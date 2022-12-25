@@ -1,0 +1,17 @@
+{
+  "name": "shared-environments",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/shared/environments/src",
+  "prefix": "msh",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shared/environments/**/*.ts", "libs/shared/environments/**/*.html"]
+      }
+    }
+  },
+  "tags": ["scope:shared", "type:environments"]
+}
