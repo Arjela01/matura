@@ -50,7 +50,19 @@
       "unitTestRunner": "jest"
     },
     "@nrwl/angular:component": {
+      "changeDetection": "OnPush",
+      "displayBlock": true,
+      "skipTests": true,
+      "standalone": true,
       "style": "scss"
+    },
+    "@nrwl/angular:directive": {
+      "skipTests": true,
+      "standalone": true
+    },
+    "@nrwl/angular:pipes": {
+      "skipTests": true,
+      "standalone": true
     }
   }
 }
