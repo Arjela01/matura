@@ -1,24 +1,21 @@
 import { Routes } from '@angular/router';
-import { AppLayoutComponent } from '@msh/layout/ui-layout';
 
 export const APP_ROUTES: Routes = [
   {
     path: '',
-    component: AppLayoutComponent,
+    loadChildren: () =>
+      import('@msh/feat-admin-shell').then(m => m.ADMIN_SHELL_ROUTES),
   },
   {
     path: 'denied',
     loadComponent: () =>
-      import('@msh/shared/ui-shared').then(
-        module => module.AccessDeniedComponent
-      ),
+      import('@msh/shared/ui-shared').then(m => m.AccessDeniedComponent),
   },
   {
     path: '404',
     loadComponent: () =>
-      import('@msh/shared/ui-shared').then(module => module.NotFoundComponent),
+      import('@msh/shared/ui-shared').then(m => m.NotFoundComponent),
   },
-
   {
     path: '**',
     redirectTo: '404',

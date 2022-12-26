@@ -23,7 +23,7 @@
           },
           {
             "glob": "**/*",
-            "input": "libs/shared/assets/src/assets",
+            "input": "libs/shared/assets/src",
             "output": "assets"
           }
         ],
