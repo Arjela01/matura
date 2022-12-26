@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -9,11 +9,18 @@ import {
   withInMemoryScrolling,
   withPreloading,
 } from '@angular/router';
+
+import { provideStore } from '@ngrx/store';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
+
+import {
+  authReducer,
+  AUTH_FEATURE_KEY,
+  TokenInterceptor,
+} from '@msh/auth/data-access-auth';
 import { getLocalStorageProvider } from '@msh/shared/data-access-shared';
 import { environment } from '@msh/shared/environments';
 import { API_URL } from '@msh/shared/util-shared';
-
-import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 import { AppComponent } from './app/app.component';
 import { APP_ROUTES } from './app/app.routes';
@@ -35,6 +42,11 @@ bootstrapApplication(AppComponent, {
         anchorScrolling: 'enabled',
       })
     ),
+
+    provideStore({
+      [AUTH_FEATURE_KEY]: authReducer,
+    }),
+
     !environment.production
       ? provideStoreDevtools({
           maxAge: 25,
@@ -42,5 +54,10 @@ bootstrapApplication(AppComponent, {
       : [],
     getLocalStorageProvider(),
     { provide: API_URL, useValue: environment.api_url },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
   ],
 });
