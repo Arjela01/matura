@@ -1,5 +1,5 @@
 {
-  "name": "layout-util-layout",
+  "name": "util-layout",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/layout/util-layout/src",
