@@ -1,11 +1,19 @@
+import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { GlobalSpinnerComponent } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'msh-root',
-  template: `<router-outlet></router-outlet>`,
+  template: `
+    <router-outlet></router-outlet>
+    <msh-global-spinner *ngIf="isLoading"></msh-global-spinner>
+  `,
   styles: [],
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, GlobalSpinnerComponent, NgIf],
 })
-export class AppComponent {}
+export class AppComponent {
+  //Todo: Loading spinner global
+  isLoading = false;
+}

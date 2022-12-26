@@ -6,6 +6,7 @@ import {
   PreloadAllModules,
   provideRouter,
   withDebugTracing,
+  withInMemoryScrolling,
   withPreloading,
 } from '@angular/router';
 
@@ -19,7 +20,11 @@ bootstrapApplication(AppComponent, {
     provideRouter(
       APP_ROUTES,
       withPreloading(PreloadAllModules),
-      withDebugTracing()
+      withDebugTracing(),
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'enabled',
+        anchorScrolling: 'enabled',
+      })
     ),
   ],
 });
