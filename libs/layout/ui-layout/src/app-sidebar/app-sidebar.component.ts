@@ -41,12 +41,12 @@ export class AppSidebarComponent implements OnInit {
               {
                 label: 'Login',
                 icon: 'pi pi-fw pi-sign-in',
-                routerLink: ['/auth/login'],
+                routerLink: ['/login'],
               },
               {
                 label: 'Access Denied',
                 icon: 'pi pi-fw pi-lock',
-                routerLink: ['/auth/access'],
+                routerLink: ['/denied'],
               },
             ],
           },

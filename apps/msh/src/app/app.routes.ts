@@ -7,6 +7,11 @@ export const APP_ROUTES: Routes = [
       import('@msh/feat-admin-shell').then(m => m.ADMIN_SHELL_ROUTES),
   },
   {
+    path: 'login',
+    loadComponent: () =>
+      import('@msh/auth/feat-auth').then(m => m.LoginComponent),
+  },
+  {
     path: 'denied',
     loadComponent: () =>
       import('@msh/shared/ui-shared').then(m => m.AccessDeniedComponent),

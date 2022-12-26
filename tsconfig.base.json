@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@msh/auth/feat-auth": ["libs/auth/feat-auth/src/index.ts"],
       "@msh/feat-admin-shell": ["libs/feat-admin-shell/src/index.ts"],
       "@msh/feat-dashboard": ["libs/feat-dashboard/src/index.ts"],
       "@msh/layout/ui-layout": ["libs/layout/ui-layout/src/index.ts"],
