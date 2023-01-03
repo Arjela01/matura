@@ -17,6 +17,18 @@
     "paths": {
       "@msh/auth/data-access-auth": ["libs/auth/data-access-auth/src/index.ts"],
       "@msh/auth/feat-auth": ["libs/auth/feat-auth/src/index.ts"],
+      "@msh/configurations/data-access-configurations": [
+        "libs/configurations/data-access-configurations/src/index.ts"
+      ],
+      "@msh/configurations/domain-configurations": [
+        "libs/configurations/domain-configurations/src/index.ts"
+      ],
+      "@msh/configurations/feat-configurations": [
+        "libs/configurations/feat-configurations/src/index.ts"
+      ],
+      "@msh/configurations/ui-configurations": [
+        "libs/configurations/ui-configurations/src/index.ts"
+      ],
       "@msh/feat-admin-shell": ["libs/feat-admin-shell/src/index.ts"],
       "@msh/feat-dashboard": ["libs/feat-dashboard/src/index.ts"],
       "@msh/layout/ui-layout": ["libs/layout/ui-layout/src/index.ts"],
