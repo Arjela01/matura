@@ -22,7 +22,8 @@
                   "type:app",
                   "type:feature",
                   "type:ui",
-                  "type:util"
+                  "type:util",
+                  "type:domain"
                 ]
               },
               {
@@ -30,16 +31,26 @@
                 "onlyDependOnLibsWithTags": [
                   "type:feature",
                   "type:ui",
-                  "type:util"
+                  "type:data-access",
+                  "type:util",
+                  "type:domain"
                 ]
               },
               {
                 "sourceTag": "type:ui",
-                "onlyDependOnLibsWithTags": ["type:ui", "type:util"]
+                "onlyDependOnLibsWithTags": [
+                  "type:ui",
+                  "type:util",
+                  "type:domain"
+                ]
               },
               {
                 "sourceTag": "type:data-access",
-                "onlyDependOnLibsWithTags": ["type:util", "type:data-access"]
+                "onlyDependOnLibsWithTags": [
+                  "type:util",
+                  "type:data-access",
+                  "type:domain"
+                ]
               },
               {
                 "sourceTag": "type:util",
