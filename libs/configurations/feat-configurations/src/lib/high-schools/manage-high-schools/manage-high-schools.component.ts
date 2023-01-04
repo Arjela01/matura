@@ -98,11 +98,11 @@ export class ManageHighSchoolsComponent implements OnInit {
   }
 
   onFormSave(highSchool: HighSchool) {
-    if (highSchool.Id) {
+    if (highSchool.id) {
       this.highSchoolStore.updateHighSchool(highSchool);
       this.toastService.showSuccess('High School Updated!');
     }
-    if (!highSchool.Id) {
+    if (!highSchool.id) {
       this.highSchoolStore.addHighSchool(highSchool);
       this.toastService.showSuccess('High School Added!');
     }
@@ -111,7 +111,11 @@ export class ManageHighSchoolsComponent implements OnInit {
 
   getHighSchools($event: LazyLoadEvent) {
     this.highSchoolApiService.loadHighSchools($event).subscribe(response => {
-      console.log(response);
+      const highSchools = response.data as HighSchool[];
+      this.highSchoolStore.patchState({
+        status: 'success',
+        highSchools,
+      })
     });
   }
 }

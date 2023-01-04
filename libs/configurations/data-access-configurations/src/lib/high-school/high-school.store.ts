@@ -93,7 +93,7 @@ export class HighSchoolStore extends ComponentStore<HighSchoolState> {
   updateHighSchool(highSchool: HighSchool) {
     this.patchState(({ highSchools }) => ({
       highSchools: highSchools.map(hs => {
-        if (hs.Id === highSchool.Id) {
+        if (hs.id === highSchool.id) {
           return highSchool;
         }
         return hs;
@@ -103,14 +103,14 @@ export class HighSchoolStore extends ComponentStore<HighSchoolState> {
 
   deleteHighSchool(highSchool: HighSchool) {
     this.patchState(({ highSchools }) => ({
-      highSchools: highSchools.filter(hs => hs.Id !== highSchool.Id),
+      highSchools: highSchools.filter(hs => hs.id !== highSchool.id),
     }));
   }
 
   deleteSelectedHighSchools() {
     this.patchState(state => ({
       highSchools: state.highSchools.filter(
-        hs => !state.selectedHighSchoolsIds.includes(hs.Id)
+        hs => !state.selectedHighSchoolsIds.includes(hs.id)
       ),
       selectedHighSchoolsIds: [],
     }));
@@ -118,21 +118,21 @@ export class HighSchoolStore extends ComponentStore<HighSchoolState> {
 
   selectHighSchool(highSchool: HighSchool) {
     this.patchState(({ selectedHighSchoolsIds }) => ({
-      selectedHighSchoolsIds: [...selectedHighSchoolsIds, highSchool.Id],
+      selectedHighSchoolsIds: [...selectedHighSchoolsIds, highSchool.id],
     }));
   }
 
   unSelectHighSchool(highSchool: HighSchool) {
     this.patchState(({ selectedHighSchoolsIds }) => ({
       selectedHighSchoolsIds: selectedHighSchoolsIds.filter(
-        hs => hs !== highSchool.Id
+        hs => hs !== highSchool.id
       ),
     }));
   }
 
   selectManySchools(highSchools: HighSchool[]) {
     this.patchState({
-      selectedHighSchoolsIds: highSchools.map(hs => hs.Id),
+      selectedHighSchoolsIds: highSchools.map(hs => hs.id),
     });
   }
 

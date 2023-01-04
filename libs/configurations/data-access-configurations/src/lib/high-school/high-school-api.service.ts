@@ -10,11 +10,9 @@ import { LazyLoadEvent } from 'primeng/api';
   providedIn: 'root',
 })
 export class HighSchoolApiService {
-  constructor(private http: HttpClient, private apiService: APIService) {}
+  constructor(private http: HttpClient) {}
 
   loadHighSchools(event: LazyLoadEvent): Observable<any> {
-    console.log('LAZY');
-    console.log(event);
     return this.http.post(`${environment.api_url}/HighSchool/TableData`, event);
   }
 

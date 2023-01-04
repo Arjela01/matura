@@ -3,13 +3,12 @@
   [value]="highSchools"
   responsiveLayout="scroll"
   [rows]="10"
-  [rows]="10"
   [paginator]="true"
   [rowsPerPageOptions]="[10, 20, 30]"
   [showCurrentPageReport]="true"
   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
   [rowHover]="true"
-  dataKey="Id"
+  dataKey="id"
   [(selection)]="selectedHighSchools"
   selectionMode="multiple"
   (onRowSelect)="onRowSelect($event)"
@@ -36,48 +35,48 @@
         <p-tableHeaderCheckbox (click)="onSelectAllClick()">
         </p-tableHeaderCheckbox>
       </th>
-      <th pSortableColumn="Code">
-        Code
-        <p-sortIcon field="Code"></p-sortIcon>
+      <th pSortableColumn="code">
+        code
+        <p-sortIcon field="code"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="Code"
+          field="code"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="Name">
-        Name
-        <p-sortIcon field="Name"></p-sortIcon>
+      <th pSortableColumn="name">
+        name
+        <p-sortIcon field="name"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="Name"
+          field="name"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="IsPublic">
+      <th pSortableColumn="isPublic">
         Is Public?
-        <p-sortIcon field="IsPublic"></p-sortIcon>
+        <p-sortIcon field="isPublic"></p-sortIcon>
       </th>
-      <th pSortableColumn="AdministrationOffice">
+      <th pSortableColumn="administrationOffice">
         Administration Office
-        <p-sortIcon field="AdministrationOffice"></p-sortIcon>
+        <p-sortIcon field="administrationOffice"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="AdministrationOffice"
+          field="administrationOffice"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="City">
-        City
-        <p-sortIcon field="City"></p-sortIcon>
+      <th pSortableColumn="cityName">
+        cityName
+        <p-sortIcon field="cityName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="City"
+          field="cityName"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="Region">
-        Region
-        <p-sortIcon field="Region"></p-sortIcon>
+      <th pSortableColumn="regionName">
+        regionName
+        <p-sortIcon field="regionName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="Region"
+          field="regionName"
           display="menu"></p-columnFilter>
       </th>
       <th></th>

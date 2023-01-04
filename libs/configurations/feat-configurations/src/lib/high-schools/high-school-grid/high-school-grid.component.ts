@@ -14,6 +14,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import {LazyLoadEvent} from "primeng/api";
+import {RippleModule} from "primeng/ripple";
 
 @Component({
   selector: 'msh-high-school-grid',
@@ -25,6 +26,7 @@ import {LazyLoadEvent} from "primeng/api";
     InputTextModule,
     TooltipModule,
     CheckboxModule,
+    RippleModule,
   ],
   templateUrl: './high-school-grid.component.html',
   styleUrls: ['./high-school-grid.component.scss'],
