@@ -3,7 +3,7 @@ import { HighSchool } from '@msh/configurations/domain-configurations';
 import { GenericStoreStatus } from '@msh/shared/data-access-shared';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
 import { LazyLoadEvent } from 'primeng/api';
-import { switchMap, tap } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs';
 import { HighSchoolApiService } from './high-school-api.service';
 
 export interface HighSchoolState {
@@ -37,8 +37,20 @@ export class HighSchoolStore extends ComponentStore<HighSchoolState> {
     super(initialHighSchoolState);
   }
 
+  /*
+  this.highSchoolApiService.loadHighSchools($event).subscribe(response => {
+      const highSchools = response.data as HighSchool[];
+      this.highSchoolStore.patchState({
+        status: 'success',
+        highSchools,
+      })
+    });
+
+
+   */
+
   //Effects
-  loadHighSchools = this.effect<void>(filters$ =>
+  loadHighSchools = this.effect<LazyLoadEvent>(filters$ =>
     filters$.pipe(
       tap(() => {
         this.patchState({
@@ -46,10 +58,12 @@ export class HighSchoolStore extends ComponentStore<HighSchoolState> {
           error: null,
         });
       }),
-      switchMap(() => {
-        return this.highSchoolApiService.loadDummyHighSchools().pipe(
+      switchMap(payload => {
+        console.log(payload);
+        return this.highSchoolApiService.loadHighSchools(payload).pipe(
           tapResponse(
-            (highSchools: HighSchool[]) => {
+            response => {
+              const highSchools = response.data as HighSchool[];
               this.patchState({
                 status: 'success',
                 highSchools,

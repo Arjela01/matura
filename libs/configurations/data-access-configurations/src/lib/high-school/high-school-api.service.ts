@@ -13,6 +13,7 @@ export class HighSchoolApiService {
   constructor(private http: HttpClient) {}
 
   loadHighSchools(event: LazyLoadEvent): Observable<any> {
+    console.log(event)
     return this.http.post(`${environment.api_url}/HighSchool/TableData`, event);
   }
 
