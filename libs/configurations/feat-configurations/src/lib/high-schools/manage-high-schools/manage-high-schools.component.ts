@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { GlobalToastService } from '@msh/shared/util-shared';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -12,6 +12,7 @@ import { HighSchool } from '@msh/configurations/domain-configurations';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { HighSchoolFormComponent } from '../high-school-form/high-school-form.component';
 import { HighSchoolGridComponent } from '../high-school-grid/high-school-grid.component';
+import { HighSchoolApiService } from '../../../../../data-access-configurations/src/lib/high-school/high-school-api.service';
 
 @Component({
   selector: 'msh-manage-high-schools',
@@ -40,11 +41,11 @@ export class ManageHighSchoolsComponent implements OnInit {
   constructor(
     private readonly highSchoolStore: HighSchoolStore,
     private readonly confirmationService: ConfirmationService,
-    private readonly toastService: GlobalToastService
+    private readonly toastService: GlobalToastService,
+    private readonly highSchoolApiService: HighSchoolApiService
   ) {}
 
   ngOnInit(): void {
-    this.highSchoolStore.loadHighSchools();
   }
 
   onNewClick() {
@@ -106,5 +107,11 @@ export class ManageHighSchoolsComponent implements OnInit {
       this.toastService.showSuccess('High School Added!');
     }
     this.highSchoolDialog = false;
+  }
+
+  getHighSchools($event: LazyLoadEvent) {
+    this.highSchoolApiService.loadHighSchools($event).subscribe(response => {
+      console.log(response);
+    });
   }
 }

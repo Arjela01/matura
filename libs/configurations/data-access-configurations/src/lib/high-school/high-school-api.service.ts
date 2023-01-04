@@ -3,12 +3,20 @@ import { Injectable } from '@angular/core';
 import { HighSchool } from '@msh/configurations/domain-configurations';
 import { APIService } from '@msh/shared/util-shared';
 import { map, Observable } from 'rxjs';
+import { environment } from '@msh/shared/environments';
+import { LazyLoadEvent } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HighSchoolApiService {
   constructor(private http: HttpClient, private apiService: APIService) {}
+
+  loadHighSchools(event: LazyLoadEvent): Observable<any> {
+    console.log('LAZY');
+    console.log(event);
+    return this.http.post(`${environment.api_url}/HighSchool/TableData`, event);
+  }
 
   loadDummyHighSchools(): Observable<HighSchool[]> {
     return this.http
