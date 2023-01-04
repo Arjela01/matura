@@ -59,7 +59,6 @@ export class HighSchoolStore extends ComponentStore<HighSchoolState> {
         });
       }),
       switchMap(payload => {
-        console.log(payload);
         return this.highSchoolApiService.loadHighSchools(payload).pipe(
           tapResponse(
             response => {
