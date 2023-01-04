@@ -9,11 +9,9 @@ import { ToolbarModule } from 'primeng/toolbar';
 
 import { HighSchoolStore } from '@msh/configurations/data-access-configurations';
 import { HighSchool } from '@msh/configurations/domain-configurations';
-import {
-  HighSchoolFormComponent,
-  HighSchoolGridComponent,
-} from '@msh/configurations/ui-configurations';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
+import { HighSchoolFormComponent } from '../high-school-form/high-school-form.component';
+import { HighSchoolGridComponent } from '../high-school-grid/high-school-grid.component';
 
 @Component({
   selector: 'msh-manage-high-schools',
