@@ -22,6 +22,7 @@ import { getLocalStorageProvider } from '@msh/shared/data-access-shared';
 import { environment } from '@msh/shared/environments';
 import { API_URL } from '@msh/shared/util-shared';
 
+import { MessageService } from 'primeng/api';
 import { AppComponent } from './app/app.component';
 import { APP_ROUTES } from './app/app.routes';
 
@@ -59,5 +60,6 @@ bootstrapApplication(AppComponent, {
       useClass: TokenInterceptor,
       multi: true,
     },
+    MessageService,
   ],
 });

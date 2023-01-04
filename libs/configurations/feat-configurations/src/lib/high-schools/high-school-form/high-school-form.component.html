@@ -1,0 +1,120 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="Code">Code</label>
+    <input
+      type="text"
+      pInputText
+      id="Code"
+      name="Code"
+      [(ngModel)]="highSchool.Code"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !highSchool.Code }" />
+    <small class="p-error block" *ngIf="submitted && !highSchool.Code">
+      Code is required.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Name">Name</label>
+    <input
+      type="text"
+      pInputText
+      id="Name"
+      name="Name"
+      [(ngModel)]="highSchool.Name"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !highSchool.Name }" />
+    <small class="p-error block" *ngIf="submitted && !highSchool.Name">
+      Name is required.
+    </small>
+  </div>
+
+  <div class="field">
+    <label class="mb-3">Is Public?</label>
+    <div class="formgrid grid">
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          inputId="IsPublicTrue"
+          name="IsPublic"
+          value="1"
+          [(ngModel)]="highSchool.IsPublic"></p-radioButton>
+        <label for="IsPublicTrue">Yes</label>
+      </div>
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          inputId="IsPublicFalse"
+          name="IsPublic"
+          value="0"
+          [(ngModel)]="highSchool.IsPublic"></p-radioButton>
+        <label for="IsPublicFalse">No</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="AdministrationOffice">Administration Office</label>
+    <input
+      type="text"
+      pInputText
+      id="AdministrationOffice"
+      name="AdministrationOffice"
+      [(ngModel)]="highSchool.AdministrationOffice"
+      required
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !highSchool.AdministrationOffice
+      }" />
+    <small
+      class="p-error block"
+      *ngIf="submitted && !highSchool.AdministrationOffice">
+      Administration Office is required.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="City">City</label>
+    <input
+      type="text"
+      pInputText
+      id="City"
+      name="City"
+      [(ngModel)]="highSchool.City"
+      required
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !highSchool.City }" />
+    <small class="p-error block" *ngIf="submitted && !highSchool.City">
+      City is required.
+    </small>
+  </div>
+
+  <div class="field mb-5">
+    <label for="Name">Region</label>
+    <input
+      type="text"
+      pInputText
+      id="Region"
+      name="Region"
+      [(ngModel)]="highSchool.Region"
+      required
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !highSchool.Region }" />
+    <small class="p-error block" *ngIf="submitted && !highSchool.Region">
+      Region is required.
+    </small>
+  </div>
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Cancel"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      type="submit"
+      pButton
+      icon="pi pi-check"
+      label="Save"
+      class="p-button-text w-auto"></button>
+  </div>
+</form>
