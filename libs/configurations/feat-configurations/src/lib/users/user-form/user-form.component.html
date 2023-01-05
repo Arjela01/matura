@@ -1,0 +1,253 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="displayName">displayName</label>
+    <input
+      type="text"
+      pInputText
+      id="displayName"
+      name="displayName"
+      [(ngModel)]="user.displayName"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !user.displayName }" />
+    <small class="p-error block" *ngIf="submitted && !user.displayName">
+      displayName is required.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Name">administrationOffice</label>
+    <input
+      type="text"
+      pInputText
+      id="administrationOffice"
+      name="administrationOffice"
+      [(ngModel)]="user.administrationOffice"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !user.administrationOffice
+      }" />
+    <small
+      class="p-error block"
+      *ngIf="submitted && !user.administrationOffice">
+      administrationOffice is required.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Name">universityDepartment</label>
+    <input
+      type="text"
+      pInputText
+      id="universityDepartment"
+      name="universityDepartment"
+      [(ngModel)]="user.universityDepartment"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !user.universityDepartment
+      }" />
+    <small
+      class="p-error block"
+      *ngIf="submitted && !user.universityDepartment">
+      universityDepartment is required.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Name">highSchool</label>
+    <input
+      type="text"
+      pInputText
+      id="highSchool"
+      name="highSchool"
+      [(ngModel)]="user.highSchool"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !user.highSchool
+      }" />
+    <small class="p-error block" *ngIf="submitted && !user.highSchool">
+      highSchool is required.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Name">lastName</label>
+    <input
+      type="text"
+      pInputText
+      id="lastName"
+      name="lastName"
+      [(ngModel)]="user.lastName"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !user.lastName
+      }" />
+    <small class="p-error block" *ngIf="submitted && !user.lastName">
+      lastName is required.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Name">lastPasswordChange</label>
+    <input
+      type="text"
+      pInputText
+      id="lastPasswordChange"
+      name="lastPasswordChange"
+      [(ngModel)]="user.lastPasswordChange"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !user.lastPasswordChange
+      }" />
+    <small class="p-error block" *ngIf="submitted && !user.lastPasswordChange">
+      lastPasswordChange is required.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Name">name</label>
+    <input
+      type="text"
+      pInputText
+      id="name"
+      name="name"
+      [(ngModel)]="user.name"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !user.name
+      }" />
+    <small class="p-error block" *ngIf="submitted && !user.name">
+      name is required.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Name">overseerCode</label>
+    <input
+      type="text"
+      pInputText
+      id="overseerCode"
+      name="overseerCode"
+      [(ngModel)]="user.overseerCode"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !user.overseerCode
+      }" />
+    <small class="p-error block" *ngIf="submitted && !user.overseerCode">
+      overseerCode is required.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Name">studentId</label>
+    <input
+      type="text"
+      pInputText
+      id="studentId"
+      name="studentId"
+      [(ngModel)]="user.studentId"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !user.studentId
+      }" />
+    <small class="p-error block" *ngIf="submitted && !user.studentId">
+      studentId is required.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Name">studyProgramId</label>
+    <input
+      type="text"
+      pInputText
+      id="studyProgramId"
+      name="studyProgramId"
+      [(ngModel)]="user.studyProgramId"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !user.studyProgramId
+      }" />
+    <small class="p-error block" *ngIf="submitted && !user.studyProgramId">
+      studyProgramId is required.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Name">universityId</label>
+    <input
+      type="text"
+      pInputText
+      id="universityId"
+      name="universityId"
+      [(ngModel)]="user.universityId"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !user.universityId
+      }" />
+    <small class="p-error block" *ngIf="submitted && !user.universityId">
+      universityId is required.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Name">validFrom</label>
+    <p-calendar
+      [(ngModel)]="user.validFrom"
+      [showTime]="true"
+      [showSeconds]="true"
+      inputId="time"
+      [required]="true"
+      autofocus
+      [showIcon]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !user.validFrom
+      }"></p-calendar>
+    <small class="p-error block" *ngIf="submitted && !user.validFrom">
+      validFrom is required.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Name">validTo</label>
+    <p-calendar
+      [(ngModel)]="user.validTo"
+      [showTime]="true"
+      [showSeconds]="true"
+      inputId="time"
+      [showIcon]="true"
+      [required]="true"
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !user.validTo
+      }"></p-calendar>
+    <small class="p-error block" *ngIf="submitted && !user.validTo">
+      validTo is required.
+    </small>
+  </div>
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Cancel"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      type="submit"
+      pButton
+      icon="pi pi-check"
+      label="Save"
+      class="p-button-text w-auto"></button>
+  </div>
+</form>

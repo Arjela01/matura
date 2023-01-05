@@ -1,0 +1,198 @@
+<p-table
+  #dt
+  [value]="users"
+  responsiveLayout="scroll"
+  [rows]="10"
+  [rows]="10"
+  [paginator]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+  [rowHover]="true"
+  dataKey="Id"
+  [(selection)]="selectedUsers"
+  selectionMode="multiple"
+  (onRowSelect)="onRowSelect($event)"
+  (onRowUnselect)="onRowUnselect($event)">
+  <ng-template pTemplate="caption">
+    <div
+      class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+      <h5 class="m-0">Manage Users</h5>
+      <span class="block mt-2 md:mt-0 p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+          pInputText
+          type="text"
+          placeholder="Search..."
+          class="w-full sm:w-auto" />
+      </span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 3rem">
+        <p-tableHeaderCheckbox (click)="onSelectAllClick()">
+        </p-tableHeaderCheckbox>
+      </th>
+      <th pSortableColumn="DisplayName">
+        DisplayName
+        <p-sortIcon field="DisplayName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="DisplayName"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="AdministrationOffice">
+        AdministrationOffice
+        <p-sortIcon field="AdministrationOffice"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="AdministrationOffice"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="UniversityDepartment">
+        UniversityDepartment
+        <p-sortIcon field="UniversityDepartment"></p-sortIcon>
+      </th>
+      <th pSortableColumn="HighSchool">
+        HighSchool
+        <p-sortIcon field="HighSchool"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="HighSchool"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="LastPasswordChange">
+        LastPasswordChange
+        <p-sortIcon field="LastPasswordChange"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="LastPasswordChange"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="Name">
+        Name
+        <p-sortIcon field="Name"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="Name"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="OverseerCode">
+        OverseerCode
+        <p-sortIcon field="OverseerCode"></p-sortIcon>
+        <p-columnFilter
+          type="numeric"
+          field="OverseerCode"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="StudentId">
+        StudentId
+        <p-sortIcon field="StudentId"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="StudentId"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="StudyProgramId">
+        StudyProgramId
+        <p-sortIcon field="StudyProgramId"></p-sortIcon>
+        <p-columnFilter
+          type="numeric"
+          field="StudyProgramId"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="UniversityId">
+        UniversityId
+        <p-sortIcon field="UniversityId"></p-sortIcon>
+        <p-columnFilter
+          type="numeric"
+          field="UniversityId"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="ValidFrom">
+        ValidFrom
+        <p-sortIcon field="ValidFrom"></p-sortIcon>
+        <p-columnFilter
+          type="datetime"
+          field="ValidFrom"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="ValidTo">
+        ValidTo
+        <p-sortIcon field="ValidTo"></p-sortIcon>
+        <p-columnFilter
+          type="datetime"
+          field="ValidTo"
+          display="menu"></p-columnFilter>
+      </th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-user>
+    <tr>
+      <td>
+        <p-tableCheckbox [value]="user"></p-tableCheckbox>
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.DisplayName }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.AdministrationOffice }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.UniversityDepartment }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.HighSchool }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.LastName }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.LastPasswordChange }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.Name }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.OverseerCode }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.StudentId }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.StudyProgramId }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.UniversityId }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.ValidFrom }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.ValidTo }}
+      </td>
+      <td>
+        <div class="flex">
+          <button
+            pButton
+            pRipple
+            icon="pi pi-pencil"
+            class="p-button-rounded p-button-warning p-button-text mr-2"
+            pTooltip="Edit"
+            tooltipPosition="bottom"
+            (click)="onEditClick(user)"></button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-danger p-button-text"
+            pTooltip="Delete"
+            tooltipPosition="bottom"
+            (click)="onDeleteClick(user)"></button>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
