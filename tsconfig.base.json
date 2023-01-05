@@ -33,6 +33,7 @@
       "@msh/feat-dashboard": ["libs/feat-dashboard/src/index.ts"],
       "@msh/layout/ui-layout": ["libs/layout/ui-layout/src/index.ts"],
       "@msh/layout/util-layout": ["libs/layout/util-layout/src/index.ts"],
+      "@msh/profile-group": ["libs/profile-group/src/index.ts"],
       "@msh/shared/assets": ["libs/shared/assets/src/index.ts"],
       "@msh/shared/data-access-shared": [
         "libs/shared/data-access-shared/src/index.ts"

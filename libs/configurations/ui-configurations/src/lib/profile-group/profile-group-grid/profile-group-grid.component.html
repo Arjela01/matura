@@ -1,0 +1,89 @@
+<p-table
+  #dt
+  [value]="profileGroup"
+  responsiveLayout="scroll"
+  [rows]="10"
+  [rows]="10"
+  [paginator]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+  [rowHover]="true"
+  dataKey="Id"
+  [(selection)]="selectedProfileGroup"
+  selectionMode="multiple"
+  (onRowSelect)="onRowSelect($event)"
+  (onRowUnselect)="onRowUnselect($event)">
+  <ng-template pTemplate="caption">
+    <div
+      class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+      <h5 class="m-0">Manage Profile Group</h5>
+      <span class="block mt-2 md:mt-0 p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+          pInputText
+          type="text"
+          placeholder="Search..."
+          class="w-full sm:w-auto" />
+      </span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 3rem">
+        <p-tableHeaderCheckbox (click)="onSelectAllClick()">
+        </p-tableHeaderCheckbox>
+      </th>
+      <th pSortableColumn="Name">
+        Name
+        <p-sortIcon field="Name"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="Name"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="Ordering">
+        Ordering
+        <p-sortIcon field="Ordering"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="Ordering"
+          display="menu"></p-columnFilter>
+      </th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-profileGroup>
+    <tr>
+      <td>
+        <p-tableCheckbox [value]="profileGroup"></p-tableCheckbox>
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ profileGroup.Name }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ profileGroup.Ordering }}
+      </td>
+      <td>
+        <div class="flex">
+          <button
+            pButton
+            pRipple
+            icon="pi pi-pencil"
+            class="p-button-rounded p-button-warning p-button-text mr-2"
+            pTooltip="Edit"
+            tooltipPosition="bottom"
+            (click)="onEditClick(profileGroup)"></button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-danger p-button-text"
+            pTooltip="Delete"
+            tooltipPosition="bottom"
+            (click)="onDeleteClick(profileGroup)"></button>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

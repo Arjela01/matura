@@ -50,6 +50,7 @@ export class AppSidebarComponent implements OnInit {
               },
             ],
           },
+
           {
             label: 'Not Found',
             icon: 'pi pi-fw pi-exclamation-circle',
@@ -126,6 +127,7 @@ export class AppSidebarComponent implements OnInit {
           },
         ],
       },
+
       {
         label: 'Configurations',
         items: [
@@ -133,6 +135,16 @@ export class AppSidebarComponent implements OnInit {
             label: 'High Schools',
             icon: 'pi pi-fw pi-bookmark',
             routerLink: ['configurations', 'high-school'],
+          },
+          {
+            label: 'Profile Group',
+            icon: 'pi pi-fw pi-users',
+            routerLink: ['configurations', 'profile-group'],
+          },
+          {
+            label: 'Profile',
+            icon: 'pi pi-fw pi-user',
+            routerLink: ['configurations', 'profile'],
           },
         ],
       },
