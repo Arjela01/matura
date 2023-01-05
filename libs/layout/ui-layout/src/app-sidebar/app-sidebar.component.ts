@@ -20,7 +20,10 @@ export class AppSidebarComponent implements OnInit {
   //TODO: This will be dynamic
   model$: Observable<MenuItem[]> = this.menuStore.menus$.pipe(
     map(menus => {
-      return this.format(menus)
+      return [{
+        label: "Menu",
+        items: this.format(menus)
+      }]
     })
   );
 

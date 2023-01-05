@@ -12,7 +12,7 @@ export class MenuApiService {
 
   loadDummyMenus(): Observable<MenuNode[]> {
     return this.http
-      .get<{ data: MenuNode[] }>('assets/demo/data/menus.json')
+      .get<{ data: MenuNode[] }>('assets/demo/data/old-menus.json')
       .pipe(
         map(response => {
           return this.convertToTree(response.data);
