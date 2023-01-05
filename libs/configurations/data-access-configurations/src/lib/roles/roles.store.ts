@@ -94,7 +94,6 @@ export class RolesStore extends ComponentStore<RolesState> {
     updateRole(role: Role) {
         this.patchState(({ roles }) => ({
             roles: roles.map(r => {
-                console.log(role)
                 if (r.Id === role.Id) {
                     return role;
                 }
@@ -126,7 +125,6 @@ export class RolesStore extends ComponentStore<RolesState> {
     }
 
     unSelectRole(role: Role) {
-        console.log(role)
         this.patchState(({ selectedRoleIds }) => ({
             selectedRoleIds: selectedRoleIds.filter(
                 r => r !== role.Id

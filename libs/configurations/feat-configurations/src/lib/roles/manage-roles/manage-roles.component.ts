@@ -59,17 +59,14 @@ export class ManageRolesComponent {
   }
 
   onGridEvent(event: GridEvent<Role | Role[]>) {
-    console.log(event)
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
         this.rolesStore.selectRole(event.data as Role);
-        console.log('aaa', event.data)
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
         this.rolesStore.unSelectRole(event.data as Role);
         break;
       case GRID_ACTIONS.SELECT_MANY:
-        console.log('a')
         this.rolesStore.selectRoles(event.data as Role[]);
         break;
       case GRID_ACTIONS.UNSELECT_ALL:
