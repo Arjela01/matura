@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HighSchool } from '@msh/configurations/domain-configurations';
 import { APIService } from '@msh/shared/util-shared';
 import { map, Observable } from 'rxjs';
-import {MenuNode} from "../../../../domain-layout/src";
+import { MenuNode } from "../../../../domain-layout/src";
 
 @Injectable({
   providedIn: 'root',
@@ -16,8 +15,24 @@ export class MenuApiService {
       .get<{ data: MenuNode[] }>('assets/demo/data/menus.json')
       .pipe(
         map(response => {
-          return response.data as MenuNode[];
+          return this.convertToTree(response.data);
         })
       );
   }
+
+  // TODO : MOVE THESE FUNCTIONS
+
+
+  private convertToTree(menus: MenuNode[]): MenuNode[] {
+    const nest = (menus: MenuNode[], id: number | null = null): MenuNode[] =>
+      menus
+        .filter(item => item.Parent === id)
+        .map(menu => ({ ...menu, Children: nest(menus, menu.ID) }))
+        .sort((a , b) => a.DisplayOrder > b.DisplayOrder ? 1 : -1);
+
+    return nest(menus);
+  }
+
+
 }
+

@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LayoutService } from '@msh/layout/util-layout';
-import { AppMenuitemComponent } from './../app-menuitem/app-menuitem.component';
+import { AppMenuitemComponent } from '../app-menuitem/app-menuitem.component';
 
 import { MenuItem } from 'primeng/api';
 import { MenuStore } from "../../../data-access-layout/src";
 import {map, Observable} from "rxjs";
+import {MenuNode} from "../../../domain-layout/src";
 
 @Component({
   selector: 'msh-app-sidebar',
@@ -19,65 +20,7 @@ export class AppSidebarComponent implements OnInit {
   //TODO: This will be dynamic
   model$: Observable<MenuItem[]> = this.menuStore.menus$.pipe(
     map(menus => {
-      return [
-        {
-          label: 'Home',
-          items: [
-            {
-              label: 'Dashboard',
-              icon: 'pi pi-fw pi-home',
-              routerLink: ['/'],
-            },
-          ],
-        },
-        {
-          label: 'Pages',
-          icon: 'pi pi-fw pi-briefcase',
-          items: [
-            {
-              label: 'Auth',
-              icon: 'pi pi-fw pi-user',
-              items: [
-                {
-                  label: 'Login',
-                  icon: 'pi pi-fw pi-sign-in',
-                  routerLink: ['/login'],
-                },
-                {
-                  label: 'Access Denied',
-                  icon: 'pi pi-fw pi-lock',
-                  routerLink: ['/denied'],
-                },
-              ],
-            },
-            {
-              label: 'Not Found',
-              icon: 'pi pi-fw pi-exclamation-circle',
-              routerLink: ['/notfound'],
-            },
-          ],
-        },
-        {
-          label: 'Hierarchy',
-          items: menus.map(menu => {
-            return {
-              icon:'pi pi-fw pi-bookmark',
-              routerLink: menu.Url,
-              label: menu.Text,
-            }
-          })
-        },
-        {
-          label: 'Configurations',
-          items: [
-            {
-              label: 'High Schools',
-              icon: 'pi pi-fw pi-bookmark',
-              routerLink: ['configurations', 'high-school'],
-            },
-          ],
-        },
-      ];
+      return this.format(menus)
     })
   );
 
@@ -88,5 +31,19 @@ export class AppSidebarComponent implements OnInit {
 
   ngOnInit() {
     this.menuStore.loadMenus();
+  }
+
+  private format(menus: MenuNode[]): MenuItem[] {
+    const reformat = (node: MenuNode): MenuItem => {
+      const output: MenuItem = {};
+      output["icon"] = 'pi pi-fw pi-bookmark';
+      output["label"] = node.Text;
+      if (node.Children.length == 0) output["routerLink"] = node.Url;
+      if (node.Children.length != 0) output["items"] = node.Children?.map((x) => reformat(x));
+      return output;
+
+    };
+    return menus.map((x) => reformat(x));
+
   }
 }
