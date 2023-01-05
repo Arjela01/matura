@@ -1,12 +1,12 @@
 export interface HighSchool {
-  Id: number;
-  Code: string;
-  Name: string;
-  IsPublic: boolean;
-  AdministrationOfficeId?: number;
-  AdministrationOffice: string;
-  CityId?: number;
-  City: string;
-  RegionId?: number;
-  Region: string;
+  id: number;
+  code: string;
+  name: string;
+  isPublic: boolean;
+  administrationOfficeId?: number;
+  administrationOfficeName: string;
+  cityId?: number;
+  cityName: string;
+  regionId?: number;
+  regionName: string;
 }

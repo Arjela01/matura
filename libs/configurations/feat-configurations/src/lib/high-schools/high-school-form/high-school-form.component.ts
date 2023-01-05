@@ -47,13 +47,13 @@ export class HighSchoolFormComponent {
   submitted = false;
 
   highSchool: HighSchool = {
-    Id: 0,
-    Code: '',
-    Name: '',
-    IsPublic: true,
-    AdministrationOffice: '',
-    City: '',
-    Region: '',
+    id: 0,
+    code: '',
+    name: '',
+    isPublic: true,
+    administrationOfficeName: '',
+    cityName: '',
+    regionName: '',
   };
 
   onCancelClick() {

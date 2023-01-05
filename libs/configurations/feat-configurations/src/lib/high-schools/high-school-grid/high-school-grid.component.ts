@@ -13,6 +13,8 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import {LazyLoadEvent} from "primeng/api";
+import {RippleModule} from "primeng/ripple";
 
 @Component({
   selector: 'msh-high-school-grid',
@@ -24,6 +26,7 @@ import { TooltipModule } from 'primeng/tooltip';
     InputTextModule,
     TooltipModule,
     CheckboxModule,
+    RippleModule,
   ],
   templateUrl: './high-school-grid.component.html',
   styleUrls: ['./high-school-grid.component.scss'],
@@ -38,6 +41,8 @@ export class HighSchoolGridComponent {
   @Output() gridEvent = new EventEmitter<
     GridEvent<HighSchool | HighSchool[]>
   >();
+
+  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
   onEditClick(highSchool: HighSchool) {
     this.gridEvent.emit({
@@ -78,5 +83,9 @@ export class HighSchoolGridComponent {
       action: GRID_ACTIONS.UNSELECT_ROW,
       data: data,
     } as GridEvent<HighSchool>);
+  }
+
+  loadRows($event: LazyLoadEvent) {
+    this.lazyLoadData.emit($event);
   }
 }

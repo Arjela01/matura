@@ -34,7 +34,8 @@
 
       <msh-high-school-grid
         [highSchools]="(highSchools$ | async) || []"
-        (gridEvent)="onGridEvent($event)">
+        (gridEvent)="onGridEvent($event)"
+        (lazyLoadData)="getHighSchools($event)">
       </msh-high-school-grid>
     </div>
   </div>
