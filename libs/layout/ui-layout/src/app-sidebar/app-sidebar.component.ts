@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import { LayoutService } from '@msh/layout/util-layout';
 import { AppMenuitemComponent } from '../app-menuitem/app-menuitem.component';
 
@@ -14,7 +14,7 @@ import {MenuNode} from "../../../domain-layout/src";
   imports: [CommonModule, AppMenuitemComponent],
   providers: [MenuStore],
   templateUrl: './app-sidebar.component.html',
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppSidebarComponent implements OnInit {
   //TODO: This will be dynamic
