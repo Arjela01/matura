@@ -1,22 +1,24 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   Output,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { HighSchool } from '@msh/configurations/domain-configurations';
+import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
+import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { DropdownModule } from 'primeng/dropdown';
-import { DropdownModel } from '@msh/shared/data-access-shared';
 
 @Component({
   selector: 'msh-high-school-form',
@@ -36,7 +38,7 @@ import { DropdownModel } from '@msh/shared/data-access-shared';
   styleUrls: ['./high-school-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HighSchoolFormComponent {
+export class HighSchoolFormComponent implements OnChanges {
   @Input() cities: DropdownModel<number>[] = [];
   @Input() regions: DropdownModel<number>[] = [];
   @Input() administrationOffices: DropdownModel<number>[] = [];
@@ -60,10 +62,16 @@ export class HighSchoolFormComponent {
     code: '',
     name: '',
     isPublic: true,
-    administrationOfficeName: '',
-    cityName: '',
-    regionName: '',
   };
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  constructor(private cd: ChangeDetectorRef) {}
+
+  ngOnChanges(): void {
+    if (this.cities && this.highSchool.regionID) {
+      this.onRegionChange({ value: this.highSchool.regionID });
+    }
+  }
 
   onCancelClick() {
     this.formClose.emit();
@@ -77,8 +85,6 @@ export class HighSchoolFormComponent {
   }
 
   onRegionChange($event: any) {
-    this.citiesFiltered = this.cities.filter(
-      c => c.parentKey == $event.value
-    );
+    this.citiesFiltered = this.cities.filter(c => c.parentKey == $event.value);
   }
 }

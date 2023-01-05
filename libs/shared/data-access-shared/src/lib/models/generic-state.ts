@@ -5,7 +5,7 @@ export type GenericStoreStatus =
   | 'error'
   | 'initial'
   | 'saving'
-  | 'savingSuccessful'  ;
+  | 'deleting';
 
 export interface GenericState<T> {
   data: T | null;

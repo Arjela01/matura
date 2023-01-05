@@ -1,36 +1,40 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HighSchool } from '@msh/configurations/domain-configurations';
-import { APIService } from '@msh/shared/util-shared';
-import { map, Observable } from 'rxjs';
-import { environment } from '@msh/shared/environments';
-import { LazyLoadEvent } from 'primeng/api';
+import {
+  HighSchool,
+  HighSchoolTableView,
+} from '@msh/configurations/domain-configurations';
 import { ApiResult } from '@msh/shared/data-access-shared';
+import { APIService } from '@msh/shared/util-shared';
+import { LazyLoadEvent } from 'primeng/api';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HighSchoolApiService {
-  constructor(private http: HttpClient) {}
+  constructor(private apiService: APIService) {}
 
-  loadHighSchools(event: LazyLoadEvent): Observable<any> {
-    return this.http.post(`${environment.api_url}/HighSchool/TableData`, event);
+  loadHighSchools(event: LazyLoadEvent): Observable<HighSchoolTableView> {
+    return this.apiService.post(`/HighSchool/TableData`, event);
   }
 
   save(highSchool: HighSchool): Observable<ApiResult<HighSchool>> {
-    return this.http.post<ApiResult<HighSchool>>(
-      `${environment.api_url}/HighSchool`,
+    return this.apiService.post<ApiResult<HighSchool>, HighSchool>(
+      `/HighSchool`,
       highSchool
     );
   }
 
-  loadDummyHighSchools(): Observable<HighSchool[]> {
-    return this.http
-      .get<{ data: HighSchool[] }>('assets/demo/data/high-schools.json')
-      .pipe(
-        map(response => {
-          return response.data as HighSchool[];
-        })
-      );
+  update(highSchool: HighSchool): Observable<ApiResult<HighSchool>> {
+    return this.apiService.put<ApiResult<HighSchool>, HighSchool>(
+      `/HighSchool`,
+      highSchool
+    );
+  }
+
+  delete(highSchoolId: number): Observable<ApiResult<unknown>> {
+    return this.apiService.delete<ApiResult<HighSchool>>(
+      `/HighSchool?id=${highSchoolId}`
+    );
   }
 }

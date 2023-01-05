@@ -7,17 +7,18 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
-import { HighSchoolStore } from '@msh/configurations/data-access-configurations';
+import {
+  AdministrationOfficeApiService,
+  CityApiService,
+  HighSchoolStore,
+  RegionApiService,
+} from '@msh/configurations/data-access-configurations';
 import { HighSchool } from '@msh/configurations/domain-configurations';
+import { DropdownModel } from '@msh/shared/data-access-shared';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
+
 import { HighSchoolFormComponent } from '../high-school-form/high-school-form.component';
 import { HighSchoolGridComponent } from '../high-school-grid/high-school-grid.component';
-import { CityApiService } from '../../../../../data-access-configurations/src/lib/city/city-api.service';
-import { AdministrationOfficeApiService } from '../../../../../data-access-configurations/src/lib/administration-office/administration-office-api.service';
-import { RegionApiService } from '../../../../../data-access-configurations/src/lib/region/region-api.service';
-import { DropdownModel } from '@msh/shared/data-access-shared';
-import {Actions, ofType} from '@ngrx/effects';
-import {filter, tap} from "rxjs";
 
 @Component({
   selector: 'msh-manage-high-schools',
@@ -38,12 +39,11 @@ import {filter, tap} from "rxjs";
 })
 export class ManageHighSchoolsComponent implements OnInit {
   highSchools$ = this.highSchoolStore.highSchools$;
+  totalRecords$ = this.highSchoolStore.totalRecords$;
   hasSelectedHighSchools$ = this.highSchoolStore.hasSelectedHighSchools$;
   activeHighSchool$ = this.highSchoolStore.activeHighSchool$;
-  modal$ = this.highSchoolStore.modal$.pipe(tap(_ => this.highSchoolDialog = false));
+  isModalVisible$ = this.highSchoolStore.isModalVisible$;
 
-
-  highSchoolDialog = false;
   cities: DropdownModel<number>[] = [];
   administrationOffices: DropdownModel<number>[] = [];
   regions: DropdownModel<number>[] = [];
@@ -54,26 +54,25 @@ export class ManageHighSchoolsComponent implements OnInit {
     private readonly toastService: GlobalToastService,
     private readonly cityApiService: CityApiService,
     private readonly administrationOfficeApiService: AdministrationOfficeApiService,
-    private readonly regionApiService: RegionApiService,
-    private actions$: Actions
+    private readonly regionApiService: RegionApiService
   ) {}
 
   ngOnInit(): void {
     this.getAdministrationOfficeDropdown();
     this.getCitiesDropdown();
     this.getRegionDropdown();
-
   }
 
   onNewClick() {
     this.highSchoolStore.setActiveHighSchool(null);
+    this.highSchoolStore.showModal();
   }
 
   onDeleteSelectedClick() {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to delete selected entities?',
+      message: 'Jeni i sigurt që doni të fshini shkollat e zgjedhura?',
       accept: () => {
-        this.highSchoolStore.deleteSelectedHighSchools();
+        //this.highSchoolStore.deleteSelectedHighSchools();
         this.toastService.showWarning('High Schools deleted!');
       },
     });
@@ -95,11 +94,11 @@ export class ManageHighSchoolsComponent implements OnInit {
         break;
       case GRID_ACTIONS.EDIT:
         this.highSchoolStore.setActiveHighSchool(event.data as HighSchool);
-        this.highSchoolDialog = true;
+        this.highSchoolStore.showModal();
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Are you sure that you want to delete this entity?',
+          message: 'Jeni i sigurt që doni të fshini shkollën e zgjedhur?',
           accept: () => {
             this.highSchoolStore.deleteHighSchool(event.data as HighSchool);
             this.toastService.showWarning('High School deleted!');
@@ -109,20 +108,17 @@ export class ManageHighSchoolsComponent implements OnInit {
     }
   }
 
-  onFormClose() {
-    this.highSchoolDialog = false;
+  onModalClose() {
+    this.highSchoolStore.hideModal();
   }
 
   onFormSave(highSchool: HighSchool) {
     if (highSchool.id) {
       this.highSchoolStore.updateHighSchool(highSchool);
-      this.toastService.showSuccess('High School Updated!');
     }
     if (!highSchool.id) {
       this.highSchoolStore.saveHighSchool(highSchool);
-      this.toastService.showSuccess('High School Added!');
     }
-    this.highSchoolDialog = false;
   }
 
   getHighSchools($event: LazyLoadEvent) {

@@ -1,18 +1,17 @@
-import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
-import { environment } from '@msh/shared/environments';
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
+import { APIService } from '@msh/shared/util-shared';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CityApiService {
-  constructor(private http: HttpClient) {}
+  constructor(private apiService: APIService) {}
 
   loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
-    return this.http.get<ApiResult<DropdownModel<number>[]>>(
-      `${environment.api_url}/City/DropdownList`
+    return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
+      `/City/DropdownList`
     );
   }
 }

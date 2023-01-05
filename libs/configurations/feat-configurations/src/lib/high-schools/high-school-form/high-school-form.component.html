@@ -11,7 +11,7 @@
       autofocus
       [ngClass]="{ 'ng-invalid ng-dirty': submitted && !highSchool.code }" />
     <small class="p-error block" *ngIf="submitted && !highSchool.code">
-      code is required.
+      Kodi është fushë e kërkuar.
     </small>
   </div>
 
@@ -27,7 +27,7 @@
       autofocus
       [ngClass]="{ 'ng-invalid ng-dirty': submitted && !highSchool.name }" />
     <small class="p-error block" *ngIf="submitted && !highSchool.name">
-      name is required.
+      Emri është fushë e kërkuar.
     </small>
   </div>
 
@@ -38,23 +38,23 @@
         <p-radioButton
           id="IsPublicTrue"
           name="IsPublic"
-          value="1"
+          [value]="true"
           [(ngModel)]="highSchool.isPublic"></p-radioButton>
-        <label for="IsPublicTrue">Yes</label>
+        <label for="IsPublicTrue">Po</label>
       </div>
       <div class="field-radiobutton col-6">
         <p-radioButton
           id="IsPublicFalse"
           name="IsPublic"
-          value="0"
+          [value]="false"
           [(ngModel)]="highSchool.isPublic"></p-radioButton>
-        <label for="IsPublicFalse">No</label>
+        <label for="IsPublicFalse">Jo</label>
       </div>
     </div>
   </div>
 
   <div class="field">
-    <label for="AdministrationOffice">Administration Office *</label>
+    <label for="AdministrationOffice">DAR/ZA *</label>
     <p-dropdown
       id="AdministrationOffice"
       [options]="administrationOffices"
@@ -62,74 +62,73 @@
       optionLabel="value"
       name="administrationOfficeId"
       [autoDisplayFirst]="false"
-      [(ngModel)]="highSchool.administrationOfficeId"
+      [(ngModel)]="highSchool.administrationOfficeID"
       [showClear]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !highSchool.administrationOfficeId
+        'ng-invalid ng-dirty': submitted && !highSchool.administrationOfficeID
       }">
     </p-dropdown>
     <small
       class="p-error block"
-      *ngIf="submitted && !highSchool.administrationOfficeId">
-      Dar/Za eshte e kerkuar.
+      *ngIf="submitted && !highSchool.administrationOfficeID">
+      DAR/ZA është fushë e kërkuar.
     </small>
   </div>
 
   <div class="field mb-5">
-    <label for="Region">Region *</label>
+    <label for="Region">Rrethi *</label>
     <p-dropdown
-            id="Region"
-            [options]="regions"
-            name="regionId"
-            optionValue="key"
-            optionLabel="value"
-            [(ngModel)]="highSchool.regionId"
-            [autoDisplayFirst]="false"
-            (onChange)="onRegionChange($event)"
-            [showClear]="true"
-            [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !highSchool.regionId
+      id="Region"
+      [options]="regions"
+      name="regionId"
+      optionValue="key"
+      optionLabel="value"
+      [(ngModel)]="highSchool.regionID"
+      [autoDisplayFirst]="false"
+      (onChange)="onRegionChange($event)"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !highSchool.regionID
       }">
     </p-dropdown>
-    <small class="p-error block" *ngIf="submitted && !highSchool.regionId">
-      Rrethi eshte fushe e kerkuar.
+    <small class="p-error block" *ngIf="submitted && !highSchool.regionID">
+      Rrethi është fushë e kërkuar.
     </small>
   </div>
 
   <div class="field">
-    <label for="City">Qytet/Fshat *</label>
+    <label for="City">Qyteti/Fshati *</label>
     <p-dropdown
       id="City"
       [options]="citiesFiltered"
       optionValue="key"
       optionLabel="value"
       name="cityId"
-      [(ngModel)]="highSchool.cityId"
+      [(ngModel)]="highSchool.cityID"
       [autoDisplayFirst]="false"
       [showClear]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !highSchool.cityId
+        'ng-invalid ng-dirty': submitted && !highSchool.cityID
       }">
     </p-dropdown>
-    <small class="p-error block" *ngIf="submitted && !highSchool.cityName">
-      Qyet/Fshat eshte fushe e kerkuar.
+    <small class="p-error block" *ngIf="submitted && !highSchool.cityID">
+      Qyeti/Fshati është fushë e kërkuar.
     </small>
   </div>
-
 
   <div class="flex justify-content-end">
     <button
       type="button"
       pButton
       icon="pi pi-times"
-      label="Cancel"
+      label="Anullo"
       class="p-button-text w-auto mr-2"
       (click)="onCancelClick()"></button>
     <button
       type="submit"
       pButton
       icon="pi pi-check"
-      label="Save"
+      label="Ruaj"
       class="p-button-text w-auto"></button>
   </div>
 </form>
