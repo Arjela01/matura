@@ -42,7 +42,7 @@
 </div>
 
 <p-dialog
-  [(visible)]="highSchoolDialog"
+  [visible]="modal$ | async"
   [style]="{ width: '500px' }"
   header="High School Details"
   [modal]="true"
@@ -54,9 +54,15 @@
     <msh-high-school-form
       [highSchoolDetails]="activeHighSchool$ | async"
       (formClose)="onFormClose()"
-      (formSave)="onFormSave($event)"></msh-high-school-form>
+      (formSave)="onFormSave($event)"
+      [cities]="cities"
+      [administrationOffices]="administrationOffices"
+      [regions]="regions"
+    ></msh-high-school-form>
   </ng-template>
 </p-dialog>
+
+<ng-container ></ng-container>
 
 <p-confirmDialog
   #cd

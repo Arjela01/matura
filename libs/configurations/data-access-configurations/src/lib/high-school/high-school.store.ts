@@ -13,6 +13,7 @@ export interface HighSchoolState {
   activeHighSchool: HighSchool | null;
   status: GenericStoreStatus;
   error: string | null;
+  modal: boolean;
 }
 
 const initialHighSchoolState: HighSchoolState = {
@@ -21,6 +22,7 @@ const initialHighSchoolState: HighSchoolState = {
   selectedHighSchoolsIds: [],
   activeHighSchool: null,
   status: 'initial',
+  modal: false,
   error: null,
 };
 
@@ -36,18 +38,6 @@ export class HighSchoolStore extends ComponentStore<HighSchoolState> {
   constructor(private highSchoolApiService: HighSchoolApiService) {
     super(initialHighSchoolState);
   }
-
-  /*
-  this.highSchoolApiService.loadHighSchools($event).subscribe(response => {
-      const highSchools = response.data as HighSchool[];
-      this.highSchoolStore.patchState({
-        status: 'success',
-        highSchools,
-      })
-    });
-
-
-   */
 
   //Effects
   loadHighSchools = this.effect<LazyLoadEvent>(filters$ =>
@@ -80,7 +70,41 @@ export class HighSchoolStore extends ComponentStore<HighSchoolState> {
     )
   );
 
+  saveHighSchool = this.effect<HighSchool>(filters$ =>
+      filters$.pipe(
+          tap(() => {
+            this.patchState({
+              status: 'saving',
+              error: null,
+            });
+          }),
+          switchMap(payload => {
+            return this.highSchoolApiService.save(payload).pipe(
+                tapResponse(
+                    response => {
+                      if(response.isSuccessful) {
+                        this.addHighSchool(response.data);
+                        this.patchState({
+                          status: 'success',
+                          modal: false
+                        });
+                      }
+                    },
+                    error => {
+                      this.patchState({
+                        status: 'error',
+                        error: error as string,
+                      });
+                    }
+                )
+            );
+          })
+      )
+  );
+
   //Selectors
+
+  readonly modal$ = this.select(state => state.modal);
   readonly highSchools$ = this.select(state => state.highSchools);
   readonly hasSelectedHighSchools$ = this.select(
     state => !!state.selectedHighSchoolsIds.length
@@ -90,16 +114,12 @@ export class HighSchoolStore extends ComponentStore<HighSchoolState> {
   //Updaters
 
   setActiveHighSchool(highSchool: HighSchool | null) {
-    this.patchState({ activeHighSchool: highSchool });
+    this.patchState({ activeHighSchool: highSchool, modal: true });
   }
 
-  addHighSchool(highSchool: HighSchool) {
-    const newHighSchool = Object.assign({}, highSchool, {
-      Id: this.get().highSchools.length + 1,
-    });
-
+  private addHighSchool(highSchool: HighSchool) {
     this.patchState(({ highSchools }) => ({
-      highSchools: [...highSchools, newHighSchool],
+      highSchools: [...highSchools, highSchool],
     }));
   }
 

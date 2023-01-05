@@ -15,6 +15,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { DropdownModule } from 'primeng/dropdown';
+import { DropdownModel } from '@msh/shared/data-access-shared';
 
 @Component({
   selector: 'msh-high-school-form',
@@ -28,12 +30,17 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     InputTextareaModule,
     ButtonModule,
     CheckboxModule,
+    DropdownModule,
   ],
   templateUrl: './high-school-form.component.html',
   styleUrls: ['./high-school-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HighSchoolFormComponent {
+  @Input() cities: DropdownModel<number>[] = [];
+  @Input() regions: DropdownModel<number>[] = [];
+  @Input() administrationOffices: DropdownModel<number>[] = [];
+
   @Input() set highSchoolDetails(details: HighSchool | null) {
     if (details) {
       this.highSchool = Object.assign({}, details);
@@ -43,6 +50,8 @@ export class HighSchoolFormComponent {
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
+
+  citiesFiltered: DropdownModel<number>[] = [];
 
   submitted = false;
 
@@ -65,5 +74,11 @@ export class HighSchoolFormComponent {
     if (this.form.valid) {
       this.formSave.emit(this.highSchool);
     }
+  }
+
+  onRegionChange($event: any) {
+    this.citiesFiltered = this.cities.filter(
+      c => c.parentKey == $event.value
+    );
   }
 }

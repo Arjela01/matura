@@ -1,8 +1,8 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="field">
-    <label for="Code">code</label>
+    <label for="Code">Kodi *</label>
     <input
-      type="text"
+      type="number"
       pInputText
       id="Code"
       name="Code"
@@ -16,7 +16,7 @@
   </div>
 
   <div class="field">
-    <label for="Name">name</label>
+    <label for="Name">Emri *</label>
     <input
       type="text"
       pInputText
@@ -32,11 +32,11 @@
   </div>
 
   <div class="field">
-    <label class="mb-3">Is Public?</label>
+    <label class="mb-3">Is Public? *</label>
     <div class="formgrid grid">
       <div class="field-radiobutton col-6">
         <p-radioButton
-          inputId="IsPublicTrue"
+          id="IsPublicTrue"
           name="IsPublic"
           value="1"
           [(ngModel)]="highSchool.isPublic"></p-radioButton>
@@ -44,7 +44,7 @@
       </div>
       <div class="field-radiobutton col-6">
         <p-radioButton
-          inputId="IsPublicFalse"
+          id="IsPublicFalse"
           name="IsPublic"
           value="0"
           [(ngModel)]="highSchool.isPublic"></p-radioButton>
@@ -54,53 +54,68 @@
   </div>
 
   <div class="field">
-    <label for="AdministrationOffice">Administration Office</label>
-    <input
-      type="text"
-      pInputText
+    <label for="AdministrationOffice">Administration Office *</label>
+    <p-dropdown
       id="AdministrationOffice"
-      name="AdministrationOffice"
+      [options]="administrationOffices"
+      optionValue="key"
+      optionLabel="value"
+      name="administrationOfficeId"
+      [autoDisplayFirst]="false"
       [(ngModel)]="highSchool.administrationOfficeId"
-      required
+      [showClear]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !highSchool.administrationOfficeId
-      }" />
+      }">
+    </p-dropdown>
     <small
       class="p-error block"
       *ngIf="submitted && !highSchool.administrationOfficeId">
-      Administration Office is required.
-    </small>
-  </div>
-
-  <div class="field">
-    <label for="City">cityName</label>
-    <input
-      type="text"
-      pInputText
-      id="City"
-      name="City"
-      [(ngModel)]="highSchool.cityName"
-      required
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !highSchool.cityName }" />
-    <small class="p-error block" *ngIf="submitted && !highSchool.cityName">
-      cityName is required.
+      Dar/Za eshte e kerkuar.
     </small>
   </div>
 
   <div class="field mb-5">
-    <label for="Name">regionName</label>
-    <input
-      type="text"
-      pInputText
-      id="Region"
-      name="Region"
-      [(ngModel)]="highSchool.regionName"
-      required
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !highSchool.regionName }" />
-    <small class="p-error block" *ngIf="submitted && !highSchool.regionName">
-      regionName is required.
+    <label for="Region">Region *</label>
+    <p-dropdown
+            id="Region"
+            [options]="regions"
+            name="regionId"
+            optionValue="key"
+            optionLabel="value"
+            [(ngModel)]="highSchool.regionId"
+            [autoDisplayFirst]="false"
+            (onChange)="onRegionChange($event)"
+            [showClear]="true"
+            [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !highSchool.regionId
+      }">
+    </p-dropdown>
+    <small class="p-error block" *ngIf="submitted && !highSchool.regionId">
+      Rrethi eshte fushe e kerkuar.
     </small>
   </div>
+
+  <div class="field">
+    <label for="City">Qytet/Fshat *</label>
+    <p-dropdown
+      id="City"
+      [options]="citiesFiltered"
+      optionValue="key"
+      optionLabel="value"
+      name="cityId"
+      [(ngModel)]="highSchool.cityId"
+      [autoDisplayFirst]="false"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !highSchool.cityId
+      }">
+    </p-dropdown>
+    <small class="p-error block" *ngIf="submitted && !highSchool.cityName">
+      Qyet/Fshat eshte fushe e kerkuar.
+    </small>
+  </div>
+
 
   <div class="flex justify-content-end">
     <button

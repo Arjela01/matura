@@ -12,7 +12,12 @@ import { HighSchool } from '@msh/configurations/domain-configurations';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { HighSchoolFormComponent } from '../high-school-form/high-school-form.component';
 import { HighSchoolGridComponent } from '../high-school-grid/high-school-grid.component';
-import { HighSchoolApiService } from '../../../../../data-access-configurations/src/lib/high-school/high-school-api.service';
+import { CityApiService } from '../../../../../data-access-configurations/src/lib/city/city-api.service';
+import { AdministrationOfficeApiService } from '../../../../../data-access-configurations/src/lib/administration-office/administration-office-api.service';
+import { RegionApiService } from '../../../../../data-access-configurations/src/lib/region/region-api.service';
+import { DropdownModel } from '@msh/shared/data-access-shared';
+import {Actions, ofType} from '@ngrx/effects';
+import {filter, tap} from "rxjs";
 
 @Component({
   selector: 'msh-manage-high-schools',
@@ -35,22 +40,33 @@ export class ManageHighSchoolsComponent implements OnInit {
   highSchools$ = this.highSchoolStore.highSchools$;
   hasSelectedHighSchools$ = this.highSchoolStore.hasSelectedHighSchools$;
   activeHighSchool$ = this.highSchoolStore.activeHighSchool$;
+  modal$ = this.highSchoolStore.modal$.pipe(tap(_ => this.highSchoolDialog = false));
+
 
   highSchoolDialog = false;
+  cities: DropdownModel<number>[] = [];
+  administrationOffices: DropdownModel<number>[] = [];
+  regions: DropdownModel<number>[] = [];
 
   constructor(
     private readonly highSchoolStore: HighSchoolStore,
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly highSchoolApiService: HighSchoolApiService
+    private readonly cityApiService: CityApiService,
+    private readonly administrationOfficeApiService: AdministrationOfficeApiService,
+    private readonly regionApiService: RegionApiService,
+    private actions$: Actions
   ) {}
 
   ngOnInit(): void {
+    this.getAdministrationOfficeDropdown();
+    this.getCitiesDropdown();
+    this.getRegionDropdown();
+
   }
 
   onNewClick() {
     this.highSchoolStore.setActiveHighSchool(null);
-    this.highSchoolDialog = true;
   }
 
   onDeleteSelectedClick() {
@@ -103,7 +119,7 @@ export class ManageHighSchoolsComponent implements OnInit {
       this.toastService.showSuccess('High School Updated!');
     }
     if (!highSchool.id) {
-      this.highSchoolStore.addHighSchool(highSchool);
+      this.highSchoolStore.saveHighSchool(highSchool);
       this.toastService.showSuccess('High School Added!');
     }
     this.highSchoolDialog = false;
@@ -111,5 +127,25 @@ export class ManageHighSchoolsComponent implements OnInit {
 
   getHighSchools($event: LazyLoadEvent) {
     this.highSchoolStore.loadHighSchools($event);
+  }
+
+  getCitiesDropdown() {
+    this.cityApiService.loadDropdownList().subscribe(response => {
+      this.cities = response.data;
+    });
+  }
+
+  getAdministrationOfficeDropdown() {
+    this.administrationOfficeApiService
+      .loadDropdownList()
+      .subscribe(response => {
+        this.administrationOffices = response.data;
+      });
+  }
+
+  getRegionDropdown() {
+    this.regionApiService.loadDropdownList().subscribe(response => {
+      this.regions = response.data;
+    });
   }
 }
