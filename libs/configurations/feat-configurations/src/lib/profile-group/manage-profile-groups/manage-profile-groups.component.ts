@@ -9,10 +9,10 @@ import { ToolbarModule } from 'primeng/toolbar';
 
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import {ProfileGroup} from "@msh/configurations/domain-configurations";
-import {
-  ProfileGroupFormComponent, ProfileGroupGridComponent
-} from "@msh/configurations/ui-configurations";
+
 import { ProfileGroupStore} from "@msh/configurations/data-access-configurations";
+import {ProfileGroupFormComponent} from "../profile-group-form/profile-group-form.component";
+import {ProfileGroupGridComponent} from "../profile-group-grid/profile-group-grid.component";
 
 @Component({
   selector: 'msh-manage-profile-groups',
