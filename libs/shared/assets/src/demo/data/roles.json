@@ -1,0 +1,24 @@
+{
+    "data": [
+        {
+            "Id": 0,
+            "code": "admin",
+            "name": "admin"
+        },
+        {
+            "Id": 1,
+            "code": "user",
+            "name": "user"
+        },
+        {
+            "Id": 2,
+            "code": "teacher",
+            "name": "teacher"
+        },
+        {
+            "Id": 3,
+            "code": "student",
+            "name": "student"
+        }
+    ]
+}

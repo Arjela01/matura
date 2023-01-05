@@ -8,4 +8,11 @@ export const CONFIGURATION_ROUTES: Route[] = [
         './high-schools/manage-high-schools/manage-high-schools.component'
       ).then(m => m.ManageHighSchoolsComponent),
   },
+  {
+    path: 'roles',
+    loadComponent: () =>
+      import(
+        './roles/manage-roles/manage-roles.component'
+      ).then(m => m.ManageRolesComponent),
+  },
 ];

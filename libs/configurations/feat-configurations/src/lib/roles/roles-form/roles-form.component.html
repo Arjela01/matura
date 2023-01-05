@@ -1,0 +1,49 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="Code">Code</label>
+    <input
+      type="text"
+      pInputText
+      id="Code"
+      name="code"
+      [(ngModel)]="role.code"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !role.code }" />
+    <small class="p-error block" *ngIf="submitted && !role.code">
+      Code is required.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Name">Name</label>
+    <input
+      type="text"
+      pInputText
+      id="Name"
+      name="name"
+      [(ngModel)]="role.name"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !role.name }" />
+    <small class="p-error block" *ngIf="submitted && !role.name">
+      Name is required.
+    </small>
+  </div>
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Cancel"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      type="submit"
+      pButton
+      icon="pi pi-check"
+      label="Save"
+      class="p-button-text w-auto"></button>
+  </div>
+</form>

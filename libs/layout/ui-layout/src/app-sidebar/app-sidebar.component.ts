@@ -16,7 +16,7 @@ export class AppSidebarComponent implements OnInit {
   //TODO: This will be dynamic
   model: MenuItem[] = [];
 
-  constructor(public layoutService: LayoutService) {}
+  constructor(public layoutService: LayoutService) { }
 
   ngOnInit() {
     this.model = [
@@ -133,6 +133,11 @@ export class AppSidebarComponent implements OnInit {
             label: 'High Schools',
             icon: 'pi pi-fw pi-bookmark',
             routerLink: ['configurations', 'high-school'],
+          },
+          {
+            label: 'Roles',
+            icon: 'pi pi-fw pi-bookmark',
+            routerLink: ['configurations', 'roles'],
           },
         ],
       },
