@@ -58,4 +58,11 @@ export const CONFIGURATION_ROUTES: Route[] = [
         m => m.ManageCitiesComponent
       ),
   },
+  {
+    path: 'gender',
+    loadComponent: () =>
+      import(
+        './genders/manage-genders/manage-genders.component'
+      ).then(m => m.ManageGendersComponent),
+  },
 ];
