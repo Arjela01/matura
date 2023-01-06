@@ -134,6 +134,11 @@ export class AppSidebarComponent implements OnInit {
             icon: 'pi pi-fw pi-bookmark',
             routerLink: ['configurations', 'high-school'],
           },
+          {
+            label: 'Exam Types',
+            icon: 'pi pi-fw pi-bookmark',
+            routerLink: ['configurations', 'exam-type'],
+          },
         ],
       },
     ];
