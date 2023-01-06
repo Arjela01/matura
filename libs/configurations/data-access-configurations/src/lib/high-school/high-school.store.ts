@@ -38,11 +38,11 @@ export class HighSchoolStore extends ComponentStore<HighSchoolState> {
   }
 
   /*
-  this.highSchoolApiService.loadHighSchools($event).subscribe(response => {
-      const highSchools = response.data as HighSchool[];
+  this.highSchoolApiService.loadExamVersions($event).subscribe(response => {
+      const examVersions = response.data as HighSchool[];
       this.highSchoolStore.patchState({
         status: 'success',
-        highSchools,
+        examVersions,
       })
     });
 
