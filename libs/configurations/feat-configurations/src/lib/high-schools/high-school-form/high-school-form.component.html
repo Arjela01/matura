@@ -1,8 +1,8 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="field">
-    <label for="Code">code</label>
+    <label for="Code">Kodi *</label>
     <input
-      type="text"
+      type="number"
       pInputText
       id="Code"
       name="Code"
@@ -11,12 +11,12 @@
       autofocus
       [ngClass]="{ 'ng-invalid ng-dirty': submitted && !highSchool.code }" />
     <small class="p-error block" *ngIf="submitted && !highSchool.code">
-      code is required.
+      Kodi është fushë e kërkuar.
     </small>
   </div>
 
   <div class="field">
-    <label for="Name">name</label>
+    <label for="Name">Emri *</label>
     <input
       type="text"
       pInputText
@@ -27,78 +27,92 @@
       autofocus
       [ngClass]="{ 'ng-invalid ng-dirty': submitted && !highSchool.name }" />
     <small class="p-error block" *ngIf="submitted && !highSchool.name">
-      name is required.
+      Emri është fushë e kërkuar.
     </small>
   </div>
 
   <div class="field">
-    <label class="mb-3">Is Public?</label>
+    <label class="mb-3">Is Public? *</label>
     <div class="formgrid grid">
       <div class="field-radiobutton col-6">
         <p-radioButton
-          inputId="IsPublicTrue"
+          id="IsPublicTrue"
           name="IsPublic"
-          value="1"
+          [value]="true"
           [(ngModel)]="highSchool.isPublic"></p-radioButton>
-        <label for="IsPublicTrue">Yes</label>
+        <label for="IsPublicTrue">Po</label>
       </div>
       <div class="field-radiobutton col-6">
         <p-radioButton
-          inputId="IsPublicFalse"
+          id="IsPublicFalse"
           name="IsPublic"
-          value="0"
+          [value]="false"
           [(ngModel)]="highSchool.isPublic"></p-radioButton>
-        <label for="IsPublicFalse">No</label>
+        <label for="IsPublicFalse">Jo</label>
       </div>
     </div>
   </div>
 
   <div class="field">
-    <label for="AdministrationOffice">Administration Office</label>
-    <input
-      type="text"
-      pInputText
+    <label for="AdministrationOffice">DAR/ZA *</label>
+    <p-dropdown
       id="AdministrationOffice"
-      name="AdministrationOffice"
-      [(ngModel)]="highSchool.administrationOfficeId"
-      required
+      [options]="administrationOffices"
+      optionValue="key"
+      optionLabel="value"
+      name="administrationOfficeId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="highSchool.administrationOfficeID"
+      [showClear]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !highSchool.administrationOfficeId
-      }" />
+        'ng-invalid ng-dirty': submitted && !highSchool.administrationOfficeID
+      }">
+    </p-dropdown>
     <small
       class="p-error block"
-      *ngIf="submitted && !highSchool.administrationOfficeId">
-      Administration Office is required.
-    </small>
-  </div>
-
-  <div class="field">
-    <label for="City">cityName</label>
-    <input
-      type="text"
-      pInputText
-      id="City"
-      name="City"
-      [(ngModel)]="highSchool.cityName"
-      required
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !highSchool.cityName }" />
-    <small class="p-error block" *ngIf="submitted && !highSchool.cityName">
-      cityName is required.
+      *ngIf="submitted && !highSchool.administrationOfficeID">
+      DAR/ZA është fushë e kërkuar.
     </small>
   </div>
 
   <div class="field mb-5">
-    <label for="Name">regionName</label>
-    <input
-      type="text"
-      pInputText
+    <label for="Region">Rrethi *</label>
+    <p-dropdown
       id="Region"
-      name="Region"
-      [(ngModel)]="highSchool.regionName"
-      required
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !highSchool.regionName }" />
-    <small class="p-error block" *ngIf="submitted && !highSchool.regionName">
-      regionName is required.
+      [options]="regions"
+      name="regionId"
+      optionValue="key"
+      optionLabel="value"
+      [(ngModel)]="highSchool.regionID"
+      [autoDisplayFirst]="false"
+      (onChange)="onRegionChange($event)"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !highSchool.regionID
+      }">
+    </p-dropdown>
+    <small class="p-error block" *ngIf="submitted && !highSchool.regionID">
+      Rrethi është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="City">Qyteti/Fshati *</label>
+    <p-dropdown
+      id="City"
+      [options]="citiesFiltered"
+      optionValue="key"
+      optionLabel="value"
+      name="cityId"
+      [(ngModel)]="highSchool.cityID"
+      [autoDisplayFirst]="false"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !highSchool.cityID
+      }">
+    </p-dropdown>
+    <small class="p-error block" *ngIf="submitted && !highSchool.cityID">
+      Qyeti/Fshati është fushë e kërkuar.
     </small>
   </div>
 
@@ -107,14 +121,14 @@
       type="button"
       pButton
       icon="pi pi-times"
-      label="Cancel"
+      label="Anullo"
       class="p-button-text w-auto mr-2"
       (click)="onCancelClick()"></button>
     <button
       type="submit"
       pButton
       icon="pi pi-check"
-      label="Save"
+      label="Ruaj"
       class="p-button-text w-auto"></button>
   </div>
 </form>
