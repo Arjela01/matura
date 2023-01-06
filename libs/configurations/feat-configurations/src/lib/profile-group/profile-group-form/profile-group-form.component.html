@@ -1,0 +1,50 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="Name">Name</label>
+    <input
+      type="text"
+      pInputText
+      id="Name"
+      name="Name"
+      [(ngModel)]="profileGroup.Name"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !profileGroup.Name }" />
+    <small class="p-error block" *ngIf="submitted && !profileGroup.Name">
+      Name is required.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Ordering">Ordering</label>
+    <input
+      type="text"
+      pInputText
+      id="Ordering"
+      name="Ordering"
+      [(ngModel)]="profileGroup.Ordering"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !profileGroup.Ordering }" />
+    <small class="p-error block" *ngIf="submitted && !profileGroup.Ordering">
+      Ordering is required.
+    </small>
+  </div>
+
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Cancel"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      type="submit"
+      pButton
+      icon="pi pi-check"
+      label="Save"
+      class="p-button-text w-auto"></button>
+  </div>
+</form>
