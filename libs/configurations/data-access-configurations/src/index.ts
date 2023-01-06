@@ -3,3 +3,4 @@ export * from './lib/city/city-api.service';
 export * from './lib/high-school/high-school-api.service';
 export * from './lib/region/region-api.service';
 export * from './lib/profile-group/profile-group.store';
+export * from './lib/profile-group/profile-group.store';
