@@ -34,7 +34,7 @@ export class HighSchoolApiService {
 
   delete(highSchoolId: number): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<HighSchool>>(
-      `/HighSchool?id=${highSchoolId}`
+      `/HighSchool/${highSchoolId}`
     );
   }
 }
