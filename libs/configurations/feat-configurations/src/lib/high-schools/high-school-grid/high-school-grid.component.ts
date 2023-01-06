@@ -8,13 +8,13 @@ import {
 } from '@angular/core';
 import { HighSchool } from '@msh/configurations/domain-configurations';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
+import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
+import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import {LazyLoadEvent} from "primeng/api";
-import {RippleModule} from "primeng/ripple";
 
 @Component({
   selector: 'msh-high-school-grid',
@@ -34,6 +34,8 @@ import {RippleModule} from "primeng/ripple";
 })
 export class HighSchoolGridComponent {
   @Input() highSchools: HighSchool[] = [];
+  @Input() totalRecords = 0;
+  @Input() loading = false;
 
   //Keep it local state because of Table Header checkbox not syncing
   selectedHighSchools: HighSchool[] = [];

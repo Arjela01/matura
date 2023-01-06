@@ -3,10 +3,15 @@ export interface HighSchool {
   code: string;
   name: string;
   isPublic: boolean;
-  administrationOfficeId?: number;
-  administrationOfficeName: string;
-  cityId?: number;
-  cityName: string;
-  regionId?: number;
-  regionName: string;
+  administrationOfficeID?: number;
+  administrationOfficeName?: string;
+  cityID?: number;
+  cityName?: string;
+  regionID?: number;
+  regionName?: string;
+}
+
+export interface HighSchoolTableView {
+  data: HighSchool[];
+  total: number;
 }
