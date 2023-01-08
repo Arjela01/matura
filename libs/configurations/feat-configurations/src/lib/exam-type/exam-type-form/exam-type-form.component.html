@@ -1,6 +1,6 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="field">
-    <label for="Name">name</label>
+    <label for="Name">Emri *</label>
     <input
       type="text"
       pInputText
@@ -11,7 +11,7 @@
       autofocus
       [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examType.name }"/>
     <small class="p-error block" *ngIf="submitted && !examType.name">
-      Name is required.
+      Emri është fushë e kërkuar.
     </small>
   </div>
 
@@ -21,14 +21,14 @@
       type="button"
       pButton
       icon="pi pi-times"
-      label="Cancel"
+      label="Anullo"
       class="p-button-text w-auto mr-2"
       (click)="onCancelClick()"></button>
     <button
       type="submit"
       pButton
       icon="pi pi-check"
-      label="Save"
+      label="Ruaj"
       class="p-button-text w-auto"></button>
   </div>
 </form>

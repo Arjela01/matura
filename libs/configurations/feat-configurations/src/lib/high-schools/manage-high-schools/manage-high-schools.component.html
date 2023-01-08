@@ -21,6 +21,7 @@
               [disabled]="selectedHighSchools.length === 0"
               (click)="onDeleteSelectedClick()"></button>
           </div>
+          {{selectedHighSchools.length | json}}
         </div>
         <div class="p-toolbar-group-right">
           <button

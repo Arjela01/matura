@@ -21,7 +21,6 @@ import {LazyLoadEvent} from "primeng/api";
     TooltipModule,
     CheckboxModule,
     RippleModule,
-
   ],
   templateUrl: './exam-type-grid.component.html',
   styleUrls: ['./exam-type-grid.component.scss'],
@@ -29,6 +28,8 @@ import {LazyLoadEvent} from "primeng/api";
 })
 export class ExamTypeGridComponent {
   @Input() examTypes: ExamType[] = [];
+  @Input() totalRecords = 0;
+  @Input() loading = false;
 
 
   //Keep it local state because of Table Header checkbox not syncing

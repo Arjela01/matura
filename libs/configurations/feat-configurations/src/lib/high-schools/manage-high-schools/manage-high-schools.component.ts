@@ -14,7 +14,7 @@ import {
   HighSchoolApiService,
   RegionApiService,
 } from '@msh/configurations/data-access-configurations';
-import { HighSchool } from '@msh/configurations/domain-configurations';
+import {ExamType, HighSchool} from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
 import {
@@ -54,7 +54,6 @@ export class ManageHighSchoolsComponent implements OnInit {
   selectedHighSchool: HighSchool | null = null;
   selectedHighSchools: HighSchool[] = [];
   displayModal = false;
-
   cities: DropdownModel<number>[] = [];
   administrationOffices: DropdownModel<number>[] = [];
   regions: DropdownModel<number>[] = [];
@@ -83,7 +82,8 @@ export class ManageHighSchoolsComponent implements OnInit {
       message: 'Jeni i sigurt që doni të fshini shkollat e zgjedhura?',
       accept: () => {
         //this.highSchoolStore.deleteSelectedHighSchools();
-        this.toastService.showWarning('High Schools deleted!');
+
+          this.toastService.showWarning('High Schools deleted!');
       },
     });
   }
@@ -101,6 +101,7 @@ export class ManageHighSchoolsComponent implements OnInit {
           hs.id !== (event.data as HighSchool).id;
         });
         break;
+
       case GRID_ACTIONS.SELECT_MANY:
         this.selectedHighSchools = [
           ...this.selectedHighSchools,
@@ -163,7 +164,7 @@ export class ManageHighSchoolsComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së shkollës së mesme!'
+            'Ndodhi një problem gjatë ndryshimit së shkollës së mesme!'
           );
       });
   }
@@ -183,7 +184,7 @@ export class ManageHighSchoolsComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së shkollës së mesme!'
+            'Ndodhi një problem gjatë ndryshimit së shkollës së mesme!'
           );
       });
   }
@@ -200,7 +201,7 @@ export class ManageHighSchoolsComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë fshirjes së shkollës së mesme!'
+            'Ndodhi një problem gjatë fshirjes së shkollës së mesme!'
           );
       });
   }

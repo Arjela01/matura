@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ExamTypeStore} from "@msh/configurations/data-access-configurations";
 import {ConfirmationService, LazyLoadEvent} from "primeng/api";
 import {GlobalToastService, GRID_ACTIONS, GridEvent} from "@msh/shared/util-shared";
 import {ExamType} from "@msh/configurations/domain-configurations";
@@ -10,7 +9,11 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ToolbarModule} from "primeng/toolbar";
 import {ExamTypeGridComponent} from "../exam-type-grid/exam-type-grid.component";
 import {ExamTypeFormComponent} from "../exam-type-form/exam-type-form.component";
+import {BehaviorSubject} from "rxjs";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {ExamTypeApiService} from "../../../../../data-access-configurations/src/lib/exam-type/exam-type-api.service";
 
+@UntilDestroy()
 @Component({
   selector: 'msh-manage-exam-type',
   standalone: true,
@@ -27,36 +30,38 @@ import {ExamTypeFormComponent} from "../exam-type-form/exam-type-form.component"
   templateUrl: './manage-exam-type.component.html',
   styleUrls: ['./manage-exam-type.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ExamTypeStore, ConfirmationService],
+  providers: [ConfirmationService],
 
 })
 export class ManageExamTypeComponent {
-  examTypes$ = this.examTypeStore.examTypes$;
-  hasSelectedExamTypes$ = this.examTypeStore.hasSelectedExamTypes$;
-  activeExamTypes$ = this.examTypeStore.activeExamTypes$;
+  private examTypes$$ = new BehaviorSubject<ExamType[]>([]);
+  examTypes$ = this.examTypes$$.asObservable();
+  filters: LazyLoadEvent | null = null;
 
-  examTypeDialog = false;
+  totalRecords = 0;
+  selectedExamTypes: ExamType[] = [];
+  selectedExamType: ExamType | null = null;
+
+  displayModal = false;
 
 
   constructor(
-    private readonly examTypeStore: ExamTypeStore,
     private readonly confirmationService: ConfirmationService,
-    private readonly toastService: GlobalToastService
-  ) {
-  }
+    private readonly toastService: GlobalToastService,
+    private readonly examTypeService: ExamTypeApiService,
 
+  ) {}
 
   onNewClick() {
-    this.examTypeStore.setActiveExamType(null);
-    this.examTypeDialog = true;
+    this.displayModal = true;
   }
 
   onDeleteSelectedClick() {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to delete selected entities?',
+      message: 'Jeni i sigurt që doni të fshini tipet e zgjedhura?',
       accept: () => {
-        this.examTypeStore.deleteSelectedExamTypes();
-        this.toastService.showWarning('Exam Type is deleted!');
+        // this.examTypeService.deleteSelectedExamTypes();
+        this.toastService.showWarning('Tipi i provimit është fshirë');
       },
     });
   }
@@ -64,52 +69,116 @@ export class ManageExamTypeComponent {
   onGridEvent(event: GridEvent<ExamType | ExamType[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
-        this.examTypeStore.selectExamType(event.data as ExamType);
+        this.selectedExamTypes = [
+          ...this.selectedExamTypes,
+          event.data as ExamType,
+        ]
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
-        this.examTypeStore.unSelectExamType(event.data as ExamType);
+        this.selectedExamTypes = this.selectedExamTypes.filter(et => {
+          et.id !== (event.data as ExamType).id
+        });
         break;
       case GRID_ACTIONS.SELECT_MANY:
-        this.examTypeStore.selectManyExamTypes(event.data as ExamType[]);
+        this.selectedExamTypes = [
+          ...this.selectedExamTypes,
+          ...(event.data as ExamType[]),
+        ]
         break;
       case GRID_ACTIONS.UNSELECT_ALL:
-        this.examTypeStore.unselectAllExamTypes();
+        this.selectedExamTypes = [];
         break;
       case GRID_ACTIONS.EDIT:
-        this.examTypeStore.setActiveExamType(event.data as ExamType);
-        this.examTypeDialog = true;
+        this.selectedExamType = Object.assign({}, event.data as ExamType);
+        this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Are you sure that you want to delete this entity?',
+          message: 'Jeni i sigurt që doni të fshini tipin e provimit të zgjedhur?',
           accept: () => {
-            this.examTypeStore.deleteExamType(event.data as ExamType);
-            this.toastService.showWarning('Exam Type deleted!');
+            this.deleteExamType(event.data as ExamType);
+            this.toastService.showWarning('Tipi i provimit u fshi!');
           },
         });
         break;
     }
   }
 
-  onFormClose() {
-    this.examTypeDialog = false;
+  onModalClose() {
+    this.displayModal = false;
   }
 
   onFormSave(examType: ExamType) {
     if (examType.id) {
-      this.examTypeStore.updateExamType(examType);
-      this.toastService.showSuccess('Exam Type Updated!');
+      this.updateExamType(examType);
     }
     if (!examType.id) {
-      this.examTypeStore.addExamType(examType);
-      this.toastService.showSuccess('Exam Type Added!');
+      this.addExamType(examType);
     }
-    this.examTypeDialog = false;
-
   }
 
   getExamTypes($event: LazyLoadEvent) {
-    this.examTypeStore.loadExamTypes($event);
+    this.filters = Object.assign({}, $event)
 
+    this.examTypeService
+      .loadExamTypes($event)
+      .pipe(untilDestroyed(this))
+      .subscribe( response => {
+        this.examTypes$$.next(response.data);
+        this.totalRecords = response.total;
+      });
+  }
+
+  addExamType(examType: ExamType) {
+    this.examTypeService
+      .save(examType)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Tipi i provimit u shtua me sukses!');
+          this.displayModal = false;
+          this.getExamTypes(this.filters as LazyLoadEvent);
+        }
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi një problem gjatë ndryshimit së tipit të provimit!'
+          );
+      });
+  }
+
+  updateExamType(examType: ExamType) {
+    this.examTypeService
+      .update(examType)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess(
+            'Tipi i provimit u ndryshua me sukses!'
+          );
+          this.displayModal = false;
+          this.getExamTypes(this.filters as LazyLoadEvent);
+        }
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi një problem gjatë ndryshimit së tipit të provimit!'
+          );
+      });
+  }
+
+  deleteExamType(examType: ExamType) {
+    this.examTypeService
+      .delete(examType.id)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showInfo('Tipi i provimit u fshi me sukses!');
+          this.getExamTypes(this.filters as LazyLoadEvent);
+        }
+
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi një problem gjatë fshirjes së tipit të provimit!'
+          );
+      });
   }
 }
