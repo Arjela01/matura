@@ -14,7 +14,7 @@ import {
   HighSchoolApiService,
   RegionApiService,
 } from '@msh/configurations/data-access-configurations';
-import {ExamType, HighSchool} from '@msh/configurations/domain-configurations';
+import {HighSchool} from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
 import {

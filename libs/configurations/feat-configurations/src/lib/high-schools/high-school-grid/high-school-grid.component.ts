@@ -85,8 +85,6 @@ export class HighSchoolGridComponent {
       action: GRID_ACTIONS.UNSELECT_ROW,
       data: data,
     } as GridEvent<HighSchool>);
-    console.log(data)
-
   }
 
   loadRows($event: LazyLoadEvent) {
