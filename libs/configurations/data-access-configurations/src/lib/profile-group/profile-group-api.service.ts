@@ -3,7 +3,7 @@ import {
   ProfileGroup,
   ProfileGroupTableView,
 } from '@msh/configurations/domain-configurations';
-import { ApiResult } from '@msh/shared/data-access-shared';
+import {ApiResult, DropdownModel} from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
@@ -13,6 +13,11 @@ import { Observable } from 'rxjs';
 })
 export class ProfileGroupApiService  {
   constructor(private apiService: APIService) {}
+
+  loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
+    return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
+      `/ProfileGroup/DropdownList`);
+  }
 
   loadProfileGroups(event: LazyLoadEvent): Observable<ProfileGroupTableView> {
     return this.apiService.post(`/ProfileGroup/TableData`, event);
