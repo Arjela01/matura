@@ -1,19 +1,33 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { GlobalToastService } from '@msh/shared/util-shared';
+
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
-import { HighSchoolStore } from '@msh/configurations/data-access-configurations';
+import {
+  AdministrationOfficeApiService,
+  CityApiService,
+  HighSchoolApiService,
+  RegionApiService,
+} from '@msh/configurations/data-access-configurations';
 import { HighSchool } from '@msh/configurations/domain-configurations';
-import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
+import { DropdownModel } from '@msh/shared/data-access-shared';
+
+import {
+  GlobalToastService,
+  GridEvent,
+  GRID_ACTIONS,
+} from '@msh/shared/util-shared';
+
+import { BehaviorSubject } from 'rxjs';
 import { HighSchoolFormComponent } from '../high-school-form/high-school-form.component';
 import { HighSchoolGridComponent } from '../high-school-grid/high-school-grid.component';
-import { HighSchoolApiService } from '../../../../../data-access-configurations/src/lib/high-school/high-school-api.service';
 
+@UntilDestroy()
 @Component({
   selector: 'msh-manage-high-schools',
   standalone: true,
@@ -29,35 +43,46 @@ import { HighSchoolApiService } from '../../../../../data-access-configurations/
   templateUrl: './manage-high-schools.component.html',
   styleUrls: ['./manage-high-schools.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [HighSchoolStore, ConfirmationService],
+  providers: [ConfirmationService],
 })
 export class ManageHighSchoolsComponent implements OnInit {
-  highSchools$ = this.highSchoolStore.highSchools$;
-  hasSelectedHighSchools$ = this.highSchoolStore.hasSelectedHighSchools$;
-  activeHighSchool$ = this.highSchoolStore.activeHighSchool$;
+  private highSchools$$ = new BehaviorSubject<HighSchool[]>([]);
+  highSchools$ = this.highSchools$$.asObservable();
+  filters: LazyLoadEvent | null = null;
 
-  highSchoolDialog = false;
+  totalRecords = 0;
+  selectedHighSchool: HighSchool | null = null;
+  selectedHighSchools: HighSchool[] = [];
+  displayModal = false;
+
+  cities: DropdownModel<number>[] = [];
+  administrationOffices: DropdownModel<number>[] = [];
+  regions: DropdownModel<number>[] = [];
 
   constructor(
-    private readonly highSchoolStore: HighSchoolStore,
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly highSchoolApiService: HighSchoolApiService
+    private readonly highSchoolService: HighSchoolApiService,
+    private readonly cityApiService: CityApiService,
+    private readonly administrationOfficeApiService: AdministrationOfficeApiService,
+    private readonly regionApiService: RegionApiService
   ) {}
 
   ngOnInit(): void {
+    this.getAdministrationOfficeDropdown();
+    this.getCitiesDropdown();
+    this.getRegionDropdown();
   }
 
   onNewClick() {
-    this.highSchoolStore.setActiveHighSchool(null);
-    this.highSchoolDialog = true;
+    this.displayModal = true;
   }
 
   onDeleteSelectedClick() {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to delete selected entities?',
+      message: 'Jeni i sigurt që doni të fshini shkollat e zgjedhura?',
       accept: () => {
-        this.highSchoolStore.deleteSelectedHighSchools();
+        //this.highSchoolStore.deleteSelectedHighSchools();
         this.toastService.showWarning('High Schools deleted!');
       },
     });
@@ -66,50 +91,141 @@ export class ManageHighSchoolsComponent implements OnInit {
   onGridEvent(event: GridEvent<HighSchool | HighSchool[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
-        this.highSchoolStore.selectHighSchool(event.data as HighSchool);
+        this.selectedHighSchools = [
+          ...this.selectedHighSchools,
+          event.data as HighSchool,
+        ];
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
-        this.highSchoolStore.unSelectHighSchool(event.data as HighSchool);
+        this.selectedHighSchools = this.selectedHighSchools.filter(hs => {
+          hs.id !== (event.data as HighSchool).id;
+        });
         break;
       case GRID_ACTIONS.SELECT_MANY:
-        this.highSchoolStore.selectManySchools(event.data as HighSchool[]);
+        this.selectedHighSchools = [
+          ...this.selectedHighSchools,
+          ...(event.data as HighSchool[]),
+        ];
         break;
       case GRID_ACTIONS.UNSELECT_ALL:
-        this.highSchoolStore.unselectAllHighSchools();
+        this.selectedHighSchools = [];
         break;
       case GRID_ACTIONS.EDIT:
-        this.highSchoolStore.setActiveHighSchool(event.data as HighSchool);
-        this.highSchoolDialog = true;
+        this.selectedHighSchool = Object.assign({}, event.data as HighSchool);
+        this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Are you sure that you want to delete this entity?',
+          message: 'Jeni i sigurt që doni të fshini shkollën e zgjedhur?',
           accept: () => {
-            this.highSchoolStore.deleteHighSchool(event.data as HighSchool);
-            this.toastService.showWarning('High School deleted!');
+            this.deleteHighSchool(event.data as HighSchool);
           },
         });
         break;
     }
   }
 
-  onFormClose() {
-    this.highSchoolDialog = false;
+  onModalClose() {
+    this.displayModal = false;
   }
 
   onFormSave(highSchool: HighSchool) {
     if (highSchool.id) {
-      this.highSchoolStore.updateHighSchool(highSchool);
-      this.toastService.showSuccess('High School Updated!');
+      this.updateHighSchool(highSchool);
     }
     if (!highSchool.id) {
-      this.highSchoolStore.addHighSchool(highSchool);
-      this.toastService.showSuccess('High School Added!');
+      this.addHighSchool(highSchool);
     }
-    this.highSchoolDialog = false;
   }
 
   getHighSchools($event: LazyLoadEvent) {
-    this.highSchoolStore.loadHighSchools($event);
+    this.filters = Object.assign({}, $event);
+
+    this.highSchoolService
+      .loadHighSchools($event)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.highSchools$$.next(response.data);
+        this.totalRecords = response.total;
+      });
+  }
+
+  addHighSchool(highSchool: HighSchool) {
+    this.highSchoolService
+      .save(highSchool)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Shkolla e mesme u shtua me sukses!');
+          this.displayModal = false;
+          this.getHighSchools(this.filters as LazyLoadEvent);
+        }
+
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi nje problem gjatë ndryshimit së shkollës së mesme!'
+          );
+      });
+  }
+
+  updateHighSchool(highSchool: HighSchool) {
+    this.highSchoolService
+      .update(highSchool)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess(
+            'Shkolla e mesme u ndryshua me sukses!'
+          );
+          this.displayModal = false;
+          this.getHighSchools(this.filters as LazyLoadEvent);
+        }
+
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi nje problem gjatë ndryshimit së shkollës së mesme!'
+          );
+      });
+  }
+
+  deleteHighSchool(highSchool: HighSchool) {
+    this.highSchoolService
+      .delete(highSchool.id)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showInfo('Shkolla e mesme u fshi me sukses!');
+          this.getHighSchools(this.filters as LazyLoadEvent);
+        }
+
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi nje problem gjatë fshirjes së shkollës së mesme!'
+          );
+      });
+  }
+
+  getCitiesDropdown() {
+    this.cityApiService.loadDropdownList().subscribe(response => {
+      this.cities = response.data;
+    });
+  }
+
+  getAdministrationOfficeDropdown() {
+    this.administrationOfficeApiService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.administrationOffices = response.data;
+      });
+  }
+
+  getRegionDropdown() {
+    this.regionApiService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.regions = response.data;
+      });
   }
 }

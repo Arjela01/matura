@@ -3,7 +3,9 @@ export type GenericStoreStatus =
   | 'loading'
   | 'success'
   | 'error'
-  | 'initial';
+  | 'initial'
+  | 'saving'
+  | 'deleting';
 
 export interface GenericState<T> {
   data: T | null;
