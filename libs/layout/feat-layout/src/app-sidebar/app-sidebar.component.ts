@@ -4,9 +4,9 @@ import { LayoutService } from '@msh/layout/util-layout';
 import { AppMenuitemComponent } from '../app-menuitem/app-menuitem.component';
 
 import { MenuItem } from 'primeng/api';
-import { MenuStore } from "../../../data-access-layout/src";
+import { MenuStore } from "@msh/layout/data-access-layout";
 import {map, Observable} from "rxjs";
-import {MenuNode} from "../../../domain-layout/src";
+import {MenuNode} from "@msh/layout/domain-layout";
 
 @Component({
   selector: 'msh-app-sidebar',
@@ -40,9 +40,9 @@ export class AppSidebarComponent implements OnInit {
     const reformat = (node: MenuNode): MenuItem => {
       const output: MenuItem = {};
       output["icon"] = 'pi pi-fw pi-bookmark';
-      output["label"] = node.Text;
-      if (node.Children.length == 0) output["routerLink"] = node.Url;
-      if (node.Children.length != 0) output["items"] = node.Children?.map((x) => reformat(x));
+      output["label"] = node.text;
+      if (node.children.length == 0) output["routerLink"] = node.url;
+      if (node.children.length != 0) output["items"] = node.children?.map((x) => reformat(x));
       return output;
 
     };

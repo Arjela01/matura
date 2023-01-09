@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { APIService } from '@msh/shared/util-shared';
 import { map, Observable } from 'rxjs';
-import { MenuNode } from "../../../../domain-layout/src";
+import { MenuNode } from "@msh/layout/domain-layout";
 
 @Injectable({
   providedIn: 'root',
@@ -10,25 +10,25 @@ import { MenuNode } from "../../../../domain-layout/src";
 export class MenuApiService {
   constructor(private http: HttpClient, private apiService: APIService) {}
 
-  loadDummyMenus(): Observable<MenuNode[]> {
-    return this.http
-      .get<{ data: MenuNode[] }>('assets/demo/data/old-menus.json')
+  loadMenus(): Observable<MenuNode[]> {
+    return this.apiService
+      .get<{ data: MenuNode[] }>(`/Menu`)
       .pipe(
         map(response => {
-          return this.convertToTree(response.data);
+          return this.convertToTree(response.data as MenuNode[]);
         })
       );
   }
 
-  // TODO : MOVE THESE FUNCTIONS
 
-
+  // TODO : Test out isvisible false
   private convertToTree(menus: MenuNode[]): MenuNode[] {
     const nest = (menus: MenuNode[], id: number | null = null): MenuNode[] =>
       menus
-        .filter(item => item.Parent === id)
-        .map(menu => ({ ...menu, Children: nest(menus, menu.ID) }))
-        .sort((a , b) => a.DisplayOrder > b.DisplayOrder ? 1 : -1);
+        .filter(item => item.parentId === id)
+        .map(menu => ({ ...menu, children: nest(menus, menu.id) }))
+        .sort((a , b) => a.displayOrder > b.displayOrder ? 1 : -1)
+        .filter(menu => menu.isVisible);
 
     return nest(menus);
   }

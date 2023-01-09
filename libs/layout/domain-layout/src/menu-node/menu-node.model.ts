@@ -1,9 +1,9 @@
 export interface MenuNode {
-  ID: number,
-  IsVisible: boolean,
-  DisplayOrder: number,
-  Parent: number | null,
-  Children: MenuNode[],
-  Text: string,
-  Url: string,
+  id: number,
+  isVisible: boolean,
+  displayOrder: number,
+  parentId: number | null,
+  children: MenuNode[],
+  text: string,
+  url: string,
 }

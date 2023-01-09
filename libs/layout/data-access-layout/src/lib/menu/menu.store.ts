@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
 import { switchMap, tap } from 'rxjs';
 import { MenuApiService } from './menu-api.service';
-import {MenuNode} from "../../../../domain-layout/src";
+import {MenuNode} from "@msh/layout/domain-layout";
 import {GenericStoreStatus} from "@msh/shared/data-access-shared";
 
 export interface MenuState {
@@ -34,7 +34,7 @@ export class MenuStore extends ComponentStore<MenuState> {
         });
       }),
       switchMap(() => {
-        return this.menuApiService.loadDummyMenus().pipe(
+        return this.menuApiService.loadMenus().pipe(
           tapResponse(
             (menus: MenuNode[]) => {
               this.patchState({
