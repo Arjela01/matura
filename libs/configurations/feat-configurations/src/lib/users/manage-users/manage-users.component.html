@@ -7,17 +7,17 @@
             <button
               pButton
               pRipple
-              label="New"
+              label="Shto"
               icon="pi pi-plus"
               class="p-button-success mr-2"
               (click)="onNewClick()"></button>
             <button
               pButton
               pRipple
-              label="Delete"
+              label="Fshi"
               icon="pi pi-trash"
               class="p-button-danger"
-              [disabled]="(hasSelectedUsers$ | async) === false"
+              [disabled]="selectedUsers.length === 0"
               (click)="onDeleteSelectedClick()"></button>
           </div>
         </div>
@@ -25,7 +25,7 @@
           <button
             pButton
             pRipple
-            label="Export"
+            label="Exporto"
             icon="pi pi-upload"
             class="p-button-help"></button>
         </div>
@@ -42,7 +42,7 @@
 <p-dialog
   [(visible)]="userDialog"
   [style]="{ width: '500px' }"
-  header="User Details"
+  header="Detajet e Perdoruesit"
   [modal]="true"
   [draggable]="false"
   [resizable]="false"
@@ -50,15 +50,17 @@
   (onHide)="onFormClose()">
   <ng-template pTemplate="content">
     <msh-user-form
-      [userDetails]="activeUser$ | async"
+      [userDetails]="selectedUser"
       (formClose)="onFormClose()"
+      [cities]="cities"
+      [administrationOffices]="administrationOffices"
       (formSave)="onFormSave($event)"></msh-user-form>
   </ng-template>
 </p-dialog>
 
 <p-confirmDialog
   #cd
-  header="Confirm"
+  header="Konfirmo"
   icon="pi pi-exclamation-triangle"
   [style]="{ width: '450px' }">
   <ng-template pTemplate="footer">

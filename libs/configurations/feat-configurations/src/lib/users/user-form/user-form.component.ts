@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -9,9 +10,11 @@ import {
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { User } from '@msh/configurations/domain-configurations';
+import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
+import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
@@ -30,12 +33,16 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     ButtonModule,
     CheckboxModule,
     CalendarModule,
+    DropdownModule,
   ],
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserFormComponent {
+  @Input() cities: DropdownModel<number>[] = [];
+  @Input() administrationOffices: DropdownModel<number>[] = [];
+
   @Input() set userDetails(details: User | null) {
     if (details) {
       this.user = Object.assign({}, details);
@@ -45,6 +52,8 @@ export class UserFormComponent {
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
+
+  citiesFiltered: DropdownModel<number>[] = [];
 
   submitted = false;
 
@@ -65,6 +74,8 @@ export class UserFormComponent {
     validFrom: undefined,
     validTo: undefined,
   };
+
+  constructor(private cd: ChangeDetectorRef) {}
 
   onCancelClick() {
     this.formClose.emit();

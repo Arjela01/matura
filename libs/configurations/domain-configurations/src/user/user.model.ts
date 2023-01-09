@@ -29,3 +29,8 @@ export interface User {
 
   validTo?: Date;
 }
+
+export interface UserTableView {
+  data: User[];
+  total: number;
+}

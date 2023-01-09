@@ -1,6 +1,6 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="field">
-    <label for="displayName">displayName</label>
+    <label for="displayName">Emri</label>
     <input
       type="text"
       pInputText
@@ -11,32 +11,34 @@
       autofocus
       [ngClass]="{ 'ng-invalid ng-dirty': submitted && !user.displayName }" />
     <small class="p-error block" *ngIf="submitted && !user.displayName">
-      displayName is required.
+      Emri eshte i detyruar.
     </small>
   </div>
 
   <div class="field">
-    <label for="Name">administrationOffice</label>
-    <input
-      type="text"
-      pInputText
-      id="administrationOffice"
-      name="administrationOffice"
+    <label for="AdministrationOffice">DAR/ZA *</label>
+    <p-dropdown
+      id="AdministrationOffice"
+      [options]="administrationOffices"
+      optionValue="key"
+      optionLabel="value"
+      name="administrationOfficeId"
+      [autoDisplayFirst]="false"
       [(ngModel)]="user.administrationOffice"
-      required
-      autofocus
+      [showClear]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !user.administrationOffice
-      }" />
+      }">
+    </p-dropdown>
     <small
       class="p-error block"
       *ngIf="submitted && !user.administrationOffice">
-      administrationOffice is required.
+      DAR/ZA është fushë e kërkuar.
     </small>
   </div>
 
   <div class="field">
-    <label for="Name">universityDepartment</label>
+    <label for="Name">Departamenti Univeristar</label>
     <input
       type="text"
       pInputText
@@ -56,7 +58,7 @@
   </div>
 
   <div class="field">
-    <label for="Name">highSchool</label>
+    <label for="Name">Shkolla e Mesme</label>
     <input
       type="text"
       pInputText
@@ -72,45 +74,8 @@
       highSchool is required.
     </small>
   </div>
-
   <div class="field">
-    <label for="Name">lastName</label>
-    <input
-      type="text"
-      pInputText
-      id="lastName"
-      name="lastName"
-      [(ngModel)]="user.lastName"
-      required
-      autofocus
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.lastName
-      }" />
-    <small class="p-error block" *ngIf="submitted && !user.lastName">
-      lastName is required.
-    </small>
-  </div>
-
-  <div class="field">
-    <label for="Name">lastPasswordChange</label>
-    <input
-      type="text"
-      pInputText
-      id="lastPasswordChange"
-      name="lastPasswordChange"
-      [(ngModel)]="user.lastPasswordChange"
-      required
-      autofocus
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.lastPasswordChange
-      }" />
-    <small class="p-error block" *ngIf="submitted && !user.lastPasswordChange">
-      lastPasswordChange is required.
-    </small>
-  </div>
-
-  <div class="field">
-    <label for="Name">name</label>
+    <label for="Name">Emri</label>
     <input
       type="text"
       pInputText
@@ -124,6 +89,24 @@
       }" />
     <small class="p-error block" *ngIf="submitted && !user.name">
       name is required.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Name">Mbiemri</label>
+    <input
+      type="text"
+      pInputText
+      id="lastName"
+      name="lastName"
+      [(ngModel)]="user.lastName"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !user.lastName
+      }" />
+    <small class="p-error block" *ngIf="submitted && !user.lastName">
+      lastName is required.
     </small>
   </div>
 
@@ -146,7 +129,7 @@
   </div>
 
   <div class="field">
-    <label for="Name">studentId</label>
+    <label for="Name">Id e Studentit</label>
     <input
       type="text"
       pInputText
@@ -164,7 +147,7 @@
   </div>
 
   <div class="field">
-    <label for="Name">studyProgramId</label>
+    <label for="Name">Id e Programit te Studimit</label>
     <input
       type="text"
       pInputText
@@ -182,7 +165,7 @@
   </div>
 
   <div class="field">
-    <label for="Name">universityId</label>
+    <label for="Name">Id e Universitetit</label>
     <input
       type="text"
       pInputText
@@ -200,9 +183,10 @@
   </div>
 
   <div class="field">
-    <label for="Name">validFrom</label>
+    <label for="Name">Valid nga</label>
     <p-calendar
       [(ngModel)]="user.validFrom"
+      name="validFrom"
       [showTime]="true"
       [showSeconds]="true"
       inputId="time"
@@ -218,9 +202,10 @@
   </div>
 
   <div class="field">
-    <label for="Name">validTo</label>
+    <label for="Name">Valid deri ne</label>
     <p-calendar
       [(ngModel)]="user.validTo"
+      name="validTo"
       [showTime]="true"
       [showSeconds]="true"
       inputId="time"
@@ -240,14 +225,14 @@
       type="button"
       pButton
       icon="pi pi-times"
-      label="Cancel"
+      label="Anullo"
       class="p-button-text w-auto mr-2"
       (click)="onCancelClick()"></button>
     <button
       type="submit"
       pButton
       icon="pi pi-check"
-      label="Save"
+      label="Ruaj"
       class="p-button-text w-auto"></button>
   </div>
 </form>

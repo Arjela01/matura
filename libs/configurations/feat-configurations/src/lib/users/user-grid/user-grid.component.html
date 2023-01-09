@@ -7,7 +7,7 @@
   [paginator]="true"
   [rowsPerPageOptions]="[10, 20, 30]"
   [showCurrentPageReport]="true"
-  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+  currentPageReportTemplate="Duke treguar {first} deri {last} nga {totalRecords} rekorde"
   [rowHover]="true"
   dataKey="Id"
   [(selection)]="selectedUsers"
@@ -17,13 +17,13 @@
   <ng-template pTemplate="caption">
     <div
       class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <h5 class="m-0">Manage Users</h5>
+      <h5 class="m-0">Menaxho Perdoruesit</h5>
       <span class="block mt-2 md:mt-0 p-input-icon-left">
         <i class="pi pi-search"></i>
         <input
           pInputText
           type="text"
-          placeholder="Search..."
+          placeholder="Kerko..."
           class="w-full sm:w-auto" />
       </span>
     </div>
@@ -34,96 +34,109 @@
         <p-tableHeaderCheckbox (click)="onSelectAllClick()">
         </p-tableHeaderCheckbox>
       </th>
-      <th pSortableColumn="DisplayName">
-        DisplayName
-        <p-sortIcon field="DisplayName"></p-sortIcon>
+      <th pSortableColumn="displayName">
+        Emri
+        <p-sortIcon field="displayName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="DisplayName"
+          field="displayName"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="AdministrationOffice">
-        AdministrationOffice
-        <p-sortIcon field="AdministrationOffice"></p-sortIcon>
+      <th pSortableColumn="administrationOffice">
+        DAR/ZA
+        <p-sortIcon field="administrationOffice"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="AdministrationOffice"
+          field="administrationOffice"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="UniversityDepartment">
-        UniversityDepartment
-        <p-sortIcon field="UniversityDepartment"></p-sortIcon>
-      </th>
-      <th pSortableColumn="HighSchool">
-        HighSchool
-        <p-sortIcon field="HighSchool"></p-sortIcon>
+      <th pSortableColumn="universityDepartment">
+        Departamenti I Universitetit
+        <p-sortIcon field="universityDepartment"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="HighSchool"
+          field="universityDepartment"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="LastPasswordChange">
-        LastPasswordChange
-        <p-sortIcon field="LastPasswordChange"></p-sortIcon>
+      <th pSortableColumn="highSchool">
+        Shkolla e Mesme
+        <p-sortIcon field="highSchool"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="LastPasswordChange"
+          field="highSchool"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="Name">
-        Name
-        <p-sortIcon field="Name"></p-sortIcon>
+      <th pSortableColumn="name">
+        Emri
+        <p-sortIcon field="name"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="Name"
+          field="name"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="OverseerCode">
-        OverseerCode
-        <p-sortIcon field="OverseerCode"></p-sortIcon>
+      <th pSortableColumn="lastName">
+        Mbiemri
+        <p-sortIcon field="lastName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="lastName"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="lastPasswordChange">
+        Ndryshimi i fundit i Password
+        <p-sortIcon field="lastPasswordChange"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="lastPasswordChange"
+          display="menu"></p-columnFilter>
+      </th>
+
+      <th pSortableColumn="overseerCode">
+        overseerCode
+        <p-sortIcon field="overseerCode"></p-sortIcon>
         <p-columnFilter
           type="numeric"
-          field="OverseerCode"
+          field="overseerCode"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="StudentId">
-        StudentId
-        <p-sortIcon field="StudentId"></p-sortIcon>
+      <th pSortableColumn="studentId">
+        Id e Studentit
+        <p-sortIcon field="studentId"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="StudentId"
+          field="studentId"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="StudyProgramId">
-        StudyProgramId
-        <p-sortIcon field="StudyProgramId"></p-sortIcon>
+      <th pSortableColumn="studyProgramId">
+        Id e Programit te Studimit
+        <p-sortIcon field="studyProgramId"></p-sortIcon>
         <p-columnFilter
           type="numeric"
-          field="StudyProgramId"
+          field="studyProgramId"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="UniversityId">
-        UniversityId
-        <p-sortIcon field="UniversityId"></p-sortIcon>
+      <th pSortableColumn="universityId">
+        Id e Universitetit
+        <p-sortIcon field="universityId"></p-sortIcon>
         <p-columnFilter
           type="numeric"
-          field="UniversityId"
+          field="universityId"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="ValidFrom">
-        ValidFrom
-        <p-sortIcon field="ValidFrom"></p-sortIcon>
+      <th pSortableColumn="validFrom">
+        Valid nga
+        <p-sortIcon field="validFrom"></p-sortIcon>
         <p-columnFilter
-          type="datetime"
-          field="ValidFrom"
+          type="text"
+          field="validFrom"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="ValidTo">
-        ValidTo
-        <p-sortIcon field="ValidTo"></p-sortIcon>
+      <th pSortableColumn="validTo">
+        Valid deri ne
+        <p-sortIcon field="validTo"></p-sortIcon>
         <p-columnFilter
-          type="datetime"
-          field="ValidTo"
+          type="text"
+          field="validTo"
           display="menu"></p-columnFilter>
       </th>
       <th></th>
@@ -135,43 +148,43 @@
         <p-tableCheckbox [value]="user"></p-tableCheckbox>
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.DisplayName }}
+        {{ user.displayName }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.AdministrationOffice }}
+        {{ user.administrationOffice }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.UniversityDepartment }}
+        {{ user.universityDepartment }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.HighSchool }}
+        {{ user.highSchool }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.LastName }}
+        {{ user.name }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.LastPasswordChange }}
+        {{ user.lastName }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.Name }}
+        {{ user.lastPasswordChange }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.OverseerCode }}
+        {{ user.overseerCode }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.StudentId }}
+        {{ user.studentId }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.StudyProgramId }}
+        {{ user.studyProgramId }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.UniversityId }}
+        {{ user.universityId }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.ValidFrom }}
+        {{ user.validFrom }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.ValidTo }}
+        {{ user.validTo }}
       </td>
       <td>
         <div class="flex">
@@ -180,7 +193,7 @@
             pRipple
             icon="pi pi-pencil"
             class="p-button-rounded p-button-warning p-button-text mr-2"
-            pTooltip="Edit"
+            pTooltip="Ndrysho"
             tooltipPosition="bottom"
             (click)="onEditClick(user)"></button>
           <button
@@ -188,7 +201,7 @@
             pRipple
             icon="pi pi-trash"
             class="p-button-rounded p-button-danger p-button-text"
-            pTooltip="Delete"
+            pTooltip="Fshi"
             tooltipPosition="bottom"
             (click)="onDeleteClick(user)"></button>
         </div>
