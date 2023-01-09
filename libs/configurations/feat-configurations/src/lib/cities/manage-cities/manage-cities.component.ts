@@ -76,7 +76,7 @@ export class ManageCitiesComponent implements OnInit {
       message: 'Jeni i sigurt që doni të fshini qytetet e zgjedhura?',
       accept: () => {
         //this.cityStore.deleteSelectedCities();
-        this.toastService.showWarning('Cities deleted!');
+        this.toastService.showWarning('Qytetet u fshin!');
       },
     });
   }
@@ -156,7 +156,7 @@ export class ManageCitiesComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit të qytetit!'
+            'Ndodhi një problem gjatë ndryshimit të qytetit!'
           );
       });
   }
@@ -176,7 +176,7 @@ export class ManageCitiesComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit të qytetit!'
+            'Ndodhi një problem gjatë ndryshimit të qytetit!'
           );
       });
   }
