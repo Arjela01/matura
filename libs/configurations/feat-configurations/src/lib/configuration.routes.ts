@@ -11,15 +11,9 @@ export const CONFIGURATION_ROUTES: Route[] = [
   {
     path: 'profile-group',
     loadComponent: () =>
-      import('./profile-group/manage-profile-groups/manage-profile-groups.component').then(
-        m => m.ManageProfileGroupComponent
-      ),
-  },
-  {
-    path: 'profile-group',
-    loadComponent: () =>
-      import('./profile-group/manage-profile-groups/manage-profile-groups.component').then(
-        m => m.ManageProfileGroupComponent
+      import('./profile-group/manage-profile-groups/manage-profile-groups.component'
+        ).then(
+        m => m.ManageProfileGroupsComponent
       ),
   },
 ];

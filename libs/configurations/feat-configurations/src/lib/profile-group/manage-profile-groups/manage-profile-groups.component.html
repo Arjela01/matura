@@ -8,14 +8,14 @@
             <button
               pButton
               pRipple
-              label="New"
+              label="Shto"
               icon="pi pi-plus"
               class="p-button-success mr-2"
               (click)="onNewClick()"></button>
             <button
               pButton
               pRipple
-              label="Delete"
+              label="Fshi"
               icon="pi pi-trash"
               class="p-button-danger"
               [disabled]="selectedProfileGroups.length === 0"
@@ -26,7 +26,7 @@
           <button
             pButton
             pRipple
-            label="Export"
+            label="Eksporto"
             icon="pi pi-upload"
             class="p-button-help"></button>
         </div>
@@ -45,7 +45,7 @@
 <p-dialog
   [(visible)]="displayModal"
   [style]="{ width: '500px' }"
-  header="Detajet e Shkollës së Mesme"
+  header="Detajet e grupit të profilit"
   [modal]="true"
   [draggable]="false"
   [resizable]="false"
@@ -73,12 +73,12 @@
       label="No"
       class="p-button-text"
       (click)="cd.reject()"></button>
-    <buttons
+    <button
       type="button"
       pButton
       icon="pi pi-check"
       label="Yes"
       class="p-button-text"
-      (click)="cd.accept()"></buttons>
+      (click)="cd.accept()"></button>
   </ng-template>
 </p-confirmDialog>

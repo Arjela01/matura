@@ -32,14 +32,16 @@ import {ProfileGroupGridComponent} from "../profile-group-grid/profile-group-gri
     ConfirmDialogModule,
     ProfileGroupFormComponent,
     ProfileGroupGridComponent,
+    ManageProfileGroupsComponent,
     ToolbarModule,
+
   ],
   templateUrl: './manage-profile-groups.component.html',
   styleUrls: ['./manage-profile-groups.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageProfileGroupComponent implements OnInit {
+export class ManageProfileGroupsComponent implements OnInit {
   private profileGroups$$ = new BehaviorSubject<ProfileGroup[]>([]);
   profileGroups$ = this.profileGroups$$.asObservable();
   filters: LazyLoadEvent | null = null;
@@ -67,10 +69,10 @@ export class ManageProfileGroupComponent implements OnInit {
 
   onDeleteSelectedClick() {
     this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të fshini shkollat e zgjedhura?',
+      message: 'Jeni i sigurt që doni të fshini grupet e profileve të zgjedhura?',
       accept: () => {
-        //this.profileGroupStore.deleteSelectedHighSchools();
-        this.toastService.showWarning('High Schools deleted!');
+        //this.profileGroupStore.deleteSelectedProfilegroups();
+        this.toastService.showWarning('Grupet e profilit u fshinë');
       },
     });
   }
@@ -104,7 +106,7 @@ export class ManageProfileGroupComponent implements OnInit {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të fshini shkollën e zgjedhur?',
+          message: 'Jeni i sigurt që doni të fshini grupin e profilit të zgjedhur?',
           accept: () => {
             this.deleteProfileGroup(event.data as ProfileGroup);
           },
@@ -144,14 +146,14 @@ export class ManageProfileGroupComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Shkolla e mesme u shtua me sukses!');
+          this.toastService.showSuccess('Grupi i profilit u shtua me sukses!');
           this.displayModal = false;
           this.getProfileGroups(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së shkollës së mesme!'
+            'Ndodhi nje problem gjatë ndryshimit së grupit të profilit së mesme!'
           );
       });
   }
@@ -163,7 +165,7 @@ export class ManageProfileGroupComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
-            'Shkolla e mesme u ndryshua me sukses!'
+            'Profilei i grupit u ndryshua me sukses!'
           );
           this.displayModal = false;
           this.getProfileGroups(this.filters as LazyLoadEvent);
@@ -171,7 +173,7 @@ export class ManageProfileGroupComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së shkollës së mesme!'
+            'Ndodhi nje problem gjatë ndryshimit së profilit të grupit!'
           );
       });
   }
@@ -182,13 +184,13 @@ export class ManageProfileGroupComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showInfo('Shkolla e mesme u fshi me sukses!');
+          this.toastService.showInfo('Grupi i profilit u fshi me sukses!');
           this.getProfileGroups(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë fshirjes së shkollës së mesme!'
+            'Ndodhi nje problem gjatë fshirjes së grupit të profilit!'
           );
       });
   }

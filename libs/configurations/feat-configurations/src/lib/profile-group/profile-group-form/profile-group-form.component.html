@@ -1,6 +1,6 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="field">
-    <label for="Name">Name</label>
+    <label for="Name">Emri *</label>
     <input
       type="text"
       pInputText
@@ -11,12 +11,12 @@
       autofocus
       [ngClass]="{ 'ng-invalid ng-dirty': submitted && !profileGroup.Name }" />
     <small class="p-error block" *ngIf="submitted && !profileGroup.Name">
-      Name is required.
+      Emri është fushë e kërkuar.
     </small>
   </div>
 
   <div class="field">
-    <label for="Ordering">Ordering</label>
+    <label for="Ordering">Renditja *</label>
     <input
       type="text"
       pInputText
@@ -27,7 +27,7 @@
       autofocus
       [ngClass]="{ 'ng-invalid ng-dirty': submitted && !profileGroup.Ordering }" />
     <small class="p-error block" *ngIf="submitted && !profileGroup.Ordering">
-      Ordering is required.
+      Renditja është fushë e kërkuar.
     </small>
   </div>
 
