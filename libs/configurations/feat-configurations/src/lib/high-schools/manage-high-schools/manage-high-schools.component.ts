@@ -200,7 +200,7 @@ export class ManageHighSchoolsComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë fshirjes së shkollës së mesme!'
+            'Ndodhi një problem gjatë fshirjes së shkollës së mesme!'
           );
       });
   }

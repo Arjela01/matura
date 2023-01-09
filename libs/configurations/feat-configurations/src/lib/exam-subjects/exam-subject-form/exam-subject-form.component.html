@@ -1,0 +1,36 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+
+
+  <div class="field">
+    <label for="Name">Emri *</label>
+    <input
+      type="text"
+      pInputText
+      id="Name"
+      name="Name"
+      [(ngModel)]="examSubject.name"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examSubject.name }" />
+    <small class="p-error block" *ngIf="submitted && !examSubject.name">
+      Emri është fushë e kërkuar.
+    </small>
+  </div>
+
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      type="submit"
+      pButton
+      icon="pi pi-check"
+      label="Ruaj"
+      class="p-button-text w-auto"></button>
+  </div>
+</form>
