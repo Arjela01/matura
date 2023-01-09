@@ -1,65 +1,76 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { GlobalToastService } from '@msh/shared/util-shared';
-import { ConfirmationService } from 'primeng/api';
+
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
-import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
-import {ProfileGroup} from "@msh/configurations/domain-configurations";
+import {  ProfileGroupApiService} from '@msh/configurations/data-access-configurations';
+import { ProfileGroup} from '@msh/configurations/domain-configurations';
 
-import { ProfileGroupStore} from "@msh/configurations/data-access-configurations";
+import {
+  GlobalToastService,
+  GridEvent,
+  GRID_ACTIONS,
+} from '@msh/shared/util-shared';
+
+import { BehaviorSubject } from 'rxjs';
 import {ProfileGroupFormComponent} from "../profile-group-form/profile-group-form.component";
 import {ProfileGroupGridComponent} from "../profile-group-grid/profile-group-grid.component";
 
+@UntilDestroy()
 @Component({
   selector: 'msh-manage-profile-groups',
   standalone: true,
   imports: [
-  CommonModule,
     ButtonModule,
     CommonModule,
     DialogModule,
     ConfirmDialogModule,
-    ToolbarModule,
-    ProfileGroupGridComponent,
     ProfileGroupFormComponent,
+    ProfileGroupGridComponent,
+    ToolbarModule,
   ],
   templateUrl: './manage-profile-groups.component.html',
   styleUrls: ['./manage-profile-groups.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ProfileGroupStore, ConfirmationService],
+  providers: [ConfirmationService],
 })
 export class ManageProfileGroupComponent implements OnInit {
-  profileGroup$ = this.profileGroupStore.profileGroup$;
-  hasSelectedProfileGroup$ = this.profileGroupStore.hasSelectedProfileGroup$;
-  activeProfileGroup$ = this.profileGroupStore.activeProfileGroup$;
+  private profileGroups$$ = new BehaviorSubject<ProfileGroup[]>([]);
+  profileGroups$ = this.profileGroups$$.asObservable();
+  filters: LazyLoadEvent | null = null;
 
-  profileGroupDialog = false;
+  totalRecords = 0;
+  selectedProfileGroup: ProfileGroup | null = null;
+  selectedProfileGroups: ProfileGroup[] = [];
+  displayModal = false;
+
 
   constructor(
-    private readonly profileGroupStore: ProfileGroupStore,
     private readonly confirmationService: ConfirmationService,
-    private readonly toastService: GlobalToastService
-  ) {}
+    private readonly toastService: GlobalToastService,
+    private readonly profileGroupService: ProfileGroupApiService,
+  ) {
+  }
 
   ngOnInit(): void {
-    this.profileGroupStore.loadProfileGroups();
+    return
   }
 
   onNewClick() {
-    this.profileGroupStore.setActiveProfileGroup(null);
-    this.profileGroupDialog = true;
+    this.displayModal = true;
   }
 
   onDeleteSelectedClick() {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to delete selected entities?',
+      message: 'Jeni i sigurt që doni të fshini shkollat e zgjedhura?',
       accept: () => {
-        this.profileGroupStore.deleteSelectedProfileGroup();
-        this.toastService.showWarning('Profile Group deleted!');
+        //this.profileGroupStore.deleteSelectedHighSchools();
+        this.toastService.showWarning('High Schools deleted!');
       },
     });
   }
@@ -67,46 +78,119 @@ export class ManageProfileGroupComponent implements OnInit {
   onGridEvent(event: GridEvent<ProfileGroup | ProfileGroup[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
-        this.profileGroupStore.selectProfileGroup(event.data as ProfileGroup);
+        this.selectedProfileGroups = [
+          ...this.selectedProfileGroups,
+          event.data as ProfileGroup,
+        ];
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
-        this.profileGroupStore.unSelectProfileGroup(event.data as ProfileGroup);
+        this.selectedProfileGroups = this.selectedProfileGroups.filter(pf => {
+          pf.id !== (event.data as ProfileGroup).id;
+        });
         break;
       case GRID_ACTIONS.SELECT_MANY:
-        this.profileGroupStore.selectManyProfileGroup(event.data as ProfileGroup[]);
+        this.selectedProfileGroups = [
+          ...this.selectedProfileGroups,
+          ...(event.data as ProfileGroup[]),
+        ];
         break;
       case GRID_ACTIONS.UNSELECT_ALL:
-        this.profileGroupStore.unselectAllProfileGroup();
+        this.selectedProfileGroups = [];
         break;
       case GRID_ACTIONS.EDIT:
-        this.profileGroupStore.setActiveProfileGroup(event.data as ProfileGroup);
-        this.profileGroupDialog = true;
+        // eslint-disable-next-line max-len
+        this.selectedProfileGroup = Object.assign({}, event.data as ProfileGroup);
+        this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Are you sure that you want to delete this entity?',
+          message: 'Jeni i sigurt që doni të fshini shkollën e zgjedhur?',
           accept: () => {
-            this.profileGroupStore.deleteProfileGroup(event.data as ProfileGroup);
-            this.toastService.showWarning('Profile Group deleted!');
+            this.deleteProfileGroup(event.data as ProfileGroup);
           },
         });
         break;
     }
   }
 
-  onFormClose() {
-    this.profileGroupDialog = false;
+  onModalClose() {
+    this.displayModal = false;
   }
 
   onFormSave(profileGroup: ProfileGroup) {
-    if (profileGroup.Id) {
-      this.profileGroupStore.updateProfileGroup(profileGroup);
-      this.toastService.showSuccess('Profile Group Updated!');
+    if (profileGroup.id) {
+      this.updateProfileGroup(profileGroup);
     }
-    if (!profileGroup.Id) {
-      this.profileGroupStore.addProfileGroup(profileGroup);
-      this.toastService.showSuccess('Profile Group Added!');
+    if (!profileGroup.id) {
+      this.addProfileGroup(profileGroup);
     }
-    this.profileGroupDialog = false;
   }
+
+  getProfileGroups($event: LazyLoadEvent) {
+    this.filters = Object.assign({}, $event);
+
+    this.profileGroupService
+      .loadProfileGroups($event)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.profileGroups$$.next(response.data);
+        this.totalRecords = response.total;
+      });
+  }
+
+  addProfileGroup(profileGroup: ProfileGroup) {
+    this.profileGroupService
+      .save(profileGroup)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Shkolla e mesme u shtua me sukses!');
+          this.displayModal = false;
+          this.getProfileGroups(this.filters as LazyLoadEvent);
+        }
+
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi nje problem gjatë ndryshimit së shkollës së mesme!'
+          );
+      });
+  }
+
+  updateProfileGroup(profileGroup: ProfileGroup) {
+    this.profileGroupService
+      .update(profileGroup)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess(
+            'Shkolla e mesme u ndryshua me sukses!'
+          );
+          this.displayModal = false;
+          this.getProfileGroups(this.filters as LazyLoadEvent);
+        }
+
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi nje problem gjatë ndryshimit së shkollës së mesme!'
+          );
+      });
+  }
+
+  deleteProfileGroup(profileGroup: ProfileGroup) {
+    this.profileGroupService
+      .delete(profileGroup.id)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showInfo('Shkolla e mesme u fshi me sukses!');
+          this.getProfileGroups(this.filters as LazyLoadEvent);
+        }
+
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi nje problem gjatë fshirjes së shkollës së mesme!'
+          );
+      });
+  }
+
 }

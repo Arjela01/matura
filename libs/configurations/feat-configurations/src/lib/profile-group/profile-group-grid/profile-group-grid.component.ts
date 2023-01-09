@@ -8,9 +8,11 @@ import {
 } from '@angular/core';
 import { ProfileGroup} from '@msh/configurations/domain-configurations';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
+import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
+import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 
@@ -24,21 +26,25 @@ import { TooltipModule } from 'primeng/tooltip';
     InputTextModule,
     TooltipModule,
     CheckboxModule,
-
+    RippleModule,
   ],
   templateUrl: './profile-group-grid.component.html',
   styleUrls: ['./profile-group-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileGroupGridComponent {
-  @Input() profileGroup: ProfileGroup[] = [];
+  @Input() profileGroups: ProfileGroup[] = [];
+  @Input() totalRecords = 0;
+  @Input() loading = false;
 
   //Keep it local state because of Table Header checkbox not syncing
-  selectedProfileGroup: ProfileGroup[] = [];
+  selectedProfileGroups: ProfileGroup[] = [];
 
   @Output() gridEvent = new EventEmitter<
     GridEvent<ProfileGroup | ProfileGroup[]>
     >();
+
+  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
   onEditClick(profileGroup: ProfileGroup) {
     this.gridEvent.emit({
@@ -55,14 +61,14 @@ export class ProfileGroupGridComponent {
   }
 
   onSelectAllClick() {
-    if (this.selectedProfileGroup.length === 0) {
+    if (this.selectedProfileGroups.length === 0) {
       this.gridEvent.emit({
         action: GRID_ACTIONS.UNSELECT_ALL,
       } as GridEvent<ProfileGroup>);
     } else {
       this.gridEvent.emit({
         action: GRID_ACTIONS.SELECT_MANY,
-        data: this.selectedProfileGroup,
+        data: this.selectedProfileGroups,
       } as GridEvent<ProfileGroup[]>);
     }
   }
@@ -79,5 +85,9 @@ export class ProfileGroupGridComponent {
       action: GRID_ACTIONS.UNSELECT_ROW,
       data: data,
     } as GridEvent<ProfileGroup>);
+  }
+
+  loadRows($event: LazyLoadEvent) {
+    this.lazyLoadData.emit($event);
   }
 }
