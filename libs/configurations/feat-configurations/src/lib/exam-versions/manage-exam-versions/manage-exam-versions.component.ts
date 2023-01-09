@@ -1,16 +1,18 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {ButtonModule} from "primeng/button";
 import {DialogModule} from "primeng/dialog";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
-import {HighSchoolGridComponent} from "../../high-schools/high-school-grid/high-school-grid.component";
-import {HighSchoolFormComponent} from "../../high-schools/high-school-form/high-school-form.component";
 import {ToolbarModule} from "primeng/toolbar";
-import {ExamVersionStore} from "@msh/configurations/data-access-configurations";
 import {ConfirmationService, LazyLoadEvent} from "primeng/api";
 import {GlobalToastService, GRID_ACTIONS, GridEvent} from "@msh/shared/util-shared";
 import {ExamVersion} from "@msh/configurations/domain-configurations";
-import {HighSchoolApiService} from "../../../../../data-access-configurations/src/lib/high-school/high-school-api.service";
+
+import {BehaviorSubject} from "rxjs";
+import {untilDestroyed} from "@ngneat/until-destroy";
+import {ExamVersionApiService} from "@msh/configurations/data-access-configurations";
+import {ExamVersionFormComponent} from "../exam-version-form/exam-version-form.component";
+import {ExamVersionGridComponent} from "../exam-version-grid/exam-version-grid.component";
 
 @Component({
   selector: 'msh-manage-exam-versions',
@@ -20,43 +22,44 @@ import {HighSchoolApiService} from "../../../../../data-access-configurations/sr
     CommonModule,
     DialogModule,
     ConfirmDialogModule,
-    HighSchoolGridComponent,
-    HighSchoolFormComponent,
+    ExamVersionFormComponent,
+    ExamVersionGridComponent,
     ToolbarModule,
   ],
   templateUrl: './manage-exam-versions.component.html',
   styleUrls: ['./manage-exam-versions.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ExamVersionStore, ConfirmationService],
+  providers: [ConfirmationService],
 
 })
-export class ManageExamVersionsComponent implements OnInit {
-  examVersions$ = this.examVersionStore.examVersions$;
-  hasSelectedExamVersions$ = this.examVersionStore.hasSelectedExamVersions$;
-  activeExamVersions$ = this.examVersionStore.activeExamVersions$;
+export class ManageExamVersionsComponent {
+  examVersions$$ = new BehaviorSubject<ExamVersion[]>([]);
+  examVersions$ = this.examVersions$$.asObservable();
+  filters: LazyLoadEvent | null = null;
 
-  examVersionDialog = false;
+  totalRecords = 0;
+  selectedExamVersion: ExamVersion | null = null;
+  selectedExamVersions: ExamVersion[] = [];
+  displayModal = false;
 
   constructor(
-    private readonly examVersionStore: ExamVersionStore,
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly highSchoolApiService: HighSchoolApiService
-  ) {}
-
+    private readonly examVersionService: ExamVersionApiService,
+  ) {
+  }
 
 
   onNewClick() {
-    this.examVersionStore.setActiveExamVersion(null);
-    this.examVersionDialog = true;
+    this.displayModal = true;
   }
 
   onDeleteSelectedClick() {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to delete selected entities?',
+      message: 'Jeni i sigurt që doni të fshini versionet e provimeve të zgjedhura?',
       accept: () => {
-        this.examVersionStore.deleteSelectedExamVersions();
-        this.toastService.showWarning('Exam Versions deleted!');
+        // this.examVersionStore.deleteSelectedExamVersions();
+        this.toastService.showWarning('Versionet e provimeve u fshinë!');
       },
     });
   }
@@ -64,50 +67,118 @@ export class ManageExamVersionsComponent implements OnInit {
   onGridEvent(event: GridEvent<ExamVersion | ExamVersion[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
-        this.examVersionStore.selectExamVersion(event.data as ExamVersion);
+        this.selectedExamVersions = [
+          ...this.selectedExamVersions,
+          event.data as ExamVersion,
+        ];
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
-        this.examVersionStore.unSelectExamVersion(event.data as ExamVersion);
+        this.selectedExamVersions = this.selectedExamVersions.filter(hs => {
+          hs.id !== (event.data as ExamVersion).id;
+        });
         break;
       case GRID_ACTIONS.SELECT_MANY:
-        this.examVersionStore.selectManyExamVersions(event.data as ExamVersion[]);
+        this.selectedExamVersions = [
+          ...this.selectedExamVersions,
+          ...(event.data as ExamVersion[]),
+        ];
         break;
       case GRID_ACTIONS.UNSELECT_ALL:
-        this.examVersionStore.unselectAllExamVersions();
+        this.selectedExamVersions = [];
         break;
       case GRID_ACTIONS.EDIT:
-        this.examVersionStore.setActiveExamVersion(event.data as ExamVersion);
-        this.examVersionDialog = true;
+        this.selectedExamVersion = Object.assign({}, event.data as ExamVersion);
+        this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Are you sure that you want to delete this entity?',
+          message: 'Jeni i sigurt që doni të fshini versionin e provimit të zgjedhur?',
           accept: () => {
-            this.examVersionStore.deleteExamVersion(event.data as ExamVersion);
-            this.toastService.showWarning('Exam Version deleted!');
+            this.deleteExamVersion(event.data as ExamVersion);
           },
         });
         break;
     }
   }
 
-  onFormClose() {
-    this.examVersionDialog = false;
+  onModalClose() {
+    this.displayModal = false;
   }
 
   onFormSave(examVersion: ExamVersion) {
     if (examVersion.id) {
-      this.examVersionStore.updateExamVersion(examVersion);
-      this.toastService.showSuccess('Exam Version Updated!');
+      this.updateExamVersion(examVersion)
     }
     if (!examVersion.id) {
-      this.examVersionStore.addExamVersion(examVersion);
-      this.toastService.showSuccess('Exam Version Added!');
+      this.addExamVersion(examVersion)
     }
-    this.examVersionDialog = false;
+    this.displayModal = false;
   }
 
   getExamVersions($event: LazyLoadEvent) {
-    this.examVersionStore.loadExamVersions($event);
+    this.filters = Object.assign({}, $event);
+
+    this.examVersionService
+      .loadExamVersions($event)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.examVersions$$.next(response.data);
+        this.totalRecords = response.total;
+      });
+  }
+
+  addExamVersion(examVersion: ExamVersion) {
+    this.examVersionService
+      .save(examVersion)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Versioni i proimit u shtua me sukses!');
+          this.displayModal = false;
+          this.getExamVersions(this.filters as LazyLoadEvent);
+        }
+
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi nje problem gjatë ndryshimit së versionit të provimit!'
+          );
+      });
+  }
+
+  updateExamVersion(examVersion: ExamVersion) {
+    this.examVersionService
+      .update(examVersion)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess(
+            'Versioni i provimit u ndryshua me sukses!'
+          );
+          this.displayModal = false;
+          this.getExamVersions(this.filters as LazyLoadEvent);
+        }
+
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi nje problem gjatë ndryshimit së versionit të provimit!'
+          );
+      });
+  }
+
+  deleteExamVersion(examVersion: ExamVersion) {
+    this.examVersionService
+      .delete(examVersion.id)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showInfo('Versioni i provimit u fshi me sukses!');
+          this.getExamVersions(this.filters as LazyLoadEvent);
+        }
+
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi nje problem gjatë fshirjes së së versionit të provimit!'
+          );
+      });
   }
 }

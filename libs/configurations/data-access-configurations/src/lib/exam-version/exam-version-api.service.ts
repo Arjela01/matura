@@ -1,27 +1,53 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { HighSchool } from '@msh/configurations/domain-configurations';
-import { map, Observable } from 'rxjs';
-import { environment } from '@msh/shared/environments';
-import { LazyLoadEvent } from 'primeng/api';
+import {Injectable} from '@angular/core';
+import {catchError, map, Observable, shareReplay, throwError} from 'rxjs';
+import {LazyLoadEvent} from 'primeng/api';
+import {ExamVersion, ExamVersionTableView} from "@msh/configurations/domain-configurations";
+import {ApiResult} from "@msh/shared/data-access-shared";
+import {APIService} from "@msh/shared/util-shared";
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExamVersionApiService {
-  constructor(private http: HttpClient) {}
-
-  loadExamVersions(event: LazyLoadEvent): Observable<any> {
-    return this.http.post(`${environment.api_url}//TableData`, event)
+  constructor(private apiService: APIService) {
   }
 
-  loadDummyExamVersions(): Observable<HighSchool[]> {
-    return this.http
-      .get<{ data: HighSchool[] }>('assets/demo/data/high-schools.json')
-      .pipe(
-        map(response => {
-          return response.data as HighSchool[];
-        })
-      );
+  loadExamVersions(event: LazyLoadEvent): Observable<ExamVersionTableView> {
+    return this.apiService.post(`//TableData`, event)
+
   }
+
+
+  save(examVersion: ExamVersion): Observable<ApiResult<ExamVersion>> {
+    return this.apiService.post<ApiResult<ExamVersion>, ExamVersion>(
+      `/`,
+      examVersion
+    ).pipe(
+      map(data => data),
+      catchError((error) => throwError(error)),
+      shareReplay()
+    );
+  }
+
+  update(examVersion: ExamVersion): Observable<ApiResult<ExamVersion>> {
+    return this.apiService.put<ApiResult<ExamVersion>, ExamVersion>(
+      `/`,
+      examVersion
+    ).pipe(
+      map(data => data),
+      catchError((error) => throwError(error)),
+      shareReplay()
+    );
+  }
+
+  delete(examVersionId: number): Observable<ApiResult<unknown>> {
+    return this.apiService.delete<ApiResult<ExamVersion>>(
+      `//${examVersionId}`
+    ).pipe(
+      map(data => data),
+      catchError((error) => throwError(error)),
+      shareReplay()
+    );
+  }
+
 }

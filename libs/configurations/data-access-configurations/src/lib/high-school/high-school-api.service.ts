@@ -6,7 +6,7 @@ import {
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -15,14 +15,14 @@ export class HighSchoolApiService {
   constructor(private apiService: APIService) {}
 
   loadHighSchools(event: LazyLoadEvent): Observable<HighSchoolTableView> {
-    return this.apiService.post(`/HighSchool/TableData`, event);
+    return this.apiService.post(`/HighSchool/TableData`, event)
   }
 
   save(highSchool: HighSchool): Observable<ApiResult<HighSchool>> {
     return this.apiService.post<ApiResult<HighSchool>, HighSchool>(
       `/HighSchool`,
       highSchool
-    );
+    )
   }
 
   update(highSchool: HighSchool): Observable<ApiResult<HighSchool>> {

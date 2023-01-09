@@ -15,10 +15,10 @@
             <button
               pButton
               pRipple
-              label="Delete"
+              label="Fshi"
               icon="pi pi-trash"
               class="p-button-danger"
-              [disabled]="(hasSelectedExamVersions$ | async) === false"
+              [disabled]="selectedExamVersions.length === 0"
               (click)="onDeleteSelectedClick()"></button>
           </div>
         </div>
@@ -26,35 +26,36 @@
           <button
             pButton
             pRipple
-            label="Export"
+            label="Eksporto"
             icon="pi pi-upload"
             class="p-button-help"></button>
         </div>
       </p-toolbar>
 
-<!--      <msh-high-school-grid-->
-<!--        [highSchools]="(highSchools$ | async) || []"-->
-<!--        (gridEvent)="onGridEvent($event)"-->
-<!--        (lazyLoadData)="getHighSchools($event)">-->
-<!--      </msh-high-school-grid>-->
+      <msh-exam-version-grid
+        [examVersions]="(examVersions$ | async) || []"
+        (gridEvent)="onGridEvent($event)"
+        [totalRecords]="totalRecords"
+        (lazyLoadData)="getExamVersions($event)">
+      </msh-exam-version-grid>
     </div>
   </div>
 </div>
 
 <p-dialog
-  [(visible)]="examVersionDialog"
+  [(visible)]="displayModal"
   [style]="{ width: '500px' }"
-  header="High School Details"
+  header="Detajet e Versioneve të Provimeve"
   [modal]="true"
   [draggable]="false"
   [resizable]="false"
   class="p-fluid"
-  (onHide)="onFormClose()">
+  (onHide)="onModalClose()">
   <ng-template pTemplate="content">
-<!--    <msh-high-school-form-->
-<!--      [highSchoolDetails]="activeHighSchool$ | async"-->
-<!--      (formClose)="onFormClose()"-->
-<!--      (formSave)="onFormSave($event)"></msh-high-school-form>-->
+    <msh-exam-version-form
+      [examVersionDetails]="selectedExamVersion"
+      (formClose)="onModalClose()"
+      (formSave)="onFormSave($event)"></msh-exam-version-form>
   </ng-template>
 </p-dialog>
 
