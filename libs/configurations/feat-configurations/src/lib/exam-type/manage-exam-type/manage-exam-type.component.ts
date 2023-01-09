@@ -11,7 +11,7 @@ import {ExamTypeGridComponent} from "../exam-type-grid/exam-type-grid.component"
 import {ExamTypeFormComponent} from "../exam-type-form/exam-type-form.component";
 import {BehaviorSubject} from "rxjs";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {ExamTypeApiService} from "../../../../../data-access-configurations/src/lib/exam-type/exam-type-api.service";
+import {ExamTypeApiService} from "@msh/configurations/data-access-configurations";
 
 @UntilDestroy()
 @Component({

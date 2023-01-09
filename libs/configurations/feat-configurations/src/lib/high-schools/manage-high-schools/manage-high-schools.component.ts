@@ -82,8 +82,7 @@ export class ManageHighSchoolsComponent implements OnInit {
       message: 'Jeni i sigurt që doni të fshini shkollat e zgjedhura?',
       accept: () => {
         //this.highSchoolStore.deleteSelectedHighSchools();
-
-          this.toastService.showWarning('High Schools deleted!');
+          this.toastService.showWarning('Shkollat e zgjedhura u fshinë!');
       },
     });
   }
