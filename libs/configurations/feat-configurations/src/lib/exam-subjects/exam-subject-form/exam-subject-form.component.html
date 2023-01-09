@@ -1,6 +1,19 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
-
-
+  <div class="field">
+    <label for="Code">Kodi *</label>
+    <input
+      type="number"
+      pInputText
+      id="Code"
+      name="Code"
+      [(ngModel)]="examSubject.code"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examSubject.code }" />
+    <small class="p-error block" *ngIf="submitted && !examSubject.code">
+      Kodi është fushë e kërkuar.
+    </small>
+  </div>
   <div class="field">
     <label for="Name">Emri *</label>
     <input
@@ -15,6 +28,42 @@
     <small class="p-error block" *ngIf="submitted && !examSubject.name">
       Emri është fushë e kërkuar.
     </small>
+  </div>
+  <div class="field">
+    <label for="Name">Kredite *</label>
+    <input
+      type="number"
+      pInputText
+      id="Credits"
+      name="Credits"
+      [(ngModel)]="examSubject.credits"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examSubject.credits }" />
+    <small class="p-error block" *ngIf="submitted && !examSubject.credits">
+      Kreditet janë fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label class="mb-3">Është Opsional? *</label>
+    <div class="formgrid grid">
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="IsOptionalTrue"
+          name="IsOptional"
+          [value]="true"
+          [(ngModel)]="examSubject.isOptional"></p-radioButton>
+        <label for="IsOptionalTrue">Po</label>
+      </div>
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="IsOptionalFalse"
+          name="IsOptional"
+          [value]="false"
+          [(ngModel)]="examSubject.isOptional"></p-radioButton>
+        <label for="IsOptionalFalse">Jo</label>
+      </div>
+    </div>
   </div>
 
 

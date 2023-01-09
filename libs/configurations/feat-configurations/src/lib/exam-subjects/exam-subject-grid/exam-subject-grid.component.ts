@@ -6,7 +6,7 @@ import {InputTextModule} from "primeng/inputtext";
 import {TooltipModule} from "primeng/tooltip";
 import {CheckboxModule} from "primeng/checkbox";
 import {RippleModule} from "primeng/ripple";
-import {ExamSubject, HighSchool} from "@msh/configurations/domain-configurations";
+import {ExamSubject} from "@msh/configurations/domain-configurations";
 import {GRID_ACTIONS, GridEvent} from "@msh/shared/util-shared";
 import {LazyLoadEvent} from "primeng/api";
 
@@ -58,7 +58,7 @@ export class ExamSubjectGridComponent {
     if (this.selectedExamSubjects.length === 0) {
       this.gridEvent.emit({
         action: GRID_ACTIONS.UNSELECT_ALL,
-      } as GridEvent<HighSchool>);
+      } as GridEvent<ExamSubject>);
     } else {
       this.gridEvent.emit({
         action: GRID_ACTIONS.SELECT_MANY,

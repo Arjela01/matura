@@ -15,8 +15,7 @@ import {RadioButtonModule} from "primeng/radiobutton";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {ButtonModule} from "primeng/button";
 import {CheckboxModule} from "primeng/checkbox";
-import {ExamSubject, HighSchool} from "@msh/configurations/domain-configurations";
-import {DropdownModel} from "@msh/shared/data-access-shared";
+import {ExamSubject} from "@msh/configurations/domain-configurations";
 
 @Component({
   selector: 'msh-exam-subject-form',
@@ -51,8 +50,12 @@ export class ExamSubjectFormComponent {
   submitted = false;
 
   examSubject: ExamSubject = {
+    credits: 0,
+    isOptional: false,
     id: 0,
     name: '',
+    code: ''
+
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function

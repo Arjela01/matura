@@ -36,6 +36,14 @@
         <p-tableHeaderCheckbox (click)="onSelectAllClick()">
         </p-tableHeaderCheckbox>
       </th>
+      <th pSortableColumn="code">
+        Kodi
+        <p-sortIcon field="code"></p-sortIcon>
+        <p-columnFilter
+          type="numeric"
+          field="code"
+          display="menu"></p-columnFilter>
+      </th>
       <th pSortableColumn="name">
         Emri
         <p-sortIcon field="name"></p-sortIcon>
@@ -44,7 +52,22 @@
           field="name"
           display="menu"></p-columnFilter>
       </th>
-
+      <th pSortableColumn="credits">
+        Kredite
+        <p-sortIcon field="credits"></p-sortIcon>
+        <p-columnFilter
+          type="number"
+          field="credits"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="isOptional">
+        Është Opsional?
+        <p-sortIcon field="isOptional"></p-sortIcon>
+        <p-columnFilter
+          type="boolean"
+          field="isOptional"
+          display="menu"></p-columnFilter>
+      </th>
       <th></th>
     </tr>
   </ng-template>

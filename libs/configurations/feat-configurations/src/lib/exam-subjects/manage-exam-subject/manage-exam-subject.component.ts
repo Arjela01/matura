@@ -8,13 +8,14 @@ import {ExamSubjectFormComponent} from "../exam-subject-form/exam-subject-form.c
 import {ExamSubjectGridComponent} from "../exam-subject-grid/exam-subject-grid.component";
 import {ConfirmationService, LazyLoadEvent} from "primeng/api";
 import {BehaviorSubject} from "rxjs";
-import {ExamSubject, HighSchool} from "@msh/configurations/domain-configurations";
+import {ExamSubject} from "@msh/configurations/domain-configurations";
 import {GlobalToastService, GRID_ACTIONS, GridEvent} from "@msh/shared/util-shared";
 import {
   ExamSubjectApiService
 } from "@msh/configurations/data-access-configurations";
-import {untilDestroyed} from "@ngneat/until-destroy";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
+@UntilDestroy()
 @Component({
   selector: 'msh-manage-exam-subject',
   standalone: true,
@@ -34,7 +35,7 @@ import {untilDestroyed} from "@ngneat/until-destroy";
 })
 export class ManageExamSubjectComponent {
   private examSubjects$$ = new BehaviorSubject<ExamSubject[]>([])
-  private examSubjects$ = this.examSubjects$$.asObservable();
+  examSubjects$ = this.examSubjects$$.asObservable();
   filters: LazyLoadEvent | null = null;
 
   totalRecords = 0;

@@ -15,26 +15,26 @@ export class ExamSubjectApiService {
   constructor(private apiService: APIService) {}
 
   loadExamSubjects(event: LazyLoadEvent): Observable<ExamSubjectTableView> {
-    return this.apiService.post(`//TableData`, event);
+    return this.apiService.post(`/api/Subject/TableData`, event);
   }
 
   save(examSubject: ExamSubject): Observable<ApiResult<ExamSubject>> {
     return this.apiService.post<ApiResult<ExamSubject>, ExamSubject>(
-      `/HighSchool`,
+      `/api/Subject`,
       examSubject
     );
   }
 
   update(examSubject: ExamSubject): Observable<ApiResult<ExamSubject>> {
     return this.apiService.put<ApiResult<ExamSubject>, ExamSubject>(
-      `/HighSchool`,
+      `/api/Subject`,
       examSubject
     );
   }
 
   delete(examSubjectId: number): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<ExamSubject>>(
-      `/HighSchool/${examSubjectId}`
+      `/api/Subject/${examSubjectId}`
     );
   }
 }
