@@ -31,9 +31,7 @@
         </div>
       </p-toolbar>
 
-      <msh-user-grid
-        [users]="(users$ | async) || []"
-        (gridEvent)="onGridEvent($event)">
+      <msh-user-grid [users]="dummyUsers" (gridEvent)="onGridEvent($event)">
       </msh-user-grid>
     </div>
   </div>
@@ -52,6 +50,10 @@
     <msh-user-form
       [userDetails]="selectedUser"
       (formClose)="onFormClose()"
+      [highSchools]="highSchools"
+      [universities]="universities"
+      [studyPrograms]="studyPrograms"
+      [universityDepartments]="universityDepartments"
       [cities]="cities"
       [administrationOffices]="administrationOffices"
       (formSave)="onFormSave($event)"></msh-user-form>

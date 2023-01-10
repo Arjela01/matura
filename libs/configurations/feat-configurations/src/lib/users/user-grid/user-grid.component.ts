@@ -32,7 +32,6 @@ import { TooltipModule } from 'primeng/tooltip';
 export class UserGridComponent {
   @Input() users: User[] = [];
 
-  //Keep it local state because of Table Header checkbox not syncing
   selectedUsers: User[] = [];
 
   @Output() gridEvent = new EventEmitter<GridEvent<User | User[]>>();

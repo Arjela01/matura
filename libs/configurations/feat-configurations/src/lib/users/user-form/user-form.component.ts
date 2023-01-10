@@ -42,6 +42,10 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 export class UserFormComponent {
   @Input() cities: DropdownModel<number>[] = [];
   @Input() administrationOffices: DropdownModel<number>[] = [];
+  @Input() universityDepartments: DropdownModel<number>[] = [];
+  @Input() highSchools: DropdownModel<number>[] = [];
+  @Input() studyPrograms: DropdownModel<number>[] = [];
+  @Input() universities: DropdownModel<number>[] = [];
 
   @Input() set userDetails(details: User | null) {
     if (details) {
@@ -86,5 +90,6 @@ export class UserFormComponent {
     if (this.form.valid) {
       this.formSave.emit(this.user);
     }
+    //console.log(this.form.value);
   }
 }
