@@ -33,21 +33,23 @@
 
   <div class="field">
     <label for="academicYear">Viti Akademik *</label>
-    <input
-      type="number"
-      pInputText
+    <p-dropdown
       id="academicYear"
+      [options]="academicYears"
+      optionValue="key"
+      optionLabel="value"
       name="academicYear"
+      [autoDisplayFirst]="false"
       [(ngModel)]="studyProgram.academicYear"
-      required
-      autofocus
+      [showClear]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !studyProgram.academicYear
-      }" />
+      }">
+    </p-dropdown>
     <small
       class="p-error block"
       *ngIf="submitted && !studyProgram.academicYear">
-      Viti akademik është fushë e kërkuar.
+      Viti Akademik është fushë e kërkuar.
     </small>
   </div>
 
@@ -236,7 +238,7 @@
       [options]="universities"
       optionValue="key"
       optionLabel="value"
-      name="administrationOfficeId"
+      name="university"
       [autoDisplayFirst]="false"
       [(ngModel)]="studyProgram.university"
       [showClear]="true"

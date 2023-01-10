@@ -40,6 +40,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 export class StudyProgramFormComponent {
   @Input() universities: DropdownModel<number>[] = [];
   @Input() universityDepartaments: DropdownModel<number>[] = [];
+  @Input() academicYears: DropdownModel<number>[] = [];
 
   @Input() set studyProgramDetails(details: StudyProgram | null) {
     if (details) {
@@ -72,6 +73,7 @@ export class StudyProgramFormComponent {
     competitionCoefficient: 0,
     competitionMaxScore: 0,
     competitionMinScore: 0,
+    dropDownName: 'ssss',
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function

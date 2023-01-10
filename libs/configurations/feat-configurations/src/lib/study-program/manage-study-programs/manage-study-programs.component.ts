@@ -48,9 +48,7 @@ export class ManageStudyProgramsComponent implements OnInit {
 
   universities: DropdownModel<number>[] = [];
   universityDepartaments: DropdownModel<number>[] = [];
-  // cities: DropdownModel<number>[] = [];
-  // administrationOffices: DropdownModel<number>[] = [];
-  // regions: DropdownModel<number>[] = [];
+  academicYears: DropdownModel<number>[] = [];
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -62,6 +60,7 @@ export class ManageStudyProgramsComponent implements OnInit {
     console.log('Init');
     this.getUniversities();
     this.getUniversityDepartaments();
+    this.getAcademicYears();
   }
 
   onNewClick() {
@@ -202,11 +201,11 @@ export class ManageStudyProgramsComponent implements OnInit {
   getUniversities() {
     this.universities = [
       {
-        key: 1,
+        key: 375,
         value: 'Polis',
       },
       {
-        key: 2,
+        key: 295,
         value: 'Epoka',
       },
     ];
@@ -215,12 +214,25 @@ export class ManageStudyProgramsComponent implements OnInit {
   getUniversityDepartaments() {
     this.universityDepartaments = [
       {
-        key: 1,
+        key: 211,
         value: 'Polis',
       },
       {
-        key: 2,
+        key: 201,
         value: 'Epoka',
+      },
+    ];
+  }
+
+  getAcademicYears() {
+    this.academicYears = [
+      {
+        key: 450,
+        value: '2023',
+      },
+      {
+        key: 430,
+        value: '2022',
       },
     ];
   }

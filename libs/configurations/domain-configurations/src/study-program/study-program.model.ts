@@ -34,6 +34,8 @@ export interface StudyProgram {
   competitionCoefficient?: number;
 
   studentScores: number;
+
+  dropDownName: string;
 }
 
 export interface StudyProgramsTableView {
