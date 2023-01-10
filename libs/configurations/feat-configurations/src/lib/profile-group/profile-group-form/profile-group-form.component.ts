@@ -5,12 +5,11 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   Output,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { ProfileGroup} from '@msh/configurations/domain-configurations';
+import { ProfileGroup } from '@msh/configurations/domain-configurations';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
@@ -37,8 +36,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
   styleUrls: ['./profile-group-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfileGroupFormComponent implements OnChanges {
-
+export class ProfileGroupFormComponent {
   @Input() set profileGroupDetails(details: ProfileGroup | null) {
     if (details) {
       this.profileGroup = Object.assign({}, details);
@@ -48,8 +46,7 @@ export class ProfileGroupFormComponent implements OnChanges {
   @Output() formSave = new EventEmitter<ProfileGroup>();
   @Output() formClose = new EventEmitter<undefined>();
 
-  @ViewChild('form', {static: true}) form!: NgForm;
-
+  @ViewChild('form', { static: true }) form!: NgForm;
 
   submitted = false;
 
@@ -60,12 +57,7 @@ export class ProfileGroupFormComponent implements OnChanges {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private cd: ChangeDetectorRef) {
-  }
-
-  ngOnChanges(): void {
-    this.submitted.valueOf()
-  }
+  constructor(private cd: ChangeDetectorRef) {}
 
   onCancelClick() {
     this.formClose.emit();
@@ -77,5 +69,4 @@ export class ProfileGroupFormComponent implements OnChanges {
       this.formSave.emit(this.profileGroup);
     }
   }
-
 }

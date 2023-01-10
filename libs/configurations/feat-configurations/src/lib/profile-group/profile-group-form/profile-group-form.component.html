@@ -18,19 +18,20 @@
   <div class="field">
     <label for="Ordering">Renditja *</label>
     <input
-      type="text"
+      type="number"
       pInputText
       id="Ordering"
       name="Ordering"
       [(ngModel)]="profileGroup.Ordering"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !profileGroup.Ordering }" />
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !profileGroup.Ordering
+      }" />
     <small class="p-error block" *ngIf="submitted && !profileGroup.Ordering">
       Renditja është fushë e kërkuar.
     </small>
   </div>
-
 
   <div class="flex justify-content-end">
     <button
