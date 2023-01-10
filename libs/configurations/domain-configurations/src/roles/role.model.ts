@@ -3,3 +3,9 @@ export interface Role {
     code: string;
     name: string;
 }
+
+export interface RoleTableView {
+    data: Role[];
+    total: number;
+  }
+  

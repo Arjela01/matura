@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Role } from '@msh/configurations/domain-configurations';
+import { Role, RoleTableView } from '@msh/configurations/domain-configurations';
+import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
+import { LazyLoadEvent } from 'primeng/api';
 import { map, Observable } from 'rxjs';
 
 @Injectable({
@@ -9,14 +11,27 @@ import { map, Observable } from 'rxjs';
 })
 export class RolesApiService {
   constructor(private http: HttpClient, private apiService: APIService) { }
+  loadRoles(event: LazyLoadEvent): Observable<RoleTableView> {
+    return this.apiService.post(`/Role/TableData`, event);
+  }
 
-  loadDummyRoles(): Observable<Role[]> {
-    return this.http
-      .get<{ data: Role[] }>('assets/demo/data/roles.json')
-      .pipe(
-        map(response => {
-          return response.data as Role[];
-        })
-      );
+  save(role: Role): Observable<ApiResult<Role>> {
+    return this.apiService.post<ApiResult<Role>, Role>(
+      `/Role`,
+      role
+    );
+  }
+
+  update(role: Role): Observable<ApiResult<Role>> {
+    return this.apiService.put<ApiResult<Role>, Role>(
+      `/Role`,
+      role
+    );
+  }
+
+  delete(roleId: number): Observable<ApiResult<unknown>> {
+    return this.apiService.delete<ApiResult<Role>>(
+      `/Role/${roleId}`
+    );
   }
 }
