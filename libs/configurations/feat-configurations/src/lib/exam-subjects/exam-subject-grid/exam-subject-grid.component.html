@@ -63,10 +63,6 @@
       <th pSortableColumn="isOptional">
         Është Opsional?
         <p-sortIcon field="isOptional"></p-sortIcon>
-        <p-columnFilter
-          type="boolean"
-          field="isOptional"
-          display="menu"></p-columnFilter>
       </th>
       <th></th>
     </tr>
@@ -77,9 +73,17 @@
         <p-tableCheckbox [value]="examSubject"></p-tableCheckbox>
       </td>
       <td style="width: 14%; min-width: 10rem">
+        {{ examSubject.code }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
         {{ examSubject.name }}
       </td>
-
+      <td style="width: 14%; min-width: 10rem">
+        {{ examSubject.credits }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ examSubject.isOptional}}
+      </td>
       <td>
         <div class="flex">
           <button

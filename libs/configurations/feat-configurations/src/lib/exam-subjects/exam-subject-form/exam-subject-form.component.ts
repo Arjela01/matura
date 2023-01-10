@@ -50,12 +50,11 @@ export class ExamSubjectFormComponent {
   submitted = false;
 
   examSubject: ExamSubject = {
-    credits: 0,
-    isOptional: false,
     id: 0,
     name: '',
-    code: ''
-
+    code: '',
+    credits: 0,
+    isOptional: false,
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function

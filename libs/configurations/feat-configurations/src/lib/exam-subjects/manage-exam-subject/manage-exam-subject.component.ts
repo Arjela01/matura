@@ -101,7 +101,6 @@ export class ManageExamSubjectComponent {
         });
         break;
     }
-
   }
 
   onModalClose() {

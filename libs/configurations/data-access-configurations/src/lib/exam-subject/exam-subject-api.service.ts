@@ -1,18 +1,19 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
   ExamSubject,
   ExamSubjectTableView,
 } from '@msh/configurations/domain-configurations';
-import { ApiResult } from '@msh/shared/data-access-shared';
-import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
-import { Observable } from 'rxjs';
+import {ApiResult} from '@msh/shared/data-access-shared';
+import {APIService} from '@msh/shared/util-shared';
+import {LazyLoadEvent} from 'primeng/api';
+import {catchError, map, Observable, shareReplay, throwError} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExamSubjectApiService {
-  constructor(private apiService: APIService) {}
+  constructor(private apiService: APIService) {
+  }
 
   loadExamSubjects(event: LazyLoadEvent): Observable<ExamSubjectTableView> {
     return this.apiService.post(`/api/Subject/TableData`, event);
@@ -22,19 +23,31 @@ export class ExamSubjectApiService {
     return this.apiService.post<ApiResult<ExamSubject>, ExamSubject>(
       `/api/Subject`,
       examSubject
-    );
+    ).pipe(
+        map(data => data),
+        catchError((error) => throwError(error)),
+        shareReplay()
+      );
   }
 
   update(examSubject: ExamSubject): Observable<ApiResult<ExamSubject>> {
     return this.apiService.put<ApiResult<ExamSubject>, ExamSubject>(
       `/api/Subject`,
       examSubject
+    ).pipe(
+      map(data => data),
+      catchError((error) => throwError(error)),
+      shareReplay()
     );
   }
 
   delete(examSubjectId: number): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<ExamSubject>>(
       `/api/Subject/${examSubjectId}`
+    ).pipe(
+      map(data => data),
+      catchError((error) => throwError(error)),
+      shareReplay()
     );
   }
 }
