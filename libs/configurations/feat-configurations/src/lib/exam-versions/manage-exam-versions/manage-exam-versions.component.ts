@@ -140,7 +140,7 @@ export class ManageExamVersionsComponent {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së versionit të provimit!'
+            'Ndodhi një problem gjatë ndryshimit së versionit të provimit!'
           );
       });
   }
@@ -160,7 +160,7 @@ export class ManageExamVersionsComponent {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së versionit të provimit!'
+            'Ndodhi një problem gjatë ndryshimit së versionit të provimit!'
           );
       });
   }
@@ -177,7 +177,7 @@ export class ManageExamVersionsComponent {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë fshirjes së së versionit të provimit!'
+            'Ndodhi një problem gjatë fshirjes së versionit të provimit!'
           );
       });
   }

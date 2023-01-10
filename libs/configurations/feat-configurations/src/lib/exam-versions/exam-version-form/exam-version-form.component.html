@@ -15,6 +15,36 @@
       Emri është fushë e kërkuar.
     </small>
   </div>
+  <div class="field">
+    <label for="NumberOfQuestions">Numri i pyetjeve *</label>
+    <input
+      type="number"
+      pInputText
+      id="NumberOfQuestions"
+      name="NumberOfQuestions"
+      [(ngModel)]="examVersion.numberOfQuestions"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examVersion.numberOfQuestions }" />
+    <small class="p-error block" *ngIf="submitted && !examVersion.numberOfQuestions">
+      Numri i pyetjeve është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="Variant">Varianti *</label>
+    <input
+      type="text"
+      pInputText
+      id="Variant"
+      name="Variant"
+      [(ngModel)]="examVersion.variant"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examVersion.variant }" />
+    <small class="p-error block" *ngIf="submitted && !examVersion.variant">
+      Varianti është fushë e kërkuar.
+    </small>
+  </div>
   <div class="flex justify-content-end">
     <button
       type="button"
