@@ -61,7 +61,7 @@
 </p-dialog>
 
 <p-confirmDialog
-  #cd
+  #pg
   header="Confirm"
   icon="pi pi-exclamation-triangle"
   [style]="{ width: '450px' }">
@@ -72,13 +72,13 @@
       icon="pi pi-times"
       label="No"
       class="p-button-text"
-      (click)="cd.reject()"></button>
+      (click)="pg.reject()"></button>
     <button
       type="button"
       pButton
       icon="pi pi-check"
       label="Yes"
       class="p-button-text"
-      (click)="cd.accept()"></button>
+      (click)="pg.accept()"></button>
   </ng-template>
 </p-confirmDialog>
