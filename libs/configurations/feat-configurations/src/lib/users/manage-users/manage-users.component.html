@@ -31,7 +31,10 @@
         </div>
       </p-toolbar>
 
-      <msh-user-grid [users]="dummyUsers" (gridEvent)="onGridEvent($event)">
+      <msh-user-grid
+        [users]="(users$ | async) || []"
+        (gridEvent)="onGridEvent($event)"
+        (lazyLoadData)="getUsers()">
       </msh-user-grid>
     </div>
   </div>

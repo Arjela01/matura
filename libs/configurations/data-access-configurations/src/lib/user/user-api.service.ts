@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User, UserTableView } from '@msh/configurations/domain-configurations';
+import { User } from '@msh/configurations/domain-configurations';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,16 +11,16 @@ import { Observable, map } from 'rxjs';
 export class UserApiService {
   constructor(private http: HttpClient, private apiService: APIService) {}
 
-  loadDummyHighSchools(): Observable<User[]> {
-    return this.http.get<{ data: User[] }>('./users.json').pipe(
-      map(response => {
-        return response.data as User[];
-      })
-    );
-  }
+  // loadDummyHighSchools(): Observable<User[]> {
+  //   return this.http.get<{ data: User[] }>('./users.json').pipe(
+  //     map(response => {
+  //       return response.data as User[];
+  //     })
+  //   );
+  // }
 
-  loadUsers(event: LazyLoadEvent): Observable<UserTableView> {
-    return this.apiService.post('', event);
+  loadUsers(): Observable<ApiResult<User[]>> {
+    return this.apiService.get('/UserManagement');
   }
 
   save(user: User): Observable<ApiResult<User>> {

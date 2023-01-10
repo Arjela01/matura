@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { User } from '@msh/configurations/domain-configurations';
 import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
+import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -35,6 +36,8 @@ export class UserGridComponent {
   selectedUsers: User[] = [];
 
   @Output() gridEvent = new EventEmitter<GridEvent<User | User[]>>();
+
+  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
   onEditClick(user: User) {
     this.gridEvent.emit({
@@ -75,5 +78,9 @@ export class UserGridComponent {
       action: GRID_ACTIONS.UNSELECT_ROW,
       data: data,
     } as GridEvent<User>);
+  }
+
+  loadRows($event: LazyLoadEvent) {
+    this.lazyLoadData.emit($event);
   }
 }
