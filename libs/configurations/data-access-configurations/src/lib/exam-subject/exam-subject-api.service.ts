@@ -41,7 +41,7 @@ export class ExamSubjectApiService {
     );
   }
 
-  delete(examSubjectId: number): Observable<ApiResult<unknown>> {
+  delete(examSubjectId: string): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<ExamSubject>>(
       `/api/Subject/${examSubjectId}`
     ).pipe(

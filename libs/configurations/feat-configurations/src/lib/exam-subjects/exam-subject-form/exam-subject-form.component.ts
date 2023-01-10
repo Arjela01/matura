@@ -50,7 +50,7 @@ export class ExamSubjectFormComponent {
   submitted = false;
 
   examSubject: ExamSubject = {
-    id: 0,
+    id: '',
     name: '',
     code: '',
     credits: 0,
