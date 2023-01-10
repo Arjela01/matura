@@ -1,21 +1,21 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
-  <div class="field">
+  <!-- <div class="field">
     <label for="displayName">Emri</label>
     <input
       type="text"
       pInputText
       id="displayName"
       name="displayName"
-      [(ngModel)]="user.displayName"
+      [(ngModel)]="user1.displayName"
       required
       autofocus
       [ngClass]="{ 'ng-invalid ng-dirty': submitted && !user.displayName }" />
     <small class="p-error block" *ngIf="submitted && !user.displayName">
       Emri eshte i detyruar.
     </small>
-  </div>
+  </div> -->
 
-  <div class="field">
+  <!-- <div class="field">
     <label for="AdministrationOffice">DAR/ZA *</label>
     <p-dropdown
       id="AdministrationOffice"
@@ -35,8 +35,9 @@
       *ngIf="submitted && !user.administrationOffice">
       DAR/ZA është fushë e kërkuar.
     </small>
-  </div>
-  <div class="field">
+  </div> -->
+
+  <!-- <div class="field">
     <label for="universityDepartment">Departamenti Univeristar</label>
     <p-dropdown
       id="universityDepartment"
@@ -56,8 +57,9 @@
       *ngIf="submitted && !user.universityDepartment">
       Departamenti Univeristar është fushë e kërkuar.
     </small>
-  </div>
-  <div class="field">
+  </div> -->
+
+  <!-- <div class="field">
     <label for="highSchool">Shkolla e Mesme</label>
     <p-dropdown
       id="highSchool"
@@ -77,10 +79,28 @@
       *ngIf="submitted && !user.universityDepartment">
       Departamenti Univeristar është fushë e kërkuar.
     </small>
+  </div> -->
+
+  <div class="field">
+    <label for="fileName">File Name *</label>
+    <input
+      type="text"
+      pInputText
+      id="fileName"
+      name="fileName"
+      [(ngModel)]="user.fileName"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !user.fileName
+      }" />
+    <small class="p-error block" *ngIf="submitted && !user.fileName">
+      fileName is required.
+    </small>
   </div>
 
   <div class="field">
-    <label for="Name">Emri</label>
+    <label for="name">Emri *</label>
     <input
       type="text"
       pInputText
@@ -98,7 +118,7 @@
   </div>
 
   <div class="field">
-    <label for="Name">Mbiemri</label>
+    <label for="lastName">Mbiemri *</label>
     <input
       type="text"
       pInputText
@@ -116,7 +136,7 @@
   </div>
 
   <div class="field">
-    <label for="Name">overseerCode</label>
+    <label for="Name">overseerCode *</label>
     <input
       type="text"
       pInputText
@@ -141,18 +161,14 @@
       id="studentId"
       name="studentId"
       [(ngModel)]="user.studentId"
-      required
-      autofocus
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.studentId
-      }" />
-    <small class="p-error block" *ngIf="submitted && !user.studentId">
+      autofocus />
+    <!-- <small class="p-error block" *ngIf="submitted && !user.studentId">
       studentId is required.
-    </small>
+    </small> -->
   </div>
 
   <div class="field">
-    <label for="highSchool">Id e Programit te Studimit</label>
+    <label for="studyProgramId">Id e Programit te Studimit</label>
     <p-dropdown
       id="studyProgramId"
       [options]="studyPrograms"
@@ -161,20 +177,26 @@
       name="studyProgramId"
       [autoDisplayFirst]="false"
       [(ngModel)]="user.studyProgramId"
-      [showClear]="true"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.studyProgramId
-      }">
+      [showClear]="true">
     </p-dropdown>
-    <small
-      class="p-error block"
-      *ngIf="submitted && !user.universityDepartment">
-      Departamenti Univeristar është fushë e kërkuar.
-    </small>
   </div>
 
   <div class="field">
-    <label for="highSchool">Id e Universitetit</label>
+    <label for="nodes">Menu Nodes *</label>
+    <p-dropdown
+      id="nodes"
+      [options]="studyPrograms"
+      optionValue="key"
+      optionLabel="value"
+      name="nodes"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="user.nodes"
+      [showClear]="true">
+    </p-dropdown>
+  </div>
+
+  <div class="field">
+    <label for="universityId">Id e Universitetit</label>
     <p-dropdown
       id="universityId"
       [options]="universities"
@@ -183,16 +205,8 @@
       name="universityId"
       [autoDisplayFirst]="false"
       [(ngModel)]="user.universityId"
-      [showClear]="true"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.universityId
-      }">
+      [showClear]="true">
     </p-dropdown>
-    <small
-      class="p-error block"
-      *ngIf="submitted && !user.universityDepartment">
-      Departamenti Univeristar është fushë e kërkuar.
-    </small>
   </div>
 
   <div class="field">
@@ -202,16 +216,9 @@
       name="validFrom"
       [showTime]="true"
       [showSeconds]="true"
-      inputId="time"
-      [required]="true"
+      inputId="validFrom"
       autofocus
-      [showIcon]="true"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.validFrom
-      }"></p-calendar>
-    <small class="p-error block" *ngIf="submitted && !user.validFrom">
-      validFrom is required.
-    </small>
+      [showIcon]="true"></p-calendar>
   </div>
 
   <div class="field">
@@ -221,15 +228,44 @@
       name="validTo"
       [showTime]="true"
       [showSeconds]="true"
-      inputId="time"
+      inputId="validTo"
       [showIcon]="true"
-      [required]="true"
+      autofocus></p-calendar>
+  </div>
+
+  <div class="field">
+    <label for="userName">Username *</label>
+    <input
+      type="text"
+      pInputText
+      id="userName"
+      name="userName"
+      [(ngModel)]="user.userName"
+      required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.validTo
-      }"></p-calendar>
-    <small class="p-error block" *ngIf="submitted && !user.validTo">
-      validTo is required.
+        'ng-invalid ng-dirty': submitted && !user.userName
+      }" />
+    <small class="p-error block" *ngIf="submitted && !user.userName">
+      username is required.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="password">password *</label>
+    <input
+      type="password"
+      pInputText
+      id="password"
+      name="password"
+      [(ngModel)]="user.password"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !user.password
+      }" />
+    <small class="p-error block" *ngIf="submitted && !user.password">
+      password is required.
     </small>
   </div>
 

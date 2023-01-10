@@ -11,24 +11,16 @@ import { Observable } from 'rxjs';
 export class UserApiService {
   constructor(private http: HttpClient, private apiService: APIService) {}
 
-  // loadDummyHighSchools(): Observable<User[]> {
-  //   return this.http.get<{ data: User[] }>('./users.json').pipe(
-  //     map(response => {
-  //       return response.data as User[];
-  //     })
-  //   );
-  // }
-
   loadUsers(): Observable<ApiResult<User[]>> {
     return this.apiService.get('/UserManagement');
   }
 
   save(user: User): Observable<ApiResult<User>> {
-    return this.apiService.post<ApiResult<User>, User>('', user);
+    return this.apiService.post<ApiResult<User>, User>('/UserManagement', user);
   }
 
   update(user: User): Observable<ApiResult<User>> {
-    return this.apiService.put<ApiResult<User>, User>('', user);
+    return this.apiService.put<ApiResult<User>, User>('/UserManagement', user);
   }
 
   delete(userId: number): Observable<ApiResult<unknown>> {
