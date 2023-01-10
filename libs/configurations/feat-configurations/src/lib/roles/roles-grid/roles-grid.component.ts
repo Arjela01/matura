@@ -46,7 +46,6 @@ export class RolesGridComponent {
   }
 
   onSelectAllClick() {
-    console.log('cccc')
     if (this.selectedRoles.length === 0) {
       this.gridEvent.emit({
         action: GRID_ACTIONS.UNSELECT_ALL,
@@ -60,7 +59,6 @@ export class RolesGridComponent {
   }
 
   onRowSelect({ data }: { data: Role }) {
-    console.log(data)
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
       data: data,
@@ -68,13 +66,10 @@ export class RolesGridComponent {
   }
 
   onRowUnselect({ data }: { data: Role }) {
-    console.log('b')
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
       data: data,
     } as GridEvent<Role>);
   }
-  ngOnInit() {
-    console.log(this.selectedRoles.length)
-  }
+
 }
