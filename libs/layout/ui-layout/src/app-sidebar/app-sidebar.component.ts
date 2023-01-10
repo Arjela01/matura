@@ -134,6 +134,11 @@ export class AppSidebarComponent implements OnInit {
             icon: 'pi pi-fw pi-bookmark',
             routerLink: ['configurations', 'high-school'],
           },
+          {
+            label: 'Regions',
+            icon: 'pi pi-fw pi-bookmark',
+            routerLink: ['configurations', 'region'],
+          },
         ],
       },
     ];
