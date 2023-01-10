@@ -97,7 +97,6 @@ export class ManageExamTypeComponent {
           message: 'Jeni i sigurt që doni të fshini tipin e provimit të zgjedhur?',
           accept: () => {
             this.deleteExamType(event.data as ExamType);
-            this.toastService.showWarning('Tipi i provimit u fshi!');
           },
         });
         break;

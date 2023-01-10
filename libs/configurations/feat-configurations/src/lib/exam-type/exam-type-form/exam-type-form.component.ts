@@ -40,7 +40,7 @@ export class ExamTypeFormComponent {
   submitted = false;
 
   examType: ExamType = {
-    id: 0,
+    id: '',
     name: '',
   };
 

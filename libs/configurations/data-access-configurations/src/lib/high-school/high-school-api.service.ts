@@ -6,7 +6,7 @@ import {
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
-import { Observable } from 'rxjs';
+import {catchError, map, Observable, shareReplay, throwError} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +22,10 @@ export class HighSchoolApiService {
     return this.apiService.post<ApiResult<HighSchool>, HighSchool>(
       `/HighSchool`,
       highSchool
+    ).pipe(
+      map(data => data),
+      catchError((error) => throwError(error)),
+      shareReplay()
     );
   }
 
@@ -29,12 +33,20 @@ export class HighSchoolApiService {
     return this.apiService.put<ApiResult<HighSchool>, HighSchool>(
       `/HighSchool`,
       highSchool
+    ).pipe(
+      map(data => data),
+      catchError((error) => throwError(error)),
+      shareReplay()
     );
   }
 
   delete(highSchoolId: number): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<HighSchool>>(
       `/HighSchool/${highSchoolId}`
+    ).pipe(
+      map(data => data),
+      catchError((error) => throwError(error)),
+      shareReplay()
     );
   }
 }
