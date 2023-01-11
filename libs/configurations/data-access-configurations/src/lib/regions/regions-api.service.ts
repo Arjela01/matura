@@ -32,7 +32,7 @@ export class RegionsApiService {
     );
   }
 
-  delete(regionId: number): Observable<ApiResult<unknown>> {
+  delete(regionId: string): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<Region>>(
       `/Region/${regionId}`
     );

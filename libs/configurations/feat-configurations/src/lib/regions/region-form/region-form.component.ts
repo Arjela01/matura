@@ -53,7 +53,7 @@ export class RegionFormComponent {
   submitted = false;
 
   region: Region = {
-    id: 0,
+    id: '',
     name: '',
   };
 
@@ -69,6 +69,7 @@ export class RegionFormComponent {
     this.submitted = true;
     if (this.form.valid) {
       this.formSave.emit(this.region);
+      console.log(this.region)
     }
   }
 

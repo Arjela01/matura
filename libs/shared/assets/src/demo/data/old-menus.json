@@ -1,0 +1,1492 @@
+{
+  "data": [
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 281,
+      "Parent": null,
+      "Text": "A1",
+      "Url": "/Protected/DataEntry/A1Form/A1List.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1256,
+      "Parent": null,
+      "Text": "A1Z",
+      "Url": "/Protected/DataEntry/A1Form/A1List.aspx?IsA1Z=1"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 902,
+      "Parent": null,
+      "Text": "A1Z_Vjeshta",
+      "Url": "/Protected/DataEntry/A1Form/A1List.aspx?IsA1Z=1"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1102,
+      "Parent": null,
+      "Text": "Aplikim Vertetim Nota",
+      "Url": "/Protected/DataEntry/AplikimVertetim/Default.aspx?status=1"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1104,
+      "Parent": 1102,
+      "Text": "Aprovuar",
+      "Url": "/Protected/DataEntry/AplikimVertetim/Default.aspx?status=2"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 321,
+      "Parent": null,
+      "Text": "Auditim",
+      "Url": "/Protected/AuditTrail/AuditTablesDE/AuditDetails.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1543,
+      "Parent": 142,
+      "Text": "Dashboard",
+      "Url": "/DynamicDashboard/DynamicDashboard/Index"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 622,
+      "Parent": 621,
+      "Text": "Fituesit",
+      "Url": "/Protected/DataEntry/FacultySubscription/Winners.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 462,
+      "Parent": 461,
+      "Text": "Formulari i Korrigjimit të Pasaktësive",
+      "Url": "/Students/StudentSearch/IALApplication"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 684,
+      "Parent": 585,
+      "Text": "Jo-Fituesit sipas profilit",
+      "Url": "/Protected/Reports/NonWinnersProfile.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 681,
+      "Parent": 585,
+      "Text": "Jo-Fituesit sipas rrethit",
+      "Url": "/Protected/Reports/NonWinnersRegion.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 661,
+      "Parent": 102,
+      "Text": "Kerkesat per lendet me zgjedhje",
+      "Url": "/Protected/Reports/SubjectsWithChoiceNational.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 241,
+      "Parent": 23,
+      "Text": "Maturantë",
+      "Url": "/Students/StudentsList/StudentsList"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1562,
+      "Parent": 142,
+      "Text": "Mbart lende provimi nder vite",
+      "Url": "/Subjects/Subjects/Index"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 586,
+      "Parent": null,
+      "Text": "Mbetësit",
+      "Url": "/Protected/DataEntry/NotPassingStudents/NotPassingStudentsGrID.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 482,
+      "Parent": 46,
+      "Text": "Miratimi i Konkurseve",
+      "Url": "/Protected/DataEntry/StudyProgramApprovement/SPApproveGrID.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 666,
+      "Parent": 661,
+      "Text": "Nivel Profili",
+      "Url": "/Protected/Reports/SubjectsWithChoiceProfile.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 664,
+      "Parent": 661,
+      "Text": "Nivel Qyteti",
+      "Url": "/Protected/Reports/SubjectsWithChoiceCity.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 663,
+      "Parent": 661,
+      "Text": "Nivel Rrethi",
+      "Url": "/Protected/Reports/SubjectsWithChoiceRegion.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 665,
+      "Parent": 661,
+      "Text": "Nivel shkolle",
+      "Url": "/Protected/Reports/SubjectsWithChoiceSchool.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1103,
+      "Parent": 1102,
+      "Text": "Pending",
+      "Url": "/Protected/DataEntry/AplikimVertetim/Default.aspx?status=1"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 85,
+      "Parent": 46,
+      "Text": "Pikë Konkursi",
+      "Url": "/Protected/DataEntry/CompetitionScore/"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 7,
+      "Parent": 144,
+      "Text": "Proçese",
+      "Url": "/Protected/DataEntry/AppProcesses/"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 61,
+      "Parent": 23,
+      "Text": "Qender Provimi",
+      "Url": "/Protected/DataEntry/ExamEnvironments/ExamEnvironmentsGrID.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 562,
+      "Parent": 142,
+      "Text": "Qytete/Fshatra",
+      "Url": "/Protected/DataEntry/CityVillage/CityVillageGrID.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1122,
+      "Parent": null,
+      "Text": "Raporte Extra",
+      "Url": ""
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1124,
+      "Parent": 1122,
+      "Text": "Raporti A",
+      "Url": "/Protected/Extra/RaportA.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1105,
+      "Parent": 1102,
+      "Text": "Refuzuar",
+      "Url": "/Protected/DataEntry/AplikimVertetim/Default.aspx?status=3"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1192,
+      "Parent": 46,
+      "Text": "Regjistrim / Çregjistrim",
+      "Url": "/Protected/DataEntry/CompetitionRegistration/"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 842,
+      "Parent": null,
+      "Text": "Regjistrohu ne fakultet",
+      "Url": "/StudentRegistration.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 481,
+      "Parent": 46,
+      "Text": "Rezultatet e Konkursit",
+      "Url": "/Protected/DataEntry/CompetitionResults/StudentCompetitionResult.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1322,
+      "Parent": 143,
+      "Text": "Rezultatet e provimeve",
+      "Url": "/Evaluations/ExamResults/ExamResults"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 44,
+      "Parent": 41,
+      "Text": "Role",
+      "Url": "/Admin/Roles"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 587,
+      "Parent": 586,
+      "Text": "Studentët Mbetës",
+      "Url": "/Students/FailingStudents/ListOfFailingStudents"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 641,
+      "Parent": 621,
+      "Text": "Te Regjistruar",
+      "Url": "/Protected/DataEntry/FacultySubscription/Registered.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 2,
+      "Parent": 142,
+      "Text": "Vite Shkollore",
+      "Url": "/Protected/DataEntry/AcademicYears/"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 41,
+      "Parent": null,
+      "Text": "Administrim Sigurie",
+      "Url": "/Protected/DataEntry/Roles/Role.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 483,
+      "Parent": 23,
+      "Text": "Data Provimi",
+      "Url": "/Protected/DataEntry/ExamDates/"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 5,
+      "Parent": 144,
+      "Text": "Faza",
+      "Url": "/Protected/DataEntry/Phases/"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 441,
+      "Parent": null,
+      "Text": "Fjalekalim Studenti",
+      "Url": "/Protected/Administration/RegenerateStudentPassword.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 541,
+      "Parent": null,
+      "Text": "Gjeneralitete të Studentit",
+      "Url": "/Protected/DataEntry/Students/StudentGeneralitiesDisplay.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 261,
+      "Parent": 143,
+      "Text": "Hapi 1: HIDh Teste",
+      "Url": "/Evaluations/Folder/Index"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 862,
+      "Parent": null,
+      "Text": "Konfirmim i A1/A1Z",
+      "Url": "/Protected/DataEntry/Students/StudentsToConfirm.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 463,
+      "Parent": 461,
+      "Text": "Miratimi i Korrigjimeve",
+      "Url": "/Protected/DataEntry/CorrectionOfInaccuracies/InaccuraciesApproveGrID.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1142,
+      "Parent": 1122,
+      "Text": "Raporti B",
+      "Url": "/Protected/Extra/RaportB.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 82,
+      "Parent": 142,
+      "Text": "Universitete",
+      "Url": "/Protected/DataEntry/Universities/"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 201,
+      "Parent": 23,
+      "Text": "Caktime ne Qender Provimi",
+      "Url": "/Protected/DataEntry/EnvironmentsStudents/EnvironmentsStudentsGrID.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 84,
+      "Parent": 142,
+      "Text": "Fakultete",
+      "Url": "/Protected/DataEntry/Faculties/"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 6,
+      "Parent": 144,
+      "Text": "Formularë",
+      "Url": "/Protected/DataEntry/AppForms/"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 142,
+      "Parent": null,
+      "Text": "Konfigurime",
+      "Url": "/Protected/DataEntry/AcademicYears/"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1162,
+      "Parent": 1122,
+      "Text": "Raporti C",
+      "Url": "/Protected/Extra/RaportiC.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1183,
+      "Parent": 1122,
+      "Text": "C-Regjistrimi",
+      "Url": "/Protected/Extra/CRegjistrimi.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1222,
+      "Parent": 143,
+      "Text": "Hapi 3: HIDh pike me alternative",
+      "Url": "/Protected/DataEntry/ExamScores_provisory/ImportExamWithAlternatives.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 843,
+      "Parent": 586,
+      "Text": "Kalon në Vjeshtë",
+      "Url": "/Protected/DataEntry/NotPassingStudents/NotPassingFallUpdate.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 262,
+      "Parent": 143,
+      "Text": "Korigjim Barkodi",
+      "Url": "/Protected/DataEntry/ThesisSecretation/BarcodeCorrection.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 761,
+      "Parent": 41,
+      "Text": "Mbikqyresit sipas DarZa",
+      "Url": "/Protected/DataEntry/ActivateOverseer/ActivateOverseer.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 150,
+      "Parent": 142,
+      "Text": "Programe Studimi",
+      "Url": "/Protected/DataEntry/StudyProgram/"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 102,
+      "Parent": null,
+      "Text": "Raporte",
+      "Url": "/Protected/Reports/SMDiploma.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 3,
+      "Parent": 144,
+      "Text": "Raunde",
+      "Url": "/Protected/DataEntry/Rounds/"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1182,
+      "Parent": 1122,
+      "Text": "Regjistrimi",
+      "Url": "/Protected/Extra/Regjistrimi.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 221,
+      "Parent": 23,
+      "Text": "Zbras Qender Provimi",
+      "Url": "/Protected/DataEntry/EnvironmentsStudents/EmptyEnvironmentGrID.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 147,
+      "Parent": 143,
+      "Text": "Korigjim Pikë Provimi",
+      "Url": "/Protected/DataEntry/ExamScores/InvalIDExamScoresGrID.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1023,
+      "Parent": 142,
+      "Text": "Programe Studimi për A3",
+      "Url": "/Protected/DataEntry/StudyProgram_A3/"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1184,
+      "Parent": 1122,
+      "Text": "Raport-Regjistrimi",
+      "Url": "/Protected/Extra/RaportRegjistrim1.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 802,
+      "Parent": 102,
+      "Text": "(Dosje)Barkode - Pike per lendet me zgjedhje",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=BarcodesScoreForElectiveSubjects&isVjeshta=false"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1068,
+      "Parent": 102,
+      "Text": "(Dosje)Barkode - Pike per Lendet me Zgjedhje Vjeshta",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=BarcodesScoreForElectiveSubjects&isVjeshta=true"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 803,
+      "Parent": 102,
+      "Text": "(Dosje)Barkode - Pike per provimet D1, D2, D3",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=GetBarcodesScoreForD1D2"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1522,
+      "Parent": 102,
+      "Text": "Barkode-Pike Provimi per Lendet me Zgjedhje",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=BarcodeScoreZ1Vjeshta&isVjeshta=false"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1505,
+      "Parent": 102,
+      "Text": "Barkode-Pike Provimi per Lendet me Zgjedhje Vjeshta",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=BarcodeScoreZ1Vjeshta&isVjeshta=true"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1523,
+      "Parent": 102,
+      "Text": "Barkode-Pike Provimi per Provimet D1, D2, D3",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=GetBarcodesScoreForD1D2D3"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1305,
+      "Parent": 102,
+      "Text": "Diploma te printuara",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=GetPrintedDiplom"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 148,
+      "Parent": 102,
+      "Text": "Diplomat",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=Diplomas"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1206,
+      "Parent": 102,
+      "Text": "Diplomat e Printuara",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=GetDiplomaIsPrinted"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1302,
+      "Parent": 102,
+      "Text": "Fituesi i fundit",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=LastWinner"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1301,
+      "Parent": 102,
+      "Text": "Fituesit Afishim",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=DisplayWinners"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1304,
+      "Parent": 102,
+      "Text": "Fituesit Konfirmim",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=WinnersConfirmation"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 584,
+      "Parent": 102,
+      "Text": "Fituesit pas cdo faze",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=WinnersAfterEachPhase"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1300,
+      "Parent": 102,
+      "Text": "Fituesit per Web",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=WinnersWeb"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 804,
+      "Parent": 102,
+      "Text": "Fituesit Sipas DAR/ZA-ve",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=WinnersByDARZA"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 805,
+      "Parent": 102,
+      "Text": "Fituesit sipas Fakulteteve",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=WinnersByFaculty"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 806,
+      "Parent": 102,
+      "Text": "Fituesit sipas Shkollava",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=WinnersBySchool"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1303,
+      "Parent": 102,
+      "Text": "Fituesit Total",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=WinnersTotal"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 104,
+      "Parent": 143,
+      "Text": "Hapi 2.1: HIDh Pikë Provimi",
+      "Url": "/Protected/DataEntry/ExamScores/SelectExamThesis.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1263,
+      "Parent": 143,
+      "Text": "Hapi 2.2: HIDh Pike Provimi",
+      "Url": "/Protected/DataEntry/ExamScores_provisory/SelectExamThesis.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 585,
+      "Parent": 102,
+      "Text": "Jo-Fituesit pas cdo faze",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=ListOfNonWinnersAfterEachPhase"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1503,
+      "Parent": 142,
+      "Text": "Kategorite e formularit A1Z",
+      "Url": "/Categories/Category/A1ZCategories"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 301,
+      "Parent": 102,
+      "Text": "Kerkesat e maturanteve sipas preferencave",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=StudentPreferences"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 103,
+      "Parent": 102,
+      "Text": "Koeficientet e Provimeve me Zgjedhje",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=CoefficientsForElectiveExams"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 151,
+      "Parent": 102,
+      "Text": "Koefiçientet e Shkollave",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=CoefficientsSchools"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 149,
+      "Parent": 102,
+      "Text": "Koefiçientet e Shkollave për D1null",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=ProfileCoefficients"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 122,
+      "Parent": 142,
+      "Text": "Lende Provimi",
+      "Url": "/Protected/DataEntry/Subjects/"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1308,
+      "Parent": 142,
+      "Text": "Lendet D1 D2",
+      "Url": "/Protected/DataEntry/SubjectsProfilesD1D2/Default.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1410,
+      "Parent": 1409,
+      "Text": "LIDh Sekretimet",
+      "Url": "/Protected/DataEntry/ListSekretimi/ListSekretimi.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 361,
+      "Parent": 102,
+      "Text": "Lista Barkode-Pike",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=PointsForBarcode"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 421,
+      "Parent": 23,
+      "Text": "Lista e sekretimit per D1",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=SecretionD1&isVjeshta=false"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 964,
+      "Parent": 23,
+      "Text": "Lista e sekretimit per D1 Vjeshta",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=SecretionD1&isVjeshta=true"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1197,
+      "Parent": 23,
+      "Text": "Lista e Sekretimit per D2",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=SecretionD2&isVjeshta=false"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 965,
+      "Parent": 23,
+      "Text": "Lista e sekretimit per D2 Vjeshta",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=D2List&isVjeshta=true"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1405,
+      "Parent": 23,
+      "Text": "Lista e Sekretimit per D3",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=SecretionD3&isVjeshta=false"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1406,
+      "Parent": 23,
+      "Text": "Lista e Sekretimit per D3 Vjeshta",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=SecretionD3&isVjeshta=true"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1198,
+      "Parent": 23,
+      "Text": "Lista e Sekretimit per Z1Z2",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=SecretionZ1Z2&isVjeshta=false"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1002,
+      "Parent": 23,
+      "Text": "Lista e Sekretimit per Z1Z2 Vjeshta",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=SecretionZ1Z2&isVjeshta=true"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 401,
+      "Parent": 23,
+      "Text": "Lista emerore per D1",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=D1List&isVjeshta=false"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 962,
+      "Parent": 23,
+      "Text": "Lista emerore per D1 Vjeshta",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=D1List&isVjeshta=true"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1195,
+      "Parent": 23,
+      "Text": "Lista Emerore per D2 ",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=D2List&isVjeshta=false"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 963,
+      "Parent": 23,
+      "Text": "Lista emerore per D2 Vjeshta",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=D2List&isVjeshta=true"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1403,
+      "Parent": 23,
+      "Text": "Lista emerore per D3",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=D3List&isVjeshta=false"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1404,
+      "Parent": 23,
+      "Text": "Lista emerore per D3 Vjeshta",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=D3List&isVjeshta=true"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1196,
+      "Parent": 23,
+      "Text": "Lista Emerore per Z1Z2",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=Z1Z2List&isVjeshta=false"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 982,
+      "Parent": 23,
+      "Text": "Lista Emerore per Z1Z2 Vjeshta",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=Z1Z2List&isVjeshta=true"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 341,
+      "Parent": 102,
+      "Text": "Lista Perdorues/Fjalekalime sipas DarZa",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=StudentIDAndPassword"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 144,
+      "Parent": null,
+      "Text": "Menaxho Proçeset",
+      "Url": "/Protected/DataEntry/AdminPanel/"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 602,
+      "Parent": 586,
+      "Text": "Ndryshimi i Mbetësve",
+      "Url": "/Users/Users/ListOfFailingStudents"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 662,
+      "Parent": 661,
+      "Text": "Nivel Kombetar",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=MultipleChoiceQuestionsNational"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 381,
+      "Parent": 102,
+      "Text": "Niveli i veshtiresise se tezes",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=ExamDifficulty"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 583,
+      "Parent": 102,
+      "Text": "Nota mesatare per fituesit",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=AverageGradeWinners"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1083,
+      "Parent": 102,
+      "Text": "Numri Fituesve sipas DarZa",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=WinnersCountDarza"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1085,
+      "Parent": 102,
+      "Text": "Numri Fituesve sipas Fakulteteve",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=WinnersCountFaculty"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1084,
+      "Parent": 102,
+      "Text": "Numri Fituesve sipas Shkollave",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=WinnersCountSchool"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1464,
+      "Parent": 142,
+      "Text": "Parametrat e Sistemit",
+      "Url": "/SystemParameters/Parameters/SystemParameters"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1042,
+      "Parent": 41,
+      "Text": "Përcaktimi i Menuve",
+      "Url": "/Admin/Menu"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1407,
+      "Parent": null,
+      "Text": "Përjashtim kushti Diplome",
+      "Url": "/Students/PrintDiploma/Index"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1411,
+      "Parent": 1409,
+      "Text": "Perllogarit Notat",
+      "Url": "/Protected/DataEntry/CalculateGrades/CalculateGrades.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1401,
+      "Parent": 102,
+      "Text": "Preferenca Fakultete",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=PreferencesFaculty"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1402,
+      "Parent": 102,
+      "Text": "Preferenca Programe",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=PreferencesProgram"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1400,
+      "Parent": 102,
+      "Text": "Preferenca Universitete",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=PreferencesUniversity"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1409,
+      "Parent": null,
+      "Text": "Proceset",
+      "Url": "/Proceset"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 701,
+      "Parent": 102,
+      "Text": "Raport Dosje",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=Folder"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1209,
+      "Parent": 102,
+      "Text": "Raport i pjesemarresve A2",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=A2Report"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1210,
+      "Parent": 102,
+      "Text": "Raport i pjesemarresve A3",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=A3Report"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1199,
+      "Parent": 586,
+      "Text": "Raport për studentët mbetës",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=FailingStudents"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 561,
+      "Parent": 102,
+      "Text": "Raport Sipas Gjinise dhe Urbanizimit",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=GenderAndUrbanization"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1200,
+      "Parent": 143,
+      "Text": "Raporti i Pikëve për D1",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=D1Score&isVjeshta=false"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1062,
+      "Parent": 143,
+      "Text": "Raporti i Pikëve për D1 Vjeshta",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=D1Score&isVjeshta=true"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1201,
+      "Parent": 143,
+      "Text": "Raporti i Pikëve për D2",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=D2Score&isVjeshta=false"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1063,
+      "Parent": 143,
+      "Text": "Raporti i Pikëve për D2 Vjeshta",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=D2Score&isVjeshta=true"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1202,
+      "Parent": 143,
+      "Text": "Raporti i Pikëve për Z1Z2",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=Z1Z2Score&isVjeshta=false"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1064,
+      "Parent": 143,
+      "Text": "Raporti i Pikëve për Z1Z2 Vjeshta",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=Z1Z2Score&isVjeshta=true"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1203,
+      "Parent": 143,
+      "Text": "Raporti i Pikëve sipas lëndëve për D1",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=ScoreBySubjectsD1&isVjeshta=false"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1065,
+      "Parent": 143,
+      "Text": "Raporti i Pikëve sipas lëndëve për D1 Vjeshta",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=ScoreBySubjectsD1&isVjeshta=true"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1204,
+      "Parent": 143,
+      "Text": "Raporti i Pikëve sipas lëndëve për D2",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=ScoreBySubjectsD2&isVjeshta=false"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1066,
+      "Parent": 143,
+      "Text": "Raporti i Pikëve sipas lëndëve për D2 Vjeshta",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=ScoreBySubjectsD2&isVjeshta=true"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1205,
+      "Parent": 143,
+      "Text": "Raporti i Pikëve sipas lëndëve për Z1Z2",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=ScoreBySubjectsZ1Z2&isVjeshta=false"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1067,
+      "Parent": 143,
+      "Text": "Raporti i Pikëve sipas lëndëve për Z1Z2 Vjeshta",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=ScoreBySubjectsZ1Z2&isVjeshta=true"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1408,
+      "Parent": 1409,
+      "Text": "Rikrijimi i Tabeles T",
+      "Url": "/Protected/DataEntry/Recreation-T-Table/Recreation_T_Table.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1082,
+      "Parent": 102,
+      "Text": "Sasia Testeve per Mjedis/Darza",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=ExamsNumberByDARZA"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 721,
+      "Parent": 143,
+      "Text": "Shiko Pikë Provimi",
+      "Url": "/Protected/DataEntry/ExamScores/ExamScoresShowGrID.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 582,
+      "Parent": 102,
+      "Text": "Shperndarja e fituesve neper preferenca",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=WinnersAccordingPreferences"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 581,
+      "Parent": 102,
+      "Text": "Shperndarja e mesatares se pikeve",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=AverageScore"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 942,
+      "Parent": 143,
+      "Text": "Teste te paIDentifikuara",
+      "Url": "/Protected/Reports/TestsNotMatched.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1342,
+      "Parent": null,
+      "Text": "Testim WebService",
+      "Url": "/WebService/WebService/WebServiceMethods"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1086,
+      "Parent": 102,
+      "Text": "Vertetim Notash",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=GradesVerification"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1022,
+      "Parent": 144,
+      "Text": "Aktivizo Butonat Kryesorë",
+      "Url": "/Protected/DataEntry/SiteConf/"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1382,
+      "Parent": null,
+      "Text": "Aplikim Kopje Testi",
+      "Url": "/Evaluations/ExamCopy/ListOfApplications"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 146,
+      "Parent": 142,
+      "Text": "Koeficientet e Provimeve me Zgjedhje",
+      "Url": "/Protected/DataEntry/SubjectCoefficients/SubjectCoefficient.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 101,
+      "Parent": 143,
+      "Text": "Shkallëzim Notash",
+      "Url": "/ResultgradeMapping/ResultGrade/ResultGrade"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 601,
+      "Parent": 23,
+      "Text": "Skualifikim",
+      "Url": "/Protected/Administration/StudentStatusesList.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 741,
+      "Parent": 143,
+      "Text": "Teste me Pikë të Pa-Përcaktuara",
+      "Url": "/Protected/DataEntry/NoScoreForThesis/NSFTSGrID.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 21,
+      "Parent": 142,
+      "Text": "Dar/Za",
+      "Url": "/Protected/DataEntry/DarZas/DarZa.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 121,
+      "Parent": 143,
+      "Text": "Notat Mesatare",
+      "Url": "/Protected/DataEntry/AverageGrades/"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 882,
+      "Parent": 143,
+      "Text": "Notat Mesatare R2",
+      "Url": "/Protected/DataEntry/AverageGrades/Default_2013.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 23,
+      "Parent": null,
+      "Text": "Organizo Provimet",
+      "Url": "/Protected/DataEntry/Students/DefaultNew.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 83,
+      "Parent": 143,
+      "Text": "Sekretimi",
+      "Url": "/Protected/DataEntry/Anonymity/"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 145,
+      "Parent": 142,
+      "Text": "Shkollat e Mesme",
+      "Url": "/Protected/DataEntry/HighSchools/"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 742,
+      "Parent": 142,
+      "Text": "Tipet e Provimeve",
+      "Url": "/Subjects/SubjectType/SubjectType"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 783,
+      "Parent": 143,
+      "Text": "Notat Vjetore",
+      "Url": "/Protected/DataEntry/AnualGrades/StudentSelectionGrID.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 141,
+      "Parent": 142,
+      "Text": "Profilet e Shkollave",
+      "Url": "/Protected/DataEntry/Profiles"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 161,
+      "Parent": 142,
+      "Text": "Koeficientet e Shkollave",
+      "Url": "/Protected/DataEntry/ProfileCoefficients/ProfileCoefficient.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1193,
+      "Parent": 142,
+      "Text": "Profile / Lende",
+      "Url": "/Protected/DataEntry/SubjectsProfiles/Default.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 863,
+      "Parent": 143,
+      "Text": "Raporti i Notave sipas Llojit",
+      "Url": "/Protected/ReportLayoutPage.aspx?reportName=GradesByType"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 521,
+      "Parent": 102,
+      "Text": "Tabela e transparences",
+      "Url": "/Protected/Reports/ScoresByExamInit.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1194,
+      "Parent": 142,
+      "Text": "Lëndë te konfliktuara",
+      "Url": "/Protected/DataEntry/SubjectsConflicts/Default.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 42,
+      "Parent": 41,
+      "Text": "Përdorues",
+      "Url": "/Admin/Users/Index"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1262,
+      "Parent": 102,
+      "Text": "Shkarko Raport- Dosje-Barkode per Operator",
+      "Url": "/Students/DataExport/Export?dataset=BarcodeScoreReport"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 46,
+      "Parent": null,
+      "Text": "Konkurse",
+      "Url": "/Protected/DataEntry/Competitions/CompetitionsGrID.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 22,
+      "Parent": 142,
+      "Text": "Teste Provimi",
+      "Url": "/Protected/DataEntry/ExamThesis/ExamThesisGrID.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 24,
+      "Parent": 142,
+      "Text": "Pyetje Testi",
+      "Url": "/Protected/DataEntry/ThesisQuestions/QuestionsGrID.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 501,
+      "Parent": 142,
+      "Text": "Pike Minimale",
+      "Url": "/Protected/DataEntry/MinimalScores"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 822,
+      "Parent": 143,
+      "Text": "Nota Provim për Student (provizore)",
+      "Url": "/Protected/DataEntry/GradeDE/StudentSearch.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 143,
+      "Parent": null,
+      "Text": "Vlerësimi",
+      "Url": "/Protected/DataEntry/ThesisSecretation/ThesisSecretationGrID.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 1264,
+      "Parent": 102,
+      "Text": "Shkarko Raport- Dosje-Barkode-Pike per Operator",
+      "Url": "/Students/DataExport/Export?dataset=BarcodeScoreActionReport"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 4,
+      "Parent": 142,
+      "Text": "Vlera Konfiguruese",
+      "Url": "/Protected/DataEntry/ConfigurationSettings/"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 181,
+      "Parent": null,
+      "Text": "Aplikimi IAL",
+      "Url": "/Students/StudentSearch/IALApplication"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 461,
+      "Parent": null,
+      "Text": "Korrigjimi i Pasaktësive",
+      "Url": "/Protected/DataEntry/CorrectionOfInaccuracies/StudentSelectionGrID.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 621,
+      "Parent": null,
+      "Text": "Fakultete",
+      "Url": "/Protected/DataEntry/FacultySubscription/Winners.aspx"
+    },
+    {
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "ID": 623,
+      "Parent": null,
+      "Text": "Notat e Provimeve",
+      "Url": "/Protected/DataEntry/GradeResults/Results.aspx"
+    }
+  ]
+}

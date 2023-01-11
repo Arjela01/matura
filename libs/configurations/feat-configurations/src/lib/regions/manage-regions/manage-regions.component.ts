@@ -65,10 +65,10 @@ export class ManageRegionsComponent {
 
   onDeleteSelectedClick() {
     this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të fshini shkollat e zgjedhura?',
+      message: 'Jeni i sigurt që doni të fshini rajonet e zgjedhura?',
       accept: () => {
-        //this.highSchoolStore.deleteSelectedHighSchools();
-        this.toastService.showWarning('High Schools deleted!');
+        //this.regionStore.deleteSelectedRegions();
+        this.toastService.showWarning('Rajonet u fshin!');
       },
     });
   }
@@ -133,6 +133,7 @@ export class ManageRegionsComponent {
         this.regions$$.next(response.data);
         this.totalRecords = response.total;
       });
+
   }
 
   addRegion(region: Region) {
@@ -151,6 +152,7 @@ export class ManageRegionsComponent {
             'Ndodhi nje problem gjatë ndryshimit të rajonit!'
           );
       });
+    console.log(region)
   }
 
   updateRegion(region: Region) {
