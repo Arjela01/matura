@@ -24,8 +24,8 @@ export class MenuApiService {
       menus
         .filter(item => item.parentId === id)
         .map(menu => ({ ...menu, children: nest(menus, menu.id) }))
-        .sort((a, b) => (a.displayOrder > b.displayOrder ? 1 : -1));
-    // .filter(menu => menu.isVisible);
+        .sort((a, b) => (a.displayOrder > b.displayOrder ? 1 : -1))
+        .filter(menu => menu.isVisible);
     return nest(menus);
   }
 }
