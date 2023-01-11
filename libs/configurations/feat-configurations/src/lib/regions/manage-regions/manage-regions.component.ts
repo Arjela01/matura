@@ -152,7 +152,6 @@ export class ManageRegionsComponent {
             'Ndodhi nje problem gjatë ndryshimit të rajonit!'
           );
       });
-    console.log(region)
   }
 
   updateRegion(region: Region) {

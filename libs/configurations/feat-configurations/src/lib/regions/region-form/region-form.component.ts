@@ -69,7 +69,6 @@ export class RegionFormComponent {
     this.submitted = true;
     if (this.form.valid) {
       this.formSave.emit(this.region);
-      console.log(this.region)
     }
   }
 
