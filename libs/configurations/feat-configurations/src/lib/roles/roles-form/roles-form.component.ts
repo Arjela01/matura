@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -32,7 +33,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RolesFormComponent {
-  @Input() set roleDetails(details: Role | null) {
+
+  @Input() set rolesDetails(details: Role | null) {
     if (details) {
       this.role = Object.assign({}, details);
     }
@@ -42,13 +44,21 @@ export class RolesFormComponent {
 
   @ViewChild('form', { static: true }) form!: NgForm;
 
+
   submitted = false;
 
   role: Role = {
     id: 0,
     code: '',
-    name: ''
+    name: '',
   };
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  constructor(private cd: ChangeDetectorRef) {}
+
+  ngOnChanges(): void {
+
+  }
 
   onCancelClick() {
     this.formClose.emit();
@@ -60,4 +70,5 @@ export class RolesFormComponent {
       this.formSave.emit(this.role);
     }
   }
+
 }

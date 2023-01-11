@@ -52,7 +52,7 @@ export class ManageRolesComponent {
   }
 
   onNewClick() {
-
+    this.displayModal = true;
   }
 
   onDeleteSelectedClick() {
@@ -67,24 +67,34 @@ export class ManageRolesComponent {
   onGridEvent(event: GridEvent<Role | Role[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
-   
+        this.selectedRoles = [
+          ...this.selectedRoles,
+          event.data as Role,
+        ];
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
-
+        this.selectedRoles = this.selectedRoles.filter(hs => {
+          hs.id !== (event.data as Role).id;
+        });
         break;
       case GRID_ACTIONS.SELECT_MANY:
-
+        this.selectedRoles = [
+          ...this.selectedRoles,
+          ...(event.data as Role[]),
+        ];
         break;
       case GRID_ACTIONS.UNSELECT_ALL:
-      
+        this.selectedRoles = [];
         break;
       case GRID_ACTIONS.EDIT:
+        this.selectedRole = Object.assign({}, event.data as Role);
         this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
           message: 'Jeni te sigurtë per fshirjen e rolit?',
           accept: () => {
+            this.deleteRole(event.data as Role);
             this.toastService.showWarning('Roli u fshi!');
           },
         });
@@ -96,12 +106,12 @@ export class ManageRolesComponent {
     this.displayModal = false;
   }
 
-  onFormSave(highSchool: Role) {
-    if (highSchool.id) {
-      this.updateRole(highSchool);
+  onFormSave(role: Role) {
+    if (role.id) {
+      this.updateRole(role);
     }
-    if (!highSchool.id) {
-      this.addRoles(highSchool);
+    if (!role.id) {
+      this.addRoles(role);
     }
   }
   getRoles($event: any) {
