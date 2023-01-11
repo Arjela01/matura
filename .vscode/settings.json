@@ -8,5 +8,6 @@
     }
   },
   "eslint.alwaysShowStatus": true,
-  "cSpell.words": ["msh"]
+  "cSpell.words": ["msh"],
+  "cSpell.enabled": false
 }

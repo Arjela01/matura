@@ -1,2 +1,2 @@
 export * from './high-school/high-school.model';
-export * from './regions/region.model'
+export * from './menu/menu.model';
