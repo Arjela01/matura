@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { Gender } from '@msh/configurations/domain-configurations';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
+import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -29,22 +30,23 @@ import { TooltipModule } from 'primeng/tooltip';
 })
 export class GenderGridComponent {
   @Input() genders: Gender[] = [];
+  @Input() totalRecords = 0;
+  @Input() loading = false;
 
   //Keep it local state because of Table Header checkbox not syncing
-  selectedGenderIds: Gender[] = [];
+  selectedGenders: Gender[] = [];
 
   @Output() gridEvent = new EventEmitter<
     GridEvent<Gender | Gender[]>
   >();
+
+  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
   onEditClick(gender: Gender) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
       data: gender,
     } as GridEvent<Gender>);
-  }
-  ngAfterViewChecked() {
-    console.log(this.genders)
   }
 
   onDeleteClick(gender: Gender) {
@@ -55,14 +57,14 @@ export class GenderGridComponent {
   }
 
   onSelectAllClick() {
-    if (this.selectedGenderIds.length === 0) {
+    if (this.selectedGenders.length === 0) {
       this.gridEvent.emit({
         action: GRID_ACTIONS.UNSELECT_ALL,
       } as GridEvent<Gender>);
     } else {
       this.gridEvent.emit({
         action: GRID_ACTIONS.SELECT_MANY,
-        data: this.selectedGenderIds,
+        data: this.selectedGenders,
       } as GridEvent<Gender[]>);
     }
   }
@@ -79,5 +81,9 @@ export class GenderGridComponent {
       action: GRID_ACTIONS.UNSELECT_ROW,
       data: data,
     } as GridEvent<Gender>);
+  }
+
+  loadRows($event: LazyLoadEvent) {
+    this.lazyLoadData.emit($event);
   }
 }

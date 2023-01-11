@@ -1,5 +1,10 @@
 export interface Gender {
-    Id: number,
+    id: number,
     name: string,
-    code: string
 }
+
+export interface GenderTableView {
+    data: Gender[];
+    total: number;
+  }
+  

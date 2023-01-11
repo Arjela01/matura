@@ -1,21 +1,43 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Gender } from '@msh/configurations/domain-configurations';
+import { Gender, GenderTableView } from '@msh/configurations/domain-configurations';
+import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
+import { LazyLoadEvent } from 'primeng/api';
 import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GendersApiService {
-  constructor(private http: HttpClient, private apiService: APIService) { }
-  loadDummyGenders(): Observable<Gender[]> {
-    return this.http
-      .get<{ data: Gender[] }>('assets/demo/data/genders.json')
-      .pipe(
-        map(response => {
-          return response.data as Gender[];
-        })
-      );
+  constructor(private apiService: APIService) {}
+
+  loadGenders(event: LazyLoadEvent): Observable<GenderTableView> {
+    return this.apiService.post(`/Gender/TableData`, event);
+  }
+
+  save(gender: Gender): Observable<ApiResult<Gender>> {
+    return this.apiService.post<ApiResult<Gender>, Gender>(
+      `/Gender`,
+      gender
+    );
+  }
+
+  update(gender: Gender): Observable<ApiResult<Gender>> {
+    return this.apiService.put<ApiResult<Gender>, Gender>(
+      `/Gender`,
+      gender
+    );
+  }
+
+  delete(genderId: number): Observable<ApiResult<unknown>> {
+    return this.apiService.delete<ApiResult<Gender>>(
+      `/Gender/${genderId}`
+    );
+  }
+  loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
+    return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
+      `/Gender/DropdownList`
+    );
   }
 }

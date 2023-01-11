@@ -45,8 +45,7 @@ export class GenderFormComponent {
   submitted = false;
 
   gender: Gender = {
-    Id: 0,
-    code: '',
+    id: 0,
     name: ''
   };
 
