@@ -54,6 +54,8 @@
   <ng-template pTemplate="content">
     <msh-exam-version-form
       [examVersionDetails]="selectedExamVersion"
+      [profileGroups]="profileGroups"
+      [examTypes]="examTypes"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)"></msh-exam-version-form>
   </ng-template>

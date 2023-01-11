@@ -1,4 +1,4 @@
-import { Route } from '@angular/router';
+import {Route} from '@angular/router';
 
 export const CONFIGURATION_ROUTES: Route[] = [
   {
@@ -6,7 +6,7 @@ export const CONFIGURATION_ROUTES: Route[] = [
     loadComponent: () =>
       import(
         './high-schools/manage-high-schools/manage-high-schools.component'
-      ).then(m => m.ManageHighSchoolsComponent),
+        ).then(m => m.ManageHighSchoolsComponent),
   },
   {
     path: 'menu',

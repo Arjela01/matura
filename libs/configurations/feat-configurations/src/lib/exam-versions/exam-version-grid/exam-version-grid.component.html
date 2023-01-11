@@ -44,12 +44,20 @@
           field="name"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="name">
+      <th pSortableColumn="numberOfQuestions">
         Numri i pyetjeve
         <p-sortIcon field="numberOfQuestions"></p-sortIcon>
         <p-columnFilter
           type="number"
           field="numberOfQuestions"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="profileGroup">
+        Grupi i Profileve
+        <p-sortIcon field="profileGroup"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="profileGroup"
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="variant">
@@ -58,6 +66,14 @@
         <p-columnFilter
           type="text"
           field="variant"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="examType">
+        Tipi i Provimit
+        <p-sortIcon field="examType"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="examType"
           display="menu"></p-columnFilter>
       </th>
       <th></th>

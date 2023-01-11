@@ -7,7 +7,7 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {DropdownModel} from "@msh/shared/data-access-shared";
 import {ExamVersion} from "@msh/configurations/domain-configurations";
 import {FormsModule, NgForm} from "@angular/forms";
@@ -17,6 +17,7 @@ import {RadioButtonModule} from "primeng/radiobutton";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {ButtonModule} from "primeng/button";
 import {CheckboxModule} from "primeng/checkbox";
+import {DropdownModule} from "primeng/dropdown";
 
 @Component({
   selector: 'msh-exam-version-form',
@@ -30,24 +31,29 @@ import {CheckboxModule} from "primeng/checkbox";
     InputTextareaModule,
     ButtonModule,
     CheckboxModule,
+    DropdownModule,
+
   ],
   templateUrl: './exam-version-form.component.html',
   styleUrls: ['./exam-version-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamVersionFormComponent {
+  @Input() examTypes: DropdownModel<number>[] = [];
+  @Input() profileGroups: DropdownModel<number>[] = [];
 
   @Input() set examVersionDetails(details: ExamVersion | null) {
     if (details) {
       this.examVersion = Object.assign({}, details);
     }
   }
+
   @Output() formSave = new EventEmitter<ExamVersion>();
   @Output() formClose = new EventEmitter<undefined>();
 
-  @ViewChild('form', { static: true }) form!: NgForm;
+  @ViewChild('form', {static: true}) form!: NgForm;
 
-  citiesFiltered: DropdownModel<number>[] = [];
+  examTypesFiltered: DropdownModel<number>[] = [];
 
   submitted = false;
 
@@ -59,8 +65,14 @@ export class ExamVersionFormComponent {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(private cd: ChangeDetectorRef) {
+  }
 
+  ngOnChanges(): void {
+    if (this.profileGroups && this.examVersion.examTypeId) {
+      this.onExamTypeChange({value: this.examVersion.examTypeId});
+    }
+  }
 
   onCancelClick() {
     this.formClose.emit();
@@ -71,5 +83,9 @@ export class ExamVersionFormComponent {
     if (this.form.valid) {
       this.formSave.emit(this.examVersion);
     }
+  }
+
+  onExamTypeChange($event: any) {
+    this.examTypesFiltered = this.examTypes.filter(e => e.parentKey == $event.value);
   }
 }

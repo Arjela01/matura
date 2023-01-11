@@ -9,11 +9,17 @@ import {GlobalToastService, GRID_ACTIONS, GridEvent} from "@msh/shared/util-shar
 import {ExamVersion} from "@msh/configurations/domain-configurations";
 
 import {BehaviorSubject} from "rxjs";
-import {untilDestroyed} from "@ngneat/until-destroy";
-import {ExamVersionApiService} from "@msh/configurations/data-access-configurations";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {
+  ExamTypeApiService,
+  ExamVersionApiService,
+  ProfileGroupApiService
+} from "@msh/configurations/data-access-configurations";
 import {ExamVersionFormComponent} from "../exam-version-form/exam-version-form.component";
 import {ExamVersionGridComponent} from "../exam-version-grid/exam-version-grid.component";
+import {DropdownModel} from "@msh/shared/data-access-shared";
 
+@UntilDestroy()
 @Component({
   selector: 'msh-manage-exam-versions',
   standalone: true,
@@ -41,14 +47,25 @@ export class ManageExamVersionsComponent {
   selectedExamVersion: ExamVersion | null = null;
   selectedExamVersions: ExamVersion[] = [];
   displayModal = false;
+  profileGroups: DropdownModel<number>[] = [];
+  examTypes: DropdownModel<number>[] = [];
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examVersionService: ExamVersionApiService,
+    private readonly profileGroupApiService: ProfileGroupApiService,
+    private readonly examTypesApiService: ExamTypeApiService,
+
+
   ) {
   }
 
+  ngOnInit(): void {
+    this.getProfileGroupsDropdown();
+    this.getExamTypesDropdown();
+
+  }
 
   onNewClick() {
     this.displayModal = true;
@@ -179,6 +196,23 @@ export class ManageExamVersionsComponent {
           this.toastService.showError(
             'Ndodhi një problem gjatë fshirjes së versionit të provimit!'
           );
+      });
+  }
+
+  getProfileGroupsDropdown() {
+    this.profileGroupApiService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.profileGroups = response.data;
+      });
+  }
+  getExamTypesDropdown() {
+    this.examTypesApiService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.examTypes = response.data;
       });
   }
 }
