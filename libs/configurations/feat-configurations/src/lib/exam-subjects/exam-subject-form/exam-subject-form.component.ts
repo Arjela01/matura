@@ -3,7 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input,
+  Input, OnChanges,
   Output,
   ViewChild
 } from '@angular/core';
@@ -16,6 +16,8 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 import {ButtonModule} from "primeng/button";
 import {CheckboxModule} from "primeng/checkbox";
 import {ExamSubject} from "@msh/configurations/domain-configurations";
+import {DropdownModule} from "primeng/dropdown";
+import {DropdownModel} from "@msh/shared/data-access-shared";
 
 @Component({
   selector: 'msh-exam-subject-form',
@@ -29,12 +31,15 @@ import {ExamSubject} from "@msh/configurations/domain-configurations";
     InputTextareaModule,
     ButtonModule,
     CheckboxModule,
+    DropdownModule,
    ],
   templateUrl: './exam-subject-form.component.html',
   styleUrls: ['./exam-subject-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamSubjectFormComponent {
+export class ExamSubjectFormComponent implements OnChanges {
+  @Input() examTypes: DropdownModel<number>[] = [];
+  @Input() academicYears: DropdownModel<number>[] = [];
 
   @Input() set examSubjectDetails(details: ExamSubject | null) {
     if (details) {
@@ -46,6 +51,7 @@ export class ExamSubjectFormComponent {
 
   @ViewChild('form', { static: true }) form!: NgForm;
 
+  examTypesFiltered: DropdownModel<number>[] = [];
 
   submitted = false;
 
@@ -60,6 +66,11 @@ export class ExamSubjectFormComponent {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor(private cd: ChangeDetectorRef) {}
 
+  ngOnChanges(): void {
+    if (this.examTypes && this.examSubject.academicYearId) {
+      this.onAcademicYearChange({ value: this.examSubject.academicYearId});
+    }
+  }
   onCancelClick() {
     this.formClose.emit();
   }
@@ -71,4 +82,7 @@ export class ExamSubjectFormComponent {
     }
   }
 
+  onAcademicYearChange($event: any) {
+    this.examTypesFiltered = this.examTypes.filter(et => et.parentKey == $event.value);
+  }
 }

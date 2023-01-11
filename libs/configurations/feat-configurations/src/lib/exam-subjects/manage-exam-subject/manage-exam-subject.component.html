@@ -54,6 +54,8 @@
   <ng-template pTemplate="content">
     <msh-exam-subject-form
       [examSubjectDetails]="selectedExamSubject"
+      [examTypes]="examTypes"
+      [academicYears]="academicYears"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
     </msh-exam-subject-form>

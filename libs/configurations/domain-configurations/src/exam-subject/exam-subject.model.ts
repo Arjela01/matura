@@ -3,7 +3,9 @@ export interface ExamSubject {
   name: string;
   code: string,
   examTypeId?: number;
+  examTypeName?: number;
   academicYearId?: number;
+  academicYearName?: number;
   credits: number;
   isOptional: boolean;
 }

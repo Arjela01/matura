@@ -11,9 +11,11 @@ import {BehaviorSubject} from "rxjs";
 import {ExamSubject} from "@msh/configurations/domain-configurations";
 import {GlobalToastService, GRID_ACTIONS, GridEvent} from "@msh/shared/util-shared";
 import {
-  ExamSubjectApiService
+  AcademicYearApiService,
+  ExamSubjectApiService, ExamTypeApiService
 } from "@msh/configurations/data-access-configurations";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {DropdownModel} from "@msh/shared/data-access-shared";
 
 @UntilDestroy()
 @Component({
@@ -43,13 +45,23 @@ export class ManageExamSubjectComponent {
   selectedExamSubject: ExamSubject | null = null;
   displayModal = false;
 
+  examTypes: DropdownModel<number>[] = [];
+  academicYears: DropdownModel<number>[] = [];
+
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examSubjectService: ExamSubjectApiService,
+    private readonly academicYearsApiService: AcademicYearApiService,
+    private readonly examTypesApiService: ExamTypeApiService,
 
   ) {
+  }
+
+  ngOnInit():void {
+    this.getAcademicYearsDropdown();
+    this.getExamTypesDropdown();
   }
 
   onNewClick() {
@@ -180,6 +192,20 @@ export class ManageExamSubjectComponent {
           this.toastService.showError(
             'Ndodhi një problem gjatë fshirjes së lëndës së provimit!'
           );
+      });
+  }
+  getExamTypesDropdown() {
+    this.examTypesApiService.loadDropdownList().subscribe(response => {
+      this.examTypes = response.data;
+    });
+  }
+
+  getAcademicYearsDropdown() {
+    this.academicYearsApiService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.academicYears = response.data;
       });
   }
 
