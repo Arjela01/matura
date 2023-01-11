@@ -23,4 +23,11 @@ export const CONFIGURATION_ROUTES: Route[] = [
         './profiles/manage-profiles/manage-profiles.component'
         ).then(m => m.ManageProfilesComponent),
   },
+  {
+    path: 'menu',
+    loadComponent: () =>
+      import('./menus/manage-menus/manage-menus.component').then(
+        m => m.ManageMenusComponent
+      ),
+  },
 ];

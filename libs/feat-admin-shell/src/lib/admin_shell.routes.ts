@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { AppLayoutComponent } from '@msh/layout/ui-layout';
+import { AppLayoutComponent } from '@msh/layout/feat-layout';
 
 export const ADMIN_SHELL_ROUTES: Route[] = [
   {

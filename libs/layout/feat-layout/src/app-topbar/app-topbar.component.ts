@@ -1,15 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterLinkWithHref } from '@angular/router';
+import { RouterLink, RouterLinkWithHref } from '@angular/router';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 import { LayoutService } from '@msh/layout/util-layout';
 
 @Component({
   selector: 'msh-app-topbar',
   standalone: true,
-  imports: [CommonModule, RouterLinkWithHref],
+  imports: [CommonModule, RouterLinkWithHref, RouterLink],
   templateUrl: './app-topbar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppTopbarComponent {
-  constructor(public layoutService: LayoutService) {}
+  constructor(
+    public layoutService: LayoutService,
+    private authFacade: AuthFacade
+  ) {}
+
+  onLogoutClick() {
+    this.authFacade.logout();
+  }
 }
