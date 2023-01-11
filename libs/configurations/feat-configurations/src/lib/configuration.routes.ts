@@ -9,6 +9,13 @@ export const CONFIGURATION_ROUTES: Route[] = [
       ).then(m => m.ManageHighSchoolsComponent),
   },
   {
+    path: 'menu',
+    loadComponent: () =>
+      import('./menus/manage-menus/manage-menus.component').then(
+        m => m.ManageMenusComponent
+      ),
+  },
+  {
     path: 'study-program',
     loadComponent: () =>
       import(
