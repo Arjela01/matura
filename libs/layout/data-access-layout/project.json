@@ -18,8 +18,8 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "ibs/layout/data-access-layout/**/*.ts",
-          "ibs/layout/data-access-layout/**/*.html"
+          "libs/layout/data-access-layout/**/*.ts",
+          "libs/layout/data-access-layout/**/*.html"
         ]
       }
     }
