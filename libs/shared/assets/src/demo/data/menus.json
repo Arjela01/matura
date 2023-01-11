@@ -1,0 +1,76 @@
+{
+  "data": [
+    {
+      "ID": 1,
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "Parent": null,
+      "Text": "Home",
+      "Url": ""
+    },
+    {
+      "ID": 2,
+      "IsVisible": true,
+      "DisplayOrder": 2,
+      "Parent": null,
+      "Text": "Configurations",
+      "Url": ""
+    },
+    {
+      "ID": 3,
+      "IsVisible": true,
+      "DisplayOrder": 3,
+      "Parent": null,
+      "Text": "Pages",
+      "Url": ""
+    },
+    {
+      "ID": 4,
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "Parent": 1,
+      "Text": "Dashboard",
+      "Url": "/"
+    },
+    {
+      "ID": 5,
+      "IsVisible": true,
+      "DisplayOrder": 1,
+      "Parent": 2,
+      "Text": "High School",
+      "Url": "/configurations/high-school"
+    },
+    {
+      "ID": 6,
+      "IsVisible": true,
+      "DisplayOrder": 3,
+      "Parent": 3,
+      "Text": "Auth",
+      "Url": ""
+    },
+    {
+      "ID": 8,
+      "IsVisible": true,
+      "DisplayOrder": 3,
+      "Parent": 3,
+      "Text": "Not Found",
+      "Url": "/notfound"
+    },
+    {
+      "ID": 7,
+      "IsVisible": true,
+      "DisplayOrder": 4,
+      "Parent": 6,
+      "Text": "Login",
+      "Url": "/login"
+    },
+    {
+      "ID": 8,
+      "IsVisible": true,
+      "DisplayOrder": 5,
+      "Parent": 6,
+      "Text": "Access Denied",
+      "Url": "/denied"
+    }
+  ]
+}
