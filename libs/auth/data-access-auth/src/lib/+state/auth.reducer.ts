@@ -1,37 +1,80 @@
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { createReducer, on, Action } from '@ngrx/store';
-
-import * as AuthActions from './auth.actions';
-import { AuthEntity } from './auth.models';
+import { GenericStoreStatus } from '@msh/shared/data-access-shared';
+import { Action, createFeature, createReducer, on } from '@ngrx/store';
+import { User } from '../models/user.model';
+import { AuthActions } from './auth.actions';
 
 export const AUTH_FEATURE_KEY = 'auth';
 
-export interface AuthState extends EntityState<AuthEntity> {
-  selectedId?: string | number; // which Auth record has been selected
-  loaded: boolean; // has the Auth list been loaded
-  error?: string | null; // last known error (if any)
+export interface AuthState {
+  status: GenericStoreStatus;
+  error: string | null;
+  isAuthenticated: boolean;
+  user: User;
+  token: string;
 }
 
-export interface AuthPartialState {
-  readonly [AUTH_FEATURE_KEY]: AuthState;
-}
+export const initialAuthState: AuthState = {
+  status: 'initial',
+  error: null,
+  isAuthenticated: false,
+  user: {
+    displayName: '',
+    username: '',
+  },
+  token: '',
+};
 
-export const authAdapter: EntityAdapter<AuthEntity> =
-  createEntityAdapter<AuthEntity>();
-
-export const initialAuthState: AuthState = authAdapter.getInitialState({
-  // set initial required properties
-  loaded: false,
+export const authFeature = createFeature({
+  name: AUTH_FEATURE_KEY,
+  reducer: createReducer(
+    initialAuthState,
+    on(AuthActions.initAuth, state => ({
+      ...state,
+      status: 'pending',
+    })),
+    on(AuthActions.loadAuthSuccess, (state, { token, user }) => ({
+      ...state,
+      status: 'success',
+      isAuthenticated: true,
+      token: token,
+      user: user,
+    })),
+    on(AuthActions.login, state => ({
+      ...state,
+      status: 'loading',
+      error: '',
+    })),
+    on(AuthActions.loginSuccess, (state, { loginResponse }) => ({
+      ...state,
+      status: 'success',
+      error: null,
+      isAuthenticated: true,
+      user: {
+        displayName: loginResponse.displayName,
+        username: loginResponse.username,
+      },
+      token: loginResponse.token,
+    })),
+    on(AuthActions.loginFailure, (state, { error }) => ({
+      ...state,
+      status: 'error',
+      error: error.message,
+    })),
+    on(AuthActions.logout, state => ({
+      ...state,
+      status: 'success',
+      error: null,
+      isAuthenticated: false,
+      user: {
+        displayName: '',
+        username: '',
+      },
+      token: '',
+    }))
+  ),
 });
 
-const reducer = createReducer(
-  initialAuthState,
-  on(AuthActions.initAuth, state => ({ ...state, loaded: false, error: null })),
-  on(AuthActions.loadAuthSuccess, (state, { auth }) =>
-    authAdapter.setAll(auth, { ...state, loaded: true })
-  ),
-  on(AuthActions.loadAuthFailure, (state, { error }) => ({ ...state, error }))
-);
+const reducer = createReducer(initialAuthState);
 
 export function authReducer(state: AuthState | undefined, action: Action) {
   return reducer(state, action);

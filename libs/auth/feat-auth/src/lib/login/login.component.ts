@@ -1,9 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { AuthFacade, LoginRequest } from '@msh/auth/data-access-auth';
+import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
 import { PasswordModule } from 'primeng/password';
 
 @Component({
@@ -13,16 +17,34 @@ import { PasswordModule } from 'primeng/password';
     CommonModule,
     RouterLink,
     PasswordModule,
+    InputTextModule,
     ButtonModule,
     FormsModule,
     CheckboxModule,
+    AvatarModule,
+    MessageModule,
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
-  valCheck: string[] = ['remember'];
+  @ViewChild('f') loginForm!: NgForm;
 
-  password!: string;
+  error$ = this.authFacade.error$;
+
+  loginFormModel: LoginRequest = {
+    userName: '',
+    password: '',
+  };
+
+  constructor(readonly authFacade: AuthFacade) {}
+
+  onLoginSubmit(): void {
+    if (!this.loginForm.valid) {
+      return;
+    }
+
+    this.authFacade.login(this.loginFormModel);
+  }
 }
