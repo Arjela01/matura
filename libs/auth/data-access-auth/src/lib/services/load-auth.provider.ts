@@ -1,5 +1,5 @@
 import { APP_INITIALIZER } from '@angular/core';
-import { AuthFacade } from '@msh/auth/data-access-auth';
+import { AuthFacade } from '../+state';
 
 function loadAuthFactory(authFacade: AuthFacade) {
   return () => authFacade.init();

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { APIService } from '@msh/shared/util-shared';
-import { LoginRequest } from 'libs/auth/data-access-auth/src/lib/models/login-request.model';
 import { Observable } from 'rxjs';
+import { LoginRequest } from '../models/login-request.model';
 import { LoginResponse } from './../models/login-response.model';
 
 @Injectable({
