@@ -17,13 +17,6 @@ export const CONFIGURATION_ROUTES: Route[] = [
       ),
   },
   {
-    path: 'profile',
-    loadComponent: () =>
-      import(
-        './profiles/manage-profiles/manage-profiles.component'
-        ).then(m => m.ManageProfilesComponent),
-  },
-  {
     path: 'menu',
     loadComponent: () =>
       import('./menus/manage-menus/manage-menus.component').then(
