@@ -5,6 +5,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -37,10 +38,12 @@ import { RadioButtonModule } from 'primeng/radiobutton';
   styleUrls: ['./study-program-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StudyProgramFormComponent {
+export class StudyProgramFormComponent implements OnChanges {
   @Input() universities: DropdownModel<number>[] = [];
   @Input() universityDepartaments: DropdownModel<number>[] = [];
   @Input() academicYears: DropdownModel<number>[] = [];
+
+  universityDepartmentsFiltered: DropdownModel<number>[] = [];
 
   @Input() set studyProgramDetails(details: StudyProgram | null) {
     if (details) {
@@ -67,8 +70,8 @@ export class StudyProgramFormComponent {
     minAverageGrade: 0,
     quota: 0,
     studentScores: 0,
-    university: 1,
-    universityDepartament: 1,
+    universityId: 0,
+    universityDepartmentId: 0,
     usedQuota: 0,
     competitionCoefficient: 0,
     competitionMaxScore: 0,
@@ -78,6 +81,13 @@ export class StudyProgramFormComponent {
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor(private cd: ChangeDetectorRef) {}
+
+  ngOnChanges(): void {
+    // if (this.universityDepartaments && this.studyProgram.university) {
+    //   this.onUniversityChange({ value: this.studyProgram.university });
+    // }
+    console.log('test');
+  }
 
   onCancelClick() {
     this.formClose.emit();
@@ -89,4 +99,11 @@ export class StudyProgramFormComponent {
       this.formSave.emit(this.studyProgram);
     }
   }
+
+  // onUniversityChange($event: any) {
+  //   console.log($event.value);
+  //   console.log(this.universityDepartaments);
+  //   this.universityDepartmentsFiltered = this.universityDepartaments;
+  //   console.log(this.universityDepartmentsFiltered);
+  // }
 }

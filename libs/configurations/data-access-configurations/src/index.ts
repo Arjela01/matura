@@ -3,3 +3,5 @@ export * from './lib/city/city-api.service';
 export * from './lib/high-school/high-school-api.service';
 export * from './lib/region/region-api.service';
 export * from './lib/study-program/study-program-api.service';
+export * from './lib/university-department/university-department-api.service';
+export * from './lib/university/university-api.service';

@@ -1,6 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { StudyProgramApiService } from '@msh/configurations/data-access-configurations';
+import {
+  StudyProgramApiService,
+  UniversityApiService,
+  UniversityDepartmentApiService,
+} from '@msh/configurations/data-access-configurations';
 import { StudyProgram } from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
@@ -53,7 +57,9 @@ export class ManageStudyProgramsComponent implements OnInit {
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly studyProgramService: StudyProgramApiService
+    private readonly studyProgramService: StudyProgramApiService,
+    private readonly universitiesService: UniversityApiService,
+    private readonly universityDepartmentService: UniversityDepartmentApiService
   ) {}
 
   ngOnInit(): void {
@@ -199,29 +205,15 @@ export class ManageStudyProgramsComponent implements OnInit {
   }
 
   getUniversities() {
-    this.universities = [
-      {
-        key: 375,
-        value: 'Polis',
-      },
-      {
-        key: 295,
-        value: 'Epoka',
-      },
-    ];
+    this.universitiesService.loadDropdownList().subscribe(response => {
+      this.universities = response.data;
+    });
   }
 
   getUniversityDepartaments() {
-    this.universityDepartaments = [
-      {
-        key: 211,
-        value: 'Polis',
-      },
-      {
-        key: 201,
-        value: 'Epoka',
-      },
-    ];
+    this.universityDepartmentService.loadDropdownList().subscribe(response => {
+      this.universityDepartaments = response.data;
+    });
   }
 
   getAcademicYears() {

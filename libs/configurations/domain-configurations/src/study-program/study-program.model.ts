@@ -15,9 +15,9 @@ export interface StudyProgram {
 
   academicYear: number;
 
-  university: number;
+  universityId: number;
 
-  universityDepartament: number;
+  universityDepartmentId: number;
 
   fullName: string;
 

@@ -41,16 +41,13 @@
       name="academicYear"
       [autoDisplayFirst]="false"
       [(ngModel)]="studyProgram.academicYear"
-      [showClear]="true"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !studyProgram.academicYear
-      }">
+      [showClear]="true">
     </p-dropdown>
-    <small
+    <!-- <small
       class="p-error block"
       *ngIf="submitted && !studyProgram.academicYear">
       Viti Akademik është fushë e kërkuar.
-    </small>
+    </small> -->
   </div>
 
   <div class="field">
@@ -232,43 +229,41 @@
   </div>
 
   <div class="field">
-    <label for="university">Universiteti *</label>
+    <label for="universityId">Universiteti *</label>
     <p-dropdown
-      id="university"
+      id="universityId"
       [options]="universities"
       optionValue="key"
       optionLabel="value"
-      name="university"
+      name="universityid"
+      [required]="true"
       [autoDisplayFirst]="false"
-      [(ngModel)]="studyProgram.university"
-      [showClear]="true"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !studyProgram.university
-      }">
+      [(ngModel)]="studyProgram.universityId"
+      [showClear]="true">
     </p-dropdown>
-    <small class="p-error block" *ngIf="submitted && !studyProgram.university">
+    <small
+      class="p-error block"
+      *ngIf="submitted && !studyProgram.universityId">
       Universiteti është fushë e kërkuar.
     </small>
   </div>
 
   <div class="field">
-    <label for="universityDepartament">Departament Universitar *</label>
+    <label for="universityDepartmentId">Departament Universitar *</label>
     <p-dropdown
-      id="universityDepartament"
+      id="universityDepartmentId"
       [options]="universityDepartaments"
       optionValue="key"
       optionLabel="value"
-      name="universityDepartament"
+      [required]="true"
+      name="universityDepartmentId"
       [autoDisplayFirst]="false"
-      [(ngModel)]="studyProgram.universityDepartament"
-      [showClear]="true"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !studyProgram.universityDepartament
-      }">
+      [(ngModel)]="studyProgram.universityDepartmentId"
+      [showClear]="true">
     </p-dropdown>
     <small
       class="p-error block"
-      *ngIf="submitted && !studyProgram.universityDepartament">
+      *ngIf="submitted && !studyProgram.universityDepartmentId">
       Departamenti Universitar është fushë e kërkuar.
     </small>
   </div>
