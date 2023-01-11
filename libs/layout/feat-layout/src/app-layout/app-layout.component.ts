@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LayoutService } from '@msh/layout/util-layout';
 import { AppSidebarComponent } from '../app-sidebar/app-sidebar.component';
-import { AppTopbarComponent } from './../app-topbar/app-topbar.component';
+import { AppTopbarComponent } from '../app-topbar/app-topbar.component';
 
 @Component({
   selector: 'msh-app-layout',

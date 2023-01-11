@@ -1,15 +1,18 @@
 import { Routes } from '@angular/router';
+import { AuthGuard, NoAuthGuard } from '@msh/auth/data-access-auth';
 
 export const APP_ROUTES: Routes = [
   {
     path: '',
     loadChildren: () =>
       import('@msh/feat-admin-shell').then(m => m.ADMIN_SHELL_ROUTES),
+    canActivate: [AuthGuard],
   },
   {
     path: 'login',
     loadComponent: () =>
       import('@msh/auth/feat-auth').then(m => m.LoginComponent),
+    canActivate: [NoAuthGuard],
   },
   {
     path: 'denied',

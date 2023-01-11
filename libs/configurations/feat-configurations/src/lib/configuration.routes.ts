@@ -8,11 +8,4 @@ export const CONFIGURATION_ROUTES: Route[] = [
         './high-schools/manage-high-schools/manage-high-schools.component'
       ).then(m => m.ManageHighSchoolsComponent),
   },
-  {
-    path: 'city',
-    loadComponent: () =>
-      import(
-        './cities/manage-cities/manage-cities.component'
-        ).then(m => m.ManageCitiesComponent),
-  },
 ];

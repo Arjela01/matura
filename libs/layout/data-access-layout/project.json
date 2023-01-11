@@ -1,15 +1,15 @@
 {
-  "name": "ui-layout",
+  "name": "data-access-layout",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "sourceRoot": "libs/layout/ui-layout/src",
+  "sourceRoot": "libs/layout/data-access-layout/src",
   "prefix": "msh",
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/layout/ui-layout/jest.config.ts",
+        "jestConfig": "libs/layout/data-access-layout/jest.config.ts",
         "passWithNoTests": true
       }
     },
@@ -18,11 +18,11 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "libs/layout/ui-layout/**/*.ts",
-          "libs/layout/ui-layout/**/*.html"
+          "libs/layout/data-access-layout/**/*.ts",
+          "libs/layout/data-access-layout/**/*.html"
         ]
       }
     }
   },
-  "tags": ["type:ui"]
+  "tags": ["type:data-access", "scope:configurations"]
 }
