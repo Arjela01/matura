@@ -23,3 +23,15 @@
 :host ::ng-deep input::-ms-clear {
   display: none;
 }
+
+
+.p-button:disabled {
+  background-color: rgba(63, 81, 181, 0.75) !important;
+}
+
+
+:host ::ng-deep .p-inline-message {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+}
