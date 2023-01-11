@@ -3,11 +3,11 @@ export interface HighSchool {
   code: string;
   name: string;
   isPublic: boolean;
-  administrationOfficeID?: number;
+  administrationOfficeId?: number;
   administrationOfficeName?: string;
-  cityID?: number;
+  cityId?: number;
   cityName?: string;
-  regionID?: number;
+  regionId?: number;
   regionName?: string;
 }
 
