@@ -11,22 +11,6 @@ import { AuthActions } from './auth.actions';
 
 @Injectable()
 export class AuthEffects {
-  // init$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(AuthActions.initAuth),
-  //     fetch({
-  //       run: action => {
-  //         // Your custom service 'load' logic goes here. For now just return a success action...
-  //         return AuthActions.loadAuthSuccess({ auth: [] });
-  //       },
-  //       onError: (action, error) => {
-  //         console.error('Error', error);
-  //         return AuthActions.loadAuthFailure({ error });
-  //       },
-  //     })
-  //   )
-  // );
-
   init$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.initAuth),
@@ -47,7 +31,9 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(AuthActions.loadAuthSuccess),
-        tap(() => this.router.navigate(['/']))
+        tap(() => {
+          this.router.navigate(['/']);
+        })
       ),
     {
       dispatch: false,

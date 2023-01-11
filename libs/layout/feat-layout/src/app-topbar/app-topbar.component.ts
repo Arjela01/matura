@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import {RouterLink, RouterLinkWithHref} from '@angular/router';
+import { RouterLink, RouterLinkWithHref } from '@angular/router';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 import { LayoutService } from '@msh/layout/util-layout';
 
 @Component({
@@ -11,5 +12,12 @@ import { LayoutService } from '@msh/layout/util-layout';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppTopbarComponent {
-  constructor(public layoutService: LayoutService) {}
+  constructor(
+    public layoutService: LayoutService,
+    private authFacade: AuthFacade
+  ) {}
+
+  onLogoutClick() {
+    this.authFacade.logout();
+  }
 }

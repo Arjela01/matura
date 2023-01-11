@@ -35,6 +35,7 @@ export const authFeature = createFeature({
     on(AuthActions.loadAuthSuccess, (state, { token, user }) => ({
       ...state,
       status: 'success',
+      isAuthenticated: true,
       token: token,
       user: user,
     })),
