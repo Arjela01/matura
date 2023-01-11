@@ -22,10 +22,6 @@ export class HighSchoolApiService {
     return this.apiService.post<ApiResult<HighSchool>, HighSchool>(
       `/HighSchool`,
       highSchool
-    ).pipe(
-      map(data => data),
-      catchError((error) => throwError(error)),
-      shareReplay()
     );
   }
 
@@ -33,20 +29,12 @@ export class HighSchoolApiService {
     return this.apiService.put<ApiResult<HighSchool>, HighSchool>(
       `/HighSchool`,
       highSchool
-    ).pipe(
-      map(data => data),
-      catchError((error) => throwError(error)),
-      shareReplay()
     );
   }
 
   delete(highSchoolId: number): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<HighSchool>>(
       `/HighSchool/${highSchoolId}`
-    ).pipe(
-      map(data => data),
-      catchError((error) => throwError(error)),
-      shareReplay()
     );
   }
 }
