@@ -44,4 +44,18 @@ export const CONFIGURATION_ROUTES: Route[] = [
         m => m.ManageRegionsComponent
       ),
   },
+  {
+    path: 'exam-subject',
+    loadComponent: () =>
+      import(
+        './exam-subjects/manage-exam-subject/manage-exam-subject.component'
+        ).then(m => m.ManageExamSubjectComponent),
+  },
+  {
+    path: 'city',
+    loadComponent: () =>
+      import('./cities/manage-cities/manage-cities.component').then(
+        m => m.ManageCitiesComponent
+      ),
+  },
 ];

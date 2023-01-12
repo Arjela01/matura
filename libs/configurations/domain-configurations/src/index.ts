@@ -4,5 +4,6 @@ export * from './profile/profile.model'
 export * from './profile-group/profile-group.model';
 export * from './menu/menu.model';
 export * from './exam-type/exam-type.model';
+export * from './exam-subject/exam-subject.model';
 export * from './region/region.model'
-
+export * from './city/cities.model'

@@ -1,0 +1,100 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+
+  <div class="field">
+    <label for="Name">Emri *</label>
+    <input
+      type="text"
+      pInputText
+      id="name"
+      name="name"
+      [(ngModel)]="city.name"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !city.name }" />
+    <small class="p-error block" *ngIf="submitted && !city.name">
+      Emri është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label class="mb-3">Eshte Aktiv? *</label>
+    <div class="formgrid grid">
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="IsActiveTrue"
+          name="isActive"
+          [value]="true"
+          [(ngModel)]="city.isActive"></p-radioButton>
+        <label for="IsActiveTrue">Po</label>
+      </div>
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="IsActiveFalse"
+          name="isActive"
+          [value]="false"
+          [(ngModel)]="city.isActive"></p-radioButton>
+        <label for="IsActiveFalse">Jo</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="mb-3">Eshte Qytet? *</label>
+    <div class="formgrid grid">
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="IsCityTrue"
+          name="isCity"
+          [value]="true"
+          [(ngModel)]="city.isCity"></p-radioButton>
+        <label for="IsCityTrue">Po</label>
+      </div>
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="IsCityFalse"
+          name="isCity"
+          [value]="false"
+          [(ngModel)]="city.isCity"></p-radioButton>
+        <label for="IsCityFalse">Jo</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="field mb-5">
+    <label for="Region">Rrethi *</label>
+    <p-dropdown
+      id="Region"
+      [options]="regions"
+      name="region"
+      optionValue="key"
+      optionLabel="value"
+      [(ngModel)]="city.regionName"
+      [autoDisplayFirst]="false"
+      (onChange)="onRegionChange($event)"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !city.regionName
+      }">
+    </p-dropdown>
+    <small class="p-error block" *ngIf="submitted && !city.regionName">
+      Rrethi është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      type="submit"
+      pButton
+      icon="pi pi-check"
+      label="Ruaj"
+      class="p-button-text w-auto"></button>
+  </div>
+</form>
+
