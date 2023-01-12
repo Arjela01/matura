@@ -1,0 +1,37 @@
+import { Injectable } from '@angular/core';
+import { ApiResult } from '@msh/shared/data-access-shared';
+import { APIService } from '@msh/shared/util-shared';
+import { LazyLoadEvent } from 'primeng/api';
+import { Observable } from 'rxjs';
+import {Profile, ProfileTableView} from "@msh/configurations/domain-configurations";
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ProfileApiService {
+  constructor(private apiService: APIService) {}
+
+  loadProfiles(event: LazyLoadEvent): Observable<ProfileTableView> {
+    return this.apiService.post(`/Profile/TableData`, event);
+  }
+
+  save(profile: Profile): Observable<ApiResult<Profile>> {
+    return this.apiService.post<ApiResult<Profile>, Profile>(
+      `/Profile`,
+      profile
+    );
+  }
+
+  update(profile: Profile): Observable<ApiResult<Profile>> {
+    return this.apiService.put<ApiResult<Profile>, Profile>(
+      `/Profile`,
+      profile
+    );
+  }
+
+  delete(profileId: number): Observable<ApiResult<unknown>> {
+    return this.apiService.delete<ApiResult<Profile>>(
+      `/Profile/${profileId}`
+    );
+  }
+}
