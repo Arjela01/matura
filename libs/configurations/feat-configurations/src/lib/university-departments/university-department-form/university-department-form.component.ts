@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   Output,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { UniversityDepartment } from '@msh/configurations/domain-configurations';
+import {
+  UniversityDepartment,
+} from '@msh/configurations/domain-configurations';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
@@ -18,6 +18,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import {DropdownModel} from "@msh/shared/data-access-shared";
 
 @Component({
   selector: 'msh-university-department-form',
@@ -46,6 +47,8 @@ export class UniversityDepartmentFormComponent {
     }
   }
 
+  @Input() universities: DropdownModel<number>[] = [];
+
   @Output() formSave = new EventEmitter<UniversityDepartment>();
   @Output() formClose = new EventEmitter<undefined>();
 
@@ -54,12 +57,14 @@ export class UniversityDepartmentFormComponent {
   submitted = false;
 
   universityDepartment: UniversityDepartment = {
+    universityId: 0,
+    universityName: '',
     id: '',
     name: '',
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor() {}
 
   onCancelClick() {
     this.formClose.emit();

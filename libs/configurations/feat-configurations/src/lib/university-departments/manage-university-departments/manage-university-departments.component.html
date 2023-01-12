@@ -36,7 +36,7 @@
         [universityDepartments]="(universityDepartments$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getUniversities($event)">
+        (lazyLoadData)="getUniversityDepartments($event)">
       </msh-university-department-grid>
     </div>
   </div>
@@ -54,6 +54,7 @@
   <ng-template pTemplate="content">
     <msh-university-department-form
       [universityDepartmentDetails]="selectedUniversityDepartment"
+      [universities]="universities"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
     </msh-university-department-form>
@@ -82,4 +83,3 @@
       (click)="cd.accept()"></button>
   </ng-template>
 </p-confirmDialog>
-

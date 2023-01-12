@@ -16,6 +16,24 @@
     </small>
   </div>
 
+
+  <div class="field">
+    <label for="City">Universiteti *</label>
+    <p-dropdown
+      id="City"
+      [options]="universities"
+      optionValue="key"
+      optionLabel="value"
+      name="cityId"
+      [(ngModel)]="universityDepartment.universityId"
+      [autoDisplayFirst]="false"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !universityDepartment.universityId
+      }">
+    </p-dropdown>
+  </div>
+
   <div class="flex justify-content-end">
     <button
       type="button"

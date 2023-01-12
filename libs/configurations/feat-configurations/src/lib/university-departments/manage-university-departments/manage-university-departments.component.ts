@@ -20,7 +20,11 @@ import { BehaviorSubject } from 'rxjs';
 import { RippleModule } from 'primeng/ripple';
 import { UniversityDepartmentGridComponent } from '../university-department-grid/university-department-grid.component';
 import { UniversityDepartmentFormComponent } from '../university-department-form/university-department-form.component';
-import { UniversityDepartmentApiService } from '@msh/configurations/data-access-configurations';
+import {
+  UniversityApiService,
+  UniversityDepartmentApiService,
+} from '@msh/configurations/data-access-configurations';
+import { DropdownModel } from '@msh/shared/data-access-shared';
 
 @UntilDestroy()
 @Component({
@@ -41,7 +45,7 @@ import { UniversityDepartmentApiService } from '@msh/configurations/data-access-
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageUniversityDepartmentsComponent {
+export class ManageUniversityDepartmentsComponent implements OnInit {
   private universityDepartments$$ = new BehaviorSubject<UniversityDepartment[]>(
     []
   );
@@ -52,12 +56,18 @@ export class ManageUniversityDepartmentsComponent {
   selectedUniversityDepartment: UniversityDepartment | null = null;
   selectedUniversityDepartments: UniversityDepartment[] = [];
   displayModal = false;
+  universities: DropdownModel<number>[] = [];
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly universityDepartmentService: UniversityDepartmentApiService
+    private readonly universityDepartmentService: UniversityDepartmentApiService,
+    private readonly universityService: UniversityApiService
   ) {}
+
+  ngOnInit(): void {
+    this.getUniversityDropdown();
+  }
 
   onNewClick() {
     this.displayModal = true;
@@ -127,7 +137,7 @@ export class ManageUniversityDepartmentsComponent {
     }
   }
 
-  getUniversities($event: LazyLoadEvent) {
+  getUniversityDepartments($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.universityDepartmentService
@@ -147,7 +157,7 @@ export class ManageUniversityDepartmentsComponent {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Rajoni u shtua me sukses!');
           this.displayModal = false;
-          this.getUniversities(this.filters as LazyLoadEvent);
+          this.getUniversityDepartments(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
@@ -165,7 +175,7 @@ export class ManageUniversityDepartmentsComponent {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Rajoni u ndryshua me sukses!');
           this.displayModal = false;
-          this.getUniversities(this.filters as LazyLoadEvent);
+          this.getUniversityDepartments(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
@@ -182,13 +192,22 @@ export class ManageUniversityDepartmentsComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Rajoni u fshi me sukses!');
-          this.getUniversities(this.filters as LazyLoadEvent);
+          this.getUniversityDepartments(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
           this.toastService.showError(
             'Ndodhi nje problem gjatë fshirjes së rajonit!'
           );
+      });
+  }
+
+  getUniversityDropdown() {
+    this.universityService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.universities = response.data;
       });
   }
 }
