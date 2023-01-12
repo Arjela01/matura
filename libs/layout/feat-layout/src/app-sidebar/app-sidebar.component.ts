@@ -11,7 +11,10 @@ import { MenuNode } from '@msh/layout/domain-layout';
 @Component({
   selector: 'msh-app-sidebar',
   standalone: true,
-  imports: [CommonModule, AppMenuitemComponent],
+  imports: [
+    CommonModule,
+    AppMenuitemComponent
+  ],
   providers: [MenuStore],
   templateUrl: './app-sidebar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
