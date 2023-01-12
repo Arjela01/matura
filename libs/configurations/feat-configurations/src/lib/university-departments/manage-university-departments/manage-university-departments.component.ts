@@ -8,10 +8,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
-import {
-  UniversityApiService
-} from '@msh/configurations/data-access-configurations';
-import { Region } from '@msh/configurations/domain-configurations';
+import { UniversityDepartment } from '@msh/configurations/domain-configurations';
 
 import {
   GlobalToastService,
@@ -20,9 +17,10 @@ import {
 } from '@msh/shared/util-shared';
 
 import { BehaviorSubject } from 'rxjs';
-import { UniversityDepartmentFormComponent } from '../university-department-form/university-department-form.component';
+import { RippleModule } from 'primeng/ripple';
 import { UniversityDepartmentGridComponent } from '../university-department-grid/university-department-grid.component';
-import {RippleModule} from "primeng/ripple";
+import { UniversityDepartmentFormComponent } from '../university-department-form/university-department-form.component';
+import {UniversityDepartmentApiService} from "@msh/configurations/data-access-configurations";
 
 @UntilDestroy()
 @Component({
@@ -38,27 +36,28 @@ import {RippleModule} from "primeng/ripple";
     ToolbarModule,
     RippleModule,
   ],
-  templateUrl: './manage-university-departments.component.html',
-  styleUrls: ['./manage-university-departments.component.scss'],
+  templateUrl: './manage-universityDepartment-departments.component.html',
+  styleUrls: ['./manage-universityDepartment-departments.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
 export class ManageUniversityDepartmentsComponent {
-  private regions$$ = new BehaviorSubject<Region[]>([]);
-  regions$ = this.regions$$.asObservable();
+  private universityDepartments$$ = new BehaviorSubject<UniversityDepartment[]>(
+    []
+  );
+  universityDepartments$ = this.universityDepartments$$.asObservable();
   filters: LazyLoadEvent | null = null;
 
   totalRecords = 0;
-  selectedRegion: Region | null = null;
-  selectedUniversities: Region[] = [];
+  selectedUniversityDepartment: UniversityDepartment | null = null;
+  selectedUniversities: UniversityDepartment[] = [];
   displayModal = false;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly universityService: UniversityApiService
-  ) {
-  }
+    private readonly universityDepartmentService: UniversityDepartmentApiService
+  ) {}
 
   onNewClick() {
     this.displayModal = true;
@@ -68,43 +67,46 @@ export class ManageUniversityDepartmentsComponent {
     this.confirmationService.confirm({
       message: 'Jeni i sigurt që doni të fshini rajonet e zgjedhura?',
       accept: () => {
-        //this.regionStore.deleteSelectedUniversities();
+        //this.universityDepartmentStore.deleteSelectedUniversities();
         this.toastService.showWarning('Rajonet u fshin!');
       },
     });
   }
 
-  onGridEvent(event: GridEvent<Region | Region[]>) {
+  onGridEvent(event: GridEvent<UniversityDepartment | UniversityDepartment[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
         this.selectedUniversities = [
           ...this.selectedUniversities,
-          event.data as Region,
+          event.data as UniversityDepartment,
         ];
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
         this.selectedUniversities = this.selectedUniversities.filter(r => {
-          r.id !== (event.data as Region).id;
+          r.id !== (event.data as UniversityDepartment).id;
         });
         break;
       case GRID_ACTIONS.SELECT_MANY:
         this.selectedUniversities = [
           ...this.selectedUniversities,
-          ...(event.data as Region[]),
+          ...(event.data as UniversityDepartment[]),
         ];
         break;
       case GRID_ACTIONS.UNSELECT_ALL:
         this.selectedUniversities = [];
         break;
       case GRID_ACTIONS.EDIT:
-        this.selectedRegion = Object.assign({}, event.data as Region);
+        this.selectedUniversityDepartment = Object.assign(
+          {},
+          event.data as UniversityDepartment
+        );
         this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
           message: 'Jeni i sigurt që doni të fshini rajonin e zgjedhur?',
           accept: () => {
-            this.deleteRegion(event.data as Region);
+            this.deleteUniversityDepartment(event.data as UniversityDepartment);
           },
         });
         break;
@@ -115,31 +117,30 @@ export class ManageUniversityDepartmentsComponent {
     this.displayModal = false;
   }
 
-  onFormSave(region: Region) {
-    if (region.id) {
-      this.updateRegion(region);
+  onFormSave(universityDepartment: UniversityDepartment) {
+    if (universityDepartment.id) {
+      this.updateUniversityDepartment(universityDepartment);
     }
-    if (!region.id) {
-      this.addRegion(region);
+    if (!universityDepartment.id) {
+      this.addUniversityDepartment(universityDepartment);
     }
   }
 
   getUniversities($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    this.universityService
+    this.universityDepartmentService
       .loadUniversities($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.regions$$.next(response.data);
+        this.universityDepartments$$.next(response.data);
         this.totalRecords = response.total;
       });
-
   }
 
-  addRegion(region: Region) {
-    this.universityService
-      .save(region)
+  addUniversityDepartment(universityDepartment: UniversityDepartment) {
+    this.universityDepartmentService
+      .save(universityDepartment)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
@@ -155,15 +156,13 @@ export class ManageUniversityDepartmentsComponent {
       });
   }
 
-  updateRegion(region: Region) {
-    this.universityService
-      .update(region)
+  updateUniversityDepartment(universityDepartment: UniversityDepartment) {
+    this.universityDepartmentService
+      .update(universityDepartment)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            'Rajoni u ndryshua me sukses!'
-          );
+          this.toastService.showSuccess('Rajoni u ndryshua me sukses!');
           this.displayModal = false;
           this.getUniversities(this.filters as LazyLoadEvent);
         }
@@ -175,9 +174,9 @@ export class ManageUniversityDepartmentsComponent {
       });
   }
 
-  deleteRegion(region: Region) {
-    this.universityService
-      .delete(region.id)
+  deleteUniversityDepartment(universityDepartment: UniversityDepartment) {
+    this.universityDepartmentService
+      .delete(universityDepartment.id)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {

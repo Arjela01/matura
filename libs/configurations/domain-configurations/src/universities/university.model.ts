@@ -2,7 +2,7 @@ export interface UniversityDepartment {
   id: string;
   name: string;
 }
-export interface UniversityDepartmentView {
+export interface UniversityDepartmentTableView {
   data: UniversityDepartment[];
   total: number;
 }
