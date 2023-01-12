@@ -1,0 +1,127 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="Code">Kodi *</label>
+    <input
+      type="number"
+      pInputText
+      id="Code"
+      name="Code"
+      [(ngModel)]="examSubject.code"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examSubject.code }" />
+    <small class="p-error block" *ngIf="submitted && !examSubject.code">
+      Kodi është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="Name">Emri *</label>
+    <input
+      type="text"
+      pInputText
+      id="Name"
+      name="Name"
+      [(ngModel)]="examSubject.name"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examSubject.name }" />
+    <small class="p-error block" *ngIf="submitted && !examSubject.name">
+      Emri është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="ExamType">Tipi i provimit *</label>
+    <p-dropdown
+      id="ExamType"
+      [options]="examTypes"
+      optionValue="key"
+      optionLabel="value"
+      name="examTypeId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="examSubject.examTypeId"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examSubject.examTypeId
+      }">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examSubject.examTypeId">
+      Tipi i provimit është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="AcademicYear">Viti akademik *</label>
+    <p-dropdown
+      id="AcademicYear"
+      [options]="academicYears"
+      optionValue="key"
+      optionLabel="value"
+      name="academicYearId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="examSubject.academicYearId"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examSubject.academicYearId
+      }">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examSubject.academicYearId">
+      Viti akademik është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="Name">Kredite *</label>
+    <input
+      type="number"
+      pInputText
+      id="Credits"
+      name="Credits"
+      [(ngModel)]="examSubject.credits"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examSubject.credits }" />
+    <small class="p-error block" *ngIf="submitted && !examSubject.credits">
+      Kreditet janë fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label class="mb-3">Është Opsional? *</label>
+    <div class="formgrid grid">
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="IsOptionalTrue"
+          name="IsOptional"
+          [value]="true"
+          [(ngModel)]="examSubject.isOptional"></p-radioButton>
+        <label for="IsOptionalTrue">Po</label>
+      </div>
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="IsOptionalFalse"
+          name="IsOptional"
+          [value]="false"
+          [(ngModel)]="examSubject.isOptional"></p-radioButton>
+        <label for="IsOptionalFalse">Jo</label>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      type="submit"
+      pButton
+      icon="pi pi-check"
+      label="Ruaj"
+      class="p-button-text w-auto"></button>
+  </div>
+</form>

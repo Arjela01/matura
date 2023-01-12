@@ -11,10 +11,9 @@ export const CONFIGURATION_ROUTES: Route[] = [
   {
     path: 'profile-group',
     loadComponent: () =>
-      import('./profile-group/manage-profile-groups/manage-profile-groups.component'
-        ).then(
-        m => m.ManageProfileGroupsComponent
-      ),
+      import(
+        './profile-group/manage-profile-groups/manage-profile-groups.component'
+      ).then(m => m.ManageProfileGroupsComponent),
   },
   {
     path: 'menu',
@@ -24,10 +23,38 @@ export const CONFIGURATION_ROUTES: Route[] = [
       ),
   },
   {
+    path: 'exam-version',
+    loadComponent: () =>
+      import(
+        './exam-versions/manage-exam-versions/manage-exam-versions.component'
+      ).then(m => m.ManageExamVersionsComponent),
+  },
+  {
+    path: 'exam-type',
+    loadComponent: () =>
+      import('./exam-type/manage-exam-type/manage-exam-type.component').then(
+        m => m.ManageExamTypeComponent
+      ),
+  },
+  {
     path: 'region',
     loadComponent: () =>
       import('./regions/manage-regions/manage-regions.component').then(
         m => m.ManageRegionsComponent
+      ),
+  },
+  {
+    path: 'exam-subject',
+    loadComponent: () =>
+      import(
+        './exam-subjects/manage-exam-subject/manage-exam-subject.component'
+      ).then(m => m.ManageExamSubjectComponent),
+  },
+  {
+    path: 'city',
+    loadComponent: () =>
+      import('./cities/manage-cities/manage-cities.component').then(
+        m => m.ManageCitiesComponent
       ),
   },
   {
