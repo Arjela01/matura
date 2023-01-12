@@ -60,7 +60,7 @@ export class StudyProgramFormComponent implements OnChanges {
   studyProgram: StudyProgram = {
     id: 0,
     name: '',
-    academicYearId: 0,
+    academicYear: 0,
     code: '',
     isTwoYearLong: 1,
     isValidForRace: true,

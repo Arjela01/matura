@@ -34,21 +34,20 @@
   <div class="field">
     <label for="academicYear">Viti Akademik *</label>
     <p-dropdown
-      id="academicYearId"
+      id="academicYear"
       [options]="academicYears"
       optionValue="key"
       optionLabel="value"
-      [required]="true"
-      name="academicYearId"
+      name="academicYear"
       [autoDisplayFirst]="false"
-      [(ngModel)]="studyProgram.academicYearId"
+      [(ngModel)]="studyProgram.academicYear"
       [showClear]="true">
     </p-dropdown>
-    <small
+    <!-- <small
       class="p-error block"
-      *ngIf="submitted && !studyProgram.academicYearId">
+      *ngIf="submitted && !studyProgram.academicYear">
       Viti Akademik është fushë e kërkuar.
-    </small>
+    </small> -->
   </div>
 
   <div class="field">
