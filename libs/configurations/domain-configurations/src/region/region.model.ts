@@ -1,5 +1,9 @@
 
 export interface Region {
-  id: number;
+  id: string;
   name: string;
+}
+export interface RegionTableView {
+  data: Region[];
+  total: number;
 }
