@@ -9,9 +9,11 @@ import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
 import {
-  UniversityApiService
+  CityApiService,
+  RegionApiService,
+  UniversityApiService,
 } from '@msh/configurations/data-access-configurations';
-import { Region } from '@msh/configurations/domain-configurations';
+import { University } from '@msh/configurations/domain-configurations';
 
 import {
   GlobalToastService,
@@ -22,7 +24,8 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { UniversityFormComponent } from '../university-form/university-form.component';
 import { UniversityGridComponent } from '../university-grid/university-grid.component';
-import {RippleModule} from "primeng/ripple";
+import { RippleModule } from 'primeng/ripple';
+import { DropdownModel } from '@msh/shared/data-access-shared';
 
 @UntilDestroy()
 @Component({
@@ -43,22 +46,25 @@ import {RippleModule} from "primeng/ripple";
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageUniversitiesComponent {
-  private regions$$ = new BehaviorSubject<Region[]>([]);
-  regions$ = this.regions$$.asObservable();
+export class ManageUniversitiesComponent implements OnInit {
+  private universities$$ = new BehaviorSubject<University[]>([]);
+  universities$ = this.universities$$.asObservable();
   filters: LazyLoadEvent | null = null;
 
   totalRecords = 0;
-  selectedRegion: Region | null = null;
-  selectedUniversities: Region[] = [];
+  selectedRegion: University | null = null;
+  selectedUniversities: University[] = [];
   displayModal = false;
+  cities: DropdownModel<number>[] = [];
+  regions: DropdownModel<number>[] = [];
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly universityService: UniversityApiService
-  ) {
-  }
+    private readonly universityService: UniversityApiService,
+    private readonly cityApiService: CityApiService,
+    private readonly regionApiService: RegionApiService
+  ) {}
 
   onNewClick() {
     this.displayModal = true;
@@ -74,37 +80,37 @@ export class ManageUniversitiesComponent {
     });
   }
 
-  onGridEvent(event: GridEvent<Region | Region[]>) {
+  onGridEvent(event: GridEvent<University | University[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
         this.selectedUniversities = [
           ...this.selectedUniversities,
-          event.data as Region,
+          event.data as University,
         ];
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
         this.selectedUniversities = this.selectedUniversities.filter(r => {
-          r.id !== (event.data as Region).id;
+          r.id !== (event.data as University).id;
         });
         break;
       case GRID_ACTIONS.SELECT_MANY:
         this.selectedUniversities = [
           ...this.selectedUniversities,
-          ...(event.data as Region[]),
+          ...(event.data as University[]),
         ];
         break;
       case GRID_ACTIONS.UNSELECT_ALL:
         this.selectedUniversities = [];
         break;
       case GRID_ACTIONS.EDIT:
-        this.selectedRegion = Object.assign({}, event.data as Region);
+        this.selectedRegion = Object.assign({}, event.data as University);
         this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
           message: 'Jeni i sigurt që doni të fshini rajonin e zgjedhur?',
           accept: () => {
-            this.deleteRegion(event.data as Region);
+            this.deleteRegion(event.data as University);
           },
         });
         break;
@@ -115,12 +121,12 @@ export class ManageUniversitiesComponent {
     this.displayModal = false;
   }
 
-  onFormSave(region: Region) {
-    if (region.id) {
-      this.updateRegion(region);
+  onFormSave(university: University) {
+    if (university.id) {
+      this.updateRegion(university);
     }
-    if (!region.id) {
-      this.addRegion(region);
+    if (!university.id) {
+      this.addRegion(university);
     }
   }
 
@@ -131,15 +137,14 @@ export class ManageUniversitiesComponent {
       .loadUniversities($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.regions$$.next(response.data);
+        this.universities$$.next(response.data);
         this.totalRecords = response.total;
       });
-
   }
 
-  addRegion(region: Region) {
+  addRegion(university: University) {
     this.universityService
-      .save(region)
+      .save(university)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
@@ -155,15 +160,13 @@ export class ManageUniversitiesComponent {
       });
   }
 
-  updateRegion(region: Region) {
+  updateRegion(university: University) {
     this.universityService
-      .update(region)
+      .update(university)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            'Rajoni u ndryshua me sukses!'
-          );
+          this.toastService.showSuccess('Rajoni u ndryshua me sukses!');
           this.displayModal = false;
           this.getUniversities(this.filters as LazyLoadEvent);
         }
@@ -175,9 +178,9 @@ export class ManageUniversitiesComponent {
       });
   }
 
-  deleteRegion(region: Region) {
+  deleteRegion(university: University) {
     this.universityService
-      .delete(region.id)
+      .delete(university.id)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
@@ -189,6 +192,26 @@ export class ManageUniversitiesComponent {
           this.toastService.showError(
             'Ndodhi nje problem gjatë fshirjes së rajonit!'
           );
+      });
+  }
+
+  ngOnInit(): void {
+    this.getCitiesDropdown();
+    this.getRegionDropdown();
+  }
+
+  getCitiesDropdown() {
+    this.cityApiService.loadDropdownList().subscribe(response => {
+      this.cities = response.data;
+    });
+  }
+
+  getRegionDropdown() {
+    this.regionApiService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.regions = response.data;
       });
   }
 }

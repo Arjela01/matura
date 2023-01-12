@@ -36,8 +36,8 @@ import {UniversityDepartmentApiService} from "@msh/configurations/data-access-co
     ToolbarModule,
     RippleModule,
   ],
-  templateUrl: './manage-universityDepartment-departments.component.html',
-  styleUrls: ['./manage-universityDepartment-departments.component.scss'],
+  templateUrl: './manage-university-departments.component.html',
+  styleUrls: ['./manage-university-departments.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
@@ -52,6 +52,7 @@ export class ManageUniversityDepartmentsComponent {
   selectedUniversityDepartment: UniversityDepartment | null = null;
   selectedUniversities: UniversityDepartment[] = [];
   displayModal = false;
+  selectedRegion: any;
 
   constructor(
     private readonly confirmationService: ConfirmationService,

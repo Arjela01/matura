@@ -6,7 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { Region } from '@msh/configurations/domain-configurations';
+import { University } from '@msh/configurations/domain-configurations';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -33,58 +33,58 @@ import { TooltipModule } from 'primeng/tooltip';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UniversityGridComponent {
-  @Input() regions: Region[] = [];
+  @Input() universities: University[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
 
   //Keep it local state because of Table Header checkbox not syncing
-  selectedRegions: Region[] = [];
+  selectedRegions: University[] = [];
 
   @Output() gridEvent = new EventEmitter<
-    GridEvent<Region | Region[]>
+    GridEvent<University | University[]>
     >();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
-  onEditClick(region: Region) {
+  onEditClick(region: University) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
       data: region,
-    } as GridEvent<Region>);
+    } as GridEvent<University>);
   }
 
-  onDeleteClick(region: Region) {
+  onDeleteClick(region: University) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,
       data: region,
-    } as GridEvent<Region>);
+    } as GridEvent<University>);
   }
 
   onSelectAllClick() {
     if (this.selectedRegions.length === 0) {
       this.gridEvent.emit({
         action: GRID_ACTIONS.UNSELECT_ALL,
-      } as GridEvent<Region>);
+      } as GridEvent<University>);
     } else {
       this.gridEvent.emit({
         action: GRID_ACTIONS.SELECT_MANY,
         data: this.selectedRegions,
-      } as GridEvent<Region[]>);
+      } as GridEvent<University[]>);
     }
   }
 
-  onRowSelect({ data }: { data: Region }) {
+  onRowSelect({ data }: { data: University }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
       data: data,
-    } as GridEvent<Region>);
+    } as GridEvent<University>);
   }
 
-  onRowUnselect({ data }: { data: Region }) {
+  onRowUnselect({ data }: { data: University }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
       data: data,
-    } as GridEvent<Region>);
+    } as GridEvent<University>);
   }
 
   loadRows($event: LazyLoadEvent) {

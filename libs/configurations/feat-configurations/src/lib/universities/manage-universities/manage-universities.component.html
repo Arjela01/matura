@@ -33,7 +33,7 @@
       </p-toolbar>
 
       <msh-university-grid
-        [regions]="(regions$ | async) || []"
+        [universities]="(universities$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
         (lazyLoadData)="getUniversities($event)">
@@ -53,7 +53,9 @@
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
     <msh-university-form
-      [regionDetails]="selectedRegion"
+      [regions]="regions"
+      [cities]="cities"
+      [universityDetails]="selectedRegion"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
     </msh-university-form>
@@ -82,4 +84,3 @@
       (click)="cd.accept()"></button>
   </ng-template>
 </p-confirmDialog>
-

@@ -33,7 +33,7 @@
       </p-toolbar>
 
       <msh-university-department-grid
-        [regions]="(regions$ | async) || []"
+        [universityDepartments]="(universityDepartments$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
         (lazyLoadData)="getUniversities($event)">
