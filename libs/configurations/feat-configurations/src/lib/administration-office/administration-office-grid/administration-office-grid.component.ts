@@ -3,11 +3,25 @@ import { CommonModule } from '@angular/common';
 import { AdministrationOffice } from '@msh/configurations/domain-configurations';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { TooltipModule } from 'primeng/tooltip';
+import { CheckboxModule } from 'primeng/checkbox';
+import { RippleModule } from 'primeng/ripple';
 
 @Component({
   selector: 'msh-administration-office-grid',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    TableModule,
+    ButtonModule,
+    InputTextModule,
+    TooltipModule,
+    CheckboxModule,
+    RippleModule,
+  ],
   templateUrl: './administration-office-grid.component.html',
   styleUrls: ['./administration-office-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

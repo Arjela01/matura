@@ -1,1 +1,116 @@
-<p>administration-office-form works!</p>
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+ 
+  
+    <div class="field">
+      <label for="Name">Emri *</label>
+      <input
+        type="text"
+        pInputText
+        id="Name"
+        name="Name"
+        [(ngModel)]="administrationOffice.name"
+        required
+        autofocus
+        [ngClass]="{ 'ng-invalid ng-dirty': submitted && !administrationOffice.name }" />
+      <small class="p-error block" *ngIf="submitted && !administrationOffice.name">
+        Emri është fushë e kërkuar.
+      </small>
+    </div>
+  
+    <div class="field">
+      <label class="mb-3">Eshtë DAR *</label>
+      <div class="formgrid grid">
+        <div class="field-radiobutton col-6">
+          <p-radioButton
+            id="isRegionalOfficeTrue"
+            name="isRegionalOffice"
+            [value]="true"
+            [(ngModel)]="administrationOffice.isRegionalOffice"></p-radioButton>
+          <label for="isRegionalOfficeTrue">Po</label>
+        </div>
+        <div class="field-radiobutton col-6">
+          <p-radioButton
+            id="isRegionalOfficeFalse"
+            name="isRegionalOffice"
+            [value]="false"
+            [(ngModel)]="administrationOffice.isRegionalOffice"></p-radioButton>
+          <label for="isRegionalOfficeFalse">Jo</label>
+        </div>
+      </div>
+    </div>
+<!--   
+    <div class="field">
+      <label for="AdministrationOffice">DAR/ZA *</label>
+      <p-dropdown
+        id="AdministrationOffice"
+        [options]="administrationOffices"
+        optionValue="key"
+        optionLabel="value"
+        name="parentOfficeId"
+        [autoDisplayFirst]="false"
+        [(ngModel)]="administrationOffice.parentOfficeId"
+        [showClear]="true"
+        [ngClass]="{
+          'ng-invalid ng-dirty': submitted && !administrationOffice.parentOfficeId
+        }">
+      </p-dropdown>
+      <small
+        class="p-error block"
+        *ngIf="submitted && !administrationOffice.parentOfficeId">
+        DAR/ZA është fushë e kërkuar.
+      </small>
+    </div> -->
+  
+  
+    <div class="field">
+      <label for="City">Qyteti/Fshati *</label>
+      <p-dropdown
+        id="City"
+        [options]="citiesFiltered"
+        optionValue="key"
+        optionLabel="value"
+        name="cityId"
+        [(ngModel)]="administrationOffice.cityId"
+        [autoDisplayFirst]="false"
+        [showClear]="true"
+        [ngClass]="{
+          'ng-invalid ng-dirty': submitted && !administrationOffice.cityId
+        }">
+      </p-dropdown>
+      <small class="p-error block" *ngIf="submitted && !administrationOffice.cityId">
+        Qyeti/Fshati është fushë e kërkuar.
+      </small>
+    </div>
+  
+    <div class="flex justify-content-end">
+      <button
+        type="button"
+        pButton
+        icon="pi pi-times"
+        label="Anullo"
+        class="p-button-text w-auto mr-2"
+        (click)="onCancelClick()"></button>
+      <button
+        type="submit"
+        pButton
+        icon="pi pi-check"
+        label="Ruaj"
+        class="p-button-text w-auto"></button>
+    </div>
+    <div class="field">
+        <label for="Name">Krijuar nga *</label>
+        <input
+          type="text"
+          pInputText
+          id="DirectorName"
+          name="directorName"
+          [(ngModel)]="administrationOffice.directorName"
+          required
+          autofocus
+          [ngClass]="{ 'ng-invalid ng-dirty': submitted && !administrationOffice.directorName }" />
+        <small class="p-error block" *ngIf="submitted && !administrationOffice.directorName">
+          Emri i drejtorit është fushë e kërkuar.
+        </small>
+      </div>
+  </form>
+  

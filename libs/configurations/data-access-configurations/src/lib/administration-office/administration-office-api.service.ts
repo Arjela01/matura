@@ -27,10 +27,15 @@ export class AdministrationOfficeApiService {
     );
   }
 
-  update(highSchool: AdministrationOffice): Observable<ApiResult<AdministrationOffice>> {
+  update(administrationOffice: AdministrationOffice): Observable<ApiResult<AdministrationOffice>> {
     return this.apiService.put<ApiResult<AdministrationOffice>, AdministrationOffice>(
       `/AdministrationOffice`,
-      highSchool
+      administrationOffice
+    );
+  }
+  delete(administrationOfficeId: number): Observable<ApiResult<unknown>> {
+    return this.apiService.delete<ApiResult<AdministrationOffice>>(
+      `/AdministrationOffice/${administrationOfficeId}`
     );
   }
 }

@@ -4,7 +4,9 @@ export interface AdministrationOffice {
   directorName: string;
   isRegionalOffice: boolean;
   parentOfficeId?: number;
+  parentOfficeName?:string;
   cityId?: number;
+  cityName?:string
   signature?: string;
 }
 
