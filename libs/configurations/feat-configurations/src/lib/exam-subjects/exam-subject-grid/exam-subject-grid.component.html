@@ -52,12 +52,12 @@
           field="name"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="examTypeName">
+      <th pSortableColumn="examType">
         Tipi i provimit
-        <p-sortIcon field="examTypeName"></p-sortIcon>
+        <p-sortIcon field="examType"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="examTypeName"
+          field="examType"
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="academicYear">
@@ -98,10 +98,10 @@
         {{ examSubject.examTypeName }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ examSubject.academicYear}}
+        {{ examSubject.academicYear }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ examSubject.credits}}
+        {{ examSubject.credits }}
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ examSubject.isOptional ? 'Po' : 'Jo' }}
