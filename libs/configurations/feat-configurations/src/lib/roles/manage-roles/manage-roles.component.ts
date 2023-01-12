@@ -47,9 +47,6 @@ export class ManageRolesComponent {
     private readonly toastService: GlobalToastService
   ) { }
 
-  ngOnInit(): void {
-
-  }
 
   onNewClick() {
     this.displayModal = true;
@@ -115,9 +112,7 @@ export class ManageRolesComponent {
     }
   }
   getRoles($event: any) {
-    debugger
     this.filters = Object.assign({}, $event);
-
     this.rolesService
       .loadRoles($event)
       .pipe(untilDestroyed(this))
