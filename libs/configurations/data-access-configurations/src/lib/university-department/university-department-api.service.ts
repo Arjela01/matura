@@ -11,7 +11,7 @@ export class UniversityDepartmentApiService {
 
   loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
-      `/UniversityDropDown/DropDownList/Departments`
+      `/UniversityDEpartment/DropDownList`
     );
   }
 }

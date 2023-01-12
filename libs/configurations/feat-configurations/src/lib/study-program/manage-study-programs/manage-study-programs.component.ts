@@ -19,6 +19,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
+import { AcademicYearApiService } from '../../../../../data-access-configurations/src/lib/academic-year/academic-year-api.service';
 import { StudyProgramFormComponent } from '../study-program-form/study-program-form.component';
 import { StudyProgramGridComponent } from '../study-program-grid/study-program-grid.component';
 
@@ -59,7 +60,8 @@ export class ManageStudyProgramsComponent implements OnInit {
     private readonly toastService: GlobalToastService,
     private readonly studyProgramService: StudyProgramApiService,
     private readonly universitiesService: UniversityApiService,
-    private readonly universityDepartmentService: UniversityDepartmentApiService
+    private readonly universityDepartmentService: UniversityDepartmentApiService,
+    private readonly academicYearService: AcademicYearApiService
   ) {}
 
   ngOnInit(): void {
@@ -127,6 +129,7 @@ export class ManageStudyProgramsComponent implements OnInit {
   }
 
   onFormSave(studyProgram: StudyProgram) {
+    console.log(studyProgram.id);
     if (studyProgram.id) {
       this.updateStudyProgram(studyProgram);
     }
@@ -217,15 +220,8 @@ export class ManageStudyProgramsComponent implements OnInit {
   }
 
   getAcademicYears() {
-    this.academicYears = [
-      {
-        key: 450,
-        value: '2023',
-      },
-      {
-        key: 430,
-        value: '2022',
-      },
-    ];
+    this.academicYearService.loadDropdownList().subscribe(response => {
+      this.academicYears = response.data;
+    });
   }
 }

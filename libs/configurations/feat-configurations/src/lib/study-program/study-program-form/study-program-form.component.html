@@ -51,24 +51,6 @@
   </div>
 
   <div class="field">
-    <label for="fullName">Emri i plotë *</label>
-    <input
-      type="text"
-      pInputText
-      id="fullName"
-      name="fullName"
-      [(ngModel)]="studyProgram.fullName"
-      required
-      autofocus
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !studyProgram.fullName
-      }" />
-    <small class="p-error block" *ngIf="submitted && !studyProgram.fullName">
-      Emri i plotë është fushë e kërkuar.
-    </small>
-  </div>
-
-  <div class="field">
     <label class="mb-3">Eshte 2 vjecar? *</label>
     <div class="formgrid grid">
       <div class="field-radiobutton col-6">
@@ -236,16 +218,15 @@
       optionValue="key"
       optionLabel="value"
       name="universityid"
-      [required]="true"
       [autoDisplayFirst]="false"
       [(ngModel)]="studyProgram.universityId"
       [showClear]="true">
     </p-dropdown>
-    <small
+    <!-- <small
       class="p-error block"
       *ngIf="submitted && !studyProgram.universityId">
       Universiteti është fushë e kërkuar.
-    </small>
+    </small> -->
   </div>
 
   <div class="field">
@@ -255,17 +236,16 @@
       [options]="universityDepartaments"
       optionValue="key"
       optionLabel="value"
-      [required]="true"
       name="universityDepartmentId"
       [autoDisplayFirst]="false"
       [(ngModel)]="studyProgram.universityDepartmentId"
       [showClear]="true">
     </p-dropdown>
-    <small
+    <!-- <small
       class="p-error block"
       *ngIf="submitted && !studyProgram.universityDepartmentId">
       Departamenti Universitar është fushë e kërkuar.
-    </small>
+    </small> -->
   </div>
 
   <div class="field">

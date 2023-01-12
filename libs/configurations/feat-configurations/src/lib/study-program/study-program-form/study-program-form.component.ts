@@ -62,7 +62,6 @@ export class StudyProgramFormComponent implements OnChanges {
     name: '',
     academicYear: 0,
     code: '',
-    fullName: '',
     isTwoYearLong: 1,
     isValidForRace: true,
     isWithCompetition: true,

@@ -19,7 +19,7 @@ export interface StudyProgram {
 
   universityDepartmentId: number;
 
-  fullName: string;
+  fullName?: string;
 
   maturaCoefficient: number;
 
