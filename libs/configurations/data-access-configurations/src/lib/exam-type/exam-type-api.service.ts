@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import { Observable} from 'rxjs';
 import {LazyLoadEvent} from "primeng/api";
-import {ApiResult} from "@msh/shared/data-access-shared";
+import {ApiResult, DropdownModel} from "@msh/shared/data-access-shared";
 import {APIService} from "@msh/shared/util-shared";
 import {ExamType, ExamTypeTableView} from "@msh/configurations/domain-configurations";
 
