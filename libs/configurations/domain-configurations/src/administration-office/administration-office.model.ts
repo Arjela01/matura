@@ -7,3 +7,8 @@ export interface AdministrationOffice {
   cityId?: number;
   signature?: string;
 }
+
+export interface AdministrationOfficeTableView {
+  data: AdministrationOffice[];
+  total: number;
+}
