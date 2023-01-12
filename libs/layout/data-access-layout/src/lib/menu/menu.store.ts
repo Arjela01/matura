@@ -9,6 +9,7 @@ export interface MenuState {
   menus: MenuNode[];
   status: GenericStoreStatus;
   error: string | null;
+
 }
 
 const initialMenuState: MenuState = {
