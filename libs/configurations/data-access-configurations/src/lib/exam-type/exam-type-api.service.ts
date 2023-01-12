@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import { Observable} from 'rxjs';
 import {LazyLoadEvent} from "primeng/api";
-import {ApiResult} from "@msh/shared/data-access-shared";
+import {ApiResult, DropdownModel} from "@msh/shared/data-access-shared";
 import {APIService} from "@msh/shared/util-shared";
 import {ExamType, ExamTypeTableView} from "@msh/configurations/domain-configurations";
 
@@ -33,6 +33,11 @@ export class ExamTypeApiService {
   delete(examTypeId: string): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<ExamType>>(
       `/api/ExamTypes/${ examTypeId}`
+    );
+  }
+  loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
+    return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
+      `/api/ExamTypes/DropdownList`
     );
   }
 }
