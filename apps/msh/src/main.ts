@@ -14,14 +14,17 @@ import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 import {
-  authReducer,
+  AuthEffects,
+  authFeature,
   AUTH_FEATURE_KEY,
+  loadAuthProvider,
   TokenInterceptor,
 } from '@msh/auth/data-access-auth';
 import { getLocalStorageProvider } from '@msh/shared/data-access-shared';
 import { environment } from '@msh/shared/environments';
 import { API_URL } from '@msh/shared/util-shared';
 
+import { provideEffects } from '@ngrx/effects';
 import { MessageService } from 'primeng/api';
 import { AppComponent } from './app/app.component';
 import { APP_ROUTES } from './app/app.routes';
@@ -45,16 +48,17 @@ bootstrapApplication(AppComponent, {
     ),
 
     provideStore({
-      [AUTH_FEATURE_KEY]: authReducer,
+      [AUTH_FEATURE_KEY]: authFeature.reducer,
     }),
-
     !environment.production
       ? provideStoreDevtools({
           maxAge: 25,
         })
       : [],
     getLocalStorageProvider(),
+    loadAuthProvider(),
     { provide: API_URL, useValue: environment.api_url },
+    provideEffects([AuthEffects]),
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

@@ -1,0 +1,107 @@
+<script src="../../../../../domain-configurations/src/menu/menu.model.ts"></script>
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="Text">Emërtimi *</label>
+    <input
+      type="text"
+      pInputText
+      id="Text"
+      name="Text"
+      [(ngModel)]="menu.text"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !menu.text }" />
+    <small class="p-error block" *ngIf="submitted && !menu.text">
+      Emërtimi është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Url">Url *</label>
+    <input
+      type="Url"
+      pInputText
+      id="Url"
+      name="Url"
+      [(ngModel)]="menu.url"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !menu.url }" />
+    <small class="p-error block" *ngIf="submitted && !menu.url">
+      URL është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="ParentMenu">Prindi</label>
+    <p-dropdown
+      id="ParentMenu"
+      [options]="parentMenus"
+      optionValue="key"
+      optionLabel="value"
+      name="parentId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="menu.parentID"
+      [showClear]="true"
+    >
+    </p-dropdown>
+  </div>
+
+  <div class="field">
+    <label for="displayOrder">Renditja *</label>
+    <input
+      type="number"
+      pInputText
+      id="displayOrder"
+      name="displayOrder"
+      [(ngModel)]="menu.displayOrder"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !menu.displayOrder }" />
+    <small class="p-error block" *ngIf="submitted && !menu.displayOrder">
+      Renditja është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label class="mb-3">Ështe e dukshme *</label>
+    <div class="formgrid grid">
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="IsVisibleTrue"
+          name="IsVisible"
+          [value]="true"
+          [(ngModel)]="menu.isVisible"></p-radioButton>
+        <label for="IsVisibleTrue">Po</label>
+      </div>
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="IsVisibleFalse"
+          name="IsVisible"
+          [value]="false"
+          [(ngModel)]="menu.isVisible"></p-radioButton>
+        <label for="IsVisibleFalse">Jo</label>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      type="submit"
+      pButton
+      icon="pi pi-check"
+      label="Ruaj"
+      class="p-button-text w-auto"></button>
+  </div>
+</form>
