@@ -6,58 +6,126 @@
         class="w-full surface-card py-8 px-5 sm:px-8"
         style="border-radius: 53px">
         <div class="text-center mb-5">
-          <div class="text-900 text-3xl font-medium mb-3">Welcome!</div>
-          <span class="text-600 font-medium">Sign in to continue</span>
+          <p-avatar
+            icon="pi pi-user"
+            styleClass="mb-3"
+            size="xlarge"
+            [style]="{
+              'background-color': 'var(--primary-color)',
+              color: '#ffffff'
+            }"
+            shape="circle"></p-avatar>
+          <div class="text-900 text-3xl font-medium mb-3">Identifikohu</div>
         </div>
 
-        <div>
-          <label for="email1" class="block text-900 text-xl font-medium mb-2">
-            Email
-          </label>
-          <input
-            id="email1"
-            type="text"
-            placeholder="Email address"
-            pInputText
-            class="w-full md:w-30rem mb-5"
-            style="padding: 1rem" />
+        <form #f="ngForm" (ngSubmit)="onLoginSubmit()">
+          <div class="field mb-5">
+            <label
+              for="username"
+              class="block text-900 text-xl font-medium mb-2">
+              Përdoruesi
+            </label>
+            <input
+              pInputText
+              id="username"
+              name="username"
+              type="text"
+              placeholder="Përdoruesi"
+              class="w-full md:w-30rem"
+              style="padding: 1rem"
+              [ngClass]="{
+                'ng-dirty ng-invalid': f.submitted && username.errors
+              }"
+              required="true"
+              minlength="4"
+              [(ngModel)]="loginFormModel.userName"
+              #username="ngModel" />
+            <small
+              *ngIf="
+                f.submitted && username.errors && username.errors['required']
+              "
+              class="p-error block">
+              Përdoruesi është fushë e kërkuar!
+            </small>
+            <small
+              *ngIf="
+                f.submitted && username.errors && username.errors['minlength']
+              "
+              class="p-error block">
+              Përdoruesi kërkon të paktën
+              {{ username.errors['minlength'].requiredLength }} karaktere!
+            </small>
+          </div>
 
-          <label
-            for="password1"
-            class="block text-900 font-medium text-xl mb-2">
-            Password
-          </label>
-          <p-password
-            id="password1"
-            [(ngModel)]="password"
-            placeholder="Password"
-            [toggleMask]="true"
-            [feedback]="false"
-            styleClass="mb-5"
-            inputStyleClass="w-full p-3 md:w-30rem"></p-password>
+          <div class="field mb-3">
+            <label
+              for="password"
+              class="block text-900 font-medium text-xl mb-2">
+              Fjalëkalimi
+            </label>
+            <p-password
+              inputId="password"
+              name="password"
+              placeholder="Fjalëkalimi"
+              inputStyleClass="w-full p-3 md:w-30rem"
+              [toggleMask]="true"
+              [feedback]="false"
+              [ngClass]="{
+                'ng-dirty ng-invalid': f.submitted && password.errors
+              }"
+              required="true"
+              minlength="8"
+              [(ngModel)]="loginFormModel.password"
+              #password="ngModel">
+            </p-password>
+            <small
+              *ngIf="
+                f.submitted && password.errors && password.errors['required']
+              "
+              class="p-error block">
+              Fjalëkalimi është fushë e kërkuar!
+            </small>
+            <small
+              *ngIf="
+                f.submitted && password.errors && password.errors['minlength']
+              "
+              class="p-error block">
+              Fjalëkalimi kërkon të paktën
+              {{ password.errors['minlength'].requiredLength }} karaktere!
+            </small>
+          </div>
+
+          <div class="mb-5" *ngIf="error$ | async as error">
+            <p-message
+              severity="error"
+              [text]="error"
+              class="w-100"></p-message>
+          </div>
 
           <div
             class="flex align-items-center justify-content-between mb-5 gap-5">
-            <div class="flex align-items-center">
-              <p-checkbox
-                id="rememberme1"
-                [binary]="true"
-                styleClass="mr-2"></p-checkbox>
-              <label for="rememberme1"> Remember me </label>
-            </div>
             <a
               class="font-medium no-underline ml-2 text-right cursor-pointer"
               style="color: var(--primary-color)">
-              Forgot password?
+              Ke harruar fjalëkalimin?
             </a>
           </div>
           <button
+            type="submit"
             pButton
             pRipple
-            label="Sign In"
-            class="w-full p-3 text-xl"
-            [routerLink]="['/']"></button>
-        </div>
+            class="w-full p-3 text-xl justify-content-center mb-3"
+            [disabled]="authFacade.isLoading$ | async">
+            <ng-container *ngIf="authFacade.isLoading$ | async; else labelTmpl">
+              <i
+                *ngIf="authFacade.isLoading$ | async"
+                class="pi pi-spin pi-spinner"
+                style="font-size: 1.5rem; color: 'var(--surface-0)'">
+              </i>
+            </ng-container>
+            <ng-template #labelTmpl> <span>Hyr</span> </ng-template>
+          </button>
+        </form>
       </div>
     </div>
   </div>

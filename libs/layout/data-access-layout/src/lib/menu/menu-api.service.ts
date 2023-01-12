@@ -18,7 +18,6 @@ export class MenuApiService {
     );
   }
 
-  // TODO : Test out isvisible false
   private convertToTree(menus: MenuNode[]): MenuNode[] {
     const nest = (menus: MenuNode[], id: number | null = null): MenuNode[] =>
       menus
