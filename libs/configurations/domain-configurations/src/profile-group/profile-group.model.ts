@@ -1,8 +1,8 @@
 
 export interface ProfileGroup {
   id: number;
-  Name: string;
-  Ordering: string;
+  name: string;
+  ordering: string;
 }
 export interface ProfileGroupTableView {
   data: ProfileGroup[];

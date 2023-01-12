@@ -62,6 +62,7 @@ export class ManageProfileGroupsComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedProfileGroup = {} as ProfileGroup;
   }
 
   onDeleteSelectedClick() {

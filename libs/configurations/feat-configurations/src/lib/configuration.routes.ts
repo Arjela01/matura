@@ -17,10 +17,17 @@ export const CONFIGURATION_ROUTES: Route[] = [
       ),
   },
   {
-    path: 'profile',
+    path: 'menu',
     loadComponent: () =>
-      import(
-        './profiles/manage-profiles/manage-profiles.component'
-        ).then(m => m.ManageProfilesComponent),
+      import('./menus/manage-menus/manage-menus.component').then(
+        m => m.ManageMenusComponent
+      ),
+  },
+  {
+    path: 'region',
+    loadComponent: () =>
+      import('./regions/manage-regions/manage-regions.component').then(
+        m => m.ManageRegionsComponent
+      ),
   },
 ];

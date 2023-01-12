@@ -52,8 +52,8 @@ export class ProfileGroupFormComponent {
 
   profileGroup: ProfileGroup = {
     id: 0,
-    Name: '',
-    Ordering: '',
+    name: '',
+    ordering: '',
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function

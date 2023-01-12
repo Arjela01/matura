@@ -6,11 +6,11 @@
       pInputText
       id="Name"
       name="Name"
-      [(ngModel)]="profileGroup.Name"
+      [(ngModel)]="profileGroup.name"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !profileGroup.Name }" />
-    <small class="p-error block" *ngIf="submitted && !profileGroup.Name">
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !profileGroup.name }" />
+    <small class="p-error block" *ngIf="submitted && !profileGroup.name">
       Emri është fushë e kërkuar.
     </small>
   </div>
@@ -22,16 +22,15 @@
       pInputText
       id="Ordering"
       name="Ordering"
-      [(ngModel)]="profileGroup.Ordering"
+      [(ngModel)]="profileGroup.ordering"
       required
       autofocus
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !profileGroup.Ordering
-      }" />
-    <small class="p-error block" *ngIf="submitted && !profileGroup.Ordering">
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !profileGroup.ordering }" />
+    <small class="p-error block" *ngIf="submitted && !profileGroup.ordering">
       Renditja është fushë e kërkuar.
     </small>
   </div>
+
 
   <div class="flex justify-content-end">
     <button
