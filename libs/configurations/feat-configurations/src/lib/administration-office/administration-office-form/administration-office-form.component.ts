@@ -79,7 +79,6 @@ export class AdministrationOfficeFormComponent {
       fileReader.onload = function () {
         // Will upload the base64 here.
         if (fileReader.result) {
-          console.log(fileReader.result);
           var parts = fileReader.result.toString().split(';base64,');
           let parsedBase64 = parts[1];
           that.administrationOffice.signature = parsedBase64 as string;
