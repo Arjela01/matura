@@ -11,6 +11,5 @@ export * from './lib/profile/profile-api.service';
 export * from './lib/profile-group/profile-group-api.service';
 export * from './lib/exam-version/exam-version-api.service';
 export * from './lib/menu/menu-api.service';
-export * from './lib/region/regions-api.service';
 export * from './lib/exam-type/exam-type-api.service';
 export * from './lib/profile-group/profile-group-api.service';
