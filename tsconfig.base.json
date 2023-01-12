@@ -29,13 +29,24 @@
       "@msh/configurations/ui-configurations": [
         "libs/configurations/ui-configurations/src/index.ts"
       ],
+      "@msh/evaluations/data-access-evaluations": [
+        "libs/evaluations/data-access-evaluations/src/index.ts"
+      ],
+      "@msh/evaluations/domain-evaluations": [
+        "libs/evaluations/domain-evaluations/src/index.ts"
+      ],
+      "@msh/evaluations/feat-evaluations": [
+        "libs/evaluations/feat-evaluations/src/index.ts"
+      ],
       "@msh/feat-admin-shell": ["libs/feat-admin-shell/src/index.ts"],
       "@msh/feat-dashboard": ["libs/feat-dashboard/src/index.ts"],
+      "@msh/layout/data-access-layout": [
+        "libs/layout/data-access-layout/src/index.ts"
+      ],
+      "@msh/layout/domain-layout": ["libs/layout/domain-layout/src/index.ts"],
       "@msh/layout/feat-layout": ["libs/layout/feat-layout/src/index.ts"],
       "@msh/layout/util-layout": ["libs/layout/util-layout/src/index.ts"],
       "@msh/profile-group": ["libs/profile-group/src/index.ts"],
-      "@msh/layout/data-access-layout": ["libs/layout/data-access-layout/src/index.ts"],
-      "@msh/layout/domain-layout": ["libs/layout/domain-layout/src/index.ts"],
       "@msh/shared/assets": ["libs/shared/assets/src/index.ts"],
       "@msh/shared/data-access-shared": [
         "libs/shared/data-access-shared/src/index.ts"
