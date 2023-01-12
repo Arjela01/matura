@@ -22,4 +22,11 @@ export const CONFIGURATION_ROUTES: Route[] = [
         './exam-type/manage-exam-type/manage-exam-type.component'
         ).then(m => m.ManageExamTypeComponent),
   },
+  {
+    path: 'region',
+    loadComponent: () =>
+      import('./regions/manage-regions/manage-regions.component').then(
+        m => m.ManageRegionsComponent
+      ),
+  },
 ];
