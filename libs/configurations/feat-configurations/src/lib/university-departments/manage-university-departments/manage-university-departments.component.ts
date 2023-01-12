@@ -9,10 +9,9 @@ import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
 import {
-  RegionsApiService,
+  UniversityApiService
 } from '@msh/configurations/data-access-configurations';
 import { Region } from '@msh/configurations/domain-configurations';
-
 
 import {
   GlobalToastService,
@@ -21,41 +20,43 @@ import {
 } from '@msh/shared/util-shared';
 
 import { BehaviorSubject } from 'rxjs';
-import { RegionFormComponent } from '../region-form/region-form.component';
-import { RegionGridComponent } from '../region-grid/region-grid.component';
+import { UniversityDepartmentFormComponent } from '../university-department-form/university-department-form.component';
+import { UniversityDepartmentGridComponent } from '../university-department-grid/university-department-grid.component';
+import {RippleModule} from "primeng/ripple";
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-manage-regions',
+  selector: 'msh-manage-university-departments',
   standalone: true,
   imports: [
     ButtonModule,
     CommonModule,
     DialogModule,
     ConfirmDialogModule,
-    RegionGridComponent,
-    RegionFormComponent,
+    UniversityDepartmentGridComponent,
+    UniversityDepartmentFormComponent,
     ToolbarModule,
+    RippleModule,
   ],
-  templateUrl: './manage-regions.component.html',
-  styleUrls: ['./manage-regions.component.scss'],
+  templateUrl: './manage-university-departments.component.html',
+  styleUrls: ['./manage-university-departments.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageRegionsComponent {
+export class ManageUniversityDepartmentsComponent {
   private regions$$ = new BehaviorSubject<Region[]>([]);
   regions$ = this.regions$$.asObservable();
   filters: LazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedRegion: Region | null = null;
-  selectedRegions: Region[] = [];
+  selectedUniversities: Region[] = [];
   displayModal = false;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly regionService: RegionsApiService
+    private readonly universityService: UniversityApiService
   ) {
   }
 
@@ -67,7 +68,7 @@ export class ManageRegionsComponent {
     this.confirmationService.confirm({
       message: 'Jeni i sigurt që doni të fshini rajonet e zgjedhura?',
       accept: () => {
-        //this.regionStore.deleteSelectedRegions();
+        //this.regionStore.deleteSelectedUniversities();
         this.toastService.showWarning('Rajonet u fshin!');
       },
     });
@@ -76,24 +77,24 @@ export class ManageRegionsComponent {
   onGridEvent(event: GridEvent<Region | Region[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
-        this.selectedRegions = [
-          ...this.selectedRegions,
+        this.selectedUniversities = [
+          ...this.selectedUniversities,
           event.data as Region,
         ];
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
-        this.selectedRegions = this.selectedRegions.filter(r => {
+        this.selectedUniversities = this.selectedUniversities.filter(r => {
           r.id !== (event.data as Region).id;
         });
         break;
       case GRID_ACTIONS.SELECT_MANY:
-        this.selectedRegions = [
-          ...this.selectedRegions,
+        this.selectedUniversities = [
+          ...this.selectedUniversities,
           ...(event.data as Region[]),
         ];
         break;
       case GRID_ACTIONS.UNSELECT_ALL:
-        this.selectedRegions = [];
+        this.selectedUniversities = [];
         break;
       case GRID_ACTIONS.EDIT:
         this.selectedRegion = Object.assign({}, event.data as Region);
@@ -123,11 +124,11 @@ export class ManageRegionsComponent {
     }
   }
 
-  getRegions($event: LazyLoadEvent) {
+  getUniversities($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    this.regionService
-      .loadRegions($event)
+    this.universityService
+      .loadUniversities($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.regions$$.next(response.data);
@@ -137,14 +138,14 @@ export class ManageRegionsComponent {
   }
 
   addRegion(region: Region) {
-    this.regionService
+    this.universityService
       .save(region)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Rajoni u shtua me sukses!');
           this.displayModal = false;
-          this.getRegions(this.filters as LazyLoadEvent);
+          this.getUniversities(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
@@ -155,7 +156,7 @@ export class ManageRegionsComponent {
   }
 
   updateRegion(region: Region) {
-    this.regionService
+    this.universityService
       .update(region)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
@@ -164,7 +165,7 @@ export class ManageRegionsComponent {
             'Rajoni u ndryshua me sukses!'
           );
           this.displayModal = false;
-          this.getRegions(this.filters as LazyLoadEvent);
+          this.getUniversities(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
@@ -175,13 +176,13 @@ export class ManageRegionsComponent {
   }
 
   deleteRegion(region: Region) {
-    this.regionService
+    this.universityService
       .delete(region.id)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Rajoni u fshi me sukses!');
-          this.getRegions(this.filters as LazyLoadEvent);
+          this.getUniversities(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
@@ -190,5 +191,4 @@ export class ManageRegionsComponent {
           );
       });
   }
-
 }

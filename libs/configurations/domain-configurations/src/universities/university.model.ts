@@ -1,9 +1,8 @@
-
-export interface University {
+export interface UniversityDepartment {
   id: string;
   name: string;
 }
-export interface UniversityTableView {
-  data: University[];
+export interface UniversityDepartmentView {
+  data: UniversityDepartment[];
   total: number;
 }

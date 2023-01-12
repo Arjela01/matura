@@ -6,4 +6,5 @@ export * from './menu/menu.model';
 export * from './exam-type/exam-type.model';
 export * from './regions/region.model'
 export * from './universities/university.model'
+export * from './university-departments/university-department.model'
 

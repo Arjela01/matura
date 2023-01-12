@@ -32,12 +32,12 @@
         </div>
       </p-toolbar>
 
-      <msh-university-grid
+      <msh-university-department-grid
         [regions]="(regions$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
         (lazyLoadData)="getUniversities($event)">
-      </msh-university-grid>
+      </msh-university-department-grid>
     </div>
   </div>
 </div>
@@ -52,11 +52,11 @@
   class="p-fluid"
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
-    <msh-university-form
+    <msh-university-department-form
       [regionDetails]="selectedRegion"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
-    </msh-university-form>
+    </msh-university-department-form>
   </ng-template>
 </p-dialog>
 

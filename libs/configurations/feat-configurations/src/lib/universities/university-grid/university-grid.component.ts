@@ -17,7 +17,7 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
-  selector: 'msh-region-grid',
+  selector: 'msh-university-grid',
   standalone: true,
   imports: [
     CommonModule,
@@ -28,11 +28,11 @@ import { TooltipModule } from 'primeng/tooltip';
     CheckboxModule,
     RippleModule,
   ],
-  templateUrl: './region-grid.component.html',
-  styleUrls: ['./region-grid.component.scss'],
+  templateUrl: './university-grid.component.html',
+  styleUrls: ['./university-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegionGridComponent {
+export class UniversityGridComponent {
   @Input() regions: Region[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;

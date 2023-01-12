@@ -5,7 +5,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -20,7 +19,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 
 @Component({
-  selector: 'msh-region-form',
+  selector: 'msh-university-form',
   standalone: true,
   imports: [
     CommonModule,
@@ -33,11 +32,11 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     CheckboxModule,
     DropdownModule,
   ],
-  templateUrl: './region-form.component.html',
-  styleUrls: ['./region-form.component.scss'],
+  templateUrl: './university-form.component.html',
+  styleUrls: ['./university-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegionFormComponent {
+export class UniversityFormComponent {
 
   @Input() set regionDetails(details: Region | null) {
     if (details) {

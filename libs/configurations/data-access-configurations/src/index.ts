@@ -10,3 +10,5 @@ export * from './lib/menu/menu-api.service';
 export * from './lib/regions/regions-api.service'
 export * from './lib/exam-type/exam-type-api.service';
 export * from './lib/profile-group/profile-group-api.service';
+export * from './lib/universities/university-api.service';
+export * from './lib/university-departments/university-department-api.service';

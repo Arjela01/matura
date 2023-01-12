@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class UniversityApiService {
+export class UniversityDepartmentApiService {
   constructor(private apiService: APIService) {}
 
   loadUniversities(event: LazyLoadEvent): Observable<UniversityTableView> {

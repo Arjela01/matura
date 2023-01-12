@@ -1,4 +1,7 @@
 import {Route} from '@angular/router';
+import {
+  ManageUniversityDepartmentsComponent
+} from "./university-departments/manage-university-departments/manage-university-departments.component";
 
 export const CONFIGURATION_ROUTES: Route[] = [
   {
@@ -48,7 +51,14 @@ export const CONFIGURATION_ROUTES: Route[] = [
     path: 'university',
     loadComponent: () =>
       import('./universities/manage-universities/manage-universities.component').then(
-        m => m.ManageRegionsComponent
+        m => m.ManageUniversitiesComponent
+      ),
+  },
+  {
+    path: 'university-department',
+    loadComponent: () =>
+      import('./university-departments/manage-university-departments/manage-university-departments.component').then(
+        m => m.ManageUniversityDepartmentsComponent
       ),
   },
 ];

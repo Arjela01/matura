@@ -20,7 +20,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 
 @Component({
-  selector: 'msh-university-form',
+  selector: 'msh-university-department-form',
   standalone: true,
   imports: [
     CommonModule,
@@ -33,11 +33,11 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     CheckboxModule,
     DropdownModule,
   ],
-  templateUrl: './region-form.component.html',
-  styleUrls: ['./region-form.component.scss'],
+  templateUrl: './university-department-form.component.html',
+  styleUrls: ['./university-department-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegionFormComponent {
+export class UniversityDepartmentFormComponent {
 
   @Input() set regionDetails(details: Region | null) {
     if (details) {
