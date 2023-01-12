@@ -37,4 +37,11 @@ export const CONFIGURATION_ROUTES: Route[] = [
         m => m.ManageRegionsComponent
       ),
   },
+  {
+    path: 'city',
+    loadComponent: () =>
+      import('./cities/manage-cities/manage-cities.component').then(
+        m => m.ManageCitiesComponent
+      ),
+  },
 ];

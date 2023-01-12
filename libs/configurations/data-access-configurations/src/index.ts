@@ -8,3 +8,4 @@ export * from './lib/profile-group/profile-group-api.service'
 export * from './lib/menu/menu-api.service';
 export * from './lib/regions/regions-api.service'
 
+export * from './lib/cities/cities-api.service'

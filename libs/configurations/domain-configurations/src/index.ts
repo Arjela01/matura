@@ -5,3 +5,4 @@ export * from './menu/menu.model';
 export * from './exam-type/exam-type.model';
 export * from './regions/region.model'
 
+export * from './cities/cities.model'
