@@ -52,12 +52,12 @@
           field="numberOfQuestions"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="profileGroup">
+      <th pSortableColumn="profileGroupName">
         Grupi i Profileve
-        <p-sortIcon field="profileGroup"></p-sortIcon>
+        <p-sortIcon field="profileGroupName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="profileGroup"
+          field="profileGroupName"
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="variant">
@@ -68,12 +68,12 @@
           field="variant"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="examType">
+      <th pSortableColumn="examTypeName">
         Tipi i Provimit
-        <p-sortIcon field="examType"></p-sortIcon>
+        <p-sortIcon field="examTypeName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="examType"
+          field="examTypeName"
           display="menu"></p-columnFilter>
       </th>
       <th></th>
@@ -91,7 +91,13 @@
         {{ examVersion.numberOfQuestions }}
       </td>
       <td style="width: 14%; min-width: 10rem">
+        {{ examVersion.profileGroupName}}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
         {{ examVersion.variant }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ examVersion.examTypeName}}
       </td>
       <td>
         <div class="flex">
