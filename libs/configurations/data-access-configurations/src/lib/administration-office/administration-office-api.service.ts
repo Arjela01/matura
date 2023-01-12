@@ -16,6 +16,11 @@ export class AdministrationOfficeApiService {
       `/AdministrationOffice/DropdownList`
     );
   }
+  loadOnlyDars(): Observable<ApiResult<DropdownModel<number>[]>> {
+    return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
+      `/AdministrationOffice/IsDarDropdown`
+    );
+  }
   loadAdministrationOffices(event: LazyLoadEvent): Observable<AdministrationOfficeTableView> {
     return this.apiService.post(`/AdministrationOffice/TableData`, event);
   }

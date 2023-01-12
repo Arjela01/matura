@@ -18,45 +18,54 @@
                 <p-tableHeaderCheckbox (click)="onSelectAllClick()">
                 </p-tableHeaderCheckbox>
             </th>
-
+            <th pSortableColumn="parentOfficeName">
+                DAR
+                <p-sortIcon field="parentOfficeId"></p-sortIcon>
+                <p-columnFilter type="text" field="parentOfficeId" display="menu"></p-columnFilter>
+            </th>
             <th pSortableColumn="name">
                 Emri
                 <p-sortIcon field="name"></p-sortIcon>
                 <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+            </th>
+            <th pSortableColumn="isRegionalOffice">
+                Eshte DAR
+                <p-sortIcon field="isRegionalOffice"></p-sortIcon>
             </th>
             <th pSortableColumn="directorName">
                 Emri i drejtorit
                 <p-sortIcon field="directorName"></p-sortIcon>
                 <p-columnFilter type="text" field="directorName" display="menu"></p-columnFilter>
             </th>
-            <th pSortableColumn="isRegionalOffice">
-                Zyrë rajonale
-                <p-sortIcon field="isRegionalOffice"></p-sortIcon>
+         
+            <th pSortableColumn="cityName">
+                Qyteti
+                <p-sortIcon field="cityName"></p-sortIcon>
+                <p-columnFilter type="text" field="cityName" display="menu"></p-columnFilter>
             </th>
-          
-          
+            <th></th>
     </ng-template>
     <ng-template pTemplate="body" let-administrationOffice>
         <tr>
             <td>
                 <p-tableCheckbox [value]="administrationOffice"></p-tableCheckbox>
             </td>
-         
+            <td style="width: 20%; min-width: 10rem">
+                {{ administrationOffice.parentOfficeName }}
+            </td>
             <td style="width: 20%; min-width: 10rem">
                 {{ administrationOffice.name }}
             </td>
             <td style="width: 20%; min-width: 10rem">
-                {{ administrationOffice.isPublic ? 'Po' : 'Jo' }}
+                {{ administrationOffice.isRegionalOffice ? 'Po':'Jo' }}
             </td>
             <td style="width: 20%; min-width: 10rem">
                 {{ administrationOffice.directorName }}
             </td>
             <td style="width: 20%; min-width: 10rem">
-                {{ administrationOffice.regionName }}
+                {{ administrationOffice.cityName }}
             </td>
-            <td style="width: 20%; min-width: 10rem">
-                {{ administrationOffice.isRegionalOffice ? 'Po':'Jo' }}
-            </td>
+         
             <td>
                 <div class="flex">
                     <button pButton pRipple icon="pi pi-pencil"

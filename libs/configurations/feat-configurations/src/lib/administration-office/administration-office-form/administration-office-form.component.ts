@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   Output,
@@ -18,6 +19,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
+import { FileUploadModule } from 'primeng/fileupload';
 
 @Component({
   selector: 'msh-administration-office-form',
@@ -32,6 +34,7 @@ import { DropdownModule } from 'primeng/dropdown';
     ButtonModule,
     CheckboxModule,
     DropdownModule,
+    FileUploadModule,
   ],
   templateUrl: './administration-office-form.component.html',
   styleUrls: ['./administration-office-form.component.scss'],
@@ -39,7 +42,7 @@ import { DropdownModule } from 'primeng/dropdown';
 })
 export class AdministrationOfficeFormComponent {
   @Input() cities: DropdownModel<number>[] = [];
-
+  @Input() dars: DropdownModel<number>[] = [];
   @Input() set administrativeOffices(details: AdministrationOffice | null) {
     if (details) {
       this.administrationOffice = Object.assign({}, details);
@@ -47,10 +50,8 @@ export class AdministrationOfficeFormComponent {
   }
   @Output() formSave = new EventEmitter<AdministrationOffice>();
   @Output() formClose = new EventEmitter<undefined>();
-
+  uploaded = false;
   @ViewChild('form', { static: true }) form!: NgForm;
-
-  citiesFiltered: DropdownModel<number>[] = [];
 
   submitted = false;
 
@@ -59,22 +60,41 @@ export class AdministrationOfficeFormComponent {
     name: '',
     isRegionalOffice: false,
     directorName: '',
-    signature:'',
+    signature: '',
+    cityId: 0,
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor(private cd: ChangeDetectorRef) {}
 
-
   onCancelClick() {
     this.formClose.emit();
+  }
+  selectFiles(event: any) {
+    let that = this;
+    let fileReader = new FileReader();
+    for (let file of event.files) {
+      fileReader.readAsDataURL(file);
+      that.uploaded = true;
+      fileReader.onload = function () {
+        // Will upload the base64 here.
+        if (fileReader.result) {
+          console.log(fileReader.result);
+          var parts = fileReader.result.toString().split(';base64,');
+          let parsedBase64 = parts[1];
+          that.administrationOffice.signature = parsedBase64 as string;
+        }
+      };
+    }
   }
 
   onSubmit() {
     this.submitted = true;
-    if (this.form.valid) {
+    if (this.form.valid && this.administrationOffice.signature) {
+      if (this.administrationOffice.id === 0) {
+        delete this.administrationOffice.id;
+      }
       this.formSave.emit(this.administrationOffice);
     }
   }
-
 }

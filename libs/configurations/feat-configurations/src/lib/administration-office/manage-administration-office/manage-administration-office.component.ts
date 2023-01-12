@@ -14,7 +14,7 @@ import {
   AdministrationOfficeApiService,
   CityApiService,
 } from '@msh/configurations/data-access-configurations';
-import { untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { DialogModule } from 'primeng/dialog';
 import { AdministrationOfficeFormComponent } from '../administration-office-form/administration-office-form.component';
 import { AdministrationOfficeGridComponent } from '../administration-office-grid/administration-office-grid.component';
@@ -38,6 +38,7 @@ import { ToolbarModule } from 'primeng/toolbar';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
+@UntilDestroy()
 export class ManageAdministrationOfficeComponent {
   private administrativeOffices$$ = new BehaviorSubject<AdministrationOffice[]>(
     []
@@ -51,6 +52,7 @@ export class ManageAdministrationOfficeComponent {
   displayModal = false;
 
   cities: DropdownModel<number>[] = [];
+  dars: DropdownModel<number>[] = [];
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -61,6 +63,7 @@ export class ManageAdministrationOfficeComponent {
 
   ngOnInit(): void {
     this.getCitiesDropdown();
+    this.getAdministrationOfficeDropdown();
   }
 
   onNewClick() {
@@ -121,6 +124,7 @@ export class ManageAdministrationOfficeComponent {
 
   onModalClose() {
     this.displayModal = false;
+    this.selectedAdministrativeOffice = null;
   }
 
   onFormSave(administrationOffices: AdministrationOffice) {
@@ -152,6 +156,7 @@ export class ManageAdministrationOfficeComponent {
         if (response.isSuccessful) {
           this.toastService.showSuccess('DAR/ZA u shtua me sukses!');
           this.displayModal = false;
+          this.getAdministrationOffices(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
@@ -181,7 +186,7 @@ export class ManageAdministrationOfficeComponent {
 
   deleteAdministrationOffices(administrationOffice: AdministrationOffice) {
     this.administrationOfficeApiService
-      .delete(administrationOffice.id)
+      .delete(administrationOffice.id as number)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
@@ -200,5 +205,13 @@ export class ManageAdministrationOfficeComponent {
     this.cityApiService.loadDropdownList().subscribe(response => {
       this.cities = response.data;
     });
+  }
+  getAdministrationOfficeDropdown() {
+    this.administrationOfficeApiService
+      .loadOnlyDars()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.dars = response.data;
+      });
   }
 }
