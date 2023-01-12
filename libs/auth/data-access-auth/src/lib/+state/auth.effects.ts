@@ -62,7 +62,11 @@ export class AuthEffects {
           }),
           catchError((error: HttpErrorResponse) => {
             //TODO: This can be handled better if better API response
-            if (error.error.includes('username')) {
+            if (
+              error.error &&
+              error.error.includes &&
+              error.error.includes('username')
+            ) {
               return of(
                 AuthActions.loginFailure({
                   error: new Error('Përdorues/fjalëkalim i gabuar.'),
