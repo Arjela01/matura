@@ -1,0 +1,50 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="Name">Emri *</label>
+    <input
+      type="text"
+      pInputText
+      id="Name"
+      name="Name"
+      [(ngModel)]="profileGroup.name"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !profileGroup.name }" />
+    <small class="p-error block" *ngIf="submitted && !profileGroup.name">
+      Emri është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Ordering">Renditja *</label>
+    <input
+      type="number"
+      pInputText
+      id="Ordering"
+      name="Ordering"
+      [(ngModel)]="profileGroup.ordering"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !profileGroup.ordering }" />
+    <small class="p-error block" *ngIf="submitted && !profileGroup.ordering">
+      Renditja është fushë e kërkuar.
+    </small>
+  </div>
+
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Cancel"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      type="submit"
+      pButton
+      icon="pi pi-check"
+      label="Save"
+      class="p-button-text w-auto"></button>
+  </div>
+</form>
