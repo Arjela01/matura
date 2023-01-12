@@ -71,17 +71,16 @@ export class AdministrationOfficeFormComponent {
     this.formClose.emit();
   }
   selectFiles(event: any) {
-    let that = this;
-    let fileReader = new FileReader();
-    for (let file of event.files) {
+    const fileReader = new FileReader();
+    for (const file of event.files) {
       fileReader.readAsDataURL(file);
-      that.uploaded = true;
-      fileReader.onload = function () {
+      this.uploaded = true;
+      fileReader.onload = () => {
         // Will upload the base64 here.
         if (fileReader.result) {
-          var parts = fileReader.result.toString().split(';base64,');
-          let parsedBase64 = parts[1];
-          that.administrationOffice.signature = parsedBase64 as string;
+          const parts = fileReader.result.toString().split(';base64,');
+          const parsedBase64 = parts[1];
+          this.administrationOffice.signature = parsedBase64 as string;
         }
       };
     }
