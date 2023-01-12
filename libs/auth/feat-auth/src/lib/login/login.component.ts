@@ -45,6 +45,6 @@ export class LoginComponent {
       return;
     }
 
-    this.authFacade.login(this.loginFormModel);
+    this.authFacade.login(Object.assign({}, this.loginFormModel));
   }
 }
