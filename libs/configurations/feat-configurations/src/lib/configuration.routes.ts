@@ -23,4 +23,11 @@ export const CONFIGURATION_ROUTES: Route[] = [
         m => m.ManageMenusComponent
       ),
   },
+  {
+    path: 'region',
+    loadComponent: () =>
+      import('./regions/manage-regions/manage-regions.component').then(
+        m => m.ManageRegionsComponent
+      ),
+  },
 ];
