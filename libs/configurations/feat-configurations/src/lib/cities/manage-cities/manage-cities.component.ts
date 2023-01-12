@@ -8,8 +8,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
-import { CitiesApiService } from '@msh/configurations/data-access-configurations'
 import {
+  CitiesApiService,
   RegionApiService,
 } from '@msh/configurations/data-access-configurations';
 import { City } from '@msh/configurations/domain-configurations';
