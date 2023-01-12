@@ -21,8 +21,8 @@ import {
 } from '@msh/shared/util-shared';
 
 import { BehaviorSubject } from 'rxjs';
-import { RegionFormComponent } from '../region-form/region-form.component';
-import { RegionGridComponent } from '../region-grid/region-grid.component';
+import { RegionFormComponent } from '../university-form/region-form.component';
+import { RegionGridComponent } from '../university-grid/region-grid.component';
 
 @UntilDestroy()
 @Component({
@@ -37,12 +37,12 @@ import { RegionGridComponent } from '../region-grid/region-grid.component';
     RegionFormComponent,
     ToolbarModule,
   ],
-  templateUrl: './manage-regions.component.html',
-  styleUrls: ['./manage-regions.component.scss'],
+  templateUrl: './manage-universities.component.html',
+  styleUrls: ['./manage-universities.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageRegionsComponent {
+export class ManageUniversitiesComponent {
   private regions$$ = new BehaviorSubject<Region[]>([]);
   regions$ = this.regions$$.asObservable();
   filters: LazyLoadEvent | null = null;

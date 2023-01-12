@@ -44,4 +44,11 @@ export const CONFIGURATION_ROUTES: Route[] = [
         m => m.ManageRegionsComponent
       ),
   },
+  {
+    path: 'university',
+    loadComponent: () =>
+      import('./universities/manage-universities/manage-universities.component').then(
+        m => m.ManageRegionsComponent
+      ),
+  },
 ];
