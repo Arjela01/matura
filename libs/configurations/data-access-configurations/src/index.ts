@@ -11,7 +11,6 @@ export * from './lib/profile-group/profile-group-api.service';
 export * from './lib/profile/profile-api.service';
 export * from './lib/region/region-api.service';
 export * from './lib/region/regions-api.service';
-export * from './lib/regions/regions-api.service';
 export * from './lib/study-program/study-program-api.service';
 export * from './lib/university-department/university-department-api.service';
 export * from './lib/university/university-api.service';
