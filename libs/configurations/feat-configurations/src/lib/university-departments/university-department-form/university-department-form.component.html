@@ -7,11 +7,11 @@
       pInputText
       id="Name"
       name="Name"
-      [(ngModel)]="region.name"
+      [(ngModel)]="universityDepartment.name"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !region.name }" />
-    <small class="p-error block" *ngIf="submitted && !region.name">
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !universityDepartment.name }" />
+    <small class="p-error block" *ngIf="submitted && !universityDepartment.name">
       Emri është fushë e kërkuar.
     </small>
   </div>

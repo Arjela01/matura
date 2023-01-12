@@ -26,7 +26,7 @@
           pInputText
           type="text"
           placeholder="Kërko..."
-          class="w-full sm:w-auto" />
+          class="w-full sm:w-auto"/>
       </span>
     </div>
   </ng-template>
@@ -44,6 +44,22 @@
           field="name"
           display="menu"></p-columnFilter>
       </th>
+      <th pSortableColumn="RegionName">
+        Rrethi
+        <p-sortIcon field="regionName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="regionName"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="CityName">
+        Qyteti
+        <p-sortIcon field="cityName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="cityName"
+          display="menu"></p-columnFilter>
+      </th>
       <th></th>
     </tr>
   </ng-template>
@@ -55,6 +71,12 @@
 
       <td style="width: 14%; min-width: 10rem">
         {{ university.name }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ university.regionName }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ university.cityName }}
       </td>
       <td>
         <div class="flex">

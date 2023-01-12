@@ -20,7 +20,7 @@ import { BehaviorSubject } from 'rxjs';
 import { RippleModule } from 'primeng/ripple';
 import { UniversityDepartmentGridComponent } from '../university-department-grid/university-department-grid.component';
 import { UniversityDepartmentFormComponent } from '../university-department-form/university-department-form.component';
-import {UniversityDepartmentApiService} from "@msh/configurations/data-access-configurations";
+import { UniversityDepartmentApiService } from '@msh/configurations/data-access-configurations';
 
 @UntilDestroy()
 @Component({
@@ -50,9 +50,8 @@ export class ManageUniversityDepartmentsComponent {
 
   totalRecords = 0;
   selectedUniversityDepartment: UniversityDepartment | null = null;
-  selectedUniversities: UniversityDepartment[] = [];
+  selectedUniversityDepartments: UniversityDepartment[] = [];
   displayModal = false;
-  selectedRegion: any;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -77,24 +76,25 @@ export class ManageUniversityDepartmentsComponent {
   onGridEvent(event: GridEvent<UniversityDepartment | UniversityDepartment[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
-        this.selectedUniversities = [
-          ...this.selectedUniversities,
+        this.selectedUniversityDepartments = [
+          ...this.selectedUniversityDepartments,
           event.data as UniversityDepartment,
         ];
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
-        this.selectedUniversities = this.selectedUniversities.filter(r => {
-          r.id !== (event.data as UniversityDepartment).id;
-        });
+        this.selectedUniversityDepartments =
+          this.selectedUniversityDepartments.filter(r => {
+            r.id !== (event.data as UniversityDepartment).id;
+          });
         break;
       case GRID_ACTIONS.SELECT_MANY:
-        this.selectedUniversities = [
-          ...this.selectedUniversities,
+        this.selectedUniversityDepartments = [
+          ...this.selectedUniversityDepartments,
           ...(event.data as UniversityDepartment[]),
         ];
         break;
       case GRID_ACTIONS.UNSELECT_ALL:
-        this.selectedUniversities = [];
+        this.selectedUniversityDepartments = [];
         break;
       case GRID_ACTIONS.EDIT:
         this.selectedUniversityDepartment = Object.assign(

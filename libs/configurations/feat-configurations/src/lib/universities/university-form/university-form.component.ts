@@ -4,8 +4,8 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input,
-  Output,
+  Input, OnChanges, OnInit,
+  Output, SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -37,7 +37,7 @@ import {DropdownModel} from "@msh/shared/data-access-shared";
   styleUrls: ['./university-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UniversityFormComponent {
+export class UniversityFormComponent implements OnChanges {
   @Input() set universityDetails(details: University | null) {
     if (details) {
       this.university = Object.assign({}, details);
@@ -66,7 +66,7 @@ export class UniversityFormComponent {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor() {}
 
   onCancelClick() {
     this.formClose.emit();
@@ -81,5 +81,13 @@ export class UniversityFormComponent {
 
   onRegionChange($event: any) {
     this.citiesFiltered = this.cities.filter(c => c.parentKey == $event.value);
+  }
+
+  filterCities(): void {
+    this.citiesFiltered = this.cities.filter(c => c.parentKey == this.university?.regionId);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.filterCities();
   }
 }

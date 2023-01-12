@@ -38,7 +38,7 @@ export class UniversityDepartmentGridComponent {
   @Input() loading = false;
 
   //Keep it local state because of Table Header checkbox not syncing
-  selectedRegions: UniversityDepartment[] = [];
+  selectedUniversityDepartments: UniversityDepartment[] = [];
 
   @Output() gridEvent = new EventEmitter<
     GridEvent<UniversityDepartment | UniversityDepartment[]>
@@ -61,14 +61,14 @@ export class UniversityDepartmentGridComponent {
   }
 
   onSelectAllClick() {
-    if (this.selectedRegions.length === 0) {
+    if (this.selectedUniversityDepartments.length === 0) {
       this.gridEvent.emit({
         action: GRID_ACTIONS.UNSELECT_ALL,
       } as GridEvent<UniversityDepartment>);
     } else {
       this.gridEvent.emit({
         action: GRID_ACTIONS.SELECT_MANY,
-        data: this.selectedRegions,
+        data: this.selectedUniversityDepartments,
       } as GridEvent<UniversityDepartment[]>);
     }
   }

@@ -18,7 +18,7 @@
               label="Fshi"
               icon="pi pi-trash"
               class="p-button-danger"
-              [disabled]="selectedUniversities.length === 0"
+              [disabled]="selectedUniversityDepartments.length === 0"
               (click)="onDeleteSelectedClick()"></button>
           </div>
         </div>
@@ -53,7 +53,7 @@
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
     <msh-university-department-form
-      [regionDetails]="selectedRegion"
+      [universityDepartmentDetails]="selectedUniversityDepartment"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
     </msh-university-department-form>

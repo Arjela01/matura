@@ -10,7 +10,7 @@
   [showCurrentPageReport]="true"
   currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
   [rowHover]="true"
-  [(selection)]="selectedRegions"
+  [(selection)]="selectedUniversityDepartments"
   selectionMode="multiple"
   (onRowSelect)="onRowSelect($event)"
   (onRowUnselect)="onRowUnselect($event)"
@@ -44,17 +44,28 @@
           field="name"
           display="menu"></p-columnFilter>
       </th>
+      <th pSortableColumn="name">
+        Universiteti
+        <p-sortIcon field="university"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="university"
+          display="menu"></p-columnFilter>
+      </th>
       <th></th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-city>
+  <ng-template pTemplate="body" let-universityDepartment>
     <tr>
       <td>
-        <p-tableCheckbox [value]="city"></p-tableCheckbox>
+        <p-tableCheckbox [value]="universityDepartment"></p-tableCheckbox>
       </td>
 
       <td style="width: 14%; min-width: 10rem">
-        {{ city.name }}
+        {{ universityDepartment.name }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ universityDepartment.universityName }}
       </td>
       <td>
         <div class="flex">
@@ -65,7 +76,7 @@
             class="p-button-rounded p-button-warning p-button-text mr-2"
             pTooltip="Ndrysho"
             tooltipPosition="bottom"
-            (click)="onEditClick(city)"></button>
+            (click)="onEditClick(universityDepartment)"></button>
           <button
             pButton
             pRipple
@@ -73,7 +84,7 @@
             class="p-button-rounded p-button-danger p-button-text"
             pTooltip="Fshi"
             tooltipPosition="bottom"
-            (click)="onDeleteClick(city)"></button>
+            (click)="onDeleteClick(universityDepartment)"></button>
         </div>
       </td>
     </tr>

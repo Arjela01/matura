@@ -10,7 +10,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { Region } from '@msh/configurations/domain-configurations';
+import { UniversityDepartment } from '@msh/configurations/domain-configurations';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
@@ -38,28 +38,28 @@ import { RadioButtonModule } from 'primeng/radiobutton';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UniversityDepartmentFormComponent {
-
-  @Input() set regionDetails(details: Region | null) {
+  @Input() set universityDepartmentDetails(
+    details: UniversityDepartment | null
+  ) {
     if (details) {
-      this.region = Object.assign({}, details);
+      this.universityDepartment = Object.assign({}, details);
     }
   }
 
-  @Output() formSave = new EventEmitter<Region>();
+  @Output() formSave = new EventEmitter<UniversityDepartment>();
   @Output() formClose = new EventEmitter<undefined>();
 
-  @ViewChild('form', {static: true}) form!: NgForm;
+  @ViewChild('form', { static: true }) form!: NgForm;
 
   submitted = false;
 
-  region: Region = {
+  universityDepartment: UniversityDepartment = {
     id: '',
     name: '',
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private cd: ChangeDetectorRef) {
-  }
+  constructor(private cd: ChangeDetectorRef) {}
 
   onCancelClick() {
     this.formClose.emit();
@@ -68,8 +68,7 @@ export class UniversityDepartmentFormComponent {
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
-      this.formSave.emit(this.region);
+      this.formSave.emit(this.universityDepartment);
     }
   }
-
 }

@@ -36,8 +36,8 @@ export class AuthEffects {
             filter(event => event instanceof NavigationEnd),
             tap(e => {
               const url = (e as NavigationEnd).url;
-              if (url.includes('/login')) this.router.navigate(['/']);
-              this.router.navigate([url]);
+              // if (url.includes('/login')) this.router.navigate(['/']);
+              // this.router.navigate([url]);
             })
           )
         )
