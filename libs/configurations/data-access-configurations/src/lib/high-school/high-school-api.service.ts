@@ -3,16 +3,22 @@ import {
   HighSchool,
   HighSchoolTableView,
 } from '@msh/configurations/domain-configurations';
-import { ApiResult } from '@msh/shared/data-access-shared';
+import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HighSchoolApiService {
   constructor(private apiService: APIService) {}
+
+  loadDropDownList(): Observable<ApiResult<DropdownModel<number>[]>> {
+    return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
+      '/HighSchool/DropdownList'
+    );
+  }
 
   loadHighSchools(event: LazyLoadEvent): Observable<HighSchoolTableView> {
     return this.apiService.post(`/HighSchool/TableData`, event);

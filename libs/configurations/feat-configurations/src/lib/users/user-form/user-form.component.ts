@@ -5,6 +5,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -39,13 +40,15 @@ import { RadioButtonModule } from 'primeng/radiobutton';
   styleUrls: ['./user-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserFormComponent {
+export class UserFormComponent implements OnChanges {
   @Input() cities: DropdownModel<number>[] = [];
   @Input() administrationOffices: DropdownModel<number>[] = [];
   @Input() universityDepartments: DropdownModel<number>[] = [];
   @Input() highSchools: DropdownModel<number>[] = [];
   @Input() studyPrograms: DropdownModel<number>[] = [];
   @Input() universities: DropdownModel<number>[] = [];
+
+  universityDepartmentsFiltered: DropdownModel<number>[] = [];
 
   @Input() set userDetails(details: User | null) {
     if (details) {
@@ -64,12 +67,8 @@ export class UserFormComponent {
   user: User = {
     id: 0,
     displayName: '',
-    administrationOffice: '',
-    universityDepartment: '',
     fileName: '',
-    highSchool: '',
     lastName: '',
-    nodes: [],
     password: '',
     userName: '',
     lastPasswordChange: new Date(),
@@ -78,11 +77,17 @@ export class UserFormComponent {
     studentId: null,
     studyProgramId: 0,
     universityId: 0,
+    universityDepartmentId: 0,
     validFrom: undefined,
     validTo: undefined,
   };
 
   constructor(private cd: ChangeDetectorRef) {}
+
+  ngOnChanges(): void {
+    this.onUniversityChange({ value: this.user.universityId });
+    console.log(this.user.universityId);
+  }
 
   onCancelClick() {
     this.formClose.emit();
@@ -93,6 +98,12 @@ export class UserFormComponent {
     if (this.form.valid) {
       this.formSave.emit(this.user);
     }
-    //console.log(this.form.value);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onUniversityChange($event: any) {
+    this.universityDepartmentsFiltered = this.universityDepartments.filter(
+      x => x.parentKey == $event.value
+    );
   }
 }

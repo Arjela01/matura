@@ -51,7 +51,7 @@
   </div>
 
   <div class="field">
-    <label class="mb-3">Eshte 2 vjecar? *</label>
+    <label class="mb-3">Është 2 vjecar? *</label>
     <div class="formgrid grid">
       <div class="field-radiobutton col-6">
         <p-radioButton
@@ -73,7 +73,7 @@
   </div>
 
   <div class="field">
-    <label class="mb-3">Eshte e gatshme per gare? *</label>
+    <label class="mb-3">Është e gatshme për garë? *</label>
     <div class="formgrid grid">
       <div class="field-radiobutton col-6">
         <p-radioButton
@@ -95,7 +95,7 @@
   </div>
 
   <div class="field">
-    <label class="mb-3">Eshte me konkurim? *</label>
+    <label class="mb-3">Është me konkurim? *</label>
     <div class="formgrid grid">
       <div class="field-radiobutton col-6">
         <p-radioButton
@@ -173,7 +173,7 @@
   </div>
 
   <div class="field">
-    <label for="usedQuota">Kuotat e zena *</label>
+    <label for="usedQuota">Kuotat e zëna *</label>
     <input
       type="number"
       pInputText
@@ -191,7 +191,7 @@
   </div>
 
   <div class="field">
-    <label for="studentScores">Piket e studentit *</label>
+    <label for="studentScores">Pikët e studentit *</label>
     <input
       type="number"
       pInputText
@@ -206,7 +206,7 @@
     <small
       class="p-error block"
       *ngIf="submitted && !studyProgram.studentScores">
-      Piket e studentit është fushë e kërkuar.
+      Pikët e studentit është fushë e kërkuar.
     </small>
   </div>
 
@@ -232,7 +232,7 @@
   </div>
 
   <div class="field">
-    <label for="universityDepartmentId">Departament Universitar *</label>
+    <label for="universityDepartmentId">Fakulteti *</label>
     <p-dropdown
       id="universityDepartmentId"
       [options]="universityDepartmentsFiltered"
@@ -247,7 +247,7 @@
     <small
       class="p-error block"
       *ngIf="submitted && !studyProgram.universityDepartmentId">
-      Departamenti Universitar është fushë e kërkuar.
+      Fakulteti është fushë e kërkuar.
     </small>
   </div>
 
@@ -272,7 +272,7 @@
   </div>
 
   <div class="field">
-    <label for="competitionMaxScore">Piket maksimale te kompeticionit *</label>
+    <label for="competitionMaxScore">Pikët maksimale të kompeticionit *</label>
     <input
       type="number"
       pInputText
@@ -287,12 +287,12 @@
     <small
       class="p-error block"
       *ngIf="submitted && !studyProgram.competitionMaxScore">
-      Piket maksimale te kompeticionit është fushë e kërkuar.
+      Pikët maksimale të kompeticionit është fushë e kërkuar.
     </small>
   </div>
 
   <div class="field">
-    <label for="competitionMinScore">Piket minimale te kompeticionit *</label>
+    <label for="competitionMinScore">Pikët minimale të kompeticionit *</label>
     <input
       type="number"
       pInputText
@@ -307,7 +307,7 @@
     <small
       class="p-error block"
       *ngIf="submitted && !studyProgram.competitionMinScore">
-      Koeficienti i kompeticionit është fushë e kërkuar.
+      Pikët minimale të kompeticionit është fushë e kërkuar.
     </small>
   </div>
 

@@ -1,86 +1,4 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
-  <!-- <div class="field">
-    <label for="displayName">Emri</label>
-    <input
-      type="text"
-      pInputText
-      id="displayName"
-      name="displayName"
-      [(ngModel)]="user1.displayName"
-      required
-      autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !user.displayName }" />
-    <small class="p-error block" *ngIf="submitted && !user.displayName">
-      Emri eshte i detyruar.
-    </small>
-  </div> -->
-
-  <!-- <div class="field">
-    <label for="AdministrationOffice">DAR/ZA *</label>
-    <p-dropdown
-      id="AdministrationOffice"
-      [options]="administrationOffices"
-      optionValue="key"
-      optionLabel="value"
-      name="administrationOfficeId"
-      [autoDisplayFirst]="false"
-      [(ngModel)]="user.administrationOffice"
-      [showClear]="true"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.administrationOffice
-      }">
-    </p-dropdown>
-    <small
-      class="p-error block"
-      *ngIf="submitted && !user.administrationOffice">
-      DAR/ZA është fushë e kërkuar.
-    </small>
-  </div> -->
-
-  <!-- <div class="field">
-    <label for="universityDepartment">Departamenti Univeristar</label>
-    <p-dropdown
-      id="universityDepartment"
-      [options]="universityDepartments"
-      optionValue="key"
-      optionLabel="value"
-      name="universityDepartment"
-      [autoDisplayFirst]="false"
-      [(ngModel)]="user.universityDepartment"
-      [showClear]="true"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.universityDepartment
-      }">
-    </p-dropdown>
-    <small
-      class="p-error block"
-      *ngIf="submitted && !user.universityDepartment">
-      Departamenti Univeristar është fushë e kërkuar.
-    </small>
-  </div> -->
-
-  <!-- <div class="field">
-    <label for="highSchool">Shkolla e Mesme</label>
-    <p-dropdown
-      id="highSchool"
-      [options]="highSchools"
-      optionValue="key"
-      optionLabel="value"
-      name="highSchoolId"
-      [autoDisplayFirst]="false"
-      [(ngModel)]="user.highSchool"
-      [showClear]="true"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.highSchool
-      }">
-    </p-dropdown>
-    <small
-      class="p-error block"
-      *ngIf="submitted && !user.universityDepartment">
-      Departamenti Univeristar është fushë e kërkuar.
-    </small>
-  </div> -->
-
   <div class="field">
     <label for="fileName">File Name *</label>
     <input
@@ -136,7 +54,7 @@
   </div>
 
   <div class="field">
-    <label for="Name">overseerCode *</label>
+    <label for="Name">Kodi I Mbikqyresit *</label>
     <input
       type="text"
       pInputText
@@ -149,7 +67,7 @@
         'ng-invalid ng-dirty': submitted && !user.overseerCode
       }" />
     <small class="p-error block" *ngIf="submitted && !user.overseerCode">
-      overseerCode is required.
+      Kodi I Mbikqyresit eshte fushe e kerkuar.
     </small>
   </div>
 
@@ -162,13 +80,10 @@
       name="studentId"
       [(ngModel)]="user.studentId"
       autofocus />
-    <!-- <small class="p-error block" *ngIf="submitted && !user.studentId">
-      studentId is required.
-    </small> -->
   </div>
 
   <div class="field">
-    <label for="studyProgramId">Id e Programit te Studimit</label>
+    <label for="studyProgramId">Programi i Studimit</label>
     <p-dropdown
       id="studyProgramId"
       [options]="studyPrograms"
@@ -182,27 +97,14 @@
   </div>
 
   <div class="field">
-    <label for="nodes">Menu Nodes *</label>
-    <p-dropdown
-      id="nodes"
-      [options]="studyPrograms"
-      optionValue="key"
-      optionLabel="value"
-      name="nodes"
-      [autoDisplayFirst]="false"
-      [(ngModel)]="user.nodes"
-      [showClear]="true">
-    </p-dropdown>
-  </div>
-
-  <div class="field">
-    <label for="universityId">Id e Universitetit</label>
+    <label for="universityId">Universiteti</label>
     <p-dropdown
       id="universityId"
       [options]="universities"
       optionValue="key"
       optionLabel="value"
       name="universityId"
+      (onChange)="onUniversityChange($event)"
       [autoDisplayFirst]="false"
       [(ngModel)]="user.universityId"
       [showClear]="true">
@@ -210,7 +112,54 @@
   </div>
 
   <div class="field">
-    <label for="Name">Valid nga</label>
+    <label for="universityDepartmentId">Fakulteti</label>
+    <p-dropdown
+      id="universityDepartment"
+      [options]="universityDepartmentsFiltered"
+      optionValue="key"
+      optionLabel="value"
+      name="universityDepartmentId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="user.universityDepartmentId"
+      [showClear]="true">
+    </p-dropdown>
+  </div>
+
+  <div class="field">
+    <label for="administrationOfficeId">DAR/ZA</label>
+    <p-dropdown
+      id="administrationOfficeId"
+      [options]="administrationOffices"
+      optionValue="key"
+      optionLabel="value"
+      name="administrationOfficeId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="user.administrationOfficeId"
+      [showClear]="true">
+    </p-dropdown>
+  </div>
+
+  <!-- <div class="field">
+    <label for="highSchool">Shkolla e Mesme</label>
+    <p-dropdown
+      id="highSchool"
+      [options]="highSchools"
+      optionValue="key"
+      optionLabel="value"
+      name="highSchoolId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="user.highSchool"
+      [showClear]="true">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !user.universityDepartment">
+      Departamenti Univeristar është fushë e kërkuar.
+    </small>
+  </div> -->
+
+  <div class="field">
+    <label for="Name">I Vlefshëm nga</label>
     <p-calendar
       [(ngModel)]="user.validFrom"
       name="validFrom"
@@ -222,7 +171,7 @@
   </div>
 
   <div class="field">
-    <label for="Name">Valid deri ne</label>
+    <label for="Name">I Vlefshëm deri në</label>
     <p-calendar
       [(ngModel)]="user.validTo"
       name="validTo"
@@ -252,7 +201,7 @@
   </div>
 
   <div class="field">
-    <label for="password">password *</label>
+    <label for="password">Password *</label>
     <input
       type="password"
       pInputText

@@ -3,7 +3,11 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
   AdministrationOfficeApiService,
   CityApiService,
+  HighSchoolApiService,
   RegionApiService,
+  StudyProgramApiService,
+  UniversityApiService,
+  UniversityDepartmentApiService,
   UserApiService,
 } from '@msh/configurations/data-access-configurations';
 import { User } from '@msh/configurations/domain-configurations';
@@ -65,7 +69,11 @@ export class ManageUsersComponent implements OnInit {
     private readonly toastService: GlobalToastService,
     private readonly cityApiService: CityApiService,
     private readonly administrationOfficeApiService: AdministrationOfficeApiService,
-    private readonly regionApiService: RegionApiService
+    private readonly regionApiService: RegionApiService,
+    private readonly studyProgramService: StudyProgramApiService,
+    private readonly universityService: UniversityApiService,
+    private readonly universityDepartmentService: UniversityDepartmentApiService,
+    private readonly highSchoolService: HighSchoolApiService
   ) {}
 
   ngOnInit(): void {
@@ -160,7 +168,7 @@ export class ManageUsersComponent implements OnInit {
           this.getUsers();
         }
 
-        if (response.isBadRequest) {
+        if (response.isSuccessful === false) {
           this.toastService.showError(
             'Ndodhi nje problem gjate ndryshimit te perdoruesit!'
           );
@@ -180,7 +188,7 @@ export class ManageUsersComponent implements OnInit {
           this.getUsers();
         }
 
-        if (response.isBadRequest) {
+        if (response.isSuccessful === false) {
           this.toastService.showError(
             'Ndodhi nje problem gjate ndryshimit te perdoruesit!'
           );
@@ -197,7 +205,7 @@ export class ManageUsersComponent implements OnInit {
           this.toastService.showSuccess('Perdoruesi u fshi me sukses!');
           this.getUsers();
         }
-        if (response.isBadRequest) {
+        if (response.isSuccessful === false) {
           this.toastService.showError(
             'Ndonje nje problem gjate fshirjes se perdoruesit!'
           );
@@ -229,40 +237,27 @@ export class ManageUsersComponent implements OnInit {
       });
   }
 
-  //TODO: get data from the relevent api service
   getUniversitiesDropdown() {
-    this.universities = [
-      {
-        key: 1,
-        value: 'Polis',
-      },
-    ];
+    this.universityService.loadDropdownList().subscribe(response => {
+      this.universities = response.data;
+    });
   }
 
   getHighSchoolsDropdown() {
-    this.highSchools = [
-      {
-        key: 1,
-        value: 'Polis',
-      },
-    ];
+    this.highSchoolService.loadDropDownList().subscribe(response => {
+      this.highSchools = response.data;
+    });
   }
 
   getStudyProgramsDropdown() {
-    this.studyPrograms = [
-      {
-        key: 1,
-        value: 'Polis',
-      },
-    ];
+    this.studyProgramService.loadDropDownList().subscribe(response => {
+      this.studyPrograms = response.data;
+    });
   }
 
   getUniversityDepartamentDropdown() {
-    this.universityDepartments = [
-      {
-        key: 1,
-        value: 'Polis',
-      },
-    ];
+    this.universityDepartmentService.loadDropdownList().subscribe(response => {
+      this.universityDepartments = response.data;
+    });
   }
 }

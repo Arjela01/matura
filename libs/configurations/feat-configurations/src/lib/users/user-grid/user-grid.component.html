@@ -7,7 +7,7 @@
   [paginator]="true"
   [rowsPerPageOptions]="[10, 20, 30]"
   [showCurrentPageReport]="true"
-  currentPageReportTemplate="Duke treguar {first} deri {last} nga {totalRecords} rekorde"
+  currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
   [rowHover]="true"
   dataKey="Id"
   [(selection)]="selectedUsers"
@@ -17,7 +17,7 @@
   <ng-template pTemplate="caption">
     <div
       class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <h5 class="m-0">Menaxho Perdoruesit</h5>
+      <h5 class="m-0">Menaxho Përdoruesit</h5>
       <span class="block mt-2 md:mt-0 p-input-icon-left">
         <i class="pi pi-search"></i>
         <input
@@ -35,7 +35,7 @@
         </p-tableHeaderCheckbox>
       </th>
       <th pSortableColumn="displayName">
-        Emri
+        Username
         <p-sortIcon field="displayName"></p-sortIcon>
         <p-columnFilter
           type="text"
@@ -51,7 +51,7 @@
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="universityDepartment">
-        Departamenti I Universitetit
+        Fakulteti
         <p-sortIcon field="universityDepartment"></p-sortIcon>
         <p-columnFilter
           type="text"
@@ -83,7 +83,7 @@
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="lastPasswordChange">
-        Ndryshimi i fundit i Password
+        Ndryshimi i fundit i Fjalëkalimit
         <p-sortIcon field="lastPasswordChange"></p-sortIcon>
         <p-columnFilter
           type="text"
@@ -92,7 +92,7 @@
       </th>
 
       <th pSortableColumn="overseerCode">
-        overseerCode
+        Kodi I Mbikqyrësit
         <p-sortIcon field="overseerCode"></p-sortIcon>
         <p-columnFilter
           type="numeric"
@@ -108,7 +108,7 @@
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="studyProgramId">
-        Id e Programit te Studimit
+        Programi i Studimit
         <p-sortIcon field="studyProgramId"></p-sortIcon>
         <p-columnFilter
           type="numeric"
@@ -116,7 +116,7 @@
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="universityId">
-        Id e Universitetit
+        Universiteti
         <p-sortIcon field="universityId"></p-sortIcon>
         <p-columnFilter
           type="numeric"
@@ -124,7 +124,7 @@
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="validFrom">
-        Valid nga
+        I Vlefshëm nga
         <p-sortIcon field="validFrom"></p-sortIcon>
         <p-columnFilter
           type="text"
@@ -132,7 +132,7 @@
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="validTo">
-        Valid deri ne
+        I Vlefshëm deri në
         <p-sortIcon field="validTo"></p-sortIcon>
         <p-columnFilter
           type="text"
@@ -148,43 +148,43 @@
         <p-tableCheckbox [value]="user"></p-tableCheckbox>
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.displayName }}
+        {{ user.username }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.administrationOffice }}
+        {{ user.administrationOffice ? user.administrationOffice : 'N/A' }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.universityDepartment }}
+        {{ user.universityDepartment ? user.universityDepartment : 'N/A' }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.highSchool }}
+        {{ user.highSchool ? user.highSchool : 'N/A' }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.name }}
+        {{ user.name ? user.name : 'N/A' }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.lastName }}
+        {{ user.lastName ? user.lastName : 'N/A' }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.lastPasswordChange }}
+        {{ user.lastPasswordChange | date }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.overseerCode }}
+        {{ user.overseerCode ? user.overseerCode : 'N/A' }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.studentId }}
+        {{ user.studentId ? user.studentId : 'N/A' }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.studyProgramId }}
+        {{ user.studyProgramId ? user.studyProgramId : 'N/A' }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.universityId }}
+        {{ user.universityId ? user.universityId : 'N/A' }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.validFrom }}
+        {{ user.validFrom | date }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.validTo }}
+        {{ user.validTo | date }}
       </td>
       <td>
         <div class="flex">
