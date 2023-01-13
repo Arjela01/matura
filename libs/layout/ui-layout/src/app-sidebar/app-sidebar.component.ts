@@ -135,6 +135,11 @@ export class AppSidebarComponent implements OnInit {
             routerLink: ['configurations', 'high-school'],
           },
           {
+            label: 'Genders',
+            icon: 'pi pi-fw pi-bookmark',
+            routerLink: ['configurations', 'gender'],
+          },
+          {
             label: 'Roles',
             icon: 'pi pi-fw pi-bookmark',
             routerLink: ['configurations', 'roles'],

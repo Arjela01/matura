@@ -1,25 +1,23 @@
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   Output,
   ViewChild,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { DropdownModel } from '@msh/shared/data-access-shared';
-import { AdministrationOffice } from '@msh/configurations/domain-configurations';
 import { FormsModule, NgForm } from '@angular/forms';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { InputTextareaModule } from 'primeng/inputtextarea';
+import { AdministrationOffice } from '@msh/configurations/domain-configurations';
+import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @Component({
   selector: 'msh-administration-office-form',
@@ -63,9 +61,6 @@ export class AdministrationOfficeFormComponent {
     signature: '',
     cityId: 0,
   };
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private cd: ChangeDetectorRef) {}
 
   onCancelClick() {
     this.formClose.emit();

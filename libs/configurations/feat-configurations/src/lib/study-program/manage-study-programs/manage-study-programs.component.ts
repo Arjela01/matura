@@ -9,9 +9,9 @@ import {
 import { StudyProgram } from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
-  GRID_ACTIONS,
   GlobalToastService,
   GridEvent,
+  GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';

@@ -2,7 +2,7 @@
   #dt
   dataKey="id"
   responsiveLayout="scroll"
-  [value]="regions"
+  [value]="universities"
   [totalRecords]="totalRecords"
   [rows]="10"
   [paginator]="true"
@@ -19,14 +19,14 @@
   <ng-template pTemplate="caption">
     <div
       class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <h5 class="m-0">Menaxho Rajonet</h5>
+      <h5 class="m-0">Menaxho Universitetet</h5>
       <span class="block mt-2 md:mt-0 p-input-icon-left">
         <i class="pi pi-search"></i>
         <input
           pInputText
           type="text"
           placeholder="Kërko..."
-          class="w-full sm:w-auto" />
+          class="w-full sm:w-auto"/>
       </span>
     </div>
   </ng-template>
@@ -44,17 +44,39 @@
           field="name"
           display="menu"></p-columnFilter>
       </th>
+      <th pSortableColumn="RegionName">
+        Rrethi
+        <p-sortIcon field="regionName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="regionName"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="CityName">
+        Qyteti
+        <p-sortIcon field="cityName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="cityName"
+          display="menu"></p-columnFilter>
+      </th>
       <th></th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-universityDepartment>
+  <ng-template pTemplate="body" let-university>
     <tr>
       <td>
-        <p-tableCheckbox [value]="universityDepartment"></p-tableCheckbox>
+        <p-tableCheckbox [value]="university"></p-tableCheckbox>
       </td>
 
       <td style="width: 14%; min-width: 10rem">
-        {{ universityDepartment.name }}
+        {{ university.name }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ university.regionName }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ university.cityName }}
       </td>
       <td>
         <div class="flex">
@@ -65,7 +87,7 @@
             class="p-button-rounded p-button-warning p-button-text mr-2"
             pTooltip="Ndrysho"
             tooltipPosition="bottom"
-            (click)="onEditClick(universityDepartment)"></button>
+            (click)="onEditClick(university)"></button>
           <button
             pButton
             pRipple
@@ -73,7 +95,7 @@
             class="p-button-rounded p-button-danger p-button-text"
             pTooltip="Fshi"
             tooltipPosition="bottom"
-            (click)="onDeleteClick(universityDepartment)"></button>
+            (click)="onDeleteClick(university)"></button>
         </div>
       </td>
     </tr>

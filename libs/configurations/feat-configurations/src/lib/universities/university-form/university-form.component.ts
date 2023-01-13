@@ -4,14 +4,12 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input,
-  OnChanges,
-  Output,
+  Input, OnChanges, OnInit,
+  Output, SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { ExamSubject } from '@msh/configurations/domain-configurations';
-import { DropdownModel } from '@msh/shared/data-access-shared';
+import { University } from '@msh/configurations/domain-configurations';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
@@ -19,9 +17,10 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import {DropdownModel} from "@msh/shared/data-access-shared";
 
 @Component({
-  selector: 'msh-exam-subject-form',
+  selector: 'msh-university-form',
   standalone: true,
   imports: [
     CommonModule,
@@ -34,44 +33,41 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     CheckboxModule,
     DropdownModule,
   ],
-  templateUrl: './exam-subject-form.component.html',
-  styleUrls: ['./exam-subject-form.component.scss'],
+  templateUrl: './university-form.component.html',
+  styleUrls: ['./university-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamSubjectFormComponent implements OnChanges {
-  @Input() examTypes: DropdownModel<number>[] = [];
-  @Input() academicYears: DropdownModel<number>[] = [];
-
-  @Input() set examSubjectDetails(details: ExamSubject | null) {
+export class UniversityFormComponent implements OnChanges {
+  @Input() set universityDetails(details: University | null) {
     if (details) {
-      this.examSubject = Object.assign({}, details);
+      this.university = Object.assign({}, details);
     }
   }
-  @Output() formSave = new EventEmitter<ExamSubject>();
+
+  @Input() cities: DropdownModel<number>[] = [];
+  @Input() regions: DropdownModel<number>[] = [];
+
+  @Output() formSave = new EventEmitter<University>();
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
 
-  examTypesFiltered: DropdownModel<number>[] = [];
-
   submitted = false;
 
-  examSubject: ExamSubject = {
+  citiesFiltered: DropdownModel<number>[] = [];
+
+  university: University = {
+    cityId: 0,
+    cityName: '',
+    regionId: 0,
+    regionName: '',
     id: '',
     name: '',
-    code: '',
-    credits: 0,
-    isOptional: false,
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor() {}
 
-  ngOnChanges(): void {
-    if (this.examTypes && this.examSubject.academicYearId) {
-      this.onAcademicYearChange({ value: this.examSubject.academicYearId });
-    }
-  }
   onCancelClick() {
     this.formClose.emit();
   }
@@ -79,13 +75,19 @@ export class ExamSubjectFormComponent implements OnChanges {
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
-      this.formSave.emit(this.examSubject);
+      this.formSave.emit(this.university);
     }
   }
 
-  onAcademicYearChange($event: any) {
-    this.examTypesFiltered = this.examTypes.filter(
-      et => et.parentKey == $event.value
-    );
+  onRegionChange($event: any) {
+    this.citiesFiltered = this.cities.filter(c => c.parentKey == $event.value);
+  }
+
+  filterCities(): void {
+    this.citiesFiltered = this.cities.filter(c => c.parentKey == this.university?.regionId);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.filterCities();
   }
 }
