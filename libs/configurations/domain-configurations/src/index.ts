@@ -1,3 +1,4 @@
+export * from './administration-office/administration-office.model';
 export * from './city/cities.model';
 export * from './exam-subject/exam-subject.model';
 export * from './exam-type/exam-type.model';
@@ -7,4 +8,6 @@ export * from './menu/menu.model';
 export * from './profile-group/profile-group.model';
 export * from './profile/profile.model';
 export * from './region/region.model';
+export * from './roles/role.model';
 export * from './study-program/study-program.model';
+export * from './study-subject/study-subject.model';
