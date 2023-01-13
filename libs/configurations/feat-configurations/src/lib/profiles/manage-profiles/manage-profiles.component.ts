@@ -20,10 +20,12 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import {ProfileFormComponent} from "../profile-form/profile-form.component";
 import {ProfileGridComponent} from "../profile-grid/profile-grid.component";
-import {ProfileApiService, ProfileGroupApiService} from "@msh/configurations/data-access-configurations";
 import {
-  AcademicYearApiService
-} from "../../../../../data-access-configurations/src/lib/academic-year/academic-year-api.service";
+  AcademicYearApiService,
+  ProfileApiService,
+  ProfileGroupApiService
+} from "@msh/configurations/data-access-configurations";
+
 
 @UntilDestroy()
 @Component({

@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import {ManageProfilesComponent} from "./profiles/manage-profiles/manage-profiles.component";
 
 export const CONFIGURATION_ROUTES: Route[] = [
   {
@@ -14,6 +15,13 @@ export const CONFIGURATION_ROUTES: Route[] = [
       import(
         './profile-group/manage-profile-groups/manage-profile-groups.component'
       ).then(m => m.ManageProfileGroupsComponent),
+  },
+  {
+    path: 'profile',
+    loadComponent: () =>
+      import(
+        './profiles/manage-profiles/manage-profiles.component'
+      ).then(m => m.ManageProfilesComponent),
   },
   {
     path: 'administration-offices',
