@@ -5,77 +5,36 @@
       <p-toolbar styleClass="mb-4">
         <div class="p-toolbar-group-left">
           <div class="my-2">
-            <!-- <button
-              pButton
-              pRipple
-              label="New"
-              icon="pi pi-plus"
-              class="p-button-success mr-2"
-              (click)="onNewClick()"></button> -->
-            <button
-              pButton
-              pRipple
-              label="Delete"
-              icon="pi pi-trash"
-              class="p-button-danger"
-              [disabled]="(hasSelectedRoles$ | async) === false"
-              (click)="onDeleteSelectedClick()"></button>
+            <button pButton pRipple label="Shto" icon="pi pi-plus" class="p-button-success mr-2"
+              (click)="onNewClick()"></button>
+            <button pButton pRipple label="Fshi" icon="pi pi-trash" class="p-button-danger"
+              [disabled]="selectedRoles.length === 0" (click)="onDeleteSelectedClick()"></button>
           </div>
         </div>
         <div class="p-toolbar-group-right">
-          <button
-            pButton
-            pRipple
-            label="Export"
-            icon="pi pi-upload"
-            class="p-button-help"></button>
+          <button pButton pRipple label="Eksporto" icon="pi pi-upload" class="p-button-help"></button>
         </div>
       </p-toolbar>
 
-      <msh-roles-grid
-        [roles]="(roles$ | async) || []"
-        (gridEvent)="onGridEvent($event)">
+      <msh-roles-grid [roles]="(roles$ | async) || []" [totalRecords]="totalRecords"
+        (gridEvent)="onGridEvent($event)" (lazyLoadData)="getRoles($event)">
       </msh-roles-grid>
     </div>
   </div>
 </div>
 
-<p-dialog
-  [(visible)]="rolesDialog"
-  [style]="{ width: '500px' }"
-  header="Roles Details"
-  [modal]="true"
-  [draggable]="false"
-  [resizable]="false"
-  class="p-fluid"
-  (onHide)="onFormClose()">
+<p-dialog [(visible)]="displayModal" [style]="{ width: '500px' }" header="Detajet e rolit" [modal]="true"
+  [draggable]="false" [resizable]="false" class="p-fluid" (onHide)="onModalClose()">
   <ng-template pTemplate="content">
-    <msh-roles-form
-      [roleDetails]="activeRole$ | async"
-      (formClose)="onFormClose()"
-      (formSave)="onFormSave($event)"></msh-roles-form>
+    <!-- <msh-roles-form [rolesDetails]="selectedRole" (formClose)="onModalClose()"
+      (formSave)="onFormSave($event)">
+    </msh-roles-form> -->
   </ng-template>
 </p-dialog>
 
-<p-confirmDialog
-  #cd
-  header="Confirm"
-  icon="pi pi-exclamation-triangle"
-  [style]="{ width: '450px' }">
+<p-confirmDialog #cd header="Konfirmo" icon="pi pi-exclamation-triangle" [style]="{ width: '450px' }">
   <ng-template pTemplate="footer">
-    <button
-      type="button"
-      pButton
-      icon="pi pi-times"
-      label="No"
-      class="p-button-text"
-      (click)="cd.reject()"></button>
-    <button
-      type="button"
-      pButton
-      icon="pi pi-check"
-      label="Yes"
-      class="p-button-text"
-      (click)="cd.accept()"></button>
+    <button type="button" pButton icon="pi pi-times" label="Jo" class="p-button-text" (click)="cd.reject()"></button>
+    <button type="button" pButton icon="pi pi-check" label="Po" class="p-button-text" (click)="cd.accept()"></button>
   </ng-template>
 </p-confirmDialog>

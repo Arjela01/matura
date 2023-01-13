@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Role } from '@msh/configurations/domain-configurations';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
+import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -23,6 +24,8 @@ import { TooltipModule } from 'primeng/tooltip';
 })
 export class RolesGridComponent {
   @Input() roles: Role[] = [];
+  @Input() totalRecords = 0;
+  @Input() loading = false;
 
   //Keep it local state because of Table Header checkbox not syncing
   selectedRoles: Role[] = [];
@@ -30,6 +33,8 @@ export class RolesGridComponent {
   @Output() gridEvent = new EventEmitter<
     GridEvent<Role | Role[]>
   >();
+
+  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
   onEditClick(role: Role) {
     this.gridEvent.emit({
@@ -72,4 +77,7 @@ export class RolesGridComponent {
     } as GridEvent<Role>);
   }
 
+  loadRows($event: LazyLoadEvent) {
+    this.lazyLoadData.emit($event);
+  }
 }
