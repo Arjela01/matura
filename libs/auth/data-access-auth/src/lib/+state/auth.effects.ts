@@ -1,9 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { StorageService } from '@msh/shared/data-access-shared';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, exhaustMap, filter, map, of, switchMap, tap } from 'rxjs';
+import { catchError, exhaustMap, map, of, tap } from 'rxjs';
 import { TOKEN_STORAGE_KEY } from '../services/token.interceptor';
 import { User, USER_STORAGE_KEY } from './../models/user.model';
 import { AuthService } from './../services/auth.service';
@@ -23,28 +23,9 @@ export class AuthEffects {
         }
 
         return AuthActions.logout();
-      })
+      }),
+      catchError(() => of(AuthActions.logout()))
     )
-  );
-
-  loadAuthSuccess$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(AuthActions.loadAuthSuccess),
-        switchMap(() =>
-          this.router.events.pipe(
-            filter(event => event instanceof NavigationEnd),
-            tap(e => {
-              const url = (e as NavigationEnd).url;
-              if (url.includes('/login')) this.router.navigate(['/']);
-              this.router.navigate([url]);
-            })
-          )
-        )
-      ),
-    {
-      dispatch: false,
-    }
   );
 
   login$ = createEffect(() =>
@@ -123,7 +104,6 @@ export class AuthEffects {
     private actions$: Actions,
     private authService: AuthService,
     private storageService: StorageService,
-    private router: Router,
-    private route: ActivatedRoute
+    private router: Router
   ) {}
 }

@@ -9,7 +9,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
 import {
-  RegionsApiService,
+  RegionApiService,
 } from '@msh/configurations/data-access-configurations';
 import { Region } from '@msh/configurations/domain-configurations';
 
@@ -55,7 +55,7 @@ export class ManageRegionsComponent {
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly regionService: RegionsApiService
+    private readonly regionService: RegionApiService
   ) {
   }
 
