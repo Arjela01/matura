@@ -1,0 +1,149 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="Code">Kodi *</label>
+    <input
+      type="number"
+      pInputText
+      id="Code"
+      name="Code"
+      [(ngModel)]="profile.code"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !profile.code }" />
+    <small class="p-error block" *ngIf="submitted && !profile.code">
+      Kodi është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Name">Emri *</label>
+    <input
+      type="text"
+      pInputText
+      id="Name"
+      name="Name"
+      [(ngModel)]="profile.name"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !profile.name }" />
+    <small class="p-error block" *ngIf="submitted && !profile.name">
+      Emri është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label class="mb-3">Ështe Teknike? *</label>
+    <div class="formgrid grid">
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="IsTechnicalTrue"
+          name="IsTechnical"
+          [value]="true"
+          [(ngModel)]="profile.IsTechnical"></p-radioButton>
+        <label for="IsTechnicalTrue">Po</label>
+      </div>
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="IsPublicFalse"
+          name="IsPublic"
+          [value]="false"
+          [(ngModel)]="profile.IsTechnical"></p-radioButton>
+        <label for="IsPublicFalse">Jo</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="Code">Koefiçienti D1 *</label>
+    <input
+      type="number"
+      pInputText
+      id="D1Coefficient"
+      name="D1Coefficient"
+      [(ngModel)]="profile.D1Coefficient"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !profile.D1Coefficient }" />
+    <small class="p-error block" *ngIf="submitted && !profile.D1Coefficient">
+      Koefiçienti D1 është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Code">Koefiçienti D2 *</label>
+    <input
+      type="number"
+      pInputText
+      id="D2Coefficient"
+      name="D2Coefficient"
+      [(ngModel)]="profile.D2Coefficient"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !profile.D2Coefficient }" />
+    <small class="p-error block" *ngIf="submitted && !profile.D2Coefficient">
+      Koefiçienti D2 është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="AcademicYear">Viti Akademik *</label>
+    <p-dropdown
+      id="AcademicYear"
+      [options]="AcademicYears"
+      optionValue="key"
+      optionLabel="value"
+      name="AcademicYear"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="profile.AcademicYear"
+      (onChange)="onAcademicYearChange($event)"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !profile.AcademicYear
+      }">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !profile.AcademicYear">
+      Viti akademik është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field mb-5">
+    <label for="ProfileGroup">Grupi i Profilit *</label>
+    <p-dropdown
+      id="ProfileGroup"
+      [options]="ProfileGroups"
+      name="regionId"
+      optionValue="key"
+      optionLabel="value"
+      [(ngModel)]="profile.ProfileGroup"
+      [autoDisplayFirst]="false"
+      (onChange)="onProfileGroupChange($event)"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !profile.ProfileGroup
+      }">
+    </p-dropdown>
+    <small class="p-error block" *ngIf="submitted && !profile.ProfileGroup">
+      Grupi i profilit është fushë e kërkuar.
+    </small>
+  </div>
+
+
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      type="submit"
+      pButton
+      icon="pi pi-check"
+      label="Ruaj"
+      class="p-button-text w-auto"></button>
+  </div>
+</form>
