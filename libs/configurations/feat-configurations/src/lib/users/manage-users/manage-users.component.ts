@@ -60,6 +60,7 @@ export class ManageUsersComponent implements OnInit {
   universityDepartments: DropdownModel<number>[] = [];
   administrationOffices: DropdownModel<number>[] = [];
   regions: DropdownModel<number>[] = [];
+  roles: [] = [];
 
   userDialog = false;
 

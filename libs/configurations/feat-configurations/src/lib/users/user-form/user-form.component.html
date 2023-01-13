@@ -1,23 +1,5 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="field">
-    <label for="fileName">File Name *</label>
-    <input
-      type="text"
-      pInputText
-      id="fileName"
-      name="fileName"
-      [(ngModel)]="user.fileName"
-      required
-      autofocus
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.fileName
-      }" />
-    <small class="p-error block" *ngIf="submitted && !user.fileName">
-      fileName is required.
-    </small>
-  </div>
-
-  <div class="field">
     <label for="name">Emri *</label>
     <input
       type="text"
@@ -54,136 +36,7 @@
   </div>
 
   <div class="field">
-    <label for="Name">Kodi I Mbikqyresit *</label>
-    <input
-      type="text"
-      pInputText
-      id="overseerCode"
-      name="overseerCode"
-      [(ngModel)]="user.overseerCode"
-      required
-      autofocus
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.overseerCode
-      }" />
-    <small class="p-error block" *ngIf="submitted && !user.overseerCode">
-      Kodi I Mbikqyresit eshte fushe e kerkuar.
-    </small>
-  </div>
-
-  <div class="field">
-    <label for="Name">Id e Studentit</label>
-    <input
-      type="text"
-      pInputText
-      id="studentId"
-      name="studentId"
-      [(ngModel)]="user.studentId"
-      autofocus />
-  </div>
-
-  <div class="field">
-    <label for="studyProgramId">Programi i Studimit</label>
-    <p-dropdown
-      id="studyProgramId"
-      [options]="studyPrograms"
-      optionValue="key"
-      optionLabel="value"
-      name="studyProgramId"
-      [autoDisplayFirst]="false"
-      [(ngModel)]="user.studyProgramId"
-      [showClear]="true">
-    </p-dropdown>
-  </div>
-
-  <div class="field">
-    <label for="universityId">Universiteti</label>
-    <p-dropdown
-      id="universityId"
-      [options]="universities"
-      optionValue="key"
-      optionLabel="value"
-      name="universityId"
-      (onChange)="onUniversityChange($event)"
-      [autoDisplayFirst]="false"
-      [(ngModel)]="user.universityId"
-      [showClear]="true">
-    </p-dropdown>
-  </div>
-
-  <div class="field">
-    <label for="universityDepartmentId">Fakulteti</label>
-    <p-dropdown
-      id="universityDepartment"
-      [options]="universityDepartmentsFiltered"
-      optionValue="key"
-      optionLabel="value"
-      name="universityDepartmentId"
-      [autoDisplayFirst]="false"
-      [(ngModel)]="user.universityDepartmentId"
-      [showClear]="true">
-    </p-dropdown>
-  </div>
-
-  <div class="field">
-    <label for="administrationOfficeId">DAR/ZA</label>
-    <p-dropdown
-      id="administrationOfficeId"
-      [options]="administrationOffices"
-      optionValue="key"
-      optionLabel="value"
-      name="administrationOfficeId"
-      [autoDisplayFirst]="false"
-      [(ngModel)]="user.administrationOfficeId"
-      [showClear]="true">
-    </p-dropdown>
-  </div>
-
-  <!-- <div class="field">
-    <label for="highSchool">Shkolla e Mesme</label>
-    <p-dropdown
-      id="highSchool"
-      [options]="highSchools"
-      optionValue="key"
-      optionLabel="value"
-      name="highSchoolId"
-      [autoDisplayFirst]="false"
-      [(ngModel)]="user.highSchool"
-      [showClear]="true">
-    </p-dropdown>
-    <small
-      class="p-error block"
-      *ngIf="submitted && !user.universityDepartment">
-      Departamenti Univeristar është fushë e kërkuar.
-    </small>
-  </div> -->
-
-  <div class="field">
-    <label for="Name">I Vlefshëm nga</label>
-    <p-calendar
-      [(ngModel)]="user.validFrom"
-      name="validFrom"
-      [showTime]="true"
-      [showSeconds]="true"
-      inputId="validFrom"
-      autofocus
-      [showIcon]="true"></p-calendar>
-  </div>
-
-  <div class="field">
-    <label for="Name">I Vlefshëm deri në</label>
-    <p-calendar
-      [(ngModel)]="user.validTo"
-      name="validTo"
-      [showTime]="true"
-      [showSeconds]="true"
-      inputId="validTo"
-      [showIcon]="true"
-      autofocus></p-calendar>
-  </div>
-
-  <div class="field">
-    <label for="userName">Username *</label>
+    <label for="userName">Perdoruesi *</label>
     <input
       type="text"
       pInputText
@@ -201,21 +54,126 @@
   </div>
 
   <div class="field">
-    <label for="password">Password *</label>
+    <label for="role">Roli *</label>
+    <p-dropdown
+      id="role"
+      optionValue="value"
+      optionLabel="value"
+      [options]="roles"
+      [required]="true"
+      name="roles"
+      (onChange)="onRoleChange($event)"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="user.role"
+      [showClear]="true">
+    </p-dropdown>
+    <small class="p-error block" *ngIf="submitted && !user.role">
+      Roli është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field" [hidden]="showAdministrationOffice === false">
+    <label for="administrationOfficeId">DAR/ZA *</label>
+    <p-dropdown
+      id="administrationOfficeId"
+      optionValue="key"
+      optionLabel="value"
+      [options]="administrationOffices"
+      [disabled]="showAdministrationOffice === false"
+      name="administrationOfficeId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="user.administrationOfficeId"
+      [showClear]="true">
+    </p-dropdown>
+  </div>
+
+  <div class="field" [hidden]="showUniversity === false">
+    <label for="universityId">Universiteti *</label>
+    <p-dropdown
+      id="universityId"
+      optionValue="key"
+      optionLabel="value"
+      [options]="universities"
+      [disabled]="showUniversity === false"
+      name="universityId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="user.universityId"
+      [showClear]="true">
+    </p-dropdown>
+  </div>
+
+  <div class="field" [hidden]="showUniversityDepartment === false">
+    <label for="universityDepartmentId">Fakulteti *</label>
+    <p-dropdown
+      id="universityDepartmentId"
+      optionValue="key"
+      optionLabel="value"
+      [options]="universityDepartments"
+      [disabled]="showUniversityDepartment === false"
+      name="universityDepartmentId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="user.universityDepartmentId"
+      [showClear]="true">
+    </p-dropdown>
+  </div>
+
+  <div class="field" [hidden]="showStudyProgram === false">
+    <label for="studyProgramId">Programi i Studimit *</label>
+    <p-dropdown
+      id="studyProgramId"
+      optionValue="key"
+      optionLabel="value"
+      [options]="studyPrograms"
+      [disabled]="showStudyProgram === false"
+      name="studyProgramId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="user.studyProgramId"
+      [showClear]="true">
+    </p-dropdown>
+  </div>
+
+  <div class="field" [hidden]="showOverseerCode === false">
+    <label for="overseerCode">Kodi I Mbikqyresit *</label>
+    <input
+      type="text"
+      pInputText
+      id="overseerCode"
+      name="overseerCode"
+      [(ngModel)]="user.overseerCode"
+      autofocus />
+  </div>
+
+  <div class="field">
+    <label for="password">Fjalekalimi *</label>
     <input
       type="password"
       pInputText
       id="password"
       name="password"
       [(ngModel)]="user.password"
-      required
-      autofocus
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.password
-      }" />
-    <small class="p-error block" *ngIf="submitted && !user.password">
-      password is required.
-    </small>
+      autofocus />
+  </div>
+
+  <div class="field">
+    <label class="mb-3">Është aktiv? *</label>
+    <div class="formgrid grid">
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="isActiveTrue"
+          name="isActive"
+          [value]="true"
+          [(ngModel)]="user.isActive"></p-radioButton>
+        <label for="isActiveTrue">Po</label>
+      </div>
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="isActiveFalse"
+          name="isWithCompetition"
+          [value]="false"
+          [(ngModel)]="user.isActive"></p-radioButton>
+        <label for="isActiveFalse">Jo</label>
+      </div>
+    </div>
   </div>
 
   <div class="flex justify-content-end">

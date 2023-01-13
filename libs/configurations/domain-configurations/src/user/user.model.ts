@@ -19,6 +19,8 @@ export interface User {
 
   overseerCode: string;
 
+  role: string;
+
   studentId?: string | null;
 
   studyProgramId?: number;
@@ -28,6 +30,8 @@ export interface User {
   validFrom?: Date;
 
   validTo?: Date;
+
+  isActive: boolean;
 
   userName: string;
 

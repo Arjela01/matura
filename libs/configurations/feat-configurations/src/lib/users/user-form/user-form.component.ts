@@ -6,6 +6,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -20,6 +21,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { roleList, rolesDropDown } from './role-list';
 
 @Component({
   selector: 'msh-user-form',
@@ -40,13 +42,22 @@ import { RadioButtonModule } from 'primeng/radiobutton';
   styleUrls: ['./user-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserFormComponent implements OnChanges {
+export class UserFormComponent implements OnChanges, OnInit {
   @Input() cities: DropdownModel<number>[] = [];
   @Input() administrationOffices: DropdownModel<number>[] = [];
   @Input() universityDepartments: DropdownModel<number>[] = [];
   @Input() highSchools: DropdownModel<number>[] = [];
   @Input() studyPrograms: DropdownModel<number>[] = [];
   @Input() universities: DropdownModel<number>[] = [];
+  roles: DropdownModel<number>[] = [];
+
+  showUniversity = false;
+  showUniversityDepartment = false;
+  showStudent = false;
+  showStudyProgram = false;
+  showAdministrationOffice = false;
+  showHighSchools = false;
+  showOverseerCode = false;
 
   universityDepartmentsFiltered: DropdownModel<number>[] = [];
 
@@ -67,14 +78,17 @@ export class UserFormComponent implements OnChanges {
   user: User = {
     id: 0,
     displayName: '',
+    administrationOfficeId: 0,
     fileName: '',
     lastName: '',
     password: '',
     userName: '',
     lastPasswordChange: new Date(),
     name: '',
+    isActive: true,
     overseerCode: '',
     studentId: null,
+    role: '',
     studyProgramId: 0,
     universityId: 0,
     universityDepartmentId: 0,
@@ -83,10 +97,14 @@ export class UserFormComponent implements OnChanges {
   };
 
   constructor(private cd: ChangeDetectorRef) {}
+  ngOnInit(): void {
+    this.onRoleRemoved();
+    this.roles = rolesDropDown;
+  }
 
   ngOnChanges(): void {
     this.onUniversityChange({ value: this.user.universityId });
-    console.log(this.user.universityId);
+    this.onRoleChange({ value: this.user.role });
   }
 
   onCancelClick() {
@@ -105,5 +123,46 @@ export class UserFormComponent implements OnChanges {
     this.universityDepartmentsFiltered = this.universityDepartments.filter(
       x => x.parentKey == $event.value
     );
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onRoleChange($event: any) {
+    this.showUniversity = roleList.filter(
+      x => x.roleCode === $event.value
+    )[0]?.showUniversities;
+
+    this.showUniversityDepartment = roleList.filter(
+      x => x.roleCode === $event.value
+    )[0]?.showUniversityDepartment;
+
+    this.showAdministrationOffice = roleList.filter(
+      x => x.roleCode === $event.value
+    )[0]?.showAdministrationOffice;
+
+    this.showStudyProgram = roleList.filter(
+      x => x.roleCode === $event.value
+    )[0]?.showStudyProgram;
+
+    this.showHighSchools = roleList.filter(
+      x => x.roleCode === $event.value
+    )[0]?.showHighSchools;
+
+    this.showOverseerCode = roleList.filter(
+      x => x.roleCode === $event.value
+    )[0]?.showOverseerCode;
+
+    if (!this.user.role) {
+      this.onRoleRemoved();
+    }
+  }
+
+  onRoleRemoved() {
+    this.showUniversity = false;
+    this.showUniversityDepartment = false;
+    this.showStudent = false;
+    this.showStudyProgram = false;
+    this.showAdministrationOffice = false;
+    this.showHighSchools = false;
+    this.showOverseerCode = false;
   }
 }
