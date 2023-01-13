@@ -1,4 +1,4 @@
-import {Route} from '@angular/router';
+import { Route } from '@angular/router';
 
 export const CONFIGURATION_ROUTES: Route[] = [
   {
@@ -6,15 +6,14 @@ export const CONFIGURATION_ROUTES: Route[] = [
     loadComponent: () =>
       import(
         './high-schools/manage-high-schools/manage-high-schools.component'
-        ).then(m => m.ManageHighSchoolsComponent),
+      ).then(m => m.ManageHighSchoolsComponent),
   },
   {
     path: 'profile-group',
     loadComponent: () =>
-      import('./profile-group/manage-profile-groups/manage-profile-groups.component'
-        ).then(
-        m => m.ManageProfileGroupsComponent
-      ),
+      import(
+        './profile-group/manage-profile-groups/manage-profile-groups.component'
+      ).then(m => m.ManageProfileGroupsComponent),
   },
   {
     path: 'administration-offices',
@@ -35,14 +34,14 @@ export const CONFIGURATION_ROUTES: Route[] = [
     loadComponent: () =>
       import(
         './exam-versions/manage-exam-versions/manage-exam-versions.component'
-        ).then(m => m.ManageExamVersionsComponent),
+      ).then(m => m.ManageExamVersionsComponent),
   },
   {
     path: 'exam-type',
     loadComponent: () =>
-      import(
-        './exam-type/manage-exam-type/manage-exam-type.component'
-        ).then(m => m.ManageExamTypeComponent),
+      import('./exam-type/manage-exam-type/manage-exam-type.component').then(
+        m => m.ManageExamTypeComponent
+      ),
   },
   {
     path: 'region',
@@ -52,11 +51,25 @@ export const CONFIGURATION_ROUTES: Route[] = [
       ),
   },
   {
+    path: 'university',
+    loadComponent: () =>
+      import('./universities/manage-universities/manage-universities.component').then(
+        m => m.ManageUniversitiesComponent
+      ),
+  },
+  {
+    path: 'university-department',
+    loadComponent: () =>
+      import('./university-departments/manage-university-departments/manage-university-departments.component').then(
+        m => m.ManageUniversityDepartmentsComponent
+      ),
+  },
+  {
     path: 'exam-subject',
     loadComponent: () =>
       import(
         './exam-subjects/manage-exam-subject/manage-exam-subject.component'
-        ).then(m => m.ManageExamSubjectComponent),
+      ).then(m => m.ManageExamSubjectComponent),
   },
   {
     path: 'city',
@@ -73,10 +86,24 @@ export const CONFIGURATION_ROUTES: Route[] = [
       ).then(m => m.ManageGendersComponent),
   },
   {
+    path: 'study-subject',
+    loadComponent: () =>
+      import(
+        './study-subject/manage-study-subjects/manage-study-subjects.component'
+      ).then(m => m.ManageStudySubjectsComponent),
+  },
+  {
     path: 'roles',
     loadComponent: () =>
       import(
         './roles/manage-roles/manage-roles.component'
       ).then(m => m.ManageRolesComponent),
+  },
+  {
+    path: 'study-program',
+    loadComponent: () =>
+      import(
+        './study-program/manage-study-programs/manage-study-programs.component'
+      ).then(m => m.ManageStudyProgramsComponent),
   },
 ];
