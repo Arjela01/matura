@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -18,7 +17,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import {Profile} from "@msh/configurations/domain-configurations";
+import { Profile } from '@msh/configurations/domain-configurations';
 
 @Component({
   selector: 'msh-profile-form',
@@ -39,8 +38,8 @@ import {Profile} from "@msh/configurations/domain-configurations";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileFormComponent implements OnChanges {
-  @Input() AcademicYears: DropdownModel<number>[] = [];
-  @Input() ProfileGroups: DropdownModel<number>[] = [];
+  @Input() academicYears: DropdownModel<number>[] = [];
+  @Input() profileGroups: DropdownModel<number>[] = [];
 
   @Input() set profileDetails(details: Profile | null) {
     if (details) {
@@ -48,14 +47,13 @@ export class ProfileFormComponent implements OnChanges {
     }
   }
 
-
   @Output() formSave = new EventEmitter<Profile>();
   @Output() formClose = new EventEmitter<undefined>();
 
-  @ViewChild('form', {static: true}) form!: NgForm;
+  @ViewChild('form', { static: true }) form!: NgForm;
 
-  AcademicYearsFiltered: DropdownModel<number>[] = [];
-  ProfileGroupsFiltered: DropdownModel<number>[] = [];
+  academicYearsFiltered: DropdownModel<number>[] = [];
+  profileGroupsFiltered: DropdownModel<number>[] = [];
 
   submitted = false;
 
@@ -63,19 +61,15 @@ export class ProfileFormComponent implements OnChanges {
     id: 0,
     code: '',
     name: '',
-    IsTechnical: true,
+    isTechnical: true,
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private cd: ChangeDetectorRef) {
-  }
-
   ngOnChanges(): void {
-    if (this.AcademicYears && this.profile.AcademicYear) {
-      this.onAcademicYearChange({value: this.profile.AcademicYear});
+    if (this.academicYears && this.profile.academicYear) {
+      this.onAcademicYearChange({ value: this.profile.academicYearId });
     }
-    if (this.ProfileGroups && this.profile.ProfileGroup) {
-      this.onProfileGroupChange({value: this.profile.ProfileGroup});
+    if (this.profileGroups && this.profile.profileGroupId) {
+      this.onProfileGroupChange({ value: this.profile.profileGroupId });
     }
   }
 
@@ -92,10 +86,14 @@ export class ProfileFormComponent implements OnChanges {
 
   onAcademicYearChange($event: any) {
     // eslint-disable-next-line max-len
-    this.AcademicYearsFiltered = this.AcademicYears.filter(a => a.parentKey == $event.value);
+    this.academicYearsFiltered = this.academicYears.filter(
+      a => a.parentKey == $event.value
+    );
   }
   onProfileGroupChange($event: any) {
     // eslint-disable-next-line max-len
-    this.ProfileGroupsFiltered = this.ProfileGroups.filter(p => p.parentKey == $event.value);
+    this.profileGroupsFiltered = this.profileGroups.filter(
+      p => p.parentKey == $event.value
+    );
   }
 }

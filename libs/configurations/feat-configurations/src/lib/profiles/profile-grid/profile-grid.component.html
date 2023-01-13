@@ -52,40 +52,40 @@
           field="name"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="IsTechnical">
+      <th pSortableColumn="isTechnical">
         Ështe Teknike?
-        <p-sortIcon field="IsTechnical"></p-sortIcon>
+        <p-sortIcon field="isTechnical"></p-sortIcon>
       </th>
-      <th pSortableColumn="D1Coefficient">
+      <th pSortableColumn="d1Coefficient">
         Koefiçienti D1
-        <p-sortIcon field="D1Coefficient"></p-sortIcon>
+        <p-sortIcon field="d1Coefficient"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="D1Coefficient"
+          field="d1Coefficient"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="D2Coefficient">
+      <th pSortableColumn="d2Coefficient">
         Koefiçienti D2
-        <p-sortIcon field="D2Coefficient"></p-sortIcon>
+        <p-sortIcon field="d2Coefficient"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="D2Coefficient"
+          field="d2Coefficient"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="AcademicYear">
+      <th pSortableColumn="academicYear">
         Viti Akademik
-        <p-sortIcon field="AcademicYear"></p-sortIcon>
+        <p-sortIcon field="academicYear"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="AcademicYear"
+          field="academicYear"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="ProfileGroup">
+      <th pSortableColumn="profileGroupName">
         Grupi i Profilit
-        <p-sortIcon field="ProfileGroup"></p-sortIcon>
+        <p-sortIcon field="profileGroupName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="ProfileGroup"
+          field="profileGroupName"
           display="menu"></p-columnFilter>
       </th>
       <th></th>
@@ -103,19 +103,19 @@
         {{ profile.name }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ profile.IsTechnical ? 'Po' : 'Jo' }}
+        {{ profile.isTechnical ? 'Po' : 'Jo' }}
       </td>
       <td style="width: 20%; min-width: 10rem">
-        {{ profile.D1Coefficient }}
+        {{ profile.d1Coefficient }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ profile.D2Coefficient }}
+        {{ profile.d2Coefficient }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ profile.AcademicYear }}
+        {{ profile.academicYear }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ profile.ProfileGroup }}
+        {{ profile.profileGroupName }}
       </td>
       <td>
         <div class="flex">

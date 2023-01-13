@@ -2,7 +2,7 @@
   <div class="field">
     <label for="Code">Kodi *</label>
     <input
-      type="number"
+      type="text"
       pInputText
       id="Code"
       name="Code"
@@ -39,7 +39,7 @@
           id="IsTechnicalTrue"
           name="IsTechnical"
           [value]="true"
-          [(ngModel)]="profile.IsTechnical"></p-radioButton>
+          [(ngModel)]="profile.isTechnical"></p-radioButton>
         <label for="IsTechnicalTrue">Po</label>
       </div>
       <div class="field-radiobutton col-6">
@@ -47,7 +47,7 @@
           id="IsPublicFalse"
           name="IsPublic"
           [value]="false"
-          [(ngModel)]="profile.IsTechnical"></p-radioButton>
+          [(ngModel)]="profile.isTechnical"></p-radioButton>
         <label for="IsPublicFalse">Jo</label>
       </div>
     </div>
@@ -60,11 +60,11 @@
       pInputText
       id="D1Coefficient"
       name="D1Coefficient"
-      [(ngModel)]="profile.D1Coefficient"
+      [(ngModel)]="profile.d1Coefficient"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !profile.D1Coefficient }" />
-    <small class="p-error block" *ngIf="submitted && !profile.D1Coefficient">
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !profile.d1Coefficient }" />
+    <small class="p-error block" *ngIf="submitted && !profile.d1Coefficient">
       Koefiçienti D1 është fushë e kërkuar.
     </small>
   </div>
@@ -76,11 +76,11 @@
       pInputText
       id="D2Coefficient"
       name="D2Coefficient"
-      [(ngModel)]="profile.D2Coefficient"
+      [(ngModel)]="profile.d2Coefficient"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !profile.D2Coefficient }" />
-    <small class="p-error block" *ngIf="submitted && !profile.D2Coefficient">
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !profile.d2Coefficient }" />
+    <small class="p-error block" *ngIf="submitted && !profile.d2Coefficient">
       Koefiçienti D2 është fushë e kërkuar.
     </small>
   </div>
@@ -89,21 +89,21 @@
     <label for="AcademicYear">Viti Akademik *</label>
     <p-dropdown
       id="AcademicYear"
-      [options]="AcademicYears"
+      [options]="academicYears"
       optionValue="key"
       optionLabel="value"
       name="AcademicYear"
       [autoDisplayFirst]="false"
-      [(ngModel)]="profile.AcademicYear"
+      [(ngModel)]="profile.academicYearId"
       (onChange)="onAcademicYearChange($event)"
       [showClear]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !profile.AcademicYear
+        'ng-invalid ng-dirty': submitted && !profile.academicYearId
       }">
     </p-dropdown>
     <small
       class="p-error block"
-      *ngIf="submitted && !profile.AcademicYear">
+      *ngIf="submitted && !profile.academicYearId">
       Viti akademik është fushë e kërkuar.
     </small>
   </div>
@@ -112,19 +112,19 @@
     <label for="ProfileGroup">Grupi i Profilit *</label>
     <p-dropdown
       id="ProfileGroup"
-      [options]="ProfileGroups"
+      [options]="profileGroups"
       name="regionId"
       optionValue="key"
       optionLabel="value"
-      [(ngModel)]="profile.ProfileGroup"
+      [(ngModel)]="profile.profileGroupId"
       [autoDisplayFirst]="false"
       (onChange)="onProfileGroupChange($event)"
       [showClear]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !profile.ProfileGroup
+        'ng-invalid ng-dirty': submitted && !profile.profileGroupId
       }">
     </p-dropdown>
-    <small class="p-error block" *ngIf="submitted && !profile.ProfileGroup">
+    <small class="p-error block" *ngIf="submitted && !profile.profileGroupId">
       Grupi i profilit është fushë e kërkuar.
     </small>
   </div>

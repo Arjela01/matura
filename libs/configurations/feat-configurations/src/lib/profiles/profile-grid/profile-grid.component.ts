@@ -14,7 +14,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import {Profile} from "@msh/configurations/domain-configurations";
+import { Profile } from '@msh/configurations/domain-configurations';
 
 @Component({
   selector: 'msh-profile-grid',
@@ -40,9 +40,7 @@ export class ProfileGridComponent {
   //Keep it local state because of Table Header checkbox not syncing
   selectedProfiles: Profile[] = [];
 
-  @Output() gridEvent = new EventEmitter<
-    GridEvent<Profile | Profile[]>
-    >();
+  @Output() gridEvent = new EventEmitter<GridEvent<Profile | Profile[]>>();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
@@ -91,4 +89,3 @@ export class ProfileGridComponent {
     this.lazyLoadData.emit($event);
   }
 }
-
