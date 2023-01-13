@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
+  AcademicYearApiService,
   StudyProgramApiService,
   UniversityApiService,
   UniversityDepartmentApiService,
@@ -8,9 +9,9 @@ import {
 import { StudyProgram } from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
-  GRID_ACTIONS,
   GlobalToastService,
   GridEvent,
+  GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -19,7 +20,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
-import { AcademicYearApiService } from '../../../../../data-access-configurations/src/lib/academic-year/academic-year-api.service';
 import { StudyProgramFormComponent } from '../study-program-form/study-program-form.component';
 import { StudyProgramGridComponent } from '../study-program-grid/study-program-grid.component';
 
