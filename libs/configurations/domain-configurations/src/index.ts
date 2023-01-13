@@ -1,3 +1,5 @@
+export * from './gender/gender.model';
+export * from './high-school/high-school.model';
 export * from './exam-subject/exam-subject.model';
 export * from './exam-type/exam-type.model';
 export * from './exam-version/exam-version.model';
