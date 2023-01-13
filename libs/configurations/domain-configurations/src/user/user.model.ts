@@ -3,9 +3,9 @@ export interface User {
 
   displayName?: string;
 
-  administrationOffice?: string;
+  administrationOfficeId?: number;
 
-  universityDepartment?: string;
+  universityDepartmentId?: number;
 
   fileName: string;
 
@@ -16,8 +16,6 @@ export interface User {
   lastPasswordChange: Date;
 
   name: string;
-
-  nodes: [];
 
   overseerCode: string;
 

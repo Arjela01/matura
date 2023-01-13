@@ -44,7 +44,7 @@
 <p-dialog
   [(visible)]="displayModal"
   [style]="{ width: '500px' }"
-  header="Detajet e Programeve te Studimit"
+  header="Detajet e Programeve të Studimit"
   [modal]="true"
   [draggable]="false"
   [resizable]="false"
@@ -55,7 +55,7 @@
       [studyProgramDetails]="selectedstudyProgram"
       [universities]="universities"
       [academicYears]="academicYears"
-      [universityDepartaments]="universityDepartaments"
+      [universityDepartments]="universityDepartaments"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
     </msh-study-program-form>
