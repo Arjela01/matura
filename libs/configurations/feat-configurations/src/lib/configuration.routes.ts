@@ -79,6 +79,13 @@ export const CONFIGURATION_ROUTES: Route[] = [
       ),
   },
   {
+    path: 'gender',
+    loadComponent: () =>
+      import(
+        './genders/manage-genders/manage-genders.component'
+      ).then(m => m.ManageGendersComponent),
+  },
+  {
     path: 'study-subject',
     loadComponent: () =>
       import(
