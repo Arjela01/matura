@@ -63,4 +63,11 @@ export const CONFIGURATION_ROUTES: Route[] = [
         './roles/manage-roles/manage-roles.component'
       ).then(m => m.ManageRolesComponent),
   },
+  {
+    path: 'roles',
+    loadComponent: () =>
+      import(
+        './roles/manage-roles/manage-roles.component'
+      ).then(m => m.ManageRolesComponent),
+  },
 ];
