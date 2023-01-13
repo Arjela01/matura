@@ -1,0 +1,329 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="Code">Kodi *</label>
+    <input
+      type="number"
+      pInputText
+      id="Code"
+      name="Code"
+      [(ngModel)]="studyProgram.code"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !studyProgram.code }" />
+    <small class="p-error block" *ngIf="submitted && !studyProgram.code">
+      Kodi është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Name">Emri *</label>
+    <input
+      type="text"
+      pInputText
+      id="Name"
+      name="Name"
+      [(ngModel)]="studyProgram.name"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !studyProgram.name }" />
+    <small class="p-error block" *ngIf="submitted && !studyProgram.name">
+      Emri është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="academicYearId">Viti Akademik *</label>
+    <p-dropdown
+      id="academicYearId"
+      [options]="academicYears"
+      optionValue="key"
+      optionLabel="value"
+      name="academicYearId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="studyProgram.academicYearId"
+      [showClear]="true">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !studyProgram.academicYearId">
+      Viti Akademik është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label class="mb-3">Eshte 2 vjecar? *</label>
+    <div class="formgrid grid">
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="isTwoYearLongTrue"
+          name="isTwoYearLong"
+          [value]="1"
+          [(ngModel)]="studyProgram.isTwoYearLong"></p-radioButton>
+        <label for="isTwoYearLongTrue">Po</label>
+      </div>
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="isTwoYearLongFalse"
+          name="isTwoYearLong"
+          [value]="2"
+          [(ngModel)]="studyProgram.isTwoYearLong"></p-radioButton>
+        <label for="isTwoYearLongFalse">Jo</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="mb-3">Eshte e gatshme per gare? *</label>
+    <div class="formgrid grid">
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="isValidForRaceTrue"
+          name="isValidForRace"
+          [value]="true"
+          [(ngModel)]="studyProgram.isValidForRace"></p-radioButton>
+        <label for="isValidForRaceTrue">Po</label>
+      </div>
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="isValidForRaceFalse"
+          name="isValidForRace"
+          [value]="false"
+          [(ngModel)]="studyProgram.isValidForRace"></p-radioButton>
+        <label for="isValidForRaceFalse">Jo</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="mb-3">Eshte me konkurim? *</label>
+    <div class="formgrid grid">
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="isWithCompetitionTrue"
+          name="isWithCompetition"
+          [value]="true"
+          [(ngModel)]="studyProgram.isWithCompetition"></p-radioButton>
+        <label for="isWithCompetitionTrue">Po</label>
+      </div>
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="isWithCompetitionFalse"
+          name="isWithCompetition"
+          [value]="false"
+          [(ngModel)]="studyProgram.isWithCompetition"></p-radioButton>
+        <label for="isWithCompetitionFalse">Jo</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="maturaCoefficient">Koeficienti i matures *</label>
+    <input
+      type="number"
+      pInputText
+      id="maturaCoefficient"
+      name="maturaCoefficient"
+      [(ngModel)]="studyProgram.maturaCoefficient"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !studyProgram.maturaCoefficient
+      }" />
+    <small
+      class="p-error block"
+      *ngIf="submitted && !studyProgram.maturaCoefficient">
+      Koeficienti i matures është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="minAverageGrade">Nota minimale mesatare *</label>
+    <input
+      type="number"
+      pInputText
+      id="minAverageGrade"
+      name="minAverageGrade"
+      [(ngModel)]="studyProgram.minAverageGrade"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !studyProgram.minAverageGrade
+      }" />
+    <small
+      class="p-error block"
+      *ngIf="submitted && !studyProgram.minAverageGrade">
+      Nota minimale mesatare është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Quota">Kuota *</label>
+    <input
+      type="number"
+      pInputText
+      id="quota"
+      name="quota"
+      [(ngModel)]="studyProgram.quota"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !studyProgram.quota }" />
+    <small class="p-error block" *ngIf="submitted && !studyProgram.quota">
+      Kuota është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="usedQuota">Kuotat e zena *</label>
+    <input
+      type="number"
+      pInputText
+      id="usedQuota"
+      name="usedQuota"
+      [(ngModel)]="studyProgram.usedQuota"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !studyProgram.usedQuota
+      }" />
+    <small class="p-error block" *ngIf="submitted && !studyProgram.usedQuota">
+      Kuotat e zena është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="studentScores">Piket e studentit *</label>
+    <input
+      type="number"
+      pInputText
+      id="studentScores"
+      name="studentScores"
+      [(ngModel)]="studyProgram.studentScores"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !studyProgram.studentScores
+      }" />
+    <small
+      class="p-error block"
+      *ngIf="submitted && !studyProgram.studentScores">
+      Piket e studentit është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="universityId">Universiteti *</label>
+    <p-dropdown
+      id="universityId"
+      [options]="universities"
+      optionValue="key"
+      optionLabel="value"
+      name="universityid"
+      [required]="true"
+      (onChange)="onUniversityChange($event)"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="studyProgram.universityId"
+      [showClear]="true">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !studyProgram.universityId">
+      Universiteti është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="universityDepartmentId">Departament Universitar *</label>
+    <p-dropdown
+      id="universityDepartmentId"
+      [options]="universityDepartmentsFiltered"
+      optionValue="key"
+      optionLabel="value"
+      [required]="true"
+      name="universityDepartmentId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="studyProgram.universityDepartmentId"
+      [showClear]="true">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !studyProgram.universityDepartmentId">
+      Departamenti Universitar është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="competitionCoefficient">Koeficienti i kompeticionit *</label>
+    <input
+      type="number"
+      pInputText
+      id="competitionCoefficient"
+      name="competitionCoefficient"
+      [(ngModel)]="studyProgram.competitionCoefficient"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !studyProgram.competitionCoefficient
+      }" />
+    <small
+      class="p-error block"
+      *ngIf="submitted && !studyProgram.competitionCoefficient">
+      Koeficienti i kompeticionit është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="competitionMaxScore">Piket maksimale te kompeticionit *</label>
+    <input
+      type="number"
+      pInputText
+      id="competitionMaxScore"
+      name="competitionMaxScore"
+      [(ngModel)]="studyProgram.competitionMaxScore"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !studyProgram.competitionMaxScore
+      }" />
+    <small
+      class="p-error block"
+      *ngIf="submitted && !studyProgram.competitionMaxScore">
+      Piket maksimale te kompeticionit është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="competitionMinScore">Piket minimale te kompeticionit *</label>
+    <input
+      type="number"
+      pInputText
+      id="competitionMinScore"
+      name="competitionMinScore"
+      [(ngModel)]="studyProgram.competitionMinScore"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !studyProgram.competitionMinScore
+      }" />
+    <small
+      class="p-error block"
+      *ngIf="submitted && !studyProgram.competitionMinScore">
+      Koeficienti i kompeticionit është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      type="submit"
+      pButton
+      icon="pi pi-check"
+      label="Ruaj"
+      class="p-button-text w-auto"></button>
+  </div>
+</form>

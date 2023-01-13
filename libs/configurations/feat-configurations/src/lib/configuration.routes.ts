@@ -78,4 +78,11 @@ export const CONFIGURATION_ROUTES: Route[] = [
         './roles/manage-roles/manage-roles.component'
       ).then(m => m.ManageRolesComponent),
   },
+  {
+    path: 'study-program',
+    loadComponent: () =>
+      import(
+        './study-program/manage-study-programs/manage-study-programs.component'
+      ).then(m => m.ManageStudyProgramsComponent),
+  },
 ];

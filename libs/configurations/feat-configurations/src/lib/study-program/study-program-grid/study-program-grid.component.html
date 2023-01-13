@@ -1,0 +1,233 @@
+<p-table
+  #dt
+  dataKey="id"
+  responsiveLayout="scroll"
+  [value]="studyPrograms"
+  [totalRecords]="totalRecords"
+  [rows]="10"
+  [paginator]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
+  [rowHover]="true"
+  [(selection)]="selectedStudyProgram"
+  selectionMode="multiple"
+  (onRowSelect)="onRowSelect($event)"
+  (onRowUnselect)="onRowUnselect($event)"
+  (onLazyLoad)="loadRows($event)"
+  [lazy]="true">
+  <ng-template pTemplate="caption">
+    <div
+      class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+      <h5 class="m-0">Menaxho Programet e Studimit</h5>
+      <span class="block mt-2 md:mt-0 p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+          pInputText
+          type="text"
+          placeholder="Kërko..."
+          class="w-full sm:w-auto" />
+      </span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 3rem">
+        <p-tableHeaderCheckbox (click)="onSelectAllClick()">
+        </p-tableHeaderCheckbox>
+      </th>
+      <th pSortableColumn="code">
+        Kodi
+        <p-sortIcon field="code"></p-sortIcon>
+        <p-columnFilter
+          type="numeric"
+          field="code"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="name">
+        Emri
+        <p-sortIcon field="name"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="name"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="academicYear">
+        Viti Akademik
+        <p-sortIcon field="academicYear"></p-sortIcon>
+        <p-columnFilter
+          type="numeric"
+          field="academicYear"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="isTwoYearLong">
+        Ështe 2 Vjecar?
+        <p-sortIcon field="isTwoYearLong"></p-sortIcon>
+      </th>
+      <th pSortableColumn="minAverageGrade">
+        Nota Minimale Mesatare
+        <p-sortIcon field="minAverageGrade"></p-sortIcon>
+        <p-columnFilter
+          type="numeric"
+          field="minAverageGrade"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="quota">
+        Kuota
+        <p-sortIcon field="quota"></p-sortIcon>
+        <p-columnFilter
+          type="numeric"
+          field="quota"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="usedQuota">
+        Kuota Te Zena
+        <p-sortIcon field="usedQuota"></p-sortIcon>
+        <p-columnFilter
+          type="numeric"
+          field="usedQuota"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="university">
+        Universiteti
+        <p-sortIcon field="university"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="university"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="universityDepartament">
+        Departamenti Universitar
+        <p-sortIcon field="universityDepartament"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="universityDepartament"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="maturaCoefficient">
+        Koeficienti i Matures
+        <p-sortIcon field="maturaCoefficient"></p-sortIcon>
+        <p-columnFilter
+          type="numeric"
+          field="maturaCoefficient"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="isWithCompetition">
+        Ështe me Kompeticion?
+        <p-sortIcon field="isWithCompetition"></p-sortIcon>
+      </th>
+      <th pSortableColumn="isValidForRace">
+        Ështe e Gatshme per Gare?
+        <p-sortIcon field="isValidForRace"></p-sortIcon>
+      </th>
+      <th pSortableColumn="competitionMaxScore">
+        Piket Maksimale Te Kompeticionit
+        <p-sortIcon field="competitionMaxScore"></p-sortIcon>
+        <p-columnFilter
+          type="numeric"
+          field="competitionMaxScore"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="competitionMinScore">
+        Piket Minimale Te Kompeticionit
+        <p-sortIcon field="competitionMinScore"></p-sortIcon>
+        <p-columnFilter
+          type="numeric"
+          field="competitionMinScore"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="competitionCoefficient">
+        Koeficienti I Kompeticionit
+        <p-sortIcon field="competitionCoefficient"></p-sortIcon>
+        <p-columnFilter
+          type="numeric"
+          field="competitionCoefficient"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="studentScores">
+        Piket e Studentit
+        <p-sortIcon field="studentScores"></p-sortIcon>
+        <p-columnFilter
+          type="numeric"
+          field="studentScores"
+          display="menu"></p-columnFilter>
+      </th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-studyProgram>
+    <tr>
+      <td>
+        <p-tableCheckbox [value]="studyProgram"></p-tableCheckbox>
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ studyProgram.code }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ studyProgram.name }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ studyProgram.academicYear }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ studyProgram.isTwoYearLong === 1 ? 'Po' : 'Jo' }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ studyProgram.minAverageGrade }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ studyProgram.quota }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ studyProgram.usedQuota }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ studyProgram.universities }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ studyProgram.universityDepartments }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ studyProgram.maturaCoefficient }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ studyProgram.isWithCompetition ? 'Po' : 'Jo' }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ studyProgram.isValidForRace ? 'Po' : 'Jo' }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ studyProgram.competitionMaxScore }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ studyProgram.competitionMinScore }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ studyProgram.competitionCoefficient }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ studyProgram.studentScores }}
+      </td>
+      <td>
+        <div class="flex">
+          <button
+            pButton
+            pRipple
+            icon="pi pi-pencil"
+            class="p-button-rounded p-button-warning p-button-text mr-2"
+            pTooltip="Ndrysho"
+            tooltipPosition="bottom"
+            (click)="onEditClick(studyProgram)"></button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-danger p-button-text"
+            pTooltip="Fshi"
+            tooltipPosition="bottom"
+            (click)="onDeleteClick(studyProgram)"></button>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

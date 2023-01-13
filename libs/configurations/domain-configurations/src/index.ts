@@ -10,4 +10,4 @@ export * from './study-subject/study-subject.model';
 export * from './region/region.model'
 export * from './city/cities.model'
 export * from './roles/role.model';
-
+export * from './study-program/study-program.model';
