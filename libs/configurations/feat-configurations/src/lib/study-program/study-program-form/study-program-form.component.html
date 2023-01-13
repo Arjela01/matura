@@ -32,22 +32,22 @@
   </div>
 
   <div class="field">
-    <label for="academicYear">Viti Akademik *</label>
+    <label for="academicYearId">Viti Akademik *</label>
     <p-dropdown
-      id="academicYear"
+      id="academicYearId"
       [options]="academicYears"
       optionValue="key"
       optionLabel="value"
-      name="academicYear"
+      name="academicYearId"
       [autoDisplayFirst]="false"
-      [(ngModel)]="studyProgram.academicYear"
+      [(ngModel)]="studyProgram.academicYearId"
       [showClear]="true">
     </p-dropdown>
-    <!-- <small
+    <small
       class="p-error block"
-      *ngIf="submitted && !studyProgram.academicYear">
+      *ngIf="submitted && !studyProgram.academicYearId">
       Viti Akademik është fushë e kërkuar.
-    </small> -->
+    </small>
   </div>
 
   <div class="field">
@@ -57,7 +57,7 @@
         <p-radioButton
           id="isTwoYearLongTrue"
           name="isTwoYearLong"
-          [value]="true"
+          [value]="1"
           [(ngModel)]="studyProgram.isTwoYearLong"></p-radioButton>
         <label for="isTwoYearLongTrue">Po</label>
       </div>
@@ -65,7 +65,7 @@
         <p-radioButton
           id="isTwoYearLongFalse"
           name="isTwoYearLong"
-          [value]="false"
+          [value]="2"
           [(ngModel)]="studyProgram.isTwoYearLong"></p-radioButton>
         <label for="isTwoYearLongFalse">Jo</label>
       </div>
@@ -218,34 +218,37 @@
       optionValue="key"
       optionLabel="value"
       name="universityid"
+      [required]="true"
+      (onChange)="onUniversityChange($event)"
       [autoDisplayFirst]="false"
       [(ngModel)]="studyProgram.universityId"
       [showClear]="true">
     </p-dropdown>
-    <!-- <small
+    <small
       class="p-error block"
       *ngIf="submitted && !studyProgram.universityId">
       Universiteti është fushë e kërkuar.
-    </small> -->
+    </small>
   </div>
 
   <div class="field">
     <label for="universityDepartmentId">Departament Universitar *</label>
     <p-dropdown
       id="universityDepartmentId"
-      [options]="universityDepartaments"
+      [options]="universityDepartmentsFiltered"
       optionValue="key"
       optionLabel="value"
+      [required]="true"
       name="universityDepartmentId"
       [autoDisplayFirst]="false"
       [(ngModel)]="studyProgram.universityDepartmentId"
       [showClear]="true">
     </p-dropdown>
-    <!-- <small
+    <small
       class="p-error block"
       *ngIf="submitted && !studyProgram.universityDepartmentId">
       Departamenti Universitar është fushë e kërkuar.
-    </small> -->
+    </small>
   </div>
 
   <div class="field">

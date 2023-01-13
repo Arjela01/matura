@@ -60,21 +60,21 @@ export class StudyProgramFormComponent implements OnChanges {
   studyProgram: StudyProgram = {
     id: 0,
     name: '',
-    academicYear: 0,
+    academicYearId: '',
     code: '',
     isTwoYearLong: 1,
     isValidForRace: true,
     isWithCompetition: true,
-    maturaCoefficient: 0,
-    minAverageGrade: 0,
-    quota: 0,
-    studentScores: 0,
-    universityId: 0,
-    universityDepartmentId: 0,
-    usedQuota: 0,
-    competitionCoefficient: 0,
-    competitionMaxScore: 0,
-    competitionMinScore: 0,
+    maturaCoefficient: '',
+    minAverageGrade: '',
+    quota: '',
+    studentScores: '',
+    universityId: '',
+    universityDepartmentId: '',
+    usedQuota: '',
+    competitionCoefficient: '',
+    competitionMaxScore: '',
+    competitionMinScore: '',
     dropDownName: 'ssss',
   };
 
@@ -82,10 +82,8 @@ export class StudyProgramFormComponent implements OnChanges {
   constructor(private cd: ChangeDetectorRef) {}
 
   ngOnChanges(): void {
-    // if (this.universityDepartaments && this.studyProgram.university) {
-    //   this.onUniversityChange({ value: this.studyProgram.university });
-    // }
-    console.log('test');
+    this.onUniversityChange({ value: this.studyProgram.universityId });
+    console.log(this.studyProgram.universityId);
   }
 
   onCancelClick() {
@@ -99,10 +97,9 @@ export class StudyProgramFormComponent implements OnChanges {
     }
   }
 
-  // onUniversityChange($event: any) {
-  //   console.log($event.value);
-  //   console.log(this.universityDepartaments);
-  //   this.universityDepartmentsFiltered = this.universityDepartaments;
-  //   console.log(this.universityDepartmentsFiltered);
-  // }
+  onUniversityChange($event: any) {
+    this.universityDepartmentsFiltered = this.universityDepartaments.filter(
+      x => x.parentKey == $event.value
+    );
+  }
 }
