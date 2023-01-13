@@ -21,7 +21,7 @@ export const CONFIGURATION_ROUTES: Route[] = [
     loadComponent: () =>
       import(
         './profiles/manage-profiles/manage-profiles.component'
-      ).then(m => m.ManageProfilesComponent),
+        ).then(m => m.ManageProfilesComponent),
   },
   {
     path: 'administration-offices',
