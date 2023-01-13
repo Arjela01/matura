@@ -163,7 +163,7 @@ export class ManageStudyProgramsComponent implements OnInit {
           this.getStudyPrograms(this.filters as LazyLoadEvent);
         }
 
-        if (response.isBadRequest)
+        if (response.isSuccessful === false)
           this.toastService.showError(
             'Ndodhi nje problem gjatë ndryshimit së programit te studimit!'
           );
@@ -183,7 +183,7 @@ export class ManageStudyProgramsComponent implements OnInit {
           this.getStudyPrograms(this.filters as LazyLoadEvent);
         }
 
-        if (response.isBadRequest)
+        if (response.isSuccessful === false)
           this.toastService.showError(
             'Ndodhi nje problem gjatë ndryshimit së programit te studimit!'
           );
@@ -200,7 +200,7 @@ export class ManageStudyProgramsComponent implements OnInit {
           this.getStudyPrograms(this.filters as LazyLoadEvent);
         }
 
-        if (response.isBadRequest)
+        if (response.isSuccessful === false)
           this.toastService.showError(
             'Ndodhi nje problem gjatë fshirjes së programit te studimit!'
           );
