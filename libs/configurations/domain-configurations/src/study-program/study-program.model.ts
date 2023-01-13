@@ -7,33 +7,33 @@ export interface StudyProgram {
 
   isTwoYearLong: number;
 
-  minAverageGrade: number;
+  minAverageGrade: string;
 
-  quota: number;
+  quota: string;
 
-  usedQuota: number;
+  usedQuota: string;
 
-  academicYear: number;
+  academicYearId: string;
 
-  universityId: number;
+  universityId: string;
 
-  universityDepartmentId: number;
+  universityDepartmentId: string;
 
   fullName?: string;
 
-  maturaCoefficient: number;
+  maturaCoefficient: string;
 
   isWithCompetition: boolean;
 
   isValidForRace: boolean;
 
-  competitionMaxScore?: number;
+  competitionMaxScore?: string;
 
-  competitionMinScore?: number;
+  competitionMinScore?: string;
 
-  competitionCoefficient?: number;
+  competitionCoefficient?: string;
 
-  studentScores: number;
+  studentScores: string;
 
   dropDownName: string;
 }

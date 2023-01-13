@@ -52,6 +52,14 @@
           field="name"
           display="menu"></p-columnFilter>
       </th>
+      <th pSortableColumn="academicYear">
+        Viti Akademik
+        <p-sortIcon field="academicYear"></p-sortIcon>
+        <p-columnFilter
+          type="numeric"
+          field="academicYear"
+          display="menu"></p-columnFilter>
+      </th>
       <th pSortableColumn="isTwoYearLong">
         Ështe 2 Vjecar?
         <p-sortIcon field="isTwoYearLong"></p-sortIcon>
@@ -94,14 +102,6 @@
         <p-columnFilter
           type="text"
           field="universityDepartament"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="fullName">
-        Emri i plote
-        <p-sortIcon field="fullName"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="fullName"
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="maturaCoefficient">
@@ -167,7 +167,10 @@
         {{ studyProgram.name }}
       </td>
       <td style="width: 5%; min-width: 10rem">
-        {{ studyProgram.isTwoYearLong ? 'Po' : 'Jo' }}
+        {{ studyProgram.academicYear }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ studyProgram.isTwoYearLong === 1 ? 'Po' : 'Jo' }}
       </td>
       <td style="width: 5%; min-width: 10rem">
         {{ studyProgram.minAverageGrade }}
@@ -179,13 +182,10 @@
         {{ studyProgram.usedQuota }}
       </td>
       <td style="width: 5%; min-width: 10rem">
-        {{ studyProgram.academicYear }}
+        {{ studyProgram.universities }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ studyProgram.university }}
-      </td>
-      <td style="width: 10%; min-width: 10rem">
-        {{ studyProgram.fullName }}
+        {{ studyProgram.universityDepartments }}
       </td>
       <td style="width: 5%; min-width: 10rem">
         {{ studyProgram.maturaCoefficient }}
