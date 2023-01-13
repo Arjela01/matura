@@ -51,6 +51,20 @@ export const CONFIGURATION_ROUTES: Route[] = [
       ),
   },
   {
+    path: 'university',
+    loadComponent: () =>
+      import('./universities/manage-universities/manage-universities.component').then(
+        m => m.ManageUniversitiesComponent
+      ),
+  },
+  {
+    path: 'university-department',
+    loadComponent: () =>
+      import('./university-departments/manage-university-departments/manage-university-departments.component').then(
+        m => m.ManageUniversityDepartmentsComponent
+      ),
+  },
+  {
     path: 'exam-subject',
     loadComponent: () =>
       import(

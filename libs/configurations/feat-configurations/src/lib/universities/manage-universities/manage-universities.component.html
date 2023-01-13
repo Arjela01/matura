@@ -1,0 +1,86 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card px-6 py-6">
+      <!-- TODO: this can be reusable -->
+      <p-toolbar styleClass="mb-4">
+        <div class="p-toolbar-group-left">
+          <div class="my-2">
+            <button
+              pButton
+              pRipple
+              label="Shto"
+              icon="pi pi-plus"
+              class="p-button-success mr-2"
+              (click)="onNewClick()"></button>
+            <button
+              pButton
+              pRipple
+              label="Fshi"
+              icon="pi pi-trash"
+              class="p-button-danger"
+              [disabled]="selectedUniversities.length === 0"
+              (click)="onDeleteSelectedClick()"></button>
+          </div>
+        </div>
+        <div class="p-toolbar-group-right">
+          <button
+            pButton
+            pRipple
+            label="Eksporto"
+            icon="pi pi-upload"
+            class="p-button-help"></button>
+        </div>
+      </p-toolbar>
+
+      <msh-university-grid
+        [universities]="(universities$ | async) || []"
+        [totalRecords]="totalRecords"
+        (gridEvent)="onGridEvent($event)"
+        (lazyLoadData)="getUniversities($event)">
+      </msh-university-grid>
+    </div>
+  </div>
+</div>
+
+<p-dialog
+  [(visible)]="displayModal"
+  [style]="{ width: '500px' }"
+  header="Detajet e Universitetit"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid"
+  (onHide)="onModalClose()">
+  <ng-template pTemplate="content">
+    <msh-university-form
+      [regions]="regions"
+      [cities]="cities"
+      [universityDetails]="selectedRegion"
+      (formClose)="onModalClose()"
+      (formSave)="onFormSave($event)">
+    </msh-university-form>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog
+  #cd
+  header="Konfirmo"
+  icon="pi pi-exclamation-triangle"
+  [style]="{ width: '450px' }">
+  <ng-template pTemplate="footer">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Jo"
+      class="p-button-text"
+      (click)="cd.reject()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Po"
+      class="p-button-text"
+      (click)="cd.accept()"></button>
+  </ng-template>
+</p-confirmDialog>

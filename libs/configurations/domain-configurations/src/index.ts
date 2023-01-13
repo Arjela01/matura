@@ -11,3 +11,5 @@ export * from './region/region.model'
 export * from './city/cities.model'
 export * from './roles/role.model';
 export * from './study-program/study-program.model';
+export * from './universities/university.model';
+export * from './university-departments/university-department.model';

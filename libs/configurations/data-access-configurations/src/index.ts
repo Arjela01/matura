@@ -12,3 +12,5 @@ export * from './lib/region/region-api.service';
 export * from './lib/study-program/study-program-api.service';
 export * from './lib/university-department/university-department-api.service';
 export * from './lib/university/university-api.service';
+export * from './lib/universities/university-api.service';
+export * from './lib/university-departments/university-department-api.service';
