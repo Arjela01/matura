@@ -8,3 +8,5 @@ export * from './exam-type/exam-type.model';
 export * from './exam-subject/exam-subject.model';
 export * from './region/region.model'
 export * from './city/cities.model'
+export * from './roles/role.model';
+
