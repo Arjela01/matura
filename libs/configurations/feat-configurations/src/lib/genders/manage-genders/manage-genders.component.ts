@@ -3,7 +3,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { GendersApiService } from '@msh/configurations/data-access-configurations';
 import { Gender } from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import { GlobalToastService, GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
+import {
+  GlobalToastService,
+  GridEvent,
+  GRID_ACTIONS,
+} from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -14,17 +18,18 @@ import { BehaviorSubject } from 'rxjs';
 import { GenderFormComponent } from './../gender-form/gender-form.component';
 import { GenderGridComponent } from './../gender-grid/gender-grid.component';
 
-
 @Component({
   selector: 'msh-manage-genders',
   standalone: true,
-  imports: [ButtonModule,
+  imports: [
+    ButtonModule,
     CommonModule,
     DialogModule,
     ConfirmDialogModule,
     GenderFormComponent,
     GenderGridComponent,
-    ToolbarModule],
+    ToolbarModule,
+  ],
   templateUrl: './manage-genders.component.html',
   styleUrls: ['./manage-genders.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -48,11 +53,8 @@ export class ManageGendersComponent {
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly genderService: GendersApiService,
+    private readonly genderService: GendersApiService
   ) {}
-
-  ngOnInit(): void {
-  }
 
   onNewClick() {
     this.displayModal = true;
@@ -71,10 +73,7 @@ export class ManageGendersComponent {
   onGridEvent(event: GridEvent<Gender | Gender[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
-        this.selectedGenders = [
-          ...this.selectedGenders,
-          event.data as Gender,
-        ];
+        this.selectedGenders = [...this.selectedGenders, event.data as Gender];
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
         this.selectedGenders = this.selectedGenders.filter(hs => {
@@ -154,9 +153,7 @@ export class ManageGendersComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            'Gjinia u ndryshua me sukses!'
-          );
+          this.toastService.showSuccess('Gjinia u ndryshua me sukses!');
           this.displayModal = false;
           this.getGenders(this.filters as LazyLoadEvent);
         }
