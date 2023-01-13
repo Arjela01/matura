@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
+  AcademicYearApiService,
   StudyProgramApiService,
   UniversityApiService,
   UniversityDepartmentApiService,
@@ -19,7 +20,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
-import { AcademicYearApiService } from '../../../../../data-access-configurations/src/lib/academic-year/academic-year-api.service';
 import { StudyProgramFormComponent } from '../study-program-form/study-program-form.component';
 import { StudyProgramGridComponent } from '../study-program-grid/study-program-grid.component';
 
@@ -163,7 +163,7 @@ export class ManageStudyProgramsComponent implements OnInit {
           this.getStudyPrograms(this.filters as LazyLoadEvent);
         }
 
-        if (response.isBadRequest)
+        if (response.isSuccessful === false)
           this.toastService.showError(
             'Ndodhi nje problem gjatë ndryshimit së programit te studimit!'
           );
@@ -183,7 +183,7 @@ export class ManageStudyProgramsComponent implements OnInit {
           this.getStudyPrograms(this.filters as LazyLoadEvent);
         }
 
-        if (response.isBadRequest)
+        if (response.isSuccessful === false)
           this.toastService.showError(
             'Ndodhi nje problem gjatë ndryshimit së programit te studimit!'
           );
@@ -200,7 +200,7 @@ export class ManageStudyProgramsComponent implements OnInit {
           this.getStudyPrograms(this.filters as LazyLoadEvent);
         }
 
-        if (response.isBadRequest)
+        if (response.isSuccessful === false)
           this.toastService.showError(
             'Ndodhi nje problem gjatë fshirjes së programit te studimit!'
           );
