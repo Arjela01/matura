@@ -6,7 +6,6 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { ProfileGroup } from '@msh/configurations/domain-configurations';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -15,9 +14,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import { Profile } from '@msh/configurations/domain-configurations';
 
 @Component({
-  selector: 'msh-profile-group-grid',
+  selector: 'msh-profile-grid',
   standalone: true,
   imports: [
     CommonModule,
@@ -28,63 +28,61 @@ import { TooltipModule } from 'primeng/tooltip';
     CheckboxModule,
     RippleModule,
   ],
-  templateUrl: './profile-group-grid.component.html',
-  styleUrls: ['./profile-group-grid.component.scss'],
+  templateUrl: './profile-grid.component.html',
+  styleUrls: ['./profile-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfileGroupGridComponent {
-  @Input() profileGroups: ProfileGroup[] = [];
+export class ProfileGridComponent {
+  @Input() profiles: Profile[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
 
   //Keep it local state because of Table Header checkbox not syncing
-  selectedProfileGroups: ProfileGroup[] = [];
+  selectedProfiles: Profile[] = [];
 
-  @Output() gridEvent = new EventEmitter<
-    GridEvent<ProfileGroup | ProfileGroup[]>
-  >();
+  @Output() gridEvent = new EventEmitter<GridEvent<Profile | Profile[]>>();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
-  onEditClick(profileGroup: ProfileGroup) {
+  onEditClick(profile: Profile) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
-      data: profileGroup,
-    } as GridEvent<ProfileGroup>);
+      data: profile,
+    } as GridEvent<Profile>);
   }
 
-  onDeleteClick(profileGroup: ProfileGroup) {
+  onDeleteClick(profile: Profile) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,
-      data: profileGroup,
-    } as GridEvent<ProfileGroup>);
+      data: profile,
+    } as GridEvent<Profile>);
   }
 
   onSelectAllClick() {
-    if (this.selectedProfileGroups.length === 0) {
+    if (this.selectedProfiles.length === 0) {
       this.gridEvent.emit({
         action: GRID_ACTIONS.UNSELECT_ALL,
-      } as GridEvent<ProfileGroup>);
+      } as GridEvent<Profile>);
     } else {
       this.gridEvent.emit({
         action: GRID_ACTIONS.SELECT_MANY,
-        data: this.selectedProfileGroups,
-      } as GridEvent<ProfileGroup[]>);
+        data: this.selectedProfiles,
+      } as GridEvent<Profile[]>);
     }
   }
 
-  onRowSelect({ data }: { data: ProfileGroup }) {
+  onRowSelect({ data }: { data: Profile }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
       data: data,
-    } as GridEvent<ProfileGroup>);
+    } as GridEvent<Profile>);
   }
 
-  onRowUnselect({ data }: { data: ProfileGroup }) {
+  onRowUnselect({ data }: { data: Profile }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
       data: data,
-    } as GridEvent<ProfileGroup>);
+    } as GridEvent<Profile>);
   }
 
   loadRows($event: LazyLoadEvent) {
