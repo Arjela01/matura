@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -8,8 +8,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
-import {  ProfileGroupApiService} from '@msh/configurations/data-access-configurations';
-import { ProfileGroup} from '@msh/configurations/domain-configurations';
+import { ProfileGroupApiService } from '@msh/configurations/data-access-configurations';
+import { ProfileGroup } from '@msh/configurations/domain-configurations';
 
 import {
   GlobalToastService,
@@ -18,8 +18,8 @@ import {
 } from '@msh/shared/util-shared';
 
 import { BehaviorSubject } from 'rxjs';
-import {ProfileGroupFormComponent} from "../profile-group-form/profile-group-form.component";
-import {ProfileGroupGridComponent} from "../profile-group-grid/profile-group-grid.component";
+import { ProfileGroupFormComponent } from '../profile-group-form/profile-group-form.component';
+import { ProfileGroupGridComponent } from '../profile-group-grid/profile-group-grid.component';
 
 @UntilDestroy()
 @Component({
@@ -32,9 +32,7 @@ import {ProfileGroupGridComponent} from "../profile-group-grid/profile-group-gri
     ConfirmDialogModule,
     ProfileGroupFormComponent,
     ProfileGroupGridComponent,
-    ManageProfileGroupsComponent,
     ToolbarModule,
-
   ],
   templateUrl: './manage-profile-groups.component.html',
   styleUrls: ['./manage-profile-groups.component.scss'],
@@ -51,16 +49,15 @@ export class ManageProfileGroupsComponent implements OnInit {
   selectedProfileGroups: ProfileGroup[] = [];
   displayModal = false;
 
-
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly profileGroupService: ProfileGroupApiService,
-  ) {
-  }
+    private readonly cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    return
+    return;
   }
 
   onNewClick() {
@@ -70,7 +67,8 @@ export class ManageProfileGroupsComponent implements OnInit {
 
   onDeleteSelectedClick() {
     this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të fshini grupet e profileve të zgjedhura?',
+      message:
+        'Jeni i sigurt që doni të fshini grupet e profileve të zgjedhura?',
       accept: () => {
         //this.profileGroupStore.deleteSelectedProfilegroups();
         this.toastService.showWarning('Grupet e profilit u fshinë');
@@ -102,12 +100,16 @@ export class ManageProfileGroupsComponent implements OnInit {
         break;
       case GRID_ACTIONS.EDIT:
         // eslint-disable-next-line max-len
-        this.selectedProfileGroup = Object.assign({}, event.data as ProfileGroup);
+        this.selectedProfileGroup = Object.assign(
+          {},
+          event.data as ProfileGroup
+        );
         this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të fshini grupin e profilit të zgjedhur?',
+          message:
+            'Jeni i sigurt që doni të fshini grupin e profilit të zgjedhur?',
           accept: () => {
             this.deleteProfileGroup(event.data as ProfileGroup);
           },
@@ -150,6 +152,7 @@ export class ManageProfileGroupsComponent implements OnInit {
           this.toastService.showSuccess('Grupi i profilit u shtua me sukses!');
           this.displayModal = false;
           this.getProfileGroups(this.filters as LazyLoadEvent);
+          this.cd.detectChanges();
         }
 
         if (response.isBadRequest)
@@ -195,5 +198,4 @@ export class ManageProfileGroupsComponent implements OnInit {
           );
       });
   }
-
 }
