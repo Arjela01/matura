@@ -13,3 +13,6 @@ export * from './lib/menu/menu-api.service';
 export * from './lib/exam-type/exam-type-api.service';
 export * from './lib/profile-group/profile-group-api.service';
 export * from './lib/genders/genders-api.service';
+export * from './lib/roles/roles-api.service';
+
+
