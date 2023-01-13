@@ -16,6 +16,13 @@ export const CONFIGURATION_ROUTES: Route[] = [
       ).then(m => m.ManageProfileGroupsComponent),
   },
   {
+    path: 'administration-offices',
+    loadComponent: () =>
+      import(
+        './administration-office/manage-administration-office/manage-administration-office.component'
+      ).then(m => m.ManageAdministrationOfficeComponent),
+  },
+  {
     path: 'menu',
     loadComponent: () =>
       import('./menus/manage-menus/manage-menus.component').then(
@@ -63,5 +70,12 @@ export const CONFIGURATION_ROUTES: Route[] = [
       import(
         './study-subject/manage-study-subjects/manage-study-subjects.component'
       ).then(m => m.ManageStudySubjectsComponent),
+  },
+  {
+    path: 'roles',
+    loadComponent: () =>
+      import(
+        './roles/manage-roles/manage-roles.component'
+      ).then(m => m.ManageRolesComponent),
   },
 ];
