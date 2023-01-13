@@ -1,0 +1,51 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="Code">Kodi *</label>
+    <input
+      type="number"
+      pInputText
+      id="Code"
+      name="Code"
+      [(ngModel)]="role.code"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !role.code }" />
+    <small class="p-error block" *ngIf="submitted && !role.code">
+      Kodi është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Name">Emri *</label>
+    <input
+      type="text"
+      pInputText
+      id="Name"
+      name="Name"
+      [(ngModel)]="role.name"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !role.name }" />
+    <small class="p-error block" *ngIf="submitted && !role.name">
+      Emri është fushë e kërkuar.
+    </small>
+  </div>
+
+
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      type="submit"
+      pButton
+      icon="pi pi-check"
+      label="Ruaj"
+      class="p-button-text w-auto"></button>
+  </div>
+</form>
