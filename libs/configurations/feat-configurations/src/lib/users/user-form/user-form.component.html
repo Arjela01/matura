@@ -13,7 +13,7 @@
         'ng-invalid ng-dirty': submitted && !user.name
       }" />
     <small class="p-error block" *ngIf="submitted && !user.name">
-      name is required.
+      Emri është fushë e kërkuar.
     </small>
   </div>
 
@@ -31,12 +31,12 @@
         'ng-invalid ng-dirty': submitted && !user.lastName
       }" />
     <small class="p-error block" *ngIf="submitted && !user.lastName">
-      lastName is required.
+      Mbiemri është fushë e kërkuar.
     </small>
   </div>
 
   <div class="field">
-    <label for="userName">Perdoruesi *</label>
+    <label for="userName">Përdoruesi *</label>
     <input
       type="text"
       pInputText
@@ -49,7 +49,7 @@
         'ng-invalid ng-dirty': submitted && !user.userName
       }" />
     <small class="p-error block" *ngIf="submitted && !user.userName">
-      username is required.
+      Përdoruesi është fushë e kërkuar.
     </small>
   </div>
 
@@ -65,7 +65,10 @@
       (onChange)="onRoleChange($event)"
       [autoDisplayFirst]="false"
       [(ngModel)]="user.role"
-      [showClear]="true">
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !user.role
+      }">
     </p-dropdown>
     <small class="p-error block" *ngIf="submitted && !user.role">
       Roli është fushë e kërkuar.
@@ -144,14 +147,20 @@
   </div>
 
   <div class="field">
-    <label for="password">Fjalekalimi *</label>
+    <label for="password">Fjalëkalimi *</label>
     <input
       type="password"
       pInputText
       id="password"
       name="password"
       [(ngModel)]="user.password"
-      autofocus />
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !user.password
+      }" />
+    <small class="p-error block" *ngIf="submitted && !user.role">
+      Fjalëkalimi është fushë e kërkuar.
+    </small>
   </div>
 
   <div class="field">
