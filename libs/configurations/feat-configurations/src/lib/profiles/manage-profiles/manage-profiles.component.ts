@@ -3,10 +3,8 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@an
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
-import { ToolbarModule } from 'primeng/toolbar';
 
 import { Profile ,} from '@msh/configurations/domain-configurations';
 import { DropdownModel, } from '@msh/shared/data-access-shared';
@@ -25,6 +23,8 @@ import {
   ProfileApiService,
   ProfileGroupApiService
 } from "@msh/configurations/data-access-configurations";
+import {ButtonModule} from "primeng/button";
+import {ToolbarModule} from "primeng/toolbar";
 
 
 @UntilDestroy()

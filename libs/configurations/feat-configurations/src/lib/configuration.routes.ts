@@ -1,5 +1,4 @@
 import { Route } from '@angular/router';
-import {ManageProfilesComponent} from "./profiles/manage-profiles/manage-profiles.component";
 
 export const CONFIGURATION_ROUTES: Route[] = [
   {
@@ -22,6 +21,13 @@ export const CONFIGURATION_ROUTES: Route[] = [
       import(
         './profiles/manage-profiles/manage-profiles.component'
         ).then(m => m.ManageProfilesComponent),
+  },
+  {
+    path: 'students',
+    loadComponent: () =>
+      import(
+        './students/manage-students/manage-students.component'
+        ).then(m => m.ManageStudentsComponent),
   },
   {
     path: 'administration-offices',
