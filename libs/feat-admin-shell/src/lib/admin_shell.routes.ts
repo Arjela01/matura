@@ -18,6 +18,13 @@ export const ADMIN_SHELL_ROUTES: Route[] = [
             m => m.CONFIGURATION_ROUTES
           ),
       },
+      {
+        path: 'evaluations',
+        loadChildren: () =>
+          import('@msh/evaluations/feat-evaluations').then(
+            m => m.EVALUATION_ROUTES
+          ),
+      },
     ],
   },
 ];

@@ -1,12 +1,58 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {FormsModule, NgForm} from "@angular/forms";
+import {InputTextModule} from "primeng/inputtext";
+import {InputNumberModule} from "primeng/inputnumber";
+import {RadioButtonModule} from "primeng/radiobutton";
+import {InputTextareaModule} from "primeng/inputtextarea";
+import {ButtonModule} from "primeng/button";
+import {ExamResult} from "@msh/evaluations/domain-evaluations";
 
 @Component({
-  selector: 'msh-exam-results-form',
+  selector: 'msh-exam-result-form',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    InputTextModule,
+    InputNumberModule,
+    RadioButtonModule,
+    InputTextareaModule,
+    ButtonModule,],
   templateUrl: './exam-results-form.component.html',
   styleUrls: ['./exam-results-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamResultsFormComponent {}
+export class ExamResultsFormComponent {
+
+
+  @Input() set examResultDetails(details: ExamResult | null) {
+    if (details) {
+      this.examResult = Object.assign({}, details);
+    }
+  }
+  @Output() formSave = new EventEmitter<ExamResult>();
+  @Output() formClose = new EventEmitter<undefined>();
+
+  @ViewChild('form', { static: true }) form!: NgForm;
+
+  submitted = false;
+
+  examResult: ExamResult = {
+    id: 0,
+    elaboration_points: 0,
+    reason: '',
+    document_name: '',
+  };
+
+  onCancelClick() {
+    this.formClose.emit();
+  }
+
+  onSubmit() {
+    this.submitted = true;
+    if (this.form.valid) {
+      this.formSave.emit(this.examResult);
+    }
+  }
+}

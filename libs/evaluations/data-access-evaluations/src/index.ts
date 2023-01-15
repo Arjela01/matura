@@ -1,1 +1,1 @@
-export * from './lib/evaluations-data-access-evaluations.module';
+export * from './lib/exam-result/exam-result-api.service';

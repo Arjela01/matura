@@ -1,1 +1,67 @@
-<p>exam-results-form works!</p>
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="Points">Pikët *</label>
+    <input
+      type="number"
+      pInputText
+      id="Points"
+      name="Code"
+      [(ngModel)]="examResult.elaboration_points"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examResult.elaboration_points }" />
+    <small class="p-error block" *ngIf="submitted && !examResult.elaboration_points">
+      Pikët është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Reason">Arsyeja e ndryshimit *</label>
+    <input
+      type="text"
+      pInputText
+      id="Reason"
+      name="Reason"
+      [(ngModel)]="examResult.reason"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examResult.reason }" />
+    <small class="p-error block" *ngIf="submitted && !examResult.reason">
+      Arsyeja e ndryshimit është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Document">Dokumentacion mbështetës *</label>
+    <input
+      type="text"
+      pInputText
+      id="Document"
+      name="Document"
+      [(ngModel)]="examResult.document_name"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examResult.document_name }" />
+    <small class="p-error block" *ngIf="submitted && !examResult.document_name">
+      Dokumentacion mbështetës është fushë e kërkuar.
+    </small>
+  </div>
+
+
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      type="submit"
+      pButton
+      icon="pi pi-check"
+      label="Ruaj"
+      class="p-button-text w-auto"></button>
+  </div>
+</form>

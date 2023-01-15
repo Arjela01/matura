@@ -1,1 +1,1 @@
-export * from './lib/evaluations-domain-evaluations.module';
+export * from './exam-result/exam-result.model'
