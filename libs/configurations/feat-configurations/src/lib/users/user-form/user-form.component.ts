@@ -76,7 +76,7 @@ export class UserFormComponent implements OnChanges, OnInit {
   submitted = false;
 
   user: User = {
-    id: 0,
+    id: '',
     displayName: '',
     administrationOfficeId: 0,
     fileName: '',
@@ -88,12 +88,10 @@ export class UserFormComponent implements OnChanges, OnInit {
     isActive: true,
     overseerCode: '',
     studentId: null,
-    role: '',
+    roleId: '',
     studyProgramId: 0,
     universityId: 0,
     universityDepartmentId: 0,
-    validFrom: undefined,
-    validTo: undefined,
   };
 
   constructor(private cd: ChangeDetectorRef) {}
@@ -104,7 +102,7 @@ export class UserFormComponent implements OnChanges, OnInit {
 
   ngOnChanges(): void {
     this.onUniversityChange({ value: this.user.universityId });
-    this.onRoleChange({ value: this.user.role });
+    this.onRoleChange({ value: this.user.roleId });
   }
 
   onCancelClick() {
@@ -151,7 +149,7 @@ export class UserFormComponent implements OnChanges, OnInit {
       x => x.roleCode === $event.value
     )[0]?.showOverseerCode;
 
-    if (!this.user.role) {
+    if (!this.user.roleId) {
       this.onRoleRemoved();
     }
   }

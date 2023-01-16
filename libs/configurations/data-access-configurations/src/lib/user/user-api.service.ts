@@ -29,7 +29,7 @@ export class UserApiService {
     return this.apiService.put<ApiResult<User>, User>('/User', user);
   }
 
-  delete(userId: number): Observable<ApiResult<unknown>> {
+  delete(userId: string): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<User>>(`/User/${userId}`);
   }
 }

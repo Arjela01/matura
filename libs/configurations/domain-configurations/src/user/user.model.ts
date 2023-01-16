@@ -1,5 +1,5 @@
 export interface User {
-  id: number;
+  id: string;
 
   displayName?: string;
 
@@ -19,17 +19,13 @@ export interface User {
 
   overseerCode: string;
 
-  role: string;
+  roleId: string;
 
   studentId?: string | null;
 
   studyProgramId?: number;
 
   universityId: number;
-
-  validFrom?: Date;
-
-  validTo?: Date;
 
   isActive: boolean;
 

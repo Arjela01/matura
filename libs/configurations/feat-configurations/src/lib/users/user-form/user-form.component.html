@@ -64,13 +64,13 @@
       name="roles"
       (onChange)="onRoleChange($event)"
       [autoDisplayFirst]="false"
-      [(ngModel)]="user.role"
+      [(ngModel)]="user.roleId"
       [showClear]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.role
+        'ng-invalid ng-dirty': submitted && !user.roleId
       }">
     </p-dropdown>
-    <small class="p-error block" *ngIf="submitted && !user.role">
+    <small class="p-error block" *ngIf="submitted && !user.roleId">
       Roli është fushë e kërkuar.
     </small>
   </div>
@@ -158,7 +158,7 @@
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !user.password
       }" />
-    <small class="p-error block" *ngIf="submitted && !user.role">
+    <small class="p-error block" *ngIf="submitted && !user.password">
       Fjalëkalimi është fushë e kërkuar.
     </small>
   </div>
