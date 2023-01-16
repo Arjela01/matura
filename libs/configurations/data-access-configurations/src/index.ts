@@ -19,4 +19,5 @@ export * from './lib/study-program/study-program-api.service';
 export * from './lib/study-subject/study-subject-api.service';
 export * from './lib/universities/university-api.service';
 export * from './lib/university-departments/university-department-api.service';
-export * from './lib/city/cities-api.service'
+export * from './lib/exam-site/exam-site.service';
+export * from './lib/genders/genders-api.service';

@@ -14,3 +14,4 @@ export * from './study-program/study-program.model';
 export * from './study-subject/study-subject.model';
 export * from './universities/university.model';
 export * from './university-departments/university-department.model';
+export * from './exam-site/exam-site.model'
