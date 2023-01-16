@@ -19,7 +19,7 @@
   <ng-template pTemplate="caption">
     <div
       class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <h5 class="m-0">Menaxho Kategorite A1Z</h5>
+      <h5 class="m-0">Menaxho Kategoritë A1Z</h5>
       <span class="block mt-2 md:mt-0 p-input-icon-left">
         <i class="pi pi-search"></i>
         <input
@@ -42,6 +42,14 @@
         <p-columnFilter
           type="text"
           field="name"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="isCreatedBy">
+        Krijuar nga
+        <p-sortIcon field="isCreatedBy"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="isCreatedBy"
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="isActive">

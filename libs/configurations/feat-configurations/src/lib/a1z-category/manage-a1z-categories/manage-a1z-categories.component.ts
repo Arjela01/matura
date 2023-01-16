@@ -38,7 +38,6 @@ export class ManageA1zCategoriesComponent {
   selectedA1zCategory: A1ZCategory | null = null;
   selectedA1zCategories: A1ZCategory[] = [];
   displayModal = false;
-  academicYears: DropdownModel<number>[] = [];
 
 
   constructor(
