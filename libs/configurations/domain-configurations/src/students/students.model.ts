@@ -1,11 +1,11 @@
 export interface Student {
-  id: any;
+  id?: any;
   birthDate: number;
   birthPlace: string;
   isConfirmedBySupervisor: boolean;
   email: string;
   firstName: string;
-  gender: string;
+  gender?: string;
   idCard: string;
   isA2A3: boolean;
   isEAlbaniaApplication: boolean;
@@ -15,12 +15,12 @@ export interface Student {
   oldId: string;
   highSchool?: string;
   schoolFinished: string;
-  schoolName: string;
+  schoolName?: string;
   schoolProfile?: string;
-  session: string;
+  session?: string;
   studentId: string;
-  studyClass: string;
-  graduationYear?: string;
+  studyClass?: string;
+  graduationYear?: number;
   isFall: boolean;
   registrationYear?: string;
 }

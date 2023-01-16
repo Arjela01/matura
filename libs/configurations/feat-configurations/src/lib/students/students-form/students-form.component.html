@@ -1,36 +1,32 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="field mb-5">
-    <label for="Shkolla">Shkolla *</label>
+    <label for="highSchool">Shkolla *</label>
     <p-dropdown
-      id="Shkolla"
+      id="highSchool"
       [options]="highSchool"
-      name="Shkolla"
+      name="schoolProfile"
       optionValue="key"
       optionLabel="value"
       [(ngModel)]="student.highSchool"
       [autoDisplayFirst]="false"
-      (onChange)="onHighSchoolChange($event)"
-      [showClear]="true"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !student.highSchool
-      }">
+      (onChange)="onProfileSchoolChange($event)"
+      [showClear]="true">
+      [showClear]="true">
     </p-dropdown>
-    <small class="p-error block" *ngIf="submitted && !student.highSchool">
-      Shkolla është fushë e kërkuar.
-    </small>
+
   </div>
 
   <div class="field mb-5">
     <label for="schoolProfile">Profili Shkollës *</label>
     <p-dropdown
       id="schoolProfile"
-      [options]="highSchool"
+      [options]="schoolProfile"
       name="schoolProfile"
       optionValue="key"
       optionLabel="value"
       [(ngModel)]="student.schoolProfile"
       [autoDisplayFirst]="false"
-      (onChange)="onHighSchoolChange($event)"
+      (onChange)="onProfileSchoolChange($event)"
       [showClear]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !student.schoolProfile
@@ -63,27 +59,27 @@
     </div>
   </div>
 
-  <div class="field">
-    <label class="mb-3">Ka aplikuar në E-Albania? *</label>
-    <div class="formgrid grid">
-      <div class="field-radiobutton col-6">
-        <p-radioButton
-          id="isEAlbaniaApplicationTrue"
-          name="isEAlbaniaApplication"
-          [value]="true"
-          [(ngModel)]="student.isEAlbaniaApplication"></p-radioButton>
-        <label for="isEAlbaniaApplicationTrue">Po</label>
-      </div>
-      <div class="field-radiobutton col-6">
-        <p-radioButton
-          id="isEAlbaniaApplicationFalse"
-          name="isEAlbaniaApplication"
-          [value]="false"
-          [(ngModel)]="student.isEAlbaniaApplication"></p-radioButton>
-        <label for="isEAlbaniaApplicationFalse">Jo</label>
-      </div>
-    </div>
-  </div>
+<!--  <div class="field">-->
+<!--    <label class="mb-3">Ka aplikuar në E-Albania? *</label>-->
+<!--    <div class="formgrid grid">-->
+<!--      <div class="field-radiobutton col-6">-->
+<!--        <p-radioButton-->
+<!--          id="isEAlbaniaApplicationTrue"-->
+<!--          name="isEAlbaniaApplication"-->
+<!--          [value]="true"-->
+<!--          [(ngModel)]="student.isEAlbaniaApplication"></p-radioButton>-->
+<!--        <label for="isEAlbaniaApplicationTrue">Po</label>-->
+<!--      </div>-->
+<!--      <div class="field-radiobutton col-6">-->
+<!--        <p-radioButton-->
+<!--          id="isEAlbaniaApplicationFalse"-->
+<!--          name="isEAlbaniaApplication"-->
+<!--          [value]="false"-->
+<!--          [(ngModel)]="student.isEAlbaniaApplication"></p-radioButton>-->
+<!--        <label for="isEAlbaniaApplicationFalse">Jo</label>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
 
   <div class="field">
     <label class="mb-3">Është A2A3? *</label>
@@ -127,13 +123,12 @@
 
   <div class="field">
     <label for="graduationYear"
-      >Viti i përfundimit te shkollës së mesme? *</label
-    >
+      >Viti i përfundimit te shkollës së mesme? *</label>
     <p-calendar
       [(ngModel)]="student.graduationYear"
       dateFormat="yy"
-      inputId="graduationYear"
       view="year"
+      inputId="graduationYear"
       id="graduationYear"
       name="graduationYear"
       [ngClass]="{
@@ -261,20 +256,15 @@ W      id="birthDate"
     <p-dropdown
       id="gender"
       [options]="genders"
-      name="gender"
+      name="schoolProfile"
       optionValue="key"
       optionLabel="value"
       [(ngModel)]="student.gender"
       [autoDisplayFirst]="false"
-      (onChange)="onGenderChange($event)"
-      [showClear]="true"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !student.gender
-      }">
+      (onChange)="onProfileSchoolChange($event)"
+      [showClear]="true">
     </p-dropdown>
-    <small class="p-error block" *ngIf="submitted && !student.gender">
-      Gjinia është fushë e kërkuar.
-    </small>
+
   </div>
 
   <div class="field mb-5">
@@ -282,20 +272,15 @@ W      id="birthDate"
     <p-dropdown
       id="studyClass"
       [options]="studyClass"
-      name="studyClass"
+      name="schoolProfile"
       optionValue="key"
       optionLabel="value"
       [(ngModel)]="student.studyClass"
       [autoDisplayFirst]="false"
-      (onChange)="onStudyClassChange($event)"
-      [showClear]="true"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !student.studyClass
-      }">
+      (onChange)="onProfileSchoolChange($event)"
+      [showClear]="true">
     </p-dropdown>
-    <small class="p-error block" *ngIf="submitted && !student.studyClass">
-      Klasa është fushë e kërkuar.
-    </small>
+
   </div>
 
   <div class="field mb-5">
@@ -303,20 +288,15 @@ W      id="birthDate"
     <p-dropdown
       id="session"
       [options]="session"
-      name="session"
+      name="schoolProfile"
       optionValue="key"
       optionLabel="value"
       [(ngModel)]="student.session"
       [autoDisplayFirst]="false"
-      (onChange)="onSessionChange($event)"
-      [showClear]="true"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !student.session
-      }">
+      (onChange)="onProfileSchoolChange($event)"
+      [showClear]="true">
     </p-dropdown>
-    <small class="p-error block" *ngIf="submitted && !student.session">
-      Seksioni është fushë e kërkuar.
-    </small>
+
   </div>
 
   <div class="field">

@@ -9,7 +9,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
 import {
-  HighSchoolApiService,
+  HighSchoolApiService, ProfileApiService,
 } from '@msh/configurations/data-access-configurations';
 import { Student} from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
@@ -52,13 +52,15 @@ export class ManageStudentsComponent implements OnInit {
   selectedStudent: Student | null = null;
   selectedStudents: Student[] = [];
   displayModal = false;
-  highSchool: DropdownModel<number>[] = [];
+  schoolProfile: DropdownModel<number>[] = [];
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly studentService: StudentsApiService,
     private readonly highSchoolService: HighSchoolApiService,
+    private readonly profileService: ProfileApiService,
+
     private readonly cd: ChangeDetectorRef,
 
   ) {}
@@ -66,7 +68,8 @@ export class ManageStudentsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.gethighSchoolDropdown();
+    this.getProfileSchoolDropdown();
+
   }
 
   onNewClick() {
@@ -75,10 +78,9 @@ export class ManageStudentsComponent implements OnInit {
 
   onDeleteSelectedClick() {
     this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të fshini shkollat e zgjedhura?',
+      message: 'Jeni i sigurt që doni të fshini maturantet?',
       accept: () => {
-        //this.highSchoolStore.deleteSelectedHighSchools();
-        this.toastService.showWarning('Shkollat e zgjedhura u fshinë!');
+        this.toastService.showWarning('Maturantet e zgjedhur u fshinë!');
       },
     });
   }
@@ -112,7 +114,7 @@ export class ManageStudentsComponent implements OnInit {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të fshini shkollën e zgjedhur?',
+          message: 'Jeni i sigurt që doni të fshini maturantin?',
           accept: () => {
             this.deleteStudent(event.data as Student);
           },
@@ -152,7 +154,7 @@ export class ManageStudentsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Shkolla e mesme u shtua me sukses!');
+          this.toastService.showSuccess('Maturanti u shtua me sukses!');
           this.displayModal = false;
           this.getStudents(this.filters as LazyLoadEvent);
           this.cd.detectChanges();
@@ -161,7 +163,7 @@ export class ManageStudentsComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së shkollës së mesme!'
+            'Ndodhi një problem gjatë ndryshimit së maturantit!'
           );
       });
   }
@@ -173,7 +175,7 @@ export class ManageStudentsComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
-            'Shkolla e mesme u ndryshua me sukses!'
+            'Maturanti u ndryshua me sukses!'
           );
           this.displayModal = false;
           this.getStudents(this.filters as LazyLoadEvent);
@@ -181,7 +183,7 @@ export class ManageStudentsComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së shkollës së mesme!'
+            'Ndodhi një problem gjatë ndryshimit së maturantit!'
           );
       });
   }
@@ -192,7 +194,7 @@ export class ManageStudentsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showInfo('Shkolla e mesme u fshi me sukses!');
+          this.toastService.showInfo('Maturanti u fshi me sukses!');
           this.getStudents(this.filters as LazyLoadEvent);
         }
 
@@ -205,14 +207,13 @@ export class ManageStudentsComponent implements OnInit {
 
 
 
-  gethighSchoolDropdown() {
-    this.highSchoolService
+  getProfileSchoolDropdown() {
+    this.profileService
       .loadDropdownList()
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.highSchool = response.data;
+        this.schoolProfile = response.data;
       });
   }
-
 }
 
