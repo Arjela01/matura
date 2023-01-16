@@ -1,3 +1,4 @@
+export * from './academic-year/academic-year.model';
 export * from './administration-office/administration-office.model';
 export * from './city/cities.model';
 export * from './exam-subject/exam-subject.model';
