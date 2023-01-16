@@ -87,6 +87,13 @@ export const CONFIGURATION_ROUTES: Route[] = [
       ),
   },
   {
+    path: 'academic-year',
+    loadComponent: () =>
+      import('./academic-year/manage-academic-year/manage-academic-year.component').then(
+        m => m.ManageAcademicYearComponent
+      ),
+  },
+  {
     path: 'gender',
     loadComponent: () =>
       import(
