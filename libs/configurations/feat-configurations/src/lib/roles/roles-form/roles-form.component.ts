@@ -48,9 +48,10 @@ export class RolesFormComponent {
   submitted = false;
 
   role: Role = {
-    id: 0,
+    id: '',
     code: '',
     name: '',
+    description:''
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function

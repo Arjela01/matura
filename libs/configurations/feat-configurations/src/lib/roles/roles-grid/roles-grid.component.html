@@ -52,7 +52,14 @@
           field="name"
           display="menu"></p-columnFilter>
       </th>
-
+      <th pSortableColumn="description">
+        Përshkrimi
+        <p-sortIcon field="description"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="description"
+          display="menu"></p-columnFilter>
+      </th>
       <th></th>
     </tr>
   </ng-template>
@@ -61,13 +68,15 @@
       <td>
         <p-tableCheckbox [value]="roles"></p-tableCheckbox>
       </td>
-      <td style="width: 50%; min-width: 10rem">
+      <td style="width: 33%; min-width: 10rem">
         {{ roles.code }}
       </td>
-      <td style="width: 50%; min-width: 10rem">
+      <td style="width: 33%; min-width: 10rem">
         {{ roles.name }}
       </td>
-
+      <td style="width: 33%; min-width: 10rem">
+        {{ roles.description }}
+      </td>
       <td>
         <div class="flex">
           <button
