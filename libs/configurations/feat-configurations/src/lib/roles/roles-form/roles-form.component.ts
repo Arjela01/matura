@@ -48,7 +48,7 @@ export class RolesFormComponent {
   submitted = false;
 
   role: Role = {
-    id: 0,
+    id: '',
     code: '',
     name: '',
   };
