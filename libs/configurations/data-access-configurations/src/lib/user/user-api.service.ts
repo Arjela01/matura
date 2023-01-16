@@ -30,6 +30,6 @@ export class UserApiService {
   }
 
   delete(userId: number): Observable<ApiResult<unknown>> {
-    return this.apiService.delete<ApiResult<User>>(`/${userId}`);
+    return this.apiService.delete<ApiResult<User>>(`/User/${userId}`);
   }
 }
