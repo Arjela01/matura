@@ -5,7 +5,7 @@
       type="text"
       pInputText
       id="Code"
-      name="code"
+      name="Code"
       [(ngModel)]="role.code"
       required
       autofocus
@@ -32,6 +32,17 @@
   </div>
 
 
+  <div class="field">
+    <label for="Description">Përshkrimi</label>
+    <input
+      type="text"
+      pInputText
+      id="Description"
+      name="Description"
+      [(ngModel)]="role.description"
+      autofocus />
+
+  </div>
 
   <div class="flex justify-content-end">
     <button
