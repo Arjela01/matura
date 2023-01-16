@@ -114,4 +114,11 @@ export const CONFIGURATION_ROUTES: Route[] = [
         './study-program/manage-study-programs/manage-study-programs.component'
       ).then(m => m.ManageStudyProgramsComponent),
   },
+  {
+    path: 'exam-site',
+    loadComponent: () =>
+      import(
+        './exam-site/manage-exam-site/manage-exam-site.component'
+        ).then(m => m.ManageExamSiteComponent),
+  },
 ];
