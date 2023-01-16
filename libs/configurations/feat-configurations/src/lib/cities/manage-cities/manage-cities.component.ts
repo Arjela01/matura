@@ -7,8 +7,9 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
+
+import { CityApiService } from '@msh/configurations/data-access-configurations'
 import {
-  CitiesApiService,
   RegionApiService,
 } from '@msh/configurations/data-access-configurations';
 import { City } from '@msh/configurations/domain-configurations';
@@ -58,7 +59,7 @@ export class ManageCitiesComponent implements OnInit {
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly cityService: CitiesApiService,
+    private readonly cityService: CityApiService,
     private readonly regionApiService: RegionApiService
   ) {}
 
