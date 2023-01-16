@@ -1,8 +1,8 @@
 <p-table
   #dt
+  [lazy]="true"
   [value]="users"
   responsiveLayout="scroll"
-  [rows]="10"
   [rows]="10"
   [paginator]="true"
   [rowsPerPageOptions]="[10, 20, 30]"
@@ -12,6 +12,7 @@
   dataKey="Id"
   [(selection)]="selectedUsers"
   selectionMode="multiple"
+  (onLazyLoad)="loadRows($event)"
   (onRowSelect)="onRowSelect($event)"
   (onRowUnselect)="onRowUnselect($event)">
   <ng-template pTemplate="caption">
@@ -42,28 +43,28 @@
           field="displayName"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="administrationOffice">
+      <th pSortableColumn="administrationOfficeName">
         DAR/ZA
-        <p-sortIcon field="administrationOffice"></p-sortIcon>
+        <p-sortIcon field="administrationOfficeName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="administrationOffice"
+          field="administrationOfficeName"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="universityDepartment">
+      <th pSortableColumn="universityDepartmentName">
         Fakulteti
-        <p-sortIcon field="universityDepartment"></p-sortIcon>
+        <p-sortIcon field="universityDepartmentName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="universityDepartment"
+          field="universityDepartmentName"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="highSchool">
+      <th pSortableColumn="highSchoolName">
         Shkolla e Mesme
-        <p-sortIcon field="highSchool"></p-sortIcon>
+        <p-sortIcon field="highSchoolName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="highSchool"
+          field="highSchoolName"
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="name">
@@ -99,44 +100,28 @@
           field="overseerCode"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="studentId">
+      <th pSortableColumn="studentName">
         Id e Studentit
-        <p-sortIcon field="studentId"></p-sortIcon>
+        <p-sortIcon field="studentName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="studentId"
+          field="studentName"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="studyProgramId">
+      <th pSortableColumn="studyProgramName">
         Programi i Studimit
-        <p-sortIcon field="studyProgramId"></p-sortIcon>
+        <p-sortIcon field="studyProgramName"></p-sortIcon>
         <p-columnFilter
           type="numeric"
-          field="studyProgramId"
+          field="studyProgramName"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="universityId">
+      <th pSortableColumn="universityName">
         Universiteti
-        <p-sortIcon field="universityId"></p-sortIcon>
+        <p-sortIcon field="universityName"></p-sortIcon>
         <p-columnFilter
           type="numeric"
-          field="universityId"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="validFrom">
-        I Vlefshëm nga
-        <p-sortIcon field="validFrom"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="validFrom"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="validTo">
-        I Vlefshëm deri në
-        <p-sortIcon field="validTo"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="validTo"
+          field="universityName"
           display="menu"></p-columnFilter>
       </th>
       <th></th>
@@ -151,16 +136,16 @@
         {{ user.username }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.administrationOffice ? user.administrationOffice : 'N/A' }}
+        {{ user.administrationOffice }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.universityDepartment ? user.universityDepartment : 'N/A' }}
+        {{ user.universityDepartmentName }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.highSchool ? user.highSchool : 'N/A' }}
+        {{ user.highSchoolName }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.name ? user.name : 'N/A' }}
+        {{ user.name }}
       </td>
       <td style="width: 10%; min-width: 10rem">
         {{ user.lastName ? user.lastName : 'N/A' }}
@@ -172,19 +157,13 @@
         {{ user.overseerCode ? user.overseerCode : 'N/A' }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.studentId ? user.studentId : 'N/A' }}
+        {{ user.studentName }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.studyProgramId ? user.studyProgramId : 'N/A' }}
+        {{ user.studyProgramName }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ user.universityId ? user.universityId : 'N/A' }}
-      </td>
-      <td style="width: 10%; min-width: 10rem">
-        {{ user.validFrom | date }}
-      </td>
-      <td style="width: 10%; min-width: 10rem">
-        {{ user.validTo | date }}
+        {{ user.universityName }}
       </td>
       <td>
         <div class="flex">

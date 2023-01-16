@@ -14,6 +14,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import {RippleModule} from "primeng/ripple";
 
 @Component({
   selector: 'msh-user-grid',
@@ -25,6 +26,7 @@ import { TooltipModule } from 'primeng/tooltip';
     InputTextModule,
     TooltipModule,
     CheckboxModule,
+    RippleModule,
   ],
   templateUrl: './user-grid.component.html',
   styleUrls: ['./user-grid.component.scss'],

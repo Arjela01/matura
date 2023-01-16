@@ -34,7 +34,7 @@
       <msh-user-grid
         [users]="(users$ | async) || []"
         (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getUsers()">
+        (lazyLoadData)="getUsers($event)">
       </msh-user-grid>
     </div>
   </div>

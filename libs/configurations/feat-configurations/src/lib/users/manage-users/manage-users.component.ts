@@ -26,6 +26,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { UserGridComponent } from '../user-grid/user-grid.component';
+import {RippleModule} from "primeng/ripple";
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-users',
@@ -41,6 +42,7 @@ import { UserGridComponent } from '../user-grid/user-grid.component';
     ToolbarModule,
     UserGridComponent,
     UserFormComponent,
+    RippleModule,
   ],
   providers: [ConfirmationService],
 })
@@ -85,7 +87,6 @@ export class ManageUsersComponent implements OnInit {
     this.getUniversityDepartamentDropdown();
     this.getStudyProgramsDropdown();
     this.getUniversitiesDropdown();
-    this.getUsers();
   }
 
   onNewClick() {
@@ -145,11 +146,11 @@ export class ManageUsersComponent implements OnInit {
     }
   }
 
-  getUsers() {
-    this.filters = Object.assign({});
+  getUsers($event: LazyLoadEvent): void {
+    this.filters = Object.assign({}, $event);
 
     this.userService
-      .loadUsers()
+      .loadUsers($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         console.log(response.data);
@@ -166,10 +167,10 @@ export class ManageUsersComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Perdoruesi u shtua me sukses');
           this.userDialog = false;
-          this.getUsers();
+          this.getUsers(this.filters as LazyLoadEvent);
         }
 
-        if (response.isSuccessful === false) {
+        if (!response.isSuccessful) {
           this.toastService.showError(
             'Ndodhi nje problem gjate ndryshimit te perdoruesit!'
           );
@@ -186,10 +187,10 @@ export class ManageUsersComponent implements OnInit {
           this.toastService.showSuccess('Perdoruesi u ndryshua me sukses!');
 
           this.userDialog = false;
-          this.getUsers();
+          this.getUsers(this.filters as LazyLoadEvent);
         }
 
-        if (response.isSuccessful === false) {
+        if (!response.isSuccessful) {
           this.toastService.showError(
             'Ndodhi nje problem gjate ndryshimit te perdoruesit!'
           );
@@ -204,9 +205,9 @@ export class ManageUsersComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Perdoruesi u fshi me sukses!');
-          this.getUsers();
+          this.getUsers(this.filters as LazyLoadEvent);
         }
-        if (response.isSuccessful === false) {
+        if (!response.isSuccessful) {
           this.toastService.showError(
             'Ndonje nje problem gjate fshirjes se perdoruesit!'
           );
