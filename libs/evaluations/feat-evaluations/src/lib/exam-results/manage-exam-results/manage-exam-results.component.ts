@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {ButtonModule} from "primeng/button";
 import {DialogModule} from "primeng/dialog";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
@@ -38,14 +38,16 @@ import {ExamResult} from "@msh/evaluations/domain-evaluations";
   providers: [ConfirmationService],
 
 })
-export class ManageExamResultsComponent {
+export class ManageExamResultsComponent implements OnInit {
   private examResults$$ = new BehaviorSubject<ExamResult[]>([]);
   examResults$ = this.examResults$$.asObservable();
   filters: LazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedExamResult: ExamResult | null = null;
+  selectedExamType!: string | undefined;
   selectedExamResults: ExamResult[] = [];
+  examResults: ExamResult[] = [];
   displayModal = false;
 
 
@@ -53,9 +55,12 @@ export class ManageExamResultsComponent {
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examResultService: ExamResultApiService,
-  ) {}
+  ) {
+  }
 
-
+  ngOnInit(): void {
+    this.getExamResults()
+  }
 
   onNewClick() {
     this.displayModal = true;
@@ -89,7 +94,9 @@ export class ManageExamResultsComponent {
         this.selectedExamResults = [];
         break;
       case GRID_ACTIONS.EDIT:
-        this.selectedExamResult = Object.assign({}, event.data as ExamResult);
+        console.log(event)
+        this.selectedExamResult = event.data as ExamResult;
+        this.selectedExamType = event.type
         this.displayModal = true;
         break;
     }
@@ -105,19 +112,21 @@ export class ManageExamResultsComponent {
     }
   }
 
-  getExamResults(examResult: ExamResult) {
-    this.filters = Object.assign({}, $event);
-
-    this.examResultService
-      .loadExamResults($event)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.examResults$$.next(response.data);
-        this.totalRecords = response.total;
-      });
+  getExamResults() {
+    this.examResultService.loadExamResults().subscribe(
+      (data) => {
+        this.examResults = data;
+        console.log(data)
+      },
+      (error) => {
+        if (error) {
+     console.log(error)
+        }
+      }
+    )
   }
 
-  updateHighSchool(highSchool: HighSchool) {
+  updateExamResult(examResult: ExamResult) {
     // this.highSchoolService
     //   .update(highSchool)
     //   .pipe(untilDestroyed(this))

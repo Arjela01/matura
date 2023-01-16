@@ -7,6 +7,7 @@ import {RadioButtonModule} from "primeng/radiobutton";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {ButtonModule} from "primeng/button";
 import {ExamResult} from "@msh/evaluations/domain-evaluations";
+import {FileUpload, FileUploadModule} from "primeng/fileupload";
 
 @Component({
   selector: 'msh-exam-result-form',
@@ -18,7 +19,9 @@ import {ExamResult} from "@msh/evaluations/domain-evaluations";
     InputNumberModule,
     RadioButtonModule,
     InputTextareaModule,
-    ButtonModule,],
+    ButtonModule,
+    FileUploadModule,
+  ],
   templateUrl: './exam-results-form.component.html',
   styleUrls: ['./exam-results-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,10 +30,13 @@ export class ExamResultsFormComponent {
 
 
   @Input() set examResultDetails(details: ExamResult | null) {
+    console.log(details)
     if (details) {
       this.examResult = Object.assign({}, details);
+      console.log(this.examResult)
     }
   }
+  @Input() examType: string | undefined;
   @Output() formSave = new EventEmitter<ExamResult>();
   @Output() formClose = new EventEmitter<undefined>();
 
@@ -41,6 +47,7 @@ export class ExamResultsFormComponent {
   examResult: ExamResult = {
     id: 0,
     elaboration_points: 0,
+    alternative_points: 0,
     reason: '',
     document_name: '',
   };
@@ -54,5 +61,9 @@ export class ExamResultsFormComponent {
     if (this.form.valid) {
       this.formSave.emit(this.examResult);
     }
+  }
+
+  myUploader($event: any) {
+    //
   }
 }

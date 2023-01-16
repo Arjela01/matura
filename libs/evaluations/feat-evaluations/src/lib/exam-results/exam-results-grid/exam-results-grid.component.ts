@@ -39,11 +39,25 @@ export class ExamResultsGridComponent {
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
-  onEditClick(examResult: ExamResult) {
+  onEditElaborationPointsClick(examResult: ExamResult) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
       data: examResult,
+      type: 'elaboration'
     } as GridEvent<ExamResult>);
+    console.log(examResult)
+
+    console.log(examResult.elaboration_points)
+
+  }
+  onEditAlternativePointsClick(examResult: ExamResult) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.EDIT,
+      data: examResult,
+      type: 'alternative'
+    } as GridEvent<ExamResult>);
+    console.log(examResult)
+    console.log(examResult.alternative_points)
   }
 
   onSelectAllClick() {

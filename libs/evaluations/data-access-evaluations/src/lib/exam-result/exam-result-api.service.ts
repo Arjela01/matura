@@ -10,18 +10,9 @@ export class ExamResultApiService {
   constructor(private http: HttpClient) {
   }
 
-  loadExamResults(): Observable<ExamResult[]> {
-    return this.http
-      .get<{ data: ExamResult[] }>('assets/demo/data/exam-result.json')
-      .pipe(
-        map(response => {
-          return response.data as ExamResult[];
-        })
-      );
+  loadExamResults(): Observable<any> {
+    return this.http.get('assets/demo/data/exam-result.json');
   }
 
-
 }
-
-
 

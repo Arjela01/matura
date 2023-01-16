@@ -121,34 +121,20 @@
         <p-tableCheckbox [value]="examResult"></p-tableCheckbox>
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ examResult.studentId }}
+        {{ examResult.student_id }}
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ examResult.name }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ examResult.hasDocument ? 'Po' : 'Jo' }}
+        {{ examResult.has_document ? 'Po' : 'Jo' }}
       </td>
       <td style="width: 20%; min-width: 10rem">
         {{ examResult.barcode }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ examResult.alternativePoints }}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ examResult.points }}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ examResult.examType }}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ examResult.subject }}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ examResult.reason }}
-      </td>
-      <td>
-        <div class="flex">
+        <span class="flex" style="align-items: center">
+          {{examResult.elaboration_points}}
           <button
             pButton
             pRipple
@@ -156,8 +142,33 @@
             class="p-button-rounded p-button-warning p-button-text mr-2"
             pTooltip="Ndrysho"
             tooltipPosition="bottom"
-            (click)="onEditClick(examResult)"></button>
-        </div>
+            (click)="onEditElaborationPointsClick(examResult)"></button>
+        </span>
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+          <span class="flex" style="align-items: center">
+        {{ examResult.alternative_points }}
+          <button
+            pButton
+            pRipple
+            icon="pi pi-pencil"
+            class="p-button-rounded p-button-warning p-button-text mr-2"
+            pTooltip="Ndrysho"
+            tooltipPosition="bottom"
+            (click)="onEditAlternativePointsClick(examResult)"></button>
+        </span>
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ examResult.points }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ examResult.exam_type }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ examResult.subject }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ examResult.reason }}
       </td>
     </tr>
   </ng-template>

@@ -2,8 +2,8 @@ export interface ExamResult {
   id: number;
   student_id?: string;
   barcode?: string;
-  elaboration_points: number;
-  alternative_points?: number;
+  elaboration_points: number | undefined;
+  alternative_points: number | undefined;
   exam_type_id?: number;
   exam_type?: string;
   subject?: string;
@@ -12,7 +12,7 @@ export interface ExamResult {
   document_name?: string;
 }
 
-export interface HighSchoolTableView {
+export interface ExamResultView {
   data: ExamResult[];
   total: number;
 }
