@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import {ManageProfilesComponent} from "./profiles/manage-profiles/manage-profiles.component";
+import { ManageProfilesComponent } from './profiles/manage-profiles/manage-profiles.component';
 
 export const CONFIGURATION_ROUTES: Route[] = [
   {
@@ -19,9 +19,9 @@ export const CONFIGURATION_ROUTES: Route[] = [
   {
     path: 'profile',
     loadComponent: () =>
-      import(
-        './profiles/manage-profiles/manage-profiles.component'
-        ).then(m => m.ManageProfilesComponent),
+      import('./profiles/manage-profiles/manage-profiles.component').then(
+        m => m.ManageProfilesComponent
+      ),
   },
   {
     path: 'administration-offices',
@@ -89,9 +89,9 @@ export const CONFIGURATION_ROUTES: Route[] = [
   {
     path: 'academic-year',
     loadComponent: () =>
-      import('./academic-year/manage-academic-year/manage-academic-year.component').then(
-        m => m.ManageAcademicYearComponent
-      ),
+      import(
+        './academic-year/manage-academic-year/manage-academic-year.component'
+      ).then(m => m.ManageAcademicYearComponent),
   },
   {
     path: 'gender',
@@ -131,8 +131,15 @@ export const CONFIGURATION_ROUTES: Route[] = [
   {
     path: 'exam-site',
     loadComponent: () =>
+      import('./exam-site/manage-exam-site/manage-exam-site.component').then(
+        m => m.ManageExamSiteComponent
+      ),
+  },
+  {
+    path: 'a1z-category',
+    loadComponent: () =>
       import(
-        './exam-site/manage-exam-site/manage-exam-site.component'
-        ).then(m => m.ManageExamSiteComponent),
+        './a1z-category/manage-a1z-categories/manage-a1z-categories.component'
+      ).then(m => m.ManageA1zCategoriesComponent),
   },
 ];
