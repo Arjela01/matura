@@ -2,7 +2,7 @@
   <div class="field">
     <label for="Code">Kodi *</label>
     <input
-      type="number"
+      type="text"
       pInputText
       id="Code"
       name="Code"
@@ -32,6 +32,17 @@
   </div>
 
 
+  <div class="field">
+    <label for="Description">Përshkrimi</label>
+    <input
+      type="text"
+      pInputText
+      id="Description"
+      name="Description"
+      [(ngModel)]="role.description"
+      autofocus />
+
+  </div>
 
   <div class="flex justify-content-end">
     <button

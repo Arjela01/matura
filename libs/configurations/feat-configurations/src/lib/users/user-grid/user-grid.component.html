@@ -1,0 +1,190 @@
+<p-table
+  #dt
+  [lazy]="true"
+  [value]="users"
+  responsiveLayout="scroll"
+  [rows]="10"
+  [paginator]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
+  [rowHover]="true"
+  dataKey="Id"
+  [(selection)]="selectedUsers"
+  selectionMode="multiple"
+  (onLazyLoad)="loadRows($event)"
+  (onRowSelect)="onRowSelect($event)"
+  (onRowUnselect)="onRowUnselect($event)">
+  <ng-template pTemplate="caption">
+    <div
+      class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+      <h5 class="m-0">Menaxho Përdoruesit</h5>
+      <span class="block mt-2 md:mt-0 p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+          pInputText
+          type="text"
+          placeholder="Kerko..."
+          class="w-full sm:w-auto" />
+      </span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 3rem">
+        <p-tableHeaderCheckbox (click)="onSelectAllClick()">
+        </p-tableHeaderCheckbox>
+      </th>
+      <th pSortableColumn="displayName">
+        Username
+        <p-sortIcon field="displayName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="displayName"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="administrationOfficeName">
+        DAR/ZA
+        <p-sortIcon field="administrationOfficeName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="administrationOfficeName"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="universityDepartmentName">
+        Fakulteti
+        <p-sortIcon field="universityDepartmentName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="universityDepartmentName"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="highSchoolName">
+        Shkolla e Mesme
+        <p-sortIcon field="highSchoolName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="highSchoolName"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="name">
+        Emri
+        <p-sortIcon field="name"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="name"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="lastName">
+        Mbiemri
+        <p-sortIcon field="lastName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="lastName"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="lastPasswordChange">
+        Ndryshimi i fundit i Fjalëkalimit
+        <p-sortIcon field="lastPasswordChange"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="lastPasswordChange"
+          display="menu"></p-columnFilter>
+      </th>
+
+      <th pSortableColumn="overseerCode">
+        Kodi I Mbikqyrësit
+        <p-sortIcon field="overseerCode"></p-sortIcon>
+        <p-columnFilter
+          type="numeric"
+          field="overseerCode"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="studentName">
+        Id e Studentit
+        <p-sortIcon field="studentName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="studentName"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="studyProgramName">
+        Programi i Studimit
+        <p-sortIcon field="studyProgramName"></p-sortIcon>
+        <p-columnFilter
+          type="numeric"
+          field="studyProgramName"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="universityName">
+        Universiteti
+        <p-sortIcon field="universityName"></p-sortIcon>
+        <p-columnFilter
+          type="numeric"
+          field="universityName"
+          display="menu"></p-columnFilter>
+      </th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-user>
+    <tr>
+      <td>
+        <p-tableCheckbox [value]="user"></p-tableCheckbox>
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.username }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.administrationOffice }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.universityDepartmentName }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.highSchoolName }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.name }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.lastName ? user.lastName : 'N/A' }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.lastPasswordChange | date }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.overseerCode ? user.overseerCode : 'N/A' }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.studentName }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.studyProgramName }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.universityName }}
+      </td>
+      <td>
+        <div class="flex">
+          <button
+            pButton
+            pRipple
+            icon="pi pi-pencil"
+            class="p-button-rounded p-button-warning p-button-text mr-2"
+            pTooltip="Ndrysho"
+            tooltipPosition="bottom"
+            (click)="onEditClick(user)"></button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-danger p-button-text"
+            pTooltip="Fshi"
+            tooltipPosition="bottom"
+            (click)="onDeleteClick(user)"></button>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
