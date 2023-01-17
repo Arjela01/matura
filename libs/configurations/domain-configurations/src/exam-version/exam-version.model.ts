@@ -1,5 +1,5 @@
 export interface ExamVersion {
-  id: number;
+  id: string;
   name: string;
   numberOfQuestions: number;
   profileGroupId?: string;

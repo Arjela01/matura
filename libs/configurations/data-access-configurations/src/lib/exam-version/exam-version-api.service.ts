@@ -40,7 +40,7 @@ export class ExamVersionApiService {
     );
   }
 
-  delete(examVersionId: number): Observable<ApiResult<unknown>> {
+  delete(examVersionId: string): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<ExamVersion>>(
       `/api/ExamVersion/${examVersionId}`
     ).pipe(
