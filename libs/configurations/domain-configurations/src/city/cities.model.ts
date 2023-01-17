@@ -4,7 +4,7 @@ export interface City {
   isActive: boolean;
   isCity:boolean;
   regionID?: number;
-  regionName?: string;
+  regionName: string;
 }
 
 export interface CityTableView {

@@ -54,9 +54,6 @@
   <div class="field">
     <label>Dokumentacion mbështetës *</label>
     <p-fileUpload name="myfile[]" [customUpload]="true" (uploadHandler)="myUploader($event)"></p-fileUpload>
-    <small class="p-error block" *ngIf="submitted && !examResult.document_name">
-      Dokumentacion mbështetës është fushë e kërkuar.
-    </small>
   </div>
 
 

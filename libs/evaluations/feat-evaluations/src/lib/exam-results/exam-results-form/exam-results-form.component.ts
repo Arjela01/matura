@@ -61,6 +61,7 @@ export class ExamResultsFormComponent {
     if (this.form.valid) {
       this.formSave.emit(this.examResult);
     }
+    console.log(this.examResult)
   }
 
   myUploader($event: any) {
