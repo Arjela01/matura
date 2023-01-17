@@ -29,7 +29,7 @@ export class RolesApiService {
     );
   }
 
-  delete(roleId: number): Observable<ApiResult<unknown>> {
+  delete(roleId: string): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<Role>>(
       `/Role/${roleId}`
     );

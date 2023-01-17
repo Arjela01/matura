@@ -2,7 +2,7 @@
   #dt
   dataKey="id"
   responsiveLayout="scroll"
-  [value]="studySubjects"
+  [value]="examSites"
   [totalRecords]="totalRecords"
   [rows]="10"
   [paginator]="true"
@@ -10,7 +10,7 @@
   [showCurrentPageReport]="true"
   currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
   [rowHover]="true"
-  [(selection)]="selectedStudySubjects"
+  [(selection)]="selectedExamSites"
   selectionMode="multiple"
   (onRowSelect)="onRowSelect($event)"
   (onRowUnselect)="onRowUnselect($event)"
@@ -19,7 +19,7 @@
   <ng-template pTemplate="caption">
     <div
       class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <h5 class="m-0">Menaxho Lëndët e Studimit</h5>
+      <h5 class="m-0">Menaxho Qendrat e Provimit</h5>
       <span class="block mt-2 md:mt-0 p-input-icon-left">
         <i class="pi pi-search"></i>
         <input
@@ -36,14 +36,6 @@
         <p-tableHeaderCheckbox (click)="onSelectAllClick()">
         </p-tableHeaderCheckbox>
       </th>
-      <th pSortableColumn="code">
-        Kodi
-        <p-sortIcon field="code"></p-sortIcon>
-        <p-columnFilter
-          type="numeric"
-          field="code"
-          display="menu"></p-columnFilter>
-      </th>
       <th pSortableColumn="name">
         Emri
         <p-sortIcon field="name"></p-sortIcon>
@@ -52,19 +44,62 @@
           field="name"
           display="menu"></p-columnFilter>
       </th>
+      <th pSortableColumn="address">
+        Adresa
+        <p-sortIcon field="address"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="address"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="quota">
+        Kuotat
+        <p-sortIcon field="quota"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="quota"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="administrationOffice">
+        DAR/ZA
+        <p-sortIcon field="administrationOffice"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="administrationOffice"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="academicYear">
+        Viti Akademik
+        <p-sortIcon field="academicYear"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="academicYear"
+          display="menu"></p-columnFilter>
+      </th>
+
+
       <th></th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-highSchool>
+  <ng-template pTemplate="body" let-academicYear>
     <tr>
       <td>
-        <p-tableCheckbox [value]="highSchool"></p-tableCheckbox>
+        <p-tableCheckbox [value]="academicYear"></p-tableCheckbox>
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ highSchool.code }}
+        {{ academicYear.name }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ highSchool.name }}
+        {{ academicYear.address }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ academicYear.quota }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ academicYear.administrationOfficeName }}
+      </td>
+      <td style="width: 20%; min-width: 10rem">
+        {{ academicYear.academicYear }}
       </td>
       <td>
         <div class="flex">
@@ -75,7 +110,7 @@
             class="p-button-rounded p-button-warning p-button-text mr-2"
             pTooltip="Ndrysho"
             tooltipPosition="bottom"
-            (click)="onEditClick(highSchool)"></button>
+            (click)="onEditClick(academicYear)"></button>
           <button
             pButton
             pRipple
@@ -83,9 +118,10 @@
             class="p-button-rounded p-button-danger p-button-text"
             pTooltip="Fshi"
             tooltipPosition="bottom"
-            (click)="onDeleteClick(highSchool)"></button>
+            (click)="onDeleteClick(academicYear)"></button>
         </div>
       </td>
     </tr>
   </ng-template>
 </p-table>
+

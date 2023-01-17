@@ -5,58 +5,63 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   Output,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { Role } from '@msh/configurations/domain-configurations';
+import { AcademicYear } from '@msh/configurations/domain-configurations';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
+import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 
 @Component({
-  selector: 'msh-roles-form',
+  selector: 'msh-academic-year-form',
   standalone: true,
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     FormsModule,
     InputTextModule,
     InputNumberModule,
     RadioButtonModule,
     InputTextareaModule,
     ButtonModule,
-    CheckboxModule,],
-  templateUrl: './roles-form.component.html',
-  styleUrls: ['./roles-form.component.scss'],
+    CheckboxModule,
+    DropdownModule,
+  ],
+  templateUrl: './academic-year-form.component.html',
+  styleUrls: ['./academic-year-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RolesFormComponent {
+export class AcademicYearFormComponent {
 
-  @Input() set rolesDetails(details: Role | null) {
+  @Input() set academicYearDetails(details: AcademicYear | null) {
     if (details) {
-      this.role = Object.assign({}, details);
+      this.academicYear = Object.assign({}, details);
     }
   }
-  @Output() formSave = new EventEmitter<Role>();
+
+  @Output() formSave = new EventEmitter<AcademicYear>();
   @Output() formClose = new EventEmitter<undefined>();
 
-  @ViewChild('form', { static: true }) form!: NgForm;
-
+  @ViewChild('form', {static: true}) form!: NgForm;
 
   submitted = false;
 
-  role: Role = {
+  academicYear: AcademicYear = {
     id: '',
-    code: '',
-    name: '',
-    description:''
+    year: '',
+    isFall: true,
+    isActive: true,
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private cd: ChangeDetectorRef) {}
-
+  constructor(private cd: ChangeDetectorRef) {
+  }
 
   onCancelClick() {
     this.formClose.emit();
@@ -65,7 +70,8 @@ export class RolesFormComponent {
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
-      this.formSave.emit(this.role);
+      this.formSave.emit(this.academicYear);
     }
   }
+
 }

@@ -67,16 +67,16 @@ export const CONFIGURATION_ROUTES: Route[] = [
   {
     path: 'university',
     loadComponent: () =>
-      import('./universities/manage-universities/manage-universities.component').then(
-        m => m.ManageUniversitiesComponent
-      ),
+      import(
+        './universities/manage-universities/manage-universities.component'
+      ).then(m => m.ManageUniversitiesComponent),
   },
   {
     path: 'university-department',
     loadComponent: () =>
-      import('./university-departments/manage-university-departments/manage-university-departments.component').then(
-        m => m.ManageUniversityDepartmentsComponent
-      ),
+      import(
+        './university-departments/manage-university-departments/manage-university-departments.component'
+      ).then(m => m.ManageUniversityDepartmentsComponent),
   },
   {
     path: 'exam-subject',
@@ -93,11 +93,18 @@ export const CONFIGURATION_ROUTES: Route[] = [
       ),
   },
   {
+    path: 'academic-year',
+    loadComponent: () =>
+      import('./academic-year/manage-academic-year/manage-academic-year.component').then(
+        m => m.ManageAcademicYearComponent
+      ),
+  },
+  {
     path: 'gender',
     loadComponent: () =>
-      import(
-        './genders/manage-genders/manage-genders.component'
-      ).then(m => m.ManageGendersComponent),
+      import('./genders/manage-genders/manage-genders.component').then(
+        m => m.ManageGendersComponent
+      ),
   },
   {
     path: 'study-subject',
@@ -109,9 +116,9 @@ export const CONFIGURATION_ROUTES: Route[] = [
   {
     path: 'roles',
     loadComponent: () =>
-      import(
-        './roles/manage-roles/manage-roles.component'
-      ).then(m => m.ManageRolesComponent),
+      import('./roles/manage-roles/manage-roles.component').then(
+        m => m.ManageRolesComponent
+      ),
   },
   {
     path: 'study-program',
@@ -119,5 +126,19 @@ export const CONFIGURATION_ROUTES: Route[] = [
       import(
         './study-program/manage-study-programs/manage-study-programs.component'
       ).then(m => m.ManageStudyProgramsComponent),
+  },
+  {
+    path: 'user',
+    loadComponent: () =>
+      import('./users/manage-users/manage-users.component').then(
+        m => m.ManageUsersComponent
+      ),
+  },
+  {
+    path: 'exam-site',
+    loadComponent: () =>
+      import(
+        './exam-site/manage-exam-site/manage-exam-site.component'
+        ).then(m => m.ManageExamSiteComponent),
   },
 ];
