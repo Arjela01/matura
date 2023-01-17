@@ -13,14 +13,14 @@ export class ExamVersionApiService {
   }
 
   loadExamVersions(event: LazyLoadEvent): Observable<ExamVersionTableView> {
-    return this.apiService.post(`/api/ExamVersions/TableData`, event)
+    return this.apiService.post(`/api/ExamVersion/TableData`, event)
 
   }
 
 
   save(examVersion: ExamVersion): Observable<ApiResult<ExamVersion>> {
     return this.apiService.post<ApiResult<ExamVersion>, ExamVersion>(
-      `/api/ExamVersions`,
+      `/api/ExamVersion`,
       examVersion
     ).pipe(
       map(data => data),
@@ -31,7 +31,7 @@ export class ExamVersionApiService {
 
   update(examVersion: ExamVersion): Observable<ApiResult<ExamVersion>> {
     return this.apiService.put<ApiResult<ExamVersion>, ExamVersion>(
-      `/api/ExamVersions`,
+      `/api/ExamVersion`,
       examVersion
     ).pipe(
       map(data => data),
@@ -42,7 +42,7 @@ export class ExamVersionApiService {
 
   delete(examVersionId: number): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<ExamVersion>>(
-      `/api/ExamVersions/${examVersionId}`
+      `/api/ExamVersion/${examVersionId}`
     ).pipe(
       map(data => data),
       catchError((error) => throwError(error)),
