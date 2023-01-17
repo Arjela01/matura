@@ -101,6 +101,7 @@ export class ManageRolesComponent {
 
   onModalClose() {
     this.displayModal = false;
+    this.selectedRole = null;
   }
 
   onFormSave(role: Role) {

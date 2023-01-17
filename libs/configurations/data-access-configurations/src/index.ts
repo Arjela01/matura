@@ -1,3 +1,4 @@
+export * from './lib/academic-year/academic-year-api.service';
 export * from './lib/administration-office/administration-office-api.service';
 export * from './lib/city/city-api.service';
 export * from './lib/high-school/high-school-api.service';
@@ -19,5 +20,6 @@ export * from './lib/study-program/study-program-api.service';
 export * from './lib/study-subject/study-subject-api.service';
 export * from './lib/universities/university-api.service';
 export * from './lib/university-departments/university-department-api.service';
-
-export * from './lib/genders/genders-api.service'
+export * from './lib/user/user-api.service';
+export * from './lib/exam-site/exam-site.service';
+export * from './lib/genders/genders-api.service';
