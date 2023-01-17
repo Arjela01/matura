@@ -106,6 +106,7 @@ export class ManageGendersComponent {
 
   onModalClose() {
     this.displayModal = false;
+    this.selectedGender=null
   }
 
   onFormSave(gender: Gender) {
