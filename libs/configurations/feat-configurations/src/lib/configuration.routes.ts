@@ -128,4 +128,11 @@ export const CONFIGURATION_ROUTES: Route[] = [
         m => m.ManageUsersComponent
       ),
   },
+  {
+    path: 'exam-site',
+    loadComponent: () =>
+      import(
+        './exam-site/manage-exam-site/manage-exam-site.component'
+        ).then(m => m.ManageExamSiteComponent),
+  },
 ];
