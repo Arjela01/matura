@@ -4,7 +4,9 @@ export interface ExamSite{
   address: string;
   quota: number;
   administrationOfficeId: number;
-  academicYearId: number;
+  administrationOfficeName:string;
+  academicYear: number;
+  academicYearId?: number;
 }
 
 export interface ExamSiteTableView {
