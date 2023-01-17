@@ -6,7 +6,6 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { Student} from '@msh/configurations/domain-configurations';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -15,6 +14,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import {Student} from "../../../../../domain-configurations/src/students/students.model";
 
 @Component({
   selector: 'msh-students-grid',

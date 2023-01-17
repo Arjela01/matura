@@ -10,7 +10,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { Gender, Student} from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -21,10 +20,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import {CalendarModule} from 'primeng/calendar';
 import {InputMaskModule} from "primeng/inputmask";
-interface City {
-  name: string,
-  code: string
-}
+import {Student} from "../../../../../domain-configurations/src/students/students.model";
+
 @Component({
   selector: 'msh-students-form',
   standalone: true,
@@ -132,6 +129,9 @@ export class StudentsFormComponent implements OnChanges {
     if (this.schoolProfile && this.student.schoolProfile) {
       this.onProfileSchoolChange({ value: this.student.schoolProfile });
     }
+    if (this.highSchool && this.student.highSchool) {
+      this.onProfileSchoolChange({ value: this.student.highSchool });
+    }
   }
 
   onCancelClick() {
@@ -164,7 +164,11 @@ export class StudentsFormComponent implements OnChanges {
       p => p.parentKey == $event.value
     );
   }
-
+  onHighSchoolChange($event: any) {
+    this.highSchoolFiltered = this.highSchool.filter(
+      p => p.parentKey == $event.value
+    );
+  }
 
   onSessionChange($event: any) {
     this.sessionFiltered = this.session.filter(

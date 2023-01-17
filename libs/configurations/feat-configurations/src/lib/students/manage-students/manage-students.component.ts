@@ -9,9 +9,9 @@ import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
 import {
+  GendersApiService,
   HighSchoolApiService, ProfileApiService,
 } from '@msh/configurations/data-access-configurations';
-import { Student} from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
 import {
@@ -24,6 +24,7 @@ import { BehaviorSubject } from 'rxjs';
 import {StudentsFormComponent} from "../students-form/students-form.component";
 import {StudentsGridComponent} from "../students-grid/students-grid.component";
 import {StudentsApiService} from "../../../../../data-access-configurations/src/lib/students/students-api.service";
+import {Student} from "../../../../../domain-configurations/src/students/students.model";
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-students',
@@ -53,6 +54,8 @@ export class ManageStudentsComponent implements OnInit {
   selectedStudents: Student[] = [];
   displayModal = false;
   schoolProfile: DropdownModel<number>[] = [];
+  gender: DropdownModel<number>[] = [];
+  highSchool: DropdownModel<number>[] = [];
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -60,6 +63,8 @@ export class ManageStudentsComponent implements OnInit {
     private readonly studentService: StudentsApiService,
     private readonly highSchoolService: HighSchoolApiService,
     private readonly profileService: ProfileApiService,
+    private readonly genderService: GendersApiService,
+
 
     private readonly cd: ChangeDetectorRef,
 
@@ -69,7 +74,8 @@ export class ManageStudentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProfileSchoolDropdown();
-
+    this.getGenderDropdown();
+    this.getHighSchoolDropdown();
   }
 
   onNewClick() {
@@ -213,6 +219,24 @@ export class ManageStudentsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.schoolProfile = response.data;
+      });
+  }
+
+  getGenderDropdown() {
+    this.genderService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.gender = response.data;
+      });
+  }
+
+  getHighSchoolDropdown() {
+    this.highSchoolService
+      .loadDropDownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.highSchool = response.data;
       });
   }
 }

@@ -4,16 +4,19 @@
     <p-dropdown
       id="highSchool"
       [options]="highSchool"
-      name="schoolProfile"
+      name="highSchool"
       optionValue="key"
       optionLabel="value"
       [(ngModel)]="student.highSchool"
       [autoDisplayFirst]="false"
-      (onChange)="onProfileSchoolChange($event)"
-      [showClear]="true">
-      [showClear]="true">
+      (onChange)="onHighSchoolChange($event)"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !student.schoolProfile
+      }">
     </p-dropdown>
-
+    <small class="p-error block" *ngIf="submitted && !student.schoolProfile">
+      Profili shkollës është fushë e kërkuar.
+    </small>
   </div>
 
   <div class="field mb-5">
@@ -261,7 +264,7 @@ W      id="birthDate"
       optionLabel="value"
       [(ngModel)]="student.gender"
       [autoDisplayFirst]="false"
-      (onChange)="onProfileSchoolChange($event)"
+      (onChange)="onGenderChange($event)"
       [showClear]="true">
     </p-dropdown>
 

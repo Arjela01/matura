@@ -23,3 +23,4 @@ export * from './lib/university-departments/university-department-api.service';
 export * from './lib/user/user-api.service';
 export * from './lib/exam-site/exam-site.service';
 export * from './lib/genders/genders-api.service';
+export * from './lib/students/students-api.service';
