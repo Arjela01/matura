@@ -18,9 +18,9 @@ export const CONFIGURATION_ROUTES: Route[] = [
   {
     path: 'profile',
     loadComponent: () =>
-      import(
-        './profiles/manage-profiles/manage-profiles.component'
-        ).then(m => m.ManageProfilesComponent),
+      import('./profiles/manage-profiles/manage-profiles.component').then(
+        m => m.ManageProfilesComponent
+      ),
   },
   {
     path: 'students',
@@ -95,9 +95,9 @@ export const CONFIGURATION_ROUTES: Route[] = [
   {
     path: 'academic-year',
     loadComponent: () =>
-      import('./academic-year/manage-academic-year/manage-academic-year.component').then(
-        m => m.ManageAcademicYearComponent
-      ),
+      import(
+        './academic-year/manage-academic-year/manage-academic-year.component'
+      ).then(m => m.ManageAcademicYearComponent),
   },
   {
     path: 'gender',
@@ -137,8 +137,20 @@ export const CONFIGURATION_ROUTES: Route[] = [
   {
     path: 'exam-site',
     loadComponent: () =>
-      import(
-        './exam-site/manage-exam-site/manage-exam-site.component'
-        ).then(m => m.ManageExamSiteComponent),
+      import('./exam-site/manage-exam-site/manage-exam-site.component').then(
+        m => m.ManageExamSiteComponent
+      ),
+  },
+  {
+    path: 'a1z-form',
+    loadComponent: () =>
+      import('./a1z/a1z-form/a1z-form.component').then(m => m.A1zFormComponent),
+  },
+  {
+    path: 'a1z',
+    loadComponent: () =>
+      import('./a1z/manage-a1z/manage-a1z.component').then(
+        m => m.ManageA1zComponent
+      ),
   },
 ];
