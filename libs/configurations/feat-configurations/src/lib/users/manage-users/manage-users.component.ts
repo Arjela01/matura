@@ -22,11 +22,11 @@ import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
+import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { UserGridComponent } from '../user-grid/user-grid.component';
-import {RippleModule} from "primeng/ripple";
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-users',
@@ -189,7 +189,6 @@ export class ManageUsersComponent implements OnInit {
           this.userDialog = false;
           this.getUsers(this.filters as LazyLoadEvent);
         }
-
         if (!response.isSuccessful) {
           this.toastService.showError(
             'Ndodhi nje problem gjate ndryshimit te perdoruesit!'
