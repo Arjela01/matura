@@ -2,7 +2,7 @@ export * from './a1z-category/a1z-category';
 export * from './a1z/a1z.model';
 export * from './academic-year/academic-year.model';
 export * from './administration-office/administration-office.model';
-export * from './city/cities.model';
+export * from './city/city.model';
 export * from './exam-site/exam-site.model';
 export * from './exam-subject/exam-subject.model';
 export * from './exam-type/exam-type.model';

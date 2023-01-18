@@ -22,20 +22,37 @@
           </small>
         </div>
 
-        <!-- TODO: Implement student finder -->
+        <button
+          type="button"
+          pButton
+          (click)="onStudentShow()"
+          icon="pi pi-search"
+          label="Kerko Maturantin"
+          class="p-button-text w-auto mb-3 mt-3 surface-500 text-white hover:surface-400"></button>
+
         <div class="field" [style]="{ width: '500px' }">
-          <label for="academicYearId">Maturanti *</label>
-          <p-dropdown
-            id="academicYear"
-            [options]="academicYears"
-            optionValue="key"
-            optionLabel="value"
-            name="academicYear"
-            [autoDisplayFirst]="false"
-            [(ngModel)]="a1z.academicYear"
-            [showClear]="true">
-          </p-dropdown>
-          <small class="p-error block" *ngIf="submitted && !a1z.academicYear">
+          <label for="studentInputData">Maturanti *</label>
+          <input
+            type="text"
+            pInputText
+            [value]="
+              a1zNotImplementedProps.studentInputData
+                ? ''
+                : a1zNotImplementedProps.studentInputData
+            "
+            id="studentInputData"
+            name="studentInputData"
+            disabled
+            [(ngModel)]="a1zNotImplementedProps.studentInputData"
+            required
+            autofocus
+            [ngClass]="{
+              'ng-invalid ng-dirty':
+                submitted && !a1zNotImplementedProps.studentInputData
+            }" />
+          <small
+            class="p-error block"
+            *ngIf="submitted && !a1zNotImplementedProps.studentInputData">
             Maturanti është fushë e kërkuar.
           </small>
         </div>
@@ -578,3 +595,20 @@
     </div>
   </div>
 </div>
+
+<p-dialog
+  [(visible)]="showStudentModal"
+  [style]="{ width: '1000px' }"
+  header="Maturanti"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid"
+  (onHide)="onStudentHide()">
+  <ng-template pTemplate="content">
+    <msh-a1z-student-search
+      [students]="students"
+      (gridEvent)="onGridEvent($event)">
+    </msh-a1z-student-search>
+  </ng-template>
+</p-dialog>
