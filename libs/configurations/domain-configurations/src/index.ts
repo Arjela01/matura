@@ -18,3 +18,5 @@ export * from './study-subject/study-subject.model';
 export * from './universities/university.model';
 export * from './university-departments/university-department.model';
 export * from './user/user.model';
+export * from './students/students.model';
+

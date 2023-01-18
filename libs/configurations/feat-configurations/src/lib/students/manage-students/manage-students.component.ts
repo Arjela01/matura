@@ -8,12 +8,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
-import {
-  A1ZApiService,
-  GendersApiService,
-  HighSchoolApiService, ProfileApiService,
-} from '@msh/configurations/data-access-configurations';
-import { DropdownModel } from '@msh/shared/data-access-shared';
+
 
 import {
   GlobalToastService,
@@ -24,9 +19,9 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import {StudentsFormComponent} from "../students-form/students-form.component";
 import {StudentsGridComponent} from "../students-grid/students-grid.component";
-import {StudentsApiService} from "../../../../../data-access-configurations/src/lib/students/students-api.service";
-import {Student} from "../../../../../domain-configurations/src/students/students.model";
-import {A1Z} from "@msh/configurations/domain-configurations";
+import {Student} from "@msh/configurations/domain-configurations";
+import {StudentsApiService} from "@msh/configurations/data-access-configurations";
+import {StudentsViewGridComponent} from "../students-view-grid/students-view-grid.component";
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-students',
@@ -39,6 +34,7 @@ import {A1Z} from "@msh/configurations/domain-configurations";
     StudentsFormComponent,
     StudentsGridComponent,
     ToolbarModule,
+    StudentsViewGridComponent,
   ],
   templateUrl: './manage-students.component.html',
   styleUrls: ['./manage-students.component.scss'],
@@ -87,7 +83,7 @@ export class ManageStudentsComponent implements OnInit {
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
         this.selectedStudentList = this.selectedStudentList.filter(u => {
-          u.id !== (event.data as Student).id;
+          u.studentId !== (event.data as Student).studentId;
         });
         break;
       case GRID_ACTIONS.SELECT_MANY:
@@ -108,14 +104,14 @@ export class ManageStudentsComponent implements OnInit {
         this.confirmationService.confirm({
           message: 'Are you sure that you want to delete this entity?',
           accept: () => {
-            this.deleteA1Z(event.data as Student);
+            this.deleteStudent(event.data as Student);
           },
         });
         break;
     }
   }
 
-  deleteA1Z(Student: Student) {
+  deleteStudent(Student: Student) {
     this.studentService
       .delete(Student.id.toString())
       .pipe(untilDestroyed(this))
@@ -143,4 +139,5 @@ export class ManageStudentsComponent implements OnInit {
         this.totalRecords = response.total;
       });
   }
+
 }

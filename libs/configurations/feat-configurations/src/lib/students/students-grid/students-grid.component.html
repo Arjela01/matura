@@ -100,11 +100,6 @@
           field="schoolProfile"
           display="menu"></p-columnFilter>
       </th>
-<!--      <th pSortableColumn="isPublic">-->
-<!--        Ështe Publik?-->
-<!--        <p-sortIcon field="isPublic"></p-sortIcon>-->
-<!--      </th>-->
-      <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-student >
@@ -139,6 +134,16 @@
 
       <td>
         <div class="flex">
+          <a href="/configurations/students-view/{{student.id}}">
+          <button
+            pButton
+            pRipple
+            icon="pi pi-eye"
+            class="p-button-rounded p-button-info p-button-text mr-2"
+            pTooltip="Shiko me shume"
+            tooltipPosition="bottom"
+            ></button>
+          </a>
           <button
             pButton
             pRipple

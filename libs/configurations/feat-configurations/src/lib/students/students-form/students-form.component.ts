@@ -9,7 +9,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import {FormBuilder, FormsModule, NgForm} from '@angular/forms';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -26,6 +26,8 @@ import {
   StudentsApiService
 } from "@msh/configurations/data-access-configurations";
 import {Student} from "../../../../../domain-configurations/src/students/students.model";
+import {Router} from "@angular/router";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'msh-students-form',
@@ -60,6 +62,7 @@ export class StudentsFormComponent implements OnChanges {
   session: DropdownModel<number>[] = [];
   schoolProfile: DropdownModel<number>[] = [];
   academicYears: DropdownModel<number>[] = [];
+  saving= false;
   @Input() set studentDetails(details: Student | null) {
     if (details) {
       this.student = Object.assign({}, details);
@@ -78,19 +81,20 @@ export class StudentsFormComponent implements OnChanges {
     birthDate: 0,
     birthPlace: "",
     email: "",
-    gender: "",
+    genderId: "",
     idCard: "",
     isA2A3: true,
     isEAlbaniaApplication: true,
     isFall: false,
     lastName: "",
+    highSchool: "",
     middleName: "",
     mobilePhone: "",
     oldId: "",
     schoolFinished: "",
-    schoolName: "",
-    highSchool: "",
     schoolProfile: "",
+    schoolName: "",
+    highSchoolId:"",
     session: "",
     studentId: "",
     studyClass: "",
@@ -109,11 +113,12 @@ export class StudentsFormComponent implements OnChanges {
     isFall: false,
     lastName: "",
     middleName: "",
+    highSchoolName: "",
     mobilePhone: "",
     oldId: "",
     schoolFinished: "",
     schoolName: "",
-    highSchool: "",
+    HighSchoolId: "",
     schoolProfile: "",
     session: "",
     studentId: "",
@@ -125,20 +130,17 @@ export class StudentsFormComponent implements OnChanges {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
 
 
-  onSubmit() : void{
-    this.submitted = true;
-    if (this.form.valid) {
-      console.log(this.student, this.studentNotImplementedProps);
-    }
-    console.log(this.student, this.studentNotImplementedProps);
-  }
+
+
   constructor(
     private cd: ChangeDetectorRef,
     private readonly academicYearService: AcademicYearApiService,
     private readonly studentService: StudentsApiService,
     private readonly highSchoolService: HighSchoolApiService,
     private readonly profileService: ProfileApiService,
-    private readonly genderService: GendersApiService,
+    private readonly genderService: GendersApiService, private router: Router,
+    private messageService: MessageService,
+
 
   ) {}
   ngOnInit(): void {
@@ -151,14 +153,14 @@ export class StudentsFormComponent implements OnChanges {
     this.profileService.loadDropdownList().subscribe(response => {
       this.schoolProfile = response.data;
     });
-    console.log('init');
   }
 
   ngOnChanges(): void {
-    console.log(this.studentNotImplementedProps.highSchool);
+    console.log(this.studentNotImplementedProps.HighSchoolId);
     // eslint-disable-next-line max-len
-    this.onStudentChange({ value: this.studentNotImplementedProps.highSchool });
+    this.onStudentChange({ value: this.studentNotImplementedProps.HighSchoolId });
   }
+
 
   onStudentChange($event: any) {
     console.log($event);

@@ -3,13 +3,18 @@ import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import {Observable} from 'rxjs';
-import {Student, StudentTableView} from "../../../../domain-configurations/src/students/students.model";
+import {Student, StudentTableView} from "@msh/configurations/domain-configurations";
 
 @Injectable({
   providedIn: 'root',
 })
 export class StudentsApiService {
   constructor(private apiService: APIService) {}
+
+  getById(studentId: number): Observable<ApiResult<Student>> {
+    return this.apiService.get<ApiResult<Student>>(
+      `/Student/${studentId}`);
+  }
 
   loadStudents(event: LazyLoadEvent): Observable<StudentTableView> {
     return this.apiService.post(`/Student/TableData`, event);

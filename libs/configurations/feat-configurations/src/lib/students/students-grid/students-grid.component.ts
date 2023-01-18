@@ -14,8 +14,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import {Student} from "../../../../../domain-configurations/src/students/students.model";
-import {A1Z} from "@msh/configurations/domain-configurations";
+import {Student} from "@msh/configurations/domain-configurations";
+import {ActivatedRoute, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'msh-students-grid',
@@ -28,12 +28,14 @@ import {A1Z} from "@msh/configurations/domain-configurations";
     TooltipModule,
     CheckboxModule,
     RippleModule,
+    RouterLink,
   ],
   templateUrl: './students-grid.component.html',
   styleUrls: ['./students-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StudentsGridComponent {
+
 
   @Input() students: Student[] = [];
 
@@ -49,6 +51,8 @@ export class StudentsGridComponent {
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
+  student: Student | undefined;
+  private router: ActivatedRoute | undefined;
   onEditClick(student: Student) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
@@ -56,12 +60,15 @@ export class StudentsGridComponent {
     } as GridEvent<Student>);
   }
 
+
+
   onDeleteClick(student: Student) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,
       data: student,
     } as GridEvent<Student>);
   }
+
 
   onSelectAllClick() {
     if (this.selectedStudents.length === 0) {

@@ -36,6 +36,12 @@ export const CONFIGURATION_ROUTES: Route[] = [
         ).then(m => m.StudentsFormComponent),
   },
   {
+    path: 'students-view/:id',
+    loadComponent: () =>
+      import('./students/students-view-grid/students-view-grid.component'
+        ).then(m => m.StudentsViewGridComponent),
+  },
+  {
     path: 'administration-offices',
     loadComponent: () =>
       import(

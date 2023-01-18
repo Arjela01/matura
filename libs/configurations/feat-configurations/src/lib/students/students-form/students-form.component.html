@@ -14,13 +14,13 @@
       name="highSchool"
       optionValue="key"
       optionLabel="value"
-      [(ngModel)]="studentNotImplementedProps.highSchool"
+      [(ngModel)]="studentNotImplementedProps.highSchoolName"
       [autoDisplayFirst]="false"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !studentNotImplementedProps.schoolProfile
+        'ng-invalid ng-dirty': submitted && !studentNotImplementedProps.schoolName
       }">
     </p-dropdown>
-    <small class="p-error block" *ngIf="submitted && !studentNotImplementedProps.schoolProfile">
+    <small class="p-error block" *ngIf="submitted && !studentNotImplementedProps.schoolName">
       Profili shkollës është fushë e kërkuar.
     </small>
   </div>
@@ -358,12 +358,15 @@ W      id="birthDate"
       class="p-button-text w-auto mr-2">
     </button>
     </a>
-    <button
-      type="submit"
-      pButton
-      icon="pi pi-check"
-      label="Ruaj"
-      class="p-button-text w-auto"></button>
+    <div class="flex justify-content-end">
+      <button
+        type="submit"
+        pButton
+        icon="pi pi-check"
+        label="Ruaj"
+        class="p-button-text w-auto"
+        (click)="onSubmit()"></button>
+    </div>
   </div>
       </form>
     </div>
