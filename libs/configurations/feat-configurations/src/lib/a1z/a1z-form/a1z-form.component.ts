@@ -3,7 +3,9 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DoCheck,
   EventEmitter,
+  Input,
   OnChanges,
   OnInit,
   Output,
@@ -41,7 +43,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
   styleUrls: ['./a1z-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class A1zFormComponent implements OnChanges, OnInit {
+export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
   //TODO: Add logic for single form edit details
 
   @Output() formSave = new EventEmitter<A1Z>();
@@ -50,7 +52,10 @@ export class A1zFormComponent implements OnChanges, OnInit {
   @ViewChild('form', { static: true }) form!: NgForm;
   academicYears: DropdownModel<number>[] = [];
 
-  showZ1Subjects = false;
+  disableD1Subject = false;
+  disableD2Subject = false;
+  disableD3Subject = false;
+
   submitted = false;
 
   a1z: A1Z = {
@@ -69,13 +74,14 @@ export class A1zFormComponent implements OnChanges, OnInit {
     studentOldIdentifier: '',
   };
 
-  a1zNotImplementedProps = {
+  @Input() a1zNotImplementedProps = {
     a1zCategory: '',
     hasDiploma: false,
     graduatedYear: '',
     d1Subject: '',
     d2Subject: '',
     d3Subject: '',
+    neededSubjects: 0,
     d1Grade: 0,
     d2Grade: 0,
     d3Grade: 0,
@@ -102,6 +108,13 @@ export class A1zFormComponent implements OnChanges, OnInit {
     private cd: ChangeDetectorRef,
     private readonly academicYearService: AcademicYearApiService
   ) {}
+  ngDoCheck(): void {
+    if (this.a1zNotImplementedProps.neededSubjects !== 4) {
+      this.onNeededSubjectChange({
+        value: this.a1zNotImplementedProps,
+      });
+    }
+  }
   ngOnInit(): void {
     this.academicYearService.loadDropdownList().subscribe(response => {
       this.academicYears = response.data;
@@ -110,12 +123,53 @@ export class A1zFormComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges(): void {
-    console.log(this.a1zNotImplementedProps.hasZ1Subject);
-    this.onZ1Change({ value: this.a1zNotImplementedProps.hasZ1Subject });
+    this.onNeededSubjectChange({
+      value: this.a1zNotImplementedProps.neededSubjects,
+    });
   }
 
-  onZ1Change($event: any) {
-    console.log($event);
-    this.showZ1Subjects = $event.value;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onNeededSubjectChange($event: any) {
+    this.disableD1Subject =
+      $event.value.neededSubjects === 3
+        ? false
+        : ($event.value.neededSubjects === 1 &&
+            $event.value.d2Subject !== '') ||
+          $event.value.d3Subject !== '' ||
+          $event.value.neededSubjects === 0;
+
+    this.disableD2Subject =
+      $event.value.neededSubjects === 3
+        ? false
+        : ($event.value.neededSubjects === 1 &&
+            $event.value.d1Subject !== '') ||
+          $event.value.d3Subject !== '' ||
+          $event.value.neededSubjects === 0;
+
+    this.disableD3Subject =
+      $event.value.neededSubjects === 3
+        ? false
+        : ($event.value.neededSubjects === 1 &&
+            $event.value.d2Subject !== '') ||
+          $event.value.d1Subject !== '' ||
+          $event.value.neededSubjects === 0;
+
+    if ($event.value.neededSubjects === 2) {
+      if ($event.value.d2Subject !== '' && $event.value.d3Subject !== '') {
+        this.disableD1Subject = true;
+      } else {
+        this.disableD1Subject = false;
+      }
+      if ($event.value.d1Subject !== '' && $event.value.d3Subject !== '') {
+        this.disableD2Subject = true;
+      } else {
+        this.disableD2Subject = false;
+      }
+      if ($event.value.d1Subject !== '' && $event.value.d2Subject !== '') {
+        this.disableD3Subject = true;
+      } else {
+        this.disableD3Subject = false;
+      }
+    }
   }
 }

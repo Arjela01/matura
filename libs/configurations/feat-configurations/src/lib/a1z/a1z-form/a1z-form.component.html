@@ -152,35 +152,47 @@
           <div class="formgrid grid">
             <div class="field-radiobutton col-2">
               <p-radioButton
-                id="isApplyingToForeignCountriesTrue"
-                name="isApplyingToForeignCountries"
+                id="neededSubjectsZero"
+                name="neededSubjects"
+                [value]="0"
+                onchange="onNeededSubjectsChange($event)"
+                [(ngModel)]="
+                  a1zNotImplementedProps.neededSubjects
+                "></p-radioButton>
+              <label for="neededSubjectsZero">Jo</label>
+            </div>
+            <div class="field-radiobutton col-2">
+              <p-radioButton
+                id="neededSubjectsOne"
+                name="neededSubjects"
                 [value]="1"
-                [(ngModel)]="a1z.isApplyingToForeignCountries"></p-radioButton>
-              <label for="isApplyingToForeignCountriesTrue">Jo</label>
+                onchange="onNeededSubjectsChange($event)"
+                [(ngModel)]="
+                  a1zNotImplementedProps.neededSubjects
+                "></p-radioButton>
+              <label for="neededSubjectsOne">1</label>
             </div>
             <div class="field-radiobutton col-2">
               <p-radioButton
-                id="isApplyingToForeignCountriesTrue"
-                name="isApplyingToForeignCountries"
-                [value]="1"
-                [(ngModel)]="a1z.isApplyingToForeignCountries"></p-radioButton>
-              <label for="isApplyingToForeignCountriesTrue">1</label>
-            </div>
-            <div class="field-radiobutton col-2">
-              <p-radioButton
-                id="isApplyingToForeignCountriesFalse"
+                id="neededSubjectsTwo"
                 name="isWithCompetition"
-                [value]="false"
-                [(ngModel)]="a1z.isApplyingToForeignCountries"></p-radioButton>
-              <label for="isApplyingToForeignCountriesFalse">2</label>
+                [value]="2"
+                onchange="onNeededSubjectsChange($event)"
+                [(ngModel)]="
+                  a1zNotImplementedProps.neededSubjects
+                "></p-radioButton>
+              <label for="neededSubjectsTwo">2</label>
             </div>
             <div class="field-radiobutton col-2">
               <p-radioButton
-                id="isApplyingToForeignCountriesFalse"
+                id="neededSubjectsThree"
                 name="isWithCompetition"
-                [value]="false"
-                [(ngModel)]="a1z.isApplyingToForeignCountries"></p-radioButton>
-              <label for="isApplyingToForeignCountriesFalse">3</label>
+                [value]="3"
+                onchange="onNeededSubjectsChange($event)"
+                [(ngModel)]="
+                  a1zNotImplementedProps.neededSubjects
+                "></p-radioButton>
+              <label for="neededSubjectsThree">3</label>
             </div>
           </div>
         </div>
@@ -193,6 +205,7 @@
                 type="text"
                 pInputText
                 id="d1Subject"
+                [disabled]="disableD1Subject"
                 name="d1Subject"
                 [(ngModel)]="a1zNotImplementedProps.d1Subject"
                 required
@@ -204,6 +217,7 @@
                 type="number"
                 pInputText
                 id="d1Grade"
+                [disabled]="disableD1Subject"
                 name="d1Grade"
                 [(ngModel)]="a1zNotImplementedProps.d1Grade"
                 required
@@ -214,6 +228,7 @@
               <input
                 type="number"
                 pInputText
+                [disabled]="disableD1Subject"
                 id="d1Grade"
                 name="d1Grade"
                 [(ngModel)]="a1zNotImplementedProps.d1Grade"
@@ -225,6 +240,7 @@
               <input
                 type="text"
                 pInputText
+                [disabled]="disableD1Subject"
                 id="d1Reason"
                 name="d1Reason"
                 [(ngModel)]="a1zNotImplementedProps.d1Reason"
@@ -233,6 +249,7 @@
             </div>
           </div>
         </div>
+
         <div class="field">
           <div class="formgrid grid">
             <div class="field col-2">
@@ -240,6 +257,7 @@
               <input
                 type="text"
                 pInputText
+                [disabled]="disableD2Subject"
                 id="d2Subject"
                 name="d2Subject"
                 [(ngModel)]="a1zNotImplementedProps.d2Subject"
@@ -251,6 +269,7 @@
               <input
                 type="number"
                 pInputText
+                [disabled]="disableD2Subject"
                 id="d2Grade"
                 name="d2Grade"
                 [(ngModel)]="a1zNotImplementedProps.d2Grade"
@@ -263,6 +282,7 @@
                 type="number"
                 pInputText
                 id="d2Grade"
+                [disabled]="disableD2Subject"
                 name="d2Grade"
                 [(ngModel)]="a1zNotImplementedProps.d2Grade"
                 required
@@ -273,6 +293,7 @@
               <input
                 type="text"
                 pInputText
+                [disabled]="disableD2Subject"
                 id="d2Reason"
                 name="d2Reason"
                 [(ngModel)]="a1zNotImplementedProps.d2Reason"
@@ -281,6 +302,7 @@
             </div>
           </div>
         </div>
+
         <div class="field">
           <div class="formgrid grid">
             <div class="field col-2">
@@ -289,6 +311,7 @@
                 type="text"
                 pInputText
                 id="d3Subject"
+                [disabled]="disableD3Subject"
                 name="d3Subject"
                 [(ngModel)]="a1zNotImplementedProps.d3Subject"
                 required
@@ -299,6 +322,7 @@
               <input
                 type="number"
                 pInputText
+                [disabled]="disableD3Subject"
                 id="d3Grade"
                 name="d3Grade"
                 [(ngModel)]="a1zNotImplementedProps.d3Grade"
@@ -310,6 +334,7 @@
               <input
                 type="number"
                 pInputText
+                [disabled]="disableD3Subject"
                 id="d3Grade"
                 name="d3Grade"
                 [(ngModel)]="a1zNotImplementedProps.d3Grade"
@@ -321,6 +346,7 @@
               <input
                 type="text"
                 pInputText
+                [disabled]="disableD3Subject"
                 id="d3Reason"
                 name="d3Reason"
                 [(ngModel)]="a1zNotImplementedProps.d3Reason"
@@ -377,7 +403,6 @@
               <p-radioButton
                 id="hasZ1SubjetcTrue"
                 name="hasZ1Subject"
-                (onChange)="onZ1Change($event)"
                 [value]="false"
                 [(ngModel)]="
                   a1zNotImplementedProps.hasZ1Subject
@@ -386,7 +411,6 @@
             </div>
             <div class="field-radiobutton col-2">
               <p-radioButton
-                (onChange)="onZ1Change($event)"
                 id="hasZ1SubjetcFalse"
                 name="hasZ1Subject"
                 [value]="true"
@@ -398,7 +422,7 @@
           </div>
         </div>
 
-        <div class="field" [hidden]="showZ1Subjects">
+        <div class="field" [hidden]="!a1zNotImplementedProps.hasZ1Subject">
           <div class="formgrid grid">
             <div class="field col-2">
               <label for="z1Year">Viti</label>
@@ -408,10 +432,17 @@
                 optionValue="key"
                 optionLabel="value"
                 name="z1Year"
+                [disabled]="!a1zNotImplementedProps.hasZ1Subject"
+                [required]="a1zNotImplementedProps.hasZ1Subject"
                 [autoDisplayFirst]="false"
                 [(ngModel)]="a1zNotImplementedProps.z1Year"
                 [showClear]="true">
               </p-dropdown>
+              <small
+                class="p-error block"
+                *ngIf="submitted && !a1zNotImplementedProps.graduatedYear">
+                Viti është fushë e kërkuar.
+              </small>
             </div>
             <div class="field col-2">
               <label for="z1Subject">Lenda me zgjedhje:</label>
@@ -420,9 +451,15 @@
                 pInputText
                 id="z1Subject"
                 name="z1Subject"
+                [disabled]="!a1zNotImplementedProps.hasZ1Subject"
                 [(ngModel)]="a1zNotImplementedProps.z1Subject"
-                required
+                [required]="a1zNotImplementedProps.hasZ1Subject"
                 autofocus />
+              <small
+                class="p-error block"
+                *ngIf="submitted && !a1zNotImplementedProps.graduatedYear">
+                Lenda me zgjedhje është fushë e kërkuar.
+              </small>
             </div>
             <div class="field col-2" [style]="{ width: '100px' }">
               <label for="z1Grade">Nota e gjetur</label>
@@ -432,8 +469,14 @@
                 id="z1Grade"
                 name="z1Grade"
                 [(ngModel)]="a1zNotImplementedProps.z1Grade"
-                required
+                [required]="a1zNotImplementedProps.hasZ1Subject"
+                [disabled]="!a1zNotImplementedProps.hasZ1Subject"
                 autofocus />
+              <small
+                class="p-error block"
+                *ngIf="submitted && !a1zNotImplementedProps.graduatedYear">
+                Nota e gjetur është fushë e kërkuar.
+              </small>
             </div>
             <div class="field col-2" [style]="{ width: '100px' }">
               <label for="z1Grade">Nota Z1</label>
@@ -443,8 +486,14 @@
                 id="z1Grade"
                 name="z1Grade"
                 [(ngModel)]="a1zNotImplementedProps.z1Grade"
-                required
+                [required]="a1zNotImplementedProps.hasZ1Subject"
+                [disabled]="!a1zNotImplementedProps.hasZ1Subject"
                 autofocus />
+              <small
+                class="p-error block"
+                *ngIf="submitted && !a1zNotImplementedProps.graduatedYear">
+                Nota Z1 është fushë e kërkuar.
+              </small>
             </div>
             <div class="field col-2">
               <label for="z1Reason">Arsye</label>
@@ -454,8 +503,14 @@
                 id="z1Reason"
                 name="z1Reason"
                 [(ngModel)]="a1zNotImplementedProps.z1Reason"
-                required
+                [required]="a1zNotImplementedProps.hasZ1Subject"
+                [disabled]="!a1zNotImplementedProps.hasZ1Subject"
                 autofocus />
+              <small
+                class="p-error block"
+                *ngIf="submitted && !a1zNotImplementedProps.graduatedYear">
+                Arsyeja është fushë e kërkuar.
+              </small>
             </div>
           </div>
         </div>
@@ -469,7 +524,7 @@
           <p-dropdown
             id="z1Subject"
             [options]="academicYears"
-            optionValue="key"
+            optionValue="value"
             optionLabel="value"
             name="z1Subject"
             [autoDisplayFirst]="false"
@@ -483,7 +538,7 @@
           <p-dropdown
             id="z1Subject"
             [options]="academicYears"
-            optionValue="key"
+            optionValue="value"
             optionLabel="value"
             name="z1Subject"
             [autoDisplayFirst]="false"
