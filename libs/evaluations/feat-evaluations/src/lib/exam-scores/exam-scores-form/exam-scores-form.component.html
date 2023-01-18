@@ -1,24 +1,24 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="field">
-    <label for="StudentName">Emri i Studentit *</label>
+    <label for="StudentId">Id e  Studentit *</label>
     <input
       type="text"
       pInputText
-      id="StudentName"
-      name="StudentName"
-      [(ngModel)]="examScore.studentName"
+      id="StudentId"
+      name="StudentId"
+      [(ngModel)]="examScore.studentId"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examScore.studentName }"
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examScore.studentId }"
     />
-    <small class="p-error block" *ngIf="submitted && !examScore.studentName">
-      Emri i studentit është fushë e kërkuar.
+    <small class="p-error block" *ngIf="submitted && !examScore.studentId">
+      Id e studentit është fushë e kërkuar.
     </small>
   </div>
   <div class="field">
     <label for="Barcode">Barkodi *</label>
     <input
-      type="number"
+      type="text"
       pInputText
       id="Barcode"
       name="Barcode"
@@ -48,18 +48,18 @@
     </small>
   </div>
   <div class="field">
-    <label for="AcademicYear">Viti Akademik *</label>
+    <label for="AcademicYearId">Viti Akademik *</label>
     <input
       type="number"
       pInputText
-      id="AcademicYear"
-      name="AcademicYear"
-      [(ngModel)]="examScore.academicYear"
+      id="AcademicYearId"
+      name="AcademicYearId"
+      [(ngModel)]="examScore.academicYearId"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examScore.academicYear }"
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examScore.academicYearId }"
     />
-    <small class="p-error block" *ngIf="submitted && !examScore.academicYear">
+    <small class="p-error block" *ngIf="submitted && !examScore.academicYearId">
       Viti Akademik është fushë e kërkuar.
     </small>
   </div>

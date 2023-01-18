@@ -46,10 +46,10 @@ export class ExamScoresFormComponent {
 
   examScore: ExamScore = {
     id: 0,
-    studentName: '',
+    studentId: '',
     barcode: '',
     examSubjectCode : 0,
-    academicYear: '',
+    academicYearId: 0,
     isFall: false,
     writingScore: 0,
     multipleChoiceScore: 0,
