@@ -78,10 +78,10 @@ export class StudentsFormComponent implements OnChanges {
 
 
   student: Student = {
-    birthDate: 0,
+    birthDate: new Date(),
     birthPlace: "",
     email: "",
-    genderId: "",
+    genderId: 1,
     idCard: "",
     isA2A3: true,
     isEAlbaniaApplication: true,
@@ -94,7 +94,7 @@ export class StudentsFormComponent implements OnChanges {
     schoolFinished: "",
     schoolProfile: "",
     schoolName: "",
-    highSchoolId:"",
+    highSchoolId:21,
     session: "",
     studentId: "",
     studyClass: "",
