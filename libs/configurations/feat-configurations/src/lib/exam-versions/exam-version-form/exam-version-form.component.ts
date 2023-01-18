@@ -58,7 +58,7 @@ export class ExamVersionFormComponent {
   submitted = false;
 
   examVersion: ExamVersion = {
-    id: 0,
+    id: '',
     name: '',
     numberOfQuestions: 0,
     variant: ''

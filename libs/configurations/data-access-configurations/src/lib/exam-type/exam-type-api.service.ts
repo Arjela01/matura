@@ -13,31 +13,31 @@ export class ExamTypeApiService {
   }
 
   loadExamTypes(event: LazyLoadEvent): Observable<ExamTypeTableView> {
-    return this.apiService.post(`/api/ExamTypes/TableData`, event);
+    return this.apiService.post(`/api/ExamType/TableData`, event);
   }
 
   save(examType: ExamType): Observable<ApiResult<ExamType>> {
     return this.apiService.post<ApiResult<ExamType>, ExamType>(
-      `/api/ExamTypes`,
+      `/api/ExamType`,
       examType
     );
   }
 
   update(examType: ExamType): Observable<ApiResult<ExamType>> {
     return this.apiService.put<ApiResult<ExamType>, ExamType>(
-      `/api/ExamTypes `,
+      `/api/ExamType`,
       examType
     );
   }
 
   delete(examTypeId: string): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<ExamType>>(
-      `/api/ExamTypes/${ examTypeId}`
+      `/api/ExamType/${ examTypeId}`
     );
   }
   loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
-      `/api/ExamTypes/DropdownList`
+      `/api/ExamType/DropdownList`
     );
   }
 }
