@@ -1,6 +1,6 @@
 export * from './academic-year/academic-year.model';
 export * from './administration-office/administration-office.model';
-export * from './city/cities.model';
+export * from './city/city.model';
 export * from './exam-subject/exam-subject.model';
 export * from './exam-type/exam-type.model';
 export * from './exam-version/exam-version.model';
@@ -17,3 +17,9 @@ export * from './universities/university.model';
 export * from './university-departments/university-department.model';
 export * from './exam-site/exam-site.model'
 export * from './user/user.model';
+export * from './exam-type/exam-type.model';
+export * from './exam-subject/exam-subject.model';
+export * from './region/region.model'
+export * from './city/city.model'
+export * from './academic-year/academic-year.model'
+export * from './a1z-category/a1z-category'

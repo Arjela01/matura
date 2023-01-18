@@ -17,28 +17,6 @@
   </div>
 
   <div class="field">
-    <label class="mb-3">Eshte Aktiv? *</label>
-    <div class="formgrid grid">
-      <div class="field-radiobutton col-6">
-        <p-radioButton
-          id="IsActiveTrue"
-          name="isActive"
-          [value]="true"
-          [(ngModel)]="city.isActive"></p-radioButton>
-        <label for="IsActiveTrue">Po</label>
-      </div>
-      <div class="field-radiobutton col-6">
-        <p-radioButton
-          id="IsActiveFalse"
-          name="isActive"
-          [value]="false"
-          [(ngModel)]="city.isActive"></p-radioButton>
-        <label for="IsActiveFalse">Jo</label>
-      </div>
-    </div>
-  </div>
-
-  <div class="field">
     <label class="mb-3">Eshte Qytet? *</label>
     <div class="formgrid grid">
       <div class="field-radiobutton col-6">
@@ -68,7 +46,7 @@
       name="region"
       optionValue="key"
       optionLabel="value"
-      [(ngModel)]="city.regionName"
+      [(ngModel)]="city.regionId"
       [autoDisplayFirst]="false"
       (onChange)="onRegionChange($event)"
       [showClear]="true"

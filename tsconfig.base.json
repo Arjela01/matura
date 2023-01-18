@@ -15,6 +15,15 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@msh/applications/data-access-applications": [
+        "libs/applications/data-access-applications/src/index.ts"
+      ],
+      "@msh/applications/domain-configurations": [
+        "libs/applications/domain-configurations/src/index.ts"
+      ],
+      "@msh/applications/feat-applications": [
+        "libs/applications/feat-applications/src/index.ts"
+      ],
       "@msh/auth/data-access-auth": ["libs/auth/data-access-auth/src/index.ts"],
       "@msh/auth/feat-auth": ["libs/auth/feat-auth/src/index.ts"],
       "@msh/configurations/data-access-configurations": [
