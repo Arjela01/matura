@@ -167,7 +167,7 @@ export class StudentsFormComponent implements OnChanges {
     this.showStudent = $event.value;
   }
 
-  save(): void {
+  onSubmit(): void {
     const data = {...this.student};
 
     this.studentService.save(data)
