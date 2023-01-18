@@ -46,10 +46,15 @@ export class ExamResultsFormComponent {
 
   examResult: ExamResult = {
     id: 0,
-    elaboration_points: 0,
-    alternative_points: 0,
-    reason: '',
-    document_name: '',
+    studentName: '',
+    barcode: '',
+    examSubjectCode : 0,
+    academicYear: '',
+    isFall: false,
+    writingScore: 0,
+    multipleChoiceScore: 0,
+    modificationReason: '',
+    documentName: ''
   };
 
   onCancelClick() {
@@ -61,10 +66,5 @@ export class ExamResultsFormComponent {
     if (this.form.valid) {
       this.formSave.emit(this.examResult);
     }
-    console.log(this.examResult)
-  }
-
-  myUploader($event: any) {
-    //
   }
 }

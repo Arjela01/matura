@@ -1,59 +1,150 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
-  <ng-container *ngIf="examType === 'elaboration'">
-    <div class="field">
-      <label for="Points">Pikët me shtjellim *</label>
-      <input
-        type="number"
-        pInputText
-        id="Points"
-        name="Code"
-        [(ngModel)]="examResult.elaboration_points"
-        required
-        autofocus
-        [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examResult.elaboration_points }"
-      />
-      <small class="p-error block" *ngIf="submitted && !examResult.elaboration_points">
-        Pikët është fushë e kërkuar.
-      </small>
-    </div>
-  </ng-container>
-  <ng-container *ngIf="examType === 'alternative'">
-    <div class="field">
-      <label for="PointsAlt">Pikët me alt *</label>
-      <input
-        type="number"
-        pInputText
-        id="PointsAlt"
-        name="Code"
-        [(ngModel)]="examResult.alternative_points"
-        required
-        autofocus
-        [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examResult.alternative_points }"
-      />
-      <small class="p-error block" *ngIf="submitted && !examResult.alternative_points">
-        Pikët është fushë e kërkuar.
-      </small>
-    </div>
-  </ng-container>
   <div class="field">
-    <label for="Reason">Arsyeja e ndryshimit *</label>
+    <label for="StudentName">Emri i Studentit *</label>
     <input
       type="text"
       pInputText
-      id="Reason"
-      name="Reason"
-      [(ngModel)]="examResult.reason"
+      id="StudentName"
+      name="StudentName"
+      [(ngModel)]="examResult.studentName"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examResult.reason }"/>
-    <small class="p-error block" *ngIf="submitted && !examResult.reason">
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examResult.studentName }"
+    />
+    <small class="p-error block" *ngIf="submitted && !examResult.studentName">
+      Emri i studentit është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="Barcode">Barkodi *</label>
+    <input
+      type="number"
+      pInputText
+      id="Barcode"
+      name="Barcode"
+      [(ngModel)]="examResult.barcode"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examResult.barcode }"
+    />
+    <small class="p-error block" *ngIf="submitted && !examResult.barcode">
+      Barkodi është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="ExamSubjectCode">Kodi i lëndës së Provimit *</label>
+    <input
+      type="number"
+      pInputText
+      id="ExamSubjectCode"
+      name="ExamSubjectCode"
+      [(ngModel)]="examResult.examSubjectCode"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examResult.examSubjectCode }"
+    />
+    <small class="p-error block" *ngIf="submitted && !examResult.examSubjectCode">
+      Kodi i lëndës së provimit është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="AcademicYear">Viti Akademik *</label>
+    <input
+      type="number"
+      pInputText
+      id="AcademicYear"
+      name="AcademicYear"
+      [(ngModel)]="examResult.academicYear"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examResult.academicYear }"
+    />
+    <small class="p-error block" *ngIf="submitted && !examResult.academicYear">
+      Viti Akademik është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label class="mb-3">Është Vjeshtë? *</label>
+    <div class="formgrid grid">
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="IsFallTrue"
+          name="IsFall"
+          [value]="true"
+          [(ngModel)]="examResult.isFall"></p-radioButton>
+        <label for="IsFallTrue">Po</label>
+      </div>
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="IsFallFalse"
+          name="IsPublic"
+          [value]="false"
+          [(ngModel)]="examResult.isFall"></p-radioButton>
+        <label for="IsFallFalse">Jo</label>
+      </div>
+    </div>
+  </div>
+  <div class="field">
+    <label for="WritingScore">Pikët me shtjellim *</label>
+    <input
+      type="number"
+      pInputText
+      id="WritingScore"
+      name="WritingScore"
+      [(ngModel)]="examResult.writingScore"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examResult.writingScore }"
+    />
+    <small class="p-error block" *ngIf="submitted && !examResult.writingScore">
+      Pikët me shtjellim janë fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="MultipleChoiceScore">Pikët me alternativa *</label>
+    <input
+      type="number"
+      pInputText
+      id="MultipleChoiceScore"
+      name="MultipleChoiceScore"
+      [(ngModel)]="examResult.multipleChoiceScore"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examResult.multipleChoiceScore }"
+    />
+    <small class="p-error block" *ngIf="submitted && !examResult.multipleChoiceScore">
+      Pikët me alternativa është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="ModificationReason">Arsyeja e ndryshimit *</label>
+    <input
+      type="text"
+      pInputText
+      id="ModificationReason"
+      name="ModificationReason"
+      [(ngModel)]="examResult.modificationReason"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examResult.modificationReason }"/>
+    <small class="p-error block" *ngIf="submitted && !examResult.modificationReason">
       Arsyeja e ndryshimit është fushë e kërkuar.
     </small>
   </div>
-
   <div class="field">
-    <label>Dokumentacion mbështetës *</label>
-    <p-fileUpload name="myfile[]" [customUpload]="true" (uploadHandler)="myUploader($event)"></p-fileUpload>
+    <label for="DocumentName">Emri i dokumentit *</label>
+    <input
+      type="text"
+      pInputText
+      id="DocumentName"
+      name="DocumentName"
+      [(ngModel)]="examResult.documentName"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examResult.documentName }"/>
+    <small class="p-error block" *ngIf="submitted && !examResult.documentName">
+      Emri i dokumentit është fushë e kërkuar.
+    </small>
   </div>
 
 

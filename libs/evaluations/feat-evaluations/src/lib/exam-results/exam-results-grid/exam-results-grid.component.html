@@ -26,7 +26,7 @@
           pInputText
           type="text"
           placeholder="Kërko..."
-          class="w-full sm:w-auto" />
+          class="w-full sm:w-auto"/>
       </span>
     </div>
   </ng-template>
@@ -44,17 +44,13 @@
           field="studentId"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="name">
+      <th pSortableColumn="studentName">
         Emri i Studentit
-        <p-sortIcon field="name"></p-sortIcon>
+        <p-sortIcon field="studentName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="name"
+          field="studentName"
           display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="hasDocument">
-        Ka dokument?
-        <p-sortIcon field="hasDocument"></p-sortIcon>
       </th>
       <th pSortableColumn="barcode">
         Barkodi
@@ -64,52 +60,60 @@
           field="barcode"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="elaborationPoints">
+      <th pSortableColumn="examSubjectCode">
+        Kodi i Lëndes të Provimit
+        <p-sortIcon field="examSubjectCode"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="examSubjectCode"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="academicYear">
+        Viti Akademik
+        <p-sortIcon field="academicYear"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="academicYear"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="isFall">
+        Është Vjeshtë?
+        <p-sortIcon field="isFall"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="isFall"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="writingScore">
         Pikët me shtjellim
-        <p-sortIcon field="elaborationPoints"></p-sortIcon>
+        <p-sortIcon field="writingScore"></p-sortIcon>
         <p-columnFilter
           type="number"
-          field="elaborationPoints"
+          field="writingScore"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="alternativePoints">
+      <th pSortableColumn="multipleChoiceScore">
         Pikërt me aternativa
-        <p-sortIcon field="alternativePoints"></p-sortIcon>
+        <p-sortIcon field="multipleChoiceScore"></p-sortIcon>
         <p-columnFilter
           type="number"
-          field="alternativePoints"
+          field="multipleChoiceScore"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="points">
-        Pikët në total
-        <p-sortIcon field="points"></p-sortIcon>
-        <p-columnFilter
-          type="number"
-          field="points"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="examType">
-        Tipi i provimit
-        <p-sortIcon field="examType"></p-sortIcon>
+      <th pSortableColumn="modificationReason">
+        Arsyeja e Modifikimit
+        <p-sortIcon field="modificationReason"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="examType"
+          field="modificationReason"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="subject">
-        Lënda
-        <p-sortIcon field="subject"></p-sortIcon>
+      <th pSortableColumn="documentName">
+        Emri i dokumentit
+        <p-sortIcon field="documentName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="subject"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="reason">
-        Arsyeja
-        <p-sortIcon field="reason"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="reason"
+          field="documentName"
           display="menu"></p-columnFilter>
       </th>
       <th></th>
@@ -121,54 +125,54 @@
         <p-tableCheckbox [value]="examResult"></p-tableCheckbox>
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ examResult.student_id }}
+        {{ examResult.studentId }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ examResult.name }}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ examResult.has_document ? 'Po' : 'Jo' }}
+        {{ examResult.studentName }}
       </td>
       <td style="width: 20%; min-width: 10rem">
         {{ examResult.barcode }}
       </td>
+      <td style="width: 20%; min-width: 10rem">
+        {{ examResult.examSubjectCode }}
+      </td>
+      <td style="width: 20%; min-width: 10rem">
+      {{ examResult.academicYear }}
+    </td>
       <td style="width: 14%; min-width: 10rem">
-        <span class="flex" style="align-items: center">
-          {{examResult.elaboration_points}}
+        {{ examResult.isFall ? 'Po' : 'Jo' }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+          {{examResult.writingScore}}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ examResult.multipleChoiceScore}}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ examResult.modificationReason }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ examResult.documentNam }}
+      </td>
+      <td>
+        <div class="flex">
           <button
             pButton
             pRipple
             icon="pi pi-pencil"
             class="p-button-rounded p-button-warning p-button-text mr-2"
-            pTooltip="Ndrysho"
+            pTooltip="Edit"
             tooltipPosition="bottom"
-            (click)="onEditElaborationPointsClick(examResult)"></button>
-        </span>
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-          <span class="flex" style="align-items: center">
-        {{ examResult.alternative_points }}
+            (click)="onEditClick(examResult)"></button>
           <button
             pButton
             pRipple
-            icon="pi pi-pencil"
-            class="p-button-rounded p-button-warning p-button-text mr-2"
-            pTooltip="Ndrysho"
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-danger p-button-text"
+            pTooltip="Delete"
             tooltipPosition="bottom"
-            (click)="onEditAlternativePointsClick(examResult)"></button>
-        </span>
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ examResult.points }}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ examResult.exam_type }}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ examResult.subject }}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ examResult.reason }}
+            (click)="onDeleteClick(examResult)"></button>
+        </div>
       </td>
     </tr>
   </ng-template>

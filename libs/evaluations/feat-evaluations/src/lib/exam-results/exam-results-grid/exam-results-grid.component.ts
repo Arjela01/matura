@@ -6,7 +6,7 @@ import {InputTextModule} from "primeng/inputtext";
 import {TooltipModule} from "primeng/tooltip";
 import {CheckboxModule} from "primeng/checkbox";
 import {RippleModule} from "primeng/ripple";
-import {HighSchool} from "@msh/configurations/domain-configurations";
+import {ExamType, HighSchool} from "@msh/configurations/domain-configurations";
 import {GRID_ACTIONS, GridEvent} from "@msh/shared/util-shared";
 import {LazyLoadEvent} from "primeng/api";
 import {ExamResult} from "@msh/evaluations/domain-evaluations";
@@ -39,24 +39,20 @@ export class ExamResultsGridComponent {
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
-  onEditElaborationPointsClick(examResult: ExamResult) {
+  onEditClick(examResult: ExamResult) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
       data: examResult,
-      type: 'elaboration'
     } as GridEvent<ExamResult>);
-    console.log(examResult)
-    console.log(examResult.elaboration_points)
   }
-  onEditAlternativePointsClick(examResult: ExamResult) {
+
+  onDeleteClick(examResult: ExamResult) {
     this.gridEvent.emit({
-      action: GRID_ACTIONS.EDIT,
+      action: GRID_ACTIONS.DELETE,
       data: examResult,
-      type: 'alternative'
     } as GridEvent<ExamResult>);
-    console.log(examResult)
-    console.log(examResult.alternative_points)
   }
+
 
   onSelectAllClick() {
     if (this.selectedExamResults.length === 0) {
@@ -88,13 +84,4 @@ export class ExamResultsGridComponent {
   loadRows($event: LazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
-
-
-
-
-
-
-
-
-
 }
