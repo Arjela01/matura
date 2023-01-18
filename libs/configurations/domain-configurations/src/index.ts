@@ -1,3 +1,4 @@
+export * from './a1z-category/a1z-category';
 export * from './a1z/a1z.model';
 export * from './academic-year/academic-year.model';
 export * from './administration-office/administration-office.model';

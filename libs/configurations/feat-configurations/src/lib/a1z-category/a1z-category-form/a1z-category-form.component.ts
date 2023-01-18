@@ -10,8 +10,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { City } from '@msh/configurations/domain-configurations';
-import { DropdownModel } from '@msh/shared/data-access-shared';
+import { A1ZCategory } from '@msh/configurations/domain-configurations';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
@@ -21,7 +20,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 
 @Component({
-  selector: 'msh-city-form',
+  selector: 'msh-a1z-category-form',
   standalone: true,
   imports: [
     CommonModule,
@@ -34,43 +33,31 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     CheckboxModule,
     DropdownModule,
   ],
-  templateUrl: './city-form.component.html',
-  styleUrls: ['./city-form.component.scss'],
+  templateUrl: './a1z-category-form.component.html',
+  styleUrls: ['./a1z-category-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CityFormComponent implements OnChanges {
-  @Input() regions: DropdownModel<number>[] = [];
-  @Input() cities: DropdownModel<number>[] = [];
-
-
-  @Input() set cityDetails(details: City | null) {
+export class A1zCategoryFormComponent {
+  @Input() set a1zCategoriesDetails(details: A1ZCategory | null) {
     if (details) {
-      this.city = Object.assign({}, details);
+      this.a1zCategory = Object.assign({}, details);
     }
   }
-  @Output() formSave = new EventEmitter<City>();
+
+  @Output() formSave = new EventEmitter<A1ZCategory>();
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
 
-  citiesFiltered: DropdownModel<number>[] = [];
-
   submitted = false;
 
-  city: City = {
-    id: 0,
+  a1zCategory: A1ZCategory = {
+    id: '',
     name: '',
-    isCity: true,
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor(private cd: ChangeDetectorRef) {}
-
-  ngOnChanges(): void {
-    if ( this.city.regionId) {
-      this.onRegionChange({ value: this.city.regionId });
-    }
-  }
 
   onCancelClick() {
     this.formClose.emit();
@@ -79,13 +66,7 @@ export class CityFormComponent implements OnChanges {
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
-      this.formSave.emit(this.city);
+      this.formSave.emit(this.a1zCategory);
     }
   }
-
-
-  onRegionChange($event: any) {
-    this.citiesFiltered = this.cities.filter(c => c.parentKey == $event.value);
-  }
 }
-

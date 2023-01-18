@@ -108,6 +108,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
     private cd: ChangeDetectorRef,
     private readonly academicYearService: AcademicYearApiService
   ) {}
+
   ngDoCheck(): void {
     if (this.a1zNotImplementedProps.neededSubjects !== 4) {
       this.onNeededSubjectChange({
@@ -115,6 +116,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
       });
     }
   }
+
   ngOnInit(): void {
     this.academicYearService.loadDropdownList().subscribe(response => {
       this.academicYears = response.data;
