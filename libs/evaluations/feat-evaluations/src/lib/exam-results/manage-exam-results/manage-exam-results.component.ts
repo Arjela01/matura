@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ButtonModule} from "primeng/button";
 import {DialogModule} from "primeng/dialog";
@@ -8,14 +8,7 @@ import {ExamResultsFormComponent} from "../exam-results-form/exam-results-form.c
 import {ExamResultsGridComponent} from "../exam-results-grid/exam-results-grid.component";
 import {ConfirmationService, LazyLoadEvent} from "primeng/api";
 import {BehaviorSubject} from "rxjs";
-import {ExamType, HighSchool} from "@msh/configurations/domain-configurations";
-import {DropdownModel} from "@msh/shared/data-access-shared";
 import {GlobalToastService, GRID_ACTIONS, GridEvent} from "@msh/shared/util-shared";
-import {
-  AdministrationOfficeApiService,
-  CityApiService,
-  HighSchoolApiService, RegionApiService
-} from "@msh/configurations/data-access-configurations";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {ExamResultApiService} from "@msh/evaluations/data-access-evaluations";
 import {ExamResult} from "@msh/evaluations/domain-evaluations";

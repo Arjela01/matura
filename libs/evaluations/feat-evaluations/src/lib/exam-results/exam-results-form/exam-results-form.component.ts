@@ -7,7 +7,7 @@ import {RadioButtonModule} from "primeng/radiobutton";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {ButtonModule} from "primeng/button";
 import {ExamResult} from "@msh/evaluations/domain-evaluations";
-import {FileUpload, FileUploadModule} from "primeng/fileupload";
+import { FileUploadModule} from "primeng/fileupload";
 
 @Component({
   selector: 'msh-exam-result-form',
