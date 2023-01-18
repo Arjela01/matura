@@ -2,7 +2,7 @@
   #dt
   dataKey="id"
   responsiveLayout="scroll"
-  [value]="examResults"
+  [value]="examScores"
   [totalRecords]="totalRecords"
   [rows]="10"
   [paginator]="true"
@@ -10,7 +10,7 @@
   [showCurrentPageReport]="true"
   currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
   [rowHover]="true"
-  [(selection)]="selectedExamResults"
+  [(selection)]="selectedExamScores"
   selectionMode="multiple"
   (onRowSelect)="onRowSelect($event)"
   (onRowUnselect)="onRowUnselect($event)"
@@ -119,40 +119,40 @@
       <th></th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-examResult>
+  <ng-template pTemplate="body" let-examScore>
     <tr>
       <td>
-        <p-tableCheckbox [value]="examResult"></p-tableCheckbox>
+        <p-tableCheckbox [value]="examScore"></p-tableCheckbox>
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ examResult.studentId }}
+        {{ examScore.studentId }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ examResult.studentName }}
+        {{ examScore.studentName }}
       </td>
       <td style="width: 20%; min-width: 10rem">
-        {{ examResult.barcode }}
+        {{ examScore.barcode }}
       </td>
       <td style="width: 20%; min-width: 10rem">
-        {{ examResult.examSubjectCode }}
+        {{ examScore.examSubjectCode }}
       </td>
       <td style="width: 20%; min-width: 10rem">
-      {{ examResult.academicYear }}
+      {{ examScore.academicYear }}
     </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ examResult.isFall ? 'Po' : 'Jo' }}
+        {{ examScore.isFall ? 'Po' : 'Jo' }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-          {{examResult.writingScore}}
+          {{examScore.writingScore}}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ examResult.multipleChoiceScore}}
+        {{ examScore.multipleChoiceScore}}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ examResult.modificationReason }}
+        {{ examScore.modificationReason }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ examResult.documentNam }}
+        {{ examScore.documentNam }}
       </td>
       <td>
         <div class="flex">
@@ -163,7 +163,7 @@
             class="p-button-rounded p-button-warning p-button-text mr-2"
             pTooltip="Edit"
             tooltipPosition="bottom"
-            (click)="onEditClick(examResult)"></button>
+            (click)="onEditClick(examScore)"></button>
           <button
             pButton
             pRipple
@@ -171,7 +171,7 @@
             class="p-button-rounded p-button-danger p-button-text"
             pTooltip="Delete"
             tooltipPosition="bottom"
-            (click)="onDeleteClick(examResult)"></button>
+            (click)="onDeleteClick(examScore)"></button>
         </div>
       </td>
     </tr>

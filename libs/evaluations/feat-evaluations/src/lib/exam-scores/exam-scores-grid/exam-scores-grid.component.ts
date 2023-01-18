@@ -8,10 +8,10 @@ import {CheckboxModule} from "primeng/checkbox";
 import {RippleModule} from "primeng/ripple";
 import {GRID_ACTIONS, GridEvent} from "@msh/shared/util-shared";
 import {LazyLoadEvent} from "primeng/api";
-import {ExamResult} from "@msh/evaluations/domain-evaluations";
+import {ExamScore} from "@msh/evaluations/domain-evaluations";
 
 @Component({
-  selector: 'msh-exam-result-grid',
+  selector: 'msh-exam-score-grid',
   standalone: true,
   imports: [    CommonModule,
     TableModule,
@@ -20,64 +20,64 @@ import {ExamResult} from "@msh/evaluations/domain-evaluations";
     TooltipModule,
     CheckboxModule,
     RippleModule,],
-  templateUrl: './exam-results-grid.component.html',
-  styleUrls: ['./exam-results-grid.component.scss'],
+  templateUrl: './exam-scores-grid.component.html',
+  styleUrls: ['./exam-scores-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamResultsGridComponent {
-  @Input() examResults: ExamResult[] = [];
+export class ExamScoresGridComponent {
+  @Input() examScores: ExamScore[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
 
   //Keep it local state because of Table Header checkbox not syncing
-  selectedExamResults: ExamResult[] = [];
+  selectedExamScores: ExamScore[] = [];
 
   @Output() gridEvent = new EventEmitter<
-    GridEvent<ExamResult | ExamResult[]>
+    GridEvent<ExamScore | ExamScore[]>
     >();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
-  onEditClick(examResult: ExamResult) {
+  onEditClick(examResult: ExamScore) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
       data: examResult,
-    } as GridEvent<ExamResult>);
+    } as GridEvent<ExamScore>);
   }
 
-  onDeleteClick(examResult: ExamResult) {
+  onDeleteClick(examResult: ExamScore) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,
       data: examResult,
-    } as GridEvent<ExamResult>);
+    } as GridEvent<ExamScore>);
   }
 
 
   onSelectAllClick() {
-    if (this.selectedExamResults.length === 0) {
+    if (this.selectedExamScores.length === 0) {
       this.gridEvent.emit({
         action: GRID_ACTIONS.UNSELECT_ALL,
-      } as GridEvent<ExamResult>);
+      } as GridEvent<ExamScore>);
     } else {
       this.gridEvent.emit({
         action: GRID_ACTIONS.SELECT_MANY,
-        data: this.selectedExamResults,
-      } as GridEvent<ExamResult[]>);
+        data: this.selectedExamScores,
+      } as GridEvent<ExamScore[]>);
     }
   }
 
-  onRowSelect({ data }: { data: ExamResult }) {
+  onRowSelect({ data }: { data: ExamScore }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
       data: data,
-    } as GridEvent<ExamResult>);
+    } as GridEvent<ExamScore>);
   }
 
-  onRowUnselect({ data }: { data: ExamResult }) {
+  onRowUnselect({ data }: { data: ExamScore }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
       data: data,
-    } as GridEvent<ExamResult>);
+    } as GridEvent<ExamScore>);
   }
 
   loadRows($event: LazyLoadEvent) {

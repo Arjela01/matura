@@ -1,1 +1,1 @@
-export * from './exam-result/exam-result.model'
+export * from './exam-score/exam-score.model'

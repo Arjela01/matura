@@ -18,7 +18,7 @@
               label="Fshi"
               icon="pi pi-trash"
               class="p-button-danger"
-              [disabled]="selectedExamResults.length === 0"
+              [disabled]="selectedExamScores.length === 0"
               (click)="onDeleteSelectedClick()"></button>
           </div>
         </div>
@@ -32,12 +32,12 @@
         </div>
       </p-toolbar>
 
-      <msh-exam-result-grid
-        [examResults]="(examResults$ | async) || []"
+      <msh-exam-score-grid
+        [examScores]="(examScores$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getExamResults($event)">
-      </msh-exam-result-grid>
+        (lazyLoadData)="getExamScores($event)">
+      </msh-exam-score-grid>
     </div>
   </div>
 </div>
@@ -52,11 +52,11 @@
   class="p-fluid"
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
-    <msh-exam-result-form
-      [examResultDetails]="selectedExamResult"
+    <msh-exam-score-form
+      [examScoreDetails]="selectedExamScore"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
-    </msh-exam-result-form>
+    </msh-exam-score-form>
   </ng-template>
 </p-dialog>
 

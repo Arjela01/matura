@@ -4,49 +4,49 @@ import {ButtonModule} from "primeng/button";
 import {DialogModule} from "primeng/dialog";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ToolbarModule} from "primeng/toolbar";
-import {ExamResultsFormComponent} from "../exam-results-form/exam-results-form.component";
-import {ExamResultsGridComponent} from "../exam-results-grid/exam-results-grid.component";
+import {ExamScoresFormComponent} from "../exam-scores-form/exam-scores-form.component";
+import {ExamScoresGridComponent} from "../exam-scores-grid/exam-scores-grid.component";
 import {ConfirmationService, LazyLoadEvent} from "primeng/api";
 import {BehaviorSubject} from "rxjs";
 import {GlobalToastService, GRID_ACTIONS, GridEvent} from "@msh/shared/util-shared";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {ExamResultApiService} from "@msh/evaluations/data-access-evaluations";
-import {ExamResult} from "@msh/evaluations/domain-evaluations";
+import {ExamScoreApiService} from "@msh/evaluations/data-access-evaluations";
+import {ExamScore} from "@msh/evaluations/domain-evaluations";
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-manage-exam-result',
+  selector: 'msh-manage-exam-score',
   standalone: true,
   imports: [
     ButtonModule,
     CommonModule,
     DialogModule,
     ConfirmDialogModule,
-    ExamResultsFormComponent,
-    ExamResultsGridComponent,
+    ExamScoresFormComponent,
+    ExamScoresGridComponent,
     ToolbarModule
   ],
-  templateUrl: './manage-exam-results.component.html',
-  styleUrls: ['./manage-exam-results.component.scss'],
+  templateUrl: './manage-exam-scores.component.html',
+  styleUrls: ['./manage-exam-scores.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 
 })
-export class ManageExamResultsComponent {
-  private examResults$$ = new BehaviorSubject<ExamResult[]>([]);
-  examResults$ = this.examResults$$.asObservable();
+export class ManageExamScoresComponent {
+  private examScores$$ = new BehaviorSubject<ExamScore[]>([]);
+  examScores$ = this.examScores$$.asObservable();
   filters: LazyLoadEvent | null = null;
 
   totalRecords = 0;
-  selectedExamResult: ExamResult | null = null;
-  selectedExamResults: ExamResult[] = [];
+  selectedExamScore: ExamScore | null = null;
+  selectedExamScores: ExamScore[] = [];
   displayModal = false;
 
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly examResultService: ExamResultApiService,
+    private readonly examScoreService: ExamScoreApiService,
   ) {
   }
 
@@ -65,38 +65,38 @@ export class ManageExamResultsComponent {
     });
   }
 
-  onGridEvent(event: GridEvent<ExamResult | ExamResult[]>) {
+  onGridEvent(event: GridEvent<ExamScore | ExamScore[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
-        this.selectedExamResults = [
-          ...this.selectedExamResults,
-          event.data as ExamResult,
+        this.selectedExamScores = [
+          ...this.selectedExamScores,
+          event.data as ExamScore,
         ];
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
-        this.selectedExamResults = this.selectedExamResults.filter(hs => {
-          hs.id !== (event.data as ExamResult).id;
+        this.selectedExamScores = this.selectedExamScores.filter(es => {
+          es.id !== (event.data as ExamScore).id;
         });
         break;
 
       case GRID_ACTIONS.SELECT_MANY:
-        this.selectedExamResults = [
-          ...this.selectedExamResults,
-          ...(event.data as ExamResult[]),
+        this.selectedExamScores = [
+          ...this.selectedExamScores,
+          ...(event.data as ExamScore[]),
         ];
         break;
       case GRID_ACTIONS.UNSELECT_ALL:
-        this.selectedExamResults = [];
+        this.selectedExamScores = [];
         break;
       case GRID_ACTIONS.EDIT:
-        this.selectedExamResult= Object.assign({}, event.data as ExamResult);
+        this.selectedExamScore= Object.assign({}, event.data as ExamScore);
         this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
           message: 'Jeni i sigurt që doni të fshini rezultatin e zgjedhur?',
           accept: () => {
-            this.deleteExamResult(event.data as ExamResult);
+            this.deleteExamResult(event.data as ExamScore);
           },
         });
         break;
@@ -107,36 +107,36 @@ export class ManageExamResultsComponent {
     this.displayModal = false;
   }
 
-  onFormSave(examResult: ExamResult) {
-    if (examResult.id) {
-      this.updateExamResult(examResult);
+  onFormSave(examScore: ExamScore) {
+    if (examScore.id) {
+      this.updateExamScore(examScore);
     }
-    if (!examResult.id) {
-      this.addExamResult(examResult);
+    if (!examScore.id) {
+      this.addExamScore(examScore);
     }
   }
 
-  getExamResults($event: LazyLoadEvent) {
+  getExamScores($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event)
 
-    this.examResultService
-      .loadExamResults($event)
+    this.examScoreService
+      .loadExamScores($event)
       .pipe(untilDestroyed(this))
       .subscribe( response => {
-        this.examResults$$.next(response.data);
+        this.examScores$$.next(response.data);
         this.totalRecords = response.total;
       });
   }
 
-  addExamResult(examResult: ExamResult) {
-    this.examResultService
-      .save(examResult)
+  addExamScore(examScore: ExamScore) {
+    this.examScoreService
+      .save(examScore)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Rezultati i provimit u shtua me sukses!');
           this.displayModal = false;
-          this.getExamResults(this.filters as LazyLoadEvent);
+          this.getExamScores(this.filters as LazyLoadEvent);
         }
         if (response.isBadRequest)
           this.toastService.showError(
@@ -144,9 +144,9 @@ export class ManageExamResultsComponent {
           );
       });
   }
-  updateExamResult(examResult: ExamResult) {
-    this.examResultService
-      .update(examResult)
+  updateExamScore(examScore: ExamScore) {
+    this.examScoreService
+      .update(examScore)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
@@ -154,7 +154,7 @@ export class ManageExamResultsComponent {
             'Rezultati i provimit u ndryshua me sukses!'
           );
           this.displayModal = false;
-          this.getExamResults(this.filters as LazyLoadEvent);
+          this.getExamScores(this.filters as LazyLoadEvent);
         }
         if (response.isBadRequest)
           this.toastService.showError(
@@ -163,14 +163,14 @@ export class ManageExamResultsComponent {
       });
   }
 
-  deleteExamResult(examResult: ExamResult) {
-    this.examResultService
-      .delete(examResult.id)
+  deleteExamResult(examScore: ExamScore) {
+    this.examScoreService
+      .delete(examScore.id)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Rezultati i provimit u fshi me sukses!');
-          this.getExamResults(this.filters as LazyLoadEvent);
+          this.getExamScores(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)

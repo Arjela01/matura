@@ -1,1 +1,1 @@
-export * from './lib/exam-result/exam-result-api.service';
+export * from './lib/exam-score/exam-score-api.service';

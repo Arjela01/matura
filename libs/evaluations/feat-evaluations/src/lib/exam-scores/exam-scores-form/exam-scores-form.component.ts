@@ -6,11 +6,11 @@ import {InputNumberModule} from "primeng/inputnumber";
 import {RadioButtonModule} from "primeng/radiobutton";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {ButtonModule} from "primeng/button";
-import {ExamResult} from "@msh/evaluations/domain-evaluations";
+import { ExamScore} from "@msh/evaluations/domain-evaluations";
 import { FileUploadModule} from "primeng/fileupload";
 
 @Component({
-  selector: 'msh-exam-result-form',
+  selector: 'msh-exam-score-form',
   standalone: true,
   imports: [
     CommonModule,
@@ -22,29 +22,29 @@ import { FileUploadModule} from "primeng/fileupload";
     ButtonModule,
     FileUploadModule,
   ],
-  templateUrl: './exam-results-form.component.html',
-  styleUrls: ['./exam-results-form.component.scss'],
+  templateUrl: './exam-scores-form.component.html',
+  styleUrls: ['./exam-scores-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamResultsFormComponent {
+export class ExamScoresFormComponent {
 
 
-  @Input() set examResultDetails(details: ExamResult | null) {
+  @Input() set examScoreDetails(details: ExamScore | null) {
     console.log(details)
     if (details) {
-      this.examResult = Object.assign({}, details);
-      console.log(this.examResult)
+      this.examScore = Object.assign({}, details);
+      console.log(this.examScore)
     }
   }
   @Input() examType: string | undefined;
-  @Output() formSave = new EventEmitter<ExamResult>();
+  @Output() formSave = new EventEmitter<ExamScore>();
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
 
   submitted = false;
 
-  examResult: ExamResult = {
+  examScore: ExamScore = {
     id: 0,
     studentName: '',
     barcode: '',
@@ -64,7 +64,7 @@ export class ExamResultsFormComponent {
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
-      this.formSave.emit(this.examResult);
+      this.formSave.emit(this.examScore);
     }
   }
 }

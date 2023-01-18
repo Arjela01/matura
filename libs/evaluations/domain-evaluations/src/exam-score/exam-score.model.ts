@@ -1,4 +1,4 @@
-export interface ExamResult {
+export interface ExamScore{
   id: number;
   studentId?: string;
   studentName: string;
@@ -13,7 +13,7 @@ export interface ExamResult {
   documentName: string;
 }
 
-export interface ExamResultTableView {
-  data: ExamResult[];
+export interface ExamScoreTableView {
+  data: ExamScore[];
   total: number;
 }
