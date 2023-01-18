@@ -44,18 +44,6 @@
           field="name"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="isCreatedBy">
-        Krijuar nga
-        <p-sortIcon field="isCreatedBy"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="isCreatedBy"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="isActive">
-        Ështe Aktiv?
-        <p-sortIcon field="isActive"></p-sortIcon>
-      </th>
       <th></th>
     </tr>
   </ng-template>
@@ -66,12 +54,6 @@
       </td>
       <td style="width: 30%; min-width: 10rem">
         {{ a1zCategory.name }}
-      </td>
-      <td style="width: 30%; min-width: 10rem">
-        {{ a1zCategory.createdBy }}
-      </td>
-      <td style="width: 30%; min-width: 10rem">
-        {{ a1zCategory.isActive ? 'Po':'Jo' }}
       </td>
       <td>
         <div class="flex">
