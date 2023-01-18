@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -9,6 +9,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
 import {
+  A1ZApiService,
   GendersApiService,
   HighSchoolApiService, ProfileApiService,
 } from '@msh/configurations/data-access-configurations';
@@ -25,6 +26,7 @@ import {StudentsFormComponent} from "../students-form/students-form.component";
 import {StudentsGridComponent} from "../students-grid/students-grid.component";
 import {StudentsApiService} from "../../../../../data-access-configurations/src/lib/students/students-api.service";
 import {Student} from "../../../../../domain-configurations/src/students/students.model";
+import {A1Z} from "@msh/configurations/domain-configurations";
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-students',
@@ -45,199 +47,100 @@ import {Student} from "../../../../../domain-configurations/src/students/student
 
 })
 export class ManageStudentsComponent implements OnInit {
-  private students$$ = new BehaviorSubject<Student[]>([]);
-  students$ = this.students$$.asObservable();
+  private studentList$$ = new BehaviorSubject<Student[]>([]);
+  studentList$ = this.studentList$$.asObservable();
   filters: LazyLoadEvent | null = null;
 
+  hideStudentForm = true;
   totalRecords = 0;
   selectedStudent: Student | null = null;
-  selectedStudents: Student[] = [];
-  displayModal = false;
-  schoolProfile: DropdownModel<number>[] = [];
-  gender: DropdownModel<number>[] = [];
-  highSchool: DropdownModel<number>[] = [];
+  selectedStudentList: Student[] = [];
 
   constructor(
-    private readonly confirmationService: ConfirmationService,
-    private readonly toastService: GlobalToastService,
     private readonly studentService: StudentsApiService,
-    private readonly highSchoolService: HighSchoolApiService,
-    private readonly profileService: ProfileApiService,
-    private readonly genderService: GendersApiService,
-
-
-    private readonly cd: ChangeDetectorRef,
-
+    private readonly confirmationService: ConfirmationService,
+    private readonly toastService: GlobalToastService
   ) {}
 
-
-
   ngOnInit(): void {
-    this.getProfileSchoolDropdown();
-    this.getGenderDropdown();
-    this.getHighSchoolDropdown();
+    console.log('init');
   }
 
   onNewClick() {
-    this.displayModal = true;
+    this.hideStudentForm = !this.hideStudentForm;
   }
-
   onDeleteSelectedClick() {
     this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të fshini maturantet?',
+      message: 'Are you sure that you want to delete selected entities?',
       accept: () => {
-        this.toastService.showWarning('Maturantet e zgjedhur u fshinë!');
+        this.toastService.showWarning('Student deleted!');
       },
     });
   }
 
+
   onGridEvent(event: GridEvent<Student | Student[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
-        this.selectedStudents = [
-          ...this.selectedStudents,
-          event.data as Student,
-        ];
+        // eslint-disable-next-line max-len
+        this.selectedStudentList = [...this.selectedStudentList, event.data as Student];
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
-        this.selectedStudents = this.selectedStudents.filter(hs => {
-          hs.id !== (event.data as Student).id;
+        this.selectedStudentList = this.selectedStudentList.filter(u => {
+          u.id !== (event.data as Student).id;
         });
         break;
-
       case GRID_ACTIONS.SELECT_MANY:
-        this.selectedStudents = [
-          ...this.selectedStudents,
+        this.selectedStudentList = [
+          ...this.selectedStudentList,
           ...(event.data as Student[]),
         ];
         break;
       case GRID_ACTIONS.UNSELECT_ALL:
-        this.selectedStudents = [];
+        this.selectedStudentList = [];
         break;
       case GRID_ACTIONS.EDIT:
+        // eslint-disable-next-line max-len
+        // TODO: Route to a1z-form with id as a query parameter to get the dertails
         this.selectedStudent = Object.assign({}, event.data as Student);
-        this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të fshini maturantin?',
+          message: 'Are you sure that you want to delete this entity?',
           accept: () => {
-            this.deleteStudent(event.data as Student);
+            this.deleteA1Z(event.data as Student);
           },
         });
         break;
     }
   }
 
-  onModalClose() {
-    this.displayModal = false;
+  deleteA1Z(Student: Student) {
+    this.studentService
+      .delete(Student.id.toString())
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Student u fshi me sukses!');
+        }
+        if (!response.isSuccessful) {
+          this.toastService.showError(
+            'Ndonje nje problem gjate fshirjes se Studentit!'
+          );
+        }
+      });
   }
 
-  onFormSave(student: Student) {
-    if (student.id) {
-      this.updateStudent(student);
-    }
-    if (!student.id) {
-      this.addStudent(student);
-    }
-  }
-
-  getStudents($event: LazyLoadEvent) {
+  getStudent($event: LazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
 
     this.studentService
       .loadStudents($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.students$$.next(response.data);
+        console.log(response);
+        this.studentList$$.next(response.data);
         this.totalRecords = response.total;
       });
   }
-
-  addStudent(student: Student) {
-    this.studentService
-      .save(student)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showSuccess('Maturanti u shtua me sukses!');
-          this.displayModal = false;
-          this.getStudents(this.filters as LazyLoadEvent);
-          this.cd.detectChanges();
-
-        }
-
-        if (response.isBadRequest)
-          this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së maturantit!'
-          );
-      });
-  }
-
-  updateStudent(student: Student) {
-    this.studentService
-      .update(student)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            'Maturanti u ndryshua me sukses!'
-          );
-          this.displayModal = false;
-          this.getStudents(this.filters as LazyLoadEvent);
-        }
-
-        if (response.isBadRequest)
-          this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së maturantit!'
-          );
-      });
-  }
-
-  deleteStudent(student: Student) {
-    this.studentService
-      .delete(student.id)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showInfo('Maturanti u fshi me sukses!');
-          this.getStudents(this.filters as LazyLoadEvent);
-        }
-
-        if (response.isBadRequest)
-          this.toastService.showError(
-            'Ndodhi një problem gjatë fshirjes së shkollës së mesme!'
-          );
-      });
-  }
-
-
-
-  getProfileSchoolDropdown() {
-    this.profileService
-      .loadDropdownList()
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.schoolProfile = response.data;
-      });
-  }
-
-  getGenderDropdown() {
-    this.genderService
-      .loadDropdownList()
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.gender = response.data;
-      });
-  }
-
-  getHighSchoolDropdown() {
-    this.highSchoolService
-      .loadDropDownList()
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.highSchool = response.data;
-      });
-  }
 }
-

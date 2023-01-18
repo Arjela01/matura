@@ -15,6 +15,7 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import {Student} from "../../../../../domain-configurations/src/students/students.model";
+import {A1Z} from "@msh/configurations/domain-configurations";
 
 @Component({
   selector: 'msh-students-grid',
@@ -35,6 +36,7 @@ import {Student} from "../../../../../domain-configurations/src/students/student
 export class StudentsGridComponent {
 
   @Input() students: Student[] = [];
+
   @Input() totalRecords = 0;
   @Input() loading = false;
 
