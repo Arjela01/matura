@@ -96,7 +96,7 @@ export class ManageExamScoresComponent {
         this.confirmationService.confirm({
           message: 'Jeni i sigurt që doni të fshini rezultatin e zgjedhur?',
           accept: () => {
-            this.deleteExamResult(event.data as ExamScore);
+            this.deleteExamScore(event.data as ExamScore);
           },
         });
         break;
@@ -163,7 +163,7 @@ export class ManageExamScoresComponent {
       });
   }
 
-  deleteExamResult(examScore: ExamScore) {
+  deleteExamScore(examScore: ExamScore) {
     this.examScoreService
       .delete(examScore.id)
       .pipe(untilDestroyed(this))

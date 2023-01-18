@@ -254,7 +254,7 @@
       "ID": 1322,
       "Parent": 143,
       "Text": "Rezultatet e provimeve",
-      "Url": "/Evaluations/ExamResults/ExamResults"
+      "Url": "/Evaluations/ExamScores/ExamScores"
     },
     {
       "IsVisible": true,

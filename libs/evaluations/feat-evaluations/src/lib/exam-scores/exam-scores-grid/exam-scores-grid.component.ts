@@ -38,17 +38,17 @@ export class ExamScoresGridComponent {
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
-  onEditClick(examResult: ExamScore) {
+  onEditClick(examScore: ExamScore) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
-      data: examResult,
+      data: examScore,
     } as GridEvent<ExamScore>);
   }
 
-  onDeleteClick(examResult: ExamScore) {
+  onDeleteClick(examScore: ExamScore) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,
-      data: examResult,
+      data: examScore,
     } as GridEvent<ExamScore>);
   }
 
