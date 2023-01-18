@@ -60,7 +60,6 @@ export class CityFormComponent implements OnChanges {
   city: City = {
     id: 0,
     name: '',
-    isActive: true,
     isCity: true,
   };
 
@@ -68,8 +67,8 @@ export class CityFormComponent implements OnChanges {
   constructor(private cd: ChangeDetectorRef) {}
 
   ngOnChanges(): void {
-    if ( this.city.regionID) {
-      this.onRegionChange({ value: this.city.regionID });
+    if ( this.city.regionId) {
+      this.onRegionChange({ value: this.city.regionId });
     }
   }
 

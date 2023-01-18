@@ -16,12 +16,12 @@ export class ExamSubjectApiService {
   }
 
   loadExamSubjects(event: LazyLoadEvent): Observable<ExamSubjectTableView> {
-    return this.apiService.post(`/api/Subject/TableData`, event);
+    return this.apiService.post(`/api/ExamSubject/TableData`, event);
   }
 
   save(examSubject: ExamSubject): Observable<ApiResult<ExamSubject>> {
     return this.apiService.post<ApiResult<ExamSubject>, ExamSubject>(
-      `/api/Subject`,
+      `/api/ExamSubject`,
       examSubject
     ).pipe(
         map(data => data),
@@ -32,7 +32,7 @@ export class ExamSubjectApiService {
 
   update(examSubject: ExamSubject): Observable<ApiResult<ExamSubject>> {
     return this.apiService.put<ApiResult<ExamSubject>, ExamSubject>(
-      `/api/Subject`,
+      `/api/ExamSubject`,
       examSubject
     ).pipe(
       map(data => data),
@@ -43,7 +43,7 @@ export class ExamSubjectApiService {
 
   delete(examSubjectId: string): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<ExamSubject>>(
-      `/api/Subject/${examSubjectId}`
+      `/api/ExamSubject/${examSubjectId}`
     ).pipe(
       map(data => data),
       catchError((error) => throwError(error)),
