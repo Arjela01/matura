@@ -166,6 +166,32 @@ export class StudentsFormComponent implements OnChanges {
     console.log($event);
     this.showStudent = $event.value;
   }
+
+  save(): void {
+    const data = {...this.student};
+
+    this.studentService.save(data)
+      .subscribe(
+        {
+          next: value => {
+            this.saving = false;
+
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Successfully saved business.'
+            });
+            this.router.navigate(['/business-entities']).then();
+          },
+          error: error => {
+            this.saving = false;
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: `Error saving business: ${error}`
+            });
+          }
+        }
+      );
+  }
 }
-
-
