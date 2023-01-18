@@ -1,1 +1,1 @@
-export * from './lib/applications-data-access-applications';
+export * from './lib/a1z/a1z-api.service';

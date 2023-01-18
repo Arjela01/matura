@@ -1,3 +1,4 @@
+import { A1Z } from '../../../../../domain-applications/a1z/a1z.model';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CommonModule } from '@angular/common';
 import {
@@ -14,7 +15,6 @@ import {
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AcademicYearApiService } from '@msh/configurations/data-access-configurations';
-import { A1Z } from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
 import { ButtonModule } from 'primeng/button';
