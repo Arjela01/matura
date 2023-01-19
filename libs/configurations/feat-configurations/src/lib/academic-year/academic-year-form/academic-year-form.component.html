@@ -1,8 +1,9 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
-  <div class="field">
+  <div class="field p-fluid">
     <label for="Year">Viti *</label>
     <input
       type="number"
+      min="2000"
       pInputText
       id="Year"
       name="Year"
@@ -12,6 +13,9 @@
       [ngClass]="{ 'ng-invalid ng-dirty': submitted && !academicYear.year }" />
     <small class="p-error block" *ngIf="submitted && !academicYear.year">
       Viti është fushë e kërkuar.
+    </small>
+    <small class="p-error block" *ngIf="academicYearValidation">
+      Viti nuk mund të jetë më i vogël se 2000.
     </small>
   </div>
 

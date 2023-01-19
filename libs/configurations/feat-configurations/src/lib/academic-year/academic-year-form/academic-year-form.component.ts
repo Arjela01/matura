@@ -9,7 +9,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import {FormsModule, NgForm, Validators} from '@angular/forms';
 import { AcademicYear } from '@msh/configurations/domain-configurations';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -18,6 +18,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import {GlobalToastService} from "@msh/shared/util-shared";
+import { ValidatorFn } from '@angular/forms';
 
 @Component({
   selector: 'msh-academic-year-form',
@@ -38,6 +40,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AcademicYearFormComponent {
+  private readonly toastService!: GlobalToastService;
 
   @Input() set academicYearDetails(details: AcademicYear | null) {
     if (details) {
@@ -51,6 +54,7 @@ export class AcademicYearFormComponent {
   @ViewChild('form', {static: true}) form!: NgForm;
 
   submitted = false;
+  academicYearValue = 0;
 
   academicYear: AcademicYear = {
     id: '',
@@ -71,6 +75,13 @@ export class AcademicYearFormComponent {
     this.submitted = true;
     if (this.form.valid) {
       this.formSave.emit(this.academicYear);
+    }
+  }
+
+  academicYearValidation() {
+    this.academicYearValue = 0;
+    if (this.academicYearValue <= 2000) {
+      return ;
     }
   }
 
