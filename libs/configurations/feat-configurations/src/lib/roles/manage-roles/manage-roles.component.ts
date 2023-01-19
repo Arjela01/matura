@@ -13,17 +13,18 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { RolesFormComponent } from '../roles-form/roles-form.component';
 import { RolesGridComponent } from '../roles-grid/roles-grid.component';
+import {RippleModule} from "primeng/ripple";
 
 @Component({
   selector: 'msh-manage-roles',
   standalone: true,
-  imports: [ButtonModule,
-    CommonModule,
-    DialogModule,
-    ConfirmDialogModule,
-    RolesFormComponent,
-    RolesGridComponent,
-    ToolbarModule,],
+    imports: [ButtonModule,
+        CommonModule,
+        DialogModule,
+        ConfirmDialogModule,
+        RolesFormComponent,
+        RolesGridComponent,
+        ToolbarModule, RippleModule,],
   templateUrl: './manage-roles.component.html',
   styleUrls: ['./manage-roles.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
