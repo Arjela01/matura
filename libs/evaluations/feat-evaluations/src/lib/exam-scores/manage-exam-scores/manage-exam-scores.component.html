@@ -54,6 +54,8 @@
   <ng-template pTemplate="content">
     <msh-exam-score-form
       [examScoreDetails]="selectedExamScore"
+      [academicYears]="academicYears"
+      [students]="students"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
     </msh-exam-score-form>

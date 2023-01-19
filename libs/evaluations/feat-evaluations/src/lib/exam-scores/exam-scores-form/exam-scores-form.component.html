@@ -1,18 +1,23 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="field">
-    <label for="StudentId">Id e  Studentit *</label>
-    <input
-      type="text"
-      pInputText
+    <label for="StudentId">Studenti *</label>
+    <p-dropdown
       id="StudentId"
-      name="StudentId"
+      [options]="students"
+      optionValue="key"
+      optionLabel="value"
+      name="academicYearId"
+      [autoDisplayFirst]="false"
       [(ngModel)]="examScore.studentId"
-      required
-      autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examScore.studentId }"
-    />
-    <small class="p-error block" *ngIf="submitted && !examScore.studentId">
-      Id e studentit është fushë e kërkuar.
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examScore.studentId
+      }">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examScore.studentId">
+     Studentët janë fushë e kërkuar.
     </small>
   </div>
   <div class="field">
@@ -48,19 +53,24 @@
     </small>
   </div>
   <div class="field">
-    <label for="AcademicYearId">Viti Akademik *</label>
-    <input
-      type="number"
-      pInputText
-      id="AcademicYearId"
-      name="AcademicYearId"
+    <label for="AcademicYear">Viti Akademik *</label>
+    <p-dropdown
+      id="AcademicYear"
+      [options]="academicYears"
+      optionValue="key"
+      optionLabel="value"
+      name="academicYearId"
+      [autoDisplayFirst]="false"
       [(ngModel)]="examScore.academicYearId"
-      required
-      autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examScore.academicYearId }"
-    />
-    <small class="p-error block" *ngIf="submitted && !examScore.academicYearId">
-      Viti Akademik është fushë e kërkuar.
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examScore.academicYearId
+      }">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examScore.academicYearId">
+      Viti akademik është fushë e kërkuar.
     </small>
   </div>
   <div class="field">

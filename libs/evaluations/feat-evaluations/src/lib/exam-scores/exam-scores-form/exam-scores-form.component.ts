@@ -1,13 +1,15 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {FormsModule, NgForm} from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
 import {InputNumberModule} from "primeng/inputnumber";
 import {RadioButtonModule} from "primeng/radiobutton";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {ButtonModule} from "primeng/button";
-import { ExamScore} from "@msh/evaluations/domain-evaluations";
-import { FileUploadModule} from "primeng/fileupload";
+import {ExamScore} from "@msh/evaluations/domain-evaluations";
+import {FileUploadModule} from "primeng/fileupload";
+import {DropdownModel} from "@msh/shared/data-access-shared";
+import {DropdownModule} from "primeng/dropdown";
 
 @Component({
   selector: 'msh-exam-score-form',
@@ -20,7 +22,7 @@ import { FileUploadModule} from "primeng/fileupload";
     RadioButtonModule,
     InputTextareaModule,
     ButtonModule,
-    FileUploadModule,
+    DropdownModule
   ],
   templateUrl: './exam-scores-form.component.html',
   styleUrls: ['./exam-scores-form.component.scss'],
@@ -33,23 +35,22 @@ export class ExamScoresFormComponent {
     console.log(details)
     if (details) {
       this.examScore = Object.assign({}, details);
-      console.log(this.examScore)
     }
   }
+
   @Input() examType: string | undefined;
   @Output() formSave = new EventEmitter<ExamScore>();
   @Output() formClose = new EventEmitter<undefined>();
-
-  @ViewChild('form', { static: true }) form!: NgForm;
+  @Input() academicYears: DropdownModel<number>[] = [];
+  @Input() students: DropdownModel<number>[] = [];
+  @ViewChild('form', {static: true}) form!: NgForm;
 
   submitted = false;
 
   examScore: ExamScore = {
     id: 0,
-    studentId: '',
     barcode: '',
-    examSubjectCode : 0,
-    academicYearId: 0,
+    examSubjectCode: 0,
     isFall: false,
     writingScore: 0,
     multipleChoiceScore: 0,

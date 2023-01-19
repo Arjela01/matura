@@ -1,10 +1,10 @@
 export interface ExamScore{
   id: number;
-  studentId: string;
+  studentId?: string;
   studentName?: string;
   barcode: string;
   examSubjectCode: number;
-  academicYearId: number;
+  academicYearId?: number;
   academicYear?: string;
   isFall: boolean;
   writingScore: number;

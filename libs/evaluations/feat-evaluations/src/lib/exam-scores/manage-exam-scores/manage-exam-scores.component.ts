@@ -12,6 +12,8 @@ import {GlobalToastService, GRID_ACTIONS, GridEvent} from "@msh/shared/util-shar
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {ExamScoreApiService} from "@msh/evaluations/data-access-evaluations";
 import {ExamScore} from "@msh/evaluations/domain-evaluations";
+import {AcademicYearApiService} from "@msh/configurations/data-access-configurations";
+import {DropdownModel} from "@msh/shared/data-access-shared";
 
 @UntilDestroy()
 @Component({
@@ -42,14 +44,20 @@ export class ManageExamScoresComponent {
   selectedExamScores: ExamScore[] = [];
   displayModal = false;
 
+  academicYears: DropdownModel<number>[] = []
+  students: DropdownModel<number>[] = []
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examScoreService: ExamScoreApiService,
+    private readonly academicYearApiService: AcademicYearApiService,
   ) {
   }
 
+  ngOnInit(): void {
+    this.getAcademicYearsDropdown();
+  }
 
   onNewClick() {
     this.displayModal = true;
@@ -89,7 +97,7 @@ export class ManageExamScoresComponent {
         this.selectedExamScores = [];
         break;
       case GRID_ACTIONS.EDIT:
-        this.selectedExamScore= Object.assign({}, event.data as ExamScore);
+        this.selectedExamScore = Object.assign({}, event.data as ExamScore);
         this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
@@ -122,7 +130,7 @@ export class ManageExamScoresComponent {
     this.examScoreService
       .loadExamScores($event)
       .pipe(untilDestroyed(this))
-      .subscribe( response => {
+      .subscribe(response => {
         this.examScores$$.next(response.data);
         this.totalRecords = response.total;
       });
@@ -144,6 +152,7 @@ export class ManageExamScoresComponent {
           );
       });
   }
+
   updateExamScore(examScore: ExamScore) {
     this.examScoreService
       .update(examScore)
@@ -179,4 +188,14 @@ export class ManageExamScoresComponent {
           );
       });
   }
+
+  getAcademicYearsDropdown() {
+    this.academicYearApiService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.academicYears = response.data;
+      });
+  }
+
 }
