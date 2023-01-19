@@ -51,8 +51,7 @@ export class StudentsGridComponent {
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
-  student: Student | undefined;
-  private router: ActivatedRoute | undefined;
+  student: Student [] = [] ;
   onEditClick(student: Student) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,

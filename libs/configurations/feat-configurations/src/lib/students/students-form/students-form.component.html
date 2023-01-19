@@ -1,11 +1,10 @@
-<form (ngSubmit)="onSubmit()">
 <div class="grid">
   <div class="col-12 p-fluid">
     <div class="card px-6 py-6">
       <!-- Here goes the form -->
       <div class="text-5xl font-semibold mb-5">MATURANTË</div>
 
-      <form #form="ngForm" (ngSubmit)="onSubmit()">
+      <form #form="ngForm" (ngSubmit)="onSubmit(form)">
         <div class="field" [style]="{ width: '500px' }">
         <label for="highSchool">Shkolla *</label>
     <p-dropdown
@@ -14,13 +13,13 @@
       name="highSchool"
       optionValue="key"
       optionLabel="value"
-      [(ngModel)]="studentNotImplementedProps.highSchoolName"
+      [(ngModel)]="student.highSchoolId"
       [autoDisplayFirst]="false"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !studentNotImplementedProps.schoolName
+        'ng-invalid ng-dirty': submitted && !student.highSchoolId
       }">
     </p-dropdown>
-    <small class="p-error block" *ngIf="submitted && !studentNotImplementedProps.schoolName">
+    <small class="p-error block" *ngIf="submitted && !student.highSchoolId">
       Profili shkollës është fushë e kërkuar.
     </small>
   </div>
@@ -33,14 +32,14 @@
       name="schoolProfile"
       optionValue="key"
       optionLabel="value"
-      [(ngModel)]="studentNotImplementedProps.schoolProfile"
+      [(ngModel)]="student.schoolProfile"
       [autoDisplayFirst]="false"
       [showClear]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !studentNotImplementedProps.schoolProfile
+        'ng-invalid ng-dirty': submitted && !student.schoolProfile
       }">
     </p-dropdown>
-    <small class="p-error block" *ngIf="submitted && !studentNotImplementedProps.schoolProfile">
+    <small class="p-error block" *ngIf="submitted && !student.schoolProfile">
       Profili shkollës është fushë e kërkuar.
     </small>
   </div>
@@ -53,7 +52,7 @@
           id="IsFallTrue"
           name="IsFall"
           [value]="true"
-          [(ngModel)]="studentNotImplementedProps.isFall"></p-radioButton>
+          [(ngModel)]="student.isFall"></p-radioButton>
         <label for="IsFallTrue">Po</label>
       </div>
       <div class="field-radiobutton col-6">
@@ -61,7 +60,7 @@
           id="IsFallFalse"
           name="IsFall"
           [value]="false"
-          [(ngModel)]="studentNotImplementedProps.isFall"></p-radioButton>
+          [(ngModel)]="student.isFall"></p-radioButton>
         <label for="IsFallFalse">Jo</label>
       </div>
     </div>
@@ -75,7 +74,7 @@
           id="isA2A3True"
           name="isA2A3"
           [value]="true"
-          [(ngModel)]="studentNotImplementedProps.isA2A3"></p-radioButton>
+          [(ngModel)]="student.isA2A3"></p-radioButton>
         <label for="isA2A3True">Po</label>
       </div>
       <div class="field-radiobutton col-6">
@@ -83,7 +82,7 @@
           id="isA2A3False"
           name="isA2A3"
           [value]="false"
-          [(ngModel)]="studentNotImplementedProps.isA2A3"></p-radioButton>
+          [(ngModel)]="student.isA2A3"></p-radioButton>
         <label for="isA2A3False">Jo</label>
       </div>
     </div>
@@ -93,16 +92,16 @@
     <label for="SchoolFinished">Shkolla qe kam perfunduar *</label>
     <input
       type="text"
+      required
       pInputText
       id="SchoolFinished"
       name="SchoolFinished"
-      [(ngModel)]="studentNotImplementedProps.schoolFinished"
-      required
+      [(ngModel)]="student.schoolFinished"
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !studentNotImplementedProps.schoolFinished
+        'ng-invalid ng-dirty': submitted && !student.schoolFinished
       }" />
-    <small class="p-error block" *ngIf="submitted && !studentNotImplementedProps.schoolFinished">
+    <small class="p-error block" *ngIf="submitted && !student.schoolFinished">
       Shkolla që ke përfunduar është fushë e kërkuar.
     </small>
   </div>
@@ -111,16 +110,16 @@
     <label for="graduationYear"
       >Viti i përfundimit te shkollës së mesme? *</label>
     <p-calendar
-      [(ngModel)]="studentNotImplementedProps.graduationYear"
+      [(ngModel)]="student.graduationYear"
       dateFormat="yy"
       view="year"
       inputId="graduationYear"
       id="graduationYear"
       name="graduationYear"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !studentNotImplementedProps.graduationYear
+        'ng-invalid ng-dirty': submitted && !student.graduationYear
       }"></p-calendar>
-    <small class="p-error block" *ngIf="submitted && !studentNotImplementedProps.graduationYear">
+    <small class="p-error block" *ngIf="submitted && !student.graduationYear">
       Viti i përfundimit te shkollës së mesme është fushë e kërkuar.
     </small>
   </div>
@@ -132,11 +131,11 @@
       pInputText
       id="IdCard"
       name="IdCard"
-      [(ngModel)]="studentNotImplementedProps.idCard"
+      [(ngModel)]="student.idCard"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !studentNotImplementedProps.idCard }" />
-    <small class="p-error block" *ngIf="submitted && !studentNotImplementedProps.idCard">
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !student.idCard }" />
+    <small class="p-error block" *ngIf="submitted && !student.idCard">
       Numri Personal është fushë e kërkuar.
     </small>
   </div>
@@ -148,11 +147,11 @@
       pInputText
       id="OldID"
       name="OldID"
-      [(ngModel)]="studentNotImplementedProps.oldId"
+      [(ngModel)]="student.oldId"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !studentNotImplementedProps.oldId }" />
-    <small class="p-error block" *ngIf="submitted && !studentNotImplementedProps.oldId">
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !student.oldId }" />
+    <small class="p-error block" *ngIf="submitted && !student.oldId">
       ID e vjetër e maturës është fushë e kërkuar.
     </small>
   </div>
@@ -164,11 +163,11 @@
       pInputText
       id="firstName"
       name="firstName"
-      [(ngModel)]="studentNotImplementedProps.firstName"
+      [(ngModel)]="student.firstName"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !studentNotImplementedProps.firstName }" />
-    <small class="p-error block" *ngIf="submitted && !studentNotImplementedProps.firstName">
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !student.firstName }" />
+    <small class="p-error block" *ngIf="submitted && !student.firstName">
       Emri është fushë e kërkuar.
     </small>
   </div>
@@ -180,11 +179,11 @@
       pInputText
       id="middleName"
       name="middleName"
-      [(ngModel)]="studentNotImplementedProps.middleName"
+      [(ngModel)]="student.middleName"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !studentNotImplementedProps.middleName }" />
-    <small class="p-error block" *ngIf="submitted && !studentNotImplementedProps.middleName">
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !student.middleName }" />
+    <small class="p-error block" *ngIf="submitted && !student.middleName">
       Atesia është fushë e kërkuar.
     </small>
   </div>
@@ -196,11 +195,11 @@
       pInputText
       id="lastName"
       name="lastName"
-      [(ngModel)]="studentNotImplementedProps.lastName"
+      [(ngModel)]="student.lastName"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !studentNotImplementedProps.lastName }" />
-    <small class="p-error block" *ngIf="submitted && !studentNotImplementedProps.lastName">
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !student.lastName }" />
+    <small class="p-error block" *ngIf="submitted && !student.lastName">
       Mbiemri është fushë e kërkuar.
     </small>
   </div>
@@ -208,15 +207,15 @@
         <div class="field" [style]="{ width: '500px' }">
     <label for="birthDate">Datëlindja * </label>
     <p-calendar
-      [(ngModel)]="studentNotImplementedProps.birthDate"
+      [(ngModel)]="student.birthDate"
       dateFormat="dd-mm-yy"
       inputId="birthDate"
 W      id="birthDate"
       name="birthDate"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !studentNotImplementedProps.birthDate
+        'ng-invalid ng-dirty': submitted && !student.birthDate
       }"></p-calendar>
-    <small class="p-error block" *ngIf="submitted && !studentNotImplementedProps.birthDate">
+    <small class="p-error block" *ngIf="submitted && !student.birthDate">
       Datëlindja është fushë e kërkuar.
     </small>
   </div>
@@ -228,11 +227,11 @@ W      id="birthDate"
       pInputText
       id="birthPlace"
       name="birthPlace"
-      [(ngModel)]="studentNotImplementedProps.birthPlace"
+      [(ngModel)]="student.birthPlace"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !studentNotImplementedProps.birthPlace }" />
-    <small class="p-error block" *ngIf="submitted && !studentNotImplementedProps.birthPlace">
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !student.birthPlace }" />
+    <small class="p-error block" *ngIf="submitted && !student.birthPlace">
       Vendlindja është fushë e kërkuar.
     </small>
   </div>
@@ -242,16 +241,16 @@ W      id="birthDate"
     <p-dropdown
       id="gender"
       [options]="genders"
-      name="schoolProfile"
+      name="genders"
       optionValue="key"
       optionLabel="value"
-      [(ngModel)]="studentNotImplementedProps.gender"
+      [(ngModel)]="student.genderId"
       [autoDisplayFirst]="false"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !studentNotImplementedProps.schoolProfile
+        'ng-invalid ng-dirty': submitted && !student.genderId
       }">
     </p-dropdown>
-          <small class="p-error block" *ngIf="submitted && !studentNotImplementedProps.schoolProfile">
+          <small class="p-error block" *ngIf="submitted && !student.genderId">
             Gjinia është fushë e kërkuar.
           </small>
   </div>
@@ -264,13 +263,13 @@ W      id="birthDate"
       name="schoolProfile"
       optionValue="key"
       optionLabel="value"
-      [(ngModel)]="studentNotImplementedProps.studyClass"
+      [(ngModel)]="student.studyClass"
       [autoDisplayFirst]="false"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !studentNotImplementedProps.schoolProfile
+        'ng-invalid ng-dirty': submitted && !student.schoolProfile
       }">
     </p-dropdown>
-          <small class="p-error block" *ngIf="submitted && !studentNotImplementedProps.schoolProfile">
+          <small class="p-error block" *ngIf="submitted && !student.schoolProfile">
             Klasa është fushë e kërkuar.
           </small>
   </div>
@@ -283,13 +282,13 @@ W      id="birthDate"
       name="schoolProfile"
       optionValue="key"
       optionLabel="value"
-      [(ngModel)]="studentNotImplementedProps.session"
+      [(ngModel)]="student.session"
       [autoDisplayFirst]="false"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !studentNotImplementedProps.schoolProfile
+        'ng-invalid ng-dirty': submitted && !student.schoolProfile
       }">
     </p-dropdown>
-          <small class="p-error block" *ngIf="submitted && !studentNotImplementedProps.schoolProfile">
+          <small class="p-error block" *ngIf="submitted && !student.schoolProfile">
             Seksioni shkollës është fushë e kërkuar.
           </small>
   </div>
@@ -301,11 +300,11 @@ W      id="birthDate"
       pInputText
       id="Email"
       name="Email"
-      [(ngModel)]="studentNotImplementedProps.email"
+      [(ngModel)]="student.email"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !studentNotImplementedProps.email }" />
-    <small class="p-error block" *ngIf="submitted && !studentNotImplementedProps.email">
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !student.email }" />
+    <small class="p-error block" *ngIf="submitted && !student.email">
       Email është fushë e kërkuar.
     </small>
   </div>
@@ -317,11 +316,11 @@ W      id="birthDate"
       pInputText
       id="Cel"
       name="Cel"
-      [(ngModel)]="studentNotImplementedProps.mobilePhone"
+      [(ngModel)]="student.mobilePhone"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !studentNotImplementedProps.mobilePhone }" />
-    <small class="p-error block" *ngIf="submitted && !studentNotImplementedProps.mobilePhone">
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !student.mobilePhone }" />
+    <small class="p-error block" *ngIf="submitted && !student.mobilePhone">
       Cel është fushë e kërkuar.
     </small>
   </div>
@@ -334,7 +333,7 @@ W      id="birthDate"
           id="IsConfirmedBySupervisorTrue"
           name="IsConfirmedBySupervisor"
           [value]="true"
-          [(ngModel)]="studentNotImplementedProps.isConfirmedBySupervisor"></p-radioButton>
+          [(ngModel)]="student.isConfirmedBySupervisor"></p-radioButton>
         <label for="IsConfirmedBySupervisorTrue">Po</label>
       </div>
       <div class="field-radiobutton col-6">
@@ -342,7 +341,7 @@ W      id="birthDate"
           id="IsConfirmedBySupervisorFalse"
           name="IsConfirmedBySupervisor"
           [value]="false"
-          [(ngModel)]="studentNotImplementedProps.isConfirmedBySupervisor"></p-radioButton>
+          [(ngModel)]="student.isConfirmedBySupervisor"></p-radioButton>
         <label for="IsConfirmedBySupervisorFalse">Jo</label>
       </div>
     </div>
@@ -365,11 +364,10 @@ W      id="birthDate"
         icon="pi pi-check"
         label="Ruaj"
         class="p-button-text w-auto"
-        (click)="onSubmit()"></button>
+        ></button>
     </div>
   </div>
       </form>
     </div>
   </div>
 </div>
-</form>

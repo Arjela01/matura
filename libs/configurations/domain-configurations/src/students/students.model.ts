@@ -17,12 +17,12 @@ export interface Student {
   oldId: string;
   schoolName: string;
   schoolFinished: string;
-  schoolProfile?: string;
+  schoolProfile: string;
   session?: string;
   studentId: string;
   studyClass?: string;
-  graduationYear?: number;
-  highSchoolName?: string;
+  graduationYear?: string;
+  highSchoolName: string;
   isFall: boolean;
   registrationYear?: string;
 

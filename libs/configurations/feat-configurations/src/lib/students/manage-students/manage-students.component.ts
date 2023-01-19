@@ -19,9 +19,9 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import {StudentsFormComponent} from "../students-form/students-form.component";
 import {StudentsGridComponent} from "../students-grid/students-grid.component";
-import {Student} from "@msh/configurations/domain-configurations";
+import {ProfileGroup, Student} from "@msh/configurations/domain-configurations";
 import {StudentsApiService} from "@msh/configurations/data-access-configurations";
-import {StudentsViewGridComponent} from "../students-view-grid/students-view-grid.component";
+import {StudentViewComponent} from "../students-view/student-view.component";
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-students',
@@ -34,7 +34,7 @@ import {StudentsViewGridComponent} from "../students-view-grid/students-view-gri
     StudentsFormComponent,
     StudentsGridComponent,
     ToolbarModule,
-    StudentsViewGridComponent,
+    StudentViewComponent,
   ],
   templateUrl: './manage-students.component.html',
   styleUrls: ['./manage-students.component.scss'],
@@ -118,6 +118,7 @@ export class ManageStudentsComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Student u fshi me sukses!');
+          this.getStudent(this.filters as LazyLoadEvent);
         }
         if (!response.isSuccessful) {
           this.toastService.showError(
@@ -139,5 +140,7 @@ export class ManageStudentsComponent implements OnInit {
         this.totalRecords = response.total;
       });
   }
+
+
 
 }

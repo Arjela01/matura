@@ -108,7 +108,7 @@
         <p-tableCheckbox [value]="student"></p-tableCheckbox>
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ student.highSchool }}
+        {{ student.highSchoolName }}
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ student.studentId }}
@@ -134,7 +134,7 @@
 
       <td>
         <div class="flex">
-          <a href="/configurations/students-view/{{student.id}}">
+          <a href="/configurations/student-view/{{student.id}}">
           <button
             pButton
             pRipple

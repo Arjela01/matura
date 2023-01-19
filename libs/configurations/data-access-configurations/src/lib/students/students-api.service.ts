@@ -11,9 +11,9 @@ import {Student, StudentTableView} from "@msh/configurations/domain-configuratio
 export class StudentsApiService {
   constructor(private apiService: APIService) {}
 
-  getById(studentId: number): Observable<ApiResult<Student>> {
+  getById(id: any): Observable<ApiResult<Student>> {
     return this.apiService.get<ApiResult<Student>>(
-      `/Student/${studentId}`);
+      `/Student/${id}`);
   }
 
   loadStudents(event: LazyLoadEvent): Observable<StudentTableView> {

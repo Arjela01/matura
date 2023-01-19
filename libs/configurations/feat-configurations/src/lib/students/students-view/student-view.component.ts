@@ -26,8 +26,9 @@ import {
   StudentsApiService
 } from "@msh/configurations/data-access-configurations";
 import { Student } from '@msh/configurations/domain-configurations';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MessageService} from "primeng/api";
+import {untilDestroyed} from "@ngneat/until-destroy";
 
 @Component({
   selector: 'msh-students-form',
@@ -45,22 +46,22 @@ import {MessageService} from "primeng/api";
     CalendarModule,
     InputMaskModule,
   ],
-  templateUrl: './students-form.component.html',
-  styleUrls: ['./students-form.component.scss'],
+  templateUrl: './student-view.component.html',
+  styleUrls: ['./student-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StudentsFormComponent implements OnChanges {
+export class StudentViewComponent implements OnChanges {
 
   @Output() formSave = new EventEmitter<Student>();
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
 
-  highSchool: DropdownModel<number>[] = [];
+  highSchools: DropdownModel<number>[] = [];
   genders: DropdownModel<number>[] = [];
   studyClass: DropdownModel<number>[] = [];
   session: DropdownModel<number>[] = [];
-  schoolProfile: DropdownModel<number>[] = [];
+  schoolProfiles: DropdownModel<number>[] = [];
   academicYears: DropdownModel<number>[] = [];
   saving= false;
   @Input() set studentDetails(details: Student | null) {
@@ -105,6 +106,7 @@ export class StudentsFormComponent implements OnChanges {
   };
   // eslint-disable-next-line @typescript-eslint/no-empty-function
 
+  id : any;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -115,18 +117,47 @@ export class StudentsFormComponent implements OnChanges {
     private readonly genderService: GendersApiService, private router: Router,
     private messageService: MessageService,
 
+    private route: ActivatedRoute
 
-  ) {}
+  ) {
+    this.id = this.route.snapshot.paramMap.get('id')
+  }
+
   ngOnInit(): void {
-    this.highSchoolService.loadDropDownList().subscribe(response => {
-      this.highSchool = response.data;
-    });
-    this.genderService.loadDropdownList().subscribe(response => {
-      this.genders = response.data;
-    });
-    this.profileService.loadDropdownList().subscribe(response => {
-      this.schoolProfile = response.data;
-    });
+    this.studentService.getById(this.id).subscribe(result => {
+      this.student = result.data;
+    })
+
+    this.getHighSchools();
+    this.getGenders();
+    this.getProfiles();
+  }
+
+  getHighSchools() {
+    this.highSchoolService
+      .loadDropDownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.highSchools = response.data;
+      });
+  }
+
+  getGenders() {
+    this.genderService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.genders = response.data;
+      });
+  }
+
+  getProfiles() {
+    this.profileService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.schoolProfiles = response.data;
+      });
   }
 
   ngOnChanges(): void {
@@ -135,26 +166,9 @@ export class StudentsFormComponent implements OnChanges {
     this.onStudentChange({ value: this.student.highSchoolId });
   }
 
-
   onStudentChange($event: any) {
     console.log($event);
     this.showStudent = $event.value;
   }
 
-  onSubmit(form : NgForm): void {
-    // eslint-disable-next-line max-len
-    const data = {...this.student,graduationYear: this.student?.graduationYear?.substring(0, 4).trim()};
-
-    this.studentService.save(data)
-      .subscribe(
-        {
-          next: value => {
-            this.saving = false;
-            console.log(form.value);
-
-            this.router.navigate(['/configurations/students']).then();
-          },
-        }
-      );
-  }
 }
