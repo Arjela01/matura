@@ -19,6 +19,7 @@
 
       <msh-user-grid
         [users]="(users$ | async) || []"
+        [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
         (lazyLoadData)="getUsers($event)">
       </msh-user-grid>
@@ -45,6 +46,7 @@
       [universityDepartments]="universityDepartments"
       [cities]="cities"
       [administrationOffices]="administrationOffices"
+      [roles]="roles"
       (formSave)="onFormSave($event)"></msh-user-form>
   </ng-template>
 </p-dialog>

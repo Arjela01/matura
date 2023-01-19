@@ -17,16 +17,6 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="code">
-        Kodi
-        <div>
-          <p-sortIcon field="code"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="code"
-            display="menu"></p-columnFilter>
-        </div>
-      </th>
       <th pSortableColumn="name">
         Emri
         <div>
@@ -52,13 +42,10 @@
   </ng-template>
   <ng-template pTemplate="body" let-roles>
     <tr>
-      <td style="width: 33%; min-width: 10rem">
-        {{ roles.code }}
-      </td>
-      <td style="width: 33%; min-width: 10rem">
+      <td style="width: 50%; min-width: 10rem">
         {{ roles.name }}
       </td>
-      <td style="width: 33%; min-width: 10rem">
+      <td style="width: 50%; min-width: 10rem">
         {{ roles.description }}
       </td>
       <td>

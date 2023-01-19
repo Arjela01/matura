@@ -1,20 +1,18 @@
 <p-table
   #dt
-  [lazy]="true"
-  [value]="users"
+  dataKey="id"
   responsiveLayout="scroll"
+  [value]="users"
+  [totalRecords]="totalRecords"
   [rows]="10"
   [paginator]="true"
   [rowsPerPageOptions]="[10, 20, 30]"
   [showCurrentPageReport]="true"
   currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
   [rowHover]="true"
-  dataKey="Id"
-  [(selection)]="selectedUsers"
   selectionMode="multiple"
   (onLazyLoad)="loadRows($event)"
-  (onRowSelect)="onRowSelect($event)"
-  (onRowUnselect)="onRowUnselect($event)">
+  [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="name">
