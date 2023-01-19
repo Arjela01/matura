@@ -5,6 +5,7 @@ import {
   CityApiService,
   HighSchoolApiService,
   RegionApiService,
+  RolesApiService,
   StudyProgramApiService,
   UniversityApiService,
   UniversityDepartmentApiService,
@@ -50,7 +51,6 @@ export class ManageUsersComponent implements OnInit {
   private users$$ = new BehaviorSubject<User[]>([]);
   users$ = this.users$$.asObservable();
   filters: LazyLoadEvent | null = null;
-  dummyUsers: User[] = [];
 
   totalRecords = 0;
   selectedUser: User | null = null;
@@ -62,7 +62,7 @@ export class ManageUsersComponent implements OnInit {
   universityDepartments: DropdownModel<number>[] = [];
   administrationOffices: DropdownModel<number>[] = [];
   regions: DropdownModel<number>[] = [];
-  roles: [] = [];
+  roles: DropdownModel<number>[] = [];
 
   userDialog = false;
 
@@ -76,7 +76,8 @@ export class ManageUsersComponent implements OnInit {
     private readonly studyProgramService: StudyProgramApiService,
     private readonly universityService: UniversityApiService,
     private readonly universityDepartmentService: UniversityDepartmentApiService,
-    private readonly highSchoolService: HighSchoolApiService
+    private readonly highSchoolService: HighSchoolApiService,
+    private readonly roleService: RolesApiService
   ) {}
 
   ngOnInit(): void {
@@ -87,6 +88,7 @@ export class ManageUsersComponent implements OnInit {
     this.getUniversityDepartamentDropdown();
     this.getStudyProgramsDropdown();
     this.getUniversitiesDropdown();
+    this.getRolesDropdown();
   }
 
   onNewClick() {
@@ -155,7 +157,7 @@ export class ManageUsersComponent implements OnInit {
       .subscribe(response => {
         console.log(response.data);
         this.users$$.next(response.data);
-        this.totalRecords = response.data.length;
+        this.totalRecords = response.total;
       });
   }
 
@@ -259,6 +261,12 @@ export class ManageUsersComponent implements OnInit {
   getUniversityDepartamentDropdown() {
     this.universityDepartmentService.loadDropdownList().subscribe(response => {
       this.universityDepartments = response.data;
+    });
+  }
+
+  getRolesDropdown() {
+    this.roleService.loadDropdownList().subscribe(response => {
+      this.roles = response.data;
     });
   }
 }

@@ -49,7 +49,6 @@ export class RolesFormComponent {
 
   role: Role = {
     id: '',
-    code: '',
     name: '',
     description:''
   };

@@ -57,10 +57,12 @@
     <label for="role">Roli *</label>
     <p-dropdown
       id="role"
-      optionValue="value"
+      optionValue="key"
       optionLabel="value"
       [options]="roles"
       [required]="true"
+      [virtualScroll]="true"
+      [filter]="true"
       name="roles"
       (onChange)="onRoleChange($event)"
       [autoDisplayFirst]="false"
