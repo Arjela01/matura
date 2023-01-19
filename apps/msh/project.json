@@ -36,6 +36,10 @@
             {
               "replace": "libs/shared/environments/src/lib/environment.ts",
               "with": "libs/shared/environments/src/lib/environment.prod.ts"
+            },
+            {
+              "replace": "apps/msh/src/app/build-specifics/index.ts",
+              "with": "apps/msh/src/app/build-specifics/index.prod.ts"
             }
           ],
           "budgets": [

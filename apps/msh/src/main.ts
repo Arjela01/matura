@@ -1,5 +1,10 @@
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { enableProdMode, importProvidersFrom } from '@angular/core';
+import {
+  HTTP_INTERCEPTORS,
+  provideHttpClient,
+  withInterceptorsFromDi,
+  withXsrfConfiguration,
+} from '@angular/common/http';
+import { enableProdMode } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
@@ -11,7 +16,6 @@ import {
 } from '@angular/router';
 
 import { provideStore } from '@ngrx/store';
-import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 import {
   AuthEffects,
@@ -28,6 +32,7 @@ import { provideEffects } from '@ngrx/effects';
 import { MessageService } from 'primeng/api';
 import { AppComponent } from './app/app.component';
 import { APP_ROUTES } from './app/app.routes';
+import { getStoreDevToolsProvider } from './app/build-specifics';
 
 if (environment.production) {
   enableProdMode();
@@ -35,7 +40,13 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(HttpClientModule),
+    provideHttpClient(
+      withInterceptorsFromDi(),
+      withXsrfConfiguration({
+        cookieName: 'XSRF-TOKEN',
+        headerName: 'X-XSRF-TOKEN',
+      })
+    ),
     provideAnimations(),
     provideRouter(
       APP_ROUTES,
@@ -50,11 +61,7 @@ bootstrapApplication(AppComponent, {
     provideStore({
       [AUTH_FEATURE_KEY]: authFeature.reducer,
     }),
-    !environment.production
-      ? provideStoreDevtools({
-          maxAge: 25,
-        })
-      : [],
+    getStoreDevToolsProvider(),
     getLocalStorageProvider(),
     loadAuthProvider(),
     { provide: API_URL, useValue: environment.api_url },
