@@ -54,7 +54,6 @@ export class AcademicYearFormComponent {
   @ViewChild('form', {static: true}) form!: NgForm;
 
   submitted = false;
-  academicYearValue = 0;
 
   academicYear: AcademicYear = {
     id: '',
@@ -75,13 +74,6 @@ export class AcademicYearFormComponent {
     this.submitted = true;
     if (this.form.valid) {
       this.formSave.emit(this.academicYear);
-    }
-  }
-
-  academicYearValidation() {
-    this.academicYearValue = 0;
-    if (this.academicYearValue <= 2000) {
-      return ;
     }
   }
 
