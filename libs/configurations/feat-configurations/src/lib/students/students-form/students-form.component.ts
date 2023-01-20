@@ -81,7 +81,7 @@ export class StudentsFormComponent implements OnChanges {
     birthDate: new Date(),
     birthPlace: "",
     email: "",
-    genderId: 1,
+    genderId: 0,
     idCard: "",
     isA2A3: true,
     isEAlbaniaApplication: true,
@@ -130,7 +130,7 @@ export class StudentsFormComponent implements OnChanges {
   }
 
   ngOnChanges(): void {
-    console.log(this.student.highSchoolId);
+    console.log();
     // eslint-disable-next-line max-len
     this.onStudentChange({ value: this.student.highSchoolId });
   }
@@ -141,7 +141,7 @@ export class StudentsFormComponent implements OnChanges {
     this.showStudent = $event.value;
   }
 
-  onSubmit(form : NgForm): void {
+  onSubmit(): void {
     // eslint-disable-next-line max-len
     const data = {...this.student,graduationYear: this.student?.graduationYear?.substring(0, 4).trim()};
 
@@ -150,7 +150,7 @@ export class StudentsFormComponent implements OnChanges {
         {
           next: value => {
             this.saving = false;
-            console.log(form.value);
+            console.log(value);
 
             this.router.navigate(['/configurations/students']).then();
           },
