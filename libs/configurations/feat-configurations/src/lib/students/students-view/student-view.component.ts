@@ -107,6 +107,7 @@ export class StudentViewComponent implements OnChanges {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
 
   id : any;
+  genderId:any;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -144,10 +145,10 @@ export class StudentViewComponent implements OnChanges {
 
   getGenders() {
     this.genderService
-      .loadDropdownList()
+      .loadGenders(this.genderId)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.genders = response.data;
+        this.genderId = response.data;
       });
   }
 
@@ -159,6 +160,7 @@ export class StudentViewComponent implements OnChanges {
         this.schoolProfiles = response.data;
       });
   }
+
 
   ngOnChanges(): void {
     console.log(this.student.highSchoolId);

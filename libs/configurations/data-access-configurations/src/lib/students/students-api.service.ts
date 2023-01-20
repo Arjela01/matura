@@ -11,7 +11,7 @@ import {Student, StudentTableView} from "@msh/configurations/domain-configuratio
 export class StudentsApiService {
   constructor(private apiService: APIService) {}
 
-  getById(id: any): Observable<ApiResult<Student>> {
+    getById(id: any): Observable<ApiResult<Student>> {
     return this.apiService.get<ApiResult<Student>>(
       `/Student/${id}`);
   }
