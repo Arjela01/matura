@@ -8,7 +8,7 @@
   [paginator]="true"
   [rowsPerPageOptions]="[10, 20, 30]"
   [showCurrentPageReport]="true"
-  currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
+  currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
   [rowHover]="true"
   [(selection)]="selectedCities"
   selectionMode="multiple"
@@ -44,10 +44,6 @@
           field="name"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="isActive">
-        Është Aktiv?
-        <p-sortIcon field="isActive"></p-sortIcon>
-      </th>
       <th pSortableColumn="isACity">
         Është Qytet?
         <p-sortIcon field="isCity"></p-sortIcon>
@@ -68,18 +64,16 @@
       <td>
         <p-tableCheckbox [value]="city"></p-tableCheckbox>
       </td>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 28%; min-width: 10rem">
         {{ city.name }}
       </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ city.isActive ? 'Po' : 'Jo' }}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 28%; min-width: 10rem">
         {{ city.isCity ? 'Po' : 'Jo' }}
       </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ city.region }}
+      <td style="width: 28%; min-width: 10rem">
+        {{ city.regionName }}
       </td>
+      <td></td>
       <td>
         <div class="flex">
           <button

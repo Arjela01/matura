@@ -34,6 +34,7 @@ import {RippleModule} from "primeng/ripple";
 })
 export class UserGridComponent {
   @Input() users: User[] = [];
+  @Input() totalRecords = 0;
 
   selectedUsers: User[] = [];
 
@@ -52,33 +53,6 @@ export class UserGridComponent {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,
       data: user,
-    } as GridEvent<User>);
-  }
-
-  onSelectAllClick() {
-    if (this.selectedUsers.length === 0) {
-      this.gridEvent.emit({
-        action: GRID_ACTIONS.UNSELECT_ALL,
-      } as GridEvent<User>);
-    } else {
-      this.gridEvent.emit({
-        action: GRID_ACTIONS.SELECT_MANY,
-        data: this.selectedUsers,
-      } as GridEvent<User[]>);
-    }
-  }
-
-  onRowSelect({ data }: { data: User }) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.SELECT_ROW,
-      data: data,
-    } as GridEvent<User>);
-  }
-
-  onRowUnselect({ data }: { data: User }) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.UNSELECT_ROW,
-      data: data,
     } as GridEvent<User>);
   }
 

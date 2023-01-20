@@ -9,15 +9,16 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import {RippleModule} from "primeng/ripple";
 @Component({
   selector: 'msh-roles-grid',
   standalone: true,
-  imports: [CommonModule,
-    TableModule,
-    ButtonModule,
-    InputTextModule,
-    TooltipModule,
-    CheckboxModule],
+    imports: [CommonModule,
+        TableModule,
+        ButtonModule,
+        InputTextModule,
+        TooltipModule,
+        CheckboxModule, RippleModule],
   templateUrl: './roles-grid.component.html',
   styleUrls: ['./roles-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

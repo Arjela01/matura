@@ -1,7 +1,7 @@
 export const roleList = [
   {
-    roleCode: 'AKP',
-    showUniversities: false,
+    roleName: 'Admin',
+    showUniversity: false,
     showUniversityDepartment: false,
     showAdministrationOffice: false,
     showStudyProgram: false,
@@ -10,8 +10,8 @@ export const roleList = [
   },
 
   {
-    roleCode: 'DAR/ZA',
-    showUniversities: false,
+    roleName: 'AdministrationOffice',
+    showUniversity: false,
     showUniversityDepartment: false,
     showAdministrationOffice: true,
     showStudyProgram: false,
@@ -19,8 +19,8 @@ export const roleList = [
     showHighSchools: false,
   },
   {
-    roleCode: 'Administrim Testi',
-    showUniversities: false,
+    roleName: 'ExamManager',
+    showUniversity: false,
     showUniversityDepartment: false,
     showAdministrationOffice: false,
     showStudyProgram: false,
@@ -28,8 +28,8 @@ export const roleList = [
     showHighSchools: false,
   },
   {
-    roleCode: 'Auditor',
-    showUniversities: false,
+    roleName: 'Auditor',
+    showUniversity: false,
     showUniversityDepartment: false,
     showAdministrationOffice: false,
     showStudyProgram: false,
@@ -37,8 +37,8 @@ export const roleList = [
     showHighSchools: false,
   },
   {
-    roleCode: 'DV',
-    showUniversities: false,
+    roleName: 'DV',
+    showUniversity: false,
     showUniversityDepartment: false,
     showAdministrationOffice: false,
     showStudyProgram: false,
@@ -46,8 +46,8 @@ export const roleList = [
     showHighSchools: false,
   },
   {
-    roleCode: 'Dekan',
-    showUniversities: true,
+    roleName: 'University',
+    showUniversity: true,
     showUniversityDepartment: true,
     showAdministrationOffice: false,
     showStudyProgram: true,
@@ -55,8 +55,8 @@ export const roleList = [
     showHighSchools: false,
   },
   {
-    roleCode: 'Fakultet',
-    showUniversities: true,
+    roleName: 'UniversityDepartment',
+    showUniversity: true,
     showUniversityDepartment: true,
     showAdministrationOffice: false,
     showStudyProgram: true,
@@ -64,8 +64,8 @@ export const roleList = [
     showHighSchools: false,
   },
   {
-    roleCode: 'Kontrolluesi',
-    showUniversities: false,
+    roleName: 'Controller',
+    showUniversity: false,
     showUniversityDepartment: false,
     showAdministrationOffice: false,
     showStudyProgram: false,
@@ -73,17 +73,8 @@ export const roleList = [
     showHighSchools: false,
   },
   {
-    roleCode: 'MASH',
-    showUniversities: false,
-    showUniversityDepartment: false,
-    showAdministrationOffice: false,
-    showOverseerCode: false,
-    showStudyProgram: false,
-    showHighSchools: false,
-  },
-  {
-    roleCode: 'Maturant',
-    showUniversities: false,
+    roleName: 'Student',
+    showUniversity: false,
     showUniversityDepartment: false,
     showAdministrationOffice: false,
     showStudyProgram: false,
@@ -91,8 +82,8 @@ export const roleList = [
     showOverseerCode: false,
   },
   {
-    roleCode: 'Mbikqyres Formularesh',
-    showUniversities: false,
+    roleName: 'Overseer',
+    showUniversity: false,
     showUniversityDepartment: false,
     showAdministrationOffice: false,
     showStudyProgram: false,
@@ -100,8 +91,8 @@ export const roleList = [
     showOverseerCode: true,
   },
   {
-    roleCode: 'Operator',
-    showUniversities: false,
+    roleName: 'Operator',
+    showUniversity: false,
     showUniversityDepartment: false,
     showAdministrationOffice: false,
     showStudyProgram: false,
@@ -109,8 +100,8 @@ export const roleList = [
     showOverseerCode: false,
   },
   {
-    roleCode: 'Operator A2',
-    showUniversities: false,
+    roleName: 'A2Operator',
+    showUniversity: false,
     showUniversityDepartment: false,
     showAdministrationOffice: false,
     showStudyProgram: false,
@@ -118,8 +109,8 @@ export const roleList = [
     showOverseerCode: false,
   },
   {
-    roleCode: 'Operator korrigjim pasaktesie',
-    showUniversities: false,
+    roleName: 'CorrectionsOperator',
+    showUniversity: false,
     showUniversityDepartment: false,
     showAdministrationOffice: false,
     showStudyProgram: false,
@@ -127,75 +118,12 @@ export const roleList = [
     showOverseerCode: false,
   },
   {
-    roleCode: 'Shkolla',
-    showUniversities: false,
+    roleName: 'HighSchool',
+    showUniversity: false,
     showUniversityDepartment: false,
     showAdministrationOffice: false,
     showStudyProgram: false,
     showHighSchools: true,
     showOverseerCode: false,
-  },
-];
-
-export const rolesDropDown = [
-  {
-    key: 1,
-    value: 'AKP',
-  },
-  {
-    key: 2,
-    value: 'DAR/ZA',
-  },
-  {
-    key: 3,
-    value: 'Shkolla',
-  },
-  {
-    key: 5,
-    value: 'Fakultet',
-  },
-  {
-    key: 6,
-    value: 'Maturant',
-  },
-  {
-    key: 7,
-    value: 'MASH',
-  },
-  {
-    key: 8,
-    value: 'Dekan',
-  },
-  {
-    key: 9,
-    value: 'Operator A2',
-  },
-  {
-    key: 10,
-    value: 'Mbikqyres Formularesh',
-  },
-  {
-    key: 11,
-    value: 'Kontrolluesi',
-  },
-  {
-    key: 12,
-    value: 'Operator',
-  },
-  {
-    key: 13,
-    value: 'Auditor',
-  },
-  {
-    key: 14,
-    value: 'Administrim Testi',
-  },
-  {
-    key: 15,
-    value: 'DV',
-  },
-  {
-    key: 16,
-    value: 'Operator korrigjim pasaktesie',
   },
 ];

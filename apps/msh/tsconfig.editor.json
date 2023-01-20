@@ -1,4 +1,5 @@
 {
+  "composition": true,
   "extends": "./tsconfig.json",
   "include": ["src/**/*.ts"],
   "compilerOptions": {
