@@ -21,7 +21,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { roleList, rolesDropDown } from './role-list';
+import { roleList } from './role-list';
 
 @Component({
   selector: 'msh-user-form',
@@ -49,7 +49,7 @@ export class UserFormComponent implements OnChanges, OnInit {
   @Input() highSchools: DropdownModel<number>[] = [];
   @Input() studyPrograms: DropdownModel<number>[] = [];
   @Input() universities: DropdownModel<number>[] = [];
-  roles: DropdownModel<number>[] = [];
+  @Input() roles: DropdownModel<number>[] = [];
 
   showUniversity = false;
   showUniversityDepartment = false;
@@ -70,8 +70,6 @@ export class UserFormComponent implements OnChanges, OnInit {
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
-
-  citiesFiltered: DropdownModel<number>[] = [];
 
   submitted = false;
 
@@ -97,7 +95,6 @@ export class UserFormComponent implements OnChanges, OnInit {
   constructor(private cd: ChangeDetectorRef) {}
   ngOnInit(): void {
     this.onRoleRemoved();
-    this.roles = rolesDropDown;
   }
 
   ngOnChanges(): void {
@@ -123,31 +120,24 @@ export class UserFormComponent implements OnChanges, OnInit {
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onRoleChange($event: any) {
-    this.showUniversity = roleList.filter(
-      x => x.roleCode === $event.value
-    )[0]?.showUniversities;
+  onRoleChange($event: any): void {
+    const knownRole = roleList.find(x => x.roleName === $event.value);
 
-    this.showUniversityDepartment = roleList.filter(
-      x => x.roleCode === $event.value
-    )[0]?.showUniversityDepartment;
-
-    this.showAdministrationOffice = roleList.filter(
-      x => x.roleCode === $event.value
-    )[0]?.showAdministrationOffice;
-
-    this.showStudyProgram = roleList.filter(
-      x => x.roleCode === $event.value
-    )[0]?.showStudyProgram;
-
-    this.showHighSchools = roleList.filter(
-      x => x.roleCode === $event.value
-    )[0]?.showHighSchools;
-
-    this.showOverseerCode = roleList.filter(
-      x => x.roleCode === $event.value
-    )[0]?.showOverseerCode;
+    if (knownRole == null) {
+      this.showUniversity = false;
+      this.showUniversityDepartment = false;
+      this.showAdministrationOffice = false;
+      this.showStudyProgram = false;
+      this.showHighSchools = false;
+      this.showOverseerCode = false;
+    } else {
+      this.showUniversity = knownRole.showUniversity;
+      this.showUniversityDepartment = knownRole.showUniversityDepartment;
+      this.showAdministrationOffice = knownRole.showAdministrationOffice;
+      this.showStudyProgram = knownRole.showStudyProgram;
+      this.showHighSchools = knownRole.showHighSchools;
+      this.showOverseerCode = knownRole.showOverseerCode;
+    }
 
     if (!this.user.roleId) {
       this.onRoleRemoved();

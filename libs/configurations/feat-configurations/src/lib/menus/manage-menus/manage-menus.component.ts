@@ -21,20 +21,22 @@ import { MenuApiService } from '@msh/configurations/data-access-configurations';
 import { MenuGridComponent } from '../menu-grid/menu-grid.component';
 import { MenuFormComponent } from '../menu-form/menu-form.component';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import {RippleModule} from "primeng/ripple";
 
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-menus',
   standalone: true,
-  imports: [
-    ButtonModule,
-    CommonModule,
-    DialogModule,
-    ConfirmDialogModule,
-    MenuGridComponent,
-    MenuFormComponent,
-    ToolbarModule,
-  ],
+    imports: [
+        ButtonModule,
+        CommonModule,
+        DialogModule,
+        ConfirmDialogModule,
+        MenuGridComponent,
+        MenuFormComponent,
+        ToolbarModule,
+        RippleModule,
+    ],
   templateUrl: './manage-menus.component.html',
   styleUrls: ['./manage-menus.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
