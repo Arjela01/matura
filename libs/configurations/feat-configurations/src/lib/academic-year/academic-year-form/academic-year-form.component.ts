@@ -18,8 +18,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import {GlobalToastService} from "@msh/shared/util-shared";
-import { ValidatorFn } from '@angular/forms';
+
 
 @Component({
   selector: 'msh-academic-year-form',
@@ -40,7 +39,6 @@ import { ValidatorFn } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AcademicYearFormComponent {
-  private readonly toastService!: GlobalToastService;
 
   @Input() set academicYearDetails(details: AcademicYear | null) {
     if (details) {
