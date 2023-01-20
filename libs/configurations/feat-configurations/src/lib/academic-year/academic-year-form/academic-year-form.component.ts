@@ -9,7 +9,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import {FormsModule, NgForm, Validators} from '@angular/forms';
+import {FormsModule, NgForm } from '@angular/forms';
 import { AcademicYear } from '@msh/configurations/domain-configurations';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -18,7 +18,6 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-
 
 @Component({
   selector: 'msh-academic-year-form',
