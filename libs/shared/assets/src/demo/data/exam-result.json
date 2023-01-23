@@ -1,142 +1,34 @@
-[
-  {
-    "id": "22416577BE0F46D3BB8284A8ADE00785",
-    "student_id": "210100100001",
-    "name": "Anisa Emiljano Baçi",
-    "barcode": "DDDDDDDD00455ZZ",
-    "elaboration_points": "29",
-    "alternative_points": "4",
-    "exam_type_id": "3",
-    "exam_type": "Me Zgjedhje",
-    "subject": "HISTORI ARTI",
-    "reason": null,
-    "has_document": "0",
-    "document_name": null
-  },
-  {
-    "id": "8E01AE1438F743829F0BCD68C05476F7",
-    "student_id": "210100100001",
-    "name": "Anisa Emiljano Baçi",
-    "barcode": "BBBBBBBB00425D1",
-    "elaboration_points": "21",
-    "alternative_points": "12",
-    "exam_type_id": "1",
-    "exam_type": "D1",
-    "subject": "GJUHË SHQIPE DHE LETËRSI PËR GJIMNAZIN",
-    "reason": null,
-    "has_document": "0",
-    "document_name": null
-  },
-  {
-    "id": "49474662AD7B434E97704590571585AF",
-    "student_id": "210100100001",
-    "name": "Anisa Emiljano Baçi",
-    "barcode": "AAAAAAAA00742D3",
-    "elaboration_points": "34",
-    "alternative_points": "17",
-    "exam_type_id": "4",
-    "exam_type": "D3",
-    "subject": "ANGLISHT D3 (B1)",
-    "reason": null,
-    "has_document": "0",
-    "document_name": null
-  },
-  {
-    "id": "78767326C11A4B17BCD832C6E193C42F",
-    "student_id": "210100100001",
-    "name": "Anisa Emiljano Baçi",
-    "barcode": "CCCCCCCC00535D2",
-    "elaboration_points": "10",
-    "alternative_points": "12",
-    "exam_type_id": "2",
-    "exam_type": "D2",
-    "subject": "MATEMATIKË PËR SHKOLLAT E ORIENTUARA",
-    "reason": null,
-    "has_document": "0",
-    "document_name": null
-  },
-  {
-    "id": "3D073D8DC2AE4C0698C2EB1BD3F27ACF",
-    "student_id": "210100100002",
-    "name": "Valentino Koço Tito",
-    "barcode": "DDDDDDDD00511ZZ",
-    "elaboration_points": "13",
-    "alternative_points": "7",
-    "exam_type_id": "3",
-    "exam_type": "Me Zgjedhje",
-    "subject": "HISTORI ARTI",
-    "reason": null,
-    "has_document": "0",
-    "document_name": null
-  },
-  {
-    "id": "6670A966AECC41C39E4EE45D08985562",
-    "student_id": "210100100002",
-    "name": "Valentino Koço Tito",
-    "barcode": "BBBBBBBB00525D1",
-    "elaboration_points": "9",
-    "alternative_points": "7",
-    "exam_type_id": "1",
-    "exam_type": "D1",
-    "subject": "GJUHË SHQIPE DHE LETËRSI PËR GJIMNAZIN",
-    "reason": null,
-    "has_document": "0",
-    "document_name": null
-  },
-  {
-    "id": "23471D336B204D3A9193A39405B8A77F",
-    "student_id": "210100100002",
-    "name": "Valentino Koço Tito",
-    "barcode": "AAAAAAAA00620D3",
-    "elaboration_points": "27",
-    "alternative_points": "13",
-    "exam_type_id": "4",
-    "exam_type": "D3",
-    "subject": "ANGLISHT D3 (B1)",
-    "reason": null,
-    "has_document": "0",
-    "document_name": null
-  },
-  {
-    "id": "1D046D8DFEB44CEB91F0311C6B8555FC",
-    "student_id": "210100100002",
-    "name": "Valentino Koço Tito",
-    "barcode": "CCCCCCCC00650D2",
-    "elaboration_points": "4",
-    "alternative_points": "5",
-    "exam_type_id": "2",
-    "exam_type": "D2",
-    "subject": "MATEMATIKË PËR SHKOLLAT E ORIENTUARA",
-    "reason": null,
-    "has_document": "0",
-    "document_name": null
-  },
-  {
-    "id": "9E4781FF72F8440D8777516DD20E083A",
-    "student_id": "210100100002",
-    "name": "Valentino Koço Tito",
-    "barcode": "EEEEEEEE32790D2",
-    "elaboration_points": "4",
-    "alternative_points": "10",
-    "exam_type_id": "22",
-    "exam_type": "Vjeshta D2",
-    "subject": "MATEMATIKË PËR SHKOLLAT E ORIENTUARA",
-    "reason": null,
-    "has_document": "0",
-    "document_name": null
-  },
-  {
-    "id": "DDEC0C812D984B5AB29B8D8A38283283",
-    "student_id": "210100100003",
-    "name": "Danjel Dilaver Çifliku",
-    "barcode": "DDDDDDDD00441ZZ",
-    "elaboration_points": "3",
-    "alternative_points": "5",
-    "exam_type_id": "3",
-    "exam_type": "Me Zgjedhje",
-    "subject": "HISTORI ARTI",
-    "reason": null,
-    "has_document": "0",
-    "document_name": null
-  }
-]
+
+  [
+    {
+      "key": 2,
+      "value": "a student",
+      "parentKey": 0
+    },
+    {
+      "key": 4,
+      "value": "b student",
+      "parentKey": 0
+    },
+    {
+      "key": 21,
+      "value": "c student",
+      "parentKey": 0
+    },
+    {
+      "key": 22,
+      "value": "d student",
+      "parentKey": 0
+    },
+    {
+      "key": 23,
+      "value": "e student",
+      "parentKey": 0
+    },
+    {
+      "key": 24,
+      "value": "f student",
+      "parentKey": 0
+    }
+  ]
+

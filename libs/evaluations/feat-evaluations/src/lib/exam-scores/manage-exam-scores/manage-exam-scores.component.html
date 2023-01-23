@@ -26,9 +26,10 @@
           <button
             pButton
             pRipple
-            label="Ngarko Exel"
+            label="Ngarko Excel"
             icon="pi pi-upload"
-            class="p-button-help"></button>
+            class="p-button-help"
+            (click)="onUploadExcel(examScore)"></button>
         </div>
       </p-toolbar>
 
@@ -45,7 +46,7 @@
 <p-dialog
   [(visible)]="displayModal"
   [style]="{ width: '500px' }"
-  header="Modifiko Pikët"
+  header="Rezultatet e Provimeve"
   [modal]="true"
   [draggable]="false"
   [resizable]="false"

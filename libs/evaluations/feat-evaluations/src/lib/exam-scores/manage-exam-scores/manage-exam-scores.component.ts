@@ -46,6 +46,7 @@ export class ManageExamScoresComponent {
 
   academicYears: DropdownModel<number>[] = []
   students: DropdownModel<number>[] = []
+  examScore: any;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -57,6 +58,7 @@ export class ManageExamScoresComponent {
 
   ngOnInit(): void {
     this.getAcademicYearsDropdown();
+    this.getStudentsDropdown();
   }
 
   onNewClick() {
@@ -197,5 +199,16 @@ export class ManageExamScoresComponent {
         this.academicYears = response.data;
       });
   }
-
+  getStudentsDropdown(){
+    this.examScoreService
+      .loadStudentsList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response =>
+        this.students = response
+      )
+    console.log(this.students)
+  }
+  onUploadExcel(examScore: any) {
+//
+  }
 }

@@ -7,9 +7,9 @@ import {RadioButtonModule} from "primeng/radiobutton";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {ButtonModule} from "primeng/button";
 import {ExamScore} from "@msh/evaluations/domain-evaluations";
-import {FileUploadModule} from "primeng/fileupload";
 import {DropdownModel} from "@msh/shared/data-access-shared";
 import {DropdownModule} from "primeng/dropdown";
+import {AutoCompleteModule} from "primeng/autocomplete";
 
 @Component({
   selector: 'msh-exam-score-form',
@@ -22,7 +22,8 @@ import {DropdownModule} from "primeng/dropdown";
     RadioButtonModule,
     InputTextareaModule,
     ButtonModule,
-    DropdownModule
+    DropdownModule,
+    AutoCompleteModule
   ],
   templateUrl: './exam-scores-form.component.html',
   styleUrls: ['./exam-scores-form.component.scss'],
@@ -32,7 +33,6 @@ export class ExamScoresFormComponent {
 
 
   @Input() set examScoreDetails(details: ExamScore | null) {
-    console.log(details)
     if (details) {
       this.examScore = Object.assign({}, details);
     }
@@ -54,13 +54,18 @@ export class ExamScoresFormComponent {
     isFall: false,
     writingScore: 0,
     multipleChoiceScore: 0,
-    modificationReason: '',
     documentName: ''
   };
 
+  search(event: any) {
+    // this.mylookupservice.getResults(event.query).then(data => {
+    //   this.students = data;
+    // });
+  }
   onCancelClick() {
     this.formClose.emit();
   }
+
 
   onSubmit() {
     this.submitted = true;

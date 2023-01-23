@@ -9,7 +9,7 @@ export interface ExamScore{
   isFall: boolean;
   writingScore: number;
   multipleChoiceScore: number;
-  modificationReason: string;
+  modificationReason?: string;
   documentName: string;
 }
 
