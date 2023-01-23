@@ -63,6 +63,7 @@ export class StudentsFormComponent implements OnChanges {
   schoolProfile: DropdownModel<number>[] = [];
   academicYears: DropdownModel<number>[] = [];
   saving= false;
+ graduationYear: any;
   @Input() set studentDetails(details: Student | null) {
     if (details) {
       this.student = Object.assign({}, details);
@@ -143,7 +144,7 @@ export class StudentsFormComponent implements OnChanges {
 
   onSubmit(): void {
     // eslint-disable-next-line max-len
-    const data = {...this.student,graduationYear: this.student?.graduationYear?.substring(0, 4).trim()};
+    const data = {...this.student, graduationYear: this.graduationYear,};
 
     this.studentService.save(data)
       .subscribe(
