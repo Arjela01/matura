@@ -6,8 +6,9 @@ export interface Student {
   email: string;
   firstName: string;
   genderId?: number;
+
   highSchoolId?: number;
-  idCard: string;
+  idCard?: string;
   isA2A3: boolean;
   isEAlbaniaApplication: boolean;
   lastName: string;
@@ -18,6 +19,8 @@ export interface Student {
   schoolName: string;
   schoolFinished: string;
   schoolProfile: string;
+  profileId?: number;
+  profileName: string;
   session?: string;
   studentId: string;
   studyClass?: string;

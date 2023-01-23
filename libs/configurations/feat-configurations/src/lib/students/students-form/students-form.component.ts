@@ -100,6 +100,8 @@ export class StudentsFormComponent implements OnChanges {
     session: "",
     studentId: "",
     studyClass: "",
+    profileId: 0,
+    profileName: "",
     firstName: '',
     isConfirmedBySupervisor: true,
     graduationYear: ""
