@@ -43,7 +43,15 @@ export class ExamDateFormComponent {
 
   @Input() set examDatesDetails(details: ExamDate | null) {
     if (details) {
+      console.log(details)
       this.examDate = Object.assign({}, details);
+
+      console.log(this.examDate)
+      if (this.examDate.id) {
+        this.dateVal = new Date(this.examDate.dateTime);
+        console.log(this.dateVal)
+        this.timeVal = new Date(this.examDate.dateTime).getHours() + ':' + new Date(this.examDate.dateTime).getMinutes();
+      }
     }
   }
 
@@ -53,20 +61,24 @@ export class ExamDateFormComponent {
   @ViewChild('form', {static: true}) form!: NgForm;
 
   submitted = false;
-
   examDate: ExamDate = {
     id: '',
-    dateTime: 0,
+    dateTime: '',
     examTypeId:0,
     examTypeName:'',
     examSiteId:0,
     examSiteName:'',
   };
 
+  dateVal!: Date;
+  timeVal!: string;
+
+
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor(private cd: ChangeDetectorRef) {
-  }
 
+
+  }
 
   onCancelClick() {
     this.formClose.emit();
@@ -74,9 +86,13 @@ export class ExamDateFormComponent {
 
   onSubmit() {
     this.submitted = true;
+
     if (this.form.valid) {
+      const timeString = this.timeVal + ':00';
+      const dateObj = new Date(this.dateVal + ' ' + timeString);
+      this.examDate.dateTime = dateObj;
       this.formSave.emit(this.examDate);
+
     }
-    console.log(this.examDate)
   }
-}
+  }

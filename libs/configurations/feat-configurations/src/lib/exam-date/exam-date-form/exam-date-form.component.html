@@ -29,7 +29,7 @@
       [options]="examSites"
       optionValue="key"
       optionLabel="value"
-      name="examTypeId"
+      name="examSiteId"
       [autoDisplayFirst]="false"
       [(ngModel)]="examDate.examSiteId"
       [showClear]="true"
@@ -46,36 +46,35 @@
 
 
   <div class="field">
-    <label for="dateTime">Data *</label>
+    <label for="date">Data *</label>
     <input
-      value="01-01-2001"
+      value=""
       type="date"
       pInputText
-      id="dateTime"
-      name="dateTime"
-      [(ngModel)]="examDate.dateTime"
+      id="date"
+      name="date"
+      [(ngModel)]="dateVal"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examDate.dateTime }" />
-    <small class="p-error block" *ngIf="submitted && !examDate.dateTime">
-     Data dhe Ora  është fushë e kërkuar.
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !dateVal }" />
+    <small class="p-error block" *ngIf="submitted && !dateVal">
+      Data është fushë e kërkuar.
     </small>
   </div>
 
   <div class="field">
-    <label for="dateTime">Ora *</label>
+    <label for="hour">Ora *</label>
     <input
-      placeholder="HH:mm"
       type="time"
       pInputText
-      id="dateTime"
-      name="dateTime"
-      [(ngModel)]="examDate.dateTime"
+      id="hour"
+      name="hour"
+      [(ngModel)]="timeVal"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examDate.dateTime }" />
-    <small class="p-error block" *ngIf="submitted && !examDate.dateTime">
-      Data dhe Ora  është fushë e kërkuar.
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !timeVal }" />
+    <small class="p-error block" *ngIf="submitted && !timeVal">
+      Ora  është fushë e kërkuar.
     </small>
   </div>
 

@@ -1,6 +1,6 @@
 export interface ExamDate{
   id: string;
-  dateTime: number;
+  dateTime: any;
   examSiteId: number;
   examSiteName:string;
   examTypeId: number;
