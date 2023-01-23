@@ -191,7 +191,6 @@ export class ManageUsersComponent implements OnInit {
           this.userDialog = false;
           this.getUsers(this.filters as LazyLoadEvent);
         }
-
         if (!response.isSuccessful) {
           this.toastService.showError(
             'Ndodhi nje problem gjate ndryshimit te perdoruesit!'

@@ -6,7 +6,6 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { A1Z } from '@msh/configurations/domain-configurations';
 import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -17,7 +16,7 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
-  selector: 'msh-a1z-grid',
+  selector: 'msh-a1z-student-search',
   standalone: true,
   imports: [
     CommonModule,
@@ -28,61 +27,42 @@ import { TooltipModule } from 'primeng/tooltip';
     CheckboxModule,
     RippleModule,
   ],
-  templateUrl: './a1z-grid.component.html',
-  styleUrls: ['./a1z-grid.component.scss'],
+  templateUrl: './a1z-student-search.component.html',
+  styleUrls: ['./a1z-student-search.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class A1zGridComponent {
-  @Input() a1z: A1Z[] = [];
+export class A1zStudentSearchComponent {
+  @Input() students: any[] = [];
+  @Input() totalRecords = 0;
+  @Input() loading = false;
 
-  selectedA1Z: A1Z[] = [];
-
-  @Output() gridEvent = new EventEmitter<GridEvent<A1Z | A1Z[]>>();
+  @Output() gridEvent = new EventEmitter<GridEvent<any | any[]>>();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
-  onEditClick(A1Z: A1Z) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.EDIT,
-      data: A1Z,
-    } as GridEvent<A1Z>);
-  }
-
-  onDeleteClick(A1Z: A1Z) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.DELETE,
-      data: A1Z,
-    } as GridEvent<A1Z>);
-  }
-
-  onSelectAllClick() {
-    if (this.selectedA1Z.length === 0) {
-      this.gridEvent.emit({
-        action: GRID_ACTIONS.UNSELECT_ALL,
-      } as GridEvent<A1Z>);
-    } else {
-      this.gridEvent.emit({
-        action: GRID_ACTIONS.SELECT_MANY,
-        data: this.selectedA1Z,
-      } as GridEvent<A1Z[]>);
-    }
-  }
-
-  onRowSelect({ data }: { data: A1Z }) {
+  onRowSelect({ data }: { data: any }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
       data: data,
-    } as GridEvent<A1Z>);
+    } as GridEvent<any>);
   }
 
-  onRowUnselect({ data }: { data: A1Z }) {
+  onRowUnselect({ data }: { data: any }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
       data: data,
-    } as GridEvent<A1Z>);
+    } as GridEvent<any>);
   }
 
   loadRows($event: LazyLoadEvent) {
     this.lazyLoadData.emit($event);
+  }
+
+  onStudentSelect(student: any) {
+    console.log(student);
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.EDIT,
+      data: student,
+    } as GridEvent<any>);
   }
 }

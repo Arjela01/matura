@@ -164,5 +164,10 @@ export const CONFIGURATION_ROUTES: Route[] = [
       import('./a1z/manage-a1z/manage-a1z.component').then(
         m => m.ManageA1zComponent
       ),
+    path: 'a1z-category',
+    loadComponent: () =>
+      import(
+        './a1z-category/manage-a1z-categories/manage-a1z-categories.component'
+      ).then(m => m.ManageA1zCategoriesComponent),
   },
 ];

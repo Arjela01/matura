@@ -1,10 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { A1Z, A1ZTableView } from '@msh/configurations/domain-configurations';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
+import {
+  A1Z,
+  A1ZTableView,
+} from '../../../../domain-applications/a1z/a1z.model';
 
 @Injectable({
   providedIn: 'root',

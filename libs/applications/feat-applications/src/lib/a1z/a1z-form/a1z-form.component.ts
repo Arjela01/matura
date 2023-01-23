@@ -1,3 +1,5 @@
+import { A1Z } from '../../../../../domain-applications/a1z/a1z.model';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -13,20 +15,26 @@ import {
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AcademicYearApiService } from '@msh/configurations/data-access-configurations';
-import { A1Z } from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { A1zStudentSearchComponent } from '../a1z-student-search/a1z-student-search.component';
 
 @Component({
   selector: 'msh-a1z-form',
   standalone: true,
+  templateUrl: './a1z-form.component.html',
+  styleUrls: ['./a1z-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     FormsModule,
@@ -36,12 +44,12 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     InputTextareaModule,
     ButtonModule,
     CheckboxModule,
+    DialogModule,
+    ConfirmDialogModule,
     CalendarModule,
     DropdownModule,
+    A1zStudentSearchComponent,
   ],
-  templateUrl: './a1z-form.component.html',
-  styleUrls: ['./a1z-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
   //TODO: Add logic for single form edit details
@@ -51,6 +59,27 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
 
   @ViewChild('form', { static: true }) form!: NgForm;
   academicYears: DropdownModel<number>[] = [];
+
+  selectedStudent: any = null;
+
+  students = [
+    {
+      id: 1,
+      studentFirstName: 'Rei',
+      studentLastName: 'Ikonomi',
+      studentFatherName: 'Tomash',
+      nid: 'K232333320b',
+    },
+    {
+      id: 1,
+      studentFirstName: 'Testing',
+      studentLastName: 'Testing1',
+      studentFatherName: 'Testing2',
+      nid: 'A2656721762g',
+    },
+  ];
+
+  showStudentModal = false;
 
   disableD1Subject = false;
   disableD2Subject = false;
@@ -81,6 +110,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
     d1Subject: '',
     d2Subject: '',
     d3Subject: '',
+    studentInputData: '',
     neededSubjects: 0,
     d1Grade: 0,
     d2Grade: 0,
@@ -108,13 +138,21 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
     private cd: ChangeDetectorRef,
     private readonly academicYearService: AcademicYearApiService
   ) {}
+
   ngDoCheck(): void {
     if (this.a1zNotImplementedProps.neededSubjects !== 4) {
       this.onNeededSubjectChange({
         value: this.a1zNotImplementedProps,
       });
     }
+    if (
+      this.a1zNotImplementedProps.studentInputData !== '' ||
+      this.a1zNotImplementedProps.studentInputData.length === 0
+    ) {
+      this.onStudentChange(this.selectedStudent);
+    }
   }
+
   ngOnInit(): void {
     this.academicYearService.loadDropdownList().subscribe(response => {
       this.academicYears = response.data;
@@ -128,7 +166,32 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onGridEvent(event: GridEvent<any | any[]>) {
+    switch (event.action) {
+      case GRID_ACTIONS.EDIT:
+        this.selectedStudent = Object.assign({}, event.data);
+        console.log(event.data);
+        this.showStudentModal = false;
+        break;
+    }
+  }
+
+  onStudentChange(event: any) {
+    console.log(event);
+    if (!event) {
+      this.a1zNotImplementedProps.studentInputData = ' ';
+    } else {
+      this.a1zNotImplementedProps.studentInputData =
+        event?.nid +
+        '-' +
+        event?.studentFirstName +
+        '-' +
+        event?.studentFatherName +
+        '-' +
+        event?.studentLastName;
+    }
+  }
+
   onNeededSubjectChange($event: any) {
     this.disableD1Subject =
       $event.value.neededSubjects === 3
@@ -171,5 +234,13 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
         this.disableD3Subject = false;
       }
     }
+  }
+
+  onStudentShow() {
+    this.showStudentModal = true;
+  }
+
+  onStudentHide() {
+    this.showStudentModal = false;
   }
 }

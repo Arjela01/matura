@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { A1ZApiService } from '@msh/configurations/data-access-configurations';
-import { A1Z } from '@msh/configurations/domain-configurations';
+import { A1ZApiService } from '@msh/applications/data-access-applications';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -15,6 +14,7 @@ import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
+import { A1Z } from '../../../../../domain-applications';
 import { A1zFormComponent } from '../a1z-form/a1z-form.component';
 import { A1zGridComponent } from '../a1z-grid/a1z-grid.component';
 @UntilDestroy()
