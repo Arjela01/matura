@@ -1,4 +1,5 @@
 export const environment = {
   production: false,
-  api_url: 'http://localhost:5022',
+  api_url: 'https://matura-dev-api.azurewebsites.net',
 };
+

@@ -142,4 +142,11 @@ export const CONFIGURATION_ROUTES: Route[] = [
         './a1z-category/manage-a1z-categories/manage-a1z-categories.component'
       ).then(m => m.ManageA1zCategoriesComponent),
   },
+  {
+    path: 'exam-date',
+    loadComponent: () =>
+      import('./exam-date/manage-exam-date/manage-exam-date.component').then(
+        m => m.ManageExamDateComponent
+      ),
+  },
 ];
