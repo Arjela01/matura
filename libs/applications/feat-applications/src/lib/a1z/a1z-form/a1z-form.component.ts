@@ -7,14 +7,17 @@ import {
   Component,
   DoCheck,
   EventEmitter,
-  Input,
   OnChanges,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { AcademicYearApiService } from '@msh/configurations/data-access-configurations';
+import { A1ZApiService } from '@msh/applications/data-access-applications';
+import {
+  A1ZCategoryApiService,
+  AcademicYearApiService,
+} from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
 import { ButtonModule } from 'primeng/button';
@@ -59,6 +62,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
 
   @ViewChild('form', { static: true }) form!: NgForm;
   academicYears: DropdownModel<number>[] = [];
+  a1Categories: DropdownModel<number>[] = [];
 
   selectedStudent: any = null;
 
@@ -71,7 +75,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
       nid: 'K232333320b',
     },
     {
-      id: 1,
+      id: 2,
       studentFirstName: 'Testing',
       studentLastName: 'Testing1',
       studentFatherName: 'Testing2',
@@ -89,65 +93,66 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
 
   a1z: A1Z = {
     id: 0,
-    academicYear: '',
-    isA1: 'A1Z',
-    createdOn: '',
-    isApplyingToForeignCountries: false,
-    nid: '',
-    studentBirthDate: '',
-    studentBirthPlace: '',
-    studentFatherName: '',
-    studentFirstName: '',
-    studentIdentifier: '',
-    studentLastName: '',
-    studentOldIdentifier: '',
-  };
-
-  @Input() a1zNotImplementedProps = {
-    a1zCategory: '',
-    hasDiploma: false,
-    graduatedYear: '',
-    d1Subject: '',
-    d2Subject: '',
-    d3Subject: '',
+    academicYearId: 0,
     studentInputData: '',
-    neededSubjects: 0,
-    d1Grade: 0,
-    d2Grade: 0,
-    d3Grade: 0,
-    d1Reason: '',
-    d2Reason: '',
-    d3Reason: '',
-    hasZ1Subject: false,
-    z1Subject: '',
-    z1Year: '',
-    z1Grade: '',
-    z1Reason: '',
-    overseerCode: '',
+    isApplyingToForeignCountries: false,
+    a1ZCategoryId: '',
+    alreadyHaveDiploma: true,
+    carriedGradeAZ1: 0,
+    carriedGradeD1: 0,
+    carriedGradeD2: 0,
+    carriedGradeD3: 0,
+    carriedReasonAZ1: '',
+    carriedReasonD1: '',
+    carriedReasonD2: '',
+    carriedReasonD3: '',
+    carriedSubjectAZ1: '',
+    carriedSubjectD1: '',
+    carriedSubjectD2: '',
+    carriedSubjectD3: '',
+    noCarriedSubjets: 0,
+    noCarriedSubjetsZ: 0,
+    isA1: false,
+    overSeerCode: '',
+    studentId: '0867D567-E31A-4600-3464-08DAFB019942',
+    subjectD1: '',
+    subjectD2: '',
+    subjectD3: '',
+    subjectZ1: '',
+    yearOfSchoolA1Z: 0,
+    yearZ1: 0,
   };
 
   onSubmit() {
     this.submitted = true;
+
     if (this.form.valid) {
-      console.log(this.a1z, this.a1zNotImplementedProps);
+      this.a1zService.save(this.a1z).subscribe(response => {
+        console.log(response);
+      });
     }
-    console.log(this.a1z, this.a1zNotImplementedProps);
+    this.a1zService.save(this.a1z).subscribe(response => {
+      console.log(response.data);
+    });
+    console.log(this.a1z);
   }
 
   constructor(
     private cd: ChangeDetectorRef,
-    private readonly academicYearService: AcademicYearApiService
+    private readonly academicYearService: AcademicYearApiService,
+    private readonly a1CategoryService: A1ZCategoryApiService,
+    private readonly a1zService: A1ZApiService
   ) {}
 
   ngDoCheck(): void {
-    if (this.a1zNotImplementedProps.neededSubjects !== 4) {
+    if (this.a1z.noCarriedSubjets !== 4) {
       this.onNeededSubjectChange({
-        value: this.a1zNotImplementedProps,
+        value: this.a1z,
       });
     }
     if (
-      this.a1zNotImplementedProps.studentInputData !== '' ||
-      this.a1zNotImplementedProps.studentInputData.length === 0
+      this.a1z.studentInputData !== '' ||
+      this.a1z.studentInputData.length === 0
     ) {
       this.onStudentChange(this.selectedStudent);
     }
@@ -157,12 +162,15 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
     this.academicYearService.loadDropdownList().subscribe(response => {
       this.academicYears = response.data;
     });
+    this.a1CategoryService.loadDropdownList().subscribe(response => {
+      this.a1Categories = response.data;
+    });
     console.log('init');
   }
 
   ngOnChanges(): void {
     this.onNeededSubjectChange({
-      value: this.a1zNotImplementedProps.neededSubjects,
+      value: this.a1z.noCarriedSubjets,
     });
   }
 
@@ -177,11 +185,11 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
   }
 
   onStudentChange(event: any) {
-    console.log(event);
     if (!event) {
-      this.a1zNotImplementedProps.studentInputData = ' ';
+      this.a1z.studentInputData = ' ';
     } else {
-      this.a1zNotImplementedProps.studentInputData =
+      this.a1z.studentId = event.id;
+      this.a1z.studentInputData =
         event?.nid +
         '-' +
         event?.studentFirstName +
@@ -192,43 +200,63 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
     }
   }
 
-  onNeededSubjectChange($event: any) {
+  onSubjectD1Change($event: any) {
     this.disableD1Subject =
-      $event.value.neededSubjects === 3
-        ? false
-        : ($event.value.neededSubjects === 1 &&
-            $event.value.d2Subject !== '') ||
-          $event.value.d3Subject !== '' ||
-          $event.value.neededSubjects === 0;
+      ($event.value.noCarriedSubjets === 1 &&
+        $event.value.carriedSubjectD2 !== '') ||
+      $event.value.carriedSubjectD3 !== '' ||
+      $event.value.noCarriedSubjets === 0;
+  }
 
+  onSubjectD2Change($event: any) {
     this.disableD2Subject =
-      $event.value.neededSubjects === 3
-        ? false
-        : ($event.value.neededSubjects === 1 &&
-            $event.value.d1Subject !== '') ||
-          $event.value.d3Subject !== '' ||
-          $event.value.neededSubjects === 0;
+      ($event.value.noCarriedSubjets === 1 &&
+        $event.value.carriedSubjectD1 !== '') ||
+      $event.value.carriedSubjectD3 !== '' ||
+      $event.value.noCarriedSubjets === 0;
+  }
 
+  onSubjectD3Change($event: any) {
     this.disableD3Subject =
-      $event.value.neededSubjects === 3
-        ? false
-        : ($event.value.neededSubjects === 1 &&
-            $event.value.d2Subject !== '') ||
-          $event.value.d1Subject !== '' ||
-          $event.value.neededSubjects === 0;
+      ($event.value.noCarriedSubjets === 1 &&
+        $event.value.carriedSubjectD2 !== '') ||
+      $event.value.carriedSubjectD1 !== '' ||
+      $event.value.noCarriedSubjets === 0;
+  }
 
-    if ($event.value.neededSubjects === 2) {
-      if ($event.value.d2Subject !== '' && $event.value.d3Subject !== '') {
+  onNeededSubjectChange($event: any) {
+    this.onSubjectD1Change($event);
+    this.onSubjectD2Change($event);
+    this.onSubjectD3Change($event);
+
+    if ($event.value.noCarriedSubjets === 3) {
+      this.disableD1Subject = false;
+      this.disableD2Subject = false;
+      this.disableD3Subject = false;
+    }
+
+    // There was a problem when disabling the input fields if radio button nr 2 was selected. The logic above didn't work in that case.
+    if ($event.value.noCarriedSubjets === 2) {
+      if (
+        $event.value.carriedSubjectD2 !== '' &&
+        $event.value.carriedSubjectD3 !== ''
+      ) {
         this.disableD1Subject = true;
       } else {
         this.disableD1Subject = false;
       }
-      if ($event.value.d1Subject !== '' && $event.value.d3Subject !== '') {
+      if (
+        $event.value.carriedSubjectD1 !== '' &&
+        $event.value.carriedSubjectD3 !== ''
+      ) {
         this.disableD2Subject = true;
       } else {
         this.disableD2Subject = false;
       }
-      if ($event.value.d1Subject !== '' && $event.value.d2Subject !== '') {
+      if (
+        $event.value.carriedSubjectD1 !== '' &&
+        $event.value.carriedSubjectD2 !== ''
+      ) {
         this.disableD3Subject = true;
       } else {
         this.disableD3Subject = false;
