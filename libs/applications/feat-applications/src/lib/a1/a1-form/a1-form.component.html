@@ -1,1 +1,32 @@
-<p>a1-form works!</p>
+<h3>Shto Formular A1</h3>
+<h5 class="uppercase">Të Dhëna të përgjithshme</h5>
+<form #form="ngForm" class="mt-5" (ngSubmit)="onSubmit()">
+
+    <div class="field w-5">
+        <label for="academicYear">Viti akademik </label>
+        <input type="text" pInputText id="Name" class="w-full" [value]="a1.academicYear" name="academicYear" readonly />
+    </div>
+    <div class="field w-5">
+        <label for="student">Maturanti</label>
+        <input type="text" class="w-full" pInputText id="student" name="student" readonly />
+    </div>
+    <div class="field w-5">
+        <label for="isA1">Tip formulari *</label>
+        <input type="text" pInputText id="isA1" class="w-full" name="isA1" [value]="testType" readonly />
+    </div>
+
+    <div class="field w-5">
+        <label for="City">Lenda D3</label>
+        <p-dropdown id="City" [options]="d3Dropdown" optionValue="key" autoWidth="false" [style]="{'width':'100%'}"
+            optionLabel="value" name="d3Subject" [required]="false" class="w-full block" [(ngModel)]="d3SubjectChoosen"
+            [autoDisplayFirst]="false" [showClear]="true">
+        </p-dropdown>
+
+    </div>
+
+    <div class="flex justify-content-end">
+        <button type="button" pButton icon="pi pi-times" label="Anullo" class="p-button-text w-auto mr-2"
+            (click)="onCancelClick()"></button>
+        <button type="submit" pButton icon="pi pi-check" label="Ruaj" class="p-button-text w-auto"></button>
+    </div>
+</form>

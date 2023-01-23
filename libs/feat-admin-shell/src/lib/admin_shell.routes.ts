@@ -12,6 +12,13 @@ export const ADMIN_SHELL_ROUTES: Route[] = [
           import('@msh/feat-dashboard').then(m => m.DashboardComponent),
       },
       {
+        path: 'applications',
+        loadChildren: () =>
+          import('@msh/applications/feat-applications').then(
+            m => m.APPLICATIONS_ROUTES
+          ),
+      },
+      {
         path: 'configurations',
         loadChildren: () =>
           import('@msh/configurations/feat-configurations').then(
