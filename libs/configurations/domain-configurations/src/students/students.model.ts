@@ -28,6 +28,7 @@ export interface Student {
   highSchoolName: string;
   isFall: boolean;
   registrationYear?: string;
+  schoolFinishedName: string;
 
 }
 

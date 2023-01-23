@@ -72,7 +72,6 @@ export class StudentViewComponent implements OnChanges {
 
 
 
-
   showStudent = false;
   submitted = false;
 
@@ -102,6 +101,7 @@ export class StudentViewComponent implements OnChanges {
     session: "",
     studentId: "",
     studyClass: "",
+    schoolFinishedName: "",
     firstName: '',
     isConfirmedBySupervisor: true,
     graduationYear: ""
@@ -116,7 +116,8 @@ export class StudentViewComponent implements OnChanges {
     private readonly studentService: StudentsApiService,
     private readonly highSchoolService: HighSchoolApiService,
     private readonly profileService: ProfileApiService,
-    private readonly genderService: GendersApiService, private router: Router,
+    private readonly genderService: GendersApiService,
+    private router: Router,
     private messageService: MessageService,
 
     private route: ActivatedRoute
@@ -127,18 +128,18 @@ export class StudentViewComponent implements OnChanges {
 
   ngOnInit(): void {
     this.studentService.getById(this.id).subscribe(result => {
-      this.student = result.data;
-    })
-
+      this.student = {...result.data};
+      this.cd.detectChanges();
+    });
     this.getHighSchools();
-    this.getGenders();
+    //this.getGenders();
     this.getProfiles();
   }
 
   getHighSchools() {
     this.highSchoolService
       .loadDropDownList()
-      .pipe(untilDestroyed(this))
+      .pipe()
       .subscribe(response => {
         this.highSchools = response.data;
       });
@@ -146,17 +147,17 @@ export class StudentViewComponent implements OnChanges {
 
   getGenders() {
     this.genderService
-      .loadDropdownList()
-      .pipe(untilDestroyed(this))
+      .loadGenders({})
+      .pipe()
       .subscribe(response => {
-        this.genders = response.data;
+        //this.genders = response.data;
       });
   }
 
   getProfiles() {
     this.profileService
       .loadDropdownList()
-      .pipe(untilDestroyed(this))
+      .pipe()
       .subscribe(response => {
         this.schoolProfiles = response.data;
       });

@@ -3,7 +3,8 @@
     <div class="card px-6 py-6">
     <h3>Detajet e Maturantit</h3>
 
-    <div *ngIf="student !== null">
+    <form #form="ngForm"   *ngIf="student !== null">
+
       <div class="field" [style]="{ width: '500px' }">
         <label for="highSchool">Shkolla</label>
         <input
@@ -22,7 +23,7 @@
           pInputText
           id="schoolProfile"
           name="schoolProfile"
-          [(ngModel)]="student.schoolProfile"
+          [(ngModel)]="student.profileName"
           disabled />
       </div>
 
@@ -81,6 +82,7 @@
           pInputText
           id="SchoolFinished"
           name="SchoolFinished"
+          [(ngModel)]="student.schoolFinished"
           [(ngModel)]="student.schoolFinished"
           disabled />
       </div>
@@ -257,7 +259,8 @@
           </div>
         </div>
       </div>
-    </div>
+    </form>
     </div>
   </div>
+
 </div>

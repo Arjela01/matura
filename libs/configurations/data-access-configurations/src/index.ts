@@ -1,4 +1,3 @@
-export * from './lib/a1z/a1z-api.service';
 export * from './lib/academic-year/academic-year-api.service';
 export * from './lib/administration-office/administration-office-api.service';
 export * from './lib/city/city-api.service';

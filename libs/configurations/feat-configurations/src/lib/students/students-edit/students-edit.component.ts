@@ -26,11 +26,11 @@ import {
   StudentsApiService
 } from "@msh/configurations/data-access-configurations";
 import { Student } from '@msh/configurations/domain-configurations';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MessageService} from "primeng/api";
 
 @Component({
-  selector: 'msh-students-form',
+  selector: 'msh-students-edit',
   standalone: true,
   imports: [
     CommonModule,
@@ -45,11 +45,11 @@ import {MessageService} from "primeng/api";
     CalendarModule,
     InputMaskModule,
   ],
-  templateUrl: './students-form.component.html',
-  styleUrls: ['./students-form.component.scss'],
+  templateUrl: './students-edit.component.html',
+  styleUrls: ['./students-edit.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StudentsFormComponent implements OnChanges {
+export class StudentsEditComponent implements OnChanges {
 
   @Output() formSave = new EventEmitter<Student>();
   @Output() formClose = new EventEmitter<undefined>();
@@ -63,7 +63,8 @@ export class StudentsFormComponent implements OnChanges {
   schoolProfile: DropdownModel<number>[] = [];
   academicYears: DropdownModel<number>[] = [];
   saving= false;
- graduationYear: any;
+  graduationYear: any;
+  private id: any;
   @Input() set studentDetails(details: Student | null) {
     if (details) {
       this.student = Object.assign({}, details);
@@ -76,8 +77,8 @@ export class StudentsFormComponent implements OnChanges {
   showStudent = false;
   submitted = false;
 
-
-
+current = null;
+loading = false;
   student: Student = {
     birthDate: new Date(),
     birthPlace: "",
@@ -96,6 +97,7 @@ export class StudentsFormComponent implements OnChanges {
     schoolProfile: "",
     highSchoolName: "",
     schoolName: "",
+    schoolFinishedName: "",
     highSchoolId: 0,
     session: "",
     studentId: "",
@@ -103,8 +105,6 @@ export class StudentsFormComponent implements OnChanges {
     profileId: 0,
     profileName: "",
     firstName: '',
-    schoolFinishedName: "",
-
     isConfirmedBySupervisor: true,
     graduationYear: ""
   };
@@ -119,10 +119,17 @@ export class StudentsFormComponent implements OnChanges {
     private readonly profileService: ProfileApiService,
     private readonly genderService: GendersApiService, private router: Router,
     private messageService: MessageService,
+    private route: ActivatedRoute
 
 
-  ) {}
+  ) {
+    this.id = this.route.snapshot.paramMap.get('id')
+  }
   ngOnInit(): void {
+    // this.studentService.getById(this.id).subscribe(result => {
+    //   this.student = {...result.data};
+    //   this.cd.detectChanges();
+    // });
     this.highSchoolService.loadDropDownList().subscribe(response => {
       this.highSchool = response.data;
     });
@@ -146,20 +153,24 @@ export class StudentsFormComponent implements OnChanges {
     this.showStudent = $event.value;
   }
 
-  onSubmit(): void {
-    // eslint-disable-next-line max-len
-    const data = {...this.student, graduationYear: this.graduationYear,};
-
-    this.studentService.save(data)
+  update(): void {
+    this.saving = true;
+    this.studentService.update({id: this.id,...this.student})
       .subscribe(
         {
           next: value => {
             this.saving = false;
+            this.messageService.add({severity: 'success', summary: 'Success', detail: 'Studenti u ruajt me sukses.'});
             console.log(value);
 
             this.router.navigate(['/configurations/students']).then();
           },
+          error: error => {
+            this.saving = false;
+            this.messageService.add({severity: 'error', summary: 'Error', detail: `Studenti nuk mund te ruhet: ${error}`});
+          }
         }
       );
   }
 }
+

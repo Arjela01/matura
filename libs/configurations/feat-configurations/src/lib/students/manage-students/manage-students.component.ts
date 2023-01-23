@@ -19,9 +19,10 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import {StudentsFormComponent} from "../students-form/students-form.component";
 import {StudentsGridComponent} from "../students-grid/students-grid.component";
-import {ProfileGroup, Student} from "@msh/configurations/domain-configurations";
+import {HighSchool, Student} from "@msh/configurations/domain-configurations";
 import {StudentsApiService} from "@msh/configurations/data-access-configurations";
 import {StudentViewComponent} from "../students-view/student-view.component";
+import {StudentsEditComponent} from "../students-edit/students-edit.component";
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-students',
@@ -35,6 +36,7 @@ import {StudentViewComponent} from "../students-view/student-view.component";
     StudentsGridComponent,
     ToolbarModule,
     StudentViewComponent,
+    StudentsEditComponent,
   ],
   templateUrl: './manage-students.component.html',
   styleUrls: ['./manage-students.component.scss'],
@@ -140,7 +142,23 @@ export class ManageStudentsComponent implements OnInit {
         this.totalRecords = response.total;
       });
   }
+  updateStudent(student: Student) {
+    this.studentService
+      .update(student)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess(
+            'Shkolla e mesme u ndryshua me sukses!'
+          );
+        }
 
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi një problem gjatë ndryshimit së shkollës së mesme!'
+          );
+      });
+  }
 
 
 }

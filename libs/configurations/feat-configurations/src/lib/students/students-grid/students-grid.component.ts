@@ -52,12 +52,12 @@ export class StudentsGridComponent {
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
   student: Student [] = [] ;
-  onEditClick(student: Student) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.EDIT,
-      data: student,
-    } as GridEvent<Student>);
-  }
+  // onEditClick(student: Student) {
+  //   this.gridEvent.emit({
+  //     action: GRID_ACTIONS.EDIT,
+  //     data: student,
+  //   } as GridEvent<Student>);
+  // }
 
 
 
