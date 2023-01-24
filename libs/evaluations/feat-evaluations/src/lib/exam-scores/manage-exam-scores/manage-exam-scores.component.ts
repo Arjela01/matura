@@ -119,6 +119,7 @@ export class ManageExamScoresComponent {
 
   onFormSave(examScore: ExamScore) {
     if (examScore.id) {
+      console.log('___')
       this.updateExamScore(examScore);
     }
     if (!examScore.id) {

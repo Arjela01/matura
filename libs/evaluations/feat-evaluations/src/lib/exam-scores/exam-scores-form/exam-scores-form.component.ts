@@ -1,4 +1,12 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component, ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild
+} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, NgForm} from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
@@ -30,23 +38,13 @@ import {AutoCompleteModule} from "primeng/autocomplete";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamScoresFormComponent {
-
-
-  @Input() set examScoreDetails(details: ExamScore | null) {
-    if (details) {
-      this.examScore = Object.assign({}, details);
-    }
-  }
-
   @Input() examType: string | undefined;
   @Output() formSave = new EventEmitter<ExamScore>();
   @Output() formClose = new EventEmitter<undefined>();
   @Input() academicYears: DropdownModel<number>[] = [];
   @Input() students: DropdownModel<number>[] = [];
   @ViewChild('form', {static: true}) form!: NgForm;
-
   submitted = false;
-
   examScore: ExamScore = {
     id: 0,
     barcode: '',
@@ -56,6 +54,34 @@ export class ExamScoresFormComponent {
     multipleChoiceScore: 0,
     documentName: ''
   };
+
+
+
+
+  currentYear: number = new Date().getFullYear()
+
+  @ViewChild('academicYear') academicYear!: ElementRef;
+  selectedYear = '';
+  onSelected() {
+    this.selectedYear = this.academicYear.nativeElement.value;
+  }
+  @Input() set examScoreDetails(details: ExamScore | null) {
+    let val;
+    if (details) {
+      this.examScore = Object.assign({}, details);
+    }
+  }
+
+
+
+
+  // currentYearObj: any = this.academicYears
+
+
+
+
+
+
 
   search(event: any) {
     // this.mylookupservice.getResults(event.query).then(data => {
