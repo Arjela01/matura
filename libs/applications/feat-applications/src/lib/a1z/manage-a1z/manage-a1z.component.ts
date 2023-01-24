@@ -105,7 +105,7 @@ export class ManageA1zComponent implements OnInit {
 
   deleteA1Z(a1z: A1Z) {
     this.a1zservice
-      .delete(a1z.id.toString())
+      .delete(a1z.id!.toString())
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {

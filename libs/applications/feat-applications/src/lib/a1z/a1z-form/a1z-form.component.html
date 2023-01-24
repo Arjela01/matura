@@ -1,3 +1,4 @@
+
 <div class="grid">
   <div class="col-12 p-fluid">
     <div class="card px-6 py-6">
@@ -370,7 +371,7 @@
           <input
             type="text"
             pInputText
-            [value]="a1z.carriedSubjectD1 ? a1z.carriedSubjectD1 : ''"
+            [value]="a1z.subjectD1 ? a1z.subjectD1 : ''"
             id="subjectD1"
             name="subjectD1"
             [(ngModel)]="a1z.subjectD1"
@@ -382,7 +383,7 @@
           <input
             type="text"
             pInputText
-            [value]="a1z.carriedSubjectD2 ? a1z.carriedSubjectD2 : ''"
+            [value]="a1z.subjectD2 ? a1z.subjectD2 : ''"
             id="d2Subject"
             name="d2Subject"
             [(ngModel)]="a1z.subjectD2"
@@ -394,10 +395,23 @@
           <input
             type="text"
             pInputText
-            [value]="a1z.carriedSubjectD3 ? a1z.carriedSubjectD3 : ''"
+            [value]="a1z.subjectD3 ? a1z.subjectD3 : ''"
             id="d3Subject"
             name="d3Subject"
             [(ngModel)]="a1z.subjectD3"
+            required
+            autofocus />
+        </div>
+
+        <div class="field" [style]="{ width: '500px' }">
+          <label for="z1Subject">Lenda Z1:</label>
+          <input
+            type="text"
+            pInputText
+            [value]="a1z.subjectZ1 ? a1z.subjectZ1 : ''"
+            id="z1Subject"
+            name="z1Subject"
+            [(ngModel)]="a1z.subjectZ1"
             required
             autofocus />
         </div>
@@ -519,34 +533,6 @@
           Lendet me zgjedhje qe do te jepen provim
         </div>
 
-        <!-- TODO: Get data from dropdown -->
-        <!-- <div class="field" [style]="{ width: '500px' }">
-          <label for="z1Subject">Lendet me zgjedhje</label>
-          <p-dropdown
-            id="z1Subject"
-            [options]="academicYears"
-            optionValue="value"
-            optionLabel="value"
-            name="z1Subject"
-            [autoDisplayFirst]="false"
-            [(ngModel)]="a1z.subjectZ1"
-            [showClear]="true">
-          </p-dropdown>
-        </div>
-
-        <div class="field" [style]="{ width: '500px' }">
-          <label for="z1Subject">Lendet e zgjedhura</label>
-          <p-dropdown
-            id="z1Subject"
-            [options]="academicYears"
-            optionValue="value"
-            optionLabel="value"
-            name="z1Subject"
-            [autoDisplayFirst]="false"
-            [(ngModel)]="a1z.subjectZ1"
-            [showClear]="true">
-          </p-dropdown>
-        </div> -->
 
         <div class="field" [style]="{ width: '500px' }">
           <label for="overseerCode">Kodi I Mbikqyresit</label>
