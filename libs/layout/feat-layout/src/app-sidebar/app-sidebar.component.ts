@@ -7,14 +7,12 @@ import { MenuItem } from 'primeng/api';
 import { MenuStore } from '@msh/layout/data-access-layout';
 import { map, Observable } from 'rxjs';
 import { MenuNode } from '@msh/layout/domain-layout';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'msh-app-sidebar',
   standalone: true,
-  imports: [
-    CommonModule,
-    AppMenuitemComponent
-  ],
+  imports: [CommonModule, AppMenuitemComponent],
   providers: [MenuStore],
   templateUrl: './app-sidebar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,6 +32,7 @@ export class AppSidebarComponent implements OnInit {
 
   constructor(
     private readonly menuStore: MenuStore,
+    private router: Router,
     public layoutService: LayoutService
   ) {}
 
@@ -46,11 +45,38 @@ export class AppSidebarComponent implements OnInit {
       const output: MenuItem = {};
       output['icon'] = 'pi pi-fw pi-bookmark';
       output['label'] = node.text;
+
       if (node.children.length == 0) output['routerLink'] = node.url;
       if (node.children.length != 0)
         output['items'] = node.children?.map(x => reformat(x));
       return output;
     };
-    return menus.map(x => reformat(x));
+    const output = menus.map(x => reformat(x));
+
+    const scan = (node: MenuItem): boolean => {
+      if (
+        this.router.isActive(node['routerLink'], {
+          paths: 'exact',
+          queryParams: 'ignored',
+          matrixParams: 'ignored',
+          fragment: 'ignored',
+        })
+      ) {
+        node['expanded'] = true;
+        return true;
+      }
+
+      if (node['items']?.length == 0) return false;
+
+      node['expanded'] = node['items']
+        ?.map(x => scan(x))
+        .reduce((acc, current) => (current ? true : acc), false);
+
+      return node['expanded'] ?? false;
+    };
+
+    output.map(x => scan(x));
+
+    return output;
   }
 }

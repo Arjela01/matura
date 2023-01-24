@@ -2,7 +2,7 @@ export interface Menu {
   id: number;
   isVisible: boolean;
   displayOrder: number;
-  parentID: number | null;
+  parentId: number | null;
   text: string;
   url: string;
 }

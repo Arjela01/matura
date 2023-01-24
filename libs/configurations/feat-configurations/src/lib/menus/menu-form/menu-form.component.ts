@@ -5,9 +5,7 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   Output,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -61,7 +59,7 @@ export class MenuFormComponent {
     isVisible: false,
     url: '',
     text: '',
-    parentID: null,
+    parentId: null,
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
