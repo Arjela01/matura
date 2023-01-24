@@ -52,20 +52,20 @@
           field="examSiteName"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="dateTime">
+      <th pSortableColumn="date">
         Data
-        <p-sortIcon field="dateTime"></p-sortIcon>
+        <p-sortIcon field="date"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="dateTime"
+          field="date"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="dateTime">
+      <th pSortableColumn="time">
         Ora
-        <p-sortIcon field="dateTime"></p-sortIcon>
+        <p-sortIcon field="time"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="dateAndTime"
+          field="time"
           display="menu"></p-columnFilter>
       </th>
       <th></th>
@@ -83,10 +83,10 @@
         {{ examDate.examTypeName}}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ examDate.dateTime | date : 'dd/MM/YYYY'}}
+        {{ examDate.date | date : 'dd/MM/YYYY'}}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ examDate.dateTime | date : 'hh:mm'}}
+        {{ examDate.time}}
       </td>
       <td>
         <div class="flex">

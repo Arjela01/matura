@@ -48,32 +48,31 @@
   <div class="field">
     <label for="date">Data *</label>
     <input
-      value=""
-      type="date"
+      type="string"
       pInputText
       id="date"
       name="date"
-      [(ngModel)]="dateVal"
+      [(ngModel)]="examDate.formatedDate"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !dateVal }" />
-    <small class="p-error block" *ngIf="submitted && !dateVal">
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examDate.date }" />
+    <small class="p-error block" *ngIf="submitted && !examDate.date">
       Data është fushë e kërkuar.
     </small>
   </div>
 
   <div class="field">
-    <label for="hour">Ora *</label>
+    <label for="time">Ora *</label>
     <input
       type="time"
       pInputText
-      id="hour"
-      name="hour"
-      [(ngModel)]="timeVal"
+      id="time"
+      name="time"
+      [(ngModel)]="examDate.time"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !timeVal }" />
-    <small class="p-error block" *ngIf="submitted && !timeVal">
+      [ngClass]="{ 'ng-invalid ng-dirty': examDate.time }" />
+    <small class="p-error block" *ngIf="submitted && !examDate.time">
       Ora  është fushë e kërkuar.
     </small>
   </div>

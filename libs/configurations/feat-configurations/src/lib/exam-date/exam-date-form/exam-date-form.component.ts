@@ -4,7 +4,7 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input,
+  Input, OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -38,20 +38,17 @@ import { RadioButtonModule } from 'primeng/radiobutton';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamDateFormComponent {
+
   @Input() examTypes: DropdownModel<number>[] = [];
   @Input() examSites: DropdownModel<number>[] = [];
 
   @Input() set examDatesDetails(details: ExamDate | null) {
     if (details) {
-      console.log(details)
       this.examDate = Object.assign({}, details);
+      const date = details.date.toDateString();
+      this.examDate.formatedDate = date;
+      this.examDate.date
 
-      console.log(this.examDate)
-      if (this.examDate.id) {
-        this.dateVal = new Date(this.examDate.dateTime);
-        console.log(this.dateVal)
-        this.timeVal = new Date(this.examDate.dateTime).getHours() + ':' + new Date(this.examDate.dateTime).getMinutes();
-      }
     }
   }
 
@@ -63,20 +60,17 @@ export class ExamDateFormComponent {
   submitted = false;
   examDate: ExamDate = {
     id: '',
-    dateTime: '',
+    date: new Date(),
+    time:'',
     examTypeId:0,
     examTypeName:'',
     examSiteId:0,
     examSiteName:'',
+    formatedDate: ''
   };
-
-  dateVal!: Date;
-  timeVal!: string;
-
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor(private cd: ChangeDetectorRef) {
-
 
   }
 
@@ -86,13 +80,8 @@ export class ExamDateFormComponent {
 
   onSubmit() {
     this.submitted = true;
-
     if (this.form.valid) {
-      const timeString = this.timeVal + ':00';
-      const dateObj = new Date(this.dateVal + ' ' + timeString);
-      this.examDate.dateTime = dateObj;
       this.formSave.emit(this.examDate);
-
     }
   }
   }
