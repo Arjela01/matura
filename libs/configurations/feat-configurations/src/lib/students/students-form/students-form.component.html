@@ -110,20 +110,12 @@
         <div class="field" [style]="{ width: '500px' }">
     <label for="graduationYear"
       >Viti i përfundimit te shkollës së mesme? *</label>
-    <p-calendar
-      [(ngModel)]="student.graduationYear"
-      dateFormat="yy"
-      view="year"
-      inputId="graduationYear"
-      id="graduationYear"
-      name="graduationYear"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !student.graduationYear
-      }"></p-calendar>
-    <small class="p-error block" *ngIf="submitted && !student.graduationYear">
-      Viti i përfundimit te shkollës së mesme është fushë e kërkuar.
-    </small>
-  </div>
+          <label for="graduationYear">Year Picker</label>
+          <p-calendar [(ngModel)]="student.graduationYear"       id="graduationYear"
+                      name="graduationYear"
+                      view="year" dateFormat="yy" inputId="yearpicker"></p-calendar>
+        </div>
+
 
         <div class="field" [style]="{ width: '500px' }">
     <label for="IdCard">Karta Identitetit *</label>

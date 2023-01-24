@@ -105,7 +105,7 @@ export class StudentViewComponent implements OnChanges {
     schoolFinishedName: "",
     firstName: '',
     isConfirmedBySupervisor: true,
-    graduationYear: new Date(),
+    graduationYear: "",
   };
   // eslint-disable-next-line @typescript-eslint/no-empty-function
 

@@ -28,7 +28,7 @@
       </div>
 
       <div class="field" [style]="{ width: '500px' }">
-        <label class="mb-3">Sesioni i Vjeshtës? *</label>
+        <label class="mb-3">Sesioni i Vjeshtës? </label>
         <div class="formgrid grid">
           <div class="field-radiobutton col-6">
             <p-radioButton
@@ -76,19 +76,19 @@
 <!--      </div>-->
 
       <div class="field" [style]="{ width: '500px' }">
-        <label for="SchoolFinished">Shkolla qe kam perfunduar *</label>
+        <label for="SchoolFinished">Shkolla qe kam perfunduar </label>
         <input
           type="text"
           pInputText
           id="SchoolFinished"
           name="SchoolFinished"
-          [(ngModel)]="student.schoolFinishedName"
+          [(ngModel)]="student.schoolFinished"
           disabled />
       </div>
 
       <div class="field" [style]="{ width: '500px' }">
         <label for="graduationYear"
-          >Viti i përfundimit te shkollës së mesme? *</label
+          >Viti i përfundimit te shkollës së mesme? </label
         >
         <p-calendar
           [(ngModel)]="student.graduationYear"
@@ -102,7 +102,7 @@
       </div>
 
       <div class="field" [style]="{ width: '500px' }">
-        <label for="IdCard">Karta Identitetit *</label>
+        <label for="IdCard">Karta Identitetit </label>
         <input
           type="text"
           pInputText
@@ -113,13 +113,23 @@
       </div>
 
       <div class="field" [style]="{ width: '500px' }">
-        <label for="OldID">ID e vjetër e maturës *</label>
+        <label for="OldID">ID e vjetër e maturës </label>
         <input
           type="number"
           pInputText
           id="OldID"
           name="OldID"
           [(ngModel)]="student.oldId"
+          disabled />
+      </div>
+      <div class="field" [style]="{ width: '500px' }">
+        <label for="OldID">ID e studentit </label>
+        <input
+          type="number"
+          pInputText
+          id="studentId"
+          name="OldID"
+          [(ngModel)]="student.studentId"
           disabled />
       </div>
 
@@ -135,7 +145,7 @@
       </div>
 
       <div class="field" [style]="{ width: '500px' }">
-        <label for="middleName">Atësia *</label>
+        <label for="middleName">Atësia </label>
         <input
           type="text"
           pInputText
@@ -146,7 +156,7 @@
       </div>
 
       <div class="field" [style]="{ width: '500px' }">
-        <label for="lastName">Mbiemri *</label>
+        <label for="lastName">Mbiemri </label>
         <input
           type="text"
           pInputText
@@ -157,7 +167,7 @@
       </div>
 
       <div class="field" [style]="{ width: '500px' }">
-        <label for="birthDate">Datëlindja * </label>
+        <label for="birthDate">Datëlindja  </label>
         <p-calendar
           [(ngModel)]="student.birthDate"
           dateFormat="dd-mm-yy"
@@ -168,7 +178,7 @@
       </div>
 
       <div class="field" [style]="{ width: '500px' }">
-        <label for="birthPlace">Vendlindja *</label>
+        <label for="birthPlace">Vendlindja </label>
         <input
           type="text"
           pInputText
@@ -179,7 +189,7 @@
       </div>
 
       <div class="field" [style]="{ width: '500px' }">
-        <label for="gender">Gjinia *</label>
+        <label for="gender">Gjinia </label>
         <input
           type="text"
           pInputText
@@ -190,7 +200,7 @@
       </div>
 
       <div class="field" [style]="{ width: '500px' }">
-        <label for="studyClass">Klasa *</label>
+        <label for="studyClass">Klasa </label>
         <input
           type="text"
           pInputText
@@ -201,7 +211,7 @@
       </div>
 
       <div class="field" [style]="{ width: '500px' }">
-        <label for="session">Seksioni *</label>
+        <label for="session">Seksioni </label>
         <input
           type="text"
           pInputText
@@ -212,7 +222,7 @@
       </div>
 
       <div class="field" [style]="{ width: '500px' }">
-        <label for="Email">Email *</label>
+        <label for="Email">Email </label>
         <input
           type="email"
           pInputText
@@ -223,7 +233,7 @@
       </div>
 
       <div class="field" [style]="{ width: '500px' }">
-        <label for="Cel">Cel *</label>
+        <label for="Cel">Cel </label>
         <input
           type="cel"
           pInputText
@@ -234,7 +244,7 @@
       </div>
 
       <div class="field" [style]="{ width: '500px' }">
-        <label class="mb-3">Është Konfirmuar Nga Mbikëqyrësi? *</label>
+        <label class="mb-3">Është Konfirmuar Nga Mbikëqyrësi? </label>
         <div class="formgrid grid" >
           <div class="field-radiobutton col-6">
             <p-radioButton
