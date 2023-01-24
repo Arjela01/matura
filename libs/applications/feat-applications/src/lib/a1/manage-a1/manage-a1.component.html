@@ -1,8 +1,8 @@
 <div class="grid">
     <div class="col-12">
-        <div class="card px-6 py-6">
+        <div class="card px-6 py-6" *ngIf="displayForm">
             <!-- TODO: this can be reusable -->
-            <p-toolbar styleClass="mb-4" *ngIf="displayForm">
+            <p-toolbar styleClass="mb-4">
                 <div class="p-toolbar-group-left">
                     <div class="my-2">
                         <button pButton pRipple label="Shto" icon="pi pi-plus" class="p-button-success mr-2"
@@ -18,13 +18,16 @@
             <a1-grid [a1]="(a1$ | async) || []" [totalRecords]="totalRecords" (gridEvent)="onGridEvent($event)"
                 (lazyLoadData)="getA1($event)" *ngIf="displayForm">
             </a1-grid>
-            <a1-form [d3Dropdown]="d3Dropdown" *ngIf="!displayForm">
+
+        </div>
+        <div class="card px-6 py-6 w-9 mx-auto" *ngIf="!displayForm">
+            <a1-form [d3Dropdown]="d3Subject" [optionalSubjects]="optionalSubjects" [students]="students"
+                (studentSearchOpen)="openDialog()">
 
             </a1-form>
         </div>
     </div>
 </div>
-<a1-form *ngIf="displayForm"></a1-form>
 <p-confirmDialog #cd header="Konfirmo" icon="pi pi-exclamation-triangle" [style]="{ width: '450px' }">
     <ng-template pTemplate="footer">
         <button type="button" pButton icon="pi pi-times" label="Jo" class="p-button-text"

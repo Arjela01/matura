@@ -2,20 +2,20 @@
 <h5 class="uppercase">Të Dhëna të përgjithshme</h5>
 <form #form="ngForm" class="mt-5" (ngSubmit)="onSubmit()">
 
-    <div class="field w-5">
+    <div class="field w-8">
         <label for="academicYear">Viti akademik </label>
         <input type="text" pInputText id="Name" class="w-full" [value]="a1.academicYear" name="academicYear" readonly />
     </div>
-    <div class="field w-5">
+    <div class="field w-8">
         <label for="student">Maturanti</label>
         <input type="text" class="w-full" pInputText id="student" name="student" readonly />
     </div>
-    <div class="field w-5">
-        <label for="isA1">Tip formulari *</label>
-        <input type="text" pInputText id="isA1" class="w-full" name="isA1" [value]="testType" readonly />
+    <div class="field w-8">
+        <button pButton pRipple type="button" icon="pi pi-search" label="Kërko maturantin" (click)="show()"
+            class="p-button-gray"></button>
     </div>
 
-    <div class="field w-5">
+    <div class="field w-8 mt-5">
         <label for="City">Lenda D3</label>
         <p-dropdown id="City" [options]="d3Dropdown" optionValue="key" autoWidth="false" [style]="{'width':'100%'}"
             optionLabel="value" name="d3Subject" [required]="false" class="w-full block" [(ngModel)]="d3SubjectChoosen"
@@ -23,7 +23,88 @@
         </p-dropdown>
 
     </div>
+    <div class="field w-8">
+        <label class="mb-3">Aplikon jashtë vendit *</label>
+        <div class="formgrid grid w-full">
+            <div class="field-radiobutton col-6">
+                <p-radioButton id="isApplyingToForeignCountriesTrue" name="isApplyingToForeignCountries" [value]="true"
+                    [(ngModel)]="a1.isApplyingToForeignCountries"></p-radioButton>
+                <label for="isApplyingToForeignCountriesTrue">Po</label>
+            </div>
+            <div class="field-radiobutton col-6">
+                <p-radioButton id="isApplyingToForeignCountriesFalse" name="isApplyingToForeignCountries"
+                    [value]="false" [(ngModel)]="a1.isApplyingToForeignCountries"></p-radioButton>
+                <label for="isApplyingToForeignCountriesFalse">Jo</label>
+            </div>
+        </div>
+    </div>
+    <div class="field w-8">
+        <label class="mb-3">Keni marrë diplomë/dëftesë pjekurie</label>
+        <div class="formgrid grid w-full">
+            <div class="field-radiobutton col-6">
+                <p-radioButton id="alreadyHaveDiplomaTrue" name="alreadyHaveDiploma" [value]="true"
+                    [(ngModel)]="a1.alreadyHaveDiploma"></p-radioButton>
+                <label for="alreadyHaveDiplomaTrue">Po</label>
+            </div>
+            <div class="field-radiobutton col-6">
+                <p-radioButton id="alreadyHaveDiplomaFalse" name="alreadyHaveDiploma" [value]="false"
+                    [(ngModel)]="a1.alreadyHaveDiploma"></p-radioButton>
+                <label for="alreadyHaveDiplomaFalse">Jo</label>
+            </div>
+        </div>
+    </div>
+    <h5 class="uppercase mt-5">Lëndët me zgjedhje</h5>
+    <div class="field w-8">
+        <label for="City">Lëndët me zgjedhje</label>
+        <p-dropdown id="City" [options]="optionalSubjects" autoWidth="false" [style]="{'width':'100%'}"
+            optionLabel="value" name="optionalSubject" [required]="false" class="w-full block"
+            [(ngModel)]="optionalSubjectChoosen" [autoDisplayFirst]="false" [showClear]="true">
+        </p-dropdown>
 
+    </div>
+    <div class="field w-8">
+        <button pButton pRipple type="button" label="Zgjidh" (click)="addSubject()" class="p-button-gray"></button>
+    </div>
+    <div class="field w-10 mt-5" *ngIf="subjectsChoosen && subjectsChoosen.length > 0">
+        <h5 class="px-0">Ju zgjodhët lëndët</h5>
+        <p-table #dt dataKey="key" responsiveLayout="scroll" [value]="subjectsChoosen" [rows]="10" class="px-0 mt-5"
+            [rowHover]="true">
+
+            <ng-template pTemplate="header">
+                <tr>
+
+                    <th pSortableColumn="name" class="px-0">
+                        Emri
+                    </th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-subject let-rowIndex="rowIndex">
+                <tr>
+
+                    <td style="width: 100%; min-width: 10rem" class="px-0">
+                        {{ subject.value }}
+                    </td>
+                    <td>
+                        <div class="flex">
+
+                            <button pButton pRipple icon="pi pi-trash" (click)="onDeleteClick(rowIndex)"
+                                class="p-button-rounded p-button-danger p-button-text" pTooltip="Fshi"
+                                tooltipPosition="bottom"></button>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+    </div>
+    <small class="p-error block" *ngIf="submitted && subjectsChoosen.length !== 2">
+        *Duhen zgjedhur 2 lëndë
+    </small>
+    <div class="field w-8 mt-5">
+        <label for="isA1">Kodi i mbikqyrësit</label>
+        <input type="text" pInputText id="overSeerCode" class="w-full" name="overSeerCode" />
+    </div>
     <div class="flex justify-content-end">
         <button type="button" pButton icon="pi pi-times" label="Anullo" class="p-button-text w-auto mr-2"
             (click)="onCancelClick()"></button>

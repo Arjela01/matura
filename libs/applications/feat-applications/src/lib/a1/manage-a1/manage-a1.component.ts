@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { A1ApiService } from '@msh/applications/data-access-applications';
 import { A1 } from '@msh/applications/domain-application';
+import { ExamSubjectApiService } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   GlobalToastService,
@@ -14,10 +15,12 @@ import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { A1FormComponent } from '../a1-form/a1-form.component';
 import { A1GridComponent } from '../a1-grid/a1-grid.component';
+import { ManageStudentsGridsDialogComponent } from '../manage-students-grids-dialog/manage-students-grids-dialog.component';
 @Component({
   selector: 'manage-a1',
   standalone: true,
@@ -34,27 +37,39 @@ import { A1GridComponent } from '../a1-grid/a1-grid.component';
   templateUrl: './manage-a1.component.html',
   styleUrls: ['./manage-a1.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ConfirmationService],
+  providers: [ConfirmationService, DialogService],
 })
 @UntilDestroy()
 export class ManageA1Component {
   private a1$$ = new BehaviorSubject<A1[]>([]);
   a1$ = this.a1$$.asObservable();
   filters: LazyLoadEvent | null = null;
-
+  students: any[] = [];
   totalRecords = 0;
   selectedA1: A1 | null = null;
   selectedA1Forms: A1[] = [];
   displayForm = false;
   d3Dropdown: DropdownModel<number>[] = [];
+  d3SubjectFilters = {
+    first: 0,
+    rows: 10,
+    sortOrder: 1,
+    filters: {},
+    globalFilter: null,
+  };
+  d3Subject: DropdownModel<number>[] = [];
+  ref: DynamicDialogRef | null = null;
+  optionalSubjects: DropdownModel<number>[] = [];
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly a1ApiService: A1ApiService,
-    private router: Router
+    private examSubjectService: ExamSubjectApiService,
+    private dialogService: DialogService
   ) {
     this.getD3Subjects();
+    this.getOptionalSubjects();
   }
 
   onNewClick() {
@@ -178,6 +193,47 @@ export class ManageA1Component {
       });
   }
   getD3Subjects() {
-    this.d3Dropdown = this.a1ApiService.loadD3Subjects();
+    this.examSubjectService
+      .loadExamSubjects(this.d3SubjectFilters)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.d3Subject = response.data
+          .filter(exam => exam.examTypeName === 'D3')
+          .map(data => {
+            return {
+              key: data.id,
+              parentKey: data.id,
+              value: data.name,
+            } as any;
+          });
+      });
+  }
+  getOptionalSubjects() {
+    this.examSubjectService
+      .loadExamSubjects(this.d3SubjectFilters)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.optionalSubjects = response.data
+          .filter(exam => exam.isOptional)
+          .map(data => {
+            return {
+              key: data.id,
+              parentKey: data.id,
+              value: data.name,
+            } as any;
+          });
+      });
+  }
+  openDialog() {
+    this.ref = this.dialogService.open(ManageStudentsGridsDialogComponent, {
+      width: '50%',
+      position: 'center',
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: true,
+      data: { students: this.students },
+    });
+
+    this.ref.onClose.subscribe((product: any) => {});
   }
 }

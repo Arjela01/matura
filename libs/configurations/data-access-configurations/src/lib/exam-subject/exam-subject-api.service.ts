@@ -13,7 +13,6 @@ import { Observable, catchError, map, shareReplay, throwError } from 'rxjs';
 })
 export class ExamSubjectApiService {
   constructor(private apiService: APIService) {}
-
   loadExamSubjects(event: LazyLoadEvent): Observable<ExamSubjectTableView> {
     return this.apiService.post(`/api/ExamSubject/TableData`, event);
   }
@@ -65,7 +64,7 @@ export class ExamSubjectApiService {
       {
         examTypeId: examTypeId,
         academicYearId: academicYearId,
-        id: id
+        id: id,
       }
     );
   }

@@ -1,0 +1,66 @@
+<p-table #dt dataKey="id" responsiveLayout="scroll" [rows]="10" [rowHover]="true">
+    <ng-template pTemplate="caption">
+        <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+            <h5 class="m-0">Zgjidh Studentët</h5>
+
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+
+            <th pSortableColumn="studentID">
+                ID
+            </th>
+            <th pSortableColumn="studentFirstName">
+                Emri
+            </th>
+            <th pSortableColumn="studentFatherName">
+                Atësia
+            </th>
+            <th pSortableColumn="studentLastName">
+                Mbiemri
+            </th>
+            <th pSortableColumn="nid">
+                NID
+
+            </th>
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-a1>
+        <tr>
+
+            <td style="width: 10%; min-width: 10rem">
+                {{a1.academicYear}}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+                {{a1.studentFirstName}}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+                {{a1.studentFatherName}}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+                {{a1.studentLastName}}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+                {{a1.nid}}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+                {{a1.studentIdentifier}}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+                {{a1.studentOldIdentifier}}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+                {{a1.isApplyingToForeignCountries}}
+            </td>
+            <td>
+                <div class="flex">
+                    <button pButton pRipple label="Zgjidh" class="p-button-rounded p-button-success p-button-text mr-2"
+                        pTooltip="Ndrysho" tooltipPosition="bottom"></button>
+
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

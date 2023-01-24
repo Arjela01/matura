@@ -6,7 +6,9 @@ export interface A1 {
   studentLastName: string;
   nid: string;
   isApplyingToForeignCountries: boolean;
+  alreadyHaveDiploma: boolean;
   studentIdentifier: string;
   studentOldIdentifier: string;
   isA1: boolean;
+  overSeerCode: string;
 }
