@@ -48,6 +48,12 @@ export const CONFIGURATION_ROUTES: Route[] = [
         ).then(m => m.StudentsEditComponent),
   },
   {
+    path: 'archive-folder',
+    loadComponent: () =>
+      import('./archive-folder/manage-archive-folders/manage-archive-folders.component'
+        ).then(m => m.ManageArchiveFoldersComponent),
+  },
+  {
     path: 'administration-offices',
     loadComponent: () =>
       import(

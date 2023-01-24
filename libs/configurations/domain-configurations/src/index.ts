@@ -20,7 +20,7 @@ export * from './universities/university.model';
 export * from './university-departments/university-department.model';
 export * from './user/user.model';
 export * from './students/students.model';
-
+export * from './archive-folder/archive-folder.model';
 export * from './exam-type/exam-type.model';
 export * from './exam-subject/exam-subject.model';
 export * from './region/region.model'

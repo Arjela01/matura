@@ -1,0 +1,163 @@
+<p-table
+  #dt
+  dataKey="id"
+  responsiveLayout="scroll"
+  [value]="archiveFolders"
+  [totalRecords]="totalRecords"
+  [rows]="10"
+  [paginator]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
+  [rowHover]="true"
+  [(selection)]="selectedArchiveFolders"
+  selectionMode="multiple"
+  (onRowSelect)="onRowSelect($event)"
+  (onRowUnselect)="onRowUnselect($event)"
+  (onLazyLoad)="loadRows($event)"
+  [lazy]="true">
+  <ng-template pTemplate="caption">
+    <div
+      class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+      <h5 class="m-0">Menaxho Dosjet</h5>
+      <span class="block mt-2 md:mt-0 p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+          pInputText
+          type="text"
+          placeholder="Kërko..."
+          class="w-full sm:w-auto" />
+      </span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 3rem">
+        <p-tableHeaderCheckbox (click)="onSelectAllClick()">
+        </p-tableHeaderCheckbox>
+      </th>
+      <th pSortableColumn="folder">
+        Dosja
+        <p-sortIcon field="folder"></p-sortIcon>
+        <p-columnFilter
+          type="numeric"
+          field="folder"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="total">
+        Total
+        <p-sortIcon field="total"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="total"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="examType">
+        Tipi i Provimit
+        <p-sortIcon field="examType"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="examType"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="operator">
+        Operatori
+        <p-sortIcon field="operator"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="operator"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="status">
+        Statusi
+        <p-sortIcon field="status"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="status"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="activateFolder">
+        Aktivizo Dosjen
+        <p-sortIcon field="activateFolder"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="activateFolder"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="dropBarcode">
+        Hidh BarKode
+        <p-sortIcon field="dropBarcode"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="dropBarcode"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="deleteFolder">
+        Fshi Dosjen
+        <p-sortIcon field="deleteFolder"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="deleteFolder"
+          display="menu"></p-columnFilter>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-archiveFolder>
+    <tr>
+      <td>
+        <p-tableCheckbox [value]="archiveFolder"></p-tableCheckbox>
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ archiveFolder.code }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ archiveFolder.name }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ archiveFolder.name }}
+      </td>
+      <td style="width: 20%; min-width: 10rem">
+        {{ archiveFolder.administrationOfficeName }}
+      </td>
+      <td>
+        <span [class]="'customer-badge status-' + archiveFolder.status">{{archiveFolder.status}}</span>
+      </td>
+      <td>
+        <div class="flex">
+          <button
+            pButton
+            pRipple
+            icon="pi pi-folder-open"
+            class="p-button-rounded p-button-warning p-button-text mr-2"
+            pTooltip="Aktivizo Dosjen"
+            tooltipPosition="bottom"
+            (click)="onEditClick(archiveFolder)"></button>
+        </div>
+      </td>
+      <td>
+        <div class="flex">
+          <button
+            pButton
+            pRipple
+            icon="pi pi-qrcode"
+            class="p-button-rounded p-button-warning p-button-text mr-2"
+            pTooltip="Ndrysho"
+            tooltipPosition="bottom"
+            (click)="onEditClick(archiveFolder)"></button>
+        </div>
+      </td>
+      <td>
+        <div class="flex">
+          <button
+            pButton
+            pRipple
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-danger p-button-text"
+            pTooltip="Fshi"
+            tooltipPosition="bottom"
+            (click)="onDeleteClick(archiveFolder)"></button>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

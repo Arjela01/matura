@@ -1,0 +1,62 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="AdministrationOffice">DAR/ZA *</label>
+    <p-dropdown
+      id="AdministrationOffice"
+      [options]="examTypes"
+      optionValue="key"
+      optionLabel="value"
+      name="administrationOfficeId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="archiveFolder.name"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !highSchool.administrationOfficeId
+      }">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !highSchool.administrationOfficeId">
+      DAR/ZA është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field mb-5">
+    <label for="Region">Rrethi *</label>
+    <p-dropdown
+      id="Region"
+      [options]="regions"
+      name="regionId"
+      optionValue="key"
+      optionLabel="value"
+      [(ngModel)]="highSchool.regionId"
+      [autoDisplayFirst]="false"
+      (onChange)="onRegionChange($event)"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !highSchool.regionId
+      }">
+    </p-dropdown>
+    <small class="p-error block" *ngIf="submitted && !highSchool.regionId">
+      Rrethi është fushë e kërkuar.
+    </small>
+  </div>
+
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      type="submit"
+      pButton
+      icon="pi pi-check"
+      label="Ruaj"
+      class="p-button-text w-auto"
+      (click)="onSubmit()"></button>
+  </div>
+</form>

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import {
-  Ar,
-  Folders,
-} from '@msh/configurations/domain-configurations';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
+import {
+  ArchiveFolder,
+  ArchiveFolderTableView
+} from "../../../../domain-configurations/src/archive-folder/archive-folder.model";
 
 @Injectable({
   providedIn: 'root',
@@ -16,31 +16,31 @@ export class ArchiveFolderApiService {
 
   loadDropDownList(): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
-      '/Folders/DropdownList'
+      '/ArchiveFolder/DropdownList'
     );
   }
 
-  loadHighSchools(event: LazyLoadEvent): Observable<FoldersTableView> {
-    return this.apiService.post(`/Folders/TableData`, event);
+  loadArchiveFolder(event: LazyLoadEvent): Observable<ArchiveFolderTableView> {
+    return this.apiService.post(`/ArchiveFolder/TableData`, event);
   }
 
-  save(folder: Folders): Observable<ApiResult<Folders>> {
-    return this.apiService.post<ApiResult<Folders>, Folders>(
-      `/Folders`,
+  save(folder: ArchiveFolder): Observable<ApiResult<ArchiveFolder>> {
+    return this.apiService.post<ApiResult<ArchiveFolder>, ArchiveFolder>(
+      `/ArchiveFolder`,
       folder
     );
   }
 
-  update(folder: Folders): Observable<ApiResult<Folders>> {
-    return this.apiService.put<ApiResult<Folders>, Folders>(
-      `/Folders`,
-      folder
+  update(archiveFolder: ArchiveFolder): Observable<ApiResult<ArchiveFolder>> {
+    return this.apiService.put<ApiResult<ArchiveFolder>, ArchiveFolder>(
+      `/ArchiveFolder`,
+      archiveFolder
     );
   }
 
-  delete(folderId: number): Observable<ApiResult<unknown>> {
-    return this.apiService.delete<ApiResult<Folders>>(
-      `/Folders/${folderId}`
+  delete(archiveFolderId: number): Observable<ApiResult<unknown>> {
+    return this.apiService.delete<ApiResult<ArchiveFolder>>(
+      `/ArchiveFolder/${archiveFolderId}`
     );
   }
 }
