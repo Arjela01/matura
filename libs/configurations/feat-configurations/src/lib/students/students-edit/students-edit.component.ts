@@ -94,7 +94,7 @@ loading = false;
     middleName: "",
     mobilePhone: "",
     oldId: "",
-    schoolFinished: 0,
+    schoolFinished: "",
     schoolProfile: "",
     highSchoolName: "",
     schoolName: "",
@@ -107,7 +107,7 @@ loading = false;
     profileName: "",
     firstName: '',
     isConfirmedBySupervisor: true,
-    graduationYear: 0
+    graduationYear: new Date(),
   };
   // eslint-disable-next-line @typescript-eslint/no-empty-function
 

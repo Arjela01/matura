@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import {CommonModule, formatDate} from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -95,7 +95,7 @@ export class StudentsFormComponent implements OnChanges {
     middleName: "",
     mobilePhone: "",
     oldId: "",
-    schoolFinished: 0,
+    schoolFinished: "",
     schoolProfile: "",
     highSchoolName: "",
     schoolName: "",
@@ -109,7 +109,7 @@ export class StudentsFormComponent implements OnChanges {
     schoolFinishedName: "",
 
     isConfirmedBySupervisor: true,
-    graduationYear: 0
+    graduationYear: new Date(),
   };
   // eslint-disable-next-line @typescript-eslint/no-empty-function
 

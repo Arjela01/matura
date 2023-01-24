@@ -94,7 +94,7 @@ export class StudentViewComponent implements OnChanges {
 
     oldId: "",
     profileId: 0,
-    schoolFinished: 0,
+    schoolFinished: "",
     schoolProfile: "",
     highSchoolName: "",
     schoolName: "",
@@ -105,7 +105,7 @@ export class StudentViewComponent implements OnChanges {
     schoolFinishedName: "",
     firstName: '',
     isConfirmedBySupervisor: true,
-    graduationYear: 0
+    graduationYear: new Date(),
   };
   // eslint-disable-next-line @typescript-eslint/no-empty-function
 

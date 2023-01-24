@@ -18,14 +18,14 @@ export interface Student {
   oldId: string;
   schoolName: string;
   genderName: string;
-  schoolFinished: number;
+  schoolFinished: string;
   schoolProfile: string;
   profileId?: number;
   profileName: string;
   session?: string;
   studentId: string;
   studyClass?: string;
-  graduationYear?: number;
+  graduationYear?: Date;
   highSchoolName: string;
   isFall: boolean;
   registrationYear?: string;
