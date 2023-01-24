@@ -48,14 +48,14 @@
   <div class="field">
     <label for="date">Data *</label>
     <input
-      type="string"
+      placeholder="dd/mm/yyyy"
       pInputText
       id="date"
       name="date"
-      [(ngModel)]="examDate.formatedDate"
+      [(ngModel)]="date"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examDate.date }" />
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examDate.date}" />
     <small class="p-error block" *ngIf="submitted && !examDate.date">
       Data është fushë e kërkuar.
     </small>

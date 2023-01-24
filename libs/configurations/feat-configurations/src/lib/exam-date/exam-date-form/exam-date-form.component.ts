@@ -18,6 +18,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import * as moment from 'moment';
 
 @Component({
   selector: 'msh-exam-date-form',
@@ -41,14 +42,13 @@ export class ExamDateFormComponent {
 
   @Input() examTypes: DropdownModel<number>[] = [];
   @Input() examSites: DropdownModel<number>[] = [];
+  date: any;
 
   @Input() set examDatesDetails(details: ExamDate | null) {
     if (details) {
       this.examDate = Object.assign({}, details);
-      const date = details.date.toDateString();
-      this.examDate.formatedDate = date;
-      this.examDate.date
-
+      this.examDate.date = this.date
+      this.date =  moment().format('DD/MM/YYYY ');
     }
   }
 
@@ -66,7 +66,6 @@ export class ExamDateFormComponent {
     examTypeName:'',
     examSiteId:0,
     examSiteName:'',
-    formatedDate: ''
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function

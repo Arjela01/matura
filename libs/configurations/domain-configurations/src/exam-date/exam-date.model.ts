@@ -6,7 +6,6 @@ export interface ExamDate{
   examSiteName:string;
   examTypeId: number;
   examTypeName?: string;
-  formatedDate?:string;
 }
 
 export interface ExamDateTableView {
