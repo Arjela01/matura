@@ -27,7 +27,7 @@ import {
 } from "@msh/configurations/data-access-configurations";
 import { Student } from '@msh/configurations/domain-configurations';
 import {Router} from "@angular/router";
-import {MessageService} from "primeng/api";
+import {LazyLoadEvent, MessageService} from "primeng/api";
 
 @Component({
   selector: 'msh-students-form',
@@ -55,6 +55,8 @@ export class StudentsFormComponent implements OnChanges {
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
+
+
 
   highSchool: DropdownModel<number>[] = [];
   genders: DropdownModel<number>[] = [];

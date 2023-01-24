@@ -28,7 +28,6 @@ import {
 import { Student } from '@msh/configurations/domain-configurations';
 import {ActivatedRoute, Router} from "@angular/router";
 import {MessageService} from "primeng/api";
-import {untilDestroyed} from "@ngneat/until-destroy";
 
 @Component({
   selector: 'msh-students-form',
@@ -132,7 +131,7 @@ export class StudentViewComponent implements OnChanges {
       this.cd.detectChanges();
     });
     this.getHighSchools();
-    //this.getGenders();
+    this.getGenders();
     this.getProfiles();
   }
 

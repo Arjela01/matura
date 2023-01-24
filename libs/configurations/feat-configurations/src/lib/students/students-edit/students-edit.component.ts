@@ -64,7 +64,7 @@ export class StudentsEditComponent implements OnChanges {
   academicYears: DropdownModel<number>[] = [];
   saving= false;
   graduationYear: any;
-  private id: any;
+  id : any;
   @Input() set studentDetails(details: Student | null) {
     if (details) {
       this.student = Object.assign({}, details);
@@ -126,11 +126,9 @@ loading = false;
     this.id = this.route.snapshot.paramMap.get('id')
   }
   ngOnInit(): void {
-    // this.studentService.getById(this.id).subscribe(result => {
-    //   this.student = {...result.data};
-    //   this.cd.detectChanges();
-    // });
-    this.highSchoolService.loadDropDownList().subscribe(response => {
+    this.studentService.getById(this.id).subscribe(result => {
+
+      this.highSchoolService.loadDropDownList().subscribe(response => {
       this.highSchool = response.data;
     });
     this.genderService.loadDropdownList().subscribe(response => {
@@ -138,6 +136,11 @@ loading = false;
     });
     this.profileService.loadDropdownList().subscribe(response => {
       this.schoolProfile = response.data;
+    });
+
+
+      this.student = {...result.data};
+      this.cd.detectChanges();
     });
   }
 
