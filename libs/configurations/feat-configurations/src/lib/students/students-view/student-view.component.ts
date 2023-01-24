@@ -9,7 +9,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { FormsModule, NgForm} from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -18,16 +18,18 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import {CalendarModule} from 'primeng/calendar';
-import {InputMaskModule} from "primeng/inputmask";
+import { CalendarModule } from 'primeng/calendar';
+import { InputMaskModule } from 'primeng/inputmask';
 import {
-  AcademicYearApiService, GendersApiService,
-  HighSchoolApiService, ProfileApiService,
-  StudentsApiService
-} from "@msh/configurations/data-access-configurations";
+  AcademicYearApiService,
+  GendersApiService,
+  HighSchoolApiService,
+  ProfileApiService,
+  StudentsApiService,
+} from '@msh/configurations/data-access-configurations';
 import { Student } from '@msh/configurations/domain-configurations';
-import {ActivatedRoute, Router} from "@angular/router";
-import {MessageService} from "primeng/api";
+import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'msh-students-form',
@@ -50,7 +52,6 @@ import {MessageService} from "primeng/api";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StudentViewComponent implements OnChanges {
-
   @Output() formSave = new EventEmitter<Student>();
   @Output() formClose = new EventEmitter<undefined>();
 
@@ -62,54 +63,49 @@ export class StudentViewComponent implements OnChanges {
   session: DropdownModel<number>[] = [];
   schoolProfiles: DropdownModel<number>[] = [];
   academicYears: DropdownModel<number>[] = [];
-  saving= false;
+  saving = false;
   @Input() set studentDetails(details: Student | null) {
     if (details) {
       this.student = Object.assign({}, details);
     }
   }
 
-
-
   showStudent = false;
   submitted = false;
 
-
-
   student: Student = {
     birthDate: new Date(),
-    birthPlace: "",
-    email: "",
+    birthPlace: '',
+    email: '',
     genderId: 1,
-    idCard: "",
+    idCard: '',
     isA2A3: true,
     isEAlbaniaApplication: true,
     isFall: false,
-    lastName: "",
-    highSchool: "",
-    middleName: "",
-    mobilePhone: "",
-    profileName: "",
-    genderName: "",
-
-    oldId: "",
+    lastName: '',
+    highSchool: '',
+    middleName: '',
+    mobilePhone: '',
+    profileName: '',
+    genderName: '',
+    oldID: '',
     profileId: 0,
-    schoolFinished: "",
-    schoolProfile: "",
-    highSchoolName: "",
-    schoolName: "",
+    schoolFinished: '',
+    schoolProfile: '',
+    highSchoolName: '',
+    schoolName: '',
     highSchoolId: 0,
-    session: "",
-    studentId: "",
-    studyClass: "",
-    schoolFinishedName: "",
+    session: '',
+    studentId: '',
+    studyClass: '',
+    schoolFinishedName: '',
     firstName: '',
     isConfirmedBySupervisor: true,
     graduationYear: undefined,
   };
   // eslint-disable-next-line @typescript-eslint/no-empty-function
 
-  id : any;
+  id: any;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -122,14 +118,13 @@ export class StudentViewComponent implements OnChanges {
     private messageService: MessageService,
 
     private route: ActivatedRoute
-
   ) {
-    this.id = this.route.snapshot.paramMap.get('id')
+    this.id = this.route.snapshot.paramMap.get('id');
   }
 
   ngOnInit(): void {
     this.studentService.getById(this.id).subscribe(result => {
-      this.student = {...result.data};
+      this.student = { ...result.data };
       this.cd.detectChanges();
     });
     this.getHighSchools();
@@ -164,7 +159,6 @@ export class StudentViewComponent implements OnChanges {
       });
   }
 
-
   ngOnChanges(): void {
     console.log(this.student.highSchoolId);
     // eslint-disable-next-line max-len
@@ -175,5 +169,4 @@ export class StudentViewComponent implements OnChanges {
     console.log($event);
     this.showStudent = $event.value;
   }
-
 }

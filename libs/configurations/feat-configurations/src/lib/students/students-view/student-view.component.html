@@ -36,7 +36,7 @@
               name="IsFall"
               [value]="true"
               [(ngModel)]="student.isFall"
-              [disabled]="student.isFall"
+              [disabled]="true"
             ></p-radioButton>
             <label for="IsFallTrue">Po</label>
           </div>
@@ -44,36 +44,14 @@
             <p-radioButton
               id="IsFallFalse"
               name="IsFall"
+              [disabled]="true"
               [value]="false"
               [(ngModel)]="student.isFall"
-              [disabled]="student.isFall"
             ></p-radioButton>
             <label for="IsFallFalse">Jo</label>
           </div>
         </div>
       </div>
-
-<!--      <div class="field" [style]="{ width: '500px' }">-->
-<!--        <label class="mb-3">Është A2A3? *</label>-->
-<!--        <div class="formgrid grid">-->
-<!--          <div class="field-radiobutton col-6">-->
-<!--            <p-radioButton-->
-<!--              id="isA2A3True"-->
-<!--              name="isA2A3"-->
-<!--              [value]="true"-->
-<!--              [(ngModel)]="student.isA2A3"></p-radioButton>-->
-<!--            <label for="isA2A3True">Po</label>-->
-<!--          </div>-->
-<!--          <div class="field-radiobutton col-6">-->
-<!--            <p-radioButton-->
-<!--              id="isA2A3False"-->
-<!--              name="isA2A3"-->
-<!--              [value]="false"-->
-<!--              [(ngModel)]="student.isA2A3"></p-radioButton>-->
-<!--            <label for="isA2A3False">Jo</label>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
 
       <div class="field" [style]="{ width: '500px' }">
         <label for="SchoolFinished">Shkolla qe kam perfunduar </label>
@@ -90,15 +68,13 @@
         <label for="graduationYear"
           >Viti i përfundimit te shkollës së mesme? </label
         >
-        <p-calendar
-          [(ngModel)]="student.graduationYear"
-          dateFormat="yy"
-          view="year"
-          inputId="graduationYear"
+        <input
+          type="text"
+          pInputText
           id="graduationYear"
           name="graduationYear"
-          disabled
-         ></p-calendar>
+          [(ngModel)]="student.graduationYear"
+          disabled />
       </div>
 
       <div class="field" [style]="{ width: '500px' }">
@@ -113,13 +89,13 @@
       </div>
 
       <div class="field" [style]="{ width: '500px' }">
-        <label for="OldID">ID e vjetër e maturës </label>
+        <label for="oldID">ID e vjetër e maturës </label>
         <input
           type="number"
           pInputText
-          id="OldID"
-          name="OldID"
-          [(ngModel)]="student.oldId"
+          id="oldID"
+          name="oldID"
+          [(ngModel)]="student.oldID"
           disabled />
       </div>
       <div class="field" [style]="{ width: '500px' }">
@@ -128,7 +104,7 @@
           type="number"
           pInputText
           id="studentId"
-          name="OldID"
+          name="studentId"
           [(ngModel)]="student.studentId"
           disabled />
       </div>
@@ -150,7 +126,7 @@
           type="text"
           pInputText
           id="middleName"
-          name="firstName"
+          name="middleName"
           [(ngModel)]="student.middleName"
           disabled />
       </div>
@@ -168,13 +144,13 @@
 
       <div class="field" [style]="{ width: '500px' }">
         <label for="birthDate">Datëlindja  </label>
-        <p-calendar
-          [(ngModel)]="student.birthDate"
-          dateFormat="dd-mm-yy"
-          inputId="birthDate"
+        <input
+          type="text"
+          pInputText
           id="birthDate"
           name="birthDate"
-          disabled></p-calendar>
+          value="{{student.birthDate | date: 'dd/MM/yyyy'}}"
+          disabled />
       </div>
 
       <div class="field" [style]="{ width: '500px' }">
@@ -235,7 +211,7 @@
       <div class="field" [style]="{ width: '500px' }">
         <label for="Cel">Cel </label>
         <input
-          type="cel"
+          type="tel"
           pInputText
           id="Cel"
           name="Cel"

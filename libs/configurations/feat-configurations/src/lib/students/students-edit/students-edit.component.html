@@ -1,7 +1,6 @@
 <div class="grid">
   <div class="col-12 p-fluid">
     <div class="card px-6 py-6">
-      <!-- Here goes the form -->
       <h2 class="flex-1 mb-4">Ndrysho Maturantin</h2>
 
       <form #form="ngForm" (ngSubmit)="update()">
@@ -17,10 +16,12 @@
             [autoDisplayFirst]="false"
             [showClear]="true"
             [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !student.highSchoolId
-      }">
+              'ng-invalid ng-dirty': submitted && !student.highSchoolId
+            }">
           </p-dropdown>
-          <small class="p-error block" *ngIf="submitted && !student.highSchoolId">
+          <small
+            class="p-error block"
+            *ngIf="submitted && !student.highSchoolId">
             Shkolla është fushë e kërkuar.
           </small>
         </div>
@@ -37,8 +38,8 @@
             [autoDisplayFirst]="false"
             [showClear]="true"
             [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !student.profileId
-      }">
+              'ng-invalid ng-dirty': submitted && !student.profileId
+            }">
           </p-dropdown>
           <small class="p-error block" *ngIf="submitted && !student.profileId">
             Profili shkollës është fushë e kërkuar.
@@ -67,28 +68,6 @@
           </div>
         </div>
 
-        <!--        <div class="field" [style]="{ width: '500px' }">-->
-        <!--    <label class="mb-3">Është A2A3? *</label>-->
-        <!--    <div class="formgrid grid">-->
-        <!--      <div class="field-radiobutton col-6">-->
-        <!--        <p-radioButton-->
-        <!--          id="isA2A3True"-->
-        <!--          name="isA2A3"-->
-        <!--          [value]="true"-->
-        <!--          [(ngModel)]="student.isA2A3"></p-radioButton>-->
-        <!--        <label for="isA2A3True">Po</label>-->
-        <!--      </div>-->
-        <!--      <div class="field-radiobutton col-6">-->
-        <!--        <p-radioButton-->
-        <!--          id="isA2A3False"-->
-        <!--          name="isA2A3"-->
-        <!--          [value]="false"-->
-        <!--          [(ngModel)]="student.isA2A3"></p-radioButton>-->
-        <!--        <label for="isA2A3False">Jo</label>-->
-        <!--      </div>-->
-        <!--    </div>-->
-        <!--  </div>-->
-
         <div class="field" [style]="{ width: '500px' }">
           <label for="SchoolFinished">Shkolla qe kam perfunduar *</label>
           <input
@@ -100,27 +79,35 @@
             [(ngModel)]="student.schoolFinished"
             autofocus
             [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !student.schoolFinished
-      }" />
-          <small class="p-error block" *ngIf="submitted && !student.schoolFinished">
+              'ng-invalid ng-dirty': submitted && !student.schoolFinished
+            }" />
+          <small
+            class="p-error block"
+            *ngIf="submitted && !student.schoolFinished">
             Shkolla që ke përfunduar është fushë e kërkuar.
           </small>
         </div>
 
         <div class="field" [style]="{ width: '500px' }">
           <label for="graduationYear"
-          >Viti i përfundimit te shkollës së mesme? *</label>
-          <p-calendar
-            [(ngModel)]="student.graduationYear"
-            dateFormat="yy"
-            view="year"
-            inputId="graduationYear"
+            >Viti i përfundimit te shkollës së mesme? *</label
+          >
+          <input
+            type="number"
+            pattern="/^-?\d+\.?\d*$/"
+            onKeyPress="if(this.value.length==4) return false;"
+            pInputText
             id="graduationYear"
             name="graduationYear"
+            [(ngModel)]="student.graduationYear"
+            required
+            autofocus
             [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !student.graduationYear
-      }"></p-calendar>
-          <small class="p-error block" *ngIf="submitted && !student.graduationYear">
+              'ng-invalid ng-dirty': submitted && !student.graduationYear
+            }" />
+          <small
+            class="p-error block"
+            *ngIf="submitted && !student.graduationYear">
             Viti i përfundimit te shkollës së mesme është fushë e kërkuar.
           </small>
         </div>
@@ -135,7 +122,9 @@
             [(ngModel)]="student.idCard"
             required
             autofocus
-            [ngClass]="{ 'ng-invalid ng-dirty': submitted && !student.idCard }" />
+            [ngClass]="{
+              'ng-invalid ng-dirty': submitted && !student.idCard
+            }" />
           <small class="p-error block" *ngIf="submitted && !student.idCard">
             Numri Personal është fushë e kërkuar.
           </small>
@@ -148,9 +137,11 @@
             pInputText
             id="OldID"
             name="OldID"
-            [(ngModel)]="student.oldId"
+            [(ngModel)]="student.oldID"
             autofocus
-            [ngClass]="{ 'ng-invalid ng-dirty': submitted && !student.oldId }" />
+            [ngClass]="{
+              'ng-invalid ng-dirty': submitted && !student.oldID
+            }" />
         </div>
 
         <div class="field" [style]="{ width: '500px' }">
@@ -163,7 +154,9 @@
             [(ngModel)]="student.firstName"
             required
             autofocus
-            [ngClass]="{ 'ng-invalid ng-dirty': submitted && !student.firstName }" />
+            [ngClass]="{
+              'ng-invalid ng-dirty': submitted && !student.firstName
+            }" />
           <small class="p-error block" *ngIf="submitted && !student.firstName">
             Emri është fushë e kërkuar.
           </small>
@@ -178,7 +171,9 @@
             name="middleName"
             [(ngModel)]="student.middleName"
             autofocus
-            [ngClass]="{ 'ng-invalid ng-dirty': submitted && !student.middleName }" />
+            [ngClass]="{
+              'ng-invalid ng-dirty': submitted && !student.middleName
+            }" />
         </div>
 
         <div class="field" [style]="{ width: '500px' }">
@@ -191,7 +186,9 @@
             [(ngModel)]="student.lastName"
             required
             autofocus
-            [ngClass]="{ 'ng-invalid ng-dirty': submitted && !student.lastName }" />
+            [ngClass]="{
+              'ng-invalid ng-dirty': submitted && !student.lastName
+            }" />
           <small class="p-error block" *ngIf="submitted && !student.lastName">
             Mbiemri është fushë e kërkuar.
           </small>
@@ -201,13 +198,13 @@
           <label for="birthDate">Datëlindja * </label>
           <p-calendar
             [(ngModel)]="student.birthDate"
-            dateFormat="dd-mm-yy"
+            dateFormat="dd/mm/yy"
             inputId="birthDate"
-            W      id="birthDate"
+            id="birthDate"
             name="birthDate"
             [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !student.birthDate
-      }"></p-calendar>
+              'ng-invalid ng-dirty': submitted && !student.birthDate
+            }"></p-calendar>
           <small class="p-error block" *ngIf="submitted && !student.birthDate">
             Datëlindja është fushë e kërkuar.
           </small>
@@ -223,7 +220,9 @@
             [(ngModel)]="student.birthPlace"
             required
             autofocus
-            [ngClass]="{ 'ng-invalid ng-dirty': submitted && !student.birthPlace }" />
+            [ngClass]="{
+              'ng-invalid ng-dirty': submitted && !student.birthPlace
+            }" />
           <small class="p-error block" *ngIf="submitted && !student.birthPlace">
             Vendlindja është fushë e kërkuar.
           </small>
@@ -240,8 +239,8 @@
             [(ngModel)]="student.genderId"
             [autoDisplayFirst]="false"
             [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !student.genderId
-      }">
+              'ng-invalid ng-dirty': submitted && !student.genderId
+            }">
           </p-dropdown>
           <small class="p-error block" *ngIf="submitted && !student.genderId">
             Gjinia është fushë e kërkuar.
@@ -252,17 +251,17 @@
           <label for="studyClass">Klasa *</label>
           <p-dropdown
             id="studyClass"
-            [options]="schoolProfile"
-            name="schoolProfile"
-            optionValue="key"
-            optionLabel="value"
+            [options]="studentClass"
+            name="studyClass"
             [(ngModel)]="student.studyClass"
             [autoDisplayFirst]="false"
             [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !student.schoolProfile
-      }">
+              'ng-invalid ng-dirty': submitted && !student.schoolProfile
+            }">
           </p-dropdown>
-          <small class="p-error block" *ngIf="submitted && !student.schoolProfile">
+          <small
+            class="p-error block"
+            *ngIf="submitted && !student.schoolProfile">
             Klasa është fushë e kërkuar.
           </small>
         </div>
@@ -271,17 +270,15 @@
           <label for="session">Seksioni *</label>
           <p-dropdown
             id="session"
-            [options]="schoolProfile"
-            name="schoolProfile"
-            optionValue="key"
-            optionLabel="value"
+            [options]="studentSection"
+            name="session"
             [(ngModel)]="student.session"
             [autoDisplayFirst]="false"
             [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !student.schoolProfile
-      }">
+              'ng-invalid ng-dirty': submitted && !student.session
+            }">
           </p-dropdown>
-          <small class="p-error block" *ngIf="submitted && !student.schoolProfile">
+          <small class="p-error block" *ngIf="submitted && !student.session">
             Seksioni shkollës është fushë e kërkuar.
           </small>
         </div>
@@ -296,7 +293,9 @@
             [(ngModel)]="student.email"
             required
             autofocus
-            [ngClass]="{ 'ng-invalid ng-dirty': submitted && !student.email }" />
+            [ngClass]="{
+              'ng-invalid ng-dirty': submitted && !student.email
+            }" />
           <small class="p-error block" *ngIf="submitted && !student.email">
             Email është fushë e kërkuar.
           </small>
@@ -305,21 +304,22 @@
         <div class="field" [style]="{ width: '500px' }">
           <label for="Cel">Cel *</label>
           <input
-            type="cel"
+            type="tel"
             pInputText
             id="Cel"
             name="Cel"
             [(ngModel)]="student.mobilePhone"
             required
             autofocus
-            [ngClass]="{ 'ng-invalid ng-dirty': submitted && !student.mobilePhone }" />
-          <small class="p-error block" *ngIf="submitted && !student.mobilePhone">
+            [ngClass]="{
+              'ng-invalid ng-dirty': submitted && !student.mobilePhone
+            }" />
+          <small
+            class="p-error block"
+            *ngIf="submitted && !student.mobilePhone">
             Cel është fushë e kërkuar.
           </small>
         </div>
-
-
-
 
         <div class="field" [style]="{ width: '500px' }">
           <label class="mb-3">Është Konfirmuar Nga Mbikëqyrësi? *</label>
@@ -343,27 +343,24 @@
           </div>
         </div>
 
-        <div class="flex justify-content-end">
+        <div class="flex justify-content-start">
+          <div class="flex justify-content-stat">
+            <button
+              type="submit"
+              pButton
+              icon="pi pi-check"
+              label="Ruaj"
+              class="p-button-text w-auto"></button>
+          </div>
+
           <a href="/configurations/students">
             <button
               type="button"
               pButton
               icon="pi pi-times"
               label="Anullo"
-              class="p-button-text w-auto mr-2">
-            </button>
+              class="p-button-text w-auto mr-2"></button>
           </a>
-          <div class="flex justify-content-end">
-            <button
-              type="submit"
-              pButton
-              icon="pi pi-check"
-              label="Ruaj"
-              class="p-button-text w-auto"
-              [disabled]="this.form.invalid"
-              >
-            </button>
-          </div>
         </div>
       </form>
     </div>

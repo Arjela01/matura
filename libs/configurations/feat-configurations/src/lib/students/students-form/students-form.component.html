@@ -87,64 +87,56 @@
           </div>
         </div>
 
-        <!--        <div class="field" [style]="{ width: '500px' }">-->
-        <!--    <label class="mb-3">Është A2A3? *</label>-->
-        <!--    <div class="formgrid grid">-->
-        <!--      <div class="field-radiobutton col-6">-->
-        <!--        <p-radioButton-->
-        <!--          id="isA2A3True"-->
-        <!--          name="isA2A3"-->
-        <!--          [value]="true"-->
-        <!--          [(ngModel)]="student.isA2A3"></p-radioButton>-->
-        <!--        <label for="isA2A3True">Po</label>-->
-        <!--      </div>-->
-        <!--      <div class="field-radiobutton col-6">-->
-        <!--        <p-radioButton-->
-        <!--          id="isA2A3False"-->
-        <!--          name="isA2A3"-->
-        <!--          [value]="false"-->
-        <!--          [(ngModel)]="student.isA2A3"></p-radioButton>-->
-        <!--        <label for="isA2A3False">Jo</label>-->
-        <!--      </div>-->
-        <!--    </div>-->
-        <!--  </div>-->
-
         <div class="field" [style]="{ width: '500px' }">
           <label for="SchoolFinished">Shkolla qe kam perfunduar *</label>
-          <input
-            type="text"
-            required
-            pInputText
-            id="SchoolFinished"
-            name="SchoolFinished"
-            [(ngModel)]="student.schoolFinished"
-            autofocus
-            [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !student.schoolFinished
-            }" />
-          <small
-            class="p-error block"
-            *ngIf="submitted && !student.schoolFinished">
-            Shkolla që ke përfunduar është fushë e kërkuar.
-          </small>
+          <div class="formgrid grid">
+            <div class="field-radiobutton col-6">
+              <p-radioButton
+                id="yes"
+                name="IsConfirmedBySupervisor"
+                [value]="true"
+                [(ngModel)]="finishedAtSameSchool"></p-radioButton>
+              <label for="IsConfirmedBySupervisorTrue">E njëjtë</label>
+            </div>
+            <div class="field-radiobutton col-6">
+              <p-radioButton
+                id="no"
+                name="IsConfirmedBySupervisor"
+                [value]="false"
+                [(ngModel)]="finishedAtSameSchool"></p-radioButton>
+              <label for="IsConfirmedBySupervisorFalse">Tjetër</label>
+            </div>
+          </div>
+
+          <div [hidden]="finishedAtSameSchool">
+            <input
+              type="text"
+              required
+              pInputText
+              id="SchoolFinished"
+              name="SchoolFinished"
+              [(ngModel)]="student.schoolFinished"
+              autofocus
+              [ngClass]="{
+                'ng-invalid ng-dirty': submitted && !student.schoolFinished
+              }" />
+            <small
+              class="p-error block"
+              *ngIf="submitted && !student.schoolFinished">
+              Shkolla që ke përfunduar është fushë e kërkuar.
+            </small>
+          </div>
         </div>
 
         <div class="field" [style]="{ width: '500px' }">
           <label for="graduationYear"
             >Viti i përfundimit te shkollës së mesme? *</label
           >
-          <!--    <p-calendar-->
-          <!--      [(ngModel)]="student.graduationYear"-->
-          <!--      dateFormat="yy"-->
-          <!--      view="year"-->
-          <!--      inputId="graduationYear"-->
-          <!--      id="graduationYear"-->
-          <!--      name="graduationYear"-->
-          <!--      [ngClass]="{-->
-          <!--        'ng-invalid ng-dirty': submitted && !student.graduationYear-->
-          <!--      }"></p-calendar>-->
           <input
-            type="number"
+            type="tel"
+            maxlength="4"
+            min="1990"
+            max="2050"
             pInputText
             id="graduationYear"
             name="graduationYear"
@@ -186,10 +178,10 @@
             pInputText
             id="OldID"
             name="OldID"
-            [(ngModel)]="student.oldId"
+            [(ngModel)]="student.oldID"
             autofocus
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !student.oldId
+              'ng-invalid ng-dirty': submitted && !student.oldID
             }" />
         </div>
 
@@ -247,9 +239,8 @@
           <label for="birthDate">Datëlindja * </label>
           <p-calendar
             [(ngModel)]="student.birthDate"
-            dateFormat="dd-mm-yy"
+            dateFormat="dd/mm/yy"
             inputId="birthDate"
-            W
             id="birthDate"
             name="birthDate"
             [ngClass]="{
@@ -301,10 +292,8 @@
           <label for="studyClass">Klasa *</label>
           <p-dropdown
             id="studyClass"
-            [options]="schoolProfile"
+            [options]="studentClass"
             name="schoolProfile"
-            optionValue="key"
-            optionLabel="value"
             [(ngModel)]="student.studyClass"
             [autoDisplayFirst]="false"
             [ngClass]="{
@@ -322,10 +311,8 @@
           <label for="session">Seksioni *</label>
           <p-dropdown
             id="session"
-            [options]="schoolProfile"
+            [options]="studentSection"
             name="schoolProfile"
-            optionValue="key"
-            optionLabel="value"
             [(ngModel)]="student.session"
             [autoDisplayFirst]="false"
             [ngClass]="{
@@ -360,7 +347,7 @@
         <div class="field" [style]="{ width: '500px' }">
           <label for="Cel">Cel *</label>
           <input
-            type="cel"
+            type="tel"
             pInputText
             id="Cel"
             name="Cel"

@@ -15,7 +15,7 @@ export interface Student {
   middleName: string;
   mobilePhone: string;
   highSchool: string;
-  oldId: string;
+  oldID: string;
   schoolName: string;
   genderName: string;
   schoolFinished: string;
