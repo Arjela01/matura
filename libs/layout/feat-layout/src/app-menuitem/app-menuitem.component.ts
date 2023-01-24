@@ -11,6 +11,7 @@ import {
   Component,
   HostBinding,
   Input,
+  OnChanges,
 } from '@angular/core';
 import {
   NavigationEnd,
@@ -113,7 +114,7 @@ import { filter } from 'rxjs';
     ]),
   ],
 })
-export class AppMenuitemComponent {
+export class AppMenuitemComponent implements OnChanges {
   @Input() item: any;
 
   @Input() index!: number;
@@ -144,6 +145,10 @@ export class AppMenuitemComponent {
     if (this.item.routerLink) {
       this.updateActiveStateFromRoute();
     }
+  }
+
+  ngOnChanges() {
+    this.active = this.item.expanded ?? false;
   }
 
   updateActiveStateFromRoute() {

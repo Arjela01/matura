@@ -25,10 +25,10 @@ export interface Student {
   session?: string;
   studentId: string;
   studyClass?: string;
-  graduationYear: any;
+  graduationYear?: number;
   highSchoolName: string;
   isFall: boolean;
-  registrationYear?: string;
+  registrationYearId?: number;
   schoolFinishedName: string;
 
 }

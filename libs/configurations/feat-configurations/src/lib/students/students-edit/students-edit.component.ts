@@ -63,6 +63,7 @@ export class StudentsEditComponent implements OnChanges {
   schoolProfile: DropdownModel<number>[] = [];
   academicYears: DropdownModel<number>[] = [];
   saving= false;
+  graduationYear: any;
   id : any;
   @Input() set studentDetails(details: Student | null) {
     if (details) {
@@ -106,7 +107,7 @@ loading = false;
     profileName: "",
     firstName: '',
     isConfirmedBySupervisor: true,
-    graduationYear: "",
+    graduationYear: undefined,
   };
   // eslint-disable-next-line @typescript-eslint/no-empty-function
 

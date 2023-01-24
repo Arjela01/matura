@@ -65,6 +65,7 @@ export class StudentsFormComponent implements OnChanges {
   schoolProfile: DropdownModel<number>[] = [];
   academicYears: DropdownModel<number>[] = [];
   saving= false;
+ graduationYear: any;
   @Input() set studentDetails(details: Student | null) {
     if (details) {
       this.student = Object.assign({}, details);
@@ -81,7 +82,6 @@ export class StudentsFormComponent implements OnChanges {
 
   student: Student = {
     birthDate: new Date(),
-    graduationYear: "" ,
     birthPlace: "",
     email: "",
     genderId: 0,
@@ -107,7 +107,10 @@ export class StudentsFormComponent implements OnChanges {
     profileName: "",
     firstName: '',
     schoolFinishedName: "",
+    registrationYearId: undefined,
+
     isConfirmedBySupervisor: true,
+    graduationYear: undefined,
   };
   // eslint-disable-next-line @typescript-eslint/no-empty-function
 
@@ -124,6 +127,7 @@ export class StudentsFormComponent implements OnChanges {
 
   ) {}
   ngOnInit(): void {
+    // todo ! maybe  switch to pipes
     this.highSchoolService.loadDropDownList().subscribe(response => {
       this.highSchool = response.data;
     });
@@ -133,6 +137,10 @@ export class StudentsFormComponent implements OnChanges {
     this.profileService.loadDropdownList().subscribe(response => {
       this.schoolProfile = response.data;
     });
+
+    this.academicYearService.loadDropdownList().subscribe(response => {
+      this.academicYears = response.data;
+    })
   }
 
   ngOnChanges(): void {
@@ -149,15 +157,13 @@ export class StudentsFormComponent implements OnChanges {
 
   onSubmit(): void {
     // eslint-disable-next-line max-len
-    console.log(this.student);
-    const data = {...this.student,};
+    const data = {...this.student};
 
     this.studentService.save(data)
       .subscribe(
         {
           next: value => {
             this.saving = false;
-            console.log(value);
 
             this.router.navigate(['/configurations/students']).then();
           },

@@ -46,6 +46,26 @@
   </div>
 
         <div class="field" [style]="{ width: '500px' }">
+          <label for="registrationYearId">Viti I Rregjistrimit *</label>
+          <p-dropdown
+            id="registrationYearId"
+            [options]="academicYears"
+            optionValue="key"
+            optionLabel="value"
+            name="academicYearId"
+            [autoDisplayFirst]="false"
+            [(ngModel)]="student.registrationYearId"
+            [showClear]="true">
+          </p-dropdown>
+          <small
+            class="p-error block"
+            *ngIf="submitted && !student.registrationYearId">
+            Viti I Rregjistrimit është fushë e kërkuar.
+          </small>
+        </div>
+
+
+        <div class="field" [style]="{ width: '500px' }">
     <label class="mb-3">Sesioni i Vjeshtës? *</label>
     <div class="formgrid grid">
       <div class="field-radiobutton col-6">
@@ -110,12 +130,29 @@
         <div class="field" [style]="{ width: '500px' }">
     <label for="graduationYear"
       >Viti i përfundimit te shkollës së mesme? *</label>
-          <label for="graduationYear">Year Picker</label>
-          <p-calendar [(ngModel)]="student.graduationYear"       id="graduationYear"
-                      name="graduationYear"
-                      view="year" dateFormat="yy" inputId="yearpicker"></p-calendar>
-        </div>
-
+<!--    <p-calendar-->
+<!--      [(ngModel)]="student.graduationYear"-->
+<!--      dateFormat="yy"-->
+<!--      view="year"-->
+<!--      inputId="graduationYear"-->
+<!--      id="graduationYear"-->
+<!--      name="graduationYear"-->
+<!--      [ngClass]="{-->
+<!--        'ng-invalid ng-dirty': submitted && !student.graduationYear-->
+<!--      }"></p-calendar>-->
+          <input
+            type="number"
+            pInputText
+            id="graduationYear"
+            name="graduationYear"
+            [(ngModel)]="student.graduationYear"
+            required
+            autofocus
+            [ngClass]="{ 'ng-invalid ng-dirty': submitted && !student.graduationYear }" />
+    <small class="p-error block" *ngIf="submitted && !student.graduationYear">
+      Viti i përfundimit te shkollës së mesme është fushë e kërkuar.
+    </small>
+  </div>
 
         <div class="field" [style]="{ width: '500px' }">
     <label for="IdCard">Karta Identitetit *</label>
