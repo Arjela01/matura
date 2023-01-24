@@ -1,4 +1,4 @@
-import { A1Z } from '../../../../../domain-applications/a1z/a1z.model';
+import { A1Z } from '../../../../../domain-applications';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CommonModule } from '@angular/common';
 import {
@@ -68,7 +68,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
 
   students = [
     {
-      id: 1,
+      id: '2B48CE26-E3EC-4A92-1BBD-08DAFE163D94',
       studentFirstName: 'Rei',
       studentLastName: 'Ikonomi',
       studentFatherName: 'Tomash',
@@ -93,34 +93,34 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
 
   a1z: A1Z = {
     id: 0,
-    academicYearId: 0,
-    studentInputData: '',
+    academicYearId: undefined,
+    studentInputData: undefined,
     isApplyingToForeignCountries: false,
-    a1ZCategoryId: '',
+    a1ZCategoryId: undefined,
     alreadyHaveDiploma: true,
-    carriedGradeAZ1: 0,
-    carriedGradeD1: 0,
-    carriedGradeD2: 0,
-    carriedGradeD3: 0,
-    carriedReasonAZ1: '',
-    carriedReasonD1: '',
-    carriedReasonD2: '',
-    carriedReasonD3: '',
-    carriedSubjectAZ1: '',
-    carriedSubjectD1: '',
-    carriedSubjectD2: '',
-    carriedSubjectD3: '',
+    carriedGradeAZ1: undefined,
+    carriedGradeD1: undefined,
+    carriedGradeD2: undefined,
+    carriedGradeD3: undefined,
+    carriedReasonAZ1: undefined,
+    carriedReasonD1: undefined,
+    carriedReasonD2: undefined,
+    carriedReasonD3: undefined,
+    carriedSubjectAZ1: undefined,
+    carriedSubjectD1: undefined,
+    carriedSubjectD2: undefined,
+    carriedSubjectD3: undefined,
     noCarriedSubjets: 0,
     noCarriedSubjetsZ: 0,
     isA1: false,
-    overSeerCode: '',
+    overSeerCode: undefined,
     studentId: '0867D567-E31A-4600-3464-08DAFB019942',
-    subjectD1: '',
-    subjectD2: '',
-    subjectD3: '',
-    subjectZ1: '',
-    yearOfSchoolA1Z: 0,
-    yearZ1: 0,
+    subjectD1: undefined,
+    subjectD2: undefined,
+    subjectD3: undefined,
+    subjectZ1: undefined,
+    yearOfSchoolA1Z: undefined,
+    yearZ1: undefined,
   };
 
   onSubmit() {
@@ -131,10 +131,6 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
         console.log(response);
       });
     }
-    this.a1zService.save(this.a1z).subscribe(response => {
-      console.log(response.data);
-    });
-    console.log(this.a1z);
   }
 
   constructor(
