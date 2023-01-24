@@ -155,7 +155,7 @@
         {{ student.lastName }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ student.birthDate }}
+        {{ student.birthDate | date: 'dd/MM/yyyy'}}
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ student.idCard }}
@@ -167,7 +167,7 @@
       {{ student.createdBy }}
     </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ student.birthDate }}
+        {{ student.createdDate | date: 'dd/MM/yyyy' }}
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ student.userID }}
