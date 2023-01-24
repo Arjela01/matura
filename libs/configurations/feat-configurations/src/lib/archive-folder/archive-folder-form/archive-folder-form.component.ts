@@ -19,6 +19,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'msh-archive-folder-form',
@@ -42,8 +43,9 @@ export class ArchiveFolderFormComponent  implements OnChanges {
   @Input() cities: DropdownModel<number>[] = [];
   @Input() regions: DropdownModel<number>[] = [];
   @Input() examTypes: DropdownModel<number>[] = [];
+  @Input() examVersion: DropdownModel<number>[] = [];
 
-  @Input() set archiveFolder(details: ArchiveFolder | null) {
+  @Input() set archiveFolders(details: ArchiveFolder | null) {
     if (details) {
       this.archiveFolder = Object.assign({}, details);
     }
@@ -59,14 +61,17 @@ export class ArchiveFolderFormComponent  implements OnChanges {
 
   archiveFolder: ArchiveFolder = {
     id: 0,
+    name: "",
+
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(private cd: ChangeDetectorRef,
+              private router: Router,) {}
 
   ngOnChanges(): void {
-    if (this. && this.archiveFolder.regionId) {
-      this.onRegionChange({ value: this.archiveFolder.id });
+    if (this.examTypes && this.archiveFolder.id) {
+      this.onExamTypeChange({ value: this.archiveFolder.id });
     }
   }
 
@@ -76,12 +81,12 @@ export class ArchiveFolderFormComponent  implements OnChanges {
 
   onSubmit() {
     this.submitted = true;
-    if (this.form.valid) {
-      this.formSave.emit(this.archiveFolder);
+    this.router.navigate(['/configurations/students']).then();
     }
-  }
 
-  onRegionChange($event: any) {
+
+  onExamTypeChange($event: any) {
+    // eslint-disable-next-line max-len
     this.examTypesFiltered = this.examTypes.filter(c => c.parentKey == $event.value);
   }
 }

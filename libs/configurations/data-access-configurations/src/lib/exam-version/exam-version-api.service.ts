@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {catchError, map, Observable, shareReplay, throwError} from 'rxjs';
 import {LazyLoadEvent} from 'primeng/api';
 import {ExamVersion, ExamVersionTableView} from "@msh/configurations/domain-configurations";
-import {ApiResult} from "@msh/shared/data-access-shared";
+import {ApiResult, DropdownModel} from "@msh/shared/data-access-shared";
 import {APIService} from "@msh/shared/util-shared";
 
 @Injectable({
@@ -11,7 +11,11 @@ import {APIService} from "@msh/shared/util-shared";
 export class ExamVersionApiService {
   constructor(private apiService: APIService) {
   }
-
+  loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
+    return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
+      `/ExamVersion/DropdownList`
+    );
+  }
   loadExamVersions(event: LazyLoadEvent): Observable<ExamVersionTableView> {
     return this.apiService.post(`/api/ExamVersion/TableData`, event)
 

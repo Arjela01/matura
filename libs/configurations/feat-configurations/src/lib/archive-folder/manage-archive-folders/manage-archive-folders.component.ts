@@ -10,7 +10,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 
 import {
   AdministrationOfficeApiService, ArchiveFolderApiService,
-  CityApiService, ExamTypeApiService,
+  CityApiService, ExamTypeApiService, ExamVersionApiService,
   HighSchoolApiService,
   RegionApiService,
 } from '@msh/configurations/data-access-configurations';
@@ -57,17 +57,21 @@ export class ManageArchiveFoldersComponent implements OnInit {
   selectedArchiveFolders: ArchiveFolder[] = [];
   displayModal = false;
   examType: DropdownModel<number>[] = [];
-
+  examVersion : DropdownModel<number>[] = [];
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly archiveFolderService: ArchiveFolderApiService,
     private readonly examTypeApiService: ExamTypeApiService,
+    private readonly examVersionApiService: ExamVersionApiService,
+
   ) {
   }
 
   ngOnInit(): void {
     this.getExamTypeDropdown();
+    this.getExamVersionDropdown();
+
   }
 
   onNewClick() {
@@ -212,5 +216,12 @@ export class ManageArchiveFoldersComponent implements OnInit {
         this.examType = response.data;
       });
   }
-
+  getExamVersionDropdown() {
+    this.examVersionApiService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.examVersion = response.data;
+      });
+  }
 }

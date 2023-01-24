@@ -148,7 +148,7 @@ export class StudentsFormComponent implements OnChanges {
 
   onSubmit(): void {
     // eslint-disable-next-line max-len
-    const data = {...this.student, graduationYear: this.graduationYear,};
+    const data = {...this.student,};
 
     this.studentService.save(data)
       .subscribe(

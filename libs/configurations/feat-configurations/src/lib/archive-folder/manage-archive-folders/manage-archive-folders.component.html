@@ -53,7 +53,7 @@
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
     <msh-archive-folder-form
-      [archiveFolder]="selectedArchiveFolder"
+      [archiveFolders]="selectedArchiveFolder"
       [examTypes]="examType"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
