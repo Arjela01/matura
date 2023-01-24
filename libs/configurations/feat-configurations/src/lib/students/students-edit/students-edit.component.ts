@@ -107,7 +107,7 @@ loading = false;
     profileName: "",
     firstName: '',
     isConfirmedBySupervisor: true,
-    graduationYear: new Date(),
+    graduationYear: undefined,
   };
   // eslint-disable-next-line @typescript-eslint/no-empty-function
 

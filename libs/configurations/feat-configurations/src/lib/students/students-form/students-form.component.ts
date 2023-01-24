@@ -107,9 +107,10 @@ export class StudentsFormComponent implements OnChanges {
     profileName: "",
     firstName: '',
     schoolFinishedName: "",
+    registrationYearId: undefined,
 
     isConfirmedBySupervisor: true,
-    graduationYear: new Date(),
+    graduationYear: undefined,
   };
   // eslint-disable-next-line @typescript-eslint/no-empty-function
 
@@ -126,6 +127,7 @@ export class StudentsFormComponent implements OnChanges {
 
   ) {}
   ngOnInit(): void {
+    // todo ! maybe  switch to pipes
     this.highSchoolService.loadDropDownList().subscribe(response => {
       this.highSchool = response.data;
     });
@@ -135,6 +137,10 @@ export class StudentsFormComponent implements OnChanges {
     this.profileService.loadDropdownList().subscribe(response => {
       this.schoolProfile = response.data;
     });
+
+    this.academicYearService.loadDropdownList().subscribe(response => {
+      this.academicYears = response.data;
+    })
   }
 
   ngOnChanges(): void {
@@ -151,14 +157,13 @@ export class StudentsFormComponent implements OnChanges {
 
   onSubmit(): void {
     // eslint-disable-next-line max-len
-    const data = {...this.student, graduationYear: this.graduationYear,};
+    const data = {...this.student};
 
     this.studentService.save(data)
       .subscribe(
         {
           next: value => {
             this.saving = false;
-            console.log(value);
 
             this.router.navigate(['/configurations/students']).then();
           },
