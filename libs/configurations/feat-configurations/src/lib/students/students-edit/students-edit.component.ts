@@ -84,6 +84,7 @@ loading = false;
     birthPlace: "",
     email: "",
     genderId: 0,
+    genderName: "",
     idCard: "",
     isA2A3: true,
     isEAlbaniaApplication: true,
@@ -93,7 +94,7 @@ loading = false;
     middleName: "",
     mobilePhone: "",
     oldId: "",
-    schoolFinished: "",
+    schoolFinished: 0,
     schoolProfile: "",
     highSchoolName: "",
     schoolName: "",
@@ -106,7 +107,7 @@ loading = false;
     profileName: "",
     firstName: '',
     isConfirmedBySupervisor: true,
-    graduationYear: ""
+    graduationYear: 0
   };
   // eslint-disable-next-line @typescript-eslint/no-empty-function
 
@@ -137,7 +138,6 @@ loading = false;
     this.profileService.loadDropdownList().subscribe(response => {
       this.schoolProfile = response.data;
     });
-
 
       this.student = {...result.data};
       this.cd.detectChanges();

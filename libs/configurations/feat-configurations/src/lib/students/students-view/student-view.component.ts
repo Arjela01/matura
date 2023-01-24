@@ -90,9 +90,11 @@ export class StudentViewComponent implements OnChanges {
     middleName: "",
     mobilePhone: "",
     profileName: "",
+    genderName: "",
+
     oldId: "",
     profileId: 0,
-    schoolFinished: "",
+    schoolFinished: 0,
     schoolProfile: "",
     highSchoolName: "",
     schoolName: "",
@@ -103,7 +105,7 @@ export class StudentViewComponent implements OnChanges {
     schoolFinishedName: "",
     firstName: '',
     isConfirmedBySupervisor: true,
-    graduationYear: ""
+    graduationYear: 0
   };
   // eslint-disable-next-line @typescript-eslint/no-empty-function
 

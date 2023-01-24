@@ -90,11 +90,12 @@ export class StudentsFormComponent implements OnChanges {
     isEAlbaniaApplication: true,
     isFall: false,
     lastName: "",
+    genderName: "",
     highSchool: "",
     middleName: "",
     mobilePhone: "",
     oldId: "",
-    schoolFinished: "",
+    schoolFinished: 0,
     schoolProfile: "",
     highSchoolName: "",
     schoolName: "",
@@ -108,7 +109,7 @@ export class StudentsFormComponent implements OnChanges {
     schoolFinishedName: "",
 
     isConfirmedBySupervisor: true,
-    graduationYear: ""
+    graduationYear: 0
   };
   // eslint-disable-next-line @typescript-eslint/no-empty-function
 
