@@ -2,7 +2,7 @@
   <div class="col-12 p-fluid">
     <div class="card px-6 py-6">
       <!-- Here goes the form -->
-      <div class="text-5xl font-semibold mb-5">MATURANTË</div>
+      <h2 class="flex-1 mb-4">Ndrysho Maturantin</h2>
 
       <form #form="ngForm" (ngSubmit)="update()">
         <div class="field" [style]="{ width: '500px' }">
@@ -149,12 +149,8 @@
             id="OldID"
             name="OldID"
             [(ngModel)]="student.oldId"
-            required
             autofocus
             [ngClass]="{ 'ng-invalid ng-dirty': submitted && !student.oldId }" />
-          <small class="p-error block" *ngIf="submitted && !student.oldId">
-            ID e vjetër e maturës është fushë e kërkuar.
-          </small>
         </div>
 
         <div class="field" [style]="{ width: '500px' }">
@@ -181,12 +177,8 @@
             id="middleName"
             name="middleName"
             [(ngModel)]="student.middleName"
-            required
             autofocus
             [ngClass]="{ 'ng-invalid ng-dirty': submitted && !student.middleName }" />
-          <small class="p-error block" *ngIf="submitted && !student.middleName">
-            Atesia është fushë e kërkuar.
-          </small>
         </div>
 
         <div class="field" [style]="{ width: '500px' }">

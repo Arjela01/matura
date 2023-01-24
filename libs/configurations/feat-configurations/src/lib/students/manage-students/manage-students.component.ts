@@ -1,5 +1,9 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+} from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -8,8 +12,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
-
-
 import {
   GlobalToastService,
   GridEvent,
@@ -17,12 +19,13 @@ import {
 } from '@msh/shared/util-shared';
 
 import { BehaviorSubject } from 'rxjs';
-import {StudentsFormComponent} from "../students-form/students-form.component";
-import {StudentsGridComponent} from "../students-grid/students-grid.component";
-import {HighSchool, Student} from "@msh/configurations/domain-configurations";
-import {StudentsApiService} from "@msh/configurations/data-access-configurations";
-import {StudentViewComponent} from "../students-view/student-view.component";
-import {StudentsEditComponent} from "../students-edit/students-edit.component";
+import { StudentsFormComponent } from '../students-form/students-form.component';
+import { StudentsGridComponent } from '../students-grid/students-grid.component';
+import { Student } from '@msh/configurations/domain-configurations';
+import { StudentsApiService } from '@msh/configurations/data-access-configurations';
+import { StudentViewComponent } from '../students-view/student-view.component';
+import { StudentsEditComponent } from '../students-edit/students-edit.component';
+import { RippleModule } from 'primeng/ripple';
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-students',
@@ -37,12 +40,12 @@ import {StudentsEditComponent} from "../students-edit/students-edit.component";
     ToolbarModule,
     StudentViewComponent,
     StudentsEditComponent,
+    RippleModule,
   ],
   templateUrl: './manage-students.component.html',
   styleUrls: ['./manage-students.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
-
 })
 export class ManageStudentsComponent implements OnInit {
   private studentList$$ = new BehaviorSubject<Student[]>([]);
@@ -76,12 +79,14 @@ export class ManageStudentsComponent implements OnInit {
     });
   }
 
-
   onGridEvent(event: GridEvent<Student | Student[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
         // eslint-disable-next-line max-len
-        this.selectedStudentList = [...this.selectedStudentList, event.data as Student];
+        this.selectedStudentList = [
+          ...this.selectedStudentList,
+          event.data as Student,
+        ];
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
         this.selectedStudentList = this.selectedStudentList.filter(u => {
@@ -159,6 +164,4 @@ export class ManageStudentsComponent implements OnInit {
           );
       });
   }
-
-
 }
