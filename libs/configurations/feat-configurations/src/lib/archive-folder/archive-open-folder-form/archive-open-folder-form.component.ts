@@ -22,7 +22,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'msh-archive-folder-form',
+  selector: 'msh-archive-open-folder-form',
   standalone: true,
   imports: [
     CommonModule,
@@ -35,11 +35,13 @@ import {Router} from "@angular/router";
     CheckboxModule,
     DropdownModule,
   ],
-  templateUrl: './archive-folder-form.component.html',
-  styleUrls: ['./archive-folder-form.component.scss'],
+  templateUrl: './archive-open-folder-form.component.html',
+  styleUrls: ['./archive-open-folder-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ArchiveFolderFormComponent  implements OnChanges {
+export class ArchiveOpenFolderFormComponent  implements OnChanges {
+
+
   @Input() cities: DropdownModel<number>[] = [];
   @Input() regions: DropdownModel<number>[] = [];
   @Input() examTypes: DropdownModel<number>[] = [];
@@ -79,10 +81,12 @@ export class ArchiveFolderFormComponent  implements OnChanges {
     this.formClose.emit();
   }
 
-  onSubmit() {
+
+  onOpen() {
     this.submitted = true;
-    this.router.navigate(['/configurations/students']).then();
-    }
+    this.router.navigate(['/configurations/add-barCode', ['id'] ]).then();
+
+  }
 
 
   onExamTypeChange($event: any) {

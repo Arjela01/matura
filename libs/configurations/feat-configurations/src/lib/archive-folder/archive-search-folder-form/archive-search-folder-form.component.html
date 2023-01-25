@@ -1,6 +1,6 @@
-<form #form="ngForm" (ngSubmit)="onSubmit()">
+<form #form="ngForm" (ngSubmit)="onSearchClick()">
   <div class="field">
-    <label for="examTypes">Tipet e Provimeve *</label>
+    <label for="examTypes">Tipet *</label>
     <p-dropdown
       id="examTypes"
       [options]="examTypes"
@@ -22,23 +22,20 @@
   </div>
 
   <div class="field mb-5">
-    <label for="Region">Versionet e Provimeve *</label>
-    <p-dropdown
-      id="Region"
-      [options]="examTypes"
-      name="regionId"
-      optionValue="key"
-      optionLabel="value"
+    <label for="Fodler">Dosja *</label>
+    <input
+      type="text"
+      pInputText
+      id="Fodler"
+      name="Fodler"
       [(ngModel)]="archiveFolder.id"
-      [autoDisplayFirst]="false"
-      (onChange)="onExamTypeChange($event)"
-      [showClear]="true"
+      required
+      autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !archiveFolder.id
-      }">
-    </p-dropdown>
+              'ng-invalid ng-dirty': submitted && !archiveFolder.id
+            }" />
     <small class="p-error block" *ngIf="submitted && !archiveFolder.id">
-      Rrethi është fushë e kërkuar.
+      Dosja është fushë e kërkuar.
     </small>
   </div>
 
@@ -55,8 +52,8 @@
       type="submit"
       pButton
       icon="pi pi-check"
-      label="Hap Dosjen"
+      label="Kerko"
       class="p-button-text w-auto"
-      (click)="onSubmit()"></button>
+      (click)="onSearchClick()"></button>
   </div>
 </form>

@@ -16,75 +16,49 @@
   (onRowUnselect)="onRowUnselect($event)"
   (onLazyLoad)="loadRows($event)"
   [lazy]="true">
-
+  <ng-template pTemplate="caption">
+    <div
+      class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+      <a href="/configurations/archive-folder">
+        <button
+          pButton
+          pRipple
+          label="Kthehu"
+          icon="pi pi-arrow-left"
+          class="p-button-danger mr-2"
+          [ngStyle]="{backgroundColor:'var(--bluegray-600)'}"
+        ></button>
+      </a>
+      <span class="block mt-2 md:col-3 p-input-icon-left">
+        <div class="p-inputgroup">
+          <input type="text" pInputText placeholder="Barkodi" />
+          <button
+            type="button"
+            pButton
+            pRipple
+            icon="pi pi-save"
+            label="Ruaj"
+            class="p-button-success mr-2"></button>
+        </div>
+      </span>
+    </div>
+  </ng-template>
   <ng-template pTemplate="header">
     <tr>
-      <th style="width: 3rem">
-        <p-tableHeaderCheckbox (click)="onSelectAllClick()">
-        </p-tableHeaderCheckbox>
-      </th>
       <th pSortableColumn="folder">
-        Dosja
+        Numri
         <p-sortIcon field="folder"></p-sortIcon>
         <p-columnFilter
           type="numeric"
           field="folder"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="total">
-        Total
-        <p-sortIcon field="total"></p-sortIcon>
+      <th pSortableColumn="barcode">
+        Barkodi
+        <p-sortIcon field="barcode"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="total"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="examType">
-        Tipi i Provimit
-        <p-sortIcon field="examType"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="examType"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="operator">
-        Operatori
-        <p-sortIcon field="operator"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="operator"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="status">
-        Statusi
-        <p-sortIcon field="status"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="status"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="activateFolder">
-        Aktivizo Dosjen
-        <p-sortIcon field="activateFolder"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="activateFolder"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="dropBarcode">
-        Hidh BarKode
-        <p-sortIcon field="dropBarcode"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="dropBarcode"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="deleteFolder">
-        Fshi Dosjen
-        <p-sortIcon field="deleteFolder"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="deleteFolder"
+          field="barcode"
           display="menu"></p-columnFilter>
       </th>
     </tr>
@@ -99,15 +73,6 @@
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ archiveFolder.name }}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ archiveFolder.name }}
-      </td>
-      <td style="width: 20%; min-width: 10rem">
-        {{ archiveFolder.administrationOfficeName }}
-      </td>
-      <td>
-        <span [class]="'customer-badge status-' + archiveFolder.status">{{archiveFolder.status}}</span>
       </td>
       <td>
         <div class="flex">

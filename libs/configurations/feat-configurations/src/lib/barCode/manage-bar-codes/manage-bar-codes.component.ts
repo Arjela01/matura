@@ -10,7 +10,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 
 import {
   ArchiveFolderApiService,
-   ExamTypeApiService, ExamVersionApiService,
+  ExamTypeApiService, ExamVersionApiService,
 
 } from '@msh/configurations/data-access-configurations';
 import {ArchiveFolder} from '@msh/configurations/domain-configurations';
@@ -23,45 +23,40 @@ import {
 } from '@msh/shared/util-shared';
 
 import { BehaviorSubject } from 'rxjs';
-import {RouterLink} from "@angular/router";
-import {ArchiveSearchFolderFormComponent} from "../archive-search-folder-form/archive-search-folder-form.component";
-import {ArchiveFolderGridComponent} from "../archive-folder-grid/archive-folder-grid.component";
-import {ArchiveOpenFolderFormComponent} from "../archive-open-folder-form/archive-open-folder-form.component";
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
+import {BarCodeFormComponent} from "../bar-code-form/bar-code-form.component";
+import {BarCodeGridComponent} from "../bar-code-grid/bar-code-grid.component";
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-manage-archive-folders',
+  selector: 'msh-manage-bar-codes',
   standalone: true,
   imports: [
     ButtonModule,
     CommonModule,
     DialogModule,
     ConfirmDialogModule,
-    ArchiveSearchFolderFormComponent,
-    ArchiveFolderGridComponent,
-    ArchiveOpenFolderFormComponent,
+    BarCodeFormComponent,
+    BarCodeGridComponent,
     ToolbarModule,
     RouterLink,
   ],
-  templateUrl: './manage-archive-folders.component.html',
-  styleUrls: ['./manage-archive-folders.component.scss'],
+  templateUrl: './manage-bar-codes.component.html',
+  styleUrls: ['./manage-bar-codes.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
-
 })
-export class ManageArchiveFoldersComponent implements OnInit {
+export class ManageBarCodesComponent implements OnInit {
   private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[]>([]);
   archiveFolders$ = this.archiveFolders$$.asObservable();
   filters: LazyLoadEvent | null = null;
   hideArchiveFolderForm = true;
-
+  saving= true;
   totalRecords = 0;
 
   selectedArchiveFolder: ArchiveFolder | null = null;
   selectedArchiveFolders: ArchiveFolder[] = [];
   displayModal = false;
-  displayModal1 = false;
-
   examType: DropdownModel<number>[] = [];
   examVersion : DropdownModel<number>[] = [];
   constructor(
@@ -70,6 +65,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
     private readonly archiveFolderService: ArchiveFolderApiService,
     private readonly examTypeApiService: ExamTypeApiService,
     private readonly examVersionApiService: ExamVersionApiService,
+    private router: Router
 
   ) {
   }
@@ -80,11 +76,15 @@ export class ManageArchiveFoldersComponent implements OnInit {
 
   }
 
+  onCloseClick(){
+    console.log(" succesfull")
+    this.saving = true;
+
+    this.router.navigate(['/configurations/students']).then();
+  }
+
   onNewClick() {
     this.displayModal = true;
-  }
-  onSearchClick() {
-    this.displayModal1 = true;
   }
 
   onDeleteSelectedClick() {
@@ -136,9 +136,6 @@ export class ManageArchiveFoldersComponent implements OnInit {
     }
   }
 
-  onModalClose1() {
-    this.displayModal = false;
-  }
   onModalClose() {
     this.displayModal = false;
   }

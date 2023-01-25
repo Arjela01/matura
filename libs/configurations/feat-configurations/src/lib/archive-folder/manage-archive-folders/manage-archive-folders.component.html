@@ -1,36 +1,47 @@
 <div class="grid">
   <div class="col-12">
     <div class="card px-6 py-6">
-      <!-- TODO: this can be reusable -->
-      <p-toolbar styleClass="mb-4">
-        <div class="p-toolbar-group-left">
+      <div class="flex ml-2 mb-2 page-header">
+        <h2 class="flex-1 mb-0">Menaxho Dosjet</h2>
+        <div class="flex align-items-right justify-content-right">
           <div class="my-2">
-            <button
-              pButton
-              pRipple
-              label="Hap nje Folder te ri"
-              icon="pi pi-folder"
-              class="p-button-success mr-2"
-              (click)="onNewClick()"></button>
-<!--            <button-->
-<!--              pButton-->
-<!--              pRipple-->
-<!--              label="Fshi"-->
-<!--              icon="pi pi-trash"-->
-<!--              class="p-button-danger"-->
-<!--              [disabled]="selectedHighSchools.length === 0"-->
-<!--              (click)="onDeleteSelectedClick()"></button>-->
+              <button
+                pButton
+                pRipple
+                label="Hap nje Dosje te re"
+                icon="pi pi-folder-open"
+                class="p-button-success mr-2"
+                (click)="onNewClick()"></button>
+              <button
+                pButton
+                pRipple
+                label="Kerko Dosje"
+                icon="pi pi-search"
+                class="p-button-info mr-2"
+                (click)="onSearchClick()"></button>
           </div>
         </div>
-        <div class="p-toolbar-group-right">
-          <button
-            pButton
-            pRipple
-            label="Eksporto"
-            icon="pi pi-upload"
-            class="p-button-help"></button>
-        </div>
-      </p-toolbar>
+      </div>
+
+      <p-dialog
+        [(visible)]="displayModal1"
+        [style]="{ width: '500px' }"
+        header="Kerko Dosje"
+        [modal]="true"
+        [draggable]="false"
+        [resizable]="false"
+        class="p-fluid"
+        (onHide)="onModalClose1()">
+        <ng-template pTemplate="content">
+          <msh-archive-search-folder-form
+            [archiveFolders]="selectedArchiveFolder"
+            [examTypes]="examType"
+            (formClose)="onModalClose1()"
+            (formSave)="onFormSave($event)">
+          </msh-archive-search-folder-form>
+        </ng-template>
+      </p-dialog>
+
 
       <msh-archive-folder-grid
         [archiveFolders]="(archiveFolders$ | async) || []"
@@ -41,23 +52,21 @@
     </div>
   </div>
 </div>
-
 <p-dialog
   [(visible)]="displayModal"
   [style]="{ width: '500px' }"
-  header="Hap një dosje të re"
+  header="Hap nje Dosje te re"
   [modal]="true"
   [draggable]="false"
   [resizable]="false"
   class="p-fluid"
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
-    <msh-archive-folder-form
+    <msh-archive-open-folder-form
       [archiveFolders]="selectedArchiveFolder"
       [examTypes]="examType"
-      (formClose)="onModalClose()"
-      (formSave)="onFormSave($event)">
-    </msh-archive-folder-form>
+      (formClose)="onModalClose()">
+    </msh-archive-open-folder-form>
   </ng-template>
 </p-dialog>
 

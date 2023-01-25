@@ -23,6 +23,13 @@ export const CONFIGURATION_ROUTES: Route[] = [
       ),
   },
   {
+    path: 'add-barCode',
+    loadComponent: () =>
+      import('./barCode/manage-bar-codes/manage-bar-codes.component').then(
+        m => m.ManageBarCodesComponent
+      ),
+  },
+  {
     path: 'students',
     loadComponent: () =>
       import(

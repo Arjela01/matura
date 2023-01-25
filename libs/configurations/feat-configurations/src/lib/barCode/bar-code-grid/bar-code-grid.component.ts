@@ -6,7 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import {ArchiveFolder} from '@msh/configurations/domain-configurations';
+import {ArchiveFolder, HighSchool} from '@msh/configurations/domain-configurations';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -17,7 +17,7 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
-  selector: 'msh-archive-folder-grid',
+  selector: 'msh-bar-code-grid',
   standalone: true,
   imports: [
     CommonModule,
@@ -28,15 +28,16 @@ import { TooltipModule } from 'primeng/tooltip';
     CheckboxModule,
     RippleModule,
   ],
-  templateUrl: './archive-folder-grid.component.html',
-  styleUrls: ['./archive-folder-grid.component.scss'],
+  templateUrl: './bar-code-grid.component.html',
+  styleUrls: ['./bar-code-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ArchiveFolderGridComponent {
+export class BarCodeGridComponent  {
   @Input() archiveFolders: ArchiveFolder[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
 
+  //Keep it local state because of Table Header checkbox not syncing
   selectedArchiveFolders: ArchiveFolder[] = [];
 
   @Output() gridEvent = new EventEmitter<
@@ -89,5 +90,4 @@ export class ArchiveFolderGridComponent {
   loadRows($event: LazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
-
 }
