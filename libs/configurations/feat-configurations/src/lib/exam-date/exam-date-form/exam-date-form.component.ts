@@ -1,10 +1,10 @@
-import { CommonModule } from '@angular/common';
+import {CommonModule, formatDate} from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input, OnInit,
+  Input,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -18,7 +18,6 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import * as moment from 'moment';
 
 @Component({
   selector: 'msh-exam-date-form',
@@ -48,7 +47,7 @@ export class ExamDateFormComponent {
     if (details) {
       this.examDate = Object.assign({}, details);
       this.examDate.date = this.date
-      this.date =  moment().format('DD/MM/YYYY ');
+      this.date = formatDate(new Date(), 'dd-MM-yyyy', 'sq');
     }
   }
 
