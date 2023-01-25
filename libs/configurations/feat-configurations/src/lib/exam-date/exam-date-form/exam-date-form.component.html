@@ -1,0 +1,96 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+
+  <div class="field">
+    <label for="ExamType">Tipi i Provimit *</label>
+    <p-dropdown
+      id="ExamType"
+      [options]="examTypes"
+      optionValue="key"
+      optionLabel="value"
+      name="examTypeId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="examDate.examTypeId"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examDate.examTypeId
+      }">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examDate.examTypeId">
+     Tipi i Provimit është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="ExamSite">Qendra e Provimit *</label>
+    <p-dropdown
+      id="ExamSite"
+      [options]="examSites"
+      optionValue="key"
+      optionLabel="value"
+      name="examSiteId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="examDate.examSiteId"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examDate.examSiteId
+      }">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examDate.examSiteId">
+      Qendra e Provimit është fushë e kërkuar.
+    </small>
+  </div>
+
+
+  <div class="field">
+    <label for="date">Data *</label>
+    <input
+      placeholder="dd/mm/yyyy"
+      pInputText
+      id="date"
+      name="date"
+      [(ngModel)]="date"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examDate.date}" />
+    <small class="p-error block" *ngIf="submitted && !examDate.date">
+      Data është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="time">Ora *</label>
+    <input
+      type="time"
+      pInputText
+      id="time"
+      name="time"
+      [(ngModel)]="examDate.time"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': examDate.time }" />
+    <small class="p-error block" *ngIf="submitted && !examDate.time">
+      Ora  është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      type="submit"
+      pButton
+      icon="pi pi-check"
+      label="Ruaj"
+      class="p-button-text w-auto"></button>
+  </div>
+</form>
+

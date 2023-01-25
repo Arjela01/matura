@@ -74,6 +74,10 @@ export class StudentViewComponent implements OnChanges {
   submitted = false;
 
   student: Student = {
+    createdName: "",
+    createdOn: new Date(),
+    modifiedByName: "",
+    modifiedOn: new Date(),
     birthDate: new Date(),
     birthPlace: '',
     email: '',
@@ -101,9 +105,10 @@ export class StudentViewComponent implements OnChanges {
     schoolFinishedName: '',
     firstName: '',
     isConfirmedBySupervisor: true,
-    graduationYear: undefined,
+    graduationYear: undefined
   };
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+
+  finishedAtSameSchool = true;
 
   id: any;
 
@@ -125,38 +130,10 @@ export class StudentViewComponent implements OnChanges {
   ngOnInit(): void {
     this.studentService.getById(this.id).subscribe(result => {
       this.student = { ...result.data };
+      this.finishedAtSameSchool = this.student?.schoolFinished == '' ||
+        this.student?.schoolFinished == null;
       this.cd.detectChanges();
     });
-    this.getHighSchools();
-    this.getGenders();
-    this.getProfiles();
-  }
-
-  getHighSchools() {
-    this.highSchoolService
-      .loadDropDownList()
-      .pipe()
-      .subscribe(response => {
-        this.highSchools = response.data;
-      });
-  }
-
-  getGenders() {
-    this.genderService
-      .loadGenders({})
-      .pipe()
-      .subscribe(response => {
-        //this.genders = response.data;
-      });
-  }
-
-  getProfiles() {
-    this.profileService
-      .loadDropdownList()
-      .pipe()
-      .subscribe(response => {
-        this.schoolProfiles = response.data;
-      });
   }
 
   ngOnChanges(): void {

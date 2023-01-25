@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
-  OnChanges,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -26,8 +25,8 @@ import {
 import { Student } from '@msh/configurations/domain-configurations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { StudentClassModel } from '../../../../../domain-configurations/src/students/student-class.model';
-import { StudentSectionModel } from '../../../../../domain-configurations/src/students/student-section.model';
+import { StudentClassModel } from '@msh/configurations/domain-configurations';
+import { StudentSectionModel } from '@msh/configurations/domain-configurations';
 
 @Component({
   selector: 'msh-students-edit',
@@ -66,6 +65,8 @@ export class StudentsEditComponent {
   current = null;
   loading = false;
   student: Student = {
+    createdName: '',
+    createdOn: new Date(),
     birthDate: new Date(),
     birthPlace: '',
     email: '',
@@ -132,23 +133,35 @@ export class StudentsEditComponent {
         ...result.data,
         birthDate: new Date(result.data.birthDate),
       };
+      this.finishedAtSameSchool = this.student?.schoolFinished == '' ||
+        this.student?.schoolFinished == null;
       this.cd.detectChanges();
     });
   }
 
   update(): void {
+    if (this.finishedAtSameSchool) {
+      this.student.schoolFinished = '';
+    }
+
     this.saving = true;
     this.studentService.update({ id: this.id, ...this.student }).subscribe({
       next: value => {
         this.saving = false;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Studenti u ruajt me sukses.',
-        });
-        console.log(value);
-
-        this.router.navigate(['/configurations/students']).then();
+        if (value.isSuccessful) {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Studenti u ruajt me sukses.',
+          });
+          this.router.navigate(['/configurations/students']).then();
+        } else {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: value.errorMessage,
+          });
+        }
       },
       error: error => {
         this.saving = false;
