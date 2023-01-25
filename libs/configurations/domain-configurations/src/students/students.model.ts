@@ -30,7 +30,10 @@ export interface Student {
   isFall: boolean;
   registrationYearId?: number;
   schoolFinishedName: string;
-
+  createdOn: Date;
+  createdName: string;
+  modifiedOn?: Date;
+  modifiedByName?: string;
 }
 
 export interface StudentTableView {

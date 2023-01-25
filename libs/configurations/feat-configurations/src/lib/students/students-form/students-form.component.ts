@@ -77,6 +77,10 @@ export class StudentsFormComponent implements OnInit, OnChanges {
   submitted = false;
 
   student: Student = {
+    createdName: "",
+    createdOn: new Date(),
+    modifiedByName: "",
+    modifiedOn: new Date(),
     birthDate: new Date(),
     birthPlace: '',
     email: '',
@@ -106,7 +110,7 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     registrationYearId: undefined,
 
     isConfirmedBySupervisor: true,
-    graduationYear: undefined,
+    graduationYear: undefined
   };
 
   finishedAtSameSchool = true;
@@ -156,7 +160,7 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     const data = { ...this.student };
 
     this.studentService.save(data).subscribe({
-      next: value => {
+      next: () => {
         this.saving = false;
 
         this.router.navigate(['/configurations/students']).then();

@@ -98,23 +98,23 @@
             display="menu"></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="createdBy">
+      <th pSortableColumn="createdByName">
         Krijuar Nga
         <div>
-          <p-sortIcon field="createdBy"></p-sortIcon>
+          <p-sortIcon field="createdByName"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="createdBy"
+            field="createdByName"
             display="menu"></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="createdBy">
+      <th pSortableColumn="createdOn">
         Data e Krijimit
         <div>
-          <p-sortIcon field="createdBy"></p-sortIcon>
+          <p-sortIcon field="createdOn"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="createdBy"
+            field="createdOn"
             display="menu"></p-columnFilter>
         </div>
       </th>
@@ -167,16 +167,16 @@
         {{ student.profileName }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ student.createdBy }}
+        {{ student.createdByName }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ student.createdDate | date : 'dd/MM/yyyy' }}
+        {{ student.createdOn | date : 'dd/MM/yyyy' }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ student.userID }}
+        {{ student.modifiedByName }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ student.createdBy }}
+        {{ student.modifiedOn | date : 'dd/MM/yyyy' }}
       </td>
 
       <td>

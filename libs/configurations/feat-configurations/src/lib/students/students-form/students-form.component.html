@@ -107,25 +107,25 @@
               <label for="IsConfirmedBySupervisorFalse">Tjetër</label>
             </div>
           </div>
+        </div>
 
-          <div [hidden]="finishedAtSameSchool">
-            <input
-              type="text"
-              required
-              pInputText
-              id="SchoolFinished"
-              name="SchoolFinished"
-              [(ngModel)]="student.schoolFinished"
-              autofocus
-              [ngClass]="{
-                'ng-invalid ng-dirty': submitted && !student.schoolFinished
-              }" />
-            <small
-              class="p-error block"
-              *ngIf="submitted && !student.schoolFinished">
-              Shkolla që ke përfunduar është fushë e kërkuar.
-            </small>
-          </div>
+        <div [hidden]="finishedAtSameSchool">
+          <input
+            type="text"
+            required
+            pInputText
+            id="SchoolFinished"
+            name="SchoolFinished"
+            [(ngModel)]="student.schoolFinished"
+            autofocus
+            [ngClass]="{
+              'ng-invalid ng-dirty': submitted && !student.schoolFinished
+            }" />
+          <small
+            class="p-error block"
+            *ngIf="submitted && !student.schoolFinished">
+            Shkolla që ke përfunduar është fushë e kërkuar.
+          </small>
         </div>
 
         <div class="field" [style]="{ width: '500px' }">
