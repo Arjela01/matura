@@ -1,15 +1,11 @@
 import { CommonModule } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
-  Input,
   OnChanges,
-  Output,
   ViewChild,
 } from '@angular/core';
-import { FormsModule, NgForm} from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -18,16 +14,20 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import {CalendarModule} from 'primeng/calendar';
-import {InputMaskModule} from "primeng/inputmask";
+import { CalendarModule } from 'primeng/calendar';
+import { InputMaskModule } from 'primeng/inputmask';
 import {
-  AcademicYearApiService, GendersApiService,
-  HighSchoolApiService, ProfileApiService,
-  StudentsApiService
-} from "@msh/configurations/data-access-configurations";
+  AcademicYearApiService,
+  GendersApiService,
+  HighSchoolApiService,
+  ProfileApiService,
+  StudentsApiService,
+} from '@msh/configurations/data-access-configurations';
 import { Student } from '@msh/configurations/domain-configurations';
-import {ActivatedRoute, Router} from "@angular/router";
-import {MessageService} from "primeng/api";
+import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { StudentClassModel } from '../../../../../domain-configurations/src/students/student-class.model';
+import { StudentSectionModel } from '../../../../../domain-configurations/src/students/student-section.model';
 
 @Component({
   selector: 'msh-students-edit',
@@ -47,69 +47,56 @@ import {MessageService} from "primeng/api";
   ],
   templateUrl: './students-edit.component.html',
   styleUrls: ['./students-edit.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StudentsEditComponent implements OnChanges {
-
-  @Output() formSave = new EventEmitter<Student>();
-  @Output() formClose = new EventEmitter<undefined>();
-
+export class StudentsEditComponent {
   @ViewChild('form', { static: true }) form!: NgForm;
 
   highSchool: DropdownModel<number>[] = [];
   genders: DropdownModel<number>[] = [];
-  studyClass: DropdownModel<number>[] = [];
-  session: DropdownModel<number>[] = [];
+  studentClass = StudentClassModel.All;
+  studentSection = StudentSectionModel.All;
   schoolProfile: DropdownModel<number>[] = [];
   academicYears: DropdownModel<number>[] = [];
-  saving= false;
-  graduationYear: any;
-  private id: any;
-  @Input() set studentDetails(details: Student | null) {
-    if (details) {
-      this.student = Object.assign({}, details);
-    }
-  }
-
-
-
+  saving = false;
+  id: any;
 
   showStudent = false;
   submitted = false;
 
-current = null;
-loading = false;
+  current = null;
+  loading = false;
   student: Student = {
     birthDate: new Date(),
-    birthPlace: "",
-    email: "",
+    birthPlace: '',
+    email: '',
     genderId: 0,
-    idCard: "",
+    genderName: '',
+    idCard: '',
     isA2A3: true,
     isEAlbaniaApplication: true,
     isFall: false,
-    lastName: "",
-    highSchool: "",
-    middleName: "",
-    mobilePhone: "",
-    oldId: "",
-    schoolFinished: "",
-    schoolProfile: "",
-    highSchoolName: "",
-    schoolName: "",
-    schoolFinishedName: "",
+    lastName: '',
+    highSchool: '',
+    middleName: '',
+    mobilePhone: '',
+    oldID: '',
+    schoolFinished: '',
+    schoolProfile: '',
+    highSchoolName: '',
+    schoolName: '',
+    schoolFinishedName: '',
     highSchoolId: 0,
-    session: "",
-    studentId: "",
-    studyClass: "",
+    session: '',
+    studentId: '',
+    studyClass: '',
     profileId: 0,
-    profileName: "",
+    profileName: '',
     firstName: '',
     isConfirmedBySupervisor: true,
-    graduationYear: ""
+    graduationYear: undefined,
   };
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
 
+  finishedAtSameSchool = true;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -117,60 +104,60 @@ loading = false;
     private readonly studentService: StudentsApiService,
     private readonly highSchoolService: HighSchoolApiService,
     private readonly profileService: ProfileApiService,
-    private readonly genderService: GendersApiService, private router: Router,
+    private readonly genderService: GendersApiService,
+    private router: Router,
     private messageService: MessageService,
     private route: ActivatedRoute
-
-
   ) {
-    this.id = this.route.snapshot.paramMap.get('id')
+    this.id = this.route.snapshot.paramMap.get('id');
   }
   ngOnInit(): void {
-    // this.studentService.getById(this.id).subscribe(result => {
-    //   this.student = {...result.data};
-    //   this.cd.detectChanges();
-    // });
     this.highSchoolService.loadDropDownList().subscribe(response => {
       this.highSchool = response.data;
+      this.cd.detectChanges();
     });
+
     this.genderService.loadDropdownList().subscribe(response => {
       this.genders = response.data;
+      this.cd.detectChanges();
     });
+
     this.profileService.loadDropdownList().subscribe(response => {
       this.schoolProfile = response.data;
+      this.cd.detectChanges();
     });
-  }
 
-  ngOnChanges(): void {
-    console.log();
-    // eslint-disable-next-line max-len
-    this.onStudentChange({ value: this.student.highSchoolId });
-  }
-
-
-  onStudentChange($event: any) {
-    console.log($event);
-    this.showStudent = $event.value;
+    this.studentService.getById(this.id).subscribe(result => {
+      this.student = {
+        ...result.data,
+        birthDate: new Date(result.data.birthDate),
+      };
+      this.cd.detectChanges();
+    });
   }
 
   update(): void {
     this.saving = true;
-    this.studentService.update({id: this.id,...this.student})
-      .subscribe(
-        {
-          next: value => {
-            this.saving = false;
-            this.messageService.add({severity: 'success', summary: 'Success', detail: 'Studenti u ruajt me sukses.'});
-            console.log(value);
+    this.studentService.update({ id: this.id, ...this.student }).subscribe({
+      next: value => {
+        this.saving = false;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Studenti u ruajt me sukses.',
+        });
+        console.log(value);
 
-            this.router.navigate(['/configurations/students']).then();
-          },
-          error: error => {
-            this.saving = false;
-            this.messageService.add({severity: 'error', summary: 'Error', detail: `Studenti nuk mund te ruhet: ${error}`});
-          }
-        }
-      );
+        this.router.navigate(['/configurations/students']).then();
+      },
+      error: error => {
+        this.saving = false;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: `Studenti nuk mund te ruhet: ${error}`,
+        });
+      },
+    });
   }
 }
-

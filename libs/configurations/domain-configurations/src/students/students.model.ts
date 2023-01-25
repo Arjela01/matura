@@ -15,8 +15,9 @@ export interface Student {
   middleName: string;
   mobilePhone: string;
   highSchool: string;
-  oldId: string;
+  oldID: string;
   schoolName: string;
+  genderName: string;
   schoolFinished: string;
   schoolProfile: string;
   profileId?: number;
@@ -24,10 +25,10 @@ export interface Student {
   session?: string;
   studentId: string;
   studyClass?: string;
-  graduationYear?: string;
+  graduationYear?: number;
   highSchoolName: string;
   isFall: boolean;
-  registrationYear?: string;
+  registrationYearId?: number;
   schoolFinishedName: string;
 
 }
