@@ -68,8 +68,8 @@ export class HighSchoolFormComponent implements OnChanges {
   constructor(private cd: ChangeDetectorRef) {}
 
   ngOnChanges(): void {
-    if (this.cities && this.highSchool.regionID) {
-      this.onRegionChange({ value: this.highSchool.regionID });
+    if (this.cities && this.highSchool.regionId) {
+      this.onRegionChange({ value: this.highSchool.regionId });
     }
   }
 

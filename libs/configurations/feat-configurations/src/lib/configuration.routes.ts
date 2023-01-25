@@ -1,5 +1,4 @@
 import { Route } from '@angular/router';
-import { ManageProfilesComponent } from './profiles/manage-profiles/manage-profiles.component';
 
 export const CONFIGURATION_ROUTES: Route[] = [
   {
@@ -22,6 +21,31 @@ export const CONFIGURATION_ROUTES: Route[] = [
       import('./profiles/manage-profiles/manage-profiles.component').then(
         m => m.ManageProfilesComponent
       ),
+  },
+  {
+    path: 'students',
+    loadComponent: () =>
+      import(
+        './students/manage-students/manage-students.component'
+        ).then(m => m.ManageStudentsComponent),
+  },
+  {
+    path: 'students-form',
+    loadComponent: () =>
+      import('./students/students-form/students-form.component'
+        ).then(m => m.StudentsFormComponent),
+  },
+  {
+    path: 'student-view/:id',
+    loadComponent: () =>
+      import('./students/students-view/student-view.component'
+        ).then(m => m.StudentViewComponent),
+  },
+  {
+    path: 'student-edit/:id',
+    loadComponent: () =>
+      import('./students/students-edit/students-edit.component'
+        ).then(m => m.StudentsEditComponent),
   },
   {
     path: 'administration-offices',
@@ -134,6 +158,11 @@ export const CONFIGURATION_ROUTES: Route[] = [
       import('./exam-site/manage-exam-site/manage-exam-site.component').then(
         m => m.ManageExamSiteComponent
       ),
+  },
+  {
+    path: 'a1z-form',
+    loadComponent: () =>
+      import('./a1z-category/a1z-category-form/a1z-category-form.component').then(m => m.A1zCategoryFormComponent),
   },
   {
     path: 'a1z-category',
