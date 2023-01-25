@@ -35,6 +35,7 @@ export class ExamTypeApiService {
       `/api/ExamType/${ examTypeId}`
     );
   }
+
   loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
       `/api/ExamType/DropdownList`
