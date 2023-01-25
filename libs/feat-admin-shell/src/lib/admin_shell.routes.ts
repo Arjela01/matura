@@ -15,7 +15,7 @@ export const ADMIN_SHELL_ROUTES: Route[] = [
         path: 'applications',
         loadChildren: () =>
           import('@msh/applications/feat-applications').then(
-            m => m.APPLICATIONS_ROUTES
+            m => m.APPLICATION_ROUTES
           ),
       },
       {

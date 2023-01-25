@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { A1 } from '@msh/applications/domain-application';
+import { Student } from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -46,9 +47,12 @@ export class A1FormComponent {
   d3SubjectChoosen = '';
   optionalSubjectChoosen = '';
   subjectsChoosen: any[] = [];
+  choosenStudent: string | null = null;
   @Input() d3Dropdown: DropdownModel<number>[] = [];
   @Input() optionalSubjects: DropdownModel<number>[] = [];
   @Input() students: any = [];
+  @Input() selectedStudent: Student | null = null;
+
   @Input() set a1Details(details: A1 | null) {
     if (details) {
       this.a1 = Object.assign({}, details);
@@ -76,6 +80,11 @@ export class A1FormComponent {
     overSeerCode: '',
   };
 
+  ngOnChanges() {
+    if (this.selectedStudent) {
+      this.choosenStudent = `${this.selectedStudent.studentId}-${this.selectedStudent.firstName}-${this.selectedStudent.middleName}-${this.selectedStudent.lastName}`;
+    }
+  }
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor(private cd: ChangeDetectorRef) {
     console.log(this.optionalSubjects);

@@ -1,9 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+} from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { A1ApiService } from '@msh/applications/data-access-applications';
 import { A1 } from '@msh/applications/domain-application';
-import { ExamSubjectApiService } from '@msh/configurations/data-access-configurations';
+import {
+  ExamSubjectApiService,
+  StudentsApiService,
+} from '@msh/configurations/data-access-configurations';
+import { Student } from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   GlobalToastService,
@@ -44,7 +52,7 @@ export class ManageA1Component {
   private a1$$ = new BehaviorSubject<A1[]>([]);
   a1$ = this.a1$$.asObservable();
   filters: LazyLoadEvent | null = null;
-  students: any[] = [];
+  students: Student[] = [];
   totalRecords = 0;
   selectedA1: A1 | null = null;
   selectedA1Forms: A1[] = [];
@@ -57,19 +65,42 @@ export class ManageA1Component {
     filters: {},
     globalFilter: null,
   };
+  studentsFilters = {
+    first: 0,
+    rows: 10,
+    sortOrder: 1,
+    filters: {},
+    globalFilter: null,
+  };
+
   d3Subject: DropdownModel<number>[] = [];
   ref: DynamicDialogRef | null = null;
   optionalSubjects: DropdownModel<number>[] = [];
+  studentsTotalRecords: any;
+  choosenStudent: Student | null = null;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly a1ApiService: A1ApiService,
     private examSubjectService: ExamSubjectApiService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private studentService: StudentsApiService,
+    private cd: ChangeDetectorRef
   ) {
     this.getD3Subjects();
     this.getOptionalSubjects();
+    this.getOptionalSubjects();
+    this.getStudent();
+  }
+  getStudent() {
+    this.studentService
+      .loadStudents(this.studentsFilters)
+      .pipe(untilDestroyed(this))
+      .subscribe((response: any) => {
+        this.students = response.data;
+        this.studentsTotalRecords = response.total;
+      });
   }
 
   onNewClick() {
@@ -226,14 +257,24 @@ export class ManageA1Component {
   }
   openDialog() {
     this.ref = this.dialogService.open(ManageStudentsGridsDialogComponent, {
-      width: '50%',
+      width: '70%',
       position: 'center',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
       maximizable: true,
-      data: { students: this.students },
+      data: {
+        students: this.students,
+        filters: this.studentsFilters,
+        totalRecords: this.studentsTotalRecords,
+      },
     });
 
-    this.ref.onClose.subscribe((product: any) => {});
+    this.ref.onClose.pipe(untilDestroyed(this)).subscribe((event: any) => {
+      if (event) {
+        this.studentsFilters = event.filters;
+        this.choosenStudent = { ...event.student };
+        this.cd.detectChanges();
+      }
+    });
   }
 }

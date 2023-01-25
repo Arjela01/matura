@@ -18,4 +18,11 @@ export const APPLICATION_ROUTES: Route[] = [
         m => m.ManageA1zComponent
       ),
   },
+  {
+    path: 'a1',
+    loadComponent: () =>
+      import('./a1/manage-a1/manage-a1.component').then(
+        m => m.ManageA1Component
+      ),
+  },
 ];

@@ -1,6 +1,6 @@
 <div class="grid">
     <div class="col-12">
-        <div class="card px-6 py-6" *ngIf="displayForm">
+        <div class="card px-6 py-6" *ngIf="!displayForm">
             <!-- TODO: this can be reusable -->
             <p-toolbar styleClass="mb-4">
                 <div class="p-toolbar-group-left">
@@ -16,13 +16,13 @@
                 </div>
             </p-toolbar>
             <a1-grid [a1]="(a1$ | async) || []" [totalRecords]="totalRecords" (gridEvent)="onGridEvent($event)"
-                (lazyLoadData)="getA1($event)" *ngIf="displayForm">
+                (lazyLoadData)="getA1($event)">
             </a1-grid>
 
         </div>
-        <div class="card px-6 py-6 w-9 mx-auto" *ngIf="!displayForm">
-            <a1-form [d3Dropdown]="d3Subject" [optionalSubjects]="optionalSubjects" [students]="students"
-                (studentSearchOpen)="openDialog()">
+        <div class="card px-6 py-6 md:w-9 sm:w-full mx-auto" *ngIf="displayForm">
+            <a1-form [d3Dropdown]="d3Subject" [optionalSubjects]="optionalSubjects" [selectedStudent]="choosenStudent"
+                [students]="students" (studentSearchOpen)="openDialog()">
 
             </a1-form>
         </div>
