@@ -45,6 +45,7 @@ export class ExamScoresFormComponent {
   @Input() students: DropdownModel<number>[] = [];
   @ViewChild('form', {static: true}) form!: NgForm;
   submitted = false;
+
   examScore: ExamScore = {
     id: 0,
     barcode: '',
@@ -55,9 +56,6 @@ export class ExamScoresFormComponent {
     documentName: ''
   };
 
-
-
-
   currentYear: number = new Date().getFullYear()
 
   @ViewChild('academicYear') academicYear!: ElementRef;
@@ -66,32 +64,19 @@ export class ExamScoresFormComponent {
     this.selectedYear = this.academicYear.nativeElement.value;
   }
   @Input() set examScoreDetails(details: ExamScore | null) {
-    let val;
     if (details) {
       this.examScore = Object.assign({}, details);
     }
   }
 
-
-
-
   // currentYearObj: any = this.academicYears
 
-
-
-
-
-
-
   search(event: any) {
-    // this.mylookupservice.getResults(event.query).then(data => {
-    //   this.students = data;
-    // });
+//
   }
   onCancelClick() {
     this.formClose.emit();
   }
-
 
   onSubmit() {
     this.submitted = true;

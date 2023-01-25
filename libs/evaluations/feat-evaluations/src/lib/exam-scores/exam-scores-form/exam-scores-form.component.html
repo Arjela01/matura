@@ -67,12 +67,12 @@
         'ng-invalid ng-dirty': submitted && !examScore.academicYearId
       }">
     </p-dropdown>
-    <small
-      class="p-error block"
-      *ngIf="submitted && selectedYear !== currentYear.toString()">
-      {{selectedYear | json}}
-      Viti akademik duhet të jetë i njëjtë me vitin aktual.
-    </small>
+<!--    <small-->
+<!--      class="p-error block"-->
+<!--      *ngIf="submitted && selectedYear !== currentYear.toString()">-->
+<!--      {{selectedYear | json}}-->
+<!--      Viti akademik duhet të jetë i njëjtë me vitin aktual.-->
+<!--    </small>-->
     <small
       class="p-error block"
       *ngIf="submitted && !examScore.academicYearId">
