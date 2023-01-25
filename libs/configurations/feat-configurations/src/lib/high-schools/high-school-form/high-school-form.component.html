@@ -62,15 +62,15 @@
       optionLabel="value"
       name="administrationOfficeId"
       [autoDisplayFirst]="false"
-      [(ngModel)]="highSchool.administrationOfficeID"
+      [(ngModel)]="highSchool.administrationOfficeId"
       [showClear]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !highSchool.administrationOfficeID
+        'ng-invalid ng-dirty': submitted && !highSchool.administrationOfficeId
       }">
     </p-dropdown>
     <small
       class="p-error block"
-      *ngIf="submitted && !highSchool.administrationOfficeID">
+      *ngIf="submitted && !highSchool.administrationOfficeId">
       DAR/ZA është fushë e kërkuar.
     </small>
   </div>
@@ -83,15 +83,15 @@
       name="regionId"
       optionValue="key"
       optionLabel="value"
-      [(ngModel)]="highSchool.regionID"
+      [(ngModel)]="highSchool.regionId"
       [autoDisplayFirst]="false"
       (onChange)="onRegionChange($event)"
       [showClear]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !highSchool.regionID
+        'ng-invalid ng-dirty': submitted && !highSchool.regionId
       }">
     </p-dropdown>
-    <small class="p-error block" *ngIf="submitted && !highSchool.regionID">
+    <small class="p-error block" *ngIf="submitted && !highSchool.regionId">
       Rrethi është fushë e kërkuar.
     </small>
   </div>
@@ -104,14 +104,14 @@
       optionValue="key"
       optionLabel="value"
       name="cityId"
-      [(ngModel)]="highSchool.cityID"
+      [(ngModel)]="highSchool.cityId"
       [autoDisplayFirst]="false"
       [showClear]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !highSchool.cityID
+        'ng-invalid ng-dirty': submitted && !highSchool.cityId
       }">
     </p-dropdown>
-    <small class="p-error block" *ngIf="submitted && !highSchool.cityID">
+    <small class="p-error block" *ngIf="submitted && !highSchool.cityId">
       Qyeti/Fshati është fushë e kërkuar.
     </small>
   </div>
@@ -129,6 +129,7 @@
       pButton
       icon="pi pi-check"
       label="Ruaj"
-      class="p-button-text w-auto"></button>
+      class="p-button-text w-auto"
+    (click)="onSubmit()"></button>
   </div>
 </form>

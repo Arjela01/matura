@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiResult } from '@msh/shared/data-access-shared';
+import {ApiResult, DropdownModel} from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
@@ -10,7 +10,11 @@ import {Profile, ProfileTableView} from "@msh/configurations/domain-configuratio
 })
 export class ProfileApiService {
   constructor(private apiService: APIService) {}
-
+  loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
+    return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
+      `/Profile/DropdownList`
+    );
+  }
   loadProfiles(event: LazyLoadEvent): Observable<ProfileTableView> {
     return this.apiService.post(`/Profile/TableData`, event);
   }

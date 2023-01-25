@@ -9,7 +9,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import {FormsModule, NgForm } from '@angular/forms';
 import { AcademicYear } from '@msh/configurations/domain-configurations';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
