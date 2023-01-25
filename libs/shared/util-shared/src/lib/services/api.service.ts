@@ -47,4 +47,13 @@ export class APIService {
 
     return new HttpHeaders(headersConfig);
   }
+
+
+  // eslint-disable-next-line max-len
+  getById<T>(url: string, params: HttpParams = new HttpParams()): Observable<T> {
+    return this.http.get<T>(`${this.api_url}${url}`, {
+      headers: this.headers,
+      params,
+    });
+  }
 }

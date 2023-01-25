@@ -23,6 +23,31 @@ export const CONFIGURATION_ROUTES: Route[] = [
       ),
   },
   {
+    path: 'students',
+    loadComponent: () =>
+      import(
+        './students/manage-students/manage-students.component'
+        ).then(m => m.ManageStudentsComponent),
+  },
+  {
+    path: 'students-form',
+    loadComponent: () =>
+      import('./students/students-form/students-form.component'
+        ).then(m => m.StudentsFormComponent),
+  },
+  {
+    path: 'student-view/:id',
+    loadComponent: () =>
+      import('./students/students-view/student-view.component'
+        ).then(m => m.StudentViewComponent),
+  },
+  {
+    path: 'student-edit/:id',
+    loadComponent: () =>
+      import('./students/students-edit/students-edit.component'
+        ).then(m => m.StudentsEditComponent),
+  },
+  {
     path: 'administration-offices',
     loadComponent: () =>
       import(
@@ -135,10 +160,22 @@ export const CONFIGURATION_ROUTES: Route[] = [
       ),
   },
   {
+    path: 'a1z-form',
+    loadComponent: () =>
+      import('./a1z-category/a1z-category-form/a1z-category-form.component').then(m => m.A1zCategoryFormComponent),
+  },
+  {
     path: 'a1z-category',
     loadComponent: () =>
       import(
         './a1z-category/manage-a1z-categories/manage-a1z-categories.component'
       ).then(m => m.ManageA1zCategoriesComponent),
+  },
+  {
+    path: 'exam-date',
+    loadComponent: () =>
+      import('./exam-date/manage-exam-date/manage-exam-date.component').then(
+        m => m.ManageExamDateComponent
+      ),
   },
 ];
