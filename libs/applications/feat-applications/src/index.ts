@@ -1,1 +1,1 @@
-export * from './lib/applications-feat-applications';
+export * from './lib/application.routes';

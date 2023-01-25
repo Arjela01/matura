@@ -1,1 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+
+.readonlyForm .p-disabled, .readonlyForm .p-component:disabled {
+  opacity: 0.8;
+}

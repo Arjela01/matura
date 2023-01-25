@@ -1,0 +1,614 @@
+<div class="grid">
+  <div class="col-12 p-fluid">
+    <div class="card px-6 py-6">
+      <!-- Here goes the form -->
+      <div class="text-5xl font-semibold mb-5">Shto Formular A1Z</div>
+      <div class="text-3xl font-semibold mb-3">Te dhënat e përgjithshme</div>
+      <form #form="ngForm" (ngSubmit)="onSubmit()">
+        <div class="field" [style]="{ width: '500px' }">
+          <label for="academicYearId">Viti Akademik *</label>
+          <p-dropdown
+            id="academicYear"
+            [options]="academicYears"
+            optionValue="key"
+            optionLabel="value"
+            name="academicYear"
+            [autoDisplayFirst]="false"
+            [(ngModel)]="a1z.academicYear"
+            [showClear]="true">
+          </p-dropdown>
+          <small class="p-error block" *ngIf="submitted && !a1z.academicYear">
+            Viti Akademik është fushë e kërkuar.
+          </small>
+        </div>
+
+        <button
+          type="button"
+          pButton
+          (click)="onStudentShow()"
+          icon="pi pi-search"
+          label="Kerko Maturantin"
+          class="p-button-text w-auto mb-3 mt-3 surface-500 text-white hover:surface-400"></button>
+
+        <div class="field" [style]="{ width: '500px' }">
+          <label for="studentInputData">Maturanti *</label>
+          <input
+            type="text"
+            pInputText
+            [value]="
+              a1zNotImplementedProps.studentInputData
+                ? ''
+                : a1zNotImplementedProps.studentInputData
+            "
+            id="studentInputData"
+            name="studentInputData"
+            disabled
+            [(ngModel)]="a1zNotImplementedProps.studentInputData"
+            required
+            autofocus
+            [ngClass]="{
+              'ng-invalid ng-dirty':
+                submitted && !a1zNotImplementedProps.studentInputData
+            }" />
+          <small
+            class="p-error block"
+            *ngIf="submitted && !a1zNotImplementedProps.studentInputData">
+            Maturanti është fushë e kërkuar.
+          </small>
+        </div>
+
+        <div class="field" [style]="{ width: '500px' }">
+          <label for="isA1">Tip Formulari *</label>
+          <input
+            type="text"
+            pInputText
+            id="isA1"
+            name="isA1"
+            disabled
+            [(ngModel)]="a1z.isA1"
+            required
+            autofocus
+            [ngClass]="{
+              'ng-invalid ng-dirty': submitted && !a1z.isA1
+            }" />
+          <small class="p-error block" *ngIf="submitted && !a1z.isA1">
+            Tipi I Formuilarit është fushë e kërkuar.
+          </small>
+        </div>
+
+        <!-- TODO: Get this from A1Z Category -->
+        <div class="field" [style]="{ width: '500px' }">
+          <label for="a1zCategory">Kategoria</label>
+          <p-dropdown
+            id="a1zCategory"
+            [options]="academicYears"
+            optionValue="key"
+            optionLabel="value"
+            name="a1zCategory"
+            [autoDisplayFirst]="false"
+            [(ngModel)]="a1zNotImplementedProps.a1zCategory"
+            [showClear]="true">
+          </p-dropdown>
+          <small
+            class="p-error block"
+            *ngIf="submitted && !a1zNotImplementedProps.a1zCategory">
+            Kategoria është fushë e kërkuar.
+          </small>
+        </div>
+
+        <div class="field" [style]="{ width: '500px' }">
+          <label class="mb-3">Aplikon jashte vendit? *</label>
+          <div class="formgrid grid">
+            <div class="field-radiobutton col-6">
+              <p-radioButton
+                id="isApplyingToForeignCountriesTrue"
+                name="isApplyingToForeignCountries"
+                [value]="true"
+                [(ngModel)]="a1z.isApplyingToForeignCountries"></p-radioButton>
+              <label for="isApplyingToForeignCountriesTrue">Po</label>
+            </div>
+            <div class="field-radiobutton col-6">
+              <p-radioButton
+                id="isApplyingToForeignCountriesFalse"
+                name="isApplyingToForeignCountries"
+                [value]="false"
+                [(ngModel)]="a1z.isApplyingToForeignCountries"></p-radioButton>
+              <label for="isApplyingToForeignCountriesFalse">Jo</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- TODO: Fix the values when backend ready -->
+        <div class="field" [style]="{ width: '500px' }">
+          <label class="mb-3">Keni marre diplome/deftese pjekurie? *</label>
+          <div class="formgrid grid">
+            <div class="field-radiobutton col-6">
+              <p-radioButton
+                id="hasDiplomaTrue"
+                name="hasDiploma"
+                [value]="true"
+                [(ngModel)]="a1zNotImplementedProps.hasDiploma"></p-radioButton>
+              <label for="hasDiplomaTrue">Po</label>
+            </div>
+            <div class="field-radiobutton col-6">
+              <p-radioButton
+                id="hasDiplomaFalse"
+                name="hasDiploma"
+                [value]="false"
+                [(ngModel)]="a1zNotImplementedProps.hasDiploma"></p-radioButton>
+              <label for="hasDiplomaFalse">Jo</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="field" [style]="{ width: '500px' }">
+          <label for="graduatedYear"
+            >Viti i perfundimit te shkolles se mesme</label
+          >
+          <p-dropdown
+            id="graduatedYear"
+            [options]="academicYears"
+            optionValue="key"
+            optionLabel="value"
+            name="graduatedYear"
+            [autoDisplayFirst]="false"
+            [(ngModel)]="a1zNotImplementedProps.graduatedYear"
+            [showClear]="true">
+          </p-dropdown>
+          <small
+            class="p-error block"
+            *ngIf="submitted && !a1zNotImplementedProps.graduatedYear">
+            Viti i perfundimit te shkolles se mesme është fushë e kërkuar.
+          </small>
+        </div>
+
+        <div class="text-3xl font-semibold mb-3 mt-5">Lendet e Detyruara</div>
+
+        <div class="field" [style]="{ width: '500px' }">
+          <label class="mb-3">Lëndët e detyruara që do të mbarten: </label>
+          <div class="formgrid grid">
+            <div class="field-radiobutton col-2">
+              <p-radioButton
+                id="neededSubjectsZero"
+                name="neededSubjects"
+                [value]="0"
+                onchange="onNeededSubjectsChange($event)"
+                [(ngModel)]="
+                  a1zNotImplementedProps.neededSubjects
+                "></p-radioButton>
+              <label for="neededSubjectsZero">Jo</label>
+            </div>
+            <div class="field-radiobutton col-2">
+              <p-radioButton
+                id="neededSubjectsOne"
+                name="neededSubjects"
+                [value]="1"
+                onchange="onNeededSubjectsChange($event)"
+                [(ngModel)]="
+                  a1zNotImplementedProps.neededSubjects
+                "></p-radioButton>
+              <label for="neededSubjectsOne">1</label>
+            </div>
+            <div class="field-radiobutton col-2">
+              <p-radioButton
+                id="neededSubjectsTwo"
+                name="isWithCompetition"
+                [value]="2"
+                onchange="onNeededSubjectsChange($event)"
+                [(ngModel)]="
+                  a1zNotImplementedProps.neededSubjects
+                "></p-radioButton>
+              <label for="neededSubjectsTwo">2</label>
+            </div>
+            <div class="field-radiobutton col-2">
+              <p-radioButton
+                id="neededSubjectsThree"
+                name="isWithCompetition"
+                [value]="3"
+                onchange="onNeededSubjectsChange($event)"
+                [(ngModel)]="
+                  a1zNotImplementedProps.neededSubjects
+                "></p-radioButton>
+              <label for="neededSubjectsThree">3</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="formgrid grid">
+            <div class="field col-2">
+              <label for="d1Subject">Lenda e detyruar D1</label>
+              <input
+                type="text"
+                pInputText
+                id="d1Subject"
+                [disabled]="disableD1Subject"
+                name="d1Subject"
+                [(ngModel)]="a1zNotImplementedProps.d1Subject"
+                required
+                autofocus />
+            </div>
+            <div class="field col-2" [style]="{ width: '100px' }">
+              <label for="d1Grade">Nota e gjetur</label>
+              <input
+                type="number"
+                pInputText
+                id="d1Grade"
+                [disabled]="disableD1Subject"
+                name="d1Grade"
+                [(ngModel)]="a1zNotImplementedProps.d1Grade"
+                required
+                autofocus />
+            </div>
+            <div class="field col-2" [style]="{ width: '100px' }">
+              <label for="d1Grade">Nota D1</label>
+              <input
+                type="number"
+                pInputText
+                [disabled]="disableD1Subject"
+                id="d1Grade"
+                name="d1Grade"
+                [(ngModel)]="a1zNotImplementedProps.d1Grade"
+                required
+                autofocus />
+            </div>
+            <div class="field col-2">
+              <label for="d1Reason">Arsye</label>
+              <input
+                type="text"
+                pInputText
+                [disabled]="disableD1Subject"
+                id="d1Reason"
+                name="d1Reason"
+                [(ngModel)]="a1zNotImplementedProps.d1Reason"
+                required
+                autofocus />
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="formgrid grid">
+            <div class="field col-2">
+              <label for="d2Subject">Lenda e detyruar D2</label>
+              <input
+                type="text"
+                pInputText
+                [disabled]="disableD2Subject"
+                id="d2Subject"
+                name="d2Subject"
+                [(ngModel)]="a1zNotImplementedProps.d2Subject"
+                required
+                autofocus />
+            </div>
+            <div class="field col-2" [style]="{ width: '100px' }">
+              <label for="d2Grade">Nota e gjetur</label>
+              <input
+                type="number"
+                pInputText
+                [disabled]="disableD2Subject"
+                id="d2Grade"
+                name="d2Grade"
+                [(ngModel)]="a1zNotImplementedProps.d2Grade"
+                required
+                autofocus />
+            </div>
+            <div class="field col-2" [style]="{ width: '100px' }">
+              <label for="d2Grade">Nota D2</label>
+              <input
+                type="number"
+                pInputText
+                id="d2Grade"
+                [disabled]="disableD2Subject"
+                name="d2Grade"
+                [(ngModel)]="a1zNotImplementedProps.d2Grade"
+                required
+                autofocus />
+            </div>
+            <div class="field col-2">
+              <label for="d2Reason">Arsye</label>
+              <input
+                type="text"
+                pInputText
+                [disabled]="disableD2Subject"
+                id="d2Reason"
+                name="d2Reason"
+                [(ngModel)]="a1zNotImplementedProps.d2Reason"
+                required
+                autofocus />
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="formgrid grid">
+            <div class="field col-2">
+              <label for="d3Subject">Lenda e detyruar D3</label>
+              <input
+                type="text"
+                pInputText
+                id="d3Subject"
+                [disabled]="disableD3Subject"
+                name="d3Subject"
+                [(ngModel)]="a1zNotImplementedProps.d3Subject"
+                required
+                autofocus />
+            </div>
+            <div class="field col-2" [style]="{ width: '100px' }">
+              <label for="d3Grade">Nota e gjetur</label>
+              <input
+                type="number"
+                pInputText
+                [disabled]="disableD3Subject"
+                id="d3Grade"
+                name="d3Grade"
+                [(ngModel)]="a1zNotImplementedProps.d3Grade"
+                required
+                autofocus />
+            </div>
+            <div class="field col-2" [style]="{ width: '100px' }">
+              <label for="d3Grade">Nota D3</label>
+              <input
+                type="number"
+                pInputText
+                [disabled]="disableD3Subject"
+                id="d3Grade"
+                name="d3Grade"
+                [(ngModel)]="a1zNotImplementedProps.d3Grade"
+                required
+                autofocus />
+            </div>
+            <div class="field col-2">
+              <label for="d3Reason">Arsye</label>
+              <input
+                type="text"
+                pInputText
+                [disabled]="disableD3Subject"
+                id="d3Reason"
+                name="d3Reason"
+                [(ngModel)]="a1zNotImplementedProps.d3Reason"
+                required
+                autofocus />
+            </div>
+          </div>
+        </div>
+
+        <div class="text-3xl font-semibold mb-3 mt-5">
+          Lendet e detyruara qe do te jepen provim:
+        </div>
+
+        <div class="field" [style]="{ width: '500px' }">
+          <label for="d1Subject">Lenda D1:</label>
+          <input
+            type="text"
+            pInputText
+            id="d1Subject"
+            name="d1Subject"
+            [(ngModel)]="a1zNotImplementedProps.d1Subject"
+            required
+            autofocus />
+        </div>
+        <div class="field" [style]="{ width: '500px' }">
+          <label for="d2Subject">Lenda D2:</label>
+          <input
+            type="text"
+            pInputText
+            id="d2Subject"
+            name="d2Subject"
+            [(ngModel)]="a1zNotImplementedProps.d2Subject"
+            required
+            autofocus />
+        </div>
+        <div class="field" [style]="{ width: '500px' }">
+          <label for="d3Subject">Lenda D3:</label>
+          <input
+            type="text"
+            pInputText
+            id="d3Subject"
+            name="d3Subject"
+            [(ngModel)]="a1zNotImplementedProps.d3Subject"
+            required
+            autofocus />
+        </div>
+
+        <div class="text-3xl font-semibold mb-3 mt-5">Lendet me zgjedhje</div>
+
+        <div class="field" [style]="{ width: '500px' }">
+          <label class="mb-3">Lendet me zgjedhje qe do te mbarten: </label>
+          <div class="formgrid grid">
+            <div class="field-radiobutton col-2">
+              <p-radioButton
+                id="hasZ1SubjetcTrue"
+                name="hasZ1Subject"
+                [value]="false"
+                [(ngModel)]="
+                  a1zNotImplementedProps.hasZ1Subject
+                "></p-radioButton>
+              <label for="hasZ1SubjetcTrue">Jo</label>
+            </div>
+            <div class="field-radiobutton col-2">
+              <p-radioButton
+                id="hasZ1SubjetcFalse"
+                name="hasZ1Subject"
+                [value]="true"
+                [(ngModel)]="
+                  a1zNotImplementedProps.hasZ1Subject
+                "></p-radioButton>
+              <label for="hasZ1SubjetcFalse">1</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="field" [hidden]="!a1zNotImplementedProps.hasZ1Subject">
+          <div class="formgrid grid">
+            <div class="field col-2">
+              <label for="z1Year">Viti</label>
+              <p-dropdown
+                id="z1Year"
+                [options]="academicYears"
+                optionValue="key"
+                optionLabel="value"
+                name="z1Year"
+                [disabled]="!a1zNotImplementedProps.hasZ1Subject"
+                [required]="a1zNotImplementedProps.hasZ1Subject"
+                [autoDisplayFirst]="false"
+                [(ngModel)]="a1zNotImplementedProps.z1Year"
+                [showClear]="true">
+              </p-dropdown>
+              <small
+                class="p-error block"
+                *ngIf="submitted && !a1zNotImplementedProps.graduatedYear">
+                Viti është fushë e kërkuar.
+              </small>
+            </div>
+            <div class="field col-2">
+              <label for="z1Subject">Lenda me zgjedhje:</label>
+              <input
+                type="text"
+                pInputText
+                id="z1Subject"
+                name="z1Subject"
+                [disabled]="!a1zNotImplementedProps.hasZ1Subject"
+                [(ngModel)]="a1zNotImplementedProps.z1Subject"
+                [required]="a1zNotImplementedProps.hasZ1Subject"
+                autofocus />
+              <small
+                class="p-error block"
+                *ngIf="submitted && !a1zNotImplementedProps.graduatedYear">
+                Lenda me zgjedhje është fushë e kërkuar.
+              </small>
+            </div>
+            <div class="field col-2" [style]="{ width: '100px' }">
+              <label for="z1Grade">Nota e gjetur</label>
+              <input
+                type="number"
+                pInputText
+                id="z1Grade"
+                name="z1Grade"
+                [(ngModel)]="a1zNotImplementedProps.z1Grade"
+                [required]="a1zNotImplementedProps.hasZ1Subject"
+                [disabled]="!a1zNotImplementedProps.hasZ1Subject"
+                autofocus />
+              <small
+                class="p-error block"
+                *ngIf="submitted && !a1zNotImplementedProps.graduatedYear">
+                Nota e gjetur është fushë e kërkuar.
+              </small>
+            </div>
+            <div class="field col-2" [style]="{ width: '100px' }">
+              <label for="z1Grade">Nota Z1</label>
+              <input
+                type="number"
+                pInputText
+                id="z1Grade"
+                name="z1Grade"
+                [(ngModel)]="a1zNotImplementedProps.z1Grade"
+                [required]="a1zNotImplementedProps.hasZ1Subject"
+                [disabled]="!a1zNotImplementedProps.hasZ1Subject"
+                autofocus />
+              <small
+                class="p-error block"
+                *ngIf="submitted && !a1zNotImplementedProps.graduatedYear">
+                Nota Z1 është fushë e kërkuar.
+              </small>
+            </div>
+            <div class="field col-2">
+              <label for="z1Reason">Arsye</label>
+              <input
+                type="text"
+                pInputText
+                id="z1Reason"
+                name="z1Reason"
+                [(ngModel)]="a1zNotImplementedProps.z1Reason"
+                [required]="a1zNotImplementedProps.hasZ1Subject"
+                [disabled]="!a1zNotImplementedProps.hasZ1Subject"
+                autofocus />
+              <small
+                class="p-error block"
+                *ngIf="submitted && !a1zNotImplementedProps.graduatedYear">
+                Arsyeja është fushë e kërkuar.
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-3xl font-semibold mb-3 mt-5">
+          Lendet me zgjedhje qe do te jepen provim
+        </div>
+
+        <div class="field" [style]="{ width: '500px' }">
+          <label for="z1Subject">Lendet me zgjedhje</label>
+          <p-dropdown
+            id="z1Subject"
+            [options]="academicYears"
+            optionValue="value"
+            optionLabel="value"
+            name="z1Subject"
+            [autoDisplayFirst]="false"
+            [(ngModel)]="a1zNotImplementedProps.z1Subject"
+            [showClear]="true">
+          </p-dropdown>
+        </div>
+
+        <div class="field" [style]="{ width: '500px' }">
+          <label for="z1Subject">Lendet e zgjedhura</label>
+          <p-dropdown
+            id="z1Subject"
+            [options]="academicYears"
+            optionValue="value"
+            optionLabel="value"
+            name="z1Subject"
+            [autoDisplayFirst]="false"
+            [(ngModel)]="a1zNotImplementedProps.z1Subject"
+            [showClear]="true">
+          </p-dropdown>
+        </div>
+
+        <div class="field" [style]="{ width: '500px' }">
+          <label for="overseerCode">Kodi I Mbikqyresit</label>
+          <input
+            type="text"
+            pInputText
+            id="overseerCode"
+            name="overseerCode"
+            [(ngModel)]="a1zNotImplementedProps.overseerCode"
+            autofocus />
+        </div>
+
+        <div class="flex justify-content-end">
+          <a href="/configurations/a1z">
+            <button
+              type="button"
+              pButton
+              icon="pi pi-times"
+              label="Anullo"
+              class="p-button-text w-auto mr-2"></button>
+          </a>
+          <button
+            type="submit"
+            pButton
+            icon="pi pi-check"
+            label="Ruaj"
+            class="p-button-text w-auto"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<p-dialog
+  [(visible)]="showStudentModal"
+  [style]="{ width: '1000px' }"
+  header="Maturanti"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid"
+  (onHide)="onStudentHide()">
+  <ng-template pTemplate="content">
+    <msh-a1z-student-search
+      [students]="students"
+      (gridEvent)="onGridEvent($event)">
+    </msh-a1z-student-search>
+  </ng-template>
+</p-dialog>
