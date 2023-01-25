@@ -1,23 +1,24 @@
 import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component, ElementRef,
+  ChangeDetectionStrategy, ChangeDetectorRef,
+  Component,
+  ElementRef,
   EventEmitter,
-  Input,
+  Input, OnChanges,
   Output,
-  ViewChild
+  SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormsModule, NgForm} from "@angular/forms";
-import {InputTextModule} from "primeng/inputtext";
-import {InputNumberModule} from "primeng/inputnumber";
-import {RadioButtonModule} from "primeng/radiobutton";
-import {InputTextareaModule} from "primeng/inputtextarea";
-import {ButtonModule} from "primeng/button";
-import {ExamScore} from "@msh/evaluations/domain-evaluations";
-import {DropdownModel} from "@msh/shared/data-access-shared";
-import {DropdownModule} from "primeng/dropdown";
-import {AutoCompleteModule} from "primeng/autocomplete";
+import {FormsModule, NgForm} from '@angular/forms';
+import {InputTextModule} from 'primeng/inputtext';
+import {InputNumberModule} from 'primeng/inputnumber';
+import {RadioButtonModule} from 'primeng/radiobutton';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {ButtonModule} from 'primeng/button';
+import {ExamScore} from '@msh/evaluations/domain-evaluations';
+import {DropdownModel} from '@msh/shared/data-access-shared';
+import {DropdownModule} from 'primeng/dropdown';
+import {AutoCompleteModule} from 'primeng/autocomplete';
 
 @Component({
   selector: 'msh-exam-score-form',
@@ -31,57 +32,75 @@ import {AutoCompleteModule} from "primeng/autocomplete";
     InputTextareaModule,
     ButtonModule,
     DropdownModule,
-    AutoCompleteModule
+    AutoCompleteModule,
   ],
   templateUrl: './exam-scores-form.component.html',
   styleUrls: ['./exam-scores-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamScoresFormComponent {
-  @Input() examType: string | undefined;
+export class ExamScoresFormComponent implements OnChanges {
+  @Input() examTypes: DropdownModel<number>[] = [];
+  @Input() examSubjects: DropdownModel<string>[] = [];
+  @Input() examVersions: DropdownModel<string>[] = [];
+  @Input() academicYears: DropdownModel<number>[] = [];
+
   @Output() formSave = new EventEmitter<ExamScore>();
   @Output() formClose = new EventEmitter<undefined>();
-  @Input() academicYears: DropdownModel<number>[] = [];
-  @Input() students: DropdownModel<number>[] = [];
-  @ViewChild('form', {static: true}) form!: NgForm;
+  @Output() examTypeChanged = new EventEmitter<string>();
+  @Output() examSubjectChanged = new EventEmitter<string>();
+
+
+  @ViewChild('form', { static: true }) form!: NgForm;
   submitted = false;
 
   examScore: ExamScore = {
-    id: 0,
+    academicYear: '',
+    academicYearId: 0,
     barcode: '',
-    examSubjectCode: 0,
-    isFall: false,
-    writingScore: 0,
+    documentName: '',
+    examSecretId: '',
+    examVersionId: '',
+    examVersionName: '',
+    id: 0,
+    modificationReason: '',
     multipleChoiceScore: 0,
-    documentName: ''
+    writingScore: 0,
   };
+  examTypeId: any;
+  examSubjectId: any;
 
-  currentYear: number = new Date().getFullYear()
-
-  @ViewChild('academicYear') academicYear!: ElementRef;
-  selectedYear = '';
-  onSelected() {
-    this.selectedYear = this.academicYear.nativeElement.value;
-  }
   @Input() set examScoreDetails(details: ExamScore | null) {
     if (details) {
       this.examScore = Object.assign({}, details);
     }
   }
 
-  // currentYearObj: any = this.academicYears
-
-  search(event: any) {
-//
+  constructor(private cd: ChangeDetectorRef) {
   }
-  onCancelClick() {
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.examTypeId = this.examScore.examTypeId;
+    this.examSubjectId = this.examScore.examSubjectId;
+    this.cd.detectChanges();
+  }
+
+  onCancelClick(): void {
     this.formClose.emit();
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.submitted = true;
     if (this.form.valid) {
       this.formSave.emit(this.examScore);
     }
+  }
+
+  onExamTypeChanged($event: any): void {
+    console.log('changed');
+    this.examTypeChanged.emit(this.examTypeId);
+  }
+
+  onExamSubjectChanged($event: any): void {
+    this.examSubjectChanged.emit(this.examSubjectId);
   }
 }

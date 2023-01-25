@@ -1,15 +1,22 @@
-export interface ExamScore{
+export interface ExamScore {
   id: number;
-  studentId?: string;
-  studentName?: string;
+  examSecretId?: string;
+
+  examTypeId?: number;
+  examTypeName?: string;
+
+  examSubjectId?: string;
+  examSubjectName?: string;
+
+  examVersionId: string;
+  examVersionName: string;
+
   barcode: string;
-  examSubjectCode: number;
-  academicYearId?: number;
-  academicYear?: string;
-  isFall: boolean;
+  academicYearId: number;
+  academicYear: string;
   writingScore: number;
   multipleChoiceScore: number;
-  modificationReason?: string;
+  modificationReason: string;
   documentName: string;
 }
 

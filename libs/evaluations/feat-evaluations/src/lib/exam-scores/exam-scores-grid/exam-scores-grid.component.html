@@ -16,143 +16,90 @@
   (onRowUnselect)="onRowUnselect($event)"
   (onLazyLoad)="loadRows($event)"
   [lazy]="true">
-  <ng-template pTemplate="caption">
-    <div
-      class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <h5 class="m-0">Rezutatet e Provimeve</h5>
-      <span class="block mt-2 md:mt-0 p-input-icon-left">
-        <i class="pi pi-search"></i>
-        <input
-          pInputText
-          type="text"
-          placeholder="Kërko..."
-          class="w-full sm:w-auto"/>
-      </span>
-    </div>
-  </ng-template>
   <ng-template pTemplate="header">
     <tr>
-      <th style="width: 3rem">
-        <p-tableHeaderCheckbox (click)="onSelectAllClick()">
-        </p-tableHeaderCheckbox>
+      <th pSortableColumn="academicYear">
+        Viti Akademik
+        <div>
+          <p-sortIcon field="academicYear"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="academicYear"
+            display="menu"></p-columnFilter>
+        </div>
       </th>
-      <th pSortableColumn="studentId">
-        Id e Studentit
-        <p-sortIcon field="studentId"></p-sortIcon>
-        <p-columnFilter
-          type="numeric"
-          field="studentId"
-          display="menu"></p-columnFilter>
+      <th pSortableColumn="examTypeName">
+        Tipi i Provimit
+        <div>
+          <p-sortIcon field="examTypeName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="examTypeName"
+            display="menu"></p-columnFilter>
+        </div>
       </th>
-      <th pSortableColumn="studentName">
-        Emri i Studentit
-        <p-sortIcon field="studentName"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="studentName"
-          display="menu"></p-columnFilter>
+      <th pSortableColumn="examVersionName">
+        Testi i Provimit
+        <div>
+          <p-sortIcon field="examVersionName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="examVersionName"
+            display="menu"></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="barcode">
         Barkodi
-        <p-sortIcon field="barcode"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="barcode"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="examSubjectCode">
-        Kodi i Lëndes të Provimit
-        <p-sortIcon field="examSubjectCode"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="examSubjectCode"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="academicYear">
-        Viti Akademik
-        <p-sortIcon field="academicYear"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="academicYear"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="isFall">
-        Është Vjeshtë?
-        <p-sortIcon field="isFall"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="isFall"
-          display="menu"></p-columnFilter>
+        <div>
+          <p-sortIcon field="barcode"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="barcode"
+            display="menu"></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="writingScore">
         Pikët me shtjellim
-        <p-sortIcon field="writingScore"></p-sortIcon>
-        <p-columnFilter
-          type="number"
-          field="writingScore"
-          display="menu"></p-columnFilter>
+        <div>
+          <p-sortIcon field="writingScore"></p-sortIcon>
+          <p-columnFilter
+            type="number"
+            field="writingScore"
+            display="menu"></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="multipleChoiceScore">
         Pikërt me aternativa
-        <p-sortIcon field="multipleChoiceScore"></p-sortIcon>
-        <p-columnFilter
-          type="number"
-          field="multipleChoiceScore"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="modificationReason">
-        Arsyeja e Modifikimit
-        <p-sortIcon field="modificationReason"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="modificationReason"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="documentName">
-        Emri i dokumentit
-        <p-sortIcon field="documentName"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="documentName"
-          display="menu"></p-columnFilter>
+        <div>
+          <p-sortIcon field="multipleChoiceScore"></p-sortIcon>
+          <p-columnFilter
+            type="number"
+            field="multipleChoiceScore"
+            display="menu"></p-columnFilter>
+        </div>
       </th>
       <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-examScore>
     <tr>
-      <td>
-        <p-tableCheckbox [value]="examScore"></p-tableCheckbox>
+      <td style="width: 20%; min-width: 10rem">
+        {{ examScore.academicYear }}
       </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ examScore.studentId }}
+      <td style="width: 20%; min-width: 10rem">
+        {{ examScore.examTypeName }}
       </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ examScore.studentName }}
+      <td style="width: 20%; min-width: 10rem">
+        {{ examScore.examVersionName }}
       </td>
       <td style="width: 20%; min-width: 10rem">
         {{ examScore.barcode }}
       </td>
-      <td style="width: 20%; min-width: 10rem">
-        {{ examScore.examSubjectCode }}
-      </td>
-      <td style="width: 20%; min-width: 10rem">
-      {{ examScore.academicYear }}
-    </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ examScore.isFall ? 'Po' : 'Jo' }}
+        {{ examScore.writingScore }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-          {{examScore.writingScore}}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ examScore.multipleChoiceScore}}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ examScore.modificationReason }}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ examScore.documentName}}
+        {{ examScore.multipleChoiceScore }}
       </td>
       <td>
         <div class="flex">

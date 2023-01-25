@@ -1,19 +1,29 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ButtonModule} from "primeng/button";
-import {DialogModule} from "primeng/dialog";
-import {ConfirmDialogModule} from "primeng/confirmdialog";
-import {ToolbarModule} from "primeng/toolbar";
-import {ExamScoresFormComponent} from "../exam-scores-form/exam-scores-form.component";
-import {ExamScoresGridComponent} from "../exam-scores-grid/exam-scores-grid.component";
-import {ConfirmationService, LazyLoadEvent} from "primeng/api";
-import {BehaviorSubject} from "rxjs";
-import {GlobalToastService, GRID_ACTIONS, GridEvent} from "@msh/shared/util-shared";
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {ExamScoreApiService} from "@msh/evaluations/data-access-evaluations";
-import {ExamScore} from "@msh/evaluations/domain-evaluations";
-import {AcademicYearApiService} from "@msh/configurations/data-access-configurations";
-import {DropdownModel} from "@msh/shared/data-access-shared";
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToolbarModule } from 'primeng/toolbar';
+import { ExamScoresFormComponent } from '../exam-scores-form/exam-scores-form.component';
+import { ExamScoresGridComponent } from '../exam-scores-grid/exam-scores-grid.component';
+import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { BehaviorSubject } from 'rxjs';
+import {
+  GlobalToastService,
+  GRID_ACTIONS,
+  GridEvent,
+} from '@msh/shared/util-shared';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
+import { ExamScore } from '@msh/evaluations/domain-evaluations';
+import {
+  AcademicYearApiService,
+  ExamSubjectApiService,
+  ExamTypeApiService,
+  ExamVersionApiService,
+} from '@msh/configurations/data-access-configurations';
+import { DropdownModel } from '@msh/shared/data-access-shared';
+import {RippleModule} from "primeng/ripple";
 
 @UntilDestroy()
 @Component({
@@ -26,15 +36,15 @@ import {DropdownModel} from "@msh/shared/data-access-shared";
     ConfirmDialogModule,
     ExamScoresFormComponent,
     ExamScoresGridComponent,
-    ToolbarModule
+    ToolbarModule,
+    RippleModule,
   ],
   templateUrl: './manage-exam-scores.component.html',
   styleUrls: ['./manage-exam-scores.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
-
 })
-export class ManageExamScoresComponent {
+export class ManageExamScoresComponent implements OnInit {
   private examScores$$ = new BehaviorSubject<ExamScore[]>([]);
   examScores$ = this.examScores$$.asObservable();
   filters: LazyLoadEvent | null = null;
@@ -44,32 +54,52 @@ export class ManageExamScoresComponent {
   selectedExamScores: ExamScore[] = [];
   displayModal = false;
 
-  academicYears: DropdownModel<number>[] = []
-  students: DropdownModel<number>[] = []
-  examScore: any;
+  academicYears: DropdownModel<number>[] = [];
+  students: DropdownModel<number>[] = [];
+  examTypes: DropdownModel<number>[] = [];
+  examSubjects: DropdownModel<string>[] = [];
+  examVersions: DropdownModel<string>[] = [];
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examScoreService: ExamScoreApiService,
     private readonly academicYearApiService: AcademicYearApiService,
-  ) {
-  }
+    private readonly examTypeService: ExamTypeApiService,
+    private readonly examSubjectService: ExamSubjectApiService,
+    private readonly examVersionService: ExamVersionApiService
+  ) {}
 
   ngOnInit(): void {
     this.getAcademicYearsDropdown();
-    this.getStudentsDropdown();
+    this.getExamTypes();
   }
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedExamScore = {
+      academicYear: "",
+      academicYearId: 0,
+      barcode: "",
+      documentName: "",
+      examSecretId: "",
+      examSubjectId: "",
+      examSubjectName: "",
+      examTypeId: 0,
+      examTypeName: "",
+      examVersionId: "",
+      examVersionName: "",
+      id: 0,
+      modificationReason: "",
+      multipleChoiceScore: 0,
+      writingScore: 0
+    }
   }
 
   onDeleteSelectedClick() {
     this.confirmationService.confirm({
       message: 'Jeni i sigurt që doni të fshini elementët e zgjedhur?',
       accept: () => {
-        // this.examTypeService.deleteSelectedExamTypes();
         this.toastService.showWarning(' është fshirë');
       },
     });
@@ -100,6 +130,8 @@ export class ManageExamScoresComponent {
         break;
       case GRID_ACTIONS.EDIT:
         this.selectedExamScore = Object.assign({}, event.data as ExamScore);
+        this.getExamSubjects(this.selectedExamScore.examTypeId);
+        this.getExamVersions(this.selectedExamScore.examSubjectId ?? '');
         this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
@@ -127,7 +159,7 @@ export class ManageExamScoresComponent {
   }
 
   getExamScores($event: LazyLoadEvent) {
-    this.filters = Object.assign({}, $event)
+    this.filters = Object.assign({}, $event);
 
     this.examScoreService
       .loadExamScores($event)
@@ -144,9 +176,15 @@ export class ManageExamScoresComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Rezultati i provimit u shtua me sukses!');
+          this.toastService.showSuccess(
+            'Rezultati i provimit u shtua me sukses!'
+          );
           this.displayModal = false;
           this.getExamScores(this.filters as LazyLoadEvent);
+        } else {
+          this.toastService.showError(
+              response.errorMessage
+          );
         }
         if (response.isBadRequest)
           this.toastService.showError(
@@ -199,16 +237,44 @@ export class ManageExamScoresComponent {
         this.academicYears = response.data;
       });
   }
-  getStudentsDropdown(){
-    this.examScoreService
-      .loadStudentsList()
+
+  getExamTypes() {
+    this.examTypeService
+      .loadDropdownList()
       .pipe(untilDestroyed(this))
-      .subscribe(response =>
-        this.students = response
-      )
-    console.log(this.students)
+      .subscribe(response => {
+        this.examTypes = response.data;
+      });
   }
-  onUploadExcel(examScore: any) {
-//
+
+  getExamSubjects(examTypeId?: number) {
+    this.examSubjectService
+      .forExamType(examTypeId)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.examSubjects = response.data;
+      });
+  }
+
+  getExamVersions(examSubjectId: string) {
+    this.examVersionService
+      .forExamSubject(examSubjectId)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.examVersions = response.data;
+      });
+  }
+
+  onExamTypeChanged(examTypeId: any) {
+    if(this.selectedExamScore != null)
+      this.selectedExamScore.examTypeId = examTypeId;
+    this.getExamSubjects(examTypeId);
+    this.examVersions = [];
+  }
+
+  onExamSubjectChanged(examSubjectId: string) {
+    if(this.selectedExamScore != null)
+      this.selectedExamScore.examSubjectId = examSubjectId;
+    this.getExamVersions(examSubjectId);
   }
 }
