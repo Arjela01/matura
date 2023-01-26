@@ -8,10 +8,14 @@ import { RouterModule } from '@angular/router';
 import { A1ApiService } from '@msh/applications/data-access-applications';
 import { A1 } from '@msh/applications/domain-application';
 import {
+  AcademicYearApiService,
   ExamSubjectApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
-import { Student } from '@msh/configurations/domain-configurations';
+import {
+  AcademicYear,
+  Student,
+} from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   GlobalToastService,
@@ -78,6 +82,7 @@ export class ManageA1Component {
   optionalSubjects: DropdownModel<number>[] = [];
   studentsTotalRecords: any;
   choosenStudent: Student | null = null;
+  academicYear: AcademicYear | null = null;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -86,12 +91,24 @@ export class ManageA1Component {
     private examSubjectService: ExamSubjectApiService,
     private dialogService: DialogService,
     private studentService: StudentsApiService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private academicYearService: AcademicYearApiService
   ) {
     this.getD3Subjects();
     this.getOptionalSubjects();
     this.getOptionalSubjects();
     this.getStudent();
+    this.getAcademicYears();
+  }
+  getAcademicYears() {
+    this.academicYearService
+      .getAcademicYears()
+      .pipe(untilDestroyed(this))
+      .subscribe((response: any) => {
+        this.academicYear = response.data.find((years: AcademicYear) => {
+          return years.isActive;
+        });
+      });
   }
   getStudent() {
     this.studentService
@@ -156,7 +173,7 @@ export class ManageA1Component {
       this.updateA1(a1);
     }
     if (!a1.id) {
-      this.updateA1(a1);
+      this.addA1(a1);
     }
   }
 
@@ -169,6 +186,7 @@ export class ManageA1Component {
       .subscribe((response: any) => {
         this.a1$$.next(response.data);
         this.totalRecords = response.total;
+        this.displayForm = false;
       });
   }
 
