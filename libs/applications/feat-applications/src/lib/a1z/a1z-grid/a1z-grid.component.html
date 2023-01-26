@@ -4,6 +4,7 @@
   [value]="a1z"
   responsiveLayout="scroll"
   [rows]="10"
+  [totalRecords]="totalRecords"
   [paginator]="true"
   [rowsPerPageOptions]="[10, 20, 30]"
   [showCurrentPageReport]="true"
@@ -19,22 +20,10 @@
     <div
       class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
       <h5 class="m-0">Menaxho Formularët A1Z</h5>
-      <span class="block mt-2 md:mt-0 p-input-icon-left">
-        <i class="pi pi-search"></i>
-        <input
-          pInputText
-          type="text"
-          placeholder="Kerko..."
-          class="w-full sm:w-auto" />
-      </span>
     </div>
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
-      <th style="width: 3rem">
-        <p-tableHeaderCheckbox (click)="onSelectAllClick()">
-        </p-tableHeaderCheckbox>
-      </th>
       <th pSortableColumn="academicYear">
         Viti Akademik
         <p-sortIcon field="academicYear"></p-sortIcon>
@@ -105,22 +94,6 @@
           field="studentBirthPlace"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="isApplyingToForeignCountries">
-        Aplikon për jashtë vendit?
-        <p-sortIcon field="isApplyingToForeignCountries"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="isApplyingToForeignCountries"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="isA1">
-        Tipi i Formularit
-        <p-sortIcon field="isA1"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="isA1"
-          display="menu"></p-columnFilter>
-      </th>
       <th pSortableColumn="createdOn">
         Krijuar me
         <p-sortIcon field="createdOn"></p-sortIcon>
@@ -134,9 +107,6 @@
   </ng-template>
   <ng-template pTemplate="body" let-a1z>
     <tr>
-      <td>
-        <p-tableCheckbox [value]="a1z"></p-tableCheckbox>
-      </td>
       <td style="width: 10%; min-width: 10rem">
         {{ a1z.academicYear }}
       </td>
@@ -165,13 +135,7 @@
         {{ a1z.studentBirthPlace }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ a1z.isApplyingToForeignCountries }}
-      </td>
-      <td style="width: 10%; min-width: 10rem">
-        {{ a1z.isA1 }}
-      </td>
-      <td style="width: 10%; min-width: 10rem">
-        {{ a1z.createdOn }}
+        {{ a1z.createdOn | date }}
       </td>
       <td>
         <div class="flex">

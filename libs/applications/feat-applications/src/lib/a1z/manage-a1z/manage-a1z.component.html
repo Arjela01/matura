@@ -4,14 +4,13 @@
       <p-toolbar styleClass="mb-4">
         <div class="p-toolbar-group-left">
           <div class="my-2">
-            <a href="/applications/a1z-form">
-              <button
-                pButton
-                pRipple
-                [label]="hideA1ZForm === false ? 'Anullo' : 'Shto'"
-                icon="pi pi-plus"
-                class="p-button-success mr-2"></button>
-            </a>
+            <button
+              pButton
+              pRipple
+              (click)="onNewClick()"
+              [label]="hideA1ZForm === false ? 'Anullo' : 'Shto'"
+              icon="pi pi-plus"
+              class="p-button-success mr-2"></button>
             <button
               pButton
               pRipple
@@ -34,6 +33,7 @@
       <msh-a1z-grid
         [a1z]="(a1zList$ | async) || []"
         (gridEvent)="onGridEvent($event)"
+        [totalRecords]="totalRecords"
         (lazyLoadData)="getA1Z($event)">
       </msh-a1z-grid>
     </div>

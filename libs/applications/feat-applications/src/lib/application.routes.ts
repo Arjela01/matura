@@ -7,6 +7,11 @@ export const APPLICATION_ROUTES: Route[] = [
       import('./a1z/a1z-form/a1z-form.component').then(m => m.A1zFormComponent),
   },
   {
+    path: 'a1z-form/:id',
+    loadComponent: () =>
+      import('./a1z/a1z-form/a1z-form.component').then(m => m.A1zFormComponent),
+  },
+  {
     path: 'a1z',
     loadComponent: () =>
       import('./a1z/manage-a1z/manage-a1z.component').then(

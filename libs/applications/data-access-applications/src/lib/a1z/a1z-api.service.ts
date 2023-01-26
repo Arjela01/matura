@@ -19,6 +19,10 @@ export class A1ZApiService {
     return this.apiService.post('/A1Z/TableData', event);
   }
 
+  getOne(id: number): Observable<ApiResult<A1Z>> {
+    return this.apiService.get(`/A1Z/${id}`);
+  }
+
   save(a1z: A1Z): Observable<ApiResult<A1Z>> {
     return this.apiService.post<ApiResult<A1Z>, A1Z>('/A1Z', a1z);
   }

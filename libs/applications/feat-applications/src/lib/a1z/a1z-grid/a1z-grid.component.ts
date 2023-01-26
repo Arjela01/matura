@@ -34,7 +34,7 @@ import { A1Z } from '../../../../../domain-applications/a1z/a1z.model';
 })
 export class A1zGridComponent {
   @Input() a1z: A1Z[] = [];
-
+  @Input() totalRecords = 0;
   selectedA1Z: A1Z[] = [];
 
   @Output() gridEvent = new EventEmitter<GridEvent<A1Z | A1Z[]>>();

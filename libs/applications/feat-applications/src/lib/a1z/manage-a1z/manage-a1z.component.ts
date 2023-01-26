@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { A1ZApiService } from '@msh/applications/data-access-applications';
 import {
   GRID_ACTIONS,
@@ -50,7 +51,8 @@ export class ManageA1zComponent implements OnInit {
   constructor(
     private readonly a1zservice: A1ZApiService,
     private readonly confirmationService: ConfirmationService,
-    private readonly toastService: GlobalToastService
+    private readonly toastService: GlobalToastService,
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {
@@ -59,6 +61,7 @@ export class ManageA1zComponent implements OnInit {
 
   onNewClick() {
     this.hideA1ZForm = !this.hideA1ZForm;
+    this.router.navigate(['/applications/a1z-form']);
   }
   onDeleteSelectedClick() {
     this.confirmationService.confirm({
@@ -89,8 +92,8 @@ export class ManageA1zComponent implements OnInit {
         this.selectedA1ZList = [];
         break;
       case GRID_ACTIONS.EDIT:
-        // TODO: Route to a1z-form with id as a query parameter to get the dertails
         this.selectedA1Z = Object.assign({}, event.data as A1Z);
+        this.router.navigate(['applications/a1z-form', this.selectedA1Z.id]);
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
@@ -105,6 +108,7 @@ export class ManageA1zComponent implements OnInit {
 
   deleteA1Z(a1z: A1Z) {
     this.a1zservice
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       .delete(a1z.id!.toString())
       .pipe(untilDestroyed(this))
       .subscribe(response => {
