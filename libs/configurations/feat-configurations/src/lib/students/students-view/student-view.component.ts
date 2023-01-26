@@ -5,7 +5,7 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
+  OnChanges, OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -51,19 +51,14 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./student-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StudentViewComponent implements OnChanges {
+export class StudentViewComponent implements OnChanges, OnInit {
   @Output() formSave = new EventEmitter<Student>();
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
 
-  highSchools: DropdownModel<number>[] = [];
   genders: DropdownModel<number>[] = [];
-  studyClass: DropdownModel<number>[] = [];
-  session: DropdownModel<number>[] = [];
-  schoolProfiles: DropdownModel<number>[] = [];
   academicYears: DropdownModel<number>[] = [];
-  saving = false;
   @Input() set studentDetails(details: Student | null) {
     if (details) {
       this.student = Object.assign({}, details);
@@ -110,7 +105,7 @@ export class StudentViewComponent implements OnChanges {
 
   finishedAtSameSchool = true;
 
-  id: any;
+  id: string | null;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -137,13 +132,6 @@ export class StudentViewComponent implements OnChanges {
   }
 
   ngOnChanges(): void {
-    console.log(this.student.highSchoolId);
-    // eslint-disable-next-line max-len
-    this.onStudentChange({ value: this.student.highSchoolId });
-  }
-
-  onStudentChange($event: any) {
-    console.log($event);
-    this.showStudent = $event.value;
+    this.showStudent = this.student.highSchoolId != null;
   }
 }

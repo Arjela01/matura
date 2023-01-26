@@ -65,6 +65,7 @@ export class AdministrationOfficeFormComponent {
   onCancelClick() {
     this.formClose.emit();
   }
+
   selectFiles(event: any) {
     const fileReader = new FileReader();
     for (const file of event.files) {

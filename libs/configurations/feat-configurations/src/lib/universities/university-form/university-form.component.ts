@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input, OnChanges, OnInit,
-  Output, SimpleChanges,
+  Input,
+  OnChanges,
+  Output,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -17,7 +17,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import {DropdownModel} from "@msh/shared/data-access-shared";
+import { DropdownModel } from '@msh/shared/data-access-shared';
 
 @Component({
   selector: 'msh-university-form',
@@ -84,10 +84,12 @@ export class UniversityFormComponent implements OnChanges {
   }
 
   filterCities(): void {
-    this.citiesFiltered = this.cities.filter(c => c.parentKey == this.university?.regionId);
+    this.citiesFiltered = this.cities.filter(
+      c => c.parentKey == this.university?.regionId
+    );
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.filterCities();
   }
 }

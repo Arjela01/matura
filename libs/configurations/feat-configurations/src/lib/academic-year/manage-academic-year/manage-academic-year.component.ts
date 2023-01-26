@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -8,10 +8,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
-import {
- AcademicYearApiService
-} from '@msh/configurations/data-access-configurations';
-import {AcademicYear} from '@msh/configurations/domain-configurations';
+import { AcademicYearApiService } from '@msh/configurations/data-access-configurations';
+import { AcademicYear } from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
 import {
@@ -53,13 +51,11 @@ export class ManageAcademicYearComponent {
   displayModal = false;
   academicYears: DropdownModel<number>[] = [];
 
-
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly academicYearService: AcademicYearApiService,
-  ) {
-  }
+    private readonly academicYearService: AcademicYearApiService
+  ) {}
 
   onNewClick() {
     this.displayModal = true;
@@ -98,12 +94,16 @@ export class ManageAcademicYearComponent {
         this.selectedAcademicYears = [];
         break;
       case GRID_ACTIONS.EDIT:
-        this.selectedAcademicYear = Object.assign({}, event.data as AcademicYear);
+        this.selectedAcademicYear = Object.assign(
+          {},
+          event.data as AcademicYear
+        );
         this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të fshini vitin akademik të zgjedhur?',
+          message:
+            'Jeni i sigurt që doni të fshini vitin akademik të zgjedhur?',
           accept: () => {
             this.deleteAcademicYear(event.data as AcademicYear);
           },
@@ -161,9 +161,7 @@ export class ManageAcademicYearComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            'Viti Akademik u ndryshua me sukses!'
-          );
+          this.toastService.showSuccess('Viti Akademik u ndryshua me sukses!');
           this.displayModal = false;
           this.getAcademicYears(this.filters as LazyLoadEvent);
         }
