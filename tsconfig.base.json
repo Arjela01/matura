@@ -38,6 +38,15 @@
       "@msh/configurations/ui-configurations": [
         "libs/configurations/ui-configurations/src/index.ts"
       ],
+      "@msh/evaluations/data-access-evaluations": [
+        "libs/evaluations/data-access-evaluations/src/index.ts"
+      ],
+      "@msh/evaluations/domain-evaluations": [
+        "libs/evaluations/domain-evaluations/src/index.ts"
+      ],
+      "@msh/evaluations/feat-evaluations": [
+        "libs/evaluations/feat-evaluations/src/index.ts"
+      ],
       "@msh/feat-admin-shell": ["libs/feat-admin-shell/src/index.ts"],
       "@msh/feat-dashboard": ["libs/feat-dashboard/src/index.ts"],
       "@msh/layout/data-access-layout": [
