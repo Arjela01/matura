@@ -6,7 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import {ArchiveFolder} from '@msh/configurations/domain-configurations';
+import { ArchiveFolder } from '@msh/configurations/domain-configurations';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -44,6 +44,7 @@ export class ArchiveFolderGridComponent {
   >();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+
 
   onEditClick(archiveFolder: ArchiveFolder) {
     this.gridEvent.emit({
@@ -89,5 +90,4 @@ export class ArchiveFolderGridComponent {
   loadRows($event: LazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
-
 }

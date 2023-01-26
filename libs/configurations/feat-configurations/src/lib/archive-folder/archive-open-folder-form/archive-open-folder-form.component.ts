@@ -10,7 +10,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import {ArchiveFolder, HighSchool} from '@msh/configurations/domain-configurations';
+import {ArchiveFolder,} from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -62,6 +62,9 @@ export class ArchiveOpenFolderFormComponent  implements OnChanges {
   examTypesFiltered: DropdownModel<number>[] = [];
   examVersionsFiltered: DropdownModel<number>[] = [];
   examSubjectsFiltered: DropdownModel<number>[] = [];
+  @Output() examTypeChanged = new EventEmitter<string>();
+  @Output() examSubjectChanged = new EventEmitter<string>();
+
 
   submitted = false;
 

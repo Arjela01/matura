@@ -12,17 +12,15 @@
         <a href="/configurations/archive-folder">
           <button
             pButton
-            pRipple
             label="Kthehu"
             icon="pi pi-arrow-left"
             class="p-button-danger mr-2"
             [ngStyle]="{backgroundColor:'var(--bluegray-600)'}"
           ></button>
         </a>
-        <a href="/configurations/report-layout-page">
+        <a href="/configurations/layout-report-page">
         <button
             pButton
-            pRipple
             label="Mbyll Dosjen"
             icon="pi pi-folder"
             class="p-button-danger mr-2"
@@ -40,18 +38,6 @@
     </div>
 </div>
 </div>
-<p-dialog
-  [(visible)]="displayModal"
-  [style]="{ width: '500px' }"
-  header="Kerko Dosje"
-  [modal]="true"
-  [draggable]="false"
-  [resizable]="false"
-  class="p-fluid"
-  (onHide)="onModalClose()">
-  <ng-template pTemplate="content">
-  </ng-template>
-</p-dialog>
 
 <p-confirmDialog
   #cd

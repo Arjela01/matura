@@ -77,6 +77,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
   ngOnInit(): void {
     this.getExamTypeDropdown();
     this.getExamVersionDropdown();
+    this.getExamSubjectDropdown();
 
   }
 
@@ -229,6 +230,14 @@ export class ManageArchiveFoldersComponent implements OnInit {
       });
   }
   getExamVersionDropdown() {
+    this.examVersionApiService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.examVersion = response.data;
+      });
+  }
+  getExamSubjectDropdown() {
     this.examVersionApiService
       .loadDropdownList()
       .pipe(untilDestroyed(this))

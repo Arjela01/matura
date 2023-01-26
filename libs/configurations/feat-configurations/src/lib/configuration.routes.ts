@@ -61,10 +61,17 @@ export const CONFIGURATION_ROUTES: Route[] = [
         ).then(m => m.ManageArchiveFoldersComponent),
   },
   {
-    path: 'report-layout-page',
+    path: 'archive-view/:id',
     loadComponent: () =>
-      import('./report-layout-page/manage-report-layout/manage-report-layout.component'
-        ).then(m => m.ManageReportLayoutComponent),
+      import('./archive-folder/archive-folder-view/archive-folder-view.component'
+        ).then(m => m.ArchiveFolderViewComponent),
+  },
+  {
+    path: 'layout-report-page',
+    loadComponent: () =>
+      import(
+        './report-layout-page/manage-report-layout-page/manage-report-layout-page.component'
+        ).then(m => m.ManageReportLayoutPageComponent),
   },
   {
     path: 'administration-offices',

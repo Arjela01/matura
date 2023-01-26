@@ -3,16 +3,18 @@ import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
-import {
-  ArchiveFolder,
-  ArchiveFolderTableView
-} from "../../../../domain-configurations/src/archive-folder/archive-folder.model";
+import {ArchiveFolder, ArchiveFolderTableView} from "@msh/configurations/domain-configurations";
 
 @Injectable({
   providedIn: 'root',
 })
 export class ArchiveFolderApiService {
   constructor(private apiService: APIService) {}
+
+  getById(id: any): Observable<ApiResult<ArchiveFolder>> {
+    return this.apiService.get<ApiResult<ArchiveFolder>>(
+      `/ArchiveFolder/${id}`);
+  }
 
   loadDropDownList(): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(

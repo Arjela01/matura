@@ -10,9 +10,10 @@ import {
 } from '@angular/core';
 import {
   ArchiveFolder,
+  Student,
 } from '@msh/configurations/domain-configurations';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { LazyLoadEvent, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -22,15 +23,17 @@ import { TooltipModule } from 'primeng/tooltip';
 import { FormsModule, NgForm } from '@angular/forms';
 import {
   AcademicYearApiService,
+  ArchiveFolderApiService,
   GendersApiService,
   HighSchoolApiService,
   ProfileApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToolbarModule } from 'primeng/toolbar';
 
 @Component({
-  selector: 'msh-bar-code-grid',
+  selector: 'msh-archive-folder-view',
   standalone: true,
   imports: [
     CommonModule,
@@ -41,12 +44,16 @@ import { Router } from '@angular/router';
     CheckboxModule,
     RippleModule,
     FormsModule,
+    ToolbarModule,
   ],
-  templateUrl: './bar-code-grid.component.html',
-  styleUrls: ['./bar-code-grid.component.scss'],
+  templateUrl: './archive-folder-view.component.html',
+  styleUrls: ['./archive-folder-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BarCodeGridComponent {
+export class ArchiveFolderViewComponent {
+  @Output() formSave = new EventEmitter<Student>();
+  @Output() formClose = new EventEmitter<undefined>();
+
   @Input() archiveFolders: ArchiveFolder[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
@@ -61,18 +68,69 @@ export class BarCodeGridComponent {
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
+  @Input() set studentDetails(details: Student | null) {
+    if (details) {
+      this.student = Object.assign({}, details);
+    }
+  }
+
+  showStudent = false;
+  submitted = false;
+
+  student: Student = {
+    createdName: '',
+    createdOn: new Date(),
+    modifiedByName: '',
+    modifiedOn: new Date(),
+    birthDate: new Date(),
+    birthPlace: '',
+    email: '',
+    genderId: 1,
+    idCard: '',
+    isA2A3: true,
+    isEAlbaniaApplication: true,
+    isFall: false,
+    lastName: '',
+    highSchool: '',
+    middleName: '',
+    mobilePhone: '',
+    profileName: '',
+    genderName: '',
+    oldID: '',
+    profileId: 0,
+    schoolFinished: '',
+    schoolProfile: '',
+    highSchoolName: '',
+    schoolName: '',
+    highSchoolId: 0,
+    session: '',
+    studentId: '',
+    studyClass: '',
+    schoolFinishedName: '',
+    firstName: '',
+    isConfirmedBySupervisor: true,
+    graduationYear: undefined,
+  };
+
+  finishedAtSameSchool = true;
+
+  id: string | null;
 
   constructor(
     private cd: ChangeDetectorRef,
     private readonly academicYearService: AcademicYearApiService,
     private readonly studentService: StudentsApiService,
+    private readonly archiveFolderService: ArchiveFolderApiService,
     private readonly highSchoolService: HighSchoolApiService,
     private readonly profileService: ProfileApiService,
     private readonly genderService: GendersApiService,
-    private readonly archiveFolderService: GendersApiService,
+    private router: Router,
+    private messageService: MessageService,
 
-    private router: Router
-  ) {}
+    private route: ActivatedRoute
+  ) {
+    this.id = this.route.snapshot.paramMap.get('id');
+  }
 
   archiveFolder: ArchiveFolder = {
     id: 0,
@@ -92,13 +150,20 @@ export class BarCodeGridComponent {
     });
   }
 
-  onEditClick(archiveFolder: ArchiveFolder) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.EDIT,
-      data: archiveFolder,
-    } as GridEvent<ArchiveFolder>);
+  ngOnInit(): void {
+    this.studentService.getById(this.id).subscribe(result => {
+      this.student = { ...result.data };
+      this.finishedAtSameSchool =
+        this.student?.schoolFinished == '' ||
+        this.student?.schoolFinished == null;
+      this.cd.detectChanges();
+    });
   }
-  onDropBarcodeClick(archiveFolder: ArchiveFolder) {
+
+  ngOnChanges(): void {
+    this.showStudent = this.student.highSchoolId != null;
+  }
+  onEditClick(archiveFolder: ArchiveFolder) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
       data: archiveFolder,
