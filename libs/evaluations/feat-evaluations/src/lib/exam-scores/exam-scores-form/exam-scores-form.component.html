@@ -1,0 +1,156 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <pre>{{this.examScore | json}}</pre>
+  <div class="field">
+    <label for="AcademicYear">Viti Akademik *</label>
+    <p-dropdown
+      id="AcademicYear"
+      [options]="academicYears"
+      optionValue="key"
+      optionLabel="value"
+      name="academicYearId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="examScore.academicYearId"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examScore.academicYearId
+      }">
+    </p-dropdown>
+    <small class="p-error block" *ngIf="submitted && !examScore.academicYearId">
+      Viti akademik është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="ExamType">Tipi i Provimit *</label>
+    <p-dropdown
+      id="ExamType"
+      [options]="examTypes"
+      optionValue="key"
+      optionLabel="value"
+      name="examTypeId"
+      (onChange)="onExamTypeChanged($event)"
+      (onClear)="onExamTypeChanged($event)"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="examTypeId"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examTypeId
+      }">
+    </p-dropdown>
+    <small class="p-error block" *ngIf="submitted && !examTypeId">
+      Tipi i provimit eshte fushe e kerkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="ExamSubject">Lënda e Provimit *</label>
+    <p-dropdown
+      id="ExamSubject"
+      [options]="examSubjects"
+      optionValue="key"
+      optionLabel="value"
+      name="examSubjectId"
+      (onChange)="onExamSubjectChanged($event)"
+      (onClear)="onExamSubjectChanged($event)"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="examSubjectId"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examSubjectId
+      }">
+    </p-dropdown>
+    <small class="p-error block" *ngIf="submitted && !examSubjectId">
+      Lënda e provimit është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="ExamVersion">Exam Version *</label>
+    <p-dropdown
+      id="ExamVersion"
+      [options]="examVersions"
+      optionValue="key"
+      optionLabel="value"
+      name="examVersionId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="examScore.examVersionId"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examScore.examVersionId
+      }">
+    </p-dropdown>
+    <small class="p-error block" *ngIf="submitted && !examScore.examVersionId">
+      Testi është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="barcode">Barkodi *</label>
+    <input
+      type="text"
+      pInputText
+      id="barcode"
+      name="barcode"
+      [(ngModel)]="examScore.barcode"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examScore.barcode }" />
+    <small class="p-error block" *ngIf="submitted && !examScore.barcode">
+      Barkodi është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="WritingScore">Pikët me shtjellim *</label>
+    <input
+      type="number"
+      pInputText
+      id="WritingScore"
+      name="WritingScore"
+      [(ngModel)]="examScore.writingScore"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examScore.writingScore
+      }" />
+    <small class="p-error block" *ngIf="submitted && !examScore.writingScore">
+      Pikët me shtjellim janë fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="MultipleChoiceScore">Pikët me alternativa *</label>
+    <input
+      type="number"
+      pInputText
+      id="MultipleChoiceScore"
+      name="MultipleChoiceScore"
+      [(ngModel)]="examScore.multipleChoiceScore"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examScore.multipleChoiceScore
+      }" />
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examScore.multipleChoiceScore">
+      Pikët me alternativa është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      type="submit"
+      pButton
+      icon="pi pi-check"
+      label="Ruaj"
+      class="p-button-text w-auto"></button>
+  </div>
+</form>

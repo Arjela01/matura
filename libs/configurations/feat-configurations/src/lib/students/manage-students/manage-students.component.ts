@@ -144,7 +144,7 @@ export class ManageStudentsComponent implements OnInit {
       .subscribe(response => {
         console.log(response);
         const students = [...response.data];
-        for(let student of students) {
+        for(const student of students) {
           student.createdOn = new Date(student.createdOn);
           if(student.modifiedOn != null)
             student.modifiedOn = new Date(student.modifiedOn);

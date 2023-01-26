@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {
   AdministrationOfficeApiService,
   CityApiService,
@@ -39,7 +39,7 @@ import { AdministrationOfficeGridComponent } from '../administration-office-grid
   providers: [ConfirmationService],
 })
 @UntilDestroy()
-export class ManageAdministrationOfficeComponent {
+export class ManageAdministrationOfficeComponent implements OnInit {
   private administrativeOffices$$ = new BehaviorSubject<AdministrationOffice[]>(
     []
   );
@@ -58,7 +58,7 @@ export class ManageAdministrationOfficeComponent {
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly cityApiService: CityApiService,
-    private readonly administrationOfficeApiService: AdministrationOfficeApiService
+    private readonly adminOfficeApiService: AdministrationOfficeApiService
   ) {}
 
   ngOnInit(): void {
@@ -139,7 +139,7 @@ export class ManageAdministrationOfficeComponent {
   getAdministrationOffices($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    this.administrationOfficeApiService
+    this.adminOfficeApiService
       .loadAdministrationOffices($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
@@ -149,7 +149,7 @@ export class ManageAdministrationOfficeComponent {
   }
 
   addAdministrationOffice(administrationOffice: AdministrationOffice) {
-    this.administrationOfficeApiService
+    this.adminOfficeApiService
       .save(administrationOffice)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
@@ -167,7 +167,7 @@ export class ManageAdministrationOfficeComponent {
   }
 
   updateAdministrationOffice(administrationOffice: AdministrationOffice) {
-    this.administrationOfficeApiService
+    this.adminOfficeApiService
       .update(administrationOffice)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
@@ -185,7 +185,7 @@ export class ManageAdministrationOfficeComponent {
   }
 
   deleteAdministrationOffices(administrationOffice: AdministrationOffice) {
-    this.administrationOfficeApiService
+    this.adminOfficeApiService
       .delete(administrationOffice.id as number)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
@@ -207,7 +207,7 @@ export class ManageAdministrationOfficeComponent {
     });
   }
   getAdministrationOfficeDropdown() {
-    this.administrationOfficeApiService
+    this.adminOfficeApiService
       .loadOnlyDars()
       .pipe(untilDestroyed(this))
       .subscribe(response => {
