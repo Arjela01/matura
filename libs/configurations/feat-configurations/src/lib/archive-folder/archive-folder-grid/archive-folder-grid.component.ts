@@ -6,7 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { ArchiveFolder } from '@msh/configurations/domain-configurations';
+import {ArchiveFolder, Student} from '@msh/configurations/domain-configurations';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -15,6 +15,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import {Router, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'msh-archive-folder-grid',
@@ -27,13 +28,14 @@ import { TooltipModule } from 'primeng/tooltip';
     TooltipModule,
     CheckboxModule,
     RippleModule,
+    RouterLink,
   ],
   templateUrl: './archive-folder-grid.component.html',
   styleUrls: ['./archive-folder-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArchiveFolderGridComponent {
-  @Input() archiveFolders: ArchiveFolder[] = [];
+  @Input() archiveFolders: ArchiveFolder[]  | Student[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
 
@@ -45,7 +47,11 @@ export class ArchiveFolderGridComponent {
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
+constructor(
+  private router: Router,
 
+) {
+}
   onEditClick(archiveFolder: ArchiveFolder) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
@@ -87,6 +93,9 @@ export class ArchiveFolderGridComponent {
     } as GridEvent<ArchiveFolder>);
   }
 
+  // viewArchive(viewArchive: ArchiveFolder) {
+  //   this.router.navigate(['/configurations/archive-view']).then();
+  // }
   loadRows($event: LazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }

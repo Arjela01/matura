@@ -54,15 +54,15 @@ export class ArchiveFolderViewComponent {
   @Output() formSave = new EventEmitter<Student>();
   @Output() formClose = new EventEmitter<undefined>();
 
-  @Input() archiveFolders: ArchiveFolder[] = [];
+  @Input() archiveFolders: Student[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
 
   //Keep it local state because of Table Header checkbox not syncing
-  selectedArchiveFolders: ArchiveFolder[] = [];
+  selectedArchiveFolders: Student[] = [];
 
   @Output() gridEvent = new EventEmitter<
-    GridEvent<ArchiveFolder | ArchiveFolder[]>
+    GridEvent<Student | Student[]>
   >();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
@@ -112,6 +112,8 @@ export class ArchiveFolderViewComponent {
     graduationYear: undefined,
   };
 
+  fakeDosjeList: any;
+  students= null;
   finishedAtSameSchool = true;
 
   id: string | null;
@@ -138,6 +140,35 @@ export class ArchiveFolderViewComponent {
   };
   saving = false;
 
+  ngOnInit(): void {
+    this.studentService.getById(this.id).subscribe(result => {
+      this.student = { ...result.data };
+      this.fakeDosjeList =
+        [
+          {
+            numri: 1,
+            barcode: "asdaeda2d1",
+            emri: "Lenda 1"
+          },
+          {
+            numri: 2,
+            barcode: "asdaeda2d12",
+            emri: "Lenda 2"
+          },
+          {
+            numri: 3,
+            barcode: "asdaeda2d31",
+            emri: "Lenda 3"
+          }
+        ];
+
+      console.log("fakedosje");
+      this.finishedAtSameSchool = this.student?.schoolFinished == '' ||
+        this.student?.schoolFinished == null;
+      this.cd.detectChanges();
+    });
+  }
+
   onSubmit(): void {
     const data = { ...this.archiveFolder };
 
@@ -150,36 +181,26 @@ export class ArchiveFolderViewComponent {
     });
   }
 
-  ngOnInit(): void {
-    this.studentService.getById(this.id).subscribe(result => {
-      this.student = { ...result.data };
-      this.finishedAtSameSchool =
-        this.student?.schoolFinished == '' ||
-        this.student?.schoolFinished == null;
-      this.cd.detectChanges();
-    });
-  }
-
   ngOnChanges(): void {
     this.showStudent = this.student.highSchoolId != null;
   }
-  onEditClick(archiveFolder: ArchiveFolder) {
+  onEditClick(archiveFolder: Student) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
       data: archiveFolder,
-    } as GridEvent<ArchiveFolder>);
+    } as GridEvent<Student>);
   }
-  onActivate(archiveFolder: ArchiveFolder) {
+  onActivate(archiveFolder: Student) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
       data: archiveFolder,
-    } as GridEvent<ArchiveFolder>);
+    } as GridEvent<Student>);
   }
-  onDeleteClick(archiveFolder: ArchiveFolder) {
+  onDeleteClick(archiveFolder: Student) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,
       data: archiveFolder,
-    } as GridEvent<ArchiveFolder>);
+    } as GridEvent<Student>);
   }
 
   loadRows($event: LazyLoadEvent) {

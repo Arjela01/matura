@@ -94,8 +94,18 @@
       <td>
         <p-tableCheckbox [value]="archiveFolder"></p-tableCheckbox>
       </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ archiveFolder.code }}
+      <td style="width: 14%; min-width: 10rem"><a [routerLink]="['/configurations', 'archive-view', archiveFolder.id]">
+
+        <button
+          pButton
+          pRipple
+          icon="pi pi-eye"
+          class="p-button-rounded p-button-info p-button-text"
+          pTooltip="Shiko me shume!"
+          tooltipPosition="bottom"
+          > {{ archiveFolder.name }}</button>
+
+      </a>
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ archiveFolder.name }}
@@ -115,7 +125,7 @@
             pButton
             pRipple
             icon="pi pi-folder-open"
-            class="p-button-rounded p-button-warning p-button-text mr-2"
+            class="p-button-rounded p-button-info p-button-text mr-2"
             pTooltip="Aktivizo Dosjen"
             tooltipPosition="bottom"
             (click)="onEditClick(archiveFolder)"></button>

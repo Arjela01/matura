@@ -1,8 +1,11 @@
 <div class="grid">
   <div class="col-12">
-    <div class="card px-6 py-6">
+    <div class="card px-6 py-6"> <div *ngIf="student !== null"><p>
+      Name: {{student.firstName}}
+    </p>
+
       <!-- TODO: this can be reusable -->
-      <p-toolbar styleClass="mb-4">
+      <p-toolbar styleClass="mb-4" >
         <div class="p-toolbar-group-left">
           <h2 class="flex-1 mb-0">
             Dosja: {{ 'DOSJA: 607,     D3:   TURQISHT D3 (B1)' }}
@@ -37,17 +40,18 @@
           <button
             pButton
             pRipple
-            label="17/50"
+            label="{{student.firstName}}/50"
             icon="pi pi-database"
             disabled
             class="p-button-danger mr-2"></button>
         </div>
       </p-toolbar>
       <p-table
+
         #dt
         dataKey="id"
         responsiveLayout="scroll"
-        [value]="archiveFolders"
+        [value]="fakeDosjeList"
         [totalRecords]="totalRecords"
         [rows]="10"
         [paginator]="true"
@@ -59,16 +63,16 @@
         selectionMode="multiple">
         <!--        (onRowSelect)="onRowSelect($event)"-->
         <!--        (onRowUnselect)="onRowUnselect($event)"-->
-        (onLazyLoad)="loadRows($event)" [lazy]="true">
+<!--        (onLazyLoad)="loadRows($event)" [lazy]="true">-->
 
-        <ng-template pTemplate="header" *ngIf="student !== null">
+        <ng-template pTemplate="header" >
           <tr>
-            <th pSortableColumn="folderId">
+            <th pSortableColumn="numri">
               Numri
-              <p-sortIcon field="folderId"></p-sortIcon>
+              <p-sortIcon field="numri"></p-sortIcon>
               <p-columnFilter
                 type="numeric"
-                field="folderId"
+                field="numri"
                 display="menu"></p-columnFilter>
             </th>
             <th pSortableColumn="barcode">
@@ -79,26 +83,26 @@
                 field="barcode"
                 display="menu"></p-columnFilter>
             </th>
-            <th pSortableColumn="studentName">
+            <th pSortableColumn="emri">
               Emri
-              <p-sortIcon field="studentName"></p-sortIcon>
+              <p-sortIcon field="emri"></p-sortIcon>
               <p-columnFilter
                 type="text"
-                field="studentName"
+                field="emri"
                 display="menu"></p-columnFilter>
             </th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-student>
+        <ng-template pTemplate="body" let-fakeDosjeList>
           <tr>
             <td style="width: 14%; min-width: 10rem">
-              {{ student.code }}
+              {{ fakeDosjeList.numri }}
             </td>
             <td style="width: 14%; min-width: 10rem">
-              {{ student.name }}
+              {{ fakeDosjeList.barcode }}
             </td>
             <td style="width: 14%; min-width: 10rem">
-              {{ student.name }}
+              {{ fakeDosjeList.emri }}
             </td>
           </tr>
         </ng-template>

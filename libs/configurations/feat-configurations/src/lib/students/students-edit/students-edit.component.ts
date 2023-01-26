@@ -60,7 +60,7 @@ export class StudentsEditComponent {
   id: any;
 
   showStudent = false;
-  submitted = false;
+  submitted = true;
 
   current = null;
   loading = false;

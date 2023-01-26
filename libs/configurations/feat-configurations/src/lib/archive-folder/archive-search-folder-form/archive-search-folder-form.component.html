@@ -11,30 +11,31 @@
       [(ngModel)]="archiveFolder.id"
       [showClear]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !archiveFolder.id
+        'ng-invalid ng-dirty': searching && !archiveFolder.id
       }">
     </p-dropdown>
     <small
       class="p-error block"
-      *ngIf="submitted && !archiveFolder.id">
+      *ngIf="searching && !archiveFolder.id">
       Tipet e provimeve është fushë e kërkuar.
     </small>
   </div>
 
   <div class="field mb-5">
-    <label for="Fodler">Dosja *</label>
+    <label for="Folder">Dosja *</label>
     <input
       type="text"
+      maxlength="7"
       pInputText
-      id="Fodler"
-      name="Fodler"
-      [(ngModel)]="archiveFolder.id"
+      id="Folder"
+      name="Folder"
+      [(ngModel)]="archiveFolder.name"
       required
       autofocus
       [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !archiveFolder.id
+              'ng-invalid ng-dirty': searching && !archiveFolder.name
             }" />
-    <small class="p-error block" *ngIf="submitted && !archiveFolder.id">
+    <small class="p-error block" *ngIf="searching && !archiveFolder.name">
       Dosja është fushë e kërkuar.
     </small>
   </div>
@@ -53,7 +54,6 @@
       pButton
       icon="pi pi-check"
       label="Kerko"
-      class="p-button-text w-auto"
-      (click)="onSearchClick()"></button>
+      class="p-button-text w-auto"></button>
   </div>
 </form>

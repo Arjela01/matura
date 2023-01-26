@@ -21,6 +21,11 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import {Router} from "@angular/router";
 import {takeUntil} from "rxjs";
+import {
+  AcademicYearApiService, ArchiveFolderApiService, GendersApiService,
+  HighSchoolApiService, ProfileApiService,
+  StudentsApiService
+} from "@msh/configurations/data-access-configurations";
 
 @Component({
   selector: 'msh-archive-search-folder-form',
@@ -57,8 +62,7 @@ export class ArchiveSearchFolderFormComponent  implements OnChanges {
   @ViewChild('form', { static: true }) form!: NgForm;
 
   examTypesFiltered: DropdownModel<number>[] = [];
-  searching= false;
-  submitted = false;
+  searching= true;
 
   archiveFolder: ArchiveFolder = {
     id: 0,
@@ -67,8 +71,15 @@ export class ArchiveSearchFolderFormComponent  implements OnChanges {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private cd: ChangeDetectorRef,
-              private router: Router,) {}
+  constructor( private cd: ChangeDetectorRef,
+               private readonly academicYearService: AcademicYearApiService,
+               private readonly studentService: StudentsApiService,
+               private readonly highSchoolService: HighSchoolApiService,
+               private readonly profileService: ProfileApiService,
+               private readonly genderService: GendersApiService,
+               private router: Router,
+               private archiveFolderService: ArchiveFolderApiService
+  ) {}
 
   ngOnChanges(): void {
     if (this.examTypes && this.archiveFolder.id) {
@@ -81,12 +92,17 @@ export class ArchiveSearchFolderFormComponent  implements OnChanges {
   }
 
 
-  onSearchClick() {
-    this.submitted = true;
-    this.router.navigate(['/configurations/students']).then();
+  onSearchClick(): void {
+    const data = { ...this.archiveFolder };
 
+    this.archiveFolderService.save(data).subscribe({
+      next: () => {
+        this.searching = true;
+
+        this.router.navigate(['/configurations/add-barCode', ['id']]).then();
+      },
+    });
   }
-
 
 
 

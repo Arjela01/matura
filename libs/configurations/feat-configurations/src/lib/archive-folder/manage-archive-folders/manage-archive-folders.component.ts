@@ -10,10 +10,10 @@ import { ToolbarModule } from 'primeng/toolbar';
 
 import {
   ArchiveFolderApiService,
-   ExamTypeApiService, ExamVersionApiService,
+  ExamTypeApiService, ExamVersionApiService, StudentsApiService,
 
 } from '@msh/configurations/data-access-configurations';
-import {ArchiveFolder} from '@msh/configurations/domain-configurations';
+import {ArchiveFolder, Student} from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
 import {
@@ -50,7 +50,7 @@ import {ArchiveOpenFolderFormComponent} from "../archive-open-folder-form/archiv
 
 })
 export class ManageArchiveFoldersComponent implements OnInit {
-  private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[]>([]);
+  private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[]| Student[]>([]);
   archiveFolders$ = this.archiveFolders$$.asObservable();
   filters: LazyLoadEvent | null = null;
   hideArchiveFolderForm = true;
@@ -70,6 +70,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
     private readonly archiveFolderService: ArchiveFolderApiService,
     private readonly examTypeApiService: ExamTypeApiService,
     private readonly examVersionApiService: ExamVersionApiService,
+    private readonly studentApiTestService: StudentsApiService
 
   ) {
   }
@@ -156,11 +157,33 @@ export class ManageArchiveFoldersComponent implements OnInit {
   getArchiveFolders($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    this.archiveFolderService
-      .loadArchiveFolder($event)
+    this.studentApiTestService
+      .loadStudents($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.archiveFolders$$.next(response.data);
+        //this.archiveFolders$$.next(response.data);
+        this.archiveFolders$$.next([
+          {
+            id: "4d4dasd",
+            name: "Dosja1"
+          },
+          {
+            id: "4d4dasdg",
+            name: "Dosja2"
+          },
+          {
+            id: "4d4dasdf",
+            name: "Dosja3"
+          },
+          {
+            id: "4d4dasdd",
+            name: "Dosja4"
+          },
+          {
+            id: "4d4dasds",
+            name: "Dosja5"
+          }
+        ])
         this.totalRecords = response.total;
       });
   }
