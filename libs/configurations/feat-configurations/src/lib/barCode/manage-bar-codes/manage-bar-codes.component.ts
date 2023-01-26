@@ -77,9 +77,6 @@ export class ManageBarCodesComponent implements OnInit {
   }
 
   onCloseClick(){
-    console.log(" succesfull")
-    this.saving = true;
-
     this.router.navigate(['/configurations/students']).then();
   }
 

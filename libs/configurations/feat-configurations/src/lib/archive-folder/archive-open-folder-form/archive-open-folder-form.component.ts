@@ -45,6 +45,8 @@ export class ArchiveOpenFolderFormComponent  implements OnChanges {
   @Input() cities: DropdownModel<number>[] = [];
   @Input() regions: DropdownModel<number>[] = [];
   @Input() examTypes: DropdownModel<number>[] = [];
+  @Input() examSubject: DropdownModel<number>[] = [];
+
   @Input() examVersion: DropdownModel<number>[] = [];
 
   @Input() set archiveFolders(details: ArchiveFolder | null) {
@@ -58,6 +60,8 @@ export class ArchiveOpenFolderFormComponent  implements OnChanges {
   @ViewChild('form', { static: true }) form!: NgForm;
 
   examTypesFiltered: DropdownModel<number>[] = [];
+  examVersionsFiltered: DropdownModel<number>[] = [];
+  examSubjectsFiltered: DropdownModel<number>[] = [];
 
   submitted = false;
 
@@ -75,6 +79,12 @@ export class ArchiveOpenFolderFormComponent  implements OnChanges {
     if (this.examTypes && this.archiveFolder.id) {
       this.onExamTypeChange({ value: this.archiveFolder.id });
     }
+    if (this.examVersion && this.archiveFolder.id) {
+      this.onExamVersionChange({ value: this.archiveFolder.id });
+    }
+    if (this.examSubject && this.archiveFolder.id) {
+      this.onExamSubjectChange({ value: this.archiveFolder.id });
+    }
   }
 
   onCancelClick() {
@@ -90,6 +100,14 @@ export class ArchiveOpenFolderFormComponent  implements OnChanges {
 
 
   onExamTypeChange($event: any) {
+    // eslint-disable-next-line max-len
+    this.examTypesFiltered = this.examTypes.filter(c => c.parentKey == $event.value);
+  }
+  onExamVersionChange($event: any) {
+    // eslint-disable-next-line max-len
+    this.examTypesFiltered = this.examTypes.filter(c => c.parentKey == $event.value);
+  }
+  onExamSubjectChange($event: any) {
     // eslint-disable-next-line max-len
     this.examTypesFiltered = this.examTypes.filter(c => c.parentKey == $event.value);
   }

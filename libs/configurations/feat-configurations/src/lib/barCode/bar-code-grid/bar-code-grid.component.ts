@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
+  ChangeDetectionStrategy, ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
-  Output,
+  Output, ViewChild,
 } from '@angular/core';
-import {ArchiveFolder, HighSchool} from '@msh/configurations/domain-configurations';
+import {ArchiveFolder, HighSchool, Student} from '@msh/configurations/domain-configurations';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -15,6 +15,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import {NgForm} from "@angular/forms";
+import {
+  AcademicYearApiService, GendersApiService,
+  HighSchoolApiService, ProfileApiService,
+  StudentsApiService
+} from "@msh/configurations/data-access-configurations";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'msh-bar-code-grid',
@@ -45,6 +52,43 @@ export class BarCodeGridComponent  {
   >();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+
+
+  @ViewChild('form', {static: true}) form!: NgForm;
+
+  constructor(
+    private cd: ChangeDetectorRef,
+    private readonly academicYearService: AcademicYearApiService,
+    private readonly studentService: StudentsApiService,
+    private readonly highSchoolService: HighSchoolApiService,
+    private readonly profileService: ProfileApiService,
+    private readonly genderService: GendersApiService,
+    private router: Router
+  ) {}
+
+
+  archiveFolder: ArchiveFolder = {
+    id: 0,
+    name: "",
+  }
+  saving = false;
+
+
+
+  onSubmit(): void {
+
+
+    const data = { ...this.archiveFolder };
+
+    this.studentService.save(data).subscribe({
+      next: () => {
+        this.saving = false;
+
+        this.router.navigate(['/configurations/students']).then();
+      },
+    });
+  }
+
 
   onEditClick(archiveFolder: ArchiveFolder) {
     this.gridEvent.emit({
@@ -91,3 +135,5 @@ export class BarCodeGridComponent  {
     this.lazyLoadData.emit($event);
   }
 }
+
+

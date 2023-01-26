@@ -9,13 +9,25 @@
         </h2>
       </div>
       <div class="p-toolbar-group-right">
+        <a href="/configurations/archive-folder">
           <button
+            pButton
+            pRipple
+            label="Kthehu"
+            icon="pi pi-arrow-left"
+            class="p-button-danger mr-2"
+            [ngStyle]="{backgroundColor:'var(--bluegray-600)'}"
+          ></button>
+        </a>
+        <a href="/configurations/report-layout-page">
+        <button
             pButton
             pRipple
             label="Mbyll Dosjen"
             icon="pi pi-folder"
             class="p-button-danger mr-2"
           (click)="onCloseClick"></button>
+        </a>
       </div>
     </p-toolbar>
 
@@ -38,12 +50,6 @@
   class="p-fluid"
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
-    <!--    <msh-archive-folder-form-->
-    <!--      [archiveFolders]="selectedArchiveFolder"-->
-    <!--      [examTypes]="examType"-->
-    <!--      (formClose)="onModalClose()"-->
-    <!--      (formSave)="onFormSave($event)">-->
-    <!--    </msh-archive-folder-form>-->
   </ng-template>
 </p-dialog>
 
