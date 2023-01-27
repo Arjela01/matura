@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { StudentsApiService } from '@msh/configurations/data-access-configurations';
 import { Student } from '@msh/configurations/domain-configurations';
@@ -44,6 +44,7 @@ import { BehaviorSubject } from 'rxjs';
 @UntilDestroy()
 export class ManageStudentsGridsDialogComponent {
   filters: LazyLoadEvent | null = null;
+  @ViewChild('dt', { static: true }) dt: any;
   totalRecords: number = 0;
   private students$$ = new BehaviorSubject<Student[]>([]);
   students$ = this.students$$.asObservable();
@@ -56,8 +57,10 @@ export class ManageStudentsGridsDialogComponent {
 
   loadRows($event: LazyLoadEvent) {
     if (!this.loadedForTheFirstTime) {
-      this.filters = Object.assign({}, $event);
-
+      $event.filters = {
+        ...$event.filters,
+        ...this.config.data.config.filters,
+      };
       this.studentsService
         .loadStudents($event)
         .pipe(untilDestroyed(this))

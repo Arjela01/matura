@@ -1,24 +1,31 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { A1ApiService } from '@msh/applications/data-access-applications';
 import { A1 } from '@msh/applications/domain-application';
-import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import {
+  AcademicYear,
+  Student,
+} from '@msh/configurations/domain-configurations';
+import { DropdownModel } from '@msh/shared/data-access-shared';
+import { GlobalToastService, GRID_ACTIONS } from '@msh/shared/util-shared';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
+import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
+import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'a1-grid',
   standalone: true,
@@ -32,67 +39,114 @@ import { TooltipModule } from 'primeng/tooltip';
     ButtonModule,
     TooltipModule,
     CheckboxModule,
+    DialogModule,
+    ConfirmDialogModule,
+    ToolbarModule,
     RippleModule,
     TableModule,
   ],
   templateUrl: './a1-grid.component.html',
   styleUrls: ['./a1-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ConfirmationService, DialogService],
 })
+@UntilDestroy()
 export class A1GridComponent {
-  @Input() a1: A1[] = [];
-  @Input() totalRecords = 0;
-  @Input() loading = false;
+  private a1$$ = new BehaviorSubject<A1[]>([]);
+  a1$ = this.a1$$.asObservable();
+  filters: LazyLoadEvent | null = null;
+  students: Student[] = [];
+  totalRecords = 0;
+  selectedA1: A1 | null = null;
+  selectedA1Forms: A1[] = [];
+  displayForm = false;
+  d3Dropdown: DropdownModel<number>[] = [];
+  gridAction = GRID_ACTIONS;
+  d3Subject: DropdownModel<number>[] = [];
+  ref: DynamicDialogRef | null = null;
+  optionalSubjects: DropdownModel<number>[] = [];
+  studentsTotalRecords: any;
+  choosenStudent: Student | null = null;
+  academicYear: AcademicYear | null = null;
+  constructor(
+    private readonly confirmationService: ConfirmationService,
+    private readonly toastService: GlobalToastService,
+    private readonly a1ApiService: A1ApiService,
+    private router: Router
+  ) {}
 
-  //Keep it local state because of Table Header checkbox not syncing
-  selectedA1: A1[] = [];
+  onNewClick() {
+    this.router.navigate(['applications/save-a1']);
+  }
+  updateA1(a1: A1) {
+    this.a1ApiService
+      .update(a1)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Formulari A1 u ndryshua me sukses!');
+          this.getA1(this.filters as LazyLoadEvent);
+        }
 
-  @Output() gridEvent = new EventEmitter<GridEvent<A1 | A1[]>>();
-
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
-
-  onEditClick(a1: A1) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.EDIT,
-      data: a1,
-    } as GridEvent<A1>);
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi një problem gjatë ndryshimit të formularit A1!'
+          );
+      });
   }
 
-  onDeleteClick(a1: A1) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.DELETE,
-      data: a1,
-    } as GridEvent<A1>);
+  onDeleteSelectedClick() {
+    this.confirmationService.confirm({
+      message: 'Jeni i sigurt që doni të fshini formularët A1 të zgjedhur?',
+      accept: () => {
+        this.toastService.showWarning('Formularët A1 të zgjedhur u fshinë!');
+      },
+    });
   }
 
-  onSelectAllClick() {
-    if (this.selectedA1.length === 0) {
-      this.gridEvent.emit({
-        action: GRID_ACTIONS.UNSELECT_ALL,
-      } as GridEvent<A1>);
-    } else {
-      this.gridEvent.emit({
-        action: GRID_ACTIONS.SELECT_MANY,
-        data: this.selectedA1,
-      } as GridEvent<A1[]>);
+  onGridEvent(action: GRID_ACTIONS, event: any) {
+    debugger;
+    switch (action) {
+      case GRID_ACTIONS.EDIT:
+        this.selectedA1 = Object.assign({}, event.data as A1);
+        this.displayForm = true;
+        break;
+      case GRID_ACTIONS.DELETE:
+        this.confirmationService.confirm({
+          message: 'Jeni i sigurt që doni të fshini formularët e zgjedhur?',
+          accept: () => {
+            this.deleteA1(event as A1);
+          },
+        });
+        break;
     }
   }
+  deleteA1(a1: A1) {
+    this.a1ApiService
+      .delete(a1.id)
+      .pipe(untilDestroyed(this))
+      .subscribe((response: any) => {
+        if (response.isSuccessful) {
+          this.toastService.showInfo('Formulari A1 u fshi me sukses!');
+          this.getA1(this.filters as LazyLoadEvent);
+        }
 
-  onRowSelect({ data }: { data: A1 }) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.SELECT_ROW,
-      data: data,
-    } as GridEvent<A1>);
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi një problem gjatë fshirjes së formularit A1!'
+          );
+      });
   }
 
-  onRowUnselect({ data }: { data: A1 }) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.UNSELECT_ROW,
-      data: data,
-    } as GridEvent<A1>);
-  }
-
-  loadRows($event: LazyLoadEvent) {
-    this.lazyLoadData.emit($event);
+  getA1($event: LazyLoadEvent) {
+    this.filters = Object.assign({}, $event);
+    this.a1ApiService
+      .loadA1($event)
+      .pipe(untilDestroyed(this))
+      .subscribe((response: any) => {
+        this.a1$$.next(response.data);
+        this.totalRecords = response.total;
+        this.displayForm = false;
+      });
   }
 }

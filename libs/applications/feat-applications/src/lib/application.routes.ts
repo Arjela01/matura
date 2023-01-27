@@ -18,11 +18,20 @@ export const APPLICATION_ROUTES: Route[] = [
         m => m.ManageA1zComponent
       ),
   },
+
   {
     path: 'a1',
     loadComponent: () =>
-      import('./a1/manage-a1/manage-a1.component').then(
-        m => m.ManageA1Component
-      ),
+      import('./a1/a1-grid/a1-grid.component').then(m => m.A1GridComponent),
+  },
+  {
+    path: 'save-a1',
+    loadComponent: () =>
+      import('./a1/a1-form/a1-form.component').then(m => m.A1FormComponent),
+  },
+  {
+    path: 'save-a1/:id',
+    loadComponent: () =>
+      import('./a1/a1-form/a1-form.component').then(m => m.A1FormComponent),
   },
 ];

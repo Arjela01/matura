@@ -30,9 +30,4 @@ export class A1ApiService {
   delete(a1: string): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<A1>>(`/A1/${a1}`);
   }
-  // loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
-  //   return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
-  //     `/A1/DropdownList`
-  //   );
-  // }
 }
