@@ -24,7 +24,6 @@ import {
 
 import { BehaviorSubject } from 'rxjs';
 import {RouterLink} from "@angular/router";
-import {ArchiveSearchFolderFormComponent} from "../archive-search-folder-form/archive-search-folder-form.component";
 import {ArchiveFolderGridComponent} from "../archive-folder-grid/archive-folder-grid.component";
 import {ArchiveOpenFolderFormComponent} from "../archive-open-folder-form/archive-open-folder-form.component";
 import {RippleModule} from "primeng/ripple";
@@ -38,7 +37,6 @@ import {RippleModule} from "primeng/ripple";
     CommonModule,
     DialogModule,
     ConfirmDialogModule,
-    ArchiveSearchFolderFormComponent,
     ArchiveFolderGridComponent,
     ArchiveOpenFolderFormComponent,
     ToolbarModule,
@@ -163,58 +161,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
       .loadStudents($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        //this.archiveFolders$$.next(response.data);
-        this.archiveFolders$$.next([
-          {
-            id: "4d4dasd",
-            name: "Dosja1"
-          },
-          {
-            id: "4d4dasd",
-            name: "Dosja1"
-          },
-          {
-            id: "4d4dasd",
-            name: "Dosja1"
-          }, {
-            id: "4d4dasd",
-            name: "Dosja1"
-          }, {
-            id: "4d4dasd",
-            name: "Dosja1"
-          }, {
-            id: "4d4dasd",
-            name: "Dosja1"
-          },
-          {
-            id: "4d4dasd",
-            name: "Dosja1"
-          },
-          {
-            id: "4d4dasd",
-            name: "Dosja1"
-          },
-
-
-
-
-          {
-            id: "515455",
-            name: "Dosja2"
-          },
-          {
-            id: "4d4dasdf",
-            name: "Dosja3"
-          },
-          {
-            id: "4d4dasdd",
-            name: "Dosja4"
-          },
-          {
-            id: "4d4dasds",
-            name: "Dosja5"
-          }
-        ])
+        this.archiveFolders$$.next(response.data);
         this.totalRecords = response.total;
       });
   }

@@ -68,10 +68,8 @@ export class ReportLayoutPageGridComponent {
   ) {}
 
   archiveFolder: ArchiveFolder = {
-    examSubjectId: 0,
     examTypeId: 0,
-    id: undefined,
-    isClosed: false,
+    id: 0,
   };
   saving = false;
 

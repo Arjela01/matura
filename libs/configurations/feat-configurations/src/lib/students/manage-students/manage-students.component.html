@@ -19,6 +19,7 @@
 
       <msh-students-grid
         [students]="(studentList$ | async) || []"
+        [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
         (lazyLoadData)="getStudent($event)">
       </msh-students-grid>

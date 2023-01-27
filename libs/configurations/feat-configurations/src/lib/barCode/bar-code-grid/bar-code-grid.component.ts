@@ -75,22 +75,22 @@ export class BarCodeGridComponent {
   ) {}
 
   archiveFolder: ArchiveFolder = {
-    id: 0,
-    name: '',
+    examTypeId: 0,
+    id: 0
   };
   saving = false;
 
-  onSubmit(): void {
-    const data = { ...this.archiveFolder };
-
-    this.archiveFolderService.save(data).subscribe({
-      next: () => {
-        this.saving = false;
-
-        this.router.navigate(['/configurations/students']).then();
-      },
-    });
-  }
+  // onSubmit(): void {
+  //   const data = { ...this.archiveFolder };
+  //
+  //   this.archiveFolderService.save(this).subscribe({
+  //     next: () => {
+  //       this.saving = false;
+  //
+  //       this.router.navigate(['/configurations/students']).then();
+  //     },
+  //   });
+  // }
   onRowUnselect({ data }: { data: ArchiveFolder }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,

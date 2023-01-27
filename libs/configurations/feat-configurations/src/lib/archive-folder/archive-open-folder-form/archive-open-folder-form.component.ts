@@ -66,10 +66,12 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
   examSubjectsFiltered: DropdownModel<number>[] = [];
 
   submitted = false;
+  saving = false;
 
   archiveFolder: ArchiveFolder = {
     id: 0,
-    name: '',
+    examTypeId: 0,
+
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -100,19 +102,24 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
     this.formClose.emit();
   }
 
+
+
+
+
   onOpen(): void {
     const data = { ...this.archiveFolder };
 
     this.archiveFolderService.save(data).subscribe({
       next: () => {
-        this.submitted = false;
+        this.saving = false;
 
-        this.router.navigate(['/configurations/students']).then();
+        this.router.navigate(['/configurations/add-barCode']).then();
       },
     });
   }
 
-  onExamTypeChange($event: any) {
+
+onExamTypeChange($event: any) {
     this.examTypesFiltered = this.examTypes.filter(
       c => c.parentKey == $event.value
     );

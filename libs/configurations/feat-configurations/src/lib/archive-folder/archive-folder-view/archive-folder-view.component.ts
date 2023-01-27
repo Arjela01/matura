@@ -135,8 +135,8 @@ export class ArchiveFolderViewComponent {
   }
 
   archiveFolder: ArchiveFolder = {
-    id: 0,
-    name: '',
+    examTypeId: 0,
+    id: 0
   };
   saving = false;
 
