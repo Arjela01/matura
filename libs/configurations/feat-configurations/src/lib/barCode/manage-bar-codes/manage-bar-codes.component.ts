@@ -10,10 +10,10 @@ import { ToolbarModule } from 'primeng/toolbar';
 
 import {
   ArchiveFolderApiService,
-  ExamTypeApiService, ExamVersionApiService,
+  ExamTypeApiService, ExamVersionApiService, StudentsApiService,
 
 } from '@msh/configurations/data-access-configurations';
-import {ArchiveFolder} from '@msh/configurations/domain-configurations';
+import {ArchiveFolder, HighSchool} from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
 import {
@@ -47,7 +47,7 @@ import {BarCodeGridComponent} from "../bar-code-grid/bar-code-grid.component";
   providers: [ConfirmationService],
 })
 export class ManageBarCodesComponent implements OnInit {
-  private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[]>([]);
+  private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[] >([]);
   archiveFolders$ = this.archiveFolders$$.asObservable();
   filters: LazyLoadEvent | null = null;
   hideArchiveFolderForm = true;
@@ -65,6 +65,8 @@ export class ManageBarCodesComponent implements OnInit {
     private readonly archiveFolderService: ArchiveFolderApiService,
     private readonly examTypeApiService: ExamTypeApiService,
     private readonly examVersionApiService: ExamVersionApiService,
+    private readonly studentAPITestService: StudentsApiService,
+
     private router: Router
 
   ) {
@@ -153,6 +155,9 @@ export class ManageBarCodesComponent implements OnInit {
       .loadArchiveFolder($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
+        this.archiveFolders$$.next([
+
+        ])
         this.archiveFolders$$.next(response.data);
         this.totalRecords = response.total;
       });

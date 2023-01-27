@@ -9,7 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
-  ArchiveFolder,
+  ArchiveFolder, Menu, Student,
 } from '@msh/configurations/domain-configurations';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
@@ -47,7 +47,7 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BarCodeGridComponent {
-  @Input() archiveFolders: ArchiveFolder[] = [];
+  @Input() archiveFolders: ArchiveFolder[]  | Student[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
 
@@ -91,6 +91,18 @@ export class BarCodeGridComponent {
       },
     });
   }
+  onRowUnselect({ data }: { data: ArchiveFolder }) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.UNSELECT_ROW,
+      data: data,
+    } as GridEvent<ArchiveFolder>);
+  }
+  onRowSelect({ data }: { data: ArchiveFolder }) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.SELECT_ROW,
+      data: data,
+    } as GridEvent<ArchiveFolder>);
+  }
 
   onEditClick(archiveFolder: ArchiveFolder) {
     this.gridEvent.emit({
@@ -121,3 +133,4 @@ export class BarCodeGridComponent {
     this.lazyLoadData.emit($event);
   }
 }
+

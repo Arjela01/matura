@@ -27,6 +27,7 @@ import {RouterLink} from "@angular/router";
 import {ArchiveSearchFolderFormComponent} from "../archive-search-folder-form/archive-search-folder-form.component";
 import {ArchiveFolderGridComponent} from "../archive-folder-grid/archive-folder-grid.component";
 import {ArchiveOpenFolderFormComponent} from "../archive-open-folder-form/archive-open-folder-form.component";
+import {RippleModule} from "primeng/ripple";
 
 @UntilDestroy()
 @Component({
@@ -42,6 +43,7 @@ import {ArchiveOpenFolderFormComponent} from "../archive-open-folder-form/archiv
     ArchiveOpenFolderFormComponent,
     ToolbarModule,
     RouterLink,
+    RippleModule,
   ],
   templateUrl: './manage-archive-folders.component.html',
   styleUrls: ['./manage-archive-folders.component.scss'],
@@ -168,7 +170,36 @@ export class ManageArchiveFoldersComponent implements OnInit {
             name: "Dosja1"
           },
           {
-            id: "4d4dasdg",
+            id: "4d4dasd",
+            name: "Dosja1"
+          },
+          {
+            id: "4d4dasd",
+            name: "Dosja1"
+          }, {
+            id: "4d4dasd",
+            name: "Dosja1"
+          }, {
+            id: "4d4dasd",
+            name: "Dosja1"
+          }, {
+            id: "4d4dasd",
+            name: "Dosja1"
+          },
+          {
+            id: "4d4dasd",
+            name: "Dosja1"
+          },
+          {
+            id: "4d4dasd",
+            name: "Dosja1"
+          },
+
+
+
+
+          {
+            id: "515455",
             name: "Dosja2"
           },
           {

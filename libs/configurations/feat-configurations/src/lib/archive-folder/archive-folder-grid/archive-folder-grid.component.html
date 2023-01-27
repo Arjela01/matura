@@ -16,13 +16,8 @@
   (onRowUnselect)="onRowUnselect($event)"
   (onLazyLoad)="loadRows($event)"
   [lazy]="true">
-
   <ng-template pTemplate="header">
     <tr>
-      <th style="width: 3rem">
-        <p-tableHeaderCheckbox (click)="onSelectAllClick()">
-        </p-tableHeaderCheckbox>
-      </th>
       <th pSortableColumn="folder">
         Dosja
         <p-sortIcon field="folder"></p-sortIcon>
@@ -89,61 +84,60 @@
       </th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-archiveFolder>
+  <ng-template pTemplate="body" let-students>
     <tr>
-      <td>
-        <p-tableCheckbox [value]="archiveFolder"></p-tableCheckbox>
-      </td>
-      <td style="width: 14%; min-width: 10rem"><a [routerLink]="['/configurations', 'archive-view', archiveFolder.id]">
-
-        <button
-          pButton
-          pRipple
-          icon="pi pi-eye"
-          class="p-button-rounded p-button-info p-button-text"
-          pTooltip="Shiko me shume!"
-          tooltipPosition="bottom"
-          > {{ archiveFolder.name }}</button>
-
-      </a>
+      <td style="width: 14%; min-width: 10rem">
+        <a [routerLink]="['/configurations/archive-view', students.id]">
+          {{ this.students.id }}
+        </a>
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ archiveFolder.name }}
+        {{ students.name }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ archiveFolder.name }}
+        {{ students.name }}
       </td>
       <td style="width: 20%; min-width: 10rem">
-        {{ archiveFolder.administrationOfficeName }}
+        {{ students.administrationOfficeName }}
       </td>
       <td>
-        <span [class]="'customer-badge status-' + archiveFolder.status">{{archiveFolder.status}}</span>
+        <span [class]="'customer-badge status-' + students.status">{{
+          students.status
+        }}</span>
       </td>
       <td>
         <div class="flex">
           <button
             pButton
             pRipple
-            icon="pi pi-folder-open"
             class="p-button-rounded p-button-info p-button-text mr-2"
-            pTooltip="Aktivizo Dosjen"
+            pTooltip="{{
+              _opened ? 'Mbyll Dosjen' : 'Aktivizo Dosjen'
+            }}"
             tooltipPosition="bottom"
-            (click)="onEditClick(archiveFolder)"></button>
+            (click)="clickOpen()"
+            icon="{{
+              _opened ? 'pi pi-folder-open' : 'pi pi-folder'}}"></button>
         </div>
       </td>
       <td>
-        <div class="flex">
-          <button
-            pButton
-            pRipple
-            icon="pi pi-qrcode"
-            class="p-button-rounded p-button-warning p-button-text mr-2"
-            pTooltip="Ndrysho"
-            tooltipPosition="bottom"
-            (click)="onEditClick(archiveFolder)"></button>
+        <div [hidden]="hideBarCode">
+          <div class="flex">
+            <a [routerLink]="['/configurations/archive-view', students.id]">
+            <button
+              pButton
+              pRipple
+              icon="pi pi-qrcode"
+              class="p-button-rounded p-button-warning p-button-text mr-2"
+              pTooltip="Hidh Barkode"
+              tooltipPosition="bottom"
+            ></button>
+            </a>
+          </div>
         </div>
       </td>
       <td>
+        <div [hidden]="hideBarCode">
         <div class="flex">
           <button
             pButton
@@ -152,7 +146,8 @@
             class="p-button-rounded p-button-danger p-button-text"
             pTooltip="Fshi"
             tooltipPosition="bottom"
-            (click)="onDeleteClick(archiveFolder)"></button>
+            (click)="onDeleteClick(students)"></button>
+        </div>
         </div>
       </td>
     </tr>

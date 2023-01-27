@@ -63,8 +63,7 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
   @ViewChild('form', { static: true }) form!: NgForm;
 
   examTypesFiltered: DropdownModel<number>[] = [];
-  @Output() examTypeChanged = new EventEmitter<string>();
-  @Output() examSubjectChanged = new EventEmitter<string>();
+  examSubjectsFiltered: DropdownModel<number>[] = [];
 
   submitted = false;
 
@@ -114,20 +113,17 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
   }
 
   onExamTypeChange($event: any) {
-    // eslint-disable-next-line max-len
     this.examTypesFiltered = this.examTypes.filter(
       c => c.parentKey == $event.value
     );
   }
   onExamVersionChange($event: any) {
-    // eslint-disable-next-line max-len
     this.examTypesFiltered = this.examTypes.filter(
       c => c.parentKey == $event.value
     );
   }
   onExamSubjectChange($event: any) {
-    // eslint-disable-next-line max-len
-    this.examTypesFiltered = this.examTypes.filter(
+    this.examSubjectsFiltered = this.examSubject.filter(
       c => c.parentKey == $event.value
     );
   }

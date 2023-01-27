@@ -12,10 +12,11 @@
   [rowHover]="true"
   [(selection)]="selectedArchiveFolders"
   selectionMode="multiple"
+  (onRowSelect)="onRowSelect($event)"
+  (onRowUnselect)="onRowUnselect($event)"
   (onLazyLoad)="loadRows($event)"
   [lazy]="true">
   <ng-template pTemplate="caption">
-    <form #form="ngForm" (ngSubmit)="onSubmit()">
       <div class="flex flex-column mt-2 md:col-3 md:align-items-center">
         <div class="p-inputgroup">
           <button
@@ -24,7 +25,7 @@
             pRipple
             icon="pi pi-database"
             disabled
-            label="50/50"
+            label="{{totalRecords}}/50"
             class="p-button-info mr-2"
           ></button>
           <input type="text" maxlength="7" pInputText placeholder="Barkodi" />
@@ -37,7 +38,6 @@
             class="p-button-success mr-2"></button>
         </div>
       </div>
-    </form>
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
@@ -57,57 +57,30 @@
           field="barcode"
           display="menu"></p-columnFilter>
       </th>
+      <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-archiveFolder>
     <tr>
-      <td>
-        <p-tableCheckbox [value]="archiveFolder"></p-tableCheckbox>
-      </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ archiveFolder.code }}
+        {{ archiveFolder.id }}
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ archiveFolder.name }}
       </td>
+
+
+
       <td>
         <div class="flex">
           <button
             pButton
             pRipple
-            icon="pi pi-folder-open"
-            class="p-button-rounded p-button-warning p-button-text mr-2"
-            pTooltip="Aktivizo Dosjen"
-            tooltipPosition="bottom"
-            (click)="onActivate(archiveFolder)"></button>
-        </div>
-      </td>
-      <td>
-        <div class="flex">
-          <button
-            pButton
-            pRipple
-            icon="pi pi-qrcode"
-            class="p-button-rounded p-button-warning p-button-text mr-2"
-            pTooltip="Hidh Barkode"
-            tooltipPosition="bottom"
-            (click)="onDropBarcodeClick(archiveFolder)"></button>
-        </div>
-      </td>
-      <td>
-        <div class="flex">
-          <button
-            pButton
-            pRipple
-            icon="pi pi-qrcode"
+            icon="pi pi-pencil"
             class="p-button-rounded p-button-warning p-button-text mr-2"
             pTooltip="Ndrysho"
             tooltipPosition="bottom"
             (click)="onEditClick(archiveFolder)"></button>
-        </div>
-      </td>
-      <td>
-        <div class="flex">
           <button
             pButton
             pRipple

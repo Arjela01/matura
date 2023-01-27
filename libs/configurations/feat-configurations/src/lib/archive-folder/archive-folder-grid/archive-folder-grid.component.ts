@@ -16,6 +16,8 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import {Router, RouterLink} from "@angular/router";
+import {FormsModule} from "@angular/forms";
+import {StudentsApiService} from "@msh/configurations/data-access-configurations";
 
 @Component({
   selector: 'msh-archive-folder-grid',
@@ -29,6 +31,7 @@ import {Router, RouterLink} from "@angular/router";
     CheckboxModule,
     RippleModule,
     RouterLink,
+    FormsModule,
   ],
   templateUrl: './archive-folder-grid.component.html',
   styleUrls: ['./archive-folder-grid.component.scss'],
@@ -45,13 +48,23 @@ export class ArchiveFolderGridComponent {
     GridEvent<ArchiveFolder | ArchiveFolder[]>
   >();
 
+  student : Student []=[];
+
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  constructor(
+    private router: Router,
+    private readonly studentService: StudentsApiService,
 
-constructor(
-  private router: Router,
+  ) {
+  }
 
-) {
-}
+
+  hideBarCode = false;
+  _opened = true;
+ clickOpen(): void {
+    this._opened = !this._opened;
+    this.hideBarCode = !this._opened;
+  }
   onEditClick(archiveFolder: ArchiveFolder) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,

@@ -87,6 +87,9 @@ export class ManageReportLayoutPageComponent implements OnInit {
   onNewClick() {
     this.displayModal = true;
   }
+  onPrint() {
+    console.log()
+  }
 
   onDeleteSelectedClick() {
     this.confirmationService.confirm({

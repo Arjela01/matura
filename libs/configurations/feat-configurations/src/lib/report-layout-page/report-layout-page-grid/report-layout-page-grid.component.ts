@@ -9,7 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 
-import { UntilDestroy, } from '@ngneat/until-destroy';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 
 import {
@@ -21,16 +21,13 @@ import {
 } from '@msh/configurations/data-access-configurations';
 import { ArchiveFolder } from '@msh/configurations/domain-configurations';
 
-import {
-  GridEvent,
-  GRID_ACTIONS,
-} from '@msh/shared/util-shared';
+import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 
-import { Router, } from '@angular/router';
+import { Router } from '@angular/router';
 import { TableModule } from 'primeng/table';
-import {FormsModule, NgForm} from '@angular/forms';
-import {ToastModule} from "primeng/toast";
-import {StepsModule} from "primeng/steps";
+import { FormsModule, NgForm } from '@angular/forms';
+import { ToastModule } from 'primeng/toast';
+import { StepsModule } from 'primeng/steps';
 
 @UntilDestroy()
 @Component({
@@ -70,27 +67,24 @@ export class ReportLayoutPageGridComponent {
     private router: Router
   ) {}
 
-
-
-
   archiveFolder: ArchiveFolder = {
-    id: 0,
-    name: '',
+    examSubjectId: 0,
+    examTypeId: 0,
+    id: undefined,
+    isClosed: false,
   };
   saving = false;
-
-
 
   onSubmit(): void {
     const data = { ...this.archiveFolder };
 
-    this.archiveFolderService.save(data).subscribe({
-      next: () => {
-        this.saving = false;
+    // this.archiveFolderService.save(data).subscribe({
+    //   next: () => {
+    //     this.saving = false;
 
-        this.router.navigate(['/configurations/students']).then();
-      },
-    });
+    //     this.router.navigate(['/configurations/students']).then();
+    //   },
+    // });
   }
 
   onEditClick(archiveFolder: ArchiveFolder) {

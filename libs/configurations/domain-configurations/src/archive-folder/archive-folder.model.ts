@@ -1,7 +1,9 @@
 
 export interface ArchiveFolder{
   id: any;
-  name: string;
+  examTypeId: number;
+  isClosed: boolean;
+  examSubjectId: number;
 }
 
 export interface ArchiveFolderTableView{

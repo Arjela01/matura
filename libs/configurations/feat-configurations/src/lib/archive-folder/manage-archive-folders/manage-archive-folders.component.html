@@ -5,20 +5,13 @@
         <h2 class="flex-1 mb-0">Menaxho Dosjet</h2>
         <div class="flex align-items-right justify-content-right">
           <div class="my-2">
-              <button
-                pButton
-                pRipple
-                label="Hap nje Dosje te re"
-                icon="pi pi-folder-open"
-                class="p-button-success mr-2"
-                (click)="onNewClick()"></button>
-              <button
-                pButton
-                pRipple
-                label="Kerko Dosje"
-                icon="pi pi-search"
-                class="p-button-info mr-2"
-                (click)="onSearchClick()"></button>
+            <button
+              pButton
+              pRipple
+              label="Hap nje Dosje te re"
+              icon="pi pi-folder-open"
+              class="p-button-success mr-2"
+              (click)="onNewClick()"></button>
           </div>
         </div>
       </div>
@@ -41,7 +34,6 @@
           </msh-archive-search-folder-form>
         </ng-template>
       </p-dialog>
-
 
       <msh-archive-folder-grid
         [archiveFolders]="(archiveFolders$ | async) || []"
