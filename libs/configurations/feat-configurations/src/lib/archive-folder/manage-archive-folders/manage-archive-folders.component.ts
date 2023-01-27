@@ -10,10 +10,10 @@ import { ToolbarModule } from 'primeng/toolbar';
 
 import {
   ArchiveFolderApiService,
-  ExamTypeApiService, ExamVersionApiService, StudentsApiService,
-
+  ExamSubjectApiService,
+  ExamTypeApiService, ExamVersionApiService,
 } from '@msh/configurations/data-access-configurations';
-import {ArchiveFolder, Student} from '@msh/configurations/domain-configurations';
+import { ArchiveFolder } from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
 import {
@@ -23,10 +23,10 @@ import {
 } from '@msh/shared/util-shared';
 
 import { BehaviorSubject } from 'rxjs';
-import {RouterLink} from "@angular/router";
-import {ArchiveFolderGridComponent} from "../archive-folder-grid/archive-folder-grid.component";
-import {ArchiveOpenFolderFormComponent} from "../archive-open-folder-form/archive-open-folder-form.component";
-import {RippleModule} from "primeng/ripple";
+import { RouterLink } from '@angular/router';
+import { ArchiveFolderGridComponent } from '../archive-folder-grid/archive-folder-grid.component';
+import { ArchiveOpenFolderFormComponent } from '../archive-open-folder-form/archive-open-folder-form.component';
+import { RippleModule } from 'primeng/ripple';
 
 @UntilDestroy()
 @Component({
@@ -47,46 +47,38 @@ import {RippleModule} from "primeng/ripple";
   styleUrls: ['./manage-archive-folders.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
-
 })
 export class ManageArchiveFoldersComponent implements OnInit {
-  private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[]| Student[]>([]);
+  private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[]>([])
+  examTypes: DropdownModel<number>[] = [];
+  examSubjects: DropdownModel<string>[] = [];
+  examVersions: DropdownModel<string>[] = [];
+
   archiveFolders$ = this.archiveFolders$$.asObservable();
   filters: LazyLoadEvent | null = null;
-  hideArchiveFolderForm = true;
 
   totalRecords = 0;
 
   selectedArchiveFolder: ArchiveFolder | null = null;
   selectedArchiveFolders: ArchiveFolder[] = [];
   displayModal = false;
-  displayModal1 = false;
 
-  examType: DropdownModel<number>[] = [];
-  examVersion : DropdownModel<number>[] = [];
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly archiveFolderService: ArchiveFolderApiService,
     private readonly examTypeApiService: ExamTypeApiService,
-    private readonly examVersionApiService: ExamVersionApiService,
-    private readonly studentApiTestService: StudentsApiService
-
+    private readonly examSubjectApiService: ExamSubjectApiService,
+    private readonly examVersionApiService: ExamVersionApiService
   ) {
   }
 
   ngOnInit(): void {
-    this.getExamTypeDropdown();
-    this.getExamVersionDropdown();
-    this.getExamSubjectDropdown();
-
+    this.getExamTypes();
   }
 
   onNewClick() {
     this.displayModal = true;
-  }
-  onSearchClick() {
-    this.displayModal1 = true;
   }
 
   onDeleteSelectedClick() {
@@ -123,8 +115,9 @@ export class ManageArchiveFoldersComponent implements OnInit {
         this.selectedArchiveFolders = [];
         break;
       case GRID_ACTIONS.EDIT:
-        // eslint-disable-next-line max-len
         this.selectedArchiveFolder = Object.assign({}, event.data as ArchiveFolder);
+        this.getExamSubjects(this.selectedArchiveFolder.examTypeId);
+        this.getExamVersions(this.selectedArchiveFolder.examSubjectId ?? '');
         this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
@@ -138,9 +131,6 @@ export class ManageArchiveFoldersComponent implements OnInit {
     }
   }
 
-  onModalClose1() {
-    this.displayModal = false;
-  }
   onModalClose() {
     this.displayModal = false;
   }
@@ -157,8 +147,8 @@ export class ManageArchiveFoldersComponent implements OnInit {
   getArchiveFolders($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    this.studentApiTestService
-      .loadStudents($event)
+    this.archiveFolderService
+      .loadArchiveFolder($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.archiveFolders$$.next(response.data);
@@ -221,29 +211,43 @@ export class ManageArchiveFoldersComponent implements OnInit {
       });
   }
 
-
-  getExamTypeDropdown() {
+  getExamTypes() {
     this.examTypeApiService
       .loadDropdownList()
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.examType = response.data;
+        this.examTypes = response.data;
       });
   }
-  getExamVersionDropdown() {
-    this.examVersionApiService
-      .loadDropdownList()
+
+  getExamSubjects(examTypeId?: number) {
+    this.examSubjectApiService
+      .forExamType(examTypeId)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.examVersion = response.data;
+        this.examSubjects = response.data;
       });
   }
-  getExamSubjectDropdown() {
+
+  getExamVersions(examSubjectId: string) {
     this.examVersionApiService
-      .loadDropdownList()
+      .forExamSubject(examSubjectId)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.examVersion = response.data;
+        this.examVersions = response.data;
       });
+  }
+
+  onExamTypeChanged(examTypeId: any) {
+    if(this.selectedArchiveFolder != null)
+      this.selectedArchiveFolder.examTypeId = examTypeId;
+    this.getExamSubjects(examTypeId);
+    this.examVersions = [];
+  }
+
+  onExamSubjectChanged(examSubjectId: string) {
+    if(this.selectedArchiveFolder != null)
+      this.selectedArchiveFolder.examSubjectId = examSubjectId;
+    this.getExamVersions(examSubjectId);
   }
 }

@@ -9,7 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
-  ArchiveFolder, Menu, Student,
+  ArchiveFolder,
 } from '@msh/configurations/domain-configurations';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
@@ -47,7 +47,7 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BarCodeGridComponent {
-  @Input() archiveFolders: ArchiveFolder[]  | Student[] = [];
+  @Input() archiveFolders: ArchiveFolder[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
 
@@ -62,23 +62,14 @@ export class BarCodeGridComponent {
 
   @ViewChild('form', { static: true }) form!: NgForm;
 
-  constructor(
-    private cd: ChangeDetectorRef,
-    private readonly academicYearService: AcademicYearApiService,
-    private readonly studentService: StudentsApiService,
-    private readonly highSchoolService: HighSchoolApiService,
-    private readonly profileService: ProfileApiService,
-    private readonly genderService: GendersApiService,
-    private readonly archiveFolderService: GendersApiService,
-
-    private router: Router
-  ) {}
 
   archiveFolder: ArchiveFolder = {
+    isClosed: false,
+    lastUserId: undefined,
     examTypeId: 0,
-    id: 0
+    id: 0,
   };
-  saving = false;
+  // saving = false;
 
   // onSubmit(): void {
   //   const data = { ...this.archiveFolder };
@@ -133,4 +124,3 @@ export class BarCodeGridComponent {
     this.lazyLoadData.emit($event);
   }
 }
-

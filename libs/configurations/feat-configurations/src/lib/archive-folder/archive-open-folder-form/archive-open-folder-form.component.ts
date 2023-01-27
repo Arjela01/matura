@@ -7,6 +7,7 @@ import {
   Input,
   OnChanges,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -49,8 +50,9 @@ import {
 })
 export class ArchiveOpenFolderFormComponent implements OnChanges {
   @Input() examTypes: DropdownModel<number>[] = [];
-  @Input() examSubject: DropdownModel<number>[] = [];
-  @Input() examVersion: DropdownModel<number>[] = [];
+  @Input() examSubjects: DropdownModel<number>[] = [];
+  @Output() examTypeChanged = new EventEmitter<string>();
+  @Output() examSubjectChanged = new EventEmitter<string>();
 
   @Input() set archiveFolders(details: ArchiveFolder | null) {
     if (details) {
@@ -62,16 +64,17 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
 
   @ViewChild('form', { static: true }) form!: NgForm;
 
-  examTypesFiltered: DropdownModel<number>[] = [];
-  examSubjectsFiltered: DropdownModel<number>[] = [];
 
   submitted = false;
   saving = false;
-
+  examTypeId: any;
+  examSubjectId: any;
   archiveFolder: ArchiveFolder = {
+    isClosed: false,
+    lastUserId: undefined,
     id: 0,
     examTypeId: 0,
-
+    examSubjectId: "",
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -86,29 +89,22 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
     private archiveFolderService: ArchiveFolderApiService
   ) {}
 
-  ngOnChanges(): void {
-    if (this.examTypes && this.archiveFolder.id) {
-      this.onExamTypeChange({ value: this.archiveFolder.id });
-    }
-    if (this.examVersion && this.archiveFolder.id) {
-      this.onExamVersionChange({ value: this.archiveFolder.id });
-    }
-    if (this.examSubject && this.archiveFolder.id) {
-      this.onExamSubjectChange({ value: this.archiveFolder.id });
-    }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.examTypeId = this.archiveFolder.examTypeId;
+    this.examSubjectId = this.archiveFolder.examSubjectId;
+    this.cd.detectChanges();
   }
 
   onCancelClick() {
     this.formClose.emit();
   }
 
-
-
-
-
   onOpen(): void {
     const data = { ...this.archiveFolder };
-
+    this.submitted = true;
+    if (this.form.valid) {
+      this.formSave.emit(this.archiveFolder);
+    }
     this.archiveFolderService.save(data).subscribe({
       next: () => {
         this.saving = false;
@@ -118,20 +114,11 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
     });
   }
 
+  onExamTypeChanged($event: any): void {
+    this.examTypeChanged.emit(this.examTypeId);
+  }
 
-onExamTypeChange($event: any) {
-    this.examTypesFiltered = this.examTypes.filter(
-      c => c.parentKey == $event.value
-    );
-  }
-  onExamVersionChange($event: any) {
-    this.examTypesFiltered = this.examTypes.filter(
-      c => c.parentKey == $event.value
-    );
-  }
-  onExamSubjectChange($event: any) {
-    this.examSubjectsFiltered = this.examSubject.filter(
-      c => c.parentKey == $event.value
-    );
+  onExamSubjectChanged($event: any): void {
+    this.examSubjectChanged.emit(this.examSubjectId);
   }
 }

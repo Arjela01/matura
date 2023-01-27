@@ -55,21 +55,11 @@ export class ReportLayoutPageGridComponent {
 
   @ViewChild('form', { static: true }) form!: NgForm;
 
-  constructor(
-    private cd: ChangeDetectorRef,
-    private readonly academicYearService: AcademicYearApiService,
-    private readonly studentService: StudentsApiService,
-    private readonly highSchoolService: HighSchoolApiService,
-    private readonly profileService: ProfileApiService,
-    private readonly genderService: GendersApiService,
-    private readonly archiveFolderService: GendersApiService,
-
-    private router: Router
-  ) {}
 
   archiveFolder: ArchiveFolder = {
+    isClosed: false, lastUserId: undefined,
     examTypeId: 0,
-    id: 0,
+    id: 0
   };
   saving = false;
 

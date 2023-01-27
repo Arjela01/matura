@@ -61,9 +61,7 @@ export class ArchiveFolderViewComponent {
   //Keep it local state because of Table Header checkbox not syncing
   selectedArchiveFolders: Student[] = [];
 
-  @Output() gridEvent = new EventEmitter<
-    GridEvent<Student | Student[]>
-  >();
+  @Output() gridEvent = new EventEmitter<GridEvent<Student | Student[]>>();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
@@ -113,7 +111,7 @@ export class ArchiveFolderViewComponent {
   };
 
   fakeDosjeList: any;
-  students= null;
+  students = null;
   finishedAtSameSchool = true;
 
   id: string | null;
@@ -135,35 +133,37 @@ export class ArchiveFolderViewComponent {
   }
 
   archiveFolder: ArchiveFolder = {
+    isClosed: false,
+    lastUserId: undefined,
     examTypeId: 0,
-    id: 0
+    id: 0,
   };
   saving = false;
 
   ngOnInit(): void {
     this.studentService.getById(this.id).subscribe(result => {
       this.student = { ...result.data };
-      this.fakeDosjeList =
-        [
-          {
-            numri: 1,
-            barcode: "asdaeda2d1",
-            emri: "Lenda 1"
-          },
-          {
-            numri: 2,
-            barcode: "asdaeda2d12",
-            emri: "Lenda 2"
-          },
-          {
-            numri: 3,
-            barcode: "asdaeda2d31",
-            emri: "Lenda 3"
-          }
-        ];
+      this.fakeDosjeList = [
+        {
+          numri: 1,
+          barcode: 'asdaeda2d1',
+          emri: 'Lenda 1',
+        },
+        {
+          numri: 2,
+          barcode: 'asdaeda2d12',
+          emri: 'Lenda 2',
+        },
+        {
+          numri: 3,
+          barcode: 'asdaeda2d31',
+          emri: 'Lenda 3',
+        },
+      ];
 
-      console.log("fakedosje");
-      this.finishedAtSameSchool = this.student?.schoolFinished == '' ||
+      console.log('fakedosje');
+      this.finishedAtSameSchool =
+        this.student?.schoolFinished == '' ||
         this.student?.schoolFinished == null;
       this.cd.detectChanges();
     });

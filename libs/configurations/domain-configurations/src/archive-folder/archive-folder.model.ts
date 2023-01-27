@@ -1,8 +1,17 @@
 
 export interface ArchiveFolder{
   id: number;
-  examTypeId: number;
-  // examSubjectId?: any;
+  examTypeId?: number;
+  examTypeName?: string;
+
+  examSubjectId?: string;
+  examSubjectName?: string;
+  academicYearId?: number;
+  academicYearName?: string;
+  isClosed: boolean;
+  lastUserId: any;
+  profileGroupId?: string;
+  profileGroupName?: string;
 }
 
 export interface ArchiveFolderTableView{
