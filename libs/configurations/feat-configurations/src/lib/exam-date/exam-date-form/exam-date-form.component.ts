@@ -46,8 +46,7 @@ export class ExamDateFormComponent {
   @Input() set examDatesDetails(details: ExamDate | null) {
     if (details) {
       this.examDate = Object.assign({}, details);
-      this.examDate.date = this.date
-      this.date = formatDate(new Date(), 'dd-MM-yyyy', 'sq');
+      this.date = formatDate(new Date(this.examDate.date), 'dd/MM/yyyy', 'en');
     }
   }
 
