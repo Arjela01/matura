@@ -18,12 +18,12 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="folder">
+      <th pSortableColumn="examTypes">
         Dosja
-        <p-sortIcon field="folder"></p-sortIcon>
+        <p-sortIcon field="examTypes"></p-sortIcon>
         <p-columnFilter
           type="numeric"
-          field="folder"
+          field="examTypes"
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="examTypes">
@@ -87,8 +87,8 @@
   <ng-template pTemplate="body" let-archiveFolder>
     <tr>
       <td style="width: 14%; min-width: 10rem">
-        <a [routerLink]="['/configurations/archive-view', archiveFolder.id]">
-          {{ this.archiveFolder.id }}
+        <a [routerLink]="['/configurations/archive-view', archiveFolder.examTypeName]">
+          {{ this.archiveFolder.examTypeId }}
         </a>
       </td>
       <td style="width: 14%; min-width: 10rem">

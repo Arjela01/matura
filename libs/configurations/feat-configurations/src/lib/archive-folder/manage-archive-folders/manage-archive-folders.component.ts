@@ -13,7 +13,7 @@ import {
   ExamSubjectApiService,
   ExamTypeApiService, ExamVersionApiService,
 } from '@msh/configurations/data-access-configurations';
-import { ArchiveFolder } from '@msh/configurations/domain-configurations';
+import {ArchiveFolder, HighSchool} from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
 import {
@@ -72,6 +72,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
     private readonly examVersionApiService: ExamVersionApiService
   ) {
   }
+
 
   ngOnInit(): void {
     this.getExamTypes();
@@ -210,6 +211,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
           );
       });
   }
+
 
   getExamTypes() {
     this.examTypeApiService

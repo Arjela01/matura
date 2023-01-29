@@ -63,12 +63,13 @@ export class BarCodeGridComponent {
   @ViewChild('form', { static: true }) form!: NgForm;
 
 
-  archiveFolder: ArchiveFolder = {
-    isClosed: false,
-    lastUserId: undefined,
-    examTypeId: 0,
-    id: 0,
-  };
+  // archiveFolder: ArchiveFolder = {
+  //   isClosed: false,
+  //   lastUserId: undefined,
+  //   examTypeId: 0,
+  //   id: 0,
+  //   isActiveAcademicYear: false
+  // };
   // saving = false;
 
   // onSubmit(): void {
