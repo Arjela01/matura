@@ -24,20 +24,22 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { CityFormComponent } from '../city-form/city-form.component';
 import { CityGridComponent } from '../city-grid/city-grid.component';
+import {RippleModule} from "primeng/ripple";
 
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-cities',
   standalone: true,
-  imports: [
-    ButtonModule,
-    CommonModule,
-    DialogModule,
-    ConfirmDialogModule,
-    CityGridComponent,
-    CityFormComponent,
-    ToolbarModule,
-  ],
+    imports: [
+        ButtonModule,
+        CommonModule,
+        DialogModule,
+        ConfirmDialogModule,
+        CityGridComponent,
+        CityFormComponent,
+        ToolbarModule,
+        RippleModule,
+    ],
   templateUrl: './manage-cities.component.html',
   styleUrls: ['./manage-cities.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
