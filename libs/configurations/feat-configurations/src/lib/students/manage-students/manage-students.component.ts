@@ -26,22 +26,24 @@ import { StudentsApiService } from '@msh/configurations/data-access-configuratio
 import { StudentViewComponent } from '../students-view/student-view.component';
 import { StudentsEditComponent } from '../students-edit/students-edit.component';
 import { RippleModule } from 'primeng/ripple';
+import {RouterLink} from "@angular/router";
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-students',
   standalone: true,
-  imports: [
-    ButtonModule,
-    CommonModule,
-    DialogModule,
-    ConfirmDialogModule,
-    StudentsFormComponent,
-    StudentsGridComponent,
-    ToolbarModule,
-    StudentViewComponent,
-    StudentsEditComponent,
-    RippleModule,
-  ],
+    imports: [
+        ButtonModule,
+        CommonModule,
+        DialogModule,
+        ConfirmDialogModule,
+        StudentsFormComponent,
+        StudentsGridComponent,
+        ToolbarModule,
+        StudentViewComponent,
+        StudentsEditComponent,
+        RippleModule,
+        RouterLink,
+    ],
   templateUrl: './manage-students.component.html',
   styleUrls: ['./manage-students.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

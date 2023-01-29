@@ -25,20 +25,22 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { ExamSiteFormComponent } from '../exam-site-form/exam-site-form.component';
 import { ExamSiteGridComponent } from '../exam-site-grid/exam-site-grid.component';
+import {RippleModule} from "primeng/ripple";
 
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-exam-site',
   standalone: true,
-  imports: [
-    ButtonModule,
-    CommonModule,
-    DialogModule,
-    ConfirmDialogModule,
-    ExamSiteFormComponent,
-    ExamSiteGridComponent,
-    ToolbarModule,
-  ],
+    imports: [
+        ButtonModule,
+        CommonModule,
+        DialogModule,
+        ConfirmDialogModule,
+        ExamSiteFormComponent,
+        ExamSiteGridComponent,
+        ToolbarModule,
+        RippleModule,
+    ],
   templateUrl: './manage-exam-site.component.html',
   styleUrls: ['./manage-exam-site.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

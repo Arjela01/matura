@@ -25,21 +25,23 @@ import {
 } from "@msh/configurations/data-access-configurations";
 import {ButtonModule} from "primeng/button";
 import {ToolbarModule} from "primeng/toolbar";
+import {RippleModule} from "primeng/ripple";
 
 
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-profiles',
   standalone: true,
-  imports: [
-    ButtonModule,
-    CommonModule,
-    DialogModule,
-    ConfirmDialogModule,
-    ProfileGridComponent,
-    ProfileFormComponent,
-    ToolbarModule,
-  ],
+    imports: [
+        ButtonModule,
+        CommonModule,
+        DialogModule,
+        ConfirmDialogModule,
+        ProfileGridComponent,
+        ProfileFormComponent,
+        ToolbarModule,
+        RippleModule,
+    ],
   templateUrl: './manage-profiles.component.html',
   styleUrls: ['./manage-profiles.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

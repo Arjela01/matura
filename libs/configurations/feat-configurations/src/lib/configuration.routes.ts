@@ -30,7 +30,7 @@ export const CONFIGURATION_ROUTES: Route[] = [
         ).then(m => m.ManageStudentsComponent),
   },
   {
-    path: 'students-form',
+    path: 'students/add',
     loadComponent: () =>
       import('./students/students-form/students-form.component'
         ).then(m => m.StudentsFormComponent),

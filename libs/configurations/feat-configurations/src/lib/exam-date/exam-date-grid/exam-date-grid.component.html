@@ -16,26 +16,8 @@
   (onRowUnselect)="onRowUnselect($event)"
   (onLazyLoad)="loadRows($event)"
   [lazy]="true">
-  <ng-template pTemplate="caption">
-    <div
-      class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <h5 class="m-0">Menaxho Datat e Provimit</h5>
-      <span class="block mt-2 md:mt-0 p-input-icon-left">
-        <i class="pi pi-search"></i>
-        <input
-          pInputText
-          type="text"
-          placeholder="Kërko..."
-          class="w-full sm:w-auto" />
-      </span>
-    </div>
-  </ng-template>
   <ng-template pTemplate="header">
     <tr>
-      <th style="width: 3rem">
-        <p-tableHeaderCheckbox (click)="onSelectAllClick()">
-        </p-tableHeaderCheckbox>
-      </th>
       <th pSortableColumn="examTypeName">
         Tipi i Provimit
         <p-sortIcon field="examTypeName"></p-sortIcon>
@@ -73,19 +55,16 @@
   </ng-template>
   <ng-template pTemplate="body" let-examDate>
     <tr>
-      <td>
-        <p-tableCheckbox [value]="examDate"></p-tableCheckbox>
-      </td>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 25%; min-width: 10rem">
         {{ examDate.examSiteName }}
       </td>
-      <td style="width: 20%; min-width: 10rem">
+      <td style="width: 25%; min-width: 10rem">
         {{ examDate.examTypeName}}
       </td>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 25%; min-width: 10rem">
         {{ examDate.date | date : 'dd/MM/YYYY'}}
       </td>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 25%; min-width: 10rem">
         {{ examDate.time}}
       </td>
       <td>
