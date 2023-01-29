@@ -12,12 +12,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { CheckboxModule } from 'primeng/checkbox';
 import { RippleModule } from 'primeng/ripple';
-import { ExamSubject } from '@msh/configurations/domain-configurations';
+import { ExamSubjectProfile} from '@msh/configurations/domain-configurations';
 import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 
 @Component({
-  selector: 'msh-exam-subject-grid',
+  selector: 'msh-exam-subject-profile-grid',
   standalone: true,
   imports: [
     CommonModule,
@@ -28,63 +28,63 @@ import { LazyLoadEvent } from 'primeng/api';
     CheckboxModule,
     RippleModule,
   ],
-  templateUrl: './exam-subject-grid.component.html',
-  styleUrls: ['./exam-subject-grid.component.scss'],
+  templateUrl: './exam-subject-profile-grid.component.html',
+  styleUrls: ['./exam-subject-profile-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamSubjectGridComponent {
-  @Input() examSubjects: ExamSubject[] = [];
+export class ExamSubjectProfileGridComponent {
+  @Input() examSubjects: ExamSubjectProfile[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
 
   //Keep it local state because of Table Header checkbox not syncing
-  selectedExamSubjects: ExamSubject[] = [];
+  selectedExamSubjects: ExamSubjectProfile[] = [];
 
   @Output() gridEvent = new EventEmitter<
-    GridEvent<ExamSubject | ExamSubject[]>
+    GridEvent<ExamSubjectProfile | ExamSubjectProfile[]>
   >();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
-  onEditClick(examSubject: ExamSubject) {
+  onEditClick(examSubject: ExamSubjectProfile) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
       data: examSubject,
-    } as GridEvent<ExamSubject>);
+    } as GridEvent<ExamSubjectProfile>);
   }
 
-  onDeleteClick(examSubject: ExamSubject) {
+  onDeleteClick(examSubject: ExamSubjectProfile) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,
       data: examSubject,
-    } as GridEvent<ExamSubject>);
+    } as GridEvent<ExamSubjectProfile>);
   }
 
   onSelectAllClick() {
     if (this.selectedExamSubjects.length === 0) {
       this.gridEvent.emit({
         action: GRID_ACTIONS.UNSELECT_ALL,
-      } as GridEvent<ExamSubject>);
+      } as GridEvent<ExamSubjectProfile>);
     } else {
       this.gridEvent.emit({
         action: GRID_ACTIONS.SELECT_MANY,
         data: this.selectedExamSubjects,
-      } as GridEvent<ExamSubject[]>);
+      } as GridEvent<ExamSubjectProfile[]>);
     }
   }
 
-  onRowSelect({ data }: { data: ExamSubject }) {
+  onRowSelect({ data }: { data: ExamSubjectProfile }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
       data: data,
-    } as GridEvent<ExamSubject>);
+    } as GridEvent<ExamSubjectProfile>);
   }
 
-  onRowUnselect({ data }: { data: ExamSubject }) {
+  onRowUnselect({ data }: { data: ExamSubjectProfile }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
       data: data,
-    } as GridEvent<ExamSubject>);
+    } as GridEvent<ExamSubjectProfile>);
   }
 
   loadRows($event: LazyLoadEvent) {

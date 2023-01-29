@@ -50,6 +50,14 @@
           field="academicYear"
           display="menu"></p-columnFilter>
       </th>
+      <th pSortableColumn="credits">
+        Kredite
+        <p-sortIcon field="credits"></p-sortIcon>
+        <p-columnFilter
+          type="number"
+          field="credits"
+          display="menu"></p-columnFilter>
+      </th>
       <th pSortableColumn="isOptional">
         Me Zgjedhje?
         <p-sortIcon field="isOptional"></p-sortIcon>
@@ -63,7 +71,7 @@
       <td style="width: 14%; min-width: 10rem">
         {{ examSubject.code }}
       </td>
-      <td style="width: 25%; min-width: 10rem">
+      <td style="width: 14%; min-width: 10rem">
         {{ examSubject.name }}
       </td>
       <td style="width: 14%; min-width: 10rem">
@@ -71,6 +79,9 @@
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ examSubject.academicYear }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ examSubject.credits }}
       </td>
       <td style="width: 24%; min-width: 10rem">
         {{ examSubject.isOptional ? 'Po' : 'Jo' }}

@@ -104,6 +104,13 @@ export const CONFIGURATION_ROUTES: Route[] = [
       ).then(m => m.ManageExamSubjectComponent),
   },
   {
+    path: 'exam-subject-profile',
+    loadComponent: () =>
+      import(
+        './exam-subject-profiles/manage-exam-profile-subject/manage-exam-subject-profile.component'
+      ).then(m => m.ManageExamSubjectProfileComponent),
+  },
+  {
     path: 'city',
     loadComponent: () =>
       import('./cities/manage-cities/manage-cities.component').then(

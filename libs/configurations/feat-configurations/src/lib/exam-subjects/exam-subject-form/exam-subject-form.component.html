@@ -44,9 +44,7 @@
         'ng-invalid ng-dirty': submitted && !examSubject.examTypeId
       }">
     </p-dropdown>
-    <small
-      class="p-error block"
-      *ngIf="submitted && !examSubject.examTypeId">
+    <small class="p-error block" *ngIf="submitted && !examSubject.examTypeId">
       Tipi i provimit është fushë e kërkuar.
     </small>
   </div>
@@ -72,22 +70,7 @@
     </small>
   </div>
   <div class="field">
-    <label for="Name">Kredite *</label>
-    <input
-      type="number"
-      pInputText
-      id="Credits"
-      name="Credits"
-      [(ngModel)]="examSubject.credits"
-      required
-      autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examSubject.credits }" />
-    <small class="p-error block" *ngIf="submitted && !examSubject.credits">
-      Kreditet janë fushë e kërkuar.
-    </small>
-  </div>
-  <div class="field">
-    <label class="mb-3">Është Opsional? *</label>
+    <label class="mb-3">Me Zgjedhje? *</label>
     <div class="formgrid grid">
       <div class="field-radiobutton col-6">
         <p-radioButton
@@ -107,7 +90,6 @@
       </div>
     </div>
   </div>
-
 
   <div class="flex justify-content-end">
     <button
