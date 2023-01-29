@@ -1,7 +1,7 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <pre>{{this.examScore | json}}</pre>
   <div class="field">
-    <label for="AcademicYear">Viti Akademik *</label>
+    <label for="AcademicYear">Viti *</label>
     <p-dropdown
       id="AcademicYear"
       [options]="academicYears"
@@ -16,7 +16,7 @@
       }">
     </p-dropdown>
     <small class="p-error block" *ngIf="submitted && !examScore.academicYearId">
-      Viti akademik është fushë e kërkuar.
+      Viti është fushë e kërkuar.
     </small>
   </div>
 

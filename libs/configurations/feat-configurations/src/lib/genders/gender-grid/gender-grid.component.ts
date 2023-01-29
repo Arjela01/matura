@@ -14,6 +14,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import {RippleModule} from "primeng/ripple";
 
 @Component({
   selector: 'msh-gender-grid',
@@ -23,7 +24,7 @@ import { TooltipModule } from 'primeng/tooltip';
     ButtonModule,
     InputTextModule,
     TooltipModule,
-    CheckboxModule,],
+    CheckboxModule, RippleModule,],
   templateUrl: './gender-grid.component.html',
   styleUrls: ['./gender-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

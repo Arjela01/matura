@@ -16,26 +16,8 @@
   (onRowUnselect)="onRowUnselect($event)"
   (onLazyLoad)="loadRows($event)"
   [lazy]="true">
-  <ng-template pTemplate="caption">
-    <div
-      class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <h5 class="m-0">Menaxho Kategoritë A1Z</h5>
-      <span class="block mt-2 md:mt-0 p-input-icon-left">
-        <i class="pi pi-search"></i>
-        <input
-          pInputText
-          type="text"
-          placeholder="Kërko..."
-          class="w-full sm:w-auto" />
-      </span>
-    </div>
-  </ng-template>
   <ng-template pTemplate="header">
     <tr>
-      <th style="width: 3rem">
-        <p-tableHeaderCheckbox (click)="onSelectAllClick()">
-        </p-tableHeaderCheckbox>
-      </th>
       <th pSortableColumn="name">
         Emri
         <p-sortIcon field="name"></p-sortIcon>
@@ -49,9 +31,6 @@
   </ng-template>
   <ng-template pTemplate="body" let-a1zCategory>
     <tr>
-      <td>
-        <p-tableCheckbox [value]="a1zCategory"></p-tableCheckbox>
-      </td>
       <td style="width: 30%; min-width: 10rem">
         {{ a1zCategory.name }}
       </td>

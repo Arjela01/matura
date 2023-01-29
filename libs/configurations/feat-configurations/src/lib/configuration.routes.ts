@@ -30,7 +30,7 @@ export const CONFIGURATION_ROUTES: Route[] = [
         ).then(m => m.ManageStudentsComponent),
   },
   {
-    path: 'students-form',
+    path: 'students/add',
     loadComponent: () =>
       import('./students/students-form/students-form.component'
         ).then(m => m.StudentsFormComponent),
@@ -102,6 +102,13 @@ export const CONFIGURATION_ROUTES: Route[] = [
       import(
         './exam-subjects/manage-exam-subject/manage-exam-subject.component'
       ).then(m => m.ManageExamSubjectComponent),
+  },
+  {
+    path: 'exam-subject-profile',
+    loadComponent: () =>
+      import(
+        './exam-subject-profiles/manage-exam-profile-subject/manage-exam-subject-profile.component'
+      ).then(m => m.ManageExamSubjectProfileComponent),
   },
   {
     path: 'city',

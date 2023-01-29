@@ -4,8 +4,8 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input,
-  Output,
+  Input, OnChanges,
+  Output, SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -37,7 +37,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
   styleUrls: ['./menu-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MenuFormComponent {
+export class MenuFormComponent implements OnChanges {
   @Input() parentMenus: DropdownModel<number>[] = [];
 
   @Input() set menuDetails(details: Menu | null) {
@@ -74,5 +74,9 @@ export class MenuFormComponent {
     if (this.form.valid) {
       this.formSave.emit(this.menu);
     }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.cd.detectChanges();
   }
 }

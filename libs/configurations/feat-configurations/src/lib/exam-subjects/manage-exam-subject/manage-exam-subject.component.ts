@@ -16,6 +16,7 @@ import {
 } from "@msh/configurations/data-access-configurations";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {DropdownModel} from "@msh/shared/data-access-shared";
+import {RippleModule} from "primeng/ripple";
 
 @UntilDestroy()
 @Component({
@@ -28,7 +29,9 @@ import {DropdownModel} from "@msh/shared/data-access-shared";
     ConfirmDialogModule,
     ExamSubjectFormComponent,
     ExamSubjectGridComponent,
-    ToolbarModule,],
+    ToolbarModule,
+    RippleModule,
+  ],
   templateUrl: './manage-exam-subject.component.html',
   styleUrls: ['./manage-exam-subject.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

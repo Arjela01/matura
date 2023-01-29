@@ -15,8 +15,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
-import { GenderFormComponent } from './../gender-form/gender-form.component';
-import { GenderGridComponent } from './../gender-grid/gender-grid.component';
+import { GenderFormComponent } from '../gender-form/gender-form.component';
+import { GenderGridComponent } from '../gender-grid/gender-grid.component';
+import {RippleModule} from "primeng/ripple";
 
 @Component({
   selector: 'msh-manage-genders',
@@ -29,6 +30,7 @@ import { GenderGridComponent } from './../gender-grid/gender-grid.component';
     GenderFormComponent,
     GenderGridComponent,
     ToolbarModule,
+    RippleModule,
   ],
   templateUrl: './manage-genders.component.html',
   styleUrls: ['./manage-genders.component.scss'],

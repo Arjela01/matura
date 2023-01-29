@@ -20,19 +20,21 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { AdministrationOfficeFormComponent } from '../administration-office-form/administration-office-form.component';
 import { AdministrationOfficeGridComponent } from '../administration-office-grid/administration-office-grid.component';
+import {RippleModule} from "primeng/ripple";
 
 @Component({
   selector: 'msh-manage-administration-office',
   standalone: true,
-  imports: [
-    ButtonModule,
-    CommonModule,
-    DialogModule,
-    ConfirmDialogModule,
-    AdministrationOfficeFormComponent,
-    AdministrationOfficeGridComponent,
-    ToolbarModule,
-  ],
+    imports: [
+        ButtonModule,
+        CommonModule,
+        DialogModule,
+        ConfirmDialogModule,
+        AdministrationOfficeFormComponent,
+        AdministrationOfficeGridComponent,
+        ToolbarModule,
+        RippleModule,
+    ],
   templateUrl: './manage-administration-office.component.html',
   styleUrls: ['./manage-administration-office.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

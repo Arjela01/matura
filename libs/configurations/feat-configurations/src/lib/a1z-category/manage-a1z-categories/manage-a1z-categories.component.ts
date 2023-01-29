@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 import { A1ZCategory } from '@msh/configurations/domain-configurations';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { DropdownModel } from '@msh/shared/data-access-shared';
 import { GlobalToastService, GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { A1ZCategoryApiService } from '@msh/configurations/data-access-configurations';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -13,17 +12,18 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { A1zCategoryFormComponent } from '../a1z-category-form/a1z-category-form.component';
 import { A1zCategoryGridComponent } from '../a1z-category-grid/a1z-category-grid.component';
 import { ToolbarModule } from 'primeng/toolbar';
+import {RippleModule} from "primeng/ripple";
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-a1z-categories',
   standalone: true,
-  imports: [   ButtonModule,
-    CommonModule,
-    DialogModule,
-    ConfirmDialogModule,
-    A1zCategoryFormComponent,
-    A1zCategoryGridComponent,
-    ToolbarModule,],
+    imports: [ButtonModule,
+        CommonModule,
+        DialogModule,
+        ConfirmDialogModule,
+        A1zCategoryFormComponent,
+        A1zCategoryGridComponent,
+        ToolbarModule, RippleModule,],
   templateUrl: './manage-a1z-categories.component.html',
   styleUrls: ['./manage-a1z-categories.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -16,20 +16,22 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { StudySubjectFormComponent } from '../study-subject-form/study-subject-form.component';
 import { StudySubjectGridComponent } from '../study-subject-grid/study-subject-grid.component';
+import {RippleModule} from "primeng/ripple";
 
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-study-subjects',
   standalone: true,
-  imports: [
-    ButtonModule,
-    CommonModule,
-    DialogModule,
-    ConfirmDialogModule,
-    ToolbarModule,
-    StudySubjectFormComponent,
-    StudySubjectGridComponent,
-  ],
+    imports: [
+        ButtonModule,
+        CommonModule,
+        DialogModule,
+        ConfirmDialogModule,
+        ToolbarModule,
+        StudySubjectFormComponent,
+        StudySubjectGridComponent,
+        RippleModule,
+    ],
   templateUrl: './manage-study-subjects.component.html',
   styleUrls: ['./manage-study-subjects.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

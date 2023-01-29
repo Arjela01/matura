@@ -6,7 +6,7 @@
       <div class="text-3xl font-semibold mb-3">Te dhënat e përgjithshme</div>
       <form #form="ngForm" (ngSubmit)="onSubmit()">
         <div class="field" [style]="{ width: '500px' }">
-          <label for="academicYearId">Viti Akademik *</label>
+          <label for="academicYearId">Viti *</label>
           <p-dropdown
             id="academicYear"
             [options]="academicYears"
@@ -18,7 +18,7 @@
             [showClear]="true">
           </p-dropdown>
           <small class="p-error block" *ngIf="submitted && !a1z.academicYear">
-            Viti Akademik është fushë e kërkuar.
+            Viti është fushë e kërkuar.
           </small>
         </div>
 
