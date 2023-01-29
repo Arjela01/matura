@@ -143,7 +143,7 @@ export class ManageAcademicYearComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Viti Akademik u shtua me sukses!');
+          this.toastService.showSuccess('Viti u shtua me sukses!');
           this.displayModal = false;
           this.getAcademicYears(this.filters as LazyLoadEvent);
         }
@@ -161,7 +161,7 @@ export class ManageAcademicYearComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Viti Akademik u ndryshua me sukses!');
+          this.toastService.showSuccess('Viti u ndryshua me sukses!');
           this.displayModal = false;
           this.getAcademicYears(this.filters as LazyLoadEvent);
         }
@@ -179,7 +179,7 @@ export class ManageAcademicYearComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showInfo('Viti Akademik u fshi me sukses!');
+          this.toastService.showInfo('Viti u fshi me sukses!');
           this.getAcademicYears(this.filters as LazyLoadEvent);
         }
 
