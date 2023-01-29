@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -52,6 +51,8 @@ export class ExamSubjectProfileFormComponent implements OnChanges {
   @Output() formSave = new EventEmitter<ExamSubjectProfile>();
   @Output() formClose = new EventEmitter<undefined>();
 
+  @Output() loadExamSubjects = new EventEmitter<ExamSubjectProfile>();
+
   @ViewChild('form', { static: true }) form!: NgForm;
 
   examTypesFiltered: DropdownModel<number>[] = [];
@@ -61,15 +62,12 @@ export class ExamSubjectProfileFormComponent implements OnChanges {
   examSubjectProfile: ExamSubjectProfile = {
     examSubjectId: undefined,
     examSubjectName: undefined,
-    id: '',
+    id: undefined,
     name: '',
     code: '',
     credits: 0,
     isOptional: false,
   };
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private cd: ChangeDetectorRef) {}
 
   ngOnChanges(): void {
     if (this.examTypes && this.examSubjectProfile.academicYearId) {
@@ -93,5 +91,9 @@ export class ExamSubjectProfileFormComponent implements OnChanges {
     this.examTypesFiltered = this.examTypes.filter(
       et => et.parentKey == $event.value
     );
+  }
+
+  refreshExamSubjects() {
+    this.loadExamSubjects.emit(Object.assign({}, this.examSubjectProfile));
   }
 }

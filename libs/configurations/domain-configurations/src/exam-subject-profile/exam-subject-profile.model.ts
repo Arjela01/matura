@@ -1,5 +1,5 @@
 export interface ExamSubjectProfile {
-  id: string;
+  id?: number;
   name: string;
   code: string,
   examTypeId?: number;

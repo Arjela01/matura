@@ -32,14 +32,17 @@
   header="Detajet e Lëndë-Profile për D1/D2"
   [modal]="true"
   [draggable]="false"
-  [resizable]="false"
+  [resizable]="true"
   class="p-fluid"
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
     <msh-exam-subject-profile-form
       [examSubjectDetails]="selectedExamSubject"
       [examTypes]="examTypes"
+      [examSubjects]="examSubjects"
       [academicYears]="academicYears"
+      (loadExamSubjects)="loadExamSubjects($event)"
+      [profiles]="profiles"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
     </msh-exam-subject-profile-form>

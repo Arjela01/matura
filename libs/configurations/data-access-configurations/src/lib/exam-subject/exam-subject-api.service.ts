@@ -52,11 +52,17 @@ export class ExamSubjectApiService {
   }
 
   forExamType(
-    examTypeId?: number
+    examTypeId?: number,
+    academicYearId?: number,
+    id?: string
   ): Observable<ApiResult<DropdownModel<string>[]>> {
     return this.apiService.post<ApiResult<DropdownModel<string>[]>, any>(
       `/api/ExamSubject/ForExamType`,
-      { examTypeId: examTypeId }
+      {
+        examTypeId: examTypeId,
+        academicYearId: academicYearId,
+        id: id
+      }
     );
   }
 }

@@ -1,5 +1,27 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="field">
+    <label for="examSubjectId">Profili *</label>
+    <p-dropdown
+      id="profileId"
+      [options]="profiles"
+      optionValue="key"
+      optionLabel="value"
+      name="profileId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="examSubjectProfile.profileId"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examSubjectProfile.profileId
+      }">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examSubjectProfile.profileId">
+      Profili është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
     <label for="examSubjectId">Tipi i Provimit *</label>
     <p-dropdown
       id="examTypeId"
@@ -8,6 +30,7 @@
       optionLabel="value"
       name="examTypeId"
       [autoDisplayFirst]="false"
+      (onChange)="refreshExamSubjects()"
       [(ngModel)]="examSubjectProfile.examTypeId"
       [showClear]="true"
       [ngClass]="{
@@ -29,6 +52,7 @@
       optionValue="key"
       optionLabel="value"
       name="academicYearId"
+      (onChange)="refreshExamSubjects()"
       [autoDisplayFirst]="false"
       [(ngModel)]="examSubjectProfile.academicYearId"
       [showClear]="true"
@@ -62,28 +86,6 @@
       class="p-error block"
       *ngIf="submitted && !examSubjectProfile.examSubjectId">
       Viti është fushë e kërkuar.
-    </small>
-  </div>
-
-  <div class="field">
-    <label for="examSubjectId">Profile *</label>
-    <p-dropdown
-      id="profileId"
-      [options]="profiles"
-      optionValue="key"
-      optionLabel="value"
-      name="profileId"
-      [autoDisplayFirst]="false"
-      [(ngModel)]="examSubjectProfile.profileId"
-      [showClear]="true"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examSubjectProfile.profileId
-      }">
-    </p-dropdown>
-    <small
-      class="p-error block"
-      *ngIf="submitted && !examSubjectProfile.profileId">
-      Profili është fushë e kërkuar.
     </small>
   </div>
 

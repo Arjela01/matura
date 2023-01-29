@@ -15,16 +15,16 @@ export class ExamSubjectProfileApiService {
   constructor(private apiService: APIService) {}
 
   loadTableData(event: LazyLoadEvent): Observable<ExamSubjectProfileTableView> {
-    return this.apiService.post(`/api/ExamSubjectProfile/TableData`, event);
+    return this.apiService.post(`/ExamSubjectProfile/TableData`, event);
   }
 
   save(
-    examSubject: ExamSubjectProfile
+    examSubjectProfile: ExamSubjectProfile
   ): Observable<ApiResult<ExamSubjectProfile>> {
     return this.apiService
       .post<ApiResult<ExamSubjectProfile>, ExamSubjectProfile>(
-        `/api/ExamSubjectProfile`,
-        examSubject
+        `/ExamSubjectProfile`,
+        examSubjectProfile
       )
       .pipe(
         map(data => data),
@@ -34,12 +34,12 @@ export class ExamSubjectProfileApiService {
   }
 
   update(
-    examSubject: ExamSubjectProfile
+    examSubjectProfile: ExamSubjectProfile
   ): Observable<ApiResult<ExamSubjectProfile>> {
     return this.apiService
       .put<ApiResult<ExamSubjectProfile>, ExamSubjectProfile>(
-        `/api/ExamSubjectProfile`,
-        examSubject
+        `/ExamSubjectProfile`,
+        examSubjectProfile
       )
       .pipe(
         map(data => data),
@@ -48,11 +48,9 @@ export class ExamSubjectProfileApiService {
       );
   }
 
-  delete(examSubjectId: string): Observable<ApiResult<unknown>> {
+  delete(id?: number): Observable<ApiResult<unknown>> {
     return this.apiService
-      .delete<ApiResult<ExamSubjectProfile>>(
-        `/api/ExamSubjectProfile/${examSubjectId}`
-      )
+      .delete<ApiResult<ExamSubjectProfile>>(`/ExamSubjectProfile/${id}`)
       .pipe(
         map(data => data),
         catchError(error => throwError(error)),

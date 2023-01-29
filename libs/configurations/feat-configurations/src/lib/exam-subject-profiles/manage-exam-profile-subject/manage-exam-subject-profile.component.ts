@@ -18,7 +18,7 @@ import {
   AcademicYearApiService,
   ExamSubjectApiService,
   ExamSubjectProfileApiService,
-  ExamTypeApiService,
+  ExamTypeApiService, ProfileApiService,
 } from '@msh/configurations/data-access-configurations';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { DropdownModel } from '@msh/shared/data-access-shared';
@@ -56,7 +56,9 @@ export class ManageExamSubjectProfileComponent {
   displayModal = false;
 
   examTypes: DropdownModel<number>[] = [];
+  profiles: DropdownModel<number>[] = [];
   academicYears: DropdownModel<number>[] = [];
+  examSubjects: DropdownModel<string>[] = [];
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -64,12 +66,14 @@ export class ManageExamSubjectProfileComponent {
     private readonly examSubjectProfileService: ExamSubjectProfileApiService,
     private readonly examSubjectService: ExamSubjectApiService,
     private readonly academicYearsApiService: AcademicYearApiService,
-    private readonly examTypesApiService: ExamTypeApiService
+    private readonly examTypesApiService: ExamTypeApiService,
+    private readonly profilesApiService: ProfileApiService,
   ) {}
 
   ngOnInit(): void {
     this.getAcademicYearsDropdown();
     this.getExamTypesDropdown();
+    this.getProfilesDropdown();
   }
 
   onNewClick() {
@@ -110,6 +114,7 @@ export class ManageExamSubjectProfileComponent {
         break;
       case GRID_ACTIONS.EDIT:
         this.selectedExamSubject = Object.assign({}, event.data as ExamSubjectProfile);
+        this.loadExamSubjects(this.selectedExamSubject);
         this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
@@ -188,7 +193,7 @@ export class ManageExamSubjectProfileComponent {
   }
 
   deleteExamSubject(examSubjectProfile: ExamSubjectProfile) {
-    this.examSubjectService
+    this.examSubjectProfileService
       .delete(examSubjectProfile.id)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
@@ -203,9 +208,23 @@ export class ManageExamSubjectProfileComponent {
           );
       });
   }
+
   getExamTypesDropdown() {
     this.examTypesApiService.loadDropdownList().subscribe(response => {
       this.examTypes = response.data;
+    });
+  }
+
+  getProfilesDropdown() {
+    this.profilesApiService.loadDropdownList().subscribe(response => {
+      this.profiles = response.data;
+    });
+  }
+
+
+  getExamSubjects(examTypeId?: number, academicYearId?: number, examSubjectId?: string) {
+    this.examSubjectService.forExamType(examTypeId, academicYearId, examSubjectId).subscribe(response => {
+      this.examSubjects = response.data;
     });
   }
 
@@ -216,5 +235,9 @@ export class ManageExamSubjectProfileComponent {
       .subscribe(response => {
         this.academicYears = response.data;
       });
+  }
+
+  loadExamSubjects($event: ExamSubjectProfile) {
+    this.getExamSubjects($event.examTypeId, $event.academicYearId, $event.examSubjectId);
   }
 }
