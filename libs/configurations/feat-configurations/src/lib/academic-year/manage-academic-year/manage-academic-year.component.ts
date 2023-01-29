@@ -21,6 +21,7 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { AcademicYearFormComponent } from '../academic-year-form/academic-year-form.component';
 import { AcademicYearGridComponent } from '../academic-year-grid/academic-year-grid.component';
+import {RippleModule} from "primeng/ripple";
 
 @UntilDestroy()
 @Component({
@@ -34,6 +35,7 @@ import { AcademicYearGridComponent } from '../academic-year-grid/academic-year-g
     AcademicYearFormComponent,
     AcademicYearGridComponent,
     ToolbarModule,
+    RippleModule,
   ],
   templateUrl: './manage-academic-year.component.html',
   styleUrls: ['./manage-academic-year.component.scss'],
