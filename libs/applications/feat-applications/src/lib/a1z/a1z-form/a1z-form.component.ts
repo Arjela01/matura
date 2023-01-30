@@ -134,7 +134,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
     this.submitted = true;
 
     if (this.form.valid) {
-      if (this.a1z.id === 0) {
+      if (!this.a1z.id) {
         this.onNewA1ZFormSubmit();
       } else {
         this.onEditA1ZFormSubmit();
@@ -244,22 +244,22 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
 
   onSubjectD1Change($event: any) {
     this.disableD1Subject =
-      ($event.value.noCarriedSubjets === 1 && $event.value.carriedSubjectD2) ||
-      $event.value.carriedSubjectD3 ||
+      ($event.value.noCarriedSubjets === 1 && $event.value.carriedGradeD2) ||
+      $event.value.carriedGradeD3 ||
       $event.value.noCarriedSubjets === 0;
   }
 
   onSubjectD2Change($event: any) {
     this.disableD2Subject =
-      ($event.value.noCarriedSubjets === 1 && $event.value.carriedSubjectD1) ||
-      $event.value.carriedSubjectD3 ||
+      ($event.value.noCarriedSubjets === 1 && $event.value.carriedGradeD1) ||
+      $event.value.carriedGradeD3 ||
       $event.value.noCarriedSubjets === 0;
   }
 
   onSubjectD3Change($event: any) {
     this.disableD3Subject =
-      ($event.value.noCarriedSubjets === 1 && $event.value.carriedSubjectD2) ||
-      $event.value.carriedSubjectD1 ||
+      ($event.value.noCarriedSubjets === 1 && $event.value.carriedGradeD2) ||
+      $event.value.carriedGradeD1 ||
       $event.value.noCarriedSubjets === 0;
   }
 
@@ -276,17 +276,17 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
 
     // There was a problem when disabling the input fields if radio button nr 2 was selected. The logic above didn't work in that case.
     if ($event.value.noCarriedSubjets === 2) {
-      if ($event.value.carriedSubjectD2 && $event.value.carriedSubjectD3) {
+      if ($event.value.carriedGradeD2 && $event.value.carriedGradeD3) {
         this.disableD1Subject = true;
       } else {
         this.disableD1Subject = false;
       }
-      if ($event.value.carriedSubjectD1 && $event.value.carriedSubjectD3) {
+      if ($event.value.carriedGradeD1 && $event.value.carriedGradeD3) {
         this.disableD2Subject = true;
       } else {
         this.disableD2Subject = false;
       }
-      if ($event.value.carriedSubjectD1 && $event.value.carriedSubjectD2) {
+      if ($event.value.carriedGradeD1 && $event.value.carriedGradeD2) {
         this.disableD3Subject = true;
       } else {
         this.disableD3Subject = false;

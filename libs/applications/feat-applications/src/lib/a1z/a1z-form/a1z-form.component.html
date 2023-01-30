@@ -1,3 +1,6 @@
+<small class="p-error block" *ngIf="submitted && !a1z.academicYearId">
+  Viti Akademik është fushë e kërkuar.
+</small>
 <div class="grid">
   <div class="col-12 p-fluid">
     <div class="card px-6 py-6">
@@ -5,7 +8,7 @@
       <div class="text-3xl font-semibold mb-3">Te dhënat e përgjithshme</div>
       <form #form="ngForm" (ngSubmit)="onSubmit()">
         <div class="field" [style]="{ width: '500px' }">
-          <label for="academicYearId">Viti *</label>
+          <label for="academicYearId">Viti Akademik *</label>
           <p-dropdown
             id="academicYearId"
             [options]="academicYears"
@@ -128,16 +131,13 @@
           <label for="yearOfSchoolA1Z"
             >Viti i perfundimit te shkolles se mesme</label
           >
-          <p-dropdown
+          <input
+            type="number"
+            pInputText
             id="yearOfSchoolA1Z"
-            [options]="academicYears"
-            optionValue="key"
-            optionLabel="value"
             name="yearOfSchoolA1Z"
-            [autoDisplayFirst]="false"
             [(ngModel)]="a1z.yearOfSchoolA1Z"
-            [showClear]="true">
-          </p-dropdown>
+            autofocus />
         </div>
 
         <div class="text-3xl font-semibold mb-3 mt-5">Lendet e Detyruara</div>
@@ -192,7 +192,7 @@
                 id="carriedSubjectD1"
                 [options]="examSubjects"
                 optionValue="key"
-                [placeholder]="'Letersi'"
+                [placeholder]="'Lenda D1'"
                 optionLabel="value"
                 name="carriedSubjectD1"
                 [disabled]="disableD1Subject"
@@ -210,10 +210,13 @@
                 min="4"
                 id="carriedGradeD1"
                 [disabled]="disableD1Subject"
-                name="carriedGradeD1"
-                [(ngModel)]="
-                  a1z.carriedGradeD1 ? a1z.carriedGradeD1 : a1z.scoreD1A1Z
+                [value]="
+                  a1z.scoreD1A1Z !== undefined
+                    ? a1z.scoreD1A1Z
+                    : a1z.carriedGradeD1
                 "
+                name="carriedGradeD1"
+                [(ngModel)]="a1z.scoreD1A1Z"
                 required
                 autofocus />
             </div>
@@ -225,11 +228,14 @@
                 [disabled]="disableD1Subject"
                 max="10"
                 min="4"
+                [value]="
+                  a1z.scoreD1A1Z !== undefined
+                    ? a1z.scoreD1A1Z
+                    : a1z.carriedGradeD1
+                "
                 id="carriedGradeD1"
                 name="carriedGradeD1"
-                [(ngModel)]="
-                  a1z.carriedGradeD1 ? a1z.carriedGradeD1 : a1z.scoreD1A1Z
-                "
+                [(ngModel)]="a1z.scoreD1A1Z"
                 required
                 autofocus />
             </div>
@@ -254,7 +260,7 @@
               <p-dropdown
                 id="carriedSubjectD2"
                 [options]="examSubjects"
-                [placeholder]="'Matematike'"
+                [placeholder]="'Lenda D2'"
                 optionValue="key"
                 optionLabel="value"
                 [disabled]="disableD2Subject"
@@ -271,12 +277,15 @@
                 pInputText
                 max="10"
                 min="4"
+                [value]="
+                  a1z.scoreD1A1Z !== undefined
+                    ? a1z.scoreD2A1Z
+                    : a1z.carriedGradeD2
+                "
                 [disabled]="disableD2Subject"
                 id="carriedGradeD2"
                 name="carriedGradeD2"
-                [(ngModel)]="
-                  a1z.carriedGradeD2 ? a1z.carriedGradeD2 : a1z.scoreD2A1Z
-                "
+                [(ngModel)]="a1z.scoreD2A1Z"
                 required
                 autofocus />
             </div>
@@ -287,12 +296,15 @@
                 pInputText
                 max="10"
                 min="4"
+                [value]="
+                  a1z.scoreD1A1Z !== undefined
+                    ? a1z.scoreD2A1Z
+                    : a1z.carriedGradeD2
+                "
                 id="carriedGradeD2"
                 [disabled]="disableD2Subject"
                 name="carriedGradeD2"
-                [(ngModel)]="
-                  a1z.carriedGradeD2 ? a1z.carriedGradeD2 : a1z.scoreD2A1Z
-                "
+                [(ngModel)]="a1z.scoreD2A1Z"
                 required
                 autofocus />
             </div>
@@ -313,16 +325,16 @@
         <div class="field">
           <div class="formgrid grid">
             <div class="field col-2">
-              <label for="carriedSubjectD3">Lenda e detyruar D3</label>
+              <label for="subjectD3A1ZId">Lenda e detyruar D3</label>
               <p-dropdown
-                id="carriedSubjectD3"
+                id="subjectD3A1ZId"
                 [options]="examSubjects"
                 optionValue="key"
                 optionLabel="value"
-                name="carriedSubjectD3"
+                name="subjectD3A1ZId"
                 [disabled]="disableD3Subject"
                 [autoDisplayFirst]="false"
-                [(ngModel)]="a1z.subjectD3A1ZId"
+                [(ngModel)]="a1z.carriedSubjectD3"
                 [showClear]="true">
               </p-dropdown>
             </div>
@@ -333,10 +345,15 @@
                 pInputText
                 max="10"
                 min="4"
+                [value]="
+                  a1z.scoreD1A1Z !== undefined
+                    ? a1z.scoreD3A1Z
+                    : a1z.carriedGradeD3
+                "
                 [disabled]="disableD3Subject"
                 id="carriedGradeD3"
                 name="carriedGradeD3"
-                [(ngModel)]="a1z.carriedGradeD3"
+                [(ngModel)]="a1z.scoreD3A1Z"
                 required
                 autofocus />
             </div>
@@ -347,10 +364,15 @@
                 pInputText
                 max="10"
                 min="4"
+                [value]="
+                  a1z.scoreD1A1Z !== undefined
+                    ? a1z.scoreD3A1Z
+                    : a1z.carriedGradeD3
+                "
                 [disabled]="disableD3Subject"
                 id="carriedGradeD3"
                 name="carriedGradeD3"
-                [(ngModel)]="a1z.carriedGradeD3"
+                [(ngModel)]="a1z.scoreD3A1Z"
                 required
                 autofocus />
             </div>
@@ -377,7 +399,9 @@
           <p-dropdown
             id="subjectD1A1ZId"
             [options]="examSubjects"
-            optionValue="key"
+            [optionValue]="
+              a1z.carriedSubjectD1 !== undefined ? a1z.carriedSubjectD1 : 'key'
+            "
             optionLabel="value"
             [placeholder]="'Letersi'"
             [disabled]="true"
@@ -394,7 +418,9 @@
           <p-dropdown
             id="subjectD2A1ZId"
             [options]="examSubjects"
-            optionValue="key"
+            [optionValue]="
+              a1z.carriedSubjectD2 !== undefined ? a1z.carriedSubjectD2 : 'key'
+            "
             optionLabel="value"
             [placeholder]="'Matematike'"
             [disabled]="true"
@@ -407,13 +433,13 @@
         </div>
 
         <div class="field" [style]="{ width: '500px' }">
-          <label for="d3Subject">Lenda D3:</label>
+          <label for="subjectD3A1ZId">Lenda D3:</label>
           <p-dropdown
-            id="subjectD3"
+            id="subjectD3A1ZId"
             [options]="examSubjects"
             optionValue="key"
             optionLabel="value"
-            name="subjectD3"
+            name="subjectD3A1ZId"
             [disabled]="false"
             [autoDisplayFirst]="false"
             [(ngModel)]="a1z.subjectD3A1ZId"
@@ -450,29 +476,14 @@
           <div class="formgrid grid">
             <div class="field col-2">
               <label for="yearZ1">Viti</label>
-              <p-dropdown
-                id="yearZ1"
-                [options]="academicYears"
-                optionValue="key"
-                optionLabel="value"
-                name="yearZ1"
-                [disabled]="a1z.noCarriedSubjetsZ === 0"
-                [autoDisplayFirst]="false"
-                [(ngModel)]="a1z.yearZ1"
-                [showClear]="true">
-              </p-dropdown>
-            </div>
-            <!-- <div class="field col-2">
-              <label for="carriedSubjectAZ1">Lenda me zgjedhje:</label>
               <input
-                type="text"
+                type="number"
                 pInputText
-                id="carriedSubjectAZ1"
-                name="carriedSubjectAZ1"
-                [disabled]="a1z.noCarriedSubjetsZ === 0"
-                [(ngModel)]="a1z.carriedSubjectAZ1"
+                id="yearZ1"
+                name="yearZ1"
+                [(ngModel)]="a1z.yearZ1"
                 autofocus />
-            </div> -->
+            </div>
 
             <div class="field" [style]="{ width: '500px' }">
               <label for="carriedSubjectAZ1">Lenda me zgjedhje:</label>
@@ -496,9 +507,14 @@
                 pInputText
                 max="10"
                 min="4"
+                [value]="
+                  a1z.scoreZ1A1Z !== undefined
+                    ? a1z.scoreZ1A1Z
+                    : a1z.carriedGradeZ1
+                "
                 id="carriedGradeAZ1"
                 name="carriedGradeAZ1"
-                [(ngModel)]="a1z.carriedGradeZ1"
+                [(ngModel)]="a1z.scoreZ1A1Z"
                 [disabled]="a1z.noCarriedSubjetsZ === 0"
                 [required]="a1z.noCarriedSubjetsZ === 1"
                 autofocus />
@@ -511,6 +527,9 @@
                 id="carriedGradeAZ1"
                 name="carriedGradeAZ1"
                 max="10"
+                [value]="
+                  a1z.scoreZ1A1Z !== undefined ? a1z.scoreZ1A1Z : a1z.scoreZ1A1Z
+                "
                 min="4"
                 [(ngModel)]="a1z.carriedGradeZ1"
                 [disabled]="a1z.noCarriedSubjetsZ === 0"
@@ -536,13 +555,13 @@
         </div>
 
         <div class="field" [style]="{ width: '500px' }">
-          <label for="z1Subject">Lenda Z1:</label>
+          <label for="subjectZ1A1ZId">Lenda Z1:</label>
           <p-dropdown
-            id="subjectZ1"
+            id="subjectZ1A1ZId"
             [options]="examSubjects"
             optionValue="key"
             optionLabel="value"
-            name="subjectZ1"
+            name="subjectZ1A1ZId"
             [disabled]="false"
             [autoDisplayFirst]="false"
             [(ngModel)]="a1z.subjectZ1A1ZId"
