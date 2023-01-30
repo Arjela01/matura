@@ -9,6 +9,4 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./manage-a1.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ManageA1Component {
-  constructor() {}
-}
+export class ManageA1Component {}

@@ -65,7 +65,7 @@ export class A1GridComponent {
   d3Subject: DropdownModel<number>[] = [];
   ref: DynamicDialogRef | null = null;
   optionalSubjects: DropdownModel<number>[] = [];
-  studentsTotalRecords: any;
+  studentsTotalRecords = 0;
   choosenStudent: Student | null = null;
   academicYear: AcademicYear | null = null;
   constructor(
@@ -105,7 +105,6 @@ export class A1GridComponent {
   }
 
   onGridEvent(action: GRID_ACTIONS, event: any) {
-    debugger;
     switch (action) {
       case GRID_ACTIONS.EDIT:
         this.router.navigate([`applications/save-a1/${event.id}`]);

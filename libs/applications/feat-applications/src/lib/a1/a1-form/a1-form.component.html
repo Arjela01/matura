@@ -27,9 +27,10 @@
                     <label for="City">Lenda D3</label>
                     <p-dropdown id="City" [options]="d3Dropdown" optionValue="key" autoWidth="false"
                         [style]="{'width':'100%'}" optionLabel="value" name="subjectD3Id" [required]="false"
-                        class="w-full block" [(ngModel)]="a1.subjectD3Id" [autoDisplayFirst]="false" [showClear]="true">
+                        class="w-full block" [(ngModel)]="a1.subjectD3A1Id" [autoDisplayFirst]="false"
+                        [showClear]="true">
                     </p-dropdown>
-                    <small class="p-error block" *ngIf="submitted && (!a1.subjectD3Id || a1.subjectD3Id==='')">
+                    <small class="p-error block" *ngIf="submitted && (!a1.subjectD3A1Id || a1.subjectD3A1Id==='')">
                         Maturanti është fushë e kërkuar.
                     </small>
                 </div>

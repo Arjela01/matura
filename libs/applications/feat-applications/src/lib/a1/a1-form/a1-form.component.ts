@@ -31,8 +31,7 @@ import { TableModule } from 'primeng/table';
 import { combineLatest, Observable } from 'rxjs';
 import { ManageStudentsGridsDialogComponent } from '../manage-students-grids-dialog/manage-students-grids-dialog.component';
 
-const D1 = 25;
-const D2 = 2;
+const Z1 = 26;
 const D3 = 4;
 const INITIAL_FILTER = {
   registrationYear: [
@@ -84,11 +83,12 @@ export class A1FormComponent {
     academicYearId: '',
     studentId: '',
     isA1: true,
-    subjectD3Id: '',
     isApplyingToForeignCountries: false,
     alreadyHaveDiploma: false,
-    subjectD1Id: '',
-    subjectD2Id: '',
+    subjectD3A1Id: '',
+    subjectZ1A1Id: '',
+    subjectZ2A1Id: '',
+    subjectZ3A1Id: '',
     overSeerCode: '',
   };
   studentsConfig = {
@@ -120,33 +120,64 @@ export class A1FormComponent {
   }
 
   initializeFormWithApiCalls() {
-    let apiCalls = [this.getAcademicYears(), this.getStudent()];
+    let apiCalls = [
+      this.getAcademicYears(),
+      this.getStudent(),
+      this.getOptionalSubjects(),
+      this.getD3Subjects(),
+    ];
     if (!this.id) {
       combineLatest(apiCalls)
         .pipe(untilDestroyed(this))
-        .subscribe(([years, students]) => {
+        .subscribe(([years, students, z1, d3]) => {
           this.showForm = true;
           this.academicYear = years['data'].find(
             (year: AcademicYear) => year.isActive
           );
           this.a1.academicYearId = this.academicYear?.id;
           this.students = students;
+          this.optionalSubjects = z1.data;
+          this.d3Dropdown = d3.data;
           this.cd.detectChanges();
         });
     } else {
       apiCalls.push(this.getA1ById());
       combineLatest(apiCalls)
         .pipe(untilDestroyed(this))
-        .subscribe(([years, students, a1]) => {
+        .subscribe(([years, students, z1, d3, a1]) => {
           this.showForm = true;
           this.academicYear = years['data'].find(
             (year: AcademicYear) => year.isActive
           );
           this.students = students;
-          this.a1 = { ...a1?.data };
+          this.a1 = { ...a1?.data } as A1;
+          this.optionalSubjects = z1.data;
+          this.d3Dropdown = d3.data;
+          this.initializeOptionalSubjects();
           this.choosenStudent = `${this.a1.studentIdentifier}-${this.a1.studentFirstName}-${this.a1.studentFatherName}-${this.a1.studentLastName}`;
           this.cd.detectChanges();
         });
+    }
+  }
+
+  initializeOptionalSubjects() {
+    if (this.a1.subjectZ1A1Id) {
+      this.subjectsChoosen.push({
+        key: this.a1.subjectZ1A1Id,
+        value: this.a1.subjectZ1A1Name,
+      });
+    }
+    if (this.a1.subjectZ2A1Id) {
+      this.subjectsChoosen.push({
+        key: this.a1.subjectZ2A1Id,
+        value: this.a1.subjectZ2A1Name,
+      });
+    }
+    if (this.a1.subjectZ3A1Id) {
+      this.subjectsChoosen.push({
+        key: this.a1.subjectZ3A1Id,
+        value: this.a1.subjectZ3A1Name,
+      });
     }
   }
 
@@ -157,19 +188,19 @@ export class A1FormComponent {
       width: '70%',
       position: 'center',
       contentStyle: { overflow: 'auto' },
-      baseZIndex: 10000,
       maximizable: true,
+      closable: true,
       data: {
         students: this.students?.data,
         config: this.studentsConfig,
         totalRecords: this.students?.total,
       },
     });
-    this.ref.onClose.subscribe(data => {
+    this.ref.onClose.pipe(untilDestroyed(this)).subscribe(data => {
       console.log(data);
       if (data) {
         this.choosenStudent = `${data.student.studentId}-${data.student.firstName}-${data.student.middleName}-${data.student.lastName}`;
-        this.a1.studentId = data.student.studentId;
+        this.a1.studentId = data.student.id;
         this.cd.detectChanges();
       }
     });
@@ -178,14 +209,24 @@ export class A1FormComponent {
     this.router.navigate(['/applications/a1']);
   }
   getA1ById(): Observable<any> {
-    return this.a1ApiService.getById(this.id!!);
+    return this.a1ApiService.getById(this.id!!).pipe(untilDestroyed(this));
+  }
+  getOptionalSubjects(): Observable<any> {
+    return this.examSubjectsService.forExamType(Z1).pipe(untilDestroyed(this));
+  }
+  getD3Subjects(): Observable<any> {
+    return this.examSubjectsService.forExamType(D3).pipe(untilDestroyed(this));
   }
   getAcademicYears(): Observable<any> {
-    return this.academicYearService.getAcademicYears();
+    return this.academicYearService
+      .getAcademicYears()
+      .pipe(untilDestroyed(this));
   }
   getStudent(): Observable<any> {
     this.studentsConfig.filters = INITIAL_FILTER;
-    return this.studentsApiService.loadStudents(this.studentsConfig);
+    return this.studentsApiService
+      .loadStudents(this.studentsConfig)
+      .pipe(untilDestroyed(this));
   }
   onDeleteClick(index: number) {
     this.moreSubjectThanAllowed = false;
@@ -195,33 +236,42 @@ export class A1FormComponent {
     console.log(this.a1);
     this.submitted = true;
     if (this.form.valid) {
-      // this.formSave.emit(this.a1);
+      if (this.id) {
+        this.updateA1(this.a1);
+      } else {
+        this.addA1(this.a1);
+      }
     }
   }
   addSubject() {
+    console.log(this.subjectsChoosen);
     this.moreSubjectThanAllowed = false;
-    if (
-      this.optionalSubjectChoosen === null ||
-      this.optionalSubjectChoosen === ''
-    ) {
-      return;
-    }
-    if (this.subjectsChoosen.length === 2) {
-      this.moreSubjectThanAllowed = true;
-      return;
-    }
     let subjectIndexFound = this.subjectsChoosen.findIndex(
       subject => subject.key === this.optionalSubjectChoosen.key
     );
     if (subjectIndexFound !== -1) {
+      this.toastService.showError('Lënda është zgjedhur');
+      debugger;
+      return;
+    }
+    if (
+      this.optionalSubjectChoosen === null ||
+      this.optionalSubjectChoosen === ''
+    ) {
+      debugger;
+      return;
+    }
+    if (this.subjectsChoosen.length === 2) {
+      this.moreSubjectThanAllowed = true;
+      debugger;
       return;
     }
     this.subjectsChoosen.push(this.optionalSubjectChoosen);
     if (this.subjectsChoosen.length > 1) {
-      this.a1.subjectD1Id = this.subjectsChoosen[0].key;
-      this.a1.subjectD2Id = this.subjectsChoosen[1].key;
+      this.a1.subjectZ1A1Id = this.subjectsChoosen[0].key;
+      this.a1.subjectZ2A1Id = this.subjectsChoosen[1].key;
     } else {
-      this.a1.subjectD1Id = this.subjectsChoosen[0].key;
+      this.a1.subjectZ1A1Id = this.subjectsChoosen[0].key;
     }
     this.optionalSubjectChoosen = '';
   }
@@ -230,31 +280,55 @@ export class A1FormComponent {
     this.a1ApiService
       .save(a1)
       .pipe(untilDestroyed(this))
-      .subscribe((response: any) => {
-        if (response.isSuccessful) {
-          this.toastService.showSuccess('Formulari A1 u shtua me sukses!');
-        }
-
-        if (response.isBadRequest)
-          this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit të formularit A1!'
-          );
+      .subscribe({
+        next: (response: any) => {
+          if (response.isSuccessful) {
+            this.toastService.showSuccess('Formulari A1 u shtua me sukses!');
+          }
+          if (response.isBadRequest)
+            this.toastService.showError(
+              'Ndodhi një problem gjatë ndryshimit të formularit A1!'
+            );
+        },
+        error: err => {},
       });
   }
 
   updateA1(a1: A1) {
+    let that = this;
     this.a1ApiService
       .update(a1)
       .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showSuccess('Formulari A1 u ndryshua me sukses!');
-        }
-
-        if (response.isBadRequest)
-          this.toastService.showError(
+      .subscribe({
+        next: (data: any) => {
+          if (data.isSuccessful) {
+            that.toastService.showSuccess('Formulari A1 u ndryshua me sukses!');
+          } else {
+            data.errorMessage
+              ? that.toastService.showError(data.errorMessage)
+              : that.toastService.showError(
+                  'Ndodhi një problem gjatë ndryshimit të formularit A1!'
+                );
+          }
+          if (data.isBadRequest) {
+            data.errorMessage
+              ? that.toastService.showError(data.errorMessage)
+              : that.toastService.showError(
+                  'Ndodhi një problem gjatë ndryshimit të formularit A1!'
+                );
+          }
+        },
+      });
+    error: (error: any) => {
+      console.log(error);
+      error.errorMessage
+        ? this.toastService.showError(error.errorMessage)
+        : this.toastService.showError(
             'Ndodhi një problem gjatë ndryshimit të formularit A1!'
           );
-      });
+      this.toastService.showError(
+        'Ndodhi një problem gjatë ndryshimit të formularit A1!'
+      );
+    };
   }
 }
