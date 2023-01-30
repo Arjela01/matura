@@ -120,60 +120,38 @@ export class A1FormComponent {
   }
 
   initializeFormWithApiCalls() {
-    let apiCalls = [
-      this.getAcademicYears(),
-      this.getStudent(),
-      this.getD3Subjects(),
-      this.getOptionalSubjectsD1(),
-      this.getOptionalSubjectsD2(),
-    ];
+    let apiCalls = [this.getAcademicYears(), this.getStudent()];
     if (!this.id) {
       combineLatest(apiCalls)
         .pipe(untilDestroyed(this))
-        .subscribe(([years, students, d3Subjects, d1Subjects]) => {
+        .subscribe(([years, students]) => {
           this.showForm = true;
           this.academicYear = years['data'].find(
             (year: AcademicYear) => year.isActive
           );
           this.a1.academicYearId = this.academicYear?.id;
           this.students = students;
-          this.d3Dropdown = d3Subjects.data;
-          this.d1Dropdown = d1Subjects.data;
           this.cd.detectChanges();
         });
     } else {
       apiCalls.push(this.getA1ById());
       combineLatest(apiCalls)
         .pipe(untilDestroyed(this))
-        .subscribe(
-          ([years, students, d3Subjects, d1Subjects, d2Subjects, a1]) => {
-            this.showForm = true;
-            this.academicYear = years['data'].find(
-              (year: AcademicYear) => year.isActive
-            );
-            this.students = students;
-            this.d1Dropdown = d1Subjects.data;
-            this.d2Dropdown = d2Subjects.data;
-            this.d3Dropdown = d3Subjects.data;
-            this.a1 = { ...a1.data };
-            this.choosenStudent = `${this.a1.studentIdentifier}-${this.a1.studentFirstName}-${this.a1.studentFatherName}-${this.a1.studentLastName}`;
-            this.cd.detectChanges();
-          }
-        );
+        .subscribe(([years, students, a1]) => {
+          this.showForm = true;
+          this.academicYear = years['data'].find(
+            (year: AcademicYear) => year.isActive
+          );
+          this.students = students;
+          this.a1 = { ...a1?.data };
+          this.choosenStudent = `${this.a1.studentIdentifier}-${this.a1.studentFirstName}-${this.a1.studentFatherName}-${this.a1.studentLastName}`;
+          this.cd.detectChanges();
+        });
     }
   }
 
   ngOnChanges() {}
 
-  getD3Subjects(): Observable<any> {
-    return this.examSubjectsService.fromExamType(D3);
-  }
-  getOptionalSubjectsD1() {
-    return this.examSubjectsService.fromExamType(D1);
-  }
-  getOptionalSubjectsD2() {
-    return this.examSubjectsService.fromExamType(D2);
-  }
   openDialog() {
     this.ref = this.dialogService.open(ManageStudentsGridsDialogComponent, {
       width: '70%',
