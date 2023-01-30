@@ -1,8 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import {
+  ConfirmationService,
+  LazyLoadEvent,
+  MessageService,
+} from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -17,6 +30,7 @@ import {
 import {
   ArchiveFolder,
   HighSchool,
+  Student,
 } from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
@@ -30,6 +44,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BarCodeFormComponent } from '../bar-code-form/bar-code-form.component';
 import { BarCodeGridComponent } from '../bar-code-grid/bar-code-grid.component';
+import { NgForm } from '@angular/forms';
 
 @UntilDestroy()
 @Component({
@@ -51,11 +66,24 @@ import { BarCodeGridComponent } from '../bar-code-grid/bar-code-grid.component';
   providers: [ConfirmationService],
 })
 export class ManageBarCodesComponent implements OnInit {
+  @Input() loading = false;
+
+  @Output() gridEvent = new EventEmitter<
+    GridEvent<ArchiveFolder | ArchiveFolder[]>
+  >();
+
+  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  @Output() formSave = new EventEmitter<ArchiveFolder>();
+  @Input() set archiveFolderDetails(details: ArchiveFolder | null) {
+    if (details) {
+      this.archiveFolder = Object.assign({}, details);
+    }
+  }
+  @ViewChild('form', { static: true }) form!: NgForm;
+
   private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[]>([]);
   archiveFolders$ = this.archiveFolders$$.asObservable();
   filters: LazyLoadEvent | null = null;
-  hideArchiveFolderForm = true;
-  saving = true;
   totalRecords = 0;
 
   selectedArchiveFolder: ArchiveFolder | null = null;
@@ -64,21 +92,40 @@ export class ManageBarCodesComponent implements OnInit {
   examType: DropdownModel<number>[] = [];
   examVersion: DropdownModel<number>[] = [];
   constructor(
+    private cd: ChangeDetectorRef,
+
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly archiveFolderService: ArchiveFolderApiService,
     private readonly examTypeApiService: ExamTypeApiService,
     private readonly examVersionApiService: ExamVersionApiService,
     private readonly studentAPITestService: StudentsApiService,
+    private router: Router,
+    private messageService: MessageService,
 
-    private router: Router
-  ) {}
-
-  ngOnInit(): void {
-    this.getExamTypeDropdown();
-    this.getExamVersionDropdown();
+    private route: ActivatedRoute
+  ) {
+    this.id = this.route.snapshot.paramMap.get('id');
   }
 
+  archiveFolder: ArchiveFolder = {
+    examTypeName: '',
+    examTypeId: 0,
+    examSubjectId: '',
+    examSubjectName: '',
+    id: 0,
+    isClosed: false,
+    lastUserId: undefined,
+    nr: 0,
+  };
+  id: string | null;
+
+  ngOnInit(): void {
+    this.archiveFolderService.getById(this.id).subscribe(result => {
+      this.archiveFolder = { ...result.data };
+      this.cd.detectChanges();
+    });
+  }
   onCloseClick() {
     this.router.navigate(['/configurations/students']).then();
   }

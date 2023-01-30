@@ -23,7 +23,7 @@ export const CONFIGURATION_ROUTES: Route[] = [
       ),
   },
   {
-    path: 'add-barCode',
+    path: 'add-barCode/:id',
     loadComponent: () =>
       import('./barCode/manage-bar-codes/manage-bar-codes.component').then(
         m => m.ManageBarCodesComponent

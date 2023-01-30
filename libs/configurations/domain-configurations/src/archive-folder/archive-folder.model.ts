@@ -9,7 +9,7 @@ export interface ArchiveFolder{
   examSubjectName?: string;
   academicYearId?: number;
   academicYearName?: string;
-  isClosed: boolean;
+  isClosed?: boolean;
   lastUserId: any;
   profileGroupId?: string;
   profileGroupName?: string;

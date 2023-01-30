@@ -42,12 +42,12 @@
           field="examType"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="operator">
+      <th pSortableColumn="createdName">
         Operatori
-        <p-sortIcon field="operator"></p-sortIcon>
+        <p-sortIcon field="createdName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="operator"
+          field="createdName"
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="status">
@@ -58,45 +58,32 @@
           field="status"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="activateFolder">
+      <th>
         Aktivizo Dosjen
-        <p-sortIcon field="activateFolder"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="activateFolder"
-          display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="dropBarcode">
+      <th >
         Hidh BarKode
-        <p-sortIcon field="dropBarcode"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="dropBarcode"
-          display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="deleteFolder">
+      <th>
         Fshi Dosjen
-        <p-sortIcon field="deleteFolder"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="deleteFolder"
-          display="menu"></p-columnFilter>
       </th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-archiveFolder>
     <tr>
       <td style="width: 14%; min-width: 10rem">
-        <a
+        <a pTooltip="Shiko Dosjen"
+           tooltipPosition="bottom"
           [routerLink]="[
             '/configurations/archive-view',
             archiveFolder.id
           ]">
-          {{ this.archiveFolder.id }}
+          {{ this.archiveFolder.nr }}
+
         </a>
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ archiveFolder.examTypeId }}
+        {{totalRecords}}
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ archiveFolder.examTypeName }}
@@ -105,10 +92,13 @@
         {{ archiveFolder.createdByName }}
       </td>
       <td>
+
+
+
         <button pButton pRipple style="color: #256029; background-color: #c8e6c9" disabled>
-          <span>
-            {{ _opened ? 'Aktiv ' : 'Mbyllur' }}</span
-          >
+
+            {{archiveFolder === _opened ? 'Aktiv ' : 'Mbyllur' }}
+
         </button>
       </td>
 
@@ -129,7 +119,7 @@
       <td>
         <div [hidden]="hideBarCode">
           <div class="flex">
-            <a [routerLink]="['/configurations/add-barCode']">
+            <a [routerLink]="['/configurations/add-barCode',archiveFolder.id]">
               <button
                 pButton
                 pRipple

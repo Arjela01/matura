@@ -12,7 +12,7 @@ import {
   ArchiveFolder,
 } from '@msh/configurations/domain-configurations';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import {LazyLoadEvent, MessageService} from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -21,13 +21,13 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { FormsModule, NgForm } from '@angular/forms';
 import {
-  AcademicYearApiService,
+  AcademicYearApiService, ArchiveFolderApiService,
   GendersApiService,
   HighSchoolApiService,
   ProfileApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'msh-bar-code-grid',
@@ -59,11 +59,53 @@ export class BarCodeGridComponent {
   >();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  @Output() formSave = new EventEmitter<ArchiveFolder>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
+  submitted= false;
+  saving= false;
+  id: string | null;
+
+  constructor(
+    private cd: ChangeDetectorRef,
+    private readonly archiveFolderService: ArchiveFolderApiService,
+    private router: Router,
+    private messageService: MessageService,
+
+    private route: ActivatedRoute
+  ) {
+    this.id = this.route.snapshot.paramMap.get('id');
+  }
 
 
-  // archiveFolder: ArchiveFolder = {
+  archiveFolder: ArchiveFolder = {
+    nr: 0,
+    isClosed: false,
+    lastUserId: undefined,
+    id: 0,
+    examTypeId: 0,
+    examSubjectId: ""
+  };
+
+  ngOnInit(): void {
+    this.archiveFolderService.getById(this.id).subscribe(result => {
+      this.archiveFolder = { ...result.data };
+      this.cd.detectChanges();
+    });
+  }
+  onSaveBarCode(): void {
+
+    const data = { ...this.archiveFolder };
+
+    this.archiveFolderService.save(data).subscribe({
+      next: () => {
+        this.saving = true;
+        },
+    });
+  }
+
+
+// archiveFolder: ArchiveFolder = {
   //   isClosed: false,
   //   lastUserId: undefined,
   //   examTypeId: 0,

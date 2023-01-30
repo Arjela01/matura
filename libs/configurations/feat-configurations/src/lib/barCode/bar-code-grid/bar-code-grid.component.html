@@ -17,7 +17,7 @@
   (onLazyLoad)="loadRows($event)"
   [lazy]="true">
   <ng-template pTemplate="caption">
-      <div class="flex flex-column mt-2 md:col-3 md:align-items-center">
+    <div class="flex flex-column mt-2 md:col-3 md:align-items-center">
         <div class="p-inputgroup">
           <button
             type="button"
@@ -28,16 +28,26 @@
             label="{{totalRecords}}/50"
             class="p-button-info mr-2"
           ></button>
-          <input type="text" maxlength="7" pInputText placeholder="Barkodi" />
+          <input type="text"
+                 maxlength="7"
+                 pInputText
+                 placeholder="Barkodi"
+                 id="examType"
+                 name="examType"
+                 [(ngModel)]="archiveFolder.id"
+                 required/>
           <button
             type="button"
             pButton
             pRipple
             icon="pi pi-save"
             label="Ruaj"
-            class="p-button-success mr-2"></button>
+            class="p-button-success mr-2"
+            (click)="onSaveBarCode"
+     ></button>
         </div>
-      </div>
+    </div>
+
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
@@ -66,7 +76,7 @@
         {{ archiveFolder.id }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ archiveFolder.name }}
+        {{archiveFolder.examTypeName}}
       </td>
 
 

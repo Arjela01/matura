@@ -63,7 +63,7 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
-
+id: any;
 
   submitted = false;
   saving = false;
@@ -108,7 +108,7 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
       //   next: () => {
       //     this.saving = false;
 
-      this.router.navigate(['/configurations/add-barCode']).then();
+      this.router.navigate(['/configurations/add-barCode',this.archiveFolder.id]).then();
     }
   }
 

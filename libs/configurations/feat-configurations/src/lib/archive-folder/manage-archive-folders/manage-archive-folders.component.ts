@@ -128,7 +128,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të fshini shkollën e zgjedhur?',
+          message: 'Jeni i sigurt që doni të dosjen e zgjedhur?',
           accept: () => {
             this.deleteArchiveFolder(event.data as ArchiveFolder);
           },
@@ -170,14 +170,14 @@ export class ManageArchiveFoldersComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Shkolla e mesme u shtua me sukses!');
+          this.toastService.showSuccess('Dosja u shtua me sukses!');
           this.displayModal = false;
           this.getArchiveFolders(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së shkollës së mesme!'
+            'Ndodhi një problem gjatë ndryshimit së dosjes!'
           );
       });
   }
@@ -189,7 +189,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
-            'Shkolla e mesme u ndryshua me sukses!'
+            'Dosja u ndryshua me sukses!'
           );
           this.displayModal = false;
           this.getArchiveFolders(this.filters as LazyLoadEvent);
@@ -197,7 +197,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së shkollës së mesme!'
+            'Ndodhi një problem gjatë ndryshimit së dosjes!'
           );
       });
   }
@@ -208,13 +208,13 @@ export class ManageArchiveFoldersComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showInfo('Shkolla e mesme u fshi me sukses!');
+          this.toastService.showInfo('Dosja u fshi me sukses!');
           this.getArchiveFolders(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë fshirjes së shkollës së mesme!'
+            'Ndodhi një problem gjatë fshirjes së dosjes!'
           );
       });
   }
