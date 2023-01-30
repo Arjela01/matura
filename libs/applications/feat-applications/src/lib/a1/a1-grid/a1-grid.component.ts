@@ -108,7 +108,7 @@ export class A1GridComponent {
     debugger;
     switch (action) {
       case GRID_ACTIONS.EDIT:
-        this.selectedA1 = Object.assign({}, event.data as A1);
+        this.router.navigate([`applications/save-a1/${event.id}`]);
         this.displayForm = true;
         break;
       case GRID_ACTIONS.DELETE:

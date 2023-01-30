@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { A1ApiService } from '@msh/applications/data-access-applications';
 import { A1 } from '@msh/applications/domain-application';
 import {
@@ -100,34 +100,7 @@ export class A1FormComponent {
   };
   showForm: boolean = false;
   students: any | null = null;
-
-  ngOnInit() {
-    this.initializeFormWithApiCalls();
-  }
-
-  initializeFormWithApiCalls() {
-    let apiCalls = [
-      this.getAcademicYears(),
-      this.getStudent(),
-      this.getD3Subjects(),
-      this.getOptionalSubjectsD1(),
-    ];
-    combineLatest(apiCalls)
-      .pipe(untilDestroyed(this))
-      .subscribe(([years, students, d3Subjects, d1Subjects]) => {
-        this.showForm = true;
-        this.academicYear = years['data'].find(
-          (year: AcademicYear) => year.isActive
-        );
-        this.a1.academicYearId = this.academicYear?.id;
-        this.students = students;
-        this.d3Dropdown = d3Subjects.data;
-        this.d1Dropdown = d1Subjects.data;
-        this.cd.detectChanges();
-      });
-  }
-
-  ngOnChanges() {}
+  id: string | null = null;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -137,8 +110,60 @@ export class A1FormComponent {
     private studentsApiService: StudentsApiService,
     private examSubjectsService: ExamSubjectApiService,
     private dialogService: DialogService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
+
+  ngOnInit() {
+    this.id = this.route.snapshot.params['id'];
+    this.initializeFormWithApiCalls();
+  }
+
+  initializeFormWithApiCalls() {
+    let apiCalls = [
+      this.getAcademicYears(),
+      this.getStudent(),
+      this.getD3Subjects(),
+      this.getOptionalSubjectsD1(),
+      this.getOptionalSubjectsD2(),
+    ];
+    if (!this.id) {
+      combineLatest(apiCalls)
+        .pipe(untilDestroyed(this))
+        .subscribe(([years, students, d3Subjects, d1Subjects]) => {
+          this.showForm = true;
+          this.academicYear = years['data'].find(
+            (year: AcademicYear) => year.isActive
+          );
+          this.a1.academicYearId = this.academicYear?.id;
+          this.students = students;
+          this.d3Dropdown = d3Subjects.data;
+          this.d1Dropdown = d1Subjects.data;
+          this.cd.detectChanges();
+        });
+    } else {
+      apiCalls.push(this.getA1ById());
+      combineLatest(apiCalls)
+        .pipe(untilDestroyed(this))
+        .subscribe(
+          ([years, students, d3Subjects, d1Subjects, d2Subjects, a1]) => {
+            this.showForm = true;
+            this.academicYear = years['data'].find(
+              (year: AcademicYear) => year.isActive
+            );
+            this.students = students;
+            this.d1Dropdown = d1Subjects.data;
+            this.d2Dropdown = d2Subjects.data;
+            this.d3Dropdown = d3Subjects.data;
+            this.a1 = { ...a1.data };
+            this.choosenStudent = `${this.a1.studentIdentifier}-${this.a1.studentFirstName}-${this.a1.studentFatherName}-${this.a1.studentLastName}`;
+            this.cd.detectChanges();
+          }
+        );
+    }
+  }
+
+  ngOnChanges() {}
 
   getD3Subjects(): Observable<any> {
     return this.examSubjectsService.fromExamType(D3);
@@ -173,6 +198,9 @@ export class A1FormComponent {
   }
   onCancelClick() {
     this.router.navigate(['/applications/a1']);
+  }
+  getA1ById(): Observable<any> {
+    return this.a1ApiService.getById(this.id!!);
   }
   getAcademicYears(): Observable<any> {
     return this.academicYearService.getAcademicYears();

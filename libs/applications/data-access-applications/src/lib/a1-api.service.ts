@@ -16,8 +16,13 @@ export class A1ApiService {
       `/A1/DropdownList`
     );
   }
+
   loadA1(event: LazyLoadEvent): Observable<A1> {
     return this.apiService.post(`/A1/TableData`, event);
+  }
+
+  getById(a1Id: string): Observable<A1> {
+    return this.apiService.getById(`/A1/${a1Id}`);
   }
 
   save(a1: A1): Observable<ApiResult<A1>> {
