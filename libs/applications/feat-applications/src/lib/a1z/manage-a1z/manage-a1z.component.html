@@ -21,14 +21,6 @@
               (click)="onDeleteSelectedClick()"></button>
           </div>
         </div>
-        <div class="p-toolbar-group-right">
-          <button
-            pButton
-            pRipple
-            label="Exporto"
-            icon="pi pi-upload"
-            class="p-button-help"></button>
-        </div>
       </p-toolbar>
       <msh-a1z-grid
         [a1z]="(a1zList$ | async) || []"

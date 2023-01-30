@@ -6,6 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
+import { A1Z } from '@msh/applications/domain-applications';
 import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -14,7 +15,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import { A1Z } from '../../../../../domain-applications/a1z/a1z.model';
 
 @Component({
   selector: 'msh-a1z-grid',

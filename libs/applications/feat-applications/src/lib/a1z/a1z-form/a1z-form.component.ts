@@ -1,4 +1,4 @@
-import { A1Z } from '../../../../../domain-applications';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CommonModule } from '@angular/common';
 import {
@@ -8,6 +8,7 @@ import {
   DoCheck,
   EventEmitter,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   ViewChild,
@@ -15,11 +16,13 @@ import {
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { A1ZApiService } from '@msh/applications/data-access-applications';
+import { A1Z } from '@msh/applications/domain-applications';
 import {
   A1ZCategoryApiService,
   AcademicYearApiService,
   ExamGradeApiService,
   ExamSubjectApiService,
+  ExamTypeApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
 import { Student } from '@msh/configurations/domain-configurations';
@@ -43,6 +46,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { BehaviorSubject } from 'rxjs';
 import { A1zStudentSearchComponent } from '../a1z-student-search/a1z-student-search.component';
+import { EXAM_TYPES } from './exam-type.enum';
 @UntilDestroy()
 @Component({
   selector: 'msh-a1z-form',
@@ -67,7 +71,7 @@ import { A1zStudentSearchComponent } from '../a1z-student-search/a1z-student-sea
   ],
   providers: [ConfirmationService],
 })
-export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
+export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   @Output() formSave = new EventEmitter<A1Z>();
   @Output() formClose = new EventEmitter<undefined>();
 
@@ -75,10 +79,16 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
   academicYears: DropdownModel<number>[] = [];
   a1Categories: DropdownModel<number>[] = [];
   examSubjects: DropdownModel<number>[] = [];
+  d1ExamSubjects: DropdownModel<string>[] = [];
+  d2ExamSubjects: DropdownModel<string>[] = [];
+  d3ExamSubjects: DropdownModel<string>[] = [];
+  z1ExamSubjects: DropdownModel<string>[] = [];
   filters: LazyLoadEvent | null = null;
 
   //TODO: Replace any with ExamGrade model
   examGrades: any[] | any = null;
+
+  formId: string | null;
 
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
@@ -134,7 +144,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
     this.submitted = true;
 
     if (this.form.valid) {
-      if (!this.a1z.id) {
+      if (this.a1z.id === 0) {
         this.onNewA1ZFormSubmit();
       } else {
         this.onEditA1ZFormSubmit();
@@ -150,11 +160,18 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
     private readonly studentService: StudentsApiService,
     private readonly toastService: GlobalToastService,
     private readonly a1zService: A1ZApiService,
+    private readonly examTypeService: ExamTypeApiService,
     private readonly activatedRoute: ActivatedRoute,
     private readonly examGradeSercice: ExamGradeApiService,
     private readonly router: Router,
     private readonly examSubjectService: ExamSubjectApiService
-  ) {}
+  ) {
+    this.formId = this.activatedRoute.snapshot.paramMap.get('id');
+  }
+
+  ngOnDestroy(): void {
+    console.log('destroyed');
+  }
 
   ngDoCheck(): void {
     if (
@@ -165,8 +182,14 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
         value: this.a1z,
       });
     }
-    if (this.studentInputData !== undefined) {
+    if (this.a1z.studentId !== undefined) {
+      this.onStudentInit(this.a1z);
+    }
+    if (this.selectedStudent) {
       this.onStudentChange(this.selectedStudent);
+    }
+    if (this.a1z.academicYearId !== undefined) {
+      this.getSubjectDropdown();
     }
   }
 
@@ -180,16 +203,16 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
     this.examSubjectService.loadDropDownList().subscribe(response => {
       this.examSubjects = response.data;
     });
-    this.activatedRoute.params.subscribe(x => {
-      this.a1zService.getOne(x['id']).subscribe(y => {
-        this.a1z = y.data;
-        this.onStudentInit(y.data);
-        //TODO: When exam grade implemented uncomment the following lines
-        // this.examGradeSercice.getExamGrade(this.a1z.id!).subscribe(response => {
-        //   this.examGrades = response.data;
-        // });
-        console.log(this.a1z);
-      });
+    // this.getSubjectDropdown();
+    this.a1zService.getOne(parseInt(this.formId!)).subscribe(response => {
+      this.a1z = response.data;
+      this.a1z.noCarriedSubjets = 3;
+      this.a1z.noCarriedSubjetsZ = 1;
+      this.cd.detectChanges();
+      //TODO: When exam grade implemented uncomment the following lines
+      // this.examGradeSercice.getExamGrade(this.a1z.id!).subscribe(response => {
+      //   this.examGrades = response.data;
+      // });
     });
     console.log('init');
   }
@@ -210,19 +233,19 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
     }
   }
 
-  onStudentInit(event: any) {
-    if (!event) {
+  onStudentInit(student: any) {
+    if (!student) {
       this.a1z.studentInputData = ' ';
     } else {
-      console.log(event);
+      this.a1z.studentId = student.studentId;
       this.studentInputData =
-        event?.studentIdentifier +
+        student?.studentIdentifier +
         '-' +
-        event?.studentFirstName +
+        student?.studentFirstName +
         '-' +
-        event?.studentFatherName +
+        student?.studentFatherName +
         '-' +
-        event?.studentLastName;
+        student?.studentLastName;
     }
   }
 
@@ -307,6 +330,53 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
       });
   }
 
+  getSubjectDropdown() {
+    this.examTypeService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(x => {
+        const d1ExamType = x.data.find(
+          d1 => d1.value === EXAM_TYPES.D1 || d1.value === EXAM_TYPES.D1_VJESHTA
+        );
+        const d2ExamType = x.data.find(
+          d2 => d2.value === EXAM_TYPES.D2 || d2.value === EXAM_TYPES.D2_VJESHTA
+        );
+        const d3ExamType = x.data.find(
+          d3 => d3.value === EXAM_TYPES.D3 || d3.value === EXAM_TYPES.D3_VJESHTA
+        );
+        const z1ExamType = x.data.find(
+          z1 => z1.value === EXAM_TYPES.Z1 || z1.value === EXAM_TYPES.Z1_VJESHTA
+        );
+
+        if (this.a1z.academicYearId) {
+          this.examSubjectService
+            .forExamType(d1ExamType!.key!, this.a1z.academicYearId)
+            .pipe(untilDestroyed(this))
+            .subscribe(y => {
+              this.d1ExamSubjects = y.data;
+            });
+          this.examSubjectService
+            .forExamType(d2ExamType!.key!, this.a1z.academicYearId)
+            .pipe(untilDestroyed(this))
+            .subscribe(y => {
+              this.d2ExamSubjects = y.data;
+            });
+          this.examSubjectService
+            .forExamType(d3ExamType!.key!, this.a1z.academicYearId)
+            .pipe(untilDestroyed(this))
+            .subscribe(y => {
+              this.d3ExamSubjects = y.data;
+            });
+          this.examSubjectService
+            .forExamType(z1ExamType!.key!, this.a1z.academicYearId)
+            .pipe(untilDestroyed(this))
+            .subscribe(y => {
+              this.z1ExamSubjects = y.data;
+            });
+        }
+      });
+  }
+
   onStudentShow() {
     this.showStudentModal = true;
   }
@@ -345,7 +415,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Formulari A1Z u shtua me sukses!');
+          this.toastService.showSuccess('Formulari A1Z u ndryshua me sukses!');
           this.router.navigate(['applications/a1z']);
           console.log(response);
         }

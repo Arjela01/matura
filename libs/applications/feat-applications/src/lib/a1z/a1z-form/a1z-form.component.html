@@ -13,6 +13,7 @@
             id="academicYearId"
             [options]="academicYears"
             optionValue="key"
+            [filter]="true"
             optionLabel="value"
             name="academicYearId"
             [autoDisplayFirst]="false"
@@ -45,11 +46,9 @@
             required
             autofocus
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !a1z.studentInputData
+              'ng-invalid ng-dirty': submitted && !a1z.studentId
             }" />
-          <small
-            class="p-error block"
-            *ngIf="submitted && !a1z.studentInputData">
+          <small class="p-error block" *ngIf="submitted && !a1z.studentId">
             Maturanti është fushë e kërkuar.
           </small>
         </div>
@@ -72,6 +71,7 @@
             id="a1ZCategoryId"
             [options]="a1Categories"
             optionValue="key"
+            [filter]="true"
             optionLabel="value"
             name="a1ZCategoryId"
             [autoDisplayFirst]="false"
@@ -190,8 +190,9 @@
               <label for="carriedSubjectD1">Lenda e detyruar D1</label>
               <p-dropdown
                 id="carriedSubjectD1"
-                [options]="examSubjects"
+                [options]="d1ExamSubjects"
                 optionValue="key"
+                [filter]="true"
                 [placeholder]="'Lenda D1'"
                 optionLabel="value"
                 name="carriedSubjectD1"
@@ -259,9 +260,10 @@
               <label for="carriedSubjectD2">Lenda e detyruar D2</label>
               <p-dropdown
                 id="carriedSubjectD2"
-                [options]="examSubjects"
+                [options]="d2ExamSubjects"
                 [placeholder]="'Lenda D2'"
                 optionValue="key"
+                [filter]="true"
                 optionLabel="value"
                 [disabled]="disableD2Subject"
                 name="carriedSubjectD2"
@@ -327,11 +329,13 @@
             <div class="field col-2">
               <label for="subjectD3A1ZId">Lenda e detyruar D3</label>
               <p-dropdown
-                id="subjectD3A1ZId"
-                [options]="examSubjects"
+                id="carriedSubjectD3"
+                [options]="d3ExamSubjects"
                 optionValue="key"
                 optionLabel="value"
-                name="subjectD3A1ZId"
+                name="carriedSubjectD3"
+                [placeholder]="'Lenda D3'"
+                [filter]="true"
                 [disabled]="disableD3Subject"
                 [autoDisplayFirst]="false"
                 [(ngModel)]="a1z.carriedSubjectD3"
@@ -398,12 +402,13 @@
           <label for="subjectD1A1ZId">Lenda D1:</label>
           <p-dropdown
             id="subjectD1A1ZId"
-            [options]="examSubjects"
+            [options]="d1ExamSubjects"
             [optionValue]="
               a1z.carriedSubjectD1 !== undefined ? a1z.carriedSubjectD1 : 'key'
             "
             optionLabel="value"
             [placeholder]="'Letersi'"
+            [filter]="true"
             [disabled]="true"
             name="subjectD1A1ZId"
             [disabled]="true"
@@ -417,7 +422,8 @@
           <label for="subjectD2A1ZId">Lenda D2:</label>
           <p-dropdown
             id="subjectD2A1ZId"
-            [options]="examSubjects"
+            [options]="d2ExamSubjects"
+            [filter]="true"
             [optionValue]="
               a1z.carriedSubjectD2 !== undefined ? a1z.carriedSubjectD2 : 'key'
             "
@@ -436,8 +442,10 @@
           <label for="subjectD3A1ZId">Lenda D3:</label>
           <p-dropdown
             id="subjectD3A1ZId"
-            [options]="examSubjects"
+            [options]="d3ExamSubjects"
+            [filter]="true"
             optionValue="key"
+            [placeholder]="'Lenda D3'"
             optionLabel="value"
             name="subjectD3A1ZId"
             [disabled]="false"
@@ -489,7 +497,8 @@
               <label for="carriedSubjectAZ1">Lenda me zgjedhje:</label>
               <p-dropdown
                 id="carriedSubjectAZ1"
-                [options]="examSubjects"
+                [filter]="true"
+                [options]="z1ExamSubjects"
                 optionValue="key"
                 optionLabel="value"
                 name="carriedSubjectAZ1"
@@ -558,9 +567,10 @@
           <label for="subjectZ1A1ZId">Lenda Z1:</label>
           <p-dropdown
             id="subjectZ1A1ZId"
-            [options]="examSubjects"
+            [options]="z1ExamSubjects"
             optionValue="key"
             optionLabel="value"
+            [filter]="true"
             name="subjectZ1A1ZId"
             [disabled]="false"
             [autoDisplayFirst]="false"
