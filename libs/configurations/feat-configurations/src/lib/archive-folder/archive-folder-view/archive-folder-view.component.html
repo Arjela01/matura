@@ -1,16 +1,18 @@
 <div class="grid">
   <div class="col-12">
     <div class="card px-6 py-6">
-      <div *ngIf="student !== null">
         <p></p>
 
         <!-- TODO: this can be reusable -->
-        <p-toolbar styleClass="mb-4">
-          <div class="p-toolbar-group-left">
+        <p-toolbar styleClass="mb-4">            <div *ngIf="archiveFolder !== null">
+
+
+        <div class="p-toolbar-group-left">
             <h2 class="flex-1 mb-0">
-              Dosja: {{ 'DOSJA: 607,     D3:   TURQISHT D3 (B1)' }}
+              Dosja: {{archiveFolder.examTypeName}}:{{archiveFolder.examSubjectName}}
             </h2>
           </div>
+        </div>
           <div class="p-toolbar-group-right">
             <a href="/configurations/archive-folder">
               <button
@@ -40,17 +42,19 @@
             <button
               pButton
               pRipple
-              label="{{ student.firstName }}/50"
+              label="{{totalRecords}}/50"
               icon="pi pi-database"
               disabled
               class="p-button-danger mr-2"></button>
           </div>
+
         </p-toolbar>
+
         <p-table
           #dt
           dataKey="id"
           responsiveLayout="scroll"
-          [value]="fakeDosjeList"
+          [value]="archiveFolders"
           [totalRecords]="totalRecords"
           [rows]="10"
           [paginator]="true"
@@ -93,16 +97,16 @@
               <th></th>
             </tr>
           </ng-template>
-          <ng-template pTemplate="body" let-fakeDosjeList>
+          <ng-template pTemplate="body" let-archiveFolder>
             <tr>
               <td style="width: 14%; min-width: 10rem">
-                {{ fakeDosjeList.numri }}
+                {{ archiveFolder.lastName }}
               </td>
               <td style="width: 14%; min-width: 10rem">
-                {{ fakeDosjeList.barcode }}
+                {{ archiveFolder.lastName }}
               </td>
               <td style="width: 14%; min-width: 10rem">
-                {{ fakeDosjeList.emri }}
+                {{ archiveFolder.examSubjectName }}
               </td>
               <td>
                 <div class="flex">
@@ -120,13 +124,14 @@
                     class="p-button-rounded p-button-danger p-button-text"
                     pTooltip="Fshi"
                     tooltipPosition="bottom"
-                    (click)="onDeleteClick(student)"></button>
+                    (click)="onDeleteClick(archiveFolder)"></button>
                 </div>
               </td>
             </tr>
+
           </ng-template>
         </p-table>
-      </div>
     </div>
   </div>
 </div>
+

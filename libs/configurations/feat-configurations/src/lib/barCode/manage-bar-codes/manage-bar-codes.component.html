@@ -1,42 +1,45 @@
 <div class="grid">
-<div class="col-12">
-  <div class="card px-6 py-6">
-    <!-- TODO: this can be reusable -->
-    <p-toolbar styleClass="mb-4">
-      <div class="p-toolbar-group-left">
-        <h2 class="flex-1 mb-0">
-          Dosja: {{"555 lende me zgjedhje:shërbime kujdesi për të moshuar (pilot - giz)"}}
-        </h2>
-      </div>
-      <div class="p-toolbar-group-right">
-        <a href="/configurations/archive-folder">
-          <button
-            pButton
-            label="Kthehu"
-            icon="pi pi-arrow-left"
-            class="p-button-danger mr-2"
-            [ngStyle]="{backgroundColor:'var(--bluegray-600)'}"
-          ></button>
-        </a>
-        <a href="/configurations/layout-report-page">
-        <button
-            pButton
-            label="Mbyll Dosjen"
-            icon="pi pi-folder"
-            class="p-button-danger mr-2"
-          (click)="onCloseClick"></button>
-        </a>
-      </div>
-    </p-toolbar>
+  <div class="col-12">
+    <div class="card px-6 py-6">
+      <!-- TODO: this can be reusable -->
 
-   <msh-bar-code-grid
+      <p-toolbar styleClass="mb-4">
+        <div class="p-toolbar-group-left">
+          <h2 class="flex-1 mb-0">
+            Dosja:
+            {{
+              '555 lende me zgjedhje:shërbime kujdesi për të moshuar (pilot - giz)'
+            }}
+          </h2>
+        </div>
+        <div class="p-toolbar-group-right">
+          <a href="/configurations/archive-folder">
+            <button
+              pButton
+              label="Kthehu"
+              icon="pi pi-arrow-left"
+              class="p-button-danger mr-2"
+              [ngStyle]="{ backgroundColor: 'var(--bluegray-600)' }"></button>
+          </a>
+          <a href="/configurations/layout-report-page">
+            <button
+              pButton
+              label="Mbyll Dosjen"
+              icon="pi pi-folder"
+              class="p-button-danger mr-2"
+              (click)="(onCloseClick)"></button>
+          </a>
+        </div>
+      </p-toolbar>
+
+      <msh-bar-code-grid
         [archiveFolders]="(archiveFolders$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
         (lazyLoadData)="getArchiveFolders($event)">
       </msh-bar-code-grid>
     </div>
-</div>
+  </div>
 </div>
 
 <p-confirmDialog

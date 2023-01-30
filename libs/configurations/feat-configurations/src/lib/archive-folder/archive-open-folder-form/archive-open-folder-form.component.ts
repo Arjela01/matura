@@ -70,11 +70,12 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
   examTypeId: any;
   examSubjectId: any;
   archiveFolder: ArchiveFolder = {
+    nr: 0,
     isClosed: false,
     lastUserId: undefined,
     id: 0,
     examTypeId: 0,
-    examSubjectId: "",
+    examSubjectId: ""
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -93,26 +94,23 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
   onCancelClick() {
     this.formClose.emit();
   }
-  onOpen() {
+
+
+  onOpen(): void {
+    const data = {...this.archiveFolder};
     this.submitted = true;
     if (this.form.valid) {
       this.formSave.emit(this.archiveFolder);
+
+
+
+      // this.archiveFolderService.save(data).subscribe({
+      //   next: () => {
+      //     this.saving = false;
+
+      this.router.navigate(['/configurations/add-barCode']).then();
     }
   }
-
-  // onOpen(): void {
-  //   const data = {...this.archiveFolder};
-  //   this.submitted = true;
-  //   if (this.form.valid) {
-  //     this.formSave.emit(this.archiveFolder);
-  //
-  //     // this.archiveFolderService.save(data).subscribe({
-  //     //   next: () => {
-  //     //     this.saving = false;
-  //
-  //     this.router.navigate(['/configurations/add-barCode']).then();
-  //   }
-  // }
 
   onExamTypeChanged($event: any): void {
     this.examTypeChanged.emit(this.examTypeId);

@@ -87,31 +87,30 @@
   <ng-template pTemplate="body" let-archiveFolder>
     <tr>
       <td style="width: 14%; min-width: 10rem">
-        <a [routerLink]="['/configurations/archive-view', archiveFolder.examTypeName]">
-          {{ this.archiveFolder.examTypeId }}
+        <a
+          [routerLink]="[
+            '/configurations/archive-view',
+            archiveFolder.id
+          ]">
+          {{ this.archiveFolder.id }}
         </a>
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ archiveFolder.examTypeId }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ archiveFolder.name }}
+        {{ archiveFolder.examTypeName }}
       </td>
       <td style="width: 20%; min-width: 10rem">
-        {{ archiveFolder.administrationOfficeName }}
+        {{ archiveFolder.createdByName }}
       </td>
       <td>
-
-<!--        <button-->
-<!--          pButton-->
-<!--          pRipple-->
-<!--        style="color: #256029; background-color:#C8E6C9">-->
-<!--          <span-->
-<!--            [class]="'product-badge status-' + archiveFolder.id.toLowerCase()"-->
-<!--            disabled>-->
-<!--            {{ _opened ? 'Aktiv ' : 'Mbyllur' }}</span-->
-<!--          >-->
-<!--        </button>-->
+        <button pButton pRipple style="color: #256029; background-color: #c8e6c9" disabled>
+          <span>
+            {{ _opened ? 'Aktiv ' : 'Mbyllur' }}</span
+          >
+        </button>
+      </td>
 
       <td>
         <div class="flex">
@@ -119,7 +118,7 @@
             pButton
             pRipple
             class="p-button-rounded p-button-info p-button-text mr-2"
-            pTooltip="{{ _opened ? 'Mbyll Dosjen' : 'Aktivizo Dosjen' }}"
+            pTooltip="{{ _opened.valueOf() ? 'Mbyll Dosjen' : 'Aktivizo Dosjen' }}"
             tooltipPosition="bottom"
             (click)="clickOpen()"
             icon="{{

@@ -57,6 +57,7 @@ export class ArchiveFolderGridComponent {
   hideBarCode = false;
   _opened = true;
   status = false;
+  id: any;
   clickOpen(): void {
     this._opened = !this._opened;
     this.hideBarCode = !this._opened;

@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import {
   ArchiveFolder,
-  Student,
 } from '@msh/configurations/domain-configurations';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { LazyLoadEvent, MessageService } from 'primeng/api';
@@ -27,7 +26,6 @@ import {
   GendersApiService,
   HighSchoolApiService,
   ProfileApiService,
-  StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToolbarModule } from 'primeng/toolbar';
@@ -51,75 +49,42 @@ import { ToolbarModule } from 'primeng/toolbar';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArchiveFolderViewComponent {
-  @Output() formSave = new EventEmitter<Student>();
+  @Output() formSave = new EventEmitter<ArchiveFolder>();
   @Output() formClose = new EventEmitter<undefined>();
 
-  @Input() archiveFolders: Student[] = [];
+  @Input() archiveFolders: ArchiveFolder[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
 
   //Keep it local state because of Table Header checkbox not syncing
-  selectedArchiveFolders: Student[] = [];
+  selectedArchiveFolders: ArchiveFolder[] = [];
 
-  @Output() gridEvent = new EventEmitter<GridEvent<Student | Student[]>>();
+  @Output() gridEvent = new EventEmitter<GridEvent<ArchiveFolder>>();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
-  @Input() set studentDetails(details: Student | null) {
-    if (details) {
-      this.student = Object.assign({}, details);
-    }
-  }
 
-  showStudent = false;
+  showArchiveFolder = false;
   submitted = false;
 
-  student: Student = {
-    createdName: '',
-    createdOn: new Date(),
-    modifiedByName: '',
-    modifiedOn: new Date(),
-    birthDate: new Date(),
-    birthPlace: '',
-    email: '',
-    genderId: 1,
-    idCard: '',
-    isA2A3: true,
-    isEAlbaniaApplication: true,
-    isFall: false,
-    lastName: '',
-    highSchool: '',
-    middleName: '',
-    mobilePhone: '',
-    profileName: '',
-    genderName: '',
-    oldID: '',
-    profileId: 0,
-    schoolFinished: '',
-    schoolProfile: '',
-    highSchoolName: '',
-    schoolName: '',
-    highSchoolId: 0,
-    session: '',
-    studentId: '',
-    studyClass: '',
-    schoolFinishedName: '',
-    firstName: '',
-    isConfirmedBySupervisor: true,
-    graduationYear: undefined,
+  archiveFolder: ArchiveFolder = {
+    examTypeName: "",
+    examTypeId: 0,
+    examSubjectId: "",
+    examSubjectName: "",
+    id: 0,
+    isClosed: false,
+    lastUserId: undefined,
+    nr: 0,
   };
 
-  fakeDosjeList: any;
-  students = null;
-  finishedAtSameSchool = true;
 
   id: string | null;
 
   constructor(
     private cd: ChangeDetectorRef,
     private readonly academicYearService: AcademicYearApiService,
-    private readonly studentService: StudentsApiService,
     private readonly archiveFolderService: ArchiveFolderApiService,
     private readonly highSchoolService: HighSchoolApiService,
     private readonly profileService: ProfileApiService,
@@ -132,75 +97,46 @@ export class ArchiveFolderViewComponent {
     this.id = this.route.snapshot.paramMap.get('id');
   }
 
-  archiveFolder: ArchiveFolder = {
-    isClosed: false,
-    lastUserId: undefined,
-    examTypeId: 0,
-    id: 0,
-  };
   saving = false;
 
   ngOnInit(): void {
-    this.studentService.getById(this.id).subscribe(result => {
-      this.student = { ...result.data };
-      this.fakeDosjeList = [
-        {
-          numri: 1,
-          barcode: 'asdaeda2d1',
-          emri: 'Lenda 1',
-        },
-        {
-          numri: 2,
-          barcode: 'asdaeda2d12',
-          emri: 'Lenda 2',
-        },
-        {
-          numri: 3,
-          barcode: 'asdaeda2d31',
-          emri: 'Lenda 3',
-        },
-      ];
-
-      console.log('fakedosje');
-      this.finishedAtSameSchool =
-        this.student?.schoolFinished == '' ||
-        this.student?.schoolFinished == null;
+    this.archiveFolderService.getById(this.id).subscribe(result => {
+      this.archiveFolder = { ...result.data };
       this.cd.detectChanges();
     });
   }
 
   onSubmit(): void {
     const data = { ...this.archiveFolder };
-
     this.archiveFolderService.save(data).subscribe({
       next: () => {
         this.saving = false;
 
-        this.router.navigate(['/configurations/students']).then();
+        this.router.navigate(['/configurations/archive-view']).then();
       },
     });
   }
 
   ngOnChanges(): void {
-    this.showStudent = this.student.highSchoolId != null;
+    this.showArchiveFolder = this.archiveFolder.examTypeName != null;
   }
-  onEditClick(archiveFolder: Student) {
+  onEditClick(archiveFolder: ArchiveFolder) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
       data: archiveFolder,
-    } as GridEvent<Student>);
+    } as GridEvent<ArchiveFolder>);
   }
-  onActivate(archiveFolder: Student) {
+  onActivate(archiveFolder: ArchiveFolder) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
       data: archiveFolder,
-    } as GridEvent<Student>);
+    } as GridEvent<ArchiveFolder>);
   }
-  onDeleteClick(archiveFolder: Student) {
+  onDeleteClick(archiveFolder: ArchiveFolder) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,
       data: archiveFolder,
-    } as GridEvent<Student>);
+    } as GridEvent<ArchiveFolder>);
   }
 
   loadRows($event: LazyLoadEvent) {

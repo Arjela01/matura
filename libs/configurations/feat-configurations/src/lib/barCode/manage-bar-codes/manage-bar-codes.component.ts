@@ -10,10 +10,14 @@ import { ToolbarModule } from 'primeng/toolbar';
 
 import {
   ArchiveFolderApiService,
-  ExamTypeApiService, ExamVersionApiService, StudentsApiService,
-
+  ExamTypeApiService,
+  ExamVersionApiService,
+  StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
-import {ArchiveFolder, HighSchool} from '@msh/configurations/domain-configurations';
+import {
+  ArchiveFolder,
+  HighSchool,
+} from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
 import {
@@ -23,9 +27,9 @@ import {
 } from '@msh/shared/util-shared';
 
 import { BehaviorSubject } from 'rxjs';
-import {ActivatedRoute, Router, RouterLink} from "@angular/router";
-import {BarCodeFormComponent} from "../bar-code-form/bar-code-form.component";
-import {BarCodeGridComponent} from "../bar-code-grid/bar-code-grid.component";
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { BarCodeFormComponent } from '../bar-code-form/bar-code-form.component';
+import { BarCodeGridComponent } from '../bar-code-grid/bar-code-grid.component';
 
 @UntilDestroy()
 @Component({
@@ -47,18 +51,18 @@ import {BarCodeGridComponent} from "../bar-code-grid/bar-code-grid.component";
   providers: [ConfirmationService],
 })
 export class ManageBarCodesComponent implements OnInit {
-  private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[] >([]);
+  private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[]>([]);
   archiveFolders$ = this.archiveFolders$$.asObservable();
   filters: LazyLoadEvent | null = null;
   hideArchiveFolderForm = true;
-  saving= true;
+  saving = true;
   totalRecords = 0;
 
   selectedArchiveFolder: ArchiveFolder | null = null;
   selectedArchiveFolders: ArchiveFolder[] = [];
   displayModal = false;
   examType: DropdownModel<number>[] = [];
-  examVersion : DropdownModel<number>[] = [];
+  examVersion: DropdownModel<number>[] = [];
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
@@ -68,17 +72,14 @@ export class ManageBarCodesComponent implements OnInit {
     private readonly studentAPITestService: StudentsApiService,
 
     private router: Router
-
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.getExamTypeDropdown();
     this.getExamVersionDropdown();
-
   }
 
-  onCloseClick(){
+  onCloseClick() {
     this.router.navigate(['/configurations/students']).then();
   }
 
@@ -121,7 +122,10 @@ export class ManageBarCodesComponent implements OnInit {
         break;
       case GRID_ACTIONS.EDIT:
         // eslint-disable-next-line max-len
-        this.selectedArchiveFolder = Object.assign({}, event.data as ArchiveFolder);
+        this.selectedArchiveFolder = Object.assign(
+          {},
+          event.data as ArchiveFolder
+        );
         this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
@@ -155,9 +159,7 @@ export class ManageBarCodesComponent implements OnInit {
       .loadArchiveFolder($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.archiveFolders$$.next([
-
-        ])
+        this.archiveFolders$$.next([]);
         this.archiveFolders$$.next(response.data);
         this.totalRecords = response.total;
       });
@@ -217,7 +219,6 @@ export class ManageBarCodesComponent implements OnInit {
           );
       });
   }
-
 
   getExamTypeDropdown() {
     this.examTypeApiService

@@ -57,6 +57,7 @@ export class ReportLayoutPageGridComponent {
 
 
   archiveFolder: ArchiveFolder = {
+    nr: 0,
     isClosed: false, lastUserId: undefined,
     examTypeId: 0,
     id: 0
