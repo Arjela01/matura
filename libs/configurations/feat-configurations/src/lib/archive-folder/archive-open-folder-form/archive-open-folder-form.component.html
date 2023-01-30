@@ -6,7 +6,7 @@
       [options]="examTypes"
       optionValue="key"
       optionLabel="value"
-      name="examTypes"s
+      name="examTypes"
       [autoDisplayFirst]="false"
       [(ngModel)]="archiveFolder.examTypeId"
       [showClear]="true"
@@ -30,6 +30,7 @@
       name="examSubject"
       [autoDisplayFirst]="false"
       [(ngModel)]="archiveFolder.examSubjectId"
+      (onChange)="onExamSubjectChanged($event)"
       [showClear]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !archiveFolder.examSubjectId

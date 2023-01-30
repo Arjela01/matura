@@ -11,9 +11,13 @@ import { ToolbarModule } from 'primeng/toolbar';
 import {
   ArchiveFolderApiService,
   ExamSubjectApiService,
-  ExamTypeApiService, ExamVersionApiService,
+  ExamTypeApiService,
+  ExamVersionApiService,
 } from '@msh/configurations/data-access-configurations';
-import {ArchiveFolder, HighSchool} from '@msh/configurations/domain-configurations';
+import {
+  ArchiveFolder,
+  HighSchool,
+} from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
 import {
@@ -49,10 +53,9 @@ import { RippleModule } from 'primeng/ripple';
   providers: [ConfirmationService],
 })
 export class ManageArchiveFoldersComponent implements OnInit {
-  private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[]>([])
+  private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[]>([]);
   examTypes: DropdownModel<number>[] = [];
-  examSubjects: DropdownModel<string>[] = [];
-  examVersions: DropdownModel<string>[] = [];
+  examSubjects: DropdownModel<number>[] = [];
 
   archiveFolders$ = this.archiveFolders$$.asObservable();
   filters: LazyLoadEvent | null = null;
@@ -73,9 +76,9 @@ export class ManageArchiveFoldersComponent implements OnInit {
   ) {
   }
 
-
   ngOnInit(): void {
     this.getExamTypes();
+    this.getExamSubjects();
   }
 
   onNewClick() {
@@ -116,9 +119,12 @@ export class ManageArchiveFoldersComponent implements OnInit {
         this.selectedArchiveFolders = [];
         break;
       case GRID_ACTIONS.EDIT:
-        this.selectedArchiveFolder = Object.assign({}, event.data as ArchiveFolder);
-        this.getExamSubjects(this.selectedArchiveFolder.examTypeId);
-        this.getExamVersions(this.selectedArchiveFolder.examSubjectId ?? '');
+        this.selectedArchiveFolder = Object.assign(
+          {},
+          event.data as ArchiveFolder
+        );
+        // this.getExamSubjects(this.selectedArchiveFolder.examTypeId);
+        // this.getExamVersions(this.selectedArchiveFolder.examSubjectId ?? '');
         this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
@@ -212,7 +218,6 @@ export class ManageArchiveFoldersComponent implements OnInit {
       });
   }
 
-
   getExamTypes() {
     this.examTypeApiService
       .loadDropdownList()
@@ -222,34 +227,36 @@ export class ManageArchiveFoldersComponent implements OnInit {
       });
   }
 
-  getExamSubjects(examTypeId?: number) {
+  getExamSubjects() {
     this.examSubjectApiService
-      .forExamType(examTypeId)
+      .loadDropdownList()
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examSubjects = response.data;
       });
   }
 
-  getExamVersions(examSubjectId: string) {
-    this.examVersionApiService
-      .forExamSubject(examSubjectId)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.examVersions = response.data;
-      });
-  }
+//   getExamVersions(examSubjectId: string) {
+//     this.examVersionApiService
+//       .forExamSubject(examSubjectId)
+//       .pipe(untilDestroyed(this))
+//       .subscribe(response => {
+//         this.examVersions = response.data;
+//       });
+//   }
+// }
 
-  onExamTypeChanged(examTypeId: any) {
-    if(this.selectedArchiveFolder != null)
-      this.selectedArchiveFolder.examTypeId = examTypeId;
-    this.getExamSubjects(examTypeId);
-    this.examVersions = [];
-  }
-
-  onExamSubjectChanged(examSubjectId: string) {
-    if(this.selectedArchiveFolder != null)
-      this.selectedArchiveFolder.examSubjectId = examSubjectId;
-    this.getExamVersions(examSubjectId);
-  }
+//   onExamTypeChanged(examTypeId: any) {
+//     if (this.selectedArchiveFolder != null)
+//       this.selectedArchiveFolder.examTypeId = examTypeId;
+//     this.getExamSubjects(examTypeId);
+//     this.examVersions = [];
+//   }
+//
+//   onExamSubjectChanged(examSubjectId: string) {
+//     if (this.selectedArchiveFolder != null)
+//       this.selectedArchiveFolder.examSubjectId = examSubjectId;
+//     this.getExamVersions(examSubjectId);
+//   }
+// }
 }

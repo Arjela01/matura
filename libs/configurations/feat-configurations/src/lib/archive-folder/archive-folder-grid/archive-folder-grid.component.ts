@@ -4,7 +4,7 @@ import {
   Component,
   EventEmitter,
   Input,
-  Output,
+  Output, ViewChild,
 } from '@angular/core';
 import {
   ArchiveFolder,
@@ -18,7 +18,7 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import {  RouterLink } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, NgForm} from '@angular/forms';
 
 @Component({
   selector: 'msh-archive-folder-grid',
@@ -43,6 +43,7 @@ export class ArchiveFolderGridComponent {
   @Input() totalRecords = 0;
   @Input() loading = false;
 
+  //Keep it local state because of Table Header checkbox not syncing
   selectedArchiveFolders: ArchiveFolder[] = [];
 
   @Output() gridEvent = new EventEmitter<
@@ -50,6 +51,9 @@ export class ArchiveFolderGridComponent {
   >();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+
+  @ViewChild('form', { static: true }) form!: NgForm;
+
   hideBarCode = false;
   _opened = true;
   status = false;

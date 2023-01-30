@@ -52,7 +52,7 @@ export class ExamSubjectApiService {
   }
   loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
-      `/ExamSubject/DropdownList`
+      `/api/ExamSubject/DropdownList`
     );
   }
   forExamType(
