@@ -20,20 +20,22 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { ProfileGroupFormComponent } from '../profile-group-form/profile-group-form.component';
 import { ProfileGroupGridComponent } from '../profile-group-grid/profile-group-grid.component';
+import {RippleModule} from "primeng/ripple";
 
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-profile-groups',
   standalone: true,
-  imports: [
-    ButtonModule,
-    CommonModule,
-    DialogModule,
-    ConfirmDialogModule,
-    ProfileGroupFormComponent,
-    ProfileGroupGridComponent,
-    ToolbarModule,
-  ],
+    imports: [
+        ButtonModule,
+        CommonModule,
+        DialogModule,
+        ConfirmDialogModule,
+        ProfileGroupFormComponent,
+        ProfileGroupGridComponent,
+        ToolbarModule,
+        RippleModule,
+    ],
   templateUrl: './manage-profile-groups.component.html',
   styleUrls: ['./manage-profile-groups.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

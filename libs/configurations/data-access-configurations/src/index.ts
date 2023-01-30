@@ -5,6 +5,7 @@ export * from './lib/city/city-api.service';
 export * from './lib/exam-date/exam-date-api.service';
 export * from './lib/exam-grade/exam-grade-api.service';
 export * from './lib/exam-site/exam-site.service';
+export * from './lib/exam-subject-profile/exam-subject-profile-api.service';
 export * from './lib/exam-subject/exam-subject-api.service';
 export * from './lib/exam-type/exam-type-api.service';
 export * from './lib/exam-version/exam-version-api.service';

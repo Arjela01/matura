@@ -15,12 +15,12 @@
       Viti është fushë e kërkuar.
     </small>
     <small class="p-error block" *ngIf="academicYear.year !== '' && academicYear.year !== null && +academicYear.year < 2000">
-      Viti akademik duhet të jetë më i madh se 2000.
+      Viti duhet të jetë më i madh se 2000.
     </small>
   </div>
 
   <div class="field">
-    <label class="mb-3">Is Active? *</label>
+    <label class="mb-3">Është aktiv? *</label>
     <div class="formgrid grid">
       <div class="field-radiobutton col-6">
         <p-radioButton
@@ -36,27 +36,6 @@
           name="IsActive"
           [value]="false"
           [(ngModel)]="academicYear.isActive"></p-radioButton>
-        <label for="IsActiveFalse">Jo</label>
-      </div>
-    </div>
-  </div>
-  <div class="field">
-    <label class="mb-3">Is Fall? *</label>
-    <div class="formgrid grid">
-      <div class="field-radiobutton col-6">
-        <p-radioButton
-          id="IsFallTrue"
-          name="IsFall"
-          [value]="true"
-          [(ngModel)]="academicYear.isFall"></p-radioButton>
-        <label for="IsFallTrue">Po</label>
-      </div>
-      <div class="field-radiobutton col-6">
-        <p-radioButton
-          id="IsFallFalse"
-          name="IsFall"
-          [value]="false"
-          [(ngModel)]="academicYear.isFall"></p-radioButton>
         <label for="IsActiveFalse">Jo</label>
       </div>
     </div>

@@ -1,9 +1,9 @@
 <div class="grid">
   <div class="col-12">
     <div class="card px-6 py-6">
-      <!-- TODO: this can be reusable -->
-      <p-toolbar styleClass="mb-4">
-        <div class="p-toolbar-group-left">
+      <div class="flex ml-2 mb-2 page-header">
+        <h2 class="flex-1 mb-0">Rrethe</h2>
+        <div class="flex align-items-right justify-content-right">
           <div class="my-2">
             <button
               pButton
@@ -12,25 +12,9 @@
               icon="pi pi-plus"
               class="p-button-success mr-2"
               (click)="onNewClick()"></button>
-            <button
-              pButton
-              pRipple
-              label="Fshi"
-              icon="pi pi-trash"
-              class="p-button-danger"
-              [disabled]="selectedRegions.length === 0"
-              (click)="onDeleteSelectedClick()"></button>
           </div>
         </div>
-        <div class="p-toolbar-group-right">
-          <button
-            pButton
-            pRipple
-            label="Eksporto"
-            icon="pi pi-upload"
-            class="p-button-help"></button>
-        </div>
-      </p-toolbar>
+      </div>
 
       <msh-region-grid
         [regions]="(regions$ | async) || []"

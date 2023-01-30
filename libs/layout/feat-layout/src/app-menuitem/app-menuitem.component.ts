@@ -15,17 +15,18 @@ import {
 } from '@angular/core';
 import {
   NavigationEnd,
-  Router,
+  Router, RouterLink,
   RouterLinkActive,
   RouterLinkWithHref,
 } from '@angular/router';
 import { filter } from 'rxjs';
+import {RippleModule} from "primeng/ripple";
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: '[msh-app-menuitem]',
   standalone: true,
-  imports: [CommonModule, RouterLinkWithHref, RouterLinkActive],
+  imports: [CommonModule, RouterLinkWithHref, RouterLinkActive, RippleModule, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ng-container>
