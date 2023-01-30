@@ -72,7 +72,6 @@ export class ManageArchiveFoldersComponent implements OnInit {
     private readonly archiveFolderService: ArchiveFolderApiService,
     private readonly examTypeApiService: ExamTypeApiService,
     private readonly examSubjectApiService: ExamSubjectApiService,
-    private readonly examVersionApiService: ExamVersionApiService
   ) {
   }
 
@@ -137,6 +136,8 @@ export class ManageArchiveFoldersComponent implements OnInit {
         break;
     }
   }
+
+
 
   onModalClose() {
     this.displayModal = false;

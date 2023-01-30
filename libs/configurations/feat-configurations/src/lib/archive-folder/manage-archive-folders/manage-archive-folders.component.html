@@ -16,24 +16,24 @@
         </div>
       </div>
 
-<!--      <p-dialog-->
-<!--        [(visible)]="displayModal1"-->
-<!--        [style]="{ width: '500px' }"-->
-<!--        header="Kerko Dosje"-->
-<!--        [modal]="true"-->
-<!--        [draggable]="false"-->
-<!--        [resizable]="false"-->
-<!--        class="p-fluid"-->
-<!--        (onHide)="onModalClose1()">-->
-<!--        <ng-template pTemplate="content">-->
-<!--          <msh-archive-search-folder-form-->
-<!--            [archiveFolders]="selectedArchiveFolder"-->
-<!--            [examTypes]="examType"-->
-<!--            (formClose)="onModalClose1()"-->
-<!--            (formSave)="onFormSave($event)">-->
-<!--          </msh-archive-search-folder-form>-->
-<!--        </ng-template>-->
-<!--      </p-dialog>-->
+      <!--      <p-dialog-->
+      <!--        [(visible)]="displayModal1"-->
+      <!--        [style]="{ width: '500px' }"-->
+      <!--        header="Kerko Dosje"-->
+      <!--        [modal]="true"-->
+      <!--        [draggable]="false"-->
+      <!--        [resizable]="false"-->
+      <!--        class="p-fluid"-->
+      <!--        (onHide)="onModalClose1()">-->
+      <!--        <ng-template pTemplate="content">-->
+      <!--          <msh-archive-search-folder-form-->
+      <!--            [archiveFolders]="selectedArchiveFolder"-->
+      <!--            [examTypes]="examType"-->
+      <!--            (formClose)="onModalClose1()"-->
+      <!--            (formSave)="onFormSave($event)">-->
+      <!--          </msh-archive-search-folder-form>-->
+      <!--        </ng-template>-->
+      <!--      </p-dialog>-->
 
       <msh-archive-folder-grid
         [archiveFolders]="(archiveFolders$ | async) || []"
@@ -58,7 +58,8 @@
       [archiveFolders]="selectedArchiveFolder"
       [examTypes]="examTypes"
       [examSubjects]="examSubjects"
-      (formClose)="onModalClose()">
+      (formClose)="onModalClose()"
+      (formSave)="onFormSave($event)">
     </msh-archive-open-folder-form>
   </ng-template>
 </p-dialog>
