@@ -19,10 +19,6 @@ export class ExamScoreApiService {
     return this.apiService.post(`/api/ExamScores/TableData`, event);
   }
 
-  loadExamScoresExcel(examScore: ExamScore): Observable<ExamScore> {
-    return this.apiService.post(`/api/ExamScores/Import`, examScore);
-  }
-
   save(examScore: ExamScore): Observable<ApiResult<ExamScore>> {
     return this.apiService.post<ApiResult<ExamScore>, ExamScore>(
       `/api/ExamScores`,
