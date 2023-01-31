@@ -26,8 +26,8 @@
                 </div>
 
                 <div class="field xl:w-4 mt-5 lg:w-6 sm:w-full">
-                    <label for="City">Lenda D3</label>
-                    <p-dropdown id="City" [options]="d3Dropdown" optionValue="key" autoWidth="false"
+                    <label for="d3Dubject">Lenda D3</label>
+                    <p-dropdown id="d3Dubject" [options]="d3Dropdown" optionValue="key" autoWidth="false"
                         [style]="{'width':'100%'}" optionLabel="value" name="subjectD3Id" [required]="false"
                         class="w-full block" [(ngModel)]="a1.subjectD3Id" [autoDisplayFirst]="false" [showClear]="true"
                         [ngClass]="{ 'ng-invalid ng-dirty': submitted  && (!a1.subjectD3Id || a1.subjectD3Id==='') }">
@@ -68,9 +68,9 @@
                 </div>
                 <h5 class="uppercase mt-5">Lëndët me zgjedhje</h5>
                 <div class="field xl:w-4  lg:w-6  smxs:w-full">
-                    <label for="City">Lëndët me zgjedhje</label>
-                    <p-dropdown id="City" [options]="optionalSubjects" autoWidth="false" [style]="{'width':'100%'}"
-                        optionLabel="value" name="optionalSubject" class="w-full block"
+                    <label for="optionalSubjects">Lëndët me zgjedhje</label>
+                    <p-dropdown id="optionalSubjects" [options]="optionalSubjects" autoWidth="false"
+                        [style]="{'width':'100%'}" optionLabel="value" name="optionalSubject" class="w-full block"
                         [(ngModel)]="optionalSubjectChoosen" [autoDisplayFirst]="false" [showClear]="true"
                         [ngClass]="{ 'ng-invalid ng-dirty': submitted  && subjectsChoosen.length < 1 }">
                     </p-dropdown>
