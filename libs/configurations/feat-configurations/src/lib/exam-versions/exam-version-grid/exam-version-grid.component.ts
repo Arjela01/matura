@@ -1,14 +1,20 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {ExamVersion} from "@msh/configurations/domain-configurations";
-import {GRID_ACTIONS, GridEvent} from "@msh/shared/util-shared";
-import {LazyLoadEvent} from "primeng/api";
-import {TableModule} from "primeng/table";
-import {ButtonModule} from "primeng/button";
-import {InputTextModule} from "primeng/inputtext";
-import {TooltipModule} from "primeng/tooltip";
-import {CheckboxModule} from "primeng/checkbox";
-import {RippleModule} from "primeng/ripple";
+import { ExamVersion } from '@msh/configurations/domain-configurations';
+import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
+import { LazyLoadEvent } from 'primeng/api';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { TooltipModule } from 'primeng/tooltip';
+import { CheckboxModule } from 'primeng/checkbox';
+import { RippleModule } from 'primeng/ripple';
 
 @Component({
   selector: 'msh-exam-version-grid',
@@ -27,7 +33,6 @@ import {RippleModule} from "primeng/ripple";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamVersionGridComponent {
-
   @Input() examVersions: ExamVersion[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
@@ -36,7 +41,7 @@ export class ExamVersionGridComponent {
 
   @Output() gridEvent = new EventEmitter<
     GridEvent<ExamVersion | ExamVersion[]>
-    >();
+  >();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 

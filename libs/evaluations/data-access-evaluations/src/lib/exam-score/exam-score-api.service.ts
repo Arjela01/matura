@@ -1,18 +1,19 @@
-import {Injectable} from '@angular/core';
-import { Observable} from 'rxjs';
-import {LazyLoadEvent} from "primeng/api";
-import {ApiResult} from "@msh/shared/data-access-shared";
-import {APIService} from "@msh/shared/util-shared";
-import {ExamScore, ExamScoreTableView} from "@msh/evaluations/domain-evaluations";
-import {HttpClient} from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
+import { LazyLoadEvent } from 'primeng/api';
+import { ApiResult } from '@msh/shared/data-access-shared';
+import { APIService } from '@msh/shared/util-shared';
+import {
+  ExamScore,
+  ExamScoreTableView,
+  FileImport,
+} from '@msh/evaluations/domain-evaluations';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExamScoreApiService {
-  constructor(private apiService: APIService,private http: HttpClient) {
-  }
-
+  constructor(private apiService: APIService) {}
 
   loadExamScores(event: LazyLoadEvent): Observable<ExamScoreTableView> {
     return this.apiService.post(`/api/ExamScores/TableData`, event);
@@ -38,11 +39,21 @@ export class ExamScoreApiService {
 
   delete(examScoreId: number): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<ExamScore>>(
-      `/api/ExamScores/${ examScoreId}`
+      `/api/ExamScores/${examScoreId}`
     );
   }
-  loadStudentsList(): Observable<any> {
-    return this.http.get('assets/demo/data/exam-result.json');
+
+  uploadExcelFile(
+    base64: string | ArrayBuffer | null
+  ): Observable<ApiResult<unknown>> {
+    return this.apiService
+      .post<ApiResult<FileImport>, FileImport>('/api/ExamScores/Import', {
+        file: base64,
+      })
+      .pipe(
+        map(data => data),
+        catchError(error => throwError(error)),
+        shareReplay()
+      );
   }
 }
-
