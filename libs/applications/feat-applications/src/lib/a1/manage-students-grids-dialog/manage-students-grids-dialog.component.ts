@@ -45,7 +45,7 @@ import { BehaviorSubject } from 'rxjs';
 export class ManageStudentsGridsDialogComponent {
   filters: LazyLoadEvent | null = null;
   @ViewChild('dt', { static: true }) dt: any;
-  totalRecords: number = 0;
+  totalRecords = 0;
   private students$$ = new BehaviorSubject<Student[]>([]);
   students$ = this.students$$.asObservable();
   loadedForTheFirstTime = true;

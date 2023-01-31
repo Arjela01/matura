@@ -102,7 +102,7 @@ export class A1FormComponent {
     filters: {},
     globalFilter: null,
   };
-  showForm: boolean = false;
+  showForm: boolean | null = null;
   students: any | null = null;
   id: string | null = null;
 
@@ -124,7 +124,7 @@ export class A1FormComponent {
   }
 
   initializeFormWithApiCalls() {
-    let apiCalls = [
+    const apiCalls = [
       this.getAcademicYears(),
       this.getStudent(),
       this.getOptionalSubjects(),
@@ -147,7 +147,7 @@ export class A1FormComponent {
         .pipe(
           switchMap((a1: any) => {
             this.a1 = { ...a1?.data } as A1;
-            apiCalls.push(this.getD3Subjects(this.a1.isFall!!));
+            apiCalls.push(this.getD3Subjects(this.a1.isFall));
             return combineLatest(apiCalls);
           })
         )
@@ -168,7 +168,6 @@ export class A1FormComponent {
   }
 
   initializeOptionalSubjects() {
-    console.log(this.a1.subjectZ1A1Id);
     if (this.a1.subjectZ1A1Id) {
       this.subjectsChoosen.push({
         key: this.a1.subjectZ1A1Id,
@@ -182,8 +181,6 @@ export class A1FormComponent {
       });
     }
   }
-
-  ngOnChanges() {}
 
   initializeDialog() {
     this.ref = this.dialogService.open(ManageStudentsGridsDialogComponent, {
@@ -224,7 +221,7 @@ export class A1FormComponent {
   }
 
   getA1ById(): Observable<any> {
-    return this.a1ApiService.getById(this.id!!).pipe(untilDestroyed(this));
+    return this.a1ApiService.getById(this.id!).pipe(untilDestroyed(this));
   }
 
   getOptionalSubjects(): Observable<any> {
@@ -275,7 +272,7 @@ export class A1FormComponent {
 
   addSubject() {
     this.moreSubjectThanAllowed = false;
-    let subjectIndexFound = this.subjectsChoosen.findIndex(
+    const subjectIndexFound = this.subjectsChoosen.findIndex(
       subject => subject.key === this.optionalSubjectChoosen.key
     );
     if (subjectIndexFound !== -1) {
@@ -303,60 +300,67 @@ export class A1FormComponent {
   }
 
   addA1(a1: A1) {
-    let that = this;
     this.a1ApiService
       .save(a1)
       .pipe(untilDestroyed(this))
       .subscribe({
         next: (response: any) => {
           if (response.isSuccessful) {
-            that.toastService.showSuccess('Formulari A1 u shtua me sukses!');
+            this.toastService.showSuccess('Formulari A1 u shtua me sukses!');
             this.router.navigate(['/applications/a1']);
           }
           if (response.isBadRequest)
-            that.toastService.showError(
+            this.toastService.showError(
               'Ndodhi një problem gjatë ndryshimit të formularit A1!'
             );
         },
-        error: err => {},
+        error: error => {
+          error.errorMessage
+            ? this.toastService.showError(error.errorMessage)
+            : this.toastService.showError(
+                'Ndodhi një problem gjatë ndryshimit të formularit A1!'
+              );
+          this.toastService.showError(
+            'Ndodhi një problem gjatë ndryshimit të formularit A1!'
+          );
+        },
       });
   }
 
   updateA1(a1: A1) {
-    let that = this;
     this.a1ApiService
       .update(a1)
       .pipe(untilDestroyed(this))
       .subscribe({
         next: (data: any) => {
           if (data.isSuccessful) {
-            that.toastService.showSuccess('Formulari A1 u ndryshua me sukses!');
+            this.toastService.showSuccess('Formulari A1 u ndryshua me sukses!');
             this.router.navigate(['/applications/a1']);
           } else {
             data.errorMessage
-              ? that.toastService.showError(data.errorMessage)
-              : that.toastService.showError(
+              ? this.toastService.showError(data.errorMessage)
+              : this.toastService.showError(
                   'Ndodhi një problem gjatë ndryshimit të formularit A1!'
                 );
           }
           if (data.isBadRequest) {
             data.errorMessage
-              ? that.toastService.showError(data.errorMessage)
-              : that.toastService.showError(
+              ? this.toastService.showError(data.errorMessage)
+              : this.toastService.showError(
                   'Ndodhi një problem gjatë ndryshimit të formularit A1!'
                 );
           }
         },
-      });
-    error: (error: any) => {
-      error.errorMessage
-        ? this.toastService.showError(error.errorMessage)
-        : this.toastService.showError(
+        error: (error: any) => {
+          error.errorMessage
+            ? this.toastService.showError(error.errorMessage)
+            : this.toastService.showError(
+                'Ndodhi një problem gjatë ndryshimit të formularit A1!'
+              );
+          this.toastService.showError(
             'Ndodhi një problem gjatë ndryshimit të formularit A1!'
           );
-      this.toastService.showError(
-        'Ndodhi një problem gjatë ndryshimit të formularit A1!'
-      );
-    };
+        },
+      });
   }
 }
