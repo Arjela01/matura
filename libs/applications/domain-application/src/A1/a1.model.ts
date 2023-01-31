@@ -6,17 +6,18 @@ export interface A1 {
   studentFatherName?: string;
   studentLastName?: string;
   nid?: string;
-  subjectD3A1Id: string;
+  subjectD3Id: string;
   isApplyingToForeignCountries: boolean;
   alreadyHaveDiploma: boolean;
   studentIdentifier?: string;
   studentOldIdentifier?: string;
   isA1: boolean;
-  subjectZ1A1Id?: string;
-  subjectZ1A1Name?: string;
-  subjectZ2A1Id?: string;
-  subjectZ2A1Name?: string;
-  subjectZ3A1Id?: string;
-  subjectZ3A1Name?: string;
+  isFall?: boolean;
+  subjectZ1Id?: string;
+  subjectZ1Name?: string;
+  subjectZ2Id?: string | null;
+  subjectZ2Name?: string | null;
+  subjectZ3Id?: string | null;
+  subjectZ3Name?: string | null;
   overSeerCode: string;
 }

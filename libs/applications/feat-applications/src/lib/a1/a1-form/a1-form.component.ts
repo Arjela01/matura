@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  HostListener,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -28,11 +29,9 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest, Observable, of, switchMap } from 'rxjs';
 import { ManageStudentsGridsDialogComponent } from '../manage-students-grids-dialog/manage-students-grids-dialog.component';
 
-const Z1 = 26;
-const D3 = 4;
 const INITIAL_FILTER = {
   registrationYear: [
     {
@@ -76,19 +75,24 @@ export class A1FormComponent {
   d1Dropdown: DropdownModel<number>[] = [];
   d2Dropdown: DropdownModel<number>[] = [];
   @ViewChild('form', { static: false }) form!: NgForm;
+  @HostListener('window:popstate', ['$event'])
+  onPopState() {
+    //close modal when clicking back button on google
+    this.ref?.destroy();
+  }
   ref?: DynamicDialogRef;
   submitted = false;
-  a1: A1 = {
+  a1: any = {
     id: '',
     academicYearId: '',
     studentId: '',
     isA1: true,
     isApplyingToForeignCountries: false,
     alreadyHaveDiploma: false,
-    subjectD3A1Id: '',
-    subjectZ1A1Id: '',
-    subjectZ2A1Id: '',
-    subjectZ3A1Id: '',
+    subjectD3Id: '',
+    subjectZ1Id: '',
+    subjectZ2Id: null,
+    subjectZ3Id: null,
     overSeerCode: '',
   };
   studentsConfig = {
@@ -124,12 +128,11 @@ export class A1FormComponent {
       this.getAcademicYears(),
       this.getStudent(),
       this.getOptionalSubjects(),
-      this.getD3Subjects(),
     ];
     if (!this.id) {
       combineLatest(apiCalls)
         .pipe(untilDestroyed(this))
-        .subscribe(([years, students, z1, d3]) => {
+        .subscribe(([years, students, z1]) => {
           this.showForm = true;
           this.academicYear = years['data'].find(
             (year: AcademicYear) => year.isActive
@@ -137,22 +140,26 @@ export class A1FormComponent {
           this.a1.academicYearId = this.academicYear?.id;
           this.students = students;
           this.optionalSubjects = z1.data;
-          this.d3Dropdown = d3.data;
           this.cd.detectChanges();
         });
     } else {
-      apiCalls.push(this.getA1ById());
-      combineLatest(apiCalls)
-        .pipe(untilDestroyed(this))
-        .subscribe(([years, students, z1, d3, a1]) => {
-          this.showForm = true;
+      this.getA1ById()
+        .pipe(
+          switchMap((a1: any) => {
+            this.a1 = { ...a1?.data } as A1;
+            apiCalls.push(this.getD3Subjects(this.a1.isFall!!));
+            return combineLatest(apiCalls);
+          })
+        )
+        .subscribe(([years, students, z1, d3]) => {
           this.academicYear = years['data'].find(
             (year: AcademicYear) => year.isActive
           );
-          this.students = students;
-          this.a1 = { ...a1?.data } as A1;
-          this.optionalSubjects = z1.data;
+          this.showForm = true;
           this.d3Dropdown = d3.data;
+          this.a1.subjectD3Id = this.a1.subjectD3A1Id;
+          this.students = students;
+          this.optionalSubjects = z1.data;
           this.initializeOptionalSubjects();
           this.choosenStudent = `${this.a1.studentIdentifier}-${this.a1.studentFirstName}-${this.a1.studentFatherName}-${this.a1.studentLastName}`;
           this.cd.detectChanges();
@@ -161,29 +168,24 @@ export class A1FormComponent {
   }
 
   initializeOptionalSubjects() {
+    console.log(this.a1.subjectZ1A1Id);
     if (this.a1.subjectZ1A1Id) {
       this.subjectsChoosen.push({
         key: this.a1.subjectZ1A1Id,
-        value: this.a1.subjectZ1A1Name,
+        value: this.a1.subjectZ1Name,
       });
     }
     if (this.a1.subjectZ2A1Id) {
       this.subjectsChoosen.push({
         key: this.a1.subjectZ2A1Id,
-        value: this.a1.subjectZ2A1Name,
-      });
-    }
-    if (this.a1.subjectZ3A1Id) {
-      this.subjectsChoosen.push({
-        key: this.a1.subjectZ3A1Id,
-        value: this.a1.subjectZ3A1Name,
+        value: this.a1.subjectZ2Name,
       });
     }
   }
 
   ngOnChanges() {}
 
-  openDialog() {
+  initializeDialog() {
     this.ref = this.dialogService.open(ManageStudentsGridsDialogComponent, {
       width: '70%',
       position: 'center',
@@ -196,44 +198,71 @@ export class A1FormComponent {
         totalRecords: this.students?.total,
       },
     });
-    this.ref.onClose.pipe(untilDestroyed(this)).subscribe(data => {
-      console.log(data);
-      if (data) {
-        this.choosenStudent = `${data.student.studentId}-${data.student.firstName}-${data.student.middleName}-${data.student.lastName}`;
-        this.a1.studentId = data.student.id;
-        this.cd.detectChanges();
-      }
-    });
+    this.ref.onClose
+      .pipe(
+        switchMap((data: any) => {
+          this.d3Dropdown = [];
+          this.subjectsChoosen = [];
+          this.submitted = false;
+          this.d3SubjectChoosen = '';
+          if (data) {
+            this.choosenStudent = `${data.student.studentId}-${data.student.firstName}-${data.student.middleName}-${data.student.lastName}`;
+            this.a1.studentId = data.student.id;
+            this.cd.detectChanges();
+            return this.getD3Subjects(data.student.isFall);
+          }
+          return of([]);
+        })
+      )
+      .subscribe((d3: any) => {
+        this.d3Dropdown = d3?.data;
+      });
   }
+
   onCancelClick() {
     this.router.navigate(['/applications/a1']);
   }
+
   getA1ById(): Observable<any> {
     return this.a1ApiService.getById(this.id!!).pipe(untilDestroyed(this));
   }
+
   getOptionalSubjects(): Observable<any> {
-    return this.examSubjectsService.forExamType(Z1).pipe(untilDestroyed(this));
+    return this.examSubjectsService
+      .forExamType(undefined, undefined, undefined, undefined, true)
+      .pipe(untilDestroyed(this));
   }
-  getD3Subjects(): Observable<any> {
-    return this.examSubjectsService.forExamType(D3).pipe(untilDestroyed(this));
+
+  getD3Subjects(isFall: boolean, id?: string): Observable<any> {
+    return this.examSubjectsService
+      .forExamType(undefined, undefined, undefined, isFall, false)
+      .pipe(untilDestroyed(this));
   }
+
   getAcademicYears(): Observable<any> {
     return this.academicYearService
       .getAcademicYears()
       .pipe(untilDestroyed(this));
   }
+
   getStudent(): Observable<any> {
     this.studentsConfig.filters = INITIAL_FILTER;
     return this.studentsApiService
       .loadStudents(this.studentsConfig)
       .pipe(untilDestroyed(this));
   }
+
   onDeleteClick(index: number) {
     this.moreSubjectThanAllowed = false;
     this.subjectsChoosen.splice(index, 1);
+    if (this.subjectsChoosen.length === 1) {
+      this.a1.subjectZ1Id = this.subjectsChoosen[0].key;
+      this.a1.subjectZ2Id = null;
+      this.a1.subjectZ2Name = null;
+    }
   }
+
   onSubmit() {
-    console.log(this.a1);
     this.submitted = true;
     if (this.form.valid) {
       if (this.id) {
@@ -243,50 +272,49 @@ export class A1FormComponent {
       }
     }
   }
+
   addSubject() {
-    console.log(this.subjectsChoosen);
     this.moreSubjectThanAllowed = false;
     let subjectIndexFound = this.subjectsChoosen.findIndex(
       subject => subject.key === this.optionalSubjectChoosen.key
     );
     if (subjectIndexFound !== -1) {
       this.toastService.showError('Lënda është zgjedhur');
-      debugger;
       return;
     }
     if (
       this.optionalSubjectChoosen === null ||
       this.optionalSubjectChoosen === ''
     ) {
-      debugger;
       return;
     }
     if (this.subjectsChoosen.length === 2) {
       this.moreSubjectThanAllowed = true;
-      debugger;
       return;
     }
     this.subjectsChoosen.push(this.optionalSubjectChoosen);
     if (this.subjectsChoosen.length > 1) {
-      this.a1.subjectZ1A1Id = this.subjectsChoosen[0].key;
-      this.a1.subjectZ2A1Id = this.subjectsChoosen[1].key;
+      this.a1.subjectZ1Id = this.subjectsChoosen[0].key;
+      this.a1.subjectZ2Id = this.subjectsChoosen[1].key;
     } else {
-      this.a1.subjectZ1A1Id = this.subjectsChoosen[0].key;
+      this.a1.subjectZ1Id = this.subjectsChoosen[0].key;
     }
     this.optionalSubjectChoosen = '';
   }
 
   addA1(a1: A1) {
+    let that = this;
     this.a1ApiService
       .save(a1)
       .pipe(untilDestroyed(this))
       .subscribe({
         next: (response: any) => {
           if (response.isSuccessful) {
-            this.toastService.showSuccess('Formulari A1 u shtua me sukses!');
+            that.toastService.showSuccess('Formulari A1 u shtua me sukses!');
+            this.router.navigate(['/applications/a1']);
           }
           if (response.isBadRequest)
-            this.toastService.showError(
+            that.toastService.showError(
               'Ndodhi një problem gjatë ndryshimit të formularit A1!'
             );
         },
@@ -303,6 +331,7 @@ export class A1FormComponent {
         next: (data: any) => {
           if (data.isSuccessful) {
             that.toastService.showSuccess('Formulari A1 u ndryshua me sukses!');
+            this.router.navigate(['/applications/a1']);
           } else {
             data.errorMessage
               ? that.toastService.showError(data.errorMessage)
@@ -320,7 +349,6 @@ export class A1FormComponent {
         },
       });
     error: (error: any) => {
-      console.log(error);
       error.errorMessage
         ? this.toastService.showError(error.errorMessage)
         : this.toastService.showError(

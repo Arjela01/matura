@@ -57,7 +57,9 @@ export class ExamSubjectApiService {
   forExamType(
     examTypeId?: number,
     academicYearId?: number,
-    id?: string
+    id?: string,
+    isFall?: boolean,
+    isOptionalSubject?: boolean
   ): Observable<ApiResult<DropdownModel<string>[]>> {
     return this.apiService.post<ApiResult<DropdownModel<string>[]>, any>(
       `/api/ExamSubject/ForExamType`,
@@ -65,6 +67,8 @@ export class ExamSubjectApiService {
         examTypeId: examTypeId,
         academicYearId: academicYearId,
         id: id,
+        isFall,
+        isOptionalSubject,
       }
     );
   }

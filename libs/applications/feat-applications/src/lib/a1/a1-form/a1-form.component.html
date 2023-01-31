@@ -5,36 +5,38 @@
             <h5 class="uppercase">Të Dhëna të përgjithshme</h5>
             <form #form="ngForm" class="mt-5" (ngSubmit)="onSubmit()" *ngIf="showForm">
 
-                <div class="field md:w-6 sm:w-12">
+                <div class="field xl:w-4  lg:w-6 sm:w-full">
                     <label for="academicYear">Viti akademik </label>
                     <input type="text" class="w-full" pInputText id="academicYear" name="academicYear"
                         [(ngModel)]="academicYear!!.year" readonly />
                 </div>
-                <div class="field md:w-6 sm:w-12">
+                <div class="field xl:w-4 lg:w-6 sm:w-full">
                     <label for="student">Maturanti</label>
                     <input type="text" class="w-full" [(ngModel)]="choosenStudent" pInputText id="studentInfo"
-                        name="studentInfo" readonly />
+                        name="studentInfo" readonly
+                        [ngClass]="{ 'ng-invalid ng-dirty': submitted  && (!choosenStudent || choosenStudent==='') }"
+                        required />
                     <small class="p-error block" *ngIf="submitted && !choosenStudent">
                         Maturanti është fushë e kërkuar.
                     </small>
                 </div>
                 <div [style]="{ width: '180px' }">
                     <button pButton pRipple type="button" icon="pi pi-search" label="Kërko maturantin"
-                        (click)="openDialog()" class="p-button-gray w-full"></button>
+                        (click)="initializeDialog()" class="p-button-gray w-full"></button>
                 </div>
 
-                <div class="field md:w-6 sm:w-12 mt-5">
+                <div class="field xl:w-4 mt-5 lg:w-6 sm:w-full">
                     <label for="City">Lenda D3</label>
                     <p-dropdown id="City" [options]="d3Dropdown" optionValue="key" autoWidth="false"
                         [style]="{'width':'100%'}" optionLabel="value" name="subjectD3Id" [required]="false"
-                        class="w-full block" [(ngModel)]="a1.subjectD3A1Id" [autoDisplayFirst]="false"
-                        [showClear]="true">
+                        class="w-full block" [(ngModel)]="a1.subjectD3Id" [autoDisplayFirst]="false" [showClear]="true"
+                        [ngClass]="{ 'ng-invalid ng-dirty': submitted  && (!a1.subjectD3Id || a1.subjectD3Id==='') }">
                     </p-dropdown>
-                    <small class="p-error block" *ngIf="submitted && (!a1.subjectD3A1Id || a1.subjectD3A1Id==='')">
-                        Maturanti është fushë e kërkuar.
+                    <small class="p-error block" *ngIf="submitted && (!a1.subjectD3Id || a1.subjectD3Id==='')">
+                        Lënda D3 është fushë e kërkuar.
                     </small>
                 </div>
-                <div class="field md:w-6 sm:w-12">
+                <div class="field xl:w-4  lg:w-6  sm:w-full">
                     <label class="mb-3">Aplikon jashtë vendit *</label>
                     <div class="formgrid grid w-full">
                         <div class="field-radiobutton col-6">
@@ -49,7 +51,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="field md:w-6 sm:w-12">
+                <div class="field xl:w-4  lg:w-6  sm:w-full">
                     <label class="mb-3">Keni marrë diplomë/dëftesë pjekurie</label>
                     <div class="formgrid grid w-full">
                         <div class="field-radiobutton col-6">
@@ -65,11 +67,12 @@
                     </div>
                 </div>
                 <h5 class="uppercase mt-5">Lëndët me zgjedhje</h5>
-                <div class="field md:w-6 sm:w-12">
+                <div class="field xl:w-4  lg:w-6  smxs:w-full">
                     <label for="City">Lëndët me zgjedhje</label>
                     <p-dropdown id="City" [options]="optionalSubjects" autoWidth="false" [style]="{'width':'100%'}"
-                        optionLabel="value" name="optionalSubject" [required]="false" class="w-full block"
-                        [(ngModel)]="optionalSubjectChoosen" [autoDisplayFirst]="false" [showClear]="true">
+                        optionLabel="value" name="optionalSubject" class="w-full block"
+                        [(ngModel)]="optionalSubjectChoosen" [autoDisplayFirst]="false" [showClear]="true"
+                        [ngClass]="{ 'ng-invalid ng-dirty': submitted  && subjectsChoosen.length < 1 }">
                     </p-dropdown>
 
                 </div>
@@ -77,7 +80,7 @@
                     <button pButton pRipple type="button" label="Zgjidh" (click)="addSubject()"
                         class="p-button-gray w-full"></button>
                 </div>
-                <div class="field md:w-6 sm:w-12  mt-5" *ngIf="subjectsChoosen && subjectsChoosen.length > 0">
+                <div class="field xl:w-4  lg:w-6 sm:w-full  mt-5" *ngIf="subjectsChoosen && subjectsChoosen.length > 0">
                     <h5 class="px-0">Ju zgjodhët lëndët</h5>
                     <p-table #dt dataKey="key" responsiveLayout="scroll" [value]="subjectsChoosen" [rows]="10"
                         class="px-0 mt-5" [rowHover]="true">
@@ -116,10 +119,11 @@
                 <small class="p-error block" *ngIf="moreSubjectThanAllowed">
                     *Duhen zgjedhur maksimalisht 2 lëndë
                 </small>
-                <div class="field md:w-6 sm:w-full mt-5">
+                <div class="field lg:w-4 md:w-6 sm:w-full mt-5">
                     <label for="isA1">Kodi i mbikqyrësit</label>
-                    <input type="text" pInputText id="overSeerCode" class="w-full" [(ngModel)]="a1.overSeerCode"
-                        name="overSeerCode" />
+                    <input type="password" pInputText required id="overSeerCode" class="w-full"
+                        [(ngModel)]="a1.overSeerCode" name="overSeerCode"
+                        [ngClass]="{ 'ng-invalid ng-dirty': submitted  && (!a1.overSeerCode || a1.overSeerCode==='') }" />
                 </div>
                 <small class="p-error block" *ngIf="submitted && (!a1.overSeerCode || a1.overSeerCode==='')">
                     Kodi i mbikqyrësit është fushë e kërkuar.
