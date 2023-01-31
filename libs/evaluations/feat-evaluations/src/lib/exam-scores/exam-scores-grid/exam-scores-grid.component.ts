@@ -1,25 +1,33 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {TableModule} from "primeng/table";
-import {ButtonModule} from "primeng/button";
-import {InputTextModule} from "primeng/inputtext";
-import {TooltipModule} from "primeng/tooltip";
-import {CheckboxModule} from "primeng/checkbox";
-import {RippleModule} from "primeng/ripple";
-import {GRID_ACTIONS, GridEvent} from "@msh/shared/util-shared";
-import {LazyLoadEvent} from "primeng/api";
-import {ExamScore} from "@msh/evaluations/domain-evaluations";
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { TooltipModule } from 'primeng/tooltip';
+import { CheckboxModule } from 'primeng/checkbox';
+import { RippleModule } from 'primeng/ripple';
+import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
+import { LazyLoadEvent } from 'primeng/api';
+import { ExamScore } from '@msh/evaluations/domain-evaluations';
 
 @Component({
   selector: 'msh-exam-score-grid',
   standalone: true,
-  imports: [    CommonModule,
+  imports: [
+    CommonModule,
     TableModule,
     ButtonModule,
     InputTextModule,
     TooltipModule,
     CheckboxModule,
-    RippleModule,],
+    RippleModule,
+  ],
   templateUrl: './exam-scores-grid.component.html',
   styleUrls: ['./exam-scores-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,9 +40,7 @@ export class ExamScoresGridComponent {
   //Keep it local state because of Table Header checkbox not syncing
   selectedExamScores: ExamScore[] = [];
 
-  @Output() gridEvent = new EventEmitter<
-    GridEvent<ExamScore | ExamScore[]>
-    >();
+  @Output() gridEvent = new EventEmitter<GridEvent<ExamScore | ExamScore[]>>();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
@@ -51,7 +57,6 @@ export class ExamScoresGridComponent {
       data: examScore,
     } as GridEvent<ExamScore>);
   }
-
 
   onSelectAllClick() {
     if (this.selectedExamScores.length === 0) {

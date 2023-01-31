@@ -7,6 +7,7 @@ export interface ExamVersion {
   variant: string;
   examTypeId?: string;
   examTypeName?: string;
+  code: string;
 }
 export interface ExamVersionTableView {
   data: ExamVersion[];

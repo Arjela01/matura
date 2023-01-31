@@ -58,6 +58,14 @@
           field="examTypeName"
           display="menu"></p-columnFilter>
       </th>
+      <th pSortableColumn="code">
+        Kodi
+        <p-sortIcon field="code"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="code"
+          display="menu"></p-columnFilter>
+      </th>
       <th></th>
     </tr>
   </ng-template>
@@ -70,13 +78,16 @@
         {{ examVersion.numberOfQuestions }}
       </td>
       <td style="width: 18%; min-width: 10rem">
-        {{ examVersion.profileGroupName}}
+        {{ examVersion.profileGroupName }}
       </td>
       <td style="width: 18%; min-width: 10rem">
         {{ examVersion.variant }}
       </td>
       <td style="width: 18%; min-width: 10rem">
-        {{ examVersion.examTypeName}}
+        {{ examVersion.examTypeName }}
+      </td>
+      <td style="width: 18%; min-width: 10rem">
+        {{ examVersion.code }}
       </td>
       <td>
         <div class="flex">
