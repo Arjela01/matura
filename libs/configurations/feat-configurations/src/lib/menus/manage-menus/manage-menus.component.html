@@ -38,6 +38,7 @@
   <ng-template pTemplate="content">
     <msh-menu-form
       [parentMenus]="parentMenus"
+      [roles]="roles"
       [menuDetails]="selectedMenu"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
