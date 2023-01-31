@@ -24,3 +24,7 @@ export interface ExamScoreTableView {
   data: ExamScore[];
   total: number;
 }
+
+export interface FileImport {
+  file: string | ArrayBuffer | null;
+}

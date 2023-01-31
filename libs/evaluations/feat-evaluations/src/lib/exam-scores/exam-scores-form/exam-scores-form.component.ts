@@ -1,24 +1,26 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
-  Input, OnChanges,
+  Input,
+  OnChanges,
   Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule, NgForm} from '@angular/forms';
-import {InputTextModule} from 'primeng/inputtext';
-import {InputNumberModule} from 'primeng/inputnumber';
-import {RadioButtonModule} from 'primeng/radiobutton';
-import {InputTextareaModule} from 'primeng/inputtextarea';
-import {ButtonModule} from 'primeng/button';
-import {ExamScore} from '@msh/evaluations/domain-evaluations';
-import {DropdownModel} from '@msh/shared/data-access-shared';
-import {DropdownModule} from 'primeng/dropdown';
-import {AutoCompleteModule} from 'primeng/autocomplete';
+import { CommonModule } from '@angular/common';
+import { FormsModule, NgForm } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ButtonModule } from 'primeng/button';
+import { ExamScore } from '@msh/evaluations/domain-evaluations';
+import { DropdownModel } from '@msh/shared/data-access-shared';
+import { DropdownModule } from 'primeng/dropdown';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 @Component({
   selector: 'msh-exam-score-form',
@@ -49,7 +51,6 @@ export class ExamScoresFormComponent implements OnChanges {
   @Output() examTypeChanged = new EventEmitter<string>();
   @Output() examSubjectChanged = new EventEmitter<string>();
 
-
   @ViewChild('form', { static: true }) form!: NgForm;
   submitted = false;
 
@@ -75,8 +76,7 @@ export class ExamScoresFormComponent implements OnChanges {
     }
   }
 
-  constructor(private cd: ChangeDetectorRef) {
-  }
+  constructor(private cd: ChangeDetectorRef) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.examTypeId = this.examScore.examTypeId;

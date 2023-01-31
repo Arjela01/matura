@@ -23,7 +23,8 @@ import {
   ExamVersionApiService,
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import {RippleModule} from "primeng/ripple";
+import { RippleModule } from 'primeng/ripple';
+import { FileUploadModule } from 'primeng/fileupload';
 
 @UntilDestroy()
 @Component({
@@ -38,6 +39,7 @@ import {RippleModule} from "primeng/ripple";
     ExamScoresGridComponent,
     ToolbarModule,
     RippleModule,
+    FileUploadModule,
   ],
   templateUrl: './manage-exam-scores.component.html',
   styleUrls: ['./manage-exam-scores.component.scss'],
@@ -59,6 +61,7 @@ export class ManageExamScoresComponent implements OnInit {
   examTypes: DropdownModel<number>[] = [];
   examSubjects: DropdownModel<string>[] = [];
   examVersions: DropdownModel<string>[] = [];
+  base64: string | ArrayBuffer | null | undefined;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -78,22 +81,22 @@ export class ManageExamScoresComponent implements OnInit {
   onNewClick() {
     this.displayModal = true;
     this.selectedExamScore = {
-      academicYear: "",
+      academicYear: '',
       academicYearId: 0,
-      barcode: "",
-      documentName: "",
-      examSecretId: "",
-      examSubjectId: "",
-      examSubjectName: "",
+      barcode: '',
+      documentName: '',
+      examSecretId: '',
+      examSubjectId: '',
+      examSubjectName: '',
       examTypeId: 0,
-      examTypeName: "",
-      examVersionId: "",
-      examVersionName: "",
+      examTypeName: '',
+      examVersionId: '',
+      examVersionName: '',
       id: 0,
-      modificationReason: "",
+      modificationReason: '',
       multipleChoiceScore: 0,
-      writingScore: 0
-    }
+      writingScore: 0,
+    };
   }
 
   onDeleteSelectedClick() {
@@ -182,9 +185,7 @@ export class ManageExamScoresComponent implements OnInit {
           this.displayModal = false;
           this.getExamScores(this.filters as LazyLoadEvent);
         } else {
-          this.toastService.showError(
-              response.errorMessage
-          );
+          this.toastService.showError(response.errorMessage);
         }
         if (response.isBadRequest)
           this.toastService.showError(
@@ -266,15 +267,34 @@ export class ManageExamScoresComponent implements OnInit {
   }
 
   onExamTypeChanged(examTypeId: any) {
-    if(this.selectedExamScore != null)
+    if (this.selectedExamScore != null)
       this.selectedExamScore.examTypeId = examTypeId;
     this.getExamSubjects(examTypeId);
     this.examVersions = [];
   }
 
   onExamSubjectChanged(examSubjectId: string) {
-    if(this.selectedExamScore != null)
+    if (this.selectedExamScore != null)
       this.selectedExamScore.examSubjectId = examSubjectId;
     this.getExamVersions(examSubjectId);
+  }
+
+  onUpload(event: any) {
+    const file = event.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const base64 = reader.result as string;
+      this.base64 = base64.split(',')[1];
+      this.examScoreService.uploadExcelFile(this.base64).subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Dokumenti u shtua me sukses!');
+        }
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi një problem gjatë ngarkimit të dokumentit!'
+          );
+      });
+    };
   }
 }

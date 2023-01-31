@@ -1,5 +1,4 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
-  <pre>{{this.examScore | json}}</pre>
   <div class="field">
     <label for="AcademicYear">Viti *</label>
     <p-dropdown
@@ -38,7 +37,7 @@
       }">
     </p-dropdown>
     <small class="p-error block" *ngIf="submitted && !examTypeId">
-      Tipi i provimit eshte fushe e kerkuar.
+      Tipi i provimit është fushë e kërkuar.
     </small>
   </div>
 
@@ -65,7 +64,7 @@
   </div>
 
   <div class="field">
-    <label for="ExamVersion">Exam Version *</label>
+    <label for="ExamVersion">Tezat e Provimit *</label>
     <p-dropdown
       id="ExamVersion"
       [options]="examVersions"
@@ -80,7 +79,7 @@
       }">
     </p-dropdown>
     <small class="p-error block" *ngIf="submitted && !examScore.examVersionId">
-      Testi është fushë e kërkuar.
+      Versioni i Provimit është fushë e kërkuar.
     </small>
   </div>
 
