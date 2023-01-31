@@ -5,6 +5,7 @@ export enum GRID_ACTIONS {
   UNSELECT_ALL,
   SELECT_ROW,
   UNSELECT_ROW,
+  CHANGE
 }
 
 export interface GridEvent<T> {

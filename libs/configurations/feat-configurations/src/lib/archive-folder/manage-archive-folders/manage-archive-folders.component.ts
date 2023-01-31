@@ -12,18 +12,14 @@ import {
   ArchiveFolderApiService,
   ExamSubjectApiService,
   ExamTypeApiService,
-  ExamVersionApiService,
 } from '@msh/configurations/data-access-configurations';
-import {
-  ArchiveFolder,
-  HighSchool,
-} from '@msh/configurations/domain-configurations';
+import { ArchiveFolder } from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
 import {
   GlobalToastService,
-  GridEvent,
   GRID_ACTIONS,
+  GridEvent,
 } from '@msh/shared/util-shared';
 
 import { BehaviorSubject } from 'rxjs';
@@ -71,9 +67,8 @@ export class ManageArchiveFoldersComponent implements OnInit {
     private readonly toastService: GlobalToastService,
     private readonly archiveFolderService: ArchiveFolderApiService,
     private readonly examTypeApiService: ExamTypeApiService,
-    private readonly examSubjectApiService: ExamSubjectApiService,
-  ) {
-  }
+    private readonly examSubjectApiService: ExamSubjectApiService
+  ) {}
 
   ngOnInit(): void {
     this.getExamTypes();
@@ -122,22 +117,29 @@ export class ManageArchiveFoldersComponent implements OnInit {
           {},
           event.data as ArchiveFolder
         );
+
         // this.getExamSubjects(this.selectedArchiveFolder.examTypeId);
         // this.getExamVersions(this.selectedArchiveFolder.examSubjectId ?? '');
         this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të dosjen e zgjedhur?',
+          message: 'Jeni i sigurt që doni të fshini dosjen e zgjedhur?',
           accept: () => {
             this.deleteArchiveFolder(event.data as ArchiveFolder);
           },
         });
         break;
+      case GRID_ACTIONS.CHANGE:
+        this.confirmationService.confirm({
+          message: 'Jeni i sigurt që doni të ndryshoni statusin e dosjes?',
+          accept: () => {
+            this.changeFolderStatus(event.data as ArchiveFolder);
+          },
+        });
+        break;
     }
   }
-
-
 
   onModalClose() {
     this.displayModal = false;
@@ -188,9 +190,25 @@ export class ManageArchiveFoldersComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            'Dosja u ndryshua me sukses!'
+          this.toastService.showSuccess('Dosja u ndryshua me sukses!');
+          this.displayModal = false;
+          this.getArchiveFolders(this.filters as LazyLoadEvent);
+        }
+
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi një problem gjatë ndryshimit së dosjes!'
           );
+      });
+  }
+
+  changeFolderStatus(archiveFolder: ArchiveFolder) {
+    this.archiveFolderService
+      .changeFolderStatus(archiveFolder)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Dosja u ndryshua me sukses!');
           this.displayModal = false;
           this.getArchiveFolders(this.filters as LazyLoadEvent);
         }
@@ -237,27 +255,27 @@ export class ManageArchiveFoldersComponent implements OnInit {
       });
   }
 
-//   getExamVersions(examSubjectId: string) {
-//     this.examVersionApiService
-//       .forExamSubject(examSubjectId)
-//       .pipe(untilDestroyed(this))
-//       .subscribe(response => {
-//         this.examVersions = response.data;
-//       });
-//   }
-// }
+  //   getExamVersions(examSubjectId: string) {
+  //     this.examVersionApiService
+  //       .forExamSubject(examSubjectId)
+  //       .pipe(untilDestroyed(this))
+  //       .subscribe(response => {
+  //         this.examVersions = response.data;
+  //       });
+  //   }
+  // }
 
-//   onExamTypeChanged(examTypeId: any) {
-//     if (this.selectedArchiveFolder != null)
-//       this.selectedArchiveFolder.examTypeId = examTypeId;
-//     this.getExamSubjects(examTypeId);
-//     this.examVersions = [];
-//   }
-//
-//   onExamSubjectChanged(examSubjectId: string) {
-//     if (this.selectedArchiveFolder != null)
-//       this.selectedArchiveFolder.examSubjectId = examSubjectId;
-//     this.getExamVersions(examSubjectId);
-//   }
-// }
+  //   onExamTypeChanged(examTypeId: any) {
+  //     if (this.selectedArchiveFolder != null)
+  //       this.selectedArchiveFolder.examTypeId = examTypeId;
+  //     this.getExamSubjects(examTypeId);
+  //     this.examVersions = [];
+  //   }
+  //
+  //   onExamSubjectChanged(examSubjectId: string) {
+  //     if (this.selectedArchiveFolder != null)
+  //       this.selectedArchiveFolder.examSubjectId = examSubjectId;
+  //     this.getExamVersions(examSubjectId);
+  //   }
+  // }
 }

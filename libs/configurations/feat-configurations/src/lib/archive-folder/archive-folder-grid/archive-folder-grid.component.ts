@@ -1,31 +1,33 @@
 import { CommonModule } from '@angular/common';
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
-  Output, ViewChild,
+  Output,
+  ViewChild,
 } from '@angular/core';
-import {
-  ArchiveFolder, City, Student,
-} from '@msh/configurations/domain-configurations';
+import { ArchiveFolder } from '@msh/configurations/domain-configurations';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
-import {LazyLoadEvent, MessageService, PrimeNGConfig} from 'primeng/api';
+import { LazyLoadEvent, MessageService, PrimeNGConfig } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import {ActivatedRoute, Router, RouterLink} from '@angular/router';
-import {FormsModule, NgForm} from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { FormsModule, NgForm } from '@angular/forms';
 import {
   AcademicYearApiService,
-  ArchiveFolderApiService, GendersApiService,
-  HighSchoolApiService, ProfileApiService
-} from "@msh/configurations/data-access-configurations";
-import {ToggleButtonModule} from "primeng/togglebutton";
-import {RadioButtonModule} from "primeng/radiobutton";
+  ArchiveFolderApiService,
+  GendersApiService,
+  HighSchoolApiService,
+  ProfileApiService,
+} from '@msh/configurations/data-access-configurations';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @Component({
   selector: 'msh-archive-folder-grid',
@@ -59,16 +61,19 @@ export class ArchiveFolderGridComponent {
     GridEvent<ArchiveFolder | ArchiveFolder[]>
   >();
 
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
   @Output() formSave = new EventEmitter<ArchiveFolder>();
+
+  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
   saving = false;
+
   @Input() set archiveFolderDetails(details: ArchiveFolder | null) {
     if (details) {
       this.archiveFolder = Object.assign({}, details);
     }
   }
+
   constructor(
     private cd: ChangeDetectorRef,
     private readonly academicYearService: AcademicYearApiService,
@@ -78,43 +83,35 @@ export class ArchiveFolderGridComponent {
     private readonly genderService: GendersApiService,
     private router: Router,
     private messageService: MessageService,
+    private activatedRoute: ActivatedRoute,
     private primengConfig: PrimeNGConfig,
     private route: ActivatedRoute
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
 
-
+  current: ArchiveFolder[] = [];
 
   archiveFolder: ArchiveFolder = {
-    examTypeName: "",
+    examTypeName: '',
     examTypeId: 0,
-    examSubjectId: "",
-    examSubjectName: "",
+    examSubjectId: '',
+    examSubjectName: '',
     id: 0,
     isClosed: false,
     lastUserId: undefined,
     nr: 0,
   };
 
-
-  hideBarCode = false;
-  _opened = false;
-  status = false;
-  isClosed = false;
   submitted = false;
   id: any;
-  clickOpen(): void {
-    this._opened = !this._opened;
-    this.hideBarCode = !this._opened;
-    this.status = !this._opened;
-    this.isClosed =this._opened;
 
+  changeStatus(archive: ArchiveFolder): void {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.CHANGE,
+      data: archive,
+    } as GridEvent<ArchiveFolder>);
   }
-
-
-
-
 
   onDeleteClick(archiveFolder: ArchiveFolder) {
     this.gridEvent.emit({
@@ -122,7 +119,6 @@ export class ArchiveFolderGridComponent {
       data: archiveFolder,
     } as GridEvent<ArchiveFolder>);
   }
-
 
   onRowSelect({ data }: { data: ArchiveFolder }) {
     this.gridEvent.emit({

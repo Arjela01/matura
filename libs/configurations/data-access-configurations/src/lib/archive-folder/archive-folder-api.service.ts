@@ -19,7 +19,16 @@ export class ArchiveFolderApiService {
       `/ArchiveFolder/${id}`
     );
   }
-
+  changeFolderStatus(
+    archive: ArchiveFolder
+  ): Observable<ApiResult<ArchiveFolder>> {
+    return this.apiService.put<ApiResult<ArchiveFolder>, any>(
+      `/ArchiveFolder/UpdateStatus`,
+      {
+        id: archive.id,
+      }
+    );
+  }
   loadDropDownList(): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
       '/ArchiveFolder/DropdownList'

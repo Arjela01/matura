@@ -58,32 +58,23 @@
           field="status"
           display="menu"></p-columnFilter>
       </th>
-      <th>
-        Aktivizo Dosjen
-      </th>
-      <th >
-        Hidh BarKode
-      </th>
-      <th>
-        Fshi Dosjen
-      </th>
+      <th>Aktivizo Dosjen</th>
+      <th>Hidh BarKode</th>
+      <th>Fshi Dosjen</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-archiveFolder>
     <tr>
       <td style="width: 14%; min-width: 10rem">
-        <a pTooltip="Shiko Dosjen"
-           tooltipPosition="bottom"
-          [routerLink]="[
-            '/configurations/archive-view',
-            archiveFolder.id
-          ]">
+        <a
+          pTooltip="Shiko Dosjen"
+          tooltipPosition="bottom"
+          [routerLink]="['/configurations/archive-view', archiveFolder.id]">
           {{ this.archiveFolder.nr }}
-
         </a>
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{totalRecords}}
+        {{ totalRecords }}
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ archiveFolder.examTypeName }}
@@ -92,13 +83,14 @@
         {{ archiveFolder.createdByName }}
       </td>
       <td>
-
-
-
-        <button pButton pRipple style="color: #256029; background-color: #c8e6c9" disabled>
-
-            {{archiveFolder === _opened ? 'Aktiv ' : 'Mbyllur' }}
-
+        <button
+          pButton
+          pRipple
+          style="color: black;"
+          [ngStyle]="{ 'background-color': archiveFolder.isClosed ? '#c8e6c9' : '#feedaf' }">
+          <span>
+            {{archiveFolder.isClosed ? 'Mbyllur ' : 'Aktiv' }}
+          </span>
         </button>
       </td>
 
@@ -108,18 +100,20 @@
             pButton
             pRipple
             class="p-button-rounded p-button-info p-button-text mr-2"
-            pTooltip="{{ _opened.valueOf() ? 'Mbyll Dosjen' : 'Aktivizo Dosjen' }}"
+            pTooltip="{{
+              !archiveFolder.isClosed ? 'Mbyll Dosjen' : 'Aktivizo Dosjen'
+            }}"
             tooltipPosition="bottom"
-            (click)="clickOpen()"
+            (click)="changeStatus(archiveFolder)"
             icon="{{
-              _opened ? 'pi pi-folder-open' : 'pi pi-folder'
+              !archiveFolder.isClosed ? 'pi pi-folder-open' : 'pi pi-folder'
             }}"></button>
         </div>
       </td>
       <td>
-        <div [hidden]="hideBarCode">
+        <div [hidden]="archiveFolder.isClosed">
           <div class="flex">
-            <a [routerLink]="['/configurations/add-barCode',archiveFolder.id]">
+            <a [routerLink]="['/configurations/add-barCode', archiveFolder.id]">
               <button
                 pButton
                 pRipple
@@ -132,7 +126,7 @@
         </div>
       </td>
       <td>
-        <div [hidden]="hideBarCode">
+        <div [hidden]="archiveFolder.isClosed">
           <div class="flex">
             <button
               pButton
