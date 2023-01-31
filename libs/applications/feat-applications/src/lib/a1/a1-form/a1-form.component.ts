@@ -173,12 +173,14 @@ export class A1FormComponent {
         key: this.a1.subjectZ1A1Id,
         value: this.a1.subjectZ1Name,
       });
+      this.a1.subjectZ1Id = this.a1.subjectZ1A1Id;
     }
     if (this.a1.subjectZ2A1Id) {
       this.subjectsChoosen.push({
         key: this.a1.subjectZ2A1Id,
         value: this.a1.subjectZ2Name,
       });
+      this.a1.subjectZ2Id = this.a1.subjectZ2A1Id;
     }
   }
 
