@@ -8,4 +8,11 @@ export const EVALUATION_ROUTES: Route[] = [
         './exam-scores/manage-exam-scores/manage-exam-scores.component'
         ).then(m => m.ManageExamScoresComponent),
   },
+  {
+    path: 'exam-secret',
+    loadComponent: () =>
+      import(
+        './exam-secrets/manage-exam-scores/manage-exam-secrets.component'
+        ).then(m => m.ManageExamSecretsComponent),
+  },
 ]
