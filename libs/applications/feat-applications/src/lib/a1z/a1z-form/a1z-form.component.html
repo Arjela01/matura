@@ -14,6 +14,7 @@
             [options]="academicYears"
             optionValue="key"
             [filter]="true"
+            (ngModelChange)="getSubjectDropdown($event)"
             optionLabel="value"
             name="academicYearId"
             [autoDisplayFirst]="false"
@@ -144,58 +145,26 @@
 
         <div class="field" [style]="{ width: '500px' }">
           <label class="mb-3">Lëndët e detyruara që do të mbarten: </label>
-          <div class="formgrid grid">
-            <div class="field-radiobutton col-2">
-              <p-radioButton
-                id="noCarriedSubjetsZero"
-                name="noCarriedSubjets"
-                [value]="0"
-                onchange="onNeededSubjectsChange($event)"
-                [(ngModel)]="a1z.noCarriedSubjets"></p-radioButton>
-              <label for="noCarriedSubjetsZero">Jo</label>
-            </div>
-            <div class="field-radiobutton col-2">
-              <p-radioButton
-                id="noCarriedSubjetsOne"
-                name="noCarriedSubjets"
-                [value]="1"
-                onchange="onNeededSubjectsChange($event)"
-                [(ngModel)]="a1z.noCarriedSubjets"></p-radioButton>
-              <label for="noCarriedSubjetsOne">1</label>
-            </div>
-            <div class="field-radiobutton col-2">
-              <p-radioButton
-                id="noCarriedSubjetsTwo"
-                name="isWithCompetition"
-                [value]="2"
-                onchange="onNeededSubjectsChange($event)"
-                [(ngModel)]="a1z.noCarriedSubjets"></p-radioButton>
-              <label for="noCarriedSubjetsTwo">2</label>
-            </div>
-            <div class="field-radiobutton col-2">
-              <p-radioButton
-                id="noCarriedSubjetsThree"
-                name="isWithCompetition"
-                [value]="3"
-                onchange="onNeededSubjectsChange($event)"
-                [(ngModel)]="a1z.noCarriedSubjets"></p-radioButton>
-              <label for="noCarriedSubjetsThree">3</label>
-            </div>
-          </div>
         </div>
 
         <div class="field">
           <div class="formgrid grid">
+            <div class="field-checkbox ml-3 mr-3 mt-4">
+              <p-checkbox
+                (onChange)="onSubjectD1Change($event)"
+                [binary]="true"
+                inputId="binary"></p-checkbox>
+              <label for="binary">Lenda D1</label>
+            </div>
             <div class="field col-2">
-              <label for="carriedSubjectD1">Lenda e detyruar D1</label>
+              <label for="subjectD1A1ZId">Lenda e detyruar D1</label>
               <p-dropdown
                 id="carriedSubjectD1"
                 [options]="d1ExamSubjects"
                 optionValue="key"
-                [filter]="true"
-                [placeholder]="'Lenda D1'"
                 optionLabel="value"
                 name="carriedSubjectD1"
+                [filter]="true"
                 [disabled]="disableD1Subject"
                 [autoDisplayFirst]="false"
                 [(ngModel)]="a1z.carriedSubjectD1"
@@ -218,7 +187,7 @@
                 "
                 name="carriedGradeD1"
                 [(ngModel)]="a1z.scoreD1A1Z"
-                required
+                [required]="disableD1Subject"
                 autofocus />
             </div>
             <div class="field col-2" [style]="{ width: '100px' }">
@@ -237,7 +206,7 @@
                 id="carriedGradeD1"
                 name="carriedGradeD1"
                 [(ngModel)]="a1z.scoreD1A1Z"
-                required
+                [required]="disableD1Subject"
                 autofocus />
             </div>
             <div class="field col-2">
@@ -256,12 +225,18 @@
 
         <div class="field">
           <div class="formgrid grid">
+            <div class="field-checkbox ml-3 mr-3 mt-4">
+              <p-checkbox
+                (onChange)="onSubjectD2Change($event)"
+                [binary]="true"
+                inputId="binary"></p-checkbox>
+              <label for="binary">Lenda D2</label>
+            </div>
             <div class="field col-2">
               <label for="carriedSubjectD2">Lenda e detyruar D2</label>
               <p-dropdown
                 id="carriedSubjectD2"
                 [options]="d2ExamSubjects"
-                [placeholder]="'Lenda D2'"
                 optionValue="key"
                 [filter]="true"
                 optionLabel="value"
@@ -288,7 +263,7 @@
                 id="carriedGradeD2"
                 name="carriedGradeD2"
                 [(ngModel)]="a1z.scoreD2A1Z"
-                required
+                [required]="disableD2Subject"
                 autofocus />
             </div>
             <div class="field col-2" [style]="{ width: '100px' }">
@@ -307,7 +282,7 @@
                 [disabled]="disableD2Subject"
                 name="carriedGradeD2"
                 [(ngModel)]="a1z.scoreD2A1Z"
-                required
+                [required]="disableD2Subject"
                 autofocus />
             </div>
             <div class="field col-2">
@@ -326,6 +301,13 @@
 
         <div class="field">
           <div class="formgrid grid">
+            <div class="field-checkbox ml-3 mr-3 mt-4">
+              <p-checkbox
+                (onChange)="onSubjectD3Change($event)"
+                [binary]="true"
+                inputId="binary"></p-checkbox>
+              <label for="binary">Lenda D3</label>
+            </div>
             <div class="field col-2">
               <label for="subjectD3A1ZId">Lenda e detyruar D3</label>
               <p-dropdown
@@ -358,7 +340,7 @@
                 id="carriedGradeD3"
                 name="carriedGradeD3"
                 [(ngModel)]="a1z.scoreD3A1Z"
-                required
+                [required]="disableD3Subject"
                 autofocus />
             </div>
             <div class="field col-2" [style]="{ width: '100px' }">
@@ -377,7 +359,7 @@
                 id="carriedGradeD3"
                 name="carriedGradeD3"
                 [(ngModel)]="a1z.scoreD3A1Z"
-                required
+                [required]="disableD3Subject"
                 autofocus />
             </div>
             <div class="field col-2">
@@ -403,15 +385,12 @@
           <p-dropdown
             id="subjectD1A1ZId"
             [options]="d1ExamSubjects"
-            [optionValue]="
-              a1z.carriedSubjectD1 !== undefined ? a1z.carriedSubjectD1 : 'key'
-            "
+            optionValue="key"
             optionLabel="value"
-            [placeholder]="'Letersi'"
+            [placeholder]="'Lenda D1'"
             [filter]="true"
-            [disabled]="true"
+            [disabled]="false"
             name="subjectD1A1ZId"
-            [disabled]="true"
             [autoDisplayFirst]="false"
             [(ngModel)]="a1z.subjectD1A1ZId"
             [showClear]="true">
@@ -424,14 +403,11 @@
             id="subjectD2A1ZId"
             [options]="d2ExamSubjects"
             [filter]="true"
-            [optionValue]="
-              a1z.carriedSubjectD2 !== undefined ? a1z.carriedSubjectD2 : 'key'
-            "
+            optionValue="key"
             optionLabel="value"
-            [placeholder]="'Matematike'"
-            [disabled]="true"
+            [placeholder]="'Lenda D2'"
+            [disabled]="false"
             name="subjectD2A1ZId"
-            [disabled]="true"
             [autoDisplayFirst]="false"
             [(ngModel)]="a1z.subjectD2A1ZId"
             [showClear]="true">
@@ -457,37 +433,22 @@
 
         <div class="text-3xl font-semibold mb-3 mt-5">Lendet me zgjedhje</div>
 
-        <div class="field" [style]="{ width: '500px' }">
-          <label class="mb-3">Lendet me zgjedhje qe do te mbarten: </label>
+        <div class="field">
           <div class="formgrid grid">
-            <div class="field-radiobutton col-2">
-              <p-radioButton
-                id="noCarriedSubjetsZTrue"
-                name="hasZ1Subject"
-                [value]="0"
-                [(ngModel)]="a1z.noCarriedSubjetsZ"></p-radioButton>
-              <label for="noCarriedSubjetsZTrue">Jo</label>
+            <div class="field-checkbox ml-3 mr-3 mt-4">
+              <p-checkbox
+                (onChange)="onSubjectZ1Change($event)"
+                [binary]="true"
+                inputId="binary"></p-checkbox>
+              <label for="binary">Lenda Z1</label>
             </div>
-            <div class="field-radiobutton col-2">
-              <p-radioButton
-                id="noCarriedSubjetsZFalse"
-                name="hasZ1Subject"
-                [value]="1"
-                [(ngModel)]="a1z.noCarriedSubjetsZ"></p-radioButton>
-              <label for="noCarriedSubjetsZFalse">1</label>
-            </div>
-          </div>
-        </div>
-
-        <!-- TODO: Get z1 subject from new endpoint -->
-        <div class="field" [hidden]="a1z.noCarriedSubjetsZ === 0">
-          <div class="formgrid grid">
             <div class="field col-2">
               <label for="yearZ1">Viti</label>
               <input
                 type="number"
                 pInputText
                 id="yearZ1"
+                [disabled]="disableZ1Subject"
                 name="yearZ1"
                 [(ngModel)]="a1z.yearZ1"
                 autofocus />
@@ -502,7 +463,7 @@
                 optionValue="key"
                 optionLabel="value"
                 name="carriedSubjectAZ1"
-                [disabled]="false"
+                [disabled]="disableZ1Subject"
                 [autoDisplayFirst]="false"
                 [(ngModel)]="a1z.carriedSubjectZ1"
                 [showClear]="true">
@@ -524,8 +485,7 @@
                 id="carriedGradeAZ1"
                 name="carriedGradeAZ1"
                 [(ngModel)]="a1z.scoreZ1A1Z"
-                [disabled]="a1z.noCarriedSubjetsZ === 0"
-                [required]="a1z.noCarriedSubjetsZ === 1"
+                [disabled]="disableZ1Subject"
                 autofocus />
             </div>
             <div class="field col-2" [style]="{ width: '100px' }">
@@ -541,8 +501,7 @@
                 "
                 min="4"
                 [(ngModel)]="a1z.carriedGradeZ1"
-                [disabled]="a1z.noCarriedSubjetsZ === 0"
-                [required]="a1z.noCarriedSubjetsZ === 1"
+                [disabled]="disableZ1Subject"
                 autofocus />
             </div>
             <div class="field col-2">
@@ -553,7 +512,7 @@
                 id="carriedReasonAZ1"
                 name="carriedReasonAZ1"
                 [(ngModel)]="a1z.carriedReasonAZ1"
-                [disabled]="a1z.noCarriedSubjetsZ === 0"
+                [disabled]="disableZ1Subject"
                 autofocus />
             </div>
           </div>
@@ -628,6 +587,7 @@
       [students]="(studentList$ | async) || []"
       [totalRecords]="totalRecords"
       (gridEvent)="onGridEvent($event)"
+      (ngModelChange)="getSubjectDropdown($event)"
       (lazyLoadData)="getStudents($event)">
     </msh-a1z-student-search>
   </ng-template>

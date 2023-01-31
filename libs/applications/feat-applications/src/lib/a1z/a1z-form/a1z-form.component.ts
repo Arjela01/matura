@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CommonModule } from '@angular/common';
@@ -78,11 +79,12 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   @ViewChild('form', { static: true }) form!: NgForm;
   academicYears: DropdownModel<number>[] = [];
   a1Categories: DropdownModel<number>[] = [];
-  examSubjects: DropdownModel<number>[] = [];
   d1ExamSubjects: DropdownModel<string>[] = [];
   d2ExamSubjects: DropdownModel<string>[] = [];
   d3ExamSubjects: DropdownModel<string>[] = [];
   z1ExamSubjects: DropdownModel<string>[] = [];
+  d3ExamSubjectsFall: DropdownModel<string>[] = [];
+  z1ExamSubjectsFall: DropdownModel<string>[] = [];
   filters: LazyLoadEvent | null = null;
 
   //TODO: Replace any with ExamGrade model
@@ -98,9 +100,10 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   studentInputData = '';
 
   showStudentModal = false;
-  disableD1Subject = false;
-  disableD2Subject = false;
-  disableD3Subject = false;
+  disableD1Subject = true;
+  disableD2Subject = true;
+  disableD3Subject = true;
+  disableZ1Subject = true;
   submitted = false;
 
   a1z: A1Z = {
@@ -174,22 +177,11 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   }
 
   ngDoCheck(): void {
-    if (
-      this.a1z.noCarriedSubjets !== 4 ||
-      this.a1z.noCarriedSubjets !== undefined
-    ) {
-      this.onNeededSubjectChange({
-        value: this.a1z,
-      });
-    }
     if (this.a1z.studentId !== undefined) {
       this.onStudentInit(this.a1z);
     }
-    if (this.selectedStudent) {
+    if (this.selectedStudent !== null) {
       this.onStudentChange(this.selectedStudent);
-    }
-    if (this.a1z.academicYearId !== undefined) {
-      this.getSubjectDropdown();
     }
   }
 
@@ -200,14 +192,11 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
     this.a1CategoryService.loadDropdownList().subscribe(response => {
       this.a1Categories = response.data;
     });
-    this.examSubjectService.loadDropDownList().subscribe(response => {
-      this.examSubjects = response.data;
+    this.getSubjectDropdown({
+      value: this.a1z.academicYearId,
     });
-    // this.getSubjectDropdown();
     this.a1zService.getOne(parseInt(this.formId!)).subscribe(response => {
       this.a1z = response.data;
-      this.a1z.noCarriedSubjets = 3;
-      this.a1z.noCarriedSubjetsZ = 1;
       this.cd.detectChanges();
       //TODO: When exam grade implemented uncomment the following lines
       // this.examGradeSercice.getExamGrade(this.a1z.id!).subscribe(response => {
@@ -218,8 +207,9 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   }
 
   ngOnChanges(): void {
-    this.onNeededSubjectChange({
-      value: this.a1z,
+    this.getSubjectDropdown({
+      value: this.a1z.academicYearId,
+      isFall: this.selectedStudent.isFall,
     });
   }
 
@@ -259,62 +249,38 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         '-' +
         student?.firstName +
         '-' +
-        student?.fatherName +
+        student?.middleName +
         '-' +
         student?.lastName;
     }
   }
 
   onSubjectD1Change($event: any) {
-    this.disableD1Subject =
-      ($event.value.noCarriedSubjets === 1 && $event.value.carriedGradeD2) ||
-      $event.value.carriedGradeD3 ||
-      $event.value.noCarriedSubjets === 0;
+    this.disableD1Subject = !this.disableD1Subject;
+    this.disableD1Subject === false
+      ? (this.a1z.noCarriedSubjets! = this.a1z.noCarriedSubjets! + 1)
+      : (this.a1z.noCarriedSubjets! = this.a1z.noCarriedSubjets! - 1);
   }
 
   onSubjectD2Change($event: any) {
-    this.disableD2Subject =
-      ($event.value.noCarriedSubjets === 1 && $event.value.carriedGradeD1) ||
-      $event.value.carriedGradeD3 ||
-      $event.value.noCarriedSubjets === 0;
+    this.disableD2Subject = !this.disableD2Subject;
+    this.disableD2Subject === false
+      ? (this.a1z.noCarriedSubjets! = this.a1z.noCarriedSubjets! + 1)
+      : (this.a1z.noCarriedSubjets! = this.a1z.noCarriedSubjets! - 1);
   }
 
   onSubjectD3Change($event: any) {
-    this.disableD3Subject =
-      ($event.value.noCarriedSubjets === 1 && $event.value.carriedGradeD2) ||
-      $event.value.carriedGradeD1 ||
-      $event.value.noCarriedSubjets === 0;
+    this.disableD3Subject = !this.disableD3Subject;
+    this.disableD3Subject === false
+      ? (this.a1z.noCarriedSubjets! = this.a1z.noCarriedSubjets! + 1)
+      : (this.a1z.noCarriedSubjets! = this.a1z.noCarriedSubjets! - 1);
   }
 
-  onNeededSubjectChange($event: any) {
-    this.onSubjectD1Change($event);
-    this.onSubjectD2Change($event);
-    this.onSubjectD3Change($event);
-
-    if ($event.value.noCarriedSubjets === 3) {
-      this.disableD1Subject = false;
-      this.disableD2Subject = false;
-      this.disableD3Subject = false;
-    }
-
-    // There was a problem when disabling the input fields if radio button nr 2 was selected. The logic above didn't work in that case.
-    if ($event.value.noCarriedSubjets === 2) {
-      if ($event.value.carriedGradeD2 && $event.value.carriedGradeD3) {
-        this.disableD1Subject = true;
-      } else {
-        this.disableD1Subject = false;
-      }
-      if ($event.value.carriedGradeD1 && $event.value.carriedGradeD3) {
-        this.disableD2Subject = true;
-      } else {
-        this.disableD2Subject = false;
-      }
-      if ($event.value.carriedGradeD1 && $event.value.carriedGradeD2) {
-        this.disableD3Subject = true;
-      } else {
-        this.disableD3Subject = false;
-      }
-    }
+  onSubjectZ1Change($event: any) {
+    this.disableZ1Subject = !this.disableZ1Subject;
+    this.disableZ1Subject === false
+      ? this.a1z.noCarriedSubjetsZ!++
+      : this.a1z.noCarriedSubjetsZ!--;
   }
 
   getStudents($event: LazyLoadEvent): void {
@@ -330,7 +296,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       });
   }
 
-  getSubjectDropdown() {
+  getSubjectDropdown($event: any) {
     this.examTypeService
       .loadDropdownList()
       .pipe(untilDestroyed(this))
@@ -341,39 +307,55 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         const d2ExamType = x.data.find(
           d2 => d2.value === EXAM_TYPES.D2 || d2.value === EXAM_TYPES.D2_VJESHTA
         );
-        const d3ExamType = x.data.find(
-          d3 => d3.value === EXAM_TYPES.D3 || d3.value === EXAM_TYPES.D3_VJESHTA
+        const d3ExamType = x.data.find(d3 => d3.value === EXAM_TYPES.D3);
+        const d3ExamTypeFall = x.data.find(
+          d3 => d3.value === EXAM_TYPES.D3_VJESHTA
         );
         const z1ExamType = x.data.find(
           z1 => z1.value === EXAM_TYPES.Z1 || z1.value === EXAM_TYPES.Z1_VJESHTA
         );
+        const z1ExamTypeFall = x.data.find(
+          z1 => z1.value === EXAM_TYPES.Z1_VJESHTA
+        );
 
-        if (this.a1z.academicYearId) {
-          this.examSubjectService
-            .forExamType(d1ExamType!.key!, this.a1z.academicYearId)
-            .pipe(untilDestroyed(this))
-            .subscribe(y => {
-              this.d1ExamSubjects = y.data;
-            });
-          this.examSubjectService
-            .forExamType(d2ExamType!.key!, this.a1z.academicYearId)
-            .pipe(untilDestroyed(this))
-            .subscribe(y => {
-              this.d2ExamSubjects = y.data;
-            });
-          this.examSubjectService
-            .forExamType(d3ExamType!.key!, this.a1z.academicYearId)
-            .pipe(untilDestroyed(this))
-            .subscribe(y => {
-              this.d3ExamSubjects = y.data;
-            });
-          this.examSubjectService
-            .forExamType(z1ExamType!.key!, this.a1z.academicYearId)
-            .pipe(untilDestroyed(this))
-            .subscribe(y => {
-              this.z1ExamSubjects = y.data;
-            });
-        }
+        this.examSubjectService
+          .forExamType(d1ExamType!.key!, this.a1z.academicYearId)
+          .pipe(untilDestroyed(this))
+          .subscribe(y => {
+            this.d1ExamSubjects = y.data;
+          });
+        this.examSubjectService
+          .forExamType(d2ExamType!.key!, this.a1z.academicYearId)
+          .pipe(untilDestroyed(this))
+          .subscribe(y => {
+            this.d2ExamSubjects = y.data;
+          });
+
+        this.examSubjectService
+          .forExamType(d3ExamTypeFall!.key!, this.a1z.academicYearId)
+          .pipe(untilDestroyed(this))
+          .subscribe(y => {
+            this.d3ExamSubjectsFall = y.data;
+          });
+        this.examSubjectService
+          .forExamType(z1ExamTypeFall!.key!, this.a1z.academicYearId)
+          .pipe(untilDestroyed(this))
+          .subscribe(y => {
+            this.z1ExamSubjectsFall = y.data;
+          });
+
+        this.examSubjectService
+          .forExamType(d3ExamType!.key!, this.a1z.academicYearId)
+          .pipe(untilDestroyed(this))
+          .subscribe(y => {
+            this.d3ExamSubjects = this.d3ExamSubjectsFall.concat(y.data);
+          });
+        this.examSubjectService
+          .forExamType(z1ExamType!.key!, this.a1z.academicYearId)
+          .pipe(untilDestroyed(this))
+          .subscribe(y => {
+            this.z1ExamSubjects = this.z1ExamSubjectsFall.concat(y.data);
+          });
       });
   }
 
