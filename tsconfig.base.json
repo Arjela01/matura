@@ -18,6 +18,9 @@
       "@msh/applications/data-access-applications": [
         "libs/applications/data-access-applications/src/index.ts"
       ],
+      "@msh/applications/domain-application": [
+        "libs/applications/domain-application/src/index.ts"
+      ],
       "@msh/applications/domain-configurations": [
         "libs/applications/domain-configurations/src/index.ts"
       ],

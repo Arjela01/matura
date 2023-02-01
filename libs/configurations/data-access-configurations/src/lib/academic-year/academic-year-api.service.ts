@@ -14,6 +14,9 @@ import { Observable } from 'rxjs';
 export class AcademicYearApiService {
   constructor(private apiService: APIService) {}
 
+  getAcademicYears(): Observable<AcademicYear> {
+    return this.apiService.get(`/AcademicYear`);
+  }
   loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
       `/AcademicYear/DropdownList`

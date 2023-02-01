@@ -13,7 +13,6 @@ import { Observable, catchError, map, shareReplay, throwError } from 'rxjs';
 })
 export class ExamSubjectApiService {
   constructor(private apiService: APIService) {}
-
   loadExamSubjects(event: LazyLoadEvent): Observable<ExamSubjectTableView> {
     return this.apiService.post(`/api/ExamSubject/TableData`, event);
   }
@@ -58,14 +57,18 @@ export class ExamSubjectApiService {
   forExamType(
     examTypeId?: number,
     academicYearId?: number,
-    id?: string
+    id?: string,
+    isFall?: boolean,
+    isOptionalSubject?: boolean
   ): Observable<ApiResult<DropdownModel<string>[]>> {
     return this.apiService.post<ApiResult<DropdownModel<string>[]>, any>(
       `/api/ExamSubject/ForExamType`,
       {
         examTypeId: examTypeId,
         academicYearId: academicYearId,
-        id: id
+        id: id,
+        isFall,
+        isOptionalSubject,
       }
     );
   }
