@@ -9,6 +9,7 @@ export interface Student {
   idCard?: string;
   isA2A3: boolean;
   isEAlbaniaApplication: boolean;
+  isConfirmedBySupervisor?: boolean;
   lastName: string;
   middleName: string;
   mobilePhone: string;
