@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
+import {
+  A1ZCategory,
+  A1ZCategoryTableView,
+} from '@msh/configurations/domain-configurations';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
+import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
-import {LazyLoadEvent} from "primeng/api";
-import {A1ZCategory, A1ZCategoryTableView} from "@msh/configurations/domain-configurations";
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +15,7 @@ export class A1ZCategoryApiService {
   constructor(private apiService: APIService) {}
 
   loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
-    return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
+    return this.apiService.post<ApiResult<DropdownModel<number>[]>, null>(
       `/A1ZCategory/DropdownList`
     );
   }
@@ -38,5 +41,4 @@ export class A1ZCategoryApiService {
       `/A1ZCategory/${a1zCategory}`
     );
   }
-
 }

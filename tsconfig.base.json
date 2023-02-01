@@ -18,6 +18,9 @@
       "@msh/applications/data-access-applications": [
         "libs/applications/data-access-applications/src/index.ts"
       ],
+      "@msh/applications/domain-application": [
+        "libs/applications/domain-application/src/index.ts"
+      ],
       "@msh/applications/domain-configurations": [
         "libs/applications/domain-configurations/src/index.ts"
       ],
@@ -38,6 +41,7 @@
       "@msh/configurations/ui-configurations": [
         "libs/configurations/ui-configurations/src/index.ts"
       ],
+      "@msh/applications/domain-applications": ["libs/applications/domain-applications/src/index.ts"],
       "@msh/evaluations/data-access-evaluations": [
         "libs/evaluations/data-access-evaluations/src/index.ts"
       ],

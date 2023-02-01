@@ -1,24 +1,28 @@
+<small class="p-error block" *ngIf="submitted && !a1z.academicYearId">
+  Viti Akademik është fushë e kërkuar.
+</small>
 <div class="grid">
   <div class="col-12 p-fluid">
     <div class="card px-6 py-6">
-      <!-- Here goes the form -->
       <div class="text-5xl font-semibold mb-5">Shto Formular A1Z</div>
       <div class="text-3xl font-semibold mb-3">Te dhënat e përgjithshme</div>
       <form #form="ngForm" (ngSubmit)="onSubmit()">
         <div class="field" [style]="{ width: '500px' }">
-          <label for="academicYearId">Viti *</label>
+          <label for="academicYearId">Viti Akademik *</label>
           <p-dropdown
-            id="academicYear"
+            id="academicYearId"
             [options]="academicYears"
             optionValue="key"
+            [filter]="true"
+            (ngModelChange)="getSubjectDropdown($event)"
             optionLabel="value"
-            name="academicYear"
+            name="academicYearId"
             [autoDisplayFirst]="false"
-            [(ngModel)]="a1z.academicYear"
+            [(ngModel)]="a1z.academicYearId"
             [showClear]="true">
           </p-dropdown>
-          <small class="p-error block" *ngIf="submitted && !a1z.academicYear">
-            Viti është fushë e kërkuar.
+          <small class="p-error block" *ngIf="submitted && !a1z.academicYearId">
+            Viti Akademik është fushë e kërkuar.
           </small>
         </div>
 
@@ -35,24 +39,17 @@
           <input
             type="text"
             pInputText
-            [value]="
-              a1zNotImplementedProps.studentInputData
-                ? ''
-                : a1zNotImplementedProps.studentInputData
-            "
+            [value]="studentInputData"
             id="studentInputData"
             name="studentInputData"
             disabled
-            [(ngModel)]="a1zNotImplementedProps.studentInputData"
+            [(ngModel)]="a1z.studentInputData"
             required
             autofocus
             [ngClass]="{
-              'ng-invalid ng-dirty':
-                submitted && !a1zNotImplementedProps.studentInputData
+              'ng-invalid ng-dirty': submitted && !a1z.studentId
             }" />
-          <small
-            class="p-error block"
-            *ngIf="submitted && !a1zNotImplementedProps.studentInputData">
+          <small class="p-error block" *ngIf="submitted && !a1z.studentId">
             Maturanti është fushë e kërkuar.
           </small>
         </div>
@@ -65,33 +62,24 @@
             id="isA1"
             name="isA1"
             disabled
-            [(ngModel)]="a1z.isA1"
-            required
-            autofocus
-            [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !a1z.isA1
-            }" />
-          <small class="p-error block" *ngIf="submitted && !a1z.isA1">
-            Tipi I Formuilarit është fushë e kërkuar.
-          </small>
+            [value]="'A1Z'"
+            autofocus />
         </div>
 
-        <!-- TODO: Get this from A1Z Category -->
         <div class="field" [style]="{ width: '500px' }">
-          <label for="a1zCategory">Kategoria</label>
+          <label for="a1ZCategoryId">Kategoria</label>
           <p-dropdown
-            id="a1zCategory"
-            [options]="academicYears"
+            id="a1ZCategoryId"
+            [options]="a1Categories"
             optionValue="key"
+            [filter]="true"
             optionLabel="value"
-            name="a1zCategory"
+            name="a1ZCategoryId"
             [autoDisplayFirst]="false"
-            [(ngModel)]="a1zNotImplementedProps.a1zCategory"
+            [(ngModel)]="a1z.a1ZCategoryId"
             [showClear]="true">
           </p-dropdown>
-          <small
-            class="p-error block"
-            *ngIf="submitted && !a1zNotImplementedProps.a1zCategory">
+          <small class="p-error block" *ngIf="submitted && !a1z.a1ZCategoryId">
             Kategoria është fushë e kërkuar.
           </small>
         </div>
@@ -118,150 +106,118 @@
           </div>
         </div>
 
-        <!-- TODO: Fix the values when backend ready -->
         <div class="field" [style]="{ width: '500px' }">
           <label class="mb-3">Keni marre diplome/deftese pjekurie? *</label>
           <div class="formgrid grid">
             <div class="field-radiobutton col-6">
               <p-radioButton
-                id="hasDiplomaTrue"
-                name="hasDiploma"
+                id="alreadyHaveDiplomaTrue"
+                name="alreadyHaveDiploma"
                 [value]="true"
-                [(ngModel)]="a1zNotImplementedProps.hasDiploma"></p-radioButton>
-              <label for="hasDiplomaTrue">Po</label>
+                [(ngModel)]="a1z.alreadyHaveDiploma"></p-radioButton>
+              <label for="alreadyHaveDiplomaTrue">Po</label>
             </div>
             <div class="field-radiobutton col-6">
               <p-radioButton
-                id="hasDiplomaFalse"
-                name="hasDiploma"
+                id="alreadyHaveDiplomaFalse"
+                name="alreadyHaveDiploma"
                 [value]="false"
-                [(ngModel)]="a1zNotImplementedProps.hasDiploma"></p-radioButton>
-              <label for="hasDiplomaFalse">Jo</label>
+                [(ngModel)]="a1z.alreadyHaveDiploma"></p-radioButton>
+              <label for="alreadyHaveDiplomaFalse">Jo</label>
             </div>
           </div>
         </div>
 
         <div class="field" [style]="{ width: '500px' }">
-          <label for="graduatedYear"
+          <label for="yearOfSchoolA1Z"
             >Viti i perfundimit te shkolles se mesme</label
           >
-          <p-dropdown
-            id="graduatedYear"
-            [options]="academicYears"
-            optionValue="key"
-            optionLabel="value"
-            name="graduatedYear"
-            [autoDisplayFirst]="false"
-            [(ngModel)]="a1zNotImplementedProps.graduatedYear"
-            [showClear]="true">
-          </p-dropdown>
-          <small
-            class="p-error block"
-            *ngIf="submitted && !a1zNotImplementedProps.graduatedYear">
-            Viti i perfundimit te shkolles se mesme është fushë e kërkuar.
-          </small>
+          <input
+            type="number"
+            pInputText
+            id="yearOfSchoolA1Z"
+            name="yearOfSchoolA1Z"
+            [(ngModel)]="a1z.yearOfSchoolA1Z"
+            autofocus />
         </div>
 
         <div class="text-3xl font-semibold mb-3 mt-5">Lendet e Detyruara</div>
 
         <div class="field" [style]="{ width: '500px' }">
           <label class="mb-3">Lëndët e detyruara që do të mbarten: </label>
-          <div class="formgrid grid">
-            <div class="field-radiobutton col-2">
-              <p-radioButton
-                id="neededSubjectsZero"
-                name="neededSubjects"
-                [value]="0"
-                onchange="onNeededSubjectsChange($event)"
-                [(ngModel)]="
-                  a1zNotImplementedProps.neededSubjects
-                "></p-radioButton>
-              <label for="neededSubjectsZero">Jo</label>
-            </div>
-            <div class="field-radiobutton col-2">
-              <p-radioButton
-                id="neededSubjectsOne"
-                name="neededSubjects"
-                [value]="1"
-                onchange="onNeededSubjectsChange($event)"
-                [(ngModel)]="
-                  a1zNotImplementedProps.neededSubjects
-                "></p-radioButton>
-              <label for="neededSubjectsOne">1</label>
-            </div>
-            <div class="field-radiobutton col-2">
-              <p-radioButton
-                id="neededSubjectsTwo"
-                name="isWithCompetition"
-                [value]="2"
-                onchange="onNeededSubjectsChange($event)"
-                [(ngModel)]="
-                  a1zNotImplementedProps.neededSubjects
-                "></p-radioButton>
-              <label for="neededSubjectsTwo">2</label>
-            </div>
-            <div class="field-radiobutton col-2">
-              <p-radioButton
-                id="neededSubjectsThree"
-                name="isWithCompetition"
-                [value]="3"
-                onchange="onNeededSubjectsChange($event)"
-                [(ngModel)]="
-                  a1zNotImplementedProps.neededSubjects
-                "></p-radioButton>
-              <label for="neededSubjectsThree">3</label>
-            </div>
-          </div>
         </div>
 
         <div class="field">
           <div class="formgrid grid">
+            <div class="field-checkbox ml-3 mr-3 mt-4">
+              <p-checkbox
+                (onChange)="onSubjectD1Change($event)"
+                [binary]="true"
+                inputId="binary"></p-checkbox>
+              <label for="binary">Lenda D1</label>
+            </div>
             <div class="field col-2">
-              <label for="d1Subject">Lenda e detyruar D1</label>
-              <input
-                type="text"
-                pInputText
-                id="d1Subject"
+              <label for="subjectD1A1ZId">Lenda e detyruar D1</label>
+              <p-dropdown
+                id="carriedSubjectD1"
+                [options]="d1ExamSubjects"
+                optionValue="key"
+                optionLabel="value"
+                name="carriedSubjectD1"
+                [filter]="true"
                 [disabled]="disableD1Subject"
-                name="d1Subject"
-                [(ngModel)]="a1zNotImplementedProps.d1Subject"
-                required
-                autofocus />
+                [autoDisplayFirst]="false"
+                [(ngModel)]="a1z.carriedSubjectD1"
+                [showClear]="true">
+              </p-dropdown>
             </div>
             <div class="field col-2" [style]="{ width: '100px' }">
-              <label for="d1Grade">Nota e gjetur</label>
+              <label for="carriedGradeD1">Nota e gjetur</label>
               <input
                 type="number"
                 pInputText
-                id="d1Grade"
+                max="10"
+                min="4"
+                id="carriedGradeD1"
                 [disabled]="disableD1Subject"
-                name="d1Grade"
-                [(ngModel)]="a1zNotImplementedProps.d1Grade"
-                required
+                [value]="
+                  a1z.scoreD1A1Z !== undefined
+                    ? a1z.scoreD1A1Z
+                    : a1z.carriedGradeD1
+                "
+                name="carriedGradeD1"
+                [(ngModel)]="a1z.scoreD1A1Z"
+                [required]="disableD1Subject"
                 autofocus />
             </div>
             <div class="field col-2" [style]="{ width: '100px' }">
-              <label for="d1Grade">Nota D1</label>
+              <label for="carriedGradeD1">Nota D1</label>
               <input
                 type="number"
                 pInputText
                 [disabled]="disableD1Subject"
-                id="d1Grade"
-                name="d1Grade"
-                [(ngModel)]="a1zNotImplementedProps.d1Grade"
-                required
+                max="10"
+                min="4"
+                [value]="
+                  a1z.scoreD1A1Z !== undefined
+                    ? a1z.scoreD1A1Z
+                    : a1z.carriedGradeD1
+                "
+                id="carriedGradeD1"
+                name="carriedGradeD1"
+                [(ngModel)]="a1z.scoreD1A1Z"
+                [required]="disableD1Subject"
                 autofocus />
             </div>
             <div class="field col-2">
-              <label for="d1Reason">Arsye</label>
+              <label for="carriedReasonD1">Arsye</label>
               <input
                 type="text"
                 pInputText
                 [disabled]="disableD1Subject"
-                id="d1Reason"
-                name="d1Reason"
-                [(ngModel)]="a1zNotImplementedProps.d1Reason"
-                required
+                id="carriedReasonD1"
+                name="carriedReasonD1"
+                [(ngModel)]="a1z.carriedReasonD1"
                 autofocus />
             </div>
           </div>
@@ -269,52 +225,75 @@
 
         <div class="field">
           <div class="formgrid grid">
+            <div class="field-checkbox ml-3 mr-3 mt-4">
+              <p-checkbox
+                (onChange)="onSubjectD2Change($event)"
+                [binary]="true"
+                inputId="binary"></p-checkbox>
+              <label for="binary">Lenda D2</label>
+            </div>
             <div class="field col-2">
-              <label for="d2Subject">Lenda e detyruar D2</label>
+              <label for="carriedSubjectD2">Lenda e detyruar D2</label>
+              <p-dropdown
+                id="carriedSubjectD2"
+                [options]="d2ExamSubjects"
+                optionValue="key"
+                [filter]="true"
+                optionLabel="value"
+                [disabled]="disableD2Subject"
+                name="carriedSubjectD2"
+                [autoDisplayFirst]="false"
+                [(ngModel)]="a1z.carriedSubjectD2"
+                [showClear]="true">
+              </p-dropdown>
+            </div>
+            <div class="field col-2" [style]="{ width: '100px' }">
+              <label for="carriedGradeD2">Nota e gjetur</label>
+              <input
+                type="number"
+                pInputText
+                max="10"
+                min="4"
+                [value]="
+                  a1z.scoreD1A1Z !== undefined
+                    ? a1z.scoreD2A1Z
+                    : a1z.carriedGradeD2
+                "
+                [disabled]="disableD2Subject"
+                id="carriedGradeD2"
+                name="carriedGradeD2"
+                [(ngModel)]="a1z.scoreD2A1Z"
+                [required]="disableD2Subject"
+                autofocus />
+            </div>
+            <div class="field col-2" [style]="{ width: '100px' }">
+              <label for="carriedGradeD2">Nota D2</label>
+              <input
+                type="number"
+                pInputText
+                max="10"
+                min="4"
+                [value]="
+                  a1z.scoreD1A1Z !== undefined
+                    ? a1z.scoreD2A1Z
+                    : a1z.carriedGradeD2
+                "
+                id="carriedGradeD2"
+                [disabled]="disableD2Subject"
+                name="carriedGradeD2"
+                [(ngModel)]="a1z.scoreD2A1Z"
+                [required]="disableD2Subject"
+                autofocus />
+            </div>
+            <div class="field col-2">
+              <label for="carriedReasonD2">Arsye</label>
               <input
                 type="text"
                 pInputText
                 [disabled]="disableD2Subject"
-                id="d2Subject"
-                name="d2Subject"
-                [(ngModel)]="a1zNotImplementedProps.d2Subject"
-                required
-                autofocus />
-            </div>
-            <div class="field col-2" [style]="{ width: '100px' }">
-              <label for="d2Grade">Nota e gjetur</label>
-              <input
-                type="number"
-                pInputText
-                [disabled]="disableD2Subject"
-                id="d2Grade"
-                name="d2Grade"
-                [(ngModel)]="a1zNotImplementedProps.d2Grade"
-                required
-                autofocus />
-            </div>
-            <div class="field col-2" [style]="{ width: '100px' }">
-              <label for="d2Grade">Nota D2</label>
-              <input
-                type="number"
-                pInputText
-                id="d2Grade"
-                [disabled]="disableD2Subject"
-                name="d2Grade"
-                [(ngModel)]="a1zNotImplementedProps.d2Grade"
-                required
-                autofocus />
-            </div>
-            <div class="field col-2">
-              <label for="d2Reason">Arsye</label>
-              <input
-                type="text"
-                pInputText
-                [disabled]="disableD2Subject"
-                id="d2Reason"
-                name="d2Reason"
-                [(ngModel)]="a1zNotImplementedProps.d2Reason"
-                required
+                id="carriedReasonD2"
+                name="carriedReasonD2"
+                [(ngModel)]="a1z.carriedReasonD2"
                 autofocus />
             </div>
           </div>
@@ -322,52 +301,76 @@
 
         <div class="field">
           <div class="formgrid grid">
+            <div class="field-checkbox ml-3 mr-3 mt-4">
+              <p-checkbox
+                (onChange)="onSubjectD3Change($event)"
+                [binary]="true"
+                inputId="binary"></p-checkbox>
+              <label for="binary">Lenda D3</label>
+            </div>
             <div class="field col-2">
-              <label for="d3Subject">Lenda e detyruar D3</label>
-              <input
-                type="text"
-                pInputText
-                id="d3Subject"
+              <label for="subjectD3A1ZId">Lenda e detyruar D3</label>
+              <p-dropdown
+                id="carriedSubjectD3"
+                [options]="d3ExamSubjects"
+                optionValue="key"
+                optionLabel="value"
+                name="carriedSubjectD3"
+                [placeholder]="'Lenda D3'"
+                [filter]="true"
                 [disabled]="disableD3Subject"
-                name="d3Subject"
-                [(ngModel)]="a1zNotImplementedProps.d3Subject"
-                required
-                autofocus />
+                [autoDisplayFirst]="false"
+                [(ngModel)]="a1z.carriedSubjectD3"
+                [showClear]="true">
+              </p-dropdown>
             </div>
             <div class="field col-2" [style]="{ width: '100px' }">
-              <label for="d3Grade">Nota e gjetur</label>
+              <label for="carriedGradeD3">Nota e gjetur</label>
               <input
                 type="number"
                 pInputText
+                max="10"
+                min="4"
+                [value]="
+                  a1z.scoreD1A1Z !== undefined
+                    ? a1z.scoreD3A1Z
+                    : a1z.carriedGradeD3
+                "
                 [disabled]="disableD3Subject"
-                id="d3Grade"
-                name="d3Grade"
-                [(ngModel)]="a1zNotImplementedProps.d3Grade"
-                required
+                id="carriedGradeD3"
+                name="carriedGradeD3"
+                [(ngModel)]="a1z.scoreD3A1Z"
+                [required]="disableD3Subject"
                 autofocus />
             </div>
             <div class="field col-2" [style]="{ width: '100px' }">
-              <label for="d3Grade">Nota D3</label>
+              <label for="carriedGradeD3">Nota D3</label>
               <input
                 type="number"
                 pInputText
+                max="10"
+                min="4"
+                [value]="
+                  a1z.scoreD1A1Z !== undefined
+                    ? a1z.scoreD3A1Z
+                    : a1z.carriedGradeD3
+                "
                 [disabled]="disableD3Subject"
-                id="d3Grade"
-                name="d3Grade"
-                [(ngModel)]="a1zNotImplementedProps.d3Grade"
-                required
+                id="carriedGradeD3"
+                name="carriedGradeD3"
+                [(ngModel)]="a1z.scoreD3A1Z"
+                [required]="disableD3Subject"
                 autofocus />
             </div>
             <div class="field col-2">
-              <label for="d3Reason">Arsye</label>
+              <label for="carriedReasonD3">Arsye</label>
               <input
                 type="text"
                 pInputText
                 [disabled]="disableD3Subject"
-                id="d3Reason"
-                name="d3Reason"
-                [(ngModel)]="a1zNotImplementedProps.d3Reason"
-                required
+                id="carriedReasonD3"
+                name="carriedReasonD3"
+                [(ngModel)]="a1z.carriedReasonD3"
                 autofocus />
             </div>
           </div>
@@ -378,156 +381,139 @@
         </div>
 
         <div class="field" [style]="{ width: '500px' }">
-          <label for="d1Subject">Lenda D1:</label>
-          <input
-            type="text"
-            pInputText
-            id="d1Subject"
-            name="d1Subject"
-            [(ngModel)]="a1zNotImplementedProps.d1Subject"
-            required
-            autofocus />
+          <label for="subjectD1A1ZId">Lenda D1:</label>
+          <p-dropdown
+            id="subjectD1A1ZId"
+            [options]="d1ExamSubjects"
+            optionValue="key"
+            optionLabel="value"
+            [placeholder]="'Lenda D1'"
+            [filter]="true"
+            [disabled]="false"
+            name="subjectD1A1ZId"
+            [autoDisplayFirst]="false"
+            [(ngModel)]="a1z.subjectD1A1ZId"
+            [showClear]="true">
+          </p-dropdown>
         </div>
+
         <div class="field" [style]="{ width: '500px' }">
-          <label for="d2Subject">Lenda D2:</label>
-          <input
-            type="text"
-            pInputText
-            id="d2Subject"
-            name="d2Subject"
-            [(ngModel)]="a1zNotImplementedProps.d2Subject"
-            required
-            autofocus />
+          <label for="subjectD2A1ZId">Lenda D2:</label>
+          <p-dropdown
+            id="subjectD2A1ZId"
+            [options]="d2ExamSubjects"
+            [filter]="true"
+            optionValue="key"
+            optionLabel="value"
+            [placeholder]="'Lenda D2'"
+            [disabled]="false"
+            name="subjectD2A1ZId"
+            [autoDisplayFirst]="false"
+            [(ngModel)]="a1z.subjectD2A1ZId"
+            [showClear]="true">
+          </p-dropdown>
         </div>
+
         <div class="field" [style]="{ width: '500px' }">
-          <label for="d3Subject">Lenda D3:</label>
-          <input
-            type="text"
-            pInputText
-            id="d3Subject"
-            name="d3Subject"
-            [(ngModel)]="a1zNotImplementedProps.d3Subject"
-            required
-            autofocus />
+          <label for="subjectD3A1ZId">Lenda D3:</label>
+          <p-dropdown
+            id="subjectD3A1ZId"
+            [options]="d3ExamSubjects"
+            [filter]="true"
+            optionValue="key"
+            [placeholder]="'Lenda D3'"
+            optionLabel="value"
+            name="subjectD3A1ZId"
+            [disabled]="false"
+            [autoDisplayFirst]="false"
+            [(ngModel)]="a1z.subjectD3A1ZId"
+            [showClear]="true">
+          </p-dropdown>
         </div>
 
         <div class="text-3xl font-semibold mb-3 mt-5">Lendet me zgjedhje</div>
 
-        <div class="field" [style]="{ width: '500px' }">
-          <label class="mb-3">Lendet me zgjedhje qe do te mbarten: </label>
+        <div class="field">
           <div class="formgrid grid">
-            <div class="field-radiobutton col-2">
-              <p-radioButton
-                id="hasZ1SubjetcTrue"
-                name="hasZ1Subject"
-                [value]="false"
-                [(ngModel)]="
-                  a1zNotImplementedProps.hasZ1Subject
-                "></p-radioButton>
-              <label for="hasZ1SubjetcTrue">Jo</label>
+            <div class="field-checkbox ml-3 mr-3 mt-4">
+              <p-checkbox
+                (onChange)="onSubjectZ1Change($event)"
+                [binary]="true"
+                inputId="binary"></p-checkbox>
+              <label for="binary">Lenda Z1</label>
             </div>
-            <div class="field-radiobutton col-2">
-              <p-radioButton
-                id="hasZ1SubjetcFalse"
-                name="hasZ1Subject"
-                [value]="true"
-                [(ngModel)]="
-                  a1zNotImplementedProps.hasZ1Subject
-                "></p-radioButton>
-              <label for="hasZ1SubjetcFalse">1</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="field" [hidden]="!a1zNotImplementedProps.hasZ1Subject">
-          <div class="formgrid grid">
             <div class="field col-2">
-              <label for="z1Year">Viti</label>
+              <label for="yearZ1">Viti</label>
+              <input
+                type="number"
+                pInputText
+                id="yearZ1"
+                [disabled]="disableZ1Subject"
+                name="yearZ1"
+                [(ngModel)]="a1z.yearZ1"
+                autofocus />
+            </div>
+
+            <div class="field" [style]="{ width: '500px' }">
+              <label for="carriedSubjectAZ1">Lenda me zgjedhje:</label>
               <p-dropdown
-                id="z1Year"
-                [options]="academicYears"
+                id="carriedSubjectAZ1"
+                [filter]="true"
+                [options]="z1ExamSubjects"
                 optionValue="key"
                 optionLabel="value"
-                name="z1Year"
-                [disabled]="!a1zNotImplementedProps.hasZ1Subject"
-                [required]="a1zNotImplementedProps.hasZ1Subject"
+                name="carriedSubjectAZ1"
+                [disabled]="disableZ1Subject"
                 [autoDisplayFirst]="false"
-                [(ngModel)]="a1zNotImplementedProps.z1Year"
+                [(ngModel)]="a1z.carriedSubjectZ1"
                 [showClear]="true">
               </p-dropdown>
-              <small
-                class="p-error block"
-                *ngIf="submitted && !a1zNotImplementedProps.graduatedYear">
-                Viti është fushë e kërkuar.
-              </small>
             </div>
-            <div class="field col-2">
-              <label for="z1Subject">Lenda me zgjedhje:</label>
-              <input
-                type="text"
-                pInputText
-                id="z1Subject"
-                name="z1Subject"
-                [disabled]="!a1zNotImplementedProps.hasZ1Subject"
-                [(ngModel)]="a1zNotImplementedProps.z1Subject"
-                [required]="a1zNotImplementedProps.hasZ1Subject"
-                autofocus />
-              <small
-                class="p-error block"
-                *ngIf="submitted && !a1zNotImplementedProps.graduatedYear">
-                Lenda me zgjedhje është fushë e kërkuar.
-              </small>
-            </div>
+
             <div class="field col-2" [style]="{ width: '100px' }">
-              <label for="z1Grade">Nota e gjetur</label>
+              <label for="carriedGradeAZ1">Nota e gjetur</label>
               <input
                 type="number"
                 pInputText
-                id="z1Grade"
-                name="z1Grade"
-                [(ngModel)]="a1zNotImplementedProps.z1Grade"
-                [required]="a1zNotImplementedProps.hasZ1Subject"
-                [disabled]="!a1zNotImplementedProps.hasZ1Subject"
+                max="10"
+                min="4"
+                [value]="
+                  a1z.scoreZ1A1Z !== undefined
+                    ? a1z.scoreZ1A1Z
+                    : a1z.carriedGradeZ1
+                "
+                id="carriedGradeAZ1"
+                name="carriedGradeAZ1"
+                [(ngModel)]="a1z.scoreZ1A1Z"
+                [disabled]="disableZ1Subject"
                 autofocus />
-              <small
-                class="p-error block"
-                *ngIf="submitted && !a1zNotImplementedProps.graduatedYear">
-                Nota e gjetur është fushë e kërkuar.
-              </small>
             </div>
             <div class="field col-2" [style]="{ width: '100px' }">
-              <label for="z1Grade">Nota Z1</label>
+              <label for="carriedGradeAZ1">Nota Z1</label>
               <input
                 type="number"
                 pInputText
-                id="z1Grade"
-                name="z1Grade"
-                [(ngModel)]="a1zNotImplementedProps.z1Grade"
-                [required]="a1zNotImplementedProps.hasZ1Subject"
-                [disabled]="!a1zNotImplementedProps.hasZ1Subject"
+                id="carriedGradeAZ1"
+                name="carriedGradeAZ1"
+                max="10"
+                [value]="
+                  a1z.scoreZ1A1Z !== undefined ? a1z.scoreZ1A1Z : a1z.scoreZ1A1Z
+                "
+                min="4"
+                [(ngModel)]="a1z.carriedGradeZ1"
+                [disabled]="disableZ1Subject"
                 autofocus />
-              <small
-                class="p-error block"
-                *ngIf="submitted && !a1zNotImplementedProps.graduatedYear">
-                Nota Z1 është fushë e kërkuar.
-              </small>
             </div>
             <div class="field col-2">
-              <label for="z1Reason">Arsye</label>
+              <label for="carriedReasonAZ1">Arsye</label>
               <input
                 type="text"
                 pInputText
-                id="z1Reason"
-                name="z1Reason"
-                [(ngModel)]="a1zNotImplementedProps.z1Reason"
-                [required]="a1zNotImplementedProps.hasZ1Subject"
-                [disabled]="!a1zNotImplementedProps.hasZ1Subject"
+                id="carriedReasonAZ1"
+                name="carriedReasonAZ1"
+                [(ngModel)]="a1z.carriedReasonAZ1"
+                [disabled]="disableZ1Subject"
                 autofocus />
-              <small
-                class="p-error block"
-                *ngIf="submitted && !a1zNotImplementedProps.graduatedYear">
-                Arsyeja është fushë e kërkuar.
-              </small>
             </div>
           </div>
         </div>
@@ -537,29 +523,17 @@
         </div>
 
         <div class="field" [style]="{ width: '500px' }">
-          <label for="z1Subject">Lendet me zgjedhje</label>
+          <label for="subjectZ1A1ZId">Lenda Z1:</label>
           <p-dropdown
-            id="z1Subject"
-            [options]="academicYears"
-            optionValue="value"
+            id="subjectZ1A1ZId"
+            [options]="z1ExamSubjects"
+            optionValue="key"
             optionLabel="value"
-            name="z1Subject"
+            [filter]="true"
+            name="subjectZ1A1ZId"
+            [disabled]="false"
             [autoDisplayFirst]="false"
-            [(ngModel)]="a1zNotImplementedProps.z1Subject"
-            [showClear]="true">
-          </p-dropdown>
-        </div>
-
-        <div class="field" [style]="{ width: '500px' }">
-          <label for="z1Subject">Lendet e zgjedhura</label>
-          <p-dropdown
-            id="z1Subject"
-            [options]="academicYears"
-            optionValue="value"
-            optionLabel="value"
-            name="z1Subject"
-            [autoDisplayFirst]="false"
-            [(ngModel)]="a1zNotImplementedProps.z1Subject"
+            [(ngModel)]="a1z.subjectZ1A1ZId"
             [showClear]="true">
           </p-dropdown>
         </div>
@@ -571,19 +545,22 @@
             pInputText
             id="overseerCode"
             name="overseerCode"
-            [(ngModel)]="a1zNotImplementedProps.overseerCode"
+            required
+            [(ngModel)]="a1z.overSeerCode"
             autofocus />
+          <small class="p-error block" *ngIf="submitted && !a1z.overSeerCode">
+            Kodi i mbikqyrësit është fushë e kërkuar.
+          </small>
         </div>
 
         <div class="flex justify-content-end">
-          <a href="/configurations/a1z">
-            <button
-              type="button"
-              pButton
-              icon="pi pi-times"
-              label="Anullo"
-              class="p-button-text w-auto mr-2"></button>
-          </a>
+          <button
+            type="button"
+            pButton
+            (click)="onExitForm()"
+            icon="pi pi-times"
+            label="Anullo"
+            class="p-button-text w-auto mr-2"></button>
           <button
             type="submit"
             pButton
@@ -607,8 +584,11 @@
   (onHide)="onStudentHide()">
   <ng-template pTemplate="content">
     <msh-a1z-student-search
-      [students]="students"
-      (gridEvent)="onGridEvent($event)">
+      [students]="(studentList$ | async) || []"
+      [totalRecords]="totalRecords"
+      (gridEvent)="onGridEvent($event)"
+      (ngModelChange)="getSubjectDropdown($event)"
+      (lazyLoadData)="getStudents($event)">
     </msh-a1z-student-search>
   </ng-template>
 </p-dialog>
