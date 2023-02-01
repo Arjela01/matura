@@ -63,7 +63,7 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
-id: any;
+
 
   submitted = false;
   saving = false;

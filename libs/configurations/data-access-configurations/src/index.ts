@@ -24,3 +24,4 @@ export * from './lib/a1z-category/a1z-category-api.service'
 export * from './lib/archive-folder/archive-folder-api.service'
 export * from './lib/a1z-category/a1z-category-api.service';
 export * from './lib/exam-date/exam-date-api.service'
+export * from './lib/add-barcode/add-barcode-api.service'

@@ -22,15 +22,16 @@ import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
 import {
+  AddBarcodeApiService,
   ArchiveFolderApiService,
   ExamTypeApiService,
   ExamVersionApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
 import {
-  ArchiveFolder,
-  HighSchool,
-  Student,
+  AddBarcode, ArchiveFolder,
+
+
 } from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
@@ -42,7 +43,6 @@ import {
 
 import { BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { BarCodeFormComponent } from '../bar-code-form/bar-code-form.component';
 import { BarCodeGridComponent } from '../bar-code-grid/bar-code-grid.component';
 import { NgForm } from '@angular/forms';
 
@@ -55,7 +55,6 @@ import { NgForm } from '@angular/forms';
     CommonModule,
     DialogModule,
     ConfirmDialogModule,
-    BarCodeFormComponent,
     BarCodeGridComponent,
     ToolbarModule,
     RouterLink,
@@ -69,63 +68,58 @@ export class ManageBarCodesComponent implements OnInit {
   @Input() loading = false;
 
   @Output() gridEvent = new EventEmitter<
-    GridEvent<ArchiveFolder | ArchiveFolder[]>
+    GridEvent<AddBarcode | AddBarcode[]>
   >();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
-  @Output() formSave = new EventEmitter<ArchiveFolder>();
-  @Input() set archiveFolderDetails(details: ArchiveFolder | null) {
+  @Output() formSave = new EventEmitter<AddBarcode>();
+
+  @Input() set barCodeDetails(details: AddBarcode | null) {
     if (details) {
-      this.archiveFolder = Object.assign({}, details);
+      this.barCode = Object.assign({}, details);
     }
   }
-  @ViewChild('form', { static: true }) form!: NgForm;
 
-  private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[]>([]);
-  archiveFolders$ = this.archiveFolders$$.asObservable();
+  @ViewChild('form', {static: true}) form!: NgForm;
+
+  private barCodes$$ = new BehaviorSubject<AddBarcode[]>([]);
+  barCodes$ = this.barCodes$$.asObservable();
   filters: LazyLoadEvent | null = null;
   totalRecords = 0;
 
-  selectedArchiveFolder: ArchiveFolder | null = null;
-  selectedArchiveFolders: ArchiveFolder[] = [];
+  selectedBarCode: AddBarcode | null = null;
+  selectedBarCodes: AddBarcode[] = [];
   displayModal = false;
-  examType: DropdownModel<number>[] = [];
-  examVersion: DropdownModel<number>[] = [];
+
   constructor(
     private cd: ChangeDetectorRef,
-
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly archiveFolderService: ArchiveFolderApiService,
     private readonly examTypeApiService: ExamTypeApiService,
+    private readonly barCodesService: AddBarcodeApiService,
     private readonly examVersionApiService: ExamVersionApiService,
     private readonly studentAPITestService: StudentsApiService,
     private router: Router,
     private messageService: MessageService,
-
     private route: ActivatedRoute
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
 
-  archiveFolder: ArchiveFolder = {
-    examTypeName: '',
-    examTypeId: 0,
-    examSubjectId: '',
-    examSubjectName: '',
-    id: 0,
-    isClosed: false,
-    lastUserId: undefined,
-    nr: 0,
+  barCode: AddBarcode = {
+    index: 0,
+    archiveFolderId: 0,
+    barCode: "",
   };
   id: string | null;
 
   ngOnInit(): void {
-    this.archiveFolderService.getById(this.id).subscribe(result => {
-      this.archiveFolder = { ...result.data };
+    this.barCodesService.getById(this.id).subscribe(result => {
+      this.barCode = {...result.data};
       this.cd.detectChanges();
     });
   }
+
   onCloseClick() {
     this.router.navigate(['/configurations/students']).then();
   }
@@ -144,42 +138,50 @@ export class ManageBarCodesComponent implements OnInit {
     });
   }
 
-  onGridEvent(event: GridEvent<ArchiveFolder | ArchiveFolder[]>) {
+  onGridEvent(event: GridEvent<AddBarcode | AddBarcode[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
-        this.selectedArchiveFolders = [
-          ...this.selectedArchiveFolders,
-          event.data as ArchiveFolder,
+        this.selectedBarCodes = [
+          ...this.selectedBarCodes,
+          event.data as AddBarcode,
         ];
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
-        this.selectedArchiveFolders = this.selectedArchiveFolders.filter(hs => {
-          hs.id !== (event.data as ArchiveFolder).id;
+        this.selectedBarCodes = this.selectedBarCodes.filter(hs => {
+          hs.archiveFolderId !== (event.data as AddBarcode).archiveFolderId;
         });
         break;
 
       case GRID_ACTIONS.SELECT_MANY:
-        this.selectedArchiveFolders = [
-          ...this.selectedArchiveFolders,
-          ...(event.data as ArchiveFolder[]),
+        this.selectedBarCodes = [
+          ...this.selectedBarCodes,
+          ...(event.data as AddBarcode[]),
         ];
         break;
       case GRID_ACTIONS.UNSELECT_ALL:
-        this.selectedArchiveFolders = [];
+        this.selectedBarCodes = [];
         break;
       case GRID_ACTIONS.EDIT:
         // eslint-disable-next-line max-len
-        this.selectedArchiveFolder = Object.assign(
+        this.selectedBarCode = Object.assign(
           {},
-          event.data as ArchiveFolder
+          event.data as AddBarcode
         );
         this.displayModal = true;
         break;
-      case GRID_ACTIONS.DELETE:
+      // case GRID_ACTIONS.DELETE:
+      //   this.confirmationService.confirm({
+      //     message: 'Jeni i sigurt që doni të fshini shkollën e zgjedhur?',
+      //     accept: () => {
+      //       this.deleteBarCode(event.data as AddBarcode);
+      //     },
+      //   });
+      //   break;
+      case GRID_ACTIONS.CHANGE:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të fshini shkollën e zgjedhur?',
+          message: 'Doni te shotni Barkodin?',
           accept: () => {
-            this.deleteArchiveFolder(event.data as ArchiveFolder);
+            this.addBarCode(event.data as AddBarcode);
           },
         });
         break;
@@ -190,37 +192,37 @@ export class ManageBarCodesComponent implements OnInit {
     this.displayModal = false;
   }
 
-  onFormSave(archiveFolder: ArchiveFolder) {
-    if (archiveFolder.id) {
-      this.updateArchiveFolder(archiveFolder);
+  onFormSave(barCode: AddBarcode) {
+    if (barCode.barCode) {
+      this.updateBarCode(barCode);
     }
-    if (!archiveFolder.id) {
-      this.addArchiveFolder(archiveFolder);
+    if (!barCode.barCode) {
+      this.addBarCode(barCode);
     }
   }
 
-  getArchiveFolders($event: LazyLoadEvent) {
+  getBarCodes($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    this.archiveFolderService
-      .loadArchiveFolder($event)
+    this.barCodesService
+      .loadAddBarcode($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.archiveFolders$$.next([]);
-        this.archiveFolders$$.next(response.data);
+        this.barCodes$$.next([]);
+        this.barCodes$$.next(response.data);
         this.totalRecords = response.total;
       });
   }
 
-  addArchiveFolder(archiveFolder: ArchiveFolder) {
-    this.archiveFolderService
-      .save(archiveFolder)
+  addBarCode(barCode: AddBarcode) {
+    this.barCodesService
+      .save(barCode)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Shkolla e mesme u shtua me sukses!');
           this.displayModal = false;
-          this.getArchiveFolders(this.filters as LazyLoadEvent);
+          this.getBarCodes(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
@@ -230,9 +232,9 @@ export class ManageBarCodesComponent implements OnInit {
       });
   }
 
-  updateArchiveFolder(archiveFolder: ArchiveFolder) {
-    this.archiveFolderService
-      .update(archiveFolder)
+  updateBarCode(barCode: AddBarcode) {
+    this.barCodesService
+      .update(barCode)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
@@ -240,7 +242,7 @@ export class ManageBarCodesComponent implements OnInit {
             'Shkolla e mesme u ndryshua me sukses!'
           );
           this.displayModal = false;
-          this.getArchiveFolders(this.filters as LazyLoadEvent);
+          this.getBarCodes(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
@@ -249,38 +251,21 @@ export class ManageBarCodesComponent implements OnInit {
           );
       });
   }
-
-  deleteArchiveFolder(archiveFolder: ArchiveFolder) {
-    this.archiveFolderService
-      .delete(archiveFolder.id)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showInfo('Shkolla e mesme u fshi me sukses!');
-          this.getArchiveFolders(this.filters as LazyLoadEvent);
-        }
-
-        if (response.isBadRequest)
-          this.toastService.showError(
-            'Ndodhi një problem gjatë fshirjes së shkollës së mesme!'
-          );
-      });
-  }
-
-  getExamTypeDropdown() {
-    this.examTypeApiService
-      .loadDropdownList()
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.examType = response.data;
-      });
-  }
-  getExamVersionDropdown() {
-    this.examVersionApiService
-      .loadDropdownList()
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.examVersion = response.data;
-      });
-  }
 }
+//   deleteBarCode(barcode: AddBarcode) {
+//     this.barCodesService
+//       .delete(barcode.barCode)
+//       .pipe(untilDestroyed(this))
+//       .subscribe(response => {
+//         if (response.isSuccessful) {
+//           this.toastService.showInfo('Shkolla e mesme u fshi me sukses!');
+//           this.getBarCodes(this.filters as LazyLoadEvent);
+//         }
+//
+//         if (response.isBadRequest)
+//           this.toastService.showError(
+//             'Ndodhi një problem gjatë fshirjes së shkollës së mesme!'
+//           );
+//       });
+//   }
+// }

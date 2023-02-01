@@ -2,7 +2,7 @@
   #dt
   dataKey="id"
   responsiveLayout="scroll"
-  [value]="archiveFolders"
+  [value]="barCodes"
   [totalRecords]="totalRecords"
   [rows]="10"
   [paginator]="true"
@@ -10,15 +10,17 @@
   [showCurrentPageReport]="true"
   currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
   [rowHover]="true"
-  [(selection)]="selectedArchiveFolders"
+  [(selection)]="selectedBarCodes"
   selectionMode="multiple"
   (onRowSelect)="onRowSelect($event)"
   (onRowUnselect)="onRowUnselect($event)"
   (onLazyLoad)="loadRows($event)"
   [lazy]="true">
-  <ng-template pTemplate="caption">
-    <div class="flex flex-column mt-2 md:col-3 md:align-items-center">
-        <div class="p-inputgroup">
+  <ng-template pTemplate="caption" >
+  <div class="flex flex-column mt-2 md:col-3 md:align-items-center">
+    <form #form="ngForm" (ngSubmit)="onSubmit()">
+
+    <div class="p-inputgroup">
           <button
             type="button"
             pButton
@@ -34,7 +36,7 @@
                  placeholder="Barkodi"
                  id="examType"
                  name="examType"
-                 [(ngModel)]="archiveFolder.examTypeId"
+                 [(ngModel)]="barCode.barCode"
                  required/>
           <button
             type="button"
@@ -43,11 +45,11 @@
             icon="pi pi-save"
             label="Ruaj"
             class="p-button-success mr-2"
-            (click)="onSaveBarCode"
-     ></button>
+            (click)="changeStatus(barCode)"
+         ></button>
         </div>
+    </form>
     </div>
-
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
@@ -70,13 +72,13 @@
       <th></th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-archiveFolder>
+  <ng-template pTemplate="body" let-barcode>
     <tr>
       <td style="width: 14%; min-width: 10rem">
-        {{ archiveFolder.id }}
+        {{ barcode.index }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{archiveFolder.examTypeName}}
+        {{barcode.archiveFolderId}}
       </td>
 
 
@@ -90,7 +92,7 @@
             class="p-button-rounded p-button-warning p-button-text mr-2"
             pTooltip="Ndrysho"
             tooltipPosition="bottom"
-            (click)="onEditClick(archiveFolder)"></button>
+            (click)="onEditClick(barcode)"></button>
           <button
             pButton
             pRipple
@@ -98,7 +100,7 @@
             class="p-button-rounded p-button-danger p-button-text"
             pTooltip="Fshi"
             tooltipPosition="bottom"
-            (click)="onDeleteClick(archiveFolder)"></button>
+            (click)="onDeleteClick(barcode)"></button>
         </div>
       </td>
     </tr>

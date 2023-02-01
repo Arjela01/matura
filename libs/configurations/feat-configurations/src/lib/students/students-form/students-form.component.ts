@@ -5,7 +5,8 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges, OnInit,
+  OnChanges,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -77,9 +78,9 @@ export class StudentsFormComponent implements OnInit, OnChanges {
   submitted = false;
 
   student: Student = {
-    createdName: "",
+    createdName: '',
     createdOn: new Date(),
-    modifiedByName: "",
+    modifiedByName: '',
     modifiedOn: new Date(),
     birthDate: new Date(),
     birthPlace: '',
@@ -110,7 +111,7 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     registrationYearId: undefined,
 
     isConfirmedBySupervisor: true,
-    graduationYear: undefined
+    graduationYear: undefined,
   };
 
   finishedAtSameSchool = true;

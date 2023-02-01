@@ -18,20 +18,20 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="examTypes">
+      <th pSortableColumn="nr">
         Dosja
-        <p-sortIcon field="examTypes"></p-sortIcon>
+        <p-sortIcon field="nr"></p-sortIcon>
         <p-columnFilter
           type="numeric"
-          field="examTypes"
+          field="nr"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="examTypes">
+      <th pSortableColumn="total">
         Total
-        <p-sortIcon field="examTypes"></p-sortIcon>
+        <p-sortIcon field="total"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="examTypes"
+          field="total"
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="examType">
@@ -86,10 +86,9 @@
         <button
           pButton
           pRipple
-          style="color: black;"
-          [ngStyle]="{ 'background-color': archiveFolder.isClosed ? '#c8e6c9' : '#feedaf' }">
+          [ngStyle]="{ 'background-color': archiveFolder.isClosed ? '#c8e6c9' : '#feedaf', 'color': archiveFolder.isClosed ? '#256029' : '#8a5340' }">
           <span>
-            {{archiveFolder.isClosed ? 'Mbyllur ' : 'Aktiv' }}
+            {{archiveFolder.isClosed ? 'MBYLLUR ' : 'AKTIV' }}
           </span>
         </button>
       </td>
