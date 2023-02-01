@@ -6,7 +6,7 @@ import {
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
-import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
+import { Observable, catchError, map, shareReplay, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +16,10 @@ export class ExamSubjectApiService {
 
   loadExamSubjects(event: LazyLoadEvent): Observable<ExamSubjectTableView> {
     return this.apiService.post(`/api/ExamSubject/TableData`, event);
+  }
+
+  loadDropDownList(): Observable<ApiResult<DropdownModel<number>[]>> {
+    return this.apiService.get(`/api/ExamSubject/DropdownList`);
   }
 
   save(examSubject: ExamSubject): Observable<ApiResult<ExamSubject>> {

@@ -6,6 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
+import { Student } from '@msh/configurations/domain-configurations';
 import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -32,37 +33,37 @@ import { TooltipModule } from 'primeng/tooltip';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class A1zStudentSearchComponent {
-  @Input() students: any[] = [];
+  @Input() students: Student[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
 
-  @Output() gridEvent = new EventEmitter<GridEvent<any | any[]>>();
+  @Output() gridEvent = new EventEmitter<GridEvent<Student | Student[]>>();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
-  onRowSelect({ data }: { data: any }) {
+  onRowSelect({ data }: { data: Student }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
       data: data,
-    } as GridEvent<any>);
+    } as GridEvent<Student>);
   }
 
-  onRowUnselect({ data }: { data: any }) {
+  onRowUnselect({ data }: { data: Student }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
       data: data,
-    } as GridEvent<any>);
+    } as GridEvent<Student>);
   }
 
   loadRows($event: LazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
 
-  onStudentSelect(student: any) {
+  onStudentSelect(student: Student) {
     console.log(student);
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
       data: student,
-    } as GridEvent<any>);
+    } as GridEvent<Student>);
   }
 }
