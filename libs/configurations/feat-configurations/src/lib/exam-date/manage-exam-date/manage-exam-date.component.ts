@@ -25,20 +25,22 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { ExamDateFormComponent } from '../exam-date-form/exam-date-form.component';
 import { ExamDateGridComponent } from '../exam-date-grid/exam-date-grid.component';
+import {RippleModule} from "primeng/ripple";
 
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-exam-date',
   standalone: true,
-  imports: [
-    ButtonModule,
-    CommonModule,
-    DialogModule,
-    ConfirmDialogModule,
-    ExamDateFormComponent,
-    ExamDateGridComponent,
-    ToolbarModule,
-  ],
+    imports: [
+        ButtonModule,
+        CommonModule,
+        DialogModule,
+        ConfirmDialogModule,
+        ExamDateFormComponent,
+        ExamDateGridComponent,
+        ToolbarModule,
+        RippleModule,
+    ],
   templateUrl: './manage-exam-Date.component.html',
   styleUrls: ['./manage-exam-Date.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

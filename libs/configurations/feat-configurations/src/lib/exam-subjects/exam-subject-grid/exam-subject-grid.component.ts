@@ -1,14 +1,20 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {TableModule} from "primeng/table";
-import {ButtonModule} from "primeng/button";
-import {InputTextModule} from "primeng/inputtext";
-import {TooltipModule} from "primeng/tooltip";
-import {CheckboxModule} from "primeng/checkbox";
-import {RippleModule} from "primeng/ripple";
-import {ExamSubject} from "@msh/configurations/domain-configurations";
-import {GRID_ACTIONS, GridEvent} from "@msh/shared/util-shared";
-import {LazyLoadEvent} from "primeng/api";
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { TooltipModule } from 'primeng/tooltip';
+import { CheckboxModule } from 'primeng/checkbox';
+import { RippleModule } from 'primeng/ripple';
+import { ExamSubject } from '@msh/configurations/domain-configurations';
+import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
+import { LazyLoadEvent } from 'primeng/api';
 
 @Component({
   selector: 'msh-exam-subject-grid',
@@ -36,7 +42,7 @@ export class ExamSubjectGridComponent {
 
   @Output() gridEvent = new EventEmitter<
     GridEvent<ExamSubject | ExamSubject[]>
-    >();
+  >();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 

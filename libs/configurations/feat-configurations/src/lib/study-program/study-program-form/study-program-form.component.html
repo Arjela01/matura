@@ -32,7 +32,7 @@
   </div>
 
   <div class="field">
-    <label for="academicYearId">Viti Akademik *</label>
+    <label for="academicYearId">Viti *</label>
     <p-dropdown
       id="academicYearId"
       [options]="academicYears"
@@ -46,7 +46,7 @@
     <small
       class="p-error block"
       *ngIf="submitted && !studyProgram.academicYearId">
-      Viti Akademik është fushë e kërkuar.
+      Viti është fushë e kërkuar.
     </small>
   </div>
 

@@ -18,6 +18,7 @@ import {
 import {ExamVersionFormComponent} from "../exam-version-form/exam-version-form.component";
 import {ExamVersionGridComponent} from "../exam-version-grid/exam-version-grid.component";
 import {DropdownModel} from "@msh/shared/data-access-shared";
+import {RippleModule} from "primeng/ripple";
 
 @UntilDestroy()
 @Component({
@@ -31,6 +32,7 @@ import {DropdownModel} from "@msh/shared/data-access-shared";
     ExamVersionFormComponent,
     ExamVersionGridComponent,
     ToolbarModule,
+    RippleModule,
   ],
   templateUrl: './manage-exam-versions.component.html',
   styleUrls: ['./manage-exam-versions.component.scss'],

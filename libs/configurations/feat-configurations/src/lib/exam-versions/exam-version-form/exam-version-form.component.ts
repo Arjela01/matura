@@ -61,7 +61,8 @@ export class ExamVersionFormComponent {
     id: '',
     name: '',
     numberOfQuestions: 0,
-    variant: ''
+    variant: '',
+    code: ''
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function

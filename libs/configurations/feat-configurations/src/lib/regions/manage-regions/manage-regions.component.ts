@@ -23,20 +23,22 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { RegionFormComponent } from '../region-form/region-form.component';
 import { RegionGridComponent } from '../region-grid/region-grid.component';
+import {RippleModule} from "primeng/ripple";
 
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-regions',
   standalone: true,
-  imports: [
-    ButtonModule,
-    CommonModule,
-    DialogModule,
-    ConfirmDialogModule,
-    RegionGridComponent,
-    RegionFormComponent,
-    ToolbarModule,
-  ],
+    imports: [
+        ButtonModule,
+        CommonModule,
+        DialogModule,
+        ConfirmDialogModule,
+        RegionGridComponent,
+        RegionFormComponent,
+        ToolbarModule,
+        RippleModule,
+    ],
   templateUrl: './manage-regions.component.html',
   styleUrls: ['./manage-regions.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

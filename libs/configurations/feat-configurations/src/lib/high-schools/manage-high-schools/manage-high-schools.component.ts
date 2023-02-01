@@ -26,20 +26,22 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { HighSchoolFormComponent } from '../high-school-form/high-school-form.component';
 import { HighSchoolGridComponent } from '../high-school-grid/high-school-grid.component';
+import {RippleModule} from "primeng/ripple";
 
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-high-schools',
   standalone: true,
-  imports: [
-    ButtonModule,
-    CommonModule,
-    DialogModule,
-    ConfirmDialogModule,
-    HighSchoolGridComponent,
-    HighSchoolFormComponent,
-    ToolbarModule,
-  ],
+    imports: [
+        ButtonModule,
+        CommonModule,
+        DialogModule,
+        ConfirmDialogModule,
+        HighSchoolGridComponent,
+        HighSchoolFormComponent,
+        ToolbarModule,
+        RippleModule,
+    ],
   templateUrl: './manage-high-schools.component.html',
   styleUrls: ['./manage-high-schools.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

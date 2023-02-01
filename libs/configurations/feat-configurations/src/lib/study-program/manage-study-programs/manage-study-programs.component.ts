@@ -22,6 +22,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { StudyProgramFormComponent } from '../study-program-form/study-program-form.component';
 import { StudyProgramGridComponent } from '../study-program-grid/study-program-grid.component';
+import {RippleModule} from "primeng/ripple";
 
 @UntilDestroy()
 @Component({
@@ -39,6 +40,7 @@ import { StudyProgramGridComponent } from '../study-program-grid/study-program-g
     ToolbarModule,
     StudyProgramGridComponent,
     StudyProgramFormComponent,
+    RippleModule,
   ],
 })
 export class ManageStudyProgramsComponent implements OnInit {
@@ -163,7 +165,7 @@ export class ManageStudyProgramsComponent implements OnInit {
           this.getStudyPrograms(this.filters as LazyLoadEvent);
         }
 
-        if (response.isSuccessful === false)
+        if (!response.isSuccessful)
           this.toastService.showError(
             'Ndodhi nje problem gjatë ndryshimit së programit te studimit!'
           );
@@ -183,7 +185,7 @@ export class ManageStudyProgramsComponent implements OnInit {
           this.getStudyPrograms(this.filters as LazyLoadEvent);
         }
 
-        if (response.isSuccessful === false)
+        if (!response.isSuccessful)
           this.toastService.showError(
             'Ndodhi nje problem gjatë ndryshimit së programit te studimit!'
           );
@@ -200,7 +202,7 @@ export class ManageStudyProgramsComponent implements OnInit {
           this.getStudyPrograms(this.filters as LazyLoadEvent);
         }
 
-        if (response.isSuccessful === false)
+        if (!response.isSuccessful)
           this.toastService.showError(
             'Ndodhi nje problem gjatë fshirjes së programit te studimit!'
           );

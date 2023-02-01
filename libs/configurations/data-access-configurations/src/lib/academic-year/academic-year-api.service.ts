@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
+import {
+  AcademicYear,
+  AcademicYearTableView,
+} from '@msh/configurations/domain-configurations';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
+import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
-import {LazyLoadEvent} from "primeng/api";
-import {AcademicYear, AcademicYearTableView} from "@msh/configurations/domain-configurations";
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +14,9 @@ import {AcademicYear, AcademicYearTableView} from "@msh/configurations/domain-co
 export class AcademicYearApiService {
   constructor(private apiService: APIService) {}
 
+  getAcademicYears(): Observable<AcademicYear> {
+    return this.apiService.get(`/AcademicYear`);
+  }
   loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
       `/AcademicYear/DropdownList`
@@ -38,5 +44,4 @@ export class AcademicYearApiService {
       `/AcademicYear/${academicYearId}`
     );
   }
-
 }

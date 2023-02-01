@@ -48,6 +48,9 @@
             display="menu"></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="parentText">
+        Prindi
+      </th>
       <th pSortableColumn="isVisible">
         Ështe E Dukshme?
         <div>
@@ -67,6 +70,9 @@
       </td>
       <td style="width: 25%; min-width: 10rem">
         {{ menu.displayOrder }}
+      </td>
+      <td style="width: 25%; min-width: 10rem">
+        {{ menu.parentText }}
       </td>
       <td style="width: 25%; min-width: 10rem">
         {{ menu.isVisible ? 'Po' : 'Jo' }}

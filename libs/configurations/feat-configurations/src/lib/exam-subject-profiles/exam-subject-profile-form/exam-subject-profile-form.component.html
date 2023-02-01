@@ -1,0 +1,107 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="examSubjectId">Profili *</label>
+    <p-dropdown
+      id="profileId"
+      [options]="profiles"
+      optionValue="key"
+      optionLabel="value"
+      name="profileId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="examSubjectProfile.profileId"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examSubjectProfile.profileId
+      }">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examSubjectProfile.profileId">
+      Profili është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="examSubjectId">Tipi i Provimit *</label>
+    <p-dropdown
+      id="examTypeId"
+      [options]="examTypes"
+      optionValue="key"
+      optionLabel="value"
+      name="examTypeId"
+      [autoDisplayFirst]="false"
+      (onChange)="refreshExamSubjects()"
+      [(ngModel)]="examSubjectProfile.examTypeId"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examSubjectProfile.examTypeId
+      }">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examSubjectProfile.examTypeId">
+      Viti është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="AcademicYear">Viti *</label>
+    <p-dropdown
+      id="AcademicYear"
+      [options]="academicYears"
+      optionValue="key"
+      optionLabel="value"
+      name="academicYearId"
+      (onChange)="refreshExamSubjects()"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="examSubjectProfile.academicYearId"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examSubjectProfile.academicYearId
+      }">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examSubjectProfile.academicYearId">
+      Viti është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="examSubjectId">Lëndë Provimi *</label>
+    <p-dropdown
+      id="examSubjectId"
+      [options]="examSubjects"
+      optionValue="key"
+      optionLabel="value"
+      name="examSubjectId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="examSubjectProfile.examSubjectId"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examSubjectProfile.examSubjectId
+      }">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examSubjectProfile.examSubjectId">
+      Viti është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      type="submit"
+      pButton
+      icon="pi pi-check"
+      label="Ruaj"
+      class="p-button-text w-auto"></button>
+  </div>
+</form>

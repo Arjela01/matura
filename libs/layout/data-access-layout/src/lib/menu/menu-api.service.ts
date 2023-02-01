@@ -25,6 +25,6 @@ export class MenuApiService {
         .map(menu => ({ ...menu, children: nest(menus, menu.id) }))
         .sort((a, b) => (a.displayOrder > b.displayOrder ? 1 : -1))
         .filter(menu => menu.isVisible);
-    return nest(menus);
+    return nest(menus, 0);
   }
 }

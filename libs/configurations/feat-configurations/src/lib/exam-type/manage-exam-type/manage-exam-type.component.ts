@@ -12,21 +12,22 @@ import {ExamTypeFormComponent} from "../exam-type-form/exam-type-form.component"
 import {BehaviorSubject} from "rxjs";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {ExamTypeApiService} from "@msh/configurations/data-access-configurations";
+import {RippleModule} from "primeng/ripple";
 
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-exam-type',
   standalone: true,
-  imports: [CommonModule,
-    ButtonModule,
-    CommonModule,
-    DialogModule,
-    ConfirmDialogModule,
-    ToolbarModule,
-    ExamTypeGridComponent,
-    ExamTypeFormComponent,
+    imports: [CommonModule,
+        ButtonModule,
+        CommonModule,
+        DialogModule,
+        ConfirmDialogModule,
+        ToolbarModule,
+        ExamTypeGridComponent,
+        ExamTypeFormComponent, RippleModule,
 
-  ],
+    ],
   templateUrl: './manage-exam-type.component.html',
   styleUrls: ['./manage-exam-type.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
