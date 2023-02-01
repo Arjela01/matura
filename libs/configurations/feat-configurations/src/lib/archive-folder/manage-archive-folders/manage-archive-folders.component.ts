@@ -23,7 +23,7 @@ import {
 } from '@msh/shared/util-shared';
 
 import { BehaviorSubject } from 'rxjs';
-import { RouterLink } from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import { ArchiveFolderGridComponent } from '../archive-folder-grid/archive-folder-grid.component';
 import { ArchiveOpenFolderFormComponent } from '../archive-open-folder-form/archive-open-folder-form.component';
 import { RippleModule } from 'primeng/ripple';
@@ -57,7 +57,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
   filters: LazyLoadEvent | null = null;
 
   totalRecords = 0;
-
+  id:any;
   selectedArchiveFolder: ArchiveFolder | null = null;
   selectedArchiveFolders: ArchiveFolder[] = [];
   displayModal = false;
@@ -67,8 +67,13 @@ export class ManageArchiveFoldersComponent implements OnInit {
     private readonly toastService: GlobalToastService,
     private readonly archiveFolderService: ArchiveFolderApiService,
     private readonly examTypeApiService: ExamTypeApiService,
-    private readonly examSubjectApiService: ExamSubjectApiService
-  ) {}
+    private readonly examSubjectApiService: ExamSubjectApiService,
+
+    private route: ActivatedRoute
+  ) {
+    this.id = this.route.snapshot.paramMap.get('id');
+
+  }
 
   ngOnInit(): void {
     this.getExamTypes();
@@ -208,7 +213,9 @@ export class ManageArchiveFoldersComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Dosja u ndryshua me sukses!');
+          this.toastService.showSuccess(
+            !archiveFolder.isClosed ? 'Dosja u mbyll me sukses!' : 'Dosja u aktivizua me sukses!');
+
           this.displayModal = false;
           this.getArchiveFolders(this.filters as LazyLoadEvent);
         }

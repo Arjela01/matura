@@ -17,8 +17,9 @@
   (onLazyLoad)="loadRows($event)"
   [lazy]="true">
   <ng-template pTemplate="caption" >
-  <div class="flex flex-column mt-2 md:col-3 md:align-items-center">
     <form #form="ngForm" (ngSubmit)="onSubmit()">
+
+    <div class="flex flex-column mt-2 md:col-3 md:align-items-center">
 
     <div class="p-inputgroup">
           <button
@@ -32,24 +33,29 @@
           ></button>
           <input type="text"
                  maxlength="7"
+                 minlength="7"
                  pInputText
                  placeholder="Barkodi"
-                 id="examType"
-                 name="examType"
+                 id="barcode"
+                 name="barcode"
                  [(ngModel)]="barCode.barCode"
+                 pTooltip="Barkodi duhet te permbaje 7 shifra"
+                 tooltipPosition="top"
                  required/>
           <button
-            type="button"
             pButton
             pRipple
             icon="pi pi-save"
+            type="button"
+            [disabled]="!form.valid"
             label="Ruaj"
             class="p-button-success mr-2"
             (click)="changeStatus(barCode)"
          ></button>
         </div>
-    </form>
     </div>
+    </form>
+
   </ng-template>
   <ng-template pTemplate="header">
     <tr>

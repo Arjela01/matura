@@ -20,15 +20,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { Router } from '@angular/router';
-import {
-  AcademicYearApiService,
-  ArchiveFolderApiService,
-  GendersApiService,
-  HighSchoolApiService,
-  ProfileApiService,
-  StudentsApiService,
-} from '@msh/configurations/data-access-configurations';
+import {ActivatedRoute, Router} from '@angular/router';
+import {HttpClient} from "@angular/common/http";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'msh-archive-open-folder-form',
@@ -64,6 +58,7 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
 
   @ViewChild('form', { static: true }) form!: NgForm;
 
+  id:any;
 
   submitted = false;
   saving = false;
@@ -81,9 +76,14 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor(
     private cd: ChangeDetectorRef,
-    private router: Router,
+    private router: Router,private http: HttpClient,
+    private messageService: MessageService,
 
-  ) {}
+  private route: ActivatedRoute
+) {
+  this.id = this.route.snapshot.paramMap.get('id');
+
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.examTypeId = this.archiveFolder.examTypeId;
@@ -97,7 +97,7 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
 
 
   onOpen(): void {
-    const data = {...this.archiveFolder};
+    this.id= {...this.archiveFolder};
     this.submitted = true;
     if (this.form.valid) {
       this.formSave.emit(this.archiveFolder);
@@ -108,7 +108,7 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
       //   next: () => {
       //     this.saving = false;
 
-      this.router.navigate(['/configurations/add-barCode',this.archiveFolder.id]).then();
+      this.router.navigate(['/configurations/add-barCode', this.archiveFolder.id]).then();
     }
   }
 

@@ -79,15 +79,20 @@ export class BarCodeGridComponent {
     private readonly barCodesService: AddBarcodeApiService,
     private router: Router,
     private messageService: MessageService,
-    private route: ActivatedRoute
-  ) {
+    private route: ActivatedRoute,
+  private activatedRoute: ActivatedRoute,
+
+) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
+
+
+
 
   barCode: AddBarcode = {
     barCode: "",
   };
-  onSubmit(): void {
+   onSubmit(): void {
 
     const data = { ...this.barCode };
 
@@ -96,6 +101,8 @@ export class BarCodeGridComponent {
         this.submitted = false;
         if (this.form.valid) {
           this.formSave.emit(this.barCode);
+          const id = this.activatedRoute.snapshot.paramMap.get('id');
+
         }
       },
     });

@@ -28,6 +28,7 @@ import {
 } from '@msh/configurations/data-access-configurations';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'msh-archive-folder-grid',
@@ -74,7 +75,7 @@ export class ArchiveFolderGridComponent {
     }
   }
 
-  constructor(
+  constructor(  private http: HttpClient,
     private cd: ChangeDetectorRef,
     private readonly academicYearService: AcademicYearApiService,
     private readonly archiveFolderService: ArchiveFolderApiService,
@@ -85,19 +86,19 @@ export class ArchiveFolderGridComponent {
     private messageService: MessageService,
     private activatedRoute: ActivatedRoute,
     private primengConfig: PrimeNGConfig,
+
     private route: ActivatedRoute
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
 
-  current: ArchiveFolder[] = [];
 
   archiveFolder: ArchiveFolder = {
     examTypeName: '',
     examTypeId: 0,
     examSubjectId: '',
     examSubjectName: '',
-    id: 0,
+    id: "",
     isClosed: false,
     lastUserId: undefined,
     nr: 0,

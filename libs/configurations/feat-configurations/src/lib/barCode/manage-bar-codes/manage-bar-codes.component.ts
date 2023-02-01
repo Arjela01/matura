@@ -101,11 +101,21 @@ export class ManageBarCodesComponent implements OnInit {
     private readonly studentAPITestService: StudentsApiService,
     private router: Router,
     private messageService: MessageService,
+    private readonly archivefolder: ArchiveFolderApiService,
+
     private route: ActivatedRoute
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
-  }
 
+  }
+  archiveFolder: ArchiveFolder = {
+    nr: 0,
+    isClosed: false,
+    lastUserId: undefined,
+    id: 0,
+    examTypeId: 0,
+    examSubjectId: ""
+  };
   barCode: AddBarcode = {
     index: 0,
     archiveFolderId: 0,
@@ -179,10 +189,10 @@ export class ManageBarCodesComponent implements OnInit {
       //   break;
       case GRID_ACTIONS.CHANGE:
         this.confirmationService.confirm({
-          message: 'Doni te shotni Barkodin?',
+          message: 'Doni te shtoni Barkodin?',
           accept: () => {
             this.addBarCode(event.data as AddBarcode);
-          },
+            },
         });
         break;
     }
