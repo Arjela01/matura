@@ -2,11 +2,9 @@ export interface Student {
   id?: any;
   birthDate: Date;
   birthPlace: string;
-  isConfirmedBySupervisor: boolean;
   email: string;
   firstName: string;
   genderId?: number;
-
   highSchoolId?: number;
   idCard?: string;
   isA2A3: boolean;
@@ -39,6 +37,4 @@ export interface Student {
 export interface StudentTableView {
   data: Student[];
   total: number;
-
 }
-
