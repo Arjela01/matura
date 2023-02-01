@@ -7,7 +7,7 @@ export interface ExamSecret {
   academicYearId: number,
   academicYear: string,
   barcode: string,
-  isFall: true
+  isFall: boolean
 }
 
 export interface ExamSecretTableView {

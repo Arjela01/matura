@@ -12,7 +12,7 @@ export const EVALUATION_ROUTES: Route[] = [
     path: 'exam-secret',
     loadComponent: () =>
       import(
-        './exam-secrets/manage-exam-scores/manage-exam-secrets.component'
+        './exam-secrets/manage-exam-secrets/manage-exam-secrets.component'
         ).then(m => m.ManageExamSecretsComponent),
   },
 ]
