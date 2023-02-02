@@ -87,9 +87,7 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
     id: '',
     studentId: '',
     studentName: '',
-    examVersionId: '',
     examVersionName: '',
-    academicYearId: 0,
     academicYear: '',
     barcode: '',
     isFall: true,
@@ -158,7 +156,7 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
 
   onStudentInit(student: any) {
     if (!student) {
-      this.examSecret.studentInputData = ' ';
+      this.studentInputData = ' ';
     } else {
       this.examSecret.studentId = student.studentId;
       this.studentInputData =
