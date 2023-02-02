@@ -5,6 +5,7 @@ import {ApiResult} from "@msh/shared/data-access-shared";
 import {APIService} from "@msh/shared/util-shared";
 import {ExamSecret, ExamSecretTableView, FileImport} from "@msh/evaluations/domain-evaluations";
 import {untilDestroyed} from "@ngneat/until-destroy";
+import {A1Z} from "@msh/applications/domain-applications";
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +31,10 @@ export class ExamSecretApiService {
       `/api/ExamSecrets`,
       examSecret
     );
+  }
+
+  getExamSecret(id: number): Observable<ApiResult<ExamSecret>> {
+    return this.apiService.get(`/ExamSecret/${id}`);
   }
 
   delete(examSecretId: string): Observable<ApiResult<unknown>> {

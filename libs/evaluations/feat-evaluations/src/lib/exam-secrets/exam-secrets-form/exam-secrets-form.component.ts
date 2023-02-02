@@ -1,40 +1,44 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
-  ElementRef,
+  DoCheck,
   EventEmitter,
-  Input, OnChanges,
+  OnChanges,
+  OnInit,
   Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule, NgForm} from '@angular/forms';
-import {InputTextModule} from 'primeng/inputtext';
-import {InputNumberModule} from 'primeng/inputnumber';
-import {RadioButtonModule} from 'primeng/radiobutton';
-import {InputTextareaModule} from 'primeng/inputtextarea';
-import {ButtonModule} from 'primeng/button';
-import {ExamSecret} from '@msh/evaluations/domain-evaluations';
-import {DropdownModel} from '@msh/shared/data-access-shared';
-import {DropdownModule} from 'primeng/dropdown';
-import {AutoCompleteModule} from 'primeng/autocomplete';
-import {BehaviorSubject} from "rxjs";
-import {Student} from "@msh/configurations/domain-configurations";
-import {GlobalToastService, GRID_ACTIONS, GridEvent} from "@msh/shared/util-shared";
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {LazyLoadEvent} from "primeng/api";
-import {DialogModule} from "primeng/dialog";
+import { CommonModule } from '@angular/common';
+import { FormsModule, NgForm } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ButtonModule } from 'primeng/button';
+import { ExamSecret } from '@msh/evaluations/domain-evaluations';
+import { DropdownModel } from '@msh/shared/data-access-shared';
+import { DropdownModule } from 'primeng/dropdown';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { BehaviorSubject } from 'rxjs';
+import { Student } from '@msh/configurations/domain-configurations';
+import {
+  GlobalToastService,
+  GRID_ACTIONS,
+  GridEvent,
+} from '@msh/shared/util-shared';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
 import {
   AcademicYearApiService,
   ExamVersionApiService,
-  StudentsApiService
-} from "@msh/configurations/data-access-configurations";
-import {Router} from "@angular/router";
-import {ExamSecretApiService} from "@msh/evaluations/data-access-evaluations";
-import {
-  A1zStudentSearchComponent
-} from "../../../../../../applications/feat-applications/src/lib/a1z/a1z-student-search/a1z-student-search.component";
+  StudentsApiService,
+} from '@msh/configurations/data-access-configurations';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ExamSecretApiService } from '@msh/evaluations/data-access-evaluations';
+import { A1zStudentSearchComponent } from '../../../../../../applications/feat-applications/src/lib/a1z/a1z-student-search/a1z-student-search.component';
 
 @UntilDestroy()
 @Component({
@@ -51,23 +55,20 @@ import {
     DropdownModule,
     AutoCompleteModule,
     DialogModule,
-    A1zStudentSearchComponent
-
-
+    A1zStudentSearchComponent,
   ],
+  providers: [ConfirmationService],
+
   templateUrl: './exam-secrets-form.component.html',
   styleUrls: ['./exam-secrets-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamSecretsFormComponent implements OnChanges {
-
-  @Output() formSave = new EventEmitter<ExamSecret>();
-  @Output() formClose = new EventEmitter<undefined>();
+export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
   @Output() examVersionChanged = new EventEmitter<string>();
 
-  @ViewChild('form', {static: true}) form!: NgForm;
+  @ViewChild('form', { static: true }) form!: NgForm;
   academicYears: DropdownModel<number>[] = [];
-  @Input() examVersions: DropdownModel<number>[] = [];
+  examVersions: DropdownModel<number>[] = [];
 
   filters: LazyLoadEvent | null = null;
 
@@ -80,6 +81,8 @@ export class ExamSecretsFormComponent implements OnChanges {
   showStudentModal = false;
   selectedStudent: any = null;
   examVersionId: any;
+  formId: any;
+
   examSecret: ExamSecret = {
     id: '',
     studentId: '',
@@ -89,52 +92,31 @@ export class ExamSecretsFormComponent implements OnChanges {
     academicYearId: 0,
     academicYear: '',
     barcode: '',
-    isFall: true
+    isFall: true,
   };
-
-  @Input() set examScoreDetails(details: ExamSecret | null) {
-    if (details) {
-      this.examSecret = Object.assign({}, details);
-    }
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.examVersionId = this.examSecret.examVersionId;
     this.cd.detectChanges();
   }
 
-  constructor(private cd: ChangeDetectorRef,
-              private readonly studentService: StudentsApiService,
-              private readonly router: Router,
-              private examSecretApiService: ExamSecretApiService,
-              private readonly toastService: GlobalToastService,
-              private readonly academicYearService: AcademicYearApiService,
-              private readonly examVersionService: ExamVersionApiService
+  constructor(
+    private cd: ChangeDetectorRef,
+    private readonly studentService: StudentsApiService,
+    private readonly router: Router,
+    private examSecretApiService: ExamSecretApiService,
+    private readonly toastService: GlobalToastService,
+    private readonly academicYearService: AcademicYearApiService,
+    private readonly examVersionService: ExamVersionApiService,
+    private readonly activatedRoute: ActivatedRoute
   ) {
-  }
-
-  onGridEvent(event: GridEvent<Student | Student[]>) {
-    switch (event.action) {
-      case GRID_ACTIONS.EDIT:
-        this.selectedStudent = Object.assign({}, event.data);
-        console.log(event.data);
-        this.showStudentModal = false;
-        break;
-    }
+    this.formId = this.activatedRoute.snapshot.paramMap.get('id');
   }
 
   onExamVersionChanged($event: any): void {
     console.log('changed');
     this.examVersionChanged.emit(this.examVersionId);
   }
-
-  // ngAfterViewInit(): void {
-  //   if (this.selectedStudent) {
-  //     this.onStudentChange(this.selectedStudent);
-  //   } else {
-  //     this.getAca();
-  //   }
-  // }
 
   ngDoCheck(): void {
     if (this.examSecret.studentId !== undefined) {
@@ -152,6 +134,21 @@ export class ExamSecretsFormComponent implements OnChanges {
     this.examVersionService.loadDropdownList().subscribe(response => {
       this.examVersions = response.data;
     });
+    this.examSecretApiService
+      .getExamSecret(this.formId!)
+      .subscribe(response => {
+        this.examSecret = response.data;
+        this.cd.detectChanges();
+      });
+  }
+  onGridEvent(event: GridEvent<Student | Student[]>) {
+    switch (event.action) {
+      case GRID_ACTIONS.EDIT:
+        this.selectedStudent = Object.assign({}, event.data);
+        console.log(event.data);
+        this.showStudentModal = false;
+        break;
+    }
   }
 
   onStudentInit(student: any) {
@@ -186,9 +183,6 @@ export class ExamSecretsFormComponent implements OnChanges {
     }
   }
 
-
-
-
   onStudentShow() {
     this.showStudentModal = true;
   }
@@ -205,45 +199,45 @@ export class ExamSecretsFormComponent implements OnChanges {
     this.submitted = true;
     if (this.form.valid) {
       if (-this.examSecret.id === 0) {
-        this.onNewExamSecretFormSubmit();
+        this.onAddFormSubmit();
       } else {
-        this.onEditExamSecretFormSubmit();
+        this.onEditFormSubmit();
       }
     }
   }
 
-  onNewExamSecretFormSubmit() {
+  onAddFormSubmit() {
     this.examSecretApiService
       .save(this.examSecret)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Formulari A1Z u shtua me sukses!');
+          this.toastService.showSuccess('Sekretimi u shtua me sukses!');
           this.router.navigate(['evaluations/exam-secret']);
           console.log(response);
         }
         if (!response.isSuccessful) {
           this.toastService.showError(
-            'Ndodhi një problem gjatë shtimit të formularit A1Z!'
+            'Ndodhi një problem gjatë shtimit të sekretimit!'
           );
           console.log(response);
         }
       });
   }
 
-  onEditExamSecretFormSubmit() {
+  onEditFormSubmit() {
     this.examSecretApiService
       .update(this.examSecret)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Formulari A1Z u ndryshua me sukses!');
+          this.toastService.showSuccess('Sekretimi u ndryshua me sukses!');
           this.router.navigate(['evaluations/exam-secret']);
           console.log(response);
         }
         if (!response.isSuccessful) {
           this.toastService.showError(
-            'Ndodhi një problem gjatë shtimit të formularit A1Z!'
+            'Ndodhi një problem gjatë shtimit të sekretimit!'
           );
           console.log(response);
         }
@@ -262,5 +256,4 @@ export class ExamSecretsFormComponent implements OnChanges {
         this.totalRecords = response.total;
       });
   }
-
 }

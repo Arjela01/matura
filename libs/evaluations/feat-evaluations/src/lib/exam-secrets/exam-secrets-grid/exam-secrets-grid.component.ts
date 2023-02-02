@@ -73,20 +73,6 @@ export class ExamSecretsGridComponent {
     }
   }
 
-  onRowSelect({ data }: { data: ExamSecret }) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.SELECT_ROW,
-      data: data,
-    } as GridEvent<ExamSecret>);
-  }
-
-  onRowUnselect({ data }: { data: ExamSecret }) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.UNSELECT_ROW,
-      data: data,
-    } as GridEvent<ExamSecret>);
-  }
-
   loadRows($event: LazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }

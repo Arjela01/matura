@@ -2,8 +2,6 @@ export interface ExamSecret {
   id: string,
   studentId?: string,
   studentName: string,
-  examSubjectId?: string;
-  examSubjectName?: string;
   examVersionId?: string,
   examVersionName: string,
   academicYearId: number,
