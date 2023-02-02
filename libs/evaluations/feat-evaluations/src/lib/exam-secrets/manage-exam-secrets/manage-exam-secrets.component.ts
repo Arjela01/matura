@@ -14,18 +14,20 @@ import {
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExamSecret } from '@msh/evaluations/domain-evaluations';
 import {
-  AcademicYearApiService,
+  AcademicYearApiService, ExamVersionApiService,
 
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {RippleModule} from "primeng/ripple";
 import {ExamSecretApiService} from "@msh/evaluations/data-access-evaluations";
+import {Router} from "@angular/router";
 import {ExamSecretsFormComponent} from "../exam-secrets-form/exam-secrets-form.component";
 import {ExamSecretsGridComponent} from "../exam-secrets-grid/exam-secrets-grid.component";
+import {FileUploadModule} from "primeng/fileupload";
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-manage-exam-score',
+  selector: 'msh-manage-exam-secrets',
   standalone: true,
   imports: [
     ButtonModule,
@@ -36,16 +38,20 @@ import {ExamSecretsGridComponent} from "../exam-secrets-grid/exam-secrets-grid.c
     ExamSecretsGridComponent,
     ToolbarModule,
     RippleModule,
+    FileUploadModule,
+
   ],
   templateUrl: './manage-exam-secrets.component.html',
   styleUrls: ['./manage-exam-secrets.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageExamSecretsComponent implements OnInit {
+export class ManageExamSecretsComponent {
   private examSecrets$$ = new BehaviorSubject<ExamSecret[]>([]);
   examSecrets$ = this.examSecrets$$.asObservable();
   filters: LazyLoadEvent | null = null;
+  examVersions: DropdownModel<number>[] = [];
+  base64: string | ArrayBuffer | null | undefined;
 
   totalRecords = 0;
   selectedExamSecret: ExamSecret | null = null;
@@ -61,26 +67,16 @@ export class ManageExamSecretsComponent implements OnInit {
     private readonly toastService: GlobalToastService,
     private readonly examSecretService: ExamSecretApiService,
     private readonly academicYearApiService: AcademicYearApiService,
+    private readonly router: Router,
+    private readonly examVersionService: ExamVersionApiService
 
   ) {}
 
-  ngOnInit(): void {
-    this.getAcademicYearsDropdown();
-  }
+
 
   onNewClick() {
-    this.displayModal = true;
-    this.selectedExamSecret = {
-      id: '',
-      studentId: '',
-      studentName: '',
-      examVersionId: '',
-      examVersionName: '',
-      academicYearId: 0,
-      academicYear: '',
-      barcode: '',
-      isFall: true
-    }
+    this.router.navigate(['/evaluations/exam-secret-form']);
+
   }
 
   onDeleteSelectedClick() {
@@ -130,18 +126,16 @@ export class ManageExamSecretsComponent implements OnInit {
     }
   }
 
-  onModalClose() {
-    this.displayModal = false;
+  getExamVersions() {
+    this.examVersionService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.examVersions = response.data;
+      });
   }
 
-  onFormSave(examScore: ExamSecret) {
-    if (examScore.id) {
-      this.updateExamScore(examScore);
-    }
-    if (!examScore.id) {
-      this.addExamScore(examScore);
-    }
-  }
+
 
   getExamScores($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
@@ -153,48 +147,6 @@ export class ManageExamSecretsComponent implements OnInit {
         this.examSecrets$$.next(response.data);
         this.totalRecords = response.total;
       });
-  }
-
-  addExamScore(examScore: ExamSecret) {
-    // this.examScoreService
-    //   .save(examScore)
-    //   .pipe(untilDestroyed(this))
-    //   .subscribe(response => {
-    //     if (response.isSuccessful) {
-    //       this.toastService.showSuccess(
-    //         'Rezultati i provimit u shtua me sukses!'
-    //       );
-    //       this.displayModal = false;
-    //       this.getExamScores(this.filters as LazyLoadEvent);
-    //     } else {
-    //       this.toastService.showError(
-    //           response.errorMessage
-    //       );
-    //     }
-    //     if (response.isBadRequest)
-    //       this.toastService.showError(
-    //         'Ndodhi një problem gjatë ndryshimit së reszultatit të provimit!'
-    //       );
-    //   });
-  }
-
-  updateExamScore(examScore: ExamSecret) {
-    // this.examScoreService
-    //   .update(examScore)
-    //   .pipe(untilDestroyed(this))
-    //   .subscribe(response => {
-    //     if (response.isSuccessful) {
-    //       this.toastService.showSuccess(
-    //         'Rezultati i provimit u ndryshua me sukses!'
-    //       );
-    //       this.displayModal = false;
-    //       this.getExamScores(this.filters as LazyLoadEvent);
-    //     }
-    //     if (response.isBadRequest)
-    //       this.toastService.showError(
-    //         'Ndodhi një problem gjatë ndryshimit së rezultatit të provimit!'
-    //       );
-    //   });
   }
 
   deleteExamSecret(examSecret: ExamSecret) {
@@ -214,13 +166,31 @@ export class ManageExamSecretsComponent implements OnInit {
       });
   }
 
-  getAcademicYearsDropdown() {
-    this.academicYearApiService
-      .loadDropdownList()
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.academicYears = response.data;
-      });
-  }
+  // getAcademicYearsDropdown() {
+  //   this.academicYearApiService
+  //     .loadDropdownList()
+  //     .pipe(untilDestroyed(this))
+  //     .subscribe(response => {
+  //       this.academicYears = response.data;
+  //     });
+  // }
 
+  onUpload(event: any) {
+    const file = event.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const base64 = reader.result as string;
+      this.base64 = base64.split(',')[1];
+      this.examSecretService.uploadExcelFile(this.base64).subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Dokumenti u shtua me sukses!');
+        }
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi një problem gjatë ngarkimit të dokumentit!'
+          );
+      });
+    };
+  }
 }

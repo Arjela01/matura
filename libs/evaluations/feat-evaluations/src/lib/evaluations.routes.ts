@@ -15,4 +15,18 @@ export const EVALUATION_ROUTES: Route[] = [
         './exam-secrets/manage-exam-secrets/manage-exam-secrets.component'
         ).then(m => m.ManageExamSecretsComponent),
   },
+  {
+    path: 'exam-secret-form/:id',
+    loadComponent: () =>
+      import(
+        './exam-secrets/exam-secrets-form/exam-secrets-form.component'
+        ).then(m => m.ExamSecretsFormComponent),
+  },
+  {
+    path: 'exam-secret-form',
+    loadComponent: () =>
+      import(
+        './exam-secrets/exam-secrets-form/exam-secrets-form.component'
+        ).then(m => m.ExamSecretsFormComponent),
+  },
 ]

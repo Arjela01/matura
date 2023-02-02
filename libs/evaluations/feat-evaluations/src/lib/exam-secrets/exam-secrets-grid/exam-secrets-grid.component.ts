@@ -42,7 +42,7 @@ export class ExamSecretsGridComponent {
 
   @Output() gridEvent = new EventEmitter<
     GridEvent<ExamSecret | ExamSecret[]>
-  >();
+    >();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 

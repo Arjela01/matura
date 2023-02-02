@@ -19,7 +19,24 @@ import {ExamSecret} from '@msh/evaluations/domain-evaluations';
 import {DropdownModel} from '@msh/shared/data-access-shared';
 import {DropdownModule} from 'primeng/dropdown';
 import {AutoCompleteModule} from 'primeng/autocomplete';
+import {BehaviorSubject} from "rxjs";
+import {Student} from "@msh/configurations/domain-configurations";
+import {GlobalToastService, GRID_ACTIONS, GridEvent} from "@msh/shared/util-shared";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {LazyLoadEvent} from "primeng/api";
+import {DialogModule} from "primeng/dialog";
+import {
+  AcademicYearApiService,
+  ExamVersionApiService,
+  StudentsApiService
+} from "@msh/configurations/data-access-configurations";
+import {Router} from "@angular/router";
+import {ExamSecretApiService} from "@msh/evaluations/data-access-evaluations";
+import {
+  A1zStudentSearchComponent
+} from "../../../../../../applications/feat-applications/src/lib/a1z/a1z-student-search/a1z-student-search.component";
 
+@UntilDestroy()
 @Component({
   selector: 'msh-exam-secret-form',
   standalone: true,
@@ -33,20 +50,36 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
     ButtonModule,
     DropdownModule,
     AutoCompleteModule,
+    DialogModule,
+    A1zStudentSearchComponent
+
+
   ],
   templateUrl: './exam-secrets-form.component.html',
   styleUrls: ['./exam-secrets-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamSecretsFormComponent implements OnChanges {
-  @Input() academicYears: DropdownModel<number>[] = [];
 
   @Output() formSave = new EventEmitter<ExamSecret>();
   @Output() formClose = new EventEmitter<undefined>();
+  @Output() examVersionChanged = new EventEmitter<string>();
 
-  @ViewChild('form', { static: true }) form!: NgForm;
+  @ViewChild('form', {static: true}) form!: NgForm;
+  academicYears: DropdownModel<number>[] = [];
+  @Input() examVersions: DropdownModel<number>[] = [];
+
+  filters: LazyLoadEvent | null = null;
+
+  private studentList$$ = new BehaviorSubject<Student[]>([]);
+  studentList$ = this.studentList$$.asObservable();
+  totalRecords = 0;
+
   submitted = false;
-
+  studentInputData = '';
+  showStudentModal = false;
+  selectedStudent: any = null;
+  examVersionId: any;
   examSecret: ExamSecret = {
     id: '',
     studentId: '',
@@ -58,8 +91,6 @@ export class ExamSecretsFormComponent implements OnChanges {
     barcode: '',
     isFall: true
   };
-  examTypeId: any;
-  examSubjectId: any;
 
   @Input() set examScoreDetails(details: ExamSecret | null) {
     if (details) {
@@ -67,22 +98,169 @@ export class ExamSecretsFormComponent implements OnChanges {
     }
   }
 
-  constructor(private cd: ChangeDetectorRef) {
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
-
+    this.examVersionId = this.examSecret.examVersionId;
     this.cd.detectChanges();
   }
 
-  onCancelClick(): void {
-    this.formClose.emit();
+  constructor(private cd: ChangeDetectorRef,
+              private readonly studentService: StudentsApiService,
+              private readonly router: Router,
+              private examSecretApiService: ExamSecretApiService,
+              private readonly toastService: GlobalToastService,
+              private readonly academicYearService: AcademicYearApiService,
+              private readonly examVersionService: ExamVersionApiService
+  ) {
+  }
+
+  onGridEvent(event: GridEvent<Student | Student[]>) {
+    switch (event.action) {
+      case GRID_ACTIONS.EDIT:
+        this.selectedStudent = Object.assign({}, event.data);
+        console.log(event.data);
+        this.showStudentModal = false;
+        break;
+    }
+  }
+
+  onExamVersionChanged($event: any): void {
+    console.log('changed');
+    this.examVersionChanged.emit(this.examVersionId);
+  }
+
+  // ngAfterViewInit(): void {
+  //   if (this.selectedStudent) {
+  //     this.onStudentChange(this.selectedStudent);
+  //   } else {
+  //     this.getAca();
+  //   }
+  // }
+
+  ngDoCheck(): void {
+    if (this.examSecret.studentId !== undefined) {
+      this.onStudentInit(this.examSecret);
+    }
+    if (this.selectedStudent !== null) {
+      this.onStudentChange(this.selectedStudent);
+    }
+  }
+
+  ngOnInit(): void {
+    this.academicYearService.loadDropdownList().subscribe(response => {
+      this.academicYears = response.data;
+    });
+    this.examVersionService.loadDropdownList().subscribe(response => {
+      this.examVersions = response.data;
+    });
+  }
+
+  onStudentInit(student: any) {
+    if (!student) {
+      this.examSecret.studentInputData = ' ';
+    } else {
+      this.examSecret.studentId = student.studentId;
+      this.studentInputData =
+        student?.studentIdentifier +
+        '-' +
+        student?.studentFirstName +
+        '-' +
+        student?.studentFatherName +
+        '-' +
+        student?.studentLastName;
+    }
+  }
+
+  onStudentChange(student: any) {
+    if (!student) {
+      this.examSecret.studentInputData = ' ';
+    } else {
+      this.examSecret.studentId = student.id;
+      this.studentInputData =
+        student?.studentId +
+        '-' +
+        student?.firstName +
+        '-' +
+        student?.middleName +
+        '-' +
+        student?.lastName;
+    }
+  }
+
+
+
+
+  onStudentShow() {
+    this.showStudentModal = true;
+  }
+
+  onStudentHide() {
+    this.showStudentModal = false;
+  }
+
+  onExitForm() {
+    this.router.navigate(['/evaluations/exam-secret']);
   }
 
   onSubmit(): void {
     this.submitted = true;
     if (this.form.valid) {
-      this.formSave.emit(this.examSecret);
+      if (-this.examSecret.id === 0) {
+        this.onNewExamSecretFormSubmit();
+      } else {
+        this.onEditExamSecretFormSubmit();
+      }
     }
   }
+
+  onNewExamSecretFormSubmit() {
+    this.examSecretApiService
+      .save(this.examSecret)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Formulari A1Z u shtua me sukses!');
+          this.router.navigate(['evaluations/exam-secret']);
+          console.log(response);
+        }
+        if (!response.isSuccessful) {
+          this.toastService.showError(
+            'Ndodhi një problem gjatë shtimit të formularit A1Z!'
+          );
+          console.log(response);
+        }
+      });
+  }
+
+  onEditExamSecretFormSubmit() {
+    this.examSecretApiService
+      .update(this.examSecret)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Formulari A1Z u ndryshua me sukses!');
+          this.router.navigate(['evaluations/exam-secret']);
+          console.log(response);
+        }
+        if (!response.isSuccessful) {
+          this.toastService.showError(
+            'Ndodhi një problem gjatë shtimit të formularit A1Z!'
+          );
+          console.log(response);
+        }
+      });
+  }
+
+  getStudents($event: LazyLoadEvent): void {
+    this.filters = Object.assign({}, $event);
+
+    this.studentService
+      .loadStudents($event)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        console.log(response);
+        this.studentList$$.next(response.data);
+        this.totalRecords = response.total;
+      });
+  }
+
 }

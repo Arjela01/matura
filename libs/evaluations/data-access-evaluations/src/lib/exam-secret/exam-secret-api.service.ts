@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import { Observable} from 'rxjs';
+import {catchError, map, Observable, shareReplay, throwError} from 'rxjs';
 import {LazyLoadEvent} from "primeng/api";
 import {ApiResult} from "@msh/shared/data-access-shared";
 import {APIService} from "@msh/shared/util-shared";
-import {ExamSecret, ExamSecretTableView} from "@msh/evaluations/domain-evaluations";
+import {ExamSecret, ExamSecretTableView, FileImport} from "@msh/evaluations/domain-evaluations";
+import {untilDestroyed} from "@ngneat/until-destroy";
 
 @Injectable({
   providedIn: 'root',
@@ -37,5 +38,18 @@ export class ExamSecretApiService {
     );
   }
 
+  uploadExcelFile(
+    base64: string | ArrayBuffer | null
+  ): Observable<ApiResult<unknown>> {
+    return this.apiService
+      .post<ApiResult<FileImport>, FileImport>('/api/ExamSecrets/Import', {
+        file: base64,
+      })
+      .pipe(
+        map(data => data),
+        catchError(error => throwError(error)),
+        shareReplay()
+      );
+  }
 }
 
