@@ -52,6 +52,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class ArchiveFolderGridComponent {
   @Input() archiveFolders: ArchiveFolder[] = [];
+
   @Input() totalRecords = 0;
   @Input() loading = false;
 
@@ -124,7 +125,7 @@ export class ArchiveFolderGridComponent {
   onRowSelect({ data }: { data: ArchiveFolder }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
-      data: data,
+      data: data.id,
     } as GridEvent<ArchiveFolder>);
   }
 

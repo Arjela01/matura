@@ -4,7 +4,7 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input,
+  Input, OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -42,7 +42,7 @@ import {DropdownModel} from "@msh/shared/data-access-shared";
   styleUrls: ['./bar-code-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BarCodeGridComponent {
+export class BarCodeGridComponent implements  OnInit{
 
 
 
@@ -72,7 +72,12 @@ export class BarCodeGridComponent {
   @Output() formSave = new EventEmitter<AddBarcode>();
 
   submitted= false;
-  id: string | null;
+  id = 0;
+
+  barCode: AddBarcode = {
+    barCode: "",
+    archiveFolderId: this.id
+  };
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -83,27 +88,25 @@ export class BarCodeGridComponent {
   private activatedRoute: ActivatedRoute,
 
 ) {
-    this.id = this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id');
+    if(id){
+      this.id = parseInt(id);
+    }
+  }
+
+  ngOnInit() {
+    this.barCode = {
+      ...this.barCode, archiveFolderId: this.id as number
+    }
   }
 
 
-
-
-  barCode: AddBarcode = {
-    barCode: "",
-  };
-   onSubmit(): void {
+  onSubmit(): void {
 
     const data = { ...this.barCode };
-
     this.barCodesService.save(data).subscribe({
       next: () => {
         this.submitted = false;
-        if (this.form.valid) {
-          this.formSave.emit(this.barCode);
-          const id = this.activatedRoute.snapshot.paramMap.get('id');
-
-        }
       },
     });
   }

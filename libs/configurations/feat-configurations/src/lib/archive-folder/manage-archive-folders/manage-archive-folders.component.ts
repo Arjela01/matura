@@ -2,18 +2,19 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import {ConfirmationService, LazyLoadEvent, MessageService} from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
 import {
+  AddBarcodeApiService,
   ArchiveFolderApiService,
   ExamSubjectApiService,
   ExamTypeApiService,
 } from '@msh/configurations/data-access-configurations';
-import { ArchiveFolder } from '@msh/configurations/domain-configurations';
+import {AddBarcode, ArchiveFolder} from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
 import {
@@ -23,10 +24,11 @@ import {
 } from '@msh/shared/util-shared';
 
 import { BehaviorSubject } from 'rxjs';
-import {ActivatedRoute, RouterLink} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { ArchiveFolderGridComponent } from '../archive-folder-grid/archive-folder-grid.component';
 import { ArchiveOpenFolderFormComponent } from '../archive-open-folder-form/archive-open-folder-form.component';
 import { RippleModule } from 'primeng/ripple';
+import {HttpClient} from "@angular/common/http";
 
 @UntilDestroy()
 @Component({
@@ -57,7 +59,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
   filters: LazyLoadEvent | null = null;
 
   totalRecords = 0;
-  id:any;
+  id: any;
   selectedArchiveFolder: ArchiveFolder | null = null;
   selectedArchiveFolders: ArchiveFolder[] = [];
   displayModal = false;
@@ -65,10 +67,12 @@ export class ManageArchiveFoldersComponent implements OnInit {
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly archiveFolderService: ArchiveFolderApiService,
     private readonly examTypeApiService: ExamTypeApiService,
+    private readonly addBarcodeService: AddBarcodeApiService,
+    private archiveFolderService: ArchiveFolderApiService,
     private readonly examSubjectApiService: ExamSubjectApiService,
-
+    private router: Router,private http: HttpClient,
+    private messageService: MessageService,
     private route: ActivatedRoute
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -173,15 +177,18 @@ export class ManageArchiveFoldersComponent implements OnInit {
 
   addArchiveFolder(archiveFolder: ArchiveFolder) {
     this.archiveFolderService
-      .save(archiveFolder)
+      .save({...archiveFolder, id: 0})
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Dosja u shtua me sukses!');
+
+
           this.displayModal = false;
           this.getArchiveFolders(this.filters as LazyLoadEvent);
-        }
+          this.router.navigate(['/configurations/add-barCode', response.data.id]);
 
+        }
         if (response.isBadRequest)
           this.toastService.showError(
             'Ndodhi një problem gjatë ndryshimit së dosjes!'

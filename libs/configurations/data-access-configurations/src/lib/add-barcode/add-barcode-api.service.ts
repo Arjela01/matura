@@ -13,29 +13,20 @@ import {
 export class AddBarcodeApiService {
   constructor(private apiService: APIService) {}
 
-  getById(id: any): Observable<ApiResult<AddBarcode>> {
-    return this.apiService.get<ApiResult<AddBarcode>>(
-      `/ArchiveExam/${id}`
+  getById(id: any, event: LazyLoadEvent): any {
+    return this.apiService.post<any, any>(
+      `/ArchiveExam/${id}`, event
     );
   }
-  changeAddBarcode(
-    barcode: AddBarcode
-  ): Observable<ApiResult<AddBarcode>> {
-    return this.apiService.put<ApiResult<AddBarcode>, any>(
-      `/ArchiveExam/UpdateStatus`,
-      {
-        id: barcode.archiveFolderId,
-      }
-    );
-  }
+
   loadDropDownList(): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
       '/ArchiveExam/DropdownList'
     );
   }
 
-  loadAddBarcode(event: LazyLoadEvent): Observable<AddBarcodeTableView> {
-    return this.apiService.post(`/ArchiveExam/TableData`, event);
+  loadAddBarcode(event: LazyLoadEvent, id: any): Observable<AddBarcodeTableView> {
+    return this.apiService.post(`/ArchiveExam/TableData/${id}`, event);
   }
 
   save(barcode: AddBarcode): Observable<ApiResult<AddBarcode>> {

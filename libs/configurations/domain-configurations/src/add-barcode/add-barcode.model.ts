@@ -2,7 +2,7 @@
 export interface AddBarcode{
   index?: number;
   archiveFolderId?: number;
-  barCode: string;
+  barCode?: string;
 }
 
 export interface AddBarcodeTableView{

@@ -11,7 +11,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { ArchiveFolder } from '@msh/configurations/domain-configurations';
+import {ArchiveFolder, Gender} from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -23,6 +23,9 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from "@angular/common/http";
 import {MessageService} from "primeng/api";
+import {untilDestroyed} from "@ngneat/until-destroy";
+import {ArchiveFolderApiService} from "@msh/configurations/data-access-configurations";
+import {BehaviorSubject} from "rxjs";
 
 @Component({
   selector: 'msh-archive-open-folder-form',
@@ -47,6 +50,7 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
   @Input() examSubjects: DropdownModel<number>[] = [];
   @Output() examTypeChanged = new EventEmitter<string>();
   @Output() examSubjectChanged = new EventEmitter<string>();
+  private archivefolder$$ = new BehaviorSubject<ArchiveFolder[]>([]);
 
   @Input() set archiveFolders(details: ArchiveFolder | null) {
     if (details) {
@@ -68,7 +72,6 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
     nr: 0,
     isClosed: false,
     lastUserId: undefined,
-    id: 0,
     examTypeId: 0,
     examSubjectId: ""
   };
@@ -78,10 +81,11 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
     private cd: ChangeDetectorRef,
     private router: Router,private http: HttpClient,
     private messageService: MessageService,
+    private archiveFolderService: ArchiveFolderApiService,
 
   private route: ActivatedRoute
 ) {
-  this.id = this.route.snapshot.paramMap.get('id');
+  this.archiveFolder.id = this.route.snapshot.paramMap.get('id');
 
   }
 
@@ -97,20 +101,27 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
 
 
   onOpen(): void {
-    this.id= {...this.archiveFolder};
+    this.archiveFolder= {...this.archiveFolder};
     this.submitted = true;
     if (this.form.valid) {
       this.formSave.emit(this.archiveFolder);
 
-
-
+      //
+      // this.archiveFolderService
+      //   .loadArchiveFolder(this.archiveFolder.id)
+      //   .pipe(untilDestroyed(this))
+        // .subscribe(response => {
+        //   this.saving=true;
+        //   this.archivefolder$$.next(response.data);
+        // });
       // this.archiveFolderService.save(data).subscribe({
       //   next: () => {
       //     this.saving = false;
 
-      this.router.navigate(['/configurations/add-barCode', this.archiveFolder.id]).then();
+
     }
   }
+
 
   onExamTypeChanged($event: any): void {
     this.examTypeChanged.emit(this.examTypeId);

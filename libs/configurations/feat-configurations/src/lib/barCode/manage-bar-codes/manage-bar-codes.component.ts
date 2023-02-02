@@ -64,7 +64,7 @@ import { NgForm } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageBarCodesComponent implements OnInit {
+export class ManageBarCodesComponent  {
   @Input() loading = false;
 
   @Output() gridEvent = new EventEmitter<
@@ -72,15 +72,17 @@ export class ManageBarCodesComponent implements OnInit {
   >();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
-  @Output() formSave = new EventEmitter<AddBarcode>();
+  // @Output() formSave = new EventEmitter<AddBarcode>();
 
   @Input() set barCodeDetails(details: AddBarcode | null) {
     if (details) {
       this.barCode = Object.assign({}, details);
     }
   }
+  @Output() formSave = new EventEmitter<AddBarcode[]> ();
 
   @ViewChild('form', {static: true}) form!: NgForm;
+  private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[]>([]);
 
   private barCodes$$ = new BehaviorSubject<AddBarcode[]>([]);
   barCodes$ = this.barCodes$$.asObservable();
@@ -102,11 +104,11 @@ export class ManageBarCodesComponent implements OnInit {
     private router: Router,
     private messageService: MessageService,
     private readonly archivefolder: ArchiveFolderApiService,
+    private archiveFolderService: ArchiveFolderApiService,
 
     private route: ActivatedRoute
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
-
   }
   archiveFolder: ArchiveFolder = {
     nr: 0,
@@ -121,14 +123,8 @@ export class ManageBarCodesComponent implements OnInit {
     archiveFolderId: 0,
     barCode: "",
   };
-  id: string | null;
+  id: any;
 
-  ngOnInit(): void {
-    this.barCodesService.getById(this.id).subscribe(result => {
-      this.barCode = {...result.data};
-      this.cd.detectChanges();
-    });
-  }
 
   onCloseClick() {
     this.router.navigate(['/configurations/students']).then();
@@ -215,11 +211,22 @@ export class ManageBarCodesComponent implements OnInit {
     this.filters = Object.assign({}, $event);
 
     this.barCodesService
-      .loadAddBarcode($event)
+      .loadAddBarcode($event, this.id)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.barCodes$$.next([]);
         this.barCodes$$.next(response.data);
+        this.totalRecords = response.total;
+      });
+  }
+  getArchiveFolders($event: LazyLoadEvent) {
+    this.filters = Object.assign({}, $event);
+
+    this.archiveFolderService
+      .loadArchiveFolder($event)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.archiveFolders$$.next(response.data);
         this.totalRecords = response.total;
       });
   }
