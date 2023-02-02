@@ -45,6 +45,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BarCodeGridComponent } from '../bar-code-grid/bar-code-grid.component';
 import { NgForm } from '@angular/forms';
+import {BarCodeFormComponent} from "../bar-code-form/bar-code-form.component";
 
 @UntilDestroy()
 @Component({
@@ -58,20 +59,22 @@ import { NgForm } from '@angular/forms';
     BarCodeGridComponent,
     ToolbarModule,
     RouterLink,
+    BarCodeFormComponent,
   ],
   templateUrl: './manage-bar-codes.component.html',
   styleUrls: ['./manage-bar-codes.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageBarCodesComponent  {
+export class ManageBarCodesComponent {
   @Input() loading = false;
 
   @Output() gridEvent = new EventEmitter<
-    GridEvent<AddBarcode | AddBarcode[]>
+    GridEvent<AddBarcode | ArchiveFolder[] >
   >();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+
   // @Output() formSave = new EventEmitter<AddBarcode>();
 
   @Input() set barCodeDetails(details: AddBarcode | null) {
@@ -79,7 +82,8 @@ export class ManageBarCodesComponent  {
       this.barCode = Object.assign({}, details);
     }
   }
-  @Output() formSave = new EventEmitter<AddBarcode[]> ();
+
+  @Output() formSave = new EventEmitter<AddBarcode[] | ArchiveFolder[]>();
 
   @ViewChild('form', {static: true}) form!: NgForm;
   private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[]>([]);
@@ -92,6 +96,7 @@ export class ManageBarCodesComponent  {
   selectedBarCode: AddBarcode | null = null;
   selectedBarCodes: AddBarcode[] = [];
   displayModal = false;
+  @Input() barCodes: AddBarcode[] = [];
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -105,16 +110,14 @@ export class ManageBarCodesComponent  {
     private messageService: MessageService,
     private readonly archivefolder: ArchiveFolderApiService,
     private archiveFolderService: ArchiveFolderApiService,
-
     private route: ActivatedRoute
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
+
   archiveFolder: ArchiveFolder = {
-    nr: 0,
     isClosed: false,
     lastUserId: undefined,
-    id: 0,
     examTypeId: 0,
     examSubjectId: ""
   };
@@ -126,22 +129,24 @@ export class ManageBarCodesComponent  {
   id: any;
 
 
-  onCloseClick() {
-    this.router.navigate(['/configurations/students']).then();
-  }
-
   onNewClick() {
     this.displayModal = true;
   }
 
   onDeleteSelectedClick() {
     this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të fshini shkollat e zgjedhura?',
+      message: 'Jeni i sigurt që doni të fshini barkodin e zgjedhur?',
       accept: () => {
         //this.highSchoolStore.deleteSelectedHighSchools();
-        this.toastService.showWarning('Shkollat e zgjedhura u fshinë!');
+        this.toastService.showWarning('Barkodi i  zgjedhur u fshi!');
       },
     });
+  }
+  changeStatus(barcode: ArchiveFolder): void {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.CHANGE,
+      data: barcode,
+    } as GridEvent<AddBarcode>);
   }
 
   onGridEvent(event: GridEvent<AddBarcode | AddBarcode[]>) {
@@ -188,7 +193,7 @@ export class ManageBarCodesComponent  {
           message: 'Doni te shtoni Barkodin?',
           accept: () => {
             this.addBarCode(event.data as AddBarcode);
-            },
+          },
         });
         break;
     }
@@ -219,17 +224,6 @@ export class ManageBarCodesComponent  {
         this.totalRecords = response.total;
       });
   }
-  getArchiveFolders($event: LazyLoadEvent) {
-    this.filters = Object.assign({}, $event);
-
-    this.archiveFolderService
-      .loadArchiveFolder($event)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.archiveFolders$$.next(response.data);
-        this.totalRecords = response.total;
-      });
-  }
 
   addBarCode(barCode: AddBarcode) {
     this.barCodesService
@@ -237,14 +231,18 @@ export class ManageBarCodesComponent  {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Shkolla e mesme u shtua me sukses!');
+          this.toastService.showSuccess('Barkodi u shtua me sukses!');
           this.displayModal = false;
           this.getBarCodes(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së shkollës së mesme!'
+            'Ndodhi një problem gjatë ndryshimit së barkodit!'
+          );
+        if (this.totalRecords >= 50)
+          this.toastService.showWarning(
+            'Dosja ka tejkaluar limitin e 50 Provimeve!'
           );
       });
   }
@@ -271,7 +269,7 @@ export class ManageBarCodesComponent  {
 }
 //   deleteBarCode(barcode: AddBarcode) {
 //     this.barCodesService
-//       .delete(barcode.barCode)
+//       .delete(barcode.archiveFolderId)
 //       .pipe(untilDestroyed(this))
 //       .subscribe(response => {
 //         if (response.isSuccessful) {

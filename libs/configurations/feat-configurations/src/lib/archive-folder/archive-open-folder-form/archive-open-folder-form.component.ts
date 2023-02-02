@@ -73,7 +73,8 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
     isClosed: false,
     lastUserId: undefined,
     examTypeId: 0,
-    examSubjectId: ""
+    examSubjectId: "",
+    totalArchiveExams: 0,
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function

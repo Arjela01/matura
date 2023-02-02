@@ -40,6 +40,7 @@
                  name="barcode"
                  [(ngModel)]="barCode.barCode"
                  pTooltip="Barkodi duhet te permbaje 7 shifra"
+                 onfocus="this.value=''"
                  tooltipPosition="top"
                  required/>
           <button
@@ -50,7 +51,7 @@
             [disabled]="!form.valid"
             label="Ruaj"
             class="p-button-success mr-2"
-            (click)="changeStatus(barCode)"
+            (click)="SaveBarCode(barCode)"
          ></button>
         </div>
     </div>
@@ -84,7 +85,7 @@
         {{ barcode.index }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{barcode.archiveFolderId}}
+        {{barcode.barcode}}
       </td>
 
 

@@ -107,20 +107,16 @@ export class BarCodeGridComponent implements  OnInit{
     this.barCodesService.save(data).subscribe({
       next: () => {
         this.submitted = false;
+
       },
+
     });
   }
 
-  onclick() {
-    this.submitted = true;
-    if (this.form.valid) {
-      this.formSave.emit(this.barCode);
-    }
-  }
 
 
 
-  changeStatus(barcode: AddBarcode): void {
+  SaveBarCode(barcode: AddBarcode): void {
     this.gridEvent.emit({
       action: GRID_ACTIONS.CHANGE,
       data: barcode,

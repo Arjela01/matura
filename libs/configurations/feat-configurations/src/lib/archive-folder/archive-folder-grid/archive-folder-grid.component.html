@@ -26,12 +26,12 @@
           field="nr"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="total">
+      <th pSortableColumn="totalArchiveExams">
         Total
-        <p-sortIcon field="total"></p-sortIcon>
+        <p-sortIcon field="totalArchiveExams"></p-sortIcon>
         <p-columnFilter
-          type="text"
-          field="total"
+          type="numeric"
+          field="totalArchiveExams"
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="examType">
@@ -74,7 +74,7 @@
         </a>
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ this.id }}
+        {{archiveFolder.totalArchiveExams}}
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ archiveFolder.examTypeName }}

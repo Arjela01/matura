@@ -6,7 +6,7 @@
       <p-toolbar styleClass="mb-4">
         <div class="p-toolbar-group-left">
           <h2 class="flex-1 mb-0">
-            Dosja: {{ totalRecords }}
+            Dosja: {{archiveFolder.nr }}
           </h2>
         </div>
         <div class="p-toolbar-group-right">
@@ -18,17 +18,18 @@
               class="p-button-danger mr-2"
               [ngStyle]="{ backgroundColor: 'var(--bluegray-600)' }"></button>
           </a>
-          <a href="/configurations/layout-report-page">
+
             <button
               pButton
+
               [ngStyle]="{ 'background-color': archiveFolder.isClosed ? '#c8e6c9' : '#feedaf', 'color': archiveFolder.isClosed ? '#256029' : '#8a5340' }"
             label="{{archiveFolder.isClosed ? 'MBYLLUR ' : 'MBYLL DOSJEN' }}"
               icon="{{
               !archiveFolder.isClosed ? 'pi pi-folder-open' : 'pi pi-folder'
             }}"
               class="p-button-danger mr-2"
-              (click)="(onCloseClick)"></button>
-          </a>
+              (click)="changeStatus(archiveFolder)"></button>
+
         </div>
       </p-toolbar>
       <msh-bar-code-grid
@@ -52,10 +53,10 @@
   class="p-fluid"
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
-    <!--    <msh-bar-code-form-->
-    <!--      (formClose)="onModalClose()"-->
-    <!--      (formSave)="onFormSave($event)">-->
-    <!--    </msh-bar-code-form>-->
+        <msh-bar-code-form
+          (formClose)="onModalClose()"
+          (formSave)="onFormSave($event)">
+        </msh-bar-code-form>
   </ng-template>
 </p-dialog>
 

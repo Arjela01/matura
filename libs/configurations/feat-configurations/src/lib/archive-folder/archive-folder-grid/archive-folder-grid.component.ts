@@ -102,6 +102,7 @@ export class ArchiveFolderGridComponent {
     id: "",
     isClosed: false,
     lastUserId: undefined,
+    totalArchiveExams: 0,
     nr: 0,
   };
 

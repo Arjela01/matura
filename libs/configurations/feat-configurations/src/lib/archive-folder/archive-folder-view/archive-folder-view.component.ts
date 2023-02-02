@@ -9,7 +9,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
-  ArchiveFolder,
+  AddBarcode,
+  ArchiveFolder, Student,
 } from '@msh/configurations/domain-configurations';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { LazyLoadEvent, MessageService } from 'primeng/api';
@@ -21,7 +22,7 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { FormsModule, NgForm } from '@angular/forms';
 import {
-  AcademicYearApiService,
+  AcademicYearApiService, AddBarcodeApiService,
   ArchiveFolderApiService,
   GendersApiService,
   HighSchoolApiService,
@@ -49,35 +50,26 @@ import { ToolbarModule } from 'primeng/toolbar';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArchiveFolderViewComponent {
-  @Output() formSave = new EventEmitter<ArchiveFolder>();
-  @Output() formClose = new EventEmitter<undefined>();
-
-  @Input() archiveFolders: ArchiveFolder[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
 
-  //Keep it local state because of Table Header checkbox not syncing
-  selectedArchiveFolders: ArchiveFolder[] = [];
+  @Input() barcodes: AddBarcode[] = [];
 
-  @Output() gridEvent = new EventEmitter<GridEvent<ArchiveFolder>>();
+  //Keep it local state because of Table Header checkbox not syncing
+  selectedBarcodes: AddBarcode[] = [];
+
+  @Output() gridEvent = new EventEmitter<GridEvent<AddBarcode>>();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
-
-  showArchiveFolder = false;
+  @Input() set barCodeDetails(details: AddBarcode | null) {
+    if (details) {
+      this.barCode = Object.assign({}, details);
+    }
+  }
+  showBarcodes = false;
   submitted = false;
-
-  archiveFolder: ArchiveFolder = {
-    examTypeName: "",
-    examTypeId: 0,
-    examSubjectId: "",
-    examSubjectName: "",
-    id: 0,
-    isClosed: false,
-    lastUserId: undefined,
-    nr: 0,
-  };
 
 
   id: string | null;
@@ -86,57 +78,62 @@ export class ArchiveFolderViewComponent {
     private cd: ChangeDetectorRef,
     private readonly academicYearService: AcademicYearApiService,
     private readonly archiveFolderService: ArchiveFolderApiService,
+    private readonly addBarcodeService: AddBarcodeApiService,
     private readonly highSchoolService: HighSchoolApiService,
     private readonly profileService: ProfileApiService,
     private readonly genderService: GendersApiService,
     private router: Router,
     private messageService: MessageService,
+    private activatedRoute: ActivatedRoute,
+
+
 
     private route: ActivatedRoute
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
 
-  saving = false;
+  barCode: AddBarcode = {
+    barCode: "",
+    archiveFolderId: 0,
+  };
+
 
   ngOnInit(): void {
-    this.archiveFolderService.getById(this.id).subscribe(result => {
-      this.archiveFolder = { ...result.data };
-      this.cd.detectChanges();
-    });
+    const id = this.activatedRoute.snapshot.paramMap.get('id');
+  }
+    // this.addBarcodeService.ba.subscribe(result => {
+    //   this.barCode = { ...result.data };
+    //   this.cd.detectChanges();
+    // });
+
+
+
+
+  onRowUnselect({ data }: { data: AddBarcode }) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.UNSELECT_ROW,
+      data: data,
+    } as GridEvent<AddBarcode>);
+  }
+  onRowSelect({ data }: { data: AddBarcode }) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.SELECT_ROW,
+      data: data,
+    } as GridEvent<AddBarcode>);
   }
 
-  onSubmit(): void {
-    const data = { ...this.archiveFolder };
-    this.archiveFolderService.save(data).subscribe({
-      next: () => {
-        this.saving = false;
-
-        this.router.navigate(['/configurations/archive-view']).then();
-      },
-    });
-  }
-
-  ngOnChanges(): void {
-    this.showArchiveFolder = this.archiveFolder.examTypeName != null;
-  }
-  onEditClick(archiveFolder: ArchiveFolder) {
+  onEditClick(barcode: AddBarcode) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
-      data: archiveFolder,
-    } as GridEvent<ArchiveFolder>);
+      data: barcode,
+    } as GridEvent<AddBarcode>);
   }
-  onActivate(archiveFolder: ArchiveFolder) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.EDIT,
-      data: archiveFolder,
-    } as GridEvent<ArchiveFolder>);
-  }
-  onDeleteClick(archiveFolder: ArchiveFolder) {
+  onDeleteClick(barcode: AddBarcode) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,
-      data: archiveFolder,
-    } as GridEvent<ArchiveFolder>);
+      data: barcode,
+    } as GridEvent<AddBarcode>);
   }
 
   loadRows($event: LazyLoadEvent) {
