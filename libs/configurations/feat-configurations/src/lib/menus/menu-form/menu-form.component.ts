@@ -4,8 +4,10 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input, OnChanges,
-  Output, SimpleChanges,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -18,6 +20,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @Component({
   selector: 'msh-menu-form',
@@ -32,6 +35,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     ButtonModule,
     CheckboxModule,
     DropdownModule,
+    MultiSelectModule,
   ],
   templateUrl: './menu-form.component.html',
   styleUrls: ['./menu-form.component.scss'],
@@ -39,6 +43,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 })
 export class MenuFormComponent implements OnChanges {
   @Input() parentMenus: DropdownModel<number>[] = [];
+  @Input() roles: DropdownModel<number>[] = [];
 
   @Input() set menuDetails(details: Menu | null) {
     if (details) {
@@ -60,6 +65,7 @@ export class MenuFormComponent implements OnChanges {
     url: '',
     text: '',
     parentId: null,
+    roles: [],
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function

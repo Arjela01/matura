@@ -5,6 +5,7 @@ export interface Menu {
   parentId: number | null;
   text: string;
   url: string;
+  roles: string[];
 }
 export interface MenuTableView {
   data: Menu[];
