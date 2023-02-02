@@ -1,6 +1,6 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="field">
-    <label for="subject">Emri *</label>
+    <label for="subject">Lënda *</label>
     <input
       type="text"
       pInputText
@@ -13,7 +13,7 @@
         'ng-invalid ng-dirty': submitted && !failingStudent.subject
       }" />
     <small class="p-error block" *ngIf="submitted && !failingStudent.subject">
-      Emri është fushë e kërkuar.
+      Lënda është fushë e kërkuar.
     </small>
   </div>
 

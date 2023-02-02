@@ -73,7 +73,7 @@ export class ManageFailingStudentsComponent {
   }
 
   onFormSave(failingStudent: FailingStudent) {
-    console.log(failingStudent);
+    this.updateFailingStudent(failingStudent);
   }
 
   getFailingStudents($event: LazyLoadEvent) {

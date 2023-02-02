@@ -27,7 +27,7 @@ export class FailingStudentApiService {
     );
   }
 
-  getOne(id: string): Observable<ApiResult<FailingStudent>> {
+  getOne(id: number): Observable<ApiResult<FailingStudent>> {
     return this.apiservice.get(`/FailingStudents/${id}`);
   }
 

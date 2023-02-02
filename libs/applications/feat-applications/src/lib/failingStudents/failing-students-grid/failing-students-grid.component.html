@@ -63,28 +63,27 @@
           field="schoolName"
           display="menu"></p-columnFilter>
       </th>
-
-      <th></th>
+      <th>Shto Lenden</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-failingStudent>
     <tr>
-      <td style="width: 100%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ failingStudent.firstName }}
       </td>
-      <td style="width: 100%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ failingStudent.middleName }}
       </td>
-      <td style="width: 100%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ failingStudent.lastName }}
       </td>
-      <td style="width: 100%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ failingStudent.studentIdentifier }}
       </td>
-      <td style="width: 100%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ failingStudent.personalIdentifier }}
       </td>
-      <td style="width: 100%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ failingStudent.schoolName }}
       </td>
       <td>
@@ -94,16 +93,9 @@
             pRipple
             icon="pi pi-pencil"
             class="p-button-rounded p-button-warning p-button-text mr-2"
-            pTooltip="Ndrysho"
+            pTooltip="Shto Lenden"
             tooltipPosition="bottom"
             (click)="onEditClick(failingStudent)"></button>
-          <button
-            pButton
-            pRipple
-            icon="pi pi-trash"
-            class="p-button-rounded p-button-danger p-button-text"
-            pTooltip="Fshi"
-            tooltipPosition="bottom"></button>
         </div>
       </td>
     </tr>

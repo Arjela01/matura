@@ -1,7 +1,7 @@
 export interface FailingStudent {
   id?: number;
 
-  student?: number;
+  studentId?: number;
 
   subject?: string;
 
