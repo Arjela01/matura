@@ -34,4 +34,11 @@ export const APPLICATION_ROUTES: Route[] = [
     loadComponent: () =>
       import('./a1/a1-form/a1-form.component').then(m => m.A1FormComponent),
   },
+  {
+    path: 'failing-students',
+    loadComponent: () =>
+      import(
+        './failingStudents/manage-failing-students/manage-failing-students.component'
+      ).then(m => m.ManageFailingStudentsComponent),
+  },
 ];
