@@ -76,9 +76,9 @@ export class ManageMenusComponent implements OnInit {
 
   onDeleteSelectedClick() {
     this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të fshini shkollat e zgjedhura?',
+      message: 'Jeni i sigurt që doni të fshini menut e zgjedhura?',
       accept: () => {
-        this.toastService.showWarning('High Schools deleted!');
+        this.toastService.showWarning('Menus deleted!');
       },
     });
   }
@@ -147,14 +147,14 @@ export class ManageMenusComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Shkolla e mesme u shtua me sukses!');
+          this.toastService.showSuccess('Menuja u shtua me sukses!');
           this.displayModal = false;
           this.getMenus(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së shkollës së mesme!'
+            'Ndodhi nje problem gjatë ndryshimit së menusë!'
           );
       });
   }
@@ -165,16 +165,14 @@ export class ManageMenusComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            'Shkolla e mesme u ndryshua me sukses!'
-          );
+          this.toastService.showSuccess('Menuja u ndryshua me sukses!');
           this.displayModal = false;
           this.getMenus(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së shkollës së mesme!'
+            'Ndodhi nje problem gjatë ndryshimit të menusë!'
           );
       });
   }
