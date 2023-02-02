@@ -33,8 +33,8 @@ export class ExamSecretApiService {
     );
   }
 
-  getExamSecret(id: number): Observable<ApiResult<ExamSecret>> {
-    return this.apiService.get(`/ExamSecret/${id}`);
+  getExamSecret(id: string): Observable<ApiResult<ExamSecret>> {
+    return this.apiService.get(`/api/ExamSecrets/${id}`);
   }
 
   delete(examSecretId: string): Observable<ApiResult<unknown>> {

@@ -203,7 +203,6 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       //   this.examGrades = response.data;
       // });
     });
-    console.log('init');
   }
 
   ngOnChanges(): void {

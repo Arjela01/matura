@@ -3,7 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   DoCheck,
-  EventEmitter,
+  EventEmitter, Input,
   OnChanges,
   OnInit,
   Output,
@@ -64,12 +64,12 @@ import { A1zStudentSearchComponent } from '../../../../../../applications/feat-a
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
+
   @Output() examVersionChanged = new EventEmitter<string>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
   academicYears: DropdownModel<number>[] = [];
   examVersions: DropdownModel<number>[] = [];
-
   filters: LazyLoadEvent | null = null;
 
   private studentList$$ = new BehaviorSubject<Student[]>([]);
@@ -81,7 +81,7 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
   showStudentModal = false;
   selectedStudent: any = null;
   examVersionId: any;
-  formId: any;
+  formId: string | null;
 
   examSecret: ExamSecret = {
     id: '',
@@ -123,6 +123,7 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
       this.onStudentInit(this.examSecret);
     }
     if (this.selectedStudent !== null) {
+      console.log(1111 ,this.selectedStudent)
       this.onStudentChange(this.selectedStudent);
     }
   }
@@ -134,18 +135,22 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
     this.examVersionService.loadDropdownList().subscribe(response => {
       this.examVersions = response.data;
     });
-    this.examSecretApiService
-      .getExamSecret(this.formId!)
-      .subscribe(response => {
+    if (this.formId) {
+      this.examSecretApiService
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        .getExamSecret(this.formId!).subscribe(response => {
         this.examSecret = response.data;
+        console.log(this.examSecret)
         this.cd.detectChanges();
+        console.log(response.data)
       });
+    }
+
   }
   onGridEvent(event: GridEvent<Student | Student[]>) {
     switch (event.action) {
       case GRID_ACTIONS.EDIT:
         this.selectedStudent = Object.assign({}, event.data);
-        console.log(event.data);
         this.showStudentModal = false;
         break;
     }
@@ -157,13 +162,9 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
     } else {
       this.examSecret.studentId = student.studentId;
       this.studentInputData =
-        student?.studentIdentifier +
+        student?.studentId +
         '-' +
-        student?.studentFirstName +
-        '-' +
-        student?.studentFatherName +
-        '-' +
-        student?.studentLastName;
+        student?.studentName
     }
   }
 
