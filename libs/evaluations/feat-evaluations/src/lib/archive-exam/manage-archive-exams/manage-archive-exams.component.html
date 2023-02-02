@@ -1,0 +1,84 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card px-6 py-6">
+      <p-toolbar styleClass="mb-4">
+        <div class="p-toolbar-group-left">
+          <h2 class="flex-1 mb-0">Dosja: {{ archiveFolder.nr }}</h2>
+        </div>
+        <div class="p-toolbar-group-right">
+          <a [routerLink]="['/evaluations', 'archive-folder']">
+            <button
+              pButton
+              label="Kthehu"
+              icon="pi pi-arrow-left"
+              class="p-button-danger mr-2"
+              [ngStyle]="{ backgroundColor: 'var(--bluegray-600)' }"></button>
+          </a>
+
+          <button
+            pButton
+            [ngStyle]="{
+              'background-color': archiveFolder.isClosed
+                ? '#c8e6c9'
+                : '#feedaf',
+              color: archiveFolder.isClosed ? '#256029' : '#8a5340'
+            }"
+            label="{{ archiveFolder.isClosed ? 'MBYLLUR ' : 'MBYLL DOSJEN' }}"
+            icon="{{
+              !archiveFolder.isClosed ? 'pi pi-folder-open' : 'pi pi-folder'
+            }}"
+            class="p-button-danger mr-2"
+            (click)="changeStatus(archiveFolder)"></button>
+        </div>
+      </p-toolbar>
+      <msh-archive-exam-grid
+        [barCodes]="(barCodes$ | async) || []"
+        [totalRecords]="totalRecords"
+        (gridEvent)="onGridEvent($event)"
+        (lazyLoadData)="getBarCodes($event)"
+        (formSave)="onFormSave($event)">
+      </msh-archive-exam-grid>
+    </div>
+  </div>
+</div>
+
+<p-dialog
+  [(visible)]="displayModal"
+  [style]="{ width: '500px' }"
+  header="Detajet e Barkodit"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid"
+  (onHide)="onModalClose()">
+  <ng-template pTemplate="content">
+    <msh-archive-exam-form
+      [barCodeDetails]="selectedBarCode"
+      (formClose)="onModalClose()"
+      (formSave)="onFormSave($event)">
+    </msh-archive-exam-form>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog
+  #cd
+  header="Konfirmo"
+  icon="pi pi-exclamation-triangle"
+  [style]="{ width: '450px' }">
+  <ng-template pTemplate="footer">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Jo"
+      class="p-button-text"
+      (click)="cd.reject()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Po"
+      class="p-button-text"
+      (click)="cd.accept()"></button>
+  </ng-template>
+</p-confirmDialog>

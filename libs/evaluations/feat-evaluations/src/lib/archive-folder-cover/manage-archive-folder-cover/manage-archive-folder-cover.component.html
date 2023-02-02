@@ -1,0 +1,68 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card px-6 py-6">
+      <!-- TODO: this can be reusable -->
+      <p-toolbar styleClass="mb-4">
+        <div class="p-toolbar-group-left">
+          <h2 class="flex-1 mb-0">
+            Ju mund të printoni kopjen tuaj si më poshtë!
+          </h2>
+        </div>
+        <div class="p-toolbar-group-right">
+          <a [routerLink]="['/evaluations', 'archive-folder']">
+            <button
+              pButton
+              pRipple
+              label="Kthehu"
+              icon="pi pi-arrow-left"
+              class="p-button-danger mr-2"
+              [ngStyle]="{ backgroundColor: 'var(--bluegray-600)' }"></button>
+          </a>
+          <a [routerLink]="['/evaluations', 'archive-folder-cover']">
+            <button
+              pButton
+              pRipple
+              label="Printo"
+              icon="pi pi-print"
+              class="p-button-success mr-2"
+              (click)="(onPrint)"></button>
+          </a>
+        </div>
+      </p-toolbar>
+      <div class="card">
+        <p-toast></p-toast>
+        <p-steps [model]="items" [readonly]="true"></p-steps>
+      </div>
+
+      <msh-archive-folder-cover-grid
+        [archiveFolders]="(archiveFolders$ | async) || []"
+        [totalRecords]="totalRecords"
+        (gridEvent)="onGridEvent($event)"
+        (lazyLoadData)="getArchiveFolders($event)">
+      </msh-archive-folder-cover-grid>
+    </div>
+  </div>
+</div>
+
+<p-confirmDialog
+  #cd
+  header="Konfirmo"
+  icon="pi pi-exclamation-triangle"
+  [style]="{ width: '450px' }">
+  <ng-template pTemplate="footer">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Jo"
+      class="p-button-text"
+      (click)="cd.reject()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Po"
+      class="p-button-text"
+      (click)="cd.accept()"></button>
+  </ng-template>
+</p-confirmDialog>

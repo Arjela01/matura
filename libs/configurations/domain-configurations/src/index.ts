@@ -20,7 +20,6 @@ export * from './universities/university.model';
 export * from './university-departments/university-department.model';
 export * from './user/user.model';
 export * from './students/students.model';
-export * from './archive-folder/archive-folder.model';
 export * from './exam-type/exam-type.model';
 export * from './exam-subject/exam-subject.model';
 export * from './region/region.model'
@@ -28,8 +27,6 @@ export * from './city/city.model'
 export * from './academic-year/academic-year.model'
 export * from './a1z-category/a1z-category'
 export * from './exam-date/exam-date.model'
-// export * from './folders/folders.model'
 export * from './students/student-section.model'
 export * from './students/student-class.model'
 export * from './exam-subject-profile/exam-subject-profile.model'
-export * from './add-barcode/add-barcode.model'
