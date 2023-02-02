@@ -51,8 +51,6 @@ export class ManageA1a1zConfirmedComponent {
     private a1a1zService: ConfirmedA1A1ZService
   ) {}
 
-  ngOnInit(): void {}
-
   onGridEvent(event: GridEvent<Student | Student[]>) {
     switch (event.action) {
       case GRID_ACTIONS.REJECT:
