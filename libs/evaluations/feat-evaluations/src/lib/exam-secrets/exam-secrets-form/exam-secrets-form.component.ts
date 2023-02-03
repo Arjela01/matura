@@ -4,7 +4,6 @@ import {
   Component,
   DoCheck,
   EventEmitter,
-  Input,
   OnChanges,
   OnInit,
   Output,
@@ -39,7 +38,8 @@ import {
 } from '@msh/configurations/data-access-configurations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ExamSecretApiService } from '@msh/evaluations/data-access-evaluations';
-import { A1zStudentSearchComponent } from '../../../../../../applications/feat-applications/src/lib/a1z/a1z-student-search/a1z-student-search.component';
+import { SharedStudentLookupModule } from "@msh/shared/student-lookup";
+
 
 @UntilDestroy()
 @Component({
@@ -56,7 +56,7 @@ import { A1zStudentSearchComponent } from '../../../../../../applications/feat-a
     DropdownModule,
     AutoCompleteModule,
     DialogModule,
-    A1zStudentSearchComponent,
+    SharedStudentLookupModule,
   ],
   providers: [ConfirmationService],
 
@@ -109,11 +109,6 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
     private readonly activatedRoute: ActivatedRoute
   ) {
     this.formId = this.activatedRoute.snapshot.paramMap.get('id');
-  }
-
-  onExamVersionChanged($event: any): void {
-    console.log('changed');
-    this.examVersionChanged.emit(this.examVersionId);
   }
 
   ngDoCheck(): void {

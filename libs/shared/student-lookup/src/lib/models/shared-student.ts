@@ -1,5 +1,4 @@
-import { SharedStudent } from '@msh/shared/student-lookup';
-export interface Student extends SharedStudent {
+export interface SharedStudent {
   id?: any;
   birthDate: Date;
   birthPlace: string;
@@ -35,9 +34,4 @@ export interface Student extends SharedStudent {
   modifiedOn?: Date;
   modifiedByName?: string;
   nid?: string;
-}
-
-export interface StudentTableView {
-  data: Student[];
-  total: number;
 }
