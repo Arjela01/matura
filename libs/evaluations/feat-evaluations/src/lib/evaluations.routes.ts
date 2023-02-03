@@ -38,7 +38,7 @@ export const EVALUATION_ROUTES: Route[] = [
       ).then(m => m.ManageArchiveExamsComponent),
   },
   {
-    path: 'archive-folder-cover',
+    path: 'archive-folder-cover/:id',
     loadComponent: () =>
       import(
         './archive-folder-cover/manage-archive-folder-cover/manage-archive-folder-cover.component'

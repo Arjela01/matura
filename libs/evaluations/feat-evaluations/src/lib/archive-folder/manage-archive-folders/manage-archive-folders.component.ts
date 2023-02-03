@@ -218,7 +218,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
 
   changeFolderStatus(archiveFolder: ArchiveFolder) {
     this.archiveFolderService
-      .changeFolderStatus(archiveFolder)
+      .changeFolderStatus(archiveFolder.id)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {

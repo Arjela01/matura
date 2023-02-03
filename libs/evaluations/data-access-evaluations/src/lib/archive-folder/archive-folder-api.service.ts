@@ -20,12 +20,12 @@ export class ArchiveFolderApiService {
     );
   }
   changeFolderStatus(
-    archive: ArchiveFolder
+    id: number
   ): Observable<ApiResult<ArchiveFolder>> {
     return this.apiService.put<ApiResult<ArchiveFolder>, any>(
       `/ArchiveFolder/UpdateStatus`,
       {
-        id: archive.id,
+        id: id,
       }
     );
   }

@@ -78,13 +78,14 @@ export class ManageArchiveExamsComponent {
 
   @Output() formSave = new EventEmitter<ArchiveExam[] | ArchiveFolder[]>();
 
-  @ViewChild('form', {static: true}) form!: NgForm;
+  @ViewChild('form', { static: true }) form!: NgForm;
   private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[]>([]);
 
   private barCodes$$ = new BehaviorSubject<ArchiveExam[]>([]);
   barCodes$ = this.barCodes$$.asObservable();
   filters: LazyLoadEvent | null = null;
   totalRecords = 0;
+  dataload: any;
 
   selectedBarCode: ArchiveExam | null = null;
   selectedBarCodes: ArchiveExam[] = [];
@@ -101,11 +102,13 @@ export class ManageArchiveExamsComponent {
     private readonly studentAPITestService: StudentsApiService,
     private router: Router,
     private messageService: MessageService,
-    private readonly archivefolder: ArchiveFolderApiService,
     private archiveFolderService: ArchiveFolderApiService,
     private route: ActivatedRoute
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
+    this.barCodes$.subscribe(b => {
+      this.dataload = { ...b };
+    });
   }
 
   archiveFolder: ArchiveFolder = {
@@ -129,17 +132,9 @@ export class ManageArchiveExamsComponent {
     this.confirmationService.confirm({
       message: 'Jeni i sigurt që doni të fshini barkodin e zgjedhur?',
       accept: () => {
-        //this.highSchoolStore.deleteSelectedHighSchools();
         this.toastService.showWarning('Barkodi i  zgjedhur u fshi!');
       },
     });
-  }
-
-  changeStatus(folder: ArchiveExam): void {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.CHANGE,
-      data: folder,
-    } as GridEvent<ArchiveExam>);
   }
 
   onGridEvent(event: GridEvent<ArchiveExam | ArchiveExam[]>) {
@@ -230,6 +225,9 @@ export class ManageArchiveExamsComponent {
           this.toastService.showError(
             'Ndodhi një problem gjatë ndryshimit së barkodit!'
           );
+        if (response.errorMessage) {
+          this.toastService.showError(response.errorMessage);
+        }
         if (this.totalRecords >= 50)
           this.toastService.showWarning(
             'Dosja ka tejkaluar limitin e 50 Provimeve!'
@@ -253,6 +251,29 @@ export class ManageArchiveExamsComponent {
         if (response.isBadRequest)
           this.toastService.showError(
             'Ndodhi një problem gjatë ndryshimit së shkollës së mesme!'
+          );
+      });
+  }
+
+  changeFolderStatus() {
+    this.archiveFolderService
+      .changeFolderStatus(this.id)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.router.navigate(['./evaluations/archive-folder-cover', this.id]);
+          this.toastService.showSuccess(
+            this.dataload[0]?.isFolderClosed
+              ? 'Dosja u hap me sukses!'
+              : 'Dosja u mbyll me sukses!'
+          );
+
+          this.displayModal = false;
+        }
+
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi një problem gjatë ndryshimit së dosjes!'
           );
       });
   }

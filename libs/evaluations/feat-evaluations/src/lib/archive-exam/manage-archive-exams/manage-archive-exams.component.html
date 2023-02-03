@@ -3,8 +3,10 @@
     <div class="card px-6 py-6">
       <p-toolbar styleClass="mb-4">
         <div class="p-toolbar-group-left">
-          <h2 class="flex-1 mb-0">Dosja: {{ archiveFolder.nr }}</h2>
+          <h2 class="flex-1 mb-0" icon="pi pi-circle">Dosja: {{ dataload[0]?.archiveFolderNr }}  |  {{ dataload[0]?.examTypeName}} : {{ dataload[0]?.examSubjectName}}</h2>
         </div>
+<!--        <div class="p-toolbar-group-left"><h2 class="flex-1 mb-0">{{ bar[0]?.examTypeName}} : {{ bar[0]?.examSubjectName}}</h2></div>-->
+
         <div class="p-toolbar-group-right">
           <a [routerLink]="['/evaluations', 'archive-folder']">
             <button
@@ -18,18 +20,19 @@
           <button
             pButton
             [ngStyle]="{
-              'background-color': archiveFolder.isClosed
+              'background-color': dataload[0]?.isFolderClosed
                 ? '#c8e6c9'
                 : '#feedaf',
-              color: archiveFolder.isClosed ? '#256029' : '#8a5340'
+              color: dataload[0]?.isFolderClosed ? '#256029' : '#8a5340'
             }"
-            label="{{ archiveFolder.isClosed ? 'MBYLLUR ' : 'MBYLL DOSJEN' }}"
+            label="{{ dataload[0]?.isFolderClosed ? 'Hap Dosjen ' : 'Mbyll Dosjen' }}"
             icon="{{
-              !archiveFolder.isClosed ? 'pi pi-folder-open' : 'pi pi-folder'
+              !dataload[0]?.isFolderClosed ? 'pi pi-folder-open' : 'pi pi-folder'
             }}"
             class="p-button-danger mr-2"
-            (click)="changeStatus(barCode)"></button>
+            (click)="changeFolderStatus()"></button>
         </div>
+
       </p-toolbar>
       <msh-archive-exam-grid
         [barCodes]="(barCodes$ | async) || []"
