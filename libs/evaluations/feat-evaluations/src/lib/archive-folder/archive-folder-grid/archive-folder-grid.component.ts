@@ -131,4 +131,8 @@ export class ArchiveFolderGridComponent {
   loadRows($event: LazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
+
+  persistArchiveFolder(archiveFolder: ArchiveFolder){
+    this.archiveFolderService.currentArchiveFolder$.next(archiveFolder);
+  }
 }

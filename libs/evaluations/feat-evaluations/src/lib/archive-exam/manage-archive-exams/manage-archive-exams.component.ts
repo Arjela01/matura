@@ -5,6 +5,8 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -23,7 +25,7 @@ import {
   GridEvent,
   GRID_ACTIONS,
 } from '@msh/shared/util-shared';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, take } from 'rxjs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ArchiveExamGridComponent } from '../archive-exam-grid/archive-exam-grid.component';
 import { NgForm } from '@angular/forms';
@@ -61,35 +63,36 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageArchiveExamsComponent {
+export class ManageArchiveExamsComponent implements OnInit {
   @Input() loading = false;
-
-  @Output() gridEvent = new EventEmitter<
-    GridEvent<ArchiveExam | ArchiveFolder[]>
-  >();
-
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
-
   @Input() set barCodeDetails(details: ArchiveExam | null) {
     if (details) {
       this.barCode = Object.assign({}, details);
     }
   }
-
+  @Input() barCodes: ArchiveExam[] = [];
+  @Output() gridEvent = new EventEmitter<
+    GridEvent<ArchiveExam | ArchiveFolder[]>
+  >();
+  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
   @Output() formSave = new EventEmitter<ArchiveExam[] | ArchiveFolder[]>();
-
   @ViewChild('form', { static: true }) form!: NgForm;
-
-  private barCodes$$ = new BehaviorSubject<ArchiveExam[]>([]);
+  barCodes$$ = new BehaviorSubject<ArchiveExam[]>([]);
   barCodes$ = this.barCodes$$.asObservable();
   filters: LazyLoadEvent | null = null;
   totalRecords = 0;
   dataload: any;
-
   selectedBarCode: ArchiveExam | null = null;
   selectedBarCodes: ArchiveExam[] = [];
   displayModal = false;
-  @Input() barCodes: ArchiveExam[] = [];
+  barCode: ArchiveExam = {
+    index: 0,
+    archiveFolderId: 0,
+    barcode: '',
+  };
+  id: any;
+  archiveFolder: ArchiveFolder;
+
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -108,20 +111,27 @@ export class ManageArchiveExamsComponent {
     this.barCodes$.subscribe(b => {
       this.dataload = { ...b };
     });
+    this.archiveFolder = {};
   }
 
-  archiveFolder: ArchiveFolder = {
-    isClosed: false,
-    lastUserId: undefined,
-    examTypeId: 0,
-    examSubjectId: '',
-  };
-  barCode: ArchiveExam = {
-    index: 0,
-    archiveFolderId: 0,
-    barcode: '',
-  };
-  id: any;
+  ngOnInit() {
+    this.archiveFolderService.currentArchiveFolder$
+      .pipe(take(1))
+      .subscribe(response => {
+        if (response != null) {
+          this.archiveFolder = { ...response };
+          sessionStorage.setItem(
+            'archiveFolder',
+            JSON.stringify(this.archiveFolder)
+          );
+        } else {
+          const folder = sessionStorage.getItem('archiveFolder');
+          if (folder) {
+            this.archiveFolder = JSON.parse(folder);
+          }
+        }
+      });
+  }
 
   onNewClick() {
     this.displayModal = true;
@@ -240,9 +250,7 @@ export class ManageArchiveExamsComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            'Barkodi u ndryshua me sukses!'
-          );
+          this.toastService.showSuccess('Barkodi u ndryshua me sukses!');
           this.displayModal = false;
           this.getBarCodes(this.filters as LazyLoadEvent);
         }

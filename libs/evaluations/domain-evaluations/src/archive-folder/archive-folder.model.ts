@@ -10,7 +10,7 @@ export interface ArchiveFolder{
   academicYearId?: number;
   academicYearName?: string;
   isClosed?: boolean;
-  lastUserId: any;
+  lastUserId?: any;
   profileGroupId?: string;
   profileGroupName?: string;
 }

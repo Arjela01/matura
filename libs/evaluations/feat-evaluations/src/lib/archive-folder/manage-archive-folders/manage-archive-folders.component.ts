@@ -184,7 +184,6 @@ export class ManageArchiveFoldersComponent implements OnInit {
           this.toastService.showSuccess('Dosja u shtua me sukses!');
 
           this.displayModal = false;
-          this.getArchiveFolders(this.filters as LazyLoadEvent);
           this.router.navigate([
             '/evaluations',
             'archive-exams',
