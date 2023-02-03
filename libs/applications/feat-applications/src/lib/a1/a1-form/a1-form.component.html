@@ -20,7 +20,7 @@
                         Maturanti është fushë e kërkuar.
                     </small>
                 </div>
-                <div [style]="{ width: '180px' }">
+                <div [style]="{ width: '180px' }" *ngIf="!id">
                     <button pButton pRipple type="button" icon="pi pi-search" label="Kërko maturantin"
                         (click)="initializeDialog()" class="p-button-gray w-full"></button>
                 </div>

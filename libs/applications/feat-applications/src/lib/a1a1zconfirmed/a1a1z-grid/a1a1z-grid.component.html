@@ -1,0 +1,119 @@
+<p-table #dt dataKey="id" responsiveLayout="scroll" [value]="students" [totalRecords]="totalRecords" [rows]="10"
+    [paginator]="true" [rowsPerPageOptions]="[10, 20, 30]" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde" [rowHover]="true"
+    (onLazyLoad)="loadRows($event)" [lazy]="true">
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="highSchool">
+                Shkolla
+                <div>
+                    <p-sortIcon field="highSchool"></p-sortIcon>
+                    <p-columnFilter type="text" field="highSchool" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="ID">
+                Matura ID
+                <div>
+                    <p-sortIcon field="ID"></p-sortIcon>
+                    <p-columnFilter type="text" field="ID" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="firstName">
+                Emri
+                <div>
+                    <p-sortIcon field="firstName"></p-sortIcon>
+                    <p-columnFilter type="text" field="firstName" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="middleName">
+                Atësia
+                <div>
+                    <p-sortIcon field="middleName"></p-sortIcon>
+                    <p-columnFilter type="text" field="middleName" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="lastName">
+                Mbiemri
+                <div>
+                    <p-sortIcon field="lastName"></p-sortIcon>
+                    <p-columnFilter type="text" field="lastName" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="birthDate">
+                Datëlindja
+                <div>
+                    <p-sortIcon field="birthDate"></p-sortIcon>
+                    <p-columnFilter type="number" field="birthDate" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="idCard">
+                NID
+                <div>
+                    <p-sortIcon field="birthDate"></p-sortIcon>
+                    <p-columnFilter type="text" field="idCard" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="schoolProfile">
+                Profili
+                <div>
+                    <p-sortIcon field="schoolProfile"></p-sortIcon>
+                    <p-columnFilter type="text" field="schoolProfile" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="status">
+                Statusi
+                <div>
+
+                    <p-columnFilter type="text" field="schoolProfile" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-student>
+        <tr>
+            <td style="width: 14%; min-width: 10rem">
+                {{ student.highSchoolName }}
+            </td>
+            <td style="width: 14%; min-width: 10rem">
+                {{ student.studentId }}
+            </td>
+            <td style="width: 14%; min-width: 10rem">
+                {{ student.firstName }}
+            </td>
+            <td style="width: 14%; min-width: 10rem">
+                {{ student.middleName }}
+            </td>
+            <td style="width: 14%; min-width: 10rem">
+                {{ student.lastName }}
+            </td>
+            <td style="width: 14%; min-width: 10rem">
+                {{ student.birthDate | date : 'dd/MM/yyyy' }}
+            </td>
+            <td style="width: 14%; min-width: 10rem">
+                {{ student.idCard }}
+            </td>
+            <td style="width: 14%; min-width: 10rem">
+                {{ student.profileName }}
+            </td>
+
+            <td>
+                <div class="flex">
+                    <span styleClass="   text-white" *ngIf="student.isConfirmedBySupervisor!==null"
+                        [ngClass]="student.isConfirmedBySupervisor  ? ['bg-green-400','text-white','px-3','py-1','border-round-md'] :['bg-red-400','text-white','px-3','py-1','border-round-md']">
+
+                        {{ student.isConfirmedBySupervisor ? 'Aprovuar':'Refuzuar' }}
+                    </span>
+                    <button pButton pRipple icon="pi pi-check" pTooltip="Aprovo" tooltipPosition="bottom"
+                        class="p-button-success p-button-text mr-2" *ngIf="student.isConfirmedBySupervisor===null"
+                        (click)="onApprove(student)">
+                    </button>
+                    <button pButton icon="pi pi-times" pTooltip="Refuzo" tooltipPosition="bottom" pRipple
+                        class="p-button-danger p-button-text  mr-2" *ngIf="student.isConfirmedBySupervisor===null"
+                        (click)="onRefuse(student)">
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

@@ -5,21 +5,13 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges, OnInit,
+  OnChanges,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { DropdownModel } from '@msh/shared/data-access-shared';
-import { ButtonModule } from 'primeng/button';
-import { CheckboxModule } from 'primeng/checkbox';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { CalendarModule } from 'primeng/calendar';
-import { InputMaskModule } from 'primeng/inputmask';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   AcademicYearApiService,
   GendersApiService,
@@ -28,8 +20,17 @@ import {
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
 import { Student } from '@msh/configurations/domain-configurations';
-import { ActivatedRoute, Router } from '@angular/router';
+import { DropdownModel } from '@msh/shared/data-access-shared';
 import { MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputMaskModule } from 'primeng/inputmask';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @Component({
   selector: 'msh-students-form',
@@ -69,9 +70,9 @@ export class StudentViewComponent implements OnChanges, OnInit {
   submitted = false;
 
   student: Student = {
-    createdName: "",
+    createdName: '',
     createdOn: new Date(),
-    modifiedByName: "",
+    modifiedByName: '',
     modifiedOn: new Date(),
     birthDate: new Date(),
     birthPlace: '',
@@ -99,8 +100,7 @@ export class StudentViewComponent implements OnChanges, OnInit {
     studyClass: '',
     schoolFinishedName: '',
     firstName: '',
-    isConfirmedBySupervisor: true,
-    graduationYear: undefined
+    graduationYear: undefined,
   };
 
   finishedAtSameSchool = true;
@@ -125,7 +125,8 @@ export class StudentViewComponent implements OnChanges, OnInit {
   ngOnInit(): void {
     this.studentService.getById(this.id).subscribe(result => {
       this.student = { ...result.data };
-      this.finishedAtSameSchool = this.student?.schoolFinished == '' ||
+      this.finishedAtSameSchool =
+        this.student?.schoolFinished == '' ||
         this.student?.schoolFinished == null;
       this.cd.detectChanges();
     });
