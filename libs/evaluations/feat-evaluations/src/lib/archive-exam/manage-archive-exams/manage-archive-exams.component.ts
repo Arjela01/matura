@@ -5,7 +5,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnDestroy,
   OnInit,
   Output,
   ViewChild,
@@ -81,7 +80,6 @@ export class ManageArchiveExamsComponent implements OnInit {
   barCodes$ = this.barCodes$$.asObservable();
   filters: LazyLoadEvent | null = null;
   totalRecords = 0;
-  dataload: any;
   selectedBarCode: ArchiveExam | null = null;
   selectedBarCodes: ArchiveExam[] = [];
   displayModal = false;
@@ -108,9 +106,6 @@ export class ManageArchiveExamsComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
-    this.barCodes$.subscribe(b => {
-      this.dataload = { ...b };
-    });
     this.archiveFolder = {};
   }
 
@@ -232,7 +227,7 @@ export class ManageArchiveExamsComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së barkodit!'
+            'Ndodhi një problem gjatë shtimit së barkodit!'
           );
         if (response.errorMessage) {
           this.toastService.showError(response.errorMessage);
@@ -259,6 +254,9 @@ export class ManageArchiveExamsComponent implements OnInit {
           this.toastService.showError(
             'Ndodhi një problem gjatë ndryshimit së barkodit!'
           );
+        if (response.errorMessage) {
+          this.toastService.showError(response.errorMessage);
+        }
       });
   }
 
@@ -270,7 +268,7 @@ export class ManageArchiveExamsComponent implements OnInit {
         if (response.isSuccessful) {
           this.router.navigate(['./evaluations/archive-folder-cover', this.id]);
           this.toastService.showSuccess(
-            this.dataload[0]?.isFolderClosed
+            this.archiveFolder?.isClosed
               ? 'Dosja u hap me sukses!'
               : 'Dosja u mbyll me sukses!'
           );

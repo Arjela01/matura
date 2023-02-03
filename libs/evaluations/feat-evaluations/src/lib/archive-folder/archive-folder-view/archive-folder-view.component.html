@@ -5,9 +5,8 @@
         <p-toolbar styleClass="mb-4">
           <div class="p-toolbar-group-left">
             <h2 class="flex-1 mb-0">
-              Dosja: {{ dataload[0]?.archiveFolderNr }} |
-              {{ dataload[0]?.examTypeName }} :
-              {{ dataload[0]?.examSubjectName }}
+              Dosja: {{ archiveFolder.nr }} |
+              {{ archiveFolder.examTypeName }} : {{archiveFolder.examSubjectName }}
             </h2>
           </div>
 
@@ -25,14 +24,14 @@
             <button
               pButton
               [ngStyle]="{
-                'background-color': dataload[0]?.isFolderClosed
+                'background-color': archiveFolder?.isClosed!
                   ? '#c8e6c9'
                   : '#feedaf',
-                color: dataload[0]?.isFolderClosed ? '#256029' : '#8a5340'
+                color: archiveFolder.isClosed ? '#256029' : '#8a5340'
               }"
-              label="{{ dataload[0]?.isFolderClosed ? 'Mbyllur ' : 'Hapur' }}"
+              label="{{ archiveFolder.isClosed ? 'Mbyllur ' : 'Hapur' }}"
               icon="{{
-                !dataload[0]?.isFolderClosed
+                !archiveFolder.isClosed
                   ? 'pi pi-folder-open'
                   : 'pi pi-folder'
               }}"
@@ -101,7 +100,7 @@
                 {{ barcode.barcode }}
               </td>
               <td style="width: 14%; min-width: 10rem">
-                {{ barcode.examSubjectName }}
+                {{ barcode.ex }}
               </td>
             </tr>
           </ng-template>

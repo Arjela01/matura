@@ -27,8 +27,8 @@ import {
   ArchiveExam,
   ArchiveFolder,
 } from '@msh/evaluations/domain-evaluations';
-import { BehaviorSubject } from 'rxjs';
-import { GlobalToastService, GridEvent } from '@msh/shared/util-shared';
+import { BehaviorSubject, take } from 'rxjs';
+import { GridEvent } from '@msh/shared/util-shared';
 
 @UntilDestroy()
 @Component({
@@ -55,6 +55,7 @@ export class ArchiveFolderViewComponent implements OnInit {
   @Output() gridEvent = new EventEmitter<
     GridEvent<ArchiveExam | ArchiveFolder[]>
   >();
+  @Input() barCodes: ArchiveExam[] = [];
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
@@ -72,17 +73,11 @@ export class ArchiveFolderViewComponent implements OnInit {
 
   filters: LazyLoadEvent | null = null;
   barCodes$ = this.barCodes$$.asObservable();
-  dataload: any;
 
   submitted = false;
-  archiveFolder: ArchiveFolder = {
-    isClosed: false,
-    lastUserId: undefined,
-    examTypeId: 0,
-    examSubjectId: '',
-  };
 
   id: any;
+  archiveFolder: ArchiveFolder;
   barCode: ArchiveExam = {
     index: 0,
     archiveFolderId: 0,
@@ -105,19 +100,39 @@ export class ArchiveFolderViewComponent implements OnInit {
     if (id) {
       this.id = parseInt(id);
     }
-    this.barCodes$.subscribe(b => {
-      this.dataload = { ...b };
-    });
+    this.archiveFolder = {};
+
   }
 
   ngOnInit() {
+    this.archiveFolderService.currentArchiveFolder$
+      .pipe(take(1))
+      .subscribe(response => {
+        if (response != null) {
+          this.archiveFolder = { ...response };
+          console.log(this.archiveFolder);
+          sessionStorage.setItem(
+            'archiveFolder',
+            JSON.stringify(this.archiveFolder)
+          );
+        } else {
+          const folder = sessionStorage.getItem('archiveFolder');
+          if (folder) {
+            this.archiveFolder = JSON.parse(folder);
+          }
+        }
+      });
+    console.log(this.archiveFolder);
     this.barCode = {
-      ...this.barCode,
-      archiveFolderId: this.id as number,
-    };
-    this.getArchiveFolders(this.dataload);
+          ...this.barCode,
+          archiveFolderId: this.id as number,
+        };
+    this.getArchiveFolders(this.archiveFolder.id);
     this.changeFolderStatus();
   }
+
+
+
 
   onSubmit(): void {
     const data = { ...this.barCode };
@@ -130,7 +145,7 @@ export class ArchiveFolderViewComponent implements OnInit {
 
   changeFolderStatus() {
     this.archiveFolderService
-      .changeFolderStatus(this.dataload)
+      .changeFolderStatus(this.id)
       .pipe(untilDestroyed(this));
     this.cd.detectChanges();
   }

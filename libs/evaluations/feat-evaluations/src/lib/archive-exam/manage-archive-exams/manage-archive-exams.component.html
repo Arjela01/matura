@@ -22,16 +22,16 @@
           <button
             pButton
             [ngStyle]="{
-              'background-color': dataload[0]?.isFolderClosed
+              'background-color': archiveFolder?.isClosed
                 ? '#c8e6c9'
                 : '#feedaf',
-              color: dataload[0]?.isFolderClosed ? '#256029' : '#8a5340'
+              color: archiveFolder?.isClosed? '#256029' : '#8a5340'
             }"
             label="{{
-              dataload[0]?.isFolderClosed ? 'Hap Dosjen ' : 'Mbyll Dosjen'
+              archiveFolder?.isClosed? 'Hap Dosjen ' : 'Mbyll Dosjen'
             }}"
             icon="{{
-              !dataload[0]?.isFolderClosed
+              !archiveFolder?.isClosed
                 ? 'pi pi-folder-open'
                 : 'pi pi-folder'
             }}"
