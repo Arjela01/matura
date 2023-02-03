@@ -36,8 +36,10 @@
         'ng-invalid ng-dirty': submitted && !archiveFolder.examSubjectId
       }">
     </p-dropdown>
-    <small class="p-error block" *ngIf="submitted && !archiveFolder.examSubjectId">
-      Tipet e provimeve është fushë e kërkuar.
+    <small
+      class="p-error block"
+      *ngIf="submitted && !archiveFolder.examSubjectId">
+      Llojet e provimeve është fushë e kërkuar.
     </small>
   </div>
 

@@ -225,7 +225,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
           this.toastService.showSuccess(
             !archiveFolder.isClosed
               ? 'Dosja u mbyll me sukses!'
-              : 'Dosja u aktivizua me sukses!'
+              : 'Dosja u hap me sukses!'
           );
 
           this.displayModal = false;

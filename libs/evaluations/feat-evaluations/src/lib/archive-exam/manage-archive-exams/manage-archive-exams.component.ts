@@ -79,7 +79,6 @@ export class ManageArchiveExamsComponent {
   @Output() formSave = new EventEmitter<ArchiveExam[] | ArchiveFolder[]>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
-  private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[]>([]);
 
   private barCodes$$ = new BehaviorSubject<ArchiveExam[]>([]);
   barCodes$ = this.barCodes$$.asObservable();
@@ -132,7 +131,7 @@ export class ManageArchiveExamsComponent {
     this.confirmationService.confirm({
       message: 'Jeni i sigurt që doni të fshini barkodin e zgjedhur?',
       accept: () => {
-        this.toastService.showWarning('Barkodi i  zgjedhur u fshi!');
+        this.toastService.showWarning('Barkodi i zgjedhur u fshi!');
       },
     });
   }
@@ -167,7 +166,7 @@ export class ManageArchiveExamsComponent {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të fshini shkollën e zgjedhur?',
+          message: 'Jeni i sigurt që doni të fshini barkodin e zgjedhur?',
           accept: () => {
             this.deleteBarCode(event.data as ArchiveExam);
           },
@@ -175,7 +174,7 @@ export class ManageArchiveExamsComponent {
         break;
       case GRID_ACTIONS.CHANGE:
         this.confirmationService.confirm({
-          message: 'Doni te shtoni Barkodin?',
+          message: 'Dëshironi te ruani barkodin?',
           accept: () => {
             this.addBarCode(event.data as ArchiveExam);
           },
@@ -216,7 +215,7 @@ export class ManageArchiveExamsComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Barkodi u shtua me sukses!');
+          this.toastService.showSuccess('Barkodi u ruajt me sukses!');
           this.displayModal = false;
           this.getBarCodes(this.filters as LazyLoadEvent);
         }
@@ -242,7 +241,7 @@ export class ManageArchiveExamsComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
-            'Shkolla e mesme u ndryshua me sukses!'
+            'Barkodi u ndryshua me sukses!'
           );
           this.displayModal = false;
           this.getBarCodes(this.filters as LazyLoadEvent);
@@ -250,7 +249,7 @@ export class ManageArchiveExamsComponent {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së shkollës së mesme!'
+            'Ndodhi një problem gjatë ndryshimit së barkodit!'
           );
       });
   }

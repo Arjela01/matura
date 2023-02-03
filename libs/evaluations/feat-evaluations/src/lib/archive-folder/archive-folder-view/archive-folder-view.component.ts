@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { LazyLoadEvent, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -11,11 +19,16 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ToolbarModule } from 'primeng/toolbar';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {ArchiveExamApiService, ArchiveFolderApiService} from '@msh/evaluations/data-access-evaluations';
-import {ArchiveExam, ArchiveFolder} from '@msh/evaluations/domain-evaluations';
-import {BehaviorSubject} from "rxjs";
-import {GlobalToastService, GridEvent} from "@msh/shared/util-shared";
-import {DropdownModel} from "@msh/shared/data-access-shared";
+import {
+  ArchiveExamApiService,
+  ArchiveFolderApiService,
+} from '@msh/evaluations/data-access-evaluations';
+import {
+  ArchiveExam,
+  ArchiveFolder,
+} from '@msh/evaluations/domain-evaluations';
+import { BehaviorSubject } from 'rxjs';
+import { GlobalToastService, GridEvent } from '@msh/shared/util-shared';
 
 @UntilDestroy()
 @Component({
@@ -37,7 +50,6 @@ import {DropdownModel} from "@msh/shared/data-access-shared";
   styleUrls: ['./archive-folder-view.component.scss'],
 })
 export class ArchiveFolderViewComponent implements OnInit {
-
   @Input() loading = false;
 
   @Output() gridEvent = new EventEmitter<
@@ -54,14 +66,10 @@ export class ArchiveFolderViewComponent implements OnInit {
 
   @Output() formSave = new EventEmitter<ArchiveExam[] | ArchiveFolder[]>();
 
-
-
   @ViewChild('form', { static: true }) form!: NgForm;
   private barCodes$$ = new BehaviorSubject<ArchiveExam[]>([]);
   private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[]>([]);
 
-
-  archiveFolders$ = this.archiveFolders$$.asObservable();
   filters: LazyLoadEvent | null = null;
   barCodes$ = this.barCodes$$.asObservable();
   dataload: any;
@@ -92,8 +100,6 @@ export class ArchiveFolderViewComponent implements OnInit {
     private router: Router,
     private messageService: MessageService,
     private route: ActivatedRoute,
-    private readonly toastService: GlobalToastService,
-
   ) {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -110,7 +116,7 @@ export class ArchiveFolderViewComponent implements OnInit {
       archiveFolderId: this.id as number,
     };
     this.getArchiveFolders(this.dataload);
-    this.changeFolderStatus(this.dataload);
+    this.changeFolderStatus();
   }
 
   onSubmit(): void {
@@ -122,16 +128,12 @@ export class ArchiveFolderViewComponent implements OnInit {
     });
   }
 
-
-
-  changeFolderStatus(dataload: ArchiveFolder) {
+  changeFolderStatus() {
     this.archiveFolderService
       .changeFolderStatus(this.dataload)
-      .pipe(untilDestroyed(this))
+      .pipe(untilDestroyed(this));
     this.cd.detectChanges();
-
   }
-
 
   getArchiveFolders($event: LazyLoadEvent) {
     this.archiveFolderService

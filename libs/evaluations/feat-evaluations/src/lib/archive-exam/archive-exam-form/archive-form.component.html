@@ -13,7 +13,9 @@
       pTooltip="Barkodi duhet te permbaje 7 shifra"
       tooltipPosition="top"
       required
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !archiveExam.barcode }" />
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !archiveExam.barcode
+      }" />
     <small class="p-error block" *ngIf="submitted && !archiveExam.barcode">
       Barkodi është fushë e kërkuar.
     </small>

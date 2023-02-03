@@ -75,8 +75,7 @@ export class ArchiveExamGridComponent implements OnInit {
     private readonly archiveExamApiService: ArchiveExamApiService,
     private router: Router,
     private messageService: MessageService,
-    private route: ActivatedRoute,
-    private activatedRoute: ActivatedRoute
+    private route: ActivatedRoute
   ) {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {

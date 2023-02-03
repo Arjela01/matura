@@ -15,7 +15,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
-import {ArchiveExam} from "@msh/evaluations/domain-evaluations";
+import { ArchiveExam } from '@msh/evaluations/domain-evaluations';
 
 @Component({
   selector: 'msh-archive-exam-form',
@@ -49,7 +49,7 @@ export class ArchiveFormComponent {
 
   submitted = false;
 
-  archiveExam: ArchiveExam = {archiveFolderId: 0};
+  archiveExam: ArchiveExam = { archiveFolderId: 0 };
 
   onCancelClick() {
     this.formClose.emit();

@@ -4,7 +4,11 @@
       <div>
         <p-toolbar styleClass="mb-4">
           <div class="p-toolbar-group-left">
-            <h2 class="flex-1 mb-0">Dosja: {{ dataload[0]?.archiveFolderNr }}  |  {{ dataload[0]?.examTypeName}} : {{ dataload[0]?.examSubjectName}}</h2>
+            <h2 class="flex-1 mb-0">
+              Dosja: {{ dataload[0]?.archiveFolderNr }} |
+              {{ dataload[0]?.examTypeName }} :
+              {{ dataload[0]?.examSubjectName }}
+            </h2>
           </div>
 
           <div class="p-toolbar-group-right">
@@ -19,20 +23,20 @@
             </a>
 
             <button
-              disabled
               pButton
               [ngStyle]="{
-              'background-color': dataload[0]?.isFolderClosed
-                ? '#c8e6c9'
-                : '#feedaf',
-              color: dataload[0]?.isFolderClosed ? '#256029' : '#8a5340'
-            }"
+                'background-color': dataload[0]?.isFolderClosed
+                  ? '#c8e6c9'
+                  : '#feedaf',
+                color: dataload[0]?.isFolderClosed ? '#256029' : '#8a5340'
+              }"
               label="{{ dataload[0]?.isFolderClosed ? 'Mbyllur ' : 'Hapur' }}"
               icon="{{
-              !dataload[0]?.isFolderClosed ? 'pi pi-folder-open' : 'pi pi-folder'
-            }}"
-              class="p-button-danger mr-2"
-            ></button>
+                !dataload[0]?.isFolderClosed
+                  ? 'pi pi-folder-open'
+                  : 'pi pi-folder'
+              }}"
+              class="p-button-danger mr-2"></button>
 
             <button
               pButton
@@ -42,7 +46,6 @@
               disabled
               class="p-button-danger mr-2"></button>
           </div>
-
         </p-toolbar>
 
         <p-table
@@ -98,7 +101,7 @@
                 {{ barcode.barcode }}
               </td>
               <td style="width: 14%; min-width: 10rem">
-                {{ barcode.examSubjectName}}
+                {{ barcode.examSubjectName }}
               </td>
             </tr>
           </ng-template>
