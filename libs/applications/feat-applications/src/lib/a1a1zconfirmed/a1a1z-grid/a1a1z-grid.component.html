@@ -102,7 +102,7 @@
                     <span styleClass="   text-white" *ngIf="student.isConfirmedBySupervisor!==null"
                         [ngClass]="student.isConfirmedBySupervisor  ? ['bg-green-400','text-white','px-3','py-1','border-round-md'] :['bg-red-400','text-white','px-3','py-1','border-round-md']">
 
-                        {{ student.isConfirmedBySupervisor ? 'Aprovuar':'Refuzuar' }}
+                        {{ student.isConfirmedBySupervisor==true ? 'Aprovuar':'Refuzuar' }}
                     </span>
                     <button pButton pRipple icon="pi pi-check" pTooltip="Aprovo" tooltipPosition="bottom"
                         class="p-button-success p-button-text mr-2" *ngIf="student.isConfirmedBySupervisor===null"

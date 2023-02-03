@@ -103,8 +103,8 @@ export class ManageA1a1zConfirmedComponent {
 
   getStudent($event: LazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
-    this.studentService
-      .loadStudents($event)
+    this.a1a1zService
+      .loadStudentToConfirm($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         const students = [...response.data];
