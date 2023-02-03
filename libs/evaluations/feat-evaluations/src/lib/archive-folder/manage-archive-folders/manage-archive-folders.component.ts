@@ -187,7 +187,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
           this.getArchiveFolders(this.filters as LazyLoadEvent);
           this.router.navigate([
             '/evaluations',
-            'add-archive-exam',
+            'archive-exams',
             response.data.id,
           ]);
         }

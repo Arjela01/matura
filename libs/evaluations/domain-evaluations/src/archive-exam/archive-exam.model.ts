@@ -1,6 +1,7 @@
 export interface ArchiveExam {
+  id?:any;
   index?: number;
-  archiveFolderId?: number;
+  archiveFolderId: number;
   barcode?: string;
   totalArchiveExams?: 0;
 }

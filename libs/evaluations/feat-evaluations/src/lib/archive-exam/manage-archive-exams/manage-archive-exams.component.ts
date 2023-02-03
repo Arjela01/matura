@@ -78,7 +78,7 @@ export class ManageArchiveExamsComponent {
 
   @Output() formSave = new EventEmitter<ArchiveExam[] | ArchiveFolder[]>();
 
-  @ViewChild('form', { static: true }) form!: NgForm;
+  @ViewChild('form', {static: true}) form!: NgForm;
   private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[]>([]);
 
   private barCodes$$ = new BehaviorSubject<ArchiveExam[]>([]);
@@ -134,7 +134,8 @@ export class ManageArchiveExamsComponent {
       },
     });
   }
-  changeStatus(folder: ArchiveFolder): void {
+
+  changeStatus(folder: ArchiveExam): void {
     this.gridEvent.emit({
       action: GRID_ACTIONS.CHANGE,
       data: folder,
@@ -169,14 +170,14 @@ export class ManageArchiveExamsComponent {
         this.selectedBarCode = Object.assign({}, event.data as ArchiveExam);
         this.displayModal = true;
         break;
-      // case GRID_ACTIONS.DELETE:
-      //   this.confirmationService.confirm({
-      //     message: 'Jeni i sigurt që doni të fshini shkollën e zgjedhur?',
-      //     accept: () => {
-      //       this.deleteBarCode(event.data as AddBarcode);
-      //     },
-      //   });
-      //   break;
+      case GRID_ACTIONS.DELETE:
+        this.confirmationService.confirm({
+          message: 'Jeni i sigurt që doni të fshini shkollën e zgjedhur?',
+          accept: () => {
+            this.deleteBarCode(event.data as ArchiveExam);
+          },
+        });
+        break;
       case GRID_ACTIONS.CHANGE:
         this.confirmationService.confirm({
           message: 'Doni te shtoni Barkodin?',
@@ -255,21 +256,21 @@ export class ManageArchiveExamsComponent {
           );
       });
   }
+
+  deleteBarCode(barCode: ArchiveExam) {
+    this.archiveExamApiService
+      .delete(barCode.id)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showInfo('Dosja u fshi me sukses!');
+          this.getBarCodes(this.filters as LazyLoadEvent);
+        }
+
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi një problem gjatë fshirjes së dosjes!'
+          );
+      });
+  }
 }
-//   deleteBarCode(archive-exam: AddBarcode) {
-//     this.barCodesService
-//       .delete(archive-exam.archiveFolderId)
-//       .pipe(untilDestroyed(this))
-//       .subscribe(response => {
-//         if (response.isSuccessful) {
-//           this.toastService.showInfo('Shkolla e mesme u fshi me sukses!');
-//           this.getBarCodes(this.filters as LazyLoadEvent);
-//         }
-//
-//         if (response.isBadRequest)
-//           this.toastService.showError(
-//             'Ndodhi një problem gjatë fshirjes së shkollës së mesme!'
-//           );
-//       });
-//   }
-// }

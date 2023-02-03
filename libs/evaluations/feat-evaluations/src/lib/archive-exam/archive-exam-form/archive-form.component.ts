@@ -49,7 +49,7 @@ export class ArchiveFormComponent {
 
   submitted = false;
 
-  archiveExam: ArchiveExam = {};
+  archiveExam: ArchiveExam = {archiveFolderId: 0};
 
   onCancelClick() {
     this.formClose.emit();

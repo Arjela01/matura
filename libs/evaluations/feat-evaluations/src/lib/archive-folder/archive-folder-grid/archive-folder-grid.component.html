@@ -91,7 +91,7 @@
             color: archiveFolder.isClosed ? '#256029' : '#8a5340'
           }">
           <span>
-            {{ archiveFolder.isClosed ? 'MBYLLUR ' : 'AKTIV' }}
+            {{ archiveFolder.isClosed ? 'MBYLLUR ' : 'HAPUR' }}
           </span>
         </button>
       </td>
@@ -103,7 +103,7 @@
             pRipple
             class="p-button-rounded p-button-info p-button-text mr-2"
             pTooltip="{{
-              !archiveFolder.isClosed ? 'Mbyll Dosjen' : 'Aktivizo Dosjen'
+              !archiveFolder.isClosed ? 'Mbyll Dosjen' : 'Hap Dosjen'
             }}"
             tooltipPosition="bottom"
             (click)="changeStatus(archiveFolder)"
