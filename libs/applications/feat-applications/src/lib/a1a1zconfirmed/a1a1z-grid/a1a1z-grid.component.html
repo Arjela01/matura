@@ -97,22 +97,26 @@
                 {{ student.profileName }}
             </td>
 
-            <td>
-                <div class="flex">
-                    <span styleClass="   text-white" *ngIf="student.isConfirmedBySupervisor!==null"
-                        [ngClass]="student.isConfirmedBySupervisor  ? ['bg-green-400','text-white','px-3','py-1','border-round-md'] :['bg-red-400','text-white','px-3','py-1','border-round-md']">
 
-                        {{ student.isConfirmedBySupervisor==true ? 'Aprovuar':'Refuzuar' }}
+            <td style="width: 14%; min-width: 10rem">
+                <div class="flex">
+                    <span
+                        [ngClass]="student.isConfirmedBySupervisor ===true ? ['bg-green-400','text-white','px-3','py-1','border-round-md'] : student.isConfirmedBySupervisor===false ?['bg-red-400','text-white','px-3','py-1','border-round-md'] : ['surface-500','text-dark','px-3','py-1','border-round-md']">
+                        {{ student.isConfirmedBySupervisor==true ? 'Aprovuar' : student.isConfirmedBySupervisor=== false
+                        ?'Refuzuar' : 'Në pritje' }}
                     </span>
-                    <button pButton pRipple icon="pi pi-check" pTooltip="Aprovo" tooltipPosition="bottom"
-                        class="p-button-success p-button-text mr-2" *ngIf="student.isConfirmedBySupervisor===null"
-                        (click)="onApprove(student)">
-                    </button>
-                    <button pButton icon="pi pi-times" pTooltip="Refuzo" tooltipPosition="bottom" pRipple
-                        class="p-button-danger p-button-text  mr-2" *ngIf="student.isConfirmedBySupervisor===null"
-                        (click)="onRefuse(student)">
-                    </button>
+
                 </div>
+            </td>
+            <td style="width: 14%; min-width: 10rem">
+                <button pButton pRipple icon="pi pi-check" pTooltip="Aprovo" tooltipPosition="bottom"
+                    class="p-button-success p-button-text mr-2" *ngIf="student.isConfirmedBySupervisor!==true"
+                    (click)="onApprove(student)">
+                </button>
+                <button pButton icon="pi pi-times" pTooltip="Refuzo" tooltipPosition="bottom" pRipple
+                    class="p-button-danger p-button-text  mr-2" *ngIf="student.isConfirmedBySupervisor!==false"
+                    (click)="onRefuse(student)">
+                </button>
             </td>
         </tr>
     </ng-template>
