@@ -22,3 +22,4 @@ export * from './lib/study-subject/study-subject-api.service';
 export * from './lib/universities/university-api.service';
 export * from './lib/university-departments/university-department-api.service';
 export * from './lib/user/user-api.service';
+export * from './lib/exam-assignment/exam-assignment-api.service'
