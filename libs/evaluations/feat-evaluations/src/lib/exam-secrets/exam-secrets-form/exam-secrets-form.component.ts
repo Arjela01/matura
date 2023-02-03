@@ -3,7 +3,8 @@ import {
   ChangeDetectorRef,
   Component,
   DoCheck,
-  EventEmitter, Input,
+  EventEmitter,
+  Input,
   OnChanges,
   OnInit,
   Output,
@@ -64,7 +65,6 @@ import { A1zStudentSearchComponent } from '../../../../../../applications/feat-a
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
-
   @Output() examVersionChanged = new EventEmitter<string>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
@@ -121,7 +121,7 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
       this.onStudentInit(this.examSecret);
     }
     if (this.selectedStudent !== null) {
-      console.log(1111 ,this.selectedStudent)
+      console.log(1111, this.selectedStudent);
       this.onStudentChange(this.selectedStudent);
     }
   }
@@ -136,14 +136,14 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
     if (this.formId) {
       this.examSecretApiService
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        .getExamSecret(this.formId!).subscribe(response => {
-        this.examSecret = response.data;
-        console.log(this.examSecret)
-        this.cd.detectChanges();
-        console.log(response.data)
-      });
+        .getExamSecret(this.formId!)
+        .subscribe(response => {
+          this.examSecret = response.data;
+          console.log(this.examSecret);
+          this.cd.detectChanges();
+          console.log(response.data);
+        });
     }
-
   }
   onGridEvent(event: GridEvent<Student | Student[]>) {
     switch (event.action) {
@@ -159,10 +159,7 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
       this.studentInputData = ' ';
     } else {
       this.examSecret.studentId = student.studentId;
-      this.studentInputData =
-        student?.studentId +
-        '-' +
-        student?.studentName
+      this.studentInputData = student?.studentId + '-' + student?.studentName;
     }
   }
 

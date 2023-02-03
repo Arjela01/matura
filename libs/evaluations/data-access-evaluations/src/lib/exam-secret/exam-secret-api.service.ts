@@ -1,19 +1,20 @@
-import {Injectable} from '@angular/core';
-import {catchError, map, Observable, shareReplay, throwError} from 'rxjs';
-import {LazyLoadEvent} from "primeng/api";
-import {ApiResult} from "@msh/shared/data-access-shared";
-import {APIService} from "@msh/shared/util-shared";
-import {ExamSecret, ExamSecretTableView, FileImport} from "@msh/evaluations/domain-evaluations";
-import {untilDestroyed} from "@ngneat/until-destroy";
-import {A1Z} from "@msh/applications/domain-applications";
+import { Injectable } from '@angular/core';
+import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
+import { LazyLoadEvent } from 'primeng/api';
+import { ApiResult } from '@msh/shared/data-access-shared';
+import { APIService } from '@msh/shared/util-shared';
+import {
+  ExamSecret,
+  ExamSecretTableView,
+  FileImport,
+} from '@msh/evaluations/domain-evaluations';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExamSecretApiService {
-  constructor(private apiService: APIService) {
-  }
-
+  constructor(private apiService: APIService) {}
 
   loadExamSecrets(event: LazyLoadEvent): Observable<ExamSecretTableView> {
     return this.apiService.post(`/api/ExamSecrets/TableData`, event);
@@ -39,7 +40,7 @@ export class ExamSecretApiService {
 
   delete(examSecretId: string): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<ExamSecret>>(
-      `/api/ExamSecrets/${ examSecretId}`
+      `/api/ExamSecrets/${examSecretId}`
     );
   }
 
@@ -57,4 +58,3 @@ export class ExamSecretApiService {
       );
   }
 }
-
