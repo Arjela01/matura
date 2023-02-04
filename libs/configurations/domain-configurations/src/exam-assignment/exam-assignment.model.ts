@@ -8,7 +8,6 @@ export interface ExamAssignment {
   studentInputData: string;
   examSiteId?: number;
   examSiteName?:string;
-  examTypeDateTimeId?: number;
   examTypeDateTime?: string;
   takenSeats?: number;
 }

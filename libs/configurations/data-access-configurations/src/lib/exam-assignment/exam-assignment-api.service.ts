@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import {catchError, map, Observable, shareReplay, throwError} from 'rxjs';
+import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
 import { LazyLoadEvent } from 'primeng/api';
-import { ExamAssignment , ExamAssignmentTableView} from "@msh/configurations/domain-configurations";
-// import { FileImport } from "@msh/evaluations/domain-evaluations";
-
+import {
+  ExamAssignment,
+  ExamAssignmentTableView,
+  ExamDate,
+} from '@msh/configurations/domain-configurations';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { FileImport } from '@msh/evaluations/domain-evaluations';
 
 @Injectable({
   providedIn: 'root',
@@ -13,11 +17,11 @@ import { ExamAssignment , ExamAssignmentTableView} from "@msh/configurations/dom
 export class ExamAssignmentApiService {
   constructor(private apiService: APIService) {}
 
-  getById(id: any): Observable<ApiResult<ExamAssignment>> {
-    return this.apiService.get<ApiResult<ExamAssignment>>(
-      `/ExamAssignment/${id}`
-    );
-  }
+  // getById(id: any): Observable<ApiResult<ExamAssignment>> {
+  //   return this.apiService.get<ApiResult<ExamAssignment>>(
+  //     `/ExamAssignment/${id}`
+  //   );
+  // }
 
   loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
@@ -52,17 +56,17 @@ export class ExamAssignmentApiService {
     );
   }
 
-  // uploadExcelFile(
-  //   base64: string | ArrayBuffer | null
-  // ): Observable<ApiResult<unknown>> {
-  //   return this.apiService
-  //     .post<ApiResult<FileImport>, FileImport>('/ExamAssignment/Import', {
-  //       file: base64,
-  //     })
-  //     .pipe(
-  //       map(data => data),
-  //       catchError(error => throwError(error)),
-  //       shareReplay()
-  //     );
-  // }
+  uploadExcelFile(
+    base64: string | ArrayBuffer | null
+  ): Observable<ApiResult<unknown>> {
+    return this.apiService
+      .post<ApiResult<FileImport>, FileImport>('/ExamAssignment/Import', {
+        file: base64,
+      })
+      .pipe(
+        map(data => data),
+        catchError(error => throwError(error)),
+        shareReplay()
+      );
+  }
 }
