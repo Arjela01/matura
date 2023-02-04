@@ -185,4 +185,11 @@ export const CONFIGURATION_ROUTES: Route[] = [
         m => m.ManageExamDateComponent
       ),
   },
+  {
+    path: 'empty-site',
+    loadComponent: () =>
+      import('./empty-site/manage-empty-site/manage-empty-site.component').then(
+        m => m.ManageEmptySiteComponent
+      ),
+  },
 ];
