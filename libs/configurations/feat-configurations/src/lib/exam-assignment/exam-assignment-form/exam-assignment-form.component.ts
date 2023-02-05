@@ -137,6 +137,10 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
     this.displayModal = false;
   }
 
+  onCancelClick() {
+    this.formClose.emit();
+  }
+
   onSiteChange($event: any) {
     this.examDatesFiltered = this.examDates.filter(
       ed => ed.parentKey == $event.value
@@ -144,8 +148,8 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
   }
 
   ngOnChanges(): void {
-    if (this.examDates && this.examAssignment.examDateId) {
-      this.onSiteChange({ value: this.examAssignment.examDateId });
+    if (this.examDates && this.examAssignment.examSiteId) {
+      this.onSiteChange({ value: this.examAssignment.examSiteId });
     }
   }
   refreshExamDates() {
