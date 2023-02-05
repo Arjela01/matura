@@ -38,32 +38,32 @@ import {EmptySiteGridComponent} from "../empty-site-grid/empty-site-grid.compone
 })
 @UntilDestroy()
 export class ManageEmptySiteComponent {
-  private examSitesList$$ = new BehaviorSubject<ExamSite[]>([]);
-  examSitesList$ = this.examSitesList$$.asObservable();
+  private examAssignmentList$$ = new BehaviorSubject<ExamSite[]>([]);
+  examAssignmentList$ = this.examAssignmentList$$.asObservable();
   filters: LazyLoadEvent | null = null;
   totalRecords = 0;
 
   constructor(
-    private readonly examSiteService: ExamSiteApiService,
+    //private readonly examAssignmentService: ExamAssignmentApiService,
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     //private readonly examAssignmentService: ExamAssignmentApiService,
     private emptySiteService: EmptySiteApiService,
   ) {}
 
-  onGridEvent(event: GridEvent<ExamSite | ExamSite[]>) {
-    switch (event.action) {
-      case GRID_ACTIONS.REJECT:
-        this.confirmationService.confirm({
-          message: 'Jeni i sigurtë që doni të zbrazni  qendren?',
-          accept: () => {
-           //this.emptySite(event.data as ExamSite);
-          },
-        });
-        break;
-    }
-  }
-  // emptySite(ExamSite: ExamSite) {
+  // onGridEvent(event: GridEvent<ExamAssignment | ExamAssignment[]>) {
+  //   switch (event.action) {
+  //     case GRID_ACTIONS.REJECT:
+  //       this.confirmationService.confirm({
+  //         message: 'Jeni i sigurtë që doni të zbrazni  qendren?',
+  //         accept: () => {
+  //          //this.emptySite(event.data as ExamSite);
+  //         },
+  //       });
+  //       break;
+  //   }
+  // }
+  // emptySite(ExamAssignment: ExamAssignment) {
   //   this.examAssignmentService
   //     .emptySite(ExamSite.id)
   //     .pipe(untilDestroyed(this))
@@ -78,7 +78,7 @@ export class ManageEmptySiteComponent {
   //     });
   // }
 
-  getExamSite($event: LazyLoadEvent): void {
+  getExamAssignment($event: LazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
     this.emptySiteService
       .loadExamSites($event)
@@ -86,7 +86,7 @@ export class ManageEmptySiteComponent {
       .subscribe(response => {
         const examSites = [...response.data];
         console.log(111 , examSites)
-        this.examSitesList$$.next(examSites);
+        this.examAssignmentList$$.next(examSites);
         this.totalRecords = response.total;
       });
   }
