@@ -13,7 +13,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { FailingStudentApiService } from '@msh/applications/data-access-applications';
 import { FailingStudent } from '@msh/applications/domain-application';
 import { StudentsApiService } from '@msh/configurations/data-access-configurations';
-import { Student } from '@msh/configurations/domain-configurations';
+import { Student } from '@msh/shared/domain-models';
 import { GlobalToastService } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ButtonModule } from 'primeng/button';
