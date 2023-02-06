@@ -55,4 +55,11 @@ export const APPLICATION_ROUTES: Route[] = [
         './manageFailingStudents/manage-failing-students/manage-failing-students.component'
       ).then(m => m.ManageFailingStudentsComponent),
   },
+  {
+    path: 'pass-in-fall',
+    loadComponent: () =>
+      import(
+        './passInFall/manage-pass-in-fall/manage-pass-in-fall.component'
+      ).then(m => m.ManagePassInFallComponent),
+  },
 ];

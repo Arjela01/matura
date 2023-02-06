@@ -79,22 +79,4 @@ export class FailingStudentsFormComponent implements OnInit {
       this.formSave.emit(this.failingStudent);
     }
   }
-
-  // getFailingStudentById(studentId: number) {
-  //   this.failingStudentService
-  //     .getOne(studentId)
-  //     .pipe(untilDestroyed(this))
-  //     .subscribe(response => {
-  //       if (response.isSuccessful === true) {
-  //         this.failingStudent = response.data;
-  //         this.cd.detectChanges();
-  //       }
-
-  //       if (response.isSuccessful === false) {
-  //         this.toastService.showError(
-  //           'Ndodhi nje problem gjatë kerkimit te studentit mbetes!'
-  //         );
-  //       }
-  //     });
-  // }
 }
