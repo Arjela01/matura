@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RolesApiService } from '@msh/configurations/data-access-configurations';
 
-import { Role } from '@msh/configurations/domain-configurations';
+import { Role } from '@msh/shared/domain-models';
 import { GlobalToastService, GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';

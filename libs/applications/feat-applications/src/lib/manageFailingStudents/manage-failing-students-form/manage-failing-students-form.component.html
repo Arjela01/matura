@@ -1,0 +1,146 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="grid">
+    <div class="field col-4">
+      <label for="subject">Emri *</label>
+      <input
+        type="text"
+        pInputText
+        id="subject"
+        name="subject"
+        [value]="student.firstName"
+        disabled
+        required
+        autofocus />
+    </div>
+    <div class="field col-4">
+      <label for="subject">Mbiemri *</label>
+      <input
+        type="text"
+        pInputText
+        id="subject"
+        name="subject"
+        [value]="student.lastName"
+        disabled
+        required
+        autofocus />
+    </div>
+    <div class="field col-4">
+      <label for="subject">Email *</label>
+      <input
+        type="text"
+        pInputText
+        id="subject"
+        name="subject"
+        [value]="student.email"
+        disabled
+        required
+        autofocus />
+    </div>
+    <div class="field col-4">
+      <label for="subject">Gjinia *</label>
+      <input
+        type="text"
+        pInputText
+        id="subject"
+        name="subject"
+        [value]="student.genderName"
+        disabled
+        required
+        autofocus />
+    </div>
+    <div class="field col-4">
+      <label for="subject">Shkolla e Mesme *</label>
+      <input
+        type="text"
+        pInputText
+        id="subject"
+        name="subject"
+        [value]="student.highSchoolName"
+        disabled
+        required
+        autofocus />
+    </div>
+    <div class="field col-4">
+      <label for="subject">Profili *</label>
+      <input
+        type="text"
+        pInputText
+        id="subject"
+        name="subject"
+        [value]="student.profileName"
+        disabled
+        required
+        autofocus />
+    </div>
+    <div class="field col-4">
+      <label for="subject">Vendlindja *</label>
+      <input
+        type="text"
+        pInputText
+        id="subject"
+        name="subject"
+        [value]="student.birthPlace"
+        disabled
+        required
+        autofocus />
+    </div>
+    <div class="field col-4">
+      <label for="subject">ID *</label>
+      <input
+        type="text"
+        pInputText
+        id="subject"
+        name="subject"
+        [value]="student.studentId"
+        disabled
+        required
+        autofocus />
+    </div>
+    <div class="field col-4">
+      <label for="subject">Datelindja *</label>
+      <input
+        type="text"
+        pInputText
+        id="subject"
+        name="subject"
+        [value]="student.birthDate | date"
+        disabled
+        required
+        autofocus />
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="subject">Lënda *</label>
+    <input
+      type="text"
+      pInputText
+      id="subject"
+      name="subject"
+      [(ngModel)]="failingStudent.subject"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !failingStudent.subject
+      }" />
+    <small class="p-error block" *ngIf="submitted && !failingStudent.subject">
+      Lënda është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      type="submit"
+      pButton
+      icon="pi pi-check"
+      label="Ruaj"
+      class="p-button-text w-auto"></button>
+  </div>
+</form>

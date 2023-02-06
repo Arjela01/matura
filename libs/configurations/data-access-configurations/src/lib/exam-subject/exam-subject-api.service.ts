@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   ExamSubject,
   ExamSubjectTableView,
-} from '@msh/configurations/domain-configurations';
+} from '@msh/shared/domain-models';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
@@ -14,17 +14,17 @@ import { Observable, catchError, map, shareReplay, throwError } from 'rxjs';
 export class ExamSubjectApiService {
   constructor(private apiService: APIService) {}
   loadExamSubjects(event: LazyLoadEvent): Observable<ExamSubjectTableView> {
-    return this.apiService.post(`/api/ExamSubject/TableData`, event);
+    return this.apiService.post(`/ExamSubject/TableData`, event);
   }
 
   loadDropDownList(): Observable<ApiResult<DropdownModel<number>[]>> {
-    return this.apiService.get(`/api/ExamSubject/DropdownList`);
+    return this.apiService.get(`/ExamSubject/DropdownList`);
   }
 
   save(examSubject: ExamSubject): Observable<ApiResult<ExamSubject>> {
     return this.apiService
       .post<ApiResult<ExamSubject>, ExamSubject>(
-        `/api/ExamSubject`,
+        `/ExamSubject`,
         examSubject
       )
       .pipe(
@@ -36,7 +36,7 @@ export class ExamSubjectApiService {
 
   update(examSubject: ExamSubject): Observable<ApiResult<ExamSubject>> {
     return this.apiService
-      .put<ApiResult<ExamSubject>, ExamSubject>(`/api/ExamSubject`, examSubject)
+      .put<ApiResult<ExamSubject>, ExamSubject>(`/ExamSubject`, examSubject)
       .pipe(
         map(data => data),
         catchError(error => throwError(error)),
@@ -46,7 +46,7 @@ export class ExamSubjectApiService {
 
   delete(examSubjectId: string): Observable<ApiResult<unknown>> {
     return this.apiService
-      .delete<ApiResult<ExamSubject>>(`/api/ExamSubject/${examSubjectId}`)
+      .delete<ApiResult<ExamSubject>>(`/ExamSubject/${examSubjectId}`)
       .pipe(
         map(data => data),
         catchError(error => throwError(error)),
@@ -66,7 +66,7 @@ export class ExamSubjectApiService {
     isOptionalSubject?: boolean
   ): Observable<ApiResult<DropdownModel<string>[]>> {
     return this.apiService.post<ApiResult<DropdownModel<string>[]>, any>(
-      `/api/ExamSubject/ForExamType`,
+      `/ExamSubject/ForExamType`,
       {
         examTypeId: examTypeId,
         academicYearId: academicYearId,

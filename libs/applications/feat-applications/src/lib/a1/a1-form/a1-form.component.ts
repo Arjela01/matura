@@ -15,7 +15,7 @@ import {
   ExamSubjectApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
-import { AcademicYear } from '@msh/configurations/domain-configurations';
+import { AcademicYear } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { GlobalToastService } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';

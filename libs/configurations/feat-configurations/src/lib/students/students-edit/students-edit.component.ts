@@ -13,7 +13,7 @@ import {
   Student,
   StudentClassModel,
   StudentSectionModel,
-} from '@msh/configurations/domain-configurations';
+} from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';

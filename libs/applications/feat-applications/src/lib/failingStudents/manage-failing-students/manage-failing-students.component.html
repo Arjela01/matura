@@ -1,0 +1,57 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card px-6 py-6">
+      <div class="flex ml-2 mb-2 page-header">
+        <h2 class="flex-1 mb-0">Studentet Mbetes</h2>
+        <div class="flex align-items-right justify-content-right"></div>
+      </div>
+      <msh-failing-students-grid
+        [students]="(students$ | async) || []"
+        [totalRecords]="totalRecords"
+        (gridEvent)="onGridEvent($event)"
+        (lazyLoadData)="getStudents($event)">
+      </msh-failing-students-grid>
+    </div>
+  </div>
+</div>
+
+<p-dialog
+  [(visible)]="displayModal"
+  [style]="{ width: '500px' }"
+  header="Vendosni lenden ne te cilen studenti ka ngelur."
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid"
+  (onHide)="onModalClose()">
+  <ng-template pTemplate="content">
+    <msh-failing-students-form
+      [failingStudentDetails]="selectedFailingStudent"
+      (formClose)="onModalClose()"
+      (formSave)="onFormSave($event)">
+    </msh-failing-students-form>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog
+  #cd
+  header="Konfirmo"
+  icon="pi pi-exclamation-triangle"
+  [style]="{ width: '450px' }">
+  <ng-template pTemplate="footer">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Jo"
+      class="p-button-text"
+      (click)="cd.reject()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Po"
+      class="p-button-text"
+      (click)="cd.accept()"></button>
+  </ng-template>
+</p-confirmDialog>

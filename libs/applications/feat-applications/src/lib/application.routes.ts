@@ -41,4 +41,18 @@ export const APPLICATION_ROUTES: Route[] = [
         './a1a1zconfirmed/manage-a1a1z-confirmed/manage-a1a1z-confirmed.component'
       ).then(m => m.ManageA1a1zConfirmedComponent),
   },
+  {
+    path: 'failing-students',
+    loadComponent: () =>
+      import(
+        './failingStudents/manage-failing-students/manage-failing-students.component'
+      ).then(m => m.ManageFailingStudentsComponent),
+  },
+  {
+    path: 'manage-failing-students',
+    loadComponent: () =>
+      import(
+        './manageFailingStudents/manage-failing-students/manage-failing-students.component'
+      ).then(m => m.ManageFailingStudentsComponent),
+  },
 ];

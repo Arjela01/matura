@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { StudySubject } from '@msh/configurations/domain-configurations';
+import { StudySubject } from '@msh/shared/domain-models';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';

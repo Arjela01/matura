@@ -19,7 +19,7 @@ import {
   ProfileApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
-import { Student } from '@msh/configurations/domain-configurations';
+import { Student } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';

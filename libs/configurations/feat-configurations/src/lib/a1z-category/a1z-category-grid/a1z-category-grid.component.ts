@@ -6,7 +6,7 @@ import {
   Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { A1ZCategory } from '@msh/configurations/domain-configurations';
+import { A1ZCategory } from '@msh/shared/domain-models';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { FormsModule } from '@angular/forms';
