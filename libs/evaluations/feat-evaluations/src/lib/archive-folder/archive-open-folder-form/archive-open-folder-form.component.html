@@ -7,6 +7,7 @@
       optionValue="key"
       optionLabel="value"
       name="examTypes"
+      [filter]="true"
       [autoDisplayFirst]="false"
       [(ngModel)]="archiveFolder.examTypeId"
       [showClear]="true"
@@ -25,6 +26,7 @@
     <p-dropdown
       id="examSubject"
       [options]="examSubjects"
+      [filter]="true"
       optionValue="key"
       optionLabel="value"
       name="examSubject"

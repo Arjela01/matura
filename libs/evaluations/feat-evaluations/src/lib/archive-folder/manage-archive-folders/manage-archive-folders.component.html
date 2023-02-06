@@ -27,7 +27,7 @@
 </div>
 <p-dialog
   [(visible)]="displayModal"
-  [style]="{ width: '500px' }"
+  [style]="{ width: '500px', minHeight: '500px' }"
   header="Hap nje Dosje te re"
   [modal]="true"
   [draggable]="false"
@@ -39,6 +39,7 @@
       [archiveFolders]="selectedArchiveFolder"
       [examTypes]="examTypes"
       [examSubjects]="examSubjects"
+      (examTypeChanged)="getExamSubjects($event)"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
     </msh-archive-open-folder-form>

@@ -1,26 +1,27 @@
-import {CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component,
+  Component, ElementRef,
   EventEmitter,
   Input,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
-import {GRID_ACTIONS, GridEvent} from '@msh/shared/util-shared';
-import {LazyLoadEvent, MessageService} from 'primeng/api';
-import {ButtonModule} from 'primeng/button';
-import {CheckboxModule} from 'primeng/checkbox';
-import {InputTextModule} from 'primeng/inputtext';
-import {RippleModule} from 'primeng/ripple';
-import {TableModule} from 'primeng/table';
-import {TooltipModule} from 'primeng/tooltip';
-import {FormsModule, NgForm} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ArchiveExamApiService} from '@msh/evaluations/data-access-evaluations';
-import {ArchiveExam} from '@msh/evaluations/domain-evaluations';
+import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
+import { LazyLoadEvent, MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { InputTextModule } from 'primeng/inputtext';
+import { RippleModule } from 'primeng/ripple';
+import { TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
+import { FormsModule, NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ArchiveExamApiService } from '@msh/evaluations/data-access-evaluations';
+import { ArchiveExam } from '@msh/evaluations/domain-evaluations';
+import {BarcodeService} from "../services/barcode-service";
 
 @Component({
   selector: 'msh-archive-exam-grid',
@@ -41,6 +42,8 @@ import {ArchiveExam} from '@msh/evaluations/domain-evaluations';
 })
 export class ArchiveExamGridComponent implements OnInit {
   @ViewChild('form', { static: true }) form!: NgForm;
+
+  @ViewChild('barcodeField', {static: true}) barcodeField!: HTMLInputElement;
 
   @Input() set ArchiveExamsDetails(details: ArchiveExam | null) {
     if (details) {
@@ -65,10 +68,13 @@ export class ArchiveExamGridComponent implements OnInit {
   submitted = false;
   id = 0;
 
+  @Input()
+  isBarcodeInputDisabled = false;
+
   archiveExam: ArchiveExam = {
     id: undefined,
     barcode: '',
-    archiveFolderId: this.id
+    archiveFolderId: this.id,
   };
 
   constructor(
@@ -76,7 +82,8 @@ export class ArchiveExamGridComponent implements OnInit {
     private readonly archiveExamApiService: ArchiveExamApiService,
     private router: Router,
     private messageService: MessageService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private barcodeService: BarcodeService
   ) {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -89,6 +96,12 @@ export class ArchiveExamGridComponent implements OnInit {
       ...this.archiveExam,
       archiveFolderId: this.id as number,
     };
+    this.barcodeService.emptyBarcodeField$.subscribe((value) => {
+      if(value == true) {
+        this.archiveExam.barcode = '';
+        this.barcodeField.focus();
+      }
+    })
   }
 
   onSubmit(): void {
@@ -100,9 +113,9 @@ export class ArchiveExamGridComponent implements OnInit {
     });
   }
 
-  SaveArchiveExam(archiveExam: ArchiveExam): void {
+  saveArchiveExam(archiveExam: ArchiveExam): void {
     this.gridEvent.emit({
-      action: GRID_ACTIONS.CHANGE,
+      action: GRID_ACTIONS.CUSTOM_ACTION1,
       data: archiveExam,
     } as GridEvent<ArchiveExam>);
   }

@@ -102,7 +102,7 @@ export class ArchiveFolderGridComponent {
 
   changeStatus(archive: ArchiveFolder): void {
     this.gridEvent.emit({
-      action: GRID_ACTIONS.CHANGE,
+      action: GRID_ACTIONS.CUSTOM_ACTION1,
       data: archive,
     } as GridEvent<ArchiveFolder>);
   }

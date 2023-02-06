@@ -1,3 +1,43 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="flex flex-column mt-2 md:align-items-center" style="width: 300px">
+    <div class="p-inputgroup">
+      <button
+        type="button"
+        pButton
+        pRipple
+        icon="pi pi-database"
+        disabled
+        label="{{ totalRecords }}/50"
+        class="p-button-info mr-2"></button>
+      <input
+        type="text"
+        maxlength="7"
+        minlength="7"
+        pInputText
+        placeholder="Barkodi"
+        id="barcode"
+        #barcodeField
+        name="barcode"
+        [(ngModel)]="archiveExam.barcode"
+        pTooltip="Barkodi duhet te jete nje numer 7 shifror"
+        onfocus="this.value=''"
+        tooltipPosition="top"
+        [disabled]="isBarcodeInputDisabled"
+        required
+        (keyup.enter)="saveArchiveExam(archiveExam)" />
+      <button
+        pButton
+        pRipple
+        icon="pi pi-save"
+        type="button"
+        [disabled]="!form.valid"
+        label="Ruaj"
+        class="p-button-success mr-2"
+        (click)="saveArchiveExam(archiveExam)"></button>
+    </div>
+  </div>
+</form>
+
 <p-table
   #dt
   dataKey="id"
@@ -16,44 +56,6 @@
   (onRowUnselect)="onRowUnselect($event)"
   (onLazyLoad)="loadRows($event)"
   [lazy]="true">
-  <ng-template pTemplate="caption">
-    <form #form="ngForm" (ngSubmit)="onSubmit()">
-      <div class="flex flex-column mt-2 md:col-3 md:align-items-center">
-        <div class="p-inputgroup">
-          <button
-            type="button"
-            pButton
-            pRipple
-            icon="pi pi-database"
-            disabled
-            label="{{ totalRecords }}/50"
-            class="p-button-info mr-2"></button>
-          <input
-            type="text"
-            maxlength="7"
-            minlength="7"
-            pInputText
-            placeholder="Barkodi"
-            id="barcode"
-            name="barcode"
-            [(ngModel)]="archiveExam.barcode"
-            pTooltip="Barkodi duhet te jete nje numer 7 shifror"
-            onfocus="this.value=''"
-            tooltipPosition="top"
-            required />
-          <button
-            pButton
-            pRipple
-            icon="pi pi-save"
-            type="button"
-            [disabled]="!form.valid"
-            label="Ruaj"
-            class="p-button-success mr-2"
-            (click)="SaveArchiveExam(archiveExam)"></button>
-        </div>
-      </div>
-    </form>
-  </ng-template>
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="folder">

@@ -61,7 +61,7 @@ export class ArchiveFolderViewComponent implements OnInit {
   submitted = false;
 
   id: any;
-  archiveFolder: ArchiveFolder;
+  archiveFolder: ArchiveFolder = {}  as ArchiveFolder;
   archiveExam: ArchiveExam = {
     id: undefined,
     index: 0,

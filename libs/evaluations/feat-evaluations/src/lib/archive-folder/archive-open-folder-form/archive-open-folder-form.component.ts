@@ -22,7 +22,6 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
-import { BehaviorSubject } from 'rxjs';
 import { ArchiveFolder } from '@msh/evaluations/domain-evaluations';
 import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
 
@@ -46,7 +45,7 @@ import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluation
 })
 export class ArchiveOpenFolderFormComponent implements OnChanges {
   @Input() examTypes: DropdownModel<number>[] = [];
-  @Input() examSubjects: DropdownModel<number>[] = [];
+  @Input() examSubjects: DropdownModel<string>[] = [];
   @Output() examTypeChanged = new EventEmitter<string>();
   @Output() examSubjectChanged = new EventEmitter<string>();
 

@@ -4,8 +4,8 @@
       <p-toolbar styleClass="mb-4">
         <div class="p-toolbar-group-left">
           <h2 class="flex-1 mb-0">
-            Dosja: {{ archiveFolder.nr }} |
-            {{ archiveFolder.examTypeName }} : {{archiveFolder.examSubjectName }}
+            Dosja: {{ archiveFolder.nr }} | {{ archiveFolder.examTypeName }} :
+            {{ archiveFolder.examSubjectName }}
           </h2>
         </div>
 
@@ -22,18 +22,16 @@
           <button
             pButton
             [ngStyle]="{
-              'background-color': archiveFolder?.isClosed
+              'background-color': archiveFolder.isClosed
                 ? '#c8e6c9'
                 : '#feedaf',
-              color: archiveFolder?.isClosed? '#256029' : '#8a5340'
+              color: archiveFolder.isClosed ? '#256029' : '#8a5340'
             }"
             label="{{
-              archiveFolder?.isClosed? 'Hap Dosjen ' : 'Mbyll Dosjen'
+              archiveFolder.isClosed ? 'Hap Dosjen ' : 'Mbyll Dosjen'
             }}"
             icon="{{
-              !archiveFolder?.isClosed
-                ? 'pi pi-folder-open'
-                : 'pi pi-folder'
+              !archiveFolder.isClosed ? 'pi pi-folder-open' : 'pi pi-folder'
             }}"
             class="p-button-danger mr-2"
             (click)="changeFolderStatus()"></button>
@@ -44,7 +42,8 @@
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
         (lazyLoadData)="getArchiveExams($event)"
-        (formSave)="onFormSave($event)">
+        (formSave)="onFormSave($event)"
+        [isBarcodeInputDisabled]="isBarcodeInputDisabled">
       </msh-archive-exam-grid>
     </div>
   </div>

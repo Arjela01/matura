@@ -57,7 +57,7 @@ import {
 export class ManageArchiveFoldersComponent implements OnInit {
   private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[]>([]);
   examTypes: DropdownModel<number>[] = [];
-  examSubjects: DropdownModel<number>[] = [];
+  examSubjects: DropdownModel<string>[] = [];
 
   archiveFolders$ = this.archiveFolders$$.asObservable();
   filters: LazyLoadEvent | null = null;
@@ -85,7 +85,6 @@ export class ManageArchiveFoldersComponent implements OnInit {
 
   ngOnInit(): void {
     this.getExamTypes();
-    this.getExamSubjects();
   }
 
   onNewClick() {
@@ -139,7 +138,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
           },
         });
         break;
-      case GRID_ACTIONS.CHANGE:
+      case GRID_ACTIONS.CUSTOM_ACTION1:
         this.confirmationService.confirm({
           message: 'Jeni i sigurt që doni të ndryshoni statusin e dosjes?',
           accept: () => {
@@ -264,9 +263,9 @@ export class ManageArchiveFoldersComponent implements OnInit {
       });
   }
 
-  getExamSubjects() {
+  getExamSubjects(id: any) {
     this.examSubjectApiService
-      .loadDropdownList()
+      .forExamType(id)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examSubjects = response.data;
