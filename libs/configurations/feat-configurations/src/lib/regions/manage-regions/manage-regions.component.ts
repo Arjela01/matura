@@ -11,7 +11,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import {
   RegionApiService,
 } from '@msh/configurations/data-access-configurations';
-import { Region } from '@msh/configurations/domain-configurations';
+import { Region } from '@msh/shared/domain-models';
 
 
 import {

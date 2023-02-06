@@ -12,7 +12,7 @@ import { CityApiService } from '@msh/configurations/data-access-configurations'
 import {
   RegionApiService,
 } from '@msh/configurations/data-access-configurations';
-import { City } from '@msh/configurations/domain-configurations';
+import { City } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
 import {

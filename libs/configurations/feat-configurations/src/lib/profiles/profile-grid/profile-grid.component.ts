@@ -14,7 +14,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import { Profile } from '@msh/configurations/domain-configurations';
+import { Profile } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-profile-grid',

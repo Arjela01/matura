@@ -6,7 +6,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ToolbarModule} from "primeng/toolbar";
 import {ConfirmationService, LazyLoadEvent} from "primeng/api";
 import {GlobalToastService, GRID_ACTIONS, GridEvent} from "@msh/shared/util-shared";
-import {ExamVersion} from "@msh/configurations/domain-configurations";
+import {ExamVersion} from "@msh/shared/domain-models";
 
 import {BehaviorSubject} from "rxjs";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";

@@ -6,7 +6,7 @@ import {
   UniversityApiService,
   UniversityDepartmentApiService,
 } from '@msh/configurations/data-access-configurations';
-import { StudyProgram } from '@msh/configurations/domain-configurations';
+import { StudyProgram } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   GlobalToastService,

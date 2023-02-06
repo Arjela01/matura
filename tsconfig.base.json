@@ -32,7 +32,7 @@
       "@msh/configurations/data-access-configurations": [
         "libs/configurations/data-access-configurations/src/index.ts"
       ],
-      "@msh/configurations/domain-configurations": [
+      "@msh/shared/domain-models": [
         "libs/configurations/domain-configurations/src/index.ts"
       ],
       "@msh/configurations/feat-configurations": [
@@ -63,6 +63,7 @@
       "@msh/shared/data-access-shared": [
         "libs/shared/data-access-shared/src/index.ts"
       ],
+      "@msh/shared/domain-models": ["libs/shared/domain-models/src/index.ts"],
       "@msh/shared/environments": ["libs/shared/environments/src/index.ts"],
       "@msh/shared/student-lookup": ["libs/shared/student-lookup/src/index.ts"],
       "@msh/shared/styles": ["libs/shared/styles/src/index.ts"],

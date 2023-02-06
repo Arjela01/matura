@@ -3,7 +3,7 @@ import { Observable} from 'rxjs';
 import {LazyLoadEvent} from "primeng/api";
 import {ApiResult, DropdownModel} from "@msh/shared/data-access-shared";
 import {APIService} from "@msh/shared/util-shared";
-import {ExamType, ExamTypeTableView} from "@msh/configurations/domain-configurations";
+import {ExamType, ExamTypeTableView} from "@msh/shared/domain-models";
 
 @Injectable({
   providedIn: 'root',

@@ -4,7 +4,7 @@ import { LazyLoadEvent } from 'primeng/api';
 import {
   ExamVersion,
   ExamVersionTableView,
-} from '@msh/configurations/domain-configurations';
+} from '@msh/shared/domain-models';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 
