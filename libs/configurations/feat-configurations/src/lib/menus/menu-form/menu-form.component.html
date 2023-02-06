@@ -47,6 +47,27 @@
   </div>
 
   <div class="field">
+    <label for="Roles">Rolet</label>
+    <p-multiSelect
+      id="Roles"
+      name="roles"
+
+      [options]="roles"
+      optionValue="value"
+      optionLabel="value"
+      [(ngModel)]="menu.roles"
+
+      appendTo="body"
+
+      [showClear]="true"
+
+      defaultLabel="Selekto Rolet"
+      display="chip"
+    ></p-multiSelect>
+
+  </div>
+
+  <div class="field">
     <label for="displayOrder">Renditja *</label>
     <input
       type="number"

@@ -1,20 +1,7 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectorRef,
-  Component,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { DropdownModel } from '@msh/shared/data-access-shared';
-import { ButtonModule } from 'primeng/button';
-import { CheckboxModule } from 'primeng/checkbox';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { CalendarModule } from 'primeng/calendar';
-import { InputMaskModule } from 'primeng/inputmask';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   AcademicYearApiService,
   GendersApiService,
@@ -22,11 +9,22 @@ import {
   ProfileApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
-import { Student } from '@msh/configurations/domain-configurations';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  Student,
+  StudentClassModel,
+  StudentSectionModel,
+} from '@msh/configurations/domain-configurations';
+import { DropdownModel } from '@msh/shared/data-access-shared';
 import { MessageService } from 'primeng/api';
-import { StudentClassModel } from '@msh/configurations/domain-configurations';
-import { StudentSectionModel } from '@msh/configurations/domain-configurations';
+import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputMaskModule } from 'primeng/inputmask';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @Component({
   selector: 'msh-students-edit',
@@ -93,7 +91,6 @@ export class StudentsEditComponent {
     profileId: 0,
     profileName: '',
     firstName: '',
-    isConfirmedBySupervisor: true,
     graduationYear: undefined,
   };
 
@@ -133,7 +130,8 @@ export class StudentsEditComponent {
         ...result.data,
         birthDate: new Date(result.data.birthDate),
       };
-      this.finishedAtSameSchool = this.student?.schoolFinished == '' ||
+      this.finishedAtSameSchool =
+        this.student?.schoolFinished == '' ||
         this.student?.schoolFinished == null;
       this.cd.detectChanges();
     });

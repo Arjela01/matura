@@ -6,8 +6,8 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { A1Z } from '@msh/applications/domain-applications';
-import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
+import { A1Z } from '@msh/applications/domain-application';
+import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';

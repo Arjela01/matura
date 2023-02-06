@@ -1,5 +1,4 @@
 import { Route } from '@angular/router';
-import {ManageArchiveExamsComponent} from "./archive-exam/manage-archive-exams/manage-archive-exams.component";
 
 export const EVALUATION_ROUTES: Route[] = [
   {
@@ -44,4 +43,34 @@ export const EVALUATION_ROUTES: Route[] = [
         './archive-folder-cover/manage-archive-folder-cover/manage-archive-folder-cover.component'
       ).then(m => m.ManageArchiveFolderCoverComponent),
   },
+
+  {
+    path: 'exam-secret',
+    loadComponent: () =>
+      import(
+        './exam-secrets/manage-exam-secrets/manage-exam-secrets.component'
+      ).then(m => m.ManageExamSecretsComponent),
+  },
+  {
+    path: 'exam-secret-form/:id',
+    loadComponent: () =>
+      import(
+        './exam-secrets/exam-secrets-form/exam-secrets-form.component'
+      ).then(m => m.ExamSecretsFormComponent),
+  },
+  {
+    path: 'exam-secret-form',
+    loadComponent: () =>
+      import(
+        './exam-secrets/exam-secrets-form/exam-secrets-form.component'
+      ).then(m => m.ExamSecretsFormComponent),
+  },
+  {
+    path: 'exam-grades-grid',
+    loadComponent: () =>
+      import('./exam-grade-grid/exam-grade-grid.component').then(
+        m => m.ExamGradeGridComponent
+      ),
+  },
+
 ];

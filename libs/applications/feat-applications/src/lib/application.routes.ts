@@ -34,4 +34,11 @@ export const APPLICATION_ROUTES: Route[] = [
     loadComponent: () =>
       import('./a1/a1-form/a1-form.component').then(m => m.A1FormComponent),
   },
+  {
+    path: 'confirmed-a1a1z',
+    loadComponent: () =>
+      import(
+        './a1a1zconfirmed/manage-a1a1z-confirmed/manage-a1a1z-confirmed.component'
+      ).then(m => m.ManageA1a1zConfirmedComponent),
+  },
 ];

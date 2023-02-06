@@ -1,7 +1,7 @@
 /* eslint-disable */
 export default {
-  displayName: 'domain-applications',
-  preset: '../../jest.preset.js',
+  displayName: 'shared-student-lookup',
+  preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {
@@ -9,7 +9,7 @@ export default {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../coverage/libs/domain-applications',
+  coverageDirectory: '../../../coverage/libs/shared/student-lookup',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
   },

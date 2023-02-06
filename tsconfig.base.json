@@ -41,7 +41,6 @@
       "@msh/configurations/ui-configurations": [
         "libs/configurations/ui-configurations/src/index.ts"
       ],
-      "@msh/applications/domain-applications": ["libs/applications/domain-applications/src/index.ts"],
       "@msh/evaluations/data-access-evaluations": [
         "libs/evaluations/data-access-evaluations/src/index.ts"
       ],
@@ -65,6 +64,7 @@
         "libs/shared/data-access-shared/src/index.ts"
       ],
       "@msh/shared/environments": ["libs/shared/environments/src/index.ts"],
+      "@msh/shared/student-lookup": ["libs/shared/student-lookup/src/index.ts"],
       "@msh/shared/styles": ["libs/shared/styles/src/index.ts"],
       "@msh/shared/ui-shared": ["libs/shared/ui-shared/src/index.ts"],
       "@msh/shared/util-shared": ["libs/shared/util-shared/src/index.ts"]

@@ -310,6 +310,12 @@ export class A1FormComponent {
           if (response.isSuccessful) {
             this.toastService.showSuccess('Formulari A1 u shtua me sukses!');
             this.router.navigate(['/applications/a1']);
+          } else {
+            response.errorMessage
+              ? this.toastService.showError(response.errorMessage)
+              : this.toastService.showError(
+                  'Ndodhi një problem gjatë ndryshimit të formularit A1!'
+                );
           }
           if (response.isBadRequest)
             this.toastService.showError(

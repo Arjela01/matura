@@ -11,16 +11,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { DropdownModel } from '@msh/shared/data-access-shared';
-import { ButtonModule } from 'primeng/button';
-import { CheckboxModule } from 'primeng/checkbox';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { CalendarModule } from 'primeng/calendar';
-import { InputMaskModule } from 'primeng/inputmask';
+import { Router } from '@angular/router';
 import {
   AcademicYearApiService,
   GendersApiService,
@@ -33,7 +24,16 @@ import {
   StudentClassModel,
   StudentSectionModel,
 } from '@msh/configurations/domain-configurations';
-import { Router } from '@angular/router';
+import { DropdownModel } from '@msh/shared/data-access-shared';
+import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputMaskModule } from 'primeng/inputmask';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @Component({
   selector: 'msh-students-form',
@@ -109,9 +109,8 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     firstName: '',
     schoolFinishedName: '',
     registrationYearId: undefined,
-
-    isConfirmedBySupervisor: true,
     graduationYear: undefined,
+    isConfirmedBySupervisor: true,
   };
 
   finishedAtSameSchool = true;
