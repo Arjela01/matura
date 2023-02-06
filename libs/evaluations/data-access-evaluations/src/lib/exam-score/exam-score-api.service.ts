@@ -16,26 +16,26 @@ export class ExamScoreApiService {
   constructor(private apiService: APIService) {}
 
   loadExamScores(event: LazyLoadEvent): Observable<ExamScoreTableView> {
-    return this.apiService.post(`/api/ExamScores/TableData`, event);
+    return this.apiService.post(`/ExamScores/TableData`, event);
   }
 
   save(examScore: ExamScore): Observable<ApiResult<ExamScore>> {
     return this.apiService.post<ApiResult<ExamScore>, ExamScore>(
-      `/api/ExamScores`,
+      `/ExamScores`,
       examScore
     );
   }
 
   update(examScore: ExamScore): Observable<ApiResult<ExamScore>> {
     return this.apiService.put<ApiResult<ExamScore>, ExamScore>(
-      `/api/ExamScores`,
+      `/ExamScores`,
       examScore
     );
   }
 
   delete(examScoreId: number): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<ExamScore>>(
-      `/api/ExamScores/${examScoreId}`
+      `/ExamScores/${examScoreId}`
     );
   }
 
@@ -43,7 +43,7 @@ export class ExamScoreApiService {
     base64: string | ArrayBuffer | null
   ): Observable<ApiResult<unknown>> {
     return this.apiService
-      .post<ApiResult<FileImport>, FileImport>('/api/ExamScores/Import', {
+      .post<ApiResult<FileImport>, FileImport>('/ExamScores/Import', {
         file: base64,
       })
       .pipe(
