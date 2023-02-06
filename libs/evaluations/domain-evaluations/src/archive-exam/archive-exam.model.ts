@@ -1,9 +1,10 @@
 export interface ArchiveExam {
-  id?:any;
+  id:any;
   index?: number;
   archiveFolderId: number;
   barcode?: string;
   totalArchiveExams?: 0;
+  examSubjectName?:string;
 }
 
 export interface ArchiveExamView {

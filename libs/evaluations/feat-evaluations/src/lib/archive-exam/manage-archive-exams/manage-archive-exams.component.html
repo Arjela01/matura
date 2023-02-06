@@ -40,10 +40,10 @@
         </div>
       </p-toolbar>
       <msh-archive-exam-grid
-        [barCodes]="(barCodes$ | async) || []"
+        [archiveExams]="(archiveExams$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getBarCodes($event)"
+        (lazyLoadData)="getArchiveExams($event)"
         (formSave)="onFormSave($event)">
       </msh-archive-exam-grid>
     </div>
@@ -61,7 +61,7 @@
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
     <msh-archive-exam-form
-      [barCodeDetails]="selectedBarCode"
+      [archiveExamDetails]="selectedArchiveExam"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
     </msh-archive-exam-form>

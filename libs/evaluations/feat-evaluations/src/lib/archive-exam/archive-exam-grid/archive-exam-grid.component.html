@@ -2,7 +2,7 @@
   #dt
   dataKey="id"
   responsiveLayout="scroll"
-  [value]="barCodes"
+  [value]="archiveExams"
   [totalRecords]="totalRecords"
   [rows]="100"
   [paginator]="true"
@@ -10,7 +10,7 @@
   [showCurrentPageReport]="true"
   currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
   [rowHover]="true"
-  [(selection)]="selectedBarCodes"
+  [(selection)]="selectedArchiveExams"
   selectionMode="multiple"
   (onRowSelect)="onRowSelect($event)"
   (onRowUnselect)="onRowUnselect($event)"
@@ -36,7 +36,7 @@
             placeholder="Barkodi"
             id="barcode"
             name="barcode"
-            [(ngModel)]="barCode.barcode"
+            [(ngModel)]="archiveExam.barcode"
             pTooltip="Barkodi duhet te jete nje numer 7 shifror"
             onfocus="this.value=''"
             tooltipPosition="top"
@@ -49,7 +49,7 @@
             [disabled]="!form.valid"
             label="Ruaj"
             class="p-button-success mr-2"
-            (click)="SaveBarCode(barCode)"></button>
+            (click)="SaveArchiveExam(archiveExam)"></button>
         </div>
       </div>
     </form>
@@ -75,13 +75,13 @@
       <th></th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-barcode>
+  <ng-template pTemplate="body" let-archiveExam>
     <tr>
       <td style="width: 14%; min-width: 10rem">
-        {{ barcode.index }}
+        {{ archiveExam.index }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ barcode.barcode }}
+        {{ archiveExam.barcode }}
       </td>
 
       <td>
@@ -93,7 +93,7 @@
             class="p-button-rounded p-button-warning p-button-text mr-2"
             pTooltip="Ndrysho"
             tooltipPosition="bottom"
-            (click)="onEditClick(barcode)"></button>
+            (click)="onEditClick(archiveExam)"></button>
           <button
             pButton
             pRipple
@@ -101,7 +101,7 @@
             class="p-button-rounded p-button-danger p-button-text"
             pTooltip="Fshi"
             tooltipPosition="bottom"
-            (click)="onDeleteClick(barcode)"></button>
+            (click)="onDeleteClick(archiveExam)"></button>
         </div>
       </td>
     </tr>

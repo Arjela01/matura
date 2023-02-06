@@ -36,7 +36,7 @@ import { ArchiveExam } from '@msh/evaluations/domain-evaluations';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArchiveFormComponent {
-  @Input() set barCodeDetails(details: ArchiveExam | null) {
+  @Input() set archiveExamDetails(details: ArchiveExam | null) {
     if (details) {
       this.archiveExam = Object.assign({}, details);
     }
@@ -49,7 +49,7 @@ export class ArchiveFormComponent {
 
   submitted = false;
 
-  archiveExam: ArchiveExam = { archiveFolderId: 0 };
+  archiveExam: ArchiveExam = {id: undefined, archiveFolderId: 0 };
 
   onCancelClick() {
     this.formClose.emit();

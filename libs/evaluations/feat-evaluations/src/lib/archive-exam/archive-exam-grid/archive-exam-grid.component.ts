@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -9,18 +9,18 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
-import { LazyLoadEvent, MessageService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { CheckboxModule } from 'primeng/checkbox';
-import { InputTextModule } from 'primeng/inputtext';
-import { RippleModule } from 'primeng/ripple';
-import { TableModule } from 'primeng/table';
-import { TooltipModule } from 'primeng/tooltip';
-import { FormsModule, NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ArchiveExamApiService } from '@msh/evaluations/data-access-evaluations';
-import { ArchiveExam } from '@msh/evaluations/domain-evaluations';
+import {GRID_ACTIONS, GridEvent} from '@msh/shared/util-shared';
+import {LazyLoadEvent, MessageService} from 'primeng/api';
+import {ButtonModule} from 'primeng/button';
+import {CheckboxModule} from 'primeng/checkbox';
+import {InputTextModule} from 'primeng/inputtext';
+import {RippleModule} from 'primeng/ripple';
+import {TableModule} from 'primeng/table';
+import {TooltipModule} from 'primeng/tooltip';
+import {FormsModule, NgForm} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ArchiveExamApiService} from '@msh/evaluations/data-access-evaluations';
+import {ArchiveExam} from '@msh/evaluations/domain-evaluations';
 
 @Component({
   selector: 'msh-archive-exam-grid',
@@ -42,16 +42,16 @@ import { ArchiveExam } from '@msh/evaluations/domain-evaluations';
 export class ArchiveExamGridComponent implements OnInit {
   @ViewChild('form', { static: true }) form!: NgForm;
 
-  @Input() set studentDetails(details: ArchiveExam | null) {
+  @Input() set ArchiveExamsDetails(details: ArchiveExam | null) {
     if (details) {
-      this.barCode = Object.assign({}, details);
+      this.archiveExam = Object.assign({}, details);
     }
   }
-  @Input() barCodes: ArchiveExam[] = [];
+  @Input() archiveExams: ArchiveExam[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
 
-  selectedBarCodes: ArchiveExam[] = [];
+  selectedArchiveExams: ArchiveExam[] = [];
 
   @Output() gridEvent = new EventEmitter<
     GridEvent<ArchiveExam | ArchiveExam[]>
@@ -65,9 +65,10 @@ export class ArchiveExamGridComponent implements OnInit {
   submitted = false;
   id = 0;
 
-  barCode: ArchiveExam = {
+  archiveExam: ArchiveExam = {
+    id: undefined,
     barcode: '',
-    archiveFolderId: this.id,
+    archiveFolderId: this.id
   };
 
   constructor(
@@ -84,14 +85,14 @@ export class ArchiveExamGridComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.barCode = {
-      ...this.barCode,
+    this.archiveExam = {
+      ...this.archiveExam,
       archiveFolderId: this.id as number,
     };
   }
 
   onSubmit(): void {
-    const data = { ...this.barCode };
+    const data = { ...this.archiveExam };
     this.archiveExamApiService.save(data).subscribe({
       next: () => {
         this.submitted = false;
@@ -99,10 +100,10 @@ export class ArchiveExamGridComponent implements OnInit {
     });
   }
 
-  SaveBarCode(barcode: ArchiveExam): void {
+  SaveArchiveExam(archiveExam: ArchiveExam): void {
     this.gridEvent.emit({
       action: GRID_ACTIONS.CHANGE,
-      data: barcode,
+      data: archiveExam,
     } as GridEvent<ArchiveExam>);
   }
   onRowUnselect({ data }: { data: ArchiveExam }) {
@@ -118,16 +119,16 @@ export class ArchiveExamGridComponent implements OnInit {
     } as GridEvent<ArchiveExam>);
   }
 
-  onEditClick(barcode: ArchiveExam) {
+  onEditClick(archiveExam: ArchiveExam) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
-      data: barcode,
+      data: archiveExam,
     } as GridEvent<ArchiveExam>);
   }
-  onDeleteClick(barcode: ArchiveExam) {
+  onDeleteClick(archiveExam: ArchiveExam) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,
-      data: barcode,
+      data: archiveExam,
     } as GridEvent<ArchiveExam>);
   }
 

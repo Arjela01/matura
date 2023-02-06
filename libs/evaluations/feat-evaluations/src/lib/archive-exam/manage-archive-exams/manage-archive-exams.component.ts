@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -9,39 +9,23 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {
-  ConfirmationService,
-  LazyLoadEvent,
-  MessageService,
-} from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { DialogModule } from 'primeng/dialog';
-import { ToolbarModule } from 'primeng/toolbar';
-import {
-  GlobalToastService,
-  GridEvent,
-  GRID_ACTIONS,
-} from '@msh/shared/util-shared';
-import {BehaviorSubject, forkJoin, take} from 'rxjs';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ArchiveExamGridComponent } from '../archive-exam-grid/archive-exam-grid.component';
-import { NgForm } from '@angular/forms';
-import { ArchiveFormComponent } from '../archive-exam-form/archive-form.component';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {ConfirmationService, LazyLoadEvent, MessageService,} from 'primeng/api';
+import {ButtonModule} from 'primeng/button';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {DialogModule} from 'primeng/dialog';
+import {ToolbarModule} from 'primeng/toolbar';
+import {GlobalToastService, GRID_ACTIONS, GridEvent,} from '@msh/shared/util-shared';
+import {BehaviorSubject} from 'rxjs';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import {ArchiveExamGridComponent} from '../archive-exam-grid/archive-exam-grid.component';
+import {NgForm} from '@angular/forms';
+import {ArchiveFormComponent} from '../archive-exam-form/archive-form.component';
 import {
   ExamTypeApiService,
-  ExamVersionApiService,
-  StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
-import {
-  ArchiveExamApiService,
-  ArchiveFolderApiService,
-} from '@msh/evaluations/data-access-evaluations';
-import {
-  ArchiveExam,
-  ArchiveFolder,
-} from '@msh/evaluations/domain-evaluations';
+import {ArchiveExamApiService, ArchiveFolderApiService,} from '@msh/evaluations/data-access-evaluations';
+import {ArchiveExam, ArchiveFolder,} from '@msh/evaluations/domain-evaluations';
 
 @UntilDestroy()
 @Component({
@@ -64,33 +48,33 @@ import {
 })
 export class ManageArchiveExamsComponent implements OnInit {
   @Input() loading = false;
-  @Input() set barCodeDetails(details: ArchiveExam | null) {
+  @Input() set archiveExamsDetails(details: ArchiveExam | null) {
     if (details) {
-      this.barCode = Object.assign({}, details);
+      this.archiveExam = Object.assign({}, details);
     }
   }
-  @Input() barCodes: ArchiveExam[] = [];
+  @Input() archiveExams: ArchiveExam[] = [];
   @Output() gridEvent = new EventEmitter<
     GridEvent<ArchiveExam | ArchiveFolder[]>
   >();
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
   @Output() formSave = new EventEmitter<ArchiveExam[] | ArchiveFolder[]>();
   @ViewChild('form', { static: true }) form!: NgForm;
-  barCodes$$ = new BehaviorSubject<ArchiveExam[]>([]);
-  barCodes$ = this.barCodes$$.asObservable();
+  archiveExams$$ = new BehaviorSubject<ArchiveExam[]>([]);
+  archiveExams$ = this.archiveExams$$.asObservable();
   filters: LazyLoadEvent | null = null;
   totalRecords = 0;
-  selectedBarCode: ArchiveExam | null = null;
-  selectedBarCodes: ArchiveExam[] = [];
+  selectedArchiveExam: ArchiveExam | null = null;
+  selectedArchiveExams: ArchiveExam[] = [];
   displayModal = false;
-  barCode: ArchiveExam = {
+  archiveExam: ArchiveExam = {
+    id: undefined,
     index: 0,
     archiveFolderId: 0,
-    barcode: '',
+    barcode: ''
   };
   id: any;
   archiveFolder: ArchiveFolder;
-
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -98,8 +82,6 @@ export class ManageArchiveExamsComponent implements OnInit {
     private readonly toastService: GlobalToastService,
     private readonly examTypeApiService: ExamTypeApiService,
     private readonly archiveExamApiService: ArchiveExamApiService,
-    private readonly examVersionApiService: ExamVersionApiService,
-    private readonly studentAPITestService: StudentsApiService,
     private router: Router,
     private messageService: MessageService,
     private archiveFolderService: ArchiveFolderApiService,
@@ -112,7 +94,7 @@ export class ManageArchiveExamsComponent implements OnInit {
   ngOnInit() {
     this.archiveFolderService
       .getById(this.id)
-      .subscribe(folder => this.archiveFolder = {...folder.data});
+      .subscribe(folder => (this.archiveFolder = { ...folder.data }));
   }
 
   onNewClick() {
@@ -131,36 +113,36 @@ export class ManageArchiveExamsComponent implements OnInit {
   onGridEvent(event: GridEvent<ArchiveExam | ArchiveExam[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
-        this.selectedBarCodes = [
-          ...this.selectedBarCodes,
+        this.selectedArchiveExams = [
+          ...this.selectedArchiveExams,
           event.data as ArchiveExam,
         ];
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
-        this.selectedBarCodes = this.selectedBarCodes.filter(hs => {
+        this.selectedArchiveExams = this.selectedArchiveExams.filter(hs => {
           hs.archiveFolderId !== (event.data as ArchiveExam).archiveFolderId;
         });
         break;
 
       case GRID_ACTIONS.SELECT_MANY:
-        this.selectedBarCodes = [
-          ...this.selectedBarCodes,
+        this.selectedArchiveExams = [
+          ...this.selectedArchiveExams,
           ...(event.data as ArchiveExam[]),
         ];
         break;
       case GRID_ACTIONS.UNSELECT_ALL:
-        this.selectedBarCodes = [];
+        this.selectedArchiveExams = [];
         break;
       case GRID_ACTIONS.EDIT:
         // eslint-disable-next-line max-len
-        this.selectedBarCode = Object.assign({}, event.data as ArchiveExam);
+        this.selectedArchiveExam = Object.assign({}, event.data as ArchiveExam);
         this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
           message: 'Jeni i sigurt që doni të fshini barkodin e zgjedhur?',
           accept: () => {
-            this.deleteBarCode(event.data as ArchiveExam);
+            this.deleteArchiveExam(event.data as ArchiveExam);
           },
         });
         break;
@@ -168,7 +150,7 @@ export class ManageArchiveExamsComponent implements OnInit {
         this.confirmationService.confirm({
           message: 'Dëshironi te ruani barkodin?',
           accept: () => {
-            this.addBarCode(event.data as ArchiveExam);
+            this.addArchiveExams(event.data as ArchiveExam);
           },
         });
         break;
@@ -179,37 +161,37 @@ export class ManageArchiveExamsComponent implements OnInit {
     this.displayModal = false;
   }
 
-  onFormSave(barCode: ArchiveExam) {
-    if (barCode.barcode) {
-      this.updateBarCode(barCode);
+  onFormSave(archiveExam: ArchiveExam) {
+    if (archiveExam.barcode) {
+      this.updateArchiveExam(archiveExam);
     }
-    if (!barCode.barcode) {
-      this.addBarCode(barCode);
+    if (!archiveExam.barcode) {
+      this.addArchiveExams(archiveExam);
     }
   }
 
-  getBarCodes($event: LazyLoadEvent) {
+  getArchiveExams($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.archiveExamApiService
       .loadArchiveExams($event, this.id)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.barCodes$$.next([]);
-        this.barCodes$$.next(response.data);
+        this.archiveExams$$.next([]);
+        this.archiveExams$$.next(response.data);
         this.totalRecords = response.total;
       });
   }
 
-  addBarCode(barCode: ArchiveExam) {
+  addArchiveExams(archiveExam: ArchiveExam) {
     this.archiveExamApiService
-      .save(barCode)
+      .save(archiveExam)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Barkodi u ruajt me sukses!');
           this.displayModal = false;
-          this.getBarCodes(this.filters as LazyLoadEvent);
+          this.getArchiveExams(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
@@ -226,15 +208,15 @@ export class ManageArchiveExamsComponent implements OnInit {
       });
   }
 
-  updateBarCode(barCode: ArchiveExam) {
+  updateArchiveExam(archiveExam: ArchiveExam) {
     this.archiveExamApiService
-      .update(barCode)
+      .update(archiveExam)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Barkodi u ndryshua me sukses!');
           this.displayModal = false;
-          this.getBarCodes(this.filters as LazyLoadEvent);
+          this.getArchiveExams(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
@@ -270,14 +252,14 @@ export class ManageArchiveExamsComponent implements OnInit {
       });
   }
 
-  deleteBarCode(barCode: ArchiveExam) {
+  deleteArchiveExam(archiveExam: ArchiveExam) {
     this.archiveExamApiService
-      .delete(barCode.id)
+      .delete(archiveExam.id)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showInfo('Dosja u fshi me sukses!');
-          this.getBarCodes(this.filters as LazyLoadEvent);
+          this.toastService.showInfo('Barkodi u fshi me sukses!');
+          this.getArchiveExams(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)

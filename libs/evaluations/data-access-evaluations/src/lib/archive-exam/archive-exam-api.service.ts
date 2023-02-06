@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
+import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
 import {
   ArchiveExam,
-  ArchiveExamView, ArchiveFolder,
+  ArchiveExamView,
 } from '@msh/evaluations/domain-evaluations';
 
 @Injectable({
@@ -14,19 +14,22 @@ import {
 export class ArchiveExamApiService {
   constructor(private apiService: APIService) {}
 
-  getById(id: any, event: LazyLoadEvent): any {
-    return this.apiService.post<any, any>(`/ArchiveExam/${id}`, event);
-  }
-
-  getFolderByExamId(id: any): Observable<ArchiveFolder> {
-    return this.apiService.get<any>(`/ArchiveExam/GetFolderByExamId/${id}`);
-  }
-
-  loadDropDownList(): Observable<ApiResult<DropdownModel<number>[]>> {
-    return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
-      '/ArchiveExam/DropdownList'
-    );
-  }
+  //
+  // getById(id: any): Observable<ApiResult<ArchiveExam>> {
+  //   return this.apiService.get<ApiResult<ArchiveExam>>(
+  //     `/ArchiveExam/${id}`
+  //   );
+  // }
+  //
+  // getFolderByExamId(id: any): Observable<ArchiveFolder> {
+  //   return this.apiService.get<any>(`/ArchiveExam/GetFolderByExamId/${id}`);
+  // }
+  //
+  // loadDropDownList(): Observable<ApiResult<DropdownModel<number>[]>> {
+  //   return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
+  //     '/ArchiveExam/DropdownList'
+  //   );
+  // }
 
   loadArchiveExams(event: LazyLoadEvent, id: any): Observable<ArchiveExamView> {
     return this.apiService.post(`/ArchiveExam/TableData/${id}`, event);
