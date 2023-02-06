@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
-import { A1ZCategory } from '@msh/configurations/domain-configurations';
+import { A1ZCategory } from '@msh/shared/domain-models';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { GlobalToastService, GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { A1ZCategoryApiService } from '@msh/configurations/data-access-configurations';

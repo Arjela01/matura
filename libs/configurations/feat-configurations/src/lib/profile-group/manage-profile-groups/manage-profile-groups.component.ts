@@ -9,7 +9,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
 import { ProfileGroupApiService } from '@msh/configurations/data-access-configurations';
-import { ProfileGroup } from '@msh/configurations/domain-configurations';
+import { ProfileGroup } from '@msh/shared/domain-models';
 
 import {
   GlobalToastService,

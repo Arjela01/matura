@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AdministrationOffice, AdministrationOfficeTableView } from '@msh/configurations/domain-configurations';
+import { AdministrationOffice, AdministrationOfficeTableView } from '@msh/shared/domain-models';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';

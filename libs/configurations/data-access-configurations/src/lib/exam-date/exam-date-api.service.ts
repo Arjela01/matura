@@ -6,7 +6,7 @@ import {APIService} from "@msh/shared/util-shared";
 import {
   ExamDate,
   ExamDateTableView
-} from "@msh/configurations/domain-configurations";
+} from "@msh/shared/domain-models";
 
 @Injectable({
   providedIn: 'root',

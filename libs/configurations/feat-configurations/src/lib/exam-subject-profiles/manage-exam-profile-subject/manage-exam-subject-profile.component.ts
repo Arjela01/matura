@@ -8,7 +8,7 @@ import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { BehaviorSubject } from 'rxjs';
 import {
   ExamSubjectProfile,
-} from '@msh/configurations/domain-configurations';
+} from '@msh/shared/domain-models';
 import {
   GlobalToastService,
   GRID_ACTIONS,

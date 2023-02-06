@@ -6,7 +6,7 @@ import {InputTextModule} from "primeng/inputtext";
 import {TooltipModule} from "primeng/tooltip";
 import {CheckboxModule} from "primeng/checkbox";
 import {GRID_ACTIONS, GridEvent} from "@msh/shared/util-shared";
-import {ExamType} from "@msh/configurations/domain-configurations";
+import {ExamType} from "@msh/shared/domain-models";
 import {RippleModule} from "primeng/ripple";
 import {LazyLoadEvent} from "primeng/api";
 

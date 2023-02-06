@@ -5,7 +5,7 @@ import {
   UniversityTableView,
   User,
   UserTableView
-} from '@msh/configurations/domain-configurations';
+} from '@msh/shared/domain-models';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { Observable } from 'rxjs';
