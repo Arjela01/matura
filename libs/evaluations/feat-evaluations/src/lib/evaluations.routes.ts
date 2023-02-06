@@ -29,4 +29,18 @@ export const EVALUATION_ROUTES: Route[] = [
         './exam-secrets/exam-secrets-form/exam-secrets-form.component'
       ).then(m => m.ExamSecretsFormComponent),
   },
+  {
+    path: 'exam-grades-grid',
+    loadComponent: () =>
+      import('./exam-grade-grid/exam-grade-grid.component').then(
+        m => m.ExamGradeGridComponent
+      ),
+  },
+  {
+    path: 'calculate-grades',
+    loadComponent: () =>
+      import('./calculate-grades/calculate-grades.component').then(
+        m => m.CalculateGradesComponent
+      ),
+  },
 ];
