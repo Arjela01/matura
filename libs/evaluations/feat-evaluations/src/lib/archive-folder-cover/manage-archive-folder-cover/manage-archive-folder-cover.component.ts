@@ -71,7 +71,6 @@ export class ManageArchiveFolderCoverComponent implements OnInit {
       { label: 'Firmosni formularin' },
     ];
     this.getExamTypeDropdown();
-    this.getExamVersionDropdown();
   }
 
   onNewClick() {
@@ -221,12 +220,5 @@ export class ManageArchiveFolderCoverComponent implements OnInit {
         this.examType = response.data;
       });
   }
-  getExamVersionDropdown() {
-    this.examVersionApiService
-      .loadDropdownList()
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.examVersion = response.data;
-      });
-  }
+
 }

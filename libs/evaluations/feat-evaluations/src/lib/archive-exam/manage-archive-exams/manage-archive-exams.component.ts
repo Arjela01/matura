@@ -24,7 +24,7 @@ import {
   GridEvent,
   GRID_ACTIONS,
 } from '@msh/shared/util-shared';
-import { BehaviorSubject, take } from 'rxjs';
+import {BehaviorSubject, forkJoin, take} from 'rxjs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ArchiveExamGridComponent } from '../archive-exam-grid/archive-exam-grid.component';
 import { NgForm } from '@angular/forms';
@@ -110,9 +110,9 @@ export class ManageArchiveExamsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.archiveExamApiService.getFolderByExamId(this.id).subscribe((archiveFolder) => {
-      this.archiveFolder = {...archiveFolder};
-    })
+    this.archiveFolderService
+      .getById(this.id)
+      .subscribe(folder => this.archiveFolder = {...folder.data});
   }
 
   onNewClick() {
