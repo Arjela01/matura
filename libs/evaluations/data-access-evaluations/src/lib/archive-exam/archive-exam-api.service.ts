@@ -5,7 +5,7 @@ import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
 import {
   ArchiveExam,
-  ArchiveExamView,
+  ArchiveExamView, ArchiveFolder,
 } from '@msh/evaluations/domain-evaluations';
 
 @Injectable({
@@ -16,6 +16,10 @@ export class ArchiveExamApiService {
 
   getById(id: any, event: LazyLoadEvent): any {
     return this.apiService.post<any, any>(`/ArchiveExam/${id}`, event);
+  }
+
+  getFolderByExamId(id: any): Observable<ArchiveFolder> {
+    return this.apiService.get<any>(`/ArchiveExam/GetFolderByExamId/${id}`);
   }
 
   loadDropDownList(): Observable<ApiResult<DropdownModel<number>[]>> {

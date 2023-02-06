@@ -50,11 +50,7 @@ export class ExamVersionApiService {
         shareReplay()
       );
   }
-  loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
-    return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
-      `/api/ExamVersion/DropdownList`
-    );
-  }
+
   forExamSubject(
     examSubjectId: string
   ): Observable<ApiResult<DropdownModel<string>[]>> {

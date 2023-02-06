@@ -110,22 +110,9 @@ export class ManageArchiveExamsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.archiveFolderService.currentArchiveFolder$
-      .pipe(take(1))
-      .subscribe(response => {
-        if (response != null) {
-          this.archiveFolder = { ...response };
-          sessionStorage.setItem(
-            'archiveFolder',
-            JSON.stringify(this.archiveFolder)
-          );
-        } else {
-          const folder = sessionStorage.getItem('archiveFolder');
-          if (folder) {
-            this.archiveFolder = JSON.parse(folder);
-          }
-        }
-      });
+    this.archiveExamApiService.getFolderByExamId(this.id).subscribe((archiveFolder) => {
+      this.archiveFolder = {...archiveFolder};
+    })
   }
 
   onNewClick() {
