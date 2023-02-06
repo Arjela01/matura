@@ -12,9 +12,9 @@ import {
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { FailingStudentApiService } from '@msh/applications/data-access-applications';
-import { FailingStudent } from '@msh/applications/domain-applications';
+import { FailingStudent } from '@msh/applications/domain-application';
 import { GlobalToastService } from '@msh/shared/util-shared';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -58,7 +58,7 @@ export class FailingStudentsFormComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('Form init');
-    this.getFailingStudentById(this.failingStudent.id!);
+    //this.getFailingStudentById(this.failingStudent.id!);
   }
 
   submitted = false;
@@ -80,21 +80,21 @@ export class FailingStudentsFormComponent implements OnInit {
     }
   }
 
-  getFailingStudentById(studentId: number) {
-    this.failingStudentService
-      .getOne(studentId)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response.isSuccessful === true) {
-          this.failingStudent = response.data;
-          this.cd.detectChanges();
-        }
+  // getFailingStudentById(studentId: number) {
+  //   this.failingStudentService
+  //     .getOne(studentId)
+  //     .pipe(untilDestroyed(this))
+  //     .subscribe(response => {
+  //       if (response.isSuccessful === true) {
+  //         this.failingStudent = response.data;
+  //         this.cd.detectChanges();
+  //       }
 
-        if (response.isSuccessful === false) {
-          this.toastService.showError(
-            'Ndodhi nje problem gjatë kerkimit te studentit mbetes!'
-          );
-        }
-      });
-  }
+  //       if (response.isSuccessful === false) {
+  //         this.toastService.showError(
+  //           'Ndodhi nje problem gjatë kerkimit te studentit mbetes!'
+  //         );
+  //       }
+  //     });
+  // }
 }

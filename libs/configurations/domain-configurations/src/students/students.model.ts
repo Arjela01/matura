@@ -1,16 +1,16 @@
-export interface Student {
+import { SharedStudent } from '@msh/shared/student-lookup';
+export interface Student extends SharedStudent {
   id?: any;
   birthDate: Date;
   birthPlace: string;
-  isConfirmedBySupervisor: boolean;
   email: string;
   firstName: string;
   genderId?: number;
-
   highSchoolId?: number;
   idCard?: string;
   isA2A3: boolean;
   isEAlbaniaApplication: boolean;
+  isConfirmedBySupervisor?: boolean;
   lastName: string;
   middleName: string;
   mobilePhone: string;
@@ -34,11 +34,10 @@ export interface Student {
   createdName: string;
   modifiedOn?: Date;
   modifiedByName?: string;
+  nid?: string;
 }
 
 export interface StudentTableView {
   data: Student[];
   total: number;
-
 }
-

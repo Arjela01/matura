@@ -17,7 +17,7 @@ import {
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { A1ZApiService } from '@msh/applications/data-access-applications';
-import { A1Z } from '@msh/applications/domain-applications';
+import { A1Z } from '@msh/applications/domain-application';
 import {
   A1ZCategoryApiService,
   AcademicYearApiService,
@@ -29,9 +29,9 @@ import {
 import { Student } from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
-  GRID_ACTIONS,
   GlobalToastService,
   GridEvent,
+  GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';

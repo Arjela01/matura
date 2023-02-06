@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { A1Z, A1ZTableView } from '@msh/applications/domain-applications';
+import { A1Z, A1ZTableView } from '@msh/applications/domain-application';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';

@@ -6,7 +6,8 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { FailingStudent } from '@msh/applications/domain-applications';
+import { FailingStudent } from '@msh/applications/domain-application';
+import { Student } from '@msh/configurations/domain-configurations';
 import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -34,6 +35,7 @@ import { TooltipModule } from 'primeng/tooltip';
 })
 export class FailingStudentsGridComponent {
   @Input() failingStudents: FailingStudent[] = [];
+  @Input() students: Student[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
 

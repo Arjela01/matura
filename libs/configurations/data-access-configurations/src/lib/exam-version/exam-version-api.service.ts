@@ -59,4 +59,9 @@ export class ExamVersionApiService {
       { examSubjectId: examSubjectId }
     );
   }
+  loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
+    return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
+      `/api/ExamVersion/DropdownList`
+    );
+  }
 }

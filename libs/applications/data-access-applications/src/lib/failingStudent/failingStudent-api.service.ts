@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import {
   FailingStudent,
   FailingStudentTableView,
-} from '@msh/applications/domain-applications';
+} from '@msh/applications/domain-application';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
@@ -21,7 +21,7 @@ export class FailingStudentApiService {
     return this.apiservice.post('/FailingStudents/TableData', event);
   }
 
-  delete(id: string): Observable<ApiResult<unknown>> {
+  delete(id: number): Observable<ApiResult<unknown>> {
     return this.apiservice.delete<ApiResult<FailingStudent>>(
       `/FailingStudents/${id}`
     );

@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { A1ZApiService } from '@msh/applications/data-access-applications';
-import { A1Z } from '@msh/applications/domain-applications';
+import { A1Z } from '@msh/applications/domain-application';
+
 import {
-  GRID_ACTIONS,
   GlobalToastService,
   GridEvent,
+  GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';

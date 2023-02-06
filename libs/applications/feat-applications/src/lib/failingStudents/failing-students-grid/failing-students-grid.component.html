@@ -2,7 +2,7 @@
   #dt
   dataKey="id"
   responsiveLayout="scroll"
-  [value]="failingStudents"
+  [value]="students"
   [totalRecords]="totalRecords"
   [rows]="10"
   [paginator]="true"
@@ -78,10 +78,10 @@
         {{ failingStudent.lastName }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ failingStudent.studentIdentifier }}
+        {{ failingStudent.studentId }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ failingStudent.personalIdentifier }}
+        {{ failingStudent.idCard }}
       </td>
       <td style="width: 15%; min-width: 10rem">
         {{ failingStudent.schoolName }}
