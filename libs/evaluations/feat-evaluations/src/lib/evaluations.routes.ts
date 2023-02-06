@@ -79,4 +79,18 @@ export const EVALUATION_ROUTES: Route[] = [
         m => m.CalculateGradesComponent
       ),
   },
+  {
+    path: 'grades-scale',
+    loadComponent: () =>
+      import(
+        './grade-scale/manage-grades-scale/manage-grades-scale.component'
+      ).then(m => m.ManageGradesScaleComponent),
+  },
+  {
+    path: 'grades-scale-form/:examSubjectId',
+    loadComponent: () =>
+      import('./grade-scale/grade-scale-form/grade-scale-form.component').then(
+        m => m.GradeScaleFormComponent
+      ),
+  },
 ];
