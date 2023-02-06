@@ -8,7 +8,7 @@ import {ExamSubjectFormComponent} from "../exam-subject-form/exam-subject-form.c
 import {ExamSubjectGridComponent} from "../exam-subject-grid/exam-subject-grid.component";
 import {ConfirmationService, LazyLoadEvent} from "primeng/api";
 import {BehaviorSubject} from "rxjs";
-import {ExamSubject} from "@msh/configurations/domain-configurations";
+import {ExamSubject} from "@msh/shared/domain-models";
 import {GlobalToastService, GRID_ACTIONS, GridEvent} from "@msh/shared/util-shared";
 import {
   AcademicYearApiService,

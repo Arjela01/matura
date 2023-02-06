@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ConfirmedA1A1ZService } from '@msh/applications/data-access-applications';
 import { StudentsApiService } from '@msh/configurations/data-access-configurations';
-import { Student } from '@msh/configurations/domain-configurations';
+import { Student } from '@msh/shared/domain-models';
 import {
   GlobalToastService,
   GridEvent,

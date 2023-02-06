@@ -17,7 +17,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { Profile } from '@msh/configurations/domain-configurations';
+import { Profile } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-profile-form',

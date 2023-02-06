@@ -14,7 +14,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import {Student} from "@msh/configurations/domain-configurations";
+import {Student} from "@msh/shared/domain-models";
 import {ActivatedRoute, RouterLink} from "@angular/router";
 
 @Component({

@@ -8,7 +8,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
-import { Menu } from '@msh/configurations/domain-configurations';
+import { Menu } from '@msh/shared/domain-models';
 
 import {
   GlobalToastService,
