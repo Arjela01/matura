@@ -6,13 +6,16 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { User } from '@msh/shared/domain-models';
+import { UserApiService } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import { User } from '@msh/shared/domain-models';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -23,6 +26,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { roleList } from './role-list';
 
+@UntilDestroy()
 @Component({
   selector: 'msh-user-form',
   standalone: true,
@@ -42,7 +46,7 @@ import { roleList } from './role-list';
   styleUrls: ['./user-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserFormComponent implements OnChanges, OnInit {
+export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
   @Input() cities: DropdownModel<number>[] = [];
   @Input() administrationOffices: DropdownModel<number>[] = [];
   @Input() universityDepartments: DropdownModel<number>[] = [];
@@ -79,6 +83,7 @@ export class UserFormComponent implements OnChanges, OnInit {
     administrationOfficeId: 0,
     fileName: '',
     lastName: '',
+    username: '',
     password: '',
     userName: '',
     lastPasswordChange: new Date(),
@@ -92,9 +97,16 @@ export class UserFormComponent implements OnChanges, OnInit {
     universityDepartmentId: 0,
   };
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(
+    private cd: ChangeDetectorRef,
+    private readonly userService: UserApiService
+  ) {}
+  ngOnDestroy(): void {
+    this.form.reset();
+  }
   ngOnInit(): void {
     this.onRoleRemoved();
+    this.getUser();
   }
 
   ngOnChanges(): void {
@@ -118,6 +130,21 @@ export class UserFormComponent implements OnChanges, OnInit {
     this.universityDepartmentsFiltered = this.universityDepartments.filter(
       x => x.parentKey == $event.value
     );
+  }
+
+  getUser() {
+    if (this.user.id) {
+      this.userService
+        .getUserById(this.user.id)
+        .pipe(untilDestroyed(this))
+        .subscribe(response => {
+          if (response.isSuccessful === true) {
+            this.user = response.data;
+            console.log(response.data);
+          }
+          this.cd.detectChanges();
+        });
+    }
   }
 
   onRoleChange($event: any): void {

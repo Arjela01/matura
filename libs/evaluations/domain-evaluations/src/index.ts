@@ -1,3 +1,5 @@
 export * from './exam-score/exam-score.model'
+export * from './archive-folder/archive-folder.model'
+export * from './archive-exam/archive-exam.model'
 export * from './exam-secret/exam-secret.model'
 export * from './exam-grade/exam-grade.model'

@@ -53,7 +53,11 @@ export class ExamSubjectApiService {
         shareReplay()
       );
   }
-
+  loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
+    return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
+      `/api/ExamSubject/DropdownList`
+    );
+  }
   forExamType(
     examTypeId?: number,
     academicYearId?: number,

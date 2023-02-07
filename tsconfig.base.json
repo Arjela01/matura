@@ -35,6 +35,9 @@
       "@msh/configurations/data-access-configurations": [
         "libs/configurations/data-access-configurations/src/index.ts"
       ],
+      "@msh/configurations/domain-configurations": [
+        "libs/configurations/domain-configurations/src/index.ts"
+      ],
       "@msh/configurations/feat-configurations": [
         "libs/configurations/feat-configurations/src/index.ts"
       ],
