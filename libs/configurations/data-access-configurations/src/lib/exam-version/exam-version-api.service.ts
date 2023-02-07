@@ -15,13 +15,13 @@ export class ExamVersionApiService {
   constructor(private apiService: APIService) {}
 
   loadExamVersions(event: LazyLoadEvent): Observable<ExamVersionTableView> {
-    return this.apiService.post(`/api/ExamVersion/TableData`, event);
+    return this.apiService.post(`/ExamVersion/TableData`, event);
   }
 
   save(examVersion: ExamVersion): Observable<ApiResult<ExamVersion>> {
     return this.apiService
       .post<ApiResult<ExamVersion>, ExamVersion>(
-        `/api/ExamVersion`,
+        `/ExamVersion`,
         examVersion
       )
       .pipe(
@@ -33,7 +33,7 @@ export class ExamVersionApiService {
 
   update(examVersion: ExamVersion): Observable<ApiResult<ExamVersion>> {
     return this.apiService
-      .put<ApiResult<ExamVersion>, ExamVersion>(`/api/ExamVersion`, examVersion)
+      .put<ApiResult<ExamVersion>, ExamVersion>(`/ExamVersion`, examVersion)
       .pipe(
         map(data => data),
         catchError(error => throwError(error)),
@@ -43,7 +43,7 @@ export class ExamVersionApiService {
 
   delete(examVersionId: string): Observable<ApiResult<unknown>> {
     return this.apiService
-      .delete<ApiResult<ExamVersion>>(`/api/ExamVersion/${examVersionId}`)
+      .delete<ApiResult<ExamVersion>>(`/ExamVersion/${examVersionId}`)
       .pipe(
         map(data => data),
         catchError(error => throwError(error)),
@@ -55,13 +55,13 @@ export class ExamVersionApiService {
     examSubjectId: string
   ): Observable<ApiResult<DropdownModel<string>[]>> {
     return this.apiService.post<ApiResult<DropdownModel<string>[]>, any>(
-      `/api/ExamVersion/ForExamSubject`,
+      `/ExamVersion/ForExamSubject`,
       { examSubjectId: examSubjectId }
     );
   }
   loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
-      `/api/ExamVersion/DropdownList`
+      `/ExamVersion/DropdownList`
     );
   }
 }
