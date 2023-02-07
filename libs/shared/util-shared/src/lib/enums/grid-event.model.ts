@@ -7,6 +7,7 @@ export enum GRID_ACTIONS {
   UNSELECT_ROW,
   ACCEPT,
   REJECT,
+  CUSTOM_ACTION1
 }
 
 export interface GridEvent<T> {

@@ -1,0 +1,152 @@
+<p-table
+  #dt
+  dataKey="id"
+  responsiveLayout="scroll"
+  [value]="archiveFolders"
+  [totalRecords]="totalRecords"
+  [rows]="10"
+  [paginator]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
+  [rowHover]="true"
+  [(selection)]="selectedArchiveFolders"
+  selectionMode="multiple"
+  (onRowSelect)="onRowSelect($event)"
+  (onRowUnselect)="onRowUnselect($event)"
+  (onLazyLoad)="loadRows($event)"
+  [lazy]="true">
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="nr">
+        Dosja
+        <p-sortIcon field="nr"></p-sortIcon>
+        <p-columnFilter
+          type="numeric"
+          field="nr"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="totalArchiveExams">
+        Total
+        <p-sortIcon field="totalArchiveExams"></p-sortIcon>
+        <p-columnFilter
+          type="numeric"
+          field="totalArchiveExams"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="examType">
+        Tipi i Provimit
+        <p-sortIcon field="examType"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="examType"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="createdName">
+        Operatori
+        <p-sortIcon field="createdName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="createdName"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="status">
+        Statusi
+        <p-sortIcon field="status"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="status"
+          display="menu"></p-columnFilter>
+      </th>
+      <th>Aktivizo Dosjen</th>
+      <th>Hidh BarKode</th>
+      <th>Fshi Dosjen</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-archiveFolder>
+    <tr>
+      <td style="width: 14%; min-width: 10rem">
+        <a
+          pTooltip="Shiko Dosjen"
+          tooltipPosition="bottom"
+          [routerLink]="['/evaluations', 'archive-view', archiveFolder.id]">
+          {{ this.archiveFolder.nr }}
+        </a>
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ archiveFolder.totalArchiveExams }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ archiveFolder.examTypeName }}
+      </td>
+      <td style="width: 20%; min-width: 10rem">
+        {{ archiveFolder.createdByName }}
+      </td>
+      <td>
+        <button
+          pButton
+          pRipple
+          [ngStyle]="{
+            'background-color': archiveFolder.isClosed ? '#c8e6c9' : '#feedaf',
+            color: archiveFolder.isClosed ? '#256029' : '#8a5340'
+          }">
+          <span>
+            {{ archiveFolder.isClosed ? 'MBYLLUR ' : 'HAPUR' }}
+          </span>
+        </button>
+      </td>
+
+      <td>
+        <div class="flex">
+          <button
+            pButton
+            pRipple
+            class="p-button-rounded p-button-info p-button-text mr-2"
+            pTooltip="{{
+              !archiveFolder.isClosed ? 'Mbyll Dosjen' : 'Hap Dosjen'
+            }}"
+            tooltipPosition="bottom"
+            (click)="changeStatus(archiveFolder)"
+            icon="{{
+              !archiveFolder.isClosed ? 'pi pi-folder-open' : 'pi pi-folder'
+            }}"></button>
+        </div>
+      </td>
+      <td>
+        <div [hidden]="archiveFolder.isClosed">
+          <div class="flex">
+            <a
+              [routerLink]="[
+                '/evaluations',
+                'archive-exams',
+                archiveFolder.id
+              ]">
+              <button
+                (click)="persistArchiveFolder(archiveFolder)"
+                pButton
+                pRipple
+                icon="pi pi-qrcode"
+                class="p-button-rounded p-button-warning p-button-text mr-2"
+                pTooltip="Hidh Barkode"
+                tooltipPosition="bottom"></button>
+            </a>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div [hidden]="archiveFolder.isClosed">
+          <div class="flex">
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-danger p-button-text"
+              pTooltip="Fshi"
+              tooltipPosition="bottom"
+              (click)="onDeleteClick(archiveFolder)"></button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
