@@ -85,7 +85,7 @@ export class GradeScaleActionComponent {
     }
   }
   areScoresValid(gradeScale: GradesScale) {
-    let scales = this.values.value;
+    const scales = this.values.value;
     if (
       scales &&
       scales.length > 0 &&
@@ -158,7 +158,11 @@ export class GradeScaleActionComponent {
         next: (gradeScales: any) => {
           this.values.next(gradeScales);
         },
-        error: err => {},
+        error: err => {
+          err.errorMessage
+            ? this.toastService.showError(err.errorMessage)
+            : this.toastService.showError('Ndodhi një problem !');
+        },
       });
   }
   addGradeScales(gradesScale: GradesScale) {
@@ -168,7 +172,6 @@ export class GradeScaleActionComponent {
       .pipe(untilDestroyed(this))
       .subscribe({
         next: (response: any) => {
-          debugger;
           if (response.isSuccessful) {
             this.toastService.showSuccess('Përshkallëzimi u shtua me sukses!');
             this.displayModal = false;
@@ -186,8 +189,6 @@ export class GradeScaleActionComponent {
             );
         },
         error: error => {
-          console.log(error);
-          debugger;
           error.errorMessage
             ? this.toastService.showError(error.errorMessage)
             : this.toastService.showError(
@@ -213,7 +214,6 @@ export class GradeScaleActionComponent {
         } else {
           this.toastService.showError(response.errorMessage);
         }
-
         if (response.isBadRequest)
           this.toastService.showError(
             'Ndodhi nje problem gjatë ndryshimit të përshkallëzimit!'

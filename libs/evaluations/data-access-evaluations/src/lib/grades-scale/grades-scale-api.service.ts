@@ -42,6 +42,10 @@ export class GradesScaleService {
     );
   }
 
+  export(): Observable<ApiResult<unknown>> {
+    return this.apiService.get<any>(`/GradeScale/ExportTemplate`);
+  }
+
   //   uploadExcelFile(
   //     base64: string | ArrayBuffer | null
   //   ): Observable<ApiResult<unknown>> {

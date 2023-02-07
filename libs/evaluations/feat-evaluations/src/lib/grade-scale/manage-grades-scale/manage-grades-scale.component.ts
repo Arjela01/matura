@@ -16,6 +16,7 @@ import { BehaviorSubject } from 'rxjs';
 import { GradeScaleActionComponent } from '../grade-scale-action/grade-scale-action.component';
 import { GradeScaleGridComponent } from '../grade-scale-grid/grade-scale-grid.component';
 
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'msh-manage-grades-scale',
   standalone: true,
@@ -73,6 +74,17 @@ export class ManageGradesScaleComponent {
       });
   }
 
+  templateDownload() {
+    this.gradesScaleApiService
+      .export()
+      .pipe(untilDestroyed(this))
+      .subscribe((response: any) => {
+        const blob = new Blob([JSON.stringify(response.body)], {
+          type: 'application/vnd.ms-excel;charset=utf-8',
+        });
+        FileSaver.saveAs(blob, 'Përshkallëzim_Notash.xls');
+      });
+  }
   // onUpload(event: any) {
   //   const file = event.files[0];
   //   const reader = new FileReader();
