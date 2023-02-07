@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+} from '@angular/core';
 import { FailingStudentApiService } from '@msh/applications/data-access-applications';
 import { FailingStudent } from '@msh/applications/domain-application';
 import {
@@ -16,15 +20,14 @@ import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
-import { ManageFailingStudentsFormComponent } from '../manage-failing-students-form/manage-failing-students-form.component';
-import { ManageFailingStudentsGridComponent } from '../manage-failing-students-grid/manage-failing-students-grid.component';
+import { PassInFallGridComponent } from '../pass-in-fall-grid/pass-in-fall-grid.component';
 
 @UntilDestroy()
 @Component({
-  selector: 'manage-failing-students',
+  selector: 'msh-manage-pass-in-fall',
   standalone: true,
-  templateUrl: './manage-failing-students.component.html',
-  styleUrls: ['./manage-failing-students.component.scss'],
+  templateUrl: './manage-pass-in-fall.component.html',
+  styleUrls: ['./manage-pass-in-fall.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
   imports: [
@@ -34,52 +37,37 @@ import { ManageFailingStudentsGridComponent } from '../manage-failing-students-g
     ConfirmDialogModule,
     ToolbarModule,
     RippleModule,
-    ManageFailingStudentsGridComponent,
-    ManageFailingStudentsFormComponent,
+    PassInFallGridComponent,
   ],
 })
-export class ManageFailingStudentsComponent {
+export class ManagePassInFallComponent {
   private failingStudents$$ = new BehaviorSubject<FailingStudent[]>([]);
   failingStudents$ = this.failingStudents$$.asObservable();
   filters: LazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedFailingStudent: FailingStudent | null = null;
-  displayModal = false;
 
   constructor(
+    private cd: ChangeDetectorRef,
     private readonly failingStudentService: FailingStudentApiService,
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService
   ) {}
 
-  onNewClick() {
-    this.displayModal = true;
-  }
-
   onGridEvent(event: GridEvent<FailingStudent | FailingStudent[]>) {
     switch (event.action) {
       case GRID_ACTIONS.EDIT:
-        this.selectedFailingStudent = Object.assign(
-          {},
-          event.data as FailingStudent
-        );
-        this.displayModal = true;
-        break;
-      case GRID_ACTIONS.DELETE:
+        console.log(event.data);
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt qe deshironi te fshini studentin mbetes?',
+          message: 'A jeni i sigurt qe ka kaluar ne vjeshte maturanti?',
           accept: () => {
-            this.deleteFailingStudent(event.data as FailingStudent);
+            this.updateFailingStudent(event.data as FailingStudent);
+            event.data as FailingStudent;
           },
         });
         break;
     }
-  }
-
-  onModalClose() {
-    this.displayModal = false;
-    this.selectedFailingStudent = null;
   }
 
   onFormSave(failingStudent: FailingStudent) {
@@ -98,37 +86,38 @@ export class ManageFailingStudentsComponent {
       });
   }
 
-  deleteFailingStudent(failingStudent: FailingStudent) {
-    this.failingStudentService
-      .delete(failingStudent.id!)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response.isSuccessful === true) {
-          this.toastService.showSuccess('Studenti u fshi me sukses!');
-          this.getFailingStudents(this.filters as LazyLoadEvent);
-        }
-        if (response.isSuccessful === false)
-          this.toastService.showError(
-            'Ndodhi nje problem gjatë fshirjes së studentit mbetes!'
-          );
-      });
-  }
-
   updateFailingStudent(failingStudent: FailingStudent) {
     this.failingStudentService
-      .update(failingStudent)
+      .getOne(failingStudent.id!)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful === true) {
-          this.toastService.showSuccess('Studenti u ndryshua me sukses!');
-          this.displayModal = false;
-          this.getFailingStudents(this.filters as LazyLoadEvent);
+          this.failingStudentService
+            .update({
+              ...failingStudent,
+              studentId: response.data.studentId,
+              willRetryInFall: true,
+            })
+            .pipe(untilDestroyed(this))
+            .subscribe(response => {
+              if (response.isSuccessful === true) {
+                this.toastService.showSuccess('Studenti u ndryshua me sukses!');
+                this.getFailingStudents(this.filters as LazyLoadEvent);
+              }
+
+              if (response.isSuccessful === false)
+                this.toastService.showError(
+                  'Ndodhi nje problem gjatë ndryshimit të studentit mbetes!'
+                );
+            });
+          this.cd.detectChanges();
         }
 
-        if (response.isSuccessful === false)
+        if (response.isSuccessful === false) {
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit të studentit mbetes!'
+            'Ndodhi nje problem gjatë kerkimit te studentit mbetes!'
           );
+        }
       });
   }
 }
