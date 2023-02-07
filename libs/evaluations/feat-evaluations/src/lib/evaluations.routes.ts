@@ -73,10 +73,10 @@ export const EVALUATION_ROUTES: Route[] = [
       ),
   },
   {
-    path: 'generate-grades',
+    path: 'calculate-grades',
     loadComponent: () =>
-      import('./generate-grades/generate-grades.component').then(
-        m => m.GenerateGradesComponent
+      import('./calculate-grades/calculate-grades.component').then(
+        m => m.CalculateGradesComponent
       ),
   },
 ];

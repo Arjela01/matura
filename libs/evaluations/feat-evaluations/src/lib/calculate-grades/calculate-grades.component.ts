@@ -11,15 +11,15 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { RippleModule } from 'primeng/ripple';
 import { GridComponent } from '../grid/grid.component';
-import { GenerateGradeApiService } from '@msh/evaluations/data-access-evaluations';
+import { CalculateGradeApiService } from '@msh/evaluations/data-access-evaluations';
 import { LazyLoadEvent } from 'primeng/api';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BehaviorSubject } from 'rxjs';
-import { GenerateGrade } from '@msh/evaluations/domain-evaluations';
+import { CalculateGrade } from '@msh/evaluations/domain-evaluations';
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-generate-grades',
+  selector: 'msh-calculate-grades',
   standalone: true,
   imports: [
     CommonModule,
@@ -30,14 +30,14 @@ import { GenerateGrade } from '@msh/evaluations/domain-evaluations';
     RippleModule,
     GridComponent,
   ],
-  templateUrl: './generate-grades.component.html',
-  styleUrls: ['./generate-grades.component.scss'],
+  templateUrl: './calculate-grades.component.html',
+  styleUrls: ['./calculate-grades.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GenerateGradesComponent {
+export class CalculateGradesComponent {
   @Output() dataEmitted = new EventEmitter<any>();
-  private generateGrade$$ = new BehaviorSubject<GenerateGrade[]>([]);
-  generateGrade$ = this.generateGrade$$.asObservable();
+  private calculateGrade$$ = new BehaviorSubject<CalculateGrade[]>([]);
+  calculateGrade$ = this.calculateGrade$$.asObservable();
   filters: LazyLoadEvent | null = null;
 
   appProcessType!: string | undefined;
@@ -52,14 +52,14 @@ export class GenerateGradesComponent {
   ];
 
   constructor(
-    private readonly generateGradesService: GenerateGradeApiService
+    private readonly calculateGradesService: CalculateGradeApiService
   ) {}
 
-  getGeneratedGrades($event: LazyLoadEvent) {
+  getCalculatedGrades($event: LazyLoadEvent) {
     this.filters = { ...$event };
 
-    this.generateGradesService
-      .loadGeneratedGrades($event)
+    this.calculateGradesService
+      .loadCalculatedGrades($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         const dataArray = response.data;
@@ -76,7 +76,7 @@ export class GenerateGradesComponent {
         const seconds = Math.floor(((differenceInMs % 360000) % 60000) / 1000);
         dataArray.executionTime = `${this.endTime} ${hours}:${minutes}:${seconds}`;
 
-        this.generateGrade$$.next([dataArray]);
+        this.calculateGrade$$.next([dataArray]);
         this.appProcessType = dataArray.appProcessType;
         this.executionLog = dataArray.executionLog;
 

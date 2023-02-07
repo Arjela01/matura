@@ -1,4 +1,4 @@
-export interface GenerateGrade {
+export interface CalculateGrade {
   appProcessType: string;
   processStatus: string;
   startTime: Date;
@@ -8,7 +8,7 @@ export interface GenerateGrade {
   executionTime: string
 }
 
-export interface GenerateGradeTableView {
-  data: GenerateGrade;
+export interface CalculateGradeTableView {
+  data: CalculateGrade;
 }
 

@@ -17,8 +17,8 @@
       </div>
       <h4>Proçeset e ekzekutuara</h4>
       <msh-grid
-        [gridData]="(generateGrade$ | async) || []"
-        (dataEmitted)="getGeneratedGrades($event)"
+        [gridData]="(calculateGrade$ | async) || []"
+        (dataEmitted)="getCalculatedGrades($event)"
         [columns]="columns"></msh-grid>
     </div>
   </div>
