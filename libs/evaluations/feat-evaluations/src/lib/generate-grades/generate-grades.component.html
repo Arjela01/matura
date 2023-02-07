@@ -1,0 +1,94 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card px-6 py-6">
+      <p-header>
+        <h2 class="flex-1">Përllogarit notat</h2>
+      </p-header>
+      <div>
+      <span>Emri i procesit:</span>
+        {{appProcessType}}
+      </div>
+      <div style="margin: 10px 0 19px 0">
+        <span>Statusi:</span>
+        {{executionLog}}
+      </div>
+      <div class="actions">
+        <button pButton type="button">Fillo procesin</button>
+      </div>
+      <h4>Proçeset e ekzekutuara</h4>
+      <msh-grid [griddata]="gridData" (dataEmitted)="onDataEmitted($event)"></msh-grid>
+      <p-table
+        #dt
+        dataKey="id"
+        responsiveLayout="scroll"
+        [value]="(generateGrade$ | async) || []"
+        [rows]="10"
+        [paginator]="true"
+        [rowsPerPageOptions]="[10, 20, 30]"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
+        [rowHover]="true"
+        selectionMode="multiple"
+        (onLazyLoad)="getGeneratedGrades($event)"
+        [lazy]="true">
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="studentName">
+              Maturanti
+              <div>
+                <p-sortIcon field="studentName"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="studentName"
+                  display="menu"></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="examSubjectName">
+              Emri i lëndës së provimit
+              <div>
+                <p-sortIcon field="examSubjectName"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="examSubjectName"
+                  display="menu"></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="isCarriedOver">
+              Është i mbartur?
+              <div>
+                <p-sortIcon field="isCarriedOver"></p-sortIcon>
+              </div>
+            </th>
+            <th pSortableColumn="grade">
+              Nota
+              <div>
+                <p-sortIcon field="grade"></p-sortIcon>
+                <p-columnFilter
+                  type="number"
+                  field="grade"
+                  display="menu"></p-columnFilter>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-annualExamGrade>
+          <tr>
+            <td style="width: 25%">
+              {{ annualExamGrade.studentName }}
+            </td>
+            <td style="width: 25%">
+              {{ annualExamGrade.examSubjectName }}
+            </td>
+            <td style="width: 25%">
+              {{ annualExamGrade.isCarriedOver ? 'Po' : 'Jo' }}
+            </td>
+            <td style="width: 25%">
+              {{ annualExamGrade.grade }}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+    </div>
+  </div>
+</div>

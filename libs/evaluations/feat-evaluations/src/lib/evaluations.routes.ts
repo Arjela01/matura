@@ -36,5 +36,11 @@ export const EVALUATION_ROUTES: Route[] = [
         m => m.ExamGradeGridComponent
       ),
   },
-
+  {
+    path: 'generate-grades',
+    loadComponent: () =>
+      import('./generate-grades/generate-grades.component').then(
+        m => m.GenerateGradesComponent
+      ),
+  },
 ];
