@@ -11,7 +11,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { User } from '@msh/configurations/domain-configurations';
+import { User } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';

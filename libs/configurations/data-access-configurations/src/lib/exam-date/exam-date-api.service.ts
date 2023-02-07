@@ -5,8 +5,8 @@ import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import {
   ExamDate,
-  ExamDateTableView,
-} from '@msh/configurations/domain-configurations';
+  ExamDateTableView
+} from "@msh/shared/domain-models";
 
 @Injectable({
   providedIn: 'root',

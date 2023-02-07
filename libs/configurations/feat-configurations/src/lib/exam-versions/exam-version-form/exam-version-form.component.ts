@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {DropdownModel} from "@msh/shared/data-access-shared";
-import {ExamVersion} from "@msh/configurations/domain-configurations";
+import {ExamVersion} from "@msh/shared/domain-models";
 import {FormsModule, NgForm} from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
 import {InputNumberModule} from "primeng/inputnumber";

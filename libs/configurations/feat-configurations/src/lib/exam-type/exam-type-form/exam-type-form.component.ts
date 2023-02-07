@@ -7,7 +7,7 @@ import {RadioButtonModule} from "primeng/radiobutton";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {ButtonModule} from "primeng/button";
 import {CheckboxModule} from "primeng/checkbox";
-import {ExamType} from "@msh/configurations/domain-configurations";
+import {ExamType} from "@msh/shared/domain-models";
 
 @Component({
   selector: 'msh-exam-type-form',

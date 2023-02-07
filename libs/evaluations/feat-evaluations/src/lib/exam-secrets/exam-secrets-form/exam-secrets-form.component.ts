@@ -22,7 +22,7 @@ import { DropdownModel } from '@msh/shared/data-access-shared';
 import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { BehaviorSubject } from 'rxjs';
-import { Student } from '@msh/configurations/domain-configurations';
+import { Student } from '@msh/shared/domain-models';
 import {
   GlobalToastService,
   GRID_ACTIONS,

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { StudySubjectApiService } from '@msh/configurations/data-access-configurations';
-import { StudySubject } from '@msh/configurations/domain-configurations';
+import { StudySubject } from '@msh/shared/domain-models';
 import {
   GRID_ACTIONS,
   GlobalToastService,

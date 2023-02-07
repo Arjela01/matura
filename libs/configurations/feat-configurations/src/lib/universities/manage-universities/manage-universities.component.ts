@@ -13,7 +13,7 @@ import {
   RegionApiService,
   UniversityApiService,
 } from '@msh/configurations/data-access-configurations';
-import { University } from '@msh/configurations/domain-configurations';
+import { University } from '@msh/shared/domain-models';
 
 import {
   GlobalToastService,
