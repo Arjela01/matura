@@ -3,13 +3,10 @@ import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
 import { LazyLoadEvent } from 'primeng/api';
-import {
-  ExamAssignment,
-  ExamAssignmentTableView,
-  ExamDate,
-} from '@msh/configurations/domain-configurations';
+
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { FileImport } from '@msh/evaluations/domain-evaluations';
+import {ExamAssignment, ExamAssignmentTableView} from "@msh/shared/domain-models";
 
 @Injectable({
   providedIn: 'root',

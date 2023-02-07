@@ -9,10 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import {
-  ExamAssignment,
-  Student,
-} from '@msh/configurations/domain-configurations';
+import {ExamAssignment, Student} from "@msh/shared/domain-models";
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -24,7 +21,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { GlobalToastService, GridEvent } from '@msh/shared/util-shared';
 import {
   ExamAssignmentApiService,
-  ExamDateApiService, ExamSiteApiService,
+  ExamDateApiService,
 } from '@msh/configurations/data-access-configurations';
 
 import { DialogModule } from 'primeng/dialog';
