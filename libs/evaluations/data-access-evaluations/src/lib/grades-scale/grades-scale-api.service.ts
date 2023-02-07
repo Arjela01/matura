@@ -20,23 +20,23 @@ export class GradesScaleService {
 
   save(gradeScale: GradesScale): Observable<ApiResult<GradesScale>> {
     return this.apiService.post<ApiResult<GradesScale>, GradesScale>(
-      `/api/GradeScale`,
+      `/GradeScale`,
       gradeScale
     );
   }
 
   update(gradeScale: GradesScale): Observable<ApiResult<GradesScale>> {
     return this.apiService.put<ApiResult<GradesScale>, GradesScale>(
-      `/api/GradeScale`,
+      `/GradeScale`,
       gradeScale
     );
   }
 
-  getScale(id: string): Observable<ApiResult<GradesScale>> {
+  getScale(id: string): Observable<ApiResult<GradesScale[]>> {
     return this.apiService.get(`/GradeScale/${id}`);
   }
 
-  delete(gradeId: string): Observable<ApiResult<unknown>> {
+  delete(gradeId: number | undefined): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<GradesScale>>(
       `/GradeScale/${gradeId}`
     );

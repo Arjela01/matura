@@ -13,7 +13,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
-import { GradeScaleFormComponent } from '../grade-scale-form/grade-scale-form.component';
+import { GradeScaleActionComponent } from '../grade-scale-action/grade-scale-action.component';
 import { GradeScaleGridComponent } from '../grade-scale-grid/grade-scale-grid.component';
 
 @Component({
@@ -24,7 +24,7 @@ import { GradeScaleGridComponent } from '../grade-scale-grid/grade-scale-grid.co
     CommonModule,
     DialogModule,
     ConfirmDialogModule,
-    GradeScaleFormComponent,
+    GradeScaleActionComponent,
     GradeScaleGridComponent,
     ToolbarModule,
     RippleModule,
