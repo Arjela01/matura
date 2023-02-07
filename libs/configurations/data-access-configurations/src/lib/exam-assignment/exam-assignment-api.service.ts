@@ -6,7 +6,11 @@ import { LazyLoadEvent } from 'primeng/api';
 
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { FileImport } from '@msh/evaluations/domain-evaluations';
-import {ExamAssignment, ExamAssignmentTableView} from "@msh/shared/domain-models";
+import {
+  ExamAssignment,
+  ExamAssignmentTableView,
+} from '@msh/shared/domain-models';
+import { ExamAssignmentImportCommand } from '../../../../domain-configurations/src/exam-assignment-import-command';
 
 @Injectable({
   providedIn: 'root',
@@ -36,6 +40,15 @@ export class ExamAssignmentApiService {
       `/ExamAssignment`,
       examAssignment
     );
+  }
+
+  import(
+    command: ExamAssignmentImportCommand
+  ): Observable<ApiResult<ExamAssignmentImportCommand>> {
+    return this.apiService.post<
+      ApiResult<ExamAssignmentImportCommand>,
+      ExamAssignmentImportCommand
+    >(`/ExamAssignment/Import`, command);
   }
 
   update(

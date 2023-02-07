@@ -4,12 +4,13 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input, OnInit,
+  Input,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import {ExamAssignment, Student} from "@msh/shared/domain-models";
+import { ExamAssignment, Student } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -27,7 +28,8 @@ import {
 import { DialogModule } from 'primeng/dialog';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { LazyLoadEvent } from 'primeng/api';
-import { FileUploadModule} from "primeng/fileupload";
+import { FileUploadModule } from 'primeng/fileupload';
+import {ExamAssignmentImportCommand} from "../../../../../domain-configurations/src/exam-assignment-import-command";
 
 @UntilDestroy()
 @Component({
@@ -51,11 +53,11 @@ import { FileUploadModule} from "primeng/fileupload";
   styleUrls: ['./upload-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UploadFormComponent implements OnInit{
+export class UploadFormComponent implements OnInit {
   @Input() examDates: DropdownModel<number>[] = [];
   @Input() set examAssignmentsDetails(details: ExamAssignment | null) {
     if (details) {
-      this.examAssignment = Object.assign({}, details);
+      this.command = Object.assign({}, details);
     }
   }
 
@@ -67,31 +69,17 @@ export class UploadFormComponent implements OnInit{
   @ViewChild('form', { static: true }) form!: NgForm;
   filters: LazyLoadEvent | null = null;
   submitted = false;
-  saving = false;
-  base64: string | ArrayBuffer | null | undefined;
+  fileContent: string | ArrayBuffer | null | undefined;
 
-  examAssignment: ExamAssignment = {
-    id: 0,
-    studentId: '',
-    studentIdentifier: '',
-    studentName: '',
-    examDateId: 0,
-    date: new Date(),
-    studentInputData: '',
-    examSiteName: '',
-    examSiteId: '',
-    examTypeDateTime: '',
-    takenSeats: 0,
-  };
+  command: ExamAssignmentImportCommand = {  };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor(
     private cd: ChangeDetectorRef,
     private readonly examAssignmentService: ExamAssignmentApiService,
     private readonly toastService: GlobalToastService,
-    private readonly examDateService: ExamDateApiService,
+    private readonly examDateService: ExamDateApiService
   ) {}
-
 
   onCancelClick() {
     this.formClose.emit();
@@ -110,6 +98,19 @@ export class UploadFormComponent implements OnInit{
   onSubmit() {
     this.submitted = true;
 
+    this.command.file = this.fileContent;
+
+    this.examAssignmentService
+        .import(this.command)
+        .subscribe(response => {
+          if (response.isSuccessful) {
+            this.toastService.showSuccess('Dokumenti u shtua me sukses!');
+          }
+          if (response.isBadRequest)
+            this.toastService.showError(
+                'Ndodhi një problem gjatë ngarkimit të dokumentit!'
+            );
+        });
   }
 
   onUpload(event: any) {
@@ -118,18 +119,7 @@ export class UploadFormComponent implements OnInit{
     reader.readAsDataURL(file);
     reader.onload = () => {
       const base64 = reader.result as string;
-      this.base64 = base64.split(',')[1];
-      this.examAssignmentService
-        .uploadExcelFile(this.base64)
-        .subscribe(response => {
-          if (response.isSuccessful) {
-            this.toastService.showSuccess('Dokumenti u shtua me sukses!');
-          }
-          if (response.isBadRequest)
-            this.toastService.showError(
-              'Ndodhi një problem gjatë ngarkimit të dokumentit!'
-            );
-        });
+      this.fileContent = base64.split(',')[1];
     };
   }
 }
