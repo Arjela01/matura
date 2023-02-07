@@ -1,13 +1,19 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {TableModule} from 'primeng/table';
-import {ButtonModule} from 'primeng/button';
-import {InputTextModule} from 'primeng/inputtext';
-import {TooltipModule} from 'primeng/tooltip';
-import {CheckboxModule} from 'primeng/checkbox';
-import {RippleModule} from 'primeng/ripple';
-import {UntilDestroy,} from '@ngneat/until-destroy';
-import {LazyLoadEvent} from "primeng/api";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { TooltipModule } from 'primeng/tooltip';
+import { CheckboxModule } from 'primeng/checkbox';
+import { RippleModule } from 'primeng/ripple';
+import { UntilDestroy } from '@ngneat/until-destroy';
+import { LazyLoadEvent } from 'primeng/api';
 
 @UntilDestroy()
 @Component({
@@ -30,7 +36,6 @@ export class GridComponent {
   @Output() dataEmitted = new EventEmitter<any>();
   @Input() columns!: any[];
   @Input() gridData: any[] = [];
-
 
   loadRows($event: LazyLoadEvent) {
     this.dataEmitted.emit($event);

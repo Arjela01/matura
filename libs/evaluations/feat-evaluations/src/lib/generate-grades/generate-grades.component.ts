@@ -56,7 +56,7 @@ export class GenerateGradesComponent {
   ) {}
 
   getGeneratedGrades($event: LazyLoadEvent) {
-    this.filters = Object.assign({}, $event);
+    this.filters = { ...$event };
 
     this.generateGradesService
       .loadGeneratedGrades($event)

@@ -1,23 +1,24 @@
-<p-table  #dt
-          dataKey="id"
-          responsiveLayout="scroll"
-          [value]="gridData"
-          [columns]="columns"
-          [rowHover]="true"
-          selectionMode="multiple"
-          (onLazyLoad)="loadRows($event)"
-          [lazy]="true">
+<p-table
+  #dt
+  dataKey="id"
+  responsiveLayout="scroll"
+  [value]="gridData"
+  [columns]="columns"
+  [rowHover]="true"
+  selectionMode="multiple"
+  (onLazyLoad)="loadRows($event)"
+  [lazy]="true">
   <ng-template pTemplate="header" let-columns>
     <tr>
       <th *ngFor="let col of columns">
-        {{col.header}}
+        {{ col.header }}
       </th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-columns="columns">
     <tr>
       <td *ngFor="let col of columns">
-        {{rowData[col.field]}}
+        {{ rowData[col.field] }}
       </td>
     </tr>
   </ng-template>
