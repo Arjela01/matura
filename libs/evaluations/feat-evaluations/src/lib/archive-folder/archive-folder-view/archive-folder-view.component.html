@@ -1,0 +1,108 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card px-6 py-6">
+      <div>
+        <p-toolbar styleClass="mb-4">
+          <div class="p-toolbar-group-left">
+            <h2 class="flex-1 mb-0">
+              Dosja: {{ archiveFolder.nr }} | {{ archiveFolder.examTypeName }} :
+              {{ archiveFolder.examSubjectName }}
+            </h2>
+          </div>
+
+          <div class="p-toolbar-group-right">
+            <a [routerLink]="['/evaluations', 'archive-folder']">
+              <button
+                pButton
+                pRipple
+                label="Kthehu"
+                icon="pi pi-arrow-left"
+                class="p-button-danger mr-2"
+                [ngStyle]="{ backgroundColor: 'var(--bluegray-600)' }"></button>
+            </a>
+
+            <button
+              pButton
+              [ngStyle]="{
+                'background-color': archiveFolder.isClosed
+                  ? '#c8e6c9'
+                  : '#feedaf',
+                color: archiveFolder.isClosed ? '#256029' : '#8a5340'
+              }"
+              label="{{ archiveFolder.isClosed ? 'Mbyllur ' : 'Hapur' }}"
+              icon="{{
+                !archiveFolder.isClosed ? 'pi pi-folder-open' : 'pi pi-folder'
+              }}"
+              class="p-button-danger mr-2"></button>
+
+            <button
+              pButton
+              pRipple
+              label="{{ totalRecords }}/50"
+              icon="pi pi-database"
+              disabled
+              class="p-button-danger mr-2"></button>
+          </div>
+        </p-toolbar>
+
+        <p-table
+          #dt
+          dataKey="id"
+          responsiveLayout="scroll"
+          [value]="archiveExams"
+          [totalRecords]="totalRecords"
+          [rows]="100"
+          [paginator]="true"
+          [rowsPerPageOptions]="[10, 20, 30]"
+          [showCurrentPageReport]="true"
+          currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
+          [rowHover]="true"
+          selectionMode="multiple"
+          (onLazyLoad)="loadRows($event)"
+          [lazy]="true">
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="nr">
+                Numri
+                <p-sortIcon field="nr"></p-sortIcon>
+                <p-columnFilter
+                  type="numeric"
+                  field="nr"
+                  display="menu"></p-columnFilter>
+              </th>
+              <th pSortableColumn="barcode">
+                Barkodi
+                <p-sortIcon field="barcode"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="barcode"
+                  display="menu"></p-columnFilter>
+              </th>
+              <th pSortableColumn="name">
+                Emri
+                <p-sortIcon field="name"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="name"
+                  display="menu"></p-columnFilter>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-archiveExam>
+            <tr>
+              <td style="width: 14%; min-width: 10rem">
+                {{ archiveExam.index }}
+              </td>
+              <td style="width: 14%; min-width: 10rem">
+                {{ archiveExam.barcode }}
+              </td>
+              <td style="width: 14%; min-width: 10rem">
+                {{ archiveFolder.examSubjectName }}
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+</div>

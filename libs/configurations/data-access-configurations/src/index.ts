@@ -22,4 +22,10 @@ export * from './lib/study-subject/study-subject-api.service';
 export * from './lib/universities/university-api.service';
 export * from './lib/university-departments/university-department-api.service';
 export * from './lib/user/user-api.service';
+export * from './lib/exam-site/exam-site.service';
+export * from './lib/genders/genders-api.service';
+export * from './lib/students/students-api.service';
+export * from './lib/a1z-category/a1z-category-api.service'
+export * from './lib/a1z-category/a1z-category-api.service';
+export * from './lib/exam-date/exam-date-api.service'
 export * from './lib/exam-assignment/exam-assignment-api.service'
