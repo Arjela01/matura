@@ -116,7 +116,7 @@ export class ManageFailingStudentsComponent {
 
   updateFailingStudent(failingStudent: FailingStudent) {
     this.failingStudentService
-      .save(failingStudent)
+      .update(failingStudent)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful === true) {

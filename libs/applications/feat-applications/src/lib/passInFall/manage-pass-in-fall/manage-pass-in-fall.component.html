@@ -1,0 +1,39 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card px-6 py-6">
+      <div class="flex ml-2 mb-2 page-header">
+        <h2 class="flex-1 mb-0">Kalo Ne Vjeshte</h2>
+        <div class="flex align-items-right justify-content-right"></div>
+      </div>
+      <msh-pass-in-fall-grid
+        [failingStudents]="(failingStudents$ | async) || []"
+        [totalRecords]="totalRecords"
+        (gridEvent)="onGridEvent($event)"
+        (lazyLoadData)="getFailingStudents($event)">
+      </msh-pass-in-fall-grid>
+    </div>
+  </div>
+</div>
+
+<p-confirmDialog
+  #cd
+  header="Konfirmo"
+  icon="pi pi-exclamation-triangle"
+  [style]="{ width: '450px' }">
+  <ng-template pTemplate="footer">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Jo"
+      class="p-button-text"
+      (click)="cd.reject()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Po"
+      class="p-button-text"
+      (click)="cd.accept()"></button>
+  </ng-template>
+</p-confirmDialog>

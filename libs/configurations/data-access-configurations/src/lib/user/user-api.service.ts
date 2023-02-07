@@ -1,15 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  AdministrationOfficeTableView,
-  UniversityTableView,
-  User,
-  UserTableView
-} from '@msh/shared/domain-models';
 import { ApiResult } from '@msh/shared/data-access-shared';
+import { User, UserTableView } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
+import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
-import {LazyLoadEvent} from "primeng/api";
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +14,10 @@ export class UserApiService {
 
   loadUsers(event: LazyLoadEvent): Observable<UserTableView> {
     return this.apiService.post(`/User/TableData`, event);
+  }
+
+  getUserById(id: string): Observable<ApiResult<User>> {
+    return this.apiService.get(`/User/${id}`);
   }
 
   save(user: User): Observable<ApiResult<User>> {

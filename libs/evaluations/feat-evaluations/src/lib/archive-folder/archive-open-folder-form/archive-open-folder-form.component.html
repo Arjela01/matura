@@ -1,0 +1,63 @@
+<form #form="ngForm" (ngSubmit)="onOpen()">
+  <div class="field">
+    <label for="examTypes">Tipet e Provimeve *</label>
+    <p-dropdown
+      id="examTypes"
+      [options]="examTypes"
+      optionValue="key"
+      optionLabel="value"
+      name="examTypes"
+      [filter]="true"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="archiveFolder.examTypeId"
+      [showClear]="true"
+      (onChange)="onExamTypeChanged($event)"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !archiveFolder.examTypeId
+      }">
+    </p-dropdown>
+    <small class="p-error block" *ngIf="submitted && !archiveFolder.examTypeId">
+      Tipet e provimeve është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="examSubject">LLoji e Provimeve *</label>
+    <p-dropdown
+      id="examSubject"
+      [options]="examSubjects"
+      [filter]="true"
+      optionValue="key"
+      optionLabel="value"
+      name="examSubject"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="archiveFolder.examSubjectId"
+      (onChange)="onExamSubjectChanged($event)"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !archiveFolder.examSubjectId
+      }">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !archiveFolder.examSubjectId">
+      Llojet e provimeve është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      type="submit"
+      pButton
+      icon="pi pi-check"
+      label="Hap Dosjen"
+      class="p-button-text w-auto"></button>
+  </div>
+</form>
