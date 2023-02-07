@@ -29,7 +29,8 @@ import { DialogModule } from 'primeng/dialog';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { LazyLoadEvent } from 'primeng/api';
 import { FileUploadModule } from 'primeng/fileupload';
-import {ExamAssignmentImportCommand} from "../../../../../domain-configurations/src/exam-assignment-import-command";
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { ExamAssignmentImportCommand } from '../../../../../domain-configurations/src/exam-assignment-import-command';
 
 @UntilDestroy()
 @Component({
@@ -69,9 +70,11 @@ export class UploadFormComponent implements OnInit {
   @ViewChild('form', { static: true }) form!: NgForm;
   filters: LazyLoadEvent | null = null;
   submitted = false;
+  displayUploadModal = false;
   fileContent: string | ArrayBuffer | null | undefined;
 
-  command: ExamAssignmentImportCommand = {  };
+  command: ExamAssignmentImportCommand = {};
+  uploaded = false;
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor(
@@ -83,6 +86,7 @@ export class UploadFormComponent implements OnInit {
 
   onCancelClick() {
     this.formClose.emit();
+    this.displayUploadModal = false;
   }
 
   ngOnInit(): void {
@@ -99,24 +103,24 @@ export class UploadFormComponent implements OnInit {
     this.submitted = true;
 
     this.command.file = this.fileContent;
-
-    this.examAssignmentService
-        .import(this.command)
-        .subscribe(response => {
-          if (response.isSuccessful) {
-            this.toastService.showSuccess('Dokumenti u shtua me sukses!');
-          }
-          if (response.isBadRequest)
-            this.toastService.showError(
-                'Ndodhi një problem gjatë ngarkimit të dokumentit!'
-            );
-        });
+    this.examAssignmentService.import(this.command).subscribe(response => {
+      if (response.isSuccessful) {
+        this.toastService.showSuccess('Dokumenti u shtua me sukses!');
+        this.formClose.emit();
+        this.displayUploadModal = false;
+      }
+      if (response.isBadRequest)
+        this.toastService.showError(
+          'Ndodhi një problem gjatë ngarkimit të dokumentit!'
+        );
+    });
   }
 
   onUpload(event: any) {
     const file = event.files[0];
     const reader = new FileReader();
     reader.readAsDataURL(file);
+    this.uploaded = true;
     reader.onload = () => {
       const base64 = reader.result as string;
       this.fileContent = base64.split(',')[1];

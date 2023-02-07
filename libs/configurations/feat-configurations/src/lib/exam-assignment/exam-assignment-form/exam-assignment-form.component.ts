@@ -12,10 +12,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import {
-  ExamAssignment,
-  Student,
-} from '@msh/shared/domain-models';
+import { ExamAssignment, Student } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -40,6 +37,7 @@ import { DialogModule } from 'primeng/dialog';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { LazyLoadEvent } from 'primeng/api';
 import { BehaviorSubject } from 'rxjs';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
 
 @UntilDestroy()

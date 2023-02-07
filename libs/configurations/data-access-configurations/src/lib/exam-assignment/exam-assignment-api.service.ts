@@ -10,6 +10,7 @@ import {
   ExamAssignment,
   ExamAssignmentTableView,
 } from '@msh/shared/domain-models';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { ExamAssignmentImportCommand } from '../../../../domain-configurations/src/exam-assignment-import-command';
 
 @Injectable({
@@ -17,12 +18,6 @@ import { ExamAssignmentImportCommand } from '../../../../domain-configurations/s
 })
 export class ExamAssignmentApiService {
   constructor(private apiService: APIService) {}
-
-  // getById(id: any): Observable<ApiResult<ExamAssignment>> {
-  //   return this.apiService.get<ApiResult<ExamAssignment>>(
-  //     `/ExamAssignment/${id}`
-  //   );
-  // }
 
   loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(

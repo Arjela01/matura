@@ -1,9 +1,11 @@
 <div class="grid">
   <div class="col-12">
     <div class="card px-6 py-6">
-      <h2>Caktimi në Qendrat e Provimit</h2>
       <p-toolbar styleClass="mb-4">
         <div class="p-toolbar-group-left">
+          <h2>Caktimi në Qendrat e Provimit</h2>
+        </div>
+        <div class="p-toolbar-group-right">
           <div class="my-2">
             <button
               pButton
@@ -13,17 +15,9 @@
               class="p-button-success mr-2"
               (click)="onNewClick()"></button>
           </div>
-        </div>
-        <div class="p-toolbar-group-right">
-          <p-button label="Importo nga Exel" (onClick)="onUploadClick()"></p-button>
-<!--          <p-fileUpload-->
-<!--            name="myfile[]"-->
-<!--            [customUpload]="true"-->
-<!--            chooseLabel="Zgjidh"-->
-<!--            cancelLabel="Anullo"-->
-<!--            uploadLabel="Ngarko"-->
-<!--            (uploadHandler)="onUpload($event)">-->
-<!--          </p-fileUpload>-->
+          <p-button
+            label="Importo nga Exel"
+            (onClick)="onUploadClick()"></p-button>
         </div>
       </p-toolbar>
       <msh-exam-assignment-grid
@@ -43,18 +37,18 @@
   header="Importo file nga Exel"
   [draggable]="false"
   [resizable]="false"
+  [closable]="true"
   class="p-fluid"
-  (onHide)="onModalClose()">
+  (onHide)="onUploadClose()">
   <ng-template pTemplate="content">
     <msh-upload-form
       [examAssignmentsDetails]="selectedExamAssignment"
       [examDates]="examDates"
-      (formClose)="onModalClose()"
-      (formSave)="onFormSave($event)">
+      (formClose)="onUploadClose()"
+      (formSave)="onUploadFormSave()">
     </msh-upload-form>
   </ng-template>
 </p-dialog>
-
 
 <p-dialog
   [(visible)]="displayModal"

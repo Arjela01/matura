@@ -44,7 +44,7 @@ import { UploadFormComponent} from "../upload-form/upload-form.component";
     ExamAssignmentFormComponent,
     ToolbarModule,
     FileUploadModule,
-    UploadFormComponent
+    UploadFormComponent,
   ],
   templateUrl: './manage-exam-assignment.component.html',
   styleUrls: ['./manage-exam-assignment.component.scss'],
@@ -65,7 +65,6 @@ export class ManageExamAssignmentComponent {
   examAssignments: DropdownModel<number>[] = [];
   examDates: DropdownModel<number>[] = [];
   examSites: DropdownModel<number>[] = [];
-
 
   examAssignment: ExamAssignment = {
     id: 0,
@@ -167,6 +166,9 @@ export class ManageExamAssignmentComponent {
       this.addExamAssignment(examAssignment);
     }
   }
+  onUploadFormSave() {
+    this.getExamAssignments(this.filters as LazyLoadEvent);
+  }
 
   getExamAssignments($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
@@ -210,7 +212,7 @@ export class ManageExamAssignmentComponent {
             'Caktimi në Qender Provimi u ndryshua me sukses!'
           );
           this.displayModal = false;
-         // this.getExamAssignments(this.filters as LazyLoadEvent);
+          // this.getExamAssignments(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
@@ -249,5 +251,4 @@ export class ManageExamAssignmentComponent {
       this.examSites = response.data;
     });
   }
-
 }
