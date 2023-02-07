@@ -7,7 +7,6 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
-import { Router } from '@angular/router';
 
 import {
   ExamAssignmentApiService,
@@ -29,6 +28,8 @@ import { ExamAssignmentGridComponent } from '../exam-assignment-grid/exam-assign
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { FileUploadModule } from 'primeng/fileupload';
 import { ExamAssignmentFormComponent } from '../exam-assignment-form/exam-assignment-form.component';
+import { UploadFormComponent} from "../upload-form/upload-form.component";
+
 
 @UntilDestroy()
 @Component({
@@ -43,13 +44,14 @@ import { ExamAssignmentFormComponent } from '../exam-assignment-form/exam-assign
     ExamAssignmentFormComponent,
     ToolbarModule,
     FileUploadModule,
+    UploadFormComponent
   ],
   templateUrl: './manage-exam-assignment.component.html',
   styleUrls: ['./manage-exam-assignment.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageExamAssignmentComponent implements OnInit {
+export class ManageExamAssignmentComponent {
   private examAssignments$$ = new BehaviorSubject<ExamAssignment[]>([]);
   examAssignments$ = this.examAssignments$$.asObservable();
   filters: LazyLoadEvent | null = null;
@@ -58,25 +60,32 @@ export class ManageExamAssignmentComponent implements OnInit {
   selectedExamAssignment: ExamAssignment | null = null;
   selectedExamAssignments: ExamAssignment[] = [];
   displayModal = false;
+  displayUploadModal = false;
 
   examAssignments: DropdownModel<number>[] = [];
   examDates: DropdownModel<number>[] = [];
   examSites: DropdownModel<number>[] = [];
-  base64: string | ArrayBuffer | null | undefined;
+
+
+  examAssignment: ExamAssignment = {
+    id: 0,
+    studentIdentifier: '',
+    studentId: '',
+    studentName: '',
+    studentInputData: '',
+    date: new Date(),
+    examDateId: 0,
+    examSiteId: '',
+    examSiteName: '',
+  };
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examAssignmentService: ExamAssignmentApiService,
     private readonly examDateService: ExamDateApiService,
-    private readonly examSiteService: ExamSiteApiService,
-    private readonly router: Router
+    private readonly examSiteService: ExamSiteApiService
   ) {}
-
-  ngOnInit(): void {
-    this.getExamDateDropdown();
-    this.getExamSiteDropdown();
-  }
 
   onDeleteSelectedClick() {
     this.confirmationService.confirm({
@@ -120,6 +129,8 @@ export class ManageExamAssignmentComponent implements OnInit {
           {},
           event.data as ExamAssignment
         );
+        this.getExamSiteDropdown();
+        this.getExamDateDropdown();
         this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
@@ -133,6 +144,14 @@ export class ManageExamAssignmentComponent implements OnInit {
         break;
     }
   }
+  onUploadClick() {
+    this.displayUploadModal = true;
+  }
+
+  onUploadClose() {
+    this.displayUploadModal = false;
+  }
+
   onNewClick() {
     this.displayModal = true;
   }
@@ -191,7 +210,7 @@ export class ManageExamAssignmentComponent implements OnInit {
             'Caktimi në Qender Provimi u ndryshua me sukses!'
           );
           this.displayModal = false;
-          this.getExamAssignments(this.filters as LazyLoadEvent);
+         // this.getExamAssignments(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
@@ -221,41 +240,14 @@ export class ManageExamAssignmentComponent implements OnInit {
   }
 
   getExamDateDropdown() {
-    this.examDateService
-      .loadDropdownList()
-      .pipe()
-      .subscribe(response => {
-        this.examDates = response.data;
-      });
+    this.examDateService.loadDropdownList().subscribe(response => {
+      this.examDates = response.data;
+    });
   }
   getExamSiteDropdown() {
-    this.examSiteService
-      .loadDropdownList()
-      .pipe()
-      .subscribe(response => {
-        this.examSites = response.data;
-      });
+    this.examSiteService.loadDropdownList().subscribe(response => {
+      this.examSites = response.data;
+    });
   }
 
-  onUpload(event: any) {
-    const file = event.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      const base64 = reader.result as string;
-      this.base64 = base64.split(',')[1];
-      this.examAssignmentService
-        .uploadExcelFile(this.base64)
-        .subscribe(response => {
-          if (response.isSuccessful) {
-            this.toastService.showSuccess('Dokumenti u shtua me sukses!');
-          }
-          if (response.isBadRequest)
-            this.toastService.showError(
-              'Ndodhi një problem gjatë ngarkimit të dokumentit!'
-            );
-          console.log(111, response);
-        });
-    };
-  }
 }

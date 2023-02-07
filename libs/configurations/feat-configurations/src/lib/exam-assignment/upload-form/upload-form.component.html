@@ -1,0 +1,58 @@
+
+<div class="grid">
+  <div class="col-12 p-fluid">
+    <div class="card px-6 py-6">
+      <form #form="ngForm" (ngSubmit)="onSubmit()">
+        <div class="field mt-4 mb-4">
+          <label for="ExamDate"> Data e Provimit *</label>
+          <p-dropdown
+            class="mt-4 mb-4"
+            id="ExamDate"
+            [options]="examDates"
+            optionValue="key"
+            optionLabel="value"
+            name="ExamDate"
+            [autoDisplayFirst]="false"
+            [(ngModel)]="examAssignment.examDateId"
+            [showClear]="true"
+            [ngClass]="{
+              'ng-invalid ng-dirty': submitted && !examAssignment.examDateId
+            }">
+          </p-dropdown>
+          <small
+            class="p-error block"
+            *ngIf="submitted && !examAssignment.examDateId">
+            Data e Provimit është fushë e kërkuar.
+          </small>
+        </div>
+          <div class="field mt-4 mb-4">
+            <h6>Importo File *</h6>
+            <p-fileUpload
+              name="myfile[]"
+              [customUpload]="true"
+              chooseLabel="Zgjidh"
+              cancelLabel="Anullo"
+              uploadLabel="Ngarko"
+              (uploadHandler)="onUpload($event)">
+            </p-fileUpload>
+          </div>
+
+        <div class="flex justify-content-end">
+          <button
+            type="button"
+            pButton
+            icon="pi pi-times"
+            label="Kthehu"
+            class="p-button-text w-auto mr-2"
+            (click)="onCancelClick()"></button>
+          <button
+            type="submit"
+            pButton
+            icon="pi pi-check"
+            label="Upload"
+            class="p-button-text w-auto"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

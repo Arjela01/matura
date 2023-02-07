@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import {
   ExamAssignment,
-  ExamDate,
 } from '@msh/configurations/domain-configurations';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
@@ -59,7 +58,7 @@ export class ExamAssignmentGridComponent {
     studentInputData: '',
     date: new Date(),
     examDateId: 0,
-    examSiteId: 0,
+    examSiteId: '',
     examSiteName: '',
   };
 

@@ -6,10 +6,13 @@ export interface ExamAssignment {
   examDateId: number;
   date: Date;
   studentInputData: string;
-  examSiteId?: number;
+  examSiteId: string;
   examSiteName?:string;
   examTypeDateTime?: string;
   takenSeats?: number;
+  examTypeId? : number;
+  examTypeName? : string;
+
 }
 
 export interface ExamAssignmentTableView {

@@ -103,12 +103,12 @@
         class="p-fluid"
         (onHide)="onModalClose()">
         <ng-template pTemplate="content">
-          <msh-a1z-student-search
+          <msh-shared-student-lookup
             [students]="(studentList$ | async) || []"
             [totalRecords]="totalRecords"
             (gridEvent)="onGridEvent($event)"
             (lazyLoadData)="getStudents($event)">
-          </msh-a1z-student-search>
+          </msh-shared-student-lookup>
         </ng-template>
       </p-dialog>
     </div>

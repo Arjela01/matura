@@ -14,8 +14,6 @@ import {
 import { FormsModule, NgForm } from '@angular/forms';
 import {
   ExamAssignment,
-  ExamDate,
-  ExamSubjectProfile,
   Student,
 } from '@msh/configurations/domain-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
@@ -42,9 +40,7 @@ import { DialogModule } from 'primeng/dialog';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { LazyLoadEvent } from 'primeng/api';
 import { BehaviorSubject } from 'rxjs';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { SharedStudentLookupComponent } from '../../../../../../shared/student-lookup/src/lib/components/shared-student-lookup.component';
-import { A1zStudentSearchComponent } from '../../../../../../applications/feat-applications/src/lib/a1z/a1z-student-search/a1z-student-search.component';
+import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
 
 @UntilDestroy()
 @Component({
@@ -61,7 +57,7 @@ import { A1zStudentSearchComponent } from '../../../../../../applications/feat-a
     CheckboxModule,
     DropdownModule,
     DialogModule,
-    A1zStudentSearchComponent,
+    SharedStudentLookupModule,
   ],
   templateUrl: './exam-assignment-form.component.html',
   styleUrls: ['./exam-assignment-form.component.scss'],
@@ -98,8 +94,7 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
   studentInputData = '';
   formId: string | null;
 
-  selectedExamAssignmentId = this.route.snapshot.params['id'];
-  //selectedStudentId = this.route.snapshot.params['studentId']
+  selectedExamAssignment: ExamAssignment | null = null;
 
   examAssignment: ExamAssignment = {
     id: 0,
@@ -109,8 +104,8 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
     examDateId: 0,
     date: new Date(),
     studentInputData: '',
-    examSiteId: 0,
     examSiteName: '',
+    examSiteId: '',
     examTypeDateTime: '',
     takenSeats: 0,
   };
@@ -154,31 +149,18 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
   }
   refreshExamDates() {
     this.loadExamDates.emit(Object.assign({}, this.examAssignment));
+    this.getExamDate(this.examAssignment.examSiteId);
   }
   ngOnInit(): void {
     if (this.selectedStudent) {
       this.onStudentChange(this.selectedStudent);
     } else {
-      this.getExamDate();
       this.getExamSite();
     }
-    // if (this.formId) {
-    //   this.getExamAssignmentById();
-    // }
   }
 
-  // getExamAssignmentById() {
-  //   this.examAssignmentService
-  //     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  //     .getById(parseInt(this.formId!))
-  //     .subscribe(response => {
-  //       this.examAssignment = response.data;
-  //       this.cd.detectChanges();
-  //     });
-  // }
-
-  getExamDate() {
-    this.examDateService.loadDropdownList().subscribe(response => {
+  getExamDate(examSiteId: string) {
+    this.examDateService.forExamSiteId(examSiteId).subscribe(response => {
       this.examDates = response.data;
     });
   }
@@ -199,7 +181,7 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
 
   ngDoCheck(): void {
     if (this.examAssignment.studentId !== undefined) {
-      this.setStudent(null);
+      this.setStudent(this.examAssignment);
     }
     if (this.selectedStudent !== null) {
       this.onStudentChange(this.selectedStudent);
@@ -211,7 +193,7 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
       this.studentInputData = '';
     } else {
       this.examAssignment.studentId = student.studentId;
-      this.studentInputData = `${student?.studentIdentifier}-${student?.firstName}-${student?.middleName}-${student?.lastName}`;
+      this.studentInputData = `${student?.studentName}`;
     }
   }
   onStudentChange(student: Student) {
@@ -219,6 +201,7 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
       this.examAssignment.studentInputData = ' ';
     } else {
       this.examAssignment.studentId = student.id;
+      // eslint-disable-next-line max-len
       this.studentInputData = `${student?.studentId}-${student?.firstName}-${student?.middleName}-${student?.lastName}`;
     }
   }

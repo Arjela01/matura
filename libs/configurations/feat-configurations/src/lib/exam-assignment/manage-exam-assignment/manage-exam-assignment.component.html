@@ -15,14 +15,15 @@
           </div>
         </div>
         <div class="p-toolbar-group-right">
-          <p-fileUpload
-            name="myfile[]"
-            [customUpload]="true"
-            chooseLabel="Zgjidh"
-            cancelLabel="Anullo"
-            uploadLabel="Ngarko"
-            (uploadHandler)="onUpload($event)">
-          </p-fileUpload>
+          <p-button label="Importo nga Exel" (onClick)="onUploadClick()"></p-button>
+<!--          <p-fileUpload-->
+<!--            name="myfile[]"-->
+<!--            [customUpload]="true"-->
+<!--            chooseLabel="Zgjidh"-->
+<!--            cancelLabel="Anullo"-->
+<!--            uploadLabel="Ngarko"-->
+<!--            (uploadHandler)="onUpload($event)">-->
+<!--          </p-fileUpload>-->
         </div>
       </p-toolbar>
       <msh-exam-assignment-grid
@@ -34,6 +35,26 @@
     </div>
   </div>
 </div>
+
+<p-dialog
+  [(visible)]="displayUploadModal"
+  [style]="{ width: '600px' }"
+  [modal]="true"
+  header="Importo file nga Exel"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid"
+  (onHide)="onModalClose()">
+  <ng-template pTemplate="content">
+    <msh-upload-form
+      [examAssignmentsDetails]="selectedExamAssignment"
+      [examDates]="examDates"
+      (formClose)="onModalClose()"
+      (formSave)="onFormSave($event)">
+    </msh-upload-form>
+  </ng-template>
+</p-dialog>
+
 
 <p-dialog
   [(visible)]="displayModal"
