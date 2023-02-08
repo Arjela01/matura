@@ -23,14 +23,6 @@ export const CONFIGURATION_ROUTES: Route[] = [
       ),
   },
   {
-    path: 'add-archive-exam/:id',
-    loadComponent: () =>
-      // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-      import(
-        '../../../../evaluations/feat-evaluations/src/lib/archive-exam/manage-archive-exams/manage-archive-exams.component'
-      ).then(m => m.ManageArchiveExamsComponent),
-  },
-  {
     path: 'students',
     loadComponent: () =>
       import('./students/manage-students/manage-students.component').then(
