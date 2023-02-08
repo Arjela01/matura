@@ -48,6 +48,13 @@ export class GradeScaleGridComponent {
     } as GridEvent<GradesScale>);
   }
 
+  onViewClick(scale: GradesScale) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.EDIT,
+      data: scale,
+    } as GridEvent<GradesScale>);
+  }
+
   loadRows($event: LazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }

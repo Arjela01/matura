@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ExamSubjectApiService } from '@msh/configurations/data-access-configurations';
 import { GradesScaleService } from '@msh/evaluations/data-access-evaluations';
 import { GradesScale } from '@msh/evaluations/domain-evaluations';
+import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   GlobalToastService,
   GridEvent,
@@ -14,12 +16,12 @@ import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
-import { FileUploadModule } from 'primeng/fileupload';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { GradeScaleActionComponent } from '../grade-scale-action/grade-scale-action.component';
 import { GradeScaleGridComponent } from '../grade-scale-grid/grade-scale-grid.component';
+import { UploadGradeScaleFormComponent } from '../upload-grade-scale-form/upload-grade-scale-form.component';
 @Component({
   selector: 'msh-manage-grades-scale',
   standalone: true,
@@ -32,7 +34,7 @@ import { GradeScaleGridComponent } from '../grade-scale-grid/grade-scale-grid.co
     GradeScaleGridComponent,
     ToolbarModule,
     RippleModule,
-    FileUploadModule,
+    UploadGradeScaleFormComponent,
   ],
   templateUrl: './manage-grades-scale.component.html',
   styleUrls: ['./manage-grades-scale.component.scss'],
@@ -44,14 +46,26 @@ export class ManageGradesScaleComponent {
   private gradeScales$$ = new BehaviorSubject<GradesScale[]>([]);
   gradeScales$ = this.gradeScales$$.asObservable();
   filters: LazyLoadEvent | null = null;
+  displayGradesModal = false;
   base64: string | ArrayBuffer | null | undefined;
   totalRecords = 0;
+  examSubjectDropdown: DropdownModel<number>[] = [];
+  examTypeDropdown: DropdownModel<number>[] = [];
   displayModal = false;
   constructor(
     private readonly gradesScaleApiService: GradesScaleService,
     private readonly router: Router,
-    private readonly toastService: GlobalToastService
+    private readonly toastService: GlobalToastService,
+    private readonly examSubjectsService: ExamSubjectApiService
   ) {}
+  ngOnInit() {
+    this.getDropdownSubjects();
+  }
+  getDropdownSubjects() {
+    this.examSubjectsService.loadDropDownList().subscribe(resp => {
+      this.examSubjectDropdown = resp.data;
+    });
+  }
 
   onNewClick() {
     this.router.navigate(['/evaluations/grades-scale-form']);
@@ -89,21 +103,24 @@ export class ManageGradesScaleComponent {
         FileSaver.saveAs(blob, 'Nota_Pikë');
       });
   }
-  chooseFile(event: any) {
-    const file = event.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      const base64 = reader.result as string;
-      this.base64 = base64.split(',')[1];
-    };
-  }
-  onUpload(event: any) {
+
+  onSubmit(event: any) {
     this.gradesScaleApiService
-      .uploadExcelFile({ file: this.base64 })
+      .uploadExcelFile(event)
       .subscribe((response: any) => {
+        this.displayModal = false;
+
         if (response.isSuccessful) {
           this.toastService.showSuccess('Dokumenti u shtua me sukses!');
+          this.getGradeScales(this.filters as LazyLoadEvent);
+        } else {
+          !response.errorMessage
+            ? this.toastService.showError(
+                'Ndodhi një problem gjatë ngarkimit të dokumentit!'
+              )
+            : this.toastService.showError(
+                'Ndodhi një problem gjatë ngarkimit të dokumentit!'
+              );
         }
         if (response.isBadRequest)
           this.toastService.showError(
@@ -113,5 +130,8 @@ export class ManageGradesScaleComponent {
   }
   onModalClose() {
     this.displayModal = false;
+  }
+  openDialog() {
+    this.displayModal = true;
   }
 }

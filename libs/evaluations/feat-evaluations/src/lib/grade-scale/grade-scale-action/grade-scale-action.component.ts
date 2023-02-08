@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Input,
 } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -49,6 +50,8 @@ export class GradeScaleActionComponent {
   values: BehaviorSubject<any> = new BehaviorSubject([]);
   gradeScales = this.values.asObservable();
   examSubjectId: any;
+  @Input() hasActions = true;
+  @Input() examSubjectIdDialog = null;
   displayModal?: boolean;
   selectedGradeScale: GradesScale | null = null;
   constructor(
@@ -84,26 +87,23 @@ export class GradeScaleActionComponent {
       this.addGradeScales(gradeScale);
     }
   }
-  areScoresValid(gradeScale: GradesScale) {
-    const scales = this.values.value;
-    if (
-      scales &&
-      scales.length > 0 &&
-      gradeScale.grade > scales[scales.length - 1].grade
-    ) {
-      if (scales[scales.length - 1].score <= gradeScale.score) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      for (let scale of scales) {
-        if (scale.grade > gradeScale.grade) {
-          return scale.score > gradeScale.score;
-        }
-        if (scale.grade < gradeScale.grade) {
-          return scale.score <= gradeScale.score;
-        }
+  areScoresValid(newGradeScale: GradesScale) {
+    const scalesList = this.values.value as GradesScale[];
+    if (scalesList[0].grade > newGradeScale.grade) {
+      return scalesList[0].score > newGradeScale.score;
+    }
+    if (scalesList[scalesList.length - 1].grade < newGradeScale.grade) {
+      return scalesList[scalesList.length - 1].score < newGradeScale.score;
+    }
+    for (let i = 1; i < scalesList.length - 1; i++) {
+      if (
+        scalesList[i - 1].grade < newGradeScale.grade &&
+        newGradeScale.grade < scalesList[i].grade
+      ) {
+        return (
+          scalesList[i - 1].score < newGradeScale.score &&
+          newGradeScale.score < scalesList[i].score
+        );
       }
     }
     return;
