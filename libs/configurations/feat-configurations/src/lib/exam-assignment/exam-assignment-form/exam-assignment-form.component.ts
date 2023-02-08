@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   DoCheck,
   EventEmitter,
@@ -100,7 +99,6 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
   };
 
   constructor(
-    private cd: ChangeDetectorRef,
     private readonly studentService: StudentsApiService,
     private readonly examDateService: ExamDateApiService,
     private readonly examSiteService: ExamSiteApiService,
