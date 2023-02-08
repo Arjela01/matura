@@ -111,7 +111,7 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnChanges(): void {
     this.onUniversityChange({ value: this.user.universityId });
-    this.onRoleChange({ value: this.user.roleId });
+    this.onRoleChange({value: this.user?.roleId});
   }
 
   onCancelClick() {
@@ -138,7 +138,7 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
         .getUserById(this.user.id)
         .pipe(untilDestroyed(this))
         .subscribe(response => {
-          if (response.isSuccessful === true) {
+          if (response.isSuccessful) {
             this.user = response.data;
             console.log(response.data);
           }
