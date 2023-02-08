@@ -37,7 +37,6 @@ import { DialogModule } from 'primeng/dialog';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { LazyLoadEvent } from 'primeng/api';
 import { BehaviorSubject } from 'rxjs';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
 
 @UntilDestroy()
@@ -92,8 +91,6 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
   studentInputData = '';
   formId: string | null;
 
-  selectedExamAssignment: ExamAssignment | null = null;
-
   examAssignment: ExamAssignment = {
     id: 0,
     studentId: '',
@@ -108,7 +105,6 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
     takenSeats: 0,
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor(
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef,

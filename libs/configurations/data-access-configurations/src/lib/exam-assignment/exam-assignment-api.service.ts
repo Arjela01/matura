@@ -2,16 +2,15 @@ import { Injectable } from '@angular/core';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
-import { LazyLoadEvent } from 'primeng/api';
-
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { FileImport } from '@msh/evaluations/domain-evaluations';
+import {
+  ExamAssignmentImportCommand,
+  FileImport,
+} from '@msh/configurations/domain-configurations';
 import {
   ExamAssignment,
   ExamAssignmentTableView,
 } from '@msh/shared/domain-models';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { ExamAssignmentImportCommand } from '../../../../domain-configurations/src/exam-assignment-import-command';
+import { LazyLoadEvent } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root',

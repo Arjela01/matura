@@ -29,8 +29,7 @@ import { DialogModule } from 'primeng/dialog';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { LazyLoadEvent } from 'primeng/api';
 import { FileUploadModule } from 'primeng/fileupload';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { ExamAssignmentImportCommand } from '../../../../../domain-configurations/src/exam-assignment-import-command';
+import { ExamAssignmentImportCommand } from '@msh/configurations/domain-configurations';
 
 @UntilDestroy()
 @Component({

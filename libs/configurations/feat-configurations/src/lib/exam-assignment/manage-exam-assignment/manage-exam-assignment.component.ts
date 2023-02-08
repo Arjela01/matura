@@ -1,35 +1,28 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
-
 import {
   ExamAssignmentApiService,
   ExamDateApiService,
   ExamSiteApiService,
 } from '@msh/configurations/data-access-configurations';
-
 import { ExamAssignment } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-
 import {
   GlobalToastService,
   GridEvent,
   GRID_ACTIONS,
 } from '@msh/shared/util-shared';
-
 import { BehaviorSubject } from 'rxjs';
 import { ExamAssignmentGridComponent } from '../exam-assignment-grid/exam-assignment-grid.component';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { FileUploadModule } from 'primeng/fileupload';
 import { ExamAssignmentFormComponent } from '../exam-assignment-form/exam-assignment-form.component';
-import { UploadFormComponent} from "../upload-form/upload-form.component";
-
+import { UploadFormComponent } from '../upload-form/upload-form.component';
 
 @UntilDestroy()
 @Component({
@@ -62,21 +55,8 @@ export class ManageExamAssignmentComponent {
   displayModal = false;
   displayUploadModal = false;
 
-  examAssignments: DropdownModel<number>[] = [];
   examDates: DropdownModel<number>[] = [];
   examSites: DropdownModel<number>[] = [];
-
-  examAssignment: ExamAssignment = {
-    id: 0,
-    studentIdentifier: '',
-    studentId: '',
-    studentName: '',
-    studentInputData: '',
-    date: new Date(),
-    examDateId: 0,
-    examSiteId: '',
-    examSiteName: '',
-  };
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -212,7 +192,6 @@ export class ManageExamAssignmentComponent {
             'Caktimi në Qender Provimi u ndryshua me sukses!'
           );
           this.displayModal = false;
-          // this.getExamAssignments(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
