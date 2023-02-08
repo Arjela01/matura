@@ -3,7 +3,7 @@ import { Observable} from 'rxjs';
 import {LazyLoadEvent} from "primeng/api";
 import {ApiResult, DropdownModel} from "@msh/shared/data-access-shared";
 import {APIService} from "@msh/shared/util-shared";
-import {ExamType, ExamTypeTableView} from "@msh/configurations/domain-configurations";
+import {ExamType, ExamTypeTableView} from "@msh/shared/domain-models";
 
 @Injectable({
   providedIn: 'root',
@@ -13,32 +13,32 @@ export class ExamTypeApiService {
   }
 
   loadExamTypes(event: LazyLoadEvent): Observable<ExamTypeTableView> {
-    return this.apiService.post(`/api/ExamType/TableData`, event);
+    return this.apiService.post(`/ExamType/TableData`, event);
   }
 
   save(examType: ExamType): Observable<ApiResult<ExamType>> {
     return this.apiService.post<ApiResult<ExamType>, ExamType>(
-      `/api/ExamType`,
+      `/ExamType`,
       examType
     );
   }
 
   update(examType: ExamType): Observable<ApiResult<ExamType>> {
     return this.apiService.put<ApiResult<ExamType>, ExamType>(
-      `/api/ExamType`,
+      `/ExamType`,
       examType
     );
   }
 
   delete(examTypeId: string): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<ExamType>>(
-      `/api/ExamType/${ examTypeId}`
+      `/ExamType/${ examTypeId}`
     );
   }
 
   loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
-      `/api/ExamType/DropdownList`
+      `/ExamType/DropdownList`
     );
   }
 }

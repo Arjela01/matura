@@ -1,0 +1,42 @@
+import { Injectable } from '@angular/core';
+import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
+import { APIService } from '@msh/shared/util-shared';
+import { Observable } from 'rxjs';
+import { LazyLoadEvent } from 'primeng/api';
+import { StudentBan, StudentBanTableView } from '@msh/shared/domain-models';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class StudentBanApiService {
+  constructor(private apiService: APIService) {}
+
+  loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
+    return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
+      `/StudentBan/DropdownList`
+    );
+  }
+  loadBannedStudents(event: LazyLoadEvent): Observable<StudentBanTableView> {
+    return this.apiService.post(`/StudentBan/TableData`, event);
+  }
+
+  save(studentBan: StudentBan): Observable<ApiResult<StudentBan>> {
+    return this.apiService.post<ApiResult<StudentBan>, StudentBan>(
+      `/StudentBan`,
+      studentBan
+    );
+  }
+
+  update(studentBan: StudentBan): Observable<ApiResult<StudentBan>> {
+    return this.apiService.put<ApiResult<StudentBan>, StudentBan>(
+      `/StudentBan/`,
+      studentBan
+    );
+  }
+
+  delete(studentBanId: number): Observable<ApiResult<unknown>> {
+    return this.apiService.delete<ApiResult<StudentBan>>(
+      `/StudentBan/${studentBanId}`
+    );
+  }
+}

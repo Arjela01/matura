@@ -11,7 +11,7 @@ import {
   UniversityDepartmentApiService,
   UserApiService,
 } from '@msh/configurations/data-access-configurations';
-import { User } from '@msh/configurations/domain-configurations';
+import { User } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   GRID_ACTIONS,

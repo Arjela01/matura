@@ -9,7 +9,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { Gender } from '@msh/configurations/domain-configurations';
+import { Gender } from '@msh/shared/domain-models';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputNumberModule } from 'primeng/inputnumber';

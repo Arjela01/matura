@@ -7,11 +7,10 @@ import {
   Input,
   OnChanges,
   Output,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { Menu } from '@msh/configurations/domain-configurations';
+import { Menu } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -82,7 +81,7 @@ export class MenuFormComponent implements OnChanges {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.cd.detectChanges();
   }
 }

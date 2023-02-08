@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   StudyProgram,
   StudyProgramsTableView,
-} from '@msh/configurations/domain-configurations';
+} from '@msh/shared/domain-models';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';

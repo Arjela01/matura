@@ -10,7 +10,7 @@ import {
 import { FormsModule, NgForm } from '@angular/forms';
 import {
   UniversityDepartment,
-} from '@msh/configurations/domain-configurations';
+} from '@msh/shared/domain-models';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';

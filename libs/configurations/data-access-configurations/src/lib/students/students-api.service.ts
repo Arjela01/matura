@@ -3,7 +3,7 @@ import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import {Observable} from 'rxjs';
-import {Student, StudentTableView} from "@msh/configurations/domain-configurations";
+import {Student, StudentTableView} from "@msh/shared/domain-models";
 
 @Injectable({
   providedIn: 'root',

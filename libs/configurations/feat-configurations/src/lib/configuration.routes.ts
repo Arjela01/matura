@@ -25,27 +25,30 @@ export const CONFIGURATION_ROUTES: Route[] = [
   {
     path: 'students',
     loadComponent: () =>
-      import(
-        './students/manage-students/manage-students.component'
-        ).then(m => m.ManageStudentsComponent),
+      import('./students/manage-students/manage-students.component').then(
+        m => m.ManageStudentsComponent
+      ),
   },
   {
     path: 'students/add',
     loadComponent: () =>
-      import('./students/students-form/students-form.component'
-        ).then(m => m.StudentsFormComponent),
+      import('./students/students-form/students-form.component').then(
+        m => m.StudentsFormComponent
+      ),
   },
   {
     path: 'student-view/:id',
     loadComponent: () =>
-      import('./students/students-view/student-view.component'
-        ).then(m => m.StudentViewComponent),
+      import('./students/students-view/student-view.component').then(
+        m => m.StudentViewComponent
+      ),
   },
   {
     path: 'student-edit/:id',
     loadComponent: () =>
-      import('./students/students-edit/students-edit.component'
-        ).then(m => m.StudentsEditComponent),
+      import('./students/students-edit/students-edit.component').then(
+        m => m.StudentsEditComponent
+      ),
   },
   {
     path: 'administration-offices',
@@ -169,7 +172,9 @@ export const CONFIGURATION_ROUTES: Route[] = [
   {
     path: 'a1z-form',
     loadComponent: () =>
-      import('./a1z-category/a1z-category-form/a1z-category-form.component').then(m => m.A1zCategoryFormComponent),
+      import(
+        './a1z-category/a1z-category-form/a1z-category-form.component'
+      ).then(m => m.A1zCategoryFormComponent),
   },
   {
     path: 'a1z-category',
@@ -183,6 +188,20 @@ export const CONFIGURATION_ROUTES: Route[] = [
     loadComponent: () =>
       import('./exam-date/manage-exam-date/manage-exam-date.component').then(
         m => m.ManageExamDateComponent
+      ),
+  },
+  {
+    path: 'exam-assignment',
+    loadComponent: () =>
+      import('./exam-assignment/manage-exam-assignment/manage-exam-assignment.component').then(
+        m => m.ManageExamAssignmentComponent
+      ),
+  },
+  {
+    path: 'student-ban',
+    loadComponent: () =>
+      import('./student-ban/manage-student-ban/manage-student-ban.component').then(
+        m => m.ManageStudentBanComponent
       ),
   },
   {

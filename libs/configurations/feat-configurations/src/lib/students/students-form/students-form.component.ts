@@ -23,7 +23,7 @@ import {
   Student,
   StudentClassModel,
   StudentSectionModel,
-} from '@msh/configurations/domain-configurations';
+} from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
@@ -110,6 +110,7 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     schoolFinishedName: '',
     registrationYearId: undefined,
     graduationYear: undefined,
+    isConfirmedBySupervisor: true,
   };
 
   finishedAtSameSchool = true;
@@ -141,14 +142,7 @@ export class StudentsFormComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
-    console.log();
-    // eslint-disable-next-line max-len
-    this.onStudentChange({ value: this.student.highSchoolId });
-  }
-
-  onStudentChange($event: any) {
-    console.log($event);
-    this.showStudent = $event.value;
+    this.showStudent = this.student.highSchoolId != null;
   }
 
   onSubmit(): void {

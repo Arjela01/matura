@@ -7,7 +7,7 @@ import { A1 } from '@msh/applications/domain-application';
 import {
   AcademicYear,
   Student,
-} from '@msh/configurations/domain-configurations';
+} from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { GlobalToastService, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';

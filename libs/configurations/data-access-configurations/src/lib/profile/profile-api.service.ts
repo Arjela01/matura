@@ -3,7 +3,7 @@ import {ApiResult, DropdownModel} from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
-import {Profile, ProfileTableView} from "@msh/configurations/domain-configurations";
+import {Profile, ProfileTableView} from "@msh/shared/domain-models";
 
 @Injectable({
   providedIn: 'root',

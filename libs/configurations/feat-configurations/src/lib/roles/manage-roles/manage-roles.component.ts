@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RolesApiService } from '@msh/configurations/data-access-configurations';
 
-import { Role } from '@msh/configurations/domain-configurations';
+import { Role } from '@msh/shared/domain-models';
 import { GlobalToastService, GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -35,7 +35,7 @@ export class ManageRolesComponent {
 
   private roles$$ = new BehaviorSubject<Role[]>([]);
   roles$ = this.roles$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: LazyLoadEvent = {} as LazyLoadEvent;
 
   totalRecords = 0;
   selectedRole: Role | null = null;
@@ -113,7 +113,8 @@ export class ManageRolesComponent {
       this.addRoles(role);
     }
   }
-  getRoles($event: any) {
+
+  getRoles($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
     this.rolesService
       .loadRoles($event)
@@ -132,7 +133,7 @@ export class ManageRolesComponent {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Roli u shtua me sukses!');
           this.displayModal = false;
-          this.getRoles(this.filters as LazyLoadEvent);
+          this.getRoles(this.filters);
         }
 
         if (response.isBadRequest)
@@ -152,7 +153,7 @@ export class ManageRolesComponent {
             'Roli u ndryshua me sukses!'
           );
           this.displayModal = false;
-          this.getRoles(this.filters as LazyLoadEvent);
+          this.getRoles(this.filters);
         }
 
         if (response.isBadRequest)
@@ -169,7 +170,7 @@ export class ManageRolesComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Roli u fshi me sukses!');
-          this.getRoles(this.filters as LazyLoadEvent);
+          this.getRoles(this.filters);
         }
 
         if (response.isBadRequest)

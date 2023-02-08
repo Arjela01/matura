@@ -1,9 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
-import { A1ZCategory } from '@msh/configurations/domain-configurations';
+import { A1ZCategory } from '@msh/shared/domain-models';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { GlobalToastService, GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
+import {
+  GlobalToastService,
+  GridEvent,
+  GRID_ACTIONS,
+} from '@msh/shared/util-shared';
 import { A1ZCategoryApiService } from '@msh/configurations/data-access-configurations';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ButtonModule } from 'primeng/button';
@@ -12,18 +16,21 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { A1zCategoryFormComponent } from '../a1z-category-form/a1z-category-form.component';
 import { A1zCategoryGridComponent } from '../a1z-category-grid/a1z-category-grid.component';
 import { ToolbarModule } from 'primeng/toolbar';
-import {RippleModule} from "primeng/ripple";
+import { RippleModule } from 'primeng/ripple';
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-a1z-categories',
   standalone: true,
-    imports: [ButtonModule,
-        CommonModule,
-        DialogModule,
-        ConfirmDialogModule,
-        A1zCategoryFormComponent,
-        A1zCategoryGridComponent,
-        ToolbarModule, RippleModule,],
+  imports: [
+    ButtonModule,
+    CommonModule,
+    DialogModule,
+    ConfirmDialogModule,
+    A1zCategoryFormComponent,
+    A1zCategoryGridComponent,
+    ToolbarModule,
+    RippleModule,
+  ],
   templateUrl: './manage-a1z-categories.component.html',
   styleUrls: ['./manage-a1z-categories.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,13 +46,11 @@ export class ManageA1zCategoriesComponent {
   selectedA1zCategories: A1ZCategory[] = [];
   displayModal = false;
 
-
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly a1zCategoryApiService: A1ZCategoryApiService,
-  ) {
-  }
+    private readonly a1zCategoryApiService: A1ZCategoryApiService
+  ) {}
 
   onNewClick() {
     this.displayModal = true;
@@ -117,7 +122,7 @@ export class ManageA1zCategoriesComponent {
     this.a1zCategoryApiService
       .loadA1ZCategories($event)
       .pipe(untilDestroyed(this))
-      .subscribe((response:any) => {
+      .subscribe(response => {
         this.a1zCategories$$.next(response.data);
         this.totalRecords = response.total;
       });
@@ -127,7 +132,7 @@ export class ManageA1zCategoriesComponent {
     this.a1zCategoryApiService
       .save(a1zCategory)
       .pipe(untilDestroyed(this))
-      .subscribe((response:any) => {
+      .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Kategoria A1Z u shtua me sukses!');
           this.displayModal = false;
@@ -147,9 +152,7 @@ export class ManageA1zCategoriesComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            'Kategoria A1Z u ndryshua me sukses!'
-          );
+          this.toastService.showSuccess('Kategoria A1Z u ndryshua me sukses!');
           this.displayModal = false;
           this.getA1zCategories(this.filters as LazyLoadEvent);
         }
@@ -165,7 +168,7 @@ export class ManageA1zCategoriesComponent {
     this.a1zCategoryApiService
       .delete(a1zCategory.id)
       .pipe(untilDestroyed(this))
-      .subscribe((response:any) => {
+      .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Kategoria A1Z u fshi me sukses!');
           this.getA1zCategories(this.filters as LazyLoadEvent);

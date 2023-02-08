@@ -6,7 +6,7 @@ import {
   Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ExamVersion } from '@msh/configurations/domain-configurations';
+import { ExamVersion } from '@msh/shared/domain-models';
 import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { TableModule } from 'primeng/table';

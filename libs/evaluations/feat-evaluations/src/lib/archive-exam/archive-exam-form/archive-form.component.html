@@ -1,0 +1,39 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="barcode">Barkodi *</label>
+    <input
+      type="text"
+      maxlength="7"
+      minlength="7"
+      pInputText
+      placeholder="Barkodi"
+      id="barcode"
+      name="barcode"
+      [(ngModel)]="archiveExam.barcode"
+      pTooltip="Barkodi duhet te permbaje 7 shifra"
+      tooltipPosition="top"
+      required
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !archiveExam.barcode
+      }" />
+    <small class="p-error block" *ngIf="submitted && !archiveExam.barcode">
+      Barkodi është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      type="submit"
+      pButton
+      icon="pi pi-check"
+      label="Ruaj"
+      class="p-button-text w-auto"></button>
+  </div>
+</form>

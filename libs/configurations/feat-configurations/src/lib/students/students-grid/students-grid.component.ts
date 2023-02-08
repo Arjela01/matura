@@ -14,8 +14,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import {Student} from "@msh/configurations/domain-configurations";
-import {ActivatedRoute, RouterLink} from "@angular/router";
+import { Student } from '@msh/shared/domain-models';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'msh-students-grid',
@@ -35,8 +35,6 @@ import {ActivatedRoute, RouterLink} from "@angular/router";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StudentsGridComponent {
-
-
   @Input() students: Student[] = [];
 
   @Input() totalRecords = 0;
@@ -45,13 +43,11 @@ export class StudentsGridComponent {
   //Keep it local state because of Table Header checkbox not syncing
   selectedStudents: Student[] = [];
 
-  @Output() gridEvent = new EventEmitter<
-    GridEvent<Student | Student[]>
-  >();
+  @Output() gridEvent = new EventEmitter<GridEvent<Student | Student[]>>();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
-  student: Student [] = [] ;
+  student: Student[] = [];
   // onEditClick(student: Student) {
   //   this.gridEvent.emit({
   //     action: GRID_ACTIONS.EDIT,
@@ -59,15 +55,12 @@ export class StudentsGridComponent {
   //   } as GridEvent<Student>);
   // }
 
-
-
   onDeleteClick(student: Student) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,
       data: student,
     } as GridEvent<Student>);
   }
-
 
   onSelectAllClick() {
     if (this.selectedStudents.length === 0) {

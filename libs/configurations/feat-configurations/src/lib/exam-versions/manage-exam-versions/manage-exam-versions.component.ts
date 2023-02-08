@@ -1,24 +1,28 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ButtonModule} from "primeng/button";
-import {DialogModule} from "primeng/dialog";
-import {ConfirmDialogModule} from "primeng/confirmdialog";
-import {ToolbarModule} from "primeng/toolbar";
-import {ConfirmationService, LazyLoadEvent} from "primeng/api";
-import {GlobalToastService, GRID_ACTIONS, GridEvent} from "@msh/shared/util-shared";
-import {ExamVersion} from "@msh/configurations/domain-configurations";
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToolbarModule } from 'primeng/toolbar';
+import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import {
+  GlobalToastService,
+  GRID_ACTIONS,
+  GridEvent,
+} from '@msh/shared/util-shared';
+import { ExamVersion } from '@msh/shared/domain-models';
 
-import {BehaviorSubject} from "rxjs";
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import { BehaviorSubject } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   ExamTypeApiService,
   ExamVersionApiService,
-  ProfileGroupApiService
-} from "@msh/configurations/data-access-configurations";
-import {ExamVersionFormComponent} from "../exam-version-form/exam-version-form.component";
-import {ExamVersionGridComponent} from "../exam-version-grid/exam-version-grid.component";
-import {DropdownModel} from "@msh/shared/data-access-shared";
-import {RippleModule} from "primeng/ripple";
+  ProfileGroupApiService,
+} from '@msh/configurations/data-access-configurations';
+import { ExamVersionFormComponent } from '../exam-version-form/exam-version-form.component';
+import { ExamVersionGridComponent } from '../exam-version-grid/exam-version-grid.component';
+import { DropdownModel } from '@msh/shared/data-access-shared';
+import { RippleModule } from 'primeng/ripple';
 
 @UntilDestroy()
 @Component({
@@ -38,9 +42,8 @@ import {RippleModule} from "primeng/ripple";
   styleUrls: ['./manage-exam-versions.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
-
 })
-export class ManageExamVersionsComponent {
+export class ManageExamVersionsComponent implements OnInit {
   examVersions$$ = new BehaviorSubject<ExamVersion[]>([]);
   examVersions$ = this.examVersions$$.asObservable();
   filters: LazyLoadEvent | null = null;
@@ -57,16 +60,12 @@ export class ManageExamVersionsComponent {
     private readonly toastService: GlobalToastService,
     private readonly examVersionService: ExamVersionApiService,
     private readonly profileGroupApiService: ProfileGroupApiService,
-    private readonly examTypesApiService: ExamTypeApiService,
-
-
-  ) {
-  }
+    private readonly examTypesApiService: ExamTypeApiService
+  ) {}
 
   ngOnInit(): void {
     this.getProfileGroupsDropdown();
     this.getExamTypesDropdown();
-
   }
 
   onNewClick() {
@@ -75,7 +74,8 @@ export class ManageExamVersionsComponent {
 
   onDeleteSelectedClick() {
     this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të fshini versionet e provimeve të zgjedhura?',
+      message:
+        'Jeni i sigurt që doni të fshini versionet e provimeve të zgjedhura?',
       accept: () => {
         // this.examVersionStore.deleteSelectedExamVersions();
         this.toastService.showWarning('Versionet e provimeve u fshinë!');
@@ -111,7 +111,8 @@ export class ManageExamVersionsComponent {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të fshini versionin e provimit të zgjedhur?',
+          message:
+            'Jeni i sigurt që doni të fshini versionin e provimit të zgjedhur?',
           accept: () => {
             this.deleteExamVersion(event.data as ExamVersion);
           },
@@ -126,10 +127,10 @@ export class ManageExamVersionsComponent {
 
   onFormSave(examVersion: ExamVersion) {
     if (examVersion.id) {
-      this.updateExamVersion(examVersion)
+      this.updateExamVersion(examVersion);
     }
     if (!examVersion.id) {
-      this.addExamVersion(examVersion)
+      this.addExamVersion(examVersion);
     }
     this.displayModal = false;
   }
@@ -152,7 +153,9 @@ export class ManageExamVersionsComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Versioni i proimit u shtua me sukses!');
+          this.toastService.showSuccess(
+            'Versioni i proimit u shtua me sukses!'
+          );
           this.displayModal = false;
           this.getExamVersions(this.filters as LazyLoadEvent);
         }

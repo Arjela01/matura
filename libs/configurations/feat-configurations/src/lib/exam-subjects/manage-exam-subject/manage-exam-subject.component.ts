@@ -1,22 +1,31 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ButtonModule} from "primeng/button";
-import {DialogModule} from "primeng/dialog";
-import {ConfirmDialogModule} from "primeng/confirmdialog";
-import {ToolbarModule} from "primeng/toolbar";
-import {ExamSubjectFormComponent} from "../exam-subject-form/exam-subject-form.component";
-import {ExamSubjectGridComponent} from "../exam-subject-grid/exam-subject-grid.component";
-import {ConfirmationService, LazyLoadEvent} from "primeng/api";
-import {BehaviorSubject} from "rxjs";
-import {ExamSubject} from "@msh/configurations/domain-configurations";
-import {GlobalToastService, GRID_ACTIONS, GridEvent} from "@msh/shared/util-shared";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToolbarModule } from 'primeng/toolbar';
+import { ExamSubjectFormComponent } from '../exam-subject-form/exam-subject-form.component';
+import { ExamSubjectGridComponent } from '../exam-subject-grid/exam-subject-grid.component';
+import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { BehaviorSubject } from 'rxjs';
+import { ExamSubject } from '@msh/shared/domain-models';
+import {
+  GlobalToastService,
+  GRID_ACTIONS,
+  GridEvent,
+} from '@msh/shared/util-shared';
 import {
   AcademicYearApiService,
-  ExamSubjectApiService, ExamTypeApiService
-} from "@msh/configurations/data-access-configurations";
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {DropdownModel} from "@msh/shared/data-access-shared";
-import {RippleModule} from "primeng/ripple";
+  ExamSubjectApiService,
+  ExamTypeApiService,
+} from '@msh/configurations/data-access-configurations';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { DropdownModel } from '@msh/shared/data-access-shared';
+import { RippleModule } from 'primeng/ripple';
 
 @UntilDestroy()
 @Component({
@@ -36,33 +45,29 @@ import {RippleModule} from "primeng/ripple";
   styleUrls: ['./manage-exam-subject.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
-
 })
-export class ManageExamSubjectComponent {
-  private examSubjects$$ = new BehaviorSubject<ExamSubject[]>([])
+export class ManageExamSubjectComponent implements OnInit {
+  private examSubjects$$ = new BehaviorSubject<ExamSubject[]>([]);
   examSubjects$ = this.examSubjects$$.asObservable();
   filters: LazyLoadEvent | null = null;
 
   totalRecords = 0;
-  selectedExamSubjects: ExamSubject[] = []
+  selectedExamSubjects: ExamSubject[] = [];
   selectedExamSubject: ExamSubject | null = null;
   displayModal = false;
 
   examTypes: DropdownModel<number>[] = [];
   academicYears: DropdownModel<number>[] = [];
 
-
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examSubjectService: ExamSubjectApiService,
     private readonly academicYearsApiService: AcademicYearApiService,
-    private readonly examTypesApiService: ExamTypeApiService,
+    private readonly examTypesApiService: ExamTypeApiService
+  ) {}
 
-  ) {
-  }
-
-  ngOnInit():void {
+  ngOnInit(): void {
     this.getAcademicYearsDropdown();
     this.getExamTypesDropdown();
   }
@@ -109,7 +114,8 @@ export class ManageExamSubjectComponent {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të fshini lëndën e provimit të zgjedhur?',
+          message:
+            'Jeni i sigurt që doni të fshini lëndën e provimit të zgjedhur?',
           accept: () => {
             this.deleteExamSubject(event.data as ExamSubject);
           },
@@ -122,16 +128,16 @@ export class ManageExamSubjectComponent {
     this.displayModal = false;
   }
 
-  onFormSave(examSubject: ExamSubject){
-    if(examSubject.id){
-      this.updateExamSubject(examSubject)
+  onFormSave(examSubject: ExamSubject) {
+    if (examSubject.id) {
+      this.updateExamSubject(examSubject);
     }
-    if(!examSubject.id){
-      this.addExamSubject(examSubject)
+    if (!examSubject.id) {
+      this.addExamSubject(examSubject);
     }
   }
 
-  getExamSubjects($event: LazyLoadEvent){
+  getExamSubjects($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.examSubjectService
@@ -139,7 +145,7 @@ export class ManageExamSubjectComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examSubjects$$.next(response.data);
-        this.totalRecords = response.total
+        this.totalRecords = response.total;
       });
   }
 
@@ -211,5 +217,4 @@ export class ManageExamSubjectComponent {
         this.academicYears = response.data;
       });
   }
-
 }

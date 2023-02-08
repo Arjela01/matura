@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -6,9 +6,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { BehaviorSubject } from 'rxjs';
-import {
-  ExamSubjectProfile,
-} from '@msh/configurations/domain-configurations';
+import { ExamSubjectProfile } from '@msh/shared/domain-models';
 import {
   GlobalToastService,
   GRID_ACTIONS,
@@ -18,7 +16,8 @@ import {
   AcademicYearApiService,
   ExamSubjectApiService,
   ExamSubjectProfileApiService,
-  ExamTypeApiService, ProfileApiService,
+  ExamTypeApiService,
+  ProfileApiService,
 } from '@msh/configurations/data-access-configurations';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { DropdownModel } from '@msh/shared/data-access-shared';
@@ -45,7 +44,7 @@ import { ExamSubjectProfileGridComponent } from '../exam-subject-profile-grid/ex
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageExamSubjectProfileComponent {
+export class ManageExamSubjectProfileComponent implements OnInit {
   private examSubjectProfiles$$ = new BehaviorSubject<ExamSubjectProfile[]>([]);
   examSubjectProfiles$ = this.examSubjectProfiles$$.asObservable();
   filters: LazyLoadEvent | null = null;
@@ -67,7 +66,7 @@ export class ManageExamSubjectProfileComponent {
     private readonly examSubjectService: ExamSubjectApiService,
     private readonly academicYearsApiService: AcademicYearApiService,
     private readonly examTypesApiService: ExamTypeApiService,
-    private readonly profilesApiService: ProfileApiService,
+    private readonly profilesApiService: ProfileApiService
   ) {}
 
   ngOnInit(): void {
@@ -113,7 +112,10 @@ export class ManageExamSubjectProfileComponent {
         this.selectedExamSubjects = [];
         break;
       case GRID_ACTIONS.EDIT:
-        this.selectedExamSubject = Object.assign({}, event.data as ExamSubjectProfile);
+        this.selectedExamSubject = Object.assign(
+          {},
+          event.data as ExamSubjectProfile
+        );
         this.loadExamSubjects(this.selectedExamSubject);
         this.displayModal = true;
         break;
@@ -221,11 +223,16 @@ export class ManageExamSubjectProfileComponent {
     });
   }
 
-
-  getExamSubjects(examTypeId?: number, academicYearId?: number, examSubjectId?: string) {
-    this.examSubjectService.forExamType(examTypeId, academicYearId, examSubjectId).subscribe(response => {
-      this.examSubjects = response.data;
-    });
+  getExamSubjects(
+    examTypeId?: number,
+    academicYearId?: number,
+    examSubjectId?: string
+  ) {
+    this.examSubjectService
+      .forExamType(examTypeId, academicYearId, examSubjectId)
+      .subscribe(response => {
+        this.examSubjects = response.data;
+      });
   }
 
   getAcademicYearsDropdown() {
@@ -238,6 +245,10 @@ export class ManageExamSubjectProfileComponent {
   }
 
   loadExamSubjects($event: ExamSubjectProfile) {
-    this.getExamSubjects($event.examTypeId, $event.academicYearId, $event.examSubjectId);
+    this.getExamSubjects(
+      $event.examTypeId,
+      $event.academicYearId,
+      $event.examSubjectId
+    );
   }
 }

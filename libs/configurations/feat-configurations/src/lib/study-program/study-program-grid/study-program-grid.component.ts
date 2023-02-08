@@ -6,7 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { StudyProgram } from '@msh/configurations/domain-configurations';
+import { StudyProgram } from '@msh/shared/domain-models';
 import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';

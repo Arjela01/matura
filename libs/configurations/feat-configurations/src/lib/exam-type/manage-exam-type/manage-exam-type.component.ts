@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ConfirmationService, LazyLoadEvent} from "primeng/api";
 import {GlobalToastService, GRID_ACTIONS, GridEvent} from "@msh/shared/util-shared";
-import {ExamType} from "@msh/configurations/domain-configurations";
+import {ExamType} from "@msh/shared/domain-models";
 import {ButtonModule} from "primeng/button";
 import {DialogModule} from "primeng/dialog";
 import {ConfirmDialogModule} from "primeng/confirmdialog";

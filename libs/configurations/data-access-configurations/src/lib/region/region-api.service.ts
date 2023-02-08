@@ -6,7 +6,7 @@ import { LazyLoadEvent } from 'primeng/api';
 import {
   Region,
   RegionTableView,
-} from '@msh/configurations/domain-configurations';
+} from '@msh/shared/domain-models';
 
 @Injectable({
   providedIn: 'root',

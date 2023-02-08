@@ -1,0 +1,123 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+} from '@angular/core';
+import { FailingStudentApiService } from '@msh/applications/data-access-applications';
+import { FailingStudent } from '@msh/applications/domain-application';
+import {
+  GRID_ACTIONS,
+  GlobalToastService,
+  GridEvent,
+} from '@msh/shared/util-shared';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
+import { RippleModule } from 'primeng/ripple';
+import { ToolbarModule } from 'primeng/toolbar';
+import { BehaviorSubject } from 'rxjs';
+import { PassInFallGridComponent } from '../pass-in-fall-grid/pass-in-fall-grid.component';
+
+@UntilDestroy()
+@Component({
+  selector: 'msh-manage-pass-in-fall',
+  standalone: true,
+  templateUrl: './manage-pass-in-fall.component.html',
+  styleUrls: ['./manage-pass-in-fall.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ConfirmationService],
+  imports: [
+    ButtonModule,
+    CommonModule,
+    DialogModule,
+    ConfirmDialogModule,
+    ToolbarModule,
+    RippleModule,
+    PassInFallGridComponent,
+  ],
+})
+export class ManagePassInFallComponent {
+  private failingStudents$$ = new BehaviorSubject<FailingStudent[]>([]);
+  failingStudents$ = this.failingStudents$$.asObservable();
+  filters: LazyLoadEvent | null = null;
+
+  totalRecords = 0;
+  selectedFailingStudent: FailingStudent | null = null;
+
+  constructor(
+    private cd: ChangeDetectorRef,
+    private readonly failingStudentService: FailingStudentApiService,
+    private readonly confirmationService: ConfirmationService,
+    private readonly toastService: GlobalToastService
+  ) {}
+
+  onGridEvent(event: GridEvent<FailingStudent | FailingStudent[]>) {
+    switch (event.action) {
+      case GRID_ACTIONS.EDIT:
+        console.log(event.data);
+        this.confirmationService.confirm({
+          message: 'A jeni i sigurt qe ka kaluar ne vjeshte maturanti?',
+          accept: () => {
+            this.updateFailingStudent(event.data as FailingStudent);
+            event.data as FailingStudent;
+          },
+        });
+        break;
+    }
+  }
+
+  onFormSave(failingStudent: FailingStudent) {
+    this.updateFailingStudent(failingStudent);
+  }
+
+  getFailingStudents($event: LazyLoadEvent) {
+    this.filters = Object.assign({}, $event);
+
+    this.failingStudentService
+      .loadFailingStudents($event)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.failingStudents$$.next(response.data);
+        this.totalRecords = response.total;
+      });
+  }
+
+  updateFailingStudent(failingStudent: FailingStudent) {
+    this.failingStudentService
+      .getOne(failingStudent.id!)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful === true) {
+          this.failingStudentService
+            .update({
+              ...failingStudent,
+              studentId: response.data.studentId,
+              willRetryInFall: true,
+            })
+            .pipe(untilDestroyed(this))
+            .subscribe(response => {
+              if (response.isSuccessful === true) {
+                this.toastService.showSuccess('Studenti u ndryshua me sukses!');
+                this.getFailingStudents(this.filters as LazyLoadEvent);
+              }
+
+              if (response.isSuccessful === false)
+                this.toastService.showError(
+                  'Ndodhi nje problem gjatë ndryshimit të studentit mbetes!'
+                );
+            });
+          this.cd.detectChanges();
+        }
+
+        if (response.isSuccessful === false) {
+          this.toastService.showError(
+            'Ndodhi nje problem gjatë kerkimit te studentit mbetes!'
+          );
+        }
+      });
+  }
+}
