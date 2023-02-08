@@ -85,13 +85,11 @@ export class ProfileFormComponent implements OnChanges {
   }
 
   onAcademicYearChange($event: any) {
-    // eslint-disable-next-line max-len
     this.academicYearsFiltered = this.academicYears.filter(
       a => a.parentKey == $event.value
     );
   }
   onProfileGroupChange($event: any) {
-    // eslint-disable-next-line max-len
     this.profileGroupsFiltered = this.profileGroups.filter(
       p => p.parentKey == $event.value
     );

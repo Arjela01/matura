@@ -142,14 +142,7 @@ export class StudentsFormComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
-    console.log();
-    // eslint-disable-next-line max-len
-    this.onStudentChange({ value: this.student.highSchoolId });
-  }
-
-  onStudentChange($event: any) {
-    console.log($event);
-    this.showStudent = $event.value;
+    this.showStudent = this.student.highSchoolId != null;
   }
 
   onSubmit(): void {
