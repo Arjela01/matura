@@ -8,16 +8,23 @@ import { API_URL } from '../constants/api-url.token';
 })
 export class APIService {
   //TODO: Add logger service to log external http calls
-
+  private headers: HttpHeaders;
   constructor(
     private http: HttpClient,
     @Inject(API_URL) private api_url: string
-  ) {}
+  ) {
+    this.headers = this.getHeaders();
+  }
 
-  get<T>(url: string, params: HttpParams = new HttpParams()): Observable<T> {
+  get<T>(
+    url: string,
+    params: HttpParams = new HttpParams(),
+    responseType = 'json'
+  ): Observable<T> {
     return this.http.get<T>(`${this.api_url}${url}`, {
       headers: this.headers,
       params,
+      responseType: responseType !== 'json' ? (responseType as 'json') : 'json',
     });
   }
 
@@ -39,7 +46,7 @@ export class APIService {
     });
   }
 
-  get headers(): HttpHeaders {
+  getHeaders(): HttpHeaders {
     const headersConfig = {
       'Content-Type': 'application/json',
       Accept: 'application/json',
@@ -48,9 +55,11 @@ export class APIService {
     return new HttpHeaders(headersConfig);
   }
 
-
   // eslint-disable-next-line max-len
-  getById<T>(url: string, params: HttpParams = new HttpParams()): Observable<T> {
+  getById<T>(
+    url: string,
+    params: HttpParams = new HttpParams()
+  ): Observable<T> {
     return this.http.get<T>(`${this.api_url}${url}`, {
       headers: this.headers,
       params,
