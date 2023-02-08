@@ -33,11 +33,12 @@ import { LazyLoadEvent } from 'primeng/api';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GridComponent {
-  @Output() dataEmitted = new EventEmitter<any>();
   @Input() columns!: any[];
   @Input() gridData: any[] = [];
+  @Output() dataEmitted = new EventEmitter<any>();
 
   loadRows($event: LazyLoadEvent) {
     this.dataEmitted.emit($event);
+    console.log(111, this.dataEmitted)
   }
 }
