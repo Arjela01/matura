@@ -74,7 +74,6 @@ export class StudentBanFormComponent {
     banRemovalDate: new Date(),
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor(private cd: ChangeDetectorRef) {}
 
   onCancelClick() {

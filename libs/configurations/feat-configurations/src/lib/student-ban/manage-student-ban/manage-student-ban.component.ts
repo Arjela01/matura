@@ -102,7 +102,7 @@ export class ManageStudentBanComponent {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të fshini studentin e zgjedhur?',
+          message: 'Jeni i sigurt që doni të fshini studentin e skualifikuar të zgjedhur?',
           accept: () => {
             this.deleteBannedStudent(event.data as StudentBan);
           },
