@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Output,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule, formatDate } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -35,13 +30,12 @@ import { CalculateGrade } from '@msh/evaluations/domain-evaluations';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalculateGradesComponent {
-  @Output() dataEmitted = new EventEmitter<any>();
   private calculateGrade$$ = new BehaviorSubject<CalculateGrade[]>([]);
   calculateGrade$ = this.calculateGrade$$.asObservable();
   filters: LazyLoadEvent | null = null;
 
-  appProcessType!: string | undefined;
-  executionLog: string | undefined = '';
+  appProcessType!: string;
+  executionLog!: string;
   endTime: any;
 
   columns = [
@@ -62,25 +56,32 @@ export class CalculateGradesComponent {
       .loadCalculatedGrades($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        const dataArray = response.data;
-        this.endTime = formatDate(
-          new Date(dataArray.endTime),
-          'dd/MM/yyyy',
-          'en'
-        );
-        const differenceInMs =
-          new Date(dataArray.endTime).getTime() -
-          new Date(dataArray.startTime).getTime();
-        const hours = Math.floor(differenceInMs / 3600000);
-        const minutes = Math.floor((differenceInMs % 3600000) / 60000);
-        const seconds = Math.floor(((differenceInMs % 360000) % 60000) / 1000);
-        dataArray.executionTime = `${this.endTime} ${hours}:${minutes}:${seconds}`;
+        if (response.data.length > 0) {
+          response.data.forEach(item => {
+            this.endTime = formatDate(
+              new Date(item.endTime as Date),
+              'dd/MM/yyyy',
+              'en'
+            );
+            const differenceInMs =
+              new Date(item.endTime).getTime() -
+              new Date(item.startTime).getTime();
+            const duration = new Date(differenceInMs)
+              .toISOString()
+              .substr(11, 8);
+            item.executionTime = `${this.endTime} ${duration}`;
+          });
+        }
+        this.calculateGrade$$.next(response.data);
+        const firstData = response.data.reduce((acc: any, curr: any) => {
+          return acc || curr;
+        }, false);
 
-        this.calculateGrade$$.next([dataArray]);
-        this.appProcessType = dataArray.appProcessType;
-        this.executionLog = dataArray.executionLog;
-
-        this.dataEmitted.emit(response.data);
+        if (firstData) {
+          const object = { ...firstData };
+          this.appProcessType = object.appProcessType;
+          this.executionLog = object.executionLog;
+        }
       });
   }
 }

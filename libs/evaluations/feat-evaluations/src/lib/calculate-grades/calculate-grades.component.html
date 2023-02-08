@@ -12,14 +12,15 @@
         <span>Statusi:</span>
         {{ executionLog }}
       </div>
+
       <div class="actions">
         <button pButton type="button">Fillo procesin</button>
       </div>
       <h4>Proçeset e ekzekutuara</h4>
       <msh-grid
         [gridData]="(calculateGrade$ | async) || []"
-        (dataEmitted)="getCalculatedGrades($event)"
-        [columns]="columns"></msh-grid>
+        [columns]="columns"
+        (dataEmitted)="getCalculatedGrades($event)"></msh-grid>
     </div>
   </div>
 </div>
