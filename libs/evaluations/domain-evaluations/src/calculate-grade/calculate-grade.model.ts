@@ -1,4 +1,5 @@
 export interface CalculateGrade {
+  id: number;
   appProcessType: string;
   processStatus: string;
   startTime: Date;
@@ -9,6 +10,7 @@ export interface CalculateGrade {
 }
 
 export interface CalculateGradeTableView {
-  data: CalculateGrade;
+  data: CalculateGrade[];
+
 }
 
