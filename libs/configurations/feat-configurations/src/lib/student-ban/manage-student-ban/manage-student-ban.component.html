@@ -1,11 +1,9 @@
 <div class="grid">
   <div class="col-12">
     <div class="card px-6 py-6">
-      <p-toolbar styleClass="mb-4">
-        <div class="p-toolbar-group-left">
-          <h2>Caktimi në Qendrat e Provimit</h2>
-        </div>
-        <div class="p-toolbar-group-right">
+      <div class="flex ml-2 mb-2 page-header">
+        <h2 class="flex-1 mb-0">Skualifikim</h2>
+        <div class="flex align-items-right justify-content-right">
           <div class="my-2">
             <button
               pButton
@@ -15,57 +13,34 @@
               class="p-button-success mr-2"
               (click)="onNewClick()"></button>
           </div>
-          <p-button
-            label="Importo nga Exel"
-            (onClick)="onUploadClick()"></p-button>
         </div>
-      </p-toolbar>
-      <msh-exam-assignment-grid
-        [examAssignments]="(examAssignments$ | async) || []"
+      </div>
+
+      <msh-student-ban-grid
+        [bannedStudents]="(bannedStudents$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getExamAssignments($event)">
-      </msh-exam-assignment-grid>
+        (lazyLoadData)="getBannedStudents($event)">
+      </msh-student-ban-grid>
     </div>
   </div>
 </div>
 
 <p-dialog
-  [(visible)]="displayUploadModal"
-  [style]="{ width: '600px' }"
-  [modal]="true"
-  header="Importo file nga Exel"
-  [draggable]="false"
-  [resizable]="false"
-  [closable]="true"
-  class="p-fluid"
-  (onHide)="onUploadClose()">
-  <ng-template pTemplate="content">
-    <msh-upload-form
-      [examAssignmentsDetails]="selectedExamAssignment"
-      [examDates]="examDates"
-      (formClose)="onUploadClose()"
-      (formSave)="onUploadFormSave()">
-    </msh-upload-form>
-  </ng-template>
-</p-dialog>
-
-<p-dialog
   [(visible)]="displayModal"
-  [style]="{ width: '1100px' }"
+  [style]="{ width: '500px' }"
+  header="Detajet e Skualifikimit të Studentëve"
   [modal]="true"
   [draggable]="false"
   [resizable]="false"
   class="p-fluid"
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
-    <msh-exam-assignment-form
-      [examAssignmentsDetails]="selectedExamAssignment"
-      [examSites]="examSites"
-      [examDates]="examDates"
+    <msh-student-ban-form
+      [bannedStudentsDetails]="selectedBannedStudent"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
-    </msh-exam-assignment-form>
+    </msh-student-ban-form>
   </ng-template>
 </p-dialog>
 

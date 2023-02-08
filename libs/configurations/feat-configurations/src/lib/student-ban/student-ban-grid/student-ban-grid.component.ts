@@ -6,7 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { ExamAssignment } from '@msh/shared/domain-models';
+import { StudentBan, Student } from '@msh/shared/domain-models';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -15,10 +15,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'msh-exam-assignment-grid',
+  selector: 'msh-student-ban-grid',
   standalone: true,
   imports: [
     CommonModule,
@@ -28,77 +27,75 @@ import { RouterLink } from '@angular/router';
     TooltipModule,
     CheckboxModule,
     RippleModule,
-    RouterLink,
   ],
-  templateUrl: './exam-assignment-grid.component.html',
-  styleUrls: ['./exam-assignment-grid.component.scss'],
+  templateUrl: './student-ban-grid.component.html',
+  styleUrls: ['./student-ban-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamAssignmentGridComponent {
-  @Input() examAssignments: ExamAssignment[] = [];
+export class StudentBanGridComponent {
+  @Input() bannedStudents: StudentBan[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
 
   //Keep it local state because of Table Header checkbox not syncing
-  selectedExamAssignments: ExamAssignment[] = [];
+  selectedBannedStudents: StudentBan[] = [];
 
   @Output() gridEvent = new EventEmitter<
-    GridEvent<ExamAssignment | ExamAssignment[]>
+    GridEvent<StudentBan | StudentBan[]>
   >();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
-
-  examAssignment: ExamAssignment = {
+  student: Student[] = [];
+  studentBan: StudentBan = {
     id: 0,
-    studentIdentifier: '',
     studentId: '',
+    studentIdentifier: '',
     studentName: '',
-    studentInputData: '',
-    date: new Date(),
-    examDateId: 0,
-    examSiteId: '',
-    examSiteName: '',
+    description: '',
+    isBanned: 0,
+    effectiveDate: new Date(),
+    banRemovalDate: new Date(),
   };
 
-  onDeleteClick(examAssignment: ExamAssignment) {
+  onEditClick(StudentBan: StudentBan) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.EDIT,
+      data: StudentBan,
+    } as GridEvent<StudentBan>);
+  }
+
+  onDeleteClick(StudentBan: StudentBan) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,
-      data: examAssignment,
-    } as GridEvent<ExamAssignment>);
+      data: StudentBan,
+    } as GridEvent<StudentBan>);
   }
 
   onSelectAllClick() {
-    if (this.selectedExamAssignments.length === 0) {
+    if (this.selectedBannedStudents.length === 0) {
       this.gridEvent.emit({
         action: GRID_ACTIONS.UNSELECT_ALL,
-      } as GridEvent<ExamAssignment>);
+      } as GridEvent<StudentBan>);
     } else {
       this.gridEvent.emit({
         action: GRID_ACTIONS.SELECT_MANY,
-        data: this.selectedExamAssignments,
-      } as GridEvent<ExamAssignment[]>);
+        data: this.selectedBannedStudents,
+      } as GridEvent<StudentBan[]>);
     }
   }
 
-  onRowSelect({ data }: { data: ExamAssignment }) {
+  onRowSelect({ data }: { data: StudentBan }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
       data: data,
-    } as GridEvent<ExamAssignment>);
+    } as GridEvent<StudentBan>);
   }
 
-  onRowUnselect({ data }: { data: ExamAssignment }) {
+  onRowUnselect({ data }: { data: StudentBan }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
       data: data,
-    } as GridEvent<ExamAssignment>);
-  }
-
-  onEditClick(examAssignment: ExamAssignment) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.EDIT,
-      data: examAssignment,
-    } as GridEvent<ExamAssignment>);
+    } as GridEvent<StudentBan>);
   }
 
   loadRows($event: LazyLoadEvent) {

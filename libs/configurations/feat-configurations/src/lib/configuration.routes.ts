@@ -190,4 +190,18 @@ export const CONFIGURATION_ROUTES: Route[] = [
         m => m.ManageExamDateComponent
       ),
   },
+  {
+    path: 'exam-assignment',
+    loadComponent: () =>
+      import('./exam-assignment/manage-exam-assignment/manage-exam-assignment.component').then(
+        m => m.ManageExamAssignmentComponent
+      ),
+  },
+  {
+    path: 'student-ban',
+    loadComponent: () =>
+      import('./student-ban/manage-student-ban/manage-student-ban.component').then(
+        m => m.ManageStudentBanComponent
+      ),
+  },
 ];
