@@ -1,10 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Input,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GradesScaleService } from '@msh/evaluations/data-access-evaluations';
@@ -54,12 +49,12 @@ export class GradeScaleActionComponent {
   @Input() examSubjectIdDialog = null;
   displayModal?: boolean;
   selectedGradeScale: GradesScale | null = null;
+  title: BehaviorSubject<string> = new BehaviorSubject('');
   constructor(
     private gradesScaleApiService: GradesScaleService,
     private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
     private toastService: GlobalToastService,
-    private cd: ChangeDetectorRef,
     private router: Router
   ) {}
 
@@ -157,6 +152,9 @@ export class GradeScaleActionComponent {
       .subscribe({
         next: (gradeScales: any) => {
           this.values.next(gradeScales);
+          gradeScales.length > 0
+            ? this.title.next(gradeScales[0].examSubjectName)
+            : '';
         },
         error: err => {
           err.errorMessage

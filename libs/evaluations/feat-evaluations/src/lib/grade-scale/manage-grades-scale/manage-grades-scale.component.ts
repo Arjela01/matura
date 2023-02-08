@@ -52,15 +52,18 @@ export class ManageGradesScaleComponent {
   examSubjectDropdown: DropdownModel<number>[] = [];
   examTypeDropdown: DropdownModel<number>[] = [];
   displayModal = false;
+
   constructor(
     private readonly gradesScaleApiService: GradesScaleService,
     private readonly router: Router,
     private readonly toastService: GlobalToastService,
     private readonly examSubjectsService: ExamSubjectApiService
   ) {}
+
   ngOnInit() {
     this.getDropdownSubjects();
   }
+
   getDropdownSubjects() {
     this.examSubjectsService.loadDropDownList().subscribe(resp => {
       this.examSubjectDropdown = resp.data;
@@ -70,6 +73,7 @@ export class ManageGradesScaleComponent {
   onNewClick() {
     this.router.navigate(['/evaluations/grades-scale-form']);
   }
+
   onGridEvent(event: GridEvent<GradesScale>) {
     switch (event.action) {
       case GRID_ACTIONS.EDIT:
@@ -128,9 +132,11 @@ export class ManageGradesScaleComponent {
           );
       });
   }
+
   onModalClose() {
     this.displayModal = false;
   }
+
   openDialog() {
     this.displayModal = true;
   }
