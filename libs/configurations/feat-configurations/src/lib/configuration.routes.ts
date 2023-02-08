@@ -25,6 +25,7 @@ export const CONFIGURATION_ROUTES: Route[] = [
   {
     path: 'add-archive-exam/:id',
     loadComponent: () =>
+      // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
       import(
         '../../../../evaluations/feat-evaluations/src/lib/archive-exam/manage-archive-exams/manage-archive-exams.component'
       ).then(m => m.ManageArchiveExamsComponent),
@@ -195,6 +196,13 @@ export const CONFIGURATION_ROUTES: Route[] = [
     loadComponent: () =>
       import('./exam-date/manage-exam-date/manage-exam-date.component').then(
         m => m.ManageExamDateComponent
+      ),
+  },
+  {
+    path: 'student-ban',
+    loadComponent: () =>
+      import('./student-ban/manage-student-ban/manage-student-ban.component').then(
+        m => m.ManageStudentBanComponent
       ),
   },
 ];
