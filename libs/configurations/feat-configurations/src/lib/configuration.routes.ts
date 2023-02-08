@@ -197,4 +197,11 @@ export const CONFIGURATION_ROUTES: Route[] = [
         m => m.ManageExamAssignmentComponent
       ),
   },
+  {
+    path: 'student-ban',
+    loadComponent: () =>
+      import('./student-ban/manage-student-ban/manage-student-ban.component').then(
+        m => m.ManageStudentBanComponent
+      ),
+  },
 ];
