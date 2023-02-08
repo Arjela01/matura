@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Output,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule, formatDate } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -39,8 +34,8 @@ export class CalculateGradesComponent {
   calculateGrade$ = this.calculateGrade$$.asObservable();
   filters: LazyLoadEvent | null = null;
 
-  appProcessType: any;
-  executionLog = '';
+  appProcessType!: string;
+  executionLog!: string;
   endTime: any;
 
   columns = [
@@ -61,14 +56,22 @@ export class CalculateGradesComponent {
       .loadCalculatedGrades($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        if( response.data.length > 0){
-        response.data.forEach(item => {
-          this.endTime = formatDate(new Date(item.endTime as Date), 'dd/MM/yyyy', 'en');
-          const differenceInMs = new Date(item.endTime).getTime() - new Date(item.startTime).getTime();
-          const duration = new Date(differenceInMs).toISOString().substr(11, 8);
-          item.executionTime = `${this.endTime} ${duration}`;
-        });
-      }
+        if (response.data.length > 0) {
+          response.data.forEach(item => {
+            this.endTime = formatDate(
+              new Date(item.endTime as Date),
+              'dd/MM/yyyy',
+              'en'
+            );
+            const differenceInMs =
+              new Date(item.endTime).getTime() -
+              new Date(item.startTime).getTime();
+            const duration = new Date(differenceInMs)
+              .toISOString()
+              .substr(11, 8);
+            item.executionTime = `${this.endTime} ${duration}`;
+          });
+        }
         this.calculateGrade$$.next(response.data);
         const firstData = response.data.reduce((acc: any, curr: any) => {
           return acc || curr;

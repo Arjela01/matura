@@ -39,6 +39,5 @@ export class GridComponent {
 
   loadRows($event: LazyLoadEvent) {
     this.dataEmitted.emit($event);
-    console.log(111, this.dataEmitted)
   }
 }
