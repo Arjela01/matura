@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -45,7 +45,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
   templateUrl: './students-edit.component.html',
   styleUrls: ['./students-edit.component.scss'],
 })
-export class StudentsEditComponent {
+export class StudentsEditComponent implements OnInit {
   @ViewChild('form', { static: true }) form!: NgForm;
 
   highSchool: DropdownModel<number>[] = [];
@@ -55,9 +55,8 @@ export class StudentsEditComponent {
   schoolProfile: DropdownModel<number>[] = [];
   academicYears: DropdownModel<number>[] = [];
   saving = false;
-  id: any;
+  id?: string;
 
-  showStudent = false;
   submitted = true;
 
   current = null;
@@ -107,8 +106,9 @@ export class StudentsEditComponent {
     private messageService: MessageService,
     private route: ActivatedRoute
   ) {
-    this.id = this.route.snapshot.paramMap.get('id');
+    this.id = this.route.snapshot.paramMap.get('id') as string;
   }
+
   ngOnInit(): void {
     this.highSchoolService.loadDropDownList().subscribe(response => {
       this.highSchool = response.data;

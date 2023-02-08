@@ -7,7 +7,6 @@ import {
   Input,
   OnChanges,
   Output,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -82,7 +81,7 @@ export class MenuFormComponent implements OnChanges {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.cd.detectChanges();
   }
 }

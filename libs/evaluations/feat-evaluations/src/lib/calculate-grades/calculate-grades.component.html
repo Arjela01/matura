@@ -1,0 +1,25 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card px-6 py-6">
+      <p-header>
+        <h2 class="flex-1">Përllogarit notat</h2>
+      </p-header>
+      <div>
+        <span>Emri i procesit:</span>
+        {{ appProcessType }}
+      </div>
+      <div style="margin: 10px 0 19px 0">
+        <span>Statusi:</span>
+        {{ executionLog }}
+      </div>
+      <div class="actions">
+        <button pButton type="button">Fillo procesin</button>
+      </div>
+      <h4>Proçeset e ekzekutuara</h4>
+      <msh-grid
+        [gridData]="(calculateGrade$ | async) || []"
+        (dataEmitted)="getCalculatedGrades($event)"
+        [columns]="columns"></msh-grid>
+    </div>
+  </div>
+</div>
