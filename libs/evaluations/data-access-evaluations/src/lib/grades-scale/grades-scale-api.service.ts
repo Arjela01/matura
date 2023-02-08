@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   GradesScale,
@@ -6,7 +7,7 @@ import {
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -43,20 +44,22 @@ export class GradesScaleService {
   }
 
   export(): Observable<ApiResult<unknown>> {
-    return this.apiService.get<any>(`/GradeScale/ExportTemplate`);
+    return this.apiService.get<any>(
+      `/GradeScale/ExportTemplate`,
+      new HttpParams(),
+      'blob'
+    );
   }
-
-  //   uploadExcelFile(
-  //     base64: string | ArrayBuffer | null
-  //   ): Observable<ApiResult<unknown>> {
-  //     return this.apiService
-  //       .post<ApiResult<FileImport>, FileImport>('/api/ExamSecrets/Import', {
-  //         file: base64,
-  //       })
-  //       .pipe(
-  //         map(data => data),
-  //         catchError(error => throwError(error)),
-  //         shareReplay()
-  //       );
-  //   }
+  uploadExcelFile(data: any): Observable<ApiResult<unknown>> {
+    return this.apiService
+      .post<ApiResult<any>, any>('/GradeScale/Import', {
+        file: data.file,
+        examSubjectId: data.examSubjectId,
+      })
+      .pipe(
+        map(data => data),
+        catchError(error => throwError(error)),
+        shareReplay()
+      );
+  }
 }
