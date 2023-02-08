@@ -21,13 +21,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
 import {
-  GlobalToastService,
-  GRID_ACTIONS,
-  GridEvent,
-} from '@msh/shared/util-shared';
-import {
-  ExamAssignmentApiService,
   ExamDateApiService,
   ExamSiteApiService,
 } from '@msh/configurations/data-access-configurations';
@@ -85,7 +80,6 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
   @ViewChild('form', { static: true }) form!: NgForm;
   filters: LazyLoadEvent | null = null;
   submitted = false;
-  saving = false;
   displayModal = false;
   selectedStudent: any = null;
   studentInputData = '';
@@ -106,11 +100,8 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
   };
 
   constructor(
-    private route: ActivatedRoute,
     private cd: ChangeDetectorRef,
-    private readonly examAssignmentService: ExamAssignmentApiService,
     private readonly studentService: StudentsApiService,
-    private readonly toastService: GlobalToastService,
     private readonly examDateService: ExamDateApiService,
     private readonly examSiteService: ExamSiteApiService,
     private readonly activatedRoute: ActivatedRoute
