@@ -31,5 +31,7 @@ export * from './exam-date/exam-date.model'
 // export * from './folders/folders.model'
 export * from './students/student-section.model'
 export * from './students/student-class.model'
+export * from './exam-subject-profile/exam-subject-profile.model';
+export * from './student-ban/student-ban.model'
 export * from './exam-subject-profile/exam-subject-profile.model'
 export * from './exam-assignment/exam-assignment.model'

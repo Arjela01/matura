@@ -29,3 +29,5 @@ export * from './lib/a1z-category/a1z-category-api.service'
 export * from './lib/a1z-category/a1z-category-api.service';
 export * from './lib/exam-date/exam-date-api.service'
 export * from './lib/exam-assignment/exam-assignment-api.service'
+export * from './lib/exam-date/exam-date-api.service';
+export * from './lib/student-ban/student-ban.service';
