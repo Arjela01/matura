@@ -8,11 +8,13 @@ import { API_URL } from '../constants/api-url.token';
 })
 export class APIService {
   //TODO: Add logger service to log external http calls
-
+  private headers: HttpHeaders;
   constructor(
     private http: HttpClient,
     @Inject(API_URL) private api_url: string
-  ) {}
+  ) {
+    this.headers = this.getHeaders();
+  }
 
   get<T>(
     url: string,
@@ -44,7 +46,7 @@ export class APIService {
     });
   }
 
-  get headers(): HttpHeaders {
+  getHeaders(): HttpHeaders {
     const headersConfig = {
       'Content-Type': 'application/json',
       Accept: 'application/json',
