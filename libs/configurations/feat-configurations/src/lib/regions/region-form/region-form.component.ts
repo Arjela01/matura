@@ -1,11 +1,9 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -38,7 +36,6 @@ import { RadioButtonModule } from 'primeng/radiobutton';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegionFormComponent {
-
   @Input() set regionDetails(details: Region | null) {
     if (details) {
       this.region = Object.assign({}, details);
@@ -48,7 +45,7 @@ export class RegionFormComponent {
   @Output() formSave = new EventEmitter<Region>();
   @Output() formClose = new EventEmitter<undefined>();
 
-  @ViewChild('form', {static: true}) form!: NgForm;
+  @ViewChild('form', { static: true }) form!: NgForm;
 
   submitted = false;
 
@@ -56,10 +53,6 @@ export class RegionFormComponent {
     id: '',
     name: '',
   };
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private cd: ChangeDetectorRef) {
-  }
 
   onCancelClick() {
     this.formClose.emit();
@@ -71,5 +64,4 @@ export class RegionFormComponent {
       this.formSave.emit(this.region);
     }
   }
-
 }
