@@ -1,6 +1,6 @@
 <div class="card m-3 md:mx-auto sm:mx-0 md:w-8 sm:w-12 rounded-0">
     <h4 class="card-header mb-4">Shkallezimet e notave per lëndën
-        {{(title|async)}}</h4>
+        {{(examSubject|async)}}</h4>
     <div class="flex justify-content-end">
         <div class="my-2">
             <button pButton pRipple label="Shto" icon="pi pi-plus" class="p-button-success mr-2"
@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="card-body mt-5">
-        <p-table #dt dataKey="id" class="mt-6" [value]="values|async" styleClass="p-datatable-gridlines">
+        <p-table #dt dataKey="id" class="mt-6" [value]="gradeScales|async" styleClass="p-datatable-gridlines">
             <ng-template pTemplate="header">
                 <tr>
                     <th style="width: 25%">Pikët</th>

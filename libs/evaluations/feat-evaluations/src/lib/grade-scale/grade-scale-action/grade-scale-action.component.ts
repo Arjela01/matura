@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ExamSubjectApiService } from '@msh/configurations/data-access-configurations';
 import { GradesScaleService } from '@msh/evaluations/data-access-evaluations';
 import { GradesScale } from '@msh/evaluations/domain-evaluations';
 import { GlobalToastService } from '@msh/shared/util-shared';
@@ -15,7 +16,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { TableModule } from 'primeng/table';
-import { BehaviorSubject, map, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Observable, tap } from 'rxjs';
 import { GradeModalFormComponent } from '../grade-form/grade-form.component';
 
 @Component({
@@ -42,25 +43,47 @@ import { GradeModalFormComponent } from '../grade-form/grade-form.component';
 })
 @UntilDestroy()
 export class GradeScaleActionComponent {
-  values: BehaviorSubject<any> = new BehaviorSubject([]);
-  gradeScales = this.values.asObservable();
+  gradeScales$: BehaviorSubject<any> = new BehaviorSubject([]);
+  gradeScales = this.gradeScales$.asObservable();
   examSubjectId: any;
   @Input() hasActions = true;
   @Input() examSubjectIdDialog = null;
   displayModal?: boolean;
   selectedGradeScale: GradesScale | null = null;
-  title: BehaviorSubject<string> = new BehaviorSubject('');
+  examSubject: BehaviorSubject<string> = new BehaviorSubject('');
+
   constructor(
     private gradesScaleApiService: GradesScaleService,
     private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
     private toastService: GlobalToastService,
-    private router: Router
+    private router: Router,
+    private examSubjectApiService: ExamSubjectApiService
   ) {}
 
   ngOnInit() {
     this.examSubjectId = this.route.snapshot.params['examSubjectId'];
-    this.getGradeScales(this.examSubjectId);
+    this.initializeTable();
+  }
+
+  private initializeTable() {
+    const apiCalls = [
+      this.getGradeScales(this.examSubjectId),
+      this.getExamSubjectById(this.examSubjectId),
+    ];
+    combineLatest(apiCalls)
+      .pipe(untilDestroyed(this))
+      .subscribe(([gradeScales, examSubject]) => {
+        const examSubjectChoosen = examSubject.data.find(
+          (subject: any) => subject.key === this.examSubjectId
+        );
+        this.gradeScales$.next(gradeScales);
+        this.examSubject.next(examSubjectChoosen.value);
+      });
+  }
+
+  getExamSubjectById(examSubjectId: string): Observable<any> {
+    return this.examSubjectApiService.loadDropDownList(examSubjectId);
   }
 
   onModalClose() {
@@ -83,25 +106,39 @@ export class GradeScaleActionComponent {
     }
   }
   areScoresValid(newGradeScale: GradesScale) {
-    const scalesList = this.values.value as GradesScale[];
-    if (scalesList[0].grade > newGradeScale.grade) {
-      return scalesList[0].score > newGradeScale.score;
+    const gradeScalesList = this.gradeScales$.value as GradesScale[];
+    if (newGradeScale.id) {
+      const index = gradeScalesList.findIndex(
+        data => data.id === newGradeScale.id
+      );
+      index !== -1 ? gradeScalesList.splice(index, 1) : '';
     }
-    if (scalesList[scalesList.length - 1].grade < newGradeScale.grade) {
-      return scalesList[scalesList.length - 1].score < newGradeScale.score;
+    if (gradeScalesList.length <= 0) {
+      return true;
     }
-    for (let i = 1; i < scalesList.length - 1; i++) {
-      if (
-        scalesList[i - 1].grade < newGradeScale.grade &&
-        newGradeScale.grade < scalesList[i].grade
-      ) {
-        return (
-          scalesList[i - 1].score < newGradeScale.score &&
-          newGradeScale.score < scalesList[i].score
-        );
+    if (gradeScalesList[0].grade > newGradeScale.grade) {
+      return gradeScalesList[0].score > newGradeScale.score;
+    }
+    if (
+      gradeScalesList[gradeScalesList.length - 1].grade < newGradeScale.grade
+    ) {
+      return (
+        gradeScalesList[gradeScalesList.length - 1].score < newGradeScale.score
+      );
+    }
+    for (let i = 1; i < gradeScalesList.length; i++) {
+      const insideRangeOfGrades =
+        gradeScalesList[i - 1].grade < newGradeScale.grade &&
+        newGradeScale.grade < gradeScalesList[i].grade;
+      // check if new grade choosen is in the middle of the current iteration grade and the previous one.If this condition doesnt fail check if scores are in the correct order to
+      if (insideRangeOfGrades) {
+        const insideRangeOfScores =
+          gradeScalesList[i - 1].score < newGradeScale.score &&
+          newGradeScale.score < gradeScalesList[i].score;
+        return insideRangeOfScores;
       }
     }
-    return;
+    return true;
   }
 
   onEditClick(gradeScale: GradesScale) {
@@ -140,28 +177,13 @@ export class GradeScaleActionComponent {
           );
       });
   }
-  getGradeScales(id: number) {
-    this.gradesScaleApiService
-      .getScale(this.examSubjectId)
-      .pipe(
-        map(gradeScalesApiResponse => gradeScalesApiResponse.data),
-        tap(gradeScales =>
-          gradeScales.sort((previous, next) => previous.score - next.score)
-        )
+  getGradeScales(id: number): Observable<any> {
+    return this.gradesScaleApiService.getScale(this.examSubjectId).pipe(
+      map(gradeScalesApiResponse => gradeScalesApiResponse.data),
+      tap(gradeScales =>
+        gradeScales.sort((previous, next) => previous.score - next.score)
       )
-      .subscribe({
-        next: (gradeScales: any) => {
-          this.values.next(gradeScales);
-          gradeScales.length > 0
-            ? this.title.next(gradeScales[0].examSubjectName)
-            : '';
-        },
-        error: err => {
-          err.errorMessage
-            ? this.toastService.showError(err.errorMessage)
-            : this.toastService.showError('Ndodhi një problem !');
-        },
-      });
+    );
   }
   addGradeScales(gradesScale: GradesScale) {
     gradesScale.examSubjectId = this.examSubjectId;
@@ -173,7 +195,7 @@ export class GradeScaleActionComponent {
           if (response.isSuccessful) {
             this.toastService.showSuccess('Përshkallëzimi u shtua me sukses!');
             this.displayModal = false;
-            this.getGradeScales(this.examSubjectId);
+            this.initializeTable();
           } else {
             response.errorMessage
               ? this.toastService.showError(response.errorMessage)
@@ -208,7 +230,7 @@ export class GradeScaleActionComponent {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Përshkallëzimi u ndryshua me sukses!');
           this.displayModal = false;
-          this.getGradeScales(this.examSubjectId);
+          this.initializeTable();
         } else {
           this.toastService.showError(response.errorMessage);
         }
