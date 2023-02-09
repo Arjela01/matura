@@ -39,7 +39,6 @@ export class CalculateGradesComponent {
   endTime: any;
 
   columns = [
-    { field: '', header: 'Emri i Tabelës' },
     { field: 'executionLog', header: 'Veprimi i kryer' },
     { field: 'processStatus', header: 'Statusi' },
     { field: 'executionTime', header: 'Koha e ekzekutimit' },
@@ -68,6 +67,7 @@ export class CalculateGradesComponent {
               new Date(item.startTime).getTime();
             const duration = new Date(differenceInMs)
               .toISOString()
+            //extract only the first 8 characters starting from the 11th position
               .substr(11, 8);
             item.executionTime = `${this.endTime} ${duration}`;
           });
