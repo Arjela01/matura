@@ -19,7 +19,6 @@
         [rowHover]="true"
         selectionMode="multiple"
         (onLazyLoad)="getStudent($event)"
-
         [lazy]="true">
         <ng-template pTemplate="header">
           <tr>
@@ -156,7 +155,7 @@
               {{ annualGrades.highSchoolName }}
             </td>
             <td style="width: 14%; min-width: 10rem">
-              {{ examGrade.formularType }}
+              {{ annualGrades.formularType }}
             </td>
             <td style="width: 14%; min-width: 10rem">
               {{ annualGrades.createdOn | date : 'dd/MM/yyyy' }}

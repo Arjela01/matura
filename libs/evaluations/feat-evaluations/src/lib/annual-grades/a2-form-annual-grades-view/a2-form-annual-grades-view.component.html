@@ -3,7 +3,7 @@
     <div class="card px-6 py-6">
       <h3>Të dhëna Personale</h3>
 
-      <form #form="ngForm" *ngIf="student !== null" class="readonlyForm" [style]="{ width: '500px' }">
+      <div *ngIf="student !== null" class="readonlyForm" [style]="{ width: '500px' }">
 
         <div class="field">
           <label for="firstName">Emri *</label>
@@ -53,36 +53,35 @@
                  disabled />
         </div>
 
-        </form>
-      <div class="readonlyForm" [style]="{ width: '500px' }">
+      <div *ngIf="examGrade !== null" class="readonlyForm" [style]="{ width: '500px' }">
       <h3>Notat e Maturantit</h3>
         <div class="field">
-          <label for="schoolProfile">Nota Mesatare</label>
-          <input type="text" pInputText id="schoolProfile5185" name="schoolProfile" [(ngModel)]="examGrade.grade"
+          <label for="averageGrade">Nota Mesatare</label>
+          <input type="text" pInputText id="averageGrade" name="averageGrade" [(ngModel)]="examGrade.grade"
                  disabled />
         </div>
 
         <div class="field">
-          <label for="schoolProfile">Gjuhë shqipe dhe letërsi për gjimnazin</label>
-          <input type="text" pInputText id="schoolProfile5" name="schoolProfile" [(ngModel)]="examGrade.grade"
+          <label for="nativeLanguage">Gjuhë shqipe dhe letërsi për gjimnazin</label>
+          <input type="text" pInputText id="nativeLanguage" name="nativeLanguage" [(ngModel)]="examGrade.examSubjectName"
                  disabled />
         </div>
 
         <div class="field">
-          <label for="schoolProfile">Matematikë për gjimnazin</label>
-          <input type="text" pInputText id="schoolProfi5le" name="schoolProfile" [(ngModel)]="examGrade.grade"
+          <label for="math">Matematikë për gjimnazin</label>
+          <input type="text" pInputText id="math" name="math" [(ngModel)]="examGrade.examSubjectName"
                  disabled />
         </div>
 
         <div class="field">
-          <label for="schoolProfile">Anglisht D3 (B1)</label>
-          <input type="text" pInputText id="schoolProf5ile" name="schoolProfile" [(ngModel)]="examGrade.grade"
+          <label for="nativeEnglish">Anglisht D3 (B1)</label>
+          <input type="text" pInputText id="nativeEnglish" name="nativeEnglish" [(ngModel)]="examGrade.examSubjectName"
                  disabled />
         </div>
 
-        <div class="field">
-          <label for="schoolProfile">Qytetari dhe psikologji</label>
-          <input type="text" pInputText id="schoolPerofi5le" name="schoolProfile" [(ngModel)]="examGrade.grade"
+        <div class="field" >
+          <label for="choiseSubject">Qytetari dhe psikologji</label>
+          <input type="text" pInputText id="choiseSubject" name="choiseSubject" [(ngModel)]="examGrade.examSubjectName"
                  disabled />
         </div>
 
@@ -90,6 +89,8 @@
           <button type="button" pButton icon="pi pi-arrow-left" label="Kthehu"
                   class="p-button-text w-auto mr-2"></button>
         </a>
+
+      </div>
       </div>
     </div>
   </div>
