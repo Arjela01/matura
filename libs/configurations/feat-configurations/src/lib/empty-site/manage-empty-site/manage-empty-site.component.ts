@@ -57,7 +57,7 @@ export class ManageEmptySiteComponent {
           const examAssignment = event.data as ExamAssignment;
           this.examDateId = examAssignment.examDateId;
           this.confirmationService.confirm({
-            message: 'Jeni i sigurtë që doni të zbrazni  qendren?',
+            message: 'Jeni i sigurtë që doni të zbrazni  qendrën?',
             accept: () => {
               this.emptySite(this.examDateId);
             },
@@ -78,7 +78,7 @@ export class ManageEmptySiteComponent {
         }
         if (!response.isSuccessful) {
           this.toastService.showError(
-            'Ndodhi një problem gjatë zbrazjes së qendres!'
+            'Ndodhi një problem gjatë zbrazjes së qendrës!'
           );
         }
       });
