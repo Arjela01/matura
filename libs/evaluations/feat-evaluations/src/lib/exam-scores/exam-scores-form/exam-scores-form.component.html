@@ -17,7 +17,8 @@
     <small
       class="p-error block"
       *ngIf="
-        submitted && +academicYears[examScore.academicYearId].value !== currentYear
+        submitted &&
+        +academicYears[examScore.academicYearId].value !== currentYear
       ">
       Viti akademik duhet të jetë i njëjtë me vitin aktual.
     </small>
