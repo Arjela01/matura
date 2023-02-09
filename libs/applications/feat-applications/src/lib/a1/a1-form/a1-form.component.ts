@@ -116,7 +116,6 @@ export class A1FormComponent {
   }
 
   initializeFormWithApiCalls() {
-    const apiCalls = [this.getStudent(), this.getOptionalSubjects()];
     if (!this.id) {
       this.getAcademicYears()
         .pipe(
@@ -133,8 +132,10 @@ export class A1FormComponent {
                 },
               ],
             };
-
-            return combineLatest(apiCalls);
+            return combineLatest([
+              this.getStudent(),
+              this.getOptionalSubjects(),
+            ]);
           })
         )
         .subscribe(([students, z1]) => {
@@ -145,13 +146,16 @@ export class A1FormComponent {
           this.cd.detectChanges();
         });
     } else {
-      apiCalls.unshift(this.getAcademicYears());
       this.getA1ById()
         .pipe(
           switchMap((a1: any) => {
             this.a1 = { ...a1?.data } as A1;
-            apiCalls.push(this.getD3Subjects(this.a1.isFall));
-            return combineLatest(apiCalls);
+            return combineLatest([
+              this.getAcademicYears(),
+              this.getStudent(),
+              this.getOptionalSubjects(),
+              this.getD3Subjects(this.a1.isFall),
+            ]);
           })
         )
         .subscribe(([years, students, z1, d3]) => {

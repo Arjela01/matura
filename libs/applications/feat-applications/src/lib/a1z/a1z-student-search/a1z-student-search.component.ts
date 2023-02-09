@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { Student } from '@msh/shared/domain-models';
-import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
+import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
