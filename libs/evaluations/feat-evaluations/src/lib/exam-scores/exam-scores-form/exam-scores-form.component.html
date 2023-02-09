@@ -1,7 +1,6 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="field">
     <label for="AcademicYear">Viti Akademik*</label>
-    {{academicYears[examScore.academicYearId].value}}
     <p-dropdown
       id="AcademicYear"
       [options]="academicYears"
