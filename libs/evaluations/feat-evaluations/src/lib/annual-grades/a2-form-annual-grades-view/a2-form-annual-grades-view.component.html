@@ -1,0 +1,96 @@
+<div class="grid">
+  <div class="col-12 p-fluid">
+    <div class="card px-6 py-6">
+      <h3>Të dhëna Personale</h3>
+
+      <form #form="ngForm" *ngIf="student !== null" class="readonlyForm" [style]="{ width: '500px' }">
+
+        <div class="field">
+          <label for="firstName">Emri *</label>
+          <input type="text" pInputText id="firstName" name="firstName" [(ngModel)]="student.firstName" disabled />
+        </div>
+
+        <div class="field">
+          <label for="middleName">Atësia </label>
+          <input type="text" pInputText id="middleName" name="middleName" [(ngModel)]="student.middleName" disabled />
+        </div>
+
+        <div class="field">
+          <label for="lastName">Mbiemri </label>
+          <input type="text" pInputText id="lastName" name="lastName" [(ngModel)]="student.lastName" disabled />
+        </div>
+
+        <div class="field">
+          <label for="gender">Gjinia </label>
+          <input type="text" pInputText id="gender" name="genders" [(ngModel)]="student.genderName" disabled />
+        </div>
+
+        <div class="field">
+          <label for="studentId">ID e studentit </label>
+          <input type="number" pInputText id="studentId" name="studentId" [(ngModel)]="student.studentId" disabled />
+        </div>
+
+        <div class="field">
+          <label for="birthDate">Datëlindja </label>
+          <input type="text" pInputText id="birthDate" name="birthDate"
+                 value="{{ student.birthDate | date : 'dd/MM/yyyy' }}" disabled />
+        </div>
+
+        <div class="field">
+          <label for="birthPlace">Vendlindja </label>
+          <input type="text" pInputText id="birthPlace" name="birthPlace" [ngModel]="student.birthPlace" disabled />
+        </div>
+
+        <div class="field">
+          <label for="highSchool">Shkolla</label>
+          <input type="text" pInputText id="highSchool" name="highSchool" [(ngModel)]="student.highSchoolName"
+                 disabled />
+        </div>
+
+        <div class="field">
+          <label for="schoolProfile">Profili Shkollës</label>
+          <input type="text" pInputText id="schoolProfile" name="schoolProfile" [(ngModel)]="student.profileName"
+                 disabled />
+        </div>
+
+        </form>
+      <div class="readonlyForm" [style]="{ width: '500px' }">
+      <h3>Notat e Maturantit</h3>
+        <div class="field">
+          <label for="schoolProfile">Nota Mesatare</label>
+          <input type="text" pInputText id="schoolProfile5185" name="schoolProfile" [(ngModel)]="examGrade.grade"
+                 disabled />
+        </div>
+
+        <div class="field">
+          <label for="schoolProfile">Gjuhë shqipe dhe letërsi për gjimnazin</label>
+          <input type="text" pInputText id="schoolProfile5" name="schoolProfile" [(ngModel)]="examGrade.grade"
+                 disabled />
+        </div>
+
+        <div class="field">
+          <label for="schoolProfile">Matematikë për gjimnazin</label>
+          <input type="text" pInputText id="schoolProfi5le" name="schoolProfile" [(ngModel)]="examGrade.grade"
+                 disabled />
+        </div>
+
+        <div class="field">
+          <label for="schoolProfile">Anglisht D3 (B1)</label>
+          <input type="text" pInputText id="schoolProf5ile" name="schoolProfile" [(ngModel)]="examGrade.grade"
+                 disabled />
+        </div>
+
+        <div class="field">
+          <label for="schoolProfile">Qytetari dhe psikologji</label>
+          <input type="text" pInputText id="schoolPerofi5le" name="schoolProfile" [(ngModel)]="examGrade.grade"
+                 disabled />
+        </div>
+
+        <a routerLink="/evaluations/annual-grades">
+          <button type="button" pButton icon="pi pi-arrow-left" label="Kthehu"
+                  class="p-button-text w-auto mr-2"></button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

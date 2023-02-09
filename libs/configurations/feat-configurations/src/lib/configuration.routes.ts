@@ -22,13 +22,7 @@ export const CONFIGURATION_ROUTES: Route[] = [
         m => m.ManageProfilesComponent
       ),
   },
-  {
-    path: 'add-archive-exam/:id',
-    loadComponent: () =>
-      import(
-        '../../../../evaluations/feat-evaluations/src/lib/archive-exam/manage-archive-exams/manage-archive-exams.component'
-      ).then(m => m.ManageArchiveExamsComponent),
-  },
+
   {
     path: 'students',
     loadComponent: () =>

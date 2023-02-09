@@ -43,6 +43,20 @@ export const EVALUATION_ROUTES: Route[] = [
         './archive-folder-cover/manage-archive-folder-cover/manage-archive-folder-cover.component'
       ).then(m => m.ManageArchiveFolderCoverComponent),
   },
+  {
+    path: 'A2-form-annual-grades-view/:id',
+    loadComponent: () =>
+      import(
+        './annual-grades/a2-form-annual-grades-view/a2-form-annual-grades-view.component'
+        ).then(m => m.A2FormAnnualGradesViewComponent),
+  },
+  {
+    path: 'annual-grades',
+    loadComponent: () =>
+      import(
+        './annual-grades/annual-grades-grid/annual-grades-grid.component'
+        ).then(m => m.AnnualGradesGridComponent),
+  },
 
   {
     path: 'exam-secret',
