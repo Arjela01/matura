@@ -1,6 +1,6 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="field">
-    <label for="AcademicYear">Viti *</label>
+    <label for="AcademicYear">Viti Akademik*</label>
     <p-dropdown
       id="AcademicYear"
       [options]="academicYears"
@@ -14,8 +14,16 @@
         'ng-invalid ng-dirty': submitted && !examScore.academicYearId
       }">
     </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="
+        submitted &&
+        +academicYears[examScore.academicYearId].value !== currentYear
+      ">
+      Viti akademik duhet të jetë i njëjtë me vitin aktual.
+    </small>
     <small class="p-error block" *ngIf="submitted && !examScore.academicYearId">
-      Viti është fushë e kërkuar.
+      Viti akademik është fushë e kërkuar.
     </small>
   </div>
 
@@ -30,7 +38,7 @@
       (onChange)="onExamTypeChanged($event)"
       (onClear)="onExamTypeChanged($event)"
       [autoDisplayFirst]="false"
-      [(ngModel)]="examTypeId"
+      [(ngModel)]="examScore.examTypeId"
       [showClear]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examTypeId
@@ -43,6 +51,7 @@
 
   <div class="field">
     <label for="ExamSubject">Lënda e Provimit *</label>
+
     <p-dropdown
       id="ExamSubject"
       [options]="examSubjects"
@@ -52,7 +61,7 @@
       (onChange)="onExamSubjectChanged($event)"
       (onClear)="onExamSubjectChanged($event)"
       [autoDisplayFirst]="false"
-      [(ngModel)]="examSubjectId"
+      [(ngModel)]="examScore.examSubjectId"
       [showClear]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examSubjectId
