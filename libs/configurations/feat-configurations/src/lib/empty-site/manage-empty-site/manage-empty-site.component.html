@@ -2,20 +2,37 @@
   <div class="col-12">
     <div class="card px-6 py-6">
       <div class="flex ml-2 mb-2 page-header">
-        <h2 class="flex-1 mb-0">Zbraz Qendren e Provimit</h2>
+        <h2 class="flex-1 mb-5 mt-3">Zbraz Qendrën e Provimit</h2>
       </div>
-<!--      <msh-empty-site-grid [examAssignments]="(examAssignmentList$ | async) || []" [totalRecords]="totalRecords"-->
-<!--                  (gridEvent)="onGridEvent($event)" (lazyLoadData)="getExamAssignment($event)">-->
-<!--      </msh-empty-site-grid>-->
+      <msh-empty-site-grid
+        [examAssignments]="(examAssignmentList$ | async) || []"
+        [totalRecords]="totalRecords"
+        (gridEvent)="onGridEvent($event)"
+        (lazyLoadData)="getExamAssignment($event)">
+      </msh-empty-site-grid>
     </div>
   </div>
 </div>
 
-<p-confirmDialog #cd header="Konfirmo" icon="pi pi-exclamation-triangle" [style]="{ width: '450px' }">
+<p-confirmDialog
+  #cd
+  header="Konfirmo"
+  icon="pi pi-exclamation-triangle"
+  [style]="{ width: '450px' }">
   <ng-template pTemplate="footer">
-    <button type="button" pButton icon="pi pi-times" label="No" class="p-button-text"
-            (click)="cd.reject()"></button>
-    <button type="button" pButton icon="pi pi-check" label="Yes" class="p-button-text"
-            (click)="cd.accept()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="No"
+      class="p-button-text"
+      (click)="cd.reject()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Yes"
+      class="p-button-text"
+      (click)="cd.accept()"></button>
   </ng-template>
 </p-confirmDialog>

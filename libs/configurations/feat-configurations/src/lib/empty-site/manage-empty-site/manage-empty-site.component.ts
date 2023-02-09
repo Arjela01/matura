@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   GlobalToastService,
-  GridEvent,
   GRID_ACTIONS,
+  GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -14,9 +14,9 @@ import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
-import {ExamSite} from "@msh/configurations/domain-configurations";
-import {EmptySiteApiService, ExamSiteApiService} from "@msh/configurations/data-access-configurations";
-import {EmptySiteGridComponent} from "../empty-site-grid/empty-site-grid.component";
+import { ExamAssignmentApiService } from '@msh/configurations/data-access-configurations';
+import { EmptySiteGridComponent } from '../empty-site-grid/empty-site-grid.component';
+import { ExamAssignment } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-manage-empty-site',
@@ -38,55 +38,60 @@ import {EmptySiteGridComponent} from "../empty-site-grid/empty-site-grid.compone
 })
 @UntilDestroy()
 export class ManageEmptySiteComponent {
-  private examAssignmentList$$ = new BehaviorSubject<ExamSite[]>([]);
+  private examAssignmentList$$ = new BehaviorSubject<ExamAssignment[]>([]);
   examAssignmentList$ = this.examAssignmentList$$.asObservable();
   filters: LazyLoadEvent | null = null;
   totalRecords = 0;
+  examDateId = 0;
 
   constructor(
-    //private readonly examAssignmentService: ExamAssignmentApiService,
+    private readonly examAssignmentService: ExamAssignmentApiService,
     private readonly confirmationService: ConfirmationService,
-    private readonly toastService: GlobalToastService,
-    //private readonly examAssignmentService: ExamAssignmentApiService,
-    private emptySiteService: EmptySiteApiService,
+    private readonly toastService: GlobalToastService
   ) {}
 
-  // onGridEvent(event: GridEvent<ExamAssignment | ExamAssignment[]>) {
-  //   switch (event.action) {
-  //     case GRID_ACTIONS.REJECT:
-  //       this.confirmationService.confirm({
-  //         message: 'Jeni i sigurtë që doni të zbrazni  qendren?',
-  //         accept: () => {
-  //          //this.emptySite(event.data as ExamSite);
-  //         },
-  //       });
-  //       break;
-  //   }
-  // }
-  // emptySite(ExamAssignment: ExamAssignment) {
-  //   this.examAssignmentService
-  //     .emptySite(ExamSite.id)
-  //     .pipe(untilDestroyed(this))
-  //     .subscribe(response => {
-  //       if (response.isSuccessful) {
-  //         this.toastService.showSuccess('Qendra u zbras me sukses!');
-  //         this.getExamSite(this.filters as LazyLoadEvent);
-  //       }
-  //       if (!response.isSuccessful) {
-  //         this.toastService.showError('Ndodhi një problem!');
-  //       }
-  //     });
-  // }
+  onGridEvent(event: GridEvent<ExamAssignment | ExamAssignment[]>) {
+    switch (event.action) {
+      case GRID_ACTIONS.SELECT_ROW:
+        {
+          const examAssignment = event.data as ExamAssignment;
+          this.examDateId = examAssignment.examDateId;
+          this.confirmationService.confirm({
+            message: 'Jeni i sigurtë që doni të zbrazni  qendren?',
+            accept: () => {
+              this.emptySite(this.examDateId);
+            },
+          });
+        }
+        break;
+    }
+  }
+
+  emptySite(examDateId: number) {
+    this.examAssignmentService
+      .emptySite(examDateId)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.getExamAssignment(this.filters as LazyLoadEvent);
+          this.toastService.showSuccess('Qendra u zbraz me sukses!');
+        }
+        if (!response.isSuccessful) {
+          this.toastService.showError(
+            'Ndodhi një problem gjatë zbrazjes së qendres!'
+          );
+        }
+      });
+  }
 
   getExamAssignment($event: LazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
-    this.emptySiteService
-      .loadExamSites($event)
+    this.examAssignmentService
+      .loadExamAssignments($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        const examSites = [...response.data];
-        console.log(111 , examSites)
-        this.examAssignmentList$$.next(examSites);
+        const examAssignments = [...response.data];
+        this.examAssignmentList$$.next(examAssignments);
         this.totalRecords = response.total;
       });
   }

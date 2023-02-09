@@ -73,4 +73,12 @@ export class ExamAssignmentApiService {
         shareReplay()
       );
   }
+  emptySite(examDateId: number): Observable<ApiResult<ExamAssignment>> {
+    return this.apiService.post(
+      `/ExamAssignment/EmptySite`,
+      {
+        examDateId: examDateId,
+      }
+    );
+  }
 }
