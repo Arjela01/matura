@@ -124,7 +124,7 @@ export class A1FormComponent {
             this.academicYear = academicYears['data'].find(
               (year: AcademicYear) => year.isActive
             );
-            (INITIAL_FILTER = {
+            INITIAL_FILTER = {
               registrationYear: [
                 {
                   value: this.academicYear?.year,
@@ -132,8 +132,8 @@ export class A1FormComponent {
                   operator: 'and',
                 },
               ],
-            }),
-              +!!this.academicYear?.year;
+            };
+
             return combineLatest(apiCalls);
           })
         )
