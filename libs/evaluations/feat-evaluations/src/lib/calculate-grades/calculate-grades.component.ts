@@ -55,9 +55,9 @@ export class CalculateGradesComponent {
       .loadCalculatedGrades($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        const dataArray = response.data
-        if ([dataArray].length > 0) {
-          [dataArray].forEach(item => {
+        const dataArray = [response.data] as CalculateGrade[];
+        if (dataArray.length > 0) {
+          dataArray.forEach(item => {
             this.endTime = formatDate(
               new Date(item.endTime as Date),
               'dd/MM/yyyy',
@@ -68,14 +68,14 @@ export class CalculateGradesComponent {
               new Date(item.startTime).getTime();
             const duration = new Date(differenceInMs)
               .toISOString()
-            //extract only the first 8 characters starting from the 11th position
+              //extract only the first 8 characters starting from the 11th position
               .substr(11, 8);
             item.executionTime = `${this.endTime} ${duration}`;
+            this.appProcessType = item.appProcessType;
+            this.executionLog = item.executionLog;
           });
         }
-        this.calculateGrade$$.next([dataArray]);
-        this.appProcessType = dataArray.appProcessType;
-        this.executionLog = dataArray.executionLog;
+        this.calculateGrade$$.next(dataArray);
       });
   }
 }
