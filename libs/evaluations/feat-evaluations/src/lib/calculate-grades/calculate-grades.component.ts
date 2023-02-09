@@ -55,8 +55,9 @@ export class CalculateGradesComponent {
       .loadCalculatedGrades($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        if (response.data.length > 0) {
-          response.data.forEach(item => {
+        const dataArray = response.data
+        if ([dataArray].length > 0) {
+          [dataArray].forEach(item => {
             this.endTime = formatDate(
               new Date(item.endTime as Date),
               'dd/MM/yyyy',
@@ -72,16 +73,9 @@ export class CalculateGradesComponent {
             item.executionTime = `${this.endTime} ${duration}`;
           });
         }
-        this.calculateGrade$$.next(response.data);
-        const firstData = response.data.reduce((acc: any, curr: any) => {
-          return acc || curr;
-        }, false);
-
-        if (firstData) {
-          const object = { ...firstData };
-          this.appProcessType = object.appProcessType;
-          this.executionLog = object.executionLog;
-        }
+        this.calculateGrade$$.next([dataArray]);
+        this.appProcessType = dataArray.appProcessType;
+        this.executionLog = dataArray.executionLog;
       });
   }
 }

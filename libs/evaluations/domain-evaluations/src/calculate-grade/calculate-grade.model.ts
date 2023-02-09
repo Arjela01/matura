@@ -10,7 +10,7 @@ export interface CalculateGrade {
 }
 
 export interface CalculateGradeTableView {
-  data: CalculateGrade[];
+  data: CalculateGrade;
 
 }
 
