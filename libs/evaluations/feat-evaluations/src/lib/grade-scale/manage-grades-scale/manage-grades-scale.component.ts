@@ -65,7 +65,7 @@ export class ManageGradesScaleComponent {
   }
 
   getDropdownSubjects() {
-    this.examSubjectsService.loadDropDownList().subscribe(resp => {
+    this.examSubjectsService.loadDropdownList().subscribe(resp => {
       this.examSubjectDropdown = resp.data;
     });
   }
