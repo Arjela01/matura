@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import {SecretsComponent} from "./secrets/secrets.component";
 
 export const EVALUATION_ROUTES: Route[] = [
   {
@@ -77,6 +78,13 @@ export const EVALUATION_ROUTES: Route[] = [
     loadComponent: () =>
       import('./calculate-grades/calculate-grades.component').then(
         m => m.CalculateGradesComponent
+      ),
+  },
+  {
+    path: 'secrets',
+    loadComponent: () =>
+      import('./secrets/secrets.component').then(
+        m => m.SecretsComponent
       ),
   },
   {
