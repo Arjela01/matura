@@ -20,6 +20,7 @@ import { ExamScore } from '@msh/evaluations/domain-evaluations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { GlobalToastService } from '@msh/shared/util-shared';
 
 @Component({
   selector: 'msh-exam-score-form',
@@ -78,6 +79,7 @@ export class ExamScoresFormComponent implements OnChanges {
 
   constructor(
     private cd: ChangeDetectorRef,
+    private readonly toastService: GlobalToastService
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -92,9 +94,17 @@ export class ExamScoresFormComponent implements OnChanges {
 
   onSubmit(): void {
     this.submitted = true;
-
-    if (this.form.valid) {
-      this.formSave.emit(this.examScore);
+    if (
+      +this.academicYears[this.examScore.academicYearId].value !==
+      this.currentYear
+    ) {
+      this.toastService.showError(
+        'Viti akademik duhet të jetë i njëjtë me vitin aktual!'
+      );
+    } else {
+      if (this.form.valid) {
+        this.formSave.emit(this.examScore);
+      }
     }
   }
   onExamTypeChanged($event: any): void {

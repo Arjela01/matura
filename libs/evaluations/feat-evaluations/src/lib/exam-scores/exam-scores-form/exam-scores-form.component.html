@@ -1,6 +1,7 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="field">
     <label for="AcademicYear">Viti Akademik*</label>
+    {{academicYears[examScore.academicYearId].value}}
     <p-dropdown
       id="AcademicYear"
       [options]="academicYears"
@@ -17,8 +18,7 @@
     <small
       class="p-error block"
       *ngIf="
-        submitted &&
-        +academicYears[examScore.academicYearId].value !== currentYear
+        submitted && +academicYears[examScore.academicYearId].value !== currentYear
       ">
       Viti akademik duhet të jetë i njëjtë me vitin aktual.
     </small>
