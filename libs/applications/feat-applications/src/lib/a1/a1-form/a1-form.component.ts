@@ -15,8 +15,8 @@ import {
   ExamSubjectApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
-import { AcademicYear } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import { AcademicYear } from '@msh/shared/domain-models';
 import { GlobalToastService } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ButtonModule } from 'primeng/button';
@@ -32,15 +32,7 @@ import { TableModule } from 'primeng/table';
 import { combineLatest, Observable, of, switchMap } from 'rxjs';
 import { ManageStudentsGridsDialogComponent } from '../manage-students-grids-dialog/manage-students-grids-dialog.component';
 
-const INITIAL_FILTER = {
-  registrationYear: [
-    {
-      value: 2023,
-      matchMode: 'equals',
-      operator: 'and',
-    },
-  ],
-};
+let INITIAL_FILTER = {};
 @Component({
   selector: 'a1-form',
   standalone: true,
@@ -124,25 +116,36 @@ export class A1FormComponent {
   }
 
   initializeFormWithApiCalls() {
-    const apiCalls = [
-      this.getAcademicYears(),
-      this.getStudent(),
-      this.getOptionalSubjects(),
-    ];
+    const apiCalls = [this.getStudent(), this.getOptionalSubjects()];
     if (!this.id) {
-      combineLatest(apiCalls)
-        .pipe(untilDestroyed(this))
-        .subscribe(([years, students, z1]) => {
+      this.getAcademicYears()
+        .pipe(
+          switchMap((academicYears: any) => {
+            this.academicYear = academicYears['data'].find(
+              (year: AcademicYear) => year.isActive
+            );
+            (INITIAL_FILTER = {
+              registrationYear: [
+                {
+                  value: this.academicYear?.year,
+                  matchMode: 'equals',
+                  operator: 'and',
+                },
+              ],
+            }),
+              +!!this.academicYear?.year;
+            return combineLatest(apiCalls);
+          })
+        )
+        .subscribe(([students, z1]) => {
           this.showForm = true;
-          this.academicYear = years['data'].find(
-            (year: AcademicYear) => year.isActive
-          );
           this.a1.academicYearId = this.academicYear?.id;
           this.students = students;
           this.optionalSubjects = z1.data;
           this.cd.detectChanges();
         });
     } else {
+      apiCalls.unshift(this.getAcademicYears());
       this.getA1ById()
         .pipe(
           switchMap((a1: any) => {
