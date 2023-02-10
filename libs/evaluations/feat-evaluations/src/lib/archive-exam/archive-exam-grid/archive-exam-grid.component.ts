@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component, ElementRef,
+  Component,
   EventEmitter,
   Input,
   OnInit,
@@ -100,6 +100,7 @@ export class ArchiveExamGridComponent implements OnInit {
       if(value == true) {
         this.archiveExam.barcode = '';
         this.barcodeField.focus();
+
       }
     })
   }
