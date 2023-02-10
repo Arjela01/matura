@@ -109,9 +109,8 @@ export class ManageGradesScaleComponent {
   }
 
   onSubmit(event: any) {
-    this.gradesScaleApiService
-      .uploadExcelFile(event)
-      .subscribe((response: any) => {
+    this.gradesScaleApiService.uploadExcelFile(event).subscribe({
+      next: (response: any) => {
         this.displayModal = false;
 
         if (response.isSuccessful) {
@@ -122,15 +121,24 @@ export class ManageGradesScaleComponent {
             ? this.toastService.showError(
                 'Ndodhi një problem gjatë ngarkimit të dokumentit!'
               )
-            : this.toastService.showError(
-                'Ndodhi një problem gjatë ngarkimit të dokumentit!'
-              );
+            : this.toastService.showError(response.errorMessage);
         }
         if (response.isBadRequest)
           this.toastService.showError(
             'Ndodhi një problem gjatë ngarkimit të dokumentit!'
           );
-      });
+      },
+      error: error => {
+        error.errorMessage
+          ? this.toastService.showError(error.errorMessage)
+          : this.toastService.showError(
+              'Ndodhi një problem gjatë ndryshimit të formularit A1!'
+            );
+        this.toastService.showError(
+          'Ndodhi një problem gjatë ndryshimit të formularit A1!'
+        );
+      },
+    });
   }
 
   onModalClose() {

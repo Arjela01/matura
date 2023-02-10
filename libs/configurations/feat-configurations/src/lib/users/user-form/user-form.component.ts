@@ -92,6 +92,7 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
     overseerCode: '',
     studentId: null,
     roleId: '',
+    nid: '',
     studyProgramId: 0,
     universityId: 0,
     universityDepartmentId: 0,
@@ -111,7 +112,7 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnChanges(): void {
     this.onUniversityChange({ value: this.user.universityId });
-    this.onRoleChange({value: this.user?.roleId});
+    this.onRoleChange({ value: this.user?.roleId });
   }
 
   onCancelClick() {
@@ -121,6 +122,7 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
+      this.user.nid = this.user.nid.toUpperCase();
       this.formSave.emit(this.user);
     }
   }
