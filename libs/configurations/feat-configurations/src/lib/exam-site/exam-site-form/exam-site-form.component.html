@@ -33,6 +33,22 @@
   </div>
 
   <div class="field">
+    <label for="quotes">Kuotat *</label>
+    <input
+      type="text"
+      pInputText
+      id="quotes"
+      name="quotes"
+      [(ngModel)]="examSite.quota"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examSite.quota }" />
+    <small class="p-error block" *ngIf="submitted && !examSite.quota">
+      Kuota është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
     <label for="AdministrationOffice">DAR/ZA *</label>
     <p-dropdown
       id="AdministrationOffice"
