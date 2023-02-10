@@ -121,9 +121,7 @@ export class ManageGradesScaleComponent {
             ? this.toastService.showError(
                 'Ndodhi një problem gjatë ngarkimit të dokumentit!'
               )
-            : this.toastService.showError(
-                'Ndodhi një problem gjatë ngarkimit të dokumentit!'
-              );
+            : this.toastService.showError(response.errorMessage);
         }
         if (response.isBadRequest)
           this.toastService.showError(
