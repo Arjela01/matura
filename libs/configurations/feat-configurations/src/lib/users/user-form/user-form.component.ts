@@ -15,6 +15,10 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { UserApiService } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { User } from '@msh/shared/domain-models';
+import {
+  AlbanianNidValidatorDirective,
+  StrongPasswordDirective,
+} from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
@@ -23,6 +27,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { PasswordModule } from 'primeng/password';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { roleList } from './role-list';
 
@@ -41,6 +46,9 @@ import { roleList } from './role-list';
     CheckboxModule,
     CalendarModule,
     DropdownModule,
+    PasswordModule,
+    AlbanianNidValidatorDirective,
+    StrongPasswordDirective,
   ],
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss'],
