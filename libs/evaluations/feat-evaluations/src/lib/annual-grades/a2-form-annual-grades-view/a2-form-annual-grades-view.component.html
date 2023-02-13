@@ -50,12 +50,14 @@
 
       <h3>Notat e Maturantit</h3>
       <p-table  [tableStyle]="{'min-width': '50rem'}">
-        <ng-template pTemplate="header">
+        <ng-template pTemplate="header" >
+          <div *ngIf="examGrade.length === 0">Nuk janë gjetur asnjë notë!</div>
+
           <tr>
-            <th  *ngFor="let exam of examGrade ; let i = index">{{exam.examSubjectName}}</th>
+            <th  *ngFor="let exam of examGrade">{{exam.examSubjectName}}</th>
           </tr>
           <tr>
-            <th  *ngFor="let exam of examGrade ; let i = index">{{exam.grade}}</th>
+            <th  *ngFor="let exam of examGrade">{{exam.grade}}</th>
           </tr>
         </ng-template>
       </p-table>
