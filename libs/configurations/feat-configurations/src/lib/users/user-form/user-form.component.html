@@ -3,12 +3,12 @@
     <label for="nid">NID *</label>
     <input type="text" pInputText mshAlbanianNidValidator id="nid" name="nid" [(ngModel)]="user.nid" #nidModel="ngModel"
       required autofocus [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.name 
+        'ng-invalid ng-dirty': submitted && !user.nid 
       }" />
-    <small class="p-error block" *ngIf="submitted && !user.name">
+    <small class="p-error block" *ngIf="submitted && (user.nid=== '' || user.nid=== null) ">
       NID është fushë e kërkuar.
     </small>
-    <small class="p-error block" *ngIf="submitted &&  nidModel.errors &&  nidModel.errors['albanianNidValidator']">
+    <small class="p-error block" *ngIf="submitted &&  nidModel.errors &&  nidModel.errors['albanianNidValidator'] ">
       NID nuk i përshtatet formatit shqipëtar.
     </small>
   </div>
