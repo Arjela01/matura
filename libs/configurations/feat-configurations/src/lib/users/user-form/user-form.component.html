@@ -3,7 +3,7 @@
     <label for="nid">NID *</label>
     <input type="text" pInputText id="nid" name="nid" [(ngModel)]="user.nid" #nid="ngModel"
       pattern="[A-Za-z0-9]{1}[0-9]{8}[A-Za-z0-9]{1}" required autofocus [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.name 
+        'ng-invalid ng-dirty': submitted && !user.name
       }" />
     <small class="p-error block" *ngIf="submitted && !user.name">
       NID është fushë e kërkuar.
@@ -94,15 +94,15 @@
     <input type="text" pInputText id="overseerCode" name="overseerCode" [(ngModel)]="user.overseerCode" autofocus />
   </div>
 
-  <div class="field">
-    <label for="password">Fjalëkalimi *</label>
-    <input type="password" pInputText id="password" name="password" [(ngModel)]="user.password" autofocus [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.password
-      }" />
-    <small class="p-error block" *ngIf="submitted && !user.password">
-      Fjalëkalimi është fushë e kërkuar.
-    </small>
-  </div>
+<!--  <div class="field">-->
+<!--    <label for="password">Fjalëkalimi *</label>-->
+<!--    <input type="password" pInputText id="password" name="password" [(ngModel)]="user.password" autofocus [ngClass]="{-->
+<!--        'ng-invalid ng-dirty': submitted && !user.password-->
+<!--      }" />-->
+<!--    <small class="p-error block" *ngIf="submitted && !user.password">-->
+<!--      Fjalëkalimi është fushë e kërkuar.-->
+<!--    </small>-->
+<!--  </div>-->
 
   <div class="field">
     <label class="mb-3">Është aktiv? *</label>

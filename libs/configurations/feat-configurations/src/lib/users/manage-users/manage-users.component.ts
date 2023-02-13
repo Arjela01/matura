@@ -28,6 +28,7 @@ import { BehaviorSubject } from 'rxjs';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { UserGridComponent } from '../user-grid/user-grid.component';
 import { RippleModule } from 'primeng/ripple';
+import { UsersPasswordResetFormComponent } from '../users-password-reset-form/users-password-reset-form.component';
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-users',
@@ -44,6 +45,7 @@ import { RippleModule } from 'primeng/ripple';
     UserGridComponent,
     UserFormComponent,
     RippleModule,
+    UsersPasswordResetFormComponent,
   ],
   providers: [ConfirmationService],
 })
@@ -65,6 +67,7 @@ export class ManageUsersComponent implements OnInit {
   roles: DropdownModel<number>[] = [];
 
   userDialog = false;
+  passwordDialog = false;
 
   constructor(
     private readonly userService: UserApiService,
@@ -120,6 +123,10 @@ export class ManageUsersComponent implements OnInit {
       case GRID_ACTIONS.UNSELECT_ALL:
         this.selectedUsers = [];
         break;
+      case GRID_ACTIONS.CUSTOM_ACTION1:
+        this.selectedUser = Object.assign({}, event.data as User);
+        this.passwordDialog = true;
+        break;
       case GRID_ACTIONS.EDIT:
         this.selectedUser = Object.assign({}, event.data as User);
         this.userDialog = true;
@@ -137,6 +144,7 @@ export class ManageUsersComponent implements OnInit {
 
   onFormClose() {
     this.userDialog = false;
+    this.passwordDialog = false;
   }
 
   onFormSave(user: User) {
