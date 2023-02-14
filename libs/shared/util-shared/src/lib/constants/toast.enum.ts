@@ -6,8 +6,8 @@ export enum ToastSeverity {
 }
 
 export enum ToastDefaultTitle {
-  SUCCESS = 'Success',
-  INFO = 'Information',
-  WARN = 'Warning',
-  ERROR = 'Error',
+  SUCCESS = 'Sukses',
+  INFO = 'Informacion',
+  WARN = 'Kujdes',
+  ERROR = 'Gabim',
 }
