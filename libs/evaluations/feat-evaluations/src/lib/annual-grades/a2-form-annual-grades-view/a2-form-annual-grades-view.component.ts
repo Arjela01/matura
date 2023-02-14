@@ -1,0 +1,115 @@
+import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+import { InputMaskModule } from 'primeng/inputmask';
+import { Student } from '@msh/shared/domain-models';
+import {
+  AcademicYearApiService,
+  StudentsApiService,
+} from '@msh/configurations/data-access-configurations';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { LazyLoadEvent, MessageService } from 'primeng/api';
+import { ExamGradeApiService } from '@msh/evaluations/data-access-evaluations';
+import { TableModule } from 'primeng/table';
+
+@Component({
+  selector: 'msh-a2-form-annual-grades-view',
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    InputTextModule,
+    InputNumberModule,
+    RadioButtonModule,
+    InputTextareaModule,
+    ButtonModule,
+    CheckboxModule,
+    DropdownModule,
+    CalendarModule,
+    InputMaskModule,
+    RouterLink,
+    TableModule,
+  ],
+  templateUrl: './a2-form-annual-grades-view.component.html',
+  styleUrls: ['./a2-form-annual-grades-view.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class A2FormAnnualGradesViewComponent implements OnInit {
+  totalRecords = 0;
+  filters: LazyLoadEvent | null = null;
+  submitted = false;
+  id: any;
+  student: Student = {
+    createdName: '',
+    createdOn: new Date(),
+    modifiedByName: '',
+    modifiedOn: new Date(),
+    birthDate: new Date(),
+    birthPlace: '',
+    email: '',
+    genderId: 1,
+    idCard: '',
+    isA2A3: true,
+    isEAlbaniaApplication: true,
+    isFall: false,
+    lastName: '',
+    highSchool: '',
+    middleName: '',
+    mobilePhone: '',
+    profileName: '',
+    genderName: '',
+    oldID: '',
+    profileId: 0,
+    schoolFinished: '',
+    schoolProfile: '',
+    highSchoolName: '',
+    schoolName: '',
+    highSchoolId: 0,
+    session: '',
+    studentId: '',
+    studyClass: '',
+    schoolFinishedName: '',
+    firstName: '',
+    graduationYear: undefined,
+  };
+
+  examGrade: any[] = [];
+
+  constructor(
+    private cd: ChangeDetectorRef,
+    private readonly academicYearService: AcademicYearApiService,
+    private readonly studentService: StudentsApiService,
+    private readonly examGradeApiService: ExamGradeApiService,
+    private router: Router,
+    private messageService: MessageService,
+
+    private route: ActivatedRoute
+  ) {
+    this.id = this.route.snapshot.paramMap.get('id');
+    // this.examGrades = {};
+  }
+
+  ngOnInit(): void {
+    this.studentService.getById(this.id).subscribe(result => {
+      this.student = { ...result.data };
+      this.cd.detectChanges();
+    });
+    this.examGradeApiService.getById(this.id).subscribe(result => {
+      this.examGrade = [...result.data];
+      this.cd.detectChanges();
+    });
+  }
+}

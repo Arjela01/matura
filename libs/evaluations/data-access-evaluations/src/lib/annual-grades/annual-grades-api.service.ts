@@ -2,20 +2,17 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { LazyLoadEvent } from 'primeng/api';
 import { APIService } from '@msh/shared/util-shared';
-import { ExamGradeTableView } from '@msh/evaluations/domain-evaluations';
-import { ApiResult } from '@msh/shared/data-access-shared';
+import {AnnualGradesView} from "@msh/evaluations/domain-evaluations";
 
 @Injectable({
   providedIn: 'root',
 })
-export class ExamGradeApiService {
+export class AnnualGradesApiService {
   constructor(private apiService: APIService) {}
 
-  getById(id: any): Observable<ApiResult<any>> {
-    return this.apiService.get<ApiResult<any>>(`/ExamGrade/${id}`);
-  }
-
-  loadAnnualExamGrades(event: LazyLoadEvent): Observable<ExamGradeTableView> {
+  loadAnnualGrades(
+    event: LazyLoadEvent
+  ): Observable<AnnualGradesView> {
     return this.apiService.post(`/ExamGrade/TableData`, event).pipe(
       map((data: any) => data),
       catchError(error => throwError(error))
