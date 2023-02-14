@@ -174,9 +174,6 @@
                 'ng-invalid ng-dirty': submitted && !student.schoolProfile
               }">
             </p-dropdown>
-            <small class="p-error block" *ngIf="submitted && !student.schoolProfile">
-              Klasa është fushë e kërkuar.
-            </small>
           </div>
 
           <div class="field">
@@ -186,9 +183,7 @@
                 'ng-invalid ng-dirty': submitted && !student.session
               }">
             </p-dropdown>
-            <small class="p-error block" *ngIf="submitted && !student.session">
-              Seksioni shkollës është fushë e kërkuar.
-            </small>
+
           </div>
 
           <div class="field">
