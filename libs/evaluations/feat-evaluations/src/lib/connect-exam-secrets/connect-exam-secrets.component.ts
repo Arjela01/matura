@@ -6,13 +6,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { RippleModule } from 'primeng/ripple';
 import { GridComponent } from '../grid/grid.component';
-import { CalculationProcessesApiService } from '@msh/evaluations/data-access-evaluations';
 import { LazyLoadEvent } from 'primeng/api';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BehaviorSubject } from 'rxjs';
 import {ApplicationProcess} from '@msh/evaluations/domain-evaluations';
 import { Application_Process } from '../grid/grid-type.enum';
 import { GlobalToastService } from '@msh/shared/util-shared';
+import {CalculationProcessesApiService} from "@msh/evaluations/data-access-evaluations";
 
 @UntilDestroy()
 @Component({
@@ -27,15 +27,16 @@ import { GlobalToastService } from '@msh/shared/util-shared';
     RippleModule,
     GridComponent,
   ],
-  templateUrl: './calculate-grades.component.html',
-  styleUrls: ['./calculate-grades.component.scss'],
+  templateUrl: './connect-exam-secrets.component.html',
+  styleUrls: ['./connect-exam-secrets.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CalculateGradesComponent {
+export class ConnectExamSecretsComponent {
   private calculateGrade$$ = new BehaviorSubject<ApplicationProcess[]>([]);
   calculateGrade$ = this.calculateGrade$$.asObservable();
   filters: LazyLoadEvent | null = null;
-  processType: Application_Process = Application_Process.CalculateGrades;
+  processType: Application_Process = Application_Process.ConnectExamSecrets;
+
   appProcessType!: string;
   executionLog!: string;
   endTime: any;

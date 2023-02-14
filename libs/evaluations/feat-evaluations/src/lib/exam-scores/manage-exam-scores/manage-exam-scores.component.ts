@@ -158,6 +158,7 @@ export class ManageExamScoresComponent implements OnInit {
     }
     if (!examScore.id) {
       this.addExamScore(examScore);
+      console.log(444,examScore)
     }
   }
 
@@ -274,6 +275,7 @@ export class ManageExamScoresComponent implements OnInit {
   }
 
   onExamSubjectChanged(examSubjectId: string) {
+    console.log('Chnage step1')
     if (this.selectedExamScore != null)
       this.selectedExamScore.examSubjectId = examSubjectId;
     this.getExamVersions(examSubjectId);

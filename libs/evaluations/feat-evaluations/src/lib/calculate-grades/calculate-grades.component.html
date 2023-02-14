@@ -14,13 +14,13 @@
       </div>
 
       <div class="actions">
-        <button pButton type="button">Fillo procesin</button>
+        <button pButton type="button" (click)="postProcess()" >Fillo procesin</button>
       </div>
       <h4>Proçeset e ekzekutuara</h4>
       <msh-grid
         [gridData]="(calculateGrade$ | async) || []"
         [columns]="columns"
-        (dataEmitted)="getCalculatedGrades($event)"></msh-grid>
+        (dataEmitted)="getProcessData($event, processType)"></msh-grid>
     </div>
   </div>
 </div>

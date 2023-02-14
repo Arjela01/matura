@@ -94,25 +94,17 @@ export class ExamScoresFormComponent implements OnChanges {
 
   onSubmit(): void {
     this.submitted = true;
-    if (
-      +this.academicYears[this.examScore.academicYearId].value !==
-      this.currentYear
-    ) {
-      this.toastService.showError(
-        'Viti akademik duhet të jetë i njëjtë me vitin aktual!'
-      );
-    } else {
       if (this.form.valid) {
         this.formSave.emit(this.examScore);
       }
-    }
   }
   onExamTypeChanged($event: any): void {
-    console.log('changed');
+    this.examTypeId =  $event.value
     this.examTypeChanged.emit(this.examTypeId);
   }
 
   onExamSubjectChanged($event: any): void {
+    this.examSubjectId = $event.value
     this.examSubjectChanged.emit(this.examSubjectId);
   }
 }
