@@ -22,7 +22,6 @@ export const CONFIGURATION_ROUTES: Route[] = [
         m => m.ManageProfilesComponent
       ),
   },
-
   {
     path: 'students',
     loadComponent: () =>

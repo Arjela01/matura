@@ -15,6 +15,7 @@
         "*.jsx"
       ],
       "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
         "@nrwl/nx/enforce-module-boundaries": [
           "error",
           {

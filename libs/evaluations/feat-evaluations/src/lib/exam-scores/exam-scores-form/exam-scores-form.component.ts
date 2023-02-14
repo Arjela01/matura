@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
@@ -69,6 +68,7 @@ export class ExamScoresFormComponent implements OnChanges {
   };
   examTypeId: any;
   examSubjectId: any;
+  currentYear = new Date().getFullYear();
 
   @Input() set examScoreDetails(details: ExamScore | null) {
     if (details) {
@@ -76,7 +76,9 @@ export class ExamScoresFormComponent implements OnChanges {
     }
   }
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(
+    private cd: ChangeDetectorRef,
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.examTypeId = this.examScore.examTypeId;
@@ -90,11 +92,11 @@ export class ExamScoresFormComponent implements OnChanges {
 
   onSubmit(): void {
     this.submitted = true;
+
     if (this.form.valid) {
       this.formSave.emit(this.examScore);
     }
   }
-
   onExamTypeChanged($event: any): void {
     console.log('changed');
     this.examTypeChanged.emit(this.examTypeId);

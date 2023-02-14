@@ -1,1 +1,116 @@
-<p>exam-assignment-form works!</p>
+<div class="grid">
+  <div class="col-12 p-fluid">
+    <div class="card px-6 py-6">
+      <h3 class="mb-6">Detajet e Caktimit ne Qender Provimi</h3>
+      <form #form="ngForm" (ngSubmit)="onSubmit()">
+        <div class="field mt-4 mb-4" [style]="{ width: '500px' }">
+          <label for="ExamSite">Qendra e Provimit *</label>
+          <p-dropdown
+            class="mt-4 mb-4"
+            id="ExamSite"
+            [options]="examSites"
+            optionValue="key"
+            optionLabel="value"
+            name="examDateId"
+            (onChange)="refreshExamDates()"
+            [autoDisplayFirst]="false"
+            [(ngModel)]="examAssignment.examSiteId"
+            [showClear]="true"
+            [ngClass]="{
+              'ng-invalid ng-dirty': submitted && !examAssignment.examSiteId
+            }">
+          </p-dropdown>
+          <small
+            class="p-error block"
+            *ngIf="submitted && !examAssignment.examSiteId">
+            Qendra e Provmit është fushë e kërkuar.
+          </small>
+        </div>
+
+        <div class="field mt-4 mb-4" [style]="{ width: '500px' }">
+          <label for="examInfoId"> Tipi dhe Data e Provimit *</label>
+          <p-dropdown
+            class="mt-4 mb-4"
+            id="examInfoId"
+            [options]="examDates"
+            optionValue="key"
+            optionLabel="value"
+            name="examInfoId"
+            [autoDisplayFirst]="false"
+            [(ngModel)]="examAssignment.examDateId"
+            [showClear]="true"
+            [ngClass]="{
+              'ng-invalid ng-dirty': submitted && !examAssignment.examDateId
+            }">
+          </p-dropdown>
+          <small
+            class="p-error block"
+            *ngIf="submitted && !examAssignment.examDateId">
+            Data e Provimit është fushë e kërkuar.
+          </small>
+        </div>
+
+        <div class="field mt-4 mb-4" [style]="{ width: '500px' }">
+          <label for="studentInputData">Student *</label>
+          <div class="p-inputgroup">
+            <p-button
+              label="Kerko"
+              icon="pi pi-search"
+              (click)="onNewClick()"
+              [style]="{ height: '100%' }"></p-button>
+            <input
+              [value]="studentInputData"
+              type="text"
+              pInputText
+              id="studentInputData"
+              name="studentInputData"
+              [(ngModel)]="studentInputData"
+              required
+              autofocus
+              disabled
+              [ngClass]="{
+                'ng-invalid ng-dirty': submitted && !studentInputData
+              }" />
+          </div>
+          <small class="p-error block" *ngIf="submitted && !studentInputData">
+            Studenti është fushë e kërkuar.
+          </small>
+        </div>
+
+        <div class="flex justify-content-end">
+          <button
+            type="button"
+            pButton
+            icon="pi pi-times"
+            label="Anullo"
+            class="p-button-text w-auto mr-2"
+            (click)="onCancelClick()"></button>
+          <button
+            type="submit"
+            pButton
+            icon="pi pi-check"
+            label="Ruaj"
+            class="p-button-text w-auto"></button>
+        </div>
+      </form>
+
+      <p-dialog
+        [(visible)]="displayModal"
+        [style]="{ width: '77%' }"
+        [modal]="true"
+        [draggable]="false"
+        [resizable]="false"
+        class="p-fluid"
+        (onHide)="onModalClose()">
+        <ng-template pTemplate="content">
+          <msh-shared-student-lookup
+            [students]="(studentList$ | async) || []"
+            [totalRecords]="totalRecords"
+            (gridEvent)="onGridEvent($event)"
+            (lazyLoadData)="getStudents($event)">
+          </msh-shared-student-lookup>
+        </ng-template>
+      </p-dialog>
+    </div>
+  </div>
+</div>
