@@ -98,6 +98,7 @@ export class ManageUsersComponent implements OnInit {
     this.userDialog = true;
   }
 
+
   onDeleteSelectedClick() {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to delete selected entities?',
@@ -141,11 +142,19 @@ export class ManageUsersComponent implements OnInit {
         break;
     }
   }
-
-  onFormClose() {
-    this.userDialog = false;
+  onFormClosePass() {
     this.passwordDialog = false;
   }
+  onFormClose() {
+    this.userDialog = false;
+  }
+
+  onFormSavePass(user: User) {
+    if (user.id) {
+      this.updatePassword(user);
+    }
+  }
+
 
   onFormSave(user: User) {
     if (user.id) {
@@ -187,7 +196,6 @@ export class ManageUsersComponent implements OnInit {
         }
       });
   }
-
   updateUser(user: User) {
     this.userService
       .update(user)
@@ -197,6 +205,7 @@ export class ManageUsersComponent implements OnInit {
           this.toastService.showSuccess('Perdoruesi u ndryshua me sukses!');
 
           this.userDialog = false;
+          this.passwordDialog = false;
           this.getUsers(this.filters as LazyLoadEvent);
         }
         if (!response.isSuccessful) {
@@ -206,6 +215,26 @@ export class ManageUsersComponent implements OnInit {
         }
       });
   }
+
+  updatePassword(user: User) {
+    this.userService
+      .update(user)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Fjalekalimi u ndryshua me sukses!');
+
+          this.passwordDialog = true;
+          this.getUsers(this.filters as LazyLoadEvent);
+        }
+        if (!response.isSuccessful) {
+          this.toastService.showError(
+            'Ndodhi nje problem gjate ndryshimit te fjalkalimit!'
+          );
+        }
+      });
+  }
+
 
   deleteUser(user: User) {
     this.userService
