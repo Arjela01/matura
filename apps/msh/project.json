@@ -25,6 +25,11 @@
             "glob": "**/*",
             "input": "libs/shared/assets/src",
             "output": "assets"
+          },
+          {
+            "glob": "web.config",
+            "input": "./",
+            "output": "./"
           }
         ],
         "styles": ["libs/shared/styles/src/index.scss"],

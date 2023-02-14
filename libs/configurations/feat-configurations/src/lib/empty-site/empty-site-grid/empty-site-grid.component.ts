@@ -6,7 +6,6 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { Student } from '@msh/shared/domain-models';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -15,9 +14,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import { ExamAssignment } from '@msh/shared/domain-models';
 
 @Component({
-  selector: 'msh-a1z-student-search',
+  selector: 'msh-empty-site-grid',
   standalone: true,
   imports: [
     CommonModule,
@@ -28,42 +28,31 @@ import { TooltipModule } from 'primeng/tooltip';
     CheckboxModule,
     RippleModule,
   ],
-  templateUrl: './a1z-student-search.component.html',
-  styleUrls: ['./a1z-student-search.component.scss'],
+  templateUrl: './empty-site-grid.component.html',
+  styleUrls: ['./empty-site-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class A1zStudentSearchComponent {
-  @Input() students: Student[] = [];
+export class EmptySiteGridComponent {
+  @Input() examAssignments: ExamAssignment[] = [];
   @Input() totalRecords = 0;
-  @Input() loading = false;
 
-  @Output() gridEvent = new EventEmitter<GridEvent<Student | Student[]>>();
+  //Keep it local state because of Table Header checkbox not syncing
+  selectedExamAssignments: ExamAssignment[] = [];
+
+  @Output() gridEvent = new EventEmitter<
+    GridEvent<ExamAssignment | ExamAssignment[]>
+  >();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
-  onRowSelect({ data }: { data: Student }) {
+  onEmptySite(examAssignment: ExamAssignment) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
-      data: data,
-    } as GridEvent<Student>);
-  }
-
-  onRowUnselect({ data }: { data: Student }) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.UNSELECT_ROW,
-      data: data,
-    } as GridEvent<Student>);
+      data: examAssignment,
+    } as GridEvent<ExamAssignment>);
   }
 
   loadRows($event: LazyLoadEvent) {
     this.lazyLoadData.emit($event);
-  }
-
-  onStudentSelect(student: Student) {
-    console.log(student);
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.EDIT,
-      data: student,
-    } as GridEvent<Student>);
   }
 }

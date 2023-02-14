@@ -13,11 +13,11 @@
                     <p-columnFilter type="text" field="examTypeName" display="menu"></p-columnFilter>
                 </div>
             </th>
-            <th pSortableColumn="examSubjectName">
+            <th pSortableColumn="name">
                 Lënda
                 <div>
-                    <p-sortIcon field="examSubjectName"></p-sortIcon>
-                    <p-columnFilter type="text" field="examSubjectName" display="menu"></p-columnFilter>
+                    <p-sortIcon field="name"></p-sortIcon>
+                    <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
                 </div>
             </th>
 
@@ -30,7 +30,7 @@
                 {{ examSecret.examTypeName }}
             </td>
             <td style="width: 45%; min-width: 10rem">
-                {{ examSecret.examSubjectName }}
+                {{ examSecret.name }}
             </td>
             <td>
                 <div class="flex">

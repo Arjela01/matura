@@ -13,7 +13,7 @@ export class CalculateGradeApiService {
   loadCalculatedGrades(
     event: LazyLoadEvent
   ): Observable<CalculateGradeTableView> {
-    return this.apiService.post(`/CalculateGrades/CalculateGrades`, event).pipe(
+    return this.apiService.post(`/CalculateGrades`, event).pipe(
       map((data: any) => data),
       catchError(error => throwError(error))
     );

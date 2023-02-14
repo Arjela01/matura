@@ -79,7 +79,7 @@ export class ManageGradesScaleComponent {
       case GRID_ACTIONS.EDIT:
         this.router.navigate([
           '/evaluations/grades-scale-form',
-          event.data?.examSubjectId,
+          event.data?.id,
         ]);
         break;
     }
@@ -87,8 +87,8 @@ export class ManageGradesScaleComponent {
 
   getGradeScales($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
-    this.gradesScaleApiService
-      .loadGradesScale($event)
+    this.examSubjectsService
+      .loadExamSubjects($event)
       .pipe(untilDestroyed(this))
       .subscribe((response: any) => {
         this.gradeScales$$.next(response.data);
@@ -109,9 +109,8 @@ export class ManageGradesScaleComponent {
   }
 
   onSubmit(event: any) {
-    this.gradesScaleApiService
-      .uploadExcelFile(event)
-      .subscribe((response: any) => {
+    this.gradesScaleApiService.uploadExcelFile(event).subscribe({
+      next: (response: any) => {
         this.displayModal = false;
 
         if (response.isSuccessful) {
@@ -122,15 +121,24 @@ export class ManageGradesScaleComponent {
             ? this.toastService.showError(
                 'Ndodhi një problem gjatë ngarkimit të dokumentit!'
               )
-            : this.toastService.showError(
-                'Ndodhi një problem gjatë ngarkimit të dokumentit!'
-              );
+            : this.toastService.showError(response.errorMessage);
         }
         if (response.isBadRequest)
           this.toastService.showError(
             'Ndodhi një problem gjatë ngarkimit të dokumentit!'
           );
-      });
+      },
+      error: error => {
+        error.errorMessage
+          ? this.toastService.showError(error.errorMessage)
+          : this.toastService.showError(
+              'Ndodhi një problem gjatë ndryshimit të përshkallëzimit!'
+            );
+        this.toastService.showError(
+          'Ndodhi një problem gjatë ndryshimit të përshkallëzimit!'
+        );
+      },
+    });
   }
 
   onModalClose() {
