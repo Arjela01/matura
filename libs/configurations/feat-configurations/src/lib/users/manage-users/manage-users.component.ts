@@ -29,6 +29,7 @@ import { UserFormComponent } from '../user-form/user-form.component';
 import { UserGridComponent } from '../user-grid/user-grid.component';
 import { RippleModule } from 'primeng/ripple';
 import { UsersPasswordResetFormComponent } from '../users-password-reset-form/users-password-reset-form.component';
+import { UsersPasswordResetViewComponent } from '../users-password-reset-view/users-password-reset-view.component';
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-users',
@@ -46,6 +47,7 @@ import { UsersPasswordResetFormComponent } from '../users-password-reset-form/us
     UserFormComponent,
     RippleModule,
     UsersPasswordResetFormComponent,
+    UsersPasswordResetViewComponent,
   ],
   providers: [ConfirmationService],
 })
@@ -68,6 +70,7 @@ export class ManageUsersComponent implements OnInit {
 
   userDialog = false;
   passwordDialog = false;
+  resetPasswordGenerated = false;
 
   constructor(
     private readonly userService: UserApiService,
@@ -97,7 +100,6 @@ export class ManageUsersComponent implements OnInit {
   onNewClick() {
     this.userDialog = true;
   }
-
 
   onDeleteSelectedClick() {
     this.confirmationService.confirm({
@@ -142,6 +144,7 @@ export class ManageUsersComponent implements OnInit {
         break;
     }
   }
+
   onFormClosePass() {
     this.passwordDialog = false;
   }
@@ -154,7 +157,6 @@ export class ManageUsersComponent implements OnInit {
       this.updatePassword(user);
     }
   }
-
 
   onFormSave(user: User) {
     if (user.id) {
@@ -222,8 +224,8 @@ export class ManageUsersComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Fjalekalimi u ndryshua me sukses!');
-
           this.passwordDialog = false;
+          this.resetPasswordGenerated = true;
           this.getUsers(this.filters as LazyLoadEvent);
         }
         if (!response.isSuccessful) {
@@ -233,7 +235,6 @@ export class ManageUsersComponent implements OnInit {
         }
       });
   }
-
 
   deleteUser(user: User) {
     this.userService

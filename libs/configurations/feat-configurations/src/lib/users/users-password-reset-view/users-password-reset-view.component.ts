@@ -25,10 +25,11 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { PasswordModule } from 'primeng/password';
 import { StrongPasswordDirective } from '@msh/shared/util-shared';
 import { DividerModule } from 'primeng/divider';
+import { CardModule } from 'primeng/card';
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-users-password-reset-form',
+  selector: 'msh-users-password-reset-view',
   standalone: true,
   imports: [
     CommonModule,
@@ -44,12 +45,13 @@ import { DividerModule } from 'primeng/divider';
     PasswordModule,
     StrongPasswordDirective,
     DividerModule,
+    CardModule,
   ],
-  templateUrl: './users-password-reset-form.component.html',
-  styleUrls: ['./users-password-reset-form.component.scss'],
+  templateUrl: './users-password-reset-view.component.html',
+  styleUrls: ['./users-password-reset-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UsersPasswordResetFormComponent implements OnInit, OnDestroy {
+export class UsersPasswordResetViewComponent implements OnInit, OnDestroy {
   @Input() set userDetails(details: User | null) {
     if (details) {
       this.user = Object.assign({}, details);

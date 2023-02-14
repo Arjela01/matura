@@ -50,6 +50,31 @@
   </ng-template>
 </p-dialog>
 
+
+<p-dialog
+  [(visible)]="resetPasswordGenerated"
+  [style]="{ width: '500px', minHeight: '250px' }"
+  header="Fjalkalimi i ri"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid">
+  <ng-template pTemplate="content">
+    <msh-users-password-reset-view
+      [userDetails]="selectedUser"
+      (formClose)="onFormClosePass()"
+      (formSave)="onFormSavePass($event)">
+    </msh-users-password-reset-view>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-times"
+      (click)="resetPasswordGenerated = false"
+      label="Mbyll"
+      styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>
+
 <p-dialog
   [(visible)]="passwordDialog"
   [style]="{ width: '500px', minHeight: '500px' }"
