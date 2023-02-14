@@ -1,10 +1,18 @@
 <div class="card m-3 md:mx-auto sm:mx-0 md:w-8 sm:w-12 rounded-0">
-    <h4 class="card-header mb-4">Shkallezimet e notave per lëndën
-        {{(examSubject|async)}}</h4>
+    <div class="flex align-items-center ">
+
+        <h4 class="card-header mb-0">Shkallezimet e notave per lëndën
+            {{(examSubject|async)}}</h4>
+
+    </div>
+
     <div class="flex justify-content-end">
         <div class="my-2">
-            <button pButton pRipple label="Shto" icon="pi pi-plus" class="p-button-success mr-2"
+            <button type="button" pButton icon="pi pi-arrow-left" label="Kthehu" class="surface-700 w-auto mr-2"
+                (click)="onExitForm()"></button>
+            <button pButton pRipple label="Shto" icon="pi pi-plus" class="p-button-success "
                 (click)="onNewClick()"></button>
+
         </div>
     </div>
     <div class="card-body mt-5">
@@ -40,10 +48,7 @@
 
 
     </div>
-    <div class="flex justify-content-end w-full mt-5">
-        <button type="button" pButton icon="pi pi-times" label="Anullo" class="p-button-text w-auto mr-2"
-            (click)="onExitForm()"></button>
-    </div>
+
 </div>
 <p-dialog [(visible)]="displayModal" [style]="{ width: '500px' }" header="Detajet e rolit" [modal]="true"
     [draggable]="false" [resizable]="false" class="p-fluid" (onHide)="onModalClose()">

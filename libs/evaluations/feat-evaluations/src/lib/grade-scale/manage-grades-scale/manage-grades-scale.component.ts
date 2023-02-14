@@ -79,7 +79,7 @@ export class ManageGradesScaleComponent {
       case GRID_ACTIONS.EDIT:
         this.router.navigate([
           '/evaluations/grades-scale-form',
-          event.data?.examSubjectId,
+          event.data?.id,
         ]);
         break;
     }
@@ -87,8 +87,8 @@ export class ManageGradesScaleComponent {
 
   getGradeScales($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
-    this.gradesScaleApiService
-      .loadGradesScale($event)
+    this.examSubjectsService
+      .loadExamSubjects($event)
       .pipe(untilDestroyed(this))
       .subscribe((response: any) => {
         this.gradeScales$$.next(response.data);
@@ -132,10 +132,10 @@ export class ManageGradesScaleComponent {
         error.errorMessage
           ? this.toastService.showError(error.errorMessage)
           : this.toastService.showError(
-              'Ndodhi një problem gjatë ndryshimit të formularit A1!'
+              'Ndodhi një problem gjatë ndryshimit të përshkallëzimit!'
             );
         this.toastService.showError(
-          'Ndodhi një problem gjatë ndryshimit të formularit A1!'
+          'Ndodhi një problem gjatë ndryshimit të përshkallëzimit!'
         );
       },
     });
