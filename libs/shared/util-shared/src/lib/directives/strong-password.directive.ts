@@ -35,7 +35,6 @@ export function strongPasswordValidator(): ValidatorFn {
   standalone: true,
 })
 export class StrongPasswordDirective implements Validator {
-  constructor() {}
   public validate(control: AbstractControl): ValidationErrors | null {
     return strongPasswordValidator()(control);
   }
