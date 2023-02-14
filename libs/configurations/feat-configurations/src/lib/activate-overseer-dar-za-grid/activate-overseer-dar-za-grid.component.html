@@ -1,0 +1,103 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card px-6 py-6">
+      <div class="flex ml-2 mb-2 page-header">
+        <h2 class="flex-1">Mbikqyrësit sipas DarZa</h2>
+      </div>
+<p-table
+  #dt
+  dataKey="id"
+  responsiveLayout="scroll"
+  [value]="students"
+  [totalRecords]="totalRecords"
+  [rows]="10"
+  [paginator]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
+  [rowHover]="true"
+  [(selection)]="selectedStudents"
+  selectionMode="multiple"
+  (onRowSelect)="onRowSelect($event)"
+  (onRowUnselect)="onRowUnselect($event)"
+  (onLazyLoad)="loadRows($event)"
+  [lazy]="true">
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="DarZa">
+        Dar/Za
+        <p-sortIcon field="DarZa"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="DarZa"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="status">
+        Statusi
+        <p-sortIcon field="status"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="status"
+          display="menu"></p-columnFilter>
+      </th>
+      <th>Aktivizo</th>
+      <th>Çaktivizo</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-archiveFolder>
+    <tr>
+      <td style="width: 14%; min-width: 10rem">
+        {{ archiveFolder.totalArchiveExams }}
+      </td>
+      <td>
+        <button
+          pButton
+          pRipple
+          [ngStyle]="{
+            'background-color': archiveFolder.isClosed ? '#c8e6c9' : '#feedaf',
+            color: archiveFolder.isClosed ? '#256029' : '#8a5340'
+          }">
+          <span>
+            {{ archiveFolder.isClosed ? 'MBYLLUR ' : 'HAPUR' }}
+          </span>
+        </button>
+      </td>
+
+      <td>
+<!--        <div class="flex">-->
+<!--          <button-->
+<!--            pButton-->
+<!--            pRipple-->
+<!--            class="p-button-rounded p-button-info p-button-text mr-2"-->
+<!--            pTooltip="{{-->
+<!--              !archiveFolder.isClosed ? 'Mbyll Dosjen' : 'Hap Dosjen'-->
+<!--            }}"-->
+<!--            tooltipPosition="bottom"-->
+<!--            (click)="changeStatus(archiveFolder)"-->
+<!--            icon="{{-->
+<!--              !archiveFolder.isClosed ? 'pi pi-folder-open' : 'pi pi-folder'-->
+<!--            }}"></button>-->
+<!--        </div>-->
+      </td>
+      <td>
+      </td>
+      <td>
+        <div [hidden]="archiveFolder.isClosed">
+          <div class="flex">
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-danger p-button-text"
+              pTooltip="Fshi"
+              tooltipPosition="bottom"
+              (click)="onDeleteClick(archiveFolder)"></button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+    </div>
+  </div>
+</div>
