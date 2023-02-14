@@ -23,6 +23,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import {PasswordModule} from "primeng/password";
+import {StrongPasswordDirective} from "@msh/shared/util-shared";
+import {DividerModule} from "primeng/divider";
 
 @UntilDestroy()
 @Component({
@@ -39,6 +42,9 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     CheckboxModule,
     CalendarModule,
     DropdownModule,
+    PasswordModule,
+    StrongPasswordDirective,
+    DividerModule,
   ],
   templateUrl: './users-password-reset-form.component.html',
   styleUrls: ['./users-password-reset-form.component.scss'],
