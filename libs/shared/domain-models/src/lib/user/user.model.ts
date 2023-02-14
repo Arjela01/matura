@@ -34,6 +34,7 @@ export interface User {
   username?: string;
 
   password: string;
+  resetPassword?: string;
   confirmPassword?: string;
   nid: string;
 }

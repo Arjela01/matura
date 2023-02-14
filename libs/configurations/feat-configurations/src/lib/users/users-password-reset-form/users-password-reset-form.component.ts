@@ -111,7 +111,6 @@ export class UsersPasswordResetFormComponent implements OnInit, OnDestroy {
     this.user = {...this.user};
     this.submitted = true;
     if (this.form.valid) {
-      this.user.nid = this.user.nid.toUpperCase();
       this.formSave.emit(this.user);
     }
   }

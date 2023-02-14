@@ -205,7 +205,6 @@ export class ManageUsersComponent implements OnInit {
           this.toastService.showSuccess('Perdoruesi u ndryshua me sukses!');
 
           this.userDialog = false;
-          this.passwordDialog = false;
           this.getUsers(this.filters as LazyLoadEvent);
         }
         if (!response.isSuccessful) {
@@ -224,7 +223,7 @@ export class ManageUsersComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Fjalekalimi u ndryshua me sukses!');
 
-          this.passwordDialog = true;
+          this.passwordDialog = false;
           this.getUsers(this.filters as LazyLoadEvent);
         }
         if (!response.isSuccessful) {
