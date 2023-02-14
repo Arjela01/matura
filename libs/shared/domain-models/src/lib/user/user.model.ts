@@ -34,6 +34,8 @@ export interface User {
   username?: string;
 
   password: string;
+
+  nid: string;
 }
 
 export interface UserTableView {

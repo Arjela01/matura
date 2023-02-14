@@ -168,12 +168,12 @@ export class GradeScaleActionComponent {
       .subscribe((response: any) => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Përshkallëzimi u fshi me sukses!');
-          this.getGradeScales(this.examSubjectId);
+          this.initializeTable();
         }
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë fshirjes së rolit!'
+            'Ndodhi nje problem gjatë fshirjes së përshkallëzimit!'
           );
       });
   }
