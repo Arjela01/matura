@@ -26,7 +26,8 @@ import { PasswordModule } from 'primeng/password';
 import { StrongPasswordDirective } from '@msh/shared/util-shared';
 import { DividerModule } from 'primeng/divider';
 import { CardModule } from 'primeng/card';
-
+import {ClipboardModule} from "@angular/cdk/clipboard";
+import { Clipboard } from '@angular/cdk/clipboard';
 @UntilDestroy()
 @Component({
   selector: 'msh-users-password-reset-view',
@@ -46,6 +47,7 @@ import { CardModule } from 'primeng/card';
     StrongPasswordDirective,
     DividerModule,
     CardModule,
+    ClipboardModule,
   ],
   templateUrl: './users-password-reset-view.component.html',
   styleUrls: ['./users-password-reset-view.component.scss'],
@@ -90,8 +92,15 @@ export class UsersPasswordResetViewComponent implements OnInit, OnDestroy {
 
   constructor(
     private cd: ChangeDetectorRef,
-    private readonly userService: UserApiService
+    private readonly userService: UserApiService,
+    private clipboard: Clipboard,
+
   ) {}
+  public copyToClipboardWithParameter(value: HTMLElement): void {
+    const text: string = value.textContent || '';
+    console.log(text);
+    const successful = this.clipboard.copy(text);
+  }
 
   ngOnDestroy(): void {
     this.form.reset();
