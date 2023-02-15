@@ -6,7 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { StudentBan, Student } from '@msh/shared/domain-models';
+import {StudentBan, Student, ExamAssignment} from '@msh/shared/domain-models';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -45,11 +45,12 @@ export class StudentBanGridComponent {
   >();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
-  student: Student[] = [];
+
   studentBan: StudentBan = {
     id: 0,
     studentId: '',
     studentIdentifier: '',
+    studentInputData:'',
     studentName: '',
     description: '',
     isBanned: 0,
@@ -57,10 +58,10 @@ export class StudentBanGridComponent {
     banRemovalDate: new Date(),
   };
 
-  onEditClick(StudentBan: StudentBan) {
+  onEditClick(studentBan: StudentBan) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
-      data: StudentBan,
+      data: studentBan,
     } as GridEvent<StudentBan>);
   }
 
