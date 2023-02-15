@@ -9,10 +9,10 @@ import { GridComponent } from '../grid/grid.component';
 import { LazyLoadEvent } from 'primeng/api';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BehaviorSubject } from 'rxjs';
-import {ApplicationProcess} from '@msh/evaluations/domain-evaluations';
+import { ApplicationProcess } from '@msh/evaluations/domain-evaluations';
 import { Application_Process } from '../grid/grid-type.enum';
 import { GlobalToastService } from '@msh/shared/util-shared';
-import {CalculationProcessesApiService} from "@msh/evaluations/data-access-evaluations";
+import { CalculationProcessesApiService } from '@msh/evaluations/data-access-evaluations';
 
 @UntilDestroy()
 @Component({
@@ -76,7 +76,6 @@ export class ConnectExamSecretsComponent {
 
   formatPayload(data: any) {
     const dataArray = [data] as ApplicationProcess[];
-    console.log('step2', dataArray);
     if (dataArray.length > 0) {
       dataArray.forEach(item => {
         if (item === null) {

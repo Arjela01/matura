@@ -32,7 +32,6 @@ import { LazyLoadEvent } from 'primeng/api';
   styleUrls: ['./grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class GridComponent {
   @Input() columns!: any[];
   @Input() gridData: any[] = [];
