@@ -15,6 +15,7 @@ import { ExamVersion } from '@msh/shared/domain-models';
 import { BehaviorSubject } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
+  ExamSubjectApiService,
   ExamTypeApiService,
   ExamVersionApiService,
   ProfileGroupApiService,
@@ -54,18 +55,20 @@ export class ManageExamVersionsComponent implements OnInit {
   displayModal = false;
   profileGroups: DropdownModel<number>[] = [];
   examTypes: DropdownModel<number>[] = [];
-
+  examSubjects: DropdownModel<number>[] = [];
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examVersionService: ExamVersionApiService,
     private readonly profileGroupApiService: ProfileGroupApiService,
-    private readonly examTypesApiService: ExamTypeApiService
+    private readonly examTypesApiService: ExamTypeApiService,
+    private readonly examSubjectsApiService: ExamSubjectApiService
   ) {}
 
   ngOnInit(): void {
     this.getProfileGroupsDropdown();
     this.getExamTypesDropdown();
+    this.getExamSubjectsDropdown();
   }
 
   onNewClick() {
@@ -218,6 +221,15 @@ export class ManageExamVersionsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examTypes = response.data;
+      });
+  }
+  getExamSubjectsDropdown() {
+    this.examSubjectsApiService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.examSubjects = response.data;
+        console.log(2222, response.data)
       });
   }
 }

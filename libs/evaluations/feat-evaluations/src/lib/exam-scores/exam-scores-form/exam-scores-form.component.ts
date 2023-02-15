@@ -20,6 +20,7 @@ import { ExamScore } from '@msh/evaluations/domain-evaluations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { GlobalToastService } from '@msh/shared/util-shared';
 
 @Component({
   selector: 'msh-exam-score-form',
@@ -78,6 +79,7 @@ export class ExamScoresFormComponent implements OnChanges {
 
   constructor(
     private cd: ChangeDetectorRef,
+    private readonly toastService: GlobalToastService
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -92,17 +94,17 @@ export class ExamScoresFormComponent implements OnChanges {
 
   onSubmit(): void {
     this.submitted = true;
-
-    if (this.form.valid) {
-      this.formSave.emit(this.examScore);
-    }
+      if (this.form.valid) {
+        this.formSave.emit(this.examScore);
+      }
   }
   onExamTypeChanged($event: any): void {
-    console.log('changed');
+    this.examTypeId =  $event.value
     this.examTypeChanged.emit(this.examTypeId);
   }
 
   onExamSubjectChanged($event: any): void {
+    this.examSubjectId = $event.value
     this.examSubjectChanged.emit(this.examSubjectId);
   }
 }
