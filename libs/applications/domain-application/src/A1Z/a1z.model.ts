@@ -5,7 +5,7 @@ export interface A1Z {
   a1ZCategoryId?: string;
   alreadyHaveDiploma?: boolean;
   yearOfSchoolA1Z?: number;
-  noCarriedSubjets?: number;
+  noCarriedSubjets: number;
   studentInputData?: string;
   carriedSubjectD1?: string;
   carriedGradeD1?: number;
@@ -26,16 +26,12 @@ export interface A1Z {
   subjectZ21A1ZId?: string;
   carriedGradeD3?: number;
   carriedReasonD3?: string;
-  noCarriedSubjetsZ?: number;
+  noCarriedSubjetsZ: number;
   yearZ1?: number;
   isA1?: boolean;
   carriedSubjectZ1?: string;
   carriedGradeZ1?: number;
   carriedReasonAZ1?: string;
-  // subjectD1Id?: string;
-  // subjectD2Id?: string;
-  // subjectD3Id?: string;
-  // subjectZ1Id?: string;
   overSeerCode?: string;
   isApplyingToForeignCountries?: boolean;
 }
