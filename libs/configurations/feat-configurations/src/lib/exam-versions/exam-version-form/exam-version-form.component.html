@@ -91,6 +91,25 @@
     </small>
   </div>
   <div class="field">
+    <label for="ProfileGroups">Lënda e Provimit</label>
+    <p-dropdown
+      id="examSubjects"
+      [options]="examSubjects"
+      optionValue="key"
+      optionLabel="value"
+      name="examSubjectId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="examVersion.examSubjectId"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examVersion.examSubjectId
+      }">
+    </p-dropdown>
+    <small class="p-error block" *ngIf="submitted && !examVersion.examSubjectId">
+      Lënda e Provimit është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
     <label for="Code">Kodi *</label>
     <input
       type="text"

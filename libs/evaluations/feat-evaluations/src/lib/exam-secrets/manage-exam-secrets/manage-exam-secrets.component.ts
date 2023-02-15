@@ -24,10 +24,11 @@ import { Router } from '@angular/router';
 import { ExamSecretsFormComponent } from '../exam-secrets-form/exam-secrets-form.component';
 import { ExamSecretsGridComponent } from '../exam-secrets-grid/exam-secrets-grid.component';
 import { FileUploadModule } from 'primeng/fileupload';
+import * as FileSaver from 'file-saver';
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-manage-exam-secrets',
+  selector: 'msh-manage-exam-connect-exam-secrets',
   standalone: true,
   imports: [
     ButtonModule,
@@ -154,5 +155,16 @@ export class ManageExamSecretsComponent {
             );
         });
     };
+  }
+  downloadFile() {
+    this.examSecretService
+      .export()
+      .pipe(untilDestroyed(this))
+      .subscribe((response: any) => {
+        const blob: any = new Blob([response], {
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        });
+        FileSaver.saveAs(blob, 'Nota_Pikë');
+      });
   }
 }

@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
@@ -21,6 +20,7 @@ import { ExamScore } from '@msh/evaluations/domain-evaluations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { GlobalToastService } from '@msh/shared/util-shared';
 
 @Component({
   selector: 'msh-exam-score-form',
@@ -69,6 +69,7 @@ export class ExamScoresFormComponent implements OnChanges {
   };
   examTypeId: any;
   examSubjectId: any;
+  currentYear = new Date().getFullYear();
 
   @Input() set examScoreDetails(details: ExamScore | null) {
     if (details) {
@@ -76,7 +77,10 @@ export class ExamScoresFormComponent implements OnChanges {
     }
   }
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(
+    private cd: ChangeDetectorRef,
+    private readonly toastService: GlobalToastService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.examTypeId = this.examScore.examTypeId;
@@ -90,17 +94,17 @@ export class ExamScoresFormComponent implements OnChanges {
 
   onSubmit(): void {
     this.submitted = true;
-    if (this.form.valid) {
-      this.formSave.emit(this.examScore);
-    }
+      if (this.form.valid) {
+        this.formSave.emit(this.examScore);
+      }
   }
-
   onExamTypeChanged($event: any): void {
-    console.log('changed');
+    this.examTypeId =  $event.value
     this.examTypeChanged.emit(this.examTypeId);
   }
 
   onExamSubjectChanged($event: any): void {
+    this.examSubjectId = $event.value
     this.examSubjectChanged.emit(this.examSubjectId);
   }
 }

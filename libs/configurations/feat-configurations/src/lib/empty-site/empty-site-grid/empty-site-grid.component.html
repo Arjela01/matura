@@ -1,0 +1,89 @@
+<p-table
+  #dt
+  dataKey="id"
+  responsiveLayout="scroll"
+  [value]="examAssignments"
+  [totalRecords]="totalRecords"
+  [rows]="10"
+  [paginator]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
+  [rowHover]="true"
+  [(selection)]="selectedExamAssignments"
+  selectionMode="multiple"
+  (onLazyLoad)="loadRows($event)"
+  [lazy]="true">
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="examSiteName">
+        Qendra e Provimit
+        <p-sortIcon field="examSiteName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="examSiteName"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="date">
+        Data e Provimit
+        <p-sortIcon field="date"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="date"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="examTypeName">
+        Tipi i Provimit
+        <p-sortIcon field="examTypeName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="examTypeName"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="studentName">
+        Studenti
+        <p-sortIcon field="studentName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="studentName"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="takenSeats">
+        Vendet e Zëna
+        <p-sortIcon field="takenSeats"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="takenSeats"
+          display="menu"></p-columnFilter>
+      </th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-examAssignment>
+    <tr>
+      <td style="width: 25%; min-width: 10rem">
+        {{ examAssignment.examSiteName }}
+      </td>
+      <td style="width: 25%; min-width: 10rem">
+        {{ examAssignment.date | date : 'dd.MM.yyyy' }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ examAssignment.examTypeName }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ examAssignment.studentName }}
+      </td>
+      <td style="width: 25%; min-width: 10rem">
+        {{ examAssignment.takenSeats }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        <div class="flex">
+          <p-button
+            icon="pi pi-check"
+            label="Zbraz Qendrën"
+            (onClick)="onEmptySite(examAssignment)"></p-button>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
