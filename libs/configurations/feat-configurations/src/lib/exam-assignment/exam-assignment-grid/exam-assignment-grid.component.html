@@ -18,10 +18,6 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
-      <th style="width: 3rem">
-        <p-tableHeaderCheckbox (click)="onSelectAllClick()">
-        </p-tableHeaderCheckbox>
-      </th>
       <th pSortableColumn="examSiteName">
         Qendra e Provimit
         <p-sortIcon field="examSiteName"></p-sortIcon>
@@ -67,9 +63,6 @@
   </ng-template>
   <ng-template pTemplate="body" let-examAssignment>
     <tr>
-      <td>
-        <p-tableCheckbox [value]="examAssignment"></p-tableCheckbox>
-      </td>
       <td style="width: 23%; min-width: 10rem">
         {{ examAssignment.examSiteName }}
       </td>

@@ -29,7 +29,7 @@ export class StudentBanApiService {
 
   update(studentBan: StudentBan): Observable<ApiResult<StudentBan>> {
     return this.apiService.put<ApiResult<StudentBan>, StudentBan>(
-      `/StudentBan/`,
+      `/StudentBan`,
       studentBan
     );
   }

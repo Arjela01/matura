@@ -67,19 +67,6 @@ export class ExamAssignmentGridComponent {
     } as GridEvent<ExamAssignment>);
   }
 
-  onSelectAllClick() {
-    if (this.selectedExamAssignments.length === 0) {
-      this.gridEvent.emit({
-        action: GRID_ACTIONS.UNSELECT_ALL,
-      } as GridEvent<ExamAssignment>);
-    } else {
-      this.gridEvent.emit({
-        action: GRID_ACTIONS.SELECT_MANY,
-        data: this.selectedExamAssignments,
-      } as GridEvent<ExamAssignment[]>);
-    }
-  }
-
   onRowSelect({ data }: { data: ExamAssignment }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
