@@ -135,14 +135,14 @@ export class ManageUsersComponent implements OnInit {
         this.selectedUser = Object.assign({}, event.data as User);
         this.userDialog = true;
         break;
-      case GRID_ACTIONS.CUSTOM_ACTION1:
-        this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të ndryshoni statusin e Perdoruesit?',
-          accept: () => {
-            this.changeUserStatus(event.data as User);
-          },
-        });
-        break;
+      // case GRID_ACTIONS.CUSTOM_ACTION1:
+      //   this.confirmationService.confirm({
+      //     message: 'Jeni i sigurt që doni të ndryshoni statusin e Perdoruesit?',
+      //     accept: () => {
+      //       this.changeUserStatus(event.data as User);
+      //     },
+      //   });
+      //   break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
           message: 'Are you sure that you want to delete this entity?',
@@ -189,28 +189,28 @@ export class ManageUsersComponent implements OnInit {
       });
   }
 
-  changeUserStatus(user: User) {
-    this.userService
-      .changeUserStatus(user.id)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            !user.isClosed
-              ? 'Dosja u mbyll me sukses!'
-              : 'Dosja u hap me sukses!'
-          );
-
-          this.displayModal = false;
-          this.getUsers(this.filters as LazyLoadEvent);
-        }
-
-        if (response.isBadRequest)
-          this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së dosjes!'
-          );
-      });
-  }
+  // changeUserStatus(user: User) {
+  //   this.userService
+  //     .changeUserStatus(this.id)
+  //     .pipe(untilDestroyed(this))
+  //     .subscribe(response => {
+  //       if (response.isSuccessful) {
+  //         this.toastService.showSuccess(
+  //           !user.isActive
+  //             ? 'Dosja u mbyll me sukses!'
+  //             : 'Dosja u hap me sukses!'
+  //         );
+  //
+  //         this.displayModal = false;
+  //         this.getUsers(this.filters as LazyLoadEvent);
+  //       }
+  //
+  //       if (response.isBadRequest)
+  //         this.toastService.showError(
+  //           'Ndodhi një problem gjatë ndryshimit së dosjes!'
+  //         );
+  //     });
+  // }
 
   addUser(user: User) {
     this.userService

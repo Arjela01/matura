@@ -82,11 +82,7 @@
         </div>
       </th>
       <th pSortableColumn="status">
-        Statusi
-        <div>
-          <p-sortIcon field="status"></p-sortIcon>
-          <p-columnFilter type="text" field="status" display="menu"></p-columnFilter>
-        </div>
+        Aktivizo
       </th>
       <th></th>
       <th></th>
@@ -125,17 +121,10 @@
         {{ user.universityName }}
       </td>
       <td>
-        <button
-          pButton
-          pRipple
-          [ngStyle]="{
-            'background-color': user.isClosed ? '#c8e6c9' : '#feedaf',
-            color: user.isClosed ? '#256029' : '#8a5340'
-          }">
-          <span>
-            {{ user.isClosed ? 'Aktiv' : 'Aktiv' }}
-          </span>
-        </button>
+          <span
+            [ngClass]="user.isActive  ? ['bg-red-400','text-white','px-3','py-1','border-round-md'] :  ['bg-green-400','text-white','px-3','py-1','border-round-md'] ">
+                      {{ user.isActive ? 'Pasiv' : 'Aktiv' }}
+                    </span>
       </td>
 
       <td>
@@ -145,12 +134,12 @@
             pRipple
             class="{{!user.closed}} ? p-button-rounded p-button-danger p-button-text mr-2 : p-button-rounded p-button-success p-button-text mr-2 "
             pTooltip="{{
-              !user.isClosed ? 'Çaktivizo' : 'Aktivizo'
+              !user.isActive ? 'Çaktivizo' : 'Aktivizo'
             }}"
             tooltipPosition="bottom"
             (click)="(changeStatus(user))"
             icon="{{
-              !user.isClosed ? 'pi pi-times' : 'pi pi-check'
+              !user.isActive ? 'pi pi-times' : 'pi pi-check'
             }}"></button>
         </div>
       </td>
