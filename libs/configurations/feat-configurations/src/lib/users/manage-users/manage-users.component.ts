@@ -135,7 +135,7 @@ export class ManageUsersComponent implements OnInit {
         this.selectedUser = Object.assign({}, event.data as User);
         this.userDialog = true;
         break;
-      case GRID_ACTIONS.SELECT_MANY:
+      case GRID_ACTIONS.CUSTOM_ACTION1:
         this.confirmationService.confirm({
           message: 'Jeni i sigurt që doni të ndryshoni statusin e Perdoruesit?',
           accept: () => {
