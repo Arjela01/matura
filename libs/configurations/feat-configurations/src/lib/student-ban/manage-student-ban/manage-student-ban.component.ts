@@ -60,6 +60,9 @@ export class ManageStudentBanComponent {
   onNewClick() {
     this.displayModal = true;
   }
+  onModalClose() {
+    this.displayModal = false;
+  }
 
   onDeleteSelectedClick() {
     this.confirmationService.confirm({
@@ -102,7 +105,8 @@ export class ManageStudentBanComponent {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të fshini studentin e skualifikuar të zgjedhur?',
+          message:
+            'Jeni i sigurt që doni të fshini studentin e skualifikuar të zgjedhur?',
           accept: () => {
             this.deleteBannedStudent(event.data as StudentBan);
           },
@@ -110,11 +114,6 @@ export class ManageStudentBanComponent {
         break;
     }
   }
-
-  onModalClose() {
-    this.displayModal = false;
-  }
-
   onFormSave(studentBan: StudentBan) {
     if (studentBan.id) {
       this.updateBannedStudent(studentBan);
@@ -145,7 +144,7 @@ export class ManageStudentBanComponent {
           this.toastService.showSuccess('Studenti u shtua me sukses!');
           this.displayModal = false;
           this.getBannedStudents(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -161,14 +160,13 @@ export class ManageStudentBanComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Studenti u ndryshua me sukses!');
-          this.displayModal = false;
           this.getBannedStudents(this.filters as LazyLoadEvent);
-        }
-
+        } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest)
           this.toastService.showError(
             'Ndodhi një problem gjatë ndryshimit të studentit!'
           );
+        this.displayModal = false;
       });
   }
 
