@@ -8,6 +8,7 @@ import {
   ExamSecretTableView,
   FileImport,
 } from '@msh/evaluations/domain-evaluations';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -55,5 +56,13 @@ export class ExamSecretApiService {
         catchError(error => throwError(error)),
         shareReplay()
       );
+  }
+
+  export(): Observable<ApiResult<unknown>> {
+    return this.apiService.get<any>(
+      `/ExamSecrets/Export`,
+      new HttpParams(),
+      'blob'
+    );
   }
 }
