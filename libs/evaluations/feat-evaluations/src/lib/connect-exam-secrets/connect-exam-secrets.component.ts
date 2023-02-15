@@ -59,7 +59,6 @@ export class ConnectExamSecretsComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         const dataArray = this.formatPayload(response.data);
-        console.log('step1', dataArray);
         this.calculateGrade$$.next(dataArray);
       });
   }
