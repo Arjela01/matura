@@ -71,6 +71,7 @@ export class ManageUsersComponent implements OnInit {
   userDialog = false;
   passwordDialog = false;
   resetPasswordGenerated = false;
+  displayModal = false;
 
   constructor(
     private readonly userService: UserApiService,
@@ -134,6 +135,14 @@ export class ManageUsersComponent implements OnInit {
         this.selectedUser = Object.assign({}, event.data as User);
         this.userDialog = true;
         break;
+      case GRID_ACTIONS.SELECT_MANY:
+        this.confirmationService.confirm({
+          message: 'Jeni i sigurt që doni të ndryshoni statusin e Perdoruesit?',
+          accept: () => {
+            this.changeUserStatus(event.data as User);
+          },
+        });
+        break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
           message: 'Are you sure that you want to delete this entity?',
@@ -177,6 +186,29 @@ export class ManageUsersComponent implements OnInit {
         console.log(response.data);
         this.users$$.next(response.data);
         this.totalRecords = response.total;
+      });
+  }
+
+  changeUserStatus(user: User) {
+    this.userService
+      .changeUserStatus(user.id)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess(
+            !user.isClosed
+              ? 'Dosja u mbyll me sukses!'
+              : 'Dosja u hap me sukses!'
+          );
+
+          this.displayModal = false;
+          this.getUsers(this.filters as LazyLoadEvent);
+        }
+
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi një problem gjatë ndryshimit së dosjes!'
+          );
       });
   }
 

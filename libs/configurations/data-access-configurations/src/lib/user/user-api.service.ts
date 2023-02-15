@@ -20,6 +20,16 @@ export class UserApiService {
     return this.apiService.get(`/User/${id}`);
   }
 
+  changeUserStatus(
+    id: number
+  ): Observable<ApiResult<User>> {
+    return this.apiService.put<ApiResult<User>, any>(
+      `/User/UpdateStatus`,
+      {
+        id: id,
+      }
+    );
+  }
   save(user: User): Observable<ApiResult<User>> {
     return this.apiService.post<ApiResult<User>, User>('/User', user);
   }
