@@ -23,6 +23,7 @@ import { ExamAssignmentGridComponent } from '../exam-assignment-grid/exam-assign
 import { FileUploadModule } from 'primeng/fileupload';
 import { ExamAssignmentFormComponent } from '../exam-assignment-form/exam-assignment-form.component';
 import { UploadFormComponent } from '../upload-form/upload-form.component';
+import * as FileSaver from "file-saver";
 
 @UntilDestroy()
 @Component({
@@ -219,7 +220,17 @@ export class ManageExamAssignmentComponent {
           );
       });
   }
-
+  downloadFile() {
+    this.examAssignmentService
+      .export()
+      .pipe(untilDestroyed(this))
+      .subscribe((response: any) => {
+        const blob: any = new Blob([response], {
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        });
+        FileSaver.saveAs(blob, 'Nota_Pikë');
+      });
+  }
   getExamDateDropdown() {
     this.examDateService.loadDropdownList().subscribe(response => {
       this.examDates = response.data;
