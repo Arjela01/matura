@@ -28,6 +28,8 @@ import { BehaviorSubject } from 'rxjs';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { UserGridComponent } from '../user-grid/user-grid.component';
 import { RippleModule } from 'primeng/ripple';
+import { UsersPasswordResetFormComponent } from '../users-password-reset-form/users-password-reset-form.component';
+import { UsersPasswordResetViewComponent } from '../users-password-reset-view/users-password-reset-view.component';
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-users',
@@ -44,6 +46,8 @@ import { RippleModule } from 'primeng/ripple';
     UserGridComponent,
     UserFormComponent,
     RippleModule,
+    UsersPasswordResetFormComponent,
+    UsersPasswordResetViewComponent,
   ],
   providers: [ConfirmationService],
 })
@@ -65,6 +69,8 @@ export class ManageUsersComponent implements OnInit {
   roles: DropdownModel<number>[] = [];
 
   userDialog = false;
+  passwordDialog = false;
+  resetPasswordGenerated = false;
 
   constructor(
     private readonly userService: UserApiService,
@@ -120,6 +126,10 @@ export class ManageUsersComponent implements OnInit {
       case GRID_ACTIONS.UNSELECT_ALL:
         this.selectedUsers = [];
         break;
+      case GRID_ACTIONS.CUSTOM_ACTION1:
+        this.selectedUser = Object.assign({}, event.data as User);
+        this.passwordDialog = true;
+        break;
       case GRID_ACTIONS.EDIT:
         this.selectedUser = Object.assign({}, event.data as User);
         this.userDialog = true;
@@ -135,8 +145,17 @@ export class ManageUsersComponent implements OnInit {
     }
   }
 
+  onFormClosePass() {
+    this.passwordDialog = false;
+  }
   onFormClose() {
     this.userDialog = false;
+  }
+
+  onFormSavePass(user: User) {
+    if (user.id) {
+      this.updatePassword(user);
+    }
   }
 
   onFormSave(user: User) {
@@ -179,7 +198,6 @@ export class ManageUsersComponent implements OnInit {
         }
       });
   }
-
   updateUser(user: User) {
     this.userService
       .update(user)
@@ -194,6 +212,25 @@ export class ManageUsersComponent implements OnInit {
         if (!response.isSuccessful) {
           this.toastService.showError(
             'Ndodhi nje problem gjate ndryshimit te perdoruesit!'
+          );
+        }
+      });
+  }
+
+  updatePassword(user: User) {
+    this.userService
+      .update(user)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Fjalekalimi u ndryshua me sukses!');
+          this.passwordDialog = false;
+          this.resetPasswordGenerated = true;
+          this.getUsers(this.filters as LazyLoadEvent);
+        }
+        if (!response.isSuccessful) {
+          this.toastService.showError(
+            'Ndodhi nje problem gjate ndryshimit te fjalkalimit!'
           );
         }
       });

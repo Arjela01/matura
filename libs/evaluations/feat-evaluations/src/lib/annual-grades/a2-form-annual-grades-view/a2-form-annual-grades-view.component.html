@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="row-gap-1-3">
+    <div class="card px-6 py-6" >
+      <div class="grid">
+        <div class="col-12 md:col-6 lg:col-3">
+      <h3>Të dhëna Personale</h3>
+
+      <div *ngIf="student !== null" class="readonlyForm" [style]="{ width: '400px' }">
+
+        <div class="field">
+          <strong><label>Emri : </label></strong>
+          {{student.firstName}}
+        </div>
+
+        <div class="field">
+          <strong><label>Atësia : </label></strong>
+          {{student.middleName}}
+        </div>
+        <div class="field">
+          <strong><label>Mbiemri : </label></strong>
+          {{student.lastName}}
+        </div>
+        <div class="field">
+          <strong><label>Gjinia : </label></strong>
+          {{student.genderName}}
+        </div>
+        <div class="field">
+          <strong><label>ID e studentit : </label></strong>
+          {{student.studentId}}
+        </div>
+        <div class="field">
+          <strong><label>Datëlindja : </label></strong>
+          {{student.birthDate | date : 'dd/MM/yyyy' }}
+        </div>
+        <div class="field">
+          <strong><label>Vendlindja : </label></strong>
+          {{student.birthPlace}}
+        </div>
+        <div class="field">
+          <strong><label>Shkolla : </label></strong>
+          {{student.highSchoolName}}
+        </div>
+        <div class="field">
+          <strong><label>Profili Shkollës : </label></strong>
+          {{student.profileName}}
+        </div>
+
+        </div>
+
+      </div>
+
+        <div class="col-12 md:col-6 lg:col-9">
+
+      <h3>Notat e Maturantit</h3>
+      <p-table [resizableColumns]="true" styleClass="p-datatable-gridlines" [tableStyle]="{'min-width': '50rem'}">
+        <ng-template pTemplate="header" >
+          <div *ngIf="examGrade.length === 0">Nuk janë gjetur asnjë notë!</div>
+
+          <tr>
+            <th  *ngFor="let exam of examGrade">{{exam.examSubjectName}}</th>
+          </tr>
+          <tr>
+            <th  *ngFor="let exam of examGrade">{{exam.grade}}</th>
+          </tr>
+        </ng-template>
+      </p-table>
+
+
+
+          </div>
+      </div>
+      <a routerLink="/evaluations/annual-grades">
+        <button type="button" pButton icon="pi pi-arrow-left" label="Kthehu"
+                class="p-button-text w-auto mr-2"></button>
+      </a>
+    </div>
+  </div>
+</div>

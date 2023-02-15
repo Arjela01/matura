@@ -1,20 +1,43 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="field">
     <label for="nid">NID *</label>
-    <input type="text" pInputText mshAlbanianNidValidator id="nid" name="nid" [(ngModel)]="user.nid" #nidModel="ngModel"
-      required autofocus [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.nid 
+    <input
+      type="text"
+      pInputText
+      mshAlbanianNidValidator
+      id="nid"
+      name="nid"
+      [(ngModel)]="user.nid"
+      #nidModel="ngModel"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !user.nid
       }" />
-    <small class="p-error block" *ngIf="submitted && (user.nid=== '' || user.nid=== null) ">
+    <small
+      class="p-error block"
+      *ngIf="submitted && (user.nid === '' || user.nid === null)">
       NID është fushë e kërkuar.
     </small>
-    <small class="p-error block" *ngIf="submitted &&  nidModel.errors &&  nidModel.errors['albanianNidValidator'] ">
+    <small
+      class="p-error block"
+      *ngIf="
+        submitted && nidModel.errors && nidModel.errors['albanianNidValidator']
+      ">
       NID nuk i përshtatet formatit shqipëtar.
     </small>
   </div>
   <div class="field">
     <label for="name">Emri *</label>
-    <input type="text" pInputText id="name" name="name" [(ngModel)]="user.name" required autofocus [ngClass]="{
+    <input
+      type="text"
+      pInputText
+      id="name"
+      name="name"
+      [(ngModel)]="user.name"
+      required
+      autofocus
+      [ngClass]="{
         'ng-invalid ng-dirty': submitted && !user.name
       }" />
     <small class="p-error block" *ngIf="submitted && !user.name">
@@ -24,7 +47,14 @@
 
   <div class="field">
     <label for="lastName">Mbiemri *</label>
-    <input type="text" pInputText id="lastName" name="lastName" [(ngModel)]="user.lastName" required autofocus
+    <input
+      type="text"
+      pInputText
+      id="lastName"
+      name="lastName"
+      [(ngModel)]="user.lastName"
+      required
+      autofocus
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !user.lastName
       }" />
@@ -35,7 +65,14 @@
 
   <div class="field">
     <label for="userName">Përdoruesi *</label>
-    <input type="text" pInputText id="userName" name="userName" [(ngModel)]="user.userName" required autofocus
+    <input
+      type="text"
+      pInputText
+      id="userName"
+      name="userName"
+      [(ngModel)]="user.userName"
+      required
+      autofocus
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !user.userName
       }" />
@@ -46,9 +83,20 @@
 
   <div class="field">
     <label for="role">Roli *</label>
-    <p-dropdown id="role" optionValue="key" optionLabel="value" [options]="roles" [required]="true"
-      [virtualScroll]="true" [filter]="true" name="roles" (onChange)="onRoleChange($event)" [autoDisplayFirst]="false"
-      [(ngModel)]="user.roleId" [showClear]="true" [ngClass]="{
+    <p-dropdown
+      id="role"
+      optionValue="key"
+      optionLabel="value"
+      [options]="roles"
+      [required]="true"
+      [virtualScroll]="true"
+      [filter]="true"
+      name="roles"
+      (onChange)="onRoleChange($event)"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="user.roleId"
+      [showClear]="true"
+      [ngClass]="{
         'ng-invalid ng-dirty': submitted && !user.roleId
       }">
     </p-dropdown>
@@ -59,54 +107,102 @@
 
   <div class="field" [hidden]="showAdministrationOffice === false">
     <label for="administrationOfficeId">DAR/ZA *</label>
-    <p-dropdown id="administrationOfficeId" optionValue="key" optionLabel="value" [options]="administrationOffices"
-      [disabled]="showAdministrationOffice === false" name="administrationOfficeId" [autoDisplayFirst]="false"
-      [(ngModel)]="user.administrationOfficeId" [showClear]="true">
+    <p-dropdown
+      id="administrationOfficeId"
+      optionValue="key"
+      optionLabel="value"
+      [options]="administrationOffices"
+      [disabled]="showAdministrationOffice === false"
+      name="administrationOfficeId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="user.administrationOfficeId"
+      [showClear]="true">
     </p-dropdown>
   </div>
 
   <div class="field" [hidden]="showUniversity === false">
     <label for="universityId">Universiteti *</label>
-    <p-dropdown id="universityId" optionValue="key" optionLabel="value" [options]="universities"
-      [disabled]="showUniversity === false" name="universityId" [autoDisplayFirst]="false"
-      [(ngModel)]="user.universityId" [showClear]="true">
+    <p-dropdown
+      id="universityId"
+      optionValue="key"
+      optionLabel="value"
+      [options]="universities"
+      [disabled]="showUniversity === false"
+      name="universityId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="user.universityId"
+      [showClear]="true">
     </p-dropdown>
   </div>
 
   <div class="field" [hidden]="showUniversityDepartment === false">
     <label for="universityDepartmentId">Fakulteti *</label>
-    <p-dropdown id="universityDepartmentId" optionValue="key" optionLabel="value" [options]="universityDepartments"
-      [disabled]="showUniversityDepartment === false" name="universityDepartmentId" [autoDisplayFirst]="false"
-      [(ngModel)]="user.universityDepartmentId" [showClear]="true">
+    <p-dropdown
+      id="universityDepartmentId"
+      optionValue="key"
+      optionLabel="value"
+      [options]="universityDepartments"
+      [disabled]="showUniversityDepartment === false"
+      name="universityDepartmentId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="user.universityDepartmentId"
+      [showClear]="true">
     </p-dropdown>
   </div>
 
   <div class="field" [hidden]="showStudyProgram === false">
     <label for="studyProgramId">Programi i Studimit *</label>
-    <p-dropdown id="studyProgramId" optionValue="key" optionLabel="value" [options]="studyPrograms"
-      [disabled]="showStudyProgram === false" name="studyProgramId" [autoDisplayFirst]="false"
-      [(ngModel)]="user.studyProgramId" [showClear]="true">
+    <p-dropdown
+      id="studyProgramId"
+      optionValue="key"
+      optionLabel="value"
+      [options]="studyPrograms"
+      [disabled]="showStudyProgram === false"
+      name="studyProgramId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="user.studyProgramId"
+      [showClear]="true">
     </p-dropdown>
   </div>
 
   <div class="field" [hidden]="showOverseerCode === false">
     <label for="overseerCode">Kodi I Mbikqyresit *</label>
-    <input type="text" pInputText id="overseerCode" name="overseerCode" [(ngModel)]="user.overseerCode" autofocus />
+    <input
+      type="text"
+      pInputText
+      id="overseerCode"
+      name="overseerCode"
+      [(ngModel)]="user.overseerCode"
+      autofocus />
   </div>
 
   <div class="field">
     <label for="password">Fjalëkalimi *</label>
-    <p-password id="password" [feedback]="false" [toggleMask]="true" name="password" [(ngModel)]="user.password"
-      autofocus mshStrongPasswordValidator #password="ngModel" [ngClass]="{
+    <p-password
+      id="password"
+      [feedback]="false"
+      [toggleMask]="true"
+      name="password"
+      [(ngModel)]="user.password"
+      autofocus
+      mshStrongPasswordValidator
+      #password="ngModel"
+      [ngClass]="{
         'ng-invalid ng-dirty': submitted && !user.password
-      }"> </p-password>
+      }">
+    </p-password>
     <small class="p-error block" *ngIf="submitted && !user.password">
       Fjalëkalimi është fushë e kërkuar.
     </small>
-    <small class="p-error block"
-      *ngIf="password.touched &&  password.errors &&  password.errors['strongPasswordValidator'] ">
-      Fjalëkalimi duhet të përmbajë minimalisht një gërmë kapitale,një gërmë jo kapitale,një karakter special dhe një
-      numër.
+    <small
+      class="p-error block"
+      *ngIf="
+        password.touched &&
+        password.errors &&
+        password.errors['strongPasswordValidator']
+      ">
+      Fjalëkalimi duhet të përmbajë minimalisht një gërmë kapitale,një gërmë jo
+      kapitale,një karakter special dhe një numër.
     </small>
   </div>
 
@@ -114,11 +210,18 @@
     <label class="mb-3">Është aktiv? *</label>
     <div class="formgrid grid">
       <div class="field-radiobutton col-6">
-        <p-radioButton id="isActiveTrue" name="isActive" [value]="true" [(ngModel)]="user.isActive"></p-radioButton>
+        <p-radioButton
+          id="isActiveTrue"
+          name="isActive"
+          [value]="true"
+          [(ngModel)]="user.isActive"></p-radioButton>
         <label for="isActiveTrue">Po</label>
       </div>
       <div class="field-radiobutton col-6">
-        <p-radioButton id="isActiveFalse" name="isWithCompetition" [value]="false"
+        <p-radioButton
+          id="isActiveFalse"
+          name="isWithCompetition"
+          [value]="false"
           [(ngModel)]="user.isActive"></p-radioButton>
         <label for="isActiveFalse">Jo</label>
       </div>
@@ -126,8 +229,18 @@
   </div>
 
   <div class="flex justify-content-end">
-    <button type="button" pButton icon="pi pi-times" label="Anullo" class="p-button-text w-auto mr-2"
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
       (click)="onCancelClick()"></button>
-    <button type="submit" pButton icon="pi pi-check" label="Ruaj" class="p-button-text w-auto"></button>
+    <button
+      type="submit"
+      pButton
+      icon="pi pi-check"
+      label="Ruaj"
+      class="p-button-text w-auto"></button>
   </div>
 </form>

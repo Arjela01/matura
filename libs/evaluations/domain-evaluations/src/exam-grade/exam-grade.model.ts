@@ -1,11 +1,11 @@
 export interface ExamGrade {
-  id: number;
+  id?: number;
   studentId?: string;
-  studentName: string;
+  studentName?: string;
   examSubjectId?: string;
-  examSubjectName: string;
-  isCarriedOver: boolean;
-  grade: number;
+  examSubjectName?: string;
+  isCarriedOver?: boolean;
+  grade?: number;
 }
 
 export interface ExamGradeTableView {

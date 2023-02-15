@@ -16,7 +16,6 @@ import {ArchiveExam, ArchiveFolder,} from '@msh/evaluations/domain-evaluations';
 import {BehaviorSubject} from 'rxjs';
 import {GridEvent} from '@msh/shared/util-shared';
 
-@UntilDestroy()
 @Component({
   selector: 'msh-archive-folder-view',
   standalone: true,

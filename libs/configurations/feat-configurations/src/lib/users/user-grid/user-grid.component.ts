@@ -42,6 +42,13 @@ export class UserGridComponent {
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
+  onKeyClick(user: User) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.CUSTOM_ACTION1,
+      data: user,
+    } as GridEvent<User>);
+  }
+
   onEditClick(user: User) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
