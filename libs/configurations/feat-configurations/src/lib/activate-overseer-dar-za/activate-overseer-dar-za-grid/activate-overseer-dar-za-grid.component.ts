@@ -66,6 +66,7 @@ export class ActivateOverseerDarZaGridComponent {
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
+  selectedAdministrationOffices: AdministrationOffice[] = [];
 
   administrationOffice: AdministrationOffice = {
     directorName: '',
@@ -84,17 +85,19 @@ export class ActivateOverseerDarZaGridComponent {
     } as GridEvent<AdministrationOffice>);
   }
 
-  onEditClick(administrationOffice: AdministrationOffice) {
+
+
+  onRowSelect({ data }: { data: AdministrationOffice }) {
     this.gridEvent.emit({
-      action: GRID_ACTIONS.EDIT,
-      data: administrationOffice,
+      action: GRID_ACTIONS.SELECT_ROW,
+      data: data.id,
     } as GridEvent<AdministrationOffice>);
   }
 
-  onDeleteClick(administrationOffice: AdministrationOffice) {
+  onRowUnselect({ data }: { data: AdministrationOffice }) {
     this.gridEvent.emit({
-      action: GRID_ACTIONS.DELETE,
-      data: administrationOffice,
+      action: GRID_ACTIONS.UNSELECT_ROW,
+      data: data,
     } as GridEvent<AdministrationOffice>);
   }
 
