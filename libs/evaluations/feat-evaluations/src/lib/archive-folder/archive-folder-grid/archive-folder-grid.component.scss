@@ -1,3 +1,15 @@
 :host {
   display: block;
 }
+th {
+  vertical-align: top;
+}
+
+.closed {
+  color: #7e96a1;
+}
+
+.open {
+  color: #1B5E20;
+  font-weight: bold;
+}
