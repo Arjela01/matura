@@ -70,13 +70,13 @@
       pInputText
       id="userName"
       name="userName"
-      [(ngModel)]="user.userName"
+      [(ngModel)]="user.username"
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.userName
+        'ng-invalid ng-dirty': submitted && !user.username
       }" />
-    <small class="p-error block" *ngIf="submitted && !user.userName">
+    <small class="p-error block" *ngIf="submitted && !user.username">
       Përdoruesi është fushë e kërkuar.
     </small>
   </div>

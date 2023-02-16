@@ -29,8 +29,6 @@ export interface User {
 
   isActive: boolean;
 
-  userName: string;
-
   username?: string;
 
   password: string;
