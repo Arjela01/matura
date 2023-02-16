@@ -142,8 +142,8 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
             !administrationOffice.isAllowedToLogin
-              ? 'Dosja u mbyll me sukses!'
-              : 'Dosja u hap me sukses!'
+              ? 'DAR/ZA u çaktivizua me sukses!'
+              : 'DAR/ZA u aktivizua me sukses!'
           );
 
           this.displayModal = false;
@@ -152,7 +152,7 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së dosjes!'
+            'Ndodhi një problem gjatë ndryshimit së DAR/ZA-së!'
           );
       });
   }
