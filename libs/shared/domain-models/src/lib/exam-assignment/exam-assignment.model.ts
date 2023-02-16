@@ -1,5 +1,5 @@
 export interface ExamAssignment {
-  id: number;
+  id: string;
   studentId:string;
   studentIdentifier: string;
   studentName: string;

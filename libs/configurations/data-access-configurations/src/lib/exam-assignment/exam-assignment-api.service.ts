@@ -55,7 +55,7 @@ export class ExamAssignmentApiService {
     );
   }
 
-  delete(examAssignmentId: number): Observable<ApiResult<unknown>> {
+  delete(examAssignmentId: string): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<ExamAssignment>>(
       `/ExamAssignment/${examAssignmentId}`
     );

@@ -49,7 +49,7 @@ export class ExamAssignmentGridComponent {
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
   examAssignment: ExamAssignment = {
-    id: 0,
+    id: '',
     studentIdentifier: '',
     studentId: '',
     studentName: '',
