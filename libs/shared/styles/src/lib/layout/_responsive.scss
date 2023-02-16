@@ -6,9 +6,12 @@
     }
 
 }
-
+.layout-main-container{
+  padding: 34px 32px 32px 32px;
+}
 @media (min-width: 992px) {
     .layout-wrapper {
+      background-color: var(--surface-g);
         &.layout-overlay {
             .layout-main-container {
                 margin-left: 0;
@@ -33,7 +36,7 @@
 
         &.layout-static {
             .layout-main-container {
-                margin-left: 300px;
+                margin-left: 268px;
             }
 
             &.layout-static-inactive {
