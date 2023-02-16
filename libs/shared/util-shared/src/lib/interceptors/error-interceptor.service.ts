@@ -33,6 +33,7 @@ export class ErrorInterceptorService implements HttpInterceptor {
       retryWhen((error): Observable<any> => {
         return error.pipe(
           mergeMap((error, index) => {
+            debugger;
             switch (error.status) {
               case 400:
                 return this.handleError(error, index, ERROR_400);
