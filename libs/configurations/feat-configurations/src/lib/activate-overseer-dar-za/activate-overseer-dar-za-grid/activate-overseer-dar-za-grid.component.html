@@ -1,0 +1,81 @@
+
+<p-table
+  #dt
+  dataKey="id"
+  responsiveLayout="scroll"
+  [value]="administrationOffices"
+  [totalRecords]="totalRecords"
+  [rows]="10"
+  [paginator]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
+  [rowHover]="true"
+  selectionMode="multiple"
+  (onLazyLoad)="loadRows($event)"
+  [lazy]="true">
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="DarZa">
+        Dar/Za
+        <p-sortIcon field="DarZa"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="DarZa"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="status">
+        Statusi
+        <p-sortIcon field="status"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="status"
+          display="menu"></p-columnFilter>
+      </th>
+      <th>Veprime</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-activateOverseer>
+    <tr>
+      <td style="width: 14%; min-width: 10rem">
+        {{ activateOverseer.cityName }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        <span *ngIf="activateOverseer.isAllowedToLogin" class="closed">
+          Jo Aktiv
+        </span>
+        <span *ngIf="!activateOverseer.isAllowedToLogin" class="open">
+          Aktiv
+        </span>
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        <div class="flex">
+          <button
+            pButton
+            pRipple
+            class="p-button-rounded p-button-danger p-button-text mr-2 : p-button-rounded p-button-success p-button-text mr-2"
+            (click)="changeStatus(activateOverseer)"
+            icon="{{
+              !activateOverseer.isAllowedToLogin ? 'pi pi-times' : 'pi pi-check'
+            }}">
+            &nbsp;{{ !activateOverseer.isAllowedToLogin ? 'Çaktivizo' : 'Aktivizo' }}
+          </button>
+        </div>
+      </td>
+      <td>
+        <div [hidden]="activateOverseer.isAllowedToLogin">
+          <div class="flex">
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-danger p-button-text"
+              pTooltip="Fshi"
+              tooltipPosition="bottom"
+              (click)="onDeleteClick(activateOverseer)"></button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

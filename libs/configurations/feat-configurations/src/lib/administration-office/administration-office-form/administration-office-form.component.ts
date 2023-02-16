@@ -54,12 +54,13 @@ export class AdministrationOfficeFormComponent {
   submitted = false;
 
   administrationOffice: AdministrationOffice = {
+    isAllowedToLogin: false,
     id: 0,
     name: '',
     isRegionalOffice: false,
     directorName: '',
     signature: '',
-    cityId: 0,
+    cityId: 0
   };
   ngOnInit() {
     console.log(this.cities);

@@ -61,8 +61,8 @@ export const CONFIGURATION_ROUTES: Route[] = [
     path: 'ActivateOverseer-DarZa',
     loadComponent: () =>
       import(
-        './activate-overseer-dar-za-grid/activate-overseer-dar-za-grid.component'
-        ).then(m => m.ActivateOverseerDarZaGridComponent),
+        './activate-overseer-dar-za/manage-activate-overseer-dar-za/manage-activate-overseer-dar-za.component'
+        ).then(m => m.ManageActivateOverseerDarZaComponent),
   },
   {
     path: 'menu',
