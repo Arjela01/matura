@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import {ConnectExamSecretsComponent} from "./connect-exam-secrets/connect-exam-secrets.component";
 
 export const EVALUATION_ROUTES: Route[] = [
   {
@@ -91,6 +92,13 @@ export const EVALUATION_ROUTES: Route[] = [
     loadComponent: () =>
       import('./calculate-grades/calculate-grades.component').then(
         m => m.CalculateGradesComponent
+      ),
+  },
+  {
+    path: 'connect-exam-secrets',
+    loadComponent: () =>
+      import('./connect-exam-secrets/connect-exam-secrets.component').then(
+        m => m.ConnectExamSecretsComponent
       ),
   },
   {

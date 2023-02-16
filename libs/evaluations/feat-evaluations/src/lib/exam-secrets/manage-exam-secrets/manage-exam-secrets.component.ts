@@ -28,7 +28,7 @@ import * as FileSaver from 'file-saver';
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-manage-exam-secrets',
+  selector: 'msh-manage-exam-connect-exam-secrets',
   standalone: true,
   imports: [
     ButtonModule,

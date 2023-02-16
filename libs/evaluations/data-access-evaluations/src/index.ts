@@ -1,6 +1,6 @@
 export * from './lib/archive-exam/archive-exam-api.service';
 export * from './lib/archive-folder/archive-folder-api.service';
-export * from './lib/calculate-grade/calculate-grade-api.service';
+export * from './lib/calculation-processes/calculation-processes-api.service';
 export * from './lib/exam-grade/exam-grade-api.service';
 export * from './lib/annual-grades/annual-grades-api.service';
 export * from './lib/exam-score/exam-score-api.service';

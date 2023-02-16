@@ -3,13 +3,15 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DoCheck,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { StudentBan } from '@msh/shared/domain-models';
+import { Student, StudentBan } from '@msh/shared/domain-models';
 
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -18,7 +20,15 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
+import { LazyLoadEvent } from 'primeng/api';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { BehaviorSubject } from 'rxjs';
+import { StudentsApiService } from '@msh/configurations/data-access-configurations';
+import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
+import { DialogModule } from 'primeng/dialog';
 
+@UntilDestroy()
 @Component({
   selector: 'msh-student-ban-form',
   standalone: true,
@@ -32,14 +42,25 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     ButtonModule,
     CheckboxModule,
     DropdownModule,
+    DialogModule,
+    SharedStudentLookupModule,
   ],
   templateUrl: './student-ban-form.component.html',
   styleUrls: ['./student-ban-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StudentBanFormComponent {
+export class StudentBanFormComponent implements OnInit, DoCheck {
+  private studentList$$ = new BehaviorSubject<Student[]>([]);
+  studentList$ = this.studentList$$.asObservable();
+  totalRecords = 0;
+
+  selectedStudent: any = null;
+  displayStudentModal = false;
+  studentInputData = '';
+
   effectiveDate: any;
   banRemovalDate: any;
+  filters: LazyLoadEvent | null = null;
 
   @Input() set bannedStudentsDetails(details: StudentBan | null) {
     if (details) {
@@ -67,6 +88,7 @@ export class StudentBanFormComponent {
     id: 0,
     studentId: '',
     studentIdentifier: '',
+    studentInputData: '',
     studentName: '',
     description: '',
     isBanned: 0,
@@ -74,14 +96,76 @@ export class StudentBanFormComponent {
     banRemovalDate: new Date(),
   };
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(
+    private cd: ChangeDetectorRef,
+    private readonly studentService: StudentsApiService
+  ) {}
 
   onCancelClick() {
     this.formClose.emit();
   }
+  onNewClick() {
+    this.displayStudentModal = true;
+  }
+  onModalClose() {
+    this.displayStudentModal = false;
+  }
+
+  setStudent(student: any) {
+    if (!student) {
+      this.studentInputData = '';
+    } else {
+      this.studentBan.studentId = student.studentId;
+      this.studentBan.studentIdentifier = student.studentIdentifier;
+      this.studentInputData = `${student?.studentName}`;
+    }
+  }
+  onStudentChange(student: Student) {
+    if (!student) {
+      this.studentBan.studentInputData = ' ';
+    } else {
+      this.studentBan.studentId = student.id;
+      // eslint-disable-next-line max-len
+      this.studentInputData = `${student?.studentId}-${student?.firstName}-${student?.middleName}-${student?.lastName}`;
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.selectedStudent) {
+      this.onStudentChange(this.selectedStudent);
+    }
+  }
+
+  onGridEvent(event: GridEvent<Student | Student[]>) {
+    switch (event.action) {
+      case GRID_ACTIONS.EDIT:
+        this.selectedStudent = Object.assign({}, event.data);
+        this.setStudent(this.selectedStudent);
+        this.displayStudentModal = false;
+        break;
+    }
+  }
+  ngDoCheck(): void {
+    if (this.studentBan.studentId !== undefined) {
+      this.studentBan.studentIdentifier = this.selectedStudent?.studentId;
+      this.setStudent(this.studentBan);
+    }
+    if (this.selectedStudent !== null) {
+      this.onStudentChange(this.selectedStudent);
+    }
+  }
+  getStudents($event: LazyLoadEvent): void {
+    this.filters = Object.assign({}, $event);
+    this.studentService
+      .loadStudents($event)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.studentList$$.next(response.data);
+        this.totalRecords = response.total;
+      });
+  }
 
   onSubmit() {
-    this.submitted = true;
     if (this.form.valid) {
       this.formSave.emit(this.studentBan);
     }
