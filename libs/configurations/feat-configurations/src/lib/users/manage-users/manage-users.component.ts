@@ -214,23 +214,10 @@ export class ManageUsersComponent implements OnInit {
   }
 
   passwordGenerate(user: User) {
-    this.userService
-      .update(user)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showSuccess('Perdoruesi u ndryshua me sukses!');
-
-          this.getUsers(this.filters as LazyLoadEvent);
+          this.toastService.showSuccess('Fjalkalimi u ndryshua me sukses!');
           this.resetPasswordGenerated = true;
 
-        }
-        if (!response.isSuccessful) {
-          this.toastService.showError(
-            'Ndodhi nje problem gjate ndryshimit te perdoruesit!'
-          );
-        }
-      });
+
   }
 
 
