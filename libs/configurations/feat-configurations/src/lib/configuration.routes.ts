@@ -58,6 +58,13 @@ export const CONFIGURATION_ROUTES: Route[] = [
       ).then(m => m.ManageAdministrationOfficeComponent),
   },
   {
+    path: 'ActivateOverseer-DarZa',
+    loadComponent: () =>
+      import(
+        './activate-overseer-dar-za/manage-activate-overseer-dar-za/manage-activate-overseer-dar-za.component'
+        ).then(m => m.ManageActivateOverseerDarZaComponent),
+  },
+  {
     path: 'menu',
     loadComponent: () =>
       import('./menus/manage-menus/manage-menus.component').then(

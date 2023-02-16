@@ -31,3 +31,4 @@ export * from './lib/exam-date/exam-date-api.service'
 export * from './lib/exam-assignment/exam-assignment-api.service'
 export * from './lib/exam-date/exam-date-api.service';
 export * from './lib/student-ban/student-ban.service';
+export * from './lib/activate-overseer-DarZa/activate-overseer-DarZa-api.service';
