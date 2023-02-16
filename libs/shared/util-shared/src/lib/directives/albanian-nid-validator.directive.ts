@@ -38,7 +38,6 @@ export function albanianNidValidator(): ValidatorFn {
   standalone: true,
 })
 export class AlbanianNidValidatorDirective implements Validator {
-  constructor() {}
   public validate(control: AbstractControl): ValidationErrors | null {
     return albanianNidValidator()(control);
   }

@@ -49,7 +49,7 @@ export class ExamAssignmentGridComponent {
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
   examAssignment: ExamAssignment = {
-    id: 0,
+    id: '',
     studentIdentifier: '',
     studentId: '',
     studentName: '',
@@ -65,19 +65,6 @@ export class ExamAssignmentGridComponent {
       action: GRID_ACTIONS.DELETE,
       data: examAssignment,
     } as GridEvent<ExamAssignment>);
-  }
-
-  onSelectAllClick() {
-    if (this.selectedExamAssignments.length === 0) {
-      this.gridEvent.emit({
-        action: GRID_ACTIONS.UNSELECT_ALL,
-      } as GridEvent<ExamAssignment>);
-    } else {
-      this.gridEvent.emit({
-        action: GRID_ACTIONS.SELECT_MANY,
-        data: this.selectedExamAssignments,
-      } as GridEvent<ExamAssignment[]>);
-    }
   }
 
   onRowSelect({ data }: { data: ExamAssignment }) {

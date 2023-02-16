@@ -16,8 +16,10 @@
               (click)="onNewClick()"></button>
           </div>
           <p-button
-            label="Importo nga Exel"
+            icon="pi pi-upload"
             (onClick)="onUploadClick()"></p-button>
+          <button style="margin-left:15px" pButton pRipple  icon="pi pi-download"
+                  (click)="downloadFile()"></button>
         </div>
       </p-toolbar>
       <msh-exam-assignment-grid

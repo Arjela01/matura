@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-enable @typescript-eslint/no-unused-vars */
+/* eslint-enable @typescript-eslint/no-non-null-assertion */
+/* eslint-enable @typescript-eslint/no-explicit-any */
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -26,12 +26,12 @@ import {
   ExamTypeApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
-import { Student } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import { Student } from '@msh/shared/domain-models';
 import {
+  GRID_ACTIONS,
   GlobalToastService,
   GridEvent,
-  GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -77,6 +77,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
+  @ViewChild('checkboxD1') checkboxD1!: any;
   academicYears: DropdownModel<number>[] = [];
   a1Categories: DropdownModel<number>[] = [];
   d1ExamSubjects: DropdownModel<string>[] = [];
@@ -100,10 +101,11 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   studentInputData = '';
 
   showStudentModal = false;
-  disableD1Subject = true;
-  disableD2Subject = true;
-  disableD3Subject = true;
-  disableZ1Subject = true;
+  enableD1Subject = false;
+  enableD2Subject = false;
+  enableD3Subject = false;
+  enableZ1Subject = false;
+  hideZ1Subject = false;
   submitted = false;
 
   a1z: A1Z = {
@@ -145,7 +147,6 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
 
   onSubmit() {
     this.submitted = true;
-
     if (this.form.valid) {
       if (this.a1z.id === 0) {
         this.onNewA1ZFormSubmit();
@@ -195,14 +196,24 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
     this.getSubjectDropdown({
       value: this.a1z.academicYearId,
     });
-    this.a1zService.getOne(parseInt(this.formId!)).subscribe(response => {
-      this.a1z = response.data;
-      this.cd.detectChanges();
-      //TODO: When exam grade implemented uncomment the following lines
-      // this.examGradeSercice.getExamGrade(this.a1z.id!).subscribe(response => {
-      //   this.examGrades = response.data;
-      // });
-    });
+    if (this.formId !== null) {
+      this.a1zService.getOne(parseInt(this.formId!)).subscribe(response => {
+        this.a1z = response.data;
+        this.a1z.noCarriedSubjets = 0;
+        this.a1z.noCarriedSubjetsZ = 0;
+        this.a1z.carriedSubjectD3 = response.data.subjectD3A1ZId;
+        this.onSubjectD1Init(response.data);
+        this.onSubjectD2Init(response.data);
+        this.onSubjectD3Init(response.data);
+        this.onSubjectZ1Init(response.data);
+        this.a1z.carriedSubjectZ1 = response.data.subjectZ1A1ZId;
+        this.cd.detectChanges();
+        //TODO: When exam grade implemented uncomment the following lines
+        // this.examGradeSercice.getExamGrade(this.a1z.id!).subscribe(response => {
+        //   this.examGrades = response.data;
+        // });
+      });
+    }
     console.log('init');
   }
 
@@ -256,31 +267,64 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   }
 
   onSubjectD1Change($event: any) {
-    this.disableD1Subject = !this.disableD1Subject;
-    this.disableD1Subject === false
-      ? (this.a1z.noCarriedSubjets! = this.a1z.noCarriedSubjets! + 1)
-      : (this.a1z.noCarriedSubjets! = this.a1z.noCarriedSubjets! - 1);
+    this.enableD1Subject = $event.checked;
+    this.enableD1Subject === true
+      ? (this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets + 1)
+      : (this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets - 1);
+
+    console.log(this.a1z.noCarriedSubjets);
+  }
+
+  onSubjectD1Init(data: A1Z) {
+    if (data.scoreD1A1Z !== 0) {
+      this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets + 1;
+      this.enableD1Subject = true;
+    }
   }
 
   onSubjectD2Change($event: any) {
-    this.disableD2Subject = !this.disableD2Subject;
-    this.disableD2Subject === false
-      ? (this.a1z.noCarriedSubjets! = this.a1z.noCarriedSubjets! + 1)
-      : (this.a1z.noCarriedSubjets! = this.a1z.noCarriedSubjets! - 1);
+    this.enableD2Subject = $event.checked;
+    this.enableD2Subject === true
+      ? (this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets + 1)
+      : (this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets - 1);
+    console.log(this.a1z.noCarriedSubjets);
+  }
+
+  onSubjectD2Init(data: A1Z) {
+    if (data.scoreD2A1Z !== 0) {
+      this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets + 1;
+      this.enableD2Subject = true;
+    }
   }
 
   onSubjectD3Change($event: any) {
-    this.disableD3Subject = !this.disableD3Subject;
-    this.disableD3Subject === false
-      ? (this.a1z.noCarriedSubjets! = this.a1z.noCarriedSubjets! + 1)
-      : (this.a1z.noCarriedSubjets! = this.a1z.noCarriedSubjets! - 1);
+    this.enableD3Subject = $event.checked;
+    this.enableD3Subject === true
+      ? (this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets + 1)
+      : (this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets - 1);
+    console.log(this.a1z.noCarriedSubjets);
+  }
+
+  onSubjectD3Init(data: A1Z) {
+    if (data.scoreD3A1Z !== 0) {
+      this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets + 1;
+      this.enableD3Subject = true;
+    }
+  }
+
+  onSubjectZ1Init(data: A1Z) {
+    if (data.scoreZ1A1Z !== 0) {
+      this.a1z.noCarriedSubjetsZ = this.a1z.noCarriedSubjetsZ + 1;
+      this.enableZ1Subject = true;
+    }
   }
 
   onSubjectZ1Change($event: any) {
-    this.disableZ1Subject = !this.disableZ1Subject;
-    this.disableZ1Subject === false
-      ? this.a1z.noCarriedSubjetsZ!++
-      : this.a1z.noCarriedSubjetsZ!--;
+    this.enableZ1Subject = $event.checked;
+    this.enableZ1Subject === true
+      ? (this.a1z.noCarriedSubjetsZ = this.a1z.noCarriedSubjetsZ + 1)
+      : (this.a1z.noCarriedSubjetsZ = this.a1z.noCarriedSubjetsZ - 1);
+    console.log(this.a1z.noCarriedSubjetsZ);
   }
 
   getStudents($event: LazyLoadEvent): void {
@@ -323,12 +367,18 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
           .pipe(untilDestroyed(this))
           .subscribe(y => {
             this.d1ExamSubjects = y.data;
+            this.a1z.carriedSubjectD1 = this.d1ExamSubjects[0].key!;
+            this.a1z.subjectD1A1ZId = this.d1ExamSubjects[0].key!;
+            this.cd.detectChanges();
           });
         this.examSubjectService
           .forExamType(d2ExamType!.key!, this.a1z.academicYearId)
           .pipe(untilDestroyed(this))
           .subscribe(y => {
             this.d2ExamSubjects = y.data;
+            this.a1z.carriedSubjectD2 = this.d2ExamSubjects[0].key!;
+            this.a1z.subjectD2A1ZId = this.d2ExamSubjects[0].key!;
+            this.cd.detectChanges();
           });
 
         this.examSubjectService
@@ -336,6 +386,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
           .pipe(untilDestroyed(this))
           .subscribe(y => {
             this.d3ExamSubjectsFall = y.data;
+            this.cd.detectChanges();
           });
         this.examSubjectService
           .forExamType(z1ExamTypeFall!.key!, this.a1z.academicYearId)
@@ -372,6 +423,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   }
 
   onNewA1ZFormSubmit() {
+    this.manageSubjects();
     this.a1zService
       .save(this.a1z)
       .pipe(untilDestroyed(this))
@@ -392,6 +444,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   }
 
   onEditA1ZFormSubmit() {
+    this.manageSubjects();
     this.a1zService
       .update(this.a1z)
       .pipe(untilDestroyed(this))
@@ -409,5 +462,30 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
           console.log(response);
         }
       });
+  }
+
+  manageSubjects() {
+    if (this.enableD1Subject === false) {
+      this.a1z.carriedSubjectD1 = undefined;
+      this.a1z.scoreD1A1Z = undefined;
+    }
+    if (this.enableD2Subject === false) {
+      this.a1z.carriedSubjectD2 = undefined;
+      this.a1z.scoreD2A1Z = undefined;
+    }
+    if (this.enableD3Subject === false) {
+      this.a1z.carriedSubjectD3 = undefined;
+      this.a1z.scoreD3A1Z = undefined;
+    }
+    if (this.a1z.carriedSubjectD3 !== undefined) {
+      this.a1z.subjectD3A1ZId = this.a1z.carriedSubjectD3;
+    }
+    if (this.a1z.carriedSubjectZ1 !== undefined) {
+      this.a1z.subjectZ1A1ZId = this.a1z.carriedSubjectZ1;
+    }
+    if (this.enableZ1Subject === false) {
+      this.a1z.carriedSubjectZ1 = undefined;
+      this.a1z.scoreZ1A1Z = undefined;
+    }
   }
 }

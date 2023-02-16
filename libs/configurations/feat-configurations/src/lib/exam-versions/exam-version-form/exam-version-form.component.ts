@@ -40,6 +40,7 @@ import {DropdownModule} from "primeng/dropdown";
 })
 export class ExamVersionFormComponent {
   @Input() examTypes: DropdownModel<number>[] = [];
+  @Input() examSubjects: DropdownModel<number>[] = [];
   @Input() profileGroups: DropdownModel<number>[] = [];
 
   @Input() set examVersionDetails(details: ExamVersion | null) {

@@ -37,7 +37,7 @@ export class GradesScaleService {
     return this.apiService.get(`/GradeScale/${id}`);
   }
 
-  delete(gradeId: number | undefined): Observable<ApiResult<unknown>> {
+  delete(gradeId: string | undefined): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<GradesScale>>(
       `/GradeScale/${gradeId}`
     );

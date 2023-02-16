@@ -58,6 +58,14 @@
           field="examTypeName"
           display="menu"></p-columnFilter>
       </th>
+      <th pSortableColumn="examSubjectName">
+        Lënda e Provimit
+        <p-sortIcon field="examSubjectName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="examSubjectName"
+          display="menu"></p-columnFilter>
+      </th>
       <th pSortableColumn="code">
         Kodi
         <p-sortIcon field="code"></p-sortIcon>
@@ -85,6 +93,9 @@
       </td>
       <td style="width: 18%; min-width: 10rem">
         {{ examVersion.examTypeName }}
+      </td>
+      <td style="width: 18%; min-width: 10rem">
+        {{ examVersion.examSubjectName }}
       </td>
       <td style="width: 18%; min-width: 10rem">
         {{ examVersion.code }}
