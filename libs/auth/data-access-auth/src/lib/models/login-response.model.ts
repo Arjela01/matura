@@ -3,4 +3,5 @@ export interface LoginResponse {
   token: string;
   username: string;
   isSuccessful: boolean;
+  errorMessage?: string;
 }
