@@ -28,7 +28,6 @@ import { BehaviorSubject } from 'rxjs';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { UserGridComponent } from '../user-grid/user-grid.component';
 import { RippleModule } from 'primeng/ripple';
-import { UsersPasswordResetFormComponent } from '../users-password-reset-form/users-password-reset-form.component';
 import { UsersPasswordResetViewComponent } from '../users-password-reset-view/users-password-reset-view.component';
 @UntilDestroy()
 @Component({
@@ -46,7 +45,6 @@ import { UsersPasswordResetViewComponent } from '../users-password-reset-view/us
     UserGridComponent,
     UserFormComponent,
     RippleModule,
-    UsersPasswordResetFormComponent,
     UsersPasswordResetViewComponent,
   ],
   providers: [ConfirmationService],
@@ -69,7 +67,6 @@ export class ManageUsersComponent implements OnInit {
   roles: DropdownModel<number>[] = [];
 
   userDialog = false;
-  passwordDialog = false;
   resetPasswordGenerated = false;
 
   constructor(
@@ -127,9 +124,14 @@ export class ManageUsersComponent implements OnInit {
         this.selectedUsers = [];
         break;
       case GRID_ACTIONS.CUSTOM_ACTION1:
-        this.selectedUser = Object.assign({}, event.data as User);
-        this.passwordDialog = true;
+        this.confirmationService.confirm({
+          message: 'Jeni i sigurt qe doni te gjeneroni nje password te ri?',
+          accept: () => {
+            this.passwordGenerate(event.data as User);
+          },
+        });
         break;
+
       case GRID_ACTIONS.EDIT:
         this.selectedUser = Object.assign({}, event.data as User);
         this.userDialog = true;
@@ -145,18 +147,12 @@ export class ManageUsersComponent implements OnInit {
     }
   }
 
-  onFormClosePass() {
-    this.passwordDialog = false;
-  }
+
   onFormClose() {
     this.userDialog = false;
   }
 
-  onFormSavePass(user: User) {
-    if (user.id) {
-      this.updatePassword(user);
-    }
-  }
+
 
   onFormSave(user: User) {
     if (user.id) {
@@ -217,24 +213,26 @@ export class ManageUsersComponent implements OnInit {
       });
   }
 
-  updatePassword(user: User) {
+  passwordGenerate(user: User) {
     this.userService
       .update(user)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Fjalekalimi u ndryshua me sukses!');
-          this.passwordDialog = false;
-          this.resetPasswordGenerated = true;
+          this.toastService.showSuccess('Perdoruesi u ndryshua me sukses!');
+
           this.getUsers(this.filters as LazyLoadEvent);
+          this.resetPasswordGenerated = true;
+
         }
         if (!response.isSuccessful) {
           this.toastService.showError(
-            'Ndodhi nje problem gjate ndryshimit te fjalkalimit!'
+            'Ndodhi nje problem gjate ndryshimit te perdoruesit!'
           );
         }
       });
   }
+
 
   deleteUser(user: User) {
     this.userService
