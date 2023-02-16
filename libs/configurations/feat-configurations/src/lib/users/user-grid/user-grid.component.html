@@ -111,10 +111,30 @@
       </td>
       <td>
         <div class="flex">
-          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-warning p-button-text mr-2"
-            pTooltip="Ndrysho" tooltipPosition="bottom" (click)="onEditClick(user)"></button>
-          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-text"
-            pTooltip="Fshi" tooltipPosition="bottom" (click)="onDeleteClick(user)"></button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-key"
+            class="p-button-rounded p-button-info p-button-text mr-2"
+            pTooltip="Ndrysho Fjalëkalimin"
+            tooltipPosition="bottom"
+            (click)="onKeyClick(user)"></button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-pencil"
+            class="p-button-rounded p-button-warning p-button-text mr-2"
+            pTooltip="Ndrysho"
+            tooltipPosition="bottom"
+            (click)="onEditClick(user)"></button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-danger p-button-text"
+            pTooltip="Fshi"
+            tooltipPosition="bottom"
+            (click)="onDeleteClick(user)"></button>
         </div>
       </td>
     </tr>
