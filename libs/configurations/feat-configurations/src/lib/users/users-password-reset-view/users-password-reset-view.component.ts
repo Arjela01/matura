@@ -75,7 +75,6 @@ export class UsersPasswordResetViewComponent implements OnInit, OnDestroy {
     lastName: '',
     username: '',
     password: '',
-    userName: '',
     lastPasswordChange: new Date(),
     name: '',
     isActive: true,

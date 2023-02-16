@@ -64,8 +64,15 @@
   </div>
 
   <div class="field">
-    <label for="username">Përdoruesi *</label>
-    <input type="text" pInputText id="username" name="username" [(ngModel)]="user.username" required autofocus
+    <label for="userName">Përdoruesi *</label>
+    <input
+      type="text"
+      pInputText
+      id="userName"
+      name="userName"
+      [(ngModel)]="user.username"
+      required
+      autofocus
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !user.username
       }" />
