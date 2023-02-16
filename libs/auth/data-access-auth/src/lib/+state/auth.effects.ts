@@ -5,8 +5,8 @@ import { StorageService } from '@msh/shared/data-access-shared';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, of, tap } from 'rxjs';
 import { TOKEN_STORAGE_KEY } from '../services/token.interceptor';
-import { User, USER_STORAGE_KEY } from './../models/user.model';
-import { AuthService } from './../services/auth.service';
+import { User, USER_STORAGE_KEY } from '../models/user.model';
+import { AuthService } from '../services/auth.service';
 import { AuthActions } from './auth.actions';
 
 @Injectable()
@@ -37,8 +37,9 @@ export class AuthEffects {
             if (loginResponse.isSuccessful)
               return AuthActions.loginSuccess({ loginResponse });
 
+
             return AuthActions.loginFailure({
-              error: new Error('Përdorues/fjalëkalim i gabuar.'),
+              error: new Error(loginResponse.errorMessage ?? 'Përdorues/fjalëkalim i gabuar.'),
             });
           }),
           catchError((error: HttpErrorResponse) => {
