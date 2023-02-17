@@ -1,8 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { StorageService } from '@msh/shared/data-access-shared';
-import { HeartbeatService } from '@msh/shared/util-shared';
+import {
+  HeartbeatService,
+  StorageService,
+} from '@msh/shared/data-access-shared';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, of, tap } from 'rxjs';
 import { User, USER_STORAGE_KEY } from '../models/user.model';
@@ -19,7 +21,7 @@ export class AuthEffects {
         const token = this.storageService.getItem(TOKEN_STORAGE_KEY) as string;
         const user = this.storageService.getItem(USER_STORAGE_KEY) as User;
         if (token && user && user?.username && user?.displayName) {
-          this.heartBeatService.startTime();
+          // this.heartBeatService.startTime();
           return AuthActions.loadAuthSuccess({ token: token, user: user });
         }
         return AuthActions.logout();
@@ -82,8 +84,7 @@ export class AuthEffects {
             TOKEN_STORAGE_KEY,
             action.loginResponse.token
           );
-          debugger;
-          this.heartBeatService.startTime();
+          // this.heartBeatService.startTime();
           this.router.navigate(['/']);
         })
       ),
@@ -97,7 +98,7 @@ export class AuthEffects {
         tap(() => {
           this.storageService.removeItem(TOKEN_STORAGE_KEY);
           this.storageService.removeItem(USER_STORAGE_KEY);
-          this.heartBeatService.stopTimer();
+          // this.heartBeatService.stopTimer();
           this.router.navigate(['/login']);
         })
       ),
