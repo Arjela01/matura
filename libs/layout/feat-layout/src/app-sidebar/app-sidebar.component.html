@@ -1,13 +1,15 @@
-<ul class="layout-menu">
-  <ng-container *ngFor="let item of model$ | async; let i = index">
-    <li
-      msh-app-menuitem
-      *ngIf="!item.separator"
-      [item]="item"
-      [index]="i"
-      [root]="true"></li>
-    <li *ngIf="item.separator" class="menu-separator"></li>
-  </ng-container>
+<div class="sidebar">
+  <ul class="layout-menu">
+    <ng-container *ngFor="let item of model$ | async; let i = index">
+      <li
+        msh-app-menuitem
+        *ngIf="!item.separator"
+        [item]="item"
+        [index]="i"
+        [root]="true"></li>
+      <li *ngIf="item.separator" class="menu-separator"></li>
+    </ng-container>
+  </ul>
   <div class="profile-group">
     <div style="display: inline-flex">
       <svg
@@ -90,4 +92,4 @@
       </div>
     </div>
   </div>
-</ul>
+</div>

@@ -7,13 +7,13 @@ import { MenuItem } from 'primeng/api';
 import { MenuStore } from '@msh/layout/data-access-layout';
 import { map, Observable } from 'rxjs';
 import { MenuNode } from '@msh/layout/domain-layout';
-import {Router, RouterLink, RouterLinkWithHref} from '@angular/router';
-import {AuthFacade} from "@msh/auth/data-access-auth";
+import { Router, RouterLink, RouterLinkWithHref } from '@angular/router';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @Component({
   selector: 'msh-app-sidebar',
   standalone: true,
-  imports: [CommonModule, AppMenuitemComponent,RouterLinkWithHref, RouterLink],
+  imports: [CommonModule, AppMenuitemComponent, RouterLinkWithHref, RouterLink],
   providers: [MenuStore],
   templateUrl: './app-sidebar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -36,7 +36,6 @@ export class AppSidebarComponent implements OnInit {
     private router: Router,
     public layoutService: LayoutService,
     private authFacade: AuthFacade
-
   ) {}
 
   ngOnInit() {
