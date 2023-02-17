@@ -25,11 +25,7 @@ import {
 } from '@msh/auth/data-access-auth';
 import { getLocalStorageProvider } from '@msh/shared/data-access-shared';
 import { environment } from '@msh/shared/environments';
-import {
-  API_URL,
-  ErrorInterceptorService,
-  HeartbeatService,
-} from '@msh/shared/util-shared';
+import { API_URL, ErrorInterceptorService } from '@msh/shared/util-shared';
 
 import { provideEffects } from '@ngrx/effects';
 import { MessageService } from 'primeng/api';
@@ -43,7 +39,6 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    HeartbeatService,
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimations(),
     provideRouter(
