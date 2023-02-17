@@ -132,14 +132,6 @@ export class ManageUsersComponent implements OnInit {
           },
         });
         break;
-      case GRID_ACTIONS.CUSTOM_ACTION2:
-        this.confirmationService.confirm({
-          message: 'Jeni i sigurt qe doni te ndryshoni statusin e perdoruesit?',
-          accept: () => {
-            this.changeUserStatus(event.data as User);
-          },
-        });
-        break;
       case GRID_ACTIONS.EDIT:
         this.selectedUser = Object.assign({}, event.data as User);
         this.userDialog = true;
@@ -152,7 +144,16 @@ export class ManageUsersComponent implements OnInit {
           },
         });
         break;
-    }
+  case GRID_ACTIONS.CUSTOM_ACTION2:
+    this.confirmationService.confirm({
+      message: 'Jeni i sigurt qe doni te ndryshoni statusin e perdoruesit?',
+      accept: () => {
+        this.changeUserStatus(event.data as User);
+      },
+    });
+    break;
+
+}
   }
 
 
@@ -184,18 +185,22 @@ export class ManageUsersComponent implements OnInit {
       });
   }
 
+
+
   changeUserStatus(user: User) {
     this.userService
-      .changeUserStatus(user)
+      .changeUserStatus({
+        "id": user.id,
+        "isDisabled": !user.isDisabled
+      })
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
-            !user.isDisabled
+            response.data.isDisabled
               ? 'Perdoruesi u çaktivizua me sukses!'
               : 'Perdoruesi u aktivizua me sukses!'
           );
-
           this.displayModal = false;
           this.getUsers(this.filters as LazyLoadEvent);
         }

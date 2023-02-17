@@ -86,6 +86,7 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
   submitted = false;
 
   user: User = {
+    isDisabled: false,
     id: '',
     displayName: '',
     administrationOfficeId: 0,
@@ -102,7 +103,7 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
     nid: '',
     studyProgramId: 0,
     universityId: 0,
-    universityDepartmentId: 0,
+    universityDepartmentId: 0
   };
 
   constructor(
