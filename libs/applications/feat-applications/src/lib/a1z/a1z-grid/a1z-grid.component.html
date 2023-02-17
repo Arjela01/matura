@@ -16,12 +16,6 @@
   (onLazyLoad)="loadRows($event)"
   (onRowSelect)="onRowSelect($event)"
   (onRowUnselect)="onRowUnselect($event)">
-  <ng-template pTemplate="caption">
-    <div
-      class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <h5 class="m-0">Menaxho Formularët A1Z</h5>
-    </div>
-  </ng-template>
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="academicYear">
