@@ -1,22 +1,34 @@
-<h1 style="color: green">Profili Yt</h1>
-<p-card header="GeeksforGeeks"
-        subheader="Angular PrimeNG Card Advanced Card"
-        [style]="{ width: '360px', height: '600px' }"
-        styleClass="shadow-2">
-  <ng-template pTemplate="header">
-    <img alt="Card" height="300" src=
-      "https://media.geeksforgeeks.org/img-practice/banner/system-design-live-course-overview-image.png?v=1665305530" />
-  </ng-template>
-  <p>
-    This course helped me a lot in achieving
-    new heights in my career. I have cracked multiple
-    product-based companies including Amazon,
-    Flipkart, and Walmart.
-  </p>
-
-  <ng-template pTemplate="footer">
-    <p-button label="Ndrysho Password"
-              styleClass="p-button-success">
-    </p-button>
-  </ng-template>
-</p-card>
+<div class="user">
+  <div class="first-group">
+    <p-avatar
+      class="avatar"
+      label="{{ userProfile.firstName.charAt(0) }}{{
+        userProfile.lastName.charAt(0)
+      }}"
+      shape="circle"
+      size="xlarge">
+    </p-avatar>
+    <h4>{{ userProfile.userName }}</h4>
+    <h6>{{ userProfile.email }}</h6>
+  </div>
+  <div class="second-group">
+      <h6>
+        Emri:
+        <span class="span">{{ userProfile.firstName }}</span>
+      </h6>
+      <h6>
+        Mbiemri:
+        <span class="span">{{ userProfile.lastName }}</span>
+      </h6>
+    </div>
+    <div>
+      <h6>
+        Eshte Aktiv?:
+        <span class="span">{{ userProfile.isActive ? 'Po' : 'Jo' }}</span>
+      </h6>
+      <h6>
+        Roli:
+        <span class="span">{{ userProfile.roleName }}</span>
+      </h6>
+    </div>
+</div>

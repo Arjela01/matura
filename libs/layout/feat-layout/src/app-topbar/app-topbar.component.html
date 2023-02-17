@@ -24,7 +24,7 @@
       <i class="pi pi-calendar"></i>
       <span>Calendar</span>
     </button>
-    <button class="p-link layout-topbar-button">
+    <button class="p-link layout-topbar-button" (click)="onNewClick()">
       <i class="pi pi-user"></i>
       <span>Profile</span>
     </button>
@@ -37,5 +37,19 @@
       <i class="pi pi-sign-out"></i>
       <span>Dil</span>
     </button>
+
+    <p-dialog
+      [(visible)]="displayModal"
+      [style]="{ width: '35%' }"
+      [modal]="true"
+      [draggable]="false"
+      [resizable]="false"
+      class="p-fluid"
+      (onHide)="onModalClose()">
+      <ng-template pTemplate="content">
+       <msh-user-profile>
+       </msh-user-profile>
+      </ng-template>
+    </p-dialog>
   </div>
 </div>

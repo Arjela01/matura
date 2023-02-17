@@ -9,7 +9,7 @@ import { UserProfile } from '@msh/layout/domain-layout';
 export class UserProfileApiService {
   constructor(private apiService: APIService) {}
 
-  getUserProfile(): Observable<UserProfile> {
-    return this.apiService.get(`/UserProfile`);
+  getUserById(userId : string): Observable<UserProfile> {
+    return this.apiService.get(`/User/${userId}`);
   }
 }

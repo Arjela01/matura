@@ -1,0 +1,28 @@
+.user {
+  display: block;
+}
+.first-group {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  margin: auto;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  background-color: #1930ce;
+  color: #e5e0e0;
+  font-size: 40px;
+}
+
+.second-group {
+  justify-content: space-around;
+  display: inline-block;
+  padding: 0 10px;
+}
+
+.span {
+  color: rgba(93, 93, 94, 0.76);
+  font-size: 12px;
+}
