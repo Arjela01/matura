@@ -20,6 +20,10 @@ export class UserApiService {
     return this.apiService.get(`/User/${id}`);
   }
 
+  generateNewPass(id:string): Observable<ApiResult<User>> {
+    return this.apiService.get(`/User/GeneratePass${id}`);
+  }
+
   save(user: User): Observable<ApiResult<User>> {
     return this.apiService.post<ApiResult<User>, User>('/User', user);
   }

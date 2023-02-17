@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {
   AdministrationOfficeApiService,
   CityApiService,
@@ -68,6 +68,7 @@ export class ManageUsersComponent implements OnInit {
 
   userDialog = false;
   resetPasswordGenerated = false;
+  newUserPasswordObj: any = {};
 
   constructor(
     private readonly userService: UserApiService,
@@ -80,7 +81,8 @@ export class ManageUsersComponent implements OnInit {
     private readonly universityService: UniversityApiService,
     private readonly universityDepartmentService: UniversityDepartmentApiService,
     private readonly highSchoolService: HighSchoolApiService,
-    private readonly roleService: RolesApiService
+    private readonly roleService: RolesApiService,
+    private readonly cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -214,10 +216,39 @@ export class ManageUsersComponent implements OnInit {
   }
 
   passwordGenerate(user: User) {
+    this.userService
+      .generateNewPass(user.id)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
           this.toastService.showSuccess('Fjalkalimi u ndryshua me sukses!');
+          this.userDialog = false;
           this.resetPasswordGenerated = true;
+          this.cdr.detectChanges();
+          // this.newUserPasswordObj = {
+          //   ...response.data;
+          // }
+          this.newUserPasswordObj = {
+            username: "asdhahsdhasdh",
+            password: "asjdjasdasdhhasd"
+          }
 
+        }
 
+        if (!response.isSuccessful) {
+          //fshije pasi te egzistoje API ok
+          this.userDialog = false;
+          this.resetPasswordGenerated = true;
+          this.cdr.detectChanges();
+          this.newUserPasswordObj = {
+            username: "asdhahsdhasdh",
+            password: "asjdjasdasdhhasd"
+          }
+          this.toastService.showError(
+            'Ndodhi nje problem gjate ndryshimit te perdoruesit!'
+          );
+        }
+      });
   }
 
 
