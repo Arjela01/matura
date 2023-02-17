@@ -1,12 +1,15 @@
 .layout-topbar {
     position: fixed;
     height: 5rem;
-    z-index: 997;
+  border-radius: 15px;
+
+  z-index: 997;
     left: 0;
     top: 0;
     width: 100%;
     padding: 0 2rem;
-    background-color: var(--surface-card);
+    //background-color: var(--surface-card);
+    background-color:#1d5c96;
     transition: left $transitionDuration;
     display: flex;
     align-items: center;

@@ -5,11 +5,17 @@
   --surface-d:rgba(0,0,0,.12);
   --surface-e:#ffffff;
   --surface-f:#ffffff;
+  --surface-g:#EAECF0;
+  --surface-1000: #f9fafb;
+  --surface-1001:#f2f4f7;
   --text-color:rgba(0, 0, 0, 0.87);
   --text-color-secondary:rgba(0, 0, 0, 0.6);
   --primary-color:#3F51B5;
-  --primary-color-text:#ffffff;
-  --font-family:Roboto, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+  --primary-color-text:#F2F4F7;
+  --primary-color-navbar:#101828;
+ --primary-color-button: #155EEF;
+
+  --font-family:Roboto, Inter, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
   --surface-0: #ffffff;
   --surface-50: #FAFAFA;
   --surface-100: #F5F5F5;
@@ -21,6 +27,9 @@
   --surface-700: #616161;
   --surface-800: #424242;
   --surface-900: #212121;
+  --surface-gray-scrollbar:#344054;
+  --surface-gray-100-scrollbar:#475467;
+  --surface-gray-200-scrollbar:#667085;
   --gray-50: #FAFAFA;
   --gray-100: #F5F5F5;
   --gray-200: #EEEEEE;
