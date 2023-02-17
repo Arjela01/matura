@@ -30,7 +30,7 @@ export interface User {
   isActive: boolean;
 
   username?: string;
-
+isDisabled?: boolean;
   password: string;
   resetPassword?: string;
   confirmPassword?: string;

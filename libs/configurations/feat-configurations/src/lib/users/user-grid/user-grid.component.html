@@ -82,7 +82,7 @@
         </div>
       </th>
       <th pSortableColumn="status">
-        Aktivizo
+        Veprime
       </th>
       <th></th>
       <th></th>
@@ -120,30 +120,28 @@
       <td style="width: 10%; min-width: 10rem">
         {{ user.universityName }}
       </td>
-      <td>
-          <span
-            [ngClass]="user.isActive  ? ['bg-red-400','text-white','px-3','py-1','border-round-md'] :  ['bg-green-400','text-white','px-3','py-1','border-round-md'] ">
-                      {{ user.isActive ? 'Pasiv' : 'Aktiv' }}
-                    </span>
+      <td style="width: 14%; min-width: 10rem">
+        <span *ngIf="user.isDisabled" class="closed">
+          Pasiv
+        </span>
+        <span *ngIf="!user.isDisabled" class="open">
+          Aktiv
+        </span>
       </td>
-
-      <td>
+      <td style="width: 14%; min-width: 10rem">
         <div class="flex">
           <button
             pButton
             pRipple
-            class="{{!user.closed}} ? p-button-rounded p-button-danger p-button-text mr-2 : p-button-rounded p-button-success p-button-text mr-2 "
-            pTooltip="{{
-              !user.isActive ? 'Çaktivizo' : 'Aktivizo'
-            }}"
-            tooltipPosition="bottom"
-            (click)="(changeStatus(user))"
+            class="p-button-rounded p-button-danger p-button-text mr-2 : p-button-rounded p-button-success p-button-text mr-2"
+            (click)="changeUserStatus(user)"
             icon="{{
-              !user.isActive ? 'pi pi-times' : 'pi pi-check'
-            }}"></button>
+              !user.isDisabled ? 'pi pi-user-plus' : 'pi pi-user-minus'
+            }}">
+            &nbsp;{{ !user.isDisabled ? 'Caktivizo' : 'Aktivizo' }}
+          </button>
         </div>
       </td>
-      <td>
         <div class="flex">
           <button
             pButton
@@ -170,7 +168,6 @@
             tooltipPosition="bottom"
             (click)="onDeleteClick(user)"></button>
         </div>
-      </td>
     </tr>
   </ng-template>
 </p-table>

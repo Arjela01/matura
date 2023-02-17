@@ -132,19 +132,18 @@ export class ManageUsersComponent implements OnInit {
           },
         });
         break;
-
+      case GRID_ACTIONS.CUSTOM_ACTION2:
+        this.confirmationService.confirm({
+          message: 'Jeni i sigurt qe doni te ndryshoni statusin e perdoruesit?',
+          accept: () => {
+            this.changeUserStatus(event.data as User);
+          },
+        });
+        break;
       case GRID_ACTIONS.EDIT:
         this.selectedUser = Object.assign({}, event.data as User);
         this.userDialog = true;
         break;
-      // case GRID_ACTIONS.CUSTOM_ACTION1:
-      //   this.confirmationService.confirm({
-      //     message: 'Jeni i sigurt që doni të ndryshoni statusin e Perdoruesit?',
-      //     accept: () => {
-      //       this.changeUserStatus(event.data as User);
-      //     },
-      //   });
-      //   break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
           message: 'Are you sure that you want to delete this entity?',
@@ -185,28 +184,28 @@ export class ManageUsersComponent implements OnInit {
       });
   }
 
-  // changeUserStatus(user: User) {
-  //   this.userService
-  //     .changeUserStatus(this.id)
-  //     .pipe(untilDestroyed(this))
-  //     .subscribe(response => {
-  //       if (response.isSuccessful) {
-  //         this.toastService.showSuccess(
-  //           !user.isActive
-  //             ? 'Dosja u mbyll me sukses!'
-  //             : 'Dosja u hap me sukses!'
-  //         );
-  //
-  //         this.displayModal = false;
-  //         this.getUsers(this.filters as LazyLoadEvent);
-  //       }
-  //
-  //       if (response.isBadRequest)
-  //         this.toastService.showError(
-  //           'Ndodhi një problem gjatë ndryshimit së dosjes!'
-  //         );
-  //     });
-  // }
+  changeUserStatus(user: User) {
+    this.userService
+      .changeUserStatus(user)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess(
+            !user.isDisabled
+              ? 'Perdoruesi u çaktivizua me sukses!'
+              : 'Perdoruesi u aktivizua me sukses!'
+          );
+
+          this.displayModal = false;
+          this.getUsers(this.filters as LazyLoadEvent);
+        }
+
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi një problem gjatë ndryshimit së statusit!'
+          );
+      });
+  }
 
   addUser(user: User) {
     this.userService

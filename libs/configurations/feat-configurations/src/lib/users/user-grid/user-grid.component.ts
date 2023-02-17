@@ -49,9 +49,9 @@ export class UserGridComponent {
     } as GridEvent<User>);
   }
 
-  changeStatus(user: User): void {
+  changeUserStatus(user: User): void {
     this.gridEvent.emit({
-      action: GRID_ACTIONS.SELECT_MANY,
+      action: GRID_ACTIONS.CUSTOM_ACTION2,
       data: user,
     } as GridEvent<User>);
   }
