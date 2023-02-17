@@ -1,5 +1,5 @@
 export interface GradesScale {
-  id?: number;
+  id?: string;
   examSubjectId: string;
   examSubjectName?: string;
   examTypeName?: string;
