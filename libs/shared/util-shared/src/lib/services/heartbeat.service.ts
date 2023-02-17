@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import { interval, of, Subject, switchMap, takeUntil } from 'rxjs';
+import { interval, Subject, switchMap, takeUntil } from 'rxjs';
+import { APIService } from './api.service';
 const tokenVerifyTimer = 10000;
 
 @Injectable({
@@ -14,15 +15,19 @@ export class HeartbeatService {
       .pipe(
         takeUntil(this._stopTimer$),
         switchMap(() => {
-          return of([]);
+          return this.apiService.get('/Auth/VerifyToken');
         })
       )
-      .subscribe();
+      .subscribe({
+        next: () => {},
+        error: () => {
+          this.authFacade.logout();
+        },
+      });
   }
 
   public stopTimer(): void {
     this._stopTimer$.next();
-    this.authFacade.logout();
   }
-  constructor(private authFacade: AuthFacade) {}
+  constructor(private authFacade: AuthFacade, private apiService: APIService) {}
 }

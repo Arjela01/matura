@@ -18,12 +18,10 @@ export class AuthEffects {
       map(() => {
         const token = this.storageService.getItem(TOKEN_STORAGE_KEY) as string;
         const user = this.storageService.getItem(USER_STORAGE_KEY) as User;
-
         if (token && user && user?.username && user?.displayName) {
-          // this.heartBeatService.startTime();
+          this.heartBeatService.startTime();
           return AuthActions.loadAuthSuccess({ token: token, user: user });
         }
-
         return AuthActions.logout();
       }),
       catchError(() => of(AuthActions.logout()))
@@ -84,7 +82,8 @@ export class AuthEffects {
             TOKEN_STORAGE_KEY,
             action.loginResponse.token
           );
-          // this.heartBeatService.startTime();
+          debugger;
+          this.heartBeatService.startTime();
           this.router.navigate(['/']);
         })
       ),
