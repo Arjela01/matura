@@ -20,6 +20,7 @@ export class AuthEffects {
         const user = this.storageService.getItem(USER_STORAGE_KEY) as User;
 
         if (token && user && user?.username && user?.displayName) {
+          // this.heartBeatService.startTime();
           return AuthActions.loadAuthSuccess({ token: token, user: user });
         }
 
@@ -78,13 +79,12 @@ export class AuthEffects {
             displayName: action.loginResponse.displayName,
             username: action.loginResponse.username,
           } as User;
-          this.heartBeatService.init();
           this.storageService.setItem(USER_STORAGE_KEY, user);
           this.storageService.setItem(
             TOKEN_STORAGE_KEY,
             action.loginResponse.token
           );
-
+          // this.heartBeatService.startTime();
           this.router.navigate(['/']);
         })
       ),
@@ -98,6 +98,7 @@ export class AuthEffects {
         tap(() => {
           this.storageService.removeItem(TOKEN_STORAGE_KEY);
           this.storageService.removeItem(USER_STORAGE_KEY);
+          this.heartBeatService.stopTimer();
           this.router.navigate(['/login']);
         })
       ),

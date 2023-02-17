@@ -11,6 +11,7 @@ export class AuthFacade {
   error$ = this.store.select(authQuery.selectError);
   isAuthenticated$ = this.store.select(authQuery.selectIsAuthenticated);
   user$ = this.store.select(authQuery.selectUser);
+  startedHeartBeat$ = this.store.select(authQuery.selectStartedHeartBeat);
 
   init() {
     this.store.dispatch(AuthActions.initAuth());

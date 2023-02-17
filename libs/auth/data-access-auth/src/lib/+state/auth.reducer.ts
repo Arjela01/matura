@@ -11,6 +11,7 @@ export interface AuthState {
   isAuthenticated: boolean;
   user: User;
   token: string;
+  startedHeartBeat: boolean;
 }
 
 export const initialAuthState: AuthState = {
@@ -22,6 +23,7 @@ export const initialAuthState: AuthState = {
     username: '',
   },
   token: '',
+  startedHeartBeat: false,
 };
 
 export const authFeature = createFeature({
@@ -31,6 +33,7 @@ export const authFeature = createFeature({
     on(AuthActions.initAuth, state => ({
       ...state,
       status: 'pending',
+      startedHeartBeat: false,
     })),
     on(AuthActions.loadAuthSuccess, (state, { token, user }) => ({
       ...state,
@@ -38,6 +41,7 @@ export const authFeature = createFeature({
       isAuthenticated: true,
       token: token,
       user: user,
+      startedHeartBeat: true,
     })),
     on(AuthActions.login, state => ({
       ...state,
@@ -54,11 +58,13 @@ export const authFeature = createFeature({
         username: loginResponse.username,
       },
       token: loginResponse.token,
+      startedHeartBeat: true,
     })),
     on(AuthActions.loginFailure, (state, { error }) => ({
       ...state,
       status: 'error',
       error: error.message,
+      startedHeartBeat: false,
     })),
     on(AuthActions.logout, state => ({
       ...state,
@@ -70,6 +76,7 @@ export const authFeature = createFeature({
         username: '',
       },
       token: '',
+      startedHeartBeat: false,
     }))
   ),
 });
