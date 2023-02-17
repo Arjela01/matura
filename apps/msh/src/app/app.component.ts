@@ -16,6 +16,7 @@ import { ToastModule } from 'primeng/toast';
   imports: [RouterOutlet, GlobalSpinnerComponent, NgIf, ToastModule],
 })
 export class AppComponent {
+  constructor() {}
   //Todo: Loading spinner global
   isLoading = false;
 }

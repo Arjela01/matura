@@ -8,3 +8,4 @@ export * from './lib/enums/grid-event.model';
 export * from './lib/interceptors/error-interceptor.service';
 export * from './lib/services/api.service';
 export * from './lib/services/global-toast.service';
+export * from './lib/services/heartbeat.service';
