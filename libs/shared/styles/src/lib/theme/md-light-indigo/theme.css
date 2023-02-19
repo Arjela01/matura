@@ -315,7 +315,7 @@ h2{
   background-color: var(--surface-gray-200-scrollbar);
 }
 .p-datatable>.p-datatable-wrapper::-webkit-scrollbar {
-  width: 10px;
+  height: 9px;
 }
 
 .p-autocomplete .p-autocomplete-loader {
