@@ -9,16 +9,30 @@ import { map, Observable } from 'rxjs';
 import { MenuNode } from '@msh/layout/domain-layout';
 import { Router, RouterLink, RouterLinkWithHref } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
+import { DialogModule } from 'primeng/dialog';
+import { UserProfileComponent } from '../user-profile/user-profile.component';
+import {AvatarModule} from "primeng/avatar";
 
 @Component({
   selector: 'msh-app-sidebar',
   standalone: true,
-  imports: [CommonModule, AppMenuitemComponent, RouterLinkWithHref, RouterLink],
+  imports: [
+    CommonModule,
+    AppMenuitemComponent,
+    RouterLinkWithHref,
+    RouterLink,
+    DialogModule,
+    UserProfileComponent,
+    AvatarModule,
+  ],
   providers: [MenuStore],
   templateUrl: './app-sidebar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppSidebarComponent implements OnInit {
+  displayModal = false;
+  firstName = 'Admin'
+  lastName = 'Admin'
   //TODO: This will be dynamic
   model$: Observable<MenuItem[]> = this.menuStore.menus$.pipe(
     map(menus => {
@@ -84,5 +98,12 @@ export class AppSidebarComponent implements OnInit {
 
   onLogoutClick() {
     this.authFacade.logout();
+  }
+  onNewClick() {
+    this.displayModal = true;
+  }
+
+  onModalClose() {
+    this.displayModal = false;
   }
 }

@@ -1,34 +1,63 @@
 <div class="user">
-  <div class="first-group">
+  <div class="container1">
     <p-avatar
-      class="avatar"
       label="{{ userProfile.firstName.charAt(0) }}{{
         userProfile.lastName.charAt(0)
       }}"
       shape="circle"
+      [style]="{ background: '#0b101b', color: 'white', width: '80px',height: '80px' , fontSize: '35px'}"
       size="xlarge">
     </p-avatar>
     <h4>{{ userProfile.userName }}</h4>
     <h6>{{ userProfile.email }}</h6>
   </div>
-  <div class="second-group">
-      <h6>
+  <div class="container2">
+    <div class="first-gr">
+      <h5>
         Emri:
         <span class="span">{{ userProfile.firstName }}</span>
-      </h6>
-      <h6>
+      </h5>
+      <h5>
         Mbiemri:
         <span class="span">{{ userProfile.lastName }}</span>
-      </h6>
+      </h5>
     </div>
-    <div>
-      <h6>
+    <div class="second-gr">
+      <h5>
         Eshte Aktiv?:
         <span class="span">{{ userProfile.isActive ? 'Po' : 'Jo' }}</span>
-      </h6>
-      <h6>
+      </h5>
+      <h5>
         Roli:
         <span class="span">{{ userProfile.roleName }}</span>
-      </h6>
+      </h5>
     </div>
+  </div>
+  <div class="container3">
+    <p-button (click)="toggleDisplayForm()" label="Ndrysho Password" [style] = "{backgroundColor: '#101829'}"></p-button>
+  </div>
+  <form #form="ngForm" [hidden]="!isShowForm" class="form">
+    <label for="oldPassword">Password Aktual *</label>
+    <div class="p-inputgroup">
+      <input type="password" [value]="userProfile.userName" id="oldPassword" name="oldPassword" required disabled/>
+      <small class="p-error block" *ngIf="submitted && !userProfile.userName">
+        Password Aktual është fushë e kërkuar.
+      </small>
+      <p-button [style] = "{backgroundColor: '#101829', width:'150px' , height:'50px'}" label="Gjenero Password"></p-button>
+    </div>
+    <div class="label">
+      <h6>Password i Ri *</h6>
+      <p-password [(ngModel)]="userProfile.userName" [toggleMask]="true"></p-password>
+      <small class="p-error block" *ngIf="submitted && !userProfile.userName">
+        Password i Ri është fushë e kërkuar.
+      </small>
+    </div>
+    <div class="label">
+      <div class="flex justify-content-end">
+        <button type="button" pButton icon="pi pi-times" label="Anullo" class="p-button-text w-auto mr-2"
+                (click)="onCancelClick()"></button>
+        <button type="submit" pButton icon="pi pi-check" label="Ndrysho" class="p-button-text w-auto"></button>
+      </div>
+    </div>
+  </form>
 </div>
