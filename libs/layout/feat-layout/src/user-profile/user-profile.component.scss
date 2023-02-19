@@ -1,65 +1,39 @@
-.user {
+:host {
   display: block;
 }
-.container1 {
-  text-align: center;
-  background: transparent;
 
-  .avatar {
-    background: #0b101b;
-    color: white;
-    width: 100px;
-    height: 100px;
-  }
-  h4 {
-    margin-top: 10px;
-  }
-  h6 {
-    color: #504c4c;
-    margin-top: -5px;
-    font-size: 16px;
-  }
+.p-button.password-button-text {
+  background-color: var(--primary-color-navbar);
+  color: white;
+  border-color: transparent;
 }
-
-.container2{
-  justify-content: space-around;
+.avatar {
   display: flex;
-  margin-top: 65px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-  .first-gr{
-    align-items: flex-start;
+  .avatar-circle {
+    color: whitesmoke;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
   }
-  .second-gr{
-    align-items: flex-end;
+}
+.avatar-data {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  .column {
+    width: 50%;
+    height: 100%;
+  }
+  .column1 {
+    height: 100%;
   }
 }
-
-.span {
-  color: rgba(93, 93, 94, 0.76);
-  font-size: 16px;
+.change-passw {
+  display: flex;
+  justify-content: center;
 }
-.container3{
-  width: 50%;
-  margin-top: 50px;
-  margin-left: 120px;
-}
-.form{
-  margin-top: 60px;
-}
-input[type=password], select {
-  height: 50px;
-  width: 70%;
-  padding: 12px 20px;
-  margin: 10px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-p-button.p-element {
-  margin-top: 10px;
-}
-.label{
-  margin-top:30px;
-}
-

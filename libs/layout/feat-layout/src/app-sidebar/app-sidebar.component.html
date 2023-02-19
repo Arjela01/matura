@@ -48,7 +48,6 @@
               label="{{ firstName.charAt(0) }}{{ lastName.charAt(0) }}"
               shape="circle"
               [style]="{background:'white'}"
-              size="xlarge"
             >
             </p-avatar>
           </div>
@@ -85,6 +84,6 @@
   class="p-fluid"
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
-    <msh-user-profile> </msh-user-profile>
+    <msh-user-profile></msh-user-profile>
   </ng-template>
 </p-dialog>
