@@ -15,10 +15,11 @@
               class="p-button-success mr-2"
               (click)="onNewClick()"></button>
           </div>
-          <p-button
-            icon="pi pi-upload"
-            (onClick)="onUploadClick()"></p-button>
-          <button style="margin-left:15px" pButton pRipple  icon="pi pi-download"
+          <button pButton pRipple
+                  icon="pi pi-upload"
+            style="background-color: #12395d"
+            (click)="onUploadClick()"></button>
+          <button style="margin-left:5px;background-color: #12395d;"  pButton pRipple  icon="pi pi-download"
                   (click)="downloadFile()"></button>
         </div>
       </p-toolbar>

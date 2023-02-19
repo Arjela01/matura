@@ -68,7 +68,7 @@
             display="menu"></p-columnFilter>
         </div>
       </th>
-      <th colspan="3">Veprime</th>
+      <th colspan="3" style="text-align: center">Veprime</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-archiveFolder>
@@ -90,12 +90,15 @@
       <td style="width: 14%; min-width: 10rem">
         {{ archiveFolder.createdByName }}
       </td>
+
       <td style="width: 14%; min-width: 10rem">
-        <span *ngIf="archiveFolder.isClosed" class="closed">
-          Mbyllur
-        </span>
-        <span *ngIf="!archiveFolder.isClosed" class="open">
-          Hapur
+        <span
+          [ngClass]="
+            archiveFolder.isClosed === true
+              ? ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
+              : ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
+          ">
+          {{ archiveFolder.isClosed === true ? 'Mbyllur' : 'Hapur' }}
         </span>
       </td>
       <td>
@@ -107,14 +110,12 @@
                 'archive-exams',
                 archiveFolder.id
               ]">
-              <button
+              <img
+                src="assets/svg/qr-code.svg"
+                class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
+                tooltipPosition="bottom"
                 (click)="persistArchiveFolder(archiveFolder)"
-                pButton
-                pRipple
-                icon="pi pi-qrcode"
-                class="p-button-rounded p-button-success p-button-text mr-2">
-                &nbsp; Hidh Barkode
-              </button>
+                pTooltip="Hidh Barkode" />
             </a>
           </div>
         </div>
@@ -124,26 +125,25 @@
           <button
             pButton
             pRipple
-            class="p-button-rounded p-button-warning p-button-text mr-2"
+            style="background-color: transparent; color: #dc6803; font-size: 10px"
             (click)="changeStatus(archiveFolder)"
             icon="{{
               !archiveFolder.isClosed ? 'pi pi-lock-open' : 'pi pi-lock'
             }}">
-            &nbsp;{{ !archiveFolder.isClosed ? 'Mbyll Dosjen' : 'Hap Dosjen' }}
+            &nbsp;
+            {{ !archiveFolder.isClosed ? 'Mbyll Dosjen' : 'Hap Dosjen' }}
           </button>
         </div>
       </td>
       <td>
         <div>
           <div class="flex">
-            <button
-              pButton
-              pRipple
-              icon="pi pi-trash"
-              class="p-button-rounded p-button-danger p-button-text"
+            <img
+              src="assets/svg/delete-form.svg"
+              class="p-button-rounded p-button-danger p-button-text pointer"
               pTooltip="Fshi"
               tooltipPosition="bottom"
-              (click)="onDeleteClick(archiveFolder)"></button>
+              (click)="onDeleteClick(archiveFolder)" />
           </div>
         </div>
       </td>

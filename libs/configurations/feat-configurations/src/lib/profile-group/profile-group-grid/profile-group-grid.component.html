@@ -39,30 +39,27 @@
   </ng-template>
   <ng-template pTemplate="body" let-profileGroup>
     <tr>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 50%; min-width: 10rem">
         {{ profileGroup.name }}
       </td>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 50%; min-width: 10rem">
         {{ profileGroup.ordering }}
       </td>
       <td>
         <div class="flex">
-          <button
-            pButton
-            pRipple
-            icon="pi pi-pencil"
-            class="p-button-rounded p-button-warning p-button-text mr-2"
-            pTooltip="Edit"
+          <img
+            src="assets/svg/edit-form.svg"
+            class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"
-            (click)="onEditClick(profileGroup)"></button>
-          <button
-            pButton
-            pRipple
-            icon="pi pi-trash"
-            class="p-button-rounded p-button-danger p-button-text"
-            pTooltip="Delete"
+            (click)="onEditClick(profileGroup)"
+            pTooltip="Ndrysho" />
+
+          <img
+            src="assets/svg/delete-form.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
+            pTooltip="Fshi"
             tooltipPosition="bottom"
-            (click)="onDeleteClick(profileGroup)"></button>
+            (click)="onDeleteClick(profileGroup)" />
         </div>
       </td>
     </tr>
