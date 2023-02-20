@@ -181,6 +181,19 @@
             }}">
             &nbsp;{{ !user.isDisabled ? 'Caktivizo' : 'Aktivizo' }}
           </button>
+          <img
+            src="assets/svg/edit-form.svg"
+            class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
+            tooltipPosition="bottom"
+            (click)="onEditClick(user)"
+            pTooltip="Ndrysho" />
+
+          <img
+            src="assets/svg/delete-form.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
+            pTooltip="Fshi"
+            tooltipPosition="bottom"
+            (click)="onDeleteClick(user)" />
         </div>
       </td>
       <div class="flex">

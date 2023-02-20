@@ -88,22 +88,19 @@
       </td>
       <td>
         <div class="flex">
-          <button
-            pButton
-            pRipple
-            icon="pi pi-pencil"
-            class="p-button-rounded p-button-warning p-button-text mr-2"
-            pTooltip="Shto Lenden"
+          <img
+            src="assets/svg/edit-form.svg"
+            class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"
-            (click)="onEditClick(failingStudent)"></button>
-          <button
-            pButton
-            pRipple
-            icon="pi pi-trash"
-            class="p-button-rounded p-button-danger p-button-text"
+            (click)="onEditClick(failingStudent)"
+            pTooltip="Ndrysho" />
+
+          <img
+            src="assets/svg/delete-form.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
             pTooltip="Fshi"
             tooltipPosition="bottom"
-            (click)="onDeleteClick(failingStudent)"></button>
+            (click)="onDeleteClick(failingStudent)" />
         </div>
       </td>
     </tr>
