@@ -1,18 +1,32 @@
 <div class="layout-topbar">
-  <button
-    #menubutton
-    class="p-link layout-menu-button layout-topbar-button"
-    (click)="layoutService.onMenuToggle()">
-    <i class="pi pi-bars"></i>
-  </button>
+  <div style="min-width: 284px; display: flex; justify-content: space-between">
+    <button
+      #menubutton
+      class="p-link layout-menu-button layout-topbar-button"
+      (click)="layoutService.onMenuToggle()">
+      <i class="pi pi-bars" style="color: white"></i>
+    </button>
 
-  <button
-    #topbarmenubutton
-    class="p-link layout-topbar-menu-button layout-topbar-button"
-    (click)="layoutService.showProfileSidebar()">
-    <i class="pi pi-ellipsis-v"></i>
-  </button>
+    <button
+      #topbarmenubutton
+      class="p-link layout-topbar-menu-button layout-topbar-button"
+      (click)="layoutService.showProfileSidebar()">
+      <i class="pi pi-ellipsis-v"></i>
+    </button>
 
+    <button class="p-link layout-topbar-button">
+      <i class="pi pi-calendar" style="color: white"></i>
+      <span>Calendar</span>
+    </button>
+    <button class="p-link layout-topbar-button">
+      <i class="pi pi-user" style="color: white"></i>
+      <span>Profile</span>
+    </button>
+    <button class="p-link layout-topbar-button" [routerLink]="'/documentation'">
+      <i class="pi pi-cog" style="color: white"></i>
+      <span>Settings</span>
+    </button>
+  </div>
   <div
     #topbarmenu
     class="layout-topbar-menu"
@@ -20,21 +34,8 @@
       'layout-topbar-menu-mobile-active':
         layoutService.state.profileSidebarVisible
     }">
-    <button class="p-link layout-topbar-button">
-      <i class="pi pi-calendar"></i>
-      <span>Calendar</span>
-    </button>
-    <button class="p-link layout-topbar-button">
-      <i class="pi pi-user"></i>
-      <span>Profile</span>
-    </button>
-    <button class="p-link layout-topbar-button" [routerLink]="'/documentation'">
-      <i class="pi pi-cog"></i>
-      <span>Settings</span>
-    </button>
-
-    <button class="p-link layout-topbar-button" (click)="onLogoutClick()">
-      <i class="pi pi-sign-out"></i>
+    <button class="p-link layout-topbar-button" style= "margin-left: -4.5rem;" (click)="onLogoutClick()">
+      <i class="pi pi-sign-out" style="color: white"></i>
       <span>Dil</span>
     </button>
   </div>
