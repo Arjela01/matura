@@ -51,10 +51,8 @@
           Aktiv
         </span>
       </td>
-      <td style="width: 14%; min-width: 10rem">
-        <span *ngIf="activateOverseer.isDisabled" class="closed"> Pasiv </span>
-        <span *ngIf="!activateOverseer.isDisabled" class="open"> Aktiv </span>
-      </td>
+
+
       <td style="width: 14%; min-width: 10rem">
         <div class="flex">
           <button
@@ -63,9 +61,9 @@
             class="p-button-rounded p-button-danger p-button-text mr-2"
             (click)="changeStatus(activateOverseer)"
             icon="{{
-              !activateOverseer.isDisabled ? 'pi pi-user-minus' : 'pi pi-user-plus'
+              !activateOverseer.isAllowedToLogin ? 'pi pi-user-minus' : 'pi pi-user-plus'
             }}">
-            &nbsp;{{ !activateOverseer.isDisabled ? 'Caktivizo' : 'Aktivizo' }}
+            &nbsp;{{ !activateOverseer.isAllowedToLogin ? 'Caktivizo' : 'Aktivizo' }}
           </button>
         </div>
       </td>
