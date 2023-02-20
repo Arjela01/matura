@@ -1,79 +1,135 @@
-<p-table #dt dataKey="id" responsiveLayout="scroll" [value]="users" [totalRecords]="totalRecords" [rows]="10"
-  [paginator]="true" [rowsPerPageOptions]="[10, 20, 30]" [showCurrentPageReport]="true"
-  currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde" [rowHover]="true"
-  selectionMode="multiple" (onLazyLoad)="loadRows($event)" [lazy]="true">
+<p-table
+  #dt
+  dataKey="id"
+  responsiveLayout="scroll"
+  [value]="users"
+  [totalRecords]="totalRecords"
+  [rows]="10"
+  [paginator]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
+  [rowHover]="true"
+  [(selection)]="selectedUsers"
+  selectionMode="multiple"
+  (onRowSelect)="onRowSelect($event)"
+  (onRowUnselect)="onRowUnselect($event)"
+  (onLazyLoad)="loadRows($event)"
+  [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="nid">
         NID
         <div>
           <p-sortIcon field="nid"></p-sortIcon>
-          <p-columnFilter type="text" field="nid" display="menu"></p-columnFilter>
+          <p-columnFilter
+            type="text"
+            field="nid"
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="name">
         Emri
         <div>
           <p-sortIcon field="name"></p-sortIcon>
-          <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+          <p-columnFilter
+            type="text"
+            field="name"
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="lastName">
         Mbiemri
         <div>
           <p-sortIcon field="lastName"></p-sortIcon>
-          <p-columnFilter type="text" field="lastName" display="menu"></p-columnFilter>
+          <p-columnFilter
+            type="text"
+            field="lastName"
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="username">
         Username
         <div>
           <p-sortIcon field="username"></p-sortIcon>
-          <p-columnFilter type="text" field="username" display="menu"></p-columnFilter>
+          <p-columnFilter
+            type="text"
+            field="username"
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="administrationOfficeName">
         DAR/ZA
         <div>
           <p-sortIcon field="administrationOfficeName"></p-sortIcon>
-          <p-columnFilter type="text" field="administrationOfficeName" display="menu"></p-columnFilter>
+          <p-columnFilter
+            type="text"
+            field="administrationOfficeName"
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="universityDepartmentName">
         Fakulteti
         <div>
           <p-sortIcon field="universityDepartmentName"></p-sortIcon>
-          <p-columnFilter type="text" field="universityDepartmentName" display="menu"></p-columnFilter>
+          <p-columnFilter
+            type="text"
+            field="universityDepartmentName"
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="highSchoolName">
         Gjimnazi
         <div>
           <p-sortIcon field="highSchoolName"></p-sortIcon>
-          <p-columnFilter type="text" field="highSchoolName" display="menu"></p-columnFilter>
+          <p-columnFilter
+            type="text"
+            field="highSchoolName"
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="studentName">
         MaturantID
         <div>
           <p-sortIcon field="studentName"></p-sortIcon>
-          <p-columnFilter type="text" field="studentName" display="menu"></p-columnFilter>
+          <p-columnFilter
+            type="text"
+            field="studentName"
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="studyProgramName">
         Programi i Studimit
         <div>
           <p-sortIcon field="studyProgramName"></p-sortIcon>
-          <p-columnFilter type="numeric" field="studyProgramName" display="menu"></p-columnFilter>
+          <p-columnFilter
+            type="numeric"
+            field="studyProgramName"
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="universityName">
         Universiteti
         <div>
           <p-sortIcon field="universityName"></p-sortIcon>
-          <p-columnFilter type="numeric" field="universityName" display="menu"></p-columnFilter>
+          <p-columnFilter
+            type="numeric"
+            field="universityName"
+            display="menu"></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="status">
+        Statusi
+        <div>
+          <p-sortIcon field="status"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="status"
+            display="menu"></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="status">Veprime</th>
+      <th></th>
       <th></th>
     </tr>
   </ng-template>
@@ -109,8 +165,35 @@
       <td style="width: 10%; min-width: 10rem">
         {{ user.universityName }}
       </td>
-      <td>
+      <td style="width: 14%; min-width: 10rem">
+        <span *ngIf="user.isDisabled" class="closed"> Pasiv </span>
+        <span *ngIf="!user.isDisabled" class="open"> Aktiv </span>
+      </td>
+      <td style="width: 14%; min-width: 10rem">
         <div class="flex">
+          <img
+            src="assets/svg/edit-form.svg"
+            class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
+            tooltipPosition="bottom"
+            (click)="onEditClick(user)"
+            pTooltip="Ndrysho" />
+
+          <img
+            src="assets/svg/delete-form.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
+            pTooltip="Fshi"
+            tooltipPosition="bottom"
+            (click)="onDeleteClick(user)" />
+          <button
+            pButton
+            pRipple
+            class="p-button-rounded p-button-danger p-button-text mr-2"
+            (click)="changeUserStatus(user)"
+            icon="{{
+              !user.isDisabled ? 'pi pi-user-minus' : 'pi pi-user-plus'
+            }}">
+            &nbsp;{{ !user.isDisabled ? 'Caktivizo' : 'Aktivizo' }}
+          </button>
           <img
             src="assets/svg/edit-form.svg"
             class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
@@ -126,6 +209,33 @@
             (click)="onDeleteClick(user)" />
         </div>
       </td>
+      <div class="flex">
+        <button
+          pButton
+          pRipple
+          icon="pi pi-key"
+          class="p-button-rounded p-button-info p-button-text mr-2"
+          pTooltip="Ndrysho Fjalëkalimin"
+          tooltipPosition="bottom"
+          (click)="onKeyClick(user)"></button>
+        <button
+          pButton
+          pRipple
+          icon="pi pi-pencil"
+          class="p-button-rounded p-button-warning p-button-text mr-2"
+          pTooltip="Ndrysho"
+          tooltipPosition="bottom"
+          (click)="onEditClick(user)"></button>
+        <button
+          pButton
+          pRipple
+          icon="pi pi-trash"
+          class="p-button-rounded p-button-danger p-button-text"
+          pTooltip="Fshi"
+          tooltipPosition="bottom"
+          (click)="onDeleteClick(user)"></button>
+      </div>
     </tr>
   </ng-template>
 </p-table>
+

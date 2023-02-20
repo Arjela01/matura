@@ -38,7 +38,7 @@
               }"
               required="true"
               minlength="4"
-              [(ngModel)]="loginFormModel.userName"
+              [(ngModel)]="loginFormModel.username"
               #username="ngModel" />
             <small
               *ngIf="
@@ -64,6 +64,7 @@
               Fjalëkalimi
             </label>
             <p-password
+              id="password"
               inputId="password"
               name="password"
               placeholder="Fjalëkalimi"
