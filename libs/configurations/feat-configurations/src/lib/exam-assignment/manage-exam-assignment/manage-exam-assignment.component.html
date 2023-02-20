@@ -15,11 +15,19 @@
               class="p-button-success mr-2"
               (click)="onNewClick()"></button>
           </div>
-          <p-button
+          <button
+            pButton
+            pRipple
             icon="pi pi-upload"
-            (onClick)="onUploadClick()"></p-button>
-          <button style="margin-left:15px" pButton pRipple  icon="pi pi-download"
-                  (click)="downloadFile()"></button>
+            label="Ngarko"
+            (click)="onUploadClick()"></button>
+          <button
+            style="margin-left: 5px"
+            pButton
+            pRipple
+            icon="pi pi-download"
+            label="Shkarko"
+            (click)="downloadFile()"></button>
         </div>
       </p-toolbar>
       <msh-exam-assignment-grid

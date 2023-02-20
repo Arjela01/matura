@@ -31,27 +31,24 @@
   </ng-template>
   <ng-template pTemplate="body" let-a1zCategory>
     <tr>
-      <td style="width: 30%; min-width: 10rem">
+      <td style="width: 100%; min-width: 10rem">
         {{ a1zCategory.name }}
       </td>
       <td>
         <div class="flex">
-          <button
-            pButton
-            pRipple
-            icon="pi pi-pencil"
-            class="p-button-rounded p-button-warning p-button-text mr-2"
-            pTooltip="Ndrysho"
+          <img
+            src="assets/svg/edit-form.svg"
+            class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"
-            (click)="onEditClick(a1zCategory)"></button>
-          <button
-            pButton
-            pRipple
-            icon="pi pi-trash"
-            class="p-button-rounded p-button-danger p-button-text"
+            (click)="onEditClick(a1zCategory)"
+            pTooltip="Ndrysho" />
+
+          <img
+            src="assets/svg/delete-form.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
             pTooltip="Fshi"
             tooltipPosition="bottom"
-            (click)="onDeleteClick(a1zCategory)"></button>
+            (click)="onDeleteClick(a1zCategory)" />
         </div>
       </td>
     </tr>
