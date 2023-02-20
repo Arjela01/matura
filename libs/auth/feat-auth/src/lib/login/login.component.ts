@@ -34,7 +34,7 @@ export class LoginComponent {
   error$ = this.authFacade.error$;
 
   loginFormModel: LoginRequest = {
-    userName: '',
+    username: '',
     password: '',
   };
 

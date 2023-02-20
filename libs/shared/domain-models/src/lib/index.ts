@@ -35,3 +35,4 @@ export * from './exam-subject-profile/exam-subject-profile.model';
 export * from './student-ban/student-ban.model'
 export * from './exam-subject-profile/exam-subject-profile.model'
 export * from './exam-assignment/exam-assignment.model'
+export * from './activate-overseer-DarZa/activate-overseer-DarZa.model'

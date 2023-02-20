@@ -6,7 +6,8 @@ export interface AdministrationOffice {
   parentOfficeId?: number;
   parentOfficeName?:string;
   cityId?: number;
-  cityName?:string
+  cityName?:string;
+  isAllowedToLogin: boolean;
   signature?: string;
 }
 
