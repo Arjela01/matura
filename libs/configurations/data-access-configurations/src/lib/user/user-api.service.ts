@@ -25,6 +25,10 @@ export class UserApiService {
     return this.apiService.post<ApiResult<User>, ChangeUserStatusDto>('/User/SetDisabled', user);
   }
 
+  generateNewPass(id:string): Observable<ApiResult<User>> {
+    return this.apiService.get(`/User/GeneratePass${id}`);
+  }
+
   save(user: User): Observable<ApiResult<User>> {
     return this.apiService.post<ApiResult<User>, User>('/User', user);
   }
