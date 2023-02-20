@@ -68,6 +68,7 @@ export class UsersPasswordResetViewComponent implements OnInit, OnDestroy {
   submitted = false;
 
   user: User = {
+    isDisabled: false,
     id: '',
     displayName: '',
     administrationOfficeId: 0,
@@ -83,10 +84,8 @@ export class UsersPasswordResetViewComponent implements OnInit, OnDestroy {
     roleId: '',
     nid: '',
     studyProgramId: 0,
-    confirmPassword: '',
-    resetPassword: '',
     universityId: 0,
-    universityDepartmentId: 0,
+    universityDepartmentId: 0
   };
 
   constructor(
@@ -113,13 +112,6 @@ export class UsersPasswordResetViewComponent implements OnInit, OnDestroy {
     this.formClose.emit();
   }
 
-  onSubmit(): void {
-    this.user = { ...this.user };
-    this.submitted = true;
-    if (this.user.resetPassword === this.user.confirmPassword) {
-      this.formSave.emit(this.user);
-    }
-  }
 
   getUserPassword() {
     if (this.user.id) {

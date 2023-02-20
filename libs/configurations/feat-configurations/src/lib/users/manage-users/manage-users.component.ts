@@ -28,7 +28,6 @@ import { BehaviorSubject } from 'rxjs';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { UserGridComponent } from '../user-grid/user-grid.component';
 import { RippleModule } from 'primeng/ripple';
-import { UsersPasswordResetFormComponent } from '../users-password-reset-form/users-password-reset-form.component';
 import { UsersPasswordResetViewComponent } from '../users-password-reset-view/users-password-reset-view.component';
 @UntilDestroy()
 @Component({
@@ -46,7 +45,6 @@ import { UsersPasswordResetViewComponent } from '../users-password-reset-view/us
     UserGridComponent,
     UserFormComponent,
     RippleModule,
-    UsersPasswordResetFormComponent,
     UsersPasswordResetViewComponent,
   ],
   providers: [ConfirmationService],
@@ -69,8 +67,8 @@ export class ManageUsersComponent implements OnInit {
   roles: DropdownModel<number>[] = [];
 
   userDialog = false;
-  passwordDialog = false;
   resetPasswordGenerated = false;
+  displayModal = false;
 
   constructor(
     private readonly userService: UserApiService,
@@ -127,8 +125,12 @@ export class ManageUsersComponent implements OnInit {
         this.selectedUsers = [];
         break;
       case GRID_ACTIONS.CUSTOM_ACTION1:
-        this.selectedUser = Object.assign({}, event.data as User);
-        this.passwordDialog = true;
+        this.confirmationService.confirm({
+          message: 'Jeni i sigurt qe doni te gjeneroni nje password te ri?',
+          accept: () => {
+            this.passwordGenerate(event.data as User);
+          },
+        });
         break;
       case GRID_ACTIONS.EDIT:
         this.selectedUser = Object.assign({}, event.data as User);
@@ -142,21 +144,24 @@ export class ManageUsersComponent implements OnInit {
           },
         });
         break;
-    }
+  case GRID_ACTIONS.CUSTOM_ACTION2:
+    this.confirmationService.confirm({
+      message: 'Jeni i sigurt qe doni te ndryshoni statusin e perdoruesit?',
+      accept: () => {
+        this.changeUserStatus(event.data as User);
+      },
+    });
+    break;
+
+}
   }
 
-  onFormClosePass() {
-    this.passwordDialog = false;
-  }
+
   onFormClose() {
     this.userDialog = false;
   }
 
-  onFormSavePass(user: User) {
-    if (user.id) {
-      this.updatePassword(user);
-    }
-  }
+
 
   onFormSave(user: User) {
     if (user.id) {
@@ -177,6 +182,33 @@ export class ManageUsersComponent implements OnInit {
         console.log(response.data);
         this.users$$.next(response.data);
         this.totalRecords = response.total;
+      });
+  }
+
+
+
+  changeUserStatus(user: User) {
+    this.userService
+      .changeUserStatus({
+        "id": user.id,
+        "isDisabled": !user.isDisabled
+      })
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess(
+            response.data.isDisabled
+              ? 'Perdoruesi u çaktivizua me sukses!'
+              : 'Perdoruesi u aktivizua me sukses!'
+          );
+          this.displayModal = false;
+          this.getUsers(this.filters as LazyLoadEvent);
+        }
+
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi një problem gjatë ndryshimit së statusit!'
+          );
       });
   }
 
@@ -217,24 +249,13 @@ export class ManageUsersComponent implements OnInit {
       });
   }
 
-  updatePassword(user: User) {
-    this.userService
-      .update(user)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showSuccess('Fjalekalimi u ndryshua me sukses!');
-          this.passwordDialog = false;
+  passwordGenerate(user: User) {
+          this.toastService.showSuccess('Fjalkalimi u ndryshua me sukses!');
           this.resetPasswordGenerated = true;
-          this.getUsers(this.filters as LazyLoadEvent);
-        }
-        if (!response.isSuccessful) {
-          this.toastService.showError(
-            'Ndodhi nje problem gjate ndryshimit te fjalkalimit!'
-          );
-        }
-      });
+
+
   }
+
 
   deleteUser(user: User) {
     this.userService
