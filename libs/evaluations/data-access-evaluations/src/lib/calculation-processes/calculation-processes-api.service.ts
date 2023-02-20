@@ -2,9 +2,12 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { APIService } from '@msh/shared/util-shared';
 import {
+  ApplicationProcess,
   ApplicationProcessTableView,
   Process,
 } from '@msh/evaluations/domain-evaluations';
+import {ApiResult} from "@msh/shared/data-access-shared";
+import {HttpParams} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root',
@@ -31,5 +34,12 @@ export class CalculationProcessesApiService {
         map((data: any) => data),
         catchError(error => throwError(error))
       );
+  }
+  export(): Observable<ApiResult<unknown>> {
+    return this.apiService.get<any>(
+      `/GenerateTableT/ExportTemplate`,
+      new HttpParams(),
+      'blob'
+    );
   }
 }

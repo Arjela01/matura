@@ -1,9 +1,19 @@
+<div class="flex mb-2 page-header center justify-content-between mb-header">
+  <h2 class="mb-0">Përllogarit notat</h2>
+  <div class="flex justify-content-end">
+    <div class="my-2 flex align-items-center">
+      <div class="actions">
+        <button pButton type="button" (click)="postProcess()">
+          Fillo procesin
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="grid">
   <div class="col-12">
     <div class="card px-6 py-6">
-      <p-header>
-        <h2 class="flex-1">Përllogarit notat</h2>
-      </p-header>
       <div>
         <span>Emri i procesit:</span>
         {{ appProcessType }}
@@ -13,10 +23,7 @@
         {{ executionLog }}
       </div>
 
-      <div class="actions">
-        <button pButton type="button" (click)="postProcess()" >Fillo procesin</button>
-      </div>
-      <h4>Proçeset e ekzekutuara</h4>
+      <h4>Proçesi i fundit i ekzekutuar</h4>
       <msh-grid
         [gridData]="(calculateGrade$ | async) || []"
         [columns]="columns"

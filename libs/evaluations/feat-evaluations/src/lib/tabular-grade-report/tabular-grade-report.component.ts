@@ -6,13 +6,14 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { RippleModule } from 'primeng/ripple';
 import { GridComponent } from '../grid/grid.component';
+import { CalculationProcessesApiService } from '@msh/evaluations/data-access-evaluations';
 import { LazyLoadEvent } from 'primeng/api';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BehaviorSubject } from 'rxjs';
 import { ApplicationProcess } from '@msh/evaluations/domain-evaluations';
 import { Application_Process } from '../grid/grid-type.enum';
 import { GlobalToastService } from '@msh/shared/util-shared';
-import { CalculationProcessesApiService } from '@msh/evaluations/data-access-evaluations';
+import * as FileSaver from "file-saver";
 
 @UntilDestroy()
 @Component({
@@ -27,26 +28,31 @@ import { CalculationProcessesApiService } from '@msh/evaluations/data-access-eva
     RippleModule,
     GridComponent,
   ],
-  templateUrl: './connect-exam-secrets.component.html',
-  styleUrls: ['./connect-exam-secrets.component.scss'],
+  templateUrl: './tabular-grade-report.component.html',
+  styleUrls: ['./tabular-grade-report.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ConnectExamSecretsComponent {
+export class TabularGradeReportComponent {
   private calculateGrade$$ = new BehaviorSubject<ApplicationProcess[]>([]);
   calculateGrade$ = this.calculateGrade$$.asObservable();
   filters: LazyLoadEvent | null = null;
-  processType: Application_Process = Application_Process.ConnectExamSecrets;
-
+  processType: Application_Process = Application_Process.CreateTabularGradeReport;
   appProcessType!: string;
   executionLog!: string;
   endDate: any;
 
+  endTime = new Date();
+  startTime = new Date();
+  formattedStartTime: any;
+  formattedEndTime: any;
+
   columns = [
     { field: 'processStatus', header: 'Statusi' },
-    { field: 'executionTime', header: 'Koha e ekzekutimit' },
+    { field: 'executionTime', header: 'Data e ekzekutimit' },
     { field: 'startTimeToShow', header: 'Koha e fillimit' },
     { field: 'endTimeToShow', header: 'Koha e mbarimit' },
   ];
+
 
   constructor(
     private readonly calculateGradesService: CalculationProcessesApiService,
@@ -67,7 +73,7 @@ export class ConnectExamSecretsComponent {
   postProcess() {
     this.calculateGradesService
       .loadProcess(this.appProcessType)
-        .pipe(untilDestroyed(this))
+      .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response) {
           this.toastService.showSuccess(
@@ -76,7 +82,8 @@ export class ConnectExamSecretsComponent {
           const dataArray = this.formatPayload(response.data);
           this.calculateGrade$$.next(dataArray);
         }
-      })
+      });
+
   }
 
   formatPayload(data: any) {
@@ -86,11 +93,6 @@ export class ConnectExamSecretsComponent {
         if (item === null) {
           this.toastService.showError('Nuk u gjet procedura e ruajtur');
         }
-        this.endDate= formatDate(
-          new Date(item.endTime as Date),
-          'dd/MM/yyyy',
-          'en'
-        );
         this.endDate = formatDate(
           new Date(item.endTime as Date),
           'dd/MM/yyyy',
@@ -107,4 +109,17 @@ export class ConnectExamSecretsComponent {
     }
     return dataArray;
   }
+
+  downloadFile() {
+      this.calculateGradesService
+        .export()
+        .pipe(untilDestroyed(this))
+        .subscribe((response: any) => {
+          const blob: any = new Blob([response], {
+            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          });
+          FileSaver.saveAs(blob, 'TabelaT');
+        });
+    }
+
 }

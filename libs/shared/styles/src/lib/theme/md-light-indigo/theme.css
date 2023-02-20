@@ -3146,7 +3146,10 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 .p-column-filter-overlay-menu .p-column-filter-buttonbar {
   padding: 1rem;
 }
-
+.mb-header{
+  margin-top: 2rem !important;
+  margin-bottom: 1.625rem !important;
+}
 .fc {
   /* FullCalendar 4 */
   /* FullCalendar 5 */
@@ -4628,8 +4631,7 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 }
 
 .p-fileupload .p-fileupload-buttonbar {
-  background: #ffffff;
-  padding: 1rem;
+  padding: 0.5rem;
   color: rgba(0, 0, 0, 0.87);
   border-bottom: 0 none;
   border-top-right-radius: 4px;

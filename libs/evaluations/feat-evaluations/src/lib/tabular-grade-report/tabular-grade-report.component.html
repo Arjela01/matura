@@ -1,15 +1,25 @@
 <div class="flex mb-2 page-header center justify-content-between mb-header">
-  <h2 class="mb-0">Lidh Sekretim</h2>
+  <h2 class="mb-0">Rikrijim i tabelës T</h2>
   <div class="flex justify-content-end">
     <div class="my-2 flex align-items-center">
       <div class="actions">
-        <button pButton type="button" (click)="postProcess()">
-          Fillo procesin
-        </button>
+        <div class="actions">
+          <button pButton type="button" (click)="postProcess()">
+            Fillo procesin
+          </button>
+          <button
+            style="margin-left: 25px"
+            pRipple
+            icon="pi pi-download"
+            pButton
+            label="Shkarko"
+            (click)="downloadFile()"></button>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
 <div class="grid">
   <div class="col-12">
     <div class="card px-6 py-6">
@@ -21,7 +31,6 @@
         <span>Statusi:</span>
         {{ executionLog }}
       </div>
-
       <h4>Proçesi i fundit i ekzekutuar</h4>
       <msh-grid
         [gridData]="(calculateGrade$ | async) || []"

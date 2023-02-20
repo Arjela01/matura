@@ -1,10 +1,10 @@
+<div class="flex ml-2 mb-2 page-header mb-header">
+  <h2 class="flex-1">Notat Vjetore</h2>
+</div>
+
 <div class="grid">
   <div class="col-12">
     <div class="card px-6 py-6">
-      <div class="flex ml-2 mb-2 page-header">
-        <h2 class="flex-1">Notat Vjetore</h2>
-      </div>
-
       <p-table
         #dt
         dataKey="id"
@@ -163,14 +163,18 @@
 
             <td>
               <div class="flex">
-                <a [routerLink]="['/evaluations', 'A2-form-annual-grades-view', annualGrades.id]">
+                <a
+                  [routerLink]="[
+                    '/evaluations',
+                    'A2-form-annual-grades-view',
+                    annualGrades.id
+                  ]">
                   <img
                     src="assets/svg/view-form.svg"
                     class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
                     tooltipPosition="bottom"
                     pTooltip="Shiko me shume" />
                 </a>
-
               </div>
             </td>
           </tr>
