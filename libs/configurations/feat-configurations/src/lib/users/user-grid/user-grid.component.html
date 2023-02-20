@@ -171,16 +171,19 @@
       </td>
       <td style="width: 14%; min-width: 10rem">
         <div class="flex">
-          <button
-            pButton
-            pRipple
-            class="p-button-rounded p-button-danger p-button-text mr-2"
-            (click)="changeUserStatus(user)"
-            icon="{{
-              !user.isDisabled ? 'pi pi-user-minus' : 'pi pi-user-plus'
-            }}">
-            &nbsp;{{ !user.isDisabled ? 'Caktivizo' : 'Aktivizo' }}
-          </button>
+          <img
+            src="assets/svg/edit-form.svg"
+            class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
+            tooltipPosition="bottom"
+            (click)="onEditClick(user)"
+            pTooltip="Ndrysho" />
+
+          <img
+            src="assets/svg/delete-form.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
+            pTooltip="Fshi"
+            tooltipPosition="bottom"
+            (click)="onDeleteClick(user)" />
         </div>
       </td>
       <div class="flex">

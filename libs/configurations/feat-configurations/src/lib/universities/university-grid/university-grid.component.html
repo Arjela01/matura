@@ -55,33 +55,30 @@
         <p-tableCheckbox [value]="university"></p-tableCheckbox>
       </td>
 
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 30%; min-width: 10rem">
         {{ university.name }}
       </td>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 30%; min-width: 10rem">
         {{ university.regionName }}
       </td>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 30%; min-width: 10rem">
         {{ university.cityName }}
       </td>
       <td>
         <div class="flex">
-          <button
-            pButton
-            pRipple
-            icon="pi pi-pencil"
-            class="p-button-rounded p-button-warning p-button-text mr-2"
-            pTooltip="Ndrysho"
+          <img
+            src="assets/svg/edit-form.svg"
+            class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"
-            (click)="onEditClick(university)"></button>
-          <button
-            pButton
-            pRipple
-            icon="pi pi-trash"
-            class="p-button-rounded p-button-danger p-button-text"
+            (click)="onEditClick(university)"
+            pTooltip="Ndrysho" />
+
+          <img
+            src="assets/svg/delete-form.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
             pTooltip="Fshi"
             tooltipPosition="bottom"
-            (click)="onDeleteClick(university)"></button>
+            (click)="onDeleteClick(university)" />
         </div>
       </td>
     </tr>

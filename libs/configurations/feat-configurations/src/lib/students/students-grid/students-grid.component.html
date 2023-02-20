@@ -183,31 +183,25 @@
       <td>
         <div class="flex">
           <a [routerLink]="['/configurations', 'student-view', student.id]">
-            <button
-              pButton
-              pRipple
-              icon="pi pi-eye"
-              class="p-button-rounded p-button-info p-button-text mr-2"
-              pTooltip="Shiko me shume"
-              tooltipPosition="bottom"></button>
+            <img
+              src="assets/svg/view-form.svg"
+              class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
+              tooltipPosition="bottom"
+              pTooltip="Shiko me shume" />
           </a>
           <a [routerLink]="['/configurations', 'student-edit', student.id]">
-            <button
-              pButton
-              pRipple
-              icon="pi pi-pencil"
-              class="p-button-rounded p-button-warning p-button-text mr-2"
-              pTooltip="Ndrysho"
-              tooltipPosition="bottom"></button>
+            <img
+              src="assets/svg/edit-form.svg"
+              class="p-button-rounded p-button-warning p-button-text ml-m pointer"
+              tooltipPosition="bottom"
+              pTooltip="Ndrysho" />
           </a>
-          <button
-            pButton
-            pRipple
-            icon="pi pi-trash"
-            class="p-button-rounded p-button-danger p-button-text"
+          <img
+            src="assets/svg/delete-form.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
             pTooltip="Fshi"
             tooltipPosition="bottom"
-            (click)="onDeleteClick(student)"></button>
+            (click)="onDeleteClick(student)" />
         </div>
       </td>
     </tr>
