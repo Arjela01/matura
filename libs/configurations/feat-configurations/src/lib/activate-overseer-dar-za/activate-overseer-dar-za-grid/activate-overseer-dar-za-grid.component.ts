@@ -80,12 +80,10 @@ export class ActivateOverseerDarZaGridComponent {
 
   changeStatus(administrationOffice: AdministrationOffice): void {
     this.gridEvent.emit({
-      action: GRID_ACTIONS.CUSTOM_ACTION1,
+      action: GRID_ACTIONS.CUSTOM_ACTION2,
       data: administrationOffice,
     } as GridEvent<AdministrationOffice>);
   }
-
-
 
   onRowSelect({ data }: { data: AdministrationOffice }) {
     this.gridEvent.emit({

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   AdministrationOffice,
   AdministrationOfficeTableView,
+  ChangeAdministrationOfficeStatusDto,
 } from '@msh/shared/domain-models';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
@@ -20,13 +21,13 @@ export class AdministrationOfficeApiService {
     );
   }
 
-  changeStatus(id: number | any): Observable<ApiResult<AdministrationOffice>> {
-    return this.apiService.put<ApiResult<AdministrationOffice>, any>(
-      `/AdministrationOffice/UpdateStatus`,
-      {
-        id: id,
-      }
-    );
+  changeStatus(
+    administrationOffice: ChangeAdministrationOfficeStatusDto
+  ): Observable<ApiResult<AdministrationOffice>> {
+    return this.apiService.post<
+      ApiResult<AdministrationOffice>,
+      ChangeAdministrationOfficeStatusDto
+    >('/AdministrationOffice/UpdateIsAllowedToLogin', administrationOffice);
   }
 
   loadOnlyDars(): Observable<ApiResult<DropdownModel<number>[]>> {
