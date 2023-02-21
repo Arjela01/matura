@@ -4,7 +4,7 @@ import {
   AdministrationOfficeApiService,
   CityApiService,
 } from '@msh/configurations/data-access-configurations';
-import { AdministrationOffice } from '@msh/shared/domain-models';
+import {AdministrationOffice} from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   GlobalToastService,
@@ -113,9 +113,9 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
         );
         this.displayModal = true;
         break;
-      case GRID_ACTIONS.CUSTOM_ACTION1:
+      case GRID_ACTIONS.CUSTOM_ACTION2:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të ndryshoni statusin e DAR/ZA?',
+          message: 'Jeni i sigurt qe doni te ndryshoni statusin e perdoruesit?',
           accept: () => {
             this.changeStatus(event.data as AdministrationOffice);
           },
@@ -136,26 +136,30 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
 
   changeStatus(administrationOffice: AdministrationOffice) {
     this.adminOfficeApiService
-      .changeStatus(administrationOffice.id)
+      .changeStatus({
+        "id": administrationOffice.id,
+        "isAllowedToLogin": !administrationOffice.isAllowedToLogin
+      })
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
-            !administrationOffice.isAllowedToLogin
-              ? 'DAR/ZA u çaktivizua me sukses!'
-              : 'DAR/ZA u aktivizua me sukses!'
+            response.data.isAllowedToLogin
+              ? 'Perdoruesi u çaktivizua me sukses!'
+              : 'Perdoruesi u aktivizua me sukses!'
           );
-
           this.displayModal = false;
           this.getAdministrationOffices(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së DAR/ZA-së!'
+            'Ndodhi një problem gjatë ndryshimit së statusit!'
           );
       });
   }
+
+
 
 
   onModalClose() {

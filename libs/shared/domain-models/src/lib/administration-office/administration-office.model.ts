@@ -1,5 +1,5 @@
 export interface AdministrationOffice {
-  id?: number;
+  id?: any;
   name: string;
   directorName: string;
   isRegionalOffice: boolean;
@@ -14,4 +14,8 @@ export interface AdministrationOffice {
 export interface AdministrationOfficeTableView {
   data: AdministrationOffice[];
   total: number;
+}
+export interface ChangeAdministrationOfficeStatusDto {
+  id: string;
+  isAllowedToLogin:  boolean;
 }

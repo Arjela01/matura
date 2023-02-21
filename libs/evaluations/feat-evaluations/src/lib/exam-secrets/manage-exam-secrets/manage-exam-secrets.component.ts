@@ -153,6 +153,9 @@ export class ManageExamSecretsComponent {
             this.toastService.showError(
               'Ndodhi një problem gjatë ngarkimit të dokumentit!'
             );
+          if (!response.isSuccessful) {
+            this.toastService.showError('Nuk po ngarkoni dokumentin e duhur!');
+          }
         });
     };
   }

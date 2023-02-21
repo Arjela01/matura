@@ -1,27 +1,28 @@
+<div class="flex mb-2 page-header center justify-content-between mb-header">
+  <h2 class="mb-0">Përshkallëzim notash</h2>
+  <div class="flex justify-content-end">
+    <div class="my-2 flex align-items-center">
+      <button
+        pButton
+        pRipple
+        icon="pi pi-upload"
+        class="p-button-primary ml-2"
+        label="Ngarko"
+        (click)="openDialog()"></button>
+      <button
+        pButton
+        pRipple
+        icon="pi pi-download"
+        class="p-button-success ml-2"
+        label="Shkarko"
+        (click)="templateDownload()"></button>
+    </div>
+  </div>
+</div>
+
 <div class="grid">
   <div class="col-12">
-    <div class="card px-6 py-6">
-      <div class="flex mb-2 page-header center justify-content-between">
-        <h2 class="mb-0">Përshkallëzim notash</h2>
-        <div class="flex justify-content-end">
-          <div class="my-2 flex align-items-center">
-            <button
-              pButton
-              pRipple
-              icon="pi pi-upload"
-              class="p-button-primary ml-2"
-              label="Ngarko"
-              (click)="openDialog()"></button>
-            <button
-              pButton
-              pRipple
-              icon="pi pi-download"
-              class="p-button-success ml-2"
-              label="Shkarko"
-              (click)="templateDownload()"></button>
-          </div>
-        </div>
-      </div>
+    <div class="card">
       <msh-grade-scale-grid
         [gradeScales]="(gradeScales$ | async) || []"
         [totalRecords]="totalRecords"

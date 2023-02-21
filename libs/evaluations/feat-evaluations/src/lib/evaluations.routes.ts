@@ -102,6 +102,13 @@ export const EVALUATION_ROUTES: Route[] = [
       ),
   },
   {
+    path: 'tabular-grade-report',
+    loadComponent: () =>
+      import('./tabular-grade-report/tabular-grade-report.component').then(
+        m => m.TabularGradeReportComponent
+      ),
+  },
+  {
     path: 'grades-scale',
     loadComponent: () =>
       import(

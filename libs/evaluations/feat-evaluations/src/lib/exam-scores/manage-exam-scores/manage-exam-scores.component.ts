@@ -210,6 +210,9 @@ export class ManageExamScoresComponent implements OnInit {
           this.toastService.showError(
             'Ndodhi një problem gjatë ndryshimit së rezultatit të provimit!'
           );
+        if (!response.isSuccessful) {
+          this.toastService.showError('Nuk po ngarkoni dokumentin e duhur!');
+        }
       });
   }
 

@@ -1,21 +1,20 @@
+<div class="flex mb-2 page-header center mb-header">
+  <h2 class="flex-1 mb-0">Dosjet</h2>
+  <div class="flex align-items-right justify-content-right">
+    <div class="my-2">
+      <button
+        pButton
+        pRipple
+        label="Hap një Dosje të re"
+        icon="pi pi-folder-open"
+        class="p-button-success mr-2"
+        (click)="onNewClick()"></button>
+    </div>
+  </div>
+</div>
 <div class="grid">
   <div class="col-12">
-    <div class="card px-6 py-6">
-      <div class="flex mb-2 page-header center">
-        <h2 class="flex-1 mb-0">Dosjet</h2>
-        <div class="flex align-items-right justify-content-right">
-          <div class="my-2">
-            <button
-              pButton
-              pRipple
-              label="Hap një Dosje të re"
-              icon="pi pi-folder-open"
-              class="p-button-success mr-2"
-              (click)="onNewClick()"></button>
-          </div>
-        </div>
-      </div>
-
+    <div class="card">
       <msh-archive-folder-grid
         [archiveFolders]="(archiveFolders$ | async) || []"
         [totalRecords]="totalRecords"
