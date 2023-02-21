@@ -11,8 +11,8 @@ import {
   UniversityDepartmentApiService,
   UserApiService,
 } from '@msh/configurations/data-access-configurations';
-import { User } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import { User } from '@msh/shared/domain-models';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -23,11 +23,11 @@ import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
+import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { UserGridComponent } from '../user-grid/user-grid.component';
-import { RippleModule } from 'primeng/ripple';
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-users',
@@ -174,7 +174,9 @@ export class ManageUsersComponent implements OnInit {
 
         if (!response.isSuccessful) {
           this.toastService.showError(
-            'Ndodhi nje problem gjate ndryshimit te perdoruesit!'
+            response.errorMessage !== null
+              ? response.errorMessage
+              : 'Ndodhi nje problem gjate shtimit te perdoruesit!'
           );
         }
       });
@@ -193,7 +195,9 @@ export class ManageUsersComponent implements OnInit {
         }
         if (!response.isSuccessful) {
           this.toastService.showError(
-            'Ndodhi nje problem gjate ndryshimit te perdoruesit!'
+            response.errorMessage !== null
+              ? response.errorMessage
+              : 'Ndodhi nje problem gjate ndryshimit te perdoruesit!'
           );
         }
       });
