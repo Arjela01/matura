@@ -45,14 +45,14 @@
         <div class="first-group">
           <div class="profile-photo" (click)="onNewClick()">
             <p-avatar
-              label="{{ firstName.charAt(0) }}{{ lastName.charAt(0) }}"
+              label= "{{avatarLabel}}"
               shape="circle"
               [style]="{background:'white'}"
             >
             </p-avatar>
           </div>
-          <div class="name menu-title fs">Emer Mbiemer</div>
-          <div class="email fs">emer@gmail.com</div>
+          <div class="name menu-title fs">{{userProfile?.lastName}} {{userProfile?.lastName}}</div>
+          <div class="email fs">{{userProfile?.email}}</div>
         </div>
 
         <div class="second-group" (click)="onLogoutClick()">
@@ -74,16 +74,3 @@
     </div>
   </div>
 </div>
-
-<p-dialog
-  [(visible)]="displayModal"
-  [style]="{ width: '30%' }"
-  [modal]="true"
-  [draggable]="false"
-  [resizable]="false"
-  class="p-fluid"
-  (onHide)="onModalClose()">
-  <ng-template pTemplate="content">
-    <msh-user-profile></msh-user-profile>
-  </ng-template>
-</p-dialog>

@@ -10,8 +10,11 @@ import { MenuNode } from '@msh/layout/domain-layout';
 import { Router, RouterLink, RouterLinkWithHref } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { DialogModule } from 'primeng/dialog';
-import { UserProfileComponent } from '../user-profile/user-profile.component';
 import {AvatarModule} from "primeng/avatar";
+import {UserProfileApiService} from "@msh/user-section/data-access-user-section";
+import {UserProfile} from "@msh/user-section/domain-user-section";
+
+
 
 @Component({
   selector: 'msh-app-sidebar',
@@ -22,7 +25,6 @@ import {AvatarModule} from "primeng/avatar";
     RouterLinkWithHref,
     RouterLink,
     DialogModule,
-    UserProfileComponent,
     AvatarModule,
   ],
   providers: [MenuStore],
@@ -30,9 +32,8 @@ import {AvatarModule} from "primeng/avatar";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppSidebarComponent implements OnInit {
-  displayModal = false;
-  firstName = 'Admin'
-  lastName = 'Admin'
+  userProfile!: UserProfile;
+  avatarLabel!: string;
   //TODO: This will be dynamic
   model$: Observable<MenuItem[]> = this.menuStore.menus$.pipe(
     map(menus => {
@@ -49,11 +50,13 @@ export class AppSidebarComponent implements OnInit {
     private readonly menuStore: MenuStore,
     private router: Router,
     public layoutService: LayoutService,
-    private authFacade: AuthFacade
+    private authFacade: AuthFacade,
+    private userProfileService: UserProfileApiService,
   ) {}
 
   ngOnInit() {
     this.menuStore.loadMenus();
+    this.getUser();
   }
 
   private format(menus: MenuNode[]): MenuItem[] {
@@ -100,10 +103,14 @@ export class AppSidebarComponent implements OnInit {
     this.authFacade.logout();
   }
   onNewClick() {
-    this.displayModal = true;
+    this.router.navigate(['/user-section/user-profile']).then();
   }
-
-  onModalClose() {
-    this.displayModal = false;
+  getUser() {
+    this.userProfileService.getLoggedInUserData().subscribe(response => {
+      this.userProfile = Object.assign({}, response.data);
+      this.avatarLabel =
+        this.userProfile.firstName.charAt(0) +
+        this.userProfile.lastName.charAt(0);
+    });
   }
 }

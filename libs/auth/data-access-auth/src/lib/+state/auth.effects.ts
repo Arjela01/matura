@@ -73,13 +73,12 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthActions.loginSuccess),
         tap(action => {
-          debugger
           const user = {
             displayName: action.loginResponse.displayName,
             username: action.loginResponse.username,
-            userId : this.getDecodedAccessToken(
-              action.loginResponse.token
-            ).jti,
+            // userId : this.getDecodedAccessToken(
+            //   action.loginResponse.token
+            // ).jti,
           } as User;
           console.log(user.userId);
           this.storageService.setItem(USER_STORAGE_KEY, user);
@@ -113,11 +112,11 @@ export class AuthEffects {
     private storageService: StorageService,
     private router: Router
   ) {}
-  getDecodedAccessToken(token: string): any {
-    try {
-      return jwt_decode(token);
-    } catch (Error) {
-      return null;
-    }
-  }
+  // getDecodedAccessToken(token: string): any {
+  //   try {
+  //     return jwt_decode(token);
+  //   } catch (Error) {
+  //     return null;
+  //   }
+  // }
 }

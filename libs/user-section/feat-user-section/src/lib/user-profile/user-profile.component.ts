@@ -8,12 +8,12 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { UserProfile } from '@msh/layout/domain-layout';
-import { UserProfileApiService } from '@msh/layout/data-access-layout';
 import { AvatarModule } from 'primeng/avatar';
-import { AuthFacade } from '@msh/auth/data-access-auth';
 import { CommonModule, NgIf } from '@angular/common';
-import {PasswordModule} from "primeng/password";
+import { PasswordModule } from 'primeng/password';
+import { UserProfile } from '@msh/user-section/domain-user-section';
+import { UserProfileApiService } from '@msh/user-section/data-access-user-section';
+
 
 @UntilDestroy()
 @Component({
@@ -33,37 +33,21 @@ import {PasswordModule} from "primeng/password";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserProfileComponent implements OnInit {
-  isShowForm = false;
   submitted = false;
   @ViewChild('form', { static: true }) form!: NgForm;
-  userProfile: UserProfile = {
-    children: [],
-    email: 'admin@admin.com',
-    firstName: 'Admin',
-    isActive: false,
-    lastName: 'Admin',
-    roleId: '',
-    roleName: 'Admin',
-    userName: 'Admin',
-  };
-
-  constructor(
-    private userProfileService: UserProfileApiService,
-    private auth: AuthFacade
-  ) {}
-  toggleDisplayForm() {
-    this.isShowForm = !this.isShowForm;
-  }
-  onCancelClick(){
-    this.isShowForm = false;
-}
-
+  userProfile!: UserProfile;
+  avatarLabel!: string;
+  constructor(private userProfileService: UserProfileApiService) {}
   ngOnInit() {
-    let userId = '';
-    this.auth.user$.subscribe(res => (userId = res.userId));
-    return this.userProfileService
-      .getUserById(userId)
-      .pipe()
-      .subscribe(user => (this.userProfile = user));
+    this.getUser();
+  }
+  getUser() {
+    this.userProfileService.getLoggedInUserData().subscribe(response => {
+      this.userProfile = Object.assign({}, response.data);
+      this.avatarLabel =
+        this.userProfile.firstName.charAt(0) +
+        this.userProfile.lastName.charAt(0);
+      console.log(111 , this.userProfile)
+    });
   }
 }

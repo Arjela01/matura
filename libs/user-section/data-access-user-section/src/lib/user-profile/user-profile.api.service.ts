@@ -1,7 +1,8 @@
 import { Injectable} from '@angular/core';
 import { APIService } from '@msh/shared/util-shared';
 import { Observable } from 'rxjs';
-import { UserProfile } from '@msh/layout/domain-layout';
+import {UserProfile} from "@msh/user-section/domain-user-section";
+import {ApiResult} from "@msh/shared/data-access-shared";
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import { UserProfile } from '@msh/layout/domain-layout';
 export class UserProfileApiService {
   constructor(private apiService: APIService) {}
 
-  getUserById(userId : string): Observable<UserProfile> {
-    return this.apiService.get(`/User/${userId}`);
+  getLoggedInUserData(): Observable<ApiResult<UserProfile>> {
+    return this.apiService.get(`/User/Profile`);
   }
 }

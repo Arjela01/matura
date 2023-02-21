@@ -1,0 +1,113 @@
+<div class="grid">
+  <div class="col-12 p-fluid">
+    <div class="card px-6 py-6">
+      <div class="user-profile">
+        <div class="mt-2">
+          <h2 [style]="{ justifyContent: 'flex-start', display: 'flex' }">
+            Profili i Përdoruesit
+          </h2>
+        </div>
+        <div class="column">
+          <div class="column1 mb-6">
+            <div class="mb-2">
+              <p-avatar
+                class="avatar mb-3"
+                label="{{ avatarLabel }}"
+                [style]="{
+                  background: '#101828',
+                  width: '90px',
+                  height: '90px',
+                  fontSize: '40px',
+                  color: 'whitesmoke'
+                }"
+                shape="circle">
+              </p-avatar>
+            </div>
+            <div class="mb-3">
+              <span class="span">{{ userProfile?.username }}</span>
+            </div>
+            <div class="mb-3">
+              <span class="email">{{ userProfile?.email }}</span>
+            </div>
+          </div>
+          <div class="container mb-3">
+            <div class="column2 mb-6">
+              <p class="bold">
+                Emri:
+                <span class="span">{{ userProfile?.firstName }}</span>
+                {{userProfile?.firstName | json}}
+              </p>
+              <p class="bold">
+                Mbiemri:
+                <span class="span">{{ userProfile?.lastName }}</span>
+              </p>
+<!--              <p-->
+<!--                *ngIf="userProfile?.roleName === 'AdministrationOffice'"-->
+<!--                class="bold">-->
+<!--                DAR/ZA:-->
+<!--                <span class="span">-->
+<!--                  {{ userProfile?.administrationOfficeName }}</span-->
+<!--                >-->
+<!--              </p>-->
+<!--              <p-->
+<!--                *ngIf="-->
+<!--                  userProfile?.roleName === 'University' ||-->
+<!--                  userProfile?.roleName === 'UniversityDepartment'-->
+<!--                "-->
+<!--                class="bold">-->
+<!--                Universiteti:-->
+<!--                <span class="span"> {{ userProfile?.universityName }}</span>-->
+<!--              </p>-->
+<!--              <p *ngIf="userProfile?.roleName === 'Overseer'" class="bold">-->
+<!--                Kodi i Mbikqyrsit:-->
+<!--                <span class="span"> {{ userProfile?.overseerCode }}</span>-->
+<!--              </p>-->
+<!--              <p *ngIf="userProfile?.roleName === 'Student'" class="bold">-->
+<!--                Nid i Studentit:-->
+<!--                <span class="span"> {{ userProfile?.nid }}</span>-->
+<!--              </p>-->
+            </div>
+            <div class="column3 mb-6">
+              <p class="bold">
+                Roli:
+                <span class="span">{{ userProfile?.roleName }}</span>
+              </p>
+              <p class="bold">
+                <span class="red">{{
+                  userProfile?.isActive ? 'Aktiv' : 'JoAktiv'
+                }}</span>
+              </p>
+<!--              <p-->
+<!--                *ngIf="-->
+<!--                  userProfile?.roleName === 'University' ||-->
+<!--                  userProfile?.roleName === 'UniversityDepartment'-->
+<!--                "-->
+<!--                class="bold">-->
+<!--                Departamenti:-->
+<!--                <span class="span">-->
+<!--                  {{ userProfile?.universityDepartmentName }}</span-->
+<!--                >-->
+<!--              </p>-->
+<!--              <p-->
+<!--                *ngIf="-->
+<!--                  userProfile?.roleName === 'Overseer' ||-->
+<!--                  userProfile?.roleName === 'HighSchool'-->
+<!--                "-->
+<!--                class="bold">-->
+<!--                Gjimnazi:-->
+<!--                <span class="span"> {{ userProfile?.highSchoolName }}</span>-->
+<!--              </p>-->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="change-passw mb-4">
+        <button
+          type="button"
+          pButton
+          label="Ndrysho Fjalëkalimin"
+          class="password-button-text w-auto mr-0"></button>
+      </div>
+    </div>
+  </div>
+</div>
