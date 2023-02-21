@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
-import { switchMap, tap } from 'rxjs';
+import {Observable, switchMap, tap} from 'rxjs';
 import { MenuApiService } from './menu-api.service';
 import { MenuNode } from '@msh/layout/domain-layout';
 import { GenericStoreStatus } from '@msh/shared/data-access-shared';
@@ -55,5 +55,5 @@ export class MenuStore extends ComponentStore<MenuState> {
   );
 
   //Selectors
-  readonly menus$ = this.select(state => state.menus);
+  readonly menus$: Observable<MenuNode[]> = this.select(state => state.menus);
 }

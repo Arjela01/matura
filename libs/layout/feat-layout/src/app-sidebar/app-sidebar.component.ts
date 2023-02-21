@@ -19,12 +19,11 @@ import { AuthFacade } from '@msh/auth/data-access-auth';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppSidebarComponent implements OnInit {
-  //TODO: This will be dynamic
   model$: Observable<MenuItem[]> = this.menuStore.menus$.pipe(
     map(menus => {
       return [
         {
-          label: 'Matura Shtetërore',
+          label: '',
           items: this.format(menus as MenuNode[]),
         },
       ];
