@@ -24,7 +24,7 @@ export class CalculationProcessesApiService {
     );
   }
 
-  loadProcess(appProcessType: any): Observable<Process> {
+  loadProcess(appProcessType: any): Observable<ApiResult<Process>> {
     return this.apiService
       .post(`/Process`, {
         appProcessType: appProcessType,

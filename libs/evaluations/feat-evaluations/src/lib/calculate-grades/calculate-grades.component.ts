@@ -68,17 +68,22 @@ export class CalculateGradesComponent {
       .loadProcess(this.appProcessType)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        if (response) {
+        if (response.isSuccessful) {
           this.toastService.showSuccess('Procesi rifilloi me sukses!');
           const dataArray = this.formatPayload(response.data);
           this.calculateGrade$$.next(dataArray);
+        }
+        if (response.isBadRequest) {
+          this.toastService.showError('Dicka shkoi gabim');
+        }
+        if (!response.isSuccessful) {
+          this.toastService.showError(response.errorMessage);
         }
       });
   }
 
   formatPayload(data: any) {
     const dataArray = [data] as ApplicationProcess[];
-    if (dataArray.length > 0) {
       dataArray.forEach(item => {
         if (item === null) {
           this.toastService.showError('Nuk u gjet procedura e ruajtur');
@@ -96,7 +101,6 @@ export class CalculateGradesComponent {
         this.executionLog = item.executionLog;
         item.executionTime = this.endDate;
       });
-    }
     return dataArray;
   }
 }
