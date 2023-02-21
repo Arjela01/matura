@@ -38,12 +38,13 @@ export class CalculateGradesComponent {
   processType: Application_Process = Application_Process.CalculateGrades;
   appProcessType!: string;
   executionLog!: string;
-  endTime: any;
+  endDate: any;
 
   columns = [
-    { field: 'executionLog', header: 'Veprimi i kryer' },
     { field: 'processStatus', header: 'Statusi' },
-    { field: 'executionTime', header: 'Koha e ekzekutimit' },
+    { field: 'executionTime', header: 'Data e ekzekutimit' },
+    { field: 'startTimeToShow', header: 'Koha e fillimit' },
+    { field: 'endTimeToShow', header: 'Koha e mbarimit' },
   ];
 
   constructor(
@@ -67,31 +68,39 @@ export class CalculateGradesComponent {
       .loadProcess(this.appProcessType)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        const dataArray = this.formatPayload(response.data);
-        this.calculateGrade$$.next(dataArray);
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Procesi rifilloi me sukses!');
+          const dataArray = this.formatPayload(response.data);
+          this.calculateGrade$$.next(dataArray);
+        }
+        if (response.isBadRequest) {
+          this.toastService.showError('Dicka shkoi gabim');
+        }
+        if (!response.isSuccessful) {
+          this.toastService.showError(response.errorMessage);
+        }
       });
   }
 
   formatPayload(data: any) {
     const dataArray = [data] as ApplicationProcess[];
-    if (dataArray.length > 0) {
       dataArray.forEach(item => {
         if (item === null) {
           this.toastService.showError('Nuk u gjet procedura e ruajtur');
         }
-        this.endTime = formatDate(
+        this.endDate = formatDate(
           new Date(item.endTime as Date),
           'dd/MM/yyyy',
           'en'
         );
-        const differenceInMs =
-          new Date(item.endTime).getTime() - new Date(item.startTime).getTime();
-        const duration = new Date(differenceInMs).toISOString().substr(11, 8);
-        item.executionTime = `${this.endTime} ${duration}`;
+        const startTime = new Date(item.startTime);
+        const endTime = new Date(item.endTime);
+        item.startTimeToShow = `${startTime.getHours()}:${startTime.getMinutes()}:${startTime.getSeconds()} `;
+        item.endTimeToShow = `${endTime.getHours()}:${endTime.getMinutes()}:${endTime.getSeconds()} `;
         this.appProcessType = item.appProcessType;
         this.executionLog = item.executionLog;
+        item.executionTime = this.endDate;
       });
-    }
     return dataArray;
   }
 }

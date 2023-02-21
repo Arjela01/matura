@@ -1,35 +1,31 @@
+<div class="flex center mb-2 page-header mb-header">
+  <h2 class="flex-1 mb-0">Caktimi në Qendrat e Provimit</h2>
+  <div class="flex align-items-right justify-content-right">
+    <button
+      pButton
+      pRipple
+      label="Shto"
+      icon="pi pi-plus"
+      class="p-button-success mr-2"
+      (click)="onNewClick()"></button>
+  </div>
+  <button
+    pButton
+    pRipple
+    icon="pi pi-upload"
+    label="Ngarko"
+    (click)="onUploadClick()"></button>
+  <button
+    pButton
+    pRipple
+    icon="pi pi-download"
+    label="Shkarko"
+    (click)="downloadFile()"></button>
+</div>
+
 <div class="grid">
   <div class="col-12">
-    <div class="card px-6 py-6">
-      <p-toolbar styleClass="mb-4">
-        <div class="p-toolbar-group-left">
-          <h2>Caktimi në Qendrat e Provimit</h2>
-        </div>
-        <div class="p-toolbar-group-right">
-          <div class="my-2">
-            <button
-              pButton
-              pRipple
-              label="Shto"
-              icon="pi pi-plus"
-              class="p-button-success mr-2"
-              (click)="onNewClick()"></button>
-          </div>
-          <button
-            pButton
-            pRipple
-            icon="pi pi-upload"
-            label="Ngarko"
-            (click)="onUploadClick()"></button>
-          <button
-            style="margin-left: 5px"
-            pButton
-            pRipple
-            icon="pi pi-download"
-            label="Shkarko"
-            (click)="downloadFile()"></button>
-        </div>
-      </p-toolbar>
+    <div class="card">
       <msh-exam-assignment-grid
         [examAssignments]="(examAssignments$ | async) || []"
         [totalRecords]="totalRecords"

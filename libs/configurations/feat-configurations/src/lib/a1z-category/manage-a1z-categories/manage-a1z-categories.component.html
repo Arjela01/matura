@@ -1,69 +1,68 @@
-
-<div class="grid">
-    <div class="col-12">
-      <div class="card px-6 py-6">
-        <div class="flex ml-2 mb-2 page-header">
-          <h2 class="flex-1 mb-0">Kategori A1Z</h2>
-          <div class="flex align-items-right justify-content-right">
-            <div class="my-2">
-              <button
-                pButton
-                pRipple
-                label="Shto"
-                icon="pi pi-plus"
-                class="p-button-success mr-2"
-                (click)="onNewClick()"></button>
-            </div>
-          </div>
-        </div>
-
-        <msh-a1z-categories-grid
-          [a1zCategories]="(a1zCategories$ | async) || []"
-          [totalRecords]="totalRecords"
-          (gridEvent)="onGridEvent($event)"
-          (lazyLoadData)="getA1zCategories($event)">
-        </msh-a1z-categories-grid>
-      </div>
+<div class="flex ml-2 mb-2 page-header mb-header">
+  <h2 class="flex-1 mb-0">Kategori A1Z</h2>
+  <div class="flex align-items-right justify-content-right">
+    <div class="my-2">
+      <button
+        pButton
+        pRipple
+        label="Shto"
+        icon="pi pi-plus"
+        class="p-button-success mr-2"
+        (click)="onNewClick()"></button>
     </div>
   </div>
+</div>
 
-  <p-dialog
-    [(visible)]="displayModal"
-    [style]="{ width: '500px' }"
-    header="Detajet Kategorive A1Z"
-    [modal]="true"
-    [draggable]="false"
-    [resizable]="false"
-    class="p-fluid"
-    (onHide)="onModalClose()">
-    <ng-template pTemplate="content">
-      <msh-a1z-category-form
-        [a1zCategoriesDetails]="selectedA1zCategory"
-        (formClose)="onModalClose()"
-        (formSave)="onFormSave($event)">
-      </msh-a1z-category-form>
-    </ng-template>
-  </p-dialog>
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <msh-a1z-categories-grid
+        [a1zCategories]="(a1zCategories$ | async) || []"
+        [totalRecords]="totalRecords"
+        (gridEvent)="onGridEvent($event)"
+        (lazyLoadData)="getA1zCategories($event)">
+      </msh-a1z-categories-grid>
+    </div>
+  </div>
+</div>
 
-  <p-confirmDialog
-    #cd
-    header="Konfirmo"
-    icon="pi pi-exclamation-triangle"
-    [style]="{ width: '450px' }">
-    <ng-template pTemplate="footer">
-      <button
-        type="button"
-        pButton
-        icon="pi pi-times"
-        label="Jo"
-        class="p-button-text"
-        (click)="cd.reject()"></button>
-      <button
-        type="button"
-        pButton
-        icon="pi pi-check"
-        label="Po"
-        class="p-button-text"
-        (click)="cd.accept()"></button>
-    </ng-template>
-  </p-confirmDialog>
+<p-dialog
+  [(visible)]="displayModal"
+  [style]="{ width: '500px' }"
+  header="Detajet Kategorive A1Z"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid"
+  (onHide)="onModalClose()">
+  <ng-template pTemplate="content">
+    <msh-a1z-category-form
+      [a1zCategoriesDetails]="selectedA1zCategory"
+      (formClose)="onModalClose()"
+      (formSave)="onFormSave($event)">
+    </msh-a1z-category-form>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog
+  #cd
+  header="Konfirmo"
+  icon="pi pi-exclamation-triangle"
+  [style]="{ width: '450px' }">
+  <ng-template pTemplate="footer">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Jo"
+      class="p-button-text"
+      (click)="cd.reject()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Po"
+      class="p-button-text"
+      (click)="cd.accept()"></button>
+  </ng-template>
+</p-confirmDialog>
