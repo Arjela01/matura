@@ -1,0 +1,105 @@
+import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
+import {StudentBan, Student, ExamAssignment} from '@msh/shared/domain-models';
+import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
+import { LazyLoadEvent } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { InputTextModule } from 'primeng/inputtext';
+import { RippleModule } from 'primeng/ripple';
+import { TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
+
+@Component({
+  selector: 'msh-dynamic-dashboard-grid',
+  standalone: true,
+  imports: [
+    CommonModule,
+    TableModule,
+    ButtonModule,
+    InputTextModule,
+    TooltipModule,
+    CheckboxModule,
+    RippleModule,
+  ],
+  templateUrl: './dynamic-dashboard-grid.component.html',
+  styleUrls: ['./dynamic-dashboard-grid.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DynamicDashboardGridComponent {
+  @Input() bannedStudents: StudentBan[] = [];
+  @Input() totalRecords = 0;
+  @Input() loading = false;
+
+  //Keep it local state because of Table Header checkbox not syncing
+  selectedBannedStudents: StudentBan[] = [];
+
+  @Output() gridEvent = new EventEmitter<
+    GridEvent<StudentBan | StudentBan[]>
+  >();
+
+  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+
+  studentBan: StudentBan = {
+    id: 0,
+    studentId: '',
+    studentIdentifier: '',
+    studentInputData:'',
+    studentName: '',
+    description: '',
+    isBanned: 0,
+    effectiveDate: new Date(),
+    banRemovalDate: new Date(),
+  };
+
+  onEditClick(studentBan: StudentBan) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.EDIT,
+      data: studentBan,
+    } as GridEvent<StudentBan>);
+  }
+
+  onDeleteClick(StudentBan: StudentBan) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.DELETE,
+      data: StudentBan,
+    } as GridEvent<StudentBan>);
+  }
+
+  onSelectAllClick() {
+    if (this.selectedBannedStudents.length === 0) {
+      this.gridEvent.emit({
+        action: GRID_ACTIONS.UNSELECT_ALL,
+      } as GridEvent<StudentBan>);
+    } else {
+      this.gridEvent.emit({
+        action: GRID_ACTIONS.SELECT_MANY,
+        data: this.selectedBannedStudents,
+      } as GridEvent<StudentBan[]>);
+    }
+  }
+
+  onRowSelect({ data }: { data: StudentBan }) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.SELECT_ROW,
+      data: data,
+    } as GridEvent<StudentBan>);
+  }
+
+  onRowUnselect({ data }: { data: StudentBan }) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.UNSELECT_ROW,
+      data: data,
+    } as GridEvent<StudentBan>);
+  }
+
+  loadRows($event: LazyLoadEvent) {
+    this.lazyLoadData.emit($event);
+  }
+}

@@ -219,4 +219,11 @@ export const CONFIGURATION_ROUTES: Route[] = [
             m => m.ManageEmptySiteComponent
         ),
   },
+  {
+    path: 'dynamic-dashboard',
+    loadComponent: () =>
+      import(
+        './dynamic-dashboard/manage-dynamic-dashboard/manage-dynamic-dashboard.component'
+        ).then(m => m.ManageDynamicDashboardComponent),
+  },
 ];
