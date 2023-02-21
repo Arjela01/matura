@@ -1,5 +1,5 @@
 export interface User {
-  id: string;
+  id: any;
 
   displayName?: string;
 
@@ -13,7 +13,7 @@ export interface User {
 
   lastName: string;
 
-  lastPasswordChange: Date;
+  lastPasswordChange?: Date;
 
   name: string;
 
@@ -30,13 +30,17 @@ export interface User {
   isActive: boolean;
 
   username?: string;
-
+  isDisabled: boolean;
   password: string;
-
   nid: string;
 }
 
 export interface UserTableView {
   data: User[];
   total: number;
+}
+
+export interface ChangeUserStatusDto {
+  id: string;
+  isDisabled:  boolean;
 }

@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AdministrationOffice, AdministrationOfficeTableView } from '@msh/shared/domain-models';
+import {
+  AdministrationOffice,
+  AdministrationOfficeTableView,
+  ChangeAdministrationOfficeStatusDto,
+} from '@msh/shared/domain-models';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
@@ -16,27 +20,43 @@ export class AdministrationOfficeApiService {
       `/AdministrationOffice/DropdownList`
     );
   }
+
+  changeStatus(
+    administrationOffice: ChangeAdministrationOfficeStatusDto
+  ): Observable<ApiResult<AdministrationOffice>> {
+    return this.apiService.post<
+      ApiResult<AdministrationOffice>,
+      ChangeAdministrationOfficeStatusDto
+    >('/AdministrationOffice/UpdateIsAllowedToLogin', administrationOffice);
+  }
+
   loadOnlyDars(): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
       `/AdministrationOffice/IsDarDropdown`
     );
   }
-  loadAdministrationOffices(event: LazyLoadEvent): Observable<AdministrationOfficeTableView> {
+  loadAdministrationOffices(
+    event: LazyLoadEvent
+  ): Observable<AdministrationOfficeTableView> {
     return this.apiService.post(`/AdministrationOffice/TableData`, event);
   }
 
-  save(administrationOffice: AdministrationOffice): Observable<ApiResult<AdministrationOffice>> {
-    return this.apiService.post<ApiResult<AdministrationOffice>, AdministrationOffice>(
-      `/AdministrationOffice`,
-      administrationOffice
-    );
+  save(
+    administrationOffice: AdministrationOffice
+  ): Observable<ApiResult<AdministrationOffice>> {
+    return this.apiService.post<
+      ApiResult<AdministrationOffice>,
+      AdministrationOffice
+    >(`/AdministrationOffice`, administrationOffice);
   }
 
-  update(administrationOffice: AdministrationOffice): Observable<ApiResult<AdministrationOffice>> {
-    return this.apiService.put<ApiResult<AdministrationOffice>, AdministrationOffice>(
-      `/AdministrationOffice`,
-      administrationOffice
-    );
+  update(
+    administrationOffice: AdministrationOffice
+  ): Observable<ApiResult<AdministrationOffice>> {
+    return this.apiService.put<
+      ApiResult<AdministrationOffice>,
+      AdministrationOffice
+    >(`/AdministrationOffice`, administrationOffice);
   }
   delete(administrationOfficeId: number): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<AdministrationOffice>>(

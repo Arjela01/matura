@@ -28,6 +28,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { UserGridComponent } from '../user-grid/user-grid.component';
+import { UsersPasswordResetViewComponent } from '../users-password-reset-view/users-password-reset-view.component';
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-users',
@@ -44,6 +45,7 @@ import { UserGridComponent } from '../user-grid/user-grid.component';
     UserGridComponent,
     UserFormComponent,
     RippleModule,
+    UsersPasswordResetViewComponent,
   ],
   providers: [ConfirmationService],
 })
@@ -65,6 +67,8 @@ export class ManageUsersComponent implements OnInit {
   roles: DropdownModel<number>[] = [];
 
   userDialog = false;
+  resetPasswordGenerated = false;
+  displayModal = false;
 
   constructor(
     private readonly userService: UserApiService,
@@ -120,6 +124,14 @@ export class ManageUsersComponent implements OnInit {
       case GRID_ACTIONS.UNSELECT_ALL:
         this.selectedUsers = [];
         break;
+      case GRID_ACTIONS.CUSTOM_ACTION1:
+        this.confirmationService.confirm({
+          message: 'Jeni i sigurt qe doni te gjeneroni nje password te ri?',
+          accept: () => {
+            this.passwordGenerate(event.data as User);
+          },
+        });
+        break;
       case GRID_ACTIONS.EDIT:
         this.selectedUser = Object.assign({}, event.data as User);
         this.userDialog = true;
@@ -129,6 +141,14 @@ export class ManageUsersComponent implements OnInit {
           message: 'Are you sure that you want to delete this entity?',
           accept: () => {
             this.deleteUser(event.data as User);
+          },
+        });
+        break;
+      case GRID_ACTIONS.CUSTOM_ACTION2:
+        this.confirmationService.confirm({
+          message: 'Jeni i sigurt qe doni te ndryshoni statusin e perdoruesit?',
+          accept: () => {
+            this.changeUserStatus(event.data as User);
           },
         });
         break;
@@ -161,6 +181,31 @@ export class ManageUsersComponent implements OnInit {
       });
   }
 
+  changeUserStatus(user: User) {
+    this.userService
+      .changeUserStatus({
+        id: user.id,
+        isDisabled: !user.isDisabled,
+      })
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess(
+            response.data.isDisabled
+              ? 'Perdoruesi u çaktivizua me sukses!'
+              : 'Perdoruesi u aktivizua me sukses!'
+          );
+          this.displayModal = false;
+          this.getUsers(this.filters as LazyLoadEvent);
+        }
+
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi një problem gjatë ndryshimit së statusit!'
+          );
+      });
+  }
+
   addUser(user: User) {
     this.userService
       .save(user)
@@ -181,7 +226,6 @@ export class ManageUsersComponent implements OnInit {
         }
       });
   }
-
   updateUser(user: User) {
     this.userService
       .update(user)
@@ -201,6 +245,11 @@ export class ManageUsersComponent implements OnInit {
           );
         }
       });
+  }
+
+  passwordGenerate(user: User) {
+    this.toastService.showSuccess('Fjalkalimi u ndryshua me sukses!');
+    this.resetPasswordGenerated = true;
   }
 
   deleteUser(user: User) {

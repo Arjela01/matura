@@ -1,0 +1,46 @@
+
+<div class="flex ml-2 mb-2 page-header mb-header">
+
+    <h2 class="flex-1 ">Mbikqyrësit sipas DarZa  </h2>
+
+  </div>
+
+
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+
+      <msh-activate-overseer-dar-za-grid
+        [administrationOffices]="(administrativeOffices$ | async) || []"
+        [totalRecords]="totalRecords"
+        (gridEvent)="onGridEvent($event)"
+        (lazyLoadData)="
+          getAdministrationOffices($event)
+        "></msh-activate-overseer-dar-za-grid>
+    </div>
+  </div>
+</div>
+
+
+<p-confirmDialog
+  #cd
+  header="Konfirmo"
+  icon="pi pi-exclamation-triangle"
+  [style]="{ width: '450px' }">
+  <ng-template pTemplate="footer">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Jo"
+      class="p-button-text"
+      (click)="cd.reject()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Po"
+      class="p-button-text"
+      (click)="cd.accept()"></button>
+  </ng-template>
+</p-confirmDialog>

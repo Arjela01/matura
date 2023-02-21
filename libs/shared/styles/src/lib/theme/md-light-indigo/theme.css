@@ -5,7 +5,7 @@
   --surface-d:rgba(0,0,0,.12);
   --surface-e:#ffffff;
   --surface-f:#ffffff;
-  --surface-g:#EAECF0;
+  --surface-g:#F5F5F5;
   --surface-1000: #f9fafb;
   --surface-1001:#f2f4f7;
   --h2-font-color: #101828;
@@ -1228,7 +1228,7 @@ p-inputswitch.ng-dirty.ng-invalid > .p-inputswitch {
   font-size: 1rem;
   color: rgba(0, 0, 0, 0.87);
   background: #ffffff;
-  padding: 1rem 1rem;
+  padding: 10px 14px;
   border: 1px solid rgba(0, 0, 0, 0.38);
   transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s, background-size 0.2s cubic-bezier(0.64, 0.09, 0.08, 1);
   appearance: none;
@@ -3146,7 +3146,10 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 .p-column-filter-overlay-menu .p-column-filter-buttonbar {
   padding: 1rem;
 }
-
+.mb-header{
+  margin-top: 2rem !important;
+  margin-bottom: 1.625rem !important;
+}
 .fc {
   /* FullCalendar 4 */
   /* FullCalendar 5 */
@@ -4628,8 +4631,7 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 }
 
 .p-fileupload .p-fileupload-buttonbar {
-  background: #ffffff;
-  padding: 1rem;
+  padding: 0.5rem;
   color: rgba(0, 0, 0, 0.87);
   border-bottom: 0 none;
   border-top-right-radius: 4px;

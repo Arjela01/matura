@@ -64,12 +64,12 @@
   </div>
 
   <div class="field">
-    <label for="username">Përdoruesi *</label>
+    <label for="userName">Përdoruesi *</label>
     <input
       type="text"
       pInputText
-      id="username"
-      name="username"
+      id="userName"
+      name="userName"
       [(ngModel)]="user.username"
       required
       autofocus
@@ -89,6 +89,7 @@
       optionLabel="value"
       [options]="roles"
       [required]="true"
+      [virtualScroll]="true"
       [filter]="true"
       name="roles"
       (onChange)="onRoleChange($event)"
