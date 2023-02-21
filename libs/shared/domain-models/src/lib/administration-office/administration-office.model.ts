@@ -1,16 +1,21 @@
 export interface AdministrationOffice {
-  id?: number;
+  id?: any;
   name: string;
   directorName: string;
   isRegionalOffice: boolean;
   parentOfficeId?: number;
   parentOfficeName?:string;
   cityId?: number;
-  cityName?:string
+  cityName?:string;
+  isAllowedToLogin: boolean;
   signature?: string;
 }
 
 export interface AdministrationOfficeTableView {
   data: AdministrationOffice[];
   total: number;
+}
+export interface ChangeAdministrationOfficeStatusDto {
+  id: string;
+  isAllowedToLogin:  boolean;
 }

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResult } from '@msh/shared/data-access-shared';
-import { User, UserTableView } from '@msh/shared/domain-models';
+import {ChangeUserStatusDto, User, UserTableView} from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
@@ -16,8 +16,13 @@ export class UserApiService {
     return this.apiService.post(`/User/TableData`, event);
   }
 
+
   getUserById(id: string): Observable<ApiResult<User>> {
     return this.apiService.get(`/User/${id}`);
+  }
+
+  changeUserStatus(user: ChangeUserStatusDto): Observable<ApiResult<User>> {
+    return this.apiService.post<ApiResult<User>, ChangeUserStatusDto>('/User/SetDisabled', user);
   }
 
   save(user: User): Observable<ApiResult<User>> {

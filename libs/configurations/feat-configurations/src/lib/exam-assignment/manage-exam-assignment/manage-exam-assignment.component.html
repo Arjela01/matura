@@ -1,95 +1,105 @@
-<div class="grid">
-  <div class="col-12">
-    <div class="card px-6 py-6">
-      <p-toolbar styleClass="mb-4">
-        <div class="p-toolbar-group-left">
-          <h2>Caktimi në Qendrat e Provimit</h2>
-        </div>
-        <div class="p-toolbar-group-right">
-          <div class="my-2">
-            <button
-              pButton
-              pRipple
-              label="Shto"
-              icon="pi pi-plus"
-              class="p-button-success mr-2"
-              (click)="onNewClick()"></button>
-          </div>
-          <p-button
-            icon="pi pi-upload"
-            (onClick)="onUploadClick()"></p-button>
-          <button style="margin-left:15px" pButton pRipple  icon="pi pi-download"
-                  (click)="downloadFile()"></button>
-        </div>
-      </p-toolbar>
-      <msh-exam-assignment-grid
-        [examAssignments]="(examAssignments$ | async) || []"
-        [totalRecords]="totalRecords"
-        (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getExamAssignments($event)">
-      </msh-exam-assignment-grid>
+<div class="flex center mb-2 page-header mb-header align-items-baseline">
+  <h2 class="flex-1 mb-0">Caktimi në Qendrat e Provimit</h2>
+  <div class="flex align-items-right justify-content-right">
+    <div class="my-2">
+      <button
+        pButton
+        pRipple
+        label="Shto"
+        icon="pi pi-plus"
+        class="p-button-success mr-2"
+        (click)="onNewClick()"></button>
     </div>
   </div>
+
+  <div class="my-2">
+    <button
+      pButton
+      pRipple
+      icon="pi pi-download"
+      label="Shkarko"
+      (click)="downloadFile()"></button>
+  </div>
+
+  <p-fileUpload
+    name="myfile[]"
+    [multiple]="true"
+    [customUpload]="true"
+    chooseLabel="Zgjidh"
+    [auto]="true"
+    (click)="onUploadClick()"></p-fileUpload>
 </div>
+  <div class="grid">
+    <div class="col-12">
+      <div class="card">
+        <msh-exam-assignment-grid
+          [examAssignments]="(examAssignments$ | async) || []"
+          [totalRecords]="totalRecords"
+          (gridEvent)="onGridEvent($event)"
+          (lazyLoadData)="getExamAssignments($event)">
+        </msh-exam-assignment-grid>
+      </div>
+    </div>
+  </div>
 
-<p-dialog
-  [(visible)]="displayUploadModal"
-  [style]="{ width: '600px' }"
-  [modal]="true"
-  header="Importo Dokument nga Exel"
-  [draggable]="false"
-  [resizable]="false"
-  [closable]="true"
-  class="p-fluid"
-  (onHide)="onUploadClose()">
-  <ng-template pTemplate="content">
-    <msh-upload-form
-      [examAssignmentsDetails]="selectedExamAssignment"
-      [examDates]="examDates"
-      (formClose)="onUploadClose()"
-      (formSave)="onUploadFormSave()">
-    </msh-upload-form>
-  </ng-template>
-</p-dialog>
+  <p-dialog
+    [(visible)]="displayUploadModal"
+    [style]="{ width: '600px' }"
+    [modal]="true"
+    header="Importo Dokument nga Exel"
+    [draggable]="false"
+    [resizable]="false"
+    [closable]="true"
+    class="p-fluid"
+    (onHide)="onUploadClose()">
+    <ng-template pTemplate="content">
+      <msh-upload-form
+        [examAssignmentsDetails]="selectedExamAssignment"
+        [examDates]="examDates"
+        (formClose)="onUploadClose()"
+        (formSave)="onUploadFormSave()">
+      </msh-upload-form>
+    </ng-template>
+  </p-dialog>
 
-<p-dialog
-  [(visible)]="displayModal"
-  [style]="{ width: '1100px' }"
-  [modal]="true"
-  [draggable]="false"
-  [resizable]="false"
-  class="p-fluid"
-  (onHide)="onModalClose()">
-  <ng-template pTemplate="content">
-    <msh-exam-assignment-form
-      [examAssignmentsDetails]="selectedExamAssignment"
-      [examSites]="examSites"
-      [examDates]="examDates"
-      (formClose)="onModalClose()"
-      (formSave)="onFormSave($event)">
-    </msh-exam-assignment-form>
-  </ng-template>
-</p-dialog>
+  <p-dialog
+    [(visible)]="displayModal"
+    [style]="{ width: '1100px' }"
+    [modal]="true"
+    [draggable]="false"
+    [resizable]="false"
+    class="p-fluid"
+    (onHide)="onModalClose()">
+    <ng-template pTemplate="content">
+      <msh-exam-assignment-form
+        [examAssignmentsDetails]="selectedExamAssignment"
+        [examSites]="examSites"
+        [examDates]="examDates"
+        (formClose)="onModalClose()"
+        (formSave)="onFormSave($event)">
+      </msh-exam-assignment-form>
+    </ng-template>
+  </p-dialog>
 
-<p-confirmDialog
-  #cd
-  header="Konfirmo"
-  icon="pi pi-exclamation-triangle"
-  [style]="{ width: '450px' }">
-  <ng-template pTemplate="footer">
-    <button
-      type="button"
-      pButton
-      icon="pi pi-times"
-      label="Jo"
-      class="p-button-text"
-      (click)="cd.reject()"></button>
-    <button
-      type="button"
-      pButton
-      icon="pi pi-check"
-      label="Po"
-      class="p-button-text"
-      (click)="cd.accept()"></button>
-  </ng-template>
-</p-confirmDialog>
+  <p-confirmDialog
+    #cd
+    header="Konfirmo"
+    icon="pi pi-exclamation-triangle"
+    [style]="{ width: '450px' }">
+    <ng-template pTemplate="footer">
+      <button
+        type="button"
+        pButton
+        icon="pi pi-times"
+        label="Jo"
+        class="p-button-text"
+        (click)="cd.reject()"></button>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-check"
+        label="Po"
+        class="p-button-text"
+        (click)="cd.accept()"></button>
+    </ng-template>
+  </p-confirmDialog>

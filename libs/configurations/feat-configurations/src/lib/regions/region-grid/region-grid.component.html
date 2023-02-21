@@ -31,27 +31,24 @@
   </ng-template>
   <ng-template pTemplate="body" let-universityDepartment>
     <tr>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 100%; min-width: 10rem">
         {{ universityDepartment.name }}
       </td>
       <td>
         <div class="flex">
-          <button
-            pButton
-            pRipple
-            icon="pi pi-pencil"
-            class="p-button-rounded p-button-warning p-button-text mr-2"
-            pTooltip="Ndrysho"
+          <img
+            src="assets/svg/edit-form.svg"
+            class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"
-            (click)="onEditClick(universityDepartment)"></button>
-          <button
-            pButton
-            pRipple
-            icon="pi pi-trash"
-            class="p-button-rounded p-button-danger p-button-text"
+            (click)="onEditClick(universityDepartment)"
+            pTooltip="Ndrysho" />
+
+          <img
+            src="assets/svg/delete-form.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
             pTooltip="Fshi"
             tooltipPosition="bottom"
-            (click)="onDeleteClick(universityDepartment)"></button>
+            (click)="onDeleteClick(universityDepartment)" />
         </div>
       </td>
     </tr>

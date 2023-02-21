@@ -39,30 +39,27 @@
   </ng-template>
   <ng-template pTemplate="body" let-highSchool>
     <tr>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 50%; min-width: 10rem">
         {{ highSchool.code }}
       </td>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 50%; min-width: 10rem">
         {{ highSchool.name }}
       </td>
       <td>
         <div class="flex">
-          <button
-            pButton
-            pRipple
-            icon="pi pi-pencil"
-            class="p-button-rounded p-button-warning p-button-text mr-2"
-            pTooltip="Ndrysho"
+          <img
+            src="assets/svg/edit-form.svg"
+            class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"
-            (click)="onEditClick(highSchool)"></button>
-          <button
-            pButton
-            pRipple
-            icon="pi pi-trash"
-            class="p-button-rounded p-button-danger p-button-text"
+            (click)="onEditClick(highSchool)"
+            pTooltip="Ndrysho" />
+
+          <img
+            src="assets/svg/delete-form.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
             pTooltip="Fshi"
             tooltipPosition="bottom"
-            (click)="onDeleteClick(highSchool)"></button>
+            (click)="onDeleteClick(highSchool)" />
         </div>
       </td>
     </tr>

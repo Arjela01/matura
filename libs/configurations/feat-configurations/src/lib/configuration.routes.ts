@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import {ManageExamAssignmentComponent} from "./exam-assignment/manage-exam-assignment/manage-exam-assignment.component";
 
 export const CONFIGURATION_ROUTES: Route[] = [
   {
@@ -56,6 +57,13 @@ export const CONFIGURATION_ROUTES: Route[] = [
       import(
         './administration-office/manage-administration-office/manage-administration-office.component'
       ).then(m => m.ManageAdministrationOfficeComponent),
+  },
+  {
+    path: 'ActivateOverseer-DarZa',
+    loadComponent: () =>
+      import(
+        './activate-overseer-dar-za/manage-activate-overseer-dar-za/manage-activate-overseer-dar-za.component'
+        ).then(m => m.ManageActivateOverseerDarZaComponent),
   },
   {
     path: 'menu',
@@ -189,5 +197,26 @@ export const CONFIGURATION_ROUTES: Route[] = [
       import('./exam-date/manage-exam-date/manage-exam-date.component').then(
         m => m.ManageExamDateComponent
       ),
+  },
+  {
+    path: 'exam-assignment',
+    loadComponent: () =>
+        import('./exam-assignment/manage-exam-assignment/manage-exam-assignment.component').then(
+            m => m.ManageExamAssignmentComponent
+        ),
+  },
+  {
+    path: 'student-ban',
+    loadComponent: () =>
+        import('./student-ban/manage-student-ban/manage-student-ban.component').then(
+            m => m.ManageStudentBanComponent
+        ),
+  },
+  {
+    path: 'empty-site',
+    loadComponent: () =>
+        import('./empty-site/manage-empty-site/manage-empty-site.component').then(
+            m => m.ManageEmptySiteComponent
+        ),
   },
 ];

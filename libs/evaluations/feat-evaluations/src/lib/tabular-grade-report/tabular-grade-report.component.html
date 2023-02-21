@@ -1,0 +1,41 @@
+<div class="flex mb-2 page-header center justify-content-between mb-header align-items-baseline">
+  <div>
+    <h2 class="mb-0">Tablea T</h2>
+    <div class="mt-4">
+      <span>Emri i procesit:</span>
+      {{ appProcessType }}
+    </div>
+    <div style="margin: 10px 0 19px 0">
+      <span>Statusi:</span>
+      {{ executionLog }}
+    </div>
+    <h4>Proçesi i fundit i ekzekutuar</h4>
+  </div>
+  <div class="flex justify-content-end">
+    <div class="my-2 flex align-items-center">
+      <div class="actions">
+        <button pButton type="button" (click)="postProcess()">
+          Fillo procesin
+        </button>
+        <button
+          style="margin-left: 25px"
+          pRipple
+          icon="pi pi-download"
+          pButton
+          label="Shkarko"
+          (click)="downloadFile()"></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <msh-grid
+        [gridData]="(calculateGrade$ | async) || []"
+        [columns]="columns"
+        (dataEmitted)="getProcessData($event, processType)"></msh-grid>
+    </div>
+  </div>
+</div>

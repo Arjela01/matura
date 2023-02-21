@@ -1,39 +1,74 @@
-<div class="grid">
-    <div class="col-12">
-        <div class="card px-6 py-6">
-            <div class="flex ml-2 mb-2 page-header justify-content-between">
-                <h2 class=" mb-0">Përshkallëzim notash</h2>
-                <div class="flex justify-content-end">
-                    <div class="my-2 flex align-items-center ">
-                        <button pButton pRipple label="Ngarko shkallëzime" icon="pi pi-excel"
-                            class="p-button-primary ml-2" (click)="openDialog()"></button>
-                        <button pButton pRipple label="Shkarko format" icon="pi pi-excel" class="p-button-success ml-2"
-                            (click)="templateDownload()"></button>
-
-                    </div>
-                </div>
-            </div>
-            <msh-grade-scale-grid [gradeScales]="(gradeScales$ | async) || []" [totalRecords]="totalRecords"
-                (gridEvent)="onGridEvent($event)" (lazyLoadData)="getGradeScales($event)">
-            </msh-grade-scale-grid>
-        </div>
+<div class="flex mb-2 page-header center justify-content-between mb-header">
+  <h2 class="mb-0">Përshkallëzim notash</h2>
+  <div class="flex justify-content-end">
+    <div class="my-2 flex align-items-center">
+      <button
+        pButton
+        pRipple
+        icon="pi pi-upload"
+        class="p-button-primary ml-2"
+        label="Ngarko"
+        (click)="openDialog()"></button>
+      <button
+        pButton
+        pRipple
+        icon="pi pi-download"
+        class="p-button-success ml-2"
+        label="Shkarko"
+        (click)="templateDownload()"></button>
     </div>
+  </div>
 </div>
-<p-dialog [(visible)]="displayModal" [style]="{ width: '650px',height:'350px' }" header="Ngarko Përshkallëzim"
-    [modal]="true" [draggable]="false" [resizable]="false" class="p-fluid" (onHide)="onModalClose()">
-    <ng-template pTemplate="content" style="height: 100%;">
-        <msh-upload-grade-scale-form class="h-full" [examSubjectsDropdown]="examSubjectDropdown"
-            (upload)="onSubmit($event)">
 
-        </msh-upload-grade-scale-form>
-    </ng-template>
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <msh-grade-scale-grid
+        [gradeScales]="(gradeScales$ | async) || []"
+        [totalRecords]="totalRecords"
+        (gridEvent)="onGridEvent($event)"
+        (lazyLoadData)="getGradeScales($event)">
+      </msh-grade-scale-grid>
+    </div>
+  </div>
+</div>
+<p-dialog
+  [(visible)]="displayModal"
+  [style]="{ width: '650px', height: '350px' }"
+  header="Ngarko Përshkallëzim"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid"
+  (onHide)="onModalClose()">
+  <ng-template pTemplate="content" style="height: 100%">
+    <msh-upload-grade-scale-form
+      class="h-full"
+      [examSubjectsDropdown]="examSubjectDropdown"
+      (upload)="onSubmit($event)">
+    </msh-upload-grade-scale-form>
+  </ng-template>
 </p-dialog>
 
-<p-confirmDialog #cd header="Konfirmo" icon="pi pi-exclamation-triangle" [style]="{ width: '450px' }">
-    <ng-template pTemplate="footer">
-        <button type="button" pButton icon="pi pi-times" label="Jo" class="p-button-text"
-            (click)="cd.reject()"></button>
-        <button type="button" pButton icon="pi pi-check" label="Po" class="p-button-text"
-            (click)="cd.accept()"></button>
-    </ng-template>
+<p-confirmDialog
+  #cd
+  header="Konfirmo"
+  icon="pi pi-exclamation-triangle"
+  [style]="{ width: '450px' }">
+  <ng-template pTemplate="footer">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Jo"
+      class="p-button-text"
+      (click)="cd.reject()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Po"
+      class="p-button-text"
+      (click)="cd.accept()"></button>
+  </ng-template>
 </p-confirmDialog>

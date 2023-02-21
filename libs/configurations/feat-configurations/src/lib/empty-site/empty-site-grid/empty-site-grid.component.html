@@ -78,10 +78,15 @@
       </td>
       <td style="width: 5%; min-width: 10rem">
         <div class="flex">
-          <p-button
-            icon="pi pi-check"
-            label="Zbraz Qendrën"
-            (onClick)="onEmptySite(examAssignment)"></p-button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-times"
+            style="color: #f04438"
+            pTooltip="Zbraz Qendren"
+            tooltipPosition="bottom"
+            class="p-button-success p-button-text mr-2"
+            (click)="onEmptySite(examAssignment)"></button>
         </div>
       </td>
     </tr>

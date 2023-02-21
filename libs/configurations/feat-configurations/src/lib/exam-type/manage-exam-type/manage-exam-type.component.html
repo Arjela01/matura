@@ -1,21 +1,20 @@
+<div class="flex center mb-2 page-header mb-header">
+  <h2 class="flex-1 mb-0">Tipe Provimi</h2>
+  <div class="flex align-items-right justify-content-right">
+    <div class="my-2">
+      <button
+        pButton
+        pRipple
+        label="Shto"
+        icon="pi pi-plus"
+        class="p-button-success mr-2"
+        (click)="onNewClick()"></button>
+    </div>
+  </div>
+</div>
 <div class="grid">
   <div class="col-12">
-    <div class="card px-6 py-6">
-      <div class="flex ml-2 mb-2 page-header">
-        <h2 class="flex-1 mb-0">Tipe Provimi</h2>
-        <div class="flex align-items-right justify-content-right">
-          <div class="my-2">
-            <button
-              pButton
-              pRipple
-              label="Shto"
-              icon="pi pi-plus"
-              class="p-button-success mr-2"
-              (click)="onNewClick()"></button>
-          </div>
-        </div>
-      </div>
-
+    <div class="card">
       <msh-exam-type-grid
         [examTypes]="(examTypes$ | async) || []"
         [totalRecords]="totalRecords"
