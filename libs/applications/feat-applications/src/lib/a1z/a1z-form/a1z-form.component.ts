@@ -1,6 +1,3 @@
-/* eslint-enable @typescript-eslint/no-unused-vars */
-/* eslint-enable @typescript-eslint/no-non-null-assertion */
-/* eslint-enable @typescript-eslint/no-explicit-any */
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -48,9 +45,9 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { BehaviorSubject } from 'rxjs';
 import { A1zStudentSearchComponent } from '../a1z-student-search/a1z-student-search.component';
 import { EXAM_TYPES } from './exam-type.enum';
-import {SharedStudentLookupModule} from "@msh/shared/student-lookup";
-import {PasswordModule} from "primeng/password";
-import {SelectButtonModule} from "primeng/selectbutton";
+import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
+import { PasswordModule } from 'primeng/password';
+import { SelectButtonModule } from 'primeng/selectbutton';
 @UntilDestroy()
 @Component({
   selector: 'msh-a1z-form',
@@ -111,46 +108,15 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   enableD2Subject = false;
   enableD3Subject = false;
   enableZ1Subject = false;
-  hideZ1Subject = false;
   submitted = false;
 
   a1z: A1Z = {
     id: 0,
-    academicYearId: undefined,
-    studentInputData: undefined,
-    isApplyingToForeignCountries: false,
-    a1ZCategoryId: undefined,
-    alreadyHaveDiploma: true,
-    carriedGradeZ1: undefined,
-    carriedGradeD1: undefined,
-    carriedGradeD2: undefined,
-    carriedGradeD3: undefined,
-    carriedReasonAZ1: undefined,
-    carriedReasonD1: undefined,
-    carriedReasonD2: undefined,
-    carriedReasonD3: undefined,
-    carriedSubjectZ1: undefined,
-    carriedSubjectD1: undefined,
-    carriedSubjectD2: undefined,
-    carriedSubjectD3: undefined,
-    noCarriedSubjets: 0,
-    noCarriedSubjetsZ: 0,
-    isA1: false,
-    overSeerCode: undefined,
-    studentId: 'F701CD86-BF0A-4BF5-D400-08DAFE286BC9',
-    subjectD1A1ZId: undefined,
-    subjectD2A1ZId: undefined,
-    subjectD3A1ZId: undefined,
-    subjectZ1A1ZId: undefined,
-    yearOfSchoolA1Z: undefined,
-    yearZ1: undefined,
-    scoreD1A1Z: undefined,
-    scoreD2A1Z: undefined,
-    scoreD3A1Z: undefined,
-    scoreZ1A1Z: undefined,
-    scoreZ2A1Z: undefined,
   };
-  booly = [{label: 'Po', value: true}, {label: 'Jo', value: false}];
+  booly = [
+    { label: 'Po', value: true },
+    { label: 'Jo', value: false },
+  ];
 
   onSubmit() {
     this.submitted = true;
@@ -206,19 +172,11 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
     if (this.formId !== null) {
       this.a1zService.getOne(parseInt(this.formId!)).subscribe(response => {
         this.a1z = response.data;
-        this.a1z.noCarriedSubjets = 0;
-        this.a1z.noCarriedSubjetsZ = 0;
-        this.a1z.carriedSubjectD3 = response.data.subjectD3A1ZId;
         this.onSubjectD1Init(response.data);
         this.onSubjectD2Init(response.data);
         this.onSubjectD3Init(response.data);
         this.onSubjectZ1Init(response.data);
-        this.a1z.carriedSubjectZ1 = response.data.subjectZ1A1ZId;
         this.cd.detectChanges();
-        //TODO: When exam grade implemented uncomment the following lines
-        // this.examGradeSercice.getExamGrade(this.a1z.id!).subscribe(response => {
-        //   this.examGrades = response.data;
-        // });
       });
     }
     console.log('init');
@@ -246,14 +204,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       this.a1z.studentInputData = ' ';
     } else {
       this.a1z.studentId = student.studentId;
-      this.studentInputData =
-        student?.studentIdentifier +
-        '-' +
-        student?.studentFirstName +
-        '-' +
-        student?.studentFatherName +
-        '-' +
-        student?.studentLastName;
+      this.studentInputData = this.getStudentDisplayName(student);
     }
   }
 
@@ -262,15 +213,20 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       this.a1z.studentInputData = ' ';
     } else {
       this.a1z.studentId = student.id;
-      this.studentInputData =
-        student?.studentId +
-        '-' +
-        student?.firstName +
-        '-' +
-        student?.middleName +
-        '-' +
-        student?.lastName;
+      this.studentInputData = this.getStudentDisplayName(student);
     }
+  }
+
+  private getStudentDisplayName(student: Student): string {
+    return (
+      student?.studentId +
+      '-' +
+      student?.firstName +
+      '-' +
+      student?.middleName +
+      '-' +
+      student?.lastName
+    );
   }
 
   onSubjectD1Change($event: any) {
@@ -283,55 +239,31 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   }
 
   onSubjectD1Init(data: A1Z) {
-    if (data.scoreD1A1Z !== 0) {
-      this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets + 1;
+    if (data.scoreD1 !== 0) {
       this.enableD1Subject = true;
     }
   }
 
   onSubjectD2Change($event: any) {
     this.enableD2Subject = $event.checked;
-    this.enableD2Subject === true
-      ? (this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets + 1)
-      : (this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets - 1);
-    console.log(this.a1z.noCarriedSubjets);
   }
 
   onSubjectD2Init(data: A1Z) {
-    if (data.scoreD2A1Z !== 0) {
-      this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets + 1;
+    if (data.scoreD2 !== 0) {
       this.enableD2Subject = true;
     }
   }
 
   onSubjectD3Change($event: any) {
     this.enableD3Subject = $event.checked;
-    this.enableD3Subject === true
-      ? (this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets + 1)
-      : (this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets - 1);
-    console.log(this.a1z.noCarriedSubjets);
   }
 
-  onSubjectD3Init(data: A1Z) {
-    if (data.scoreD3A1Z !== 0) {
-      this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets + 1;
-      this.enableD3Subject = true;
-    }
-  }
+  onSubjectD3Init(data: A1Z) {}
 
-  onSubjectZ1Init(data: A1Z) {
-    if (data.scoreZ1A1Z !== 0) {
-      this.a1z.noCarriedSubjetsZ = this.a1z.noCarriedSubjetsZ + 1;
-      this.enableZ1Subject = true;
-    }
-  }
+  onSubjectZ1Init(data: A1Z) {}
 
   onSubjectZ1Change($event: any) {
     this.enableZ1Subject = $event.checked;
-    this.enableZ1Subject === true
-      ? (this.a1z.noCarriedSubjetsZ = this.a1z.noCarriedSubjetsZ + 1)
-      : (this.a1z.noCarriedSubjetsZ = this.a1z.noCarriedSubjetsZ - 1);
-    console.log(this.a1z.noCarriedSubjetsZ);
   }
 
   getStudents($event: LazyLoadEvent): void {
@@ -473,26 +405,29 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
 
   manageSubjects() {
     if (this.enableD1Subject === false) {
-      this.a1z.carriedSubjectD1 = undefined;
-      this.a1z.scoreD1A1Z = undefined;
+      this.a1z.scoreD1 = undefined;
+      this.a1z.reasonD1 = undefined;
+      this.a1z.yearD1 = undefined;
     }
     if (this.enableD2Subject === false) {
-      this.a1z.carriedSubjectD2 = undefined;
-      this.a1z.scoreD2A1Z = undefined;
+      this.a1z.scoreD2 = undefined;
+      this.a1z.reasonD2 = undefined;
+      this.a1z.yearD2 = undefined;
     }
     if (this.enableD3Subject === false) {
-      this.a1z.carriedSubjectD3 = undefined;
-      this.a1z.scoreD3A1Z = undefined;
+      this.a1z.scoreD3 = undefined;
+      this.a1z.reasonD3 = undefined;
+      this.a1z.yearD3 = undefined;
     }
-    if (this.a1z.carriedSubjectD3 !== undefined) {
-      this.a1z.subjectD3A1ZId = this.a1z.carriedSubjectD3;
+    if (this.a1z.subjectD3Id !== undefined) {
+      this.a1z.scoreD3 = undefined;
+      this.a1z.reasonD3 = undefined;
+      this.a1z.yearD3 = undefined;
     }
-    if (this.a1z.carriedSubjectZ1 !== undefined) {
-      this.a1z.subjectZ1A1ZId = this.a1z.carriedSubjectZ1;
-    }
-    if (this.enableZ1Subject === false) {
-      this.a1z.carriedSubjectZ1 = undefined;
-      this.a1z.scoreZ1A1Z = undefined;
+    if (this.a1z.subjectZ1Id !== undefined) {
+      this.a1z.scoreZ1 = undefined;
+      this.a1z.reasonZ1 = undefined;
+      this.a1z.yearZ1 = undefined;
     }
   }
 
