@@ -18,52 +18,103 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="id">
-        Id e Studentit
+      <th pSortableColumn="section">
+        Seksioni
         <p-sortIcon field="id"></p-sortIcon>
-        <p-columnFilter type="text" field="id" display="menu"></p-columnFilter>
+        <p-columnFilter type="text" field="section" display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="studentName">
-        Emri i Studentit
-        <p-sortIcon field="studentName"></p-sortIcon>
+      <th pSortableColumn="tittle">
+        Titulli
+        <p-sortIcon field="tittle"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="studentName"
+          field="tittle"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="isBanned">
-        Eshte Skualifikuar?
-        <p-sortIcon field="isBanned"></p-sortIcon>
+      <th pSortableColumn="document">
+        Dokument
+        <p-sortIcon field="document"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="isBanned"
+          field="document"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="effectiveDate">
-        Data efektive
-        <p-sortIcon field="effectiveDate"></p-sortIcon>
+      <th pSortableColumn="linkUrl">
+        Link/URL
+        <p-sortIcon field="linkUrl"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="effectiveDate"
+          field="linkUrl"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="banRemovalDate">
-        Data e heqjes se Skualifikimit
-        <p-sortIcon field="banRemovalDate"></p-sortIcon>
+      <th pSortableColumn="role">
+        Roli
+        <p-sortIcon field="role"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="banRemovalDate"
+          field="role"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="description">
-        Pershkrimi
-        <p-sortIcon field="description"></p-sortIcon>
+      <th pSortableColumn="user">
+        Përdoruesi
+        <p-sortIcon field="user"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="description"
+          field="user"
           display="menu"></p-columnFilter>
       </th>
-      <th></th>
+      <th pSortableColumn="user">
+        E Vlefshme Nga
+        <p-sortIcon field="user"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="user"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="user">
+        E Vlefshme Deri
+        <p-sortIcon field="user"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="user"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="user">
+        Krijuar Nga
+        <p-sortIcon field="user"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="user"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="user">
+        Data e krijimit
+        <p-sortIcon field="user"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="user"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="user">
+        Modifikuar Nga
+        <p-sortIcon field="user"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="user"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="user">
+        Data e Modifikimit
+        <p-sortIcon field="user"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="user"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="user">
+        Veprime
+      </th>
+
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-bannedStudent>
@@ -86,6 +137,25 @@
       <td style="width: 14%; min-width: 10rem">
         {{ bannedStudent.description }}
       </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ bannedStudent.description }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ bannedStudent.description }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ bannedStudent.description }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ bannedStudent.description }}
+      </td><td style="width: 14%; min-width: 10rem">
+      {{ bannedStudent.description }}
+    </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ bannedStudent.description }}
+      </td>
+
+
       <td>
         <div class="flex">
           <img
