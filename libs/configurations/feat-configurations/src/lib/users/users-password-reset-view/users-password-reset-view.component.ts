@@ -1,3 +1,4 @@
+import { Clipboard, ClipboardModule } from "@angular/cdk/clipboard";
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -8,26 +9,24 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { UserApiService } from '@msh/configurations/data-access-configurations';
 import { User } from '@msh/shared/domain-models';
+import { StrongPasswordDirective } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
+import { CardModule } from 'primeng/card';
 import { CheckboxModule } from 'primeng/checkbox';
+import { DividerModule } from 'primeng/divider';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { RadioButtonModule } from 'primeng/radiobutton';
 import { PasswordModule } from 'primeng/password';
-import { StrongPasswordDirective } from '@msh/shared/util-shared';
-import { DividerModule } from 'primeng/divider';
-import { CardModule } from 'primeng/card';
-import {ClipboardModule} from "@angular/cdk/clipboard";
-import { Clipboard } from '@angular/cdk/clipboard';
+import { RadioButtonModule } from 'primeng/radiobutton';
 @UntilDestroy()
 @Component({
   selector: 'msh-users-password-reset-view',
@@ -54,12 +53,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersPasswordResetViewComponent implements OnInit, OnDestroy {
-  @Input() set userDetails(details: User | null) {
-    if (details) {
-      this.user = Object.assign({}, details);
-    }
-  }
-
+  @Input() userDetails: any;
   @Output() formSave = new EventEmitter<User>();
   @Output() formClose = new EventEmitter<undefined>();
 
@@ -93,7 +87,7 @@ export class UsersPasswordResetViewComponent implements OnInit, OnDestroy {
     private readonly userService: UserApiService,
     private clipboard: Clipboard,
 
-  ) {}
+  ) { }
   public copyToClipboardWithParameter(value: HTMLElement): void {
     const text: string = value.textContent || '';
     console.log(text);

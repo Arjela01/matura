@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResult } from '@msh/shared/data-access-shared';
-import {ChangeUserStatusDto, User, UserTableView} from '@msh/shared/domain-models';
+import { ChangeUserStatusDto, User, UserTableView } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UserApiService {
-  constructor(private http: HttpClient, private apiService: APIService) {}
+  constructor(private http: HttpClient, private apiService: APIService) { }
 
   loadUsers(event: LazyLoadEvent): Observable<UserTableView> {
     return this.apiService.post(`/User/TableData`, event);
@@ -23,6 +23,10 @@ export class UserApiService {
 
   changeUserStatus(user: ChangeUserStatusDto): Observable<ApiResult<User>> {
     return this.apiService.post<ApiResult<User>, ChangeUserStatusDto>('/User/SetDisabled', user);
+  }
+
+  generateNewPass(id: string): Observable<ApiResult<User>> {
+    return this.apiService.get(`/User/ResetPassword/${id}`);
   }
 
   save(user: User): Observable<ApiResult<User>> {

@@ -1,8 +1,8 @@
 <div class="grid">
   <div class="col-12 p-fluid">
-    <div class="card">
+    <div class="card" style="border: 0">
       <form #form="ngForm" (ngSubmit)="onSubmit()">
-        <div class="field mt-4 mb-4" [style]="{ width: '500px' }">
+        <div class="field mt-4 mb-4">
           <label for="studentInputData">Student *</label>
           <div class="p-inputgroup">
             <p-button
@@ -30,7 +30,7 @@
           </small>
         </div>
 
-        <div class="field" [style]="{ width: '500px' }">
+        <div class="field">
           <label class="mb-3">Eshte Skualifikuar ? *</label>
           <div class="formgrid grid">
             <div class="field-radiobutton col-6">
@@ -52,7 +52,7 @@
           </div>
         </div>
 
-        <div class="field" [style]="{ width: '500px' }">
+        <div class="field">
           <label for="effectiveDate">Data Efektive *</label>
           <input
             placeholder="dd/MM/yyyy"
@@ -71,7 +71,7 @@
           </small>
         </div>
 
-        <div class="field" [style]="{ width: '500px' }">
+        <div class="field">
           <label for="banRemovalDate">Data e heqjes se Skualifikimit *</label>
           <input
             placeholder="dd/MM/yyyy"
@@ -90,7 +90,7 @@
           </small>
         </div>
 
-        <div class="field" [style]="{ width: '500px' }">
+        <div class="field">
           <label for="description"> Përshkrimi *</label>
           <textarea
             rows="4"
@@ -128,7 +128,7 @@
 
         <p-dialog
           [(visible)]="displayStudentModal"
-          [style]="{ width: '77%' }"
+          [style]="{ width: '850px' }"
           [modal]="true"
           [draggable]="false"
           [resizable]="false"
