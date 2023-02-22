@@ -1,126 +1,191 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="studyClass">Seksioni *</label>
+    <p-dropdown
+      id="studyClass"
+      [options]="sectionDashboard"
+      name="schoolProfile"
+      [(ngModel)]="studentBan.studentId"
+      [required]="true"
+      [virtualScroll]="true"
+      [autoDisplayFirst]="false"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !studentBan.id
+      }">
+    </p-dropdown>
+    <small class="p-error block" *ngIf="submitted && !studentBan.id">
+      Seksioni është fushë e kërkuar.
+    </small>
+  </div>
 
-      <form #form="ngForm" (ngSubmit)="onSubmit()">
-        <div class="field mt-4 mb-4" >
-          <label for="studentInputData">Student *</label>
-          <div class="p-inputgroup">
-            <p-button
-              label="Kërko"
-              icon="pi pi-search"
-              (click)="!studentBan.id ? onNewClick() : ''"
-              [disabled]="studentBan.id ? true : false"
-              [style]="{ height: '100%' }"></p-button>
-            <input
-              [value]="studentInputData"
-              type="text"
-              pInputText
-              id="studentInputData"
-              name="studentInputData"
-              [(ngModel)]="studentInputData"
-              required
-              autofocus
-              disabled
-              [ngClass]="{
-                'ng-invalid ng-dirty': submitted && !studentInputData
-              }" />
-          </div>
-          <small class="p-error block" *ngIf="submitted && !studentInputData">
-            Studenti është fushë e kërkuar.
-          </small>
-        </div>
+  <div class="field">
+    <label for="title">Titulli *</label>
+    <input
+      type="text"
+      pInputText
+      id="title"
+      name="title"
+      [(ngModel)]="studentBan.studentName"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !studentBan.studentName
+      }" />
+    <small class="p-error block" *ngIf="submitted && !studentBan.studentName">
+      Titulli është fushë e kërkuar.
+    </small>
+  </div>
 
-        <div class="field">
-          <label class="mb-3">Eshte Skualifikuar ? *</label>
-          <div class="formgrid grid">
-            <div class="field-radiobutton col-6">
-              <p-radioButton
-                id="IsBannedTrue"
-                name="isBanned"
-                [value]="true"
-                [(ngModel)]="studentBan.isBanned"></p-radioButton>
-              <label for="IsBannedTrue">Po</label>
-            </div>
-            <div class="field-radiobutton col-6">
-              <p-radioButton
-                id="IsBannedFalse"
-                name="isBanned"
-                [value]="false"
-                [(ngModel)]="studentBan.isBanned"></p-radioButton>
-              <label for="IsBannedFalse">Jo</label>
-            </div>
-          </div>
-        </div>
+  <div class="field">
+    <label for="description"> Përshkrimi *</label>
+    <textarea
+      rows="2"
+      cols="35"
+      pInputTextarea
+      id="description"
+      name="description"
+      [(ngModel)]="studentBan.description"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !studentBan.description
+      }"></textarea>
 
-        <div class="field" >
-          <label for="effectiveDate">Data Efektive *</label>
-          <input
-            placeholder="dd/MM/yyyy"
-            type="text"
-            pInputText
-            id="effectiveDate"
-            name="effectiveDate"
-            [(ngModel)]="effectiveDate"
-            required
-            autofocus
-            [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !effectiveDate
-            }" />
-          <small class="p-error block" *ngIf="submitted && !effectiveDate">
-            Data është fushë e kërkuar.
-          </small>
-        </div>
+    <small class="p-error block" *ngIf="submitted && !studentBan.description">
+      Përshkrimi është fushë e kërkuar.
+    </small>
+  </div>
 
-        <div class="field" >
-          <label for="banRemovalDate">Data e heqjes se Skualifikimit *</label>
-          <input
-            placeholder="dd/MM/yyyy"
-            type="text"
-            pInputText
-            id="banRemovalDate"
-            name="banRemovalDate"
-            [(ngModel)]="banRemovalDate"
-            required
-            autofocus
-            [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !banRemovalDate
-            }" />
-          <small class="p-error block" *ngIf="submitted && !banRemovalDate">
-            Data është fushë e kërkuar.
-          </small>
-        </div>
+  <div class="field">
+    <label for="document">Dokument *</label>
+    <div class="form-group drop-files noLabel">
+      <p-fileUpload
+        #uploader
+        [showUploadButton]="false"
+        class="ie-file-upload"
+        id="document"
+        (onSelect)="selectFiles($event)"
+        accept=".pdf">
+        <ng-template pTemplate="content">
+          <img
+            [src]="'data:image;base64,' + studentBan.id"
+            width="100"
+            height="100"
+            *ngIf="studentBan.id && !uploaded && studentBan.id"
+            alt="" />
+        </ng-template>
+      </p-fileUpload>
+      <small class="p-error block" *ngIf="submitted && !studentBan.id">
+        Dokument është fushë e kërkuar.
+      </small>
+    </div>
+  </div>
 
-        <div class="field" >
-          <label for="description"> Përshkrimi *</label>
-          <textarea
-            rows="4"
-            cols="35"
-            pInputTextarea
-            id="description"
-            name="description"
-            [(ngModel)]="studentBan.description"
-            [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !studentBan.description
-            }"></textarea>
+  <div class="field">
+    <label for="link">Link\URL *</label>
+    <input
+      type="text"
+      pInputText
+      id="link"
+      name="link"
+      [(ngModel)]="studentBan.studentName"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !studentBan.studentName
+      }" />
+    <small class="p-error block" *ngIf="submitted && !studentBan.studentName">
+      Link\URL është fushë e kërkuar.
+    </small>
+  </div>
 
-          <small
-            class="p-error block"
-            *ngIf="submitted && !studentBan.description">
-            Përshkrimi është fushë e kërkuar.
-          </small>
-        </div>
+  <div class="field">
+    <div class="field">
+      <label for="roles">Roli/et</label>
+      <p-multiSelect
+        id="roles"
+        name="roles"
+        [options]="sectionDashboard"
+        optionValue="value"
+        optionLabel="value"
+        [(ngModel)]="studentBan.studentName"
+        appendTo="body"
+        [showClear]="true"
+        defaultLabel="Selekto Rolet"
+        display="chip"></p-multiSelect>
+      <small class="p-error block" *ngIf="submitted && !studentBan.studentName">
+        Roli/et është fushë e kërkuar.
+      </small>
+    </div>
+  </div>
 
-        <div class="flex justify-content-end">
-          <button
-            type="button"
-            pButton
-            icon="pi pi-times"
-            label="Anullo"
-            class="p-button-text w-auto mr-2"
-            (click)="onCancelClick()"></button>
-          <button
-            type="submit"
-            pButton
-            icon="pi pi-check"
-            label="Ruaj"
-            class="p-button-text w-auto"></button>
-        </div>
-      </form>
+  <div class="field">
+    <label for="users">Përdoruesi/t *</label>
+    <p-dropdown
+      id="users"
+      [options]="sectionDashboard"
+      name="users"
+      [(ngModel)]="studentBan.id"
+      [autoDisplayFirst]="false"
+      [required]="true"
+      [virtualScroll]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !studentBan.id
+      }">
+    </p-dropdown>
+    <small class="p-error block" *ngIf="submitted && !studentBan.id">
+      Përdoruesi/t është fushë e kërkuar.
+    </small>
+  </div>
+
+  <!--  <div class="field">-->
+  <!--    <label for="effectiveDate">E vlefshme nga *</label>-->
+  <!--    <input-->
+  <!--      placeholder="dd/MM/yyyy"-->
+  <!--      type="text"-->
+  <!--      pInputText-->
+  <!--      id="effectiveDate"-->
+  <!--      name="effectiveDate"-->
+  <!--      [(ngModel)]="effectiveDate"-->
+  <!--      required-->
+  <!--      autofocus-->
+  <!--      [ngClass]="{-->
+  <!--        'ng-invalid ng-dirty': submitted && !effectiveDate-->
+  <!--      }" />-->
+  <!--    <small class="p-error block" *ngIf="submitted && !effectiveDate">-->
+  <!--      Data është fushë e kërkuar.-->
+  <!--    </small>-->
+  <!--  </div>-->
+
+  <!--  <div class="field">-->
+  <!--    <label for="banRemovalDate">E vlefshme deri *</label>-->
+  <!--    <input-->
+  <!--      placeholder="dd/MM/yyyy"-->
+  <!--      type="text"-->
+  <!--      pInputText-->
+  <!--      id="banRemovalDate"-->
+  <!--      name="banRemovalDate"-->
+  <!--      [(ngModel)]="banRemovalDate"-->
+  <!--      required-->
+  <!--      autofocus-->
+  <!--      [ngClass]="{-->
+  <!--        'ng-invalid ng-dirty': submitted && !banRemovalDate-->
+  <!--      }" />-->
+  <!--    <small class="p-error block" *ngIf="submitted && !banRemovalDate">-->
+  <!--      Data është fushë e kërkuar.-->
+  <!--    </small>-->
+  <!--  </div>-->
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      type="submit"
+      pButton
+      icon="pi pi-check"
+      label="Ruaj"
+      class="p-button-text w-auto"></button>
+  </div>
+</form>

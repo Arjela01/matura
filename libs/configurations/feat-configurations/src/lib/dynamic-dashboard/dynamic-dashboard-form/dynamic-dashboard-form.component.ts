@@ -11,7 +11,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { Student, StudentBan } from '@msh/shared/domain-models';
+import {DashboardSectionModel, Student, StudentBan} from '@msh/shared/domain-models';
 
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -27,6 +27,11 @@ import { BehaviorSubject } from 'rxjs';
 import { StudentsApiService } from '@msh/configurations/data-access-configurations';
 import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
 import { DialogModule } from 'primeng/dialog';
+import {FileUploadModule} from "primeng/fileupload";
+
+import {DropdownModel} from "@msh/shared/data-access-shared";
+import {AutoCompleteModule} from "primeng/autocomplete";
+import {MultiSelectModule} from "primeng/multiselect";
 
 @UntilDestroy()
 @Component({
@@ -44,19 +49,27 @@ import { DialogModule } from 'primeng/dialog';
     DropdownModule,
     DialogModule,
     SharedStudentLookupModule,
+    FileUploadModule,
+    AutoCompleteModule,
+    MultiSelectModule,
   ],
   templateUrl: './dynamic-dashboard-form.component.html',
   styleUrls: ['./dynamic-dashboard-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DynamicDashboardFormComponent  implements OnInit, DoCheck {
+  @Input() roles: DropdownModel<number>[] = [];
+
+
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
   totalRecords = 0;
+  sectionDashboard = DashboardSectionModel.All;
 
   selectedStudent: any = null;
   displayStudentModal = false;
   studentInputData = '';
+  rolesFiltered: DropdownModel<number>[] = [];
 
   effectiveDate: any;
   banRemovalDate: any;
@@ -81,7 +94,8 @@ export class DynamicDashboardFormComponent  implements OnInit, DoCheck {
   @Output() formSave = new EventEmitter<StudentBan>();
   @Output() formClose = new EventEmitter<undefined>();
 
-  @ViewChild('form', { static: true }) form!: NgForm;
+  @ViewChild('form', {static: true}) form!: NgForm;
+  uploaded = false;
 
   submitted = false;
   studentBan: StudentBan = {
@@ -94,12 +108,27 @@ export class DynamicDashboardFormComponent  implements OnInit, DoCheck {
     isBanned: 0,
     effectiveDate: new Date(),
     banRemovalDate: new Date(),
+
   };
 
   constructor(
     private cd: ChangeDetectorRef,
     private readonly studentService: StudentsApiService
-  ) {}
+  ) {
+  }
+
+
+
+
+  selectFiles(event: any) {
+    const fileReader = new FileReader();
+    for (const file of event.files) {
+      fileReader.readAsDataURL(file);
+      this.uploaded = true;
+    }
+  }
+
+
 
   onCancelClick() {
     this.formClose.emit();
@@ -136,6 +165,7 @@ export class DynamicDashboardFormComponent  implements OnInit, DoCheck {
     }
   }
 
+
   onGridEvent(event: GridEvent<Student | Student[]>) {
     switch (event.action) {
       case GRID_ACTIONS.EDIT:
@@ -164,8 +194,19 @@ export class DynamicDashboardFormComponent  implements OnInit, DoCheck {
         this.totalRecords = response.total;
       });
   }
+  ngOnChanges(): void {
+    if (this.roles && this.studentBan.studentName) {
+      this.onRoleChange({ value: this.studentBan.studentName });
+    }
+  }
 
-  onSubmit() {
+  onRoleChange($event: any) {
+    this.rolesFiltered = this.roles.filter(
+      et => et.parentKey == $event.value
+    );
+  }
+
+onSubmit() {
     if (this.form.valid) {
       this.formSave.emit(this.studentBan);
     }
