@@ -7,6 +7,8 @@ export interface ApplicationProcess {
   errorMessage: string;
   executionLog: string;
   executionTime: string;
+  endTimeToShow: string;
+  startTimeToShow: string;
 }
 
 export interface ApplicationProcessTableView {

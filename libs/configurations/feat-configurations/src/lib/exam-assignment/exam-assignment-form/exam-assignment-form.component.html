@@ -1,7 +1,6 @@
 <div class="grid">
   <div class="col-12 p-fluid">
-    <div class="card px-6 py-6">
-      <h3 class="mb-6">Detajet e Caktimit ne Qender Provimi</h3>
+    <div class="card-form px-6 " style="border:0">
       <form #form="ngForm" (ngSubmit)="onSubmit()">
         <div class="field mt-4 mb-4" [style]="{ width: '500px' }">
           <label for="ExamSite">Qendra e Provimit *</label>
@@ -96,7 +95,7 @@
 
       <p-dialog
         [(visible)]="displayModal"
-        [style]="{ width: '77%' }"
+        [style]="{ width: '850px' }"
         [modal]="true"
         [draggable]="false"
         [resizable]="false"

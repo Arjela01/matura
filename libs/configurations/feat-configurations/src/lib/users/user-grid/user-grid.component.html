@@ -198,6 +198,13 @@
             (click)="onChangePassClick(user)"
             pTooltip="Ndrysho Fjalëkalimin"/>
 
+            class="'p-button-rounded p-button-danger p-button-text mr-2' : 'p-button-rounded p-button-success p-button-text mr-2'"
+            (click)="changeUserStatus(user)"
+            icon="{{
+              !user.isDisabled ? 'pi pi-user-minus' : 'pi pi-user-plus'
+            }}">
+            &nbsp;{{ !user.isDisabled ? 'Caktivizo' : 'Aktivizo' }}
+          </button>
           <img
             src="assets/svg/edit-form.svg"
             class="p-button-rounded p-button-warning p-button-text ml-m pointer"
