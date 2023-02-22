@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
   AdministrationOfficeApiService,
   CityApiService,
@@ -9,25 +9,24 @@ import {
   StudyProgramApiService,
   UniversityApiService,
   UniversityDepartmentApiService,
-  UserApiService,
+  UserApiService
 } from '@msh/configurations/data-access-configurations';
-import { User } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import { User } from '@msh/shared/domain-models';
 import {
-  GRID_ACTIONS,
   GlobalToastService,
-  GridEvent,
+  GridEvent, GRID_ACTIONS
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
+import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { UserGridComponent } from '../user-grid/user-grid.component';
-import { RippleModule } from 'primeng/ripple';
 import { UsersPasswordResetViewComponent } from '../users-password-reset-view/users-password-reset-view.component';
 @UntilDestroy()
 @Component({
@@ -84,7 +83,7 @@ export class ManageUsersComponent implements OnInit {
     private readonly highSchoolService: HighSchoolApiService,
     private readonly roleService: RolesApiService,
     private readonly cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getAdministrationOfficeDropdown();
@@ -146,16 +145,16 @@ export class ManageUsersComponent implements OnInit {
           },
         });
         break;
-  case GRID_ACTIONS.CUSTOM_ACTION2:
-    this.confirmationService.confirm({
-      message: 'Jeni i sigurt qe doni te ndryshoni statusin e perdoruesit?',
-      accept: () => {
-        this.changeUserStatus(event.data as User);
-      },
-    });
-    break;
+      case GRID_ACTIONS.CUSTOM_ACTION2:
+        this.confirmationService.confirm({
+          message: 'Jeni i sigurt qe doni te ndryshoni statusin e perdoruesit?',
+          accept: () => {
+            this.changeUserStatus(event.data as User);
+          },
+        });
+        break;
 
-}
+    }
   }
 
 
@@ -260,26 +259,13 @@ export class ManageUsersComponent implements OnInit {
           this.toastService.showSuccess('Fjalkalimi u ndryshua me sukses!');
           this.userDialog = false;
           this.resetPasswordGenerated = true;
-          this.cdr.detectChanges();
-          // this.newUserPasswordObj = {
-          //   ...response.data;
-          // }
           this.newUserPasswordObj = {
-            username: "asdhahsdhasdh",
-            password: "asjdjasdasdhhasd"
+            ...response.data
           }
-
+          this.cdr.detectChanges();
         }
 
         if (!response.isSuccessful) {
-          //fshije pasi te egzistoje API ok
-          this.userDialog = false;
-          this.resetPasswordGenerated = true;
-          this.cdr.detectChanges();
-          this.newUserPasswordObj = {
-            username: "asdhahsdhasdh",
-            password: "asjdjasdasdhhasd"
-          }
           this.toastService.showError(
             'Ndodhi nje problem gjate ndryshimit te perdoruesit!'
           );
