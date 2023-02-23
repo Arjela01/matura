@@ -1,5 +1,5 @@
 {
-  "name": "user-section-data-access-user-section",
+  "name": "data-access-user-section",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/user-section/data-access-user-section/src",

@@ -11,9 +11,12 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { AvatarModule } from 'primeng/avatar';
 import { CommonModule, NgIf } from '@angular/common';
 import { PasswordModule } from 'primeng/password';
-import { UserProfile } from '@msh/user-section/domain-user-section';
 import { UserProfileApiService } from '@msh/user-section/data-access-user-section';
-
+import { UserProfile } from '@msh/shared/domain-models';
+import { DialogModule } from 'primeng/dialog';
+import { UserResetPasswordComponent } from '../user-reset-password/user-reset-password.component';
+import { LazyLoadEvent } from 'primeng/api';
+import { Subject } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -27,6 +30,8 @@ import { UserProfileApiService } from '@msh/user-section/data-access-user-sectio
     CommonModule,
     NgIf,
     PasswordModule,
+    DialogModule,
+    UserResetPasswordComponent,
   ],
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss'],
@@ -34,20 +39,40 @@ import { UserProfileApiService } from '@msh/user-section/data-access-user-sectio
 })
 export class UserProfileComponent implements OnInit {
   submitted = false;
+  displayPasswordModal = false;
+  filters: LazyLoadEvent | null = null;
+
   @ViewChild('form', { static: true }) form!: NgForm;
-  userProfile!: UserProfile;
+
+  userProfile: UserProfile | undefined;
+
   avatarLabel!: string;
+
+  userProfile$ = new Subject<UserProfile>();
+
   constructor(private userProfileService: UserProfileApiService) {}
+
+  onNewClick() {
+    this.displayPasswordModal = true;
+  }
+  onModalClose() {
+    this.displayPasswordModal = false;
+  }
+
   ngOnInit() {
     this.getUser();
   }
+  onFormSave() {
+    this.displayPasswordModal = false;
+  }
+
   getUser() {
     this.userProfileService.getLoggedInUserData().subscribe(response => {
+      this.userProfile$.next(response.data);
       this.userProfile = Object.assign({}, response.data);
       this.avatarLabel =
         this.userProfile.firstName.charAt(0) +
         this.userProfile.lastName.charAt(0);
-      console.log(111 , this.userProfile)
     });
   }
 }

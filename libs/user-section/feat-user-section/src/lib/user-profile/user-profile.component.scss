@@ -2,11 +2,9 @@
   display: block;
 }
 .column {
-
   margin-top: 50px;
   margin-left: 0;
   margin-right: 30px;
-
 }
 .p-button.password-button-text {
   background-color: var(--primary-color-navbar);
@@ -44,17 +42,11 @@
   justify-content: space-around;
   margin-left: 240px;
   margin-top: -60px;
-  .bold{
+  .bold {
     font-weight: 700;
   }
-  .span{
+  .span {
     font-weight: 400;
-  }
-  .red{
-    color: red;
-  }
-  .green{
-    color: green;
   }
 }
 .column2 {
@@ -76,5 +68,3 @@
   justify-content: flex-end;
   margin-top: 50px;
 }
-
-

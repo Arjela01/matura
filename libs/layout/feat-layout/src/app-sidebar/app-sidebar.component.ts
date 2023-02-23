@@ -5,16 +5,14 @@ import { AppMenuitemComponent } from '../app-menuitem/app-menuitem.component';
 
 import { MenuItem } from 'primeng/api';
 import { MenuStore } from '@msh/layout/data-access-layout';
-import { map, Observable } from 'rxjs';
+import { map, Observable, Subject } from 'rxjs';
 import { MenuNode } from '@msh/layout/domain-layout';
 import { Router, RouterLink, RouterLinkWithHref } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { DialogModule } from 'primeng/dialog';
-import {AvatarModule} from "primeng/avatar";
-import {UserProfileApiService} from "@msh/user-section/data-access-user-section";
-import {UserProfile} from "@msh/user-section/domain-user-section";
-
-
+import { AvatarModule } from 'primeng/avatar';
+import { UserProfile } from '@msh/shared/domain-models';
+import { UserProfileApiService } from '@msh/user-section/data-access-user-section';
 
 @Component({
   selector: 'msh-app-sidebar',
@@ -33,6 +31,7 @@ import {UserProfile} from "@msh/user-section/domain-user-section";
 })
 export class AppSidebarComponent implements OnInit {
   userProfile!: UserProfile;
+  userProfile$ = new Subject<UserProfile>();
   avatarLabel!: string;
   //TODO: This will be dynamic
   model$: Observable<MenuItem[]> = this.menuStore.menus$.pipe(
@@ -51,7 +50,7 @@ export class AppSidebarComponent implements OnInit {
     private router: Router,
     public layoutService: LayoutService,
     private authFacade: AuthFacade,
-    private userProfileService: UserProfileApiService,
+    private userProfileService: UserProfileApiService
   ) {}
 
   ngOnInit() {
@@ -107,6 +106,7 @@ export class AppSidebarComponent implements OnInit {
   }
   getUser() {
     this.userProfileService.getLoggedInUserData().subscribe(response => {
+      this.userProfile$.next(response.data);
       this.userProfile = Object.assign({}, response.data);
       this.avatarLabel =
         this.userProfile.firstName.charAt(0) +

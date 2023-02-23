@@ -1,8 +1,8 @@
 import { Injectable} from '@angular/core';
 import { APIService } from '@msh/shared/util-shared';
 import { Observable } from 'rxjs';
-import {UserProfile} from "@msh/user-section/domain-user-section";
 import {ApiResult} from "@msh/shared/data-access-shared";
+import {UserProfile} from "@msh/shared/domain-models";
 
 @Injectable({
   providedIn: 'root',

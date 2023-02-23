@@ -23,7 +23,6 @@ export interface UserProfile {
   username: string;
   roleId:string;
   roleName:string;
-  isActive:boolean;
   email:string;
   children: UserProfile[];
 }

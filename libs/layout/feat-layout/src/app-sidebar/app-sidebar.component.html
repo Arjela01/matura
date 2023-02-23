@@ -41,7 +41,7 @@
     </div>
 
     <div>
-      <div class="container">
+      <div class="container" *ngIf="(userProfile$ | async) as user">
         <div class="first-group">
           <div class="profile-photo" (click)="onNewClick()">
             <p-avatar
@@ -51,8 +51,8 @@
             >
             </p-avatar>
           </div>
-          <div class="name menu-title fs">{{userProfile?.lastName}} {{userProfile?.lastName}}</div>
-          <div class="email fs">{{userProfile?.email}}</div>
+          <div class="name menu-title fs">{{user.lastName}} {{user.lastName}}</div>
+          <div class="email fs">{{user.email}}</div>
         </div>
 
         <div class="second-group" (click)="onLogoutClick()">

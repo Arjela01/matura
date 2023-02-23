@@ -1,5 +1,5 @@
 {
-  "name": "user-section-feat-user-section",
+  "name": "feat-user-section",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/user-section/feat-user-section/src",

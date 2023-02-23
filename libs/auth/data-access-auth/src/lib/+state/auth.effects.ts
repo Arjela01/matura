@@ -8,7 +8,6 @@ import { TOKEN_STORAGE_KEY } from '../services/token.interceptor';
 import { User, USER_STORAGE_KEY } from '../models/user.model';
 import { AuthService } from '../services/auth.service';
 import { AuthActions } from './auth.actions';
-import jwt_decode from 'jwt-decode';
 
 @Injectable()
 export class AuthEffects {
@@ -37,9 +36,10 @@ export class AuthEffects {
             if (loginResponse.isSuccessful)
               return AuthActions.loginSuccess({ loginResponse });
 
-
             return AuthActions.loginFailure({
-              error: new Error(loginResponse.errorMessage ?? 'Përdorues/fjalëkalim i gabuar.'),
+              error: new Error(
+                loginResponse.errorMessage ?? 'Përdorues/fjalëkalim i gabuar.'
+              ),
             });
           }),
           catchError((error: HttpErrorResponse) => {
@@ -68,7 +68,6 @@ export class AuthEffects {
   );
 
   loginSuccess$ = createEffect(
-
     () =>
       this.actions$.pipe(
         ofType(AuthActions.loginSuccess),
@@ -76,9 +75,6 @@ export class AuthEffects {
           const user = {
             displayName: action.loginResponse.displayName,
             username: action.loginResponse.username,
-            // userId : this.getDecodedAccessToken(
-            //   action.loginResponse.token
-            // ).jti,
           } as User;
           console.log(user.userId);
           this.storageService.setItem(USER_STORAGE_KEY, user);
@@ -112,11 +108,4 @@ export class AuthEffects {
     private storageService: StorageService,
     private router: Router
   ) {}
-  // getDecodedAccessToken(token: string): any {
-  //   try {
-  //     return jwt_decode(token);
-  //   } catch (Error) {
-  //     return null;
-  //   }
-  // }
 }
