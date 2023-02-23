@@ -74,6 +74,7 @@
   font-size: 12px;
   border-radius: 16px;
 }
+
 /* roboto-regular - latin-ext_latin */
 @font-face {
   font-family: "Roboto";
@@ -107,7 +108,13 @@
   font-size: 1rem;
   font-weight: normal;
 }
-
+.mt-sidebar{
+  margin-top: -5px;
+}
+.span-sidebar{
+  font-size:20px;
+  font-weight: 600;
+}
 .p-component-overlay {
   background-color: rgba(0, 0, 0, 0.32);
   transition-duration: 0.2s;
@@ -299,12 +306,32 @@
   --primary-800:#232d64;
   --primary-900:#192048;
 }
+
 .ml-m{
   margin-left:20px;
 }
-.p-datatable>.p-datatable-wrapper{
+.p-dialog-content>.p-dialog-content-wrapper{
   overflow: auto;
 }
+
+.p-dialog-content::-webkit-scrollbar-track {
+  background-color: var(--table-scrollbar-100);
+  border-radius: 4px;
+}
+
+.p-dialog-content::-webkit-scrollbar-thumb {
+  background-color: var(--table-scrollbar-100);
+  border-radius: 4px;
+}
+
+.p-dialog-content::-webkit-scrollbar-thumb:hover {
+  background-color: var(--surface-gray-200-scrollbar);
+}
+.p-dialog-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+
 .p-datatable>.p-datatable-wrapper::-webkit-scrollbar-track {
   background-color: var(--table-scrollbar-100);
   border-radius: 4px;
@@ -314,17 +341,16 @@
   background-color: var(--table-scrollbar-200);
   border-radius: 4px;
 }
-h2{
-  color: var(--h2-font-color) !important;
 
-}
 .p-datatable>.p-datatable-wrapper::-webkit-scrollbar-thumb:hover {
   background-color: var(--surface-gray-200-scrollbar);
 }
 .p-datatable>.p-datatable-wrapper::-webkit-scrollbar {
   height: 9px;
 }
-
+h2{
+  color: var(--h2-font-color) !important;
+}
 .p-autocomplete .p-autocomplete-loader {
   right: 1rem;
 }
@@ -1235,7 +1261,7 @@ p-inputswitch.ng-dirty.ng-invalid > .p-inputswitch {
   font-size: 1rem;
   color: rgba(0, 0, 0, 0.87);
   background: #ffffff;
-  padding: 1rem 1rem;
+  padding: 10px 14px;
   border: 1px solid rgba(0, 0, 0, 0.38);
   transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s, background-size 0.2s cubic-bezier(0.64, 0.09, 0.08, 1);
   appearance: none;

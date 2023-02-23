@@ -194,10 +194,15 @@
     <small class="p-error block" *ngIf="submitted && !user.password">
       Fjalëkalimi është fushë e kërkuar.
     </small>
-    <small class="p-error block"
-      *ngIf="password.touched &&  password.errors &&  password.errors['strongPasswordValidator'] ">
-      Fjalëkalimi duhet të përmbajë minimalisht një gërmë kapitale,një gërmë jo kapitale,një karakter special,një
-      numër dhe s duhet të përmbajë hapësira.
+    <small
+      class="p-error block"
+      *ngIf="
+        password.touched &&
+        password.errors &&
+        password.errors['strongPasswordValidator']
+      ">
+      Fjalëkalimi duhet të përmbajë minimalisht një gërmë kapitale,një gërmë jo
+      kapitale,një karakter special,një numër dhe s duhet të përmbajë hapësira.
     </small>
   </div>
 

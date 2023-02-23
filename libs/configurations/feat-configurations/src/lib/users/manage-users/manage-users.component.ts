@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import {
   AdministrationOfficeApiService,
   CityApiService,
@@ -11,8 +16,8 @@ import {
   UniversityDepartmentApiService,
   UserApiService,
 } from '@msh/configurations/data-access-configurations';
-import { User } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import { User } from '@msh/shared/domain-models';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -23,11 +28,11 @@ import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
+import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { UserGridComponent } from '../user-grid/user-grid.component';
-import { RippleModule } from 'primeng/ripple';
 import { UsersPasswordResetViewComponent } from '../users-password-reset-view/users-password-reset-view.component';
 @UntilDestroy()
 @Component({
@@ -69,6 +74,7 @@ export class ManageUsersComponent implements OnInit {
   userDialog = false;
   resetPasswordGenerated = false;
   displayModal = false;
+  newUserPasswordObj: any = {};
 
   constructor(
     private readonly userService: UserApiService,
@@ -81,7 +87,8 @@ export class ManageUsersComponent implements OnInit {
     private readonly universityService: UniversityApiService,
     private readonly universityDepartmentService: UniversityDepartmentApiService,
     private readonly highSchoolService: HighSchoolApiService,
-    private readonly roleService: RolesApiService
+    private readonly roleService: RolesApiService,
+    private readonly cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -144,24 +151,20 @@ export class ManageUsersComponent implements OnInit {
           },
         });
         break;
-  case GRID_ACTIONS.CUSTOM_ACTION2:
-    this.confirmationService.confirm({
-      message: 'Jeni i sigurt qe doni te ndryshoni statusin e perdoruesit?',
-      accept: () => {
-        this.changeUserStatus(event.data as User);
-      },
-    });
-    break;
-
-}
+      case GRID_ACTIONS.CUSTOM_ACTION2:
+        this.confirmationService.confirm({
+          message: 'Jeni i sigurt qe doni te ndryshoni statusin e perdoruesit?',
+          accept: () => {
+            this.changeUserStatus(event.data as User);
+          },
+        });
+        break;
+    }
   }
-
 
   onFormClose() {
     this.userDialog = false;
   }
-
-
 
   onFormSave(user: User) {
     if (user.id) {
@@ -185,13 +188,11 @@ export class ManageUsersComponent implements OnInit {
       });
   }
 
-
-
   changeUserStatus(user: User) {
     this.userService
       .changeUserStatus({
-        "id": user.id,
-        "isDisabled": !user.isDisabled
+        id: user.id,
+        isDisabled: !user.isDisabled,
       })
       .pipe(untilDestroyed(this))
       .subscribe(response => {
@@ -225,7 +226,9 @@ export class ManageUsersComponent implements OnInit {
 
         if (!response.isSuccessful) {
           this.toastService.showError(
-            'Ndodhi nje problem gjate ndryshimit te perdoruesit!'
+            response.errorMessage !== null
+              ? response.errorMessage
+              : 'Ndodhi nje problem gjate shtimit te perdoruesit!'
           );
         }
       });
@@ -243,19 +246,36 @@ export class ManageUsersComponent implements OnInit {
         }
         if (!response.isSuccessful) {
           this.toastService.showError(
-            'Ndodhi nje problem gjate ndryshimit te perdoruesit!'
+            response.errorMessage !== null
+              ? response.errorMessage
+              : 'Ndodhi nje problem gjate ndryshimit te perdoruesit!'
           );
         }
       });
   }
 
   passwordGenerate(user: User) {
+    this.userService
+      .generateNewPass(user.id)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
           this.toastService.showSuccess('Fjalkalimi u ndryshua me sukses!');
+          this.userDialog = false;
           this.resetPasswordGenerated = true;
+          this.newUserPasswordObj = {
+            ...response.data,
+          };
+          this.cdr.detectChanges();
+        }
 
-
+        if (!response.isSuccessful) {
+          this.toastService.showError(
+            'Ndodhi nje problem gjate ndryshimit te perdoruesit!'
+          );
+        }
+      });
   }
-
 
   deleteUser(user: User) {
     this.userService

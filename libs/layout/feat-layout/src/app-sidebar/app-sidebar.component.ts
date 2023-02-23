@@ -38,7 +38,7 @@ export class AppSidebarComponent implements OnInit {
     map(menus => {
       return [
         {
-          label: 'Matura Shtetërore',
+          label: '',
           items: this.format(menus as MenuNode[]),
         },
       ];

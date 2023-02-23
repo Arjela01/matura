@@ -19,12 +19,12 @@ import {
   ProfileApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
+import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   Student,
   StudentClassModel,
   StudentSectionModel,
 } from '@msh/shared/domain-models';
-import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -153,10 +153,12 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     const data = { ...this.student };
 
     this.studentService.save(data).subscribe({
-      next: () => {
+      next: response => {
         this.saving = false;
 
-        this.router.navigate(['/configurations/students']).then();
+        this.router
+          .navigate(['/applications/save-a1-student', response.data.id])
+          .then();
       },
     });
   }

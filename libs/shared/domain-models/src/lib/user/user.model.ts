@@ -42,5 +42,5 @@ export interface UserTableView {
 
 export interface ChangeUserStatusDto {
   id: string;
-  isDisabled:  boolean;
+  isDisabled: boolean;
 }
