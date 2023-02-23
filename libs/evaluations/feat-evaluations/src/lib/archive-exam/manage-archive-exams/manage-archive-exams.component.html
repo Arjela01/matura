@@ -1,42 +1,39 @@
-<div class="grid">
-  <div class="col-12">
-    <div class="card">
-      <p-toolbar styleClass="mb-4">
-        <div class="p-toolbar-group-left">
-          <h2 class="flex-1 mb-0">
-            Dosja: {{ archiveFolder.nr }} | {{ archiveFolder.examTypeName }} :
-            {{ archiveFolder.examSubjectName }}
-          </h2>
-        </div>
+<div class="flex mb-2 page-header center mb-header">
+  <h2 class="flex-1 mb-0">
 
-        <div class="p-toolbar-group-right">
-          <a [routerLink]="['/evaluations', 'archive-folder']">
-            <button
-              pButton
-              label="Kthehu"
-              icon="pi pi-arrow-left"
-              class="p-button-danger mr-2"
-              [ngStyle]="{ backgroundColor: 'var(--bluegray-600)' }"></button>
-          </a>
+    <h2 class="flex-1 mb-0">
+      Dosja: {{ archiveFolder.nr }} | {{ archiveFolder.examTypeName }} :
+      {{ archiveFolder.examSubjectName }}
+    </h2>
+  </h2>
+  <div class="flex align-items-right justify-content-right">
+    <div class="my-2">
+      <a [routerLink]="['/evaluations', 'archive-folder']">
+        <button
+          pButton
+          label="Kthehu"
+          icon="pi pi-arrow-left"
+          class="p-button-danger mr-2"
+          [ngStyle]="{ backgroundColor: 'var(--bluegray-600)' }"></button>
+      </a>
 
-          <button
-            pButton
-            [ngStyle]="{
-              'background-color': archiveFolder.isClosed
-                ? '#c8e6c9'
-                : '#feedaf',
-              color: archiveFolder.isClosed ? '#256029' : '#8a5340'
-            }"
-            label="{{
-              archiveFolder.isClosed ? 'Hap Dosjen ' : 'Mbyll Dosjen'
+
+      <button
+        pButton
+        [ngClass]="
+            archiveFolder.isClosed === true
+              ? ['bg-red-400', 'red-text', 'px-3', 'fb']
+              : ['bg-green-400', 'green-text', 'px-3', 'fb']
+          "
+        icon="{{
+              !archiveFolder.isClosed ? 'pi pi-lock-open' : 'pi pi-lock'
             }}"
-            icon="{{
-              !archiveFolder.isClosed ? 'pi pi-folder-open' : 'pi pi-folder'
-            }}"
-            class="p-button-danger mr-2"
-            (click)="changeFolderStatus()"></button>
-        </div>
-      </p-toolbar>
+        label=" {{ archiveFolder.isClosed === true ? 'Mbyllur' : 'Hapur' }}"
+        (click)="changeFolderStatus()"> </button>
+    </div>
+  </div>
+</div>
+
       <msh-archive-exam-grid
         [archiveExams]="(archiveExams$ | async) || []"
         [totalRecords]="totalRecords"
@@ -46,9 +43,7 @@
         [isBarcodeInputDisabled]="isBarcodeInputDisabled"
       >
       </msh-archive-exam-grid>
-    </div>
-  </div>
-</div>
+
 
 <p-dialog
   [(visible)]="displayModal"

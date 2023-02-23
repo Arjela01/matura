@@ -182,20 +182,21 @@
 
       <td>
         <div class="flex">
-          <a [routerLink]="['/configurations', 'student-view', student.id]">
             <img
+              [routerLink]="['/configurations', 'student-view', student.id]"
               src="assets/svg/view-form.svg"
               class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
               tooltipPosition="bottom"
               pTooltip="Shiko me shume" />
-          </a>
-          <a [routerLink]="['/configurations', 'student-edit', student.id]">
+
+
             <img
+              [routerLink]="['/configurations', 'student-edit', student.id]"
               src="assets/svg/edit-form.svg"
               class="p-button-rounded p-button-warning p-button-text ml-m pointer"
               tooltipPosition="bottom"
               pTooltip="Ndrysho" />
-          </a>
+
           <img
             src="assets/svg/delete-form.svg"
             class="p-button-rounded p-button-danger p-button-text ml-m pointer"
