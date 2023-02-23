@@ -120,7 +120,7 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnChanges(): void {
     this.onUniversityChange({ value: this.user.universityId });
-    this.onRoleChange({ value: this.user?.roleId });
+    this.onRoleChange({ value: this.user.roleId });
   }
 
   onCancelClick() {
@@ -158,15 +158,11 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   onRoleChange($event: any): void {
-    const knownRole = roleList.find(x => x.roleName === $event.value);
+    const role = this.roles.find(x => x.key === $event.value);
+    const knownRole = roleList.find(x => x.roleName === role?.value);
 
     if (knownRole == null) {
-      this.showUniversity = false;
-      this.showUniversityDepartment = false;
-      this.showAdministrationOffice = false;
-      this.showStudyProgram = false;
-      this.showHighSchools = false;
-      this.showOverseerCode = false;
+      this.onRoleRemoved();
     } else {
       this.showUniversity = knownRole.showUniversity;
       this.showUniversityDepartment = knownRole.showUniversityDepartment;
