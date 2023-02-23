@@ -48,6 +48,9 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { BehaviorSubject } from 'rxjs';
 import { A1zStudentSearchComponent } from '../a1z-student-search/a1z-student-search.component';
 import { EXAM_TYPES } from './exam-type.enum';
+import {SharedStudentLookupModule} from "@msh/shared/student-lookup";
+import {PasswordModule} from "primeng/password";
+import {SelectButtonModule} from "primeng/selectbutton";
 @UntilDestroy()
 @Component({
   selector: 'msh-a1z-form',
@@ -69,6 +72,9 @@ import { EXAM_TYPES } from './exam-type.enum';
     CalendarModule,
     DropdownModule,
     A1zStudentSearchComponent,
+    SharedStudentLookupModule,
+    PasswordModule,
+    SelectButtonModule,
   ],
   providers: [ConfirmationService],
 })
@@ -144,6 +150,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
     scoreZ1A1Z: undefined,
     scoreZ2A1Z: undefined,
   };
+  booly = [{label: 'Po', value: true}, {label: 'Jo', value: false}];
 
   onSubmit() {
     this.submitted = true;
@@ -487,5 +494,9 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       this.a1z.carriedSubjectZ1 = undefined;
       this.a1z.scoreZ1A1Z = undefined;
     }
+  }
+
+  onNewClick() {
+    this.showStudentModal = true;
   }
 }
