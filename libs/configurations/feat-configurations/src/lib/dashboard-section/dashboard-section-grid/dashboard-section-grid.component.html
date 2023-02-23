@@ -2,7 +2,7 @@
   #dt
   dataKey="id"
   responsiveLayout="scroll"
-  [value]="bannedStudents"
+  [value]="dashboardSections"
   [totalRecords]="totalRecords"
   [rows]="10"
   [paginator]="true"
@@ -10,7 +10,7 @@
   [showCurrentPageReport]="true"
   currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
   [rowHover]="true"
-  [(selection)]="selectedBannedStudents"
+  [(selection)]="selectedDashboardSections"
   selectionMode="multiple"
   (onRowSelect)="onRowSelect($event)"
   (onRowUnselect)="onRowUnselect($event)"

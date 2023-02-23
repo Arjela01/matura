@@ -15,12 +15,12 @@
 <div class="grid">
   <div class="col-12">
     <div class="card">
-      <msh-dynamic-dashboard-grid
-        [bannedStudents]="(bannedStudents$ | async) || []"
+      <msh-dashboard-section-grid
+        [dashboardSections]="(dashboardSections$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getBannedStudents($event)">
-      </msh-dynamic-dashboard-grid>
+        (lazyLoadData)="getDashboardSections($event)">
+      </msh-dashboard-section-grid>
     </div>
   </div>
 </div>
@@ -35,11 +35,11 @@
   class="p-fluid"
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
-    <msh-dynamic-dashboard-form
-      [bannedStudentsDetails]="selectedBannedStudent"
+    <msh-dashboard-section-form
+      [setDashboardSectionDetails]="selectedDashboardSection"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
-    </msh-dynamic-dashboard-form>
+    </msh-dashboard-section-form>
   </ng-template>
 </p-dialog>
 

@@ -6,7 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import {StudentBan, Student, ExamAssignment} from '@msh/shared/domain-models';
+import {DashboardSection, } from '@msh/shared/domain-models';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -17,7 +17,7 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
-  selector: 'msh-dynamic-dashboard-grid',
+  selector: 'msh-dashboard-section-grid',
   standalone: true,
   imports: [
     CommonModule,
@@ -28,75 +28,68 @@ import { TooltipModule } from 'primeng/tooltip';
     CheckboxModule,
     RippleModule,
   ],
-  templateUrl: './dynamic-dashboard-grid.component.html',
-  styleUrls: ['./dynamic-dashboard-grid.component.scss'],
+  templateUrl: './dashboard-section-grid.component.html',
+  styleUrls: ['./dashboard-section-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DynamicDashboardGridComponent {
-  @Input() bannedStudents: StudentBan[] = [];
+export class DashboardSectionGridComponent {
+  @Input() dashboardSections: DashboardSection[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
 
   //Keep it local state because of Table Header checkbox not syncing
-  selectedBannedStudents: StudentBan[] = [];
+  selectedDashboardSections: DashboardSection[] = [];
 
   @Output() gridEvent = new EventEmitter<
-    GridEvent<StudentBan | StudentBan[]>
+    GridEvent<DashboardSection | DashboardSection[]>
   >();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
-  studentBan: StudentBan = {
-    id: 0,
-    studentId: '',
-    studentIdentifier: '',
-    studentInputData:'',
-    studentName: '',
-    description: '',
-    isBanned: 0,
-    effectiveDate: new Date(),
-    banRemovalDate: new Date(),
+  dashboardSection: DashboardSection = {
+    name:'',
+    roles: [],
   };
 
-  onEditClick(studentBan: StudentBan) {
+  onEditClick(dashboardSection: DashboardSection) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
-      data: studentBan,
-    } as GridEvent<StudentBan>);
+      data: dashboardSection,
+    } as GridEvent<DashboardSection>);
   }
 
-  onDeleteClick(StudentBan: StudentBan) {
+  onDeleteClick(dashboardSection: DashboardSection) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,
-      data: StudentBan,
-    } as GridEvent<StudentBan>);
+      data: dashboardSection,
+    } as GridEvent<DashboardSection>);
   }
 
   onSelectAllClick() {
-    if (this.selectedBannedStudents.length === 0) {
+    if (this.selectedDashboardSections.length === 0) {
       this.gridEvent.emit({
         action: GRID_ACTIONS.UNSELECT_ALL,
-      } as GridEvent<StudentBan>);
+      } as GridEvent<DashboardSection>);
     } else {
       this.gridEvent.emit({
         action: GRID_ACTIONS.SELECT_MANY,
-        data: this.selectedBannedStudents,
-      } as GridEvent<StudentBan[]>);
+        data: this.selectedDashboardSections,
+      } as GridEvent<DashboardSection[]>);
     }
   }
 
-  onRowSelect({ data }: { data: StudentBan }) {
+  onRowSelect({ data }: { data: DashboardSection }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
       data: data,
-    } as GridEvent<StudentBan>);
+    } as GridEvent<DashboardSection>);
   }
 
-  onRowUnselect({ data }: { data: StudentBan }) {
+  onRowUnselect({ data }: { data: DashboardSection }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
       data: data,
-    } as GridEvent<StudentBan>);
+    } as GridEvent<DashboardSection>);
   }
 
   loadRows($event: LazyLoadEvent) {

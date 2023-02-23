@@ -8,8 +8,11 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
-import { StudentBanApiService } from '@msh/configurations/data-access-configurations';
-import { StudentBan } from '@msh/shared/domain-models';
+import {
+  DashboardSectionApiService,
+  StudentBanApiService,
+} from '@msh/configurations/data-access-configurations';
+import {AcademicYear, DashboardSection, StudentBan} from '@msh/shared/domain-models';
 
 import {
   GlobalToastService,
@@ -19,12 +22,12 @@ import {
 
 import { BehaviorSubject } from 'rxjs';
 import { RippleModule } from 'primeng/ripple';
-import {DynamicDashboardFormComponent} from "../dynamic-dashboard-form/dynamic-dashboard-form.component";
-import {DynamicDashboardGridComponent} from "../dynamic-dashboard-grid/dynamic-dashboard-grid.component";
+import { DashboardSectionFormComponent } from '../dashboard-section-form/dashboard-section-form.component';
+import { DashboardSectionGridComponent } from '../dashboard-section-grid/dashboard-section-grid.component';
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-manage-dynamic-dashboard',
+  selector: 'msh-manage-dashboard-section',
   standalone: true,
   imports: [
     ButtonModule,
@@ -33,28 +36,28 @@ import {DynamicDashboardGridComponent} from "../dynamic-dashboard-grid/dynamic-d
     ConfirmDialogModule,
     ToolbarModule,
     RippleModule,
-    DynamicDashboardFormComponent,
-    DynamicDashboardGridComponent,
+    DashboardSectionFormComponent,
+    DashboardSectionGridComponent,
   ],
-  templateUrl: './manage-dynamic-dashboard.component.html',
-  styleUrls: ['./manage-dynamic-dashboard.component.scss'],
+  templateUrl: './manage-dashboard-section.component.html',
+  styleUrls: ['./manage-dashboard-section.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageDynamicDashboardComponent {
-  private bannedStudents$$ = new BehaviorSubject<StudentBan[]>([]);
-  bannedStudents$ = this.bannedStudents$$.asObservable();
+export class ManageDashboardSectionComponent {
+  private dashboardSections$$ = new BehaviorSubject<DashboardSection[]>([]);
+  dashboardSections$ = this.dashboardSections$$.asObservable();
   filters: LazyLoadEvent | null = null;
 
   totalRecords = 0;
-  selectedBannedStudent: StudentBan | null = null;
-  selectedBannedStudents: StudentBan[] = [];
+  selectedDashboardSection: DashboardSection | null = null;
+  selectedDashboardSections: DashboardSection[] = [];
   displayModal = false;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly studentBannedService: StudentBanApiService
+    private readonly dashboardSectionService: DashboardSectionApiService
   ) {}
 
   onNewClick() {
@@ -73,33 +76,35 @@ export class ManageDynamicDashboardComponent {
     });
   }
 
-  onGridEvent(event: GridEvent<StudentBan | StudentBan[]>) {
+  onGridEvent(event: GridEvent<DashboardSection | DashboardSection[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
-        this.selectedBannedStudents = [
-          ...this.selectedBannedStudents,
-          event.data as StudentBan,
+        this.selectedDashboardSections = [
+          ...this.selectedDashboardSections,
+          event.data as DashboardSection,
         ];
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
-        this.selectedBannedStudents = this.selectedBannedStudents.filter(sb => {
-          sb.id !== (event.data as StudentBan).id;
-        });
+        this.selectedDashboardSections = this.selectedDashboardSections.filter(
+          sb => {
+            sb.id !== (event.data as DashboardSection).id;
+          }
+        );
         break;
 
       case GRID_ACTIONS.SELECT_MANY:
-        this.selectedBannedStudents = [
-          ...this.selectedBannedStudents,
-          ...(event.data as StudentBan[]),
+        this.selectedDashboardSections = [
+          ...this.selectedDashboardSections,
+          ...(event.data as DashboardSection[]),
         ];
         break;
       case GRID_ACTIONS.UNSELECT_ALL:
-        this.selectedBannedStudents = [];
+        this.selectedDashboardSections = [];
         break;
       case GRID_ACTIONS.EDIT:
-        this.selectedBannedStudent = Object.assign(
+        this.selectedDashboardSection = Object.assign(
           {},
-          event.data as StudentBan
+          event.data as DashboardSection
         );
         this.displayModal = true;
         break;
@@ -108,42 +113,42 @@ export class ManageDynamicDashboardComponent {
           message:
             'Jeni i sigurt që doni të fshini studentin e skualifikuar të zgjedhur?',
           accept: () => {
-            this.deleteBannedStudent(event.data as StudentBan);
+            this.deleteDashboardSection(event.data as DashboardSection);
           },
         });
         break;
     }
   }
-  onFormSave(studentBan: StudentBan) {
-    if (studentBan.id) {
-      this.updateBannedStudent(studentBan);
+  onFormSave(dashboardSection: DashboardSection) {
+    if (dashboardSection.id) {
+      this.updateDashboardSection(dashboardSection);
     }
-    if (!studentBan.id) {
-      this.addBannedStudent(studentBan);
+    if (!dashboardSection.id) {
+      this.addDashboardSection(dashboardSection);
     }
   }
 
-  getBannedStudents($event: LazyLoadEvent) {
+  getDashboardSections($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    this.studentBannedService
-      .loadBannedStudents($event)
+    this.dashboardSectionService
+      .loadDashboardSections($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.bannedStudents$$.next(response.data);
+        this.dashboardSections$$.next(response.data);
         this.totalRecords = response.total;
       });
   }
 
-  addBannedStudent(studentBan: StudentBan) {
-    this.studentBannedService
-      .save(studentBan)
+  addDashboardSection(dashboardSection: DashboardSection) {
+    this.dashboardSectionService
+      .save(dashboardSection)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Studenti u shtua me sukses!');
           this.displayModal = false;
-          this.getBannedStudents(this.filters as LazyLoadEvent);
+          this.getDashboardSections(this.filters as LazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -153,14 +158,14 @@ export class ManageDynamicDashboardComponent {
       });
   }
 
-  updateBannedStudent(studentBan: StudentBan) {
-    this.studentBannedService
-      .update(studentBan)
+  updateDashboardSection(dashboardSection: DashboardSection) {
+    this.dashboardSectionService
+      .update(dashboardSection)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Studenti u ndryshua me sukses!');
-          this.getBannedStudents(this.filters as LazyLoadEvent);
+          this.getDashboardSections(this.filters as LazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest)
           this.toastService.showError(
@@ -170,14 +175,14 @@ export class ManageDynamicDashboardComponent {
       });
   }
 
-  deleteBannedStudent(studentBan: StudentBan) {
-    this.studentBannedService
-      .delete(studentBan.id)
+  deleteDashboardSection(dashboardSection: DashboardSection) {
+    this.dashboardSectionService
+      .delete(dashboardSection.id)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Studenti u fshi me sukses!');
-          this.getBannedStudents(this.filters as LazyLoadEvent);
+          this.getDashboardSections(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
