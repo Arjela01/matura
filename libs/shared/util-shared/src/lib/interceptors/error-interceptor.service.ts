@@ -5,7 +5,7 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { delay, mergeMap, Observable, of, retryWhen } from 'rxjs';
+import { Observable, delay, mergeMap, of, retryWhen } from 'rxjs';
 import {
   ERROR_400,
   ERROR_401,
@@ -68,6 +68,10 @@ export class ErrorInterceptorService implements HttpInterceptor {
   handleError(error: any, index: number, message: string) {
     if (index < maxRetries) {
       return of(error).pipe(delay(delayMs));
+    }
+    if (error.status === 401) {
+      localStorage.clear();
+      window.location.reload();
     }
     this.notificationsService.showError(message);
     throw error;
