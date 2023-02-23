@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import {
   AdministrationOfficeApiService,
   CityApiService,
@@ -69,6 +74,7 @@ export class ManageUsersComponent implements OnInit {
   userDialog = false;
   resetPasswordGenerated = false;
   displayModal = false;
+  newUserPasswordObj: any = {};
 
   constructor(
     private readonly userService: UserApiService,
@@ -81,7 +87,8 @@ export class ManageUsersComponent implements OnInit {
     private readonly universityService: UniversityApiService,
     private readonly universityDepartmentService: UniversityDepartmentApiService,
     private readonly highSchoolService: HighSchoolApiService,
-    private readonly roleService: RolesApiService
+    private readonly roleService: RolesApiService,
+    private readonly cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -248,8 +255,26 @@ export class ManageUsersComponent implements OnInit {
   }
 
   passwordGenerate(user: User) {
-    this.toastService.showSuccess('Fjalkalimi u ndryshua me sukses!');
-    this.resetPasswordGenerated = true;
+    this.userService
+      .generateNewPass(user.id)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Fjalkalimi u ndryshua me sukses!');
+          this.userDialog = false;
+          this.resetPasswordGenerated = true;
+          this.newUserPasswordObj = {
+            ...response.data,
+          };
+          this.cdr.detectChanges();
+        }
+
+        if (!response.isSuccessful) {
+          this.toastService.showError(
+            'Ndodhi nje problem gjate ndryshimit te perdoruesit!'
+          );
+        }
+      });
   }
 
   deleteUser(user: User) {

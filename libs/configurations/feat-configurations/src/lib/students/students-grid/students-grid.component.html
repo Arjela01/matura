@@ -180,12 +180,12 @@
         {{ student.modifiedOn | date : 'dd/MM/yyyy' }}
       </td>
 
-      <td>
+      <td style="width: 14%; min-width: 10rem">
         <div class="flex">
           <a [routerLink]="['/configurations', 'student-view', student.id]">
             <img
               src="assets/svg/view-form.svg"
-              class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
+              class="p-button-rounded p-button-warning p-button-text ml-m pointer"
               tooltipPosition="bottom"
               pTooltip="Shiko me shume" />
           </a>
@@ -196,12 +196,14 @@
               tooltipPosition="bottom"
               pTooltip="Ndrysho" />
           </a>
-          <img
-            src="assets/svg/delete-form.svg"
-            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
-            pTooltip="Fshi"
-            tooltipPosition="bottom"
-            (click)="onDeleteClick(student)" />
+          <div>
+            <img
+              src="assets/svg/delete-form.svg"
+              class="p-button-rounded p-button-danger p-button-text ml-m pointer"
+              pTooltip="Fshi"
+              tooltipPosition="bottom"
+              (click)="onDeleteClick(student)" />
+          </div>
         </div>
       </td>
     </tr>
