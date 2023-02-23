@@ -96,7 +96,7 @@ export class UserGridComponent {
 
   id: any;
 
-  onKeyClick(user: User) {
+  onChangePassClick(user: User) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.CUSTOM_ACTION1,
       data: user,
