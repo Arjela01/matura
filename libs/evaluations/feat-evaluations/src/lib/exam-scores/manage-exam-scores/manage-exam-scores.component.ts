@@ -63,6 +63,7 @@ export class ManageExamScoresComponent implements OnInit {
   examVersions: DropdownModel<string>[] = [];
   base64: string | ArrayBuffer | null | undefined;
 
+
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
