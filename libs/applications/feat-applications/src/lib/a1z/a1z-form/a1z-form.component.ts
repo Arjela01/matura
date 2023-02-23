@@ -27,7 +27,7 @@ import {
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import { Student } from '@msh/shared/domain-models';
+import { AcademicYear, Student } from '@msh/shared/domain-models';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -45,9 +45,12 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { A1zStudentSearchComponent } from '../a1z-student-search/a1z-student-search.component';
 import { EXAM_TYPES } from './exam-type.enum';
+import {SharedStudentLookupModule} from "@msh/shared/student-lookup";
+import {PasswordModule} from "primeng/password";
+import {SelectButtonModule} from "primeng/selectbutton";
 @UntilDestroy()
 @Component({
   selector: 'msh-a1z-form',
@@ -69,6 +72,9 @@ import { EXAM_TYPES } from './exam-type.enum';
     CalendarModule,
     DropdownModule,
     A1zStudentSearchComponent,
+    SharedStudentLookupModule,
+    PasswordModule,
+    SelectButtonModule,
   ],
   providers: [ConfirmationService],
 })
@@ -144,6 +150,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
     scoreZ1A1Z: undefined,
     scoreZ2A1Z: undefined,
   };
+  booly = [{label: 'Po', value: true}, {label: 'Jo', value: false}];
 
   onSubmit() {
     this.submitted = true;
@@ -187,33 +194,8 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.academicYearService.loadDropdownList().subscribe(response => {
-      this.academicYears = response.data;
-    });
-    this.a1CategoryService.loadDropdownList().subscribe(response => {
-      this.a1Categories = response.data;
-    });
-    this.getSubjectDropdown({
-      value: this.a1z.academicYearId,
-    });
-    if (this.formId !== null) {
-      this.a1zService.getOne(parseInt(this.formId!)).subscribe(response => {
-        this.a1z = response.data;
-        this.a1z.noCarriedSubjets = 0;
-        this.a1z.noCarriedSubjetsZ = 0;
-        this.a1z.carriedSubjectD3 = response.data.subjectD3A1ZId;
-        this.onSubjectD1Init(response.data);
-        this.onSubjectD2Init(response.data);
-        this.onSubjectD3Init(response.data);
-        this.onSubjectZ1Init(response.data);
-        this.a1z.carriedSubjectZ1 = response.data.subjectZ1A1ZId;
-        this.cd.detectChanges();
-        //TODO: When exam grade implemented uncomment the following lines
-        // this.examGradeSercice.getExamGrade(this.a1z.id!).subscribe(response => {
-        //   this.examGrades = response.data;
-        // });
-      });
-    }
+    this.onExistingFormInit();
+    this.loadDropDownLists();
     console.log('init');
   }
 
@@ -232,6 +214,19 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         this.showStudentModal = false;
         break;
     }
+  }
+
+  loadDropDownLists() {
+    this.onAcademicYearInit();
+    this.academicYearService.loadDropdownList().subscribe(response => {
+      this.academicYears = response.data;
+    });
+    this.a1CategoryService.loadDropdownList().subscribe(response => {
+      this.a1Categories = response.data;
+    });
+    this.getSubjectDropdown({
+      value: this.a1z.academicYearId,
+    });
   }
 
   onStudentInit(student: any) {
@@ -327,6 +322,37 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
     console.log(this.a1z.noCarriedSubjetsZ);
   }
 
+  onAcademicYearInit() {
+    this.getAcademicYears().subscribe(response => {
+      const activeYear = response.data.find(
+        (x: AcademicYear) => x.isActive === true
+      );
+      this.a1z.academicYearId = activeYear?.id;
+      this.cd.detectChanges();
+    });
+  }
+
+  onExistingFormInit() {
+    if (this.formId !== null) {
+      this.a1zService.getOne(parseInt(this.formId!)).subscribe(response => {
+        this.a1z = response.data;
+        this.a1z.noCarriedSubjets = 0;
+        this.a1z.noCarriedSubjetsZ = 0;
+        this.a1z.carriedSubjectD3 = response.data.subjectD3A1ZId;
+        this.onSubjectD1Init(response.data);
+        this.onSubjectD2Init(response.data);
+        this.onSubjectD3Init(response.data);
+        this.onSubjectZ1Init(response.data);
+        this.a1z.carriedSubjectZ1 = response.data.subjectZ1A1ZId;
+        this.cd.detectChanges();
+        //TODO: When exam grade implemented uncomment the following lines
+        // this.examGradeSercice.getExamGrade(this.a1z.id!).subscribe(response => {
+        //   this.examGrades = response.data;
+        // });
+      });
+    }
+  }
+
   getStudents($event: LazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
 
@@ -338,6 +364,12 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         this.studentList$$.next(response.data);
         this.totalRecords = response.total;
       });
+  }
+
+  getAcademicYears(): Observable<any> {
+    return this.academicYearService
+      .getAcademicYears()
+      .pipe(untilDestroyed(this));
   }
 
   getSubjectDropdown($event: any) {
@@ -487,5 +519,9 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       this.a1z.carriedSubjectZ1 = undefined;
       this.a1z.scoreZ1A1Z = undefined;
     }
+  }
+
+  onNewClick() {
+    this.showStudentModal = true;
   }
 }

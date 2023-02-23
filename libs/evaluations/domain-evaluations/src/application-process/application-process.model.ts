@@ -17,5 +17,4 @@ export interface ApplicationProcessTableView {
 
 export interface Process {
   data: ApplicationProcess;
-
 }
