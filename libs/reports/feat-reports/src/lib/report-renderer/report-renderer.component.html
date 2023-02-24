@@ -1,0 +1,18 @@
+<div class="grid mb-header">
+  <div class="col-12">
+    <div class="card px-3 py-3" style="background: white">
+      <iframe
+        #reportRenderer
+        id="reportRenderer"
+        src="http://localhost:8881"
+        width="100%"
+        frameborder="0"
+        style="border: 0"
+        iframeAutoHeight
+        (load)="onIframeLoad()">
+      </iframe>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="sendMessage$ | async"></ng-container>
