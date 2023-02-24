@@ -41,8 +41,7 @@
       name="parentId"
       [autoDisplayFirst]="false"
       [(ngModel)]="menu.parentId"
-      [showClear]="true"
-    >
+      [showClear]="true">
     </p-dropdown>
   </div>
 
@@ -51,20 +50,14 @@
     <p-multiSelect
       id="Roles"
       name="roles"
-
       [options]="roles"
       optionValue="value"
       optionLabel="value"
       [(ngModel)]="menu.roles"
-
       appendTo="body"
-
       [showClear]="true"
-
       defaultLabel="Selekto Rolet"
-      display="chip"
-    ></p-multiSelect>
-
+      display="chip"></p-multiSelect>
   </div>
 
   <div class="field">
@@ -105,23 +98,18 @@
     </div>
   </div>
 
-
-
-
-
   <div class="flex justify-content-end">
     <button
       type="button"
       pButton
-      icon="pi pi-times"
       label="Anullo"
       class="p-button-text w-auto mr-2"
       (click)="onCancelClick()"></button>
     <button
+      [disabled]="form.invalid"
       type="submit"
       pButton
-      icon="pi pi-check"
       label="Ruaj"
-      class="p-button-text w-auto"></button>
+      class="p-button w-auto"></button>
   </div>
 </form>
