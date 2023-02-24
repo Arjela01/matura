@@ -219,10 +219,10 @@ export const CONFIGURATION_ROUTES: Route[] = [
         ),
   },
   {
-    path: 'dashboard-section',
+    path: 'dashboard-items',
     loadComponent: () =>
       import(
-        './dashboard-section/manage-dashboard-section/manage-dashboard-section.component'
-        ).then(m => m.ManageDashboardSectionComponent),
+        './dashboard-items/manage-dashboard-items/manage-dashboard-items.component'
+        ).then(m => m.ManageDashboardItemsComponent),
   },
 ];

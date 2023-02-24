@@ -1,4 +1,4 @@
-export class DashboardSectionModel {
+export class DashboardSectionOptionsModel {
   public static All = [
     'Formularë',
     'Njoftime',

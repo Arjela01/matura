@@ -1,15 +1,14 @@
-import { CommonModule, formatDate } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input, OnChanges,
+  Input,
   Output,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import {AcademicYear, DashboardSection, DashboardSectionModel,} from '@msh/shared/domain-models';
+import { DashboardItems, DashboardSectionOptionsModel,} from '@msh/shared/domain-models';
 
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -30,7 +29,7 @@ import {UntilDestroy} from "@ngneat/until-destroy";
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-dashboard-section-form',
+  selector: 'msh-dashboard-items-form',
   standalone: true,
   imports: [
     CommonModule,
@@ -48,19 +47,19 @@ import {UntilDestroy} from "@ngneat/until-destroy";
     AutoCompleteModule,
     MultiSelectModule,
   ],
-  templateUrl: './dashboard-section-form.component.html',
-  styleUrls: ['./dashboard-section-form.component.scss'],
+  templateUrl: './dashboard-items-form.component.html',
+  styleUrls: ['./dashboard-items-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardSectionFormComponent  {
+export class DashboardItemsFormComponent {
   @Input() roles: DropdownModel<number>[] = [];
-  sectionDashboard = DashboardSectionModel.All;
-  @Input() set setDashboardSectionDetails(details: DashboardSection | null) {
+  sectionDashboard = DashboardSectionOptionsModel.All;
+  @Input() set setDashboardItemsDetails(details: DashboardItems | null) {
     if (details) {
-      this.dashboardSection = Object.assign({}, details);
+      this.dashboardItems = Object.assign({}, details);
     }
   }
-  @Output() formSave = new EventEmitter<DashboardSection>();
+  @Output() formSave = new EventEmitter<DashboardItems>();
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
@@ -69,7 +68,7 @@ export class DashboardSectionFormComponent  {
 
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  dashboardSection: DashboardSection = {
+  dashboardItems: DashboardItems = {
     name:'',
     roles: [],
   };
@@ -82,7 +81,7 @@ export class DashboardSectionFormComponent  {
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
-      this.formSave.emit(this.dashboardSection);
+      this.formSave.emit(this.dashboardItems);
     }
   }
 }

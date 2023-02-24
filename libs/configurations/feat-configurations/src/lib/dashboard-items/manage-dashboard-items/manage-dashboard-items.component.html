@@ -15,12 +15,12 @@
 <div class="grid">
   <div class="col-12">
     <div class="card">
-      <msh-dashboard-section-grid
-        [dashboardSections]="(dashboardSections$ | async) || []"
+      <msh-dashboard-items-grid
+        [dashboardItems]="(dashboardItems$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getDashboardSections($event)">
-      </msh-dashboard-section-grid>
+        (lazyLoadData)="getDashboardItems($event)">
+      </msh-dashboard-items-grid>
     </div>
   </div>
 </div>
@@ -35,11 +35,11 @@
   class="p-fluid"
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
-    <msh-dashboard-section-form
-      [setDashboardSectionDetails]="selectedDashboardSection"
+    <msh-dashboard-items-form
+      [setDashboardItemsDetails]="selectedDashboardItem"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
-    </msh-dashboard-section-form>
+    </msh-dashboard-items-form>
   </ng-template>
 </p-dialog>
 

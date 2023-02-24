@@ -5,15 +5,15 @@
       id="studyClass"
       [options]="sectionDashboard"
       name="schoolProfile"
-      [(ngModel)]="dashboardSection.name"
+      [(ngModel)]="dashboardItems.name"
       [required]="true"
       [virtualScroll]="true"
       [autoDisplayFirst]="false"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !dashboardSection.name
+        'ng-invalid ng-dirty': submitted && !dashboardItems.name
       }">
     </p-dropdown>
-    <small class="p-error block" *ngIf="submitted && !dashboardSection.name">
+    <small class="p-error block" *ngIf="submitted && !dashboardItems.name">
       Seksioni është fushë e kërkuar.
     </small>
   </div>
@@ -25,13 +25,13 @@
       pInputText
       id="title"
       name="title"
-      [(ngModel)]="dashboardSection.name"
+      [(ngModel)]="dashboardItems.name"
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !dashboardSection.name
+        'ng-invalid ng-dirty': submitted && !dashboardItems.name
       }" />
-    <small class="p-error block" *ngIf="submitted && !dashboardSection.name">
+    <small class="p-error block" *ngIf="submitted && !dashboardItems.name">
       Titulli është fushë e kërkuar.
     </small>
   </div>
@@ -44,12 +44,12 @@
       pInputTextarea
       id="description"
       name="description"
-      [(ngModel)]="dashboardSection.name"
+      [(ngModel)]="dashboardItems.name"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !dashboardSection.name
+        'ng-invalid ng-dirty': submitted && !dashboardItems.name
       }"></textarea>
 
-    <small class="p-error block" *ngIf="submitted && !dashboardSection.name">
+    <small class="p-error block" *ngIf="submitted && !dashboardItems.name">
       Përshkrimi është fushë e kërkuar.
     </small>
   </div>
@@ -86,13 +86,13 @@
       pInputText
       id="link"
       name="link"
-      [(ngModel)]="dashboardSection.name"
+      [(ngModel)]="dashboardItems.name"
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !dashboardSection.name
+        'ng-invalid ng-dirty': submitted && !dashboardItems.name
       }" />
-    <small class="p-error block" *ngIf="submitted && !dashboardSection.name">
+    <small class="p-error block" *ngIf="submitted && !dashboardItems.name">
       Link\URL është fushë e kërkuar.
     </small>
   </div>
@@ -106,12 +106,12 @@
         [options]="roles"
         optionValue="value"
         optionLabel="value"
-        [(ngModel)]="dashboardSection.roles"
+        [(ngModel)]="dashboardItems.roles"
         appendTo="body"
         [showClear]="true"
         defaultLabel="Selekto Rolet"
         display="chip"></p-multiSelect>
-      <small class="p-error block" *ngIf="submitted && !dashboardSection.roles">
+      <small class="p-error block" *ngIf="submitted && !dashboardItems.roles">
         Roli/et është fushë e kërkuar.
       </small>
     </div>
@@ -123,15 +123,15 @@
       id="users"
       [options]="sectionDashboard"
       name="users"
-      [(ngModel)]="dashboardSection.name"
+      [(ngModel)]="dashboardItems.name"
       [autoDisplayFirst]="false"
       [required]="true"
       [virtualScroll]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !dashboardSection.name
+        'ng-invalid ng-dirty': submitted && !dashboardItems.name
       }">
     </p-dropdown>
-    <small class="p-error block" *ngIf="submitted && !dashboardSection.name">
+    <small class="p-error block" *ngIf="submitted && !dashboardItems.name">
       Përdoruesi/t është fushë e kërkuar.
     </small>
   </div>

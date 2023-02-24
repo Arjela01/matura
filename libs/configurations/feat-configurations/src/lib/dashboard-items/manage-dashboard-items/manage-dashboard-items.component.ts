@@ -8,11 +8,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
-import {
-  DashboardSectionApiService,
-  StudentBanApiService,
-} from '@msh/configurations/data-access-configurations';
-import {AcademicYear, DashboardSection, StudentBan} from '@msh/shared/domain-models';
+import { DashboardItemsApiService } from '@msh/configurations/data-access-configurations';
 
 import {
   GlobalToastService,
@@ -22,12 +18,13 @@ import {
 
 import { BehaviorSubject } from 'rxjs';
 import { RippleModule } from 'primeng/ripple';
-import { DashboardSectionFormComponent } from '../dashboard-section-form/dashboard-section-form.component';
-import { DashboardSectionGridComponent } from '../dashboard-section-grid/dashboard-section-grid.component';
+import { DashboardItemsFormComponent } from '../dashboard-items-form/dashboard-items-form.component';
+import { DashboardItemsGridComponent } from '../dashboard-items-grid/dashboard-items-grid.component';
+import { DashboardItems } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-manage-dashboard-section',
+  selector: 'msh-manage-dashboard-items',
   standalone: true,
   imports: [
     ButtonModule,
@@ -36,28 +33,28 @@ import { DashboardSectionGridComponent } from '../dashboard-section-grid/dashboa
     ConfirmDialogModule,
     ToolbarModule,
     RippleModule,
-    DashboardSectionFormComponent,
-    DashboardSectionGridComponent,
+    DashboardItemsFormComponent,
+    DashboardItemsGridComponent,
   ],
-  templateUrl: './manage-dashboard-section.component.html',
-  styleUrls: ['./manage-dashboard-section.component.scss'],
+  templateUrl: './manage-dashboard-items.component.html',
+  styleUrls: ['./manage-dashboard-items.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageDashboardSectionComponent {
-  private dashboardSections$$ = new BehaviorSubject<DashboardSection[]>([]);
-  dashboardSections$ = this.dashboardSections$$.asObservable();
+export class ManageDashboardItemsComponent {
+  private dashboardItems$$ = new BehaviorSubject<DashboardItems[]>([]);
+  dashboardItems$ = this.dashboardItems$$.asObservable();
   filters: LazyLoadEvent | null = null;
 
   totalRecords = 0;
-  selectedDashboardSection: DashboardSection | null = null;
-  selectedDashboardSections: DashboardSection[] = [];
+  selectedDashboardItem: DashboardItems | null = null;
+  selectedDashboardItems: DashboardItems[] = [];
   displayModal = false;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly dashboardSectionService: DashboardSectionApiService
+    private readonly dashboardItemsService: DashboardItemsApiService
   ) {}
 
   onNewClick() {
@@ -76,35 +73,33 @@ export class ManageDashboardSectionComponent {
     });
   }
 
-  onGridEvent(event: GridEvent<DashboardSection | DashboardSection[]>) {
+  onGridEvent(event: GridEvent<DashboardItems | DashboardItems[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
-        this.selectedDashboardSections = [
-          ...this.selectedDashboardSections,
-          event.data as DashboardSection,
+        this.selectedDashboardItems = [
+          ...this.selectedDashboardItems,
+          event.data as DashboardItems,
         ];
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
-        this.selectedDashboardSections = this.selectedDashboardSections.filter(
-          sb => {
-            sb.id !== (event.data as DashboardSection).id;
-          }
-        );
+        this.selectedDashboardItems = this.selectedDashboardItems.filter(sb => {
+          sb.id !== (event.data as DashboardItems).id;
+        });
         break;
 
       case GRID_ACTIONS.SELECT_MANY:
-        this.selectedDashboardSections = [
-          ...this.selectedDashboardSections,
-          ...(event.data as DashboardSection[]),
+        this.selectedDashboardItems = [
+          ...this.selectedDashboardItems,
+          ...(event.data as DashboardItems[]),
         ];
         break;
       case GRID_ACTIONS.UNSELECT_ALL:
-        this.selectedDashboardSections = [];
+        this.selectedDashboardItems = [];
         break;
       case GRID_ACTIONS.EDIT:
-        this.selectedDashboardSection = Object.assign(
+        this.selectedDashboardItem = Object.assign(
           {},
-          event.data as DashboardSection
+          event.data as DashboardItems
         );
         this.displayModal = true;
         break;
@@ -113,42 +108,42 @@ export class ManageDashboardSectionComponent {
           message:
             'Jeni i sigurt që doni të fshini studentin e skualifikuar të zgjedhur?',
           accept: () => {
-            this.deleteDashboardSection(event.data as DashboardSection);
+            this.deleteDashboardItems(event.data as DashboardItems);
           },
         });
         break;
     }
   }
-  onFormSave(dashboardSection: DashboardSection) {
-    if (dashboardSection.id) {
-      this.updateDashboardSection(dashboardSection);
+  onFormSave(dashboardItems: DashboardItems) {
+    if (dashboardItems.id) {
+      this.updateDashboardItems(dashboardItems);
     }
-    if (!dashboardSection.id) {
-      this.addDashboardSection(dashboardSection);
+    if (!dashboardItems.id) {
+      this.addDashboardItems(dashboardItems);
     }
   }
 
-  getDashboardSections($event: LazyLoadEvent) {
+  getDashboardItems($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    this.dashboardSectionService
-      .loadDashboardSections($event)
+    this.dashboardItemsService
+      .loadDashboardItems($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.dashboardSections$$.next(response.data);
+        this.dashboardItems$$.next(response.data);
         this.totalRecords = response.total;
       });
   }
 
-  addDashboardSection(dashboardSection: DashboardSection) {
-    this.dashboardSectionService
-      .save(dashboardSection)
+  addDashboardItems(dashboardItems: DashboardItems) {
+    this.dashboardItemsService
+      .save(dashboardItems)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Studenti u shtua me sukses!');
           this.displayModal = false;
-          this.getDashboardSections(this.filters as LazyLoadEvent);
+          this.getDashboardItems(this.filters as LazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -158,14 +153,14 @@ export class ManageDashboardSectionComponent {
       });
   }
 
-  updateDashboardSection(dashboardSection: DashboardSection) {
-    this.dashboardSectionService
-      .update(dashboardSection)
+  updateDashboardItems(dashboardItems: DashboardItems) {
+    this.dashboardItemsService
+      .update(dashboardItems)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Studenti u ndryshua me sukses!');
-          this.getDashboardSections(this.filters as LazyLoadEvent);
+          this.getDashboardItems(this.filters as LazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest)
           this.toastService.showError(
@@ -175,14 +170,14 @@ export class ManageDashboardSectionComponent {
       });
   }
 
-  deleteDashboardSection(dashboardSection: DashboardSection) {
-    this.dashboardSectionService
-      .delete(dashboardSection.id)
+  deleteDashboardItems(dashboardItems: DashboardItems) {
+    this.dashboardItemsService
+      .delete(dashboardItems.id)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Studenti u fshi me sukses!');
-          this.getDashboardSections(this.filters as LazyLoadEvent);
+          this.getDashboardItems(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
