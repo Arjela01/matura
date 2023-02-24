@@ -81,16 +81,17 @@
     <button
       type="button"
       pButton
-      icon="pi pi-times"
       label="Anullo"
+      style="color: black;border: 1px solid #D0D5DD;box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);"
       class="p-button-text w-auto mr-2"
       (click)="onCancelClick()"></button>
     <button
+      [ngClass]="{'valid': form.valid, 'invalid': !form.valid}"
       type="submit"
       pButton
-      icon="pi pi-check"
+      style="background: #B2CCFF;border: 1px solid #B2CCFF;color:white;"
       label="Ruaj"
-      class="p-button-text w-auto"></button>
+      class="p-button-text w-auto bg-color" ></button>
   </div>
 </form>
 
