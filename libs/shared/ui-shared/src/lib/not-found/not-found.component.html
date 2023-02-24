@@ -7,14 +7,14 @@
         padding: 0.3rem;
         background: linear-gradient(
           180deg,
-          rgba(33, 150, 243, 0.4) 10%,
+         #155eef 10%,
           rgba(33, 150, 243, 0) 30%
         );
       ">
       <div
         class="w-full surface-card py-8 px-5 sm:px-8 flex flex-column align-items-center w-30rem"
         style="border-radius: 53px">
-        <span class="text-blue-500 font-bold text-3xl">404</span>
+        <span class="font-bold text-3xl" style="color:#155eef">404</span>
         <h1 class="text-900 font-bold text-3xl lg:text-5xl mb-2">Nuk u gjet</h1>
         <div class="text-600 mb-5 mb-5">
           Burimi i kërkuar nuk është i disponueshëm.
@@ -24,7 +24,7 @@
           pRipple
           icon="pi pi-arrow-left"
           label="Kthehu në faqja kryesore"
-          class="p-button-text my-5"
+          class="p-button-back my-5"
           [routerLink]="['/']"></button>
       </div>
     </div>
