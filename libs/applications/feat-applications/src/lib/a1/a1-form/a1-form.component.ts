@@ -15,8 +15,8 @@ import {
   ExamSubjectApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
-import { DropdownModel } from '@msh/shared/data-access-shared';
-import { AcademicYear } from '@msh/shared/domain-models';
+import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
+import { AcademicYear, Student } from '@msh/shared/domain-models';
 import { GlobalToastService } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ButtonModule } from 'primeng/button';
@@ -29,7 +29,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
-import { combineLatest, Observable, of, switchMap } from 'rxjs';
+import { Observable, combineLatest, of, switchMap } from 'rxjs';
 import { ManageStudentsGridsDialogComponent } from '../manage-students-grids-dialog/manage-students-grids-dialog.component';
 
 let INITIAL_FILTER = {};
@@ -97,6 +97,7 @@ export class A1FormComponent {
   showForm: boolean | null = null;
   students: any | null = null;
   id: string | null = null;
+  studentId: string | null = null;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -112,11 +113,42 @@ export class A1FormComponent {
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
+    this.studentId = this.route.snapshot.params['student'];
     this.initializeFormWithApiCalls();
   }
 
   initializeFormWithApiCalls() {
-    if (!this.id) {
+    if (this.studentId != null) {
+      this.getStudentById(this.studentId)
+        .pipe(
+          switchMap((student: ApiResult<Student>) => {
+            this.a1.studentId = student.data.id;
+            this.a1.studentIdentifier = student.data.idCard;
+            this.a1.studentFirstName = student.data.firstName;
+            this.a1.studentFatherName = student.data.middleName;
+            this.a1.studentLastName = student.data.lastName;
+            return combineLatest([
+              this.getAcademicYears(),
+              this.getStudent(),
+              this.getOptionalSubjects(),
+              this.getD3Subjects(student.data.isFall),
+            ]);
+          })
+        )
+        .subscribe(([years, students, z1, d3]) => {
+          this.academicYear = years['data'].find(
+            (year: AcademicYear) => year.isActive
+          );
+          this.showForm = true;
+          this.d3Dropdown = d3.data;
+          this.a1.subjectD3Id = this.a1.subjectD3A1Id;
+          this.students = students;
+          this.optionalSubjects = z1.data;
+          this.initializeOptionalSubjects();
+          this.choosenStudent = `${this.a1.studentIdentifier}-${this.a1.studentFirstName}-${this.a1.studentFatherName}-${this.a1.studentLastName}`;
+          this.cd.detectChanges();
+        });
+    } else if (!this.id) {
       this.getAcademicYears()
         .pipe(
           switchMap((academicYears: any) => {
@@ -172,6 +204,10 @@ export class A1FormComponent {
           this.cd.detectChanges();
         });
     }
+  }
+
+  getStudentById(id: string): Observable<any> {
+    return this.studentsApiService.getById(id).pipe(untilDestroyed(this));
   }
 
   initializeOptionalSubjects() {

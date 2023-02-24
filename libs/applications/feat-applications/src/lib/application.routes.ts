@@ -35,6 +35,11 @@ export const APPLICATION_ROUTES: Route[] = [
       import('./a1/a1-form/a1-form.component').then(m => m.A1FormComponent),
   },
   {
+    path: 'save-a1-student/:student',
+    loadComponent: () =>
+      import('./a1/a1-form/a1-form.component').then(m => m.A1FormComponent),
+  },
+  {
     path: 'confirmed-a1a1z',
     loadComponent: () =>
       import(

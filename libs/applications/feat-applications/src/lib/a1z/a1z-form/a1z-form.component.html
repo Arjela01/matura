@@ -105,7 +105,7 @@
             <td>D1</td>
             <td>
               <p-dropdown
-                      [style]="{minWidth: '200px'}"
+                [style]="{ minWidth: '200px' }"
                 id="carriedSubjectD1"
                 [options]="d1ExamSubjects"
                 optionValue="key"
@@ -120,16 +120,16 @@
             </td>
             <td>
               <p-dropdown
-                      id="carriedSubjectD1"
-                      [options]="booly"
-                      (onChange)="onSubjectD1Change($event)"
-                      optionValue="value"
-                      optionLabel="label"
-                      name="enableD1Subject"
-                      [filter]="false"
-                      [disabled]="false"
-                      [autoDisplayFirst]="false"
-                      [(ngModel)]="enableD1Subject">
+                id="carriedSubjectD1"
+                [options]="booly"
+                (onChange)="onSubjectD1Change($event)"
+                optionValue="value"
+                optionLabel="label"
+                name="enableD1Subject"
+                [filter]="false"
+                [disabled]="false"
+                [autoDisplayFirst]="false"
+                [(ngModel)]="enableD1Subject">
               </p-dropdown>
             </td>
             <td>
@@ -195,16 +195,16 @@
             </td>
             <td>
               <p-dropdown
-                      id="enableD2Subject"
-                      [options]="booly"
-                      (onChange)="onSubjectD2Change($event)"
-                      optionValue="value"
-                      optionLabel="label"
-                      name="enableD2Subject"
-                      [filter]="false"
-                      [disabled]="false"
-                      [autoDisplayFirst]="false"
-                      [(ngModel)]="enableD2Subject">
+                id="enableD2Subject"
+                [options]="booly"
+                (onChange)="onSubjectD2Change($event)"
+                optionValue="value"
+                optionLabel="label"
+                name="enableD2Subject"
+                [filter]="false"
+                [disabled]="false"
+                [autoDisplayFirst]="false"
+                [(ngModel)]="enableD2Subject">
               </p-dropdown>
             </td>
             <td>
@@ -256,30 +256,30 @@
             <td>D3</td>
             <td>
               <p-dropdown
-                      id="subjectD3A1ZId"
-                      [options]="d3ExamSubjects"
-                      [filter]="true"
-                      optionValue="key"
-                      [placeholder]="'Lenda D3'"
-                      optionLabel="value"
-                      name="subjectD3A1ZId"
-                      [disabled]="enableD3Subject"
-                      [autoDisplayFirst]="false"
-                      [(ngModel)]="a1z.subjectD3A1ZId">
+                id="subjectD3A1ZId"
+                [options]="d3ExamSubjects"
+                [filter]="true"
+                optionValue="key"
+                [placeholder]="'Lenda D3'"
+                optionLabel="value"
+                name="subjectD3A1ZId"
+                [disabled]="enableD3Subject"
+                [autoDisplayFirst]="false"
+                [(ngModel)]="a1z.subjectD3A1ZId">
               </p-dropdown>
             </td>
             <td>
               <p-dropdown
-                      id="enableD3Subject"
-                      [options]="booly"
-                      (onChange)="onSubjectD3Change($event)"
-                      optionValue="value"
-                      optionLabel="label"
-                      name="enableD3Subject"
-                      [filter]="false"
-                      [disabled]="false"
-                      [autoDisplayFirst]="false"
-                      [(ngModel)]="enableD3Subject">
+                id="enableD3Subject"
+                [options]="booly"
+                (onChange)="onSubjectD3Change($event)"
+                optionValue="value"
+                optionLabel="label"
+                name="enableD3Subject"
+                [filter]="false"
+                [disabled]="false"
+                [autoDisplayFirst]="false"
+                [(ngModel)]="enableD3Subject">
               </p-dropdown>
             </td>
             <td>
@@ -329,7 +329,6 @@
           </tr>
         </table>
 
-
         <div class="text-3xl font-semibold mb-3 mt-5">Lëndët me Zgjedhje</div>
 
         <table class="table">
@@ -345,79 +344,79 @@
             <td>Z1</td>
             <td>
               <p-dropdown
-                      id="carriedSubjectZ1"
-                      [options]="z1ExamSubjects"
-                      optionValue="key"
-                      optionLabel="value"
-                      name="carriedSubjectZ1"
-                      [filter]="true"
-                      [disabled]="true"
-                      [autoDisplayFirst]="false"
-                      [(ngModel)]="a1z.carriedSubjectZ1">
+                id="carriedSubjectZ1"
+                [options]="z1ExamSubjects"
+                optionValue="key"
+                optionLabel="value"
+                name="carriedSubjectZ1"
+                [filter]="true"
+                [disabled]="true"
+                [autoDisplayFirst]="false"
+                [(ngModel)]="a1z.carriedSubjectZ1">
               </p-dropdown>
             </td>
             <td>
               <p-dropdown
-                      id="carriedSubjectZ1"
-                      [options]="booly"
-                      (onChange)="onSubjectZ1Change($event)"
-                      optionValue="value"
-                      optionLabel="label"
-                      name="enableZ1Subject"
-                      [filter]="false"
-                      [disabled]="false"
-                      [autoDisplayFirst]="false"
-                      [(ngModel)]="enableZ1Subject">
+                id="carriedSubjectZ1"
+                [options]="booly"
+                (onChange)="onSubjectZ1Change($event)"
+                optionValue="value"
+                optionLabel="label"
+                name="enableZ1Subject"
+                [filter]="false"
+                [disabled]="false"
+                [autoDisplayFirst]="false"
+                [(ngModel)]="enableZ1Subject">
               </p-dropdown>
             </td>
             <td>
               <input
-                      type="number"
-                      pInputText
-                      max="10"
-                      min="4"
-                      id="carriedGradeZ1"
-                      [disabled]="!enableZ1Subject"
-                      [value]="
+                type="number"
+                pInputText
+                max="10"
+                min="4"
+                id="carriedGradeZ1"
+                [disabled]="!enableZ1Subject"
+                [value]="
                   a1z.scoreZ1A1Z !== undefined
                     ? a1z.scoreZ1A1Z
                     : a1z.carriedGradeZ1
                 "
-                      name="carriedGradeZ1"
-                      [(ngModel)]="a1z.scoreZ1A1Z"
-                      autofocus />
+                name="carriedGradeZ1"
+                [(ngModel)]="a1z.scoreZ1A1Z"
+                autofocus />
             </td>
             <td>
               <input
-                      type="number"
-                      pInputText
-                      max="10"
-                      [disabled]="!enableZ1Subject"
-                      min="4"
-                      [value]="
+                type="number"
+                pInputText
+                max="10"
+                [disabled]="!enableZ1Subject"
+                min="4"
+                [value]="
                   a1z.scoreZ1A1Z !== undefined
                     ? a1z.scoreZ1A1Z
                     : a1z.carriedGradeZ1
                 "
-                      id="carriedGradeZ1"
-                      name="carriedGradeZ1"
-                      [(ngModel)]="a1z.scoreZ1A1Z"
-                      autofocus />
+                id="carriedGradeZ1"
+                name="carriedGradeZ1"
+                [(ngModel)]="a1z.scoreZ1A1Z"
+                autofocus />
             </td>
             <td>
               <input
-                      type="text"
-                      pInputText
-                      [disabled]="!enableZ1Subject"
-                      id="carriedReasonZ1"
-                      name="carriedReasonZ1"
-                      [(ngModel)]="a1z.carriedReasonD1"
-                      autofocus />
+                type="text"
+                pInputText
+                [disabled]="!enableZ1Subject"
+                id="carriedReasonZ1"
+                name="carriedReasonZ1"
+                [(ngModel)]="a1z.carriedReasonD1"
+                autofocus />
             </td>
           </tr>
         </table>
 
-        <hr>
+        <hr />
 
         <div class="field" [style]="{ width: '500px' }">
           <label for="overseerCode">Kodi i Mbikqyresit</label>
