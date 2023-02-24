@@ -20,7 +20,6 @@ export const initialAuthState: AuthState = {
   user: {
     displayName: '',
     username: '',
-    userId: '',
   },
   token: '',
 };
@@ -53,7 +52,6 @@ export const authFeature = createFeature({
       user: {
         displayName: loginResponse.displayName,
         username: loginResponse.username,
-        userId: '',
       },
       token: loginResponse.token,
     })),
@@ -70,7 +68,6 @@ export const authFeature = createFeature({
       user: {
         displayName: '',
         username: '',
-        userId: '',
       },
       token: '',
     }))

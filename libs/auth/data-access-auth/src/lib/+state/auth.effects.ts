@@ -76,7 +76,6 @@ export class AuthEffects {
             displayName: action.loginResponse.displayName,
             username: action.loginResponse.username,
           } as User;
-          console.log(user.userId);
           this.storageService.setItem(USER_STORAGE_KEY, user);
           this.storageService.setItem(
             TOKEN_STORAGE_KEY,
