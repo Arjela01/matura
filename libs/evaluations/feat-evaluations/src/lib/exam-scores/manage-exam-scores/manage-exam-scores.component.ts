@@ -60,7 +60,6 @@ export class ManageExamScoresComponent implements OnInit {
   students: DropdownModel<number>[] = [];
   examTypes: DropdownModel<number>[] = [];
   examSubjects: DropdownModel<string>[] = [];
-  examVersions: DropdownModel<string>[] = [];
   base64: string | ArrayBuffer | null | undefined;
 
 
@@ -71,7 +70,6 @@ export class ManageExamScoresComponent implements OnInit {
     private readonly academicYearApiService: AcademicYearApiService,
     private readonly examTypeService: ExamTypeApiService,
     private readonly examSubjectService: ExamSubjectApiService,
-    private readonly examVersionService: ExamVersionApiService
   ) {}
 
   ngOnInit(): void {
@@ -91,8 +89,6 @@ export class ManageExamScoresComponent implements OnInit {
       examSubjectName: '',
       examTypeId: 0,
       examTypeName: '',
-      examVersionId: '',
-      examVersionName: '',
       id: 0,
       modificationReason: '',
       multipleChoiceScore: 0,
@@ -100,14 +96,7 @@ export class ManageExamScoresComponent implements OnInit {
     };
   }
 
-  onDeleteSelectedClick() {
-    this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të fshini elementët e zgjedhur?',
-      accept: () => {
-        this.toastService.showWarning(' është fshirë');
-      },
-    });
-  }
+
 
   onGridEvent(event: GridEvent<ExamScore | ExamScore[]>) {
     switch (event.action) {
@@ -135,7 +124,6 @@ export class ManageExamScoresComponent implements OnInit {
       case GRID_ACTIONS.EDIT:
         this.selectedExamScore = Object.assign({}, event.data as ExamScore);
         this.getExamSubjects(this.selectedExamScore.examTypeId);
-        this.getExamVersions(this.selectedExamScore.examSubjectId ?? '');
         this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
@@ -261,26 +249,16 @@ export class ManageExamScoresComponent implements OnInit {
       });
   }
 
-  getExamVersions(examSubjectId: string) {
-    this.examVersionService
-      .forExamSubject(examSubjectId)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.examVersions = response.data;
-      });
-  }
 
   onExamTypeChanged(examTypeId: any) {
     if (this.selectedExamScore != null)
       this.selectedExamScore.examTypeId = examTypeId;
     this.getExamSubjects(examTypeId);
-    this.examVersions = [];
   }
 
   onExamSubjectChanged(examSubjectId: string) {
     if (this.selectedExamScore != null)
       this.selectedExamScore.examSubjectId = examSubjectId;
-    this.getExamVersions(examSubjectId);
   }
 
   onUpload(event: any) {
