@@ -9,6 +9,17 @@
         (ngSubmit)="onSubmit()"
         *ngIf="showForm">
         <div class="field xl:w-4 lg:w-6 sm:w-full">
+          <label for="academicYear">Viti akademik </label>
+          <input
+            type="text"
+            class="w-full"
+            pInputText
+            id="academicYear"
+            name="academicYear"
+            [(ngModel)]="academicYear!!.year"
+            readonly />
+        </div>
+        <div class="field xl:w-4 lg:w-6 sm:w-full">
           <label for="student">Maturanti</label>
           <input
             type="text"

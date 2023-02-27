@@ -11,7 +11,6 @@ import { ToolbarModule } from 'primeng/toolbar';
 import {
   ExamSiteApiService,
   AdministrationOfficeApiService,
-  AcademicYearApiService
 } from '@msh/configurations/data-access-configurations';
 import {ExamSite} from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
@@ -55,20 +54,18 @@ export class ManageExamSiteComponent implements OnInit {
   selectedExamSite: ExamSite | null = null;
   selectedExamSites: ExamSite[] = [];
   displayModal = false;
-  academicYears: DropdownModel<number>[] = [];
   administrationOffices: DropdownModel<number>[] = [];
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examSiteService: ExamSiteApiService,
-    private readonly academicYearApiService: AcademicYearApiService,
     private readonly administrationOfficeApiService: AdministrationOfficeApiService,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.getAdministrationOfficeDropdown();
-    this.getAcademicYearDropdown();
   }
 
   onNewClick() {
@@ -211,12 +208,4 @@ export class ManageExamSiteComponent implements OnInit {
       });
   }
 
-  getAcademicYearDropdown() {
-    this.academicYearApiService
-      .loadDropdownList()
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.academicYears = response.data;
-      });
-  }
 }
