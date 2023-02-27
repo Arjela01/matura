@@ -1,7 +1,7 @@
 <form #form="ngForm" class="flex flex-column h-full">
     <div class="field">
         <label for="examSubjects">Lënda</label>
-        <p-dropdown id="examSubjects" [options]="examSubjectsDropdown" optionValue="key" [filter]="true"
+        <p-dropdown id="examSubjects" [options]="examSubjectsDropdown" appendTo="body" optionValue="key" [filter]="true"
             optionLabel="value" name="examSubjectId" [autoDisplayFirst]="false" [(ngModel)]="gradeScale.examSubjectId"
             [showClear]="true" [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !gradeScale.examSubjectId
