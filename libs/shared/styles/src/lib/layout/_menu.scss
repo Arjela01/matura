@@ -151,6 +151,12 @@
 
   .profile-photo {
     float: left;
+    color: #101829;
+    font-size: 12px;
+    margin-top: -4px;
+    &:hover {
+      cursor: pointer;
+    }
   }
   .name {
     display: inline-flex;

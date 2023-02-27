@@ -1,0 +1,112 @@
+<div class="grid" *ngIf="(userProfile$ | async) as user">
+  <div class="col-12 p-fluid">
+    <div class="card px-6 py-6 mt-6 mb-6">
+      <div class="user-profile">
+        <div class="mt-2">
+          <h2 [style]="{ justifyContent: 'flex-start', display: 'flex' }">
+            Profili i Përdoruesit
+          </h2>
+        </div>
+        <div class="column">
+          <div class="column1 mb-6">
+            <div class="mb-2">
+              <p-avatar
+                class="avatar mb-3"
+                label="{{ avatarLabel }}"
+                [style]="{
+                  background: '#101828',
+                  width: '90px',
+                  height: '90px',
+                  fontSize: '40px',
+                  color: 'whitesmoke'
+                }"
+                shape="circle">
+              </p-avatar>
+            </div>
+            <div class="mb-3">
+              <span class="span">{{ user.username }}</span>
+            </div>
+            <div class="mb-3">
+              <span class="email">{{ user.email }}</span>
+            </div>
+          </div>
+          <div class="container mb-3">
+            <div class="column2 mb-6">
+              <p class="bold">
+                Emri:
+                <span class="span">{{ user.firstName }}</span>
+              </p>
+              <p class="bold">
+                Mbiemri:
+                <span class="span">{{ user.lastName }}</span>
+              </p>
+              <p
+                *ngIf="user.roleName === 'AdministrationOffice'"
+                class="bold">
+                DAR/ZA:
+                <span class="span">
+                  {{ user.administrationOfficeName }}</span
+                >
+              </p>
+              <p
+                *ngIf="
+                  user.roleName === 'University' ||
+                  user.roleName === 'UniversityDepartment'
+                "
+                class="bold">
+                Universiteti:
+                <span class="span"> {{ user.universityName }}</span>
+              </p>
+              <p *ngIf="user.roleName === 'Overseer'" class="bold">
+                Kodi i Mbikqyrsit:
+                <span class="span"> {{ user.overseerCode }}</span>
+              </p>
+              <p *ngIf="userProfile?.roleName === 'Student'" class="bold">
+                NID :
+                <span class="span"> {{ user.nid }}</span>
+              </p>
+            </div>
+            <div class="column3 mb-6">
+              <p class="bold">
+                Roli:
+                <span class="span">{{ user.roleName }}</span>
+              </p>
+              <p class="bold">
+                NID:
+                <span class="span">
+                  {{ user.nid }}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="change-passw mb-4">
+        <button
+          type="button"
+          pButton
+          label="Ndrysho Fjalëkalimin"
+          class="password-button-text w-auto mr-0"
+          (click)="onNewClick()"></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-dialog
+  [(visible)]="displayPasswordModal"
+  [style]="{ width: '600px' }"
+  [modal]="true"
+  header="Ndrysho Fjalëkalimin"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="true"
+  class="p-fluid"
+  (onHide)="onModalClose()">
+  <ng-template pTemplate="content">
+    <msh-user-reset-password
+      (formClose)="onModalClose()"
+      (formSave)="onFormSave()">
+    </msh-user-reset-password>
+  </ng-template>
+</p-dialog>

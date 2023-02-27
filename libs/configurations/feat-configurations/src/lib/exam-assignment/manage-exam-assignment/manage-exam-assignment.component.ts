@@ -23,7 +23,7 @@ import { ExamAssignmentGridComponent } from '../exam-assignment-grid/exam-assign
 import { FileUploadModule } from 'primeng/fileupload';
 import { ExamAssignmentFormComponent } from '../exam-assignment-form/exam-assignment-form.component';
 import { UploadFormComponent } from '../upload-form/upload-form.component';
-import * as FileSaver from "file-saver";
+import * as FileSaver from 'file-saver';
 
 @UntilDestroy()
 @Component({
@@ -212,7 +212,7 @@ export class ManageExamAssignmentComponent {
             'Caktimi në qendrën  e provimit u fshi me sukses!'
           );
           this.getExamAssignments(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
