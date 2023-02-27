@@ -6,6 +6,7 @@ import {
   Inject,
   ViewChild,
 } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { REPORTS_APP_URL } from '@msh/shared/util-shared';
 import RxPostmessenger from 'rx-postmessenger';
@@ -24,6 +25,8 @@ export class ReportRendererComponent {
   @ViewChild('reportRenderer', { static: true })
   iframe!: ElementRef<HTMLIFrameElement>;
 
+  id: string = this.route.snapshot.params['id'];
+
   private readonly iframeLoaded$$ = new Subject<boolean>();
   private readonly iframeLoaded$ = this.iframeLoaded$$
     .asObservable()
@@ -38,18 +41,21 @@ export class ReportRendererComponent {
         this.reports_app_url
       );
 
-      //TODO: Replace with a real report id
       childMessenger.notify('report', {
-        reportId: '1',
         userToken: token,
       });
     })
   );
 
   constructor(
-    @Inject(REPORTS_APP_URL) private readonly reports_app_url: string,
-    private authFacade: AuthFacade
+    @Inject(REPORTS_APP_URL) readonly reports_app_url: string,
+    private readonly authFacade: AuthFacade,
+    private readonly route: ActivatedRoute
   ) {}
+
+  get reportUrl(): string {
+    return `${this.reports_app_url}/?reportId=${this.id}`;
+  }
 
   onIframeLoad(): void {
     this.iframeLoaded$$.next(true);
