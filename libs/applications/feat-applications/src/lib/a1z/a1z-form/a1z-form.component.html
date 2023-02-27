@@ -92,28 +92,14 @@
         <table class="table w-100">
           <tr>
             <th>Tipi</th>
-            <th>Mbart</th>
             <th>Lënda</th>
+            <th>Mbart</th>
             <th>Nota e Mbartur</th>
             <th [width]="100">Viti</th>
             <th>Arsyeja</th>
           </tr>
           <tr>
             <td>D1</td>
-            <td>
-              <p-dropdown
-                id="carriedSubjectD1"
-                [options]="booly"
-                (onChange)="onSubjectD1Change($event)"
-                optionValue="key"
-                optionLabel="value"
-                name="enableD1Subject"
-                [filter]="false"
-                [disabled]="false"
-                [autoDisplayFirst]="false"
-                [(ngModel)]="enableD1Subject">
-              </p-dropdown>
-            </td>
             <td>
               <p-dropdown
                 *ngIf="!a1z.subjectNameD1"
@@ -133,11 +119,25 @@
                 *ngIf="a1z.subjectNameD1"
                 type="text"
                 pInputText
-                [disabled]="!enableD1Subject"
+                [disabled]="true"
                 id="subjectNameD1"
                 name="subjectNameD1"
                 [(ngModel)]="a1z.subjectNameD1"
                 autofocus />
+            </td>
+            <td>
+              <p-dropdown
+                id="carriedSubjectD1"
+                [options]="booly"
+                (onChange)="onSubjectD1Change($event)"
+                optionValue="key"
+                optionLabel="value"
+                name="enableD1Subject"
+                [filter]="false"
+                [disabled]="false"
+                [autoDisplayFirst]="false"
+                [(ngModel)]="enableD1Subject">
+              </p-dropdown>
             </td>
 
             <td>
@@ -177,20 +177,6 @@
             <td>D2</td>
             <td>
               <p-dropdown
-                id="carriedSubjectD2"
-                [options]="booly"
-                (onChange)="onSubjectD2Change($event)"
-                optionValue="key"
-                optionLabel="value"
-                name="enableD2Subject"
-                [filter]="false"
-                [disabled]="false"
-                [autoDisplayFirst]="false"
-                [(ngModel)]="enableD2Subject">
-              </p-dropdown>
-            </td>
-            <td>
-              <p-dropdown
                 *ngIf="!a1z.subjectNameD2"
                 [style]="{ minWidth: '250px' }"
                 id="subjectD2Id"
@@ -208,11 +194,25 @@
                 *ngIf="a1z.subjectNameD2"
                 type="text"
                 pInputText
-                [disabled]="!enableD2Subject"
+                [disabled]="true"
                 id="subjectNameD2"
                 name="subjectNameD2"
                 [(ngModel)]="a1z.subjectNameD2"
                 autofocus />
+            </td>
+            <td>
+              <p-dropdown
+                id="carriedSubjectD2"
+                [options]="booly"
+                (onChange)="onSubjectD2Change($event)"
+                optionValue="key"
+                optionLabel="value"
+                name="enableD2Subject"
+                [filter]="false"
+                [disabled]="false"
+                [autoDisplayFirst]="false"
+                [(ngModel)]="enableD2Subject">
+              </p-dropdown>
             </td>
 
             <td>
@@ -252,6 +252,31 @@
             <td>D3</td>
             <td>
               <p-dropdown
+                *ngIf="!a1z.subjectNameD3"
+                [style]="{ minWidth: '250px' }"
+                id="subjectD3Id"
+                [options]="d3ExamSubjects"
+                optionValue="key"
+                optionLabel="value"
+                name="carriedSubjectD3"
+                [filter]="true"
+                [disabled]="false"
+                [autoDisplayFirst]="false"
+                [(ngModel)]="a1z.subjectD3Id"
+                [showClear]="true">
+              </p-dropdown>
+              <input
+                *ngIf="a1z.subjectNameD3"
+                type="text"
+                pInputText
+                [disabled]="true"
+                id="subjectNameD3"
+                name="subjectNameD3"
+                [(ngModel)]="a1z.subjectNameD3"
+                autofocus />
+            </td>
+            <td>
+              <p-dropdown
                 id="carriedSubjectD3"
                 [options]="booly"
                 (onChange)="onSubjectD3Change($event)"
@@ -263,31 +288,6 @@
                 [autoDisplayFirst]="false"
                 [(ngModel)]="enableD3Subject">
               </p-dropdown>
-            </td>
-            <td>
-              <p-dropdown
-                *ngIf="!a1z.subjectNameD3"
-                [style]="{ minWidth: '250px' }"
-                id="subjectD3Id"
-                [options]="d3ExamSubjects"
-                optionValue="key"
-                optionLabel="value"
-                name="carriedSubjectD3"
-                [filter]="true"
-                [disabled]="!enableD3Subject"
-                [autoDisplayFirst]="false"
-                [(ngModel)]="a1z.subjectD3Id"
-                [showClear]="true">
-              </p-dropdown>
-              <input
-                *ngIf="a1z.subjectNameD3"
-                type="text"
-                pInputText
-                [disabled]="!enableD3Subject"
-                id="subjectNameD3"
-                name="subjectNameD3"
-                [(ngModel)]="a1z.subjectNameD3"
-                autofocus />
             </td>
 
             <td>
@@ -330,14 +330,39 @@
         <table class="table">
           <tr>
             <th>Tipi</th>
-            <th>Mbart</th>
             <th>Lënda</th>
+            <th>Mbart</th>
             <th>Nota e Mbartur</th>
             <th [width]="100">Viti</th>
             <th>Arsyeja</th>
           </tr>
           <tr>
             <td>Z1</td>
+            <td>
+              <p-dropdown
+                *ngIf="!a1z.subjectNameZ1"
+                [style]="{ minWidth: '250px' }"
+                id="subjectZ1Id"
+                [options]="z1ExamSubjects"
+                optionValue="key"
+                optionLabel="value"
+                name="carriedSubjectZ1"
+                [filter]="true"
+                [disabled]="false"
+                [autoDisplayFirst]="false"
+                [(ngModel)]="a1z.subjectZ1Id"
+                [showClear]="true">
+              </p-dropdown>
+              <input
+                *ngIf="a1z.subjectNameZ1"
+                type="text"
+                pInputText
+                [disabled]="true"
+                id="subjectNameZ1"
+                name="subjectNameZ1"
+                [(ngModel)]="a1z.subjectNameZ1"
+                autofocus />
+            </td>
             <td>
               <p-dropdown
                 id="carriedSubjectZ1"
@@ -352,31 +377,7 @@
                 [(ngModel)]="enableZ1Subject">
               </p-dropdown>
             </td>
-            <td>
-              <p-dropdown
-                *ngIf="!a1z.subjectNameZ1"
-                [style]="{ minWidth: '250px' }"
-                id="subjectZ1Id"
-                [options]="z1ExamSubjects"
-                optionValue="key"
-                optionLabel="value"
-                name="carriedSubjectZ1"
-                [filter]="true"
-                [disabled]="!enableZ1Subject"
-                [autoDisplayFirst]="false"
-                [(ngModel)]="a1z.subjectZ1Id"
-                [showClear]="true">
-              </p-dropdown>
-              <input
-                *ngIf="a1z.subjectNameZ1"
-                type="text"
-                pInputText
-                [disabled]="!enableZ1Subject"
-                id="subjectNameZ1"
-                name="subjectNameZ1"
-                [(ngModel)]="a1z.subjectNameZ1"
-                autofocus />
-            </td>
+
             <td>
               <input
                 type="number"
