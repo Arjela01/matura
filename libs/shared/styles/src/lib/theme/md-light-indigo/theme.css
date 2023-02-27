@@ -167,6 +167,13 @@
   animation: p-component-overlay-leave-animation 150ms forwards;
 }
 
+.p-avatar.p-avatar-circle {
+  border-radius: 50%;
+  overflow: hidden;
+  width: 40px;
+  height: 40px;
+}
+
 @keyframes p-component-overlay-enter-animation {
   from {
     background-color: transparent;

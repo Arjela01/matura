@@ -85,6 +85,7 @@ export class AuthEffects {
             action.loginResponse.token
           );
           // this.heartBeatService.startTime();
+
           this.router.navigate(['/']);
         })
       ),

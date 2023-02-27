@@ -71,7 +71,7 @@
       [(ngModel)]="examDate.time"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': examDate.time }" />
+      [ngClass]="{ 'ng-invalid ng-dirty':  submitted && !examDate.date }" />
     <small class="p-error block" *ngIf="submitted && !examDate.time">
       Ora  është fushë e kërkuar.
     </small>
