@@ -16,7 +16,6 @@
   (onLazyLoad)="loadRows($event)"
   (onRowSelect)="onRowSelect($event)"
   (onRowUnselect)="onRowUnselect($event)">
-
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="academicYear">
@@ -27,28 +26,28 @@
           field="academicYear"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="studentFirstName">
+      <th pSortableColumn="firstName">
         Emri i Studentit
-        <p-sortIcon field="studentFirstName"></p-sortIcon>
+        <p-sortIcon field="firstName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="studentFirstName"
+          field="firstName"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="studentFatherName">
+      <th pSortableColumn="middleName">
         Atësia
-        <p-sortIcon field="studentFatherName"></p-sortIcon>
+        <p-sortIcon field="middleName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="studentFatherName"
+          field="middleName"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="studentLastName">
+      <th pSortableColumn="lastName">
         Mbiemri
-        <p-sortIcon field="studentLastName"></p-sortIcon>
+        <p-sortIcon field="lastName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="studentLastName"
+          field="lastName"
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="nid">
@@ -56,13 +55,10 @@
         <p-sortIcon field="nid"></p-sortIcon>
         <p-columnFilter type="text" field="nid" display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="studentIdentifier">
+      <th pSortableColumn="nid">
         ID Maturanti
-        <p-sortIcon field="studentIdentifier"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="studentIdentifier"
-          display="menu"></p-columnFilter>
+        <p-sortIcon field="nid"></p-sortIcon>
+        <p-columnFilter type="text" field="nid" display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="studentOldIdentifier">
         ID e vjeter
@@ -73,20 +69,20 @@
           display="menu"></p-columnFilter>
       </th>
 
-      <th pSortableColumn="studentBirthDate">
+      <th pSortableColumn="birthDate">
         Datëlindja
-        <p-sortIcon field="studentBirthDate"></p-sortIcon>
+        <p-sortIcon field="birthDate"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="studentBirthDate"
+          field="birthDate"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="studentBirthPlace">
+      <th pSortableColumn="birthPlace">
         Vendlindja
-        <p-sortIcon field="studentBirthPlace"></p-sortIcon>
+        <p-sortIcon field="birthPlace"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="studentBirthPlace"
+          field="birthPlace"
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="createdOn">
@@ -106,28 +102,28 @@
         {{ a1z.academicYear }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ a1z.studentFirstName }}
+        {{ a1z.firstName }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ a1z.studentFatherName }}
+        {{ a1z.middleName }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ a1z.studentLastName }}
+        {{ a1z.lastName }}
       </td>
       <td style="width: 10%; min-width: 10rem">
         {{ a1z.nid }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ a1z.studentIdentifier }}
+        {{ a1z.nid }}
       </td>
       <td style="width: 10%; min-width: 10rem">
         {{ a1z.studentOldIdentifier }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ a1z.studentBirthDate | date }}
+        {{ a1z.birthDate | date }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ a1z.studentBirthPlace }}
+        {{ a1z.birthPlace }}
       </td>
       <td style="width: 10%; min-width: 10rem">
         {{ a1z.createdOn | date }}
