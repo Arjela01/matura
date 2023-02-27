@@ -1,7 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
-import { AuthFacade } from '@msh/auth/data-access-auth';
 import { APIService } from '@msh/shared/util-shared';
 import { interval, Subject, switchMap, takeUntil } from 'rxjs';
+import { AuthFacade } from '../+state/auth.facade';
 
 @Injectable({
   providedIn: 'root',
