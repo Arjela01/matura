@@ -15,6 +15,6 @@
   ],
   "include": [
     "src/**/*.ts",
-    "../data-access-shared/src/lib/services/heartbeat.service.ts"
+    "../../auth/data-access-auth/src/lib/services/heartbeat.service.ts"
   ]
 }

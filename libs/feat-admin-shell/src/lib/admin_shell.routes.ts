@@ -37,6 +37,13 @@ export const ADMIN_SHELL_ROUTES: Route[] = [
         loadChildren: () =>
           import('@msh/reports/feat-reports').then(m => m.REPORTS_ROUTES),
       },
+      {
+        path: 'user-section',
+        loadChildren: () =>
+          import('@msh/user-section/feat-user-section').then(
+            m => m.USER_SECTION_ROUTES
+          ),
+      },
     ],
   },
 ];

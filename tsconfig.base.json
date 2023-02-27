@@ -72,7 +72,16 @@
       "@msh/shared/student-lookup": ["libs/shared/student-lookup/src/index.ts"],
       "@msh/shared/styles": ["libs/shared/styles/src/index.ts"],
       "@msh/shared/ui-shared": ["libs/shared/ui-shared/src/index.ts"],
-      "@msh/shared/util-shared": ["libs/shared/util-shared/src/index.ts"]
+      "@msh/shared/util-shared": ["libs/shared/util-shared/src/index.ts"],
+      "@msh/user-section/data-access-user-section": [
+        "libs/user-section/data-access-user-section/src/index.ts"
+      ],
+      "@msh/user-section/domain-user-section": [
+        "libs/user-section/domain-user-section/src/index.ts"
+      ],
+      "@msh/user-section/feat-user-section": [
+        "libs/user-section/feat-user-section/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
