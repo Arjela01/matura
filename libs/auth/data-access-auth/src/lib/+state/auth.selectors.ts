@@ -7,6 +7,7 @@ export const {
   selectError,
   selectIsAuthenticated,
   selectUser,
+  selectToken,
 } = authFeature;
 
 export const selectIsLoading = createSelector(
@@ -21,4 +22,5 @@ export const authQuery = {
   selectError,
   selectIsAuthenticated,
   selectUser,
+  selectToken,
 };
