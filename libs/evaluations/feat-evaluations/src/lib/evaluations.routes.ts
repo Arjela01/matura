@@ -122,4 +122,11 @@ export const EVALUATION_ROUTES: Route[] = [
         './grade-scale/grade-scale-action/grade-scale-action.component'
       ).then(m => m.GradeScaleActionComponent),
   },
+  {
+    path: 'unmatched-exams',
+    loadComponent: () =>
+      import(
+        './unmatched-exams/unmatched-exams-grid/unmatched-exams-grid.component'
+        ).then(m => m.UnmatchedExamsGridComponent),
+  },
 ];
