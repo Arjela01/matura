@@ -13,6 +13,8 @@ export class UnmatchedExamsApiService {
   loadUnmatchedExamScores(
     event: LazyLoadEvent
   ): Observable<ExamScoreTableView> {
+    // eslint-disable-next-line no-debugger
+    debugger;
     return this.apiService.post(`/ExamScores/UnmatchedExams`, event).pipe(
       map((data: any) => data),
       catchError(error => throwError(error))

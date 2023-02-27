@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UnmatchedExamsApiService } from '@msh/evaluations/data-access-evaluations';
 import { LazyLoadEvent } from 'primeng/api';
@@ -6,8 +6,9 @@ import { ExamScore } from '@msh/evaluations/domain-evaluations';
 
 import { TableModule } from 'primeng/table';
 import { BehaviorSubject } from 'rxjs';
-import { untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'msh-unmatched-exams-grid',
   standalone: true,
@@ -18,7 +19,7 @@ import { untilDestroyed } from '@ngneat/until-destroy';
 })
 export class UnmatchedExamsGridComponent {
   private unmatchedExams$$ = new BehaviorSubject<ExamScore[]>([]);
-  unmatchedExams$ = this.unmatchedExams$$;
+  unmatchedExams$ = this.unmatchedExams$$.asObservable();
   totalRecords = 0;
   filters: LazyLoadEvent | null = null;
 
@@ -27,15 +28,13 @@ export class UnmatchedExamsGridComponent {
   ) {}
 
   unmatchedExamScore($event: LazyLoadEvent) {
-    // eslint-disable-next-line no-debugger
-    debugger;
     this.filters = Object.assign({}, $event);
 
     this.unmatchedExamsService
       .loadUnmatchedExamScores($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.unmatchedExams$.next(response.data);
+        this.unmatchedExams$$.next(response.data);
         this.totalRecords = response.total;
       });
   }
