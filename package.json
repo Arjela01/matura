@@ -27,7 +27,6 @@
     "@ngrx/router-store": "~15.0.0",
     "@ngrx/store": "~15.0.0",
     "@nrwl/angular": "15.4.1",
-    "angular-in-memory-web-api": "^0.15.0",
     "file-saver": "^2.0.5",
     "jwt-decode": "^3.1.2",
     "ng": "^0.0.0",
@@ -35,10 +34,9 @@
     "primeflex": "^3.3.0",
     "primeicons": "^6.0.1",
     "primeng": "^15.0.0",
+    "rx-postmessenger": "^3.0.0",
     "rxjs": "~7.5.0",
-    "swagger-ui-express": "^4.6.0",
     "tslib": "^2.3.0",
-    "webpack-dev-server": "^4.11.1",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {

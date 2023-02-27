@@ -1,12 +1,15 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { StorageService } from '@msh/shared/data-access-shared';
+import {
+  HeartbeatService,
+  StorageService,
+} from '@msh/shared/data-access-shared';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, of, tap } from 'rxjs';
-import { TOKEN_STORAGE_KEY } from '../services/token.interceptor';
 import { User, USER_STORAGE_KEY } from '../models/user.model';
 import { AuthService } from '../services/auth.service';
+import { TOKEN_STORAGE_KEY } from '../services/token.interceptor';
 import { AuthActions } from './auth.actions';
 
 @Injectable()
@@ -18,9 +21,9 @@ export class AuthEffects {
         const token = this.storageService.getItem(TOKEN_STORAGE_KEY) as string;
         const user = this.storageService.getItem(USER_STORAGE_KEY) as User;
         if (token && user && user?.username && user?.displayName) {
+          // this.heartBeatService.startTime();
           return AuthActions.loadAuthSuccess({ token: token, user: user });
         }
-
         return AuthActions.logout();
       }),
       catchError(() => of(AuthActions.logout()))
@@ -81,6 +84,7 @@ export class AuthEffects {
             TOKEN_STORAGE_KEY,
             action.loginResponse.token
           );
+          // this.heartBeatService.startTime();
 
           this.router.navigate(['/']);
         })
@@ -95,6 +99,7 @@ export class AuthEffects {
         tap(() => {
           this.storageService.removeItem(TOKEN_STORAGE_KEY);
           this.storageService.removeItem(USER_STORAGE_KEY);
+          // this.heartBeatService.stopTimer();
           this.router.navigate(['/login']);
         })
       ),
@@ -105,6 +110,7 @@ export class AuthEffects {
     private actions$: Actions,
     private authService: AuthService,
     private storageService: StorageService,
-    private router: Router
+    private router: Router,
+    private heartBeatService: HeartbeatService
   ) {}
 }

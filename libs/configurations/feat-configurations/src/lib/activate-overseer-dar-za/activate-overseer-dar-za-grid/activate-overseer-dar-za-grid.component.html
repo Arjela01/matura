@@ -36,6 +36,7 @@
           display="menu"></p-columnFilter>
       </th>
       <th>Veprime</th>
+
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-activateOverseer>
@@ -43,32 +44,32 @@
       <td style="width: 40%;">
         {{ activateOverseer.cityName }}
       </td>
-      <td style="width: 60%;">
-        <span *ngIf="activateOverseer.isAllowedToLogin" class="closed">
-          Jo Aktiv
-        </span>
-        <span *ngIf="!activateOverseer.isAllowedToLogin" class="open">
-          Aktiv
+
+      <td style="width: 14%; min-width: 10rem">
+        <span
+          [ngClass]="
+            activateOverseer.isAllowedToLogin === true
+              ? ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
+              : ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
+          ">
+          {{ activateOverseer.isAllowedToLogin === true ? 'Jo Aktiv' : 'Aktiv' }}
         </span>
       </td>
-
-
       <td style="width: 14%; min-width: 10rem">
         <div class="flex">
           <button
             pButton
             pRipple
-            class="p-button-rounded p-button-danger p-button-text mr-2"
+            class="p-button-rounded p-button-plain p-button-text mr-2 pointer"
             (click)="changeStatus(activateOverseer)"
-            icon="{{
-              !activateOverseer.isAllowedToLogin ? 'pi pi-user-minus' : 'pi pi-user-plus'
-            }}">
-            &nbsp;{{ !activateOverseer.isAllowedToLogin ? 'Caktivizo' : 'Aktivizo' }}
+            [ngClass]="
+            activateOverseer.isAllowedToLogin === true
+              ? ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
+              : ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
+          ">
+            {{ activateOverseer.isAllowedToLogin === true ? 'Aktivizo' : 'Çaktivizo' }}
           </button>
         </div>
-      </td>
-      <td>
-      </td>
     </tr>
   </ng-template>
 </p-table>
