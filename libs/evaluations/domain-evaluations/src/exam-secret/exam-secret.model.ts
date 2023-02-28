@@ -4,8 +4,6 @@ export interface ExamSecret {
   studentName: string;
   examVersionId?: string;
   examVersionName: string;
-  academicYearId?: number;
-  academicYear: string;
   barcode: string;
   isFall: boolean;
   studentInputData?: string;

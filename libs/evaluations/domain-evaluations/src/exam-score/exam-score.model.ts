@@ -12,8 +12,6 @@ export interface ExamScore {
   examVersionName: string;
 
   barcode: string;
-  academicYearId: number;
-  academicYear: string;
   writingScore: number;
   multipleChoiceScore: number;
   modificationReason: string;
