@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule, formatDate } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -7,15 +7,12 @@ import { TooltipModule } from 'primeng/tooltip';
 import { RippleModule } from 'primeng/ripple';
 import { GridComponent } from '../grid/grid.component';
 import {
-  CalculationProcessesApiService,
   ProcessesApiService,
 } from '@msh/evaluations/data-access-evaluations';
 import { LazyLoadEvent } from 'primeng/api';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BehaviorSubject, tap } from 'rxjs';
-import { ApplicationProcess } from '@msh/evaluations/domain-evaluations';
+import { UntilDestroy } from '@ngneat/until-destroy';
+import {  tap } from 'rxjs';
 import { Application_Process } from '../grid/grid-type.enum';
-import { GlobalToastService } from '@msh/shared/util-shared';
 
 @UntilDestroy()
 @Component({
@@ -56,8 +53,6 @@ export class CalculateGradesComponent {
   );
 
   constructor(
-    private readonly calculateGradesService: CalculationProcessesApiService,
-    private readonly toastService: GlobalToastService,
     private readonly process: ProcessesApiService
   ) {}
 

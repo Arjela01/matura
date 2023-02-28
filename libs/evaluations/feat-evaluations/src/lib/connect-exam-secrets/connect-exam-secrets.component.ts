@@ -10,7 +10,6 @@ import { LazyLoadEvent } from 'primeng/api';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { tap } from 'rxjs';
 import { Application_Process } from '../grid/grid-type.enum';
-import { GlobalToastService } from '@msh/shared/util-shared';
 import { ProcessesApiService } from '@msh/evaluations/data-access-evaluations';
 
 @UntilDestroy()
@@ -52,7 +51,6 @@ export class ConnectExamSecretsComponent {
     })
   );
   constructor(
-    private readonly toastService: GlobalToastService,
     private readonly process: ProcessesApiService
   ) {}
 

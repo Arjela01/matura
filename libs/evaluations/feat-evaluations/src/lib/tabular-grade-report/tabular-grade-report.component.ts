@@ -14,7 +14,6 @@ import { LazyLoadEvent } from 'primeng/api';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { tap } from 'rxjs';
 import { Application_Process } from '../grid/grid-type.enum';
-import { GlobalToastService } from '@msh/shared/util-shared';
 import * as FileSaver from 'file-saver';
 
 @UntilDestroy()
@@ -58,7 +57,6 @@ export class TabularGradeReportComponent {
 
   constructor(
     private readonly calculateGradesService: CalculationProcessesApiService,
-    private readonly toastService: GlobalToastService,
     private readonly process: ProcessesApiService
   ) {}
 
