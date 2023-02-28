@@ -1,7 +1,7 @@
 <div class="sidebar">
   <div class="flex mt-2 mb-3">
     <div class="w-auto align-self-start">
-      <img src="assets/images/logo.png" style="width: 29px" class="pt-1">
+      <img src="assets/images/logo.png" style="width: 30px" class="pt-1">
     </div>
     <div class="w-100 ml-3 align-items-stretch pt-1 mt-sidebar">
       <span  class="text-white span-sidebar">Matura <br>Shtetërore</span>
@@ -27,12 +27,12 @@
             <p-avatar
               label= "{{avatarLabel}}"
               shape="circle"
-              [style]="{background:'white'}"
+              [style]="{background:'white', width: '50px' , height: '50px'}"
             >
             </p-avatar>
           </div>
-          <div class="name menu-title fs">{{user.lastName}} {{user.lastName}}</div>
-          <div class="email fs">{{user.email}}</div>
+          <div class="name menu-title fs ">{{user.firstName}} {{user.lastName}}</div>
+          <div class="email fl">{{user.roleName}}</div>
         </div>
 
         <div class="second-group" (click)="onLogoutClick()">

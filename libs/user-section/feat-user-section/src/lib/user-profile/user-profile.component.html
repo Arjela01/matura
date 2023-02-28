@@ -1,93 +1,64 @@
-<div class="grid" *ngIf="(userProfile$ | async) as user">
+<div class="grid" *ngIf="userProfile$ | async as user">
   <div class="col-12 p-fluid">
-    <div class="card px-6 py-6 mt-6 mb-6">
-      <div class="user-profile">
-        <div class="mt-2">
-          <h2 [style]="{ justifyContent: 'flex-start', display: 'flex' }">
-            Profili i Përdoruesit
-          </h2>
+    <div
+      class="card flex px-6 py-6 mt-4 mb-6"
+      style="
+        background: linear-gradient(
+          to top,
+          white 0%,
+          white 80%,
+          #101828 80%,
+          #101828 100%
+        );
+      ">
+      <div class="grid">
+    <p-avatar
+        class="avatar ml-6"
+        label="{{ avatarLabel }}"
+        [style]="{
+                            background: '#101828',
+                            width: '150px',
+                            height: '150px',
+                            fontSize: '64px',
+                            color: 'whitesmoke',
+                            border: '5px solid white'
+                          }"
+        shape="circle">
+      </p-avatar>
+    </div>
+      <div class="name ml-5 mt-5" style="color: white; font-size: 36px;"  >
+        <strong>{{user.firstName}} {{user.lastName}}</strong>
+        <div class="role mt-3"  style="color: black; font-size: 24px;">
+        <strong>{{user.roleName}}</strong>
         </div>
-        <div class="column">
-          <div class="column1 mb-6">
-            <div class="mb-2">
-              <p-avatar
-                class="avatar mb-3"
-                label="{{ avatarLabel }}"
-                [style]="{
-                  background: '#101828',
-                  width: '90px',
-                  height: '90px',
-                  fontSize: '40px',
-                  color: 'whitesmoke'
-                }"
-                shape="circle">
-              </p-avatar>
-            </div>
-            <div class="mb-3">
-              <span class="span">{{ user.username }}</span>
-            </div>
-            <div class="mb-3">
-              <span class="email">{{ user.email }}</span>
-            </div>
-          </div>
-          <div class="container mb-3">
-            <div class="column2 mb-6">
-              <p class="bold">
-                Emri:
-                <span class="span">{{ user.firstName }}</span>
-              </p>
-              <p class="bold">
-                Mbiemri:
-                <span class="span">{{ user.lastName }}</span>
-              </p>
-              <p
-                *ngIf="user.roleName === 'AdministrationOffice'"
-                class="bold">
-                DAR/ZA:
-                <span class="span">
-                  {{ user.administrationOfficeName }}</span
-                >
-              </p>
-              <p
-                *ngIf="
-                  user.roleName === 'University' ||
-                  user.roleName === 'UniversityDepartment'
-                "
-                class="bold">
-                Universiteti:
-                <span class="span"> {{ user.universityName }}</span>
-              </p>
-              <p *ngIf="user.roleName === 'Overseer'" class="bold">
-                Kodi i Mbikqyrsit:
-                <span class="span"> {{ user.overseerCode }}</span>
-              </p>
-              <p *ngIf="userProfile?.roleName === 'Student'" class="bold">
-                NID :
-                <span class="span"> {{ user.nid }}</span>
-              </p>
-            </div>
-            <div class="column3 mb-6">
-              <p class="bold">
-                Roli:
-                <span class="span">{{ user.roleName }}</span>
-              </p>
-              <p class="bold">
-                NID:
-                <span class="span">
-                  {{ user.nid }}
-                </span>
-              </p>
-            </div>
-          </div>
+        <div class="field mt-5 " style="color: black; font-size: 16px;" >
+          <label>Përdoruesi: </label>
+          <strong> {{ user.username }}</strong>
+          <br>
+          <label>Email: </label>
+          <strong>{{ user.email }}</strong>
+          <br>
+          <label>NID : </label>
+          <strong>{{ user.nid }}</strong>
+          <br>
+          <label>Shkolla : </label>
+          <strong>{{ user.highSchoolName }}</strong>
+        <div class="field  mt-5" >
+          <button
+            type="button"
+            pButton
+            label="Ndrysho Fjalëkalimin"
+            class="password-button-text w-auto mr-0"
+            (click)="onNewClick()"></button>
         </div>
-      </div>
-      <div class="change-passw mb-4">
-        <button
-          type="button"
-          pButton
-          label="Ndrysho Fjalëkalimin"
-          class="password-button-text w-auto mr-0"
-          (click)="onNewClick()"></button>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
       </div>
     </div>
   </div>
@@ -110,3 +81,4 @@
     </msh-user-reset-password>
   </ng-template>
 </p-dialog>
+</div>
