@@ -26,8 +26,9 @@
         shape="circle">
       </p-avatar>
     </div>
-      <div class="name ml-5 mt-5" style="color: white; font-size: 36px;"  >
-        <strong>{{user.firstName}} {{user.lastName}}</strong>
+      <div class="name ml-5 mt-5 mb-10" style="color: white; font-size: 36px;"  >
+        <div>  <strong>{{user.firstName}} {{user.lastName}}</strong></div>
+
         <div class="role mt-3"  style="color: black; font-size: 24px;">
         <strong>{{user.roleName}}</strong>
         </div>
@@ -51,14 +52,7 @@
             class="password-button-text w-auto mr-0"
             (click)="onNewClick()"></button>
         </div>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
+
       </div>
     </div>
   </div>
