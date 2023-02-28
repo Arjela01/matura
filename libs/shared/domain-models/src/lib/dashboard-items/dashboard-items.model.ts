@@ -1,7 +1,18 @@
 export interface DashboardItems {
   id?: any;
-  name: string;
-  roles: string[];
+  dashboardSectionId: number;
+  dashboardSectionName:string;
+  description:string;
+  document: number;
+  documentName:string;
+  endDate: Date[];
+  linkUrl:string;
+  roleIds?:number;
+  roleName?: string;
+  startDate: Date[];
+  title:string;
+  userIds?: number;
+  userName?: string;
 
 
 }

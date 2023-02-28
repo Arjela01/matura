@@ -4,7 +4,8 @@ import { APIService } from '@msh/shared/util-shared';
 import { Observable } from 'rxjs';
 import { LazyLoadEvent } from 'primeng/api';
 import {
-  DashboardItems, DashboardItemsTableView,
+  DashboardItems,
+  DashboardItemsTableView,
 } from '@msh/shared/domain-models';
 
 @Injectable({
@@ -18,15 +19,14 @@ export class DashboardItemsApiService {
       `/DashboardItems/DropdownList`
     );
   }
+
   loadDashboardItems(
     event: LazyLoadEvent
   ): Observable<DashboardItemsTableView> {
     return this.apiService.post(`/DashboardItems/TableData`, event);
   }
 
-  save(
-    dashboardItems: DashboardItems
-  ): Observable<ApiResult<DashboardItems>> {
+  save(dashboardItems: DashboardItems): Observable<ApiResult<DashboardItems>> {
     return this.apiService.post<ApiResult<DashboardItems>, DashboardItems>(
       `/DashboardItems`,
       dashboardItems

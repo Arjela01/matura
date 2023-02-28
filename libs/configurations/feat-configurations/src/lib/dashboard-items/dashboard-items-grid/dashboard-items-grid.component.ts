@@ -46,10 +46,7 @@ export class DashboardItemsGridComponent {
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
-  dashboardItem: DashboardItems = {
-    name:'',
-    roles: [],
-  };
+
 
   onEditClick(dashboardItems: DashboardItems) {
     this.gridEvent.emit({

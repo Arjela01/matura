@@ -52,6 +52,7 @@ import {UntilDestroy} from "@ngneat/until-destroy";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardItemsFormComponent {
+  @Input() Users: DropdownModel<number>[] = [];
   @Input() roles: DropdownModel<number>[] = [];
   sectionDashboard = DashboardSectionOptionsModel.All;
   @Input() set setDashboardItemsDetails(details: DashboardItems | null) {
@@ -69,9 +70,19 @@ export class DashboardItemsFormComponent {
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   dashboardItems: DashboardItems = {
-    name:'',
-    roles: [],
+    dashboardSectionId: 0,
+    dashboardSectionName: "",
+    description: "",
+    document: 0,
+    documentName: "",
+    endDate: [],
+    linkUrl: "",
+
+    startDate: [],
+    title: "",
+
   };
+  uploaded= false;
 
 
   onCancelClick() {

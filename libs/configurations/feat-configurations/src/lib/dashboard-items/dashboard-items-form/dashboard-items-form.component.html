@@ -5,15 +5,15 @@
       id="studyClass"
       [options]="sectionDashboard"
       name="schoolProfile"
-      [(ngModel)]="dashboardItems.name"
+      [(ngModel)]="dashboardItems.dashboardSectionId"
       [required]="true"
       [virtualScroll]="true"
       [autoDisplayFirst]="false"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !dashboardItems.name
+        'ng-invalid ng-dirty': submitted && !dashboardItems.dashboardSectionId
       }">
     </p-dropdown>
-    <small class="p-error block" *ngIf="submitted && !dashboardItems.name">
+    <small class="p-error block" *ngIf="submitted && !dashboardItems.dashboardSectionId">
       Seksioni është fushë e kërkuar.
     </small>
   </div>
@@ -25,13 +25,13 @@
       pInputText
       id="title"
       name="title"
-      [(ngModel)]="dashboardItems.name"
+      [(ngModel)]="dashboardItems.title"
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !dashboardItems.name
+        'ng-invalid ng-dirty': submitted && !dashboardItems.title
       }" />
-    <small class="p-error block" *ngIf="submitted && !dashboardItems.name">
+    <small class="p-error block" *ngIf="submitted && !dashboardItems.title">
       Titulli është fushë e kërkuar.
     </small>
   </div>
@@ -44,40 +44,36 @@
       pInputTextarea
       id="description"
       name="description"
-      [(ngModel)]="dashboardItems.name"
+      [(ngModel)]="dashboardItems.description"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !dashboardItems.name
+        'ng-invalid ng-dirty': submitted && !dashboardItems.description
       }"></textarea>
 
-    <small class="p-error block" *ngIf="submitted && !dashboardItems.name">
+    <small class="p-error block" *ngIf="submitted && !dashboardItems.description">
       Përshkrimi është fushë e kërkuar.
     </small>
   </div>
 
-<!--  <div class="field">-->
-<!--    <label for="document">Dokument *</label>-->
-<!--    <div class="form-group drop-files noLabel">-->
-<!--      <p-fileUpload-->
-<!--        #uploader-->
-<!--        [showUploadButton]="false"-->
-<!--        class="ie-file-upload"-->
-<!--        id="document"-->
-<!--        (onSelect)="selectFiles($event)"-->
-<!--        accept=".pdf">-->
-<!--        <ng-template pTemplate="content">-->
-<!--          <img-->
-<!--            [src]="'data:image;base64,' + dashboardSection.name"-->
-<!--            width="100"-->
-<!--            height="100"-->
-<!--            *ngIf="dashboardSection.name && !uploaded && dashboardSection.name"-->
-<!--            alt="" />-->
-<!--        </ng-template>-->
-<!--      </p-fileUpload>-->
-<!--      <small class="p-error block" *ngIf="submitted && !dashboardSection.name">-->
-<!--        Dokument është fushë e kërkuar.-->
-<!--      </small>-->
-<!--    </div>-->
-<!--  </div>-->
+  <div class="field">
+    <label for="document">Dokument *</label>
+    <div class="form-group drop-files noLabel">
+      <p-fileUpload
+        #uploader
+        [showUploadButton]="false"
+        class="ie-file-upload"
+        id="document"
+        accept=".pdf">
+        <ng-template pTemplate="content">
+          <img
+            [src]="'data:image;base64,' + dashboardItems.document"
+            width="100"
+            height="100"
+            *ngIf="dashboardItems.document && !uploaded && dashboardItems.document"
+            alt="" />
+        </ng-template>
+      </p-fileUpload>
+    </div>
+  </div>
 
   <div class="field">
     <label for="link">Link\URL *</label>
@@ -86,93 +82,93 @@
       pInputText
       id="link"
       name="link"
-      [(ngModel)]="dashboardItems.name"
+      [(ngModel)]="dashboardItems.linkUrl"
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !dashboardItems.name
+        'ng-invalid ng-dirty': submitted && !dashboardItems.linkUrl
       }" />
-    <small class="p-error block" *ngIf="submitted && !dashboardItems.name">
+    <small class="p-error block" *ngIf="submitted && !dashboardItems.linkUrl">
       Link\URL është fushë e kërkuar.
     </small>
   </div>
 
-  <div class="field">
+<!--  <div class="field">-->
+<!--    <div class="field">-->
+<!--      <label for="roles">Roli/et</label>-->
+<!--      <p-multiSelect-->
+<!--        id="roles"-->
+<!--        name="roles"-->
+<!--        [options]="roles"-->
+<!--        optionValue="value"-->
+<!--        optionLabel="value"-->
+<!--        [(ngModel)]="dashboardItems.roleName"-->
+<!--        appendTo="body"-->
+<!--        [showClear]="true"-->
+<!--        defaultLabel="Selekto Rolet"-->
+<!--        display="chip"></p-multiSelect>-->
+<!--      <small class="p-error block" *ngIf="submitted && !dashboardItems.roleName">-->
+<!--        Roli/et është fushë e kërkuar.-->
+<!--      </small>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="field">-->
+<!--    <label for="users">Përdoruesi/t *</label>-->
+<!--    <p-dropdown-->
+<!--      id="users"-->
+<!--      name="users"-->
+<!--      [options]="Users"-->
+<!--      [(ngModel)]="dashboardItems.userName"-->
+<!--      [autoDisplayFirst]="false"-->
+<!--      [required]="true"-->
+<!--      [virtualScroll]="true"-->
+<!--      [ngClass]="{-->
+<!--        'ng-invalid ng-dirty': submitted && !dashboardItems.userName-->
+<!--      }">-->
+<!--    </p-dropdown>-->
+<!--&lt;!&ndash;    <small class="p-error block" *ngIf="submitted && !dashboardItems.userName">&ndash;&gt;-->
+<!--&lt;!&ndash;      Përdoruesi/t është fushë e kërkuar.&ndash;&gt;-->
+<!--&lt;!&ndash;    </small>&ndash;&gt;-->
+<!--  </div>-->
+
     <div class="field">
-      <label for="roles">Roli/et</label>
-      <p-multiSelect
-        id="roles"
-        name="roles"
-        [options]="roles"
-        optionValue="value"
-        optionLabel="value"
-        [(ngModel)]="dashboardItems.roles"
-        appendTo="body"
-        [showClear]="true"
-        defaultLabel="Selekto Rolet"
-        display="chip"></p-multiSelect>
-      <small class="p-error block" *ngIf="submitted && !dashboardItems.roles">
-        Roli/et është fushë e kërkuar.
+      <label for="effectiveDate">E vlefshme nga *</label>
+      <input
+        placeholder="dd/MM/yyyy"
+        type="text"
+        pInputText
+        id="effectiveDate"
+        name="effectiveDate"
+        [(ngModel)]="dashboardItems.startDate"
+        required
+        autofocus
+        [ngClass]="{
+          'ng-invalid ng-dirty': submitted && ! dashboardItems.startDate
+        }" />
+      <small class="p-error block" *ngIf="submitted && !dashboardItems.startDate">
+        Data është fushë e kërkuar.
       </small>
     </div>
-  </div>
 
-  <div class="field">
-    <label for="users">Përdoruesi/t *</label>
-    <p-dropdown
-      id="users"
-      [options]="sectionDashboard"
-      name="users"
-      [(ngModel)]="dashboardItems.name"
-      [autoDisplayFirst]="false"
-      [required]="true"
-      [virtualScroll]="true"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !dashboardItems.name
-      }">
-    </p-dropdown>
-    <small class="p-error block" *ngIf="submitted && !dashboardItems.name">
-      Përdoruesi/t është fushë e kërkuar.
-    </small>
-  </div>
-
-  <!--  <div class="field">-->
-  <!--    <label for="effectiveDate">E vlefshme nga *</label>-->
-  <!--    <input-->
-  <!--      placeholder="dd/MM/yyyy"-->
-  <!--      type="text"-->
-  <!--      pInputText-->
-  <!--      id="effectiveDate"-->
-  <!--      name="effectiveDate"-->
-  <!--      [(ngModel)]="effectiveDate"-->
-  <!--      required-->
-  <!--      autofocus-->
-  <!--      [ngClass]="{-->
-  <!--        'ng-invalid ng-dirty': submitted && !effectiveDate-->
-  <!--      }" />-->
-  <!--    <small class="p-error block" *ngIf="submitted && !effectiveDate">-->
-  <!--      Data është fushë e kërkuar.-->
-  <!--    </small>-->
-  <!--  </div>-->
-
-  <!--  <div class="field">-->
-  <!--    <label for="banRemovalDate">E vlefshme deri *</label>-->
-  <!--    <input-->
-  <!--      placeholder="dd/MM/yyyy"-->
-  <!--      type="text"-->
-  <!--      pInputText-->
-  <!--      id="banRemovalDate"-->
-  <!--      name="banRemovalDate"-->
-  <!--      [(ngModel)]="banRemovalDate"-->
-  <!--      required-->
-  <!--      autofocus-->
-  <!--      [ngClass]="{-->
-  <!--        'ng-invalid ng-dirty': submitted && !banRemovalDate-->
-  <!--      }" />-->
-  <!--    <small class="p-error block" *ngIf="submitted && !banRemovalDate">-->
-  <!--      Data është fushë e kërkuar.-->
-  <!--    </small>-->
-  <!--  </div>-->
+    <div class="field">
+      <label for="banRemovalDate">E vlefshme deri *</label>
+      <input
+        placeholder="dd/MM/yyyy"
+        type="text"
+        pInputText
+        id="banRemovalDate"
+        name="banRemovalDate"
+        [(ngModel)]="dashboardItems.endDate"
+        required
+        autofocus
+        [ngClass]="{
+          'ng-invalid ng-dirty': submitted && ! dashboardItems.endDate
+        }" />
+      <small class="p-error block" *ngIf="submitted && ! dashboardItems.endDate">
+        Data është fushë e kërkuar.
+      </small>
+    </div>
   <div class="flex justify-content-end">
     <button
       type="button"

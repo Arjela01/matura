@@ -117,60 +117,71 @@
 
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-bannedStudent>
+  <ng-template pTemplate="body" let-dashboardItems>
     <tr>
       <td style="width: 14%; min-width: 10rem">
-        {{ bannedStudent.studentIdentifier }}
+        {{ dashboardItems.dashboardSectionName }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ bannedStudent.studentName }}
+        {{ dashboardItems.title }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ bannedStudent.isBanned ? 'Po' : 'Jo' }}
+        {{ dashboardItems.isBanned ? 'Po' : 'Jo' }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ bannedStudent.effectiveDate | date : 'dd/MM/yyyy' }}
+        {{ dashboardItems.linkUrl}}
       </td>
       <td style="width: 20%; min-width: 10rem">
-        {{ bannedStudent.banRemovalDate | date : 'dd/MM/yyyy' }}
+        {{ dashboardItems.roleName}}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ bannedStudent.description }}
+        {{ dashboardItems.userName }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ bannedStudent.description }}
+        {{ dashboardItems.startDate | date : 'dd/MM/yyyy' }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ bannedStudent.description }}
+        {{ dashboardItems.endDate | date : 'dd/MM/yyyy' }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ bannedStudent.description }}
+        {{ dashboardItems.description }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ bannedStudent.description }}
+        {{ dashboardItems.description }}
       </td><td style="width: 14%; min-width: 10rem">
-      {{ bannedStudent.description }}
+      {{ dashboardItems.description }}
     </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ bannedStudent.description }}
+        {{ dashboardItems.description | date : 'dd/MM/yyyy' }}
       </td>
 
 
       <td>
         <div class="flex">
+
+
+
           <img
-            src="assets/svg/edit-form.svg"
+            src="assets/svg/download.svg"
             class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"
-            (click)="onEditClick(bannedStudent)"
-            pTooltip="Ndrysho" />
+            (click)="onEditClick(dashboardItems)"
+            pTooltip="Shkarko" />
+
+          <img
+            src="assets/svg/edit-form.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
+            pTooltip="Fshi"
+            tooltipPosition="bottom"
+            (click)="onEditClick(dashboardItems)" />
 
           <img
             src="assets/svg/delete-form.svg"
             class="p-button-rounded p-button-danger p-button-text ml-m pointer"
             pTooltip="Fshi"
             tooltipPosition="bottom"
-            (click)="onDeleteClick(bannedStudent)" />
+            (click)="onDeleteClick(dashboardItems)" />
+
         </div>
       </td>
     </tr>
