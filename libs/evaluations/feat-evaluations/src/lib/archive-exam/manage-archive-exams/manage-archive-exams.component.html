@@ -1,6 +1,5 @@
 <div class="flex mb-2 page-header center mb-header">
   <h2 class="flex-1 mb-0">
-
     <h2 class="flex-1 mb-0">
       Dosja: {{ archiveFolder.nr }} | {{ archiveFolder.examTypeName }} :
       {{ archiveFolder.examSubjectName }}
@@ -14,36 +13,31 @@
           label="Kthehu"
           icon="pi pi-arrow-left"
           class="p-button-danger mr-2"
-          [ngStyle]="{ backgroundColor: 'var(--bluegray-600)' }"></button>
+          style="background: #eff1f5; color: #155eef"></button>
       </a>
-
 
       <button
         pButton
         [ngClass]="
-            archiveFolder.isClosed === true
-              ? ['bg-red-400', 'red-text', 'px-3', 'fb']
-              : ['bg-green-400', 'green-text', 'px-3', 'fb']
-          "
-        icon="{{
-              !archiveFolder.isClosed ? 'pi pi-lock-open' : 'pi pi-lock'
-            }}"
+          archiveFolder.isClosed === true
+            ? ['bg-red-400', 'red-text', 'px-3', 'fb']
+            : ['bg-green-500', 'green-text', 'px-3', 'fb']
+        "
+        icon="{{ !archiveFolder.isClosed ? 'pi pi-lock-open' : 'pi pi-lock' }}"
         label=" {{ archiveFolder.isClosed === true ? 'Mbyllur' : 'Hapur' }}"
-        (click)="changeFolderStatus()"> </button>
+        (click)="changeFolderStatus()"></button>
     </div>
   </div>
 </div>
 
-      <msh-archive-exam-grid
-        [archiveExams]="(archiveExams$ | async) || []"
-        [totalRecords]="totalRecords"
-        (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getArchiveExams($event)"
-        (formSave)="onFormSave($event)"
-        [isBarcodeInputDisabled]="isBarcodeInputDisabled"
-      >
-      </msh-archive-exam-grid>
-
+<msh-archive-exam-grid
+  [archiveExams]="(archiveExams$ | async) || []"
+  [totalRecords]="totalRecords"
+  (gridEvent)="onGridEvent($event)"
+  (lazyLoadData)="getArchiveExams($event)"
+  (formSave)="onFormSave($event)"
+  [isBarcodeInputDisabled]="isBarcodeInputDisabled">
+</msh-archive-exam-grid>
 
 <p-dialog
   [(visible)]="displayModal"

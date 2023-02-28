@@ -8,6 +8,7 @@
         icon="pi pi-database"
         disabled
         label="{{ totalRecords }}/50"
+        style= "border-radius:0"
         class="p-button-info mr-2"></button>
       <input
         type="text"
@@ -32,6 +33,7 @@
         [disabled]="!form.valid"
         label="Ruaj"
         class="p-button-success mr-2"
+        style= "border-radius:0"
         (click)="saveArchiveExam(archiveExam)"></button>
     </div>
   </div>
@@ -78,13 +80,13 @@
   </ng-template>
   <ng-template pTemplate="body" let-archiveExam>
     <tr>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 50%; min-width: 10rem">
         {{ archiveExam.index }}
       </td>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 50%; min-width: 10rem">
         {{ archiveExam.barcode }}
       </td>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 40%; min-width: 10rem">
         <img
           src="assets/svg/edit-form.svg"
           class="p-button-rounded p-button-warning p-button-text ml-m pointer"
