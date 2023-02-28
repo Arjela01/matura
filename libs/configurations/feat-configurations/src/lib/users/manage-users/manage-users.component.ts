@@ -133,7 +133,7 @@ export class ManageUsersComponent implements OnInit {
         break;
       case GRID_ACTIONS.CUSTOM_ACTION1:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt qe doni te gjeneroni nje password te ri?',
+          message: 'Jeni i sigurt qe doni te gjeneroni nje fjalkalim te ri?',
           accept: () => {
             this.passwordGenerate(event.data as User);
           },

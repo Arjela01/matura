@@ -27,6 +27,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PasswordModule } from 'primeng/password';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import {RippleModule} from "primeng/ripple";
 @UntilDestroy()
 @Component({
   selector: 'msh-users-password-reset-view',
@@ -47,6 +48,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     DividerModule,
     CardModule,
     ClipboardModule,
+    RippleModule,
   ],
   templateUrl: './users-password-reset-view.component.html',
   styleUrls: ['./users-password-reset-view.component.scss'],
@@ -85,14 +87,9 @@ export class UsersPasswordResetViewComponent implements OnInit, OnDestroy {
   constructor(
     private cd: ChangeDetectorRef,
     private readonly userService: UserApiService,
-    private clipboard: Clipboard,
 
   ) { }
-  public copyToClipboardWithParameter(value: HTMLElement): void {
-    const text: string = value.textContent || '';
-    console.log(text);
-    const successful = this.clipboard.copy(text);
-  }
+
 
   ngOnDestroy(): void {
     this.form.reset();
