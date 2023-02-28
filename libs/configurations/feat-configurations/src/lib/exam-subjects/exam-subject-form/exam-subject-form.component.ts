@@ -5,7 +5,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -38,9 +37,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
   styleUrls: ['./exam-subject-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamSubjectFormComponent implements OnChanges {
+export class ExamSubjectFormComponent {
   @Input() examTypes: DropdownModel<number>[] = [];
-  @Input() academicYears: DropdownModel<number>[] = [];
 
   @Input() set examSubjectDetails(details: ExamSubject | null) {
     if (details) {
@@ -67,11 +65,7 @@ export class ExamSubjectFormComponent implements OnChanges {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor(private cd: ChangeDetectorRef) {}
 
-  ngOnChanges(): void {
-    if (this.examTypes && this.examSubject.academicYearId) {
-      this.onAcademicYearChange({ value: this.examSubject.academicYearId });
-    }
-  }
+
   onCancelClick() {
     this.formClose.emit();
   }
@@ -83,9 +77,4 @@ export class ExamSubjectFormComponent implements OnChanges {
     }
   }
 
-  onAcademicYearChange($event: any) {
-    this.examTypesFiltered = this.examTypes.filter(
-      et => et.parentKey == $event.value
-    );
-  }
 }

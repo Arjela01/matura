@@ -43,7 +43,7 @@ import { GlobalToastService } from '@msh/shared/util-shared';
 export class ExamScoresFormComponent implements OnChanges {
   @Input() examTypes: DropdownModel<number>[] = [];
   @Input() examSubjects: DropdownModel<string>[] = [];
-  @Input() academicYears: DropdownModel<number>[] = [];
+  @Input() examVersions: DropdownModel<string>[] = [];
 
   @Output() formSave = new EventEmitter<ExamScore>();
   @Output() formClose = new EventEmitter<undefined>();
@@ -54,8 +54,6 @@ export class ExamScoresFormComponent implements OnChanges {
   submitted = false;
 
   examScore: ExamScore = {
-    academicYear: '',
-    academicYearId: 0,
     barcode: '',
     documentName: '',
     examSecretId: '',

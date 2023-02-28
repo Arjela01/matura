@@ -13,8 +13,7 @@ import {
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExamSecret } from '@msh/evaluations/domain-evaluations';
-import {
-  AcademicYearApiService, ExamSubjectApiService,
+import {ExamSubjectApiService,
 
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
@@ -63,7 +62,6 @@ export class ManageExamSecretsComponent {
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examSecretService: ExamSecretApiService,
-    private readonly academicYearApiService: AcademicYearApiService,
     private readonly router: Router,
     private readonly examSubjectService: ExamSubjectApiService
   ) {}

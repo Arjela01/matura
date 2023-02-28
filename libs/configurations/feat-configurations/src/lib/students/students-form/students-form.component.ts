@@ -13,7 +13,6 @@ import {
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
-  AcademicYearApiService,
   GendersApiService,
   HighSchoolApiService,
   ProfileApiService,
@@ -66,7 +65,6 @@ export class StudentsFormComponent implements OnInit, OnChanges {
   studentClass = StudentClassModel.All;
   studentSection = StudentSectionModel.All;
   schoolProfile: DropdownModel<number>[] = [];
-  academicYears: DropdownModel<number>[] = [];
   saving = false;
   @Input() set studentDetails(details: Student | null) {
     if (details) {
@@ -117,7 +115,6 @@ export class StudentsFormComponent implements OnInit, OnChanges {
 
   constructor(
     private cd: ChangeDetectorRef,
-    private readonly academicYearService: AcademicYearApiService,
     private readonly studentService: StudentsApiService,
     private readonly highSchoolService: HighSchoolApiService,
     private readonly profileService: ProfileApiService,
@@ -134,10 +131,6 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     });
     this.profileService.loadDropdownList().subscribe(response => {
       this.schoolProfile = response.data;
-    });
-
-    this.academicYearService.loadDropdownList().subscribe(response => {
-      this.academicYears = response.data;
     });
   }
 

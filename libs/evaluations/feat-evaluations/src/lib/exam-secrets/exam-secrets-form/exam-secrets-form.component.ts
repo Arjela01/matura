@@ -32,7 +32,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import {
-  AcademicYearApiService,
+
   ExamSubjectApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
@@ -67,7 +67,7 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
   @Output() examSubjectChanged = new EventEmitter<string>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
-  academicYears: DropdownModel<number>[] = [];
+  examVersions: DropdownModel<number>[] = [];
   examSubjects: DropdownModel<number>[] = [];
   filters: LazyLoadEvent | null = null;
 
@@ -87,7 +87,6 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
     studentId: '',
     studentName: '',
     examSubjectName: '',
-    academicYear: '',
     barcode: '',
     isFall: true,
   };
@@ -103,7 +102,6 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
     private readonly router: Router,
     private readonly examSecretApiService: ExamSecretApiService,
     private readonly toastService: GlobalToastService,
-    private readonly academicYearService: AcademicYearApiService,
     private readonly examSubjectService: ExamSubjectApiService,
     private readonly activatedRoute: ActivatedRoute
   ) {
@@ -115,15 +113,11 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
       this.onStudentInit(this.examSecret);
     }
     if (this.selectedStudent !== null) {
-      console.log(1111, this.selectedStudent);
       this.onStudentChange(this.selectedStudent);
     }
   }
 
   ngOnInit(): void {
-    this.academicYearService.loadDropdownList().subscribe(response => {
-      this.academicYears = response.data;
-    });
     this.examSubjectService.loadDropdownList().subscribe(response => {
       this.examSubjects = response.data;
     });

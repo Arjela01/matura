@@ -16,7 +16,6 @@ import {
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExamScore } from '@msh/evaluations/domain-evaluations';
 import {
-  AcademicYearApiService,
   ExamSubjectApiService,
   ExamTypeApiService,
   ExamVersionApiService,
@@ -56,7 +55,6 @@ export class ManageExamScoresComponent implements OnInit {
   selectedExamScores: ExamScore[] = [];
   displayModal = false;
 
-  academicYears: DropdownModel<number>[] = [];
   students: DropdownModel<number>[] = [];
   examTypes: DropdownModel<number>[] = [];
   examSubjects: DropdownModel<string>[] = [];
@@ -67,21 +65,17 @@ export class ManageExamScoresComponent implements OnInit {
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examScoreService: ExamScoreApiService,
-    private readonly academicYearApiService: AcademicYearApiService,
     private readonly examTypeService: ExamTypeApiService,
     private readonly examSubjectService: ExamSubjectApiService,
   ) {}
 
   ngOnInit(): void {
-    this.getAcademicYearsDropdown();
     this.getExamTypes();
   }
 
   onNewClick() {
     this.displayModal = true;
     this.selectedExamScore = {
-      academicYear: '',
-      academicYearId: 0,
       barcode: '',
       documentName: '',
       examSecretId: '',
@@ -219,15 +213,6 @@ export class ManageExamScoresComponent implements OnInit {
           this.toastService.showError(
             'Ndodhi një problem gjatë fshirjes së rezultatit të provimit!'
           );
-      });
-  }
-
-  getAcademicYearsDropdown() {
-    this.academicYearApiService
-      .loadDropdownList()
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.academicYears = response.data;
       });
   }
 

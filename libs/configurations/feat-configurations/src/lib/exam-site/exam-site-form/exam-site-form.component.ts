@@ -39,7 +39,6 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 })
 export class ExamSiteFormComponent {
   @Input() administrationOffices: DropdownModel<number>[] = [];
-  @Input() academicYears: DropdownModel<number>[] = [];
 
   @Input() set examSitesDetails(details: ExamSite | null) {
     if (details) {
@@ -61,8 +60,6 @@ export class ExamSiteFormComponent {
     quota: 0,
     administrationOfficeId:0,
     administrationOfficeName:'',
-    academicYearId:0,
-    academicYear:0,
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function

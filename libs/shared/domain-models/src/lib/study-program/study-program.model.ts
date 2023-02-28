@@ -13,8 +13,6 @@ export interface StudyProgram {
 
   usedQuota: string;
 
-  academicYearId: string;
-
   universityId: string;
 
   universityDepartmentId: string;
