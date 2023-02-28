@@ -2158,7 +2158,7 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
   right: 3rem;
 }
 .border{
-  border: 1px solid #155EEF !important;
+  border: 0.7px solid #155EEF !important;
 }
 .p-button {
   color: #ffffff;
@@ -5314,12 +5314,12 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 }
 
 .p-fileupload-choose:not(.p-disabled):hover {
-  background: rgba(63, 81, 181, 0.92);
+  background: var(--background);
   color: #ffffff;
   border-color: transparent;
 }
 .p-fileupload-choose:not(.p-disabled):active {
-  background: rgba(63, 81, 181, 0.68);
+  background: var(--background);
   color: #ffffff;
   border-color: transparent;
 }
