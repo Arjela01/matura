@@ -122,6 +122,13 @@ export const EVALUATION_ROUTES: Route[] = [
       ).then(m => m.GradeScaleActionComponent),
   },
   {
+    path: 'unmatched-exams',
+    loadComponent: () =>
+      import(
+        './unmatched-exams/unmatched-exams-grid/unmatched-exams-grid.component'
+      ).then(m => m.UnmatchedExamsGridComponent),
+  },
+  {
     path: 'exam-copy/list-of-exam-copies',
     loadComponent: () =>
       import('./exam-copy/manage-exam-copy/manage-exam-copy.component').then(

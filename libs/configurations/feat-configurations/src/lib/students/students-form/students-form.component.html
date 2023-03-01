@@ -47,25 +47,6 @@
         </div>
 
         <div class="field" [style]="{ width: '500px' }">
-          <label for="registrationYearId">Viti I Rregjistrimit *</label>
-          <p-dropdown
-            id="registrationYearId"
-            [options]="academicYears"
-            optionValue="key"
-            optionLabel="value"
-            name="academicYearId"
-            [autoDisplayFirst]="false"
-            [(ngModel)]="student.registrationYearId"
-            [showClear]="true">
-          </p-dropdown>
-          <small
-            class="p-error block"
-            *ngIf="submitted && !student.registrationYearId">
-            Viti I Rregjistrimit është fushë e kërkuar.
-          </small>
-        </div>
-
-        <div class="field" [style]="{ width: '500px' }">
           <label class="mb-3">Sesioni i Vjeshtës? *</label>
           <div class="formgrid grid">
             <div class="field-radiobutton col-6">
