@@ -24,6 +24,7 @@ import {
   DashboardItemsApiService
 } from "../../../../../data-access-configurations/src/lib/dashboard-items/dashboard-items-api.service";
 import {DashboardSectionApiService} from "@msh/configurations/data-access-configurations";
+import {DropdownModel} from "@msh/shared/data-access-shared";
 
 @UntilDestroy()
 @Component({
@@ -48,6 +49,8 @@ export class ManageDashboardItemsComponent {
   private dashboardItems$$ = new BehaviorSubject<DashboardItems[]>([]);
   dashboardItems$ = this.dashboardItems$$.asObservable();
   filters: LazyLoadEvent | null = null;
+  users: DropdownModel<number>[] = [];
+  roles: DropdownModel<number>[] = [];
 
   totalRecords = 0;
   selectedDashboardItem: DashboardItems | null = null;
