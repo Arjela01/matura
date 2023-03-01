@@ -6,3 +6,4 @@ export * from './exam-score/exam-score.model';
 export * from './exam-secret/exam-secret.model';
 export * from './grades-scale/grades-scale.model';
 export * from './annual-grades/annual-grades.model';
+export * from './ial/ial-model';
