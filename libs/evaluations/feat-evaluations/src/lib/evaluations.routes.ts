@@ -1,5 +1,4 @@
 import { Route } from '@angular/router';
-import {ConnectExamSecretsComponent} from "./connect-exam-secrets/connect-exam-secrets.component";
 
 export const EVALUATION_ROUTES: Route[] = [
   {
@@ -49,14 +48,14 @@ export const EVALUATION_ROUTES: Route[] = [
     loadComponent: () =>
       import(
         './annual-grades/a2-form-annual-grades-view/a2-form-annual-grades-view.component'
-        ).then(m => m.A2FormAnnualGradesViewComponent),
+      ).then(m => m.A2FormAnnualGradesViewComponent),
   },
   {
     path: 'annual-grades',
     loadComponent: () =>
       import(
         './annual-grades/annual-grades-grid/annual-grades-grid.component'
-        ).then(m => m.AnnualGradesGridComponent),
+      ).then(m => m.AnnualGradesGridComponent),
   },
 
   {
@@ -121,5 +120,12 @@ export const EVALUATION_ROUTES: Route[] = [
       import(
         './grade-scale/grade-scale-action/grade-scale-action.component'
       ).then(m => m.GradeScaleActionComponent),
+  },
+  {
+    path: 'exam-copy/list-of-exam-copies',
+    loadComponent: () =>
+      import('./exam-copy/manage-exam-copy/manage-exam-copy.component').then(
+        m => m.ManageExamCopyComponent
+      ),
   },
 ];
