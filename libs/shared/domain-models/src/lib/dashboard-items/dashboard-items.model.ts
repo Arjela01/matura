@@ -3,7 +3,8 @@ export interface DashboardItems {
   dashboardSectionId: number;
   dashboardSectionName?: string;
   description:string;
-  document: number;
+  document?: boolean;
+  isDocument?  : boolean
   documentName:string;
   endDate: Date[];
   linkUrl:string;
@@ -11,8 +12,8 @@ export interface DashboardItems {
   title:string;
   userIds?: number;
   userName?: string;
-  roles: string,
-  users: string,
+  roles: string[],
+  users: string[],
 
 
 }

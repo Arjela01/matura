@@ -7,7 +7,7 @@ import {
   DashboardItems,
   DashboardItemsTableView, Student,
 } from '@msh/shared/domain-models';
-import {ArchiveFolder} from "@msh/evaluations/domain-evaluations";
+import {HttpParams} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root',
@@ -15,12 +15,15 @@ import {ArchiveFolder} from "@msh/evaluations/domain-evaluations";
 export class DashboardItemsApiService {
   constructor(private apiService: APIService) {}
 
-  loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
+
+  loadDropdownList(
+    current: number | null = null
+  ): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
-      `/DashboardItems/DropdownList`
+      `/DashboardItems/DropdownList`,
+      current ? new HttpParams().append('ignore', current) : new HttpParams()
     );
   }
-
   loadDashboardItems(
     event: LazyLoadEvent
   ): Observable<DashboardItemsTableView> {
@@ -47,6 +50,7 @@ export class DashboardItemsApiService {
       `/DashboardItems/${dashboardItemsId}`
     );
   }
+
 
   downloadFileById(documentId: any): Observable<ApiResult<DashboardItems>> {
     return this.apiService.get<ApiResult<DashboardItems>>(

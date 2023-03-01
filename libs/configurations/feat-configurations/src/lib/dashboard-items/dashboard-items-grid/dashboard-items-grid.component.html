@@ -31,21 +31,13 @@
           field="tittle"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="document">
-        Dokument
-        <p-sortIcon field="document"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="document"
-          display="menu"></p-columnFilter>
+      <th pSortableColumn="isDocument">
+        Është Dokument?
+        <p-sortIcon field="isDocument"></p-sortIcon>
       </th>
-      <th pSortableColumn="linkUrl">
-        Link/URL
-        <p-sortIcon field="linkUrl"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="linkUrl"
-          display="menu"></p-columnFilter>
+      <th pSortableColumn="isLink">
+        Është Link?
+        <p-sortIcon field="isLink"></p-sortIcon>
       </th>
       <th pSortableColumn="role">
         Roli
@@ -125,11 +117,11 @@
       <td style="width: 14%; min-width: 10rem">
         {{ dashboardItems.title }}
       </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ dashboardItems.isBanned ? 'Po' : 'Jo' }}
+      <td style="width: 30%; min-width: 10rem">
+        {{ dashboardItems.isDocument ? 'Po' : 'Jo' }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ dashboardItems.linkUrl}}
+        {{ dashboardItems.isDocument ? 'Po' : 'Jo' }}
       </td>
       <td style="width: 20%; min-width: 10rem">
         {{ dashboardItems.roles}}
@@ -163,7 +155,6 @@
             src="assets/svg/download.svg"
             class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"
-            (click)="downloadFile(dashboardItems)"
             pTooltip="Shkarko" />
 
           <img

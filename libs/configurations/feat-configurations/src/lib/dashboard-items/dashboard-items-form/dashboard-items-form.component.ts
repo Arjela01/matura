@@ -79,13 +79,12 @@ export class DashboardItemsFormComponent implements OnInit{
     id: 0,
     dashboardSectionId: 0,
     description: "",
-    document: 0,
     documentName: "",
     endDate: [],
     linkUrl: "",
     startDate: [],
-    roles: '',
-    users: '',
+    roles: [],
+    users: [],
     title: ""
   };
   uploaded= false;
