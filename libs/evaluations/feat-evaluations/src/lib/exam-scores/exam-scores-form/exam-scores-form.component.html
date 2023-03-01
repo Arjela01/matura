@@ -1,31 +1,4 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
-  <div class="field">
-    <label for="AcademicYear">Viti Akademik*</label>
-    <p-dropdown
-      id="AcademicYear"
-      [options]="academicYears"
-      optionValue="key"
-      optionLabel="value"
-      name="academicYearId"
-      [autoDisplayFirst]="false"
-      [(ngModel)]="examScore.academicYearId"
-      [showClear]="true"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examScore.academicYearId
-      }">
-    </p-dropdown>
-    <small
-      class="p-error block"
-      *ngIf="
-        submitted &&
-        +academicYears[examScore.academicYearId].value !== currentYear
-      ">
-      Viti akademik duhet të jetë i njëjtë me vitin aktual.
-    </small>
-    <small class="p-error block" *ngIf="submitted && !examScore.academicYearId">
-      Viti akademik është fushë e kërkuar.
-    </small>
-  </div>
 
   <div class="field">
     <label for="ExamType">Tipi i Provimit *</label>

@@ -38,7 +38,6 @@ import { Profile } from '@msh/shared/domain-models';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileFormComponent implements OnChanges {
-  @Input() academicYears: DropdownModel<number>[] = [];
   @Input() profileGroups: DropdownModel<number>[] = [];
 
   @Input() set profileDetails(details: Profile | null) {
@@ -52,7 +51,6 @@ export class ProfileFormComponent implements OnChanges {
 
   @ViewChild('form', { static: true }) form!: NgForm;
 
-  academicYearsFiltered: DropdownModel<number>[] = [];
   profileGroupsFiltered: DropdownModel<number>[] = [];
 
   submitted = false;
@@ -65,9 +63,7 @@ export class ProfileFormComponent implements OnChanges {
   };
 
   ngOnChanges(): void {
-    if (this.academicYears && this.profile.academicYear) {
-      this.onAcademicYearChange({ value: this.profile.academicYearId });
-    }
+
     if (this.profileGroups && this.profile.profileGroupId) {
       this.onProfileGroupChange({ value: this.profile.profileGroupId });
     }
@@ -84,11 +80,7 @@ export class ProfileFormComponent implements OnChanges {
     }
   }
 
-  onAcademicYearChange($event: any) {
-    this.academicYearsFiltered = this.academicYears.filter(
-      a => a.parentKey == $event.value
-    );
-  }
+
   onProfileGroupChange($event: any) {
     this.profileGroupsFiltered = this.profileGroups.filter(
       p => p.parentKey == $event.value
