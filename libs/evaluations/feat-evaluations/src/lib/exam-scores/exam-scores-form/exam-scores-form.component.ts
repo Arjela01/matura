@@ -57,8 +57,6 @@ export class ExamScoresFormComponent implements OnChanges {
     barcode: '',
     documentName: '',
     examSecretId: '',
-    examVersionId: '',
-    examVersionName: '',
     id: 0,
     modificationReason: '',
     multipleChoiceScore: 0,
@@ -76,7 +74,6 @@ export class ExamScoresFormComponent implements OnChanges {
 
   constructor(
     private cd: ChangeDetectorRef,
-    private readonly toastService: GlobalToastService
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {

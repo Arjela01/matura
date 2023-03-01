@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule, formatDate } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -7,12 +7,10 @@ import { TooltipModule } from 'primeng/tooltip';
 import { RippleModule } from 'primeng/ripple';
 import { GridComponent } from '../grid/grid.component';
 import { LazyLoadEvent } from 'primeng/api';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BehaviorSubject } from 'rxjs';
-import { ApplicationProcess } from '@msh/evaluations/domain-evaluations';
+import { UntilDestroy } from '@ngneat/until-destroy';
+import { tap } from 'rxjs';
 import { Application_Process } from '../grid/grid-type.enum';
-import { GlobalToastService } from '@msh/shared/util-shared';
-import { CalculationProcessesApiService } from '@msh/evaluations/data-access-evaluations';
+import { ProcessesApiService } from '@msh/evaluations/data-access-evaluations';
 
 @UntilDestroy()
 @Component({
@@ -32,14 +30,11 @@ import { CalculationProcessesApiService } from '@msh/evaluations/data-access-eva
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConnectExamSecretsComponent {
-  private calculateGrade$$ = new BehaviorSubject<ApplicationProcess[]>([]);
-  calculateGrade$ = this.calculateGrade$$.asObservable();
   filters: LazyLoadEvent | null = null;
   processType: Application_Process = Application_Process.ConnectExamSecrets;
 
   appProcessType!: string;
   executionLog!: string;
-  endDate: any;
 
   columns = [
     { field: 'processStatus', header: 'Statusi' },
@@ -48,65 +43,23 @@ export class ConnectExamSecretsComponent {
     { field: 'endTimeToShow', header: 'Koha e mbarimit' },
   ];
 
+  calculateGrade$ = this.process.calculateGrade$.pipe(
+    tap(res => {
+      this.appProcessType = res[0]?.appProcessType;
+      this.executionLog = res[0]?.processStatus;
+      return res;
+    })
+  );
   constructor(
-    private readonly calculateGradesService: CalculationProcessesApiService,
-    private readonly toastService: GlobalToastService
+    private readonly process: ProcessesApiService
   ) {}
 
   getProcessData($event: LazyLoadEvent, processType: number) {
     this.filters = { ...$event };
-    this.calculateGradesService
-      .loadProcessData(processType)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        const dataArray = this.formatPayload(response.data);
-        this.calculateGrade$$.next(dataArray);
-      });
+    this.process.getData($event, processType);
   }
 
   postProcess() {
-    this.calculateGradesService
-      .loadProcess(this.appProcessType)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showSuccess('Procesi rifilloi me sukses!');
-          const dataArray = this.formatPayload(response.data);
-          this.calculateGrade$$.next(dataArray);
-        }
-        if (response.isBadRequest) {
-          this.toastService.showError('Dicka shkoi keq!');
-        }
-        if (!response.isSuccessful) {
-          this.toastService.showError(response.errorMessage);
-        }
-      });
-  }
-
-  formatPayload(data: any) {
-    const dataArray = [data] as ApplicationProcess[];
-    dataArray.forEach(item => {
-      if (item === null) {
-        this.toastService.showError('Nuk u gjet procedura e ruajtur');
-      }
-      this.endDate = formatDate(
-        new Date(item.endTime as Date),
-        'dd/MM/yyyy',
-        'en'
-      );
-      this.endDate = formatDate(
-        new Date(item.endTime as Date),
-        'dd/MM/yyyy',
-        'en'
-      );
-      const startTime = new Date(item.startTime);
-      const endTime = new Date(item.endTime);
-      item.startTimeToShow = `${startTime.getHours()}:${startTime.getMinutes()}:${startTime.getSeconds()} `;
-      item.endTimeToShow = `${endTime.getHours()}:${endTime.getMinutes()}:${endTime.getSeconds()} `;
-      this.appProcessType = item.appProcessType;
-      this.executionLog = item.executionLog;
-      item.executionTime = this.endDate;
-    });
-    return dataArray;
+    this.process.post(this.processType);
   }
 }

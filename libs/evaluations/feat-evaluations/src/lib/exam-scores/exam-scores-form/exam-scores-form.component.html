@@ -46,26 +46,6 @@
   </div>
 
   <div class="field">
-    <label for="ExamVersion">Tezat e Provimit *</label>
-    <p-dropdown
-      id="ExamVersion"
-      [options]="examVersions"
-      optionValue="key"
-      optionLabel="value"
-      name="examVersionId"
-      [autoDisplayFirst]="false"
-      [(ngModel)]="examScore.examVersionId"
-      [showClear]="true"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examScore.examVersionId
-      }">
-    </p-dropdown>
-    <small class="p-error block" *ngIf="submitted && !examScore.examVersionId">
-      Versioni i Provimit është fushë e kërkuar.
-    </small>
-  </div>
-
-  <div class="field">
     <label for="barcode">Barkodi *</label>
     <input
       type="text"

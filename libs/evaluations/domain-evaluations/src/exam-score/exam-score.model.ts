@@ -8,9 +8,6 @@ export interface ExamScore {
   examSubjectId?: string;
   examSubjectName?: string;
 
-  examVersionId: string;
-  examVersionName: string;
-
   barcode: string;
   writingScore: number;
   multipleChoiceScore: number;
