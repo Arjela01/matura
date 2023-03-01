@@ -22,8 +22,12 @@ import {
 } from '@msh/configurations/data-access-configurations';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LazyLoadEvent, MessageService } from 'primeng/api';
-import { ExamGradeApiService } from '@msh/evaluations/data-access-evaluations';
+import {
+  AnnualGradesApiService,
+  ExamGradeApiService,
+} from '@msh/evaluations/data-access-evaluations';
 import { TableModule } from 'primeng/table';
+import { IalModel } from '@msh/evaluations/domain-evaluations';
 
 @Component({
   selector: 'msh-a2-form-annual-grades-view',
@@ -86,6 +90,12 @@ export class A2FormAnnualGradesViewComponent implements OnInit {
     graduationYear: undefined,
   };
 
+  ialModel: any | IalModel = {
+    averageGrade: 0,
+    id: '',
+    name: '',
+  };
+
   examGrade: any[] = [];
 
   constructor(
@@ -95,7 +105,7 @@ export class A2FormAnnualGradesViewComponent implements OnInit {
     private readonly examGradeApiService: ExamGradeApiService,
     private router: Router,
     private messageService: MessageService,
-
+    private readonly annualGradeService: AnnualGradesApiService,
     private route: ActivatedRoute
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -111,5 +121,20 @@ export class A2FormAnnualGradesViewComponent implements OnInit {
       this.examGrade = [...result.data];
       this.cd.detectChanges();
     });
+    this.getAvgGrade();
+  }
+
+  getAvgGrade(){
+    this.annualGradeService.getAverageGrade(this.id).subscribe(result => {
+      this.ialModel = {
+        ...this.ialModel,
+        id:result.data.id,
+        averageGrade: result.data.averageGrade,
+        name:result.data.name,
+        surname:result.data.surname
+      };
+      this.cd.detectChanges();
+    });
   }
 }
+

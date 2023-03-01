@@ -16,10 +16,11 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExamGrade } from '@msh/evaluations/domain-evaluations';
-import { ExamGradeApiService } from '@msh/evaluations/data-access-evaluations';
+import {AnnualGradesApiService, ExamGradeApiService} from '@msh/evaluations/data-access-evaluations';
 import { StudentsApiService } from '@msh/configurations/data-access-configurations';
 import { Student } from '@msh/shared/domain-models';
 import { GridEvent } from '@msh/shared/util-shared';
+import * as FileSaver from "file-saver";
 
 @UntilDestroy()
 @Component({
@@ -54,7 +55,8 @@ export class AnnualGradesGridComponent {
   constructor(
     private readonly examGradeApiService: ExamGradeApiService,
     private readonly studentApiService: StudentsApiService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private readonly annualGradeService: AnnualGradesApiService,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
@@ -70,4 +72,17 @@ export class AnnualGradesGridComponent {
         this.totalRecords = response.total;
       });
   }
+
+  exportFile() {
+    this.annualGradeService
+      .export()
+      .pipe(untilDestroyed(this))
+      .subscribe((response: any) => {
+        const blob: any = new Blob([response], {
+          type: '',
+        });
+        FileSaver.saveAs(blob, '');
+      });
+  }
+
 }

@@ -62,14 +62,15 @@
               <div *ngIf="examGrade.length === 0">
                 Nuk janë gjetur asnjë notë!
               </div>
-
               <tr>
                 <th *ngFor="let exam of examGrade">
                   {{ exam.examSubjectName }}
                 </th>
+                <th>Nota Mesatare</th>
               </tr>
               <tr>
                 <th *ngFor="let exam of examGrade">{{ exam.grade }}</th>
+                <th>{{ ialModel.averageGrade }}</th>
               </tr>
             </ng-template>
           </p-table>
