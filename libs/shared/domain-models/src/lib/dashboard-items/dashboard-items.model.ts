@@ -3,7 +3,7 @@ export interface DashboardItems {
   dashboardSectionId: number;
   dashboardSectionName?: string;
   description:string;
-  document?: boolean;
+  document?: string;
   isDocument?  : boolean
   documentName:string;
   endDate: Date[];

@@ -37,7 +37,6 @@ export class DashboardItemsGridComponent {
   @Input() totalRecords = 0;
   @Input() loading = false;
 
-  //Keep it local state because of Table Header checkbox not syncing
   selectedDashboardItems: DashboardItems[] = [];
 
   @Output() gridEvent = new EventEmitter<
@@ -47,6 +46,12 @@ export class DashboardItemsGridComponent {
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
 
+  onDownloadClick(dashboardItems: DashboardItems) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.CUSTOM_ACTION2,
+      data: dashboardItems,
+    } as GridEvent<DashboardItems>);
+  }
 
   onEditClick(dashboardItems: DashboardItems) {
     this.gridEvent.emit({

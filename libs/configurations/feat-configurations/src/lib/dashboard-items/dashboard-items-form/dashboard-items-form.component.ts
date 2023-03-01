@@ -116,10 +116,26 @@ export class DashboardItemsFormComponent implements OnInit{
     });
   }
 
-
+  selectFiles(event: any) {
+    const fileReader = new FileReader();
+    for (const file of event.files) {
+      fileReader.readAsDataURL(file);
+      this.uploaded = true;
+      fileReader.onload = () => {
+        if (fileReader.result) {
+          const parts = fileReader.result.toString().split(';base64,');
+          const parsedBase64 = parts[1];
+          this.dashboardItems.document = parsedBase64 as string;
+        }
+      };
+    }
+  }
   onSubmit() {
     this.submitted = true;
-    if (this.form.valid) {
+    if (this.form.valid && this.dashboardItems.document) {
+      if (this.dashboardItems.id === 0) {
+        delete this.dashboardItems.id;
+      }
       this.formSave.emit(this.dashboardItems);
     }
   }

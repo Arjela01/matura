@@ -56,23 +56,33 @@
   </div>
 
   <div class="field">
-    <label for="document">Dokument *</label>
+    <label for="document">Dokumenti *</label>
     <div class="form-group drop-files noLabel">
       <p-fileUpload
         #uploader
+        id="document"
         [showUploadButton]="false"
         class="ie-file-upload"
-        id="document"
-        accept=".pdf">
+        (onSelect)="selectFiles($event)"
+        accept=".pdf,.docx,.jpg,.png,.txt,.xlsx,.">
         <ng-template pTemplate="content">
           <img
             [src]="'data:image;base64,' + dashboardItems.document"
             width="100"
             height="100"
-            *ngIf="dashboardItems.document && !uploaded && dashboardItems.document"
+            *ngIf="
+              dashboardItems.document &&
+              !uploaded &&
+              dashboardItems.document
+            "
             alt="" />
         </ng-template>
       </p-fileUpload>
+      <small
+        class="p-error block"
+        *ngIf="submitted && !dashboardItems.document">
+        Dokumenti është fushë e kërkuar.
+      </small>
     </div>
   </div>
 
