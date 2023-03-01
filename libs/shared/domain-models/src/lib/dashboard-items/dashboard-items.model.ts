@@ -1,7 +1,6 @@
 export interface DashboardItems {
   id?: any;
   dashboardSectionId: number;
-  dashboardSectionName:string;
   description:string;
   document: number;
   documentName:string;

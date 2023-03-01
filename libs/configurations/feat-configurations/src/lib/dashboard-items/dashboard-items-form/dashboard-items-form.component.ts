@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
+  ChangeDetectionStrategy, ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input,
+  Input, OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { DashboardItems, DashboardSectionOptionsModel,} from '@msh/shared/domain-models';
+import { DashboardItems,} from '@msh/shared/domain-models';
 
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -26,6 +26,12 @@ import {DropdownModel} from "@msh/shared/data-access-shared";
 import {AutoCompleteModule} from "primeng/autocomplete";
 import {MultiSelectModule} from "primeng/multiselect";
 import {UntilDestroy} from "@ngneat/until-destroy";
+import {
+  AcademicYearApiService, DashboardSectionApiService, GendersApiService,
+  HighSchoolApiService, ProfileApiService,
+  StudentsApiService
+} from "@msh/configurations/data-access-configurations";
+import {Router} from "@angular/router";
 
 @UntilDestroy()
 @Component({
@@ -51,10 +57,11 @@ import {UntilDestroy} from "@ngneat/until-destroy";
   styleUrls: ['./dashboard-items-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardItemsFormComponent {
-  @Input() Users: DropdownModel<number>[] = [];
-  @Input() roles: DropdownModel<number>[] = [];
-  sectionDashboard = DashboardSectionOptionsModel.All;
+export class DashboardItemsFormComponent implements OnInit{
+  users: DropdownModel<number>[] = [];
+  roles: DropdownModel<number>[] = [];
+  sectionDashboard: DropdownModel<number>[] = [];
+
   @Input() set setDashboardItemsDetails(details: DashboardItems | null) {
     if (details) {
       this.dashboardItems = Object.assign({}, details);
@@ -67,20 +74,16 @@ export class DashboardItemsFormComponent {
 
   submitted = false;
 
-
   // eslint-disable-next-line @typescript-eslint/member-ordering
   dashboardItems: DashboardItems = {
     dashboardSectionId: 0,
-    dashboardSectionName: "",
     description: "",
     document: 0,
     documentName: "",
     endDate: [],
     linkUrl: "",
-
     startDate: [],
-    title: "",
-
+    title: ""
   };
   uploaded= false;
 
@@ -88,6 +91,19 @@ export class DashboardItemsFormComponent {
   onCancelClick() {
     this.formClose.emit();
   }
+
+  constructor(
+    private cd: ChangeDetectorRef,
+    private readonly dashboardSectionService: DashboardSectionApiService,
+  ) {}
+  ngOnInit(): void {
+    this.dashboardSectionService.loadDropdownList().subscribe(response => {
+      this.sectionDashboard = [...response.data];
+      this.cd.detectChanges();
+
+    });
+  }
+
 
   onSubmit() {
     this.submitted = true;

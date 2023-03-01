@@ -8,7 +8,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
-import { DashboardItemsApiService } from '@msh/configurations/data-access-configurations';
 
 import {
   GlobalToastService,
@@ -21,6 +20,9 @@ import { RippleModule } from 'primeng/ripple';
 import { DashboardItemsFormComponent } from '../dashboard-items-form/dashboard-items-form.component';
 import { DashboardItemsGridComponent } from '../dashboard-items-grid/dashboard-items-grid.component';
 import { DashboardItems } from '@msh/shared/domain-models';
+import {
+  DashboardItemsApiService
+} from "../../../../../data-access-configurations/src/lib/dashboard-items/dashboard-items-api.service";
 
 @UntilDestroy()
 @Component({
