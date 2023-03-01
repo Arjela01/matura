@@ -94,47 +94,12 @@
     </small>
   </div>
 
-<!--  <div class="field">-->
-<!--    <div class="field">-->
-<!--      <label for="roles">Roli/et</label>-->
-<!--      <p-multiSelect-->
-<!--        id="roles"-->
-<!--        name="roles"-->
-<!--        [options]="roles"-->
-<!--        optionValue="value"-->
-<!--        optionLabel="value"-->
-<!--        [(ngModel)]="dashboardItems.roleName"-->
-<!--        appendTo="body"-->
-<!--        [showClear]="true"-->
-<!--        defaultLabel="Selekto Rolet"-->
-<!--        display="chip"></p-multiSelect>-->
-<!--&lt;!&ndash;      <small class="p-error block" *ngIf="submitted && !dashboardItems.roleName">&ndash;&gt;-->
-<!--&lt;!&ndash;        Roli/et është fushë e kërkuar.&ndash;&gt;-->
-<!--&lt;!&ndash;      </small>&ndash;&gt;-->
-<!--    </div>-->
-<!--  </div>-->
 
-<!--  <div class="field">-->
-<!--    <label for="users">Përdoruesi/t *</label>-->
-<!--    <p-dropdown-->
-<!--      id="users"-->
-<!--      name="users"-->
-<!--      [options]="users"-->
-<!--      [(ngModel)]="dashboardItems.userName"-->
-<!--      [autoDisplayFirst]="false"-->
-<!--      [required]="true"-->
-<!--      [virtualScroll]="true"-->
-<!--      >-->
-<!--    </p-dropdown>-->
-<!--&lt;!&ndash;    <small class="p-error block" *ngIf="submitted && !dashboardItems.userName">&ndash;&gt;-->
-<!--&lt;!&ndash;      Përdoruesi/t është fushë e kërkuar.&ndash;&gt;-->
-<!--&lt;!&ndash;    </small>&ndash;&gt;-->
-<!--  </div>-->
 
   <div class="field">
-    <label for="Roles">Rolet</label>
+    <label for="roles">Rolet</label>
     <p-multiSelect
-      id="Roles"
+      id="roles"
       name="roles"
       [options]="roles"
       optionValue="value"
@@ -144,7 +109,11 @@
       [showClear]="true"
       defaultLabel="Selekto Rolet"
       display="chip"></p-multiSelect>
+    <small class="p-error block" *ngIf="submitted && !dashboardItems.roles">
+      Roli/et është fushë e kërkuar.
+    </small>
   </div>
+
   <div class="field">
     <label for="Users">Perdoruesit</label>
     <p-multiSelect
@@ -158,6 +127,9 @@
       [showClear]="true"
       defaultLabel="Selekto Perdoruesit"
       display="chip"></p-multiSelect>
+    <small class="p-error block" *ngIf="submitted && !dashboardItems.users">
+      Përdoruesi/t është fushë e kërkuar.
+    </small>
   </div>
 
   <div class="field">

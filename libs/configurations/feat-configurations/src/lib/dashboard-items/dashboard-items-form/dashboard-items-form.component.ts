@@ -58,8 +58,8 @@ import {Router} from "@angular/router";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardItemsFormComponent implements OnInit{
-  @Input() users: DropdownModel<number>[] = [];
   @Input() roles: DropdownModel<number>[] = [];
+  @Input() users: DropdownModel<number>[] = [];
   sectionDashboard: DropdownModel<number>[] = [];
 
   @Input() set setDashboardItemsDetails(details: DashboardItems | null) {
@@ -76,7 +76,6 @@ export class DashboardItemsFormComponent implements OnInit{
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   dashboardItems: DashboardItems = {
-    roleName: "",
     id: 0,
     dashboardSectionId: 0,
     description: "",
@@ -85,8 +84,8 @@ export class DashboardItemsFormComponent implements OnInit{
     endDate: [],
     linkUrl: "",
     startDate: [],
-    roles: [],
-    users: [],
+    roles: '',
+    users: '',
     title: ""
   };
   uploaded= false;

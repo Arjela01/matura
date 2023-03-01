@@ -154,8 +154,6 @@
       <td style="width: 14%; min-width: 10rem">
         {{ dashboardItems.description | date : 'dd/MM/yyyy' }}
       </td>
-
-
       <td>
         <div class="flex">
 
@@ -165,7 +163,7 @@
             src="assets/svg/download.svg"
             class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"
-            (click)="onEditClick(dashboardItems)"
+            (click)="downloadFile(dashboardItems)"
             pTooltip="Shkarko" />
 
           <img

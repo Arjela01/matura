@@ -5,8 +5,9 @@ import { Observable } from 'rxjs';
 import { LazyLoadEvent } from 'primeng/api';
 import {
   DashboardItems,
-  DashboardItemsTableView,
+  DashboardItemsTableView, Student,
 } from '@msh/shared/domain-models';
+import {ArchiveFolder} from "@msh/evaluations/domain-evaluations";
 
 @Injectable({
   providedIn: 'root',
@@ -46,4 +47,11 @@ export class DashboardItemsApiService {
       `/DashboardItems/${dashboardItemsId}`
     );
   }
+
+  downloadFileById(documentId: any): Observable<ApiResult<DashboardItems>> {
+    return this.apiService.get<ApiResult<DashboardItems>>(
+      `/DashboardItems/${documentId}`
+    );
+  }
+
 }

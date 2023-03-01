@@ -7,14 +7,12 @@ export interface DashboardItems {
   documentName:string;
   endDate: Date[];
   linkUrl:string;
-  roleIds?:number;
-  roleName: string;
   startDate: Date[];
   title:string;
   userIds?: number;
   userName?: string;
-  roles: string[],
-  users: string[],
+  roles: string,
+  users: string,
 
 
 }
