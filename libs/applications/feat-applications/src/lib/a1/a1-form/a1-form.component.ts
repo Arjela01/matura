@@ -4,16 +4,16 @@ import {
   ChangeDetectorRef,
   Component,
   HostListener,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { A1ApiService } from '@msh/applications/data-access-applications';
-import { A1 } from '@msh/applications/domain-application';
+import { A1Z } from '@msh/applications/domain-application';
 import {
   AcademicYearApiService,
   ExamSubjectApiService,
-  StudentsApiService,
+  StudentsApiService
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { AcademicYear } from '@msh/shared/domain-models';
@@ -94,7 +94,7 @@ export class A1FormComponent {
     filters: {},
     globalFilter: null,
   };
-  showForm: boolean | null = null;
+
   students: any | null = null;
   id: string | null = null;
 
@@ -139,7 +139,6 @@ export class A1FormComponent {
           })
         )
         .subscribe(([students, z1]) => {
-          this.showForm = true;
           this.a1.academicYearId = this.academicYear?.id;
           this.students = students;
           this.optionalSubjects = z1.data;
@@ -149,7 +148,7 @@ export class A1FormComponent {
       this.getA1ById()
         .pipe(
           switchMap((a1: any) => {
-            this.a1 = { ...a1?.data } as A1;
+            this.a1 = { ...a1?.data } as A1Z;
             return combineLatest([
               this.getAcademicYears(),
               this.getStudent(),
@@ -162,7 +161,6 @@ export class A1FormComponent {
           this.academicYear = years['data'].find(
             (year: AcademicYear) => year.isActive
           );
-          this.showForm = true;
           this.d3Dropdown = d3.data;
           this.a1.subjectD3Id = this.a1.subjectD3A1Id;
           this.students = students;
@@ -308,7 +306,7 @@ export class A1FormComponent {
     this.optionalSubjectChoosen = '';
   }
 
-  addA1(a1: A1) {
+  addA1(a1: A1Z) {
     this.a1ApiService
       .save(a1)
       .pipe(untilDestroyed(this))
@@ -342,7 +340,7 @@ export class A1FormComponent {
       });
   }
 
-  updateA1(a1: A1) {
+  updateA1(a1: A1Z) {
     this.a1ApiService
       .update(a1)
       .pipe(untilDestroyed(this))
