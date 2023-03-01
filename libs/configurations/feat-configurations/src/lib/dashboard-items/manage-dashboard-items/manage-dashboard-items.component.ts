@@ -23,6 +23,7 @@ import { DashboardItems } from '@msh/shared/domain-models';
 import {
   DashboardItemsApiService
 } from "../../../../../data-access-configurations/src/lib/dashboard-items/dashboard-items-api.service";
+import {DashboardSectionApiService} from "@msh/configurations/data-access-configurations";
 
 @UntilDestroy()
 @Component({
@@ -56,7 +57,10 @@ export class ManageDashboardItemsComponent {
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly dashboardItemsService: DashboardItemsApiService
+    private readonly dashboardItemsService: DashboardItemsApiService,
+    private readonly dashboardSectionService: DashboardSectionApiService,
+
+
   ) {}
 
   onNewClick() {

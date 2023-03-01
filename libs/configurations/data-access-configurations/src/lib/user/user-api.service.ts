@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiResult } from '@msh/shared/data-access-shared';
+import {ApiResult, DropdownModel} from '@msh/shared/data-access-shared';
 import { ChangeUserStatusDto, User, UserTableView } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
@@ -39,5 +39,10 @@ export class UserApiService {
 
   delete(userId: string): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<User>>(`/User/${userId}`);
+  }
+  loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
+    return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
+      `/User/DropdownList`
+    );
   }
 }

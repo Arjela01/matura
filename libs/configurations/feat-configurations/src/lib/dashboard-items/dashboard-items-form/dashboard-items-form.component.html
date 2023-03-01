@@ -108,9 +108,9 @@
 <!--        [showClear]="true"-->
 <!--        defaultLabel="Selekto Rolet"-->
 <!--        display="chip"></p-multiSelect>-->
-<!--      <small class="p-error block" *ngIf="submitted && !dashboardItems.roleName">-->
-<!--        Roli/et është fushë e kërkuar.-->
-<!--      </small>-->
+<!--&lt;!&ndash;      <small class="p-error block" *ngIf="submitted && !dashboardItems.roleName">&ndash;&gt;-->
+<!--&lt;!&ndash;        Roli/et është fushë e kërkuar.&ndash;&gt;-->
+<!--&lt;!&ndash;      </small>&ndash;&gt;-->
 <!--    </div>-->
 <!--  </div>-->
 
@@ -119,21 +119,48 @@
 <!--    <p-dropdown-->
 <!--      id="users"-->
 <!--      name="users"-->
-<!--      [options]="Users"-->
+<!--      [options]="users"-->
 <!--      [(ngModel)]="dashboardItems.userName"-->
 <!--      [autoDisplayFirst]="false"-->
 <!--      [required]="true"-->
 <!--      [virtualScroll]="true"-->
-<!--      [ngClass]="{-->
-<!--        'ng-invalid ng-dirty': submitted && !dashboardItems.userName-->
-<!--      }">-->
+<!--      >-->
 <!--    </p-dropdown>-->
 <!--&lt;!&ndash;    <small class="p-error block" *ngIf="submitted && !dashboardItems.userName">&ndash;&gt;-->
 <!--&lt;!&ndash;      Përdoruesi/t është fushë e kërkuar.&ndash;&gt;-->
 <!--&lt;!&ndash;    </small>&ndash;&gt;-->
 <!--  </div>-->
 
-    <div class="field">
+  <div class="field">
+    <label for="Roles">Rolet</label>
+    <p-multiSelect
+      id="Roles"
+      name="roles"
+      [options]="roles"
+      optionValue="value"
+      optionLabel="value"
+      [(ngModel)]="dashboardItems.roles"
+      appendTo="body"
+      [showClear]="true"
+      defaultLabel="Selekto Rolet"
+      display="chip"></p-multiSelect>
+  </div>
+  <div class="field">
+    <label for="Users">Perdoruesit</label>
+    <p-multiSelect
+      id="Users"
+      name="users"
+      [options]="users"
+      optionValue="value"
+      optionLabel="value"
+      [(ngModel)]="dashboardItems.users"
+      appendTo="body"
+      [showClear]="true"
+      defaultLabel="Selekto Perdoruesit"
+      display="chip"></p-multiSelect>
+  </div>
+
+  <div class="field">
       <label for="effectiveDate">E vlefshme nga *</label>
       <input
         placeholder="dd/MM/yyyy"

@@ -28,8 +28,8 @@ import {MultiSelectModule} from "primeng/multiselect";
 import {UntilDestroy} from "@ngneat/until-destroy";
 import {
   AcademicYearApiService, DashboardSectionApiService, GendersApiService,
-  HighSchoolApiService, ProfileApiService,
-  StudentsApiService
+  HighSchoolApiService, ProfileApiService, RolesApiService,
+  StudentsApiService, UserApiService
 } from "@msh/configurations/data-access-configurations";
 import {Router} from "@angular/router";
 
@@ -58,8 +58,8 @@ import {Router} from "@angular/router";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardItemsFormComponent implements OnInit{
-  users: DropdownModel<number>[] = [];
-  roles: DropdownModel<number>[] = [];
+  @Input() users: DropdownModel<number>[] = [];
+  @Input() roles: DropdownModel<number>[] = [];
   sectionDashboard: DropdownModel<number>[] = [];
 
   @Input() set setDashboardItemsDetails(details: DashboardItems | null) {
@@ -76,6 +76,8 @@ export class DashboardItemsFormComponent implements OnInit{
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   dashboardItems: DashboardItems = {
+    roleName: "",
+    id: 0,
     dashboardSectionId: 0,
     description: "",
     document: 0,
@@ -83,6 +85,8 @@ export class DashboardItemsFormComponent implements OnInit{
     endDate: [],
     linkUrl: "",
     startDate: [],
+    roles: [],
+    users: [],
     title: ""
   };
   uploaded= false;
@@ -95,12 +99,22 @@ export class DashboardItemsFormComponent implements OnInit{
   constructor(
     private cd: ChangeDetectorRef,
     private readonly dashboardSectionService: DashboardSectionApiService,
+    private readonly rolesServices: RolesApiService,
+    private readonly usersServices: UserApiService,
+
   ) {}
   ngOnInit(): void {
     this.dashboardSectionService.loadDropdownList().subscribe(response => {
       this.sectionDashboard = [...response.data];
       this.cd.detectChanges();
-
+    });
+    this.rolesServices.loadDropdownList().subscribe(response => {
+      this.roles = [...response.data];
+      this.cd.detectChanges();
+    });
+    this.usersServices.loadDropdownList().subscribe(response => {
+      this.users = [...response.data];
+      this.cd.detectChanges();
     });
   }
 
