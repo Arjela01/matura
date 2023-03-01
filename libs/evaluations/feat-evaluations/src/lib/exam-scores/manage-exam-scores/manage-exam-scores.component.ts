@@ -63,6 +63,7 @@ export class ManageExamScoresComponent implements OnInit {
   examVersions: DropdownModel<string>[] = [];
   base64: string | ArrayBuffer | null | undefined;
 
+
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
@@ -297,6 +298,9 @@ export class ManageExamScoresComponent implements OnInit {
           this.toastService.showError(
             'Ndodhi një problem gjatë ngarkimit të dokumentit!'
           );
+        if (!response.isSuccessful) {
+          this.toastService.showError('Nuk keni ngarkuar dokumentin e duhur!');
+        }
       });
     };
   }

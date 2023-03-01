@@ -74,7 +74,7 @@ export class CalculateGradesComponent {
           this.calculateGrade$$.next(dataArray);
         }
         if (response.isBadRequest) {
-          this.toastService.showError('Dicka shkoi gabim');
+          this.toastService.showError('Dicka shkoi keq!');
         }
         if (!response.isSuccessful) {
           this.toastService.showError(response.errorMessage);
