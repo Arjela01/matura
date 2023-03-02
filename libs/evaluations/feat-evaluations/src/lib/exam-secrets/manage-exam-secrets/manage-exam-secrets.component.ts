@@ -13,8 +13,8 @@ import {
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExamSecret } from '@msh/evaluations/domain-evaluations';
-import {
-  ExamVersionApiService,
+import {ExamSubjectApiService,
+
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { RippleModule } from 'primeng/ripple';
@@ -49,7 +49,7 @@ export class ManageExamSecretsComponent {
   private examSecrets$$ = new BehaviorSubject<ExamSecret[]>([]);
   examSecrets$ = this.examSecrets$$.asObservable();
   filters: LazyLoadEvent | null = null;
-  examVersions: DropdownModel<number>[] = [];
+  examSubjects: DropdownModel<number>[] = [];
   base64: string | ArrayBuffer | null | undefined;
 
   totalRecords = 0;
@@ -63,7 +63,7 @@ export class ManageExamSecretsComponent {
     private readonly toastService: GlobalToastService,
     private readonly examSecretService: ExamSecretApiService,
     private readonly router: Router,
-    private readonly examVersionService: ExamVersionApiService
+    private readonly examSubjectService: ExamSubjectApiService
   ) {}
 
   onNewClick() {
@@ -96,12 +96,12 @@ export class ManageExamSecretsComponent {
     }
   }
 
-  getExamVersions() {
-    this.examVersionService
+  getExamSubjects() {
+    this.examSubjectService
       .loadDropdownList()
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.examVersions = response.data;
+        this.examSubjects = response.data;
       });
   }
 

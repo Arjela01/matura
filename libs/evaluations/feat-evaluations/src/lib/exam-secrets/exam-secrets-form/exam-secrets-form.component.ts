@@ -32,13 +32,13 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import {
-  ExamVersionApiService,
+
+  ExamSubjectApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ExamSecretApiService } from '@msh/evaluations/data-access-evaluations';
-import { SharedStudentLookupModule } from "@msh/shared/student-lookup";
-
+import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
 
 @UntilDestroy()
 @Component({
@@ -64,10 +64,11 @@ import { SharedStudentLookupModule } from "@msh/shared/student-lookup";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
-  @Output() examVersionChanged = new EventEmitter<string>();
+  @Output() examSubjectChanged = new EventEmitter<string>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
   examVersions: DropdownModel<number>[] = [];
+  examSubjects: DropdownModel<number>[] = [];
   filters: LazyLoadEvent | null = null;
 
   private studentList$$ = new BehaviorSubject<Student[]>([]);
@@ -78,20 +79,21 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
   studentInputData = '';
   showStudentModal = false;
   selectedStudent: any = null;
-  examVersionId: any;
+  examSubjectId: any;
   formId: string | null;
 
   examSecret: ExamSecret = {
     id: '',
     studentId: '',
     studentName: '',
-    examVersionName: '',
+    examSubjectName: '',
     barcode: '',
     isFall: true,
+    academicYearId: 1,
   };
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.examVersionId = this.examSecret.examVersionId;
+    this.examSubjectId = this.examSecret.examSubjectId;
     this.cd.detectChanges();
   }
 
@@ -99,9 +101,9 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
     private cd: ChangeDetectorRef,
     private readonly studentService: StudentsApiService,
     private readonly router: Router,
-    private examSecretApiService: ExamSecretApiService,
+    private readonly examSecretApiService: ExamSecretApiService,
     private readonly toastService: GlobalToastService,
-    private readonly examVersionService: ExamVersionApiService,
+    private readonly examSubjectService: ExamSubjectApiService,
     private readonly activatedRoute: ActivatedRoute
   ) {
     this.formId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -112,15 +114,13 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
       this.onStudentInit(this.examSecret);
     }
     if (this.selectedStudent !== null) {
-      console.log(1111, this.selectedStudent);
       this.onStudentChange(this.selectedStudent);
     }
   }
 
   ngOnInit(): void {
-
-    this.examVersionService.loadDropdownList().subscribe(response => {
-      this.examVersions = response.data;
+    this.examSubjectService.loadDropdownList().subscribe(response => {
+      this.examSubjects = response.data;
     });
     if (this.formId) {
       this.examSecretApiService
@@ -128,9 +128,7 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
         .getExamSecret(this.formId!)
         .subscribe(response => {
           this.examSecret = response.data;
-          console.log(this.examSecret);
           this.cd.detectChanges();
-          console.log(response.data);
         });
     }
   }
@@ -199,13 +197,11 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Sekretimi u shtua me sukses!');
           this.router.navigate(['evaluations/exam-secret']);
-          console.log(response);
         }
         if (!response.isSuccessful) {
           this.toastService.showError(
             'Ndodhi një problem gjatë shtimit të sekretimit!'
           );
-          console.log(response);
         }
       });
   }
@@ -218,25 +214,21 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Sekretimi u ndryshua me sukses!');
           this.router.navigate(['evaluations/exam-secret']);
-          console.log(response);
         }
         if (!response.isSuccessful) {
           this.toastService.showError(
             'Ndodhi një problem gjatë shtimit të sekretimit!'
           );
-          console.log(response);
         }
       });
   }
 
   getStudents($event: LazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
-
     this.studentService
       .loadStudents($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        console.log(response);
         this.studentList$$.next(response.data);
         this.totalRecords = response.total;
       });

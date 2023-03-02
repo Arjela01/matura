@@ -57,7 +57,7 @@ export class ManageEmptySiteComponent {
           const examAssignment = event.data as ExamAssignment;
           this.examDateId = examAssignment.examDateId;
           this.confirmationService.confirm({
-            message: 'Jeni i sigurtë që doni të zbrazni  qendrën?',
+            message: 'Jeni i sigurt që doni të zbrazni  qendrën?',
             accept: () => {
               this.emptySite(this.examDateId);
             },

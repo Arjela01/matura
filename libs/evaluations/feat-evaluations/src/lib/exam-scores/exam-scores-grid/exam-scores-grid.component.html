@@ -38,13 +38,13 @@
             display="menu"></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="examVersionName">
-        Testi i Provimit
+      <th pSortableColumn="examSubjectName">
+       Lënda e Provimit
         <div>
-          <p-sortIcon field="examVersionName"></p-sortIcon>
+          <p-sortIcon field="examSubjectName"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="examVersionName"
+            field="examSubjectName"
             display="menu"></p-columnFilter>
         </div>
       </th>
@@ -90,7 +90,7 @@
         {{ examScore.examTypeName }}
       </td>
       <td style="width: 20%; min-width: 10rem">
-        {{ examScore.examVersionName }}
+        {{ examScore.examSubjectName }}
       </td>
       <td style="width: 20%; min-width: 10rem">
         {{ examScore.barcode }}

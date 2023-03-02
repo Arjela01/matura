@@ -73,6 +73,7 @@ export class StudyProgramFormComponent implements OnChanges {
     competitionCoefficient: '',
     competitionMaxScore: '',
     competitionMinScore: '',
+    academicYearId: 1,
     dropDownName: 'ssss',
   };
 
