@@ -3,7 +3,7 @@ export interface DashboardItem {
   dashboardSectionId: number;
   dashboardSectionName?: string;
   description:string;
-  document?: string;
+  document?: any;
   hasDocument?  : boolean;
   hasLinkUrl? : boolean;
   documentName:string;
