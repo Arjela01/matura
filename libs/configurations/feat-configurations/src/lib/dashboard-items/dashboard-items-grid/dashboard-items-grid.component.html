@@ -103,6 +103,9 @@
           field="user"
           display="menu"></p-columnFilter>
       </th>
+      <th pSortableColumn="download">
+        Shkarko
+      </th>
       <th pSortableColumn="user">
         Veprime
       </th>
@@ -118,10 +121,10 @@
         {{ dashboardItems.title }}
       </td>
       <td style="width: 30%; min-width: 10rem">
-        {{ dashboardItems.isDocument ? 'Po' : 'Jo' }}
+        {{ dashboardItems.hasDocument ? 'Po' : 'Jo' }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ dashboardItems.isLink ? 'Po' : 'Jo' }}
+        {{ dashboardItems.hasLinkUrl ? 'Po' : 'Jo' }}
       </td>
       <td style="width: 20%; min-width: 10rem">
         {{ dashboardItems.roles}}
@@ -136,32 +139,35 @@
         {{ dashboardItems.endDate | date : 'dd/MM/yyyy' }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ dashboardItems.description }}
+        {{ dashboardItems.createdBy }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ dashboardItems.description }}
+        {{ dashboardItems.modifiedOn  | date : 'dd/MM/yyyy'  }}
       </td><td style="width: 14%; min-width: 10rem">
-      {{ dashboardItems.description }}
+      {{ dashboardItems.modifiedBy }}
     </td>
       <td style="width: 14%; min-width: 10rem">
         {{ dashboardItems.description | date : 'dd/MM/yyyy' }}
       </td>
-      <td>
-        <div class="flex">
-
-
-
+      <td style="width: 14%; min-width: 10rem">
+        <div *ngIf="dashboardItems?.hasDocument === false">
+          <p>NUk ka Dokument!</p>
+        </div>
+        <div [hidden]="dashboardItems?.hasDocument === false">
           <img
             src="assets/svg/download.svg"
-            class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
-            tooltipPosition="bottom"
+            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
             pTooltip="Shkarko"
-            (click)="onDownloadClick(dashboardItems)" />
-
+            download="(dashboardItems.document)"
+            tooltipPosition="bottom"/>
+          </div>
+      </td>
+<td>
+      <div class="flex">
           <img
             src="assets/svg/edit-form.svg"
             class="p-button-rounded p-button-danger p-button-text ml-m pointer"
-            pTooltip="Fshi"
+            pTooltip="Ndrysho"
             tooltipPosition="bottom"
             (click)="onEditClick(dashboardItems)" />
 

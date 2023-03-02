@@ -46,12 +46,8 @@ export class DashboardItemsGridComponent {
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
 
-  onDownloadClick(dashboardItems: DashboardItems) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.CUSTOM_ACTION2,
-      data: dashboardItems,
-    } as GridEvent<DashboardItems>);
-  }
+
+
 
   onEditClick(dashboardItems: DashboardItems) {
     this.gridEvent.emit({
