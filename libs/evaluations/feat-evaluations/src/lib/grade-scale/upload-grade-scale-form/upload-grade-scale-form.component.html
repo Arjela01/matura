@@ -32,4 +32,18 @@
       (uploadHandler)="onSubmit($event)">
     </p-fileUpload>
   </div>
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      [disabled]="form.invalid"
+      type="submit"
+      pButton
+      label="Ngarko"
+      class="p-button w-auto"></button>
+  </div>
 </form>
