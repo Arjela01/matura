@@ -89,6 +89,7 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
     examSubjectName: '',
     barcode: '',
     isFall: true,
+    academicYearId: 1,
   };
 
   ngOnChanges(changes: SimpleChanges): void {
