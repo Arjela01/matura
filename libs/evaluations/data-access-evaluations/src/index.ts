@@ -6,4 +6,5 @@ export * from './lib/annual-grades/annual-grades-api.service';
 export * from './lib/exam-score/exam-score-api.service';
 export * from './lib/exam-secret/exam-secret-api.service';
 export * from './lib/grades-scale/grades-scale-api.service';
+export * from './lib/processes/processes-api.service';
 export * from './lib/unmatched-exams/unmatched-exams-api.service';

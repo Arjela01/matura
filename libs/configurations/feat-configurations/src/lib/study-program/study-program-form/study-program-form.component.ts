@@ -41,7 +41,6 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 export class StudyProgramFormComponent implements OnChanges {
   @Input() universities: DropdownModel<number>[] = [];
   @Input() universityDepartments: DropdownModel<number>[] = [];
-  @Input() academicYears: DropdownModel<number>[] = [];
 
   universityDepartmentsFiltered: DropdownModel<number>[] = [];
 
@@ -60,7 +59,6 @@ export class StudyProgramFormComponent implements OnChanges {
   studyProgram: StudyProgram = {
     id: 0,
     name: '',
-    academicYearId: '',
     code: '',
     isTwoYearLong: 1,
     isValidForRace: true,

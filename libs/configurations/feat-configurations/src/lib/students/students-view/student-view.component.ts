@@ -13,7 +13,6 @@ import {
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-  AcademicYearApiService,
   GendersApiService,
   HighSchoolApiService,
   ProfileApiService,
@@ -59,7 +58,6 @@ export class StudentViewComponent implements OnChanges, OnInit {
   @ViewChild('form', { static: true }) form!: NgForm;
 
   genders: DropdownModel<number>[] = [];
-  academicYears: DropdownModel<number>[] = [];
   @Input() set studentDetails(details: Student | null) {
     if (details) {
       this.student = Object.assign({}, details);
@@ -109,7 +107,6 @@ export class StudentViewComponent implements OnChanges, OnInit {
 
   constructor(
     private cd: ChangeDetectorRef,
-    private readonly academicYearService: AcademicYearApiService,
     private readonly studentService: StudentsApiService,
     private readonly highSchoolService: HighSchoolApiService,
     private readonly profileService: ProfileApiService,

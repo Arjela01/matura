@@ -44,7 +44,6 @@ export class ExamScoresFormComponent implements OnChanges {
   @Input() examTypes: DropdownModel<number>[] = [];
   @Input() examSubjects: DropdownModel<string>[] = [];
   @Input() examVersions: DropdownModel<string>[] = [];
-  @Input() academicYears: DropdownModel<number>[] = [];
 
   @Output() formSave = new EventEmitter<ExamScore>();
   @Output() formClose = new EventEmitter<undefined>();
@@ -55,13 +54,9 @@ export class ExamScoresFormComponent implements OnChanges {
   submitted = false;
 
   examScore: ExamScore = {
-    academicYear: '',
-    academicYearId: 0,
     barcode: '',
     documentName: '',
     examSecretId: '',
-    examVersionId: '',
-    examVersionName: '',
     id: 0,
     modificationReason: '',
     multipleChoiceScore: 0,
@@ -79,7 +74,6 @@ export class ExamScoresFormComponent implements OnChanges {
 
   constructor(
     private cd: ChangeDetectorRef,
-    private readonly toastService: GlobalToastService
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
