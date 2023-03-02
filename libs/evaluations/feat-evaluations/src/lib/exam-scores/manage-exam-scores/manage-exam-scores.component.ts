@@ -18,7 +18,6 @@ import { ExamScore } from '@msh/evaluations/domain-evaluations';
 import {
   ExamSubjectApiService,
   ExamTypeApiService,
-  ExamVersionApiService,
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { RippleModule } from 'primeng/ripple';
@@ -87,6 +86,8 @@ export class ManageExamScoresComponent implements OnInit {
       modificationReason: '',
       multipleChoiceScore: 0,
       writingScore: 0,
+      academicYearId: 1,
+
     };
   }
 

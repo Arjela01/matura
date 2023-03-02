@@ -60,6 +60,8 @@ export class ExamSubjectFormComponent {
     code: '',
     credits: 0,
     isOptional: false,
+    academicYearId: 1,
+
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
