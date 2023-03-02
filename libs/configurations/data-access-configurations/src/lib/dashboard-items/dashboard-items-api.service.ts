@@ -4,17 +4,16 @@ import { APIService } from '@msh/shared/util-shared';
 import { Observable } from 'rxjs';
 import { LazyLoadEvent } from 'primeng/api';
 import {
-  DashboardItems,
-  DashboardItemsTableView, Student,
+  DashboardItem,
+  DashboardItemsTableView,
 } from '@msh/shared/domain-models';
-import {HttpParams} from "@angular/common/http";
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DashboardItemsApiService {
   constructor(private apiService: APIService) {}
-
 
   loadDropdownList(
     current: number | null = null
@@ -30,32 +29,28 @@ export class DashboardItemsApiService {
     return this.apiService.post(`/DashboardItems/TableData`, event);
   }
 
-  save(dashboardItems: DashboardItems): Observable<ApiResult<DashboardItems>> {
-    return this.apiService.post<ApiResult<DashboardItems>, DashboardItems>(
+  save(dashboardItems: DashboardItem): Observable<ApiResult<DashboardItem>> {
+    return this.apiService.post<ApiResult<DashboardItem>, DashboardItem>(
       `/DashboardItems`,
       dashboardItems
     );
   }
-  update(
-    dashboardItems: DashboardItems
-  ): Observable<ApiResult<DashboardItems>> {
-    return this.apiService.put<ApiResult<DashboardItems>, DashboardItems>(
+  update(dashboardItems: DashboardItem): Observable<ApiResult<DashboardItem>> {
+    return this.apiService.put<ApiResult<DashboardItem>, DashboardItem>(
       `/DashboardItems`,
       dashboardItems
     );
   }
 
   delete(dashboardItemsId: number): Observable<ApiResult<unknown>> {
-    return this.apiService.delete<ApiResult<DashboardItems>>(
+    return this.apiService.delete<ApiResult<DashboardItem>>(
       `/DashboardItems/${dashboardItemsId}`
     );
   }
 
-
-  downloadFileById(documentId: any): Observable<ApiResult<DashboardItems>> {
-    return this.apiService.get<ApiResult<DashboardItems>>(
+  downloadFileById(documentId: any): Observable<ApiResult<DashboardItem>> {
+    return this.apiService.get<ApiResult<DashboardItem>>(
       `/DashboardItems/${documentId}`
     );
   }
-
 }

@@ -8,7 +8,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
-
 import {
   GlobalToastService,
   GridEvent,
@@ -19,12 +18,13 @@ import { BehaviorSubject } from 'rxjs';
 import { RippleModule } from 'primeng/ripple';
 import { DashboardItemsFormComponent } from '../dashboard-items-form/dashboard-items-form.component';
 import { DashboardItemsGridComponent } from '../dashboard-items-grid/dashboard-items-grid.component';
-import { DashboardItems } from '@msh/shared/domain-models';
+import { DashboardItem } from '@msh/shared/domain-models';
 import {
-  DashboardItemsApiService
-} from "../../../../../data-access-configurations/src/lib/dashboard-items/dashboard-items-api.service";
-import {DashboardSectionApiService} from "@msh/configurations/data-access-configurations";
-import {DropdownModel} from "@msh/shared/data-access-shared";
+  DashboardItemsApiService,
+  DashboardSectionApiService,
+} from '@msh/configurations/data-access-configurations';
+import { DropdownModel } from '@msh/shared/data-access-shared';
+import * as FileSaver from 'file-saver';
 
 @UntilDestroy()
 @Component({
@@ -46,24 +46,21 @@ import {DropdownModel} from "@msh/shared/data-access-shared";
   providers: [ConfirmationService],
 })
 export class ManageDashboardItemsComponent {
-  private dashboardItems$$ = new BehaviorSubject<DashboardItems[]>([]);
+  private dashboardItems$$ = new BehaviorSubject<DashboardItem[]>([]);
   dashboardItems$ = this.dashboardItems$$.asObservable();
   filters: LazyLoadEvent | null = null;
   users: DropdownModel<number>[] = [];
   roles: DropdownModel<number>[] = [];
 
   totalRecords = 0;
-  selectedDashboardItem: DashboardItems | null = null;
-  selectedDashboardItems: DashboardItems[] = [];
+  selectedDashboardItem: DashboardItem | null = null;
+  selectedDashboardItems: DashboardItem[] = [];
   displayModal = false;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly dashboardItemsService: DashboardItemsApiService,
-    private readonly dashboardSectionService: DashboardSectionApiService,
-
-
   ) {}
 
   onNewClick() {
@@ -82,24 +79,24 @@ export class ManageDashboardItemsComponent {
     });
   }
 
-  onGridEvent(event: GridEvent<DashboardItems | DashboardItems[]>) {
+  onGridEvent(event: GridEvent<DashboardItem | DashboardItem[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
         this.selectedDashboardItems = [
           ...this.selectedDashboardItems,
-          event.data as DashboardItems,
+          event.data as DashboardItem,
         ];
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
         this.selectedDashboardItems = this.selectedDashboardItems.filter(sb => {
-          sb.id !== (event.data as DashboardItems).id;
+          sb.id !== (event.data as DashboardItem).id;
         });
         break;
 
       case GRID_ACTIONS.SELECT_MANY:
         this.selectedDashboardItems = [
           ...this.selectedDashboardItems,
-          ...(event.data as DashboardItems[]),
+          ...(event.data as DashboardItem[]),
         ];
         break;
       case GRID_ACTIONS.UNSELECT_ALL:
@@ -108,31 +105,25 @@ export class ManageDashboardItemsComponent {
       case GRID_ACTIONS.EDIT:
         this.selectedDashboardItem = Object.assign(
           {},
-          event.data as DashboardItems
+          event.data as DashboardItem
         );
         this.displayModal = true;
         break;
       case GRID_ACTIONS.CUSTOM_ACTION2:
-        this.confirmationService.confirm({
-          message:
-            'Jeni i sigurt që doni të fshini studentin e skualifikuar të zgjedhur?',
-          accept: () => {
-            this.getDownload(event.data as DashboardItems);
-          },
-        });
+        this.downloadDocument(event.data as DashboardItem);
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
           message:
             'Jeni i sigurt që doni të fshini studentin e skualifikuar të zgjedhur?',
           accept: () => {
-            this.deleteDashboardItems(event.data as DashboardItems);
+            this.deleteDashboardItems(event.data as DashboardItem);
           },
         });
         break;
     }
   }
-  onFormSave(dashboardItems: DashboardItems) {
+  onFormSave(dashboardItems: DashboardItem) {
     if (dashboardItems.id) {
       this.updateDashboardItems(dashboardItems);
     }
@@ -153,24 +144,14 @@ export class ManageDashboardItemsComponent {
       });
   }
 
- getDownload(dashboardItems: DashboardItems) {
-    this.dashboardItemsService
-      .delete(dashboardItems.id)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showInfo('Studenti u fshi me sukses!');
-          this.getDashboardItems(this.filters as LazyLoadEvent);
-        }
-
-        if (response.isBadRequest)
-          this.toastService.showError(
-            'Ndodhi një problem gjatë fshirjes të studentit!'
-          );
-      });
+  downloadDocument(dashboardItem: DashboardItem) {
+    const blob: any = new Blob(dashboardItem.document, {
+      type: 'application/octet-stream',
+    });
+    FileSaver.saveAs(blob, dashboardItem.documentName);
   }
 
-  addDashboardItems(dashboardItems: DashboardItems) {
+  addDashboardItems(dashboardItems: DashboardItem) {
     this.dashboardItemsService
       .save(dashboardItems)
       .pipe(untilDestroyed(this))
@@ -188,7 +169,7 @@ export class ManageDashboardItemsComponent {
       });
   }
 
-  updateDashboardItems(dashboardItems: DashboardItems) {
+  updateDashboardItems(dashboardItems: DashboardItem) {
     this.dashboardItemsService
       .update(dashboardItems)
       .pipe(untilDestroyed(this))
@@ -205,7 +186,7 @@ export class ManageDashboardItemsComponent {
       });
   }
 
-  deleteDashboardItems(dashboardItems: DashboardItems) {
+  deleteDashboardItems(dashboardItems: DashboardItem) {
     this.dashboardItemsService
       .delete(dashboardItems.id)
       .pipe(untilDestroyed(this))

@@ -21,157 +21,101 @@
       <th pSortableColumn="section">
         Seksioni
         <p-sortIcon field="id"></p-sortIcon>
-        <p-columnFilter type="text" field="section" display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="tittle">
-        Titulli
-        <p-sortIcon field="tittle"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="tittle"
+          field="section"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="title">
+        Titulli
+        <p-sortIcon field="title"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="title"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="description">
+        Description
+        <p-sortIcon field="description"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="description"
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="isDocument">
-        Është Dokument?
+        Dokument?
         <p-sortIcon field="isDocument"></p-sortIcon>
       </th>
       <th pSortableColumn="isLink">
-        Është Link?
+        Link?
         <p-sortIcon field="isLink"></p-sortIcon>
       </th>
-      <th pSortableColumn="role">
-        Roli
-        <p-sortIcon field="role"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="role"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="user">
-        Përdoruesi
-        <p-sortIcon field="user"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="user"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="user">
+      <th pSortableColumn="validFrom">
         E Vlefshme Nga
-        <p-sortIcon field="user"></p-sortIcon>
+        <p-sortIcon field="validFrom"></p-sortIcon>
         <p-columnFilter
-          type="text"
-          field="user"
+          type="date"
+          field="validFrom"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="user">
+      <th pSortableColumn="validTo">
         E Vlefshme Deri
-        <p-sortIcon field="user"></p-sortIcon>
+        <p-sortIcon field="validTo"></p-sortIcon>
         <p-columnFilter
-          type="text"
-          field="user"
+          type="date"
+          field="validTo"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="user">
-        Krijuar Nga
-        <p-sortIcon field="user"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="user"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="user">
-        Data e krijimit
-        <p-sortIcon field="user"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="user"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="user">
-        Modifikuar Nga
-        <p-sortIcon field="user"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="user"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="user">
-        Data e Modifikimit
-        <p-sortIcon field="user"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="user"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="user">
-        Veprime
-      </th>
-
+      <th pSortableColumn="user">Veprime</th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-dashboardItems>
+  <ng-template pTemplate="body" let-dashboardItem>
     <tr>
       <td style="width: 14%; min-width: 10rem">
-        {{ dashboardItems.dashboardSectionName }}
+        {{ dashboardItem.dashboardSectionName }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ dashboardItems.title }}
-      </td>
-      <td style="width: 30%; min-width: 10rem">
-        {{ dashboardItems.isDocument ? 'Po' : 'Jo' }}
+        {{ dashboardItem.title }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ dashboardItems.isLink ? 'Po' : 'Jo' }}
-      </td>
-      <td style="width: 20%; min-width: 10rem">
-        {{ dashboardItems.roles}}
+        {{ dashboardItem.description }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ dashboardItems.userName }}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ dashboardItems.startDate | date : 'dd/MM/yyyy' }}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ dashboardItems.endDate | date : 'dd/MM/yyyy' }}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ dashboardItems.description }}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ dashboardItems.description }}
-      </td><td style="width: 14%; min-width: 10rem">
-      {{ dashboardItems.description }}
-    </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ dashboardItems.description | date : 'dd/MM/yyyy' }}
-      </td>
-      <td>
-        <div class="flex">
-
-
-
+        <div *ngIf="dashboardItem.hasDocument">
           <img
             src="assets/svg/download.svg"
             class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"
             pTooltip="Shkarko"
-            (click)="onDownloadClick(dashboardItems)" />
-
+            (click)="onDownloadClick(dashboardItem)" />
+        </div>
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        <a *ngIf="dashboardItem.hasLink" href="{{ dashboardItem.linkUrl }}">
+          Visit Link
+        </a>
+        {{ dashboardItem.isLink ? 'Po' : 'Jo' }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ dashboardItem.startDate | date : 'dd/MM/yyyy' }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ dashboardItem.endDate | date : 'dd/MM/yyyy' }}
+      </td>
+      <td>
+        <div class="flex">
           <img
             src="assets/svg/edit-form.svg"
             class="p-button-rounded p-button-danger p-button-text ml-m pointer"
-            pTooltip="Fshi"
+            pTooltip="Ndrysho"
             tooltipPosition="bottom"
-            (click)="onEditClick(dashboardItems)" />
-
+            (click)="onEditClick(dashboardItem)" />
           <img
             src="assets/svg/delete-form.svg"
             class="p-button-rounded p-button-danger p-button-text ml-m pointer"
             pTooltip="Fshi"
             tooltipPosition="bottom"
-            (click)="onDeleteClick(dashboardItems)" />
-
+            (click)="onDeleteClick(dashboardItem)" />
         </div>
       </td>
     </tr>
