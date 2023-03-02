@@ -37,7 +37,6 @@ export class DashboardItemsGridComponent {
   @Input() totalRecords = 0;
   @Input() loading = false;
 
-  //Keep it local state because of Table Header checkbox not syncing
   selectedDashboardItems: DashboardItems[] = [];
 
   @Output() gridEvent = new EventEmitter<
@@ -46,10 +45,9 @@ export class DashboardItemsGridComponent {
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
-  dashboardItem: DashboardItems = {
-    name:'',
-    roles: [],
-  };
+
+
+
 
   onEditClick(dashboardItems: DashboardItems) {
     this.gridEvent.emit({

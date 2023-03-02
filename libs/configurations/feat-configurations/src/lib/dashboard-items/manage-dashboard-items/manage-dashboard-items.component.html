@@ -36,6 +36,8 @@
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
     <msh-dashboard-items-form
+      [roles]="roles"
+      [users]="users"
       [setDashboardItemsDetails]="selectedDashboardItem"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">

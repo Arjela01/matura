@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
+  ChangeDetectionStrategy, ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input,
+  Input, OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { DashboardItems, DashboardSectionOptionsModel,} from '@msh/shared/domain-models';
+import { DashboardItems,} from '@msh/shared/domain-models';
 
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -26,6 +26,12 @@ import {DropdownModel} from "@msh/shared/data-access-shared";
 import {AutoCompleteModule} from "primeng/autocomplete";
 import {MultiSelectModule} from "primeng/multiselect";
 import {UntilDestroy} from "@ngneat/until-destroy";
+import {
+  AcademicYearApiService, DashboardSectionApiService, GendersApiService,
+  HighSchoolApiService, ProfileApiService, RolesApiService,
+  StudentsApiService, UserApiService
+} from "@msh/configurations/data-access-configurations";
+import {Router} from "@angular/router";
 
 @UntilDestroy()
 @Component({
@@ -51,9 +57,11 @@ import {UntilDestroy} from "@ngneat/until-destroy";
   styleUrls: ['./dashboard-items-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardItemsFormComponent {
+export class DashboardItemsFormComponent implements OnInit{
   @Input() roles: DropdownModel<number>[] = [];
-  sectionDashboard = DashboardSectionOptionsModel.All;
+  @Input() users: DropdownModel<number>[] = [];
+  sectionDashboard: DropdownModel<number>[] = [];
+
   @Input() set setDashboardItemsDetails(details: DashboardItems | null) {
     if (details) {
       this.dashboardItems = Object.assign({}, details);
@@ -66,21 +74,68 @@ export class DashboardItemsFormComponent {
 
   submitted = false;
 
-
   // eslint-disable-next-line @typescript-eslint/member-ordering
   dashboardItems: DashboardItems = {
-    name:'',
+    id: 0,
+    dashboardSectionId: 0,
+    description: "",
+    documentName: "",
+    endDate: [],
+    linkUrl: "",
+    startDate: [],
     roles: [],
+    users: [],
+    title: ""
   };
+  uploaded= false;
 
 
   onCancelClick() {
     this.formClose.emit();
   }
 
+  constructor(
+    private cd: ChangeDetectorRef,
+    private readonly dashboardSectionService: DashboardSectionApiService,
+    private readonly rolesServices: RolesApiService,
+    private readonly usersServices: UserApiService,
+
+  ) {}
+  ngOnInit(): void {
+    this.dashboardSectionService.loadDropdownList().subscribe(response => {
+      this.sectionDashboard = [...response.data];
+      this.cd.detectChanges();
+    });
+    this.rolesServices.loadDropdownList().subscribe(response => {
+      this.roles = [...response.data];
+      this.cd.detectChanges();
+    });
+    this.usersServices.loadDropdownList().subscribe(response => {
+      this.users = [...response.data];
+      this.cd.detectChanges();
+    });
+  }
+
+  selectFiles(event: any) {
+    const fileReader = new FileReader();
+    for (const file of event.files) {
+      fileReader.readAsDataURL(file);
+      this.uploaded = true;
+      fileReader.onload = () => {
+        if (fileReader.result) {
+          const parts = fileReader.result.toString().split(';base64,');
+          const parsedBase64 = parts[1];
+          this.dashboardItems.document = parsedBase64 as string;
+        }
+      };
+    }
+  }
   onSubmit() {
     this.submitted = true;
-    if (this.form.valid) {
+    if (this.form.valid && this.dashboardItems.document) {
+      if (this.dashboardItems.id === 0) {
+        delete this.dashboardItems.id;
+      }
       this.formSave.emit(this.dashboardItems);
     }
   }

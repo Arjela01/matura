@@ -1,5 +1,6 @@
 export * from './lib/constants/api-url.token';
 export * from './lib/constants/error-mesages';
+export * from './lib/constants/reports-app.token';
 export * from './lib/constants/toast.enum';
 export * from './lib/constants/validation-regexes';
 export * from './lib/directives/albanian-nid-validator.directive';

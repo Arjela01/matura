@@ -31,21 +31,13 @@
           field="tittle"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="document">
-        Dokument
-        <p-sortIcon field="document"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="document"
-          display="menu"></p-columnFilter>
+      <th pSortableColumn="isDocument">
+        Është Dokument?
+        <p-sortIcon field="isDocument"></p-sortIcon>
       </th>
-      <th pSortableColumn="linkUrl">
-        Link/URL
-        <p-sortIcon field="linkUrl"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="linkUrl"
-          display="menu"></p-columnFilter>
+      <th pSortableColumn="isLink">
+        Është Link?
+        <p-sortIcon field="isLink"></p-sortIcon>
       </th>
       <th pSortableColumn="role">
         Roli
@@ -111,66 +103,81 @@
           field="user"
           display="menu"></p-columnFilter>
       </th>
+      <th pSortableColumn="download">
+        Shkarko
+      </th>
       <th pSortableColumn="user">
         Veprime
       </th>
 
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-bannedStudent>
+  <ng-template pTemplate="body" let-dashboardItems>
     <tr>
       <td style="width: 14%; min-width: 10rem">
-        {{ bannedStudent.studentIdentifier }}
+        {{ dashboardItems.dashboardSectionName }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ bannedStudent.studentName }}
+        {{ dashboardItems.title }}
+      </td>
+      <td style="width: 30%; min-width: 10rem">
+        {{ dashboardItems.hasDocument ? 'Po' : 'Jo' }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ bannedStudent.isBanned ? 'Po' : 'Jo' }}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ bannedStudent.effectiveDate | date : 'dd/MM/yyyy' }}
+        {{ dashboardItems.hasLinkUrl ? 'Po' : 'Jo' }}
       </td>
       <td style="width: 20%; min-width: 10rem">
-        {{ bannedStudent.banRemovalDate | date : 'dd/MM/yyyy' }}
+        {{ dashboardItems.roles}}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ bannedStudent.description }}
+        {{ dashboardItems.userName }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ bannedStudent.description }}
+        {{ dashboardItems.startDate | date : 'dd/MM/yyyy' }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ bannedStudent.description }}
+        {{ dashboardItems.endDate | date : 'dd/MM/yyyy' }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ bannedStudent.description }}
+        {{ dashboardItems.createdBy }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ bannedStudent.description }}
+        {{ dashboardItems.modifiedOn  | date : 'dd/MM/yyyy'  }}
       </td><td style="width: 14%; min-width: 10rem">
-      {{ bannedStudent.description }}
+      {{ dashboardItems.modifiedBy }}
     </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ bannedStudent.description }}
+        {{ dashboardItems.description | date : 'dd/MM/yyyy' }}
       </td>
-
-
-      <td>
-        <div class="flex">
+      <td style="width: 14%; min-width: 10rem">
+        <div *ngIf="dashboardItems?.hasDocument === false">
+          <p>NUk ka Dokument!</p>
+        </div>
+        <div [hidden]="dashboardItems?.hasDocument === false">
+          <img
+            src="assets/svg/download.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
+            pTooltip="Shkarko"
+            download="(dashboardItems.document)"
+            tooltipPosition="bottom"/>
+          </div>
+      </td>
+<td>
+      <div class="flex">
           <img
             src="assets/svg/edit-form.svg"
-            class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
+            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
+            pTooltip="Ndrysho"
             tooltipPosition="bottom"
-            (click)="onEditClick(bannedStudent)"
-            pTooltip="Ndrysho" />
+            (click)="onEditClick(dashboardItems)" />
 
           <img
             src="assets/svg/delete-form.svg"
             class="p-button-rounded p-button-danger p-button-text ml-m pointer"
             pTooltip="Fshi"
             tooltipPosition="bottom"
-            (click)="onDeleteClick(bannedStudent)" />
+            (click)="onDeleteClick(dashboardItems)" />
+
         </div>
       </td>
     </tr>

@@ -4,8 +4,10 @@ import { APIService } from '@msh/shared/util-shared';
 import { Observable } from 'rxjs';
 import { LazyLoadEvent } from 'primeng/api';
 import {
-  DashboardItems, DashboardItemsTableView,
+  DashboardItems,
+  DashboardItemsTableView, Student,
 } from '@msh/shared/domain-models';
+import {HttpParams} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root',
@@ -13,9 +15,13 @@ import {
 export class DashboardItemsApiService {
   constructor(private apiService: APIService) {}
 
-  loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
+
+  loadDropdownList(
+    current: number | null = null
+  ): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
-      `/DashboardItems/DropdownList`
+      `/DashboardItems/DropdownList`,
+      current ? new HttpParams().append('ignore', current) : new HttpParams()
     );
   }
   loadDashboardItems(
@@ -24,9 +30,7 @@ export class DashboardItemsApiService {
     return this.apiService.post(`/DashboardItems/TableData`, event);
   }
 
-  save(
-    dashboardItems: DashboardItems
-  ): Observable<ApiResult<DashboardItems>> {
+  save(dashboardItems: DashboardItems): Observable<ApiResult<DashboardItems>> {
     return this.apiService.post<ApiResult<DashboardItems>, DashboardItems>(
       `/DashboardItems`,
       dashboardItems
@@ -46,4 +50,12 @@ export class DashboardItemsApiService {
       `/DashboardItems/${dashboardItemsId}`
     );
   }
+
+
+  downloadFileById(documentId: any): Observable<ApiResult<DashboardItems>> {
+    return this.apiService.get<ApiResult<DashboardItems>>(
+      `/DashboardItems/${documentId}`
+    );
+  }
+
 }

@@ -8,7 +8,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
-import { DashboardItemsApiService } from '@msh/configurations/data-access-configurations';
 
 import {
   GlobalToastService,
@@ -21,6 +20,11 @@ import { RippleModule } from 'primeng/ripple';
 import { DashboardItemsFormComponent } from '../dashboard-items-form/dashboard-items-form.component';
 import { DashboardItemsGridComponent } from '../dashboard-items-grid/dashboard-items-grid.component';
 import { DashboardItems } from '@msh/shared/domain-models';
+import {
+  DashboardItemsApiService
+} from "../../../../../data-access-configurations/src/lib/dashboard-items/dashboard-items-api.service";
+import {DashboardSectionApiService} from "@msh/configurations/data-access-configurations";
+import {DropdownModel} from "@msh/shared/data-access-shared";
 
 @UntilDestroy()
 @Component({
@@ -45,6 +49,8 @@ export class ManageDashboardItemsComponent {
   private dashboardItems$$ = new BehaviorSubject<DashboardItems[]>([]);
   dashboardItems$ = this.dashboardItems$$.asObservable();
   filters: LazyLoadEvent | null = null;
+  users: DropdownModel<number>[] = [];
+  roles: DropdownModel<number>[] = [];
 
   totalRecords = 0;
   selectedDashboardItem: DashboardItems | null = null;
@@ -54,7 +60,10 @@ export class ManageDashboardItemsComponent {
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly dashboardItemsService: DashboardItemsApiService
+    private readonly dashboardItemsService: DashboardItemsApiService,
+    private readonly dashboardSectionService: DashboardSectionApiService,
+
+
   ) {}
 
   onNewClick() {
@@ -103,6 +112,15 @@ export class ManageDashboardItemsComponent {
         );
         this.displayModal = true;
         break;
+      case GRID_ACTIONS.CUSTOM_ACTION2:
+        this.confirmationService.confirm({
+          message:
+            'Jeni i sigurt që doni të fshini studentin e skualifikuar të zgjedhur?',
+          accept: () => {
+            this.getDownload(event.data as DashboardItems);
+          },
+        });
+        break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
           message:
@@ -132,6 +150,23 @@ export class ManageDashboardItemsComponent {
       .subscribe(response => {
         this.dashboardItems$$.next(response.data);
         this.totalRecords = response.total;
+      });
+  }
+
+ getDownload(dashboardItems: DashboardItems) {
+    this.dashboardItemsService
+      .delete(dashboardItems.id)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showInfo('Studenti u fshi me sukses!');
+          this.getDashboardItems(this.filters as LazyLoadEvent);
+        }
+
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi një problem gjatë fshirjes të studentit!'
+          );
       });
   }
 
