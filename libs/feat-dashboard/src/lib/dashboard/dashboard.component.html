@@ -79,11 +79,13 @@
 
         <div class="col-12 xl:col-4"  *ngFor="let card of dashboardCards | slice:0:3 ; let i =index " >
         <div class="card">
-          <p-card header="{{card.name}}" subheader="{{card.name}}" [style]="{height: 'auto'}"  styleClass="p-card-shadow">
+          <p-card header="{{card.dashboardSectionName}}" subheader="{{card.title}}" [style]="{height: 'auto'}"  styleClass="p-card-shadow">
             <ng-template pTemplate="header">
               <img alt="Card" src="assets/images/udhezime.svg"  [style]="{width: '400px' ,height: '300px', margin: '50px'}" >
             </ng-template>
-            <p>{{card.name}}</p>
+            <p>{{card.description}}</p>
+            <p>{{card.documentName}}</p>
+
             <ng-template pTemplate="footer">
               <p-button label="Aplikim A1Z" icon="pi pi-pencil"  [style]="{width: 'auto'}"></p-button>
               <p-button label="Aplikim A1" icon="pi pi-pencil"  [style]="{'margin-left': '.5em'}"></p-button>
