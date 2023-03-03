@@ -77,6 +77,7 @@ export class ManageHighSchoolsComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedHighSchool = {} as HighSchool;
   }
 
   onDeleteSelectedClick() {

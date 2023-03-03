@@ -7,7 +7,7 @@ export interface ExamScore {
 
   examSubjectId?: string;
   examSubjectName?: string;
-  academicYearId?: number;
+  academicYearId?: 1;
   barcode: string;
   writingScore: number;
   multipleChoiceScore: number;

@@ -54,6 +54,7 @@ export class ManageA1zCategoriesComponent {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedA1zCategory = {} as A1ZCategory;
   }
 
   onDeleteSelectedClick() {

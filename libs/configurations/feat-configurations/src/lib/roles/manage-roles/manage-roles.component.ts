@@ -51,6 +51,7 @@ export class ManageRolesComponent {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedRole = {} as Role;
   }
 
   onDeleteSelectedClick() {

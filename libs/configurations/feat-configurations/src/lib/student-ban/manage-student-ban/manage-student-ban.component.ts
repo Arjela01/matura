@@ -59,7 +59,9 @@ export class ManageStudentBanComponent {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedBannedStudent = {} as StudentBan;
   }
+
   onModalClose() {
     this.displayModal = false;
   }

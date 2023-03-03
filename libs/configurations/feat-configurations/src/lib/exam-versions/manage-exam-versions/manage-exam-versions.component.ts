@@ -10,7 +10,7 @@ import {
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
-import { ExamVersion } from '@msh/shared/domain-models';
+import {ExamSubject, ExamVersion} from '@msh/shared/domain-models';
 
 import { BehaviorSubject } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -73,6 +73,7 @@ export class ManageExamVersionsComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedExamVersion = {} as ExamVersion;
   }
 
 
@@ -219,7 +220,6 @@ export class ManageExamVersionsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examSubjects = response.data;
-        console.log(2222, response.data)
       });
   }
 }
