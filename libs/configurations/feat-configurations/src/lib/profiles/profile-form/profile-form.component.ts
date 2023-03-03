@@ -60,6 +60,8 @@ export class ProfileFormComponent implements OnChanges {
     code: '',
     name: '',
     isTechnical: true,
+    academicYearId: 1,
+
   };
 
   ngOnChanges(): void {

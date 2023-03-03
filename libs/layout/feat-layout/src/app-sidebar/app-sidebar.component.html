@@ -1,5 +1,5 @@
 <div class="sidebar">
-  <div class="flex mt-2 mb-3">
+  <div class="flex mt-2">
     <div class="w-auto align-self-start">
       <img src="assets/images/logo.png" style="width: 29px" class="pt-1">
     </div>
@@ -31,8 +31,8 @@
             >
             </p-avatar>
           </div>
-          <div class="name menu-title fs">{{user.lastName}} {{user.lastName}}</div>
-          <div class="email fs">{{user.email}}</div>
+          <div class="name menu-title fs">{{user.firstName}} {{user.lastName}}</div>
+          <div class="email fs">{{user.roleName}}</div>
         </div>
 
         <div class="second-group" (click)="onLogoutClick()">

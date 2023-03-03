@@ -1,9 +1,12 @@
+<div class="mb-header">
+  <h3 class="font-semibold">Notat Vjetore</h3>
+</div>
 <div class="row">
   <div class="row-gap-1-3">
     <div class="card-form px-6 py-6 mb-header">
       <div class="grid">
         <div class="col-12 md:col-6 lg:col-3">
-          <h3>Të dhëna Personale</h3>
+          <h4>Të dhëna Personale</h4>
 
           <div
             *ngIf="student !== null"
@@ -50,7 +53,7 @@
         </div>
 
         <div class="col-12 md:col-6 lg:col-9">
-          <h3>Notat e Maturantit</h3>
+          <h4>Notat e Maturantit</h4>
           <p-table
             [resizableColumns]="true"
             styleClass="p-datatable-gridlines"
