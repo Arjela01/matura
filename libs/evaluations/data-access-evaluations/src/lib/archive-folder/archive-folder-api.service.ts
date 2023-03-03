@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
-import {BehaviorSubject, Observable} from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
   ArchiveFolder,
   ArchiveFolderTableView,
@@ -12,6 +12,9 @@ import {
   providedIn: 'root',
 })
 export class ArchiveFolderApiService {
+  currentArchiveFolder$: BehaviorSubject<ArchiveFolder | null> =
+    new BehaviorSubject<ArchiveFolder | null>(null);
+
   constructor(private apiService: APIService) {}
 
   getById(id: any): Observable<ApiResult<ArchiveFolder>> {
@@ -19,9 +22,7 @@ export class ArchiveFolderApiService {
       `/ArchiveFolder/${id}`
     );
   }
-  changeFolderStatus(
-    id: number
-  ): Observable<ApiResult<ArchiveFolder>> {
+  changeFolderStatus(id: number): Observable<ApiResult<ArchiveFolder>> {
     return this.apiService.put<ApiResult<ArchiveFolder>, any>(
       `/ArchiveFolder/UpdateStatus`,
       {
