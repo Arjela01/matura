@@ -79,6 +79,7 @@
           field="schoolName"
           display="menu"></p-columnFilter>
       </th>
+      <th></th>
       <th>Procedo</th>
     </tr>
   </ng-template>
@@ -92,9 +93,6 @@
       </td>
       <td style="width: 15%; min-width: 10rem">
         {{ examCopy.firstName }} {{ examCopy.lastName }}
-      </td>
-      <td style="width: 15%; min-width: 10rem">
-        {{ examCopy.nid }}
       </td>
       <td style="width: 15%; min-width: 10rem">
         {{ examCopy.administrationOffice }}
@@ -111,16 +109,17 @@
       <td style="width: 15%; min-width: 10rem">
         {{ examCopy.decisionDate }}
       </td>
+      <td></td>
       <td>
         <div class="flex">
           <button
             pButton
             pRipple
-            icon="pi pi-check"
-            class="p-button-rounded p-button-info p-button-text mr-2"
-            pTooltip="Procedo"
-            tooltipPosition="bottom"
-            (click)="onProceedClick(examCopy)"></button>
+            class="p-button-rounded p-button-plain p-button-text mr-2 pointer"
+            (click)="onProceedClick(examCopy)"
+            [ngClass]="['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']">
+            Procedo
+          </button>
         </div>
       </td>
     </tr>
