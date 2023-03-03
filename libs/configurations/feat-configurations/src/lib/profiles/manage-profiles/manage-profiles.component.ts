@@ -19,7 +19,6 @@ import { BehaviorSubject } from 'rxjs';
 import {ProfileFormComponent} from "../profile-form/profile-form.component";
 import {ProfileGridComponent} from "../profile-grid/profile-grid.component";
 import {
-  AcademicYearApiService,
   ProfileApiService,
   ProfileGroupApiService
 } from "@msh/configurations/data-access-configurations";
@@ -57,21 +56,18 @@ export class ManageProfilesComponent implements OnInit {
   selectedProfiles: Profile[] = [];
   displayModal = false;
 
-  AcademicYears: DropdownModel<number>[] = [];
   ProfileGroups: DropdownModel<number>[] = [];
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly profileService: ProfileApiService,
-    private readonly AcademicYearApiService: AcademicYearApiService,
     private readonly ProfileGroupsApiService: ProfileGroupApiService,
     private readonly cd: ChangeDetectorRef,
 
   ) {}
 
   ngOnInit(): void {
-    this.getAcademicYearsDropdown();
     this.getProfileGroupsDropdown();
   }
 
@@ -208,13 +204,6 @@ export class ManageProfilesComponent implements OnInit {
       });
   }
 
-  getAcademicYearsDropdown() {
-    this.AcademicYearApiService
-      .loadDropdownList()
-      .subscribe(response => {
-      this.AcademicYears = response.data;
-    });
-  }
 
   getProfileGroupsDropdown() {
     this.ProfileGroupsApiService

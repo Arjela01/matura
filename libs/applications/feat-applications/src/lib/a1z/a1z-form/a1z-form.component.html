@@ -1,10 +1,12 @@
+<div class="mb-header">
+  <h3 class="font-semibold">Formulari A1Z</h3>
+</div>
 <small class="p-error block" *ngIf="submitted && !a1z.academicYearId">
   Viti Akademik është fushë e kërkuar.
 </small>
 <div class="grid">
   <div class="col-12 p-fluid">
-    <div class="card px-6 py-6 mb-header">
-      <h3 class="font-semibold mb-5">Formulari A1Z</h3>
+    <div class="card px-6 py-6">
       <form #form="ngForm" (ngSubmit)="onSubmit()">
         <div class="field mt-4 mb-4" [style]="{ width: '500px' }">
           <label for="studentInputData">Student *</label>

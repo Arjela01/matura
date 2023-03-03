@@ -41,6 +41,16 @@
     </ng-template>
     <ng-template pTemplate="body" let-student>
         <tr>
+          <td>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-check"
+              class="p-button-rounded p-button-success p-button-text mr-2"
+              pTooltip="Zgjidh"
+              tooltipPosition="bottom"
+              (click)="selectStudent(student)"></button>
+          </td>
             <td style="width: 20%; min-width: 10rem">
                 {{student.studentId}}
             </td>
@@ -57,11 +67,6 @@
                 {{student.idCard}}
             </td>
             <td>
-                <div class="flex">
-                    <button pButton pRipple icon="pi pi-check" class="p-button-success  mr-2" label="Zgjidh"
-                        (click)="selectStudent(student)" tooltipPosition="bottom"></button>
-
-                </div>
             </td>
         </tr>
     </ng-template>
