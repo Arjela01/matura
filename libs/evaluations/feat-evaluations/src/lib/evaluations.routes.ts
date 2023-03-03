@@ -1,5 +1,4 @@
 import { Route } from '@angular/router';
-import {ConnectExamSecretsComponent} from "./connect-exam-secrets/connect-exam-secrets.component";
 
 export const EVALUATION_ROUTES: Route[] = [
   {
@@ -23,6 +22,14 @@ export const EVALUATION_ROUTES: Route[] = [
         './archive-folder/manage-archive-folders/manage-archive-folders.component'
       ).then(m => m.ManageArchiveFoldersComponent),
   },
+  {
+    path: 'barcode-correction',
+    loadComponent: () =>
+      import(
+        './barcode-correction/manage-barcode-correction/manage-barcode-correction.component'
+        ).then(m => m.ManageBarcodeCorrectionComponent),
+  },
+
   {
     path: 'archive-view/:id',
     loadComponent: () =>

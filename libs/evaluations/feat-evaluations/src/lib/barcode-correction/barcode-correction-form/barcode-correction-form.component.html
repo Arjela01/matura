@@ -1,0 +1,48 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="examtypes">Tipi i Provimit *</label>
+    <p-dropdown
+      id="examtypes"
+      [options]="examTypes"
+      name="examtypes"
+      optionValue="key"
+      optionLabel="value"
+      display="chip"
+      appendTo="body"
+      [ngModel]="examTypes"
+      [filter]="true"
+      [autoDisplayFirst]="false">
+    </p-dropdown>
+  </div>
+  <div class="field">
+    <label for="archiveFolders">Dosjet *</label>
+    <p-dropdown
+      id="archiveFolders"
+      [options]="examTypes"
+      name="archiveFolders"
+      [ngModel]="examTypes"
+      optionValue="key"
+      optionLabel="value"
+      appendTo="body"
+      [filter]="true"
+      [autoDisplayFirst]="false">
+    </p-dropdown>
+  </div>
+
+
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      [disabled]="form.invalid"
+      type="submit"
+      pButton
+      label="Kerko"
+      class="p-button w-auto"></button>
+  </div>
+</form>

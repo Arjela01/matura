@@ -12,7 +12,6 @@ import {
   providedIn: 'root',
 })
 export class ArchiveFolderApiService {
-  currentArchiveFolder$: BehaviorSubject<ArchiveFolder | null> = new BehaviorSubject<ArchiveFolder | null>(null);
   constructor(private apiService: APIService) {}
 
   getById(id: any): Observable<ApiResult<ArchiveFolder>> {
@@ -30,7 +29,7 @@ export class ArchiveFolderApiService {
       }
     );
   }
-  loadDropDownList(): Observable<ApiResult<DropdownModel<number>[]>> {
+  loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
       '/ArchiveFolder/DropdownList'
     );
