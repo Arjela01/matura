@@ -225,4 +225,11 @@ export const CONFIGURATION_ROUTES: Route[] = [
         './dashboard-items/manage-dashboard-items/manage-dashboard-items.component'
         ).then(m => m.ManageDashboardItemsComponent),
   },
+  {
+    path: 'dashboard-sections',
+    loadComponent: () =>
+      import(
+        './dashboard-sections/manage-dashboard-sections/manage-dashboard-sections.component'
+        ).then(m => m.ManageDashboardSectionsComponent),
+  },
 ];
