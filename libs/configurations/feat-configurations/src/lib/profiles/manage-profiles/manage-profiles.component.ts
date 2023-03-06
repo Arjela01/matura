@@ -73,6 +73,7 @@ export class ManageProfilesComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedProfile = {} as Profile;
   }
 
   onDeleteSelectedClick() {

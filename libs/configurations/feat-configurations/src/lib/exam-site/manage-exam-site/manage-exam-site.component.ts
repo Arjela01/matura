@@ -12,7 +12,7 @@ import {
   ExamSiteApiService,
   AdministrationOfficeApiService,
 } from '@msh/configurations/data-access-configurations';
-import {ExamSite} from '@msh/shared/domain-models';
+import { ExamSite } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
 import {
@@ -24,22 +24,22 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { ExamSiteFormComponent } from '../exam-site-form/exam-site-form.component';
 import { ExamSiteGridComponent } from '../exam-site-grid/exam-site-grid.component';
-import {RippleModule} from "primeng/ripple";
+import { RippleModule } from 'primeng/ripple';
 
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-exam-site',
   standalone: true,
-    imports: [
-        ButtonModule,
-        CommonModule,
-        DialogModule,
-        ConfirmDialogModule,
-        ExamSiteFormComponent,
-        ExamSiteGridComponent,
-        ToolbarModule,
-        RippleModule,
-    ],
+  imports: [
+    ButtonModule,
+    CommonModule,
+    DialogModule,
+    ConfirmDialogModule,
+    ExamSiteFormComponent,
+    ExamSiteGridComponent,
+    ToolbarModule,
+    RippleModule,
+  ],
   templateUrl: './manage-exam-site.component.html',
   styleUrls: ['./manage-exam-site.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -60,9 +60,8 @@ export class ManageExamSiteComponent implements OnInit {
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examSiteService: ExamSiteApiService,
-    private readonly administrationOfficeApiService: AdministrationOfficeApiService,
-  ) {
-  }
+    private readonly administrationOfficeApiService: AdministrationOfficeApiService
+  ) {}
 
   ngOnInit(): void {
     this.getAdministrationOfficeDropdown();
@@ -70,13 +69,17 @@ export class ManageExamSiteComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedExamSite = {} as ExamSite;
   }
 
   onDeleteSelectedClick() {
     this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të fshini qendrat e provimit të zgjedhura?',
+      message:
+        'Jeni i sigurt që doni të fshini qendrat e provimit të zgjedhura?',
       accept: () => {
-        this.toastService.showWarning('Qendrat e provimit të zgjedhura u fshinë!');
+        this.toastService.showWarning(
+          'Qendrat e provimit të zgjedhura u fshinë!'
+        );
       },
     });
   }
@@ -110,7 +113,8 @@ export class ManageExamSiteComponent implements OnInit {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të fshini qendren e provimit të zgjedhur?',
+          message:
+            'Jeni i sigurt që doni të fshini qendren e provimit të zgjedhur?',
           accept: () => {
             this.deleteExamSite(event.data as ExamSite);
           },
@@ -207,5 +211,4 @@ export class ManageExamSiteComponent implements OnInit {
         this.administrationOffices = response.data;
       });
   }
-
 }

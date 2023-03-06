@@ -70,6 +70,7 @@ export class ManageAdministrationOfficeComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedAdministrativeOffice = {} as AdministrationOffice;
   }
 
   onDeleteSelectedClick() {

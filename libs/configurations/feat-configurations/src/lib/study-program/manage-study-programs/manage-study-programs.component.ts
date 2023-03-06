@@ -71,6 +71,7 @@ export class ManageStudyProgramsComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedstudyProgram = {} as StudyProgram;
   }
 
   onDeleteSelectedClick() {
