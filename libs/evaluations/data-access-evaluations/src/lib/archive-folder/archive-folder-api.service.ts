@@ -22,13 +22,15 @@ export class ArchiveFolderApiService {
       `/ArchiveFolder/${id}`
     );
   }
+
   barcodeCorrection(
-    Nr: number,
-    ExamTypeName: string
-  ): Observable<ApiResult<ArchiveFolder>> {
-    return this.apiService.get<ApiResult<ArchiveFolder>>(
-      `/ArchiveFolder/${Nr},${ExamTypeName}`
+    Nr: ArchiveFolder,
+    ExamTypeName: ArchiveFolder,
+  ):Observable<ApiResult<ArchiveFolder>> {
+    return this.apiService.post<ApiResult<ArchiveFolder>, ArchiveFolder>(
+      `/ArchiveFolder/${Nr},${ExamTypeName}`,
     );
+
   }
   changeFolderStatus(id: number): Observable<ApiResult<ArchiveFolder>> {
     return this.apiService.put<ApiResult<ArchiveFolder>, any>(
