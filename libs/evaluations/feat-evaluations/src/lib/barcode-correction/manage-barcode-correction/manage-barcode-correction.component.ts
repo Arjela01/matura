@@ -80,7 +80,7 @@ export class ManageBarcodeCorrectionComponent implements OnInit {
   filters: LazyLoadEvent | null = null;
   totalRecords = 0;
   examTypes: DropdownModel<number>[] = [];
-  archiveFolders: DropdownModel<number>[] = [];
+  archiveFolders: DropdownModel<any>[] = [];
 
   selectedArchiveExam: ArchiveExam | null = null;
   selectedArchiveExams: ArchiveExam[] = [];
@@ -114,11 +114,6 @@ export class ManageBarcodeCorrectionComponent implements OnInit {
   ngOnInit() {
     this.getExamTypes();
     this.getArchiveFolders();
-    this.archiveFolderService
-      .getById(this.id)
-      .subscribe(folder => (this.archiveFolder = { ...folder.data }));
-
-
   }
 
 

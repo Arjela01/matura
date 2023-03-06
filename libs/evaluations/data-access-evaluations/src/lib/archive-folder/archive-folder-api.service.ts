@@ -22,6 +22,14 @@ export class ArchiveFolderApiService {
       `/ArchiveFolder/${id}`
     );
   }
+  barcodeCorrection(
+    Nr: number,
+    ExamTypeName: string
+  ): Observable<ApiResult<ArchiveFolder>> {
+    return this.apiService.get<ApiResult<ArchiveFolder>>(
+      `/ArchiveFolder/${Nr},${ExamTypeName}`
+    );
+  }
   changeFolderStatus(id: number): Observable<ApiResult<ArchiveFolder>> {
     return this.apiService.put<ApiResult<ArchiveFolder>, any>(
       `/ArchiveFolder/UpdateStatus`,
@@ -30,8 +38,8 @@ export class ArchiveFolderApiService {
       }
     );
   }
-  loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
-    return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
+  loadDropdownList(): Observable<ApiResult<DropdownModel<any>[]>> {
+    return this.apiService.get<ApiResult<DropdownModel<any>[]>>(
       '/ArchiveFolder/DropdownList'
     );
   }

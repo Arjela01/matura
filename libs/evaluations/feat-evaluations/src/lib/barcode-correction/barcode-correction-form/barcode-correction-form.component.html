@@ -14,21 +14,22 @@
       [autoDisplayFirst]="false">
     </p-dropdown>
   </div>
+
   <div class="field">
-    <label for="archiveFolders">Dosjet *</label>
+    <label for="archivefolder">Tipi i Provimit *</label>
     <p-dropdown
-      id="archiveFolders"
-      [options]="examTypes"
-      name="archiveFolders"
-      [ngModel]="examTypes"
+      id="archivefolder"
+      [options]="archiveFolders"
+      name="archivefolder"
       optionValue="key"
       optionLabel="value"
+      display="chip"
       appendTo="body"
+      [ngModel]="archiveFolders"
       [filter]="true"
       [autoDisplayFirst]="false">
     </p-dropdown>
   </div>
-
 
 
   <div class="flex justify-content-end">

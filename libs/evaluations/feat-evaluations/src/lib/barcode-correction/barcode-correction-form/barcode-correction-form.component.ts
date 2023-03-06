@@ -20,6 +20,7 @@ import {DropdownModel} from "@msh/shared/data-access-shared";
 import {
    ExamTypeApiService,
 } from "@msh/configurations/data-access-configurations";
+import {ArchiveFolderApiService} from "@msh/evaluations/data-access-evaluations";
 
 @Component({
   selector: 'msh-barcode-correction-form',
@@ -60,10 +61,15 @@ export class BarcodeCorrectionFormComponent  {
   constructor(
     private cd: ChangeDetectorRef,
     private readonly examTypeService: ExamTypeApiService,
+    private readonly archiveFolderService: ArchiveFolderApiService,
   ) {}
   ngOnInit(): void {
     this.examTypeService.loadDropdownList().subscribe(response => {
       this.examTypes = [...response.data];
+      this.cd.detectChanges();
+    });
+    this.archiveFolderService.loadDropdownList().subscribe(response => {
+      this.archiveFolders = [...response.data];
       this.cd.detectChanges();
     });
   }
