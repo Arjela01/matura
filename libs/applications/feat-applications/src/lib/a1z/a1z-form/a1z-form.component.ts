@@ -28,6 +28,7 @@ import {
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { AcademicYear, Student } from '@msh/shared/domain-models';
+import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -44,13 +45,12 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { PasswordModule } from 'primeng/password';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { SelectButtonModule } from 'primeng/selectbutton';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { A1zStudentSearchComponent } from '../a1z-student-search/a1z-student-search.component';
 import { EXAM_TYPES } from './exam-type.enum';
-import {SharedStudentLookupModule} from "@msh/shared/student-lookup";
-import {PasswordModule} from "primeng/password";
-import {SelectButtonModule} from "primeng/selectbutton";
 @UntilDestroy()
 @Component({
   selector: 'msh-a1z-form',
@@ -150,7 +150,10 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
     scoreZ1A1Z: undefined,
     scoreZ2A1Z: undefined,
   };
-  booly = [{label: 'Po', value: true}, {label: 'Jo', value: false}];
+  booly = [
+    { label: 'Po', value: true },
+    { label: 'Jo', value: false },
+  ];
 
   onSubmit() {
     this.submitted = true;

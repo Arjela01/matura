@@ -55,6 +55,7 @@ export class ManageExamTypeComponent {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedExamType = {} as ExamType;
   }
 
   onDeleteSelectedClick() {

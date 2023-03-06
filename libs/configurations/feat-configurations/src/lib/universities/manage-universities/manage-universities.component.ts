@@ -68,6 +68,7 @@ export class ManageUniversitiesComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedRegion = {} as University;
   }
 
   onDeleteSelectedClick() {

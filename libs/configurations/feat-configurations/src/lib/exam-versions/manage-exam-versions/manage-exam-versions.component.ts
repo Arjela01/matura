@@ -10,7 +10,7 @@ import {
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
-import { ExamVersion } from '@msh/shared/domain-models';
+import {ExamSubject, ExamVersion} from '@msh/shared/domain-models';
 
 import { BehaviorSubject } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -73,18 +73,9 @@ export class ManageExamVersionsComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedExamVersion = {} as ExamVersion;
   }
 
-  onDeleteSelectedClick() {
-    this.confirmationService.confirm({
-      message:
-        'Jeni i sigurt që doni të fshini versionet e provimeve të zgjedhura?',
-      accept: () => {
-        // this.examVersionStore.deleteSelectedExamVersions();
-        this.toastService.showWarning('Versionet e provimeve u fshinë!');
-      },
-    });
-  }
 
   onGridEvent(event: GridEvent<ExamVersion | ExamVersion[]>) {
     switch (event.action) {
@@ -115,7 +106,7 @@ export class ManageExamVersionsComponent implements OnInit {
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
           message:
-            'Jeni i sigurt që doni të fshini versionin e provimit të zgjedhur?',
+            'Jeni i sigurt që doni të fshini tezën zgjedhur?',
           accept: () => {
             this.deleteExamVersion(event.data as ExamVersion);
           },
@@ -157,7 +148,7 @@ export class ManageExamVersionsComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
-            'Versioni i proimit u shtua me sukses!'
+            'Teza u shtua me sukses!'
           );
           this.displayModal = false;
           this.getExamVersions(this.filters as LazyLoadEvent);
@@ -165,7 +156,7 @@ export class ManageExamVersionsComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së versionit të provimit!'
+            'Ndodhi një problem gjatë ndryshimit së tezës!'
           );
       });
   }
@@ -177,7 +168,7 @@ export class ManageExamVersionsComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
-            'Versioni i provimit u ndryshua me sukses!'
+            'Teza u ndryshua me sukses!'
           );
           this.displayModal = false;
           this.getExamVersions(this.filters as LazyLoadEvent);
@@ -185,7 +176,7 @@ export class ManageExamVersionsComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së versionit të provimit!'
+            'Ndodhi një problem gjatë ndryshimit së tezës!'
           );
       });
   }
@@ -196,13 +187,13 @@ export class ManageExamVersionsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showInfo('Versioni i provimit u fshi me sukses!');
+          this.toastService.showInfo('Teza u fshi me sukses!');
           this.getExamVersions(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë fshirjes së versionit të provimit!'
+            'Ndodhi një problem gjatë fshirjes së tezës!'
           );
       });
   }
@@ -229,7 +220,6 @@ export class ManageExamVersionsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examSubjects = response.data;
-        console.log(2222, response.data)
       });
   }
 }

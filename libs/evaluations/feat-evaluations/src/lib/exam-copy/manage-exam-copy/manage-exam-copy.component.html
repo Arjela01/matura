@@ -1,46 +1,35 @@
 <div class="flex center mb-2 page-header mb-header">
-  <h2 class="flex-1 mb-0">Fakultete</h2>
-  <div class="flex align-items-right justify-content-right">
-    <div class="my-2">
-      <button
-        pButton
-        pRipple
-        label="Shto"
-        icon="pi pi-plus"
-        class="p-button-success mr-2"
-        (click)="onNewClick()"></button>
-    </div>
-  </div>
+  <h2 class="flex-1 mb-0">Aplikimet per kopjen e tezes</h2>
+  <div class="flex align-items-right justify-content-right"></div>
 </div>
 <div class="grid">
   <div class="col-12">
     <div class="card">
-      <msh-university-department-grid
-        [universityDepartments]="(universityDepartments$ | async) || []"
+      <msh-exam-copy-grid
+        [examCopies]="(examCopies$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getUniversityDepartments($event)">
-      </msh-university-department-grid>
+        (lazyLoadData)="getExamCopies($event)">
+      </msh-exam-copy-grid>
     </div>
   </div>
 </div>
 
 <p-dialog
   [(visible)]="displayModal"
-  [style]="{ width: '500px' }"
-  header="Detajet e Fakulteteve"
+  [style]="{ width: '1000px' }"
+  header="Detajet per aplikimin e marrjes se kopjes se testit te matures"
   [modal]="true"
   [draggable]="false"
   [resizable]="false"
   class="p-fluid"
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
-    <msh-university-department-form
-      [universityDepartmentDetails]="selectedUniversityDepartment"
-      [universities]="universities"
+    <msh-exam-copy-details
+      [examCopyDetails]="selecetdExamCopy"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
-    </msh-university-department-form>
+    </msh-exam-copy-details>
   </ng-template>
 </p-dialog>
 

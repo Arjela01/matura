@@ -60,6 +60,7 @@ export class ManageGendersComponent {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedGender = {} as Gender;
   }
 
   onDeleteSelectedClick() {
