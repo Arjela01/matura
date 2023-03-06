@@ -5,6 +5,7 @@ import { LazyLoadEvent } from 'primeng/api';
 import { BehaviorSubject, Observable } from 'rxjs';
 import {
   ArchiveFolder,
+  ArchiveFolderBarcodeCorrection,
   ArchiveFolderTableView,
 } from '@msh/evaluations/domain-evaluations';
 
@@ -23,15 +24,21 @@ export class ArchiveFolderApiService {
     );
   }
 
-  barcodeCorrection(
-    Nr: ArchiveFolder,
-    ExamTypeName: ArchiveFolder,
-  ):Observable<ApiResult<ArchiveFolder>> {
-    return this.apiService.post<ApiResult<ArchiveFolder>, ArchiveFolder>(
-      `/ArchiveFolder/${Nr},${ExamTypeName}`,
-    );
+  // barcodeCorrection(
+  //   Nr:  LazyLoadEvent,
+  //   ExamTypeName:  LazyLoadEvent,
+  // ):Observable<ApiResult<ArchiveFolder>> {
+  //   return this.apiService.post<ApiResult<ArchiveFolder>, ArchiveFolder>(
+  //     `/ArchiveFolder/BarcodeCorrection/${Nr},${ExamTypeName}`,
+  //   );
+  // }
 
+  barcodeCorrection(
+    event: LazyLoadEvent,
+  ): Observable<ArchiveFolderBarcodeCorrection> {
+    return this.apiService.post(`/ArchiveFolder/BarcodeCorrection`, event);
   }
+
   changeFolderStatus(id: number): Observable<ApiResult<ArchiveFolder>> {
     return this.apiService.put<ApiResult<ArchiveFolder>, any>(
       `/ArchiveFolder/UpdateStatus`,

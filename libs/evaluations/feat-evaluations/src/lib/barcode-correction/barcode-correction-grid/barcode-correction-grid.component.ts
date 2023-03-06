@@ -19,9 +19,8 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ArchiveExamApiService } from '@msh/evaluations/data-access-evaluations';
-import { ArchiveExam } from '@msh/evaluations/domain-evaluations';
-import {KEYFILTER_VALIDATOR} from "primeng/keyfilter";
+import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
+import {ArchiveExam, ArchiveFolder} from '@msh/evaluations/domain-evaluations';
 
 @Component({
   selector: 'msh-barcode-correction-grid',
@@ -40,104 +39,84 @@ import {KEYFILTER_VALIDATOR} from "primeng/keyfilter";
   styleUrls: ['./barcode-correction-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BarcodeCorrectionGridComponent  implements OnInit {
+export class BarcodeCorrectionGridComponent {
   @ViewChild('form', { static: true }) form!: NgForm;
 
-  @ViewChild('barcodeField', {static: true}) barcodeField!: HTMLInputElement;
+  @ViewChild('barcodeField', { static: true }) barcodeField!: HTMLInputElement;
 
-  @Input() set ArchiveExamsDetails(details: ArchiveExam | null) {
+  @Input() set ArchiveFoldersDetails(details: ArchiveFolder | null) {
     if (details) {
-      this.archiveExam = Object.assign({}, details);
+      this.archiveFolder = Object.assign({}, details);
     }
   }
-  @Input() archiveExams: ArchiveExam[] = [];
+  @Input() archiveFolders: ArchiveFolder[] = [];
+  @Input() archiveExam: ArchiveExam[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
 
-  selectedArchiveExams: ArchiveExam[] = [];
+  selectedAArchiveFolders: ArchiveFolder[] = [];
 
   @Output() gridEvent = new EventEmitter<
-    GridEvent<ArchiveExam | ArchiveExam[]>
+    GridEvent<ArchiveFolder | ArchiveFolder[]>
   >();
 
   @Output() formClose = new EventEmitter<undefined>();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
-  @Output() formSave = new EventEmitter<ArchiveExam>();
-
-  submitted = false;
-  id = 0;
+  @Output() formSave = new EventEmitter<ArchiveFolder>();
 
   @Input()
   isBarcodeInputDisabled = false;
 
-  archiveExam: ArchiveExam = {
-    id: undefined,
-    barcode: '',
-    archiveFolderId: this.id,
-  };
-
   constructor(
     private cd: ChangeDetectorRef,
-    private readonly archiveExamApiService: ArchiveExamApiService,
+    private readonly archiveFolderApiService: ArchiveFolderApiService,
     private router: Router,
     private messageService: MessageService,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.id = parseInt(id);
-    }
+    this.id = this.route.snapshot.paramMap.get('id');
   }
 
-  ngOnInit() {
-    this.archiveExam = {
-      ...this.archiveExam,
-      archiveFolderId: this.id as number,
-    };
+  archiveFolder: ArchiveFolder = {
+    examTypeName: '',
+    examTypeId: 0,
+    id: '',
+    totalArchiveExams: 0,
+    nr: 0,
+  };
 
-  }
+  submitted = false;
+  id: any;
 
-  onSubmit(): void {
-    const data = { ...this.archiveExam };
-    this.archiveExamApiService.save(data).subscribe({
-      next: () => {
-        this.submitted = false;
-      },
-    });
-  }
-
-  saveArchiveExam(archiveExam: ArchiveExam): void {
+  onDeleteClick(archiveFolder: ArchiveFolder) {
     this.gridEvent.emit({
-      action: GRID_ACTIONS.CUSTOM_ACTION1,
-      data: archiveExam,
-    } as GridEvent<ArchiveExam>);
+      action: GRID_ACTIONS.DELETE,
+      data: archiveFolder,
+    } as GridEvent<ArchiveFolder>);
   }
-  onRowUnselect({ data }: { data: ArchiveExam }) {
+
+  onRowSelect({ data }: { data: ArchiveFolder }) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.SELECT_ROW,
+      data: data.id,
+    } as GridEvent<ArchiveFolder>);
+  }
+
+  onRowUnselect({ data }: { data: ArchiveFolder }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
       data: data,
-    } as GridEvent<ArchiveExam>);
-  }
-  onRowSelect({ data }: { data: ArchiveExam }) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.SELECT_ROW,
-      data: data,
-    } as GridEvent<ArchiveExam>);
+    } as GridEvent<ArchiveFolder>);
   }
 
-  onEditClick(archiveExam: ArchiveExam) {
+  onEditClick(archiveFolder: ArchiveFolder) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
-      data: archiveExam,
-    } as GridEvent<ArchiveExam>);
+      data: archiveFolder,
+    } as GridEvent<ArchiveFolder>);
   }
-  onFilterData({ data }: { data: ArchiveExam }) {
-    this.gridEvent.emit({
-      action: KEYFILTER_VALIDATOR.FILTER,
-      data: data,
-    } as GridEvent<ArchiveExam>);
-  }
+
   loadRows($event: LazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }

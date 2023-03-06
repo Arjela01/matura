@@ -2,7 +2,7 @@
   #dt
   dataKey="id"
   responsiveLayout="scroll"
-  [value]="archiveExams"
+  [value]="archiveFolders"
   [totalRecords]="totalRecords"
   [rows]="100"
   [paginator]="true"
@@ -10,11 +10,10 @@
   [showCurrentPageReport]="true"
   currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
   [rowHover]="true"
-  [(selection)]="selectedArchiveExams"
+  [(selection)]="selectedAArchiveFolders"
   selectionMode="multiple"
   (onRowSelect)="onRowSelect($event)"
   (onRowUnselect)="onRowUnselect($event)"
-  (onFilter)="onFilterData($event)"
   (onLazyLoad)="loadRows($event)"
   [lazy]="true">
   <ng-template pTemplate="header">
@@ -36,10 +35,10 @@
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="examType">
-        Tipi i provimit
-        <p-sortIcon field="examType"></p-sortIcon>
+        Tipi i Provimit
+        <p-sortIcon field="number"></p-sortIcon>
         <p-columnFilter
-          type="numeric"
+          type="text"
           field="examType"
           display="menu"></p-columnFilter>
       </th>
@@ -54,23 +53,29 @@
       <th></th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-archiveExam>
-    <div *ngIf="archiveExam.length === 0">
+  <ng-template pTemplate="body" let-barcodeCorrection>
+    <div *ngIf="barcodeCorrection.length === 0">
       Nuk ka asnjë të dhënë!
     </div>
     <tr>
       <td style="width: 50%; min-width: 10rem">
-        {{ archiveExam.index }}
+        {{ barcodeCorrection.nr }}
       </td>
       <td style="width: 50%; min-width: 10rem">
-        {{ archiveExam.barcode }}
+        {{ barcodeCorrection.totalArchiveExams }}
+      </td>
+      <td style="width: 50%; min-width: 10rem">
+        {{ barcodeCorrection.examTypeName }}
+      </td>
+      <td style="width: 50%; min-width: 10rem">
+        {{ barcodeCorrection.barcode }}
       </td>
       <td style="width: 40%; min-width: 10rem">
         <img
           src="assets/svg/edit-form.svg"
           class="p-button-rounded p-button-warning p-button-text ml-m pointer"
           tooltipPosition="bottom"
-          (click)="onEditClick(archiveExam)"
+          (click)="onEditClick(barcodeCorrection)"
           pTooltip="Ndrysho" />
 
       </td>

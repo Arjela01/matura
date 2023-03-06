@@ -15,7 +15,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
-import { ArchiveExam } from '@msh/evaluations/domain-evaluations';
+import { ArchiveFolder} from '@msh/evaluations/domain-evaluations';
 import {DropdownModel} from "@msh/shared/data-access-shared";
 import {
    ExamTypeApiService,
@@ -44,20 +44,20 @@ export class BarcodeCorrectionFormComponent  {
   @Input() examTypes: DropdownModel<number>[] = [];
   @Input() archiveFolders: DropdownModel<number>[] = [];
 
-  @Input() set archiveExamDetails(details: ArchiveExam | null) {
+  @Input() set archiveFolderDetails(details: ArchiveFolder | null) {
     if (details) {
-      this.archiveExam = Object.assign({}, details);
+      this.archiveFolder = Object.assign({}, details);
     }
   }
 
-  @Output() formSave = new EventEmitter<ArchiveExam>();
+  @Output() formSave = new EventEmitter<ArchiveFolder>();
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
 
   submitted = false;
 
-  archiveExam: ArchiveExam = {id: undefined, archiveFolderId: 0 };
+  archiveFolder: ArchiveFolder = {};
   constructor(
     private cd: ChangeDetectorRef,
     private readonly examTypeService: ExamTypeApiService,
@@ -81,7 +81,7 @@ export class BarcodeCorrectionFormComponent  {
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
-      this.formSave.emit(this.archiveExam);
+      this.formSave.emit(this.archiveFolder);
     }
   }
 }

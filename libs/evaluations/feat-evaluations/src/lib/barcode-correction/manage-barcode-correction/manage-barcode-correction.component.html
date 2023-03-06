@@ -15,10 +15,10 @@
 
 
 <msh-barcode-correction-grid
-  [archiveExams]="(archiveExams$ | async) || []"
+  [archiveFolders]="(archiveFolders$ | async) || []"
   [totalRecords]="totalRecords"
   (gridEvent)="onGridEvent($event)"
-  (lazyLoadData)="getArchiveExams($event)"
+  (lazyLoadData)="getArchiveFolders($event)"
   (formSave)="onFormSave($event)">
 </msh-barcode-correction-grid>
 
@@ -33,7 +33,7 @@
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
     <msh-barcode-correction-form
-      [archiveExamDetails]="selectedArchiveExam"
+      [archiveFolderDetails]="selectedArchiveFolder"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
     </msh-barcode-correction-form>

@@ -19,3 +19,7 @@ export interface ArchiveFolderTableView{
   data: ArchiveFolder [];
   total: number;
 }
+export interface ArchiveFolderBarcodeCorrection{
+  data: ArchiveFolder [];
+  total: number;
+}
