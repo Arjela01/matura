@@ -55,6 +55,7 @@ export class ManageStudySubjectsComponent {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedStudySubject = {} as StudySubject;
   }
 
   onDeleteSelectedClick() {

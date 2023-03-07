@@ -13,7 +13,7 @@ import {
   ExamSiteApiService,
   ExamTypeApiService,
 } from '@msh/configurations/data-access-configurations';
-import {ExamDate} from '@msh/shared/domain-models';
+import {ExamDate, ExamSite} from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
 import {
@@ -73,6 +73,8 @@ export class ManageExamDateComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedExamDate = {} as ExamDate;
+
   }
 
   onDeleteSelectedClick() {
