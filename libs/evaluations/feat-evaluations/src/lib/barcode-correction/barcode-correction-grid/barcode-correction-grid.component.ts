@@ -18,9 +18,11 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { FormsModule, NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
 import {ArchiveExam, ArchiveFolder} from '@msh/evaluations/domain-evaluations';
+import {HttpClient} from "@angular/common/http";
+import {AcademicYearApiService} from "@msh/configurations/data-access-configurations";
 
 @Component({
   selector: 'msh-barcode-correction-grid',
@@ -34,45 +36,47 @@ import {ArchiveExam, ArchiveFolder} from '@msh/evaluations/domain-evaluations';
     CheckboxModule,
     RippleModule,
     FormsModule,
+    RouterLink,
   ],
   templateUrl: './barcode-correction-grid.component.html',
   styleUrls: ['./barcode-correction-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BarcodeCorrectionGridComponent {
-  @ViewChild('form', { static: true }) form!: NgForm;
-
-  @ViewChild('barcodeField', { static: true }) barcodeField!: HTMLInputElement;
-
-  @Input() set ArchiveFoldersDetails(details: ArchiveFolder | null) {
-    if (details) {
-      this.archiveFolder = Object.assign({}, details);
-    }
-  }
   @Input() archiveFolders: ArchiveFolder[] = [];
-  @Input() archiveExam: ArchiveExam[] = [];
+
   @Input() totalRecords = 0;
   @Input() loading = false;
 
-  selectedAArchiveFolders: ArchiveFolder[] = [];
+  //Keep it local state because of Table Header checkbox not syncing
+  selectedArchiveFolders: ArchiveFolder[] = [];
 
   @Output() gridEvent = new EventEmitter<
     GridEvent<ArchiveFolder | ArchiveFolder[]>
   >();
 
-  @Output() formClose = new EventEmitter<undefined>();
-
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
   @Output() formSave = new EventEmitter<ArchiveFolder>();
 
-  @Input()
-  isBarcodeInputDisabled = false;
+  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+
+  @ViewChild('form', { static: true }) form!: NgForm;
+  saving = false;
+
+  @Input() set archiveFolderDetails(details: ArchiveFolder | null) {
+    if (details) {
+      this.archiveFolder = Object.assign({}, details);
+    }
+  }
 
   constructor(
+    private http: HttpClient,
     private cd: ChangeDetectorRef,
-    private readonly archiveFolderApiService: ArchiveFolderApiService,
+    private readonly academicYearService: AcademicYearApiService,
+    private readonly archiveFolderService: ArchiveFolderApiService,
     private router: Router,
     private messageService: MessageService,
+    private activatedRoute: ActivatedRoute,
+
     private route: ActivatedRoute
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -81,7 +85,11 @@ export class BarcodeCorrectionGridComponent {
   archiveFolder: ArchiveFolder = {
     examTypeName: '',
     examTypeId: 0,
+    examSubjectId: '',
+    examSubjectName: '',
     id: '',
+    isClosed: false,
+    lastUserId: undefined,
     totalArchiveExams: 0,
     nr: 0,
   };
@@ -89,9 +97,16 @@ export class BarcodeCorrectionGridComponent {
   submitted = false;
   id: any;
 
-  onDeleteClick(archiveFolder: ArchiveFolder) {
+  changeStatus(archive: ArchiveFolder): void {
     this.gridEvent.emit({
-      action: GRID_ACTIONS.DELETE,
+      action: GRID_ACTIONS.CUSTOM_ACTION1,
+      data: archive,
+    } as GridEvent<ArchiveFolder>);
+  }
+
+  onEditClick(archiveFolder: ArchiveFolder) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.EDIT,
       data: archiveFolder,
     } as GridEvent<ArchiveFolder>);
   }
@@ -110,14 +125,11 @@ export class BarcodeCorrectionGridComponent {
     } as GridEvent<ArchiveFolder>);
   }
 
-  onEditClick(archiveFolder: ArchiveFolder) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.EDIT,
-      data: archiveFolder,
-    } as GridEvent<ArchiveFolder>);
-  }
-
   loadRows($event: LazyLoadEvent) {
     this.lazyLoadData.emit($event);
+  }
+
+  persistArchiveFolder(archiveFolder: ArchiveFolder){
+    this.archiveFolderService.currentArchiveFolder$.next(archiveFolder);
   }
 }

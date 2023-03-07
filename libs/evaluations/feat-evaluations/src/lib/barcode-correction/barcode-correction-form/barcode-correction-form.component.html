@@ -1,41 +1,31 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="field">
-    <label for="examtypes">Tipi i Provimit *</label>
-    <p-dropdown
-      id="examtypes"
-      [options]="examTypes"
-      name="examtypes"
-      optionValue="key"
-      optionLabel="value"
-      display="chip"
-      appendTo="body"
-      [ngModel]="archiveFolder.nr"
-      [filter]="true"
-      [autoDisplayFirst]="false">
-    </p-dropdown>
+    <label for="barcode">Barkodi *</label>
+    <input
+      type="text"
+      maxlength="7"
+      minlength="7"
+      pInputText
+      placeholder="Barkodi"
+      id="barcode"
+      name="barcode"
+      [(ngModel)]="archiveFolder.barcode"
+      pTooltip="Barkodi duhet te permbaje 7 shifra"
+      tooltipPosition="top"
+      required
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !archiveFolder.barcode
+      }" />
+    <small class="p-error block" *ngIf="submitted && !archiveFolder.barcode">
+      Barkodi është fushë e kërkuar.
+    </small>
   </div>
-
-  <div class="field">
-    <label for="archivefolder">Tipi i Provimit *</label>
-    <p-dropdown
-      id="archivefolder"
-      [options]="archiveFolders"
-      name="archivefolder"
-      optionValue="key"
-      optionLabel="value"
-      display="chip"
-      appendTo="body"
-      [ngModel]="archiveFolder.examTypeName"
-      [filter]="true"
-      [autoDisplayFirst]="false">
-    </p-dropdown>
-  </div>
-
 
   <div class="flex justify-content-end">
     <button
       type="button"
       pButton
+      icon="pi pi-times"
       label="Anullo"
       class="p-button-text w-auto mr-2"
       (click)="onCancelClick()"></button>
@@ -43,7 +33,7 @@
       [disabled]="form.invalid"
       type="submit"
       pButton
-      label="Kerko"
+      label="Ruaj"
       class="p-button w-auto"></button>
   </div>
 </form>

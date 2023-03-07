@@ -1,5 +1,5 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef,
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
@@ -15,12 +15,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
-import { ArchiveFolder} from '@msh/evaluations/domain-evaluations';
-import {DropdownModel} from "@msh/shared/data-access-shared";
-import {
-   ExamTypeApiService,
-} from "@msh/configurations/data-access-configurations";
-import {ArchiveFolderApiService} from "@msh/evaluations/data-access-evaluations";
+import {ArchiveExam, ArchiveFolder} from '@msh/evaluations/domain-evaluations';
 
 @Component({
   selector: 'msh-barcode-correction-form',
@@ -40,10 +35,7 @@ import {ArchiveFolderApiService} from "@msh/evaluations/data-access-evaluations"
   styleUrls: ['./barcode-correction-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BarcodeCorrectionFormComponent  {
-  @Input() examTypes: DropdownModel<number>[] = [];
-  @Input() archiveFolders: DropdownModel<number>[] = [];
-
+export class BarcodeCorrectionFormComponent   {
   @Input() set archiveFolderDetails(details: ArchiveFolder | null) {
     if (details) {
       this.archiveFolder = Object.assign({}, details);
@@ -58,21 +50,6 @@ export class BarcodeCorrectionFormComponent  {
   submitted = false;
 
   archiveFolder: ArchiveFolder = {};
-  constructor(
-    private cd: ChangeDetectorRef,
-    private readonly examTypeService: ExamTypeApiService,
-    private readonly archiveFolderService: ArchiveFolderApiService,
-  ) {}
-  ngOnInit(): void {
-    this.examTypeService.loadDropdownList().subscribe(response => {
-      this.examTypes = [...response.data];
-      this.cd.detectChanges();
-    });
-    this.archiveFolderService.loadDropdownList().subscribe(response => {
-      this.archiveFolders = [...response.data];
-      this.cd.detectChanges();
-    });
-  }
 
   onCancelClick() {
     this.formClose.emit();

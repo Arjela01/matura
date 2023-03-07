@@ -13,6 +13,7 @@ export interface ArchiveFolder{
   lastUserId?: any;
   profileGroupId?: string;
   profileGroupName?: string;
+  barcode?: number;
 }
 
 export interface ArchiveFolderTableView{
