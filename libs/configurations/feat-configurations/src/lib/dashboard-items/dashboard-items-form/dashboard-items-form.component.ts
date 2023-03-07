@@ -77,19 +77,7 @@ export class DashboardItemsFormComponent implements OnInit {
 
   submitted = false;
 
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  dashboardItems: DashboardItem = {
-    id: 0,
-    dashboardSectionId: 0,
-    description: '',
-    documentName: '',
-    endDate: [],
-    linkUrl: '',
-    startDate: [],
-    roles: [],
-    users: [],
-    title: '',
-  };
+  dashboardItems = {} as DashboardItem;
   uploaded = false;
 
   onCancelClick() {
