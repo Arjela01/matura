@@ -9,14 +9,14 @@
       placeholder="Barkodi"
       id="barcode"
       name="barcode"
-      [(ngModel)]="archiveFolder.barcode"
+      [(ngModel)]="archiveExam.barcode"
       pTooltip="Barkodi duhet te permbaje 7 shifra"
       tooltipPosition="top"
       required
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !archiveFolder.barcode
+        'ng-invalid ng-dirty': submitted && !archiveExam.barcode
       }" />
-    <small class="p-error block" *ngIf="submitted && !archiveFolder.barcode">
+    <small class="p-error block" *ngIf="submitted && !archiveExam.barcode">
       Barkodi është fushë e kërkuar.
     </small>
   </div>

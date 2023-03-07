@@ -61,12 +61,13 @@ import {HttpClient} from "@angular/common/http";
   providers: [ConfirmationService],
 
 })
-export class ManageBarcodeCorrectionComponent  {
+export class ManageBarcodeCorrectionComponent {
   private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[]>([]);
 
   archiveFolders$ = this.archiveFolders$$.asObservable();
   filters: LazyLoadEvent | null = null;
-
+  selectedArchiveExam: ArchiveExam | null = null;
+  selectedArchiveExams: ArchiveExam[] = [];
   totalRecords = 0;
   id: any;
   selectedArchiveFolder: ArchiveFolder | null = null;
@@ -77,8 +78,8 @@ export class ManageBarcodeCorrectionComponent  {
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examTypeApiService: ExamTypeApiService,
-    private readonly addBarcodeService: ArchiveExamApiService,
     private archiveFolderService: ArchiveFolderApiService,
+    private archiveExamService: ArchiveExamApiService,
     private readonly examSubjectApiService: ExamSubjectApiService,
     private router: Router,
     private http: HttpClient,
@@ -87,7 +88,6 @@ export class ManageBarcodeCorrectionComponent  {
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
-
 
 
   onNewClick() {
@@ -127,27 +127,11 @@ export class ManageBarcodeCorrectionComponent  {
         this.selectedArchiveFolders = [];
         break;
       case GRID_ACTIONS.EDIT:
-        this.selectedArchiveFolder = Object.assign(
+        this.selectedArchiveExam = Object.assign(
           {},
-          event.data as ArchiveFolder
+          event.data as ArchiveExam
         );
         this.displayModal = true;
-        break;
-      case GRID_ACTIONS.DELETE:
-        this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të fshini dosjen e zgjedhur?',
-          accept: () => {
-            this.deleteArchiveFolder(event.data as ArchiveFolder);
-          },
-        });
-        break;
-      case GRID_ACTIONS.CUSTOM_ACTION1:
-        this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të ndryshoni statusin e dosjes?',
-          accept: () => {
-            this.changeFolderStatus(event.data as ArchiveFolder);
-          },
-        });
         break;
     }
   }
@@ -156,13 +140,11 @@ export class ManageBarcodeCorrectionComponent  {
     this.displayModal = false;
   }
 
-  onFormSave(archiveFolder: ArchiveFolder) {
+  onFormSave(archiveFolder: ArchiveExam) {
     if (archiveFolder.id) {
       this.updateArchiveFolder(archiveFolder);
     }
-    if (!archiveFolder.id) {
-      this.addArchiveFolder(archiveFolder);
-    }
+
   }
 
   getArchiveFolders($event: LazyLoadEvent) {
@@ -177,30 +159,9 @@ export class ManageBarcodeCorrectionComponent  {
       });
   }
 
-  addArchiveFolder(archiveFolder: ArchiveFolder) {
-    this.archiveFolderService
-      .save({...archiveFolder, id: 0})
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showSuccess('Dosja u shtua me sukses!');
 
-          this.displayModal = false;
-          this.router.navigate([
-            '/evaluations',
-            'archive-exams',
-            response.data.id,
-          ]);
-        }
-        if (response.isBadRequest)
-          this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së dosjes!'
-          );
-      });
-  }
-
-  updateArchiveFolder(archiveFolder: ArchiveFolder) {
-    this.archiveFolderService
+  updateArchiveFolder(archiveFolder: ArchiveExam) {
+    this.archiveExamService
       .update(archiveFolder)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
@@ -217,43 +178,5 @@ export class ManageBarcodeCorrectionComponent  {
       });
   }
 
-  changeFolderStatus(archiveFolder: ArchiveFolder) {
-    this.archiveFolderService
-      .changeFolderStatus(archiveFolder.id)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            !archiveFolder.isClosed
-              ? 'Dosja u mbyll me sukses!'
-              : 'Dosja u hap me sukses!'
-          );
 
-          this.displayModal = false;
-          this.getArchiveFolders(this.filters as LazyLoadEvent);
-        }
-
-        if (response.isBadRequest)
-          this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së dosjes!'
-          );
-      });
-  }
-
-  deleteArchiveFolder(archiveFolder: ArchiveFolder) {
-    this.archiveFolderService
-      .delete(archiveFolder.id)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showInfo('Dosja u fshi me sukses!');
-          this.getArchiveFolders(this.filters as LazyLoadEvent);
-        }
-
-        if (response.isBadRequest)
-          this.toastService.showError(
-            'Ndodhi një problem gjatë fshirjes së dosjes!'
-          );
-      });
-  }
 }

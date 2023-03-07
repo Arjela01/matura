@@ -36,20 +36,20 @@ import {ArchiveExam, ArchiveFolder} from '@msh/evaluations/domain-evaluations';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BarcodeCorrectionFormComponent   {
-  @Input() set archiveFolderDetails(details: ArchiveFolder | null) {
+  @Input() set archiveExamDetails(details: ArchiveExam | null) {
     if (details) {
-      this.archiveFolder = Object.assign({}, details);
+      this.archiveExam = Object.assign({}, details);
     }
   }
 
-  @Output() formSave = new EventEmitter<ArchiveFolder>();
+  @Output() formSave = new EventEmitter<ArchiveExam>();
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
 
   submitted = false;
 
-  archiveFolder: ArchiveFolder = {};
+  archiveExam: ArchiveExam = {id: undefined, archiveFolderId: 0 };
 
   onCancelClick() {
     this.formClose.emit();
@@ -58,7 +58,7 @@ export class BarcodeCorrectionFormComponent   {
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
-      this.formSave.emit(this.archiveFolder);
+      this.formSave.emit(this.archiveExam);
     }
   }
 }

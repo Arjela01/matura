@@ -15,7 +15,7 @@
 </div>
 <p-dialog
   [(visible)]="displayModal"
-  [style]="{ width: '500px', height: '380px' }"
+  [style]="{ width: '500p' }"
   header="Hap nje Dosje te re"
   [modal]="true"
   [draggable]="false"
@@ -24,7 +24,7 @@
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
     <msh-barcode-correction-form
-      [archiveFolderDetails]="selectedArchiveFolder"
+      [archiveExamDetails]="selectedArchiveExam"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
     </msh-barcode-correction-form>
