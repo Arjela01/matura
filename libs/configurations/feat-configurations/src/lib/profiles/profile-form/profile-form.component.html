@@ -85,29 +85,6 @@
     </small>
   </div>
 
-  <div class="field">
-    <label for="AcademicYear">Viti *</label>
-    <p-dropdown
-      id="AcademicYear"
-      [options]="academicYears"
-      optionValue="key"
-      optionLabel="value"
-      name="AcademicYear"
-      [autoDisplayFirst]="false"
-      [(ngModel)]="profile.academicYearId"
-      (onChange)="onAcademicYearChange($event)"
-      [showClear]="true"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !profile.academicYearId
-      }">
-    </p-dropdown>
-    <small
-      class="p-error block"
-      *ngIf="submitted && !profile.academicYearId">
-      Viti është fushë e kërkuar.
-    </small>
-  </div>
-
   <div class="field mb-5">
     <label for="ProfileGroup">Grupi i Profilit *</label>
     <p-dropdown
@@ -135,15 +112,14 @@
     <button
       type="button"
       pButton
-      icon="pi pi-times"
       label="Anullo"
       class="p-button-text w-auto mr-2"
       (click)="onCancelClick()"></button>
     <button
+      [disabled]="form.invalid"
       type="submit"
       pButton
-      icon="pi pi-check"
       label="Ruaj"
-      class="p-button-text w-auto"></button>
+      class="p-button w-auto"></button>
   </div>
 </form>

@@ -31,24 +31,6 @@
     </small>
   </div>
 
-  <div class="field">
-    <label for="academicYearId">Viti *</label>
-    <p-dropdown
-      id="academicYearId"
-      [options]="academicYears"
-      optionValue="key"
-      optionLabel="value"
-      name="academicYearId"
-      [autoDisplayFirst]="false"
-      [(ngModel)]="studyProgram.academicYearId"
-      [showClear]="true">
-    </p-dropdown>
-    <small
-      class="p-error block"
-      *ngIf="submitted && !studyProgram.academicYearId">
-      Viti është fushë e kërkuar.
-    </small>
-  </div>
 
   <div class="field">
     <label class="mb-3">Është 2 vjecar? *</label>
@@ -320,10 +302,11 @@
       class="p-button-text w-auto mr-2"
       (click)="onCancelClick()"></button>
     <button
+      [disabled]="form.invalid"
       type="submit"
       pButton
       icon="pi pi-check"
       label="Ruaj"
-      class="p-button-text w-auto"></button>
+      class="p-button w-auto"></button>
   </div>
 </form>

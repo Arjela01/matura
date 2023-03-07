@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
-  AcademicYearApiService,
   StudyProgramApiService,
   UniversityApiService,
   UniversityDepartmentApiService,
@@ -55,7 +54,6 @@ export class ManageStudyProgramsComponent implements OnInit {
 
   universities: DropdownModel<number>[] = [];
   universityDepartaments: DropdownModel<number>[] = [];
-  academicYears: DropdownModel<number>[] = [];
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -63,18 +61,17 @@ export class ManageStudyProgramsComponent implements OnInit {
     private readonly studyProgramService: StudyProgramApiService,
     private readonly universitiesService: UniversityApiService,
     private readonly universityDepartmentService: UniversityDepartmentApiService,
-    private readonly academicYearService: AcademicYearApiService
   ) {}
 
   ngOnInit(): void {
     console.log('Init');
     this.getUniversities();
     this.getUniversityDepartaments();
-    this.getAcademicYears();
   }
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedstudyProgram = {} as StudyProgram;
   }
 
   onDeleteSelectedClick() {
@@ -218,12 +215,6 @@ export class ManageStudyProgramsComponent implements OnInit {
   getUniversityDepartaments() {
     this.universityDepartmentService.loadDropdownList().subscribe(response => {
       this.universityDepartaments = response.data;
-    });
-  }
-
-  getAcademicYears() {
-    this.academicYearService.loadDropdownList().subscribe(response => {
-      this.academicYears = response.data;
     });
   }
 }

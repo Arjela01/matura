@@ -1,26 +1,48 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
-    <div class="field">
-        <label for="=Score">Pikët *</label>
-        <input type="number" pInputText id="Score" name="Score" [(ngModel)]="gradeScale.score" required autofocus
-            [ngClass]="{ 'ng-invalid ng-dirty': submitted && !gradeScale.score }" />
-        <small class="p-error block" *ngIf="submitted && !gradeScale.score">
-            Pikët janë fushë e kërkuar.
-        </small>
-    </div>
-
-
-    <div class="field">
-        <label for="Grade">Nota</label>
-        <input type="number" pInputText id="Grade" min="4" max="10" name="Grade" [(ngModel)]="gradeScale.grade"
-            autofocus [ngClass]="{ 'ng-invalid ng-dirty': submitted && !gradeScale.score }" />
-
-    </div>
+  <div class="field">
+    <label for="=Score">Pikët *</label>
+    <input
+      type="number"
+      pInputText
+      id="Score"
+      name="Score"
+      [(ngModel)]="gradeScale.score"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !gradeScale.score }" />
     <small class="p-error block" *ngIf="submitted && !gradeScale.score">
-        Nota është fushë e kërkuar.
+      Pikët janë fushë e kërkuar.
     </small>
-    <div class="flex justify-content-end">
-        <button type="button" pButton icon="pi pi-times" label="Anullo" class="p-button-text w-auto mr-2"
-            (click)="onCancelClick()"></button>
-        <button type="submit" pButton icon="pi pi-check" label="Ruaj" class="p-button-text w-auto"></button>
-    </div>
+  </div>
+
+  <div class="field">
+    <label for="Grade">Nota</label>
+    <input
+      type="number"
+      pInputText
+      id="Grade"
+      min="4"
+      max="10"
+      name="Grade"
+      [(ngModel)]="gradeScale.grade"
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !gradeScale.score }" />
+  </div>
+  <small class="p-error block" *ngIf="submitted && !gradeScale.score">
+    Nota është fushë e kërkuar.
+  </small>
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      [disabled]="form.invalid"
+      type="submit"
+      pButton
+      label="Ruaj"
+      class="p-button w-auto"></button>
+  </div>
 </form>

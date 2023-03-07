@@ -38,7 +38,6 @@
     <msh-exam-subject-form
       [examSubjectDetails]="selectedExamSubject"
       [examTypes]="examTypes"
-      [academicYears]="academicYears"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
     </msh-exam-subject-form>
@@ -63,7 +62,7 @@
       pButton
       icon="pi pi-check"
       label="Po"
-      class="p-button-text"
+      class="p-button border"
       (click)="cd.accept()"></button>
   </ng-template>
 </p-confirmDialog>

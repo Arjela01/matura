@@ -37,14 +37,15 @@
       type="button"
       pButton
       icon="pi pi-times"
-      label="Cancel"
+      label="Anullo"
       class="p-button-text w-auto mr-2"
       (click)="onCancelClick()"></button>
     <button
+      [disabled]="form.invalid"
       type="submit"
       pButton
       icon="pi pi-check"
-      label="Save"
-      class="p-button-text w-auto"></button>
+      label="Ruaj"
+      class="p-button w-auto"></button>
   </div>
 </form>

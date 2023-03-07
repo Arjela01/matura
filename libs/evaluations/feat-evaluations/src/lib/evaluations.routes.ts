@@ -1,5 +1,7 @@
 import { Route } from '@angular/router';
-import {ConnectExamSecretsComponent} from "./connect-exam-secrets/connect-exam-secrets.component";
+
+
+
 
 export const EVALUATION_ROUTES: Route[] = [
   {
@@ -8,6 +10,13 @@ export const EVALUATION_ROUTES: Route[] = [
       import(
         './exam-scores/manage-exam-scores/manage-exam-scores.component'
       ).then(m => m.ManageExamScoresComponent),
+  },
+  {
+    path: 'exam-score-secret',
+    loadComponent: () =>
+      import('./exam-scores-secrets-grid/exam-scores-secrets-grid.component').then(
+        m => m.ExamScoresSecretsGridComponent
+      ),
   },
   {
     path: 'archive-exam',
@@ -49,14 +58,14 @@ export const EVALUATION_ROUTES: Route[] = [
     loadComponent: () =>
       import(
         './annual-grades/a2-form-annual-grades-view/a2-form-annual-grades-view.component'
-        ).then(m => m.A2FormAnnualGradesViewComponent),
+      ).then(m => m.A2FormAnnualGradesViewComponent),
   },
   {
     path: 'annual-grades',
     loadComponent: () =>
       import(
         './annual-grades/annual-grades-grid/annual-grades-grid.component'
-        ).then(m => m.AnnualGradesGridComponent),
+      ).then(m => m.AnnualGradesGridComponent),
   },
 
   {
@@ -121,5 +130,19 @@ export const EVALUATION_ROUTES: Route[] = [
       import(
         './grade-scale/grade-scale-action/grade-scale-action.component'
       ).then(m => m.GradeScaleActionComponent),
+  },
+  {
+    path: 'unmatched-exams',
+    loadComponent: () =>
+      import(
+        './unmatched-exams/unmatched-exams-grid/unmatched-exams-grid.component'
+      ).then(m => m.UnmatchedExamsGridComponent),
+  },
+  {
+    path: 'exam-copy/list-of-exam-copies',
+    loadComponent: () =>
+      import('./exam-copy/manage-exam-copy/manage-exam-copy.component').then(
+        m => m.ManageExamCopyComponent
+      ),
   },
 ];

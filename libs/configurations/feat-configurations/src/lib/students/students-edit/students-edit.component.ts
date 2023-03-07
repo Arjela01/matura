@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -9,12 +9,12 @@ import {
   ProfileApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
+import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   Student,
   StudentClassModel,
   StudentSectionModel,
 } from '@msh/shared/domain-models';
-import { DropdownModel } from '@msh/shared/data-access-shared';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
@@ -152,7 +152,10 @@ export class StudentsEditComponent implements OnInit {
             summary: 'Success',
             detail: 'Studenti u ruajt me sukses.',
           });
-          this.router.navigate(['/configurations/students']).then();
+          //this.router.navigate(['/configurations/students']).then();
+          this.router
+            .navigate(['/applications/save-a1-student', this.student.id])
+            .then();
         } else {
           this.messageService.add({
             severity: 'error',

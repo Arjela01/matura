@@ -71,7 +71,7 @@
       [(ngModel)]="examDate.time"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': examDate.time }" />
+      [ngClass]="{ 'ng-invalid ng-dirty':  submitted && !examDate.date }" />
     <small class="p-error block" *ngIf="submitted && !examDate.time">
       Ora  është fushë e kërkuar.
     </small>
@@ -81,16 +81,15 @@
     <button
       type="button"
       pButton
-      icon="pi pi-times"
       label="Anullo"
       class="p-button-text w-auto mr-2"
       (click)="onCancelClick()"></button>
     <button
+      [disabled]="form.invalid"
       type="submit"
       pButton
-      icon="pi pi-check"
       label="Ruaj"
-      class="p-button-text w-auto"></button>
+      class="p-button w-auto" ></button>
   </div>
 </form>
 

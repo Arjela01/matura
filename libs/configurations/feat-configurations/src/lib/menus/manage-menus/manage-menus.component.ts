@@ -72,6 +72,7 @@ export class ManageMenusComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedMenu = {} as Menu;
   }
 
   onDeleteSelectedClick() {

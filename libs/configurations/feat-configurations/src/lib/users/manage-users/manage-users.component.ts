@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import {
   AdministrationOfficeApiService,
   CityApiService,
@@ -9,13 +14,14 @@ import {
   StudyProgramApiService,
   UniversityApiService,
   UniversityDepartmentApiService,
-  UserApiService
+  UserApiService,
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { User } from '@msh/shared/domain-models';
 import {
+  GRID_ACTIONS,
   GlobalToastService,
-  GridEvent, GRID_ACTIONS
+  GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -83,7 +89,7 @@ export class ManageUsersComponent implements OnInit {
     private readonly highSchoolService: HighSchoolApiService,
     private readonly roleService: RolesApiService,
     private readonly cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getAdministrationOfficeDropdown();
@@ -98,6 +104,7 @@ export class ManageUsersComponent implements OnInit {
 
   onNewClick() {
     this.userDialog = true;
+    this.selectedUser = {} as User;
   }
 
   onDeleteSelectedClick() {
@@ -127,7 +134,7 @@ export class ManageUsersComponent implements OnInit {
         break;
       case GRID_ACTIONS.CUSTOM_ACTION1:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt qe doni te gjeneroni nje password te ri?',
+          message: 'Jeni i sigurt qe doni te gjeneroni nje fjalkalim te ri?',
           accept: () => {
             this.passwordGenerate(event.data as User);
           },
@@ -153,16 +160,12 @@ export class ManageUsersComponent implements OnInit {
           },
         });
         break;
-
     }
   }
-
 
   onFormClose() {
     this.userDialog = false;
   }
-
-
 
   onFormSave(user: User) {
     if (user.id) {
@@ -186,13 +189,11 @@ export class ManageUsersComponent implements OnInit {
       });
   }
 
-
-
   changeUserStatus(user: User) {
     this.userService
       .changeUserStatus({
-        "id": user.id,
-        "isDisabled": !user.isDisabled
+        id: user.id,
+        isDisabled: !user.isDisabled,
       })
       .pipe(untilDestroyed(this))
       .subscribe(response => {
@@ -226,7 +227,9 @@ export class ManageUsersComponent implements OnInit {
 
         if (!response.isSuccessful) {
           this.toastService.showError(
-            'Ndodhi nje problem gjate ndryshimit te perdoruesit!'
+            response.errorMessage !== null
+              ? response.errorMessage
+              : 'Ndodhi nje problem gjate shtimit te perdoruesit!'
           );
         }
       });
@@ -244,7 +247,9 @@ export class ManageUsersComponent implements OnInit {
         }
         if (!response.isSuccessful) {
           this.toastService.showError(
-            'Ndodhi nje problem gjate ndryshimit te perdoruesit!'
+            response.errorMessage !== null
+              ? response.errorMessage
+              : 'Ndodhi nje problem gjate ndryshimit te perdoruesit!'
           );
         }
       });
@@ -260,8 +265,8 @@ export class ManageUsersComponent implements OnInit {
           this.userDialog = false;
           this.resetPasswordGenerated = true;
           this.newUserPasswordObj = {
-            ...response.data
-          }
+            ...response.data,
+          };
           this.cdr.detectChanges();
         }
 
@@ -272,7 +277,6 @@ export class ManageUsersComponent implements OnInit {
         }
       });
   }
-
 
   deleteUser(user: User) {
     this.userService

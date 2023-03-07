@@ -61,7 +61,9 @@ export class ManageAcademicYearComponent {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedAcademicYear = {} as AcademicYear;
   }
+
 
   onDeleteSelectedClick() {
     this.confirmationService.confirm({

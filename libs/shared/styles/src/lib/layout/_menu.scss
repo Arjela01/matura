@@ -143,6 +143,9 @@
 .fs {
   font-size: 12px;
 }
+.fl {
+  font-size: 10px;
+}
 .container {
   display: flex;
   margin-top: 37px;
@@ -151,6 +154,12 @@
 
   .profile-photo {
     float: left;
+    color: #101829;
+    font-size: 12px;
+    margin-top: -4px;
+    &:hover {
+      cursor: pointer;
+    }
   }
   .name {
     display: inline-flex;

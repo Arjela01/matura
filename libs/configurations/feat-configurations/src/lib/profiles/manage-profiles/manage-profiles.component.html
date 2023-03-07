@@ -37,7 +37,6 @@
   <ng-template pTemplate="content">
     <msh-profile-form
       [profileDetails]="selectedProfile"
-      [academicYears]="AcademicYears"
       [profileGroups]="ProfileGroups"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
@@ -63,7 +62,7 @@
       pButton
       icon="pi pi-check"
       label="Po"
-      class="p-button-text"
+      class="p-button border"
       (click)="cd.accept()"></button>
   </ng-template>
 </p-confirmDialog>

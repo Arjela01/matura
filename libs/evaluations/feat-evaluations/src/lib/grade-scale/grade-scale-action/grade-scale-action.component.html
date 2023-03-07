@@ -1,72 +1,74 @@
-<div
-  class="card-form px-6 py-6 m-3 md:mx-auto sm:mx-0 md:w-8 sm:w-12 rounded-0">
-  <div class="flex align-items-center">
-    <h4 class="card-header mb-0">
-      Shkallezimet e notave per lëndën {{ examSubject | async }}
-    </h4>
-  </div>
-
-  <div class="flex justify-content-between my-2">
-    <button
-      type="button"
-      pButton
-      icon="pi pi-arrow-left"
-      label="Kthehu"
-      class="w-auto mr-2"
-      style="background: #eff1f5; color: #155eef"
-      (click)="onExitForm()"></button>
-    <button
-      pButton
-      pRipple
-      label="Shto"
-      icon="pi pi-plus"
-      class="p-button-success"
-      (click)="onNewClick()"></button>
-  </div>
-  <div class="card-body mt-5">
-    <p-table
-      #dt
-      dataKey="id"
-      class="mt-6"
-      [value]="gradeScales | async"
-      styleClass="p-datatable-gridlines">
-      <ng-template pTemplate="header">
-        <tr>
-          <th style="width: 25%">Pikët</th>
-          <th style="width: 25%">Nota</th>
-          <th style="width: 50%">Veprime</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-gradeScale>
-        <tr>
-          <td style="width: 35%; min-width: 10rem">
-            {{ gradeScale.score }}
-          </td>
-          <td style="width: 35%; min-width: 10rem">
-            {{ gradeScale.grade }}
-          </td>
-          <td>
-            <div class="flex">
-              <img
-                src="assets/svg/edit-form.svg"
-                class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
-                tooltipPosition="bottom"
-                (click)="onEditClick(gradeScale)"
-                pTooltip="Ndrysho" />
-
-              <img
-                src="assets/svg/delete-form.svg"
-                class="p-button-rounded p-button-danger p-button-text ml-m pointer"
-                pTooltip="Fshi"
-                tooltipPosition="bottom"
-                (click)="onDeleteClick(gradeScale)" />
-            </div>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
+<div class="flex center mb-2 page-header mb-header align-items-baseline">
+  <h4 class="flex-1 mb-0">
+    Shkallezimet e notave per lëndën {{ examSubject | async }}
+  </h4>
 </div>
+
+<div class="flex justify-content-between my-3">
+  <button
+    type="button"
+    pButton
+    icon="pi pi-arrow-left"
+    label="Kthehu"
+    class="w-auto mr-2"
+    style="background: #eff1f5; color: #155eef"
+    (click)="onExitForm()"></button>
+  <button
+    pButton
+    pRipple
+    label="Shto"
+    icon="pi pi-plus"
+    class="p-button-success"
+    (click)="onNewClick()"></button>
+</div>
+
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+        <p-table
+          #dt
+          dataKey="id"
+          class="mt-6"
+          [value]="gradeScales | async"
+          styleClass="p-datatable-gridlines">
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 25%">Pikët</th>
+              <th style="width: 25%">Nota</th>
+              <th style="width: 50%">Veprime</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-gradeScale>
+            <tr>
+              <td style="width: 35%; min-width: 10rem">
+                {{ gradeScale.score }}
+              </td>
+              <td style="width: 35%; min-width: 10rem">
+                {{ gradeScale.grade }}
+              </td>
+              <td>
+                <div class="flex">
+                  <img
+                    src="assets/svg/edit-form.svg"
+                    class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
+                    tooltipPosition="bottom"
+                    (click)="onEditClick(gradeScale)"
+                    pTooltip="Ndrysho" />
+
+                  <img
+                    src="assets/svg/delete-form.svg"
+                    class="p-button-rounded p-button-danger p-button-text ml-m pointer"
+                    pTooltip="Fshi"
+                    tooltipPosition="bottom"
+                    (click)="onDeleteClick(gradeScale)" />
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
 <p-dialog
   [(visible)]="displayModal"
   [style]="{ width: '500px' }"

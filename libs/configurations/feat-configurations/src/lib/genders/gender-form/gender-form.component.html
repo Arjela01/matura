@@ -1,5 +1,4 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
-
   <div class="field">
     <label for="Name">Emri *</label>
     <input
@@ -16,21 +15,18 @@
     </small>
   </div>
 
- 
-
   <div class="flex justify-content-end">
     <button
       type="button"
       pButton
-      icon="pi pi-times"
       label="Anullo"
       class="p-button-text w-auto mr-2"
       (click)="onCancelClick()"></button>
     <button
+      [disabled]="form.invalid"
       type="submit"
       pButton
-      icon="pi pi-check"
       label="Ruaj"
-      class="p-button-text w-auto"></button>
+      class="p-button w-auto"></button>
   </div>
 </form>

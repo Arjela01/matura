@@ -12,6 +12,7 @@ import { LayoutService } from '@msh/layout/util-layout';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppTopbarComponent {
+  displayModal = false;
   constructor(
     public layoutService: LayoutService,
     private authFacade: AuthFacade

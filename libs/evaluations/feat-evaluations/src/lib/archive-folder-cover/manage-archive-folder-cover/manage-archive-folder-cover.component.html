@@ -1,34 +1,35 @@
+<div class="flex center mb-2 page-header mb-header align-items-baseline">
+  <h2 class="flex-1 mb-0">Ju mund të printoni kopjen tuaj si më poshtë!</h2>
+  <div class="flex align-items-right justify-content-right">
+    <div class="my-2">
+      <a [routerLink]="['/evaluations', 'archive-folder']">
+        <button
+          pButton
+          pRipple
+          label="Kthehu"
+          icon="pi pi-arrow-left"
+          class="p-button-danger mr-2"
+          style="background: #eff1f5; color: #155eef"></button>
+      </a>
+    </div>
+    <div class="my-2">
+      <a [routerLink]="['/evaluations', 'archive-folder-cover']">
+        <button
+          pButton
+          pRipple
+          label="Printo"
+          icon="pi pi-print"
+          class="p-button-success mr-2"
+          (click)="(onPrint)"></button>
+      </a>
+    </div>
+  </div>
+</div>
 <div class="grid">
   <div class="col-12">
-    <div class="card">
+    <div class="card-form px-6 py-6 mb-header">
       <!-- TODO: this can be reusable -->
-      <p-toolbar styleClass="mb-4">
-        <div class="p-toolbar-group-left">
-          <h2 class="flex-1 mb-0">
-            Ju mund të printoni kopjen tuaj si më poshtë!
-          </h2>
-        </div>
-        <div class="p-toolbar-group-right">
-          <a [routerLink]="['/evaluations', 'archive-folder']">
-            <button
-              pButton
-              pRipple
-              label="Kthehu"
-              icon="pi pi-arrow-left"
-              class="p-button-danger mr-2"
-              [ngStyle]="{ backgroundColor: 'var(--bluegray-600)' }"></button>
-          </a>
-          <a [routerLink]="['/evaluations', 'archive-folder-cover']">
-            <button
-              pButton
-              pRipple
-              label="Printo"
-              icon="pi pi-print"
-              class="p-button-success mr-2"
-              (click)="(onPrint)"></button>
-          </a>
-        </div>
-      </p-toolbar>
+
       <div class="card">
         <p-toast></p-toast>
         <p-steps [model]="items" [readonly]="true"></p-steps>
@@ -62,7 +63,7 @@
       pButton
       icon="pi pi-check"
       label="Po"
-      class="p-button-text"
+      class="p-button border"
       (click)="cd.accept()"></button>
   </ng-template>
 </p-confirmDialog>

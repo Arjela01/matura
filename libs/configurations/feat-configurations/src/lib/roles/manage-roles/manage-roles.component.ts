@@ -51,6 +51,7 @@ export class ManageRolesComponent {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedRole = {} as Role;
   }
 
   onDeleteSelectedClick() {
@@ -90,7 +91,7 @@ export class ManageRolesComponent {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni te sigurtë per fshirjen e rolit?',
+          message: 'Jeni te sigurt per fshirjen e rolit?',
           accept: () => {
             this.deleteRole(event.data as Role);
             this.toastService.showWarning('Roli u fshi!');

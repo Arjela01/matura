@@ -13,18 +13,17 @@ import {
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
-  AcademicYearApiService,
   GendersApiService,
   HighSchoolApiService,
   ProfileApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
+import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   Student,
   StudentClassModel,
   StudentSectionModel,
 } from '@msh/shared/domain-models';
-import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -66,7 +65,6 @@ export class StudentsFormComponent implements OnInit, OnChanges {
   studentClass = StudentClassModel.All;
   studentSection = StudentSectionModel.All;
   schoolProfile: DropdownModel<number>[] = [];
-  academicYears: DropdownModel<number>[] = [];
   saving = false;
   @Input() set studentDetails(details: Student | null) {
     if (details) {
@@ -117,7 +115,6 @@ export class StudentsFormComponent implements OnInit, OnChanges {
 
   constructor(
     private cd: ChangeDetectorRef,
-    private readonly academicYearService: AcademicYearApiService,
     private readonly studentService: StudentsApiService,
     private readonly highSchoolService: HighSchoolApiService,
     private readonly profileService: ProfileApiService,
@@ -135,10 +132,6 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     this.profileService.loadDropdownList().subscribe(response => {
       this.schoolProfile = response.data;
     });
-
-    this.academicYearService.loadDropdownList().subscribe(response => {
-      this.academicYears = response.data;
-    });
   }
 
   ngOnChanges(): void {
@@ -153,10 +146,12 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     const data = { ...this.student };
 
     this.studentService.save(data).subscribe({
-      next: () => {
+      next: response => {
         this.saving = false;
 
-        this.router.navigate(['/configurations/students']).then();
+        this.router
+          .navigate(['/applications/save-a1-student', response.data.id])
+          .then();
       },
     });
   }

@@ -19,7 +19,6 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import {
-  AcademicYearApiService,
   ExamSubjectApiService,
   ExamTypeApiService,
 } from '@msh/configurations/data-access-configurations';
@@ -57,23 +56,21 @@ export class ManageExamSubjectComponent implements OnInit {
   displayModal = false;
 
   examTypes: DropdownModel<number>[] = [];
-  academicYears: DropdownModel<number>[] = [];
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examSubjectService: ExamSubjectApiService,
-    private readonly academicYearsApiService: AcademicYearApiService,
     private readonly examTypesApiService: ExamTypeApiService
   ) {}
 
   ngOnInit(): void {
-    this.getAcademicYearsDropdown();
     this.getExamTypesDropdown();
   }
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedExamSubject = {} as ExamSubject;
   }
 
   onDeleteSelectedClick() {
@@ -207,14 +204,5 @@ export class ManageExamSubjectComponent implements OnInit {
     this.examTypesApiService.loadDropdownList().subscribe(response => {
       this.examTypes = response.data;
     });
-  }
-
-  getAcademicYearsDropdown() {
-    this.academicYearsApiService
-      .loadDropdownList()
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.academicYears = response.data;
-      });
   }
 }

@@ -1,0 +1,78 @@
+<div class="grid" *ngIf="userProfile$ | async as user">
+  <div class="col-12 p-fluid">
+    <div
+      class="card flex px-6 py-6 mt-4 mb-6"
+      style="
+        background: linear-gradient(
+          to top,
+          white 0%,
+          white 80%,
+          #101828 80%,
+          #101828 100%
+        );
+      ">
+      <div class="grid">
+    <p-avatar
+        class="avatar ml-6"
+        label="{{ avatarLabel }}"
+        [style]="{
+                            background: '#101828',
+                            width: '150px',
+                            height: '150px',
+                            fontSize: '64px',
+                            color: 'whitesmoke',
+                            border: '5px solid white'
+                          }"
+        shape="circle">
+      </p-avatar>
+    </div>
+      <div class="name ml-5 mt-5 mb-10" style="color: white; font-size: 36px;"  >
+        <div>  <strong>{{user.firstName}} {{user.lastName}}</strong></div>
+
+        <div class="role mt-3"  style="color: black; font-size: 24px;">
+        <strong>{{user.roleName}}</strong>
+        </div>
+        <div class="field mt-5 " style="color: black; font-size: 16px;" >
+          <label>Përdoruesi: </label>
+          <strong> {{ user.username }}</strong>
+          <br>
+          <label>Email: </label>
+          <strong>{{ user.email }}</strong>
+          <br>
+          <label>NID : </label>
+          <strong>{{ user.nid }}</strong>
+          <br>
+          <label>Shkolla : </label>
+          <strong>{{ user.highSchoolName }}</strong>
+        <div class="field  mt-5" >
+          <button
+            type="button"
+            pButton
+            label="Ndrysho Fjalëkalimin"
+            class="password-button-text w-auto mr-0"
+            (click)="onNewClick()"></button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-dialog
+  [(visible)]="displayPasswordModal"
+  [style]="{ width: '600px' }"
+  [modal]="true"
+  header="Ndrysho Fjalëkalimin"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="true"
+  class="p-fluid"
+  (onHide)="onModalClose()">
+  <ng-template pTemplate="content">
+    <msh-user-reset-password
+      (formClose)="onModalClose()"
+      (formSave)="onFormSave()">
+    </msh-user-reset-password>
+  </ng-template>
+</p-dialog>
+</div>
