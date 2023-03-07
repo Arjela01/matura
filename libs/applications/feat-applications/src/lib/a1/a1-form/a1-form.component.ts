@@ -15,8 +15,8 @@ import {
   ExamSubjectApiService,
   StudentsApiService
 } from '@msh/configurations/data-access-configurations';
-import { DropdownModel } from '@msh/shared/data-access-shared';
-import { AcademicYear } from '@msh/shared/domain-models';
+import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
+import { AcademicYear, Student, StudentTableView } from '@msh/shared/domain-models';
 import { GlobalToastService } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ButtonModule } from 'primeng/button';
@@ -74,17 +74,16 @@ export class A1FormComponent {
   }
   ref?: DynamicDialogRef;
   submitted = false;
-  a1: any = {
-    id: '',
-    academicYearId: '',
+  a1: A1Z = {
+    id:  0,
+    academicYearId: 0,
     studentId: '',
     isA1: true,
     isApplyingToForeignCountries: false,
     alreadyHaveDiploma: false,
     subjectD3Id: '',
     subjectZ1Id: '',
-    subjectZ2Id: null,
-    subjectZ3Id: null,
+    subjectZ2Id: undefined,
     overSeerCode: '',
   };
   studentsConfig = {
@@ -95,7 +94,8 @@ export class A1FormComponent {
     globalFilter: null,
   };
 
-  students: any | null = null;
+  students: StudentTableView | null = null;
+  currentStudent: Student | null = null;
   id: string | null = null;
 
   constructor(
@@ -147,45 +147,42 @@ export class A1FormComponent {
     } else {
       this.getA1ById()
         .pipe(
-          switchMap((a1: any) => {
+          switchMap((a1: ApiResult<A1Z>) => {
             this.a1 = { ...a1?.data } as A1Z;
+            return this.studentsApiService.getById(a1.data.studentId)
+          }),
+          switchMap((student: ApiResult<Student>) => {
+            this.currentStudent = student.data;
+
             return combineLatest([
               this.getAcademicYears(),
               this.getStudent(),
               this.getOptionalSubjects(),
-              this.getD3Subjects(this.a1.isFall),
+              this.getD3Subjects(student.data.isFall ?? false),
             ]);
-          })
+          }), 
         )
         .subscribe(([years, students, z1, d3]) => {
           this.academicYear = years['data'].find(
             (year: AcademicYear) => year.isActive
           );
           this.d3Dropdown = d3.data;
-          this.a1.subjectD3Id = this.a1.subjectD3A1Id;
           this.students = students;
           this.optionalSubjects = z1.data;
           this.initializeOptionalSubjects();
           this.choosenStudent = `${this.a1.studentIdentifier}-${this.a1.studentFirstName}-${this.a1.studentFatherName}-${this.a1.studentLastName}`;
+
           this.cd.detectChanges();
         });
     }
   }
 
   initializeOptionalSubjects() {
-    if (this.a1.subjectZ1A1Id) {
-      this.subjectsChoosen.push({
-        key: this.a1.subjectZ1A1Id,
-        value: this.a1.subjectZ1Name,
-      });
-      this.a1.subjectZ1Id = this.a1.subjectZ1A1Id;
+    if (this.a1.subjectZ1Id) {
+      this.subjectsChoosen.push(this.optionalSubjects.find(x => x.key == x.key));
     }
-    if (this.a1.subjectZ2A1Id) {
-      this.subjectsChoosen.push({
-        key: this.a1.subjectZ2A1Id,
-        value: this.a1.subjectZ2Name,
-      });
-      this.a1.subjectZ2Id = this.a1.subjectZ2A1Id;
+    if (this.a1.subjectZ2Id) {
+      this.subjectsChoosen.push(this.optionalSubjects.find(x => x.key == x.key));
     }
   }
 
@@ -249,7 +246,7 @@ export class A1FormComponent {
       .pipe(untilDestroyed(this));
   }
 
-  getStudent(): Observable<any> {
+  getStudent(): Observable<StudentTableView> {
     this.studentsConfig.filters = INITIAL_FILTER;
     return this.studentsApiService
       .loadStudents(this.studentsConfig)
@@ -261,8 +258,6 @@ export class A1FormComponent {
     this.subjectsChoosen.splice(index, 1);
     if (this.subjectsChoosen.length === 1) {
       this.a1.subjectZ1Id = this.subjectsChoosen[0].key;
-      this.a1.subjectZ2Id = null;
-      this.a1.subjectZ2Name = null;
     }
   }
 

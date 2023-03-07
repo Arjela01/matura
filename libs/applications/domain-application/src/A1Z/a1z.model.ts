@@ -1,6 +1,5 @@
 export interface A1Z {
   id?: number;
-  yearOfSchoolA1Z?: number;
   a1ZCategoryId?: string;
   academicYearId?: number;
   studentId?: string;

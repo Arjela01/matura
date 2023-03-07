@@ -172,7 +172,6 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
 
     if (this.formId !== null) {
       this.a1zService.getOne(parseInt(this.formId)).subscribe(response => {
-        console.log(34,response);
         
         this.a1z = response.data;
         

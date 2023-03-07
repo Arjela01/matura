@@ -1,6 +1,6 @@
 
 export interface AcademicYear {
-  id: string;
+  id: number;
   year: string;
   isFall: boolean;
   isActive: boolean;
