@@ -28,16 +28,6 @@
             display="menu"></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="totalArchiveExams">
-        Total
-        <div>
-          <p-sortIcon field="totalArchiveExams"></p-sortIcon>
-          <p-columnFilter
-            type="numeric"
-            field="totalArchiveExams"
-            display="menu"></p-columnFilter>
-        </div>
-      </th>
       <th pSortableColumn="examType">
         Tipi i Provimit
         <div>
@@ -88,11 +78,8 @@
           pTooltip="Shiko Dosjen"
           tooltipPosition="bottom"
           [routerLink]="['/evaluations', 'archive-view', archiveFolder.id]">
-          {{ this.archiveFolder.nr }}
+          {{ this.archiveFolder.archiveFolderNr }}
         </a>
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ archiveFolder.totalArchiveExams }}
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ archiveFolder.examTypeName }}

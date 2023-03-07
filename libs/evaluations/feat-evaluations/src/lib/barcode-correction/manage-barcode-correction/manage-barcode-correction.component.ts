@@ -166,14 +166,14 @@ export class ManageBarcodeCorrectionComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Dosja u ndryshua me sukses!');
+          this.toastService.showSuccess('Barkodi u ndryshua me sukses!');
           this.displayModal = false;
           this.getArchiveFolders(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së dosjes!'
+            'Ndodhi një problem gjatë ndryshimit së barkodit!'
           );
       });
   }
