@@ -1,0 +1,46 @@
+<p-table #dt [value]="reports" responsiveLayout="scroll" [rows]="10" [paginator]="true"
+    [rowsPerPageOptions]="[10, 20, 30]" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde" [rowHover]="true" dataKey="code"
+    [(selection)]="selectedReports" selectionMode="multiple" (onRowSelect)="onRowSelect($event)"
+    (onRowUnselect)="onRowUnselect($event)" (onLazyLoad)="loadRows($event)" [lazy]="true">
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="name">
+                Emri
+                <div>
+                    <p-sortIcon field="name"></p-sortIcon>
+                    <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="path">
+                Linku
+                <div>
+                    <p-sortIcon field="path"></p-sortIcon>
+                    <p-columnFilter type="text" field="path" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-reports>
+        <tr>
+            <td style="width: 50%; min-width: 10rem">
+                {{ reports.name }}
+            </td>
+            <td style="width: 50%; min-width: 10rem">
+                {{ reports.path }}
+            </td>
+            <td>
+                <div class="flex">
+                    <img src="assets/svg/edit-form.svg"
+                        class="p-button-rounded p-button-warning p-button-text mr-2 pointer" tooltipPosition="bottom"
+                        (click)="onEditClick(reports)" pTooltip="Ndrysho" />
+
+                    <img src="assets/svg/delete-form.svg"
+                        class="p-button-rounded p-button-danger p-button-text ml-m pointer" pTooltip="Fshi"
+                        tooltipPosition="bottom" (click)="onDeleteClick(reports)" />
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

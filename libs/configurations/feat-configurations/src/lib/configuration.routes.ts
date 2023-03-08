@@ -62,13 +62,20 @@ export const CONFIGURATION_ROUTES: Route[] = [
     loadComponent: () =>
       import(
         './activate-overseer-dar-za/manage-activate-overseer-dar-za/manage-activate-overseer-dar-za.component'
-        ).then(m => m.ManageActivateOverseerDarZaComponent),
+      ).then(m => m.ManageActivateOverseerDarZaComponent),
   },
   {
     path: 'menu',
     loadComponent: () =>
       import('./menus/manage-menus/manage-menus.component').then(
         m => m.ManageMenusComponent
+      ),
+  },
+  {
+    path: 'reports',
+    loadComponent: () =>
+      import('./reports/manage-reports/manage-reports.component').then(
+        m => m.ManageReportsComponent
       ),
   },
   {
@@ -200,23 +207,23 @@ export const CONFIGURATION_ROUTES: Route[] = [
   {
     path: 'exam-assignment',
     loadComponent: () =>
-        import('./exam-assignment/manage-exam-assignment/manage-exam-assignment.component').then(
-            m => m.ManageExamAssignmentComponent
-        ),
+      import(
+        './exam-assignment/manage-exam-assignment/manage-exam-assignment.component'
+      ).then(m => m.ManageExamAssignmentComponent),
   },
   {
     path: 'student-ban',
     loadComponent: () =>
-        import('./student-ban/manage-student-ban/manage-student-ban.component').then(
-            m => m.ManageStudentBanComponent
-        ),
+      import(
+        './student-ban/manage-student-ban/manage-student-ban.component'
+      ).then(m => m.ManageStudentBanComponent),
   },
   {
     path: 'empty-site',
     loadComponent: () =>
-        import('./empty-site/manage-empty-site/manage-empty-site.component').then(
-            m => m.ManageEmptySiteComponent
-        ),
+      import('./empty-site/manage-empty-site/manage-empty-site.component').then(
+        m => m.ManageEmptySiteComponent
+      ),
   },
   {
     path: 'dashboard-items',
