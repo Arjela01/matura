@@ -1,0 +1,123 @@
+<p-table
+  #dt
+  dataKey="id"
+  responsiveLayout="scroll"
+  [value]="dashboardItems"
+  [totalRecords]="totalRecords"
+  [rows]="10"
+  [paginator]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
+  [rowHover]="true"
+  [(selection)]="selectedDashboardItems"
+  selectionMode="multiple"
+  (onRowSelect)="onRowSelect($event)"
+  (onRowUnselect)="onRowUnselect($event)"
+  (onLazyLoad)="loadRows($event)"
+  [lazy]="true">
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="section">
+        Seksioni
+        <p-sortIcon field="id"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="section"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="title">
+        Titulli
+        <p-sortIcon field="title"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="title"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="description">
+        Description
+        <p-sortIcon field="description"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="description"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="isDocument">
+        Dokument?
+        <p-sortIcon field="isDocument"></p-sortIcon>
+      </th>
+      <th pSortableColumn="isLink">
+        Link?
+        <p-sortIcon field="isLink"></p-sortIcon>
+      </th>
+      <th pSortableColumn="validFrom">
+        E Vlefshme Nga
+        <p-sortIcon field="validFrom"></p-sortIcon>
+        <p-columnFilter
+          type="date"
+          field="validFrom"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="validTo">
+        E Vlefshme Deri
+        <p-sortIcon field="validTo"></p-sortIcon>
+        <p-columnFilter
+          type="date"
+          field="validTo"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="user">Veprime</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-dashboardItem>
+    <tr>
+      <td style="width: 14%; min-width: 10rem">
+        {{ dashboardItem.dashboardSectionName }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ dashboardItem.title }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ dashboardItem.description }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        <div *ngIf="dashboardItem.hasDocument">
+          <img
+            src="assets/svg/download.svg"
+            class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
+            tooltipPosition="bottom"
+            pTooltip="Shkarko"
+            (click)="onDownloadClick(dashboardItem)" />
+        </div>
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        <a *ngIf="dashboardItem.hasLink" href="{{ dashboardItem.linkUrl }}">
+          Visit Link
+        </a>
+        {{ dashboardItem.isLink ? 'Po' : 'Jo' }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ dashboardItem.startDate | date : 'dd/MM/yyyy' }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ dashboardItem.endDate | date : 'dd/MM/yyyy' }}
+      </td>
+      <td>
+        <div class="flex">
+          <img
+            src="assets/svg/edit-form.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
+            pTooltip="Ndrysho"
+            tooltipPosition="bottom"
+            (click)="onEditClick(dashboardItem)" />
+          <img
+            src="assets/svg/delete-form.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
+            pTooltip="Fshi"
+            tooltipPosition="bottom"
+            (click)="onDeleteClick(dashboardItem)" />
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
