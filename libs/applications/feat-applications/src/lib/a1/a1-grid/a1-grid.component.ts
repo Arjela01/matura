@@ -3,12 +3,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { A1ApiService } from '@msh/applications/data-access-applications';
-import { A1 } from '@msh/applications/domain-application';
+import { A1Z } from '@msh/applications/domain-application';
+import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   AcademicYear,
-  Student,
+  Student
 } from '@msh/shared/domain-models';
-import { DropdownModel } from '@msh/shared/data-access-shared';
 import { GlobalToastService, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -52,13 +52,13 @@ import { BehaviorSubject } from 'rxjs';
 })
 @UntilDestroy()
 export class A1GridComponent {
-  private a1$$ = new BehaviorSubject<A1[]>([]);
+  private a1$$ = new BehaviorSubject<A1Z[]>([]);
   a1$ = this.a1$$.asObservable();
   filters: LazyLoadEvent | null = null;
   students: Student[] = [];
   totalRecords = 0;
-  selectedA1: A1 | null = null;
-  selectedA1Forms: A1[] = [];
+  selectedA1: A1Z | null = null;
+  selectedA1Forms: A1Z[] = [];
   displayForm = false;
   d3Dropdown: DropdownModel<number>[] = [];
   gridAction = GRID_ACTIONS;
@@ -78,7 +78,7 @@ export class A1GridComponent {
   onNewClick() {
     this.router.navigate(['applications/save-a1']);
   }
-  updateA1(a1: A1) {
+  updateA1(a1: A1Z) {
     this.a1ApiService
       .update(a1)
       .pipe(untilDestroyed(this))
@@ -114,13 +114,15 @@ export class A1GridComponent {
         this.confirmationService.confirm({
           message: 'Jeni i sigurt që doni të fshini formularët e zgjedhur?',
           accept: () => {
-            this.deleteA1(event as A1);
+            this.deleteA1(event as A1Z);
           },
         });
         break;
     }
   }
-  deleteA1(a1: A1) {
+  deleteA1(a1: A1Z) {
+    if (!a1.id) return;
+
     this.a1ApiService
       .delete(a1.id)
       .pipe(untilDestroyed(this))
