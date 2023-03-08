@@ -11,7 +11,7 @@ import { LazyLoadEvent, MessageService } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import {DashboardItemsApiService} from "@msh/configurations/data-access-configurations";
-import {DashboardItems} from "@msh/shared/domain-models";
+import {DashboardItem} from "@msh/shared/domain-models";
 
 @Component({
   selector: 'msh-dashboard',
@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
   id: any;
   loading = false;
 
-  dashboardCards:DashboardItems [] = []
+  dashboardCards:DashboardItem [] = []
 
   constructor(
     private cd: ChangeDetectorRef,

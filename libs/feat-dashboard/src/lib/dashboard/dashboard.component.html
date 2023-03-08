@@ -78,50 +78,22 @@
 
 
         <div class="col-12 xl:col-4"  *ngFor="let card of dashboardCards | slice:0:3 ; let i =index " >
-        <div class="card">
-          <p-card header="{{card.dashboardSectionName}}" subheader="{{card.title}}" [style]="{height: 'auto'}"  styleClass="p-card-shadow">
-            <ng-template pTemplate="header">
-              <img alt="Card" src="assets/images/udhezime.svg"  [style]="{width: '400px' ,height: '300px', margin: '50px'}" >
-            </ng-template>
-            <p>{{card.description}}</p>
-            <p>{{card.documentName}}</p>
 
-            <ng-template pTemplate="footer">
-              <p-button label="Aplikim A1Z" icon="pi pi-pencil"  [style]="{width: 'auto'}"></p-button>
-              <p-button label="Aplikim A1" icon="pi pi-pencil"  [style]="{'margin-left': '.5em'}"></p-button>
-              <p-button label="Shkarko PDF-në" icon="pi pi-download"  [style]="{'margin-left': '.5em'}"></p-button>
-            </ng-template>
-          </p-card>
-        </div>
-      </div>
-<!--      <div class="col-12 xl:col-4">-->
-<!--        <div class="card">-->
-<!--          <p-card header="Formularë" subheader="Në këtë seksion do të mund të shkarkoni formularë te ndryshëm." [style]="{height: 'auto'}" styleClass="p-card-shadow">-->
-<!--            <ng-template pTemplate="header">-->
-<!--              <img alt="Card" src="assets/images/formulare.svg"  [style]="{width: '400px' ,height: '300px', margin: '50px'}" >-->
-<!--            </ng-template>-->
-<!--            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt-->
-<!--              quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>-->
-<!--            <ng-template pTemplate="footer">-->
-<!--                <p-button label="Shiko me shume" icon="pi pi-eye"  [style]="{width: 'auto'}"></p-button>-->
-<!--              </ng-template>-->
-<!--          </p-card>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="col-12 xl:col-4">-->
-<!--        <div class="card">-->
-<!--          <p-card header="Programet orientuese" subheader="Në këtë seksion do të mund të gjeni programet orientuese të Maturës." [style]="{height: 'auto'}"  styleClass="p-card-shadow">-->
-<!--            <ng-template pTemplate="header">-->
-<!--              <img alt="Card" src="assets/images/Programetorientuese.svg"  [style]="{width: '400px' ,height: '300px', margin: '50px'}" >-->
-<!--            </ng-template>-->
-<!--            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt-->
-<!--              quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>-->
-<!--            <ng-template pTemplate="footer">-->
-<!--              <p-button label="Shiko me shume" icon="pi pi-eye"  [style]="{width: 'auto'}"></p-button>-->
-<!--            </ng-template>-->
-<!--          </p-card>-->
-<!--        </div>-->
-<!--      </div>-->
+
+        <p-card header="{{card.dashboardSectionName}}" subheader="{{card.title}}" [style]="{width: 'auto'}"  styleClass="p-card-shadow">
+          <ng-template pTemplate="header">
+            <img alt="Card" src="assets/images/udhezime.svg" [style]="{'margin': 'auto','padding':'100px'}">
+          </ng-template>
+          <p>{{card.description}}</p>
+          <p>{{card.documentName}}</p>
+          <ng-template pTemplate="footer">
+<!--            <p-button label="Save" icon="pi pi-check"></p-button>-->
+<!--            <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button>-->
+          </ng-template>
+        </p-card>
+
+
+</div>
     </div>
   </div>
 </div>

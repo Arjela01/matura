@@ -35,8 +35,8 @@ export class DashboardItemsApiService {
     );
   }
 
-  save(dashboardItems: DashboardItems): Observable<ApiResult<DashboardItems>> {
-    return this.apiService.post<ApiResult<DashboardItems>, DashboardItems>(
+  save(dashboardItems: DashboardItem): Observable<ApiResult<DashboardItem>> {
+    return this.apiService.post<ApiResult<DashboardItem>, DashboardItem>(
       `/DashboardItems`,
       dashboardItems
     );
