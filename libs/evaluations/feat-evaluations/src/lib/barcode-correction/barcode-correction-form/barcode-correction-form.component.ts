@@ -1,24 +1,24 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
   Output,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { AcademicYear } from '@msh/shared/domain-models';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { RadioButtonModule } from 'primeng/radiobutton';
+import {ArchiveExam, ArchiveFolder} from '@msh/evaluations/domain-evaluations';
 
 @Component({
-  selector: 'msh-academic-year-form',
+  selector: 'msh-barcode-correction-form',
   standalone: true,
   imports: [
     CommonModule,
@@ -31,30 +31,25 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     CheckboxModule,
     DropdownModule,
   ],
-  templateUrl: './academic-year-form.component.html',
-  styleUrls: ['./academic-year-form.component.scss'],
+  templateUrl: './barcode-correction-form.component.html',
+  styleUrls: ['./barcode-correction-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AcademicYearFormComponent {
-  @Input() set academicYearDetails(details: AcademicYear | null) {
+export class BarcodeCorrectionFormComponent   {
+  @Input() set archiveExamDetails(details: ArchiveExam | null) {
     if (details) {
-      this.academicYear = Object.assign({}, details);
+      this.archiveExam = Object.assign({}, details);
     }
   }
 
-  @Output() formSave = new EventEmitter<AcademicYear>();
+  @Output() formSave = new EventEmitter<ArchiveExam>();
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
 
   submitted = false;
 
-  academicYear: AcademicYear = {
-    id: 0,
-    year: '',
-    isFall: true,
-    isActive: true,
-  };
+  archiveExam: ArchiveExam = {id: undefined, archiveFolderId: 0 };
 
   onCancelClick() {
     this.formClose.emit();
@@ -63,7 +58,7 @@ export class AcademicYearFormComponent {
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
-      this.formSave.emit(this.academicYear);
+      this.formSave.emit(this.archiveExam);
     }
   }
 }

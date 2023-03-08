@@ -33,6 +33,14 @@ export const EVALUATION_ROUTES: Route[] = [
       ).then(m => m.ManageArchiveFoldersComponent),
   },
   {
+    path: 'barcode-correction',
+    loadComponent: () =>
+      import(
+        './barcode-correction/manage-barcode-correction/manage-barcode-correction.component'
+        ).then(m => m.ManageBarcodeCorrectionComponent),
+  },
+
+  {
     path: 'archive-view/:id',
     loadComponent: () =>
       import(

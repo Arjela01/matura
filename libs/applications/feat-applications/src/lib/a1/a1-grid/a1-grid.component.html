@@ -105,25 +105,31 @@
               {{ a1.academicYear }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ a1.studentFirstName }}
+              {{ a1.firstName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ a1.studentFatherName }}
+              {{ a1.middleName }}
             </td>
-            <td style="width: 15%; min-width: 10rem">
-              {{ a1.studentLastName }}
+            <td style="width: 10%; min-width: 10rem">
+              {{ a1.lastName }}
             </td>
-            <td style="width: 15%; min-width: 10rem">
-              {{ a1.studentNid }}
+            <td style="width: 10%; min-width: 10rem">
+              {{ a1.nid }}
             </td>
-            <td style="width: 15%; min-width: 10rem">
-              {{ a1.studentIdentifier }}
+            <td style="width: 10%; min-width: 10rem">
+              {{ a1.nid }}
             </td>
-            <td style="width: 15%; min-width: 10rem">
+            <td style="width: 10%; min-width: 10rem">
               {{ a1.studentOldIdentifier }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ a1.isApplyingToForeignCountries ? 'Po' : 'Jo' }}
+              {{ a1.birthDate | date }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ a1.birthPlace }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ a1.createdOn | date }}
             </td>
             <td>
               <div class="flex">

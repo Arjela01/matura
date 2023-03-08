@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
+import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import {
   AcademicYear,
-  AcademicYearTableView,
+  AcademicYearTableView
 } from '@msh/shared/domain-models';
-import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
@@ -39,7 +39,7 @@ export class AcademicYearApiService {
     );
   }
 
-  delete(academicYearId: string): Observable<ApiResult<unknown>> {
+  delete(academicYearId: number): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<AcademicYear>>(
       `/AcademicYear/${academicYearId}`
     );
