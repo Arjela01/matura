@@ -14,10 +14,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import {DashboardItem} from "@msh/shared/domain-models";
+import {DashboardSection} from "@msh/shared/domain-models";
 
 @Component({
-  selector: 'msh-dashboard-items-grid',
+  selector: 'msh-dashboard-sections-grid',
   standalone: true,
   imports: [
     CommonModule,
@@ -28,70 +28,63 @@ import {DashboardItem} from "@msh/shared/domain-models";
     CheckboxModule,
     RippleModule,
   ],
-  templateUrl: './dashboard-items-grid.component.html',
-  styleUrls: ['./dashboard-items-grid.component.scss'],
+  templateUrl: './dashboard-sections-grid.component.html',
+  styleUrls: ['./dashboard-sections-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardItemsGridComponent {
-  @Input() dashboardItems: DashboardItem[] = [];
+export class DashboardSectionsGridComponent {
+  @Input() dashboardSection: DashboardSection[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
 
-  selectedDashboardItems: DashboardItem[] = [];
+  //Keep it local state because of Table Header checkbox not syncing
+  selectedDashboardSections: DashboardSection[] = [];
 
   @Output() gridEvent = new EventEmitter<
-    GridEvent<DashboardItem | DashboardItem[]>
+    GridEvent<DashboardSection | DashboardSection[]>
   >();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
-
-  onDownloadClick(dashboardItems: DashboardItem) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.CUSTOM_ACTION2,
-      data: dashboardItems,
-    } as GridEvent<DashboardItem>);
-  }
-
-  onEditClick(dashboardItems: DashboardItem) {
+  onEditClick(dashboardSection: DashboardSection) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
-      data: dashboardItems,
-    } as GridEvent<DashboardItem>);
+      data: dashboardSection,
+    } as GridEvent<DashboardSection>);
   }
 
-  onDeleteClick(dashboardItems: DashboardItem) {
+  onDeleteClick(dashboardSection: DashboardSection) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,
-      data: dashboardItems,
-    } as GridEvent<DashboardItem>);
+      data: dashboardSection,
+    } as GridEvent<DashboardSection>);
   }
 
   onSelectAllClick() {
-    if (this.selectedDashboardItems.length === 0) {
+    if (this.selectedDashboardSections.length === 0) {
       this.gridEvent.emit({
         action: GRID_ACTIONS.UNSELECT_ALL,
-      } as GridEvent<DashboardItem>);
+      } as GridEvent<DashboardSection>);
     } else {
       this.gridEvent.emit({
         action: GRID_ACTIONS.SELECT_MANY,
-        data: this.selectedDashboardItems,
-      } as GridEvent<DashboardItem[]>);
+        data: this.selectedDashboardSections,
+      } as GridEvent<DashboardSection[]>);
     }
   }
 
-  onRowSelect({ data }: { data: DashboardItem }) {
+  onRowSelect({ data }: { data: DashboardSection }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
       data: data,
-    } as GridEvent<DashboardItem>);
+    } as GridEvent<DashboardSection>);
   }
 
-  onRowUnselect({ data }: { data: DashboardItem }) {
+  onRowUnselect({ data }: { data: DashboardSection }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
       data: data,
-    } as GridEvent<DashboardItem>);
+    } as GridEvent<DashboardSection>);
   }
 
   loadRows($event: LazyLoadEvent) {

@@ -28,7 +28,6 @@ export * from './city/city.model'
 export * from './academic-year/academic-year.model'
 export * from './a1z-category/a1z-category'
 export * from './exam-date/exam-date.model'
-// export * from './folders/folders.model'
 export * from './students/student-section.model'
 export * from './students/student-class.model'
 export * from './exam-subject-profile/exam-subject-profile.model';

@@ -39,7 +39,7 @@
   </div>
 
   <div class="field">
-    <label for="description"> Përshkrimi *</label>
+    <label for="description">Përshkrimi *</label>
     <textarea
       rows="2"
       cols="35"
@@ -59,7 +59,7 @@
   </div>
 
   <div class="field">
-    <label for="document">Dokumenti *</label>
+    <label for="document">Dokumenti</label>
     <div class="form-group drop-files noLabel">
       <p-fileUpload
         #uploader
@@ -83,18 +83,14 @@
   </div>
 
   <div class="field">
-    <label for="link">Link\URL *</label>
+    <label for="link">Link\URL</label>
     <input
       type="text"
       pInputText
       id="link"
       name="link"
       [(ngModel)]="dashboardItems.linkUrl"
-      required
-      autofocus
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !dashboardItems.linkUrl
-      }" />
+      autofocus />
   </div>
 
   <div class="field">
@@ -134,41 +130,29 @@
   </div>
 
   <div class="field">
-    <label for="effectiveDate">E vlefshme nga *</label>
-    <input
-      placeholder="dd/MM/yyyy"
-      type="text"
-      pInputText
-      id="effectiveDate"
-      name="effectiveDate"
+    <label for="startDate">E vlefshme nga *</label>
+    <p-calendar
       [(ngModel)]="dashboardItems.startDate"
-      required
-      autofocus
+      dateFormat="dd/mm/yy"
+      inputId="startDate"
+      id="startDate"
+      name="startDate"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !dashboardItems.startDate
-      }" />
+      }"></p-calendar>
     <small class="p-error block" *ngIf="submitted && !dashboardItems.startDate">
       Data është fushë e kërkuar.
     </small>
   </div>
 
   <div class="field">
-    <label for="banRemovalDate">E vlefshme deri *</label>
-    <input
-      placeholder="dd/MM/yyyy"
-      type="text"
-      pInputText
-      id="banRemovalDate"
-      name="banRemovalDate"
+    <label for="endDate">E vlefshme deri</label>
+    <p-calendar
       [(ngModel)]="dashboardItems.endDate"
-      required
-      autofocus
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !dashboardItems.endDate
-      }" />
-    <small class="p-error block" *ngIf="submitted && !dashboardItems.endDate">
-      Data është fushë e kërkuar.
-    </small>
+      dateFormat="dd/mm/yy"
+      inputId="endDate"
+      id="endDate"
+      name="endDate"></p-calendar>
   </div>
   <div class="flex justify-content-end">
     <button

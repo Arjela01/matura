@@ -1,0 +1,32 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="name">Emri *</label>
+    <input
+      type="text"
+      pInputText
+      id="name"
+      name="name"
+      [(ngModel)]="dashboardSections.name"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !dashboardSections.name }" />
+    <small class="p-error block" *ngIf="submitted && !dashboardSections.name">
+      Emri i seksionit është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      [disabled]="form.invalid"
+      type="submit"
+      pButton
+      label="Ruaj"
+      class="p-button w-auto"></button>
+  </div>
+</form>

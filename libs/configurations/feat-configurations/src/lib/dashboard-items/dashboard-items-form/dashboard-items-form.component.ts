@@ -1,14 +1,16 @@
 import { CommonModule } from '@angular/common';
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input, OnInit,
+  Input,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { DashboardItems,} from '@msh/shared/domain-models';
+import { DashboardItem } from '@msh/shared/domain-models';
 
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -20,18 +22,18 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 
 import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
 import { DialogModule } from 'primeng/dialog';
-import {FileUploadModule} from "primeng/fileupload";
+import { FileUploadModule } from 'primeng/fileupload';
 
-import {DropdownModel} from "@msh/shared/data-access-shared";
-import {AutoCompleteModule} from "primeng/autocomplete";
-import {MultiSelectModule} from "primeng/multiselect";
-import {UntilDestroy} from "@ngneat/until-destroy";
+import { DropdownModel } from '@msh/shared/data-access-shared';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import {
-  AcademicYearApiService, DashboardSectionApiService, GendersApiService,
-  HighSchoolApiService, ProfileApiService, RolesApiService,
-  StudentsApiService, UserApiService
-} from "@msh/configurations/data-access-configurations";
-import {Router} from "@angular/router";
+  DashboardSectionApiService,
+  RolesApiService,
+  UserApiService,
+} from '@msh/configurations/data-access-configurations';
+import { CalendarModule } from 'primeng/calendar';
 
 @UntilDestroy()
 @Component({
@@ -52,43 +54,31 @@ import {Router} from "@angular/router";
     FileUploadModule,
     AutoCompleteModule,
     MultiSelectModule,
+    CalendarModule,
   ],
   templateUrl: './dashboard-items-form.component.html',
   styleUrls: ['./dashboard-items-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardItemsFormComponent implements OnInit{
+export class DashboardItemsFormComponent implements OnInit {
   @Input() roles: DropdownModel<number>[] = [];
   @Input() users: DropdownModel<number>[] = [];
   sectionDashboard: DropdownModel<number>[] = [];
 
-  @Input() set setDashboardItemsDetails(details: DashboardItems | null) {
+  @Input() set setDashboardItemsDetails(details: DashboardItem | null) {
     if (details) {
       this.dashboardItems = Object.assign({}, details);
     }
   }
-  @Output() formSave = new EventEmitter<DashboardItems>();
+  @Output() formSave = new EventEmitter<DashboardItem>();
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
 
   submitted = false;
 
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  dashboardItems: DashboardItems = {
-    id: 0,
-    dashboardSectionId: 0,
-    description: "",
-    documentName: "",
-    endDate: [],
-    linkUrl: "",
-    startDate: [],
-    roles: [],
-    users: [],
-    title: ""
-  };
-  uploaded= false;
-
+  dashboardItems = {} as DashboardItem;
+  uploaded = false;
 
   onCancelClick() {
     this.formClose.emit();
@@ -98,8 +88,7 @@ export class DashboardItemsFormComponent implements OnInit{
     private cd: ChangeDetectorRef,
     private readonly dashboardSectionService: DashboardSectionApiService,
     private readonly rolesServices: RolesApiService,
-    private readonly usersServices: UserApiService,
-
+    private readonly usersServices: UserApiService
   ) {}
   ngOnInit(): void {
     this.dashboardSectionService.loadDropdownList().subscribe(response => {

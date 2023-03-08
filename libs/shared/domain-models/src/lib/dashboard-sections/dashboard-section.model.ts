@@ -1,5 +1,5 @@
 export interface DashboardSection {
-  id?: any;
+  id: number;
   name: string;
 }
 
