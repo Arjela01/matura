@@ -13,6 +13,7 @@ import {
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
+  AcademicYearApiService,
   GendersApiService,
   HighSchoolApiService,
   ProfileApiService,
@@ -66,9 +67,11 @@ export class StudentsFormComponent implements OnInit, OnChanges {
   studentSection = StudentSectionModel.All;
   schoolProfile: DropdownModel<number>[] = [];
   saving = false;
+  academicYears: DropdownModel<number>[] = [];
   @Input() set studentDetails(details: Student | null) {
     if (details) {
       this.student = Object.assign({}, details);
+      debugger;
     }
   }
 
@@ -106,7 +109,7 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     profileName: '',
     firstName: '',
     schoolFinishedName: '',
-    registrationYearId: undefined,
+    registrationYearId: 0,
     graduationYear: undefined,
     isConfirmedBySupervisor: true,
   };
@@ -119,6 +122,7 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     private readonly highSchoolService: HighSchoolApiService,
     private readonly profileService: ProfileApiService,
     private readonly genderService: GendersApiService,
+    private academicYearService: AcademicYearApiService,
     private router: Router
   ) {}
   ngOnInit(): void {
@@ -132,6 +136,14 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     this.profileService.loadDropdownList().subscribe(response => {
       this.schoolProfile = response.data;
     });
+    this.academicYearService.loadDropdownList().subscribe(response => {
+      let activeYear: any = response.data.find(
+        (data: any) => data.value === new Date().getFullYear().toString()
+      );
+      if (activeYear) {
+        this.student.registrationYearId = activeYear.key;
+      }
+    });
   }
 
   ngOnChanges(): void {
@@ -142,7 +154,6 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     if (this.finishedAtSameSchool) {
       this.student.schoolFinished = '';
     }
-
     const data = { ...this.student };
 
     this.studentService.save(data).subscribe({
