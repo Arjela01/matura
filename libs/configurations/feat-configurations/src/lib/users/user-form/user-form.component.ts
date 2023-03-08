@@ -30,7 +30,6 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PasswordModule } from 'primeng/password';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { roleList } from './role-list';
-import {ClipboardModule} from "@angular/cdk/clipboard";
 
 @UntilDestroy()
 @Component({
@@ -50,7 +49,6 @@ import {ClipboardModule} from "@angular/cdk/clipboard";
     PasswordModule,
     AlbanianNidValidatorDirective,
     StrongPasswordDirective,
-    ClipboardModule,
   ],
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss'],

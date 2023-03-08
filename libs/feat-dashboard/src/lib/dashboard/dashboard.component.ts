@@ -7,11 +7,10 @@ import {
 import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { LazyLoadEvent, MessageService } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TableModule } from 'primeng/table';
-import {DashboardItemsApiService} from "@msh/configurations/data-access-configurations";
-import {DashboardItem} from "@msh/shared/domain-models";
+import { DashboardItemsApiService } from '@msh/configurations/data-access-configurations';
+import { DashboardItem } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-dashboard',
@@ -23,18 +22,16 @@ import {DashboardItem} from "@msh/shared/domain-models";
 })
 export class DashboardComponent implements OnInit {
   totalRecords = 0;
-  filters: LazyLoadEvent | null = null;
   submitted = false;
   id: any;
   loading = false;
 
-  dashboardCards:DashboardItem [] = []
+  dashboardCards: DashboardItem[] = [];
 
   constructor(
     private cd: ChangeDetectorRef,
     private readonly dashboardItemsApiService: DashboardItemsApiService,
     private router: Router,
-    private messageService: MessageService,
     private route: ActivatedRoute
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
