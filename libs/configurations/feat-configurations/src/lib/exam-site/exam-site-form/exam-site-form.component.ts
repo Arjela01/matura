@@ -60,6 +60,8 @@ export class ExamSiteFormComponent {
     quota: 0,
     administrationOfficeId:0,
     administrationOfficeName:'',
+    academicYearId: 1,
+
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function

@@ -91,6 +91,7 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
     displayName: '',
     administrationOfficeId: 0,
     fileName: '',
+    // firstName: '',
     lastName: '',
     username: '',
     password: '',
@@ -103,7 +104,7 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
     nid: '',
     studyProgramId: 0,
     universityId: 0,
-    universityDepartmentId: 0
+    universityDepartmentId: 0,
   };
 
   constructor(

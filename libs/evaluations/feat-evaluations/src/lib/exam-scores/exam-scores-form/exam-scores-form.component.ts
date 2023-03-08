@@ -20,7 +20,6 @@ import { ExamScore } from '@msh/evaluations/domain-evaluations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { GlobalToastService } from '@msh/shared/util-shared';
 
 @Component({
   selector: 'msh-exam-score-form',
@@ -60,6 +59,7 @@ export class ExamScoresFormComponent implements OnChanges {
     id: 0,
     modificationReason: '',
     multipleChoiceScore: 0,
+    academicYearId: 1,
     writingScore: 0,
   };
   examTypeId: any;

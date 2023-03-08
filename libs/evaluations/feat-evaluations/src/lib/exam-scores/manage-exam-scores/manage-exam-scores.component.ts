@@ -18,7 +18,6 @@ import { ExamScore } from '@msh/evaluations/domain-evaluations';
 import {
   ExamSubjectApiService,
   ExamTypeApiService,
-  ExamVersionApiService,
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { RippleModule } from 'primeng/ripple';
@@ -75,22 +74,8 @@ export class ManageExamScoresComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
-    this.selectedExamScore = {
-      barcode: '',
-      documentName: '',
-      examSecretId: '',
-      examSubjectId: '',
-      examSubjectName: '',
-      examTypeId: 0,
-      examTypeName: '',
-      id: 0,
-      modificationReason: '',
-      multipleChoiceScore: 0,
-      writingScore: 0,
-    };
+    this.selectedExamScore = {} as ExamScore;
   }
-
-
 
   onGridEvent(event: GridEvent<ExamScore | ExamScore[]>) {
     switch (event.action) {

@@ -55,7 +55,7 @@ export class ManageA1a1zConfirmedComponent {
     switch (event.action) {
       case GRID_ACTIONS.REJECT:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurtë që doni të refuzoni formularin?',
+          message: 'Jeni i sigurt që doni të refuzoni formularin?',
           accept: () => {
             this.refuseA1A1Z(event.data as Student);
           },
@@ -63,7 +63,7 @@ export class ManageA1a1zConfirmedComponent {
         break;
       case GRID_ACTIONS.ACCEPT:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurtë që doni të aprovoni formularin?',
+          message: 'Jeni i sigurt që doni të aprovoni formularin?',
           accept: () => {
             this.approveA1A1Z(event.data as Student);
           },

@@ -6,7 +6,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { BehaviorSubject } from 'rxjs';
-import { ExamSubjectProfile } from '@msh/shared/domain-models';
+import {ExamSubject, ExamSubjectProfile} from '@msh/shared/domain-models';
 import {
   GlobalToastService,
   GRID_ACTIONS,
@@ -77,6 +77,7 @@ export class ManageExamSubjectProfileComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedExamSubject = {} as ExamSubjectProfile;
   }
 
   onDeleteSelectedClick() {

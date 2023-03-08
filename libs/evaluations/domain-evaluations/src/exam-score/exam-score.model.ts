@@ -1,13 +1,14 @@
 export interface ExamScore {
   id: number;
   examSecretId?: string;
-
+  studentId?: string;
+  studentName?: string;
   examTypeId?: number;
   examTypeName?: string;
 
   examSubjectId?: string;
   examSubjectName?: string;
-
+  academicYearId?: number;
   barcode: string;
   writingScore: number;
   multipleChoiceScore: number;

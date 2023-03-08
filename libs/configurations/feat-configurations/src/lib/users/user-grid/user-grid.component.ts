@@ -1,25 +1,26 @@
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
-  Output, ViewChild,
+  Output,
+  ViewChild,
 } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserApiService } from '@msh/configurations/data-access-configurations';
 import { User } from '@msh/shared/domain-models';
 import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
 import { LazyLoadEvent, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
+import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import { RippleModule } from 'primeng/ripple';
-import { HttpClient } from '@angular/common/http';
-import { UserApiService } from '@msh/configurations/data-access-configurations';
-import { ActivatedRoute, Router } from '@angular/router';
-import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'msh-user-grid',
@@ -45,17 +46,11 @@ export class UserGridComponent {
 
   @Output() formSave = new EventEmitter<User>();
 
-
   @ViewChild('form', { static: true }) form!: NgForm;
   saving = false;
 
-
-
-
-
   @Input() users: User[] = [];
   @Input() totalRecords = 0;
-
 
   @Output() gridEvent = new EventEmitter<GridEvent<User | User[]>>();
 
@@ -83,7 +78,7 @@ export class UserGridComponent {
     fileName: '',
     id: '',
     isActive: false,
-
+    // firstName: '',
     lastName: '',
     name: '',
     nid: '',
@@ -102,8 +97,6 @@ export class UserGridComponent {
       data: user,
     } as GridEvent<User>);
   }
-
-
 
   changeUserStatus(user: User): void {
     this.gridEvent.emit({

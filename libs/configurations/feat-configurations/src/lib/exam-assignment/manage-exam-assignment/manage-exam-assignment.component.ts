@@ -134,7 +134,9 @@ export class ManageExamAssignmentComponent {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedExamAssignment ={} as ExamAssignment
   }
+
   onModalClose() {
     this.displayModal = false;
   }

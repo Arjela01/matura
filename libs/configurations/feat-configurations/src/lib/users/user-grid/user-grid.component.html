@@ -181,20 +181,19 @@
             class="p-button-rounded p-button-plain p-button-text mr-2 pointer"
             (click)="changeUserStatus(user)"
             [ngClass]="
-            user.isDisabled === true
-              ? ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
-              : ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
-          ">
+              user.isDisabled === true
+                ? ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
+                : ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
+            ">
             {{ user.isDisabled === true ? 'Aktivizo' : 'Çaktivizo' }}
           </button>
-
 
           <img
             src="assets/svg/password-key.svg"
             class="p-button-rounded p-button-danger p-button-text ml-m pointer"
             tooltipPosition="bottom"
             (click)="onChangePassClick(user)"
-            pTooltip="Ndrysho Fjalëkalimin"/>
+            pTooltip="Ndrysho Fjalëkalimin" />
           <img
             src="assets/svg/edit-form.svg"
             class="p-button-rounded p-button-warning p-button-text ml-m pointer"
@@ -213,4 +212,3 @@
     </tr>
   </ng-template>
 </p-table>
-

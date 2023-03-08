@@ -104,6 +104,7 @@ export class ManageUsersComponent implements OnInit {
 
   onNewClick() {
     this.userDialog = true;
+    this.selectedUser = {} as User;
   }
 
   onDeleteSelectedClick() {

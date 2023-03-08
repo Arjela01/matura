@@ -71,6 +71,7 @@ export class ManageUniversityDepartmentsComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedUniversityDepartment = {} as UniversityDepartment;
   }
 
   onDeleteSelectedClick() {
