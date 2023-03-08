@@ -73,7 +73,7 @@ export class ReportsFormComponent {
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
-      let convMap: any = {};
+      const convMap: any = {};
       this.reports.roles = new Map(
         this.rolesArray.map(obj => [obj.key, obj.value])
       );
