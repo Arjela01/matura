@@ -25,6 +25,7 @@ import { ExamAssignmentFormComponent } from '../exam-assignment-form/exam-assign
 import { UploadFormComponent } from '../upload-form/upload-form.component';
 import * as FileSaver from 'file-saver';
 
+
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-exam-assignment',
@@ -66,18 +67,6 @@ export class ManageExamAssignmentComponent {
     private readonly examDateService: ExamDateApiService,
     private readonly examSiteService: ExamSiteApiService
   ) {}
-
-  onDeleteSelectedClick() {
-    this.confirmationService.confirm({
-      message:
-        'Jeni i sigurt që doni të fshini caktimet ne qendrat e provimit të zgjedhura?',
-      accept: () => {
-        this.toastService.showWarning(
-          'Caktimet në qendrat e provimit u fshinë!'
-        );
-      },
-    });
-  }
 
   onGridEvent(event: GridEvent<ExamAssignment | ExamAssignment[]>) {
     switch (event.action) {
@@ -176,11 +165,11 @@ export class ManageExamAssignmentComponent {
           );
           this.displayModal = false;
           this.getExamAssignments(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit të caktimit në qender të provimit!'
+            'Ndodhi një problem gjatë shtimit të caktimit në qender të provimit!'
           );
       });
   }
@@ -195,7 +184,8 @@ export class ManageExamAssignmentComponent {
             'Caktimi në Qender Provimi u ndryshua me sukses!'
           );
           this.displayModal = false;
-        }
+          this.getExamAssignments(this.filters as LazyLoadEvent);
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(

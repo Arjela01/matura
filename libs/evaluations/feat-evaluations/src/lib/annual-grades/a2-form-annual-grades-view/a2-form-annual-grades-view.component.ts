@@ -28,6 +28,7 @@ import {
 } from '@msh/evaluations/data-access-evaluations';
 import { TableModule } from 'primeng/table';
 import { IalModel } from '@msh/evaluations/domain-evaluations';
+import {GlobalToastService} from "@msh/shared/util-shared";
 
 @Component({
   selector: 'msh-a2-form-annual-grades-view',
@@ -106,7 +107,8 @@ export class A2FormAnnualGradesViewComponent implements OnInit {
     private router: Router,
     private messageService: MessageService,
     private readonly annualGradeService: AnnualGradesApiService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastService: GlobalToastService,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     // this.examGrades = {};
@@ -128,11 +130,11 @@ export class A2FormAnnualGradesViewComponent implements OnInit {
     this.annualGradeService.getAverageGrade(this.id).subscribe(result => {
       this.ialModel = {
         ...this.ialModel,
-        id:result.data.id,
-        averageGrade: result.data.averageGrade,
-        name:result.data.name,
-        surname:result.data.surname
+        averageGrade: result.data?.averageGrade,
       };
+      if (result.errorMessage){
+        this.toastService.showWarning(result.errorMessage)
+      }
       this.cd.detectChanges();
     });
   }

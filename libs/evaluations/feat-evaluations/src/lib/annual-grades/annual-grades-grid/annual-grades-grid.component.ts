@@ -79,9 +79,9 @@ export class AnnualGradesGridComponent {
       .pipe(untilDestroyed(this))
       .subscribe((response: any) => {
         const blob: any = new Blob([response], {
-          type: '',
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         });
-        FileSaver.saveAs(blob, '');
+        FileSaver.saveAs(blob, 'Lista e aplikimeve IAL');
       });
   }
 

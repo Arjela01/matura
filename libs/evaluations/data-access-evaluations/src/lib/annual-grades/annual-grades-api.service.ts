@@ -6,7 +6,6 @@ import { AnnualGradesView } from '@msh/evaluations/domain-evaluations';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { HttpParams } from '@angular/common/http';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -21,15 +20,12 @@ export class AnnualGradesApiService {
   }
 
   getAverageGrade(id: any): Observable<ApiResult<any>> {
-
-    return this.apiService
-      .get<ApiResult<any>>(`/Ial/${id}`)
-      .pipe(
-        map((data: any) => data),
-        catchError(error => throwError(error))
-      );
+    return this.apiService.get<ApiResult<any>>(`/Ial/${id}`).pipe(
+      map((data: any) => data),
+      catchError(error => throwError(error))
+    );
   }
   export(): Observable<ApiResult<unknown>> {
-    return this.apiService.get<any>(``, new HttpParams(), 'blob');
+    return this.apiService.get<any>(`/Ial/Export`, new HttpParams(), 'blob');
   }
 }
