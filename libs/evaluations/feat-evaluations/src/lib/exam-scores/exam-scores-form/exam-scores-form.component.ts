@@ -42,7 +42,6 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 export class ExamScoresFormComponent implements OnChanges {
   @Input() examTypes: DropdownModel<number>[] = [];
   @Input() examSubjects: DropdownModel<string>[] = [];
-  @Input() examVersions: DropdownModel<string>[] = [];
 
   @Output() formSave = new EventEmitter<ExamScore>();
   @Output() formClose = new EventEmitter<undefined>();

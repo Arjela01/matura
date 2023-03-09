@@ -193,7 +193,6 @@ export class ManageExamScoresComponent implements OnInit {
           this.toastService.showInfo('Rezultati i provimit u fshi me sukses!');
           this.getExamScores(this.filters as LazyLoadEvent);
         }
-
         if (response.isBadRequest)
           this.toastService.showError(
             'Ndodhi një problem gjatë fshirjes së rezultatit të provimit!'
