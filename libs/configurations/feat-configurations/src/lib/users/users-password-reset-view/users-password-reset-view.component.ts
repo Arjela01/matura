@@ -1,4 +1,4 @@
-import { Clipboard, ClipboardModule } from "@angular/cdk/clipboard";
+import { ClipboardModule } from '@angular/cdk/clipboard';
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -9,7 +9,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { UserApiService } from '@msh/configurations/data-access-configurations';
@@ -27,7 +27,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PasswordModule } from 'primeng/password';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import {RippleModule} from "primeng/ripple";
+import { RippleModule } from 'primeng/ripple';
 @UntilDestroy()
 @Component({
   selector: 'msh-users-password-reset-view',
@@ -70,6 +70,7 @@ export class UsersPasswordResetViewComponent implements OnInit, OnDestroy {
     administrationOfficeId: 0,
     fileName: '',
     lastName: '',
+    // firstName: '',
     username: '',
     password: '',
     lastPasswordChange: new Date(),
@@ -81,15 +82,13 @@ export class UsersPasswordResetViewComponent implements OnInit, OnDestroy {
     nid: '',
     studyProgramId: 0,
     universityId: 0,
-    universityDepartmentId: 0
+    universityDepartmentId: 0,
   };
 
   constructor(
     private cd: ChangeDetectorRef,
-    private readonly userService: UserApiService,
-
-  ) { }
-
+    private readonly userService: UserApiService
+  ) {}
 
   ngOnDestroy(): void {
     this.form.reset();
@@ -102,7 +101,6 @@ export class UsersPasswordResetViewComponent implements OnInit, OnDestroy {
   onCancelClick() {
     this.formClose.emit();
   }
-
 
   getUserPassword() {
     if (this.user.id) {

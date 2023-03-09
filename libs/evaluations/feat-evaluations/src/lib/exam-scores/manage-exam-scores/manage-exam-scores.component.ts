@@ -74,24 +74,8 @@ export class ManageExamScoresComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
-    this.selectedExamScore = {
-      barcode: '',
-      documentName: '',
-      examSecretId: '',
-      examSubjectId: '',
-      examSubjectName: '',
-      examTypeId: 0,
-      examTypeName: '',
-      id: 0,
-      modificationReason: '',
-      multipleChoiceScore: 0,
-      writingScore: 0,
-      academicYearId: 1,
-
-    };
+    this.selectedExamScore = {} as ExamScore;
   }
-
-
 
   onGridEvent(event: GridEvent<ExamScore | ExamScore[]>) {
     switch (event.action) {

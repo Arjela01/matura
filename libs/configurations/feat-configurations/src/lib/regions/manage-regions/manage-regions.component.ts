@@ -63,6 +63,7 @@ export class ManageRegionsComponent {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedRegion = {} as Region;
   }
 
   onDeleteSelectedClick() {

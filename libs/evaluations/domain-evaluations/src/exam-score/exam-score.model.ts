@@ -1,7 +1,8 @@
 export interface ExamScore {
   id: number;
   examSecretId?: string;
-
+  studentId?: string;
+  studentName?: string;
   examTypeId?: number;
   examTypeName?: string;
 

@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
-import {BehaviorSubject, Observable} from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
   ArchiveFolder,
+  ArchiveFolderBarcodeCorrection,
   ArchiveFolderTableView,
 } from '@msh/evaluations/domain-evaluations';
 
@@ -12,7 +13,9 @@ import {
   providedIn: 'root',
 })
 export class ArchiveFolderApiService {
-  currentArchiveFolder$: BehaviorSubject<ArchiveFolder | null> = new BehaviorSubject<ArchiveFolder | null>(null);
+  currentArchiveFolder$: BehaviorSubject<ArchiveFolder | null> =
+    new BehaviorSubject<ArchiveFolder | null>(null);
+
   constructor(private apiService: APIService) {}
 
   getById(id: any): Observable<ApiResult<ArchiveFolder>> {
@@ -20,9 +23,23 @@ export class ArchiveFolderApiService {
       `/ArchiveFolder/${id}`
     );
   }
-  changeFolderStatus(
-    id: number
-  ): Observable<ApiResult<ArchiveFolder>> {
+
+  // barcodeCorrection(
+  //   Nr:  LazyLoadEvent,
+  //   ExamTypeName:  LazyLoadEvent,
+  // ):Observable<ApiResult<ArchiveFolder>> {
+  //   return this.apiService.post<ApiResult<ArchiveFolder>, ArchiveFolder>(
+  //     `/ArchiveFolder/BarcodeCorrection/${Nr},${ExamTypeName}`,
+  //   );
+  // }
+
+  barcodeCorrection(
+    event: LazyLoadEvent,
+  ): Observable<ArchiveFolderBarcodeCorrection> {
+    return this.apiService.post(`/ArchiveFolder/BarcodeCorrection`, event);
+  }
+
+  changeFolderStatus(id: number): Observable<ApiResult<ArchiveFolder>> {
     return this.apiService.put<ApiResult<ArchiveFolder>, any>(
       `/ArchiveFolder/UpdateStatus`,
       {
@@ -30,8 +47,8 @@ export class ArchiveFolderApiService {
       }
     );
   }
-  loadDropDownList(): Observable<ApiResult<DropdownModel<number>[]>> {
-    return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
+  loadDropdownList(): Observable<ApiResult<DropdownModel<any>[]>> {
+    return this.apiService.get<ApiResult<DropdownModel<any>[]>>(
       '/ArchiveFolder/DropdownList'
     );
   }

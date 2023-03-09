@@ -5,7 +5,7 @@ import {
   EventEmitter,
   Input,
   Output,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AcademicYear } from '@msh/shared/domain-models';
@@ -50,7 +50,7 @@ export class AcademicYearFormComponent {
   submitted = false;
 
   academicYear: AcademicYear = {
-    id: '',
+    id: 0,
     year: '',
     isFall: true,
     isActive: true,

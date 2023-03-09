@@ -1,6 +1,3 @@
-/* eslint-enable @typescript-eslint/no-unused-vars */
-/* eslint-enable @typescript-eslint/no-non-null-assertion */
-/* eslint-enable @typescript-eslint/no-explicit-any */
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -12,7 +9,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -24,14 +21,14 @@ import {
   ExamGradeApiService,
   ExamSubjectApiService,
   ExamTypeApiService,
-  StudentsApiService,
+  StudentsApiService
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import { AcademicYear, Student } from '@msh/shared/domain-models';
+import { Student } from '@msh/shared/domain-models';
+import { SharedStudent, SharedStudentLookupModule } from '@msh/shared/student-lookup';
 import {
-  GRID_ACTIONS,
   GlobalToastService,
-  GridEvent,
+  GridEvent, GRID_ACTIONS
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -44,13 +41,18 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { PasswordModule } from 'primeng/password';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { BehaviorSubject } from 'rxjs';
 import { A1zStudentSearchComponent } from '../a1z-student-search/a1z-student-search.component';
 import { EXAM_TYPES } from './exam-type.enum';
-import {SharedStudentLookupModule} from "@msh/shared/student-lookup";
-import {PasswordModule} from "primeng/password";
-import {SelectButtonModule} from "primeng/selectbutton";
+
+interface ChangeEvent<T> {
+  originalEvent: Event,
+  value: T
+}
+
 @UntilDestroy()
 @Component({
   selector: 'msh-a1z-form',
@@ -83,8 +85,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
-  @ViewChild('checkboxD1') checkboxD1!: any;
-  academicYears: DropdownModel<number>[] = [];
+  
   a1Categories: DropdownModel<number>[] = [];
   d1ExamSubjects: DropdownModel<string>[] = [];
   d2ExamSubjects: DropdownModel<string>[] = [];
@@ -94,16 +95,13 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   z1ExamSubjectsFall: DropdownModel<string>[] = [];
   filters: LazyLoadEvent | null = null;
 
-  //TODO: Replace any with ExamGrade model
-  examGrades: any[] | any = null;
-
   formId: string | null;
 
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
   totalRecords = 0;
 
-  selectedStudent: any = null;
+  selectedStudent: Student | null = null;
   studentInputData = '';
 
   showStudentModal = false;
@@ -111,49 +109,20 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   enableD2Subject = false;
   enableD3Subject = false;
   enableZ1Subject = false;
-  hideZ1Subject = false;
   submitted = false;
 
   a1z: A1Z = {
     id: 0,
-    academicYearId: undefined,
-    studentInputData: undefined,
-    isApplyingToForeignCountries: false,
-    a1ZCategoryId: undefined,
-    alreadyHaveDiploma: true,
-    carriedGradeZ1: undefined,
-    carriedGradeD1: undefined,
-    carriedGradeD2: undefined,
-    carriedGradeD3: undefined,
-    carriedReasonAZ1: undefined,
-    carriedReasonD1: undefined,
-    carriedReasonD2: undefined,
-    carriedReasonD3: undefined,
-    carriedSubjectZ1: undefined,
-    carriedSubjectD1: undefined,
-    carriedSubjectD2: undefined,
-    carriedSubjectD3: undefined,
-    noCarriedSubjets: 0,
-    noCarriedSubjetsZ: 0,
-    isA1: false,
-    overSeerCode: undefined,
-    studentId: 'F701CD86-BF0A-4BF5-D400-08DAFE286BC9',
-    subjectD1A1ZId: undefined,
-    subjectD2A1ZId: undefined,
-    subjectD3A1ZId: undefined,
-    subjectZ1A1ZId: undefined,
-    yearOfSchoolA1Z: undefined,
-    yearZ1: undefined,
-    scoreD1A1Z: undefined,
-    scoreD2A1Z: undefined,
-    scoreD3A1Z: undefined,
-    scoreZ1A1Z: undefined,
-    scoreZ2A1Z: undefined,
   };
-  booly = [{label: 'Po', value: true}, {label: 'Jo', value: false}];
+
+  booly: DropdownModel<boolean>[] = [
+    { value: 'Po', key: true },
+    { value: 'Jo', key: false },
+  ];
 
   onSubmit() {
     this.submitted = true;
+
     if (this.form.valid) {
       if (this.a1z.id === 0) {
         this.onNewA1ZFormSubmit();
@@ -187,6 +156,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   ngDoCheck(): void {
     if (this.a1z.studentId !== undefined) {
       this.onStudentInit(this.a1z);
+
     }
     if (this.selectedStudent !== null) {
       this.onStudentChange(this.selectedStudent);
@@ -194,164 +164,138 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.onExistingFormInit();
-    this.loadDropDownLists();
+
+    this.a1CategoryService.loadDropdownList().subscribe(response => {
+      this.a1Categories = response.data;
+    });
+    this.getSubjectDropdown();
+
+    if (this.formId !== null) {
+      this.a1zService.getOne(parseInt(this.formId)).subscribe(response => {
+        
+        this.a1z = response.data;
+        
+
+        this.onSubjectD1Init(response.data);
+        this.onSubjectD2Init(response.data);
+        this.onSubjectD3Init(response.data);
+        this.onSubjectZ1Init(response.data);
+        this.cd.detectChanges();
+      });
+    }
     console.log('init');
   }
 
   ngOnChanges(): void {
-    this.getSubjectDropdown({
-      value: this.a1z.academicYearId,
-      isFall: this.selectedStudent.isFall,
-    });
+    this.getSubjectDropdown();
   }
 
-  onGridEvent(event: GridEvent<Student | Student[]>) {
+  onGridEvent(event: GridEvent<SharedStudent | SharedStudent[]>) {
     switch (event.action) {
       case GRID_ACTIONS.EDIT:
-        this.selectedStudent = Object.assign({}, event.data);
+        this.selectedStudent = Object.assign({}, event.data as Student);
         console.log(event.data);
         this.showStudentModal = false;
         break;
     }
   }
 
-  loadDropDownLists() {
-    this.onAcademicYearInit();
-    this.academicYearService.loadDropdownList().subscribe(response => {
-      this.academicYears = response.data;
-    });
-    this.a1CategoryService.loadDropdownList().subscribe(response => {
-      this.a1Categories = response.data;
-    });
-    this.getSubjectDropdown({
-      value: this.a1z.academicYearId,
-    });
-  }
-
-  onStudentInit(student: any) {
+  onStudentInit(student: A1Z ) {
     if (!student) {
-      this.a1z.studentInputData = ' ';
+      this.studentInputData = ' ';
     } else {
       this.a1z.studentId = student.studentId;
-      this.studentInputData =
-        student?.studentIdentifier +
-        '-' +
-        student?.studentFirstName +
-        '-' +
-        student?.studentFatherName +
-        '-' +
-        student?.studentLastName;
+      this.studentInputData = this.getStudentDisplayName(student);
     }
   }
 
-  onStudentChange(student: any) {
+  onStudentChange(student: Student) {
     if (!student) {
-      this.a1z.studentInputData = ' ';
+      this.studentInputData = ' ';
     } else {
       this.a1z.studentId = student.id;
-      this.studentInputData =
-        student?.studentId +
-        '-' +
-        student?.firstName +
-        '-' +
-        student?.middleName +
-        '-' +
-        student?.lastName;
+      this.selectedStudent = student;
+      console.log(43,student);
+      
+      this.studentInputData = this.getStudentDisplayName(student);
     }
   }
 
-  onSubjectD1Change($event: any) {
-    this.enableD1Subject = $event.checked;
-    this.enableD1Subject === true
-      ? (this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets + 1)
-      : (this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets - 1);
+  
 
-    console.log(this.a1z.noCarriedSubjets);
+  private getStudentDisplayName(student: A1Z | Student): string {
+    const a1z = (test: A1Z): test is A1Z => {
+      return test.studentFirstName !== undefined;
+    }
+
+    if (a1z(student)) {      
+      return (
+        student.studentId +
+        '-' +
+        student.studentFirstName  +
+        '-' +
+        student.studentFatherName +
+        '-' +
+        student.studentLastName
+      );
+    } else {      
+      return (
+        student.id +
+        '-' +
+        student.firstName  +
+        '-' +
+        student.middleName +
+        '-' +
+        student.lastName
+      );
+    }
+ 
+    
+  }
+
+
+  
+  onSubjectD1Change($event: ChangeEvent<boolean>) {    
+    this.enableD1Subject = $event.value ;
+  }
+
+  onSubjectD2Change($event:  ChangeEvent<boolean>) {
+    this.enableD2Subject = $event.value ;
+  }
+
+  onSubjectD3Change($event:  ChangeEvent<boolean>) {
+    this.enableD3Subject = $event.value ;    
+  }
+  
+  onSubjectZ1Change($event: ChangeEvent<boolean>) {
+    this.enableZ1Subject = $event.value;
   }
 
   onSubjectD1Init(data: A1Z) {
-    if (data.scoreD1A1Z !== 0) {
-      this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets + 1;
+    if (data.scoreD1) {
       this.enableD1Subject = true;
     }
   }
 
-  onSubjectD2Change($event: any) {
-    this.enableD2Subject = $event.checked;
-    this.enableD2Subject === true
-      ? (this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets + 1)
-      : (this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets - 1);
-    console.log(this.a1z.noCarriedSubjets);
-  }
-
   onSubjectD2Init(data: A1Z) {
-    if (data.scoreD2A1Z !== 0) {
-      this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets + 1;
+    if (data.scoreD2) {
       this.enableD2Subject = true;
     }
   }
 
-  onSubjectD3Change($event: any) {
-    this.enableD3Subject = $event.checked;
-    this.enableD3Subject === true
-      ? (this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets + 1)
-      : (this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets - 1);
-    console.log(this.a1z.noCarriedSubjets);
-  }
-
   onSubjectD3Init(data: A1Z) {
-    if (data.scoreD3A1Z !== 0) {
-      this.a1z.noCarriedSubjets = this.a1z.noCarriedSubjets + 1;
+    if (data.scoreD3) {
       this.enableD3Subject = true;
     }
   }
 
   onSubjectZ1Init(data: A1Z) {
-    if (data.scoreZ1A1Z !== 0) {
-      this.a1z.noCarriedSubjetsZ = this.a1z.noCarriedSubjetsZ + 1;
+    if (data.scoreZ1) {
       this.enableZ1Subject = true;
     }
   }
 
-  onSubjectZ1Change($event: any) {
-    this.enableZ1Subject = $event.checked;
-    this.enableZ1Subject === true
-      ? (this.a1z.noCarriedSubjetsZ = this.a1z.noCarriedSubjetsZ + 1)
-      : (this.a1z.noCarriedSubjetsZ = this.a1z.noCarriedSubjetsZ - 1);
-    console.log(this.a1z.noCarriedSubjetsZ);
-  }
 
-  onAcademicYearInit() {
-    this.getAcademicYears().subscribe(response => {
-      const activeYear = response.data.find(
-        (x: AcademicYear) => x.isActive === true
-      );
-      this.a1z.academicYearId = activeYear?.id;
-      this.cd.detectChanges();
-    });
-  }
-
-  onExistingFormInit() {
-    if (this.formId !== null) {
-      this.a1zService.getOne(parseInt(this.formId!)).subscribe(response => {
-        this.a1z = response.data;
-        this.a1z.noCarriedSubjets = 0;
-        this.a1z.noCarriedSubjetsZ = 0;
-        this.a1z.carriedSubjectD3 = response.data.subjectD3A1ZId;
-        this.onSubjectD1Init(response.data);
-        this.onSubjectD2Init(response.data);
-        this.onSubjectD3Init(response.data);
-        this.onSubjectZ1Init(response.data);
-        this.a1z.carriedSubjectZ1 = response.data.subjectZ1A1ZId;
-        this.cd.detectChanges();
-        //TODO: When exam grade implemented uncomment the following lines
-        // this.examGradeSercice.getExamGrade(this.a1z.id!).subscribe(response => {
-        //   this.examGrades = response.data;
-        // });
-      });
-    }
-  }
 
   getStudents($event: LazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
@@ -366,13 +310,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       });
   }
 
-  getAcademicYears(): Observable<any> {
-    return this.academicYearService
-      .getAcademicYears()
-      .pipe(untilDestroyed(this));
-  }
-
-  getSubjectDropdown($event: any) {
+  getSubjectDropdown() {
     this.examTypeService
       .loadDropdownList()
       .pipe(untilDestroyed(this))
@@ -394,22 +332,26 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
           z1 => z1.value === EXAM_TYPES.Z1_VJESHTA
         );
 
-        this.examSubjectService
-          .forExamType(d1ExamType!.key!, this.a1z.academicYearId)
+        if (d1ExamType && d1ExamType.key) {
+          this.examSubjectService
+          .forExamType(d1ExamType.key, this.a1z.academicYearId)
           .pipe(untilDestroyed(this))
           .subscribe(y => {
-            this.d1ExamSubjects = y.data;
-            this.a1z.carriedSubjectD1 = this.d1ExamSubjects[0].key!;
-            this.a1z.subjectD1A1ZId = this.d1ExamSubjects[0].key!;
+            this.d1ExamSubjects = y.data;            
+            this.a1z.subjectD1Id = y.data[0]!.key!;
             this.cd.detectChanges();
           });
+        }
+
+        
         this.examSubjectService
           .forExamType(d2ExamType!.key!, this.a1z.academicYearId)
           .pipe(untilDestroyed(this))
           .subscribe(y => {
             this.d2ExamSubjects = y.data;
-            this.a1z.carriedSubjectD2 = this.d2ExamSubjects[0].key!;
-            this.a1z.subjectD2A1ZId = this.d2ExamSubjects[0].key!;
+            this.a1z.subjectD2Id = y.data[0]!.key!;
+            // this.a1z.carriedSubjectD2 = this.d2ExamSubjects[0].key!;
+            // this.a1z.subjectD2A1ZId = this.d2ExamSubjects[0].key!;
             this.cd.detectChanges();
           });
 
@@ -498,26 +440,29 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
 
   manageSubjects() {
     if (this.enableD1Subject === false) {
-      this.a1z.carriedSubjectD1 = undefined;
-      this.a1z.scoreD1A1Z = undefined;
+      this.a1z.scoreD1 = undefined;
+      this.a1z.reasonD1 = undefined;
+      this.a1z.yearD1 = undefined;
     }
     if (this.enableD2Subject === false) {
-      this.a1z.carriedSubjectD2 = undefined;
-      this.a1z.scoreD2A1Z = undefined;
+      this.a1z.scoreD2 = undefined;
+      this.a1z.reasonD2 = undefined;
+      this.a1z.yearD2 = undefined;
     }
     if (this.enableD3Subject === false) {
-      this.a1z.carriedSubjectD3 = undefined;
-      this.a1z.scoreD3A1Z = undefined;
+      this.a1z.scoreD3 = undefined;
+      this.a1z.reasonD3 = undefined;
+      this.a1z.yearD3 = undefined;
     }
-    if (this.a1z.carriedSubjectD3 !== undefined) {
-      this.a1z.subjectD3A1ZId = this.a1z.carriedSubjectD3;
+    if (this.a1z.subjectD3Id !== undefined) {
+      this.a1z.scoreD3 = undefined;
+      this.a1z.reasonD3 = undefined;
+      this.a1z.yearD3 = undefined;
     }
-    if (this.a1z.carriedSubjectZ1 !== undefined) {
-      this.a1z.subjectZ1A1ZId = this.a1z.carriedSubjectZ1;
-    }
-    if (this.enableZ1Subject === false) {
-      this.a1z.carriedSubjectZ1 = undefined;
-      this.a1z.scoreZ1A1Z = undefined;
+    if (this.a1z.subjectZ1Id !== undefined) {
+      this.a1z.scoreZ1 = undefined;
+      this.a1z.reasonZ1 = undefined;
+      this.a1z.yearZ1 = undefined;
     }
   }
 

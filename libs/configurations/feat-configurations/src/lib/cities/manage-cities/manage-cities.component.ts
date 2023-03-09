@@ -71,6 +71,7 @@ export class ManageCitiesComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedCity = {} as City;
   }
 
   onDeleteSelectedClick() {

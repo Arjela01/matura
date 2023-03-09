@@ -1,5 +1,4 @@
 import { Route } from '@angular/router';
-import {ManageExamAssignmentComponent} from "./exam-assignment/manage-exam-assignment/manage-exam-assignment.component";
 
 export const CONFIGURATION_ROUTES: Route[] = [
   {
@@ -218,5 +217,19 @@ export const CONFIGURATION_ROUTES: Route[] = [
         import('./empty-site/manage-empty-site/manage-empty-site.component').then(
             m => m.ManageEmptySiteComponent
         ),
+  },
+  {
+    path: 'dashboard-items',
+    loadComponent: () =>
+      import(
+        './dashboard-items/manage-dashboard-items/manage-dashboard-items.component'
+        ).then(m => m.ManageDashboardItemsComponent),
+  },
+  {
+    path: 'dashboard-sections',
+    loadComponent: () =>
+      import(
+        './dashboard-sections/manage-dashboard-sections/manage-dashboard-sections.component'
+        ).then(m => m.ManageDashboardSectionsComponent),
   },
 ];

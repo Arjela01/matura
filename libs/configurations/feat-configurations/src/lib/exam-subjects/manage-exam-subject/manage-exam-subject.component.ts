@@ -70,6 +70,7 @@ export class ManageExamSubjectComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedExamSubject = {} as ExamSubject;
   }
 
   onDeleteSelectedClick() {

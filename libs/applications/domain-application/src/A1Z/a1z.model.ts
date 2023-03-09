@@ -1,42 +1,79 @@
 export interface A1Z {
   id?: number;
+  a1ZCategoryId?: string;
   academicYearId?: number;
   studentId?: string;
-  a1ZCategoryId?: string;
   alreadyHaveDiploma?: boolean;
-  yearOfSchoolA1Z?: number;
-  noCarriedSubjets: number;
-  studentInputData?: string;
-  carriedSubjectD1?: string;
-  carriedGradeD1?: number;
-  carriedReasonD1?: string;
-  carriedSubjectD2?: string;
-  carriedGradeD2?: number;
-  carriedReasonD2?: string;
-  carriedSubjectD3?: string;
-  subjectD1A1ZId?: string;
-  subjectD2A1ZId?: string;
-  subjectD3A1ZId?: string;
-  subjectZ1A1ZId?: string;
-  scoreD1A1Z?: number;
-  scoreD2A1Z?: number;
-  scoreD3A1Z?: number;
-  scoreZ1A1Z?: number;
-  scoreZ2A1Z?: number;
-  subjectZ21A1ZId?: string;
-  carriedGradeD3?: number;
-  carriedReasonD3?: string;
-  noCarriedSubjetsZ: number;
-  yearZ1?: number;
   isA1?: boolean;
-  carriedSubjectZ1?: string;
-  carriedGradeZ1?: number;
-  carriedReasonAZ1?: string;
+  highSchoolGraduationYear?: boolean;
   overSeerCode?: string;
   isApplyingToForeignCountries?: boolean;
+
+  subjectD1Id?: string;
+  subjectNameD1?: string;
+  scoreD1?: number;
+  reasonD1?: string;
+  yearD1?: number;
+
+  subjectD2Id?: string;
+  subjectNameD2?: string;
+  scoreD2?: number;
+  reasonD2?: string;
+  yearD2?: number;
+
+  subjectD3Id?: string;
+  subjectNameD3?: string;
+  scoreD3?: number;
+  reasonD3?: string;
+  yearD3?: number;
+
+  subjectZ1Id?: string;
+  subjectNameZ1?: string;
+  scoreZ1?: number;
+  reasonZ1?: string;
+  yearZ1?: number;
+
+  subjectZ2Id?: string;
+  subjectNameZ2?: string;
+  scoreZ2?: number;
+  reasonZ2?: string;
+  yearZ2?: number;
+
+
+  studentFirstName?:string;
+
+  studentFatherName?:string;
+
+  studentLastName?:string;
+
+  studentBirthDate?:Date;
+
+  studentBirthPlace?:string;
+
+  studentIdentifier?:string;
+
+  
+}
+
+
+// TODO: ADD STUDENT IDENTIFIER TO TABLE RECORD
+export interface A1ZTableRecord {
+  id? : number,
+  academicYear?: number,
+  academicYearActive?: boolean,
+  firstName?: string,
+  middleName?: string,
+  lastName?: string,
+  nid?: string,
+  studentOldIdentifier?: string
+  birthDate?: Date,
+  birthPlace?: string,
+  isApplyingToForeignCountries?: boolean,
+  isA1?: boolean,
+  createdOn?: Date
 }
 
 export interface A1ZTableView {
-  data: A1Z[];
+  data: A1ZTableRecord[];
   total: number;
 }

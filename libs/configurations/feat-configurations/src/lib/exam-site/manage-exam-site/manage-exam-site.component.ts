@@ -69,6 +69,7 @@ export class ManageExamSiteComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedExamSite = {} as ExamSite;
   }
 
   onGridEvent(event: GridEvent<ExamSite | ExamSite[]>) {
@@ -101,7 +102,7 @@ export class ManageExamSiteComponent implements OnInit {
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
           message:
-            'Jeni i sigurt që doni të fshini qendrën e provimit të zgjedhur?',
+            'Jeni i sigurt që doni të fshini qendren e provimit të zgjedhur?',
           accept: () => {
             this.deleteExamSite(event.data as ExamSite);
           },

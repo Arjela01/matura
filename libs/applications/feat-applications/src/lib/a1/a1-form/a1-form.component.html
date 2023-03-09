@@ -1,57 +1,33 @@
-<div class="mb-header">
-  <h3 class="font-semibold">Shto Formular A1</h3>
-</div>
-
 <div class="grid">
   <div class="col-12">
-    <div class="card-form px-6 py-6">
-      <h5 class="uppercase">Të Dhëna të përgjithshme</h5>
-      <form
-        #form="ngForm"
-        class="mt-5"
-        (ngSubmit)="onSubmit()"
-        *ngIf="showForm">
-        <div class="field xl:w-4 lg:w-6 sm:w-full">
-          <label for="academicYear">Viti akademik </label>
-          <input
-            type="text"
-            class="w-full"
-            pInputText
-            id="academicYear"
-            name="academicYear"
-            [(ngModel)]="academicYear!!.year"
-            readonly />
-        </div>
-        <div class="field xl:w-4 lg:w-6 sm:w-full">
-          <label for="student">Maturanti</label>
-          <input
-            type="text"
-            class="w-full"
-            [(ngModel)]="choosenStudent"
-            pInputText
-            id="studentInfo"
-            name="studentInfo"
-            readonly
-            [ngClass]="{
-              'ng-invalid ng-dirty':
-                submitted && (!choosenStudent || choosenStudent === '')
-            }"
-            required />
+    <div class="card-form px-6 py-6 mb-header">
+      <h3>Shto Formular A1</h3>
+      <form #form="ngForm" (ngSubmit)="onSubmit()">
+        <div class="field mt-4 mb-4" [style]="{ width: '500px' }">
+          <label for="studentInputData">Student *</label>
+          <div class="p-inputgroup">
+            <p-button
+              label="Kerko"
+              icon="pi pi-search"
+              (click)="initializeDialog()"
+              [style]="{ height: '100%' }"></p-button>
+            <input
+              type="text"
+              pInputText
+              id="studentInputData"
+              name="studentInputData"
+              [(ngModel)]="choosenStudent"
+              required
+              autofocus
+              disabled
+              [ngClass]="{
+                'ng-invalid ng-dirty': submitted && !choosenStudent
+              }" />
+          </div>
           <small class="p-error block" *ngIf="submitted && !choosenStudent">
-            Maturanti është fushë e kërkuar.
+            Studenti është fushë e kërkuar.
           </small>
         </div>
-        <div [style]="{ width: '180px' }" *ngIf="!id">
-          <button
-            pButton
-            pRipple
-            type="button"
-            icon="pi pi-search"
-            label="Kërko maturantin"
-            (click)="initializeDialog()"
-            class="p-button-gray w-full"></button>
-        </div>
-
         <div class="field xl:w-4 mt-5 lg:w-6 sm:w-full">
           <label for="d3Dubject">Lenda D3</label>
           <p-dropdown
@@ -219,15 +195,16 @@
           <button
             type="button"
             pButton
+            icon="pi pi-times"
             label="Anullo"
             class="p-button-text w-auto mr-2"
             (click)="onCancelClick()"></button>
           <button
             type="submit"
-            [disabled]="form.invalid"
             pButton
+            icon="pi pi-check"
             label="Ruaj"
-            class="p-button w-auto"></button>
+            class="p-button-text w-auto"></button>
         </div>
       </form>
     </div>

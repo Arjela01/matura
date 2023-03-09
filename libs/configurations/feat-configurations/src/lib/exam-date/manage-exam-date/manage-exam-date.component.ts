@@ -73,6 +73,8 @@ export class ManageExamDateComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedExamDate = {} as ExamDate;
+
   }
 
   onGridEvent(event: GridEvent<ExamDate | ExamDate[]>) {
