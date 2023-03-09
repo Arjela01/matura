@@ -11,6 +11,7 @@ import {
   GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import * as FileSaver from 'file-saver';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -104,7 +105,7 @@ export class ManageGradesScaleComponent {
         const blob: any = new Blob([response], {
           type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         });
-        this.FileSaver.saveAs(blob, 'Nota_Pikë');
+        FileSaver.saveAs(blob, 'Nota_Pikë');
       });
   }
 

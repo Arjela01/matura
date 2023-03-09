@@ -56,7 +56,7 @@ export class StudentsEditComponent implements OnInit {
   academicYears: DropdownModel<number>[] = [];
   saving = false;
   id?: string;
-
+  maxDate = new Date();
   submitted = true;
 
   current = null;
@@ -64,7 +64,7 @@ export class StudentsEditComponent implements OnInit {
   student: Student = {
     createdName: '',
     createdOn: new Date(),
-    birthDate: new Date(),
+    birthDate: this.maxDate,
     birthPlace: '',
     email: '',
     genderId: 0,
@@ -90,7 +90,8 @@ export class StudentsEditComponent implements OnInit {
     profileId: 0,
     profileName: '',
     firstName: '',
-    graduationYear: undefined,
+    registrationYearId: undefined,
+    graduationYear: new Date().getFullYear(),
   };
 
   finishedAtSameSchool = true;
@@ -107,6 +108,7 @@ export class StudentsEditComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.id = this.route.snapshot.paramMap.get('id') as string;
+    this.maxDate.setFullYear(this.maxDate.getFullYear() - 10);
   }
 
   ngOnInit(): void {
@@ -130,6 +132,16 @@ export class StudentsEditComponent implements OnInit {
         ...result.data,
         birthDate: new Date(result.data.birthDate),
       };
+      if (!result.data.registrationYearId) {
+        this.academicYearService.loadDropdownList().subscribe(response => {
+          let activeYear: any = response.data.find(
+            (data: any) => data.value === new Date().getFullYear().toString()
+          );
+          if (activeYear) {
+            this.student.registrationYearId = activeYear.key;
+          }
+        });
+      }
       this.finishedAtSameSchool =
         this.student?.schoolFinished == '' ||
         this.student?.schoolFinished == null;
@@ -141,7 +153,8 @@ export class StudentsEditComponent implements OnInit {
     if (this.finishedAtSameSchool) {
       this.student.schoolFinished = '';
     }
-
+    this.form.valid;
+    debugger;
     this.saving = true;
     this.studentService.update({ id: this.id, ...this.student }).subscribe({
       next: value => {

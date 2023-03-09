@@ -15,12 +15,12 @@ export interface User {
 
   lastPasswordChange?: Date;
 
-  name: string;
+  firstName?: string;
 
   overseerCode: string;
 
   roleId: string;
-
+  name?: string;
   studentId?: string | null;
 
   studyProgramId?: number;

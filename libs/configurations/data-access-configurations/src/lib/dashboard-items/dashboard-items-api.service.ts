@@ -29,6 +29,12 @@ export class DashboardItemsApiService {
     return this.apiService.post(`/DashboardItems/TableData`, event);
   }
 
+  getAll(): Observable<ApiResult<any>> {
+    return this.apiService.get<ApiResult<any>>(
+      `/DashboardItems`
+    );
+  }
+
   save(dashboardItems: DashboardItem): Observable<ApiResult<DashboardItem>> {
     return this.apiService.post<ApiResult<DashboardItem>, DashboardItem>(
       `/DashboardItems`,

@@ -67,7 +67,7 @@ export class DashboardItemsFormComponent implements OnInit {
 
   @Input() set setDashboardItemsDetails(details: DashboardItem | null) {
     if (details) {
-      this.dashboardItems = Object.assign({}, details);
+      this.dashboardItem = Object.assign({}, details);
     }
   }
   @Output() formSave = new EventEmitter<DashboardItem>();
@@ -77,19 +77,7 @@ export class DashboardItemsFormComponent implements OnInit {
 
   submitted = false;
 
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  dashboardItems: DashboardItem = {
-    id: 0,
-    dashboardSectionId: 0,
-    description: '',
-    documentName: '',
-    endDate: [],
-    linkUrl: '',
-    startDate: [],
-    roles: [],
-    users: [],
-    title: '',
-  };
+  dashboardItem = {} as DashboardItem;
   uploaded = false;
 
   onCancelClick() {
@@ -126,18 +114,18 @@ export class DashboardItemsFormComponent implements OnInit {
         if (fileReader.result) {
           const parts = fileReader.result.toString().split(';base64,');
           const parsedBase64 = parts[1];
-          this.dashboardItems.document = parsedBase64 as string;
+          this.dashboardItem.document = parsedBase64 as string;
         }
       };
     }
   }
   onSubmit() {
     this.submitted = true;
-    if (this.form.valid && this.dashboardItems.document) {
-      if (this.dashboardItems.id === 0) {
-        delete this.dashboardItems.id;
+    if (this.form.valid && this.dashboardItem.document) {
+      if (this.dashboardItem.id === 0) {
+        delete this.dashboardItem.id;
       }
-      this.formSave.emit(this.dashboardItems);
+      this.formSave.emit(this.dashboardItem);
     }
   }
 }

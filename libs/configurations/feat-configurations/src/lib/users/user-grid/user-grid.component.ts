@@ -13,7 +13,7 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserApiService } from '@msh/configurations/data-access-configurations';
 import { User } from '@msh/shared/domain-models';
-import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
+import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { LazyLoadEvent, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -79,7 +79,7 @@ export class UserGridComponent {
     id: '',
     // firstName: '',
     lastName: '',
-    name: '',
+    firstName: '',
     nid: '',
     overseerCode: '',
     password: '',
