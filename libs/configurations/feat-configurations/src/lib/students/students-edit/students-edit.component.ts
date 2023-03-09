@@ -134,7 +134,7 @@ export class StudentsEditComponent implements OnInit {
       };
       if (!result.data.registrationYearId) {
         this.academicYearService.loadDropdownList().subscribe(response => {
-          let activeYear: any = response.data.find(
+          const activeYear: any = response.data.find(
             (data: any) => data.value === new Date().getFullYear().toString()
           );
           if (activeYear) {
@@ -153,8 +153,6 @@ export class StudentsEditComponent implements OnInit {
     if (this.finishedAtSameSchool) {
       this.student.schoolFinished = '';
     }
-    this.form.valid;
-    debugger;
     this.saving = true;
     this.studentService.update({ id: this.id, ...this.student }).subscribe({
       next: value => {
