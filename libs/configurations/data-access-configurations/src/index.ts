@@ -2,6 +2,7 @@ export * from './lib/a1z-category/a1z-category-api.service';
 export * from './lib/academic-year/academic-year-api.service';
 export * from './lib/activate-overseer-DarZa/activate-overseer-DarZa-api.service';
 export * from './lib/administration-office/administration-office-api.service';
+export * from './lib/carried-grade/carried-grade-api.service';
 export * from './lib/city/city-api.service';
 export * from './lib/dashboard-items/dashboard-items-api.service';
 export * from './lib/dashboard-sections/dashboard-section-api.service';
