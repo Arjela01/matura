@@ -19,10 +19,7 @@ import { RippleModule } from 'primeng/ripple';
 import { DashboardItemsFormComponent } from '../dashboard-items-form/dashboard-items-form.component';
 import { DashboardItemsGridComponent } from '../dashboard-items-grid/dashboard-items-grid.component';
 import { DashboardItem } from '@msh/shared/domain-models';
-import {
-  DashboardItemsApiService,
-  DashboardSectionApiService,
-} from '@msh/configurations/data-access-configurations';
+import { DashboardItemsApiService } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import * as FileSaver from 'file-saver';
 
@@ -60,7 +57,7 @@ export class ManageDashboardItemsComponent {
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly dashboardItemsService: DashboardItemsApiService,
+    private readonly dashboardItemsService: DashboardItemsApiService
   ) {}
 
   onNewClick() {
@@ -72,9 +69,11 @@ export class ManageDashboardItemsComponent {
 
   onDeleteSelectedClick() {
     this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të fshini studentët e zgjedhur?',
+      message: 'Jeni i sigurt që doni të fshini konfigurimet të dashboard-it?',
       accept: () => {
-        this.toastService.showWarning('Studentët e zgjedhur u fshinë!');
+        this.toastService.showWarning(
+          'Konfigurimet e dashboard-it e zgjedhur u fshinë!'
+        );
       },
     });
   }
@@ -115,7 +114,7 @@ export class ManageDashboardItemsComponent {
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
           message:
-            'Jeni i sigurt që doni të fshini studentin e skualifikuar të zgjedhur?',
+            'Jeni i sigurt që doni të fshini konfigurimet të dashboard-it?',
           accept: () => {
             this.deleteDashboardItems(event.data as DashboardItem);
           },
@@ -157,14 +156,16 @@ export class ManageDashboardItemsComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Studenti u shtua me sukses!');
+          this.toastService.showSuccess(
+            'Konfigurimi i dashboard-it u shtua me sukses!'
+          );
           this.displayModal = false;
           this.getDashboardItems(this.filters as LazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit të studentit!'
+            'Ndodhi një problem gjatë ndryshimit konfigurimit të dashboard-it!'
           );
       });
   }
@@ -175,12 +176,14 @@ export class ManageDashboardItemsComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Studenti u ndryshua me sukses!');
+          this.toastService.showSuccess(
+            'Konfigurimi i dashboard-it u ndryshua me sukses!'
+          );
           this.getDashboardItems(this.filters as LazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit të studentit!'
+            'Ndodhi një problem gjatë konfigurimit të dashboard-it!'
           );
         this.displayModal = false;
       });
@@ -192,13 +195,15 @@ export class ManageDashboardItemsComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showInfo('Studenti u fshi me sukses!');
+          this.toastService.showInfo(
+            'Konfigurimi i dashboard-it u fshi me sukses!'
+          );
           this.getDashboardItems(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë fshirjes të studentit!'
+            'Ndodhi një problem gjatë fshirjes të konfigurimit të dashboard-it!'
           );
       });
   }
