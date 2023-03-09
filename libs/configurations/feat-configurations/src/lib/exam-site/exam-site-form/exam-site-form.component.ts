@@ -49,7 +49,7 @@ export class ExamSiteFormComponent {
   @Output() formSave = new EventEmitter<ExamSite>();
   @Output() formClose = new EventEmitter<undefined>();
 
-  @ViewChild('form', {static: true}) form!: NgForm;
+  @ViewChild('form', { static: true }) form!: NgForm;
 
   submitted = false;
 
@@ -58,16 +58,13 @@ export class ExamSiteFormComponent {
     name: '',
     address: '',
     quota: 0,
-    administrationOfficeId:0,
-    administrationOfficeName:'',
+    administrationOfficeId: 0,
+    administrationOfficeName: '',
     academicYearId: 1,
-
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private cd: ChangeDetectorRef) {
-  }
-
+  constructor(private cd: ChangeDetectorRef) {}
 
   onCancelClick() {
     this.formClose.emit();
