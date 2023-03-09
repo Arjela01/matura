@@ -27,8 +27,6 @@ export interface User {
 
   universityId: number;
 
-  isActive: boolean;
-
   username?: string;
   isDisabled: boolean;
   password: string;

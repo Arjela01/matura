@@ -77,7 +77,6 @@ export class UserGridComponent {
   user: User = {
     fileName: '',
     id: '',
-    isActive: false,
     // firstName: '',
     lastName: '',
     name: '',

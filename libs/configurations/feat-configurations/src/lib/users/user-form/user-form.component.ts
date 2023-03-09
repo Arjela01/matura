@@ -97,7 +97,6 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
     password: '',
     lastPasswordChange: new Date(),
     name: '',
-    isActive: true,
     overseerCode: '',
     studentId: null,
     roleId: '',
