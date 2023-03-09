@@ -132,8 +132,8 @@
 
         <div class="field" [style]="{ width: '500px' }">
           <label for="birthDate">Datëlindja * </label>
-          <p-calendar [(ngModel)]="student.birthDate" dateFormat="dd/mm/yy" inputId="birthDate" id="birthDate"
-            name="birthDate" [ngClass]="{
+          <p-calendar [(ngModel)]="student.birthDate" [maxDate]="maxDate" dateFormat="dd/mm/yy" inputId="birthDate"
+            id="birthDate" name="birthDate" [ngClass]="{
               'ng-invalid ng-dirty': submitted && !student.birthDate
             }"></p-calendar>
           <small class="p-error block" *ngIf="submitted && !student.birthDate">

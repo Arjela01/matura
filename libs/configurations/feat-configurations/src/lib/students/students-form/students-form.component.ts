@@ -71,19 +71,17 @@ export class StudentsFormComponent implements OnInit, OnChanges {
   @Input() set studentDetails(details: Student | null) {
     if (details) {
       this.student = Object.assign({}, details);
-      debugger;
     }
   }
-
   showStudent = false;
   submitted = false;
-
+  maxDate = new Date();
   student: Student = {
     createdName: '',
     createdOn: new Date(),
     modifiedByName: '',
     modifiedOn: new Date(),
-    birthDate: new Date(),
+    birthDate: this.maxDate,
     birthPlace: '',
     email: '',
     genderId: 0,
@@ -113,7 +111,6 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     graduationYear: undefined,
     isConfirmedBySupervisor: true,
   };
-
   finishedAtSameSchool = true;
 
   constructor(
@@ -124,7 +121,9 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     private readonly genderService: GendersApiService,
     private academicYearService: AcademicYearApiService,
     private router: Router
-  ) {}
+  ) {
+    this.maxDate.setFullYear(this.maxDate.getFullYear() - 10);
+  }
   ngOnInit(): void {
     // todo ! maybe  switch to pipes
     this.highSchoolService.loadDropDownList().subscribe(response => {

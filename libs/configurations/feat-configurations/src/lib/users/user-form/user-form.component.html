@@ -116,20 +116,6 @@
     </small>
   </div>
 
-  <div class="field">
-    <label class="mb-3">Është aktiv? *</label>
-    <div class="formgrid grid">
-      <div class="field-radiobutton col-6">
-        <p-radioButton id="isActiveTrue" name="isActive" [value]="false" [(ngModel)]="user.isDisabled"></p-radioButton>
-        <label for="isActiveTrue">Po</label>
-      </div>
-      <div class="field-radiobutton col-6">
-        <p-radioButton id="isActiveFalse" name="isWithCompetition" [value]="true"
-          [(ngModel)]="user.isDisabled"></p-radioButton>
-        <label for="isActiveFalse">Jo</label>
-      </div>
-    </div>
-  </div>
 
   <div class="flex justify-content-end">
     <button type="button" pButton label="Anullo" class="p-button-text w-auto mr-2" (click)="onCancelClick()"></button>

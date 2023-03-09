@@ -56,7 +56,7 @@ export class StudentsEditComponent implements OnInit {
   academicYears: DropdownModel<number>[] = [];
   saving = false;
   id?: string;
-
+  maxDate = new Date();
   submitted = true;
 
   current = null;
@@ -64,7 +64,7 @@ export class StudentsEditComponent implements OnInit {
   student: Student = {
     createdName: '',
     createdOn: new Date(),
-    birthDate: new Date(),
+    birthDate: this.maxDate,
     birthPlace: '',
     email: '',
     genderId: 0,
@@ -108,6 +108,7 @@ export class StudentsEditComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.id = this.route.snapshot.paramMap.get('id') as string;
+    this.maxDate.setFullYear(this.maxDate.getFullYear() - 10);
   }
 
   ngOnInit(): void {
