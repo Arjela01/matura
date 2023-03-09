@@ -103,7 +103,7 @@ export class ManageDashboardSectionsComponent implements OnInit {
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
           message:
-            'Jeni i sigurt që doni të fshini grupin e profilit të zgjedhur?',
+            'Jeni i sigurt që doni të fshini seksionin e zgjedhur?',
           accept: () => {
             this.deleteDashboardSection(event.data as DashboardSection);
           },
@@ -143,7 +143,7 @@ export class ManageDashboardSectionsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Grupi i profilit u shtua me sukses!');
+          this.toastService.showSuccess('Seksioni i dashboard-it u shtua me sukses!');
           this.displayModal = false;
           this.getDashboardSections(this.filters as LazyLoadEvent);
           this.cd.detectChanges();
@@ -151,7 +151,7 @@ export class ManageDashboardSectionsComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së grupit të profilit së mesme!'
+            'Ndodhi nje problem gjatë ndryshimit së dashboard-it!'
           );
       });
   }
@@ -163,7 +163,7 @@ export class ManageDashboardSectionsComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
-            'Profilei i grupit u ndryshua me sukses!'
+            'Seksioni i dashboard-it u ndryshua me sukses!'
           );
           this.displayModal = false;
           this.getDashboardSections(this.filters as LazyLoadEvent);
@@ -171,7 +171,7 @@ export class ManageDashboardSectionsComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së profilit të grupit!'
+            'Ndodhi nje problem gjatë ndryshimit së dashboard-it!'
           );
       });
   }
@@ -182,13 +182,13 @@ export class ManageDashboardSectionsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showInfo('Grupi i profilit u fshi me sukses!');
+          this.toastService.showInfo('Seksioni i dashboard-it u fshi me sukses!');
           this.getDashboardSections(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë fshirjes së grupit të profilit!'
+            'Ndodhi nje problem gjatë fshirjes së grupit dashboard-it!'
           );
       });
   }

@@ -28,7 +28,7 @@ export interface Student extends SharedStudent {
   graduationYear?: number;
   highSchoolName: string;
   isFall: boolean;
-  registrationYearId?: number;
+  registrationYearId?: number | undefined;
   schoolFinishedName: string;
   createdOn: Date;
   createdName: string;
