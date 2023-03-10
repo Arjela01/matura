@@ -136,7 +136,7 @@ export class StudentsFormComponent implements OnInit, OnChanges {
       this.schoolProfile = response.data;
     });
     this.academicYearService.loadDropdownList().subscribe(response => {
-      let activeYear: any = response.data.find(
+      const activeYear: any = response.data.find(
         (data: any) => data.value === new Date().getFullYear().toString()
       );
       if (activeYear) {

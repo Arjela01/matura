@@ -72,18 +72,6 @@ export class ManageExamSiteComponent implements OnInit {
     this.selectedExamSite = {} as ExamSite;
   }
 
-  onDeleteSelectedClick() {
-    this.confirmationService.confirm({
-      message:
-        'Jeni i sigurt që doni të fshini qendrat e provimit të zgjedhura?',
-      accept: () => {
-        this.toastService.showWarning(
-          'Qendrat e provimit të zgjedhura u fshinë!'
-        );
-      },
-    });
-  }
-
   onGridEvent(event: GridEvent<ExamSite | ExamSite[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
@@ -157,7 +145,7 @@ export class ManageExamSiteComponent implements OnInit {
           this.toastService.showSuccess('Qendra e provimit u shtua me sukses!');
           this.displayModal = false;
           this.getExamSites(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
