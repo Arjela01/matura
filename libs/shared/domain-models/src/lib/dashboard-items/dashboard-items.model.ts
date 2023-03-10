@@ -1,3 +1,4 @@
+
 export interface DashboardItem {
   id?: any;
   dashboardSectionId: number;
@@ -13,8 +14,8 @@ export interface DashboardItem {
   title:string;
   userIds?: number;
   userName?: string;
-  roles: Map<string, string>[],
-  users: Map<string, string>[],
+  roles: string[];
+  users: string[];
 }
 
 export interface DashboardItemsTableView {
