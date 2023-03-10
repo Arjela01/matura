@@ -9,25 +9,44 @@
         <form #form="ngForm" (ngSubmit)="update()">
           <div class="field" [style]="{ width: '500px' }">
             <label for="highSchool">Shkolla *</label>
-            <p-dropdown id="highSchool" [options]="highSchool" name="highSchool" optionValue="key" optionLabel="value"
-              [(ngModel)]="student.highSchoolId" [autoDisplayFirst]="false" [showClear]="true" [ngClass]="{
+            <p-dropdown
+              id="highSchool"
+              [options]="highSchool"
+              name="highSchool"
+              optionValue="key"
+              optionLabel="value"
+              [(ngModel)]="student.highSchoolId"
+              [autoDisplayFirst]="false"
+              [showClear]="true"
+              [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !student.highSchoolId
               }">
             </p-dropdown>
-            <small class="p-error block" *ngIf="submitted && !student.highSchoolId">
+            <small
+              class="p-error block"
+              *ngIf="submitted && !student.highSchoolId">
               Shkolla është fushë e kërkuar.
             </small>
           </div>
 
           <div class="field" [style]="{ width: '500px' }">
             <label for="schoolProfile">Profili Shkollës *</label>
-            <p-dropdown id="schoolProfile" [options]="schoolProfile" name="schoolProfile" optionValue="key"
-              optionLabel="value" [(ngModel)]="student.profileId" [autoDisplayFirst]="false" [showClear]="true"
+            <p-dropdown
+              id="schoolProfile"
+              [options]="schoolProfile"
+              name="schoolProfile"
+              optionValue="key"
+              optionLabel="value"
+              [(ngModel)]="student.profileId"
+              [autoDisplayFirst]="false"
+              [showClear]="true"
               [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !student.profileId
               }">
             </p-dropdown>
-            <small class="p-error block" *ngIf="submitted && !student.profileId">
+            <small
+              class="p-error block"
+              *ngIf="submitted && !student.profileId">
               Profili shkollës është fushë e kërkuar.
             </small>
           </div>
@@ -36,12 +55,18 @@
             <label class="mb-3">Sesioni i Vjeshtës? *</label>
             <div class="formgrid grid">
               <div class="field-radiobutton col-6">
-                <p-radioButton id="IsFallTrue" name="IsFall" [value]="true"
+                <p-radioButton
+                  id="IsFallTrue"
+                  name="IsFall"
+                  [value]="true"
                   [(ngModel)]="student.isFall"></p-radioButton>
                 <label for="IsFallTrue">Po</label>
               </div>
               <div class="field-radiobutton col-6">
-                <p-radioButton id="IsFallFalse" name="IsFall" [value]="false"
+                <p-radioButton
+                  id="IsFallFalse"
+                  name="IsFall"
+                  [value]="false"
                   [(ngModel)]="student.isFall"></p-radioButton>
                 <label for="IsFallFalse">Jo</label>
               </div>
@@ -213,7 +238,11 @@
             <a href="/configurations/students">
               <button type="button" pButton label="Anullo" class="p-button-text w-auto mr-2"></button>
             </a>
-            <button type="submit" [disabled]="form.invalid" pButton label="Ruaj" class="p-button w-auto"></button>
+            <button
+              type="submit"
+              pButton
+              label="Ruaj"
+              class="p-button w-auto"></button>
           </div>
         </form>
       </div>

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -13,9 +13,7 @@ import {
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExamSecret } from '@msh/evaluations/domain-evaluations';
-import {ExamSubjectApiService,
-
-} from '@msh/configurations/data-access-configurations';
+import { ExamSubjectApiService } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { RippleModule } from 'primeng/ripple';
 import { ExamSecretApiService } from '@msh/evaluations/data-access-evaluations';
@@ -24,6 +22,7 @@ import { ExamSecretsFormComponent } from '../exam-secrets-form/exam-secrets-form
 import { ExamSecretsGridComponent } from '../exam-secrets-grid/exam-secrets-grid.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import * as FileSaver from 'file-saver';
+import {ExamSubjectProfile} from "@msh/shared/domain-models";
 
 @UntilDestroy()
 @Component({
@@ -45,18 +44,17 @@ import * as FileSaver from 'file-saver';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageExamSecretsComponent {
+export class ManageExamSecretsComponent implements OnInit{
   private examSecrets$$ = new BehaviorSubject<ExamSecret[]>([]);
   examSecrets$ = this.examSecrets$$.asObservable();
   filters: LazyLoadEvent | null = null;
-  examSubjects: DropdownModel<number>[] = [];
   base64: string | ArrayBuffer | null | undefined;
 
   totalRecords = 0;
   selectedExamSecret: ExamSecret | null = null;
   selectedExamSecrets: ExamSecret[] = [];
   displayModal = false;
-  hideExamSecretForm = true;
+  examSubjects: DropdownModel<number>[] = [];
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -66,10 +64,15 @@ export class ManageExamSecretsComponent {
     private readonly examSubjectService: ExamSubjectApiService
   ) {}
 
-  onNewClick() {
-    this.hideExamSecretForm = !this.hideExamSecretForm;
-    this.router.navigate(['/evaluations/exam-secret-form']);
+  ngOnInit(): void {
+    this.getExamSubjects();
   }
+
+  onNewClick() {
+    this.displayModal = true;
+    this.selectedExamSecret = {} as ExamSecret;
+  }
+
   onGridEvent(event: GridEvent<ExamSecret | ExamSecret[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
@@ -80,10 +83,7 @@ export class ManageExamSecretsComponent {
         break;
       case GRID_ACTIONS.EDIT:
         this.selectedExamSecret = Object.assign({}, event.data as ExamSecret);
-        this.router.navigate([
-          'evaluations/exam-secret-form',
-          this.selectedExamSecret.id,
-        ]);
+        this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
@@ -166,6 +166,59 @@ export class ManageExamSecretsComponent {
           type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         });
         FileSaver.saveAs(blob, 'Nota_Pikë');
+      });
+  }
+
+  onModalClose() {
+    this.displayModal = false;
+  }
+
+  onFormSave(examSecret: ExamSecret) {
+    if (examSecret.id) {
+      this.updateExamSecret(examSecret);
+    }
+    if (!examSecret.id) {
+      this.addExamSecret(examSecret);
+    }
+  }
+
+  addExamSecret(examSecret: ExamSecret) {
+    this.examSecretService
+      .save(examSecret)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Sekretimi u shtua me sukses!');
+          this.displayModal = false;
+          this.getExamSecrets(this.filters as LazyLoadEvent);
+        } else {
+          this.toastService.showError(response.errorMessage);
+        }
+        if (response.isBadRequest) {
+          this.toastService.showError(
+            'Ndodhi një problem gjatë shtimit të sekretimit!'
+          );
+        }
+      });
+  }
+
+  updateExamSecret(examSecret: ExamSecret) {
+    this.examSecretService
+      .update(examSecret)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Sekretimi u ndryshua me sukses!');
+          this.displayModal = false;
+          this.getExamSecrets(this.filters as LazyLoadEvent);
+        } else {
+          this.toastService.showError(response.errorMessage);
+        }
+        if (response.isBadRequest) {
+          this.toastService.showError(
+            'Ndodhi një problem gjatë ndryshimit të sekretimit!'
+          );
+        }
       });
   }
 }

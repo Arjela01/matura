@@ -424,7 +424,9 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
 
         if (response.isSuccessful === false) {
           this.toastService.showError(
-            'Ndodhi një problem gjatë shtimit të formularit A1Z!'
+            response.errorMessage
+              ? response.errorMessage
+              : 'Ndodhi një problem gjatë shtimit të formularit A1Z!'
           );
           console.log(response);
         }
@@ -445,7 +447,9 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
 
         if (response.isSuccessful === false) {
           this.toastService.showError(
-            'Ndodhi një problem gjatë shtimit të formularit A1Z!'
+            response.errorMessage
+              ? response.errorMessage
+              : 'Ndodhi një problem gjatë ndryshimit të formularit A1Z!'
           );
           console.log(response);
         }

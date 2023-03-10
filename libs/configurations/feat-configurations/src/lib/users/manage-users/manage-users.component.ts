@@ -134,7 +134,7 @@ export class ManageUsersComponent implements OnInit {
         break;
       case GRID_ACTIONS.CUSTOM_ACTION1:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt qe doni te gjeneroni nje fjalkalim te ri?',
+          message: 'Jeni i sigurt që doni te gjeneroni nje fjalëkalim te ri?',
           accept: () => {
             this.passwordGenerate(event.data as User);
           },
@@ -154,7 +154,7 @@ export class ManageUsersComponent implements OnInit {
         break;
       case GRID_ACTIONS.CUSTOM_ACTION2:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt qe doni te ndryshoni statusin e perdoruesit?',
+          message: 'Jeni i sigurt që doni te ndryshoni statusin e përdoruesit?',
           accept: () => {
             this.changeUserStatus(event.data as User);
           },
@@ -200,8 +200,8 @@ export class ManageUsersComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
             response.data.isDisabled
-              ? 'Perdoruesi u çaktivizua me sukses!'
-              : 'Perdoruesi u aktivizua me sukses!'
+              ? 'Përdoruesi u çaktivizua me sukses!'
+              : 'Përdoruesi u aktivizua me sukses!'
           );
           this.displayModal = false;
           this.getUsers(this.filters as LazyLoadEvent);
@@ -220,7 +220,7 @@ export class ManageUsersComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Perdoruesi u shtua me sukses');
+          this.toastService.showSuccess('Përdoruesi u shtua me sukses');
           this.userDialog = false;
           this.getUsers(this.filters as LazyLoadEvent);
         }
@@ -229,7 +229,7 @@ export class ManageUsersComponent implements OnInit {
           this.toastService.showError(
             response.errorMessage !== null
               ? response.errorMessage
-              : 'Ndodhi nje problem gjate shtimit te perdoruesit!'
+              : 'Ndodhi një problem gjatë shtimit te përdoruesit!'
           );
         }
       });
@@ -240,7 +240,7 @@ export class ManageUsersComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Perdoruesi u ndryshua me sukses!');
+          this.toastService.showSuccess('Përdoruesi u ndryshua me sukses!');
 
           this.userDialog = false;
           this.getUsers(this.filters as LazyLoadEvent);
@@ -249,7 +249,7 @@ export class ManageUsersComponent implements OnInit {
           this.toastService.showError(
             response.errorMessage !== null
               ? response.errorMessage
-              : 'Ndodhi nje problem gjate ndryshimit te perdoruesit!'
+              : 'Ndodhi një problem gjatë ndryshimit të përdoruesit!'
           );
         }
       });
@@ -261,7 +261,7 @@ export class ManageUsersComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Fjalkalimi u ndryshua me sukses!');
+          this.toastService.showSuccess('Fjalëkalimi u ndryshua me sukses!');
           this.userDialog = false;
           this.resetPasswordGenerated = true;
           this.newUserPasswordObj = {
@@ -272,7 +272,7 @@ export class ManageUsersComponent implements OnInit {
 
         if (!response.isSuccessful) {
           this.toastService.showError(
-            'Ndodhi nje problem gjate ndryshimit te perdoruesit!'
+            'Ndodhi një problem gjatë ndryshimit të përdoruesit!'
           );
         }
       });
