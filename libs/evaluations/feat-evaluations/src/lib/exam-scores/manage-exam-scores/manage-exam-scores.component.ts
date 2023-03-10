@@ -22,7 +22,7 @@ import {
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { RippleModule } from 'primeng/ripple';
 import { FileUploadModule } from 'primeng/fileupload';
-import {ExamScoreApiService} from "@msh/evaluations/data-access-evaluations";
+import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
 
 @UntilDestroy()
 @Component({
@@ -59,13 +59,12 @@ export class ManageExamScoresComponent implements OnInit {
   examSubjects: DropdownModel<string>[] = [];
   base64: string | ArrayBuffer | null | undefined;
 
-
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examScoreService: ExamScoreApiService,
     private readonly examTypeService: ExamTypeApiService,
-    private readonly examSubjectService: ExamSubjectApiService,
+    private readonly examSubjectService: ExamSubjectApiService
   ) {}
 
   ngOnInit(): void {
@@ -140,7 +139,16 @@ export class ManageExamScoresComponent implements OnInit {
         this.totalRecords = response.total;
       });
   }
+  onExamTypeChanged(examTypeId: any) {
+    if (this.selectedExamScore != null)
+      this.selectedExamScore.examTypeId = examTypeId;
+    this.getExamSubjects(examTypeId);
+  }
 
+  onExamSubjectChanged(examSubjectId: string) {
+    if (this.selectedExamScore != null)
+      this.selectedExamScore.examSubjectId = examSubjectId;
+  }
   addExamScore(examScore: ExamScore) {
     this.examScoreService
       .save(examScore)
@@ -157,11 +165,10 @@ export class ManageExamScoresComponent implements OnInit {
         }
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së reszultatit të provimit!'
+            'Ndodhi një problem gjatë shtimit së reszultatit të provimit!'
           );
       });
   }
-
   updateExamScore(examScore: ExamScore) {
     this.examScoreService
       .update(examScore)
@@ -173,14 +180,13 @@ export class ManageExamScoresComponent implements OnInit {
           );
           this.displayModal = false;
           this.getExamScores(this.filters as LazyLoadEvent);
+        } else {
+          this.toastService.showError(response.errorMessage);
         }
         if (response.isBadRequest)
           this.toastService.showError(
             'Ndodhi një problem gjatë ndryshimit së rezultatit të provimit!'
           );
-        if (!response.isSuccessful) {
-          this.toastService.showError('Nuk po ngarkoni dokumentin e duhur!');
-        }
       });
   }
 
@@ -216,18 +222,6 @@ export class ManageExamScoresComponent implements OnInit {
       .subscribe(response => {
         this.examSubjects = response.data;
       });
-  }
-
-
-  onExamTypeChanged(examTypeId: any) {
-    if (this.selectedExamScore != null)
-      this.selectedExamScore.examTypeId = examTypeId;
-    this.getExamSubjects(examTypeId);
-  }
-
-  onExamSubjectChanged(examSubjectId: string) {
-    if (this.selectedExamScore != null)
-      this.selectedExamScore.examSubjectId = examSubjectId;
   }
 
   onUpload(event: any) {

@@ -94,10 +94,12 @@ export class ExamScoresFormComponent implements OnChanges {
   onExamTypeChanged($event: any): void {
     this.examTypeId =  $event.value
     this.examTypeChanged.emit(this.examTypeId);
+    this.examScore.examTypeId = this.examTypeId;
   }
 
   onExamSubjectChanged($event: any): void {
     this.examSubjectId = $event.value
     this.examSubjectChanged.emit(this.examSubjectId);
+    this.examScore.examSubjectId = this.examSubjectId;
   }
 }
