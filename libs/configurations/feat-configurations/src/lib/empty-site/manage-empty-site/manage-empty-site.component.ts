@@ -75,7 +75,7 @@ export class ManageEmptySiteComponent {
         if (response.isSuccessful) {
           this.getExamAssignment(this.filters as LazyLoadEvent);
           this.toastService.showSuccess('Qendra u zbraz me sukses!');
-        }
+        }else this.toastService.showError(response.errorMessage);
         if (!response.isSuccessful) {
           this.toastService.showError(
             'Ndodhi një problem gjatë zbrazjes së qendrës!'

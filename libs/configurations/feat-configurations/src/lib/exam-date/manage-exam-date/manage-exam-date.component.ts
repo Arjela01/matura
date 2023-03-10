@@ -13,7 +13,7 @@ import {
   ExamSiteApiService,
   ExamTypeApiService,
 } from '@msh/configurations/data-access-configurations';
-import {ExamDate, ExamSite} from '@msh/shared/domain-models';
+import { ExamDate } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
 import {
@@ -25,22 +25,22 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { ExamDateFormComponent } from '../exam-date-form/exam-date-form.component';
 import { ExamDateGridComponent } from '../exam-date-grid/exam-date-grid.component';
-import {RippleModule} from "primeng/ripple";
+import { RippleModule } from 'primeng/ripple';
 
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-exam-date',
   standalone: true,
-    imports: [
-        ButtonModule,
-        CommonModule,
-        DialogModule,
-        ConfirmDialogModule,
-        ExamDateFormComponent,
-        ExamDateGridComponent,
-        ToolbarModule,
-        RippleModule,
-    ],
+  imports: [
+    ButtonModule,
+    CommonModule,
+    DialogModule,
+    ConfirmDialogModule,
+    ExamDateFormComponent,
+    ExamDateGridComponent,
+    ToolbarModule,
+    RippleModule,
+  ],
   templateUrl: './manage-exam-Date.component.html',
   styleUrls: ['./manage-exam-Date.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -63,7 +63,7 @@ export class ManageExamDateComponent implements OnInit {
     private readonly toastService: GlobalToastService,
     private readonly examDateService: ExamDateApiService,
     private readonly examSitesApiService: ExamSiteApiService,
-    private readonly examTypesApiService: ExamTypeApiService,
+    private readonly examTypesApiService: ExamTypeApiService
   ) {}
 
   ngOnInit(): void {
@@ -75,15 +75,6 @@ export class ManageExamDateComponent implements OnInit {
     this.displayModal = true;
     this.selectedExamDate = {} as ExamDate;
 
-  }
-
-  onDeleteSelectedClick() {
-    this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të fshini datat e provimit të zgjedhura?',
-      accept: () => {
-        this.toastService.showWarning('Datat e provimit të zgjedhura u fshinë!');
-      },
-    });
   }
 
   onGridEvent(event: GridEvent<ExamDate | ExamDate[]>) {
@@ -115,7 +106,8 @@ export class ManageExamDateComponent implements OnInit {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të fshini datën e provimit të zgjedhur?',
+          message:
+            'Jeni i sigurt që doni të fshini datën e provimit të zgjedhur?',
           accept: () => {
             this.deleteExamDate(event.data as ExamDate);
           },
@@ -158,7 +150,7 @@ export class ManageExamDateComponent implements OnInit {
           this.toastService.showSuccess('Data e provimit u shtua me sukses!');
           this.displayModal = false;
           this.getExamDates(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -178,7 +170,7 @@ export class ManageExamDateComponent implements OnInit {
           );
           this.displayModal = false;
           this.getExamDates(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -195,7 +187,7 @@ export class ManageExamDateComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('Data e provimit u fshi me sukses!');
           this.getExamDates(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(

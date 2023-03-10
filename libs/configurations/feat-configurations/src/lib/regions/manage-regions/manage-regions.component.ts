@@ -71,7 +71,7 @@ export class ManageRegionsComponent {
       message: 'Jeni i sigurt që doni të fshini rajonet e zgjedhura?',
       accept: () => {
         //this.regionStore.deleteSelectedRegions();
-        this.toastService.showWarning('Rajonet u fshin!');
+        this.toastService.showWarning('Rajonet u fshinë!');
       },
     });
   }
@@ -152,7 +152,7 @@ export class ManageRegionsComponent {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit të rajonit!'
+            'Ndodhi një problem gjatë ndryshimit të rajonit!'
           );
       });
   }
@@ -172,7 +172,7 @@ export class ManageRegionsComponent {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit të rajonit!'
+            'Ndodhi një problem gjatë ndryshimit të rajonit!'
           );
       });
   }
@@ -189,7 +189,7 @@ export class ManageRegionsComponent {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë fshirjes së rajonit!'
+            'Ndodhi një problem gjatë fshirjes së rajonit!'
           );
       });
   }
