@@ -100,24 +100,55 @@
 
   <div class="field">
     <label for="password">Fjalëkalimi *</label>
-    <p-password id="password" [feedback]="false" [toggleMask]="true" name="password" [(ngModel)]="user.password"
-      autofocus mshStrongPasswordValidator #password="ngModel" [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.password
-      }">
-    </p-password>
-    <small class="p-error block" *ngIf="submitted && !user.password">
-      Fjalëkalimi është fushë e kërkuar.
-    </small>
-    <small class="p-error block" *ngIf="
-        password.touched &&
-        password.errors &&
-        password.errors['strongPasswordValidator']
-      ">
-      Fjalëkalimi duhet të përmbajë minimalisht një gërmë kapitale,një gërmë jo
-      kapitale,një karakter special,një numër dhe s duhet të përmbajë hapësira.
-    </small>
+    <div class="p-inputgroup">
+      <button
+        onclick="this.disabled = true" value="Save"
+        type="button"
+        pButton
+        pRipple
+        icon="pi pi-key"
+        (click)="onPasswordCreate()"
+        label="Gjenero"></button>
+      <input
+        type="text"
+        id="password"
+        name="password"
+        disabled
+        pInputText
+        placeholder="{{ user.password}}"
+        [(ngModel)]="user.password" />
+      <button
+        [cdkCopyToClipboard]="user.password"
+        type="button"
+        pButton
+        pRipple
+        icon="pi pi-copy"
+        label="Kopjo"></button>
+    </div>
   </div>
 
+
+  <div class="field">
+    <label class="mb-3">Është aktiv? *</label>
+    <div class="formgrid grid">
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="isActiveTrue"
+          name="isActive"
+          [value]="true"
+          [(ngModel)]="user.isActive"></p-radioButton>
+        <label for="isActiveTrue">Po</label>
+      </div>
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="isActiveFalse"
+          name="isWithCompetition"
+          [value]="false"
+          [(ngModel)]="user.isActive"></p-radioButton>
+        <label for="isActiveFalse">Jo</label>
+      </div>
+    </div>
+  </div>
 
   <div class="flex justify-content-end">
     <button type="button" pButton label="Anullo" class="p-button-text w-auto mr-2" (click)="onCancelClick()"></button>
