@@ -12,7 +12,7 @@ import {
   GlobalToastService,
   GridEvent,
 } from '@msh/shared/util-shared';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -83,84 +83,82 @@ export class ManageExamCopyComponent implements OnInit {
   }
 
   getExamCopies($event: any) {
-    this.examCopies$$.next([
-      {
-        address: 'address',
-        city: 'city',
-        administrationOffice: 'administrationOffice',
-        applicationId: 'applicationId',
-        attachedDocument: 'attachedDocument',
-        cel: 'cel',
-        comments: 'comments',
-        dateOfBirth: 'dateOfBirth',
-        decisionDate: 'decisionDate',
-        documentName: 'documentName',
-        email: 'email',
-        fatherName: 'fatherName',
-        firstName: 'firstName',
-        gender: 'gender',
-        lastName: 'lastName',
-        maturaId: 'maturaId',
-        municipalityUnit: 'municipalityUnit',
-        nationality: 'nationality',
-        nid: 'nid',
-        placeOfBirth: 'placeOfBirth',
-        postalCode: 'postalCode',
-        region: 'region',
-        remarks: 'remarks',
-        schoolCode: 'schoolCode',
-        schoolName: 'schoolName',
-        service: 'service',
-        status: 0,
-        subject: 'subject',
-        telFix: 'telFix',
-      },
-      {
-        address: 'address',
-        city: 'city',
-        administrationOffice: 'administrationOffice',
-        applicationId: 'applicationId',
-        attachedDocument: 'attachedDocument',
-        cel: 'cel',
-        comments: 'comments',
-        dateOfBirth: 'dateOfBirth',
-        decisionDate: 'decisionDate',
-        documentName: 'documentName',
-        email: 'email',
-        fatherName: 'fatherName',
-        firstName: 'firstName',
-        gender: 'gender',
-        lastName: 'lastName',
-        maturaId: 'maturaId',
-        municipalityUnit: 'municipalityUnit',
-        nationality: 'nationality',
-        nid: 'nid',
-        placeOfBirth: 'placeOfBirth',
-        postalCode: 'postalCode',
-        region: 'region',
-        remarks: 'remarks',
-        schoolCode: 'schoolCode',
-        schoolName: 'schoolName',
-        service: 'service',
-        status: 1,
-        subject: 'subject',
-        telFix: 'telFix',
-      },
-    ]);
-    //   this.examCopyService
-    //     .getExamCopies(this.filters)
-    //     .pipe(untilDestroyed(this))
-    //     .subscribe(
-    //       (response) => {
-    //         this.examCopies$$.next(response.data);
-    //         this.totalRecords = response.totalRecords;
-    //         this.cd.markForCheck();
-    //       },
-    //       (error) => {
-    //         this.toastService.showError(error);
-    //       }
-    //     );
-    // }
-    console.log('getExamCopies');
+    // this.examCopies$$.next([
+    //   {
+    //     address: 'address',
+    //     city: 'city',
+    //     administrationOffice: 'administrationOffice',
+    //     applicationId: 'applicationId',
+    //     attachedDocument: 'attachedDocument',
+    //     cel: 'cel',
+    //     comments: 'comments',
+    //     dateOfBirth: 'dateOfBirth',
+    //     decisionDate: 'decisionDate',
+    //     documentName: 'documentName',
+    //     email: 'email',
+    //     fatherName: 'fatherName',
+    //     firstName: 'firstName',
+    //     gender: 'gender',
+    //     lastName: 'lastName',
+    //     maturaId: 'maturaId',
+    //     municipalityUnit: 'municipalityUnit',
+    //     nationality: 'nationality',
+    //     nid: 'nid',
+    //     placeOfBirth: 'placeOfBirth',
+    //     postalCode: 'postalCode',
+    //     region: 'region',
+    //     remarks: 'remarks',
+    //     schoolCode: 'schoolCode',
+    //     schoolName: 'schoolName',
+    //     service: 'service',
+    //     status: 0,
+    //     subject: 'subject',
+    //     telFix: 'telFix',
+    //   },
+    //   {
+    //     address: 'address',
+    //     city: 'city',
+    //     administrationOffice: 'administrationOffice',
+    //     applicationId: 'applicationId',
+    //     attachedDocument: 'attachedDocument',
+    //     cel: 'cel',
+    //     comments: 'comments',
+    //     dateOfBirth: 'dateOfBirth',
+    //     decisionDate: 'decisionDate',
+    //     documentName: 'documentName',
+    //     email: 'email',
+    //     fatherName: 'fatherName',
+    //     firstName: 'firstName',
+    //     gender: 'gender',
+    //     lastName: 'lastName',
+    //     maturaId: 'maturaId',
+    //     municipalityUnit: 'municipalityUnit',
+    //     nationality: 'nationality',
+    //     nid: 'nid',
+    //     placeOfBirth: 'placeOfBirth',
+    //     postalCode: 'postalCode',
+    //     region: 'region',
+    //     remarks: 'remarks',
+    //     schoolCode: 'schoolCode',
+    //     schoolName: 'schoolName',
+    //     service: 'service',
+    //     status: 1,
+    //     subject: 'subject',
+    //     telFix: 'telFix',
+    //   },
+    // ]);
+    this.filters = Object.assign({}, $event);
+    this.examCopyService
+      .loadExamCopies($event)
+      .pipe(untilDestroyed(this))
+      .subscribe(
+        response => {
+          this.examCopies$$.next(response.data);
+          this.totalRecords = response.total;
+        },
+        error => {
+          this.toastService.showError(error);
+        }
+      );
   }
 }

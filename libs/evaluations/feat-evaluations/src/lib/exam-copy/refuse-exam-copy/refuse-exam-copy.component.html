@@ -1,0 +1,24 @@
+<form #form="ngForm" (ngSubmit)="onRefuse()">
+  <div class="field col-4">
+    <label for="comments">Arsyeja</label>
+    <input
+      type="text"
+      pInputText
+      id="comments"
+      name="comments"
+      [(ngModel)]="examCopy.comments"
+      autofocus />
+  </div>
+
+  <button
+    type="submit"
+    pButton
+    label="Refuzo"
+    class="p-button w-auto mr-2"></button>
+  <button
+    type="button"
+    pButton
+    label="Kthehu"
+    class="p-button-text w-auto mr-2"
+    (click)="onCancelClick()"></button>
+</form>

@@ -1,9 +1,39 @@
 import { Injectable } from '@angular/core';
+import {
+  ExamCopy,
+  ExamCopyConfirm,
+  ExamCopyTableView,
+} from '@msh/evaluations/domain-evaluations';
+import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
+import { LazyLoadEvent } from 'primeng/api';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExamCopyApiService {
   constructor(private apiService: APIService) {}
+
+  loadExamCopies(event: LazyLoadEvent): Observable<ExamCopyTableView> {
+    return this.apiService.post(`/ExamCopyRequest/TableData`, event);
+  }
+
+  confirm(body: ExamCopyConfirm): Observable<ApiResult<unknown>> {
+    return this.apiService.post(`/ExamCopyRequest/Confirm`, body);
+  }
+
+  refuse(body: ExamCopyRefuse): Observable<ApiResult<unknown>> {
+    return this.apiService.post(`/ExamCopyRequest/Refuse`, body);
+  }
+
+  getById(applicationId: string): Observable<ApiResult<ExamCopy>> {
+    return this.apiService.get(
+      `/ExamCopyRequest/GetByApplicationId/${applicationId}`
+    );
+  }
+}
+
+export interface ExamCopyRefuse {
+  applicationId: string;
 }
