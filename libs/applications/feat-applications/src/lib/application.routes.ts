@@ -18,7 +18,6 @@ export const APPLICATION_ROUTES: Route[] = [
         m => m.ManageA1zComponent
       ),
   },
-
   {
     path: 'a1',
     loadComponent: () =>

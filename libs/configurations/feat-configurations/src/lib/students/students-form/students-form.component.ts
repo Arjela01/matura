@@ -158,7 +158,6 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     this.studentService.save(data).subscribe({
       next: response => {
         this.saving = false;
-
         this.router
           .navigate(['/applications/save-a1-student', response.data.id])
           .then();
