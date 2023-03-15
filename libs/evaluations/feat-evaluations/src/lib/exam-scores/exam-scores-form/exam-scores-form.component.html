@@ -78,7 +78,7 @@
       Pikët me shtjellim janë fushë e kërkuar.
     </small>
     <small class="p-error block" *ngIf="submitted && !(examScore.writingScore <= examScore.maximumValueWritingScore)">
-      Pikët me shtjellim s'mund të jenë më të mëdha se maksimumi i pikëve.
+      Maksimumi i pikëve të lejuara është {{examScore.maximumValueWritingScore}}.
     </small>
   </div>
 
@@ -101,7 +101,7 @@
       Pikët me alternativa është fushë e kërkuar.
     </small>
     <small class="p-error block" *ngIf="submitted && !(examScore.multipleChoiceScore <= examScore.maximumValueMultipleScore)">
-      Pikët me alternativa s'mund të jenë më të mëdha se maksimumi i pikëve.
+      Maksimumi i pikëve të lejuara është {{examScore.maximumValueMultipleScore}}.
     </small>
   </div>
 
