@@ -42,11 +42,16 @@ export class ExamTypeFormComponent {
   examType: ExamType = {
     id: '',
     name: '',
+    maximumValueWritingScore: 0,
+    maximumValueMultipleScore: 0,
   };
 
   onCancelClick() {
     this.formClose.emit();
   }
+
+
+
 
   onSubmit() {
     this.submitted = true;
