@@ -96,6 +96,22 @@
                 field="isApplyingToForeignCountries"
                 display="menu"></p-columnFilter>
             </th>
+            <th pSortableColumn="birthplace">
+              Vendlindja
+              <p-sortIcon field="birthplace"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="birthplace"
+                display="menu"></p-columnFilter>
+            </th>
+            <th pSortableColumn="createdOn">
+              Krijuar më
+              <p-sortIcon field="createdOn"></p-sortIcon>
+              <p-columnFilter
+                type="date"
+                field="createdOn"
+                display="menu"></p-columnFilter>
+            </th>
             <th></th>
           </tr>
         </ng-template>
