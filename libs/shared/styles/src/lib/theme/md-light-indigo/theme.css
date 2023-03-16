@@ -322,6 +322,9 @@
 .ml-m {
   margin-left: 20px;
 }
+.mx-h{
+  max-height: 112px;
+}
 .p-dropdown-items-wrapper > .p-dialog-content-wrapper {
   overflow: auto;
 }
