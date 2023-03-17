@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { DashboardItemsApiService } from '@msh/configurations/data-access-configurations';
 import { DashboardItem } from '@msh/shared/domain-models';
+import * as FileSaver from "file-saver";
 
 @Component({
   selector: 'msh-dashboard',
@@ -42,5 +43,13 @@ export class DashboardComponent implements OnInit {
       this.dashboardCards = [...result.data];
       this.cd.detectChanges();
     });
+  }
+
+  downloadDocument(dashboardItem: DashboardItem) {
+    const blob: any = new Blob(dashboardItem.document, {
+      type: 'application/octet-stream',
+    });
+    FileSaver.saveAs(blob, dashboardItem.documentName);
+
   }
 }

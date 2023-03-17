@@ -1,0 +1,70 @@
+<div class="flex center mb-2 page-header mb-header align-items-baseline">
+  <h2 class="flex-1 mb-0">Përjashtim Kushti Diplome</h2>
+  <div class="flex align-items-right justify-content-right">
+    <div class="my-2">
+      <button
+        pButton
+        pRipple
+        label="Ngarko"
+        icon="pi pi-upload"
+        class="p-button-success mr-2"
+        (click)="onUploadClick()"></button>
+    </div>
+  </div>
+</div>
+
+
+  <div class="grid">
+  <div class="col-12">
+    <div class="card">
+
+      <msh-diploma-requirement-exemption-grid
+        [administrationOffices]="(administrativeOffices$ | async) || []"
+        [totalRecords]="totalRecords"
+        (gridEvent)="onGridEvent($event)"
+        (lazyLoadData)="
+          getAdministrationOffices($event)
+        "></msh-diploma-requirement-exemption-grid>
+    </div>
+  </div>
+</div>
+<p-dialog
+  [(visible)]="displayUploadModal"
+  [style]="{ width: '600px' }"
+  [modal]="true"
+  header="Importo Dokument nga Exel"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="true"
+  class="p-fluid"
+  (onHide)="onUploadClose()">
+  <ng-template pTemplate="content">
+    <msh-diploma-requirement-exemption-form
+      [examAssignmentsDetails]="selectedExamAssignment"
+      (formClose)="onUploadClose()"
+      (formSave)="onUploadFormSave()">
+    </msh-diploma-requirement-exemption-form>
+  </ng-template>
+</p-dialog>
+<p-confirmDialog
+  #cd
+  header="Konfirmo"
+  icon="pi pi-exclamation-triangle"
+  [style]="{ width: '450px' }">
+  <ng-template pTemplate="footer">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Jo"
+      class="p-button-text"
+      (click)="cd.reject()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Po"
+      class="p-button border"
+      (click)="cd.accept()"></button>
+  </ng-template>
+</p-confirmDialog>

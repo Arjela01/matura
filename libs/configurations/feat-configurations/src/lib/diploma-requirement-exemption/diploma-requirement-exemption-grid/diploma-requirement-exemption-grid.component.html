@@ -1,0 +1,90 @@
+
+<p-table
+  #dt
+  dataKey="id"
+  responsiveLayout="scroll"
+  [value]="administrationOffices"
+  [totalRecords]="totalRecords"
+  [rows]="10"
+  [paginator]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
+  [rowHover]="true"
+  [(selection)]="selectedAdministrationOffices"
+  selectionMode="multiple"
+  (onRowSelect)="onRowSelect($event)"
+  (onRowUnselect)="onRowUnselect($event)"
+  (onLazyLoad)="loadRows($event)"
+  [lazy]="true">
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="id">
+        ID
+        <p-sortIcon field="id"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="id"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="name">
+        Emri
+        <p-sortIcon field="name"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="name"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="fatherName">
+        Atësia
+        <p-sortIcon field="fatherName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="fatherName"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="lastName">
+        Mbiemri
+        <p-sortIcon field="lastName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="lastName"
+          display="menu"></p-columnFilter>
+      </th>
+      <th>Veprime</th>
+
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-activateOverseer>
+    <tr>
+      <td style="width: 40%;">
+        {{ activateOverseer.cityName }}
+      </td>
+      <td style="width: 40%;">
+        {{ activateOverseer.cityName }}
+      </td>
+      <td style="width: 40%;">
+        {{ activateOverseer.cityName }}
+      </td>
+      <td style="width: 40%;">
+        {{ activateOverseer.cityName }}
+      </td>
+
+      <td style="width: 14%; min-width: 10rem">
+        <div class="flex">
+          <button
+            pButton
+            pRipple
+            class="p-button-rounded p-button-plain p-button-text mr-2 pointer"
+            (click)="changeStatus(activateOverseer)"
+            [ngClass]="
+            activateOverseer.isAllowedToLogin === true
+              ? ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
+              : ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
+          ">
+            {{ activateOverseer.isAllowedToLogin === true ? 'Konfirmo' : 'Anullo' }}
+          </button>
+        </div>
+    </tr>
+  </ng-template>
+</p-table>

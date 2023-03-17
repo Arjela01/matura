@@ -65,6 +65,13 @@ export const CONFIGURATION_ROUTES: Route[] = [
       ).then(m => m.ManageActivateOverseerDarZaComponent),
   },
   {
+    path: 'diploma-requirement-exemption',
+    loadComponent: () =>
+      import(
+        './diploma-requirement-exemption/manage-diploma-requirement-exemption/manage-diploma-requirement-exemption.component'
+        ).then(m => m.ManageDiplomaRequirementExemptionComponent),
+  },
+  {
     path: 'menu',
     loadComponent: () =>
       import('./menus/manage-menus/manage-menus.component').then(
