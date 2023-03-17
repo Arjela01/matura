@@ -119,6 +119,7 @@ export class ManageExamAssignmentComponent {
 
   onUploadClose() {
     this.displayUploadModal = false;
+    this.getExamAssignments(this.filters as LazyLoadEvent);
   }
 
   onNewClick() {
