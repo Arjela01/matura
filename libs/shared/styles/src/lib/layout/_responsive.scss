@@ -9,7 +9,7 @@
 .layout-main-container {
   padding: 0 32px 32px 32px;
 }
-@media (min-width: 992px) {
+@media (min-width: 392px) {
   .layout-wrapper {
     background-color: var(--surface-g);
     &.layout-overlay {
@@ -66,7 +66,7 @@
     }
 
     .layout-sidebar {
-      transform: translateX(-100%);
+      transform: translateX(0);
       left: 0;
       top: 0;
       height: 100vh;
