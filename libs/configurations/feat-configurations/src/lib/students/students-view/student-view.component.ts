@@ -11,7 +11,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {
   GendersApiService,
   HighSchoolApiService,
@@ -46,6 +46,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     DropdownModule,
     CalendarModule,
     InputMaskModule,
+    RouterLink,
   ],
   templateUrl: './student-view.component.html',
   styleUrls: ['./student-view.component.scss'],
