@@ -14,6 +14,9 @@ export interface ExamScore {
   multipleChoiceScore: number;
   modificationReason: string;
   documentName: string;
+  maximumValueMultipleScore: number;
+  maximumValueWritingScore: number;
+
 }
 
 export interface ExamScoreTableView {
