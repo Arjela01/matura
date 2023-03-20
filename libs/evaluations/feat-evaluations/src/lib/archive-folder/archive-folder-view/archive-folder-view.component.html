@@ -1,50 +1,51 @@
 <div class="grid">
   <div class="col-12">
-    <div class="card">
-      <div>
-        <p-toolbar styleClass="mb-4">
-          <div class="p-toolbar-group-left">
-            <h2 class="flex-1 mb-0">
-              Dosja: {{ archiveFolder.nr }} | {{ archiveFolder.examTypeName }} :
-              {{ archiveFolder.examSubjectName }}
-            </h2>
-          </div>
+    <div class="mb-2 mt-6">
+      <div class="flex justify-content-between">
+        <div>
+          <h2 class="mb-0">
+            Dosja: {{ archiveFolder.nr }} | {{ archiveFolder.examTypeName }} :
+            {{ archiveFolder.examSubjectName }}
+          </h2>
+        </div>
 
-          <div class="p-toolbar-group-right">
-            <a [routerLink]="['/evaluations', 'archive-folder']">
-              <button
-                pButton
-                pRipple
-                label="Kthehu"
-                icon="pi pi-arrow-left"
-                class="p-button-danger mr-2"
-                [ngStyle]="{ backgroundColor: 'var(--bluegray-600)' }"></button>
-            </a>
-
-            <button
-              pButton
-              [ngStyle]="{
-                'background-color': archiveFolder.isClosed
-                  ? '#c8e6c9'
-                  : '#feedaf',
-                color: archiveFolder.isClosed ? '#256029' : '#8a5340'
-              }"
-              label="{{ archiveFolder.isClosed ? 'Mbyllur ' : 'Hapur' }}"
-              icon="{{
-                !archiveFolder.isClosed ? 'pi pi-folder-open' : 'pi pi-folder'
-              }}"
-              class="p-button-danger mr-2"></button>
-
+        <div>
+          <a [routerLink]="['/evaluations', 'archive-folder']">
             <button
               pButton
               pRipple
-              label="{{ totalRecords }}/50"
-              icon="pi pi-database"
-              disabled
-              class="p-button-danger mr-2"></button>
-          </div>
-        </p-toolbar>
+              label="Kthehu"
+              icon="pi pi-arrow-left"
+              class="p-button-danger mr-2"
+              [ngStyle]="{ backgroundColor: 'var(--bluegray-600)' }"></button>
+          </a>
 
+          <button
+            pButton
+            [ngStyle]="{
+              'background-color': archiveFolder.isClosed
+                ? '#c8e6c9'
+                : '#feedaf',
+              color: archiveFolder.isClosed ? '#256029' : '#8a5340'
+            }"
+            label="{{ archiveFolder.isClosed ? 'Mbyllur ' : 'Hapur' }}"
+            icon="{{
+              !archiveFolder.isClosed ? 'pi pi-folder-open' : 'pi pi-folder'
+            }}"
+            class="p-button-danger mr-2"></button>
+
+          <button
+            pButton
+            pRipple
+            label="{{ totalRecords }}/50"
+            icon="pi pi-database"
+            disabled
+            class="p-button-danger mr-2"></button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div>
         <p-table
           #dt
           dataKey="id"

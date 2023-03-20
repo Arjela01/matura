@@ -146,7 +146,7 @@ export class ManageUsersComponent implements OnInit {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Are you sure that you want to delete this entity?',
+          message: 'Jeni i sigurt që doni të fshini përdoruesin e zgjedhur?',
           accept: () => {
             this.deleteUser(event.data as User);
           },

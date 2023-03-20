@@ -26,13 +26,36 @@
           field="name"
           display="menu"></p-columnFilter>
       </th>
+      <th pSortableColumn="maximumValueWritingScore">
+        Pikët maksimale me shtjellim
+        <p-sortIcon field="maximumValueWritingScore"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="maximumValueWritingScore"
+          display="menu"></p-columnFilter>
+      </th>
+
+      <th pSortableColumn="maximumValueMultipleScore">
+        Pikët maksimale me alternativa
+        <p-sortIcon field="maximumValueMultipleScore"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="maximumValueMultipleScore"
+          display="menu"></p-columnFilter>
+      </th>
       <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-examType>
     <tr>
-      <td style="width: 95%">
+      <td style="width: 30%">
         {{ examType.name }}
+      </td>
+      <td style="width: 30%">
+        {{ examType.maximumValueWritingScore }}
+      </td>
+      <td style="width: 30%">
+        {{ examType.maximumValueMultipleScore }}
       </td>
       <td>
         <div class="flex">

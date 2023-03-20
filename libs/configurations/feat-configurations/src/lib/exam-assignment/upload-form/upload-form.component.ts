@@ -112,6 +112,9 @@ export class UploadFormComponent implements OnInit {
         this.toastService.showError(
           'Ndodhi një problem gjatë ngarkimit të dokumentit!'
         );
+      if (!response.isSuccessful) {
+        this.toastService.showError('Nuk keni ngakuar dokumentin e duhur!');
+      }
     });
   }
 
