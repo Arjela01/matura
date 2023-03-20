@@ -234,6 +234,7 @@ export class ManageExamScoresComponent implements OnInit {
       this.examScoreService.uploadExcelFile(this.base64).subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Dokumenti u shtua me sukses!');
+          this.getExamScores(this.filters as LazyLoadEvent);
         }
         if (response.isBadRequest)
           this.toastService.showError(

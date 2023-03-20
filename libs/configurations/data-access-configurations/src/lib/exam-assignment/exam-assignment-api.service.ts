@@ -61,20 +61,6 @@ export class ExamAssignmentApiService {
     );
   }
 
-  uploadExcelFile(
-    base64: string | ArrayBuffer | null
-  ): Observable<ApiResult<unknown>> {
-    return this.apiService
-      .post<ApiResult<FileImport>, FileImport>('/ExamAssignment/Import', {
-        file: base64,
-      })
-      .pipe(
-        map(data => data),
-        catchError(error => throwError(error)),
-        shareReplay()
-      );
-  }
-
   export(): Observable<ApiResult<unknown>> {
     return this.apiService.get<any>(
       `/ExamAssignment/Export`,
