@@ -97,6 +97,7 @@
       [autoDisplayFirst]="false"
       (onChange)="onProfileGroupChange($event)"
       [showClear]="true"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !profile.profileGroupId
       }">

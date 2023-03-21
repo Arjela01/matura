@@ -40,6 +40,7 @@
       [autoDisplayFirst]="false"
       [(ngModel)]="examSubject.examTypeId"
       [showClear]="true"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examSubject.examTypeId
       }">

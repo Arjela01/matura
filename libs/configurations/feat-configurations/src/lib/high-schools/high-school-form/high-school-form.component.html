@@ -64,6 +64,7 @@
       [autoDisplayFirst]="false"
       [(ngModel)]="highSchool.administrationOfficeId"
       [showClear]="true"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !highSchool.administrationOfficeId
       }">
@@ -87,6 +88,7 @@
       [autoDisplayFirst]="false"
       (onChange)="onRegionChange($event)"
       [showClear]="true"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !highSchool.regionId
       }">
@@ -107,6 +109,7 @@
       [(ngModel)]="highSchool.cityId"
       [autoDisplayFirst]="false"
       [showClear]="true"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !highSchool.cityId
       }">

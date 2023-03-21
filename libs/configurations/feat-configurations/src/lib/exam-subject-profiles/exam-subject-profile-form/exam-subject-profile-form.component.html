@@ -10,6 +10,7 @@
       [autoDisplayFirst]="false"
       [(ngModel)]="examSubjectProfile.profileId"
       [showClear]="true"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examSubjectProfile.profileId
       }">
@@ -33,6 +34,7 @@
       (onChange)="refreshExamSubjects()"
       [(ngModel)]="examSubjectProfile.examTypeId"
       [showClear]="true"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examSubjectProfile.examTypeId
       }">
@@ -56,6 +58,7 @@
       [autoDisplayFirst]="false"
       [(ngModel)]="examSubjectProfile.examSubjectId"
       [showClear]="true"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examSubjectProfile.examSubjectId
       }">
