@@ -30,8 +30,9 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PasswordModule } from 'primeng/password';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { roleList } from './role-list';
-import {ClipboardModule} from "@angular/cdk/clipboard";
-import {RippleModule} from "primeng/ripple";
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { RippleModule } from 'primeng/ripple';
+import { TooltipModule } from 'primeng/tooltip';
 
 @UntilDestroy()
 @Component({
@@ -53,6 +54,7 @@ import {RippleModule} from "primeng/ripple";
     StrongPasswordDirective,
     ClipboardModule,
     RippleModule,
+    TooltipModule,
   ],
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss'],
@@ -133,9 +135,15 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
     this.formClose.emit();
   }
 
-
   public onPasswordCreate() {
-    this.user.password = Array(8).fill("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~!@-#$").map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
+    this.user.password = Array(8)
+      .fill(
+        '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~!@-#$'
+      )
+      .map(function (x) {
+        return x[Math.floor(Math.random() * x.length)];
+      })
+      .join('');
   }
 
   onSubmit() {
@@ -153,8 +161,6 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
     );
   }
 
-
-
   getUserPasswordCreate() {
     if (this.user.id) {
       this.userService
@@ -169,9 +175,7 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
     }
   }
 
-
-
-getUser() {
+  getUser() {
     if (this.user.id) {
       this.userService
         .getUserById(this.user.id)

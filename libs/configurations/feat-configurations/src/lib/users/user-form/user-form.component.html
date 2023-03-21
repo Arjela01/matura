@@ -180,31 +180,36 @@
     <label for="password">Fjalëkalimi *</label>
     <div class="p-inputgroup">
       <button
-        onclick="this.disabled = true" value="Save"
+        onclick="this.disabled = true"
+        style="min-width: 8% !important"
+        value="Save"
         type="button"
         pButton
         pRipple
         icon="pi pi-key"
         (click)="onPasswordCreate()"
-        label="Gjenero"></button>
+        pTooltip="Gjenero Fjalëkalimin"
+        tooltipPosition="bottom"></button>
       <input
         type="text"
         id="password"
         name="password"
         disabled
         pInputText
-        placeholder="{{ user.password}}"
+        placeholder="{{ user.password }}"
         [(ngModel)]="user.password" />
       <button
+        class="password-button"
+        style="min-width: 8% !important"
         [cdkCopyToClipboard]="user.password"
         type="button"
         pButton
         pRipple
         icon="pi pi-copy"
-        label="Kopjo"></button>
+        pTooltip="Kopjo Fjalëkalimin"
+        tooltipPosition="bottom"></button>
     </div>
   </div>
-
 
   <div class="field">
     <label class="mb-3">Është aktiv? *</label>
