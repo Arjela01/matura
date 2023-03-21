@@ -28,7 +28,7 @@
         Data e Provimit
         <p-sortIcon field="date"></p-sortIcon>
         <p-columnFilter
-          type="text"
+          type="date"
           field="date"
           display="menu"></p-columnFilter>
       </th>
@@ -42,17 +42,15 @@
       </th>
       <th pSortableColumn="studentName">
         Studenti
-        <p-sortIcon field="studentName"></p-sortIcon>
         <p-columnFilter
-          type="text"
+          type="custom"
           field="studentName"
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="takenSeats">
         Vendet e Zëna
-        <p-sortIcon field="takenSeats"></p-sortIcon>
         <p-columnFilter
-          type="text"
+          type="number"
           field="takenSeats"
           display="menu"></p-columnFilter>
       </th>
@@ -61,16 +59,16 @@
   </ng-template>
   <ng-template pTemplate="body" let-examAssignment>
     <tr>
-      <td style="width: 25%; min-width: 10rem">
+      <td style="width: 30%; min-width: 10rem">
         {{ examAssignment.examSiteName }}
       </td>
       <td style="width: 25%; min-width: 10rem">
         {{ examAssignment.date | date : 'dd.MM.yyyy' }}
       </td>
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 25%; min-width: 10rem">
         {{ examAssignment.examTypeName }}
       </td>
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 20%; min-width: 10rem">
         {{ examAssignment.studentName }}
       </td>
       <td style="width: 25%; min-width: 10rem">

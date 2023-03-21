@@ -23,60 +23,60 @@
           field="firstName"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="middleName">
+      <th pSortableColumn="maturaId">
         Id e Maturantit
-        <p-sortIcon field="middleName"></p-sortIcon>
+        <p-sortIcon field="maturaId"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="middleName"
+          field="maturaId"
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="lastName">
-        Emer Mbiemer
+        Emër Mbiemër
         <p-sortIcon field="lastName"></p-sortIcon>
         <p-columnFilter
           type="text"
           field="lastName"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="studentIdentifier">
+      <th pSortableColumn="administrationOffice">
         DAR/ZA
-        <p-sortIcon field="studentIdentifier"></p-sortIcon>
+        <p-sortIcon field="administrationOffice"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="studentIdentifier"
+          field="administrationOffice"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="personalIdentifier">
+      <th pSortableColumn="schoolName">
         Shkolla e Mesme
-        <p-sortIcon field="personalIdentifier"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="personalIdentifier"
-          display="menu"></p-columnFilter>
-      </th>
-      <th pSortableColumn="schoolName">
-        Lenda
         <p-sortIcon field="schoolName"></p-sortIcon>
         <p-columnFilter
           type="text"
           field="schoolName"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="schoolName">
-        Statusi o Aplikimit
-        <p-sortIcon field="schoolName"></p-sortIcon>
+      <th pSortableColumn="subject">
+        Lënda
+        <p-sortIcon field="subject"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="schoolName"
+          field="subject"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="schoolName">
+      <th pSortableColumn="status">
+        Statusi i Aplikimit
+        <p-sortIcon field="status"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="status"
+          display="menu"></p-columnFilter>
+      </th>
+      <th pSortableColumn="decisionDate">
         Afati i vendimit
-        <p-sortIcon field="schoolName"></p-sortIcon>
+        <p-sortIcon field="decisionDate"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="schoolName"
+          field="decisionDate"
           display="menu"></p-columnFilter>
       </th>
       <th></th>
@@ -92,7 +92,7 @@
         {{ examCopy.maturaId }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ examCopy.firstName }} {{ examCopy.lastName }}
+        {{ examCopy.name }}
       </td>
       <td style="width: 15%; min-width: 10rem">
         {{ examCopy.administrationOffice }}
@@ -104,10 +104,19 @@
         {{ examCopy.subject }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ examCopy.status }}
+        <span
+          [ngClass]="
+            examCopy.status === 'Refuzuar'
+              ? ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
+              : examCopy.status === 'Pranuar'
+              ? ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
+              : ['bg-yellow-300', 'yellow-text', 'px-3', 'py-1', 'fb']
+          ">
+          {{ examCopy.status }}
+        </span>
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ examCopy.decisionDate }}
+        {{ examCopy.decisionDate | date }}
       </td>
       <td></td>
       <td>

@@ -53,7 +53,7 @@
           <label for="studentInputData">Student *</label>
           <div class="p-inputgroup">
             <p-button
-              label="Kerko"
+              label="Kërko"
               icon="pi pi-search"
               (click)="onNewClick()"
               [style]="{ height: '100%' }"></p-button>
@@ -84,7 +84,7 @@
             class="p-button-text w-auto mr-2"
             (click)="onCancelClick()"></button>
           <button
-            [disabled]="form.invalid"
+            [disabled]="!form.valid"
             type="submit"
             pButton
             label="Ruaj"

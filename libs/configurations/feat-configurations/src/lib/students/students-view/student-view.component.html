@@ -5,136 +5,268 @@
 <div class="grid">
   <div class="col-12 p-fluid">
     <div class="card-form px-6 py-6">
-      <form #form="ngForm" *ngIf="student !== null" class="readonlyForm" [style]="{ width: '500px' }">
-        <div class="field">
-          <label for="highSchool">Shkolla</label>
-          <input type="text" pInputText id="highSchool" name="highSchool" [(ngModel)]="student.highSchoolName"
-            disabled />
-        </div>
-
-        <div class="field">
-          <label for="schoolProfile">Profili Shkollës</label>
-          <input type="text" pInputText id="schoolProfile" name="schoolProfile" [(ngModel)]="student.profileName"
-            disabled />
-        </div>
-
-        <div class="field" [style]="{ width: '500px' }">
-          <label class="mb-3">Sesioni i Vjeshtës? </label>
-          <div class="formgrid grid">
-            <div class="field-radiobutton col-6">
-              <p-radioButton id="IsFallTrue" name="IsFall" [value]="true" [(ngModel)]="student.isFall"
-                [disabled]="true"></p-radioButton>
-              <label for="IsFallTrue">Po</label>
-            </div>
-            <div class="field-radiobutton col-6">
-              <p-radioButton id="IsFallFalse" name="IsFall" [disabled]="true" [value]="false"
-                [(ngModel)]="student.isFall"></p-radioButton>
-              <label for="IsFallFalse">Jo</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="field">
-          <label for="SchoolFinished">Shkolla qe kam perfunduar *</label>
-          <div class="formgrid grid">
-            <div class="field-radiobutton col-6">
-              <p-radioButton id="yes" name="IsConfirmedBySupervisor" [value]="true"
-                [(ngModel)]="finishedAtSameSchool"></p-radioButton>
-              <label for="IsConfirmedBySupervisorTrue">E njëjtë</label>
-            </div>
-            <div class="field-radiobutton col-6">
-              <p-radioButton id="no" name="IsConfirmedBySupervisor" [value]="false"
-                [(ngModel)]="finishedAtSameSchool"></p-radioButton>
-              <label for="IsConfirmedBySupervisorFalse">Tjetër</label>
-            </div>
-          </div>
-        </div>
-
-        <div [hidden]="finishedAtSameSchool">
+      <form
+        #form="ngForm"
+        *ngIf="student !== null"
+        class="readonlyForm"
+        [style]="{ width: '500px' }">
+        <div>
           <div class="field">
-            <input type="text" disabled pInputText id="SchoolFinished" name="SchoolFinished"
-              [(ngModel)]="student.schoolFinished" autofocus [ngClass]="{
-                'ng-invalid ng-dirty': submitted && !student.schoolFinished
-              }" />
-            <small class="p-error block" *ngIf="submitted && !student.schoolFinished">
-              Shkolla që ke përfunduar është fushë e kërkuar.
-            </small>
+            <label for="highSchool">Shkolla</label>
+            <input
+              type="text"
+              pInputText
+              id="highSchool"
+              name="highSchool"
+              [(ngModel)]="student.highSchoolName"
+              disabled />
+          </div>
+
+          <div class="field">
+            <label for="schoolProfile">Profili Shkollës</label>
+            <input
+              type="text"
+              pInputText
+              id="schoolProfile"
+              name="schoolProfile"
+              [(ngModel)]="student.profileName"
+              disabled />
+          </div>
+
+          <div class="field" [style]="{ width: '500px' }">
+            <label class="mb-3">Sesioni i Vjeshtës? </label>
+            <div class="formgrid grid">
+              <div class="field-radiobutton col-6">
+                <p-radioButton
+                  id="IsFallTrue"
+                  name="IsFall"
+                  [value]="true"
+                  [(ngModel)]="student.isFall"
+                  [disabled]="true"></p-radioButton>
+                <label for="IsFallTrue">Po</label>
+              </div>
+              <div class="field-radiobutton col-6">
+                <p-radioButton
+                  id="IsFallFalse"
+                  name="IsFall"
+                  [disabled]="true"
+                  [value]="false"
+                  [(ngModel)]="student.isFall"></p-radioButton>
+                <label for="IsFallFalse">Jo</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="SchoolFinished">Shkolla qe kam perfunduar *</label>
+            <div class="formgrid grid">
+              <div class="field-radiobutton col-6">
+                <p-radioButton
+                  id="yes"
+                  name="IsConfirmedBySupervisor"
+                  [value]="true"
+                  [(ngModel)]="finishedAtSameSchool"></p-radioButton>
+                <label for="IsConfirmedBySupervisorTrue">E njëjtë</label>
+              </div>
+              <div class="field-radiobutton col-6">
+                <p-radioButton
+                  id="no"
+                  name="IsConfirmedBySupervisor"
+                  [value]="false"
+                  [(ngModel)]="finishedAtSameSchool"></p-radioButton>
+                <label for="IsConfirmedBySupervisorFalse">Tjetër</label>
+              </div>
+            </div>
+          </div>
+
+          <div [hidden]="finishedAtSameSchool">
+            <div class="field">
+              <input
+                type="text"
+                disabled
+                pInputText
+                id="SchoolFinished"
+                name="SchoolFinished"
+                [(ngModel)]="student.schoolFinished"
+                autofocus
+                [ngClass]="{
+                  'ng-invalid ng-dirty': submitted && !student.schoolFinished
+                }" />
+              <small
+                class="p-error block"
+                *ngIf="submitted && !student.schoolFinished">
+                Shkolla që ke përfunduar është fushë e kërkuar.
+              </small>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="graduationYear"
+              >Viti i përfundimit te shkollës së mesme?
+            </label>
+            <input
+              type="text"
+              pInputText
+              id="graduationYear"
+              name="graduationYear"
+              [(ngModel)]="student.graduationYear"
+              disabled />
+          </div>
+
+          <div class="field">
+            <label for="IdCard">Karta Identitetit </label>
+            <input
+              type="text"
+              pInputText
+              id="IdCard"
+              name="IdCard"
+              [(ngModel)]="student.idCard"
+              disabled />
+          </div>
+
+          <div class="field">
+            <label for="oldID">ID e vjetër e maturës </label>
+            <input
+              type="number"
+              pInputText
+              id="oldID"
+              name="oldID"
+              [(ngModel)]="student.oldID"
+              disabled />
+          </div>
+          <div class="field">
+            <label for="OldID">ID e studentit </label>
+            <input
+              type="number"
+              pInputText
+              id="studentId"
+              name="studentId"
+              [(ngModel)]="student.studentId"
+              disabled />
+          </div>
+
+          <div class="field">
+            <label for="firstName">Emri *</label>
+            <input
+              type="text"
+              pInputText
+              id="firstName"
+              name="firstName"
+              [(ngModel)]="student.firstName"
+              disabled />
+          </div>
+
+          <div class="field">
+            <label for="middleName">Atësia </label>
+            <input
+              type="text"
+              pInputText
+              id="middleName"
+              name="middleName"
+              [(ngModel)]="student.middleName"
+              disabled />
+          </div>
+
+          <div class="field">
+            <label for="lastName">Mbiemri </label>
+            <input
+              type="text"
+              pInputText
+              id="lastName"
+              name="lastName"
+              [(ngModel)]="student.lastName"
+              disabled />
+          </div>
+
+          <div class="field">
+            <label for="birthDate">Datëlindja </label>
+            <input
+              type="text"
+              pInputText
+              id="birthDate"
+              name="birthDate"
+              value="{{ student.birthDate | date : 'dd/MM/yyyy' }}"
+              disabled />
+          </div>
+
+          <div class="field">
+            <label for="birthPlace">Vendlindja </label>
+            <input
+              type="text"
+              pInputText
+              id="birthPlace"
+              name="birthPlace"
+              [ngModel]="student.birthPlace"
+              disabled />
+          </div>
+
+          <div class="field">
+            <label for="gender">Gjinia </label>
+            <input
+              type="text"
+              pInputText
+              id="gender"
+              name="genders"
+              [(ngModel)]="student.genderName"
+              disabled />
+          </div>
+
+          <div class="field">
+            <label for="studyClass">Klasa </label>
+            <input
+              type="text"
+              pInputText
+              id="studyClass"
+              name="studyClass"
+              [(ngModel)]="student.studyClass"
+              disabled />
+          </div>
+
+          <div class="field">
+            <label for="session">Seksioni </label>
+            <input
+              type="text"
+              pInputText
+              id="session"
+              name="session"
+              [(ngModel)]="student.session"
+              disabled />
+          </div>
+
+          <div class="field">
+            <label for="Email">Email </label>
+            <input
+              type="email"
+              pInputText
+              id="Email"
+              name="Email"
+              [(ngModel)]="student.email"
+              disabled />
+          </div>
+
+          <div class="field">
+            <label for="Cel">Cel </label>
+            <input
+              type="tel"
+              pInputText
+              id="Cel"
+              name="Cel"
+              [(ngModel)]="student.mobilePhone"
+              disabled />
           </div>
         </div>
-
-        <div class="field">
-          <label for="graduationYear">Viti i përfundimit te shkollës së mesme?
-          </label>
-          <input type="text" pInputText id="graduationYear" name="graduationYear" [(ngModel)]="student.graduationYear"
-            disabled />
-        </div>
-
-        <div class="field">
-          <label for="IdCard">Karta Identitetit </label>
-          <input type="text" pInputText id="IdCard" name="IdCard" [(ngModel)]="student.idCard" disabled />
-        </div>
-
-        <div class="field">
-          <label for="oldID">ID e vjetër e maturës </label>
-          <input type="number" pInputText id="oldID" name="oldID" [(ngModel)]="student.oldID" disabled />
-        </div>
-        <div class="field">
-          <label for="OldID">ID e studentit </label>
-          <input type="number" pInputText id="studentId" name="studentId" [(ngModel)]="student.studentId" disabled />
-        </div>
-
-        <div class="field">
-          <label for="firstName">Emri *</label>
-          <input type="text" pInputText id="firstName" name="firstName" [(ngModel)]="student.firstName" disabled />
-        </div>
-
-        <div class="field">
-          <label for="middleName">Atësia </label>
-          <input type="text" pInputText id="middleName" name="middleName" [(ngModel)]="student.middleName" disabled />
-        </div>
-
-        <div class="field">
-          <label for="lastName">Mbiemri </label>
-          <input type="text" pInputText id="lastName" name="lastName" [(ngModel)]="student.lastName" disabled />
-        </div>
-
-        <div class="field">
-          <label for="birthDate">Datëlindja </label>
-          <input type="text" pInputText id="birthDate" name="birthDate"
-            value="{{ student.birthDate | date : 'dd/MM/yyyy' }}" disabled />
-        </div>
-
-        <div class="field">
-          <label for="birthPlace">Vendlindja </label>
-          <input type="text" pInputText id="birthPlace" name="birthPlace" [ngModel]="student.birthPlace" disabled />
-        </div>
-
-        <div class="field">
-          <label for="gender">Gjinia </label>
-          <input type="text" pInputText id="gender" name="genders" [(ngModel)]="student.genderName" disabled />
-        </div>
-
-        <div class="field">
-          <label for="studyClass">Klasa </label>
-          <input type="text" pInputText id="studyClass" name="studyClass" [(ngModel)]="student.studyClass" disabled />
-        </div>
-
-        <div class="field">
-          <label for="session">Seksioni </label>
-          <input type="text" pInputText id="session" name="session" [(ngModel)]="student.session" disabled />
-        </div>
-
-        <div class="field">
-          <label for="Email">Email </label>
-          <input type="email" pInputText id="Email" name="Email" [(ngModel)]="student.email" disabled />
-        </div>
-
-        <div class="field">
-          <label for="Cel">Cel </label>
-          <input type="tel" pInputText id="Cel" name="Cel" [(ngModel)]="student.mobilePhone" disabled />
-        </div>
-
       </form>
+      <div class="flex justify-content-end">
+        <a [routerLink]="['/configurations', 'students']">
+          <button
+            pButton
+            pRipple
+            label="Kthehu"
+            icon="pi pi-arrow-left"
+            class="p-button-danger mr-2"
+            [ngStyle]="{ backgroundColor: 'var(--bluegray-600)' }"></button>
+        </a>
+      </div>
     </div>
   </div>
 </div>

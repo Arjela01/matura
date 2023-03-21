@@ -7,15 +7,15 @@
       name="section"
       optionValue="key"
       optionLabel="value"
-      [(ngModel)]="dashboardItems.dashboardSectionId"
+      [(ngModel)]="dashboardItem.dashboardSectionId"
       [autoDisplayFirst]="false"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !dashboardItems.dashboardSectionId
+        'ng-invalid ng-dirty': submitted && !dashboardItem.dashboardSectionId
       }">
     </p-dropdown>
     <small
       class="p-error block"
-      *ngIf="submitted && !dashboardItems.dashboardSectionId">
+      *ngIf="submitted && !dashboardItem.dashboardSectionId">
       Seksioni është fushë e kërkuar.
     </small>
   </div>
@@ -27,13 +27,13 @@
       pInputText
       id="title"
       name="title"
-      [(ngModel)]="dashboardItems.title"
+      [(ngModel)]="dashboardItem.title"
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !dashboardItems.title
+        'ng-invalid ng-dirty': submitted && !dashboardItem.title
       }" />
-    <small class="p-error block" *ngIf="submitted && !dashboardItems.title">
+    <small class="p-error block" *ngIf="submitted && !dashboardItem.title">
       Titulli është fushë e kërkuar.
     </small>
   </div>
@@ -46,14 +46,14 @@
       pInputTextarea
       id="description"
       name="description"
-      [(ngModel)]="dashboardItems.description"
+      [(ngModel)]="dashboardItem.description"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !dashboardItems.description
+        'ng-invalid ng-dirty': submitted && !dashboardItem.description
       }"></textarea>
 
     <small
       class="p-error block"
-      *ngIf="submitted && !dashboardItems.description">
+      *ngIf="submitted && !dashboardItem.description">
       Përshkrimi është fushë e kërkuar.
     </small>
   </div>
@@ -70,11 +70,11 @@
         accept=".pdf,.docx,.jpg,.png,.txt,.xlsx,.">
         <ng-template pTemplate="content">
           <img
-            [src]="'data:image;base64,' + dashboardItems.document"
+            [src]="'data:image;base64,' + dashboardItem.document"
             width="100"
             height="100"
             *ngIf="
-              dashboardItems.document && !uploaded && dashboardItems.document
+              dashboardItem.document && !uploaded && dashboardItem.document
             "
             alt="" />
         </ng-template>
@@ -89,7 +89,7 @@
       pInputText
       id="link"
       name="link"
-      [(ngModel)]="dashboardItems.linkUrl"
+      [(ngModel)]="dashboardItem.linkUrl"
       autofocus />
   </div>
 
@@ -101,12 +101,12 @@
       [options]="roles"
       optionValue="value"
       optionLabel="value"
-      [(ngModel)]="dashboardItems.roles"
+      [(ngModel)]="dashboardItem.roles"
       appendTo="body"
       [showClear]="true"
       defaultLabel="Selekto Rolet"
       display="chip"></p-multiSelect>
-    <small class="p-error block" *ngIf="submitted && !dashboardItems.roles">
+    <small class="p-error block" *ngIf="submitted && !dashboardItem.roles">
       Roli/et është fushë e kërkuar.
     </small>
   </div>
@@ -119,12 +119,12 @@
       [options]="users"
       optionValue="value"
       optionLabel="value"
-      [(ngModel)]="dashboardItems.users"
+      [(ngModel)]="dashboardItem.users"
       appendTo="body"
       [showClear]="true"
       defaultLabel="Selekto Perdoruesit"
       display="chip"></p-multiSelect>
-    <small class="p-error block" *ngIf="submitted && !dashboardItems.users">
+    <small class="p-error block" *ngIf="submitted && !dashboardItem.users">
       Përdoruesi/t është fushë e kërkuar.
     </small>
   </div>
@@ -132,15 +132,15 @@
   <div class="field">
     <label for="startDate">E vlefshme nga *</label>
     <p-calendar
-      [(ngModel)]="dashboardItems.startDate"
+      [(ngModel)]="dashboardItem.startDate"
       dateFormat="dd/mm/yy"
       inputId="startDate"
       id="startDate"
       name="startDate"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !dashboardItems.startDate
+        'ng-invalid ng-dirty': submitted && !dashboardItem.startDate
       }"></p-calendar>
-    <small class="p-error block" *ngIf="submitted && !dashboardItems.startDate">
+    <small class="p-error block" *ngIf="submitted && !dashboardItem.startDate">
       Data është fushë e kërkuar.
     </small>
   </div>
@@ -148,7 +148,7 @@
   <div class="field">
     <label for="endDate">E vlefshme deri</label>
     <p-calendar
-      [(ngModel)]="dashboardItems.endDate"
+      [(ngModel)]="dashboardItem.endDate"
       dateFormat="dd/mm/yy"
       inputId="endDate"
       id="endDate"
@@ -158,15 +158,14 @@
     <button
       type="button"
       pButton
-      icon="pi pi-times"
       label="Anullo"
       class="p-button-text w-auto mr-2"
       (click)="onCancelClick()"></button>
     <button
+      [disabled]="form.invalid"
       type="submit"
       pButton
-      icon="pi pi-check"
       label="Ruaj"
-      class="p-button-text w-auto"></button>
+      class="p-button w-auto"></button>
   </div>
 </form>

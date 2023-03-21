@@ -13,13 +13,17 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ExamCopyApiService } from '@msh/evaluations/data-access-evaluations';
 import { ExamCopy } from '@msh/evaluations/domain-evaluations';
 import { GlobalToastService } from '@msh/shared/util-shared';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import * as FileSaver from 'file-saver';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
+import { DialogModule } from 'primeng/dialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { ApproveExamCopyComponent } from '../approve-exam-copy/approve-exam-copy.component';
+import { RefuseExamCopyComponent } from '../refuse-exam-copy/refuse-exam-copy.component';
 
 @UntilDestroy()
 @Component({
@@ -28,11 +32,14 @@ import { RadioButtonModule } from 'primeng/radiobutton';
   imports: [
     CommonModule,
     FormsModule,
+    DialogModule,
     InputTextModule,
     InputNumberModule,
     RadioButtonModule,
     InputTextareaModule,
     ButtonModule,
+    ApproveExamCopyComponent,
+    RefuseExamCopyComponent,
     CheckboxModule,
   ],
   templateUrl: './exam-copy-details.component.html',
@@ -42,8 +49,13 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 export class ExamCopyDetailsComponent implements OnInit {
   submitted = false;
 
+  confirmModal = false;
+  refuseModal = false;
+
   examCopy: ExamCopy = {
+    dateCreated: undefined,
     address: undefined,
+    decisionDueDate: undefined,
     administrationOffice: undefined,
     city: undefined,
     applicationId: undefined,
@@ -91,12 +103,58 @@ export class ExamCopyDetailsComponent implements OnInit {
     private readonly toastService: GlobalToastService
   ) {}
 
+  onConfirmModalClose() {
+    this.confirmModal = false;
+  }
+
+  onRefuseModalClose() {
+    this.refuseModal = false;
+  }
+
   ngOnInit(): void {
+    if (this.examCopy.applicationId) {
+      this.getDetails(this.examCopy.applicationId);
+    }
     console.log('init');
   }
 
   onCancelClick() {
     this.formClose.emit();
+  }
+
+  onConfirm() {
+    this.confirmModal = true;
+  }
+
+  onRefuse() {
+    this.refuseModal = true;
+  }
+
+  getDetails(applicationId: string) {
+    this.examCopyService
+      .getById(applicationId)
+      .pipe(untilDestroyed(this))
+      .subscribe(repsonse => {
+        this.examCopy = repsonse.data;
+        this.cd.detectChanges();
+      });
+  }
+
+  downloadFile(document: any) {
+    const blob = this.dataURItoBlob(document);
+    const file = new File([blob], this.examCopy.documentName ?? 'document');
+    FileSaver.saveAs(file, this.examCopy.documentName);
+  }
+
+  dataURItoBlob(dataURI: any) {
+    const byteString = window.atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array]);
+    return blob;
   }
 
   onSubmit() {

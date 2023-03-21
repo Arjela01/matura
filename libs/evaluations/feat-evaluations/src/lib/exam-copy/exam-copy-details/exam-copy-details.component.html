@@ -1,5 +1,5 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
-  <div class="w-auto mb-2">Te dhenat e maturantit</div>
+  <div class="text-xl mt-2 mb-2 font-bold">Të dhënat e maturantit</div>
   <div class="grid">
     <div class="field col-2">
       <label for="subject">Emri *</label>
@@ -8,9 +8,8 @@
         pInputText
         id="subject"
         name="subject"
-        [value]="examCopy.firstName"
         disabled
-        required
+        [value]="examCopy.firstName"
         autofocus />
     </div>
     <div class="field col-2">
@@ -20,21 +19,19 @@
         pInputText
         id="subject"
         name="subject"
-        [value]="examCopy.lastName"
         disabled
-        required
+        [value]="examCopy.lastName"
         autofocus />
     </div>
     <div class="field col-2">
       <label for="subject">Email *</label>
       <input
         type="text"
+        disabled
         pInputText
         id="subject"
         name="subject"
         [value]="examCopy.email"
-        disabled
-        required
         autofocus />
     </div>
     <div class="field col-2">
@@ -43,10 +40,9 @@
         type="text"
         pInputText
         id="subject"
+        disabled
         name="subject"
         [value]="examCopy.gender"
-        disabled
-        required
         autofocus />
     </div>
     <div class="field col-2">
@@ -55,14 +51,13 @@
         type="text"
         pInputText
         id="subject"
+        disabled
         name="subject"
         [value]="examCopy.administrationOffice"
-        disabled
-        required
         autofocus />
     </div>
     <div class="field col-2">
-      <label for="subject">Atesia</label>
+      <label for="subject">Atësia</label>
       <input
         type="text"
         pInputText
@@ -70,7 +65,6 @@
         name="subject"
         [value]="examCopy.fatherName"
         disabled
-        required
         autofocus />
     </div>
     <div class="field col-2">
@@ -82,7 +76,6 @@
         name="subject"
         [value]="examCopy.placeOfBirth"
         disabled
-        required
         autofocus />
     </div>
     <div class="field col-2">
@@ -94,19 +87,17 @@
         name="subject"
         [value]="examCopy.city"
         disabled
-        required
         autofocus />
     </div>
     <div class="field col-2">
-      <label for="subject">Njesia Bashkiake</label>
+      <label for="subject">Njësia Bashkiake</label>
       <input
         type="text"
         pInputText
         id="subject"
+        disabled
         name="subject"
         [value]="examCopy.municipalityUnit"
-        disabled
-        required
         autofocus />
     </div>
     <div class="field col-2">
@@ -116,9 +107,8 @@
         pInputText
         id="subject"
         name="subject"
-        [value]="examCopy.telFix"
         disabled
-        required
+        [value]="examCopy.telFix"
         autofocus />
     </div>
     <div class="field col-2">
@@ -128,45 +118,41 @@
         pInputText
         id="subject"
         name="subject"
+        disabled
         [value]="examCopy.schoolName"
-        disabled
-        required
         autofocus />
     </div>
     <div class="field col-2">
-      <label for="subject">Shenime</label>
+      <label for="subject">Shënime</label>
       <input
         type="text"
         pInputText
         id="subject"
         name="subject"
+        disabled
         [value]="examCopy.remarks"
-        disabled
-        required
         autofocus />
     </div>
     <div class="field col-2">
-      <label for="subject">Datelindje</label>
+      <label for="subject">Datëlindje</label>
       <input
         type="text"
         pInputText
         id="subject"
         name="subject"
-        [value]="examCopy.dateOfBirth"
         disabled
-        required
+        [value]="examCopy.dateOfBirth | date"
         autofocus />
     </div>
     <div class="field col-2">
-      <label for="subject">Shtetesia</label>
+      <label for="subject">Shtetësia</label>
       <input
         type="text"
         pInputText
         id="subject"
         name="subject"
+        disabled
         [value]="examCopy.nationality"
-        disabled
-        required
         autofocus />
     </div>
     <div class="field col-2">
@@ -175,10 +161,9 @@
         type="text"
         pInputText
         id="subject"
+        disabled
         name="subject"
         [value]="examCopy.region"
-        disabled
-        required
         autofocus />
     </div>
     <div class="field col-2">
@@ -187,10 +172,9 @@
         type="text"
         pInputText
         id="subject"
+        disabled
         name="subject"
         [value]="examCopy.maturaId"
-        disabled
-        required
         autofocus />
     </div>
     <div class="field col-2">
@@ -199,10 +183,9 @@
         type="text"
         pInputText
         id="subject"
+        disabled
         name="subject"
         [value]="examCopy.nid"
-        disabled
-        required
         autofocus />
     </div>
     <div class="field col-2">
@@ -212,9 +195,8 @@
         pInputText
         id="subject"
         name="subject"
-        [value]="examCopy.address"
         disabled
-        required
+        [value]="examCopy.address"
         autofocus />
     </div>
     <div class="field col-2">
@@ -224,9 +206,8 @@
         pInputText
         id="subject"
         name="subject"
-        [value]="examCopy.postalCode"
         disabled
-        required
+        [value]="examCopy.postalCode"
         autofocus />
     </div>
     <div class="field col-2">
@@ -236,37 +217,35 @@
         pInputText
         id="subject"
         name="subject"
-        [value]="examCopy.cel"
         disabled
-        required
+        [value]="examCopy.cel"
         autofocus />
     </div>
   </div>
 
-  <div>Te dhenat e aplikimit</div>
+  <div class="text-xl mt-2 mb-2 font-bold">Të dhënat e aplikimit</div>
+  <div>
   <div class="grid">
     <div class="field col-2">
-      <label for="subject">Numer Aplikimi</label>
+      <label for="subject">Numër Aplikimi</label>
       <input
         type="text"
         pInputText
         id="subject"
+        disabled
         name="subject"
         [value]="examCopy.applicationId"
-        disabled
-        required
         autofocus />
     </div>
     <div class="field col-2">
-      <label for="subject">Date aplikimi</label>
+      <label for="subject">Datë aplikimi</label>
       <input
         type="text"
         pInputText
         id="subject"
         name="subject"
-        [value]="examCopy.decisionDate"
         disabled
-        required
+        [value]="examCopy.dateCreated | date"
         autofocus />
     </div>
     <div class="field col-2">
@@ -276,33 +255,38 @@
         pInputText
         id="subject"
         name="subject"
-        [value]="examCopy.decisionDate"
         disabled
-        required
+        [value]="examCopy.decisionDueDate | date"
         autofocus />
     </div>
     <div class="field col-2">
       <label for="subject">Statusi</label>
-      <input
-        type="text"
-        pInputText
-        id="subject"
-        name="subject"
-        [value]="examCopy.status"
-        disabled
-        required
-        autofocus />
+      <div
+        [ngClass]="
+          examCopy.status === 3
+            ? ['bg-red-300', 'red-text', 'px-6', 'py-3', 'fb']
+            : examCopy.status === 2
+            ? ['bg-green-300', 'green-text', 'px-6', 'py-3', 'fb']
+            : ['bg-yellow-300', 'yellow-text', 'px-6', 'py-3', 'fb']
+        ">
+        {{
+          examCopy.status === 1
+            ? 'Draft'
+            : examCopy.status === 2
+            ? 'Pranuar'
+            : 'Refuzuar'
+        }}
+      </div>
     </div>
     <div class="field col-2">
-      <label for="subject">Date Vendimi</label>
+      <label for="subject">Datë Vendimi</label>
       <input
         type="text"
         pInputText
         id="subject"
         name="subject"
-        [value]="examCopy.decisionDate"
         disabled
-        required
+        [value]="examCopy.decisionDate | date"
         autofocus />
     </div>
     <div class="field col-2">
@@ -310,22 +294,27 @@
       <input
         type="text"
         pInputText
+        disabled
         id="subject"
         name="subject"
         [value]="examCopy.comments"
-        disabled
-        required
         autofocus />
     </div>
-    <div *ngIf="examCopy.status === 1" class="field col-2">
-      <label for="subject">Komente</label>
-      <a [href]="examCopy.attachedDocument" [download]="examCopy.documentName">
-        {{ examCopy.documentName }}
-      </a>
+  </div>
+    <div class="flex justify-content-end">
+    <div *ngIf="examCopy.status === 2" class="field col-2 mt-2 mb-0 sm:mr-0" style="display:contents">
+      <button
+        pButton
+        pRipple
+        icon="pi pi-download"
+        label="Shkarko"
+        (click)="downloadFile(examCopy.attachedDocument)"></button>
     </div>
+    </div>
+
   </div>
 
-  <div class="flex justify-content-end">
+  <div *ngIf="examCopy.status === 1" class="flex justify-content-end">
     <button
       type="button"
       pButton
@@ -333,17 +322,45 @@
       class="p-button-text w-auto mr-2"
       (click)="onCancelClick()"></button>
     <button
-      *ngIf="examCopy.status === 0"
       type="button"
       pButton
       label="Refuzo"
       class="p-button-text w-auto mr-2"
-      (click)="onCancelClick()"></button>
+      (click)="onRefuse()"></button>
     <button
-      *ngIf="examCopy.status === 0"
-      type="submit"
+      type="button"
       pButton
+      (click)="onConfirm()"
       label="Aprovo"
       class="p-button w-auto"></button>
   </div>
 </form>
+
+<p-dialog
+  [(visible)]="confirmModal"
+  [style]="{ width: '800px' }"
+  header="Ngarko Kopjen e Tezës"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid"
+  (onHide)="onConfirmModalClose()">
+  <ng-template pTemplate="content">
+    <msh-approve-exam-copy [examCopyDetails]="examCopy">
+    </msh-approve-exam-copy>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  [(visible)]="refuseModal"
+  [style]="{ width: '800px' }"
+  header="Arsyeja e Refuzimit"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid"
+  (onHide)="onRefuseModalClose()">
+  <ng-template pTemplate="content">
+    <msh-refuse-exam-copy [examCopyDetails]="examCopy"> </msh-refuse-exam-copy>
+  </ng-template>
+</p-dialog>

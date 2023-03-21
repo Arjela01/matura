@@ -9,6 +9,8 @@ export interface ExamCopy {
   dateOfBirth?: string;
   email?: string;
   cel?: string;
+  decisionDueDate?: string;
+  dateCreated?: string;
   telFix?: string;
   placeOfBirth?: string;
   nationality?: string;
@@ -33,4 +35,10 @@ export interface ExamCopy {
 export interface ExamCopyTableView {
   total: number;
   data: ExamCopy[];
+}
+
+export interface ExamCopyConfirm {
+  applicationId?: string;
+  documentName?: string;
+  attachedDocument?: string;
 }

@@ -13,6 +13,7 @@ import {
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
+  AcademicYearApiService,
   GendersApiService,
   HighSchoolApiService,
   ProfileApiService,
@@ -66,21 +67,21 @@ export class StudentsFormComponent implements OnInit, OnChanges {
   studentSection = StudentSectionModel.All;
   schoolProfile: DropdownModel<number>[] = [];
   saving = false;
+  academicYears: DropdownModel<number>[] = [];
   @Input() set studentDetails(details: Student | null) {
     if (details) {
       this.student = Object.assign({}, details);
     }
   }
-
   showStudent = false;
   submitted = false;
-
+  maxDate = new Date();
   student: Student = {
     createdName: '',
     createdOn: new Date(),
     modifiedByName: '',
     modifiedOn: new Date(),
-    birthDate: new Date(),
+    birthDate: this.maxDate,
     birthPlace: '',
     email: '',
     genderId: 0,
@@ -106,11 +107,10 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     profileName: '',
     firstName: '',
     schoolFinishedName: '',
-    registrationYearId: undefined,
+    registrationYearId: 0,
     graduationYear: undefined,
     isConfirmedBySupervisor: true,
   };
-
   finishedAtSameSchool = true;
 
   constructor(
@@ -119,8 +119,11 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     private readonly highSchoolService: HighSchoolApiService,
     private readonly profileService: ProfileApiService,
     private readonly genderService: GendersApiService,
+    private academicYearService: AcademicYearApiService,
     private router: Router
-  ) {}
+  ) {
+    this.maxDate.setFullYear(this.maxDate.getFullYear() - 10);
+  }
   ngOnInit(): void {
     // todo ! maybe  switch to pipes
     this.highSchoolService.loadDropDownList().subscribe(response => {
@@ -132,6 +135,14 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     this.profileService.loadDropdownList().subscribe(response => {
       this.schoolProfile = response.data;
     });
+    this.academicYearService.loadDropdownList().subscribe(response => {
+      const activeYear: any = response.data.find(
+        (data: any) => data.value === new Date().getFullYear().toString()
+      );
+      if (activeYear) {
+        this.student.registrationYearId = activeYear.key;
+      }
+    });
   }
 
   ngOnChanges(): void {
@@ -142,13 +153,11 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     if (this.finishedAtSameSchool) {
       this.student.schoolFinished = '';
     }
-
     const data = { ...this.student };
 
     this.studentService.save(data).subscribe({
       next: response => {
         this.saving = false;
-
         this.router
           .navigate(['/applications/save-a1-student', response.data.id])
           .then();
