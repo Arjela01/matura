@@ -7,9 +7,11 @@
       optionValue="key"
       optionLabel="value"
       name="profileId"
+      appendTo="body"
       [autoDisplayFirst]="false"
       [(ngModel)]="examSubjectProfile.profileId"
       [showClear]="true"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examSubjectProfile.profileId
       }">
@@ -29,10 +31,12 @@
       optionValue="key"
       optionLabel="value"
       name="examTypeId"
+      appendTo="body"
       [autoDisplayFirst]="false"
       (onChange)="refreshExamSubjects()"
       [(ngModel)]="examSubjectProfile.examTypeId"
       [showClear]="true"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examSubjectProfile.examTypeId
       }">
@@ -53,9 +57,11 @@
       optionValue="key"
       optionLabel="value"
       name="examSubjectId"
+      appendTo="body"
       [autoDisplayFirst]="false"
       [(ngModel)]="examSubjectProfile.examSubjectId"
       [showClear]="true"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examSubjectProfile.examSubjectId
       }">

@@ -46,10 +46,12 @@
       name="region"
       optionValue="key"
       optionLabel="value"
+      appendTo="body"
       [(ngModel)]="city.regionId"
       [autoDisplayFirst]="false"
       (onChange)="onRegionChange($event)"
       [showClear]="true"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !city.regionName
       }">
