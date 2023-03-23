@@ -3,10 +3,9 @@
     <div class="card px-3 py-3" style="background: white">
       <h4>Njoftime</h4>
     </div>
-    <div class="grid" style="margin: auto">
-
-      <div class="col-12 md:col-6 lg:col-3">
-        <div class="surface-card p-3 border-round mx-h">
+    <div class="grid">
+      <div class="col-12 md:col-6 lg:col-3" *ngIf="dashboardMetrics !== null">
+        <div class="surface-card p-3 border-round" style="background: white">
           <div class="flex align-items-center justify-content-start">
             <div
               class="flex align-items-center justify-content-center bg-blue-100 border-round"
@@ -15,17 +14,18 @@
             </div>
             <div>
               <div class="p ml-4">
-                <span class="block text-500 font-medium mb-3">Totali</span>
-                <div class="text-900 font-medium text-xl">19575</div>
-                <span class="text-green-500 font-medium">53 studente </span>
-                <span class="text-500">regjistruar së fundmi</span>
+                <span class="block text-500 font-medium mb-3">Studente</span>
+                <span class="text-green-500 font-medium"
+                  >{{ dashboardMetrics.totalStudents }} studente
+                </span>
+                <span class="text-500">regjistruar</span>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="col-12 md:col-6 lg:col-3">
-        <div class="surface-card p-3 border-round mx-h">
+        <div class="surface-card p-3 border-round" style="background: white">
           <div class="flex align-items-center justify-content-start">
             <div
               class="flex align-items-center justify-content-center bg-orange-100 border-round"
@@ -35,37 +35,49 @@
             <div>
               <div class="p ml-4">
                 <span class="block text-500 font-medium mb-3">Gjinia</span>
-                <span class="text-green-500 font-medium">64 </span>
-                <span class="text-500">Meshkuj</span>
+                <span class="text-green-500 font-medium"
+                  >{{ dashboardMetrics.malePercentage }} %
+                </span>
+                <span class="text-500"> Meshkuj</span>
                 <br />
-                <span class="text-green-500 font-medium">54 </span>
-                <span class="text-500">Femra</span>
+                <span class="text-green-500 font-medium"
+                  >{{ dashboardMetrics.femalePercentage }} %</span
+                >
+                <span class="text-500"> Femra</span>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="col-12 md:col-6 lg:col-3">
-        <div class="surface-card p-3 border-round mx-h">
+        <div class="surface-card p-3 border-round" style="background: white">
           <div class="flex align-items-center justify-content-start">
             <div
               class="flex align-items-center justify-content-center bg-cyan-100 border-round"
               style="width: 5rem; height: 5rem">
-              <i class="pi pi-percentage text-cyan-500 text-5xl"></i>
+              <i class="pi pi-file-o text-cyan-500 text-5xl"></i>
             </div>
             <div>
               <div class="p ml-4">
-                <span class="block text-500 font-medium mb-3">Përqindje</span>
-                <div class="text-900 font-medium text-xl">37</div>
-                <span class="text-green-500 font-medium">24 new </span>
-                <span class="text-500">since last visit</span>
+                <span class="block text-500 font-medium mb-3"
+                  >Raporti A1/A1Z</span
+                >
+                <span class="text-green-500 font-medium"
+                  >{{ dashboardMetrics.a1ZApplicationsPercentage }} %
+                </span>
+                <span class="text-500"> A1</span>
+                <br />
+                <span class="text-green-500 font-medium"
+                  >{{ dashboardMetrics.a1ApplicationsPercentage }} %</span
+                >
+                <span class="text-500"> A1Z</span>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="col-12 md:col-6 lg:col-3">
-        <div class="surface-card p-3 border-round mx-h">
+        <div class="surface-card p-3 border-round" style="background: white">
           <div class="flex align-items-center justify-content-start">
             <div
               class="flex align-items-center justify-content-center bg-purple-100 border-round"
@@ -74,10 +86,11 @@
             </div>
             <div>
               <div class="p ml-4">
-                <span class="block text-500 font-medium mb-3">Aplikantë</span>
-                <div class="text-900 font-medium text-xl">1192</div>
-                <span class="text-green-500 font-medium">24 aplikime </span>
-                <span class="text-500"> dy ditët e fundit</span>
+                <span class="block text-500 font-medium mb-3">Aplikime</span>
+                <span class="text-green-500 font-medium"
+                  >{{ dashboardMetrics.totalApplications }}
+                </span>
+                <span class="text-500">aplikime</span>
               </div>
             </div>
           </div>
@@ -90,7 +103,7 @@
         <p-card
           header="{{ card.dashboardSectionName }}"
           subheader="{{ card.title }}"
-          [style]="{ width: '100%', height:'100%' }"
+          [style]="{ width: 'auto' }"
           styleClass="p-card-shadow">
           <ng-template pTemplate="header">
             <img
@@ -101,8 +114,24 @@
           <p>{{ card.description }}</p>
           <p>{{ card.documentName }}</p>
           <ng-template pTemplate="footer">
-            <!--            <p-button label="Save" icon="pi pi-check"></p-button>-->
-            <!--            <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button>-->
+            <div class="grid">
+              <div *ngIf="card !== null" [hidden]="card.hasDocument === null">
+                <p-button
+                  label="Save"
+                  (click)="downloadDocument(card)"
+                  icon="pi pi-file"></p-button>
+              </div>
+
+              <div
+                *ngIf="card !== null"
+                routerLink="{{ card.linkUrl }}"
+                [hidden]="card.linkUrl === null">
+                <p-button
+                  label="Link"
+                  icon="pi pi-link"
+                  [style]="{ 'margin-left': '.5em' }"></p-button>
+              </div>
+            </div>
           </ng-template>
         </p-card>
       </div>

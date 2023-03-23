@@ -31,7 +31,7 @@ export class DashboardItemsApiService {
 
   getAll(): Observable<ApiResult<any>> {
     return this.apiService.get<ApiResult<any>>(
-      `/DashboardItems`
+      `/DashboardItems/GetAll`
     );
   }
 
