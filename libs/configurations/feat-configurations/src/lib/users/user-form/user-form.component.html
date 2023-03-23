@@ -40,7 +40,7 @@
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !user.firstName
       }" />
-    <small class="p-error block" *ngIf="submitted && !user.firstName">
+    <small class="p-error block" *ngIf="submitted && !user.name">
       Emri është fushë e kërkuar.
     </small>
   </div>
@@ -174,8 +174,6 @@
       [(ngModel)]="user.overseerCode"
       autofocus />
   </div>
-
-
 
   <div class="field">
     <label for="password">Fjalëkalimi *</label>
