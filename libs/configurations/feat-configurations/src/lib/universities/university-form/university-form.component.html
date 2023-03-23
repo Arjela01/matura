@@ -28,6 +28,7 @@
             [autoDisplayFirst]="false"
             (onChange)="onRegionChange($event)"
             [showClear]="true"
+            [required]="true"
             [ngClass]="{
         'ng-invalid ng-dirty': submitted && !university.regionId
       }">
@@ -49,6 +50,7 @@
             [(ngModel)]="university.cityId"
             [autoDisplayFirst]="false"
             [showClear]="true"
+            [required]="true"
             [ngClass]="{
         'ng-invalid ng-dirty': submitted && !university.cityId
       }">
