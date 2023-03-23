@@ -93,10 +93,12 @@
       name="regionId"
       optionValue="key"
       optionLabel="value"
+      appendTo="body"
       [(ngModel)]="profile.profileGroupId"
       [autoDisplayFirst]="false"
       (onChange)="onProfileGroupChange($event)"
       [showClear]="true"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !profile.profileGroupId
       }">

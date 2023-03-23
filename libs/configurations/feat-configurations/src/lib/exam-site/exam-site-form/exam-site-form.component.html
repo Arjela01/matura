@@ -58,7 +58,9 @@
       name="administrationOfficeId"
       [autoDisplayFirst]="false"
       [(ngModel)]="examSite.administrationOfficeId"
+      [required]="true"
       [showClear]="true"
+      appendTo="body"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examSite.administrationOfficeId
       }">

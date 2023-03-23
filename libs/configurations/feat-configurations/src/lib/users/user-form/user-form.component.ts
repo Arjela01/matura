@@ -55,6 +55,7 @@ import { TooltipModule } from 'primeng/tooltip';
     ClipboardModule,
     RippleModule,
     TooltipModule,
+
   ],
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss'],
@@ -88,6 +89,7 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
+
 
   submitted = false;
 
