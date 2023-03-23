@@ -33,6 +33,7 @@ import { roleList } from './role-list';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { RippleModule } from 'primeng/ripple';
 import { TooltipModule } from 'primeng/tooltip';
+import {MultiSelectModule} from "primeng/multiselect";
 
 @UntilDestroy()
 @Component({
@@ -55,6 +56,7 @@ import { TooltipModule } from 'primeng/tooltip';
     ClipboardModule,
     RippleModule,
     TooltipModule,
+    MultiSelectModule,
 
   ],
   templateUrl: './user-form.component.html',
