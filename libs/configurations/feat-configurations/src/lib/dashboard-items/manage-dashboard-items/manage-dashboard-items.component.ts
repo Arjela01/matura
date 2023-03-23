@@ -145,10 +145,12 @@ export class ManageDashboardItemsComponent {
 
   downloadDocument(dashboardItem: DashboardItem) {
     const blob: any = new Blob(dashboardItem.document, {
-      type: 'application/octet-stream',
+      type: 'pdf',
     });
-    FileSaver.saveAs(blob, dashboardItem.documentName);
+
+    FileSaver.saveAs(blob, dashboardItem.documentName, );
   }
+
 
   addDashboardItems(dashboardItems: DashboardItem) {
     this.dashboardItemsService

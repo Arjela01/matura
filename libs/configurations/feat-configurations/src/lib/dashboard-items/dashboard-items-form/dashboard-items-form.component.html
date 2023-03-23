@@ -67,7 +67,7 @@
         [showUploadButton]="false"
         class="ie-file-upload"
         (onSelect)="selectFiles($event)"
-        accept=".pdf,.docx,.jpg,.png,.txt,.xlsx,.">
+        accept=".pdf">
         <ng-template pTemplate="content">
           <img
             [src]="'data:image;base64,' + dashboardItem.document"
