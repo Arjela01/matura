@@ -323,7 +323,7 @@
   margin-left: 20px;
 }
 .mx-h{
-  max-height: 112px;
+  min-height: 113px;
 }
 .p-dropdown-items-wrapper > .p-dialog-content-wrapper {
   overflow: auto;

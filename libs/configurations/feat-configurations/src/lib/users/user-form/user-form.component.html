@@ -83,23 +83,22 @@
 
   <div class="field">
     <label for="role">Roli *</label>
-    <p-dropdown
+    <p-multiSelect
       id="role"
-      optionValue="key"
-      optionLabel="value"
-      [options]="roles"
-      [required]="true"
-      [virtualScroll]="true"
-      [filter]="true"
       name="roles"
+      [options]="roles"
+      optionValue="value"
+      optionLabel="value"
+      [required]="true"
       (onChange)="onRoleChange($event)"
-      [autoDisplayFirst]="false"
       [(ngModel)]="user.roleId"
       [showClear]="true"
+      appendTo="body"
+      defaultLabel="Selekto Rolet"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !user.roleId
       }">
-    </p-dropdown>
+    </p-multiSelect>
     <small class="p-error block" *ngIf="submitted && !user.roleId">
       Roli është fushë e kërkuar.
     </small>
@@ -175,6 +174,8 @@
       [(ngModel)]="user.overseerCode"
       autofocus />
   </div>
+
+
 
   <div class="field">
     <label for="password">Fjalëkalimi *</label>

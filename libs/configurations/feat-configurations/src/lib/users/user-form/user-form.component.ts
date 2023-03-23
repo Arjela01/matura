@@ -30,6 +30,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PasswordModule } from 'primeng/password';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { roleList } from './role-list';
+import {MultiSelectModule} from "primeng/multiselect";
 
 @UntilDestroy()
 @Component({
@@ -49,6 +50,8 @@ import { roleList } from './role-list';
     PasswordModule,
     AlbanianNidValidatorDirective,
     StrongPasswordDirective,
+    MultiSelectModule,
+
   ],
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss'],
@@ -82,6 +85,7 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
+
 
   submitted = false;
 
