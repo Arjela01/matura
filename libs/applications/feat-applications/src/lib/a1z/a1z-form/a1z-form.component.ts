@@ -126,10 +126,14 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   enableZ1Subject = false;
   submitted = false;
 
+  currentYear = new Date().getFullYear();
+
   a1z: A1Z = {
     id: 0,
-  };
+    highSchoolGraduationYear: ''
 
+  };
+  
   booly: DropdownModel<boolean>[] = [
     { value: 'Po', key: true },
     { value: 'Jo', key: false },
@@ -249,6 +253,14 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       '-' +
       student.lastName
     );
+  }
+
+  isGraduationYearValid(): boolean {
+    if (this.a1z.highSchoolGraduationYear !== undefined) {
+      const graduationYear = parseInt(this.a1z.highSchoolGraduationYear, 10);
+      return graduationYear <= this.currentYear;
+    }
+    return false;
   }
 
   onSubjectD1Change($event: ChangeEvent<boolean>) {

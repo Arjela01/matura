@@ -85,6 +85,10 @@
             name="highSchoolGraduationYear"
             [(ngModel)]="a1z.highSchoolGraduationYear"
             autofocus />
+          <small class="p-error block" *ngIf="submitted && !isGraduationYearValid()">
+            Viti i përfundimit të shkollës së mesme nuk mund të jetë më i madh
+            se viti aktual
+          </small>
         </div>
 
         <div class="text-3xl font-semibold mb-3 mt-5">Lëndët e Detyruara</div>
