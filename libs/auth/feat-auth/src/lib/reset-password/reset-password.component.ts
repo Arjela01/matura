@@ -55,8 +55,8 @@ export class ResetPasswordComponent {
     if (!this.resetPasswordForm.valid) {
       return;
     }
-    let name = (this.storageService.getItem('user') as any).username;
-    let password = this.passwordResetModel.newPassword;
+    const name = (this.storageService.getItem('user') as any).username;
+    const password = this.passwordResetModel.newPassword;
 
     this.resetPasswordService
       .userChangePassword(this.passwordResetModel)
