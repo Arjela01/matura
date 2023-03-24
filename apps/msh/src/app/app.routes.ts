@@ -8,11 +8,17 @@ export const APP_ROUTES: Routes = [
       import('@msh/feat-admin-shell').then(m => m.ADMIN_SHELL_ROUTES),
     canActivate: [AuthGuard],
   },
+
   {
     path: 'login',
     loadComponent: () =>
       import('@msh/auth/feat-auth').then(m => m.LoginComponent),
     canActivate: [NoAuthGuard],
+  },
+  {
+    path: 'reset-password',
+    loadComponent: () =>
+      import('@msh/auth/feat-auth').then(m => m.ResetPasswordComponent),
   },
   {
     path: 'denied',
