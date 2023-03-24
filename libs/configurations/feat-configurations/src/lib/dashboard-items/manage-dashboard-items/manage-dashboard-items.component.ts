@@ -21,7 +21,6 @@ import { DashboardItemsGridComponent } from '../dashboard-items-grid/dashboard-i
 import { DashboardItem } from '@msh/shared/domain-models';
 import { DashboardItemsApiService } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import * as FileSaver from 'file-saver';
 
 @UntilDestroy()
 @Component({
@@ -144,11 +143,22 @@ export class ManageDashboardItemsComponent {
   }
 
   downloadDocument(dashboardItem: DashboardItem) {
-    const blob: any = new Blob(dashboardItem.document, {
-      type: 'application/octet-stream',
-    });
-    FileSaver.saveAs(blob, dashboardItem.documentName);
+    const byteCharacters = atob(dashboardItem.document);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const mimeType = 'application/pdf'
+    const blob = new Blob([byteArray], { type: mimeType });
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = dashboardItem.documentName;
+    link.click();
   }
+
 
   addDashboardItems(dashboardItems: DashboardItem) {
     this.dashboardItemsService

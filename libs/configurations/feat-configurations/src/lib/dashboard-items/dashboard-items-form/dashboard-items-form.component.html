@@ -60,6 +60,24 @@
   </div>
 
   <div class="field">
+    <label for="documentName">Emri Dokumentit *</label>
+    <input
+      type="text"
+      pInputText
+      id="documentName"
+      name="documentName"
+      [(ngModel)]="dashboardItem.documentName"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !dashboardItem.documentName
+      }" />
+    <small class="p-error block" *ngIf="submitted && !dashboardItem.documentName">
+      Emri dokumentit është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
     <label for="document">Dokumenti</label>
     <div class="form-group drop-files noLabel">
       <p-fileUpload
@@ -68,16 +86,12 @@
         [showUploadButton]="false"
         class="ie-file-upload"
         (onSelect)="selectFiles($event)"
-        accept=".pdf,.docx,.jpg,.png,.txt,.xlsx,.">
+        accept=".pdf">
         <ng-template pTemplate="content">
-          <img
-            [src]="'data:image;base64,' + dashboardItem.document"
-            width="100"
-            height="100"
-            *ngIf="
+          <span *ngIf="
               dashboardItem.document && !uploaded && dashboardItem.document
-            "
-            alt="" />
+          "
+            alt="">{{dashboardItem.title}}.pdf</span>
         </ng-template>
       </p-fileUpload>
     </div>
