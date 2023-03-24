@@ -139,6 +139,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   carriedModalType = EXAM_TYPES.D1;
   private carriedGrades$$ = new BehaviorSubject<CarriedGrade[]>([]);
   carriedGrades$ = this.carriedGrades$$.asObservable();
+  currentYear:  number = new Date().getFullYear();
 
   onSubmit() {
     this.submitted = true;
@@ -183,6 +184,9 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   }
 
   ngOnInit(): void {
+    const currentDate = new Date();
+    this.currentYear = currentDate.getFullYear();
+
     this.a1CategoryService.loadDropdownList().subscribe(response => {
       this.a1Categories = response.data;
     });
