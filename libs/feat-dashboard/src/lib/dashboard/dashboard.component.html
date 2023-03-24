@@ -112,25 +112,21 @@
               [style]="{ margin: 'auto', padding: '100px' }" />
           </ng-template>
           <p>{{ card.description }}</p>
-          <p>{{ card.documentName }}</p>
           <ng-template pTemplate="footer">
             <div class="grid">
               <div *ngIf="card !== null" [hidden]="card.hasDocument === null">
                 <p-button
-                  label="Save"
+                  label="Shkarko "
                   (click)="downloadDocument(card)"
-                  icon="pi pi-file"></p-button>
+                  icon="pi pi-download"></p-button>
               </div>
-
-              <div
-                *ngIf="card !== null"
-                routerLink="{{ card.linkUrl }}"
-                [hidden]="card.linkUrl === null">
+              <a *ngIf="card.hasLinkUrl" href="{{ card.linkUrl }}">
                 <p-button
                   label="Link"
                   icon="pi pi-link"
                   [style]="{ 'margin-left': '.5em' }"></p-button>
-              </div>
+
+              </a>
             </div>
           </ng-template>
         </p-card>

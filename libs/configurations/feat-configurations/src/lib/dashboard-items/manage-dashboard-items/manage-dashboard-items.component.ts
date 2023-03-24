@@ -21,7 +21,6 @@ import { DashboardItemsGridComponent } from '../dashboard-items-grid/dashboard-i
 import { DashboardItem } from '@msh/shared/domain-models';
 import { DashboardItemsApiService } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import * as FileSaver from 'file-saver';
 
 @UntilDestroy()
 @Component({
@@ -156,7 +155,7 @@ export class ManageDashboardItemsComponent {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = dashboardItem.title;
+    link.download = dashboardItem.documentName;
     link.click();
   }
 
