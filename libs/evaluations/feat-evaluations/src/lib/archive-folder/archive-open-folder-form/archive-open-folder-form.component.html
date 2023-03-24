@@ -7,7 +7,9 @@
       optionValue="key"
       optionLabel="value"
       name="examTypes"
+      appendTo="body"
       [filter]="true"
+      [required]="true"
       [autoDisplayFirst]="false"
       [(ngModel)]="archiveFolder.examTypeId"
       [showClear]="true"
@@ -30,7 +32,9 @@
       optionValue="key"
       optionLabel="value"
       name="examSubject"
+      appendTo="body"
       [autoDisplayFirst]="false"
+      [required]="true"
       [(ngModel)]="archiveFolder.examSubjectId"
       (onChange)="onExamSubjectChanged($event)"
       [showClear]="true"
@@ -45,7 +49,7 @@
     </small>
   </div>
 
-  <div class="flex justify-content-end" style="margin-top: 77px">
+  <div class="flex justify-content-end" >
     <button
       type="button"
       pButton

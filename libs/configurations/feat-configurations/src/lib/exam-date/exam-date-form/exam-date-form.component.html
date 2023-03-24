@@ -11,6 +11,7 @@
       [autoDisplayFirst]="false"
       [(ngModel)]="examDate.examTypeId"
       [showClear]="true"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examDate.examTypeId
       }">
@@ -33,6 +34,7 @@
       [autoDisplayFirst]="false"
       [(ngModel)]="examDate.examSiteId"
       [showClear]="true"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examDate.examSiteId
       }">

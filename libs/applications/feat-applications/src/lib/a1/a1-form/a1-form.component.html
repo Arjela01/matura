@@ -17,9 +17,8 @@
               id="studentInputData"
               name="studentInputData"
               [(ngModel)]="choosenStudent"
-              required
               autofocus
-              disabled
+              [required]="true"
               [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !choosenStudent
               }" />

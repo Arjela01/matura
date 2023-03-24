@@ -234,6 +234,7 @@ export class ManageUsersComponent implements OnInit {
         }
       });
   }
+
   updateUser(user: User) {
     this.userService
       .update(user)

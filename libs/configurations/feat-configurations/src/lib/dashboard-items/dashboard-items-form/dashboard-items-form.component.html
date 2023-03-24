@@ -9,6 +9,7 @@
       optionLabel="value"
       [(ngModel)]="dashboardItem.dashboardSectionId"
       [autoDisplayFirst]="false"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !dashboardItem.dashboardSectionId
       }">
@@ -98,6 +99,7 @@
       optionValue="value"
       optionLabel="value"
       [(ngModel)]="dashboardItem.roles"
+      [required]="true"
       appendTo="body"
       [showClear]="true"
       defaultLabel="Selekto Rolet"
@@ -118,6 +120,7 @@
       [(ngModel)]="dashboardItem.users"
       appendTo="body"
       [showClear]="true"
+      [required]="true"
       defaultLabel="Selekto Perdoruesit"
       display="chip"></p-multiSelect>
     <small class="p-error block" *ngIf="submitted && !dashboardItem.users">
@@ -133,6 +136,7 @@
       inputId="startDate"
       id="startDate"
       name="startDate"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !dashboardItem.startDate
       }"></p-calendar>
@@ -148,6 +152,7 @@
       dateFormat="dd/mm/yy"
       inputId="endDate"
       id="endDate"
+      [required]="true"
       name="endDate"></p-calendar>
   </div>
   <div class="flex justify-content-end">

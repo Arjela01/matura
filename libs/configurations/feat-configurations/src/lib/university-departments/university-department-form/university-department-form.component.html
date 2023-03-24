@@ -25,9 +25,11 @@
       optionValue="key"
       optionLabel="value"
       name="cityId"
+      appendTo="body"
       [(ngModel)]="universityDepartment.universityId"
       [autoDisplayFirst]="false"
       [showClear]="true"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !universityDepartment.universityId
       }">

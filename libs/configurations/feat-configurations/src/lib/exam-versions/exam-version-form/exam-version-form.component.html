@@ -44,6 +44,7 @@
       [autoDisplayFirst]="false"
       [(ngModel)]="examVersion.profileGroupId"
       [showClear]="true"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examVersion.profileGroupId
       }">
@@ -79,9 +80,11 @@
       optionValue="key"
       optionLabel="value"
       name="examTypeId"
+      appendTo="body"
       [autoDisplayFirst]="false"
       [(ngModel)]="examVersion.examTypeId"
       [showClear]="true"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examVersion.examTypeId
       }">
@@ -98,9 +101,11 @@
       optionValue="key"
       optionLabel="value"
       name="examSubjectId"
+      appendTo="body"
       [autoDisplayFirst]="false"
       [(ngModel)]="examVersion.examSubjectId"
       [showClear]="true"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examVersion.examSubjectId
       }">

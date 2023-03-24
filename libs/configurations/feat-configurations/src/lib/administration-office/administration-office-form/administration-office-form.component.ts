@@ -62,9 +62,7 @@ export class AdministrationOfficeFormComponent {
     signature: '',
     cityId: 0
   };
-  ngOnInit() {
-    console.log(this.cities);
-  }
+
   onCancelClick() {
     this.formClose.emit();
   }

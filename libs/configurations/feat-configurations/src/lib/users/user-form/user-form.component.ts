@@ -30,6 +30,10 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PasswordModule } from 'primeng/password';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { roleList } from './role-list';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { RippleModule } from 'primeng/ripple';
+import { TooltipModule } from 'primeng/tooltip';
+import {MultiSelectModule} from "primeng/multiselect";
 
 @UntilDestroy()
 @Component({
@@ -49,6 +53,11 @@ import { roleList } from './role-list';
     PasswordModule,
     AlbanianNidValidatorDirective,
     StrongPasswordDirective,
+    ClipboardModule,
+    RippleModule,
+    TooltipModule,
+    MultiSelectModule,
+
   ],
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss'],
@@ -83,6 +92,7 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
 
   @ViewChild('form', { static: true }) form!: NgForm;
 
+
   submitted = false;
 
   user: User = {
@@ -116,6 +126,7 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
   ngOnInit(): void {
     this.onRoleRemoved();
     this.getUser();
+    this.getUserPasswordCreate();
   }
 
   ngOnChanges(): void {
@@ -125,6 +136,17 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
 
   onCancelClick() {
     this.formClose.emit();
+  }
+
+  public onPasswordCreate() {
+    this.user.password = Array(8)
+      .fill(
+        '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~!@-#$'
+      )
+      .map(function (x) {
+        return x[Math.floor(Math.random() * x.length)];
+      })
+      .join('');
   }
 
   onSubmit() {
@@ -140,6 +162,20 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
     this.universityDepartmentsFiltered = this.universityDepartments.filter(
       x => x.parentKey == $event.value
     );
+  }
+
+  getUserPasswordCreate() {
+    if (this.user.id) {
+      this.userService
+        .generateNewPass(this.user.id)
+        .pipe(untilDestroyed(this))
+        .subscribe(response => {
+          if (response.isSuccessful) {
+            this.user = response.data;
+          }
+          this.cd.detectChanges();
+        });
+    }
   }
 
   getUser() {

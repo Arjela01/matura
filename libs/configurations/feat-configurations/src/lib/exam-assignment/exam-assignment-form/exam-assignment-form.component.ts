@@ -202,8 +202,8 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
   }
 
   onSubmit() {
+    this.submitted = true;
     if (this.form.valid) {
-      this.submitted = true;
       this.formSave.emit(this.examAssignment);
     }
   }

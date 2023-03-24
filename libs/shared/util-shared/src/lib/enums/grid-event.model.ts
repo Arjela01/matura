@@ -8,7 +8,7 @@ export enum GRID_ACTIONS {
   ACCEPT,
   REJECT,
   CUSTOM_ACTION1,
-  CUSTOM_ACTION2
+  CUSTOM_ACTION2,
 }
 
 export interface GridEvent<T> {
