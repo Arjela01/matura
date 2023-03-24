@@ -102,6 +102,7 @@ export class A1FormComponent {
   currentStudent: Student | null = null;
   id: string | null = null;
   studentId: string | null = null;
+  formId: string | null;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -113,7 +114,9 @@ export class A1FormComponent {
     private dialogService: DialogService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    this.formId = this.route.snapshot.paramMap.get('id');
+  }
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];

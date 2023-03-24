@@ -1,6 +1,6 @@
 <div class="grid">
   <div class="col-12 p-fluid">
-    <h2 class="flex-1 mb-0 mt-6">Shto Formular A1Z</h2>
+    <h2 class="flex-1 mb-0 mt-6">{{!formId ? 'Shto Formular A1Z': 'Ndrysho Formular A1Z'}}</h2>
     <div class="card px-6 py-6 mt-3">
       <form #form="ngForm" (ngSubmit)="onSubmit()">
         <div class="field mt-4 mb-4" [style]="{ width: '500px' }">
