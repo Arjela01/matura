@@ -144,11 +144,20 @@ export class ManageDashboardItemsComponent {
   }
 
   downloadDocument(dashboardItem: DashboardItem) {
-    const blob: any = new Blob(dashboardItem.document, {
-      type: 'pdf',
-    });
+    const byteCharacters = atob(dashboardItem.document);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const mimeType = 'application/pdf'
+    const blob = new Blob([byteArray], { type: mimeType });
 
-    FileSaver.saveAs(blob, dashboardItem.documentName, );
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = dashboardItem.title;
+    link.click();
   }
 
 

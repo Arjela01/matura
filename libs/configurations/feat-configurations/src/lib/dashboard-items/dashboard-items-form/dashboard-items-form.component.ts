@@ -55,6 +55,7 @@ import { CalendarModule } from 'primeng/calendar';
     AutoCompleteModule,
     MultiSelectModule,
     CalendarModule,
+
   ],
   templateUrl: './dashboard-items-form.component.html',
   styleUrls: ['./dashboard-items-form.component.scss'],

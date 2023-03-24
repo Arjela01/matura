@@ -69,14 +69,10 @@
         (onSelect)="selectFiles($event)"
         accept=".pdf">
         <ng-template pTemplate="content">
-          <img
-            [src]="'data:image;base64,' + dashboardItem.document"
-            width="100"
-            height="100"
-            *ngIf="
+          <span *ngIf="
               dashboardItem.document && !uploaded && dashboardItem.document
-            "
-            alt="" />
+          "
+            alt="">{{dashboardItem.title}}.pdf</span>
         </ng-template>
       </p-fileUpload>
     </div>
