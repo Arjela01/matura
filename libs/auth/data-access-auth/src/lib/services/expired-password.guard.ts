@@ -8,7 +8,7 @@ export class ExpiredPasswordGuard implements CanActivate {
   constructor(private storageService: StorageService) {}
 
   canActivate(): boolean {
-    let token: any = jwt_decode(this.storageService.getItem('token'));
+    const token: any = jwt_decode(this.storageService.getItem('token'));
     if (token && token.NeedResetPassword === 'true') {
       return true;
     } else {

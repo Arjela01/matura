@@ -33,7 +33,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
-import { Observable, combineLatest, of, switchMap } from 'rxjs';
+import { combineLatest, Observable, of, switchMap } from 'rxjs';
 import { ManageStudentsGridsDialogComponent } from '../manage-students-grids-dialog/manage-students-grids-dialog.component';
 
 let INITIAL_FILTER = {};
@@ -146,6 +146,7 @@ export class A1FormComponent {
           this.academicYear = years['data'].find(
             (year: AcademicYear) => year.isActive
           );
+          this.a1.academicYearId = this.academicYear?.id;
           this.d3Dropdown = d3.data;
           this.students = students;
           this.optionalSubjects = z1.data;

@@ -8,7 +8,7 @@ import {
 import Validation from '../validators/validation';
 
 @Directive({
-  selector: '[appMatchPassword]',
+  selector: '[mshMatchPassword]',
   standalone: true,
   providers: [
     {
@@ -19,7 +19,7 @@ import Validation from '../validators/validation';
   ],
 })
 export class MatchPasswordDirective implements Validator {
-  @Input('appMatchPassword') matchPassword: string[] = [];
+  @Input('mshMatchPassword') matchPassword: string[] = [];
 
   validate(formGroup: FormGroup): ValidationErrors | null {
     return Validation.match(
