@@ -5,7 +5,7 @@ export interface A1Z {
   studentId?: string;
   alreadyHaveDiploma?: boolean;
   isA1?: boolean;
-  highSchoolGraduationYear?: string;
+  highSchoolGraduationYear?: boolean;
   overSeerCode?: string;
   isApplyingToForeignCountries?: boolean;
 
