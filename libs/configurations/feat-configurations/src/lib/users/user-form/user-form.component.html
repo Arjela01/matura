@@ -92,6 +92,7 @@
       [required]="true"
       (onChange)="onRoleChange($event)"
       [(ngModel)]="user.roleId"
+      [autoDisplayFirst]="false"
       [showClear]="true"
       appendTo="body"
       [ngClass]="{
