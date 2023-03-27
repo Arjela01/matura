@@ -34,13 +34,13 @@
       pInputText
       id="name"
       name="name"
-      [(ngModel)]="user.firstName"
+      [(ngModel)]="user.name"
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.firstName
+        'ng-invalid ng-dirty': submitted && !user.name
       }" />
-    <small class="p-error block" *ngIf="submitted && !user.firstName">
+    <small class="p-error block" *ngIf="submitted && !user.name">
       Emri është fushë e kërkuar.
     </small>
   </div>
