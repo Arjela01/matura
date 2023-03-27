@@ -134,7 +134,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
     highSchoolGraduationYear: ''
 
   };
-  
+
   booly: DropdownModel<boolean>[] = [
     { value: 'Po', key: true },
     { value: 'Jo', key: false },

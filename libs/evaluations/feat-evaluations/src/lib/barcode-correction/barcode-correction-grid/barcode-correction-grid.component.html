@@ -18,33 +18,35 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="nr">
+      <th pSortableColumn="archiveFolderNr">
         Dosja
         <div>
-          <p-sortIcon field="nr"></p-sortIcon>
+          <p-sortIcon field="archiveFolderNr"></p-sortIcon>
           <p-columnFilter
             type="numeric"
-            field="nr"
+            field="archiveFolderNr"
             display="menu"></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="examType">
+      <th
+        pSortableColumn="examTypeName">
         Tipi i Provimit
         <div>
-          <p-sortIcon field="examType"></p-sortIcon>
+          <p-sortIcon
+            field="examTypeName"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="examType"
+            field="examTypeName"
             display="menu"></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="createdName">
+      <th pSortableColumn="createdByName">
         Operatori
         <div>
-          <p-sortIcon field="createdName"></p-sortIcon>
+          <p-sortIcon field="createdByName"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="createdName"
+            field="createdByName"
             display="menu"></p-columnFilter>
         </div>
       </th>
@@ -101,14 +103,14 @@
         </span>
       </td>
       <td style="width: 10%; min-width: 10rem">
-          <div class="flex justify-content-center">
-            <img
-              src="assets/svg/edit-form.svg"
-              class="p-button-rounded p-button-danger p-button-text pointer"
-              pTooltip="Ndrysho"
-              tooltipPosition="bottom"
-              (click)="onEditClick(archiveFolder)" />
-          </div>
+        <div class="flex justify-content-center">
+          <img
+            src="assets/svg/edit-form.svg"
+            class="p-button-rounded p-button-danger p-button-text pointer"
+            pTooltip="Ndrysho"
+            tooltipPosition="bottom"
+            (click)="onEditClick(archiveFolder)" />
+        </div>
       </td>
     </tr>
   </ng-template>
