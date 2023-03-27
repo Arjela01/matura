@@ -40,7 +40,7 @@
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !user.firstName
       }" />
-    <small class="p-error block" *ngIf="submitted && !user.name">
+    <small class="p-error block" *ngIf="submitted && !user.firstName">
       Emri është fushë e kërkuar.
     </small>
   </div>
@@ -83,22 +83,21 @@
 
   <div class="field">
     <label for="role">Roli *</label>
-    <p-multiSelect
+    <p-dropdown
       id="role"
-      name="roles"
+      name="role"
       [options]="roles"
-      optionValue="value"
+      optionValue="key"
       optionLabel="value"
       [required]="true"
       (onChange)="onRoleChange($event)"
       [(ngModel)]="user.roleId"
       [showClear]="true"
       appendTo="body"
-      defaultLabel="Selekto Rolet"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !user.roleId
       }">
-    </p-multiSelect>
+    </p-dropdown>
     <small class="p-error block" *ngIf="submitted && !user.roleId">
       Roli është fushë e kërkuar.
     </small>

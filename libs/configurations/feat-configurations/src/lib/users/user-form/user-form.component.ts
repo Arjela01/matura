@@ -33,7 +33,6 @@ import { roleList } from './role-list';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { RippleModule } from 'primeng/ripple';
 import { TooltipModule } from 'primeng/tooltip';
-import {MultiSelectModule} from "primeng/multiselect";
 
 @UntilDestroy()
 @Component({
@@ -56,7 +55,6 @@ import {MultiSelectModule} from "primeng/multiselect";
     ClipboardModule,
     RippleModule,
     TooltipModule,
-    MultiSelectModule,
 
   ],
   templateUrl: './user-form.component.html',
@@ -196,7 +194,6 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
   onRoleChange($event: any): void {
     const role = this.roles.find(x => x.key === $event.value);
     const knownRole = roleList.find(x => x.roleName === role?.value);
-
     if (knownRole == null) {
       this.onRoleRemoved();
     } else {
