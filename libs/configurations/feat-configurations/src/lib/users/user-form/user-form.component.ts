@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -11,28 +11,25 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
-import { UserApiService } from '@msh/configurations/data-access-configurations';
-import { DropdownModel } from '@msh/shared/data-access-shared';
-import { User } from '@msh/shared/domain-models';
-import {
-  AlbanianNidValidatorDirective,
-  StrongPasswordDirective,
-} from '@msh/shared/util-shared';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ButtonModule } from 'primeng/button';
-import { CalendarModule } from 'primeng/calendar';
-import { CheckboxModule } from 'primeng/checkbox';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { PasswordModule } from 'primeng/password';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { roleList } from './role-list';
-import { ClipboardModule } from '@angular/cdk/clipboard';
-import { RippleModule } from 'primeng/ripple';
-import { TooltipModule } from 'primeng/tooltip';
+import {FormsModule, NgForm} from '@angular/forms';
+import {UserApiService} from '@msh/configurations/data-access-configurations';
+import {DropdownModel} from '@msh/shared/data-access-shared';
+import {User} from '@msh/shared/domain-models';
+import {AlbanianNidValidatorDirective, StrongPasswordDirective,} from '@msh/shared/util-shared';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {ButtonModule} from 'primeng/button';
+import {CalendarModule} from 'primeng/calendar';
+import {CheckboxModule} from 'primeng/checkbox';
+import {DropdownModule} from 'primeng/dropdown';
+import {InputNumberModule} from 'primeng/inputnumber';
+import {InputTextModule} from 'primeng/inputtext';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {PasswordModule} from 'primeng/password';
+import {RadioButtonModule} from 'primeng/radiobutton';
+import {roleList} from './role-list';
+import {ClipboardModule} from '@angular/cdk/clipboard';
+import {RippleModule} from 'primeng/ripple';
+import {TooltipModule} from 'primeng/tooltip';
 
 @UntilDestroy()
 @Component({
@@ -55,7 +52,6 @@ import { TooltipModule } from 'primeng/tooltip';
     ClipboardModule,
     RippleModule,
     TooltipModule,
-
   ],
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss'],
@@ -90,9 +86,7 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
 
   @ViewChild('form', { static: true }) form!: NgForm;
 
-
   submitted = false;
-
   user: User = {
     isDisabled: false,
     id: '',
@@ -123,9 +117,10 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.onRoleRemoved();
-    this.getUser();
     this.getUserPasswordCreate();
+    this.getUser();
   }
+
 
   ngOnChanges(): void {
     this.onUniversityChange({ value: this.user.universityId });
@@ -162,29 +157,29 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
     );
   }
 
-  getUserPasswordCreate() {
+  getUserPasswordCreate(){
     if (this.user.id) {
       this.userService
         .generateNewPass(this.user.id)
         .pipe(untilDestroyed(this))
         .subscribe(response => {
           if (response.isSuccessful) {
-            this.user = response.data;
+            this.user.password = response.data.password;
+            this.user.username = response.data.username;
           }
           this.cd.detectChanges();
         });
     }
   }
 
-  getUser() {
+  getUser(){
     if (this.user.id) {
       this.userService
         .getUserById(this.user.id)
         .pipe(untilDestroyed(this))
         .subscribe(response => {
           if (response.isSuccessful) {
-            this.user = response.data;
-            console.log(response.data);
+             this.user = response.data;
           }
           this.cd.detectChanges();
         });
