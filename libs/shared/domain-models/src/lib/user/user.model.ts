@@ -1,32 +1,19 @@
 export interface User {
   id: any;
-
   displayName?: string;
-
   administrationOfficeId?: number;
-
   universityDepartmentId?: number;
-
   fileName: string;
-
   highSchool?: string;
-
   lastName: string;
-
   lastPasswordChange?: Date;
-
   firstName?: string;
-
   overseerCode: string;
-
   roleId: string;
   name?: string;
   studentId?: string | null;
-
   studyProgramId?: number;
-
   universityId: number;
-
   username?: string;
   isDisabled: boolean;
   password: string;

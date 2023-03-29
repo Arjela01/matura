@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
 import { LazyLoadEvent } from 'primeng/api';
-import {
-  ExamVersion,
-  ExamVersionTableView,
-} from '@msh/shared/domain-models';
+import { ExamVersion, ExamVersionTableView } from '@msh/shared/domain-models';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 
@@ -20,10 +17,7 @@ export class ExamVersionApiService {
 
   save(examVersion: ExamVersion): Observable<ApiResult<ExamVersion>> {
     return this.apiService
-      .post<ApiResult<ExamVersion>, ExamVersion>(
-        `/ExamVersion`,
-        examVersion
-      )
+      .post<ApiResult<ExamVersion>, ExamVersion>(`/ExamVersion`, examVersion)
       .pipe(
         map(data => data),
         catchError(error => throwError(error)),
