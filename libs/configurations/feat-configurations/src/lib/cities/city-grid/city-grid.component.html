@@ -26,16 +26,21 @@
           field="name"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="isACity">
+      <th pSortableColumn="isCity">
         Është Qytet?
         <p-sortIcon field="isCity"></p-sortIcon>
+        <p-columnFilter
+          type="boolean"
+          field="isCity"
+          display="menu"
+        matchMode="equals"></p-columnFilter>
       </th>
-      <th pSortableColumn="region">
+      <th pSortableColumn="regionName">
         Rrethi
-        <p-sortIcon field="region"></p-sortIcon>
+        <p-sortIcon field="regionName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="region"
+          field="regionName"
           display="menu"></p-columnFilter>
       </th>
       <th></th>

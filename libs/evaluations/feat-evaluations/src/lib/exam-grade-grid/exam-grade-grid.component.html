@@ -45,6 +45,11 @@
               Është i mbartur?
               <div>
                 <p-sortIcon field="isCarriedOver"></p-sortIcon>
+                <p-columnFilter
+                  type="boolean"
+                  field="isCarriedOver"
+                  display="menu"
+                  matchMode="equals"></p-columnFilter>
               </div>
             </th>
             <th pSortableColumn="grade">
@@ -52,9 +57,10 @@
               <div>
                 <p-sortIcon field="grade"></p-sortIcon>
                 <p-columnFilter
-                  type="number"
+                  type="numeric"
                   field="grade"
-                  display="menu"></p-columnFilter>
+                  display="menu"
+                  matchMode="equals"></p-columnFilter>
               </div>
             </th>
           </tr>

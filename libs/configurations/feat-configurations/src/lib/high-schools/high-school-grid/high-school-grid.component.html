@@ -37,13 +37,17 @@
       <th pSortableColumn="isPublic">
         Ështe Publik?
         <p-sortIcon field="isPublic"></p-sortIcon>
+        <p-columnFilter
+          type="boolean"
+          field="isPublic"
+          display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="administrationOffice">
+      <th pSortableColumn="administrationOfficeName">
         DAR/ZA
-        <p-sortIcon field="administrationOffice"></p-sortIcon>
+        <p-sortIcon field="administrationOfficeName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="administrationOffice"
+          field="administrationOfficeName"
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="regionName">

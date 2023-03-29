@@ -19,20 +19,20 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="DarZa">
+      <th pSortableColumn="name">
         Dar/Za
-        <p-sortIcon field="DarZa"></p-sortIcon>
+        <p-sortIcon field="name"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="DarZa"
+          field="name"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="status">
+      <th pSortableColumn="isAllowedToLogin">
         Statusi
-        <p-sortIcon field="status"></p-sortIcon>
+        <p-sortIcon field="isAllowedToLogin"></p-sortIcon>
         <p-columnFilter
-          type="text"
-          field="status"
+          type="custom"
+          field="isAllowedToLogin"
           display="menu"></p-columnFilter>
       </th>
       <th>Veprime</th>
