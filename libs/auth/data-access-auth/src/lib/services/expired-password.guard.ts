@@ -6,10 +6,15 @@ import jwt_decode from 'jwt-decode';
 @Injectable({ providedIn: 'root' })
 export class ExpiredPasswordGuard implements CanActivate {
   constructor(private storageService: StorageService) {}
-
+  token: any = '';
   canActivate(): boolean {
-    const token: any = jwt_decode(this.storageService.getItem('token'));
-    if (token && token.NeedResetPassword === 'true') {
+    try {
+      this.token = jwt_decode(this.storageService.getItem('token'));
+    } catch (ex) {
+      return true;
+    }
+
+    if (this.token && this.token.NeedResetPassword === 'true') {
       return true;
     } else {
       return false;
