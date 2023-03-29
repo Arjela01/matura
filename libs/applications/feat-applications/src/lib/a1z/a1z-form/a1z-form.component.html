@@ -167,14 +167,14 @@
               <input
                 type="text"
                 pInputText
-                [disabled]="true"
+                [disabled]="!enableD1Subject"
                 id="reasonD1"
                 name="reasonD1"
                 [(ngModel)]="a1z.reasonD1"
                 autofocus />
             </td>
 
-            <td *ngIf="selectedStudent">
+            <td *ngIf="selectedStudent && enableD1Subject">
               <div class="p-inputgroup">
                 <p-button
                   icon="pi pi-book"
@@ -251,14 +251,14 @@
               <input
                 type="text"
                 pInputText
-                [disabled]="true"
+                [disabled]="!enableD2Subject"
                 id="reasonD2"
                 name="reasonD2"
                 [(ngModel)]="a1z.reasonD2"
                 autofocus />
             </td>
 
-            <td *ngIf="selectedStudent">
+            <td *ngIf="selectedStudent && enableD2Subject">
               <div class="p-inputgroup">
                 <p-button
                   icon="pi pi-book"
@@ -335,14 +335,14 @@
               <input
                 type="text"
                 pInputText
-                [disabled]="true"
+                [disabled]="!enableD3Subject"
                 id="reasonD3"
                 name="reasonD3"
                 [(ngModel)]="a1z.reasonD3"
                 autofocus />
             </td>
 
-            <td *ngIf="selectedStudent">
+            <td *ngIf="selectedStudent && enableD3Subject">
               <div class="p-inputgroup">
                 <p-button
                   icon="pi pi-book"
@@ -432,14 +432,14 @@
               <input
                 type="text"
                 pInputText
-                [disabled]="true"
+                [disabled]="!enableZ1Subject"
                 id="reasonZ1"
                 name="reasonZ1"
                 [(ngModel)]="a1z.reasonZ1"
                 autofocus />
             </td>
 
-            <td *ngIf="selectedStudent">
+            <td *ngIf="selectedStudent && enableZ1Subject">
               <div class="p-inputgroup">
                 <p-button
                   icon="pi pi-book"
@@ -557,7 +557,13 @@
             {{ grade.grade }}
           </td>
           <td style="width: 14%; min-width: 10rem">
-            <a href="#">Document</a>
+            <img
+              *ngIf="grade.document"
+              src="assets/svg/download.svg"
+              class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
+              tooltipPosition="bottom"
+              pTooltip="Shkarko"
+              (click)="onDownloadClick(grade)" />
           </td>
         </tr>
       </ng-template>

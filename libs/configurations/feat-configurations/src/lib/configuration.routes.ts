@@ -230,13 +230,21 @@ export const CONFIGURATION_ROUTES: Route[] = [
     loadComponent: () =>
       import(
         './dashboard-items/manage-dashboard-items/manage-dashboard-items.component'
-        ).then(m => m.ManageDashboardItemsComponent),
+      ).then(m => m.ManageDashboardItemsComponent),
   },
   {
     path: 'dashboard-sections',
     loadComponent: () =>
       import(
         './dashboard-sections/manage-dashboard-sections/manage-dashboard-sections.component'
-        ).then(m => m.ManageDashboardSectionsComponent),
+      ).then(m => m.ManageDashboardSectionsComponent),
+  },
+
+  {
+    path: 'carried-grades',
+    loadComponent: () =>
+      import(
+        './carried-grade/manage-carried-grade/manage-carried-grade.component'
+      ).then(m => m.ManageCarriedGradesComponent),
   },
 ];
