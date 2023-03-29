@@ -183,7 +183,6 @@ export class ManageUsersComponent implements OnInit {
       .loadUsers($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        console.log(response.data);
         this.users$$.next(response.data);
         this.totalRecords = response.total;
       });

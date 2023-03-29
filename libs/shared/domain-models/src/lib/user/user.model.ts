@@ -7,7 +7,6 @@ export interface User {
   highSchool?: string;
   lastName: string;
   lastPasswordChange?: Date;
-  firstName?: string;
   overseerCode: string;
   roleId: string;
   name?: string;
