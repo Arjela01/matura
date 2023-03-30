@@ -93,7 +93,6 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
     displayName: '',
     administrationOfficeId: 0,
     fileName: '',
-    firstName: '',
     lastName: '',
     username: '',
     password: '',
