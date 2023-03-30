@@ -3,10 +3,15 @@ import { CanActivate, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { AuthFacade } from '../+state';
+import { ExpiredPasswordGuard } from './expired-password.guard';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
-  constructor(private authFacade: AuthFacade, private router: Router) {}
+  constructor(
+    private authFacade: AuthFacade,
+    private router: Router,
+    private expiredPasswordGuard: ExpiredPasswordGuard
+  ) {}
 
   canActivate(): Observable<boolean> {
     return this.authFacade.isAuthenticated$.pipe(
@@ -15,8 +20,14 @@ export class AuthGuard implements CanActivate {
         if (!isAuthenticated) {
           this.router.navigate(['/login']);
           return false;
+        } else {
+          if (this.expiredPasswordGuard.canActivate()) {
+            this.router.navigate(['/reset-password']);
+            return false;
+          } else {
+            return true;
+          }
         }
-        return true;
       })
     );
   }

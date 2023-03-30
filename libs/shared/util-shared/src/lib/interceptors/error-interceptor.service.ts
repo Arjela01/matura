@@ -5,7 +5,7 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, delay, mergeMap, of, retryWhen } from 'rxjs';
+import { delay, mergeMap, Observable, of, retryWhen } from 'rxjs';
 import {
   ERROR_400,
   ERROR_401,
