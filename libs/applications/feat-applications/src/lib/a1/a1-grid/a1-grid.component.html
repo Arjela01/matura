@@ -40,28 +40,28 @@
                 field="academicYear"
                 display="menu"></p-columnFilter>
             </th>
-            <th pSortableColumn="studentFirstName">
+            <th pSortableColumn="firstName">
               Emri
-              <p-sortIcon field="studentFirstName"></p-sortIcon>
+              <p-sortIcon field="firstName"></p-sortIcon>
               <p-columnFilter
                 type="text"
-                field="studentFirstName"
+                field="firstName"
                 display="menu"></p-columnFilter>
             </th>
-            <th pSortableColumn="studentFatherName">
+            <th pSortableColumn="middleName">
               Atësia
-              <p-sortIcon field="studentFatherName"></p-sortIcon>
+              <p-sortIcon field="middleName"></p-sortIcon>
               <p-columnFilter
                 type="text"
-                field="studentFatherName"
+                field="middleName"
                 display="menu"></p-columnFilter>
             </th>
-            <th pSortableColumn="studentLastName">
+            <th pSortableColumn="lastName">
               Mbiemri
-              <p-sortIcon field="studentLastName"></p-sortIcon>
+              <p-sortIcon field="lastName"></p-sortIcon>
               <p-columnFilter
                 type="text"
-                field="studentLastName"
+                field="lastName"
                 display="menu"></p-columnFilter>
             </th>
             <th pSortableColumn="studentNid">
@@ -92,9 +92,10 @@
               Aplikon jashtë
               <p-sortIcon field="isApplyingToForeignCountries"></p-sortIcon>
               <p-columnFilter
-                type="text"
+                type="boolean"
                 field="isApplyingToForeignCountries"
-                display="menu"></p-columnFilter>
+                display="menu"
+              matchMode="equals"></p-columnFilter>
             </th>
             <th pSortableColumn="birthplace">
               Vendlindja
@@ -139,7 +140,7 @@
               {{ a1.studentOldIdentifier }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ a1.birthDate | date }}
+              {{ a1.isApplyingToForeignCountries ? 'Po' : 'Jo' }}
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ a1.birthPlace }}

@@ -39,28 +39,28 @@
           field="lastName"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="studentIdentifier">
+      <th pSortableColumn="studentId">
         Id e Maturantit
-        <p-sortIcon field="studentIdentifier"></p-sortIcon>
+        <p-sortIcon field="studentId"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="studentIdentifier"
+          field="studentId"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="personalIdentifier">
+      <th pSortableColumn="idCard">
         NID
-        <p-sortIcon field="personalIdentifier"></p-sortIcon>
+        <p-sortIcon field="idCard"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="personalIdentifier"
+          field="idCard"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="schoolName">
+      <th pSortableColumn="highSchoolName">
         Shkolla e Mesme
-        <p-sortIcon field="schoolName"></p-sortIcon>
+        <p-sortIcon field="highSchoolName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="schoolName"
+          field="highSchoolName"
           display="menu"></p-columnFilter>
       </th>
       <th>Shto Lenden</th>
@@ -84,7 +84,7 @@
         {{ failingStudent.idCard }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ failingStudent.schoolName }}
+        {{ failingStudent.highSchoolName }}
       </td>
       <td>
         <div class="flex">
