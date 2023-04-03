@@ -17,12 +17,12 @@
 <div class="grid">
   <div class="col-12">
     <div class="card">
-      <msh-diploma-requirement-exemption-grid
+      <msh-diploma-requirement-exception-grid
         [students]="(studentList$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
         (lazyLoadData)="getStudent($event)">
-      </msh-diploma-requirement-exemption-grid>
+      </msh-diploma-requirement-exception-grid>
     </div>
   </div>
 </div>

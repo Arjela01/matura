@@ -18,7 +18,7 @@ import {  Student } from '@msh/shared/domain-models';
 
 
 @Component({
-  selector: 'msh-diploma-requirement-exemption-grid',
+  selector: 'msh-diploma-requirement-exception-grid',
   standalone: true,
   imports: [
     CommonModule,
@@ -29,11 +29,11 @@ import {  Student } from '@msh/shared/domain-models';
     CheckboxModule,
     RippleModule,
   ],
-  templateUrl: './diploma-requirement-exemption-grid.component.html',
-  styleUrls: ['./diploma-requirement-exemption-grid.component.scss'],
+  templateUrl: './diploma-requirement-exception-grid.component.html',
+  styleUrls: ['./diploma-requirement-exception-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DiplomaRequirementExemptionGridComponent {
+export class DiplomaRequirementExceptionGridComponent {
   @Input() students: Student[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;

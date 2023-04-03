@@ -65,11 +65,11 @@ export const CONFIGURATION_ROUTES: Route[] = [
       ).then(m => m.ManageActivateOverseerDarZaComponent),
   },
   {
-    path: 'diploma-requirement-exemption',
+    path: 'diploma-requirement-exception',
     loadComponent: () =>
       import(
-        './diploma-requirement-exemption/manage-diploma-requirement-exemption/manage-diploma-requirement-exemption.component'
-        ).then(m => m.ManageDiplomaRequirementExemptionComponent),
+        './diploma-requirement-exception/manage-diploma-requirement-exception/manage-diploma-requirement-exception.component'
+        ).then(m => m.ManageDiplomaRequirementExceptionComponent),
   },
   {
     path: 'menu',

@@ -16,12 +16,12 @@ import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { RippleModule } from 'primeng/ripple';
-import { DiplomaRequirementExemptionGridComponent } from '../diploma-requirement-exemption-grid/diploma-requirement-exemption-grid.component';
+import { DiplomaRequirementExceptionGridComponent } from '../diploma-requirement-exception-grid/diploma-requirement-exception-grid.component';
 import {FileUploadModule} from "primeng/fileupload";
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-manage-diploma-requirement-exemption',
+  selector: 'msh-manage-diploma-requirement-exception',
   standalone: true,
   imports: [
     ButtonModule,
@@ -30,16 +30,16 @@ import {FileUploadModule} from "primeng/fileupload";
     ConfirmDialogModule,
     ToolbarModule,
     RippleModule,
-    DiplomaRequirementExemptionGridComponent,
+    DiplomaRequirementExceptionGridComponent,
     FileUploadModule,
 
   ],
-  templateUrl: './manage-diploma-requirement-exemption.component.html',
-  styleUrls: ['./manage-diploma-requirement-exemption.component.scss'],
+  templateUrl: './manage-diploma-requirement-exception.component.html',
+  styleUrls: ['./manage-diploma-requirement-exception.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageDiplomaRequirementExemptionComponent {
+export class ManageDiplomaRequirementExceptionComponent {
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
   filters: LazyLoadEvent | null = null;
