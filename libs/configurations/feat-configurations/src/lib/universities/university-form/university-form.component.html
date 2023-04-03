@@ -23,10 +23,12 @@
             name="regionId"
             optionValue="key"
             optionLabel="value"
+            appendTo="body"
             [(ngModel)]="university.regionId"
             [autoDisplayFirst]="false"
             (onChange)="onRegionChange($event)"
             [showClear]="true"
+            [required]="true"
             [ngClass]="{
         'ng-invalid ng-dirty': submitted && !university.regionId
       }">
@@ -44,9 +46,11 @@
             optionValue="key"
             optionLabel="value"
             name="cityId"
+            appendTo="body"
             [(ngModel)]="university.cityId"
             [autoDisplayFirst]="false"
             [showClear]="true"
+            [required]="true"
             [ngClass]="{
         'ng-invalid ng-dirty': submitted && !university.cityId
       }">

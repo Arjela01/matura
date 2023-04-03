@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -22,7 +22,6 @@ import { ExamSecretsFormComponent } from '../exam-secrets-form/exam-secrets-form
 import { ExamSecretsGridComponent } from '../exam-secrets-grid/exam-secrets-grid.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import * as FileSaver from 'file-saver';
-import {ExamSubjectProfile} from "@msh/shared/domain-models";
 
 @UntilDestroy()
 @Component({
@@ -44,7 +43,7 @@ import {ExamSubjectProfile} from "@msh/shared/domain-models";
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageExamSecretsComponent implements OnInit{
+export class ManageExamSecretsComponent implements OnInit {
   private examSecrets$$ = new BehaviorSubject<ExamSecret[]>([]);
   examSecrets$ = this.examSecrets$$.asObservable();
   filters: LazyLoadEvent | null = null;
@@ -146,6 +145,7 @@ export class ManageExamSecretsComponent implements OnInit{
         .subscribe(response => {
           if (response.isSuccessful) {
             this.toastService.showSuccess('Dokumenti u shtua me sukses!');
+            this.getExamSecrets(this.filters as LazyLoadEvent);
           }
           if (response.isBadRequest)
             this.toastService.showError(

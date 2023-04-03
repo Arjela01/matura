@@ -39,6 +39,7 @@
       optionValue="key"
       optionLabel="value"
       name="parentId"
+      [required]="true"
       [autoDisplayFirst]="false"
       [(ngModel)]="menu.parentId"
       [showClear]="true">
@@ -54,10 +55,12 @@
       optionValue="value"
       optionLabel="value"
       [(ngModel)]="menu.roles"
+      [required]="true"
       appendTo="body"
       [showClear]="true"
       defaultLabel="Selekto Rolet"
       display="chip"></p-multiSelect>
+
   </div>
 
   <div class="field">

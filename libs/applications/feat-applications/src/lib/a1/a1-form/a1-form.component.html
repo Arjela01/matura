@@ -1,7 +1,7 @@
 <div class="grid">
   <div class="col-12">
-    <div class="card-form px-6 py-6 mb-header">
-      <h3>Shto Formular A1</h3>
+    <h2 class="flex-1 mb-0 mt-6">{{!formId ? 'Shto Formular A1': 'Ndrysho Formular A1'}}</h2>
+    <div class="card-form px-6 py-6 mb-header mt-3">
       <form #form="ngForm" (ngSubmit)="onSubmit()">
         <div class="field mt-4 mb-4" [style]="{ width: '500px' }">
           <label for="studentInputData">Student *</label>
@@ -17,9 +17,8 @@
               id="studentInputData"
               name="studentInputData"
               [(ngModel)]="choosenStudent"
-              required
               autofocus
-              disabled
+              [required]="true"
               [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !choosenStudent
               }" />
@@ -195,16 +194,15 @@
           <button
             type="button"
             pButton
-            icon="pi pi-times"
             label="Anullo"
             class="p-button-text w-auto mr-2"
             (click)="onCancelClick()"></button>
           <button
+            [disabled]="form.invalid"
             type="submit"
             pButton
-            icon="pi pi-check"
             label="Ruaj"
-            class="p-button-text w-auto"></button>
+            class="p-button w-auto"></button>
         </div>
       </form>
     </div>

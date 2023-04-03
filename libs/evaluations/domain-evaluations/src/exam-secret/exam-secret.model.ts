@@ -7,7 +7,7 @@ export interface ExamSecret {
   barcode: string;
   isFall: boolean;
   studentInputData?: string;
-  academicYearId?: number,
+  academicYearId?: number;
 
 }
 

@@ -77,9 +77,8 @@ export class UserGridComponent {
   user: User = {
     fileName: '',
     id: '',
-    // firstName: '',
+    name: '',
     lastName: '',
-    firstName: '',
     nid: '',
     overseerCode: '',
     password: '',

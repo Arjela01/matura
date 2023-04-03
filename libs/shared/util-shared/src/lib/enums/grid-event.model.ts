@@ -14,5 +14,4 @@ export enum GRID_ACTIONS {
 export interface GridEvent<T> {
   action: GRID_ACTIONS;
   data?: T;
-  type?: string;
 }

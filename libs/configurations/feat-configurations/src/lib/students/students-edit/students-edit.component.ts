@@ -163,7 +163,6 @@ export class StudentsEditComponent implements OnInit {
             summary: 'Success',
             detail: 'Studenti u ruajt me sukses.',
           });
-          //this.router.navigate(['/configurations/students']).then();
           this.router
             .navigate(['/applications/save-a1-student', this.student.id])
             .then();

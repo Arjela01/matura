@@ -9,6 +9,7 @@
       optionLabel="value"
       [(ngModel)]="dashboardItem.dashboardSectionId"
       [autoDisplayFirst]="false"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !dashboardItem.dashboardSectionId
       }">
@@ -59,6 +60,24 @@
   </div>
 
   <div class="field">
+    <label for="documentName">Emri Dokumentit *</label>
+    <input
+      type="text"
+      pInputText
+      id="documentName"
+      name="documentName"
+      [(ngModel)]="dashboardItem.documentName"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !dashboardItem.documentName
+      }" />
+    <small class="p-error block" *ngIf="submitted && !dashboardItem.documentName">
+      Emri dokumentit është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
     <label for="document">Dokumenti</label>
     <div class="form-group drop-files noLabel">
       <p-fileUpload
@@ -67,16 +86,12 @@
         [showUploadButton]="false"
         class="ie-file-upload"
         (onSelect)="selectFiles($event)"
-        accept=".pdf,.docx,.jpg,.png,.txt,.xlsx,.">
+        accept=".pdf">
         <ng-template pTemplate="content">
-          <img
-            [src]="'data:image;base64,' + dashboardItem.document"
-            width="100"
-            height="100"
-            *ngIf="
+          <span *ngIf="
               dashboardItem.document && !uploaded && dashboardItem.document
-            "
-            alt="" />
+          "
+            alt="">{{dashboardItem.title}}.pdf</span>
         </ng-template>
       </p-fileUpload>
     </div>
@@ -102,6 +117,7 @@
       optionValue="value"
       optionLabel="value"
       [(ngModel)]="dashboardItem.roles"
+      [required]="true"
       appendTo="body"
       [showClear]="true"
       defaultLabel="Selekto Rolet"
@@ -122,6 +138,7 @@
       [(ngModel)]="dashboardItem.users"
       appendTo="body"
       [showClear]="true"
+      [required]="true"
       defaultLabel="Selekto Perdoruesit"
       display="chip"></p-multiSelect>
     <small class="p-error block" *ngIf="submitted && !dashboardItem.users">
@@ -137,6 +154,7 @@
       inputId="startDate"
       id="startDate"
       name="startDate"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !dashboardItem.startDate
       }"></p-calendar>
@@ -152,21 +170,21 @@
       dateFormat="dd/mm/yy"
       inputId="endDate"
       id="endDate"
+      [required]="true"
       name="endDate"></p-calendar>
   </div>
   <div class="flex justify-content-end">
     <button
       type="button"
       pButton
-      icon="pi pi-times"
       label="Anullo"
       class="p-button-text w-auto mr-2"
       (click)="onCancelClick()"></button>
     <button
+      [disabled]="form.invalid"
       type="submit"
       pButton
-      icon="pi pi-check"
       label="Ruaj"
-      class="p-button-text w-auto"></button>
+      class="p-button w-auto"></button>
   </div>
 </form>

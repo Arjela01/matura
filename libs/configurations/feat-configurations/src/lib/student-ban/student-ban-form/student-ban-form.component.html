@@ -18,9 +18,8 @@
               id="studentInputData"
               name="studentInputData"
               [(ngModel)]="studentInputData"
-              required
               autofocus
-              disabled
+              [required]="true"
               [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !studentInputData
               }" />
@@ -98,6 +97,7 @@
             pInputTextarea
             id="description"
             name="description"
+            required
             [(ngModel)]="studentBan.description"
             [ngClass]="{
               'ng-invalid ng-dirty': submitted && !studentBan.description

@@ -1,7 +1,7 @@
 <div class="grid">
   <div class="col-12 p-fluid">
-    <div class="card px-6 py-6">
-      <h3 class="font-semibold mb-5">Formulari A1Z</h3>
+    <h2 class="flex-1 mb-0 mt-6">{{!formId ? 'Shto Formular A1Z': 'Ndrysho Formular A1Z'}}</h2>
+    <div class="card px-6 py-6 mt-3">
       <form #form="ngForm" (ngSubmit)="onSubmit()">
         <div class="field mt-4 mb-4" [style]="{ width: '500px' }">
           <label for="studentInputData">Student *</label>
@@ -85,6 +85,10 @@
             name="highSchoolGraduationYear"
             [(ngModel)]="a1z.highSchoolGraduationYear"
             autofocus />
+          <small class="p-error block" *ngIf="submitted && !isGraduationYearValid()">
+            Viti i përfundimit të shkollës së mesme nuk mund të jetë më i madh
+            se viti aktual
+          </small>
         </div>
 
         <div class="text-3xl font-semibold mb-3 mt-5">Lëndët e Detyruara</div>
@@ -472,16 +476,15 @@
           <button
             type="button"
             pButton
-            (click)="onExitForm()"
-            icon="pi pi-times"
             label="Anullo"
-            class="p-button-text w-auto mr-2"></button>
+            class="p-button-text w-auto mr-2"
+            (click)="onExitForm()"></button>
           <button
+            [disabled]="form.invalid"
             type="submit"
             pButton
-            icon="pi pi-check"
             label="Ruaj"
-            class="p-button-text w-auto"></button>
+            class="p-button w-auto"></button>
         </div>
       </form>
     </div>
@@ -509,7 +512,7 @@
 
 <p-dialog
   [(visible)]="showCarriedModal"
-  [style]="{ width: '1000px' }"
+  [style]="{ width: '600px' }"
   header="Kërko Notën"
   [modal]="true"
   [draggable]="false"

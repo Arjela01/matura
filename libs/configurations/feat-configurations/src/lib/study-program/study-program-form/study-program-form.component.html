@@ -200,11 +200,11 @@
       optionValue="key"
       optionLabel="value"
       name="universityid"
-      [required]="true"
       (onChange)="onUniversityChange($event)"
       [autoDisplayFirst]="false"
       [(ngModel)]="studyProgram.universityId"
-      [showClear]="true">
+      [showClear]="true"
+      [required]="true">
     </p-dropdown>
     <small
       class="p-error block"

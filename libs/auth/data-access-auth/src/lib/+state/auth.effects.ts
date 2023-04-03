@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from '@msh/shared/data-access-shared';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import jwt_decode from 'jwt-decode';
 import { catchError, exhaustMap, map, of, tap } from 'rxjs';
 import { User, USER_STORAGE_KEY } from '../models/user.model';
 import { AuthService } from '../services/auth.service';
 import { HeartbeatService } from '../services/heartbeat.service';
 import { TOKEN_STORAGE_KEY } from '../services/token.interceptor';
 import { AuthActions } from './auth.actions';
-
 @Injectable()
 export class AuthEffects {
   init$ = createEffect(() =>
@@ -19,7 +19,10 @@ export class AuthEffects {
         const token = this.storageService.getItem(TOKEN_STORAGE_KEY) as string;
         const user = this.storageService.getItem(USER_STORAGE_KEY) as User;
         if (token && user && user?.username && user?.displayName) {
-          this.heartBeatService.startTime();
+          const tokenStore: any = jwt_decode(token as string);
+          if (!tokenStore.NeedResetPassword) {
+            this.heartBeatService.startTime();
+          }
           return AuthActions.loadAuthSuccess({ token: token, user: user });
         }
         return AuthActions.logout();
@@ -82,7 +85,10 @@ export class AuthEffects {
             TOKEN_STORAGE_KEY,
             action.loginResponse.token
           );
-          this.heartBeatService.startTime();
+          const token: any = jwt_decode(action.loginResponse.token as string);
+          if (!token.NeedResetPassword) {
+            this.heartBeatService.startTime();
+          }
           this.router.navigate(['/']);
         })
       ),

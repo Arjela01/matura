@@ -1,5 +1,4 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
-
   <div class="field">
     <label for="ExamType">Tipi i Provimit *</label>
     <p-dropdown
@@ -8,11 +7,13 @@
       optionValue="key"
       optionLabel="value"
       name="examTypeId"
+      [disabled]="!!examScore.id"
       (onChange)="onExamTypeChanged($event)"
       (onClear)="onExamTypeChanged($event)"
       [autoDisplayFirst]="false"
       [(ngModel)]="examScore.examTypeId"
       [showClear]="true"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examTypeId
       }">
@@ -24,16 +25,17 @@
 
   <div class="field">
     <label for="ExamSubject">Lënda e Provimit *</label>
-
     <p-dropdown
       id="ExamSubject"
       [options]="examSubjects"
       optionValue="key"
       optionLabel="value"
       name="examSubjectId"
+      [disabled]="!!examScore.id"
       (onChange)="onExamSubjectChanged($event)"
       (onClear)="onExamSubjectChanged($event)"
       [autoDisplayFirst]="false"
+      [required]="true"
       [(ngModel)]="examScore.examSubjectId"
       [showClear]="true"
       [ngClass]="{

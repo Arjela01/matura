@@ -60,6 +60,8 @@ export class ExamScoresFormComponent implements OnChanges {
     multipleChoiceScore: 0,
     academicYearId: 1,
     writingScore: 0,
+    maximumValueMultipleScore: 0,
+    maximumValueWritingScore: 0,
   };
   examTypeId: any;
   examSubjectId: any;
@@ -71,9 +73,7 @@ export class ExamScoresFormComponent implements OnChanges {
     }
   }
 
-  constructor(
-    private cd: ChangeDetectorRef,
-  ) {}
+  constructor(private cd: ChangeDetectorRef) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.examTypeId = this.examScore.examTypeId;
@@ -87,18 +87,18 @@ export class ExamScoresFormComponent implements OnChanges {
 
   onSubmit(): void {
     this.submitted = true;
-      if (this.form.valid) {
-        this.formSave.emit(this.examScore);
-      }
+    if (this.form.valid) {
+      this.formSave.emit(this.examScore);
+    }
   }
   onExamTypeChanged($event: any): void {
-    this.examTypeId =  $event.value
+    this.examTypeId = $event.value;
     this.examTypeChanged.emit(this.examTypeId);
     this.examScore.examTypeId = this.examTypeId;
   }
 
   onExamSubjectChanged($event: any): void {
-    this.examSubjectId = $event.value
+    this.examSubjectId = $event.value;
     this.examSubjectChanged.emit(this.examSubjectId);
     this.examScore.examSubjectId = this.examSubjectId;
   }

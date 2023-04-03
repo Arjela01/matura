@@ -18,7 +18,6 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
-
       <th pSortableColumn="name">
         Emri
         <p-sortIcon field="name"></p-sortIcon>
@@ -30,6 +29,11 @@
       <th pSortableColumn="isRegionalOffice">
         Eshte DAR
         <p-sortIcon field="isRegionalOffice"></p-sortIcon>
+        <p-columnFilter
+          type="boolean"
+          field="isRegionalOffice"
+          display="menu"
+          matchMode="equals"></p-columnFilter>
       </th>
       <th pSortableColumn="directorName">
         Emri i drejtorit

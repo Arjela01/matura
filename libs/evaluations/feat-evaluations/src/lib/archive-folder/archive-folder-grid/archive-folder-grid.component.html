@@ -38,33 +38,34 @@
             display="menu"></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="examType">
+      <th pSortableColumn="examTypeName">
         Tipi i Provimit
         <div>
-          <p-sortIcon field="examType"></p-sortIcon>
+          <p-sortIcon field="examTypeName"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="examType"
+            field="examTypeName"
             display="menu"></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="createdName">
+      <th pSortableColumn="createdByName">
         Operatori
         <div>
-          <p-sortIcon field="createdName"></p-sortIcon>
+          <p-sortIcon field="createdByName"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="createdName"
+            field="createdByName"
             display="menu"></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="status">
+      <th pSortableColumn="isClosed">
         Statusi
         <div>
-          <p-sortIcon field="IsClosed"></p-sortIcon>
+          <p-sortIcon field="isClosed"></p-sortIcon>
           <p-columnFilter
-            type="number"
-            field="IsClosed"
+            type="boolean"
+            field="isClosed"
+            matchMode="equals"
             display="menu"></p-columnFilter>
         </div>
       </th>

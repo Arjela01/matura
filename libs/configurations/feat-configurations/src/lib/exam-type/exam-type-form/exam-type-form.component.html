@@ -9,12 +9,47 @@
       [(ngModel)]="examType.name"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examType.name }"/>
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examType.name }" />
     <small class="p-error block" *ngIf="submitted && !examType.name">
       Emri është fushë e kërkuar.
     </small>
   </div>
-
+  <div class="field">
+    <label for="MaximumValueWritingScore">Pikët maksimale me shtjellim *</label>
+    <input
+      type="text"
+      pInputText
+      id="maximumValueWritingScore"
+      name="maximumValueWritingScore"
+      [(ngModel)]="examType.maximumValueWritingScore"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examType.maximumValueWritingScore
+      }" />
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examType.maximumValueWritingScore">
+      Pikët maksimale është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="MaximumValueMultipleScore"
+      >Pikët maksimale me alternativa *</label
+    >
+    <input
+      type="text"
+      pInputText
+      id="maximumValueMultipleScore"
+      name="maximumValueMultipleScore"
+      [(ngModel)]="examType.maximumValueMultipleScore"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examType.name }" />
+    <small class="p-error block" *ngIf="submitted && !examType.name">
+      Pikët maksimale është fushë e kërkuar.
+    </small>
+  </div>
 
   <div class="flex justify-content-end">
     <button

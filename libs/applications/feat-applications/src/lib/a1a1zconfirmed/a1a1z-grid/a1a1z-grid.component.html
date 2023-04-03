@@ -69,7 +69,7 @@
         <div>
           <p-sortIcon field="birthDate"></p-sortIcon>
           <p-columnFilter
-            type="number"
+            type="date"
             field="birthDate"
             display="menu"></p-columnFilter>
         </div>
@@ -77,29 +77,30 @@
       <th pSortableColumn="idCard">
         NID
         <div>
-          <p-sortIcon field="birthDate"></p-sortIcon>
+          <p-sortIcon field="idCard"></p-sortIcon>
           <p-columnFilter
             type="text"
             field="idCard"
             display="menu"></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="schoolProfile">
+      <th pSortableColumn="profileName">
         Profili
         <div>
-          <p-sortIcon field="schoolProfile"></p-sortIcon>
+          <p-sortIcon field="profileName"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="schoolProfile"
+            field="profileName"
             display="menu"></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="status">
+      <th pSortableColumn="isConfirmedBySupervisor">
         Statusi
         <div>
+          <p-sortIcon field="isConfirmedBySupervisor"></p-sortIcon>
           <p-columnFilter
-            type="text"
-            field="schoolProfile"
+            type="custom"
+            field="isConfirmedBySupervisor"
             display="menu"></p-columnFilter>
         </div>
       </th>

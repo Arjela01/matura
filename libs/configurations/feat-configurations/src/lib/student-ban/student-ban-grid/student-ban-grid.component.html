@@ -19,9 +19,7 @@
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="id">
-        Id e Studentit
-        <p-sortIcon field="id"></p-sortIcon>
-        <p-columnFilter type="text" field="id" display="menu"></p-columnFilter>
+        ID e Studentit
       </th>
       <th pSortableColumn="studentName">
         Emri i Studentit
@@ -35,15 +33,16 @@
         Eshte Skualifikuar?
         <p-sortIcon field="isBanned"></p-sortIcon>
         <p-columnFilter
-          type="text"
+          type="boolean"
           field="isBanned"
+          matchMode="equals"
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="effectiveDate">
         Data efektive
         <p-sortIcon field="effectiveDate"></p-sortIcon>
         <p-columnFilter
-          type="text"
+          type="date"
           field="effectiveDate"
           display="menu"></p-columnFilter>
       </th>
@@ -51,7 +50,7 @@
         Data e heqjes se Skualifikimit
         <p-sortIcon field="banRemovalDate"></p-sortIcon>
         <p-columnFilter
-          type="text"
+          type="date"
           field="banRemovalDate"
           display="menu"></p-columnFilter>
       </th>

@@ -50,6 +50,7 @@
       name="parentOfficeId"
       [(ngModel)]="administrationOffice.parentOfficeId"
       [autoDisplayFirst]="false"
+      [required]="true"
       [showClear]="true">
     </p-dropdown>
   </div>
@@ -65,6 +66,7 @@
       [(ngModel)]="administrationOffice.cityId"
       [autoDisplayFirst]="false"
       [showClear]="true"
+      [required]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !administrationOffice.cityId
       }">

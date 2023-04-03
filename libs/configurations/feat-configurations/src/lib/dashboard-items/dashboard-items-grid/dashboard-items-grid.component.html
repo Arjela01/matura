@@ -18,12 +18,12 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="section">
+      <th pSortableColumn="dashboardSectionName">
         Seksioni
-        <p-sortIcon field="id"></p-sortIcon>
+        <p-sortIcon field="dashboardSectionName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="section"
+          field="dashboardSectionName"
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="title">
@@ -42,28 +42,28 @@
           field="description"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="isDocument">
+      <th pSortableColumn="hasDocument">
         Dokument?
-        <p-sortIcon field="isDocument"></p-sortIcon>
+        <p-sortIcon field="hasDocument"></p-sortIcon>
       </th>
-      <th pSortableColumn="isLink">
+      <th pSortableColumn="hasLinkUrl">
         Link?
-        <p-sortIcon field="isLink"></p-sortIcon>
+        <p-sortIcon field="hasLinkUrl"></p-sortIcon>
       </th>
-      <th pSortableColumn="validFrom">
+      <th pSortableColumn="startDate">
         E Vlefshme Nga
-        <p-sortIcon field="validFrom"></p-sortIcon>
+        <p-sortIcon field="startDate"></p-sortIcon>
         <p-columnFilter
           type="date"
-          field="validFrom"
+          field="startDate"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="validTo">
+      <th pSortableColumn="endDate">
         E Vlefshme Deri
-        <p-sortIcon field="validTo"></p-sortIcon>
+        <p-sortIcon field="endDate"></p-sortIcon>
         <p-columnFilter
           type="date"
-          field="validTo"
+          field="endDate"
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="user">Veprime</th>
@@ -91,7 +91,7 @@
         </div>
       </td>
       <td style="width: 14%; min-width: 10rem">
-        <a *ngIf="dashboardItem.hasLinkUrl" href="{{ dashboardItem.hasLinkUrl }}">
+        <a *ngIf="dashboardItem.hasLinkUrl" href="{{ dashboardItem.linkUrl }}">
           Visit Link
         </a>
         {{ dashboardItem.hasLinkUrl ? '' : 'Jo' }}
