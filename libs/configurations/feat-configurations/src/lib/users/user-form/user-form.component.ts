@@ -30,6 +30,7 @@ import {roleList} from './role-list';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import {RippleModule} from 'primeng/ripple';
 import {TooltipModule} from 'primeng/tooltip';
+import {ActivatedRoute} from "@angular/router";
 
 @UntilDestroy()
 @Component({
@@ -83,6 +84,8 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
   }
   @Output() formSave = new EventEmitter<User>();
   @Output() formClose = new EventEmitter<undefined>();
+  formId: string | null;
+  isDisabled = false;
 
   @ViewChild('form', { static: true }) form!: NgForm;
 
@@ -109,8 +112,11 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
 
   constructor(
     private cd: ChangeDetectorRef,
-    private readonly userService: UserApiService
-  ) {}
+    private readonly userService: UserApiService,
+    private readonly  route : ActivatedRoute,
+  ) {
+    this.formId = this.route.snapshot.paramMap.get('id');
+  }
   ngOnDestroy(): void {
     this.form.reset();
   }
@@ -119,7 +125,6 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
     this.getUserPasswordCreate();
     this.getUser();
   }
-
 
   ngOnChanges(): void {
     this.onUniversityChange({ value: this.user.universityId });
