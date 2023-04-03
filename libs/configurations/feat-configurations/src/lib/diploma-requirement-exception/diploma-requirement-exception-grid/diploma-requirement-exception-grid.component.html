@@ -18,25 +18,25 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="id">
+      <th pSortableColumn="studentId">
         ID
-        <p-sortIcon field="id"></p-sortIcon>
-        <p-columnFilter type="text" field="id" display="menu"></p-columnFilter>
+        <p-sortIcon field="studentId"></p-sortIcon>
+        <p-columnFilter type="numeric" field="id" display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="name">
+      <th pSortableColumn="firstName">
         Emri
-        <p-sortIcon field="name"></p-sortIcon>
+        <p-sortIcon field="firstName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="name"
+          field="firstName"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="fatherName">
+      <th pSortableColumn="middleName">
         Atësia
-        <p-sortIcon field="fatherName"></p-sortIcon>
+        <p-sortIcon field="middleName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="fatherName"
+          field="middleName"
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="lastName">
