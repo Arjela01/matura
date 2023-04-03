@@ -1,24 +1,21 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
   Output,
 } from '@angular/core';
 import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
-import { LazyLoadEvent, MessageService } from 'primeng/api';
+import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import { AdministrationOffice } from '@msh/shared/domain-models';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { AdministrationOfficeApiService } from '@msh/configurations/data-access-configurations';
+import {  Student } from '@msh/shared/domain-models';
+
 
 @Component({
   selector: 'msh-diploma-requirement-exemption-grid',
@@ -31,72 +28,44 @@ import { AdministrationOfficeApiService } from '@msh/configurations/data-access-
     TooltipModule,
     CheckboxModule,
     RippleModule,
-    RouterLink,
   ],
   templateUrl: './diploma-requirement-exemption-grid.component.html',
   styleUrls: ['./diploma-requirement-exemption-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DiplomaRequirementExemptionGridComponent {
-  @Input() administrationOffices: AdministrationOffice[] = [];
+  @Input() students: Student[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
+
+  @Output() gridEvent = new EventEmitter<GridEvent<Student | Student[]>>();
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
-  @Output() gridEvent = new EventEmitter<
-    GridEvent<AdministrationOffice | AdministrationOffice[]>
-  >();
-  @Input() set administrationOfficeDetails(
-    details: AdministrationOffice | null
-  ) {
-    if (details) {
-      this.administrationOffice = Object.assign({}, details);
-    }
-  }
-
-  constructor(
-    private http: HttpClient,
-    private cd: ChangeDetectorRef,
-    private readonly AdministrationOfficeService: AdministrationOfficeApiService,
-    private router: Router,
-    private messageService: MessageService,
-    private activatedRoute: ActivatedRoute,
-
-    private route: ActivatedRoute
-  ) {
-    this.id = this.route.snapshot.paramMap.get('id');
-  }
-  selectedAdministrationOffices: AdministrationOffice[] = [];
-
-  administrationOffice: AdministrationOffice = {
-    directorName: '',
-    isAllowedToLogin: false,
-    isRegionalOffice: false,
-    name: '',
-  };
+  student: Student[] = [];
+  selectedStudents: Student[] = [];
 
   submitted = false;
   id: any;
 
-  changeStatus(administrationOffice: AdministrationOffice): void {
+  changeStatus(student: Student): void {
     this.gridEvent.emit({
       action: GRID_ACTIONS.CUSTOM_ACTION2,
-      data: administrationOffice,
-    } as GridEvent<AdministrationOffice>);
+      data: student,
+    } as GridEvent<Student>);
   }
 
-  onRowSelect({ data }: { data: AdministrationOffice }) {
+  onRowSelect({ data }: { data: Student }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
       data: data.id,
-    } as GridEvent<AdministrationOffice>);
+    } as GridEvent<Student>);
   }
 
-  onRowUnselect({ data }: { data: AdministrationOffice }) {
+  onRowUnselect({ data }: { data: Student }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
       data: data,
-    } as GridEvent<AdministrationOffice>);
+    } as GridEvent<Student>);
   }
 
   loadRows($event: LazyLoadEvent) {

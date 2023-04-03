@@ -35,9 +35,14 @@ export interface Student extends SharedStudent {
   modifiedOn?: Date;
   modifiedByName?: string;
   nid?: string;
+
 }
 
 export interface StudentTableView {
   data: Student[];
   total: number;
+}
+export interface ConfirmDiplomaException {
+  id: string,
+  isConfirmed: boolean,
 }
