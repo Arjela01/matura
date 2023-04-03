@@ -266,18 +266,34 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
 
   onSubjectD1Change($event: ChangeEvent<boolean>) {
     this.enableD1Subject = $event.value;
+    if ($event.value == false) {
+      this.a1z.scoreD1 = undefined;
+      this.a1z.yearD1 = undefined;
+    }
   }
 
   onSubjectD2Change($event: ChangeEvent<boolean>) {
     this.enableD2Subject = $event.value;
+    if ($event.value == false) {
+      this.a1z.scoreD2 = undefined;
+      this.a1z.yearD2 = undefined;
+    }
   }
 
   onSubjectD3Change($event: ChangeEvent<boolean>) {
     this.enableD3Subject = $event.value;
+    if ($event.value == false) {
+      this.a1z.scoreD3 = undefined;
+      this.a1z.yearD3 = undefined;
+    }
   }
 
   onSubjectZ1Change($event: ChangeEvent<boolean>) {
     this.enableZ1Subject = $event.value;
+    if ($event.value == false) {
+      this.a1z.scoreZ1 = undefined;
+      this.a1z.yearZ1 = undefined;
+    }
   }
 
   onSubjectD1Init(data: A1Z) {
@@ -336,6 +352,10 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
     } else {
       this.carriedGrades$$.next([]);
     }
+  }
+
+  onDownloadClick(grade: CarriedGrade) {
+    this.carriedGradeService.downloadDocument(grade);
   }
 
   getSubjectDropdown() {
