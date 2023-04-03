@@ -33,7 +33,7 @@ import { roleList } from './role-list';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { RippleModule } from 'primeng/ripple';
 import { TooltipModule } from 'primeng/tooltip';
-import { ActivatedRoute } from '@angular/router';
+
 
 @UntilDestroy()
 @Component({
