@@ -46,3 +46,6 @@ export interface ConfirmDiplomaException {
   id: string,
   isConfirmed: boolean,
 }
+export interface FileImport {
+  file: string | ArrayBuffer | null;
+}
