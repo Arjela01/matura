@@ -1,10 +1,12 @@
 <div class="sidebar">
   <div class="flex mt-2 mb-4">
-    <div class="w-auto align-self-start">
-      <img src="assets/images/abc.svg" style="width: 80px " class="pt-1">
+    <div class="w-auto align-self-start cursor-pointer" (click)="onLogoClick()">
+      <img src="assets/images/abc.svg" style="width: 80px" class="pt-1" />
     </div>
-    <div class="w-100 ml-3 align-items-stretch pt-1 mt-sidebar">
-      <span  class="text-white span-sidebar"><br>Matura <br>Shtetërore</span>
+    <div
+      class="w-100 ml-3 align-items-stretch pt-1 mt-sidebar cursor-pointer"
+      (click)="onLogoClick()">
+      <span class="text-white span-sidebar"><br />Matura <br />Shtetërore</span>
     </div>
   </div>
   <ul class="layout-menu">
@@ -19,20 +21,20 @@
     </ng-container>
   </ul>
   <div class="profile-group">
-
     <div>
-      <div class="container" *ngIf="(userProfile$ | async) as user">
+      <div class="container" *ngIf="userProfile$ | async as user">
         <div class="first-group">
           <div class="profile-photo" (click)="onNewClick()">
             <p-avatar
-              label= "{{avatarLabel}}"
+              label="{{ avatarLabel }}"
               shape="circle"
-              [style]="{background:'white'}"
-            >
+              [style]="{ background: 'white' }">
             </p-avatar>
           </div>
-          <div class="name menu-title fs">{{user.firstName}} {{user.lastName}}</div>
-          <div class="email fs">{{user.roleName}}</div>
+          <div class="name menu-title fs">
+            {{ user.firstName }} {{ user.lastName }}
+          </div>
+          <div class="email fs">{{ user.roleName }}</div>
         </div>
 
         <div class="second-group" (click)="onLogoutClick()">
