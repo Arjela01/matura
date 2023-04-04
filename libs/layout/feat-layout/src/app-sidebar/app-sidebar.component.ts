@@ -101,6 +101,9 @@ export class AppSidebarComponent implements OnInit {
   onLogoutClick() {
     this.authFacade.logout();
   }
+  onLogoClick(){
+    this.router.navigate(['/']).then();
+  }
   onNewClick() {
     this.router.navigate(['/user-section/user-profile']).then();
   }
