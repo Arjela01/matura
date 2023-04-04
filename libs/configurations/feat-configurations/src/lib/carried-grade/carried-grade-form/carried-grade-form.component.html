@@ -1,0 +1,123 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="nid">NID i maturantit *</label>
+    <input
+      type="text"
+      pInputText
+      id="nid"
+      name="nid"
+      [(ngModel)]="grades.nid"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !grades.nid }" />
+    <small class="p-error block" *ngIf="submitted && !grades.nid">
+      NID është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="ExamTypeID">Tipi I Provimit *</label>
+    <p-dropdown
+      id="ExamTypeID"
+      optionValue="key"
+      optionLabel="value"
+      appendTo="body"
+      defaultLabel="Zgjidh Tipin"
+      name="ExamTypeID"
+      appendTo="body"
+      [options]="examTypeDropdown"
+      [ngModelOptions]="{ standalone: true }"
+      [required]="true"
+      [style]="{ width: '100%' }"
+      [(ngModel)]="grades.examTypeId"
+      [ngClass]="{
+        'ng-invalid ng-dirty':
+          submitted && (!grades.examTypeId || grades.examTypeId === 0)
+      }">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && (!grades.examTypeId || grades.examTypeId === 0)">
+      Tipi i provimit është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="ExamSubject">Lënda *</label>
+    <input
+      type="text"
+      pInputText
+      id="ExamSubject"
+      name="ExamSubject"
+      [(ngModel)]="grades.examSubject"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !grades.examSubject }" />
+    <small class="p-error block" *ngIf="submitted && !grades.examSubject">
+      Lenda është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="Grade">Nota *</label>
+    <input
+      type="number"
+      pInputText
+      id="Grade"
+      name="Grade"
+      [(ngModel)]="grades.grade"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !grades.grade }" />
+    <small class="p-error block" *ngIf="submitted && !grades.grade">
+      Nota është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="year">Viti *</label>
+    <input
+      type="number"
+      pInputText
+      id="year"
+      name="year"
+      [(ngModel)]="grades.year"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !grades.year }" />
+    <small class="p-error block" *ngIf="submitted && !grades.year">
+      Viti është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="document">Dokumenti</label>
+    <div class="form-group drop-files noLabel">
+      <p-fileUpload
+        #uploader
+        id="document"
+        [showUploadButton]="false"
+        class="ie-file-upload"
+        (onSelect)="selectFiles($event)"
+        accept=".pdf,.docx,.jpg,.png,.txt,.xlsx,.">
+        <ng-template pTemplate="content">
+          <img
+            [src]="'data:image;base64,' + grades.document"
+            width="100"
+            height="100"
+            *ngIf="grades.document && !uploaded && grades.document"
+            alt="" />
+        </ng-template>
+      </p-fileUpload>
+    </div>
+  </div>
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      [disabled]="form.invalid"
+      type="submit"
+      pButton
+      label="Ruaj"
+      class="p-button w-auto"></button>
+  </div>
+</form>

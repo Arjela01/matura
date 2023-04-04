@@ -1,15 +1,87 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CarriedGrade } from '@msh/applications/domain-application';
+import {
+  CarriedGrade,
+  CarriedGradeTable,
+} from '@msh/applications/domain-application';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import { Observable } from 'rxjs';
+import { LazyLoadEvent } from 'primeng/api';
+import { map, Observable } from 'rxjs';
+
+import * as FileSaver from 'file-saver';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CarriedGradeApiService {
   constructor(private apiService: APIService) {}
+
+  loadCarriedGrades(event: LazyLoadEvent): Observable<CarriedGradeTable> {
+    return this.apiService.post(`/CarriedGrade/TableData`, event).pipe(
+      map(x => {
+        console.log(x);
+        return x as CarriedGradeTable;
+      })
+    );
+  }
+
+  save(carriedGrade: CarriedGrade): Observable<ApiResult<CarriedGrade>> {
+    return this.apiService.post<ApiResult<CarriedGrade>, CarriedGrade>(
+      `/CarriedGrade`,
+      carriedGrade
+    );
+  }
+
+  update(carriedGrade: CarriedGrade): Observable<ApiResult<CarriedGrade>> {
+    return this.apiService.put<ApiResult<CarriedGrade>, CarriedGrade>(
+      `/CarriedGrade`,
+      carriedGrade
+    );
+  }
+
+  delete(carriedGrade: number | undefined): Observable<ApiResult<unknown>> {
+    return this.apiService.delete<ApiResult<CarriedGrade>>(
+      `/CarriedGrade/${carriedGrade}`
+    );
+  }
+
+  downloadDocument(carriedGrade: CarriedGrade) {
+    const byteCharacters = atob(carriedGrade.document);
+    const header = byteCharacters.substring(0, 4);
+    let extension = '';
+    switch (header) {
+      case '%PDF':
+        extension = 'pdf';
+        break;
+      case 'PK\x03\x04':
+        extension = 'docx';
+        break;
+      case 'MIME':
+        extension = 'txt';
+        break;
+      case 'PK\x07\x08':
+        extension = 'xlsx';
+        break;
+      case '\x89PNG':
+        extension = 'png';
+        break;
+      case '\xFF\xD8\xFF\xE0':
+      case '\xFF\xD8\xFF\xE1':
+        extension = 'jpeg';
+        break;
+    }
+
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: 'application/octet-stream' });
+
+    FileSaver.saveAs(blob, `document.${extension}`);
+  }
 
   getByNid(nid: string, type: string): Observable<ApiResult<CarriedGrade[]>> {
     return this.apiService.get(

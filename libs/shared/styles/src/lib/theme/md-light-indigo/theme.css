@@ -2309,6 +2309,9 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 }
 .p-button.p-button-rounded {
   border-radius: 2rem;
+  min-width: 88px;
+  display: block;
+
 }
 .pointer {
   cursor: pointer;

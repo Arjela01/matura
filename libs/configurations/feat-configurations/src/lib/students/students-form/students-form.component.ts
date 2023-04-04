@@ -109,7 +109,7 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     schoolFinishedName: '',
     registrationYearId: 0,
     graduationYear: undefined,
-    isConfirmedBySupervisor: true,
+    isConfirmedBySupervisor: false,
   };
   finishedAtSameSchool = true;
 

@@ -2,8 +2,13 @@ import { Injectable } from '@angular/core';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
-import {Observable} from 'rxjs';
-import {Student, StudentTableView} from "@msh/shared/domain-models";
+import {catchError, map, Observable, shareReplay, throwError} from 'rxjs';
+import {
+  ConfirmDiplomaException,
+  Student,
+  StudentTableView,
+} from '@msh/shared/domain-models';
+import {FileImport} from "@msh/evaluations/domain-evaluations";
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +16,8 @@ import {Student, StudentTableView} from "@msh/shared/domain-models";
 export class StudentsApiService {
   constructor(private apiService: APIService) {}
 
-    getById(id: any): Observable<ApiResult<Student>> {
-    return this.apiService.get<ApiResult<Student>>(
-      `/Student/${id}`);
+  getById(id: any): Observable<ApiResult<Student>> {
+    return this.apiService.get<ApiResult<Student>>(`/Student/${id}`);
   }
 
   loadStudents(event: LazyLoadEvent): Observable<StudentTableView> {
@@ -35,8 +39,29 @@ export class StudentsApiService {
   }
 
   delete(studentId: number): Observable<ApiResult<unknown>> {
-    return this.apiService.delete<ApiResult<Student>>(
-      `/Student/${studentId}`
+    return this.apiService.delete<ApiResult<Student>>(`/Student/${studentId}`);
+  }
+
+  confirmException(
+    exceptedDiploma: { isConfirmed: boolean, id: any }
+  ): Observable<ApiResult<Student>> {
+    return this.apiService.post<ApiResult<Student>, ConfirmDiplomaException>(
+      '/Student/SetConfirm',
+      exceptedDiploma
     );
+  }
+
+  uploadExcelFile(
+    base64: string | ArrayBuffer | null
+  ): Observable<ApiResult<unknown>> {
+    return this.apiService
+      .post<ApiResult<FileImport>, FileImport>('/Student/Import', {
+        file: base64,
+      })
+      .pipe(
+        map(data => data),
+        catchError(error => throwError(error)),
+        shareReplay()
+      );
   }
 }
