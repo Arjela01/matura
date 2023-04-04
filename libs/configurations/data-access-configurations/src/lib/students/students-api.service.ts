@@ -4,11 +4,10 @@ import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import {catchError, map, Observable, shareReplay, throwError} from 'rxjs';
 import {
-  ConfirmDiplomaException,
+  ConfirmDiplomaException, FileImport,
   Student,
   StudentTableView,
 } from '@msh/shared/domain-models';
-import {FileImport} from "@msh/evaluations/domain-evaluations";
 
 @Injectable({
   providedIn: 'root',
