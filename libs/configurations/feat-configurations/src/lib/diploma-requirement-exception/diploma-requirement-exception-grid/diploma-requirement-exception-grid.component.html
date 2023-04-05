@@ -21,7 +21,7 @@
       <th pSortableColumn="studentId">
         ID
         <p-sortIcon field="studentId"></p-sortIcon>
-        <p-columnFilter type="numeric" field="id" display="menu"></p-columnFilter>
+        <p-columnFilter type="text" field="studentId" display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="firstName">
         Emri
@@ -74,11 +74,11 @@
             (click)="changeStatus(student)"
             [ngClass]="
               student.isConfirmedBySupervisor === true
-                ? ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
-                : ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
+                ? ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
+                : ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
             ">
             {{
-              student.isConfirmedBySupervisor === true ? 'Konfirmo' : 'Anullo'
+              student.isConfirmedBySupervisor === true ? 'Anullo' : 'Konfirmo'
             }}
           </button>
         </div>

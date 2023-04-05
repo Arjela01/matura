@@ -80,7 +80,7 @@ export class AppSidebarComponent implements OnInit {
           fragment: 'ignored',
         })
       ) {
-        node['expanded'] = true;
+        node['expanded'] = false;
         return true;
       }
 

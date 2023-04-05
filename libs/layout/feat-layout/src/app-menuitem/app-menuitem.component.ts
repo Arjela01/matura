@@ -11,7 +11,7 @@ import {
   Component,
   HostBinding,
   Input,
-  OnChanges,
+  OnChanges,OnInit,
 } from '@angular/core';
 import {
   NavigationEnd,
@@ -119,7 +119,7 @@ import { RippleModule } from 'primeng/ripple';
     ]),
   ],
 })
-export class AppMenuitemComponent implements OnChanges {
+export class AppMenuitemComponent implements OnChanges, OnInit {
   @Input() item: any;
 
   @Input() index!: number;
