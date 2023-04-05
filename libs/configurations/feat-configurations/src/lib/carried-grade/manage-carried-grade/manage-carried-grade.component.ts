@@ -8,9 +8,9 @@ import {
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
 import {
+  GRID_ACTIONS,
   GlobalToastService,
   GridEvent,
-  GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -161,6 +161,8 @@ export class ManageCarriedGradesComponent implements OnInit {
           this.toastService.showSuccess('Nota u shtua me sukses!');
           this.displayModal = false;
           this.getCarriedGrades(this.filters);
+        } else {
+          this.toastService.showError(response.errorMessage);
         }
 
         if (response.isBadRequest)
@@ -179,6 +181,8 @@ export class ManageCarriedGradesComponent implements OnInit {
           this.toastService.showSuccess('Nota u ndryshua me sukses!');
           this.displayModal = false;
           this.getCarriedGrades(this.filters);
+        } else {
+          this.toastService.showError(response.errorMessage);
         }
 
         if (response.isBadRequest)
