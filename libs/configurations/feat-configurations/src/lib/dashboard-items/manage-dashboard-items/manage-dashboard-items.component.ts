@@ -61,6 +61,7 @@ export class ManageDashboardItemsComponent {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedDashboardItem = {} as DashboardItem;
   }
   onModalClose() {
     this.displayModal = false;
