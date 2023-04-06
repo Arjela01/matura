@@ -149,14 +149,14 @@ export class ManageUniversitiesComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Rajoni u shtua me sukses!');
+          this.toastService.showSuccess('Universiteti u shtua me sukses!');
           this.displayModal = false;
           this.getUniversities(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit të rajonit!'
+            'Ndodhi nje problem gjatë ndryshimit të universiteti!'
           );
       });
   }
@@ -167,14 +167,14 @@ export class ManageUniversitiesComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Rajoni u ndryshua me sukses!');
+          this.toastService.showSuccess('Universiteti u ndryshua me sukses!');
           this.displayModal = false;
           this.getUniversities(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit të rajonit!'
+            'Ndodhi një problem gjatë ndryshimit të universiteti!'
           );
       });
   }
@@ -185,13 +185,13 @@ export class ManageUniversitiesComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showInfo('Rajoni u fshi me sukses!');
+          this.toastService.showInfo('Universiteti u fshi me sukses!');
           this.getUniversities(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë fshirjes së rajonit!'
+            'Ndodhi një problem gjatë fshirjes së universiteti!'
           );
       });
   }

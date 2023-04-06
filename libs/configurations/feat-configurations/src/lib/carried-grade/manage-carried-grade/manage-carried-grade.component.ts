@@ -116,7 +116,6 @@ export class ManageCarriedGradesComponent implements OnInit {
           message: 'Jeni te sigurt per fshirjen e notës?',
           accept: () => {
             this.deleteCarriedGrades(event.data as CarriedGrade);
-            this.toastService.showWarning('Nota u fshi!');
           },
         });
         break;
