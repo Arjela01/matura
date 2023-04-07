@@ -30,23 +30,23 @@ import { TooltipModule } from 'primeng/tooltip';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DynamicReportsComponent {
-  @Input() reports: Reports[] = [];
+  @Input() reports: any[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
 
   //Keep it local state because of Table Header checkbox not syncing
   selectedReports: Reports[] = [];
 
-  @Output() gridEvent = new EventEmitter<GridEvent<Reports | Reports[]>>();
+  @Output() gridEvent = new EventEmitter<GridEvent<any | any[]>>();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
   constructor(private router: Router) {}
-  onViweClick(reports: Reports) {
-    this.router.navigate([`reports/${reports.id}`]);
+  onViweClick(reports: any) {
+    this.router.navigate([`reports/${reports.reportId}`]);
   }
 
-  onDeleteClick(reports: Reports) {
+  onDeleteClick(reports: any) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,
       data: reports,
@@ -66,14 +66,14 @@ export class DynamicReportsComponent {
     }
   }
 
-  onRowSelect({ data }: { data: Reports }) {
+  onRowSelect({ data }: { data: any }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
       data: data,
     } as GridEvent<Reports>);
   }
 
-  onRowUnselect({ data }: { data: Reports }) {
+  onRowUnselect({ data }: { data: any }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
       data: data,

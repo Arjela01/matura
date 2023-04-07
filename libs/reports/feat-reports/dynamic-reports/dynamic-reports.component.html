@@ -5,14 +5,14 @@
     (onRowUnselect)="onRowUnselect($event)" (onLazyLoad)="loadRows($event)" [lazy]="true">
     <ng-template pTemplate="header">
         <tr>
-            <th pSortableColumn="name">
+            <th pSortableColumn="reportName">
                 Emri
                 <div>
                     <p-sortIcon field="name"></p-sortIcon>
                     <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
                 </div>
             </th>
-            <th pSortableColumn="path">
+            <th pSortableColumn="reportPath">
                 Linku
                 <div>
                     <p-sortIcon field="path"></p-sortIcon>
@@ -25,14 +25,14 @@
     <ng-template pTemplate="body" let-reports>
         <tr>
             <td style="width: 50%; min-width: 10rem">
-                {{ reports.name }}
+                {{ reports.reportName }}
             </td>
             <td style="width: 50%; min-width: 10rem">
-                {{ reports.path }}
+                {{ reports.reportPath }}
             </td>
             <td>
                 <div class="flex">
-                    <img src="assets/svg/view-form.svg"
+                    <img src="assets/svg/edit-form.svg"
                         class="p-button-rounded p-button-warning p-button-text mr-2 pointer" tooltipPosition="bottom"
                         (click)="onViweClick(reports)" pTooltip="Shih detajet" />
 

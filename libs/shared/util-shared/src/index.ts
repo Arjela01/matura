@@ -8,6 +8,7 @@ export * from './lib/directives/matching-passwords-directive';
 export * from './lib/directives/strong-password.directive';
 export * from './lib/enums/grid-event.model';
 export * from './lib/interceptors/error-interceptor.service';
+export * from './lib/pipe/safe-pipe';
 export * from './lib/services/api.service';
 export * from './lib/services/global-toast.service';
 export * from './lib/validators/validation';

@@ -4,9 +4,7 @@ import {
   ReportsApiService,
   RolesApiService,
 } from '@msh/configurations/data-access-configurations';
-import { Reports } from '@msh/configurations/domain-configurations';
 
-import { Router } from '@angular/router';
 import { GlobalToastService } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { LazyLoadEvent } from 'primeng/api';
@@ -36,27 +34,26 @@ import { DynamicReportsComponent } from '../dynamic-reports/dynamic-reports.comp
 })
 @UntilDestroy()
 export class ManageDynamicReportsComponent {
-  private reports$$ = new BehaviorSubject<Reports[]>([]);
+  private reports$$ = new BehaviorSubject<any[]>([]);
   reports$ = this.reports$$.asObservable();
   filters: LazyLoadEvent = {} as LazyLoadEvent;
   rolesDropdown: any;
   totalRecords = 0;
-  selectedReport: Reports | null = null;
-  selectedReports: Reports[] = [];
+  selectedReport: any | null = null;
+  selectedReports: any[] = [];
   displayModal = false;
 
   constructor(
     private readonly toastService: GlobalToastService,
     private reportsApiService: ReportsApiService,
-    private rolesService: RolesApiService,
-    private router: Router
+    private rolesService: RolesApiService
   ) {
     this.getRolesDropdown();
   }
 
   onNewClick() {
     this.displayModal = true;
-    this.selectedReport = {} as Reports;
+    this.selectedReport = {} as any;
   }
 
   onModalClose() {
@@ -64,7 +61,7 @@ export class ManageDynamicReportsComponent {
     this.selectedReport = null;
   }
 
-  onFormSave(report: Reports) {
+  onFormSave(report: any) {
     if (report.id) {
       this.updateReports(report);
     }
@@ -76,7 +73,7 @@ export class ManageDynamicReportsComponent {
   getReports($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
     this.reportsApiService
-      .loadReports($event)
+      .loadRoleReports($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.reports$$.next(response.data);
@@ -89,7 +86,7 @@ export class ManageDynamicReportsComponent {
       this.rolesDropdown = response.data;
     });
   }
-  addReports(reports: Reports) {
+  addReports(reports: any) {
     this.reportsApiService
       .save(reports)
       .pipe(untilDestroyed(this))
@@ -107,7 +104,7 @@ export class ManageDynamicReportsComponent {
       });
   }
 
-  updateReports(report: Reports) {
+  updateReports(report: any) {
     this.reportsApiService
       .update(report)
       .pipe(untilDestroyed(this))
@@ -125,7 +122,7 @@ export class ManageDynamicReportsComponent {
       });
   }
 
-  deleteReports(report: Reports) {
+  deleteReports(report: any) {
     this.reportsApiService
       .delete(report.id)
       .pipe(untilDestroyed(this))
