@@ -1,8 +1,5 @@
 <div class="grid mb-header">
   <div class="col-12">
-    <div class="card px-3 py-3" style="background: white">
-      <h4>Njoftime</h4>
-    </div>
     <div class="grid">
       <div class="col-12 md:col-6 lg:col-3" *ngIf="dashboardMetrics !== null">
         <div class="surface-card p-3 border-round" style="background: white">
@@ -105,12 +102,6 @@
           subheader="{{ card.title }}"
           [style]="{ width: 'auto' }"
           styleClass="p-card-shadow">
-          <ng-template pTemplate="header">
-            <img
-              alt="Card"
-              src="assets/images/udhezime.svg"
-              [style]="{ margin: 'auto', padding: '100px' }" />
-          </ng-template>
           <p>{{ card.description }}</p>
           <ng-template pTemplate="footer">
             <div class="grid">

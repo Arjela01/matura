@@ -2,14 +2,12 @@
   display: block;
 }
 
+.outer-wrapper {
+  background: var(--primary-color-navbar) !important;
+}
+
 .wrapper {
   border-radius: 56px;
-  padding: 0.3rem;
-  background: linear-gradient(
-    180deg,
-    var(--primary-color) 10%,
-    rgba(33, 150, 243, 0) 30%
-  );
 }
 
 :host ::ng-deep .pi-eye,
@@ -34,4 +32,31 @@
   display: block;
   width: 100%;
   padding: 0.75rem;
+}
+
+:host ::ng-deep .p-password {
+  width: 100%;
+}
+
+.login-page {
+  background: var(--primary-color-navbar) !important;
+}
+
+.institution {
+
+}
+
+.institution img {
+  max-width: 300px;
+}
+
+.institution .ministry-name,
+.institution .institution-name {
+  font-family: Georgia, Arial, sans-serif;
+  text-transform: uppercase;
+}
+
+
+.eAlbaniaLogin {
+  color: #ea1545;
 }
