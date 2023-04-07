@@ -6,11 +6,12 @@ import {
   Inject,
   ViewChild,
 } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { REPORTS_APP_URL } from '@msh/shared/util-shared';
 import RxPostmessenger from 'rx-postmessenger';
-import { first, forkJoin, map, Subject, tap } from 'rxjs';
+import { Subject, first, forkJoin, map, tap } from 'rxjs';
 import { IframeAutoHeightDirective } from '../iframe-auto-height.directive';
 
 @Component({
@@ -50,7 +51,8 @@ export class ReportRendererComponent {
   constructor(
     @Inject(REPORTS_APP_URL) readonly reports_app_url: string,
     private readonly authFacade: AuthFacade,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private sanitizer: DomSanitizer
   ) {}
 
   get reportUrl(): string {
@@ -59,5 +61,9 @@ export class ReportRendererComponent {
 
   onIframeLoad(): void {
     this.iframeLoaded$$.next(true);
+  }
+
+  sanitiseUrl() {
+    return this.sanitizer.bypassSecurityTrustHtml(this.reportUrl);
   }
 }
