@@ -60,12 +60,8 @@ export class DashboardComponent implements OnInit {
     this.dashboardItemsApiService.getAll().subscribe(result => {
       this.dashboardCards = [...result.data];
       this.cd.detectChanges();
-
     });
   }
-
-
-
 
   downloadDocument(dashboardItem: DashboardItem) {
     const byteCharacters = atob(dashboardItem.document);
