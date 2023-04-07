@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   Inject,
   ViewChild,
 } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { REPORTS_APP_URL } from '@msh/shared/util-shared';
@@ -42,7 +42,6 @@ export class ReportRendererComponent {
         this.reports_app_url
       );
 
-      console.log('notifying: ' + token);
       childMessenger.notify('report', {
         userToken: token,
       });
@@ -53,22 +52,17 @@ export class ReportRendererComponent {
     @Inject(REPORTS_APP_URL) readonly reports_app_url: string,
     private readonly authFacade: AuthFacade,
     private readonly route: ActivatedRoute,
-    private sanitizer: DomSanitizer
+    private cdr: ChangeDetectorRef
   ) {}
 
-  get reportUrl(): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(
-      `${this.reports_app_url}/?reportId=${this.id}`
-    );
+  get reportUrl(): string {
+    return `${this.reports_app_url}/?reportId=${this.id}`;
   }
 
-  onIframeLoad($event: Event): boolean {
+  onIframeLoad(): void {
     this.iframeLoaded$$.next(true);
-    $event.preventDefault();
-    return false;
   }
-
-  sanitiseUrl() {
-    // return this.sanitizer.bypassSecurityTrustHtml(this.reportUrl);
+  ngAfterInit() {
+    this.cdr.detach();
   }
 }
