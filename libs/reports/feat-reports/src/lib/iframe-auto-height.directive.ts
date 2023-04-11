@@ -19,6 +19,7 @@ export class IframeAutoHeightDirective {
     setTimeout(() => {
       const iframe = this.el.nativeElement as HTMLIFrameElement;
       this.renderer.setStyle(iframe, 'height', `${height}px`);
+      return false;
     }, 100);
   }
 }
