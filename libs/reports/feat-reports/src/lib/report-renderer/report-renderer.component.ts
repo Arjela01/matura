@@ -25,9 +25,9 @@ import { IframeAutoHeightDirective } from '../iframe-auto-height.directive';
 export class ReportRendererComponent {
   @ViewChild('reportRenderer', { static: true })
   iframe!: ElementRef<HTMLIFrameElement>;
-
   id: string = this.route.snapshot.params['id'];
-  url: string = 'https://matura-reporting.azurewebsites.net';
+  url = 'https://matura-reporting.azurewebsites.net';
+  iframeUrl = '';
   private readonly iframeLoaded$$ = new Subject<boolean>();
   private readonly iframeLoaded$ = this.iframeLoaded$$
     .asObservable()
@@ -46,7 +46,6 @@ export class ReportRendererComponent {
       });
     })
   );
-  iframeUrl: string = '';
 
   constructor(
     @Inject(REPORTS_APP_URL) readonly reports_app_url: string,
