@@ -361,9 +361,6 @@ export class A1FormComponent {
             this.toastService.showSuccess('Formulari A1 u shtua me sukses!');
             this.router.navigate(['/reports', this.a1Report])
               .then();
-            console.log(55555555,this.a1Report)
-
-            console.log(222, response.data.id)
           } else {
             response.errorMessage
               ? this.toastService.showError(response.errorMessage)
@@ -399,10 +396,6 @@ export class A1FormComponent {
             this.toastService.showSuccess('Formulari A1 u ndryshua me sukses!');
             this.router.navigate(['/reports', this.a1Report])
               .then();
-            console.log(233333,this.a1Report)
-
-            console.log(222, data.data.id)
-
           } else {
             data.errorMessage
               ? this.toastService.showError(data.errorMessage)

@@ -447,8 +447,8 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Formulari A1Z u shtua me sukses!');
           this.router.navigate(['/reports', this.a1ZReport])
-            .then();        }
-
+            .then();
+        }
         if (!response.isSuccessful) {
           this.toastService.showError(
             response.errorMessage
