@@ -44,7 +44,6 @@ export class DynamicReportsComponent {
   constructor(private router: Router) {}
   onViewClick(reports: any) {
     this.router.navigate([`reports/${reports.reportId}`]);
-    console.log(33333,reports.reportId)
   }
 
   onDeleteClick(reports: any) {
