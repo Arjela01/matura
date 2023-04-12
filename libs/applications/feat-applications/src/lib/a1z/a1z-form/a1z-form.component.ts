@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -11,10 +11,10 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { A1ZApiService } from '@msh/applications/data-access-applications';
-import { A1Z, CarriedGrade } from '@msh/applications/domain-application';
+import {FormsModule, NgForm} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {A1ZApiService} from '@msh/applications/data-access-applications';
+import {A1Z, CarriedGrade} from '@msh/applications/domain-application';
 import {
   A1ZCategoryApiService,
   AcademicYearApiService,
@@ -23,37 +23,31 @@ import {
   ExamTypeApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
-import { DropdownModel } from '@msh/shared/data-access-shared';
-import { Student } from '@msh/shared/domain-models';
-import {
-  SharedStudent,
-  SharedStudentLookupModule,
-} from '@msh/shared/student-lookup';
-import {
-  GlobalToastService,
-  GridEvent,
-  GRID_ACTIONS,
-} from '@msh/shared/util-shared';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { CalendarModule } from 'primeng/calendar';
-import { CheckboxModule } from 'primeng/checkbox';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { DialogModule } from 'primeng/dialog';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { PasswordModule } from 'primeng/password';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { RippleModule } from 'primeng/ripple';
-import { SelectButtonModule } from 'primeng/selectbutton';
-import { TableModule } from 'primeng/table';
-import { TooltipModule } from 'primeng/tooltip';
-import { BehaviorSubject } from 'rxjs';
-import { A1zStudentSearchComponent } from '../a1z-student-search/a1z-student-search.component';
-import { EXAM_TYPES } from './exam-type.enum';
+import {DropdownModel} from '@msh/shared/data-access-shared';
+import {Student} from '@msh/shared/domain-models';
+import {SharedStudent, SharedStudentLookupModule,} from '@msh/shared/student-lookup';
+import {GlobalToastService, GRID_ACTIONS, GridEvent,} from '@msh/shared/util-shared';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {ConfirmationService, LazyLoadEvent} from 'primeng/api';
+import {ButtonModule} from 'primeng/button';
+import {CalendarModule} from 'primeng/calendar';
+import {CheckboxModule} from 'primeng/checkbox';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {DialogModule} from 'primeng/dialog';
+import {DropdownModule} from 'primeng/dropdown';
+import {InputNumberModule} from 'primeng/inputnumber';
+import {InputTextModule} from 'primeng/inputtext';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {PasswordModule} from 'primeng/password';
+import {RadioButtonModule} from 'primeng/radiobutton';
+import {RippleModule} from 'primeng/ripple';
+import {SelectButtonModule} from 'primeng/selectbutton';
+import {TableModule} from 'primeng/table';
+import {TooltipModule} from 'primeng/tooltip';
+import {BehaviorSubject} from 'rxjs';
+import {A1zStudentSearchComponent} from '../a1z-student-search/a1z-student-search.component';
+import {EXAM_TYPES} from './exam-type.enum';
+import {Report} from "../../../../../../reports/reports-enum";
 
 
 interface ChangeEvent<T> {
@@ -144,6 +138,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   carriedModalType = EXAM_TYPES.D1;
   private carriedGrades$$ = new BehaviorSubject<CarriedGrade[]>([]);
   carriedGrades$ = this.carriedGrades$$.asObservable();
+  a1ZReport: Report = Report.A1ZForm_Report ;
 
   onSubmit() {
     this.submitted = true;
@@ -451,17 +446,15 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Formulari A1Z u shtua me sukses!');
-          this.router.navigate(['applications/a1z']);
-          console.log(response);
-        }
+          this.router.navigate(['/reports', this.a1ZReport])
+            .then();        }
 
-        if (response.isSuccessful === false) {
+        if (!response.isSuccessful) {
           this.toastService.showError(
             response.errorMessage
               ? response.errorMessage
               : 'Ndodhi një problem gjatë shtimit të formularit A1Z!'
           );
-          console.log(response);
         }
       });
   }
@@ -474,11 +467,11 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Formulari A1Z u ndryshua me sukses!');
-          this.router.navigate(['applications/a1z']);
-          console.log(response);
+          this.router.navigate(['/reports', this.a1ZReport])
+            .then();
         }
 
-        if (response.isSuccessful === false) {
+        if (!response.isSuccessful) {
           this.toastService.showError(
             response.errorMessage
               ? response.errorMessage
@@ -490,17 +483,17 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   }
 
   manageSubjects() {
-    if (this.enableD1Subject === false) {
+    if (!this.enableD1Subject) {
       this.a1z.scoreD1 = undefined;
       this.a1z.reasonD1 = undefined;
       this.a1z.yearD1 = undefined;
     }
-    if (this.enableD2Subject === false) {
+    if (!this.enableD2Subject) {
       this.a1z.scoreD2 = undefined;
       this.a1z.reasonD2 = undefined;
       this.a1z.yearD2 = undefined;
     }
-    if (this.enableD3Subject === false) {
+    if (!this.enableD3Subject) {
       this.a1z.scoreD3 = undefined;
       this.a1z.reasonD3 = undefined;
       this.a1z.yearD3 = undefined;

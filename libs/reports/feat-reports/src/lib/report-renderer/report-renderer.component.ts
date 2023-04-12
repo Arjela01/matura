@@ -13,6 +13,7 @@ import { REPORTS_APP_URL, SafePipe } from '@msh/shared/util-shared';
 import RxPostmessenger from 'rx-postmessenger';
 import { Subject, first, forkJoin, map, tap } from 'rxjs';
 import { IframeAutoHeightDirective } from '../iframe-auto-height.directive';
+import {environment} from "@msh/shared/environments";
 
 @Component({
   selector: 'msh-report-renderer',
@@ -27,7 +28,7 @@ export class ReportRendererComponent {
   iframe!: ElementRef<HTMLIFrameElement>;
 
   id: string = this.route.snapshot.params['id'];
-  url: string = 'https://matura-reporting.azurewebsites.net';
+  url = environment.reports_url ;
   private readonly iframeLoaded$$ = new Subject<boolean>();
   private readonly iframeLoaded$ = this.iframeLoaded$$
     .asObservable()
@@ -46,7 +47,7 @@ export class ReportRendererComponent {
       });
     })
   );
-  iframeUrl: string = '';
+  iframeUrl = '';
 
   constructor(
     @Inject(REPORTS_APP_URL) readonly reports_app_url: string,
@@ -61,7 +62,7 @@ export class ReportRendererComponent {
   ngOnInit() {
     if (this.id) {
       this.iframeUrl = `https://matura-reporting.azurewebsites.net/?reportId=${this.id}`;
-    }
+      console.log(22222,this.id)    }
   }
   ngAfterViewInit() {
     this.cdr.detach();

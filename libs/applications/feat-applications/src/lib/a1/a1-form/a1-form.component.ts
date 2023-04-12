@@ -35,6 +35,7 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { combineLatest, Observable, of, switchMap } from 'rxjs';
 import { ManageStudentsGridsDialogComponent } from '../manage-students-grids-dialog/manage-students-grids-dialog.component';
+import {Report} from "../../../../../../reports/reports-enum";
 
 let INITIAL_FILTER = {};
 @Component({
@@ -103,6 +104,9 @@ export class A1FormComponent {
   id: string | null = null;
   studentId: string | null = null;
   formId: string | null;
+  a1Report : Report = Report.A1Form_Report
+
+
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -355,7 +359,11 @@ export class A1FormComponent {
         next: (response: any) => {
           if (response.isSuccessful) {
             this.toastService.showSuccess('Formulari A1 u shtua me sukses!');
-            this.router.navigate(['/applications/a1']);
+            this.router.navigate(['/reports', this.a1Report])
+              .then();
+            console.log(55555555,this.a1Report)
+
+            console.log(222, response.data.id)
           } else {
             response.errorMessage
               ? this.toastService.showError(response.errorMessage)
@@ -389,7 +397,12 @@ export class A1FormComponent {
         next: (data: any) => {
           if (data.isSuccessful) {
             this.toastService.showSuccess('Formulari A1 u ndryshua me sukses!');
-            this.router.navigate(['/applications/a1']);
+            this.router.navigate(['/reports', this.a1Report])
+              .then();
+            console.log(233333,this.a1Report)
+
+            console.log(222, data.data.id)
+
           } else {
             data.errorMessage
               ? this.toastService.showError(data.errorMessage)

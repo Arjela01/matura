@@ -42,8 +42,9 @@ export class DynamicReportsComponent {
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
   constructor(private router: Router) {}
-  onViweClick(reports: any) {
+  onViewClick(reports: any) {
     this.router.navigate([`reports/${reports.reportId}`]);
+    console.log(33333,reports.reportId)
   }
 
   onDeleteClick(reports: any) {
