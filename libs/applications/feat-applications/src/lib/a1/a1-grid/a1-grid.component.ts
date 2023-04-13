@@ -11,7 +11,7 @@ import {
 } from '@msh/shared/domain-models';
 import { GlobalToastService, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import {ConfirmationService, LazyLoadEvent} from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -26,6 +26,8 @@ import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject } from 'rxjs';
+import { PrimeNGConfig } from 'primeng/api';
+
 @Component({
   selector: 'a1-grid',
   standalone: true,
@@ -72,8 +74,38 @@ export class A1GridComponent {
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly a1ApiService: A1ApiService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private primengConfig : PrimeNGConfig,
+
+    // private TranslateService : TranslateService
+) {}
+
+
+  ngOnInit() {
+    this.primengConfig.setTranslation({
+      startsWith: 'Fillon me',
+      contains: 'Përmban',
+      notContains: 'Nuk përmban',
+      endsWith:'Mbaron me',
+      equals: 'E njëjtë',
+      notEquals: 'Jo e njëjtë',
+      dateIs: 'Data është',
+      dateIsNot: 'Data nuk është',
+      dateAfter: 'Data pas',
+      dateBefore: 'Data para',
+      matchAll: 'Përputhen të gjitha',
+      matchAny: 'Përputhen me çfarëdo',
+      apply: 'Apliko',
+      clear: 'Fshi',
+      addRule: 'Shto Rregull',
+      removeRule: 'Hiq Rregullin',
+
+
+    })
+  }
+
+
+
 
   onNewClick() {
     this.router.navigate(['applications/save-a1']);
