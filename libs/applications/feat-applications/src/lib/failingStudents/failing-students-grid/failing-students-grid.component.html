@@ -2,7 +2,7 @@
   #dt
   dataKey="id"
   responsiveLayout="scroll"
-  [value]="students"
+  [value]="failingStudents"
   [totalRecords]="totalRecords"
   [rows]="10"
   [paginator]="true"
@@ -39,28 +39,28 @@
           field="lastName"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="studentId">
+      <th pSortableColumn="studentIdentifier">
         Id e Maturantit
-        <p-sortIcon field="studentId"></p-sortIcon>
+        <p-sortIcon field="studentIdentifier"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="studentId"
+          field="studentIdentifier"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="idCard">
+      <th pSortableColumn="personalIdentifier">
         NID
-        <p-sortIcon field="idCard"></p-sortIcon>
+        <p-sortIcon field="personalIdentifier"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="idCard"
+          field="personalIdentifier"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="highSchoolName">
+      <th pSortableColumn="schoolName">
         Shkolla e Mesme
-        <p-sortIcon field="highSchoolName"></p-sortIcon>
+        <p-sortIcon field="schoolName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="highSchoolName"
+          field="schoolName"
           display="menu"></p-columnFilter>
       </th>
       <th>Shto Lenden</th>
@@ -78,13 +78,13 @@
         {{ failingStudent.lastName }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ failingStudent.studentId }}
+        {{ failingStudent.studentIdentifier }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ failingStudent.idCard }}
+        {{ failingStudent.personalIdentifier }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ failingStudent.highSchoolName }}
+        {{ failingStudent.schoolName }}
       </td>
       <td>
         <div class="flex">

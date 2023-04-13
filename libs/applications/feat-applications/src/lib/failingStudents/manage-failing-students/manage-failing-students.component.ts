@@ -2,8 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FailingStudentApiService } from '@msh/applications/data-access-applications';
 import { FailingStudent } from '@msh/applications/domain-application';
-import { StudentsApiService } from '@msh/configurations/data-access-configurations';
-import { Student } from '@msh/shared/domain-models';
+
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -40,8 +39,8 @@ import { FailingStudentsGridComponent } from '../failing-students-grid/failing-s
   providers: [ConfirmationService],
 })
 export class ManageFailingStudentsComponent {
-  private students$$ = new BehaviorSubject<Student[]>([]);
-  students$ = this.students$$.asObservable();
+  private failingStudents$$ = new BehaviorSubject<FailingStudent[]>([]);
+  failingStudents$ = this.failingStudents$$.asObservable();
   filters: LazyLoadEvent | null = null;
 
   totalRecords = 0;
@@ -50,7 +49,6 @@ export class ManageFailingStudentsComponent {
 
   constructor(
     private readonly failingStudentService: FailingStudentApiService,
-    private readonly studentService: StudentsApiService,
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService
   ) {}
@@ -78,18 +76,18 @@ export class ManageFailingStudentsComponent {
   onFormSave(failingStudent: FailingStudent) {
     this.saveFailingStudent({
       ...failingStudent,
-      studentId: failingStudent.id,
+      id: failingStudent.id,
     });
   }
 
   getStudents($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    this.studentService
-      .loadStudents($event)
+    this.failingStudentService
+      .loadFailingStudents($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.students$$.next(response.data);
+        this.failingStudents$$.next(response.data);
         this.totalRecords = response.total;
       });
   }
@@ -99,13 +97,13 @@ export class ManageFailingStudentsComponent {
       .save(failingStudent)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        if (response.isSuccessful === true) {
+        if (response.isSuccessful) {
           this.toastService.showSuccess('Studenti u ndryshua me sukses!');
           this.displayModal = false;
           this.getStudents(this.filters as LazyLoadEvent);
         }
 
-        if (response.isSuccessful === false)
+        if (!response.isSuccessful)
           this.toastService.showError(
             'Ndodhi nje problem gjatë ndryshimit të studentit mbetes!'
           );
