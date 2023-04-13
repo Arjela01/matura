@@ -40,13 +40,6 @@
           field="examTypeName"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="studentName">
-        Studenti
-        <p-columnFilter
-          type="custom"
-          field="studentName"
-          display="menu"></p-columnFilter>
-      </th>
       <th pSortableColumn="takenSeats">
         Vendet e Zëna
         <p-columnFilter
@@ -67,9 +60,6 @@
       </td>
       <td style="width: 25%; min-width: 10rem">
         {{ examAssignment.examTypeName }}
-      </td>
-      <td style="width: 20%; min-width: 10rem">
-        {{ examAssignment.studentName }}
       </td>
       <td style="width: 25%; min-width: 10rem">
         {{ examAssignment.takenSeats }}

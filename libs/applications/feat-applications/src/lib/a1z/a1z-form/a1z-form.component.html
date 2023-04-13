@@ -75,15 +75,15 @@
         </div>
 
         <div class="field" [style]="{ width: '500px' }">
-          <label for="highSchoolGraduationYear"
+          <label for="YearOfSchoolA1Z"
             >Viti i përfundimit të shkollës së mesme</label
           >
           <input
             type="number"
             pInputText
-            id="highSchoolGraduationYear"
-            name="highSchoolGraduationYear"
-            [(ngModel)]="a1z.highSchoolGraduationYear"
+            id="YearOfSchoolA1Z"
+            name="YearOfSchoolA1Z"
+            [(ngModel)]="a1z.YearOfSchoolA1Z"
             autofocus />
           <small class="p-error block" *ngIf="submitted && !isGraduationYearValid()">
             Viti i përfundimit të shkollës së mesme nuk mund të jetë më i madh

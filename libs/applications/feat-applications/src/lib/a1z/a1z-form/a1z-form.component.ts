@@ -55,7 +55,6 @@ import { BehaviorSubject } from 'rxjs';
 import { A1zStudentSearchComponent } from '../a1z-student-search/a1z-student-search.component';
 import { EXAM_TYPES } from './exam-type.enum';
 
-
 interface ChangeEvent<T> {
   originalEvent: Event;
   value: T;
@@ -131,8 +130,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
 
   a1z: A1Z = {
     id: 0,
-    highSchoolGraduationYear: ''
-
+    YearOfSchoolA1Z: '',
   };
 
   booly: DropdownModel<boolean>[] = [
@@ -257,8 +255,8 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   }
 
   isGraduationYearValid(): boolean {
-    if (this.a1z.highSchoolGraduationYear !== undefined) {
-      const graduationYear = parseInt(this.a1z.highSchoolGraduationYear, 10);
+    if (this.a1z.YearOfSchoolA1Z !== undefined) {
+      const graduationYear = parseInt(this.a1z.YearOfSchoolA1Z, 10);
       return graduationYear <= this.currentYear;
     }
     return false;
