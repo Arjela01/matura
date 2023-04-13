@@ -5,13 +5,10 @@ import { Router } from '@angular/router';
 import { A1ApiService } from '@msh/applications/data-access-applications';
 import { A1Z } from '@msh/applications/domain-application';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import {
-  AcademicYear,
-  Student
-} from '@msh/shared/domain-models';
+import { AcademicYear, Student } from '@msh/shared/domain-models';
 import { GlobalToastService, GRID_ACTIONS } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {ConfirmationService, LazyLoadEvent} from 'primeng/api';
+import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -74,38 +71,8 @@ export class A1GridComponent {
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly a1ApiService: A1ApiService,
-    private router: Router,
-    private primengConfig : PrimeNGConfig,
-
-    // private TranslateService : TranslateService
-) {}
-
-
-  ngOnInit() {
-    this.primengConfig.setTranslation({
-      startsWith: 'Fillon me',
-      contains: 'Përmban',
-      notContains: 'Nuk përmban',
-      endsWith:'Mbaron me',
-      equals: 'E njëjtë',
-      notEquals: 'Jo e njëjtë',
-      dateIs: 'Data është',
-      dateIsNot: 'Data nuk është',
-      dateAfter: 'Data pas',
-      dateBefore: 'Data para',
-      matchAll: 'Përputhen të gjitha',
-      matchAny: 'Përputhen me çfarëdo',
-      apply: 'Apliko',
-      clear: 'Fshi',
-      addRule: 'Shto Rregull',
-      removeRule: 'Hiq Rregullin',
-
-
-    })
-  }
-
-
-
+    private router: Router
+  ) {}
 
   onNewClick() {
     this.router.navigate(['applications/save-a1']);
