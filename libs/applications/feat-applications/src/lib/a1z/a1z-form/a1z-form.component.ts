@@ -222,7 +222,6 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       this.a1z.studentId = student.studentId;
       this.studentInputData = student?.studentId + '-' + student?.studentFirstName;
     }
-    console.log(55555555,this.studentInputData)
   }
 
   onStudentChange(student: Student) {
@@ -239,7 +238,6 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         '-' +
         student?.lastName;
     }
-    console.log(2222,this.studentInputData)
   }
 
 
