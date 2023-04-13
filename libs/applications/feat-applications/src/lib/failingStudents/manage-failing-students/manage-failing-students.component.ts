@@ -76,7 +76,7 @@ export class ManageFailingStudentsComponent {
   onFormSave(failingStudent: FailingStudent) {
     this.saveFailingStudent({
       ...failingStudent,
-      studentId: failingStudent.id,
+      id: failingStudent.id,
     });
   }
 
