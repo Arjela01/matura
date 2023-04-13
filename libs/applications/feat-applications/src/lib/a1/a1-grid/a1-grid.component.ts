@@ -23,7 +23,6 @@ import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject } from 'rxjs';
-import { PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'a1-grid',
