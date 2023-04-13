@@ -92,9 +92,8 @@ export class ManageFailingStudentsFormComponent {
   };
 
   failingStudent: FailingStudent = {
-    id: 0,
+    id: '',
     subject: undefined,
-    studentId: undefined,
   };
 
   onCancelClick() {
@@ -108,14 +107,14 @@ export class ManageFailingStudentsFormComponent {
     }
   }
 
-  getFailingStudentById(studentId: number) {
+  getFailingStudentById(studentId: string) {
     this.failingStudentService
       .getOne(studentId)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful === true) {
           this.failingStudent = response.data;
-          this.getStudentData(response.data.studentId);
+          this.getStudentData(response.data.id);
           this.cd.detectChanges();
         }
 
