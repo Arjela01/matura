@@ -2,7 +2,7 @@
   #dt
   dataKey="id"
   responsiveLayout="scroll"
-  [value]="examAssignments"
+  [value]="emptySites"
   [totalRecords]="totalRecords"
   [rows]="10"
   [paginator]="true"
@@ -32,6 +32,14 @@
           field="date"
           display="menu"></p-columnFilter>
       </th>
+      <th pSortableColumn="time">
+        Ora e Provimit
+        <p-sortIcon field="time"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="time"
+          display="menu"></p-columnFilter>
+      </th>
       <th pSortableColumn="examTypeName">
         Tipi i Provimit
         <p-sortIcon field="examTypeName"></p-sortIcon>
@@ -42,27 +50,31 @@
       </th>
       <th pSortableColumn="takenSeats">
         Vendet e Zëna
+        <p-sortIcon field="takenSeats"></p-sortIcon>
         <p-columnFilter
-          type="number"
+          type="numeric"
           field="takenSeats"
           display="menu"></p-columnFilter>
       </th>
       <th></th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-examAssignment>
+  <ng-template pTemplate="body" let-emptySite>
     <tr>
       <td style="width: 30%; min-width: 10rem">
-        {{ examAssignment.examSiteName }}
+        {{ emptySite.examSiteName }}
       </td>
       <td style="width: 25%; min-width: 10rem">
-        {{ examAssignment.date | date : 'dd.MM.yyyy' }}
+        {{ emptySite.date | date : 'dd.MM.yyyy' }}
       </td>
       <td style="width: 25%; min-width: 10rem">
-        {{ examAssignment.examTypeName }}
+        {{ emptySite.date | date : 'hh.mm' }}
       </td>
       <td style="width: 25%; min-width: 10rem">
-        {{ examAssignment.takenSeats }}
+        {{ emptySite.examTypeName }}
+      </td>
+      <td style="width: 25%; min-width: 10rem">
+        {{ emptySite.takenSeats }}
       </td>
       <td style="width: 5%; min-width: 10rem">
         <div class="flex">
@@ -74,7 +86,7 @@
             pTooltip="Zbraz Qendren"
             tooltipPosition="bottom"
             class="p-button-success p-button-text mr-2"
-            (click)="onEmptySite(examAssignment)"></button>
+            (click)="onEmptySite(emptySite)"></button>
         </div>
       </td>
     </tr>
