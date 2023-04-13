@@ -21,13 +21,13 @@ export class FailingStudentApiService {
     return this.apiservice.post('/FailingStudents/TableData', event);
   }
 
-  delete(id: number): Observable<ApiResult<unknown>> {
+  delete(id: string): Observable<ApiResult<unknown>> {
     return this.apiservice.delete<ApiResult<FailingStudent>>(
       `/FailingStudents/${id}`
     );
   }
 
-  getOne(id: number): Observable<ApiResult<FailingStudent>> {
+  getOne(id: string): Observable<ApiResult<FailingStudent>> {
     return this.apiservice.get(`/FailingStudents/${id}`);
   }
 

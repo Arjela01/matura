@@ -95,7 +95,7 @@ export class ManagePassInFallComponent {
           this.failingStudentService
             .update({
               ...failingStudent,
-              studentId: response.data.studentId,
+              id: response.data.id,
               willRetryInFall: true,
             })
             .pipe(untilDestroyed(this))
