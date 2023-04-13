@@ -47,9 +47,7 @@ export class ManageDynamicReportsComponent {
     private readonly toastService: GlobalToastService,
     private reportsApiService: ReportsApiService,
     private rolesService: RolesApiService
-  ) {
-    this.getRolesDropdown();
-  }
+  ) {}
 
   onNewClick() {
     this.displayModal = true;
@@ -61,15 +59,6 @@ export class ManageDynamicReportsComponent {
     this.selectedReport = null;
   }
 
-  onFormSave(report: any) {
-    if (report.id) {
-      this.updateReports(report);
-    }
-    if (!report.id) {
-      this.addReports(report);
-    }
-  }
-
   getReports($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
     this.reportsApiService
@@ -78,64 +67,6 @@ export class ManageDynamicReportsComponent {
       .subscribe(response => {
         this.reports$$.next(response.data);
         this.totalRecords = response.total;
-      });
-  }
-
-  getRolesDropdown() {
-    this.rolesService.loadDropdownList().subscribe(response => {
-      this.rolesDropdown = response.data;
-    });
-  }
-  addReports(reports: any) {
-    this.reportsApiService
-      .save(reports)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showSuccess('Raporti u shtua me sukses!');
-          this.displayModal = false;
-          this.getReports(this.filters);
-        }
-
-        if (response.isBadRequest)
-          this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit të raportit !'
-          );
-      });
-  }
-
-  updateReports(report: any) {
-    this.reportsApiService
-      .update(report)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showSuccess('Raporti u ndryshua me sukses!');
-          this.displayModal = false;
-          this.getReports(this.filters);
-        }
-
-        if (response.isBadRequest)
-          this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit të raportit!'
-          );
-      });
-  }
-
-  deleteReports(report: any) {
-    this.reportsApiService
-      .delete(report.id)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showInfo('Raporti u fshi me sukses!');
-          this.getReports(this.filters);
-        }
-
-        if (response.isBadRequest)
-          this.toastService.showError(
-            'Ndodhi nje problem gjatë fshirjes së raportit!'
-          );
       });
   }
 }
