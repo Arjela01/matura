@@ -53,8 +53,7 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject } from 'rxjs';
 import { EXAM_TYPES } from './exam-type.enum';
-import {Report} from "../../../../../../reports/reports-enum";
-
+import { Report } from '../../../../../../reports/reports-enum';
 
 interface ChangeEvent<T> {
   originalEvent: Event;
@@ -130,8 +129,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
 
   a1z: A1Z = {
     id: 0,
-    yearOfSchoolA1Z: ''
-
+    yearOfSchoolA1Z: '',
   };
 
   booly: DropdownModel<boolean>[] = [
@@ -143,7 +141,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   carriedModalType = EXAM_TYPES.D1;
   private carriedGrades$$ = new BehaviorSubject<CarriedGrade[]>([]);
   carriedGrades$ = this.carriedGrades$$.asObservable();
-  a1ZReport: Report = Report.A1ZForm_Report ;
+  a1ZReport: Report = Report.A1ZForm_Report;
 
   onSubmit() {
     this.submitted = true;
@@ -222,7 +220,8 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       this.studentInputData = ' ';
     } else {
       this.a1z.studentId = student.studentId;
-      this.studentInputData = student?.studentId + '-' + student?.studentFirstName;
+      this.studentInputData =
+        student?.studentId + '-' + student?.studentFirstName;
     }
   }
 
@@ -436,8 +435,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Formulari A1Z u shtua me sukses!');
-          this.router.navigate(['/reports', this.a1ZReport])
-            .then();
+          this.router.navigate(['/reports', this.a1ZReport]).then();
         }
         if (!response.isSuccessful) {
           this.toastService.showError(
@@ -457,8 +455,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Formulari A1Z u ndryshua me sukses!');
-          this.router.navigate(['/reports', this.a1ZReport])
-            .then();
+          this.router.navigate(['/reports', this.a1ZReport]).then();
         }
 
         if (!response.isSuccessful) {
