@@ -13,7 +13,6 @@ import { REPORTS_APP_URL, SafePipe } from '@msh/shared/util-shared';
 import RxPostmessenger from 'rx-postmessenger';
 import { Subject, first, forkJoin, map, tap } from 'rxjs';
 import { IframeAutoHeightDirective } from '../iframe-auto-height.directive';
-import {environment} from "@msh/shared/environments";
 
 @Component({
   selector: 'msh-report-renderer',
@@ -27,8 +26,8 @@ export class ReportRendererComponent {
   @ViewChild('reportRenderer', { static: true })
   iframe!: ElementRef<HTMLIFrameElement>;
   id: string = this.route.snapshot.params['id'];
+  url = 'https://matura-reporting.azurewebsites.net';
   iframeUrl = '';
-  url = environment.reports_url ;
   private readonly iframeLoaded$$ = new Subject<boolean>();
   private readonly iframeLoaded$ = this.iframeLoaded$$
     .asObservable()
