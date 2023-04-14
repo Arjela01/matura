@@ -26,7 +26,6 @@ export class ReportRendererComponent {
   @ViewChild('reportRenderer', { static: true })
   iframe!: ElementRef<HTMLIFrameElement>;
   id: string = this.route.snapshot.params['id'];
-  url = 'https://matura-reporting.azurewebsites.net';
   iframeUrl = '';
   private readonly iframeLoaded$$ = new Subject<boolean>();
   private readonly iframeLoaded$ = this.iframeLoaded$$
@@ -39,7 +38,7 @@ export class ReportRendererComponent {
     tap(token => {
       const childMessenger = RxPostmessenger.connect(
         this.iframe.nativeElement.contentWindow as Window,
-        this.url
+        this.reports_app_url
       );
       childMessenger.notify('report', {
         userToken: token,
@@ -59,10 +58,7 @@ export class ReportRendererComponent {
   }
   ngOnInit() {
     if (this.id) {
-      this.iframeUrl = `https://matura-reporting.azurewebsites.net/?reportId=${this.id}`;
+      this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}`;
     }
-  }
-  ngAfterViewInit() {
-    this.cdr.detach();
   }
 }

@@ -461,9 +461,9 @@
             type="password"
             pPassword
             [feedback]="false"
+            required
             id="overseerCode"
             name="overseerCode"
-            required
             [(ngModel)]="a1z.overSeerCode"
             autofocus />
           <small class="p-error block" *ngIf="submitted && !a1z.overSeerCode">

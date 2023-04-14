@@ -102,7 +102,6 @@ export class ManageReportsComponent {
           message: 'Jeni te sigurt per fshirjen e raportit?',
           accept: () => {
             this.deleteReports(event.data as Reports);
-            this.toastService.showWarning('Raporti u fshi!');
           },
         });
         break;
