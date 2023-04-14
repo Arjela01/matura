@@ -114,7 +114,8 @@ export class ManageFailingStudentsFormComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.failingStudent = response.data;
-          this.getStudentData(response.data.id);
+          this.failingStudent.studentId = response.data.studentId;
+          this.getStudentData(response.data.studentId);
           this.cd.detectChanges();
         }
 
@@ -126,13 +127,14 @@ export class ManageFailingStudentsFormComponent {
       });
   }
 
-  getStudentData(id: any) {
-    this.failingStudentService
-      .getOne(id)
+  getStudentData(studentId: any) {
+    this.studentService
+      .getById(studentId)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.failingStudent = response.data;
+          this.failingStudent.studentId = this.student.studentId
           this.cd.detectChanges();
         }
       });

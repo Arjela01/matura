@@ -82,8 +82,8 @@ export class ManageFailingStudentsComponent {
     this.selectedFailingStudent = null;
   }
 
-  onFormSave(failingStudent: FailingStudent) {
-    this.updateFailingStudent(failingStudent);
+  onFormSave(id: FailingStudent) {
+    this.updateFailingStudent(id);
   }
 
   getFailingStudents($event: LazyLoadEvent) {
@@ -103,11 +103,11 @@ export class ManageFailingStudentsComponent {
       .delete(failingStudent.id!)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        if (response.isSuccessful === true) {
+        if (response.isSuccessful) {
           this.toastService.showSuccess('Studenti u fshi me sukses!');
           this.getFailingStudents(this.filters as LazyLoadEvent);
         }
-        if (response.isSuccessful === false)
+        if (!response.isSuccessful)
           this.toastService.showError(
             'Ndodhi nje problem gjatë fshirjes së studentit mbetes!'
           );
@@ -115,17 +115,19 @@ export class ManageFailingStudentsComponent {
   }
 
   updateFailingStudent(failingStudent: FailingStudent) {
+    // eslint-disable-next-line no-debugger
+    debugger;
     this.failingStudentService
       .update(failingStudent)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        if (response.isSuccessful === true) {
+        if (response.isSuccessful) {
           this.toastService.showSuccess('Studenti u ndryshua me sukses!');
           this.displayModal = false;
           this.getFailingStudents(this.filters as LazyLoadEvent);
         }
 
-        if (response.isSuccessful === false)
+        if (!response.isSuccessful)
           this.toastService.showError(
             'Ndodhi nje problem gjatë ndryshimit të studentit mbetes!'
           );
