@@ -20,7 +20,6 @@
               [(ngModel)]="studentInputData"
               required
               autofocus
-              disabled
               [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !studentInputData
               }" />
@@ -75,15 +74,15 @@
         </div>
 
         <div class="field" [style]="{ width: '500px' }">
-          <label for="highSchoolGraduationYear"
+          <label for="yearOfSchoolA1Z"
             >Viti i përfundimit të shkollës së mesme</label
           >
           <input
             type="number"
             pInputText
-            id="highSchoolGraduationYear"
-            name="highSchoolGraduationYear"
-            [(ngModel)]="a1z.highSchoolGraduationYear"
+            id="yearOfSchoolA1Z"
+            name="yearOfSchoolA1Z"
+            [(ngModel)]="a1z.yearOfSchoolA1Z"
             autofocus />
           <small class="p-error block" *ngIf="submitted && !isGraduationYearValid()">
             Viti i përfundimit të shkollës së mesme nuk mund të jetë më i madh
