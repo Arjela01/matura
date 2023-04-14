@@ -141,7 +141,7 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
     }
   }
 
-  onStudentChange(student: any) {
+  onStudentChange(student: Student) {
     if (!student) {
       this.examSecret.studentInputData = ' ';
     } else {

@@ -5,7 +5,7 @@ export interface A1Z {
   studentId?: string;
   alreadyHaveDiploma?: boolean;
   isA1?: boolean;
-  YearOfSchoolA1Z?: string;
+  yearOfSchoolA1Z?: string;
   overSeerCode?: string;
   isApplyingToForeignCountries?: boolean;
 
@@ -41,18 +41,11 @@ export interface A1Z {
 
 
   studentFirstName?:string;
-
   studentFatherName?:string;
-
   studentLastName?:string;
-
   studentBirthDate?:Date;
-
   studentBirthPlace?:string;
-
   studentIdentifier?:string;
-
-
 }
 
 

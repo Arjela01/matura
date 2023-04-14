@@ -52,8 +52,8 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject } from 'rxjs';
-import { A1zStudentSearchComponent } from '../a1z-student-search/a1z-student-search.component';
 import { EXAM_TYPES } from './exam-type.enum';
+
 
 interface ChangeEvent<T> {
   originalEvent: Event;
@@ -80,7 +80,6 @@ interface ChangeEvent<T> {
     ConfirmDialogModule,
     CalendarModule,
     DropdownModule,
-    A1zStudentSearchComponent,
     SharedStudentLookupModule,
     PasswordModule,
     SelectButtonModule,
@@ -130,7 +129,8 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
 
   a1z: A1Z = {
     id: 0,
-    YearOfSchoolA1Z: '',
+    yearOfSchoolA1Z: ''
+
   };
 
   booly: DropdownModel<boolean>[] = [
@@ -201,7 +201,6 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         this.cd.detectChanges();
       });
     }
-    console.log('init');
   }
 
   ngOnChanges(): void {
@@ -212,23 +211,17 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
     switch (event.action) {
       case GRID_ACTIONS.EDIT:
         this.selectedStudent = Object.assign({}, event.data as Student);
-        console.log(event.data);
         this.showStudentModal = false;
         break;
     }
   }
-
-  onStudentInit(student: A1Z) {
-    this.studentService.getById(student.studentId).subscribe(data => {
-      if (data.isSuccessful) {
-        this.selectedStudent = data.data;
-        this.a1z.studentId = data.data.id;
-        this.studentInputData = this.getStudentDisplayName(data.data);
-        this.cd.detectChanges();
-      } else {
-        this.toastService.showError('Ndodhi një gabim në marrjen e studentit.');
-      }
-    });
+  onStudentInit(student: any) {
+    if (!student) {
+      this.studentInputData = ' ';
+    } else {
+      this.a1z.studentId = student.studentId;
+      this.studentInputData = student?.studentId + '-' + student?.studentFirstName;
+    }
   }
 
   onStudentChange(student: Student) {
@@ -236,27 +229,21 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       this.studentInputData = ' ';
     } else {
       this.a1z.studentId = student.id;
-      this.selectedStudent = student;
-
-      this.studentInputData = this.getStudentDisplayName(student);
+      this.studentInputData =
+        student?.studentId +
+        '-' +
+        student?.firstName +
+        '-' +
+        student?.middleName +
+        '-' +
+        student?.lastName;
     }
   }
 
-  private getStudentDisplayName(student: Student): string {
-    return (
-      student.id +
-      '-' +
-      student.firstName +
-      '-' +
-      student.middleName +
-      '-' +
-      student.lastName
-    );
-  }
 
   isGraduationYearValid(): boolean {
-    if (this.a1z.YearOfSchoolA1Z !== undefined) {
-      const graduationYear = parseInt(this.a1z.YearOfSchoolA1Z, 10);
+    if (this.a1z.yearOfSchoolA1Z !== undefined) {
+      const graduationYear = parseInt(this.a1z.yearOfSchoolA1Z, 10);
       return graduationYear <= this.currentYear;
     }
     return false;
@@ -325,7 +312,6 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       .loadStudents($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        console.log(response);
         this.studentList$$.next(response.data);
         this.totalRecords = response.total;
       });
