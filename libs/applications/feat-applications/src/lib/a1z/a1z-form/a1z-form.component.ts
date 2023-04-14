@@ -52,8 +52,8 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject } from 'rxjs';
-import { A1zStudentSearchComponent } from '../a1z-student-search/a1z-student-search.component';
 import { EXAM_TYPES } from './exam-type.enum';
+import {Report} from "../../../../../../reports/reports-enum";
 
 
 interface ChangeEvent<T> {
