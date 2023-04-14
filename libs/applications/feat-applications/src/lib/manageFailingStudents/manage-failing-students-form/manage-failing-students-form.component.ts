@@ -61,7 +61,7 @@ export class ManageFailingStudentsFormComponent {
   ) {}
 
   ngOnInit(): void {
-    this.getFailingStudentById(this.failingStudent.id!);
+   this.getFailingStudentById(this.failingStudent.id!);
   }
 
   submitted = false;
@@ -112,13 +112,13 @@ export class ManageFailingStudentsFormComponent {
       .getOne(studentId)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        if (response.isSuccessful === true) {
+        if (response.isSuccessful) {
           this.failingStudent = response.data;
           this.getStudentData(response.data.id);
           this.cd.detectChanges();
         }
 
-        if (response.isSuccessful === false) {
+        if (!response.isSuccessful) {
           this.toastService.showError(
             'Ndodhi nje problem gjatë kerkimit te studentit mbetes!'
           );
@@ -127,12 +127,12 @@ export class ManageFailingStudentsFormComponent {
   }
 
   getStudentData(id: any) {
-    this.studentService
-      .getById(id)
+    this.failingStudentService
+      .getOne(id)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        if (response.isSuccessful === true) {
-          this.student = response.data;
+        if (response.isSuccessful) {
+          this.failingStudent = response.data;
           this.cd.detectChanges();
         }
       });
