@@ -1,3 +1,4 @@
+import { ClipboardModule } from '@angular/cdk/clipboard';
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -29,11 +30,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PasswordModule } from 'primeng/password';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { roleList } from './role-list';
-import { ClipboardModule } from '@angular/cdk/clipboard';
 import { RippleModule } from 'primeng/ripple';
 import { TooltipModule } from 'primeng/tooltip';
-
+import { roleList } from './role-list';
 
 @UntilDestroy()
 @Component({
@@ -56,6 +55,7 @@ import { TooltipModule } from 'primeng/tooltip';
     ClipboardModule,
     RippleModule,
     TooltipModule,
+    PasswordModule,
   ],
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss'],
@@ -180,9 +180,13 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
       this.userService
         .getUserById(this.user.id)
         .pipe(untilDestroyed(this))
-        .subscribe(response => {
+        .subscribe((response: any) => {
           if (response.isSuccessful) {
             this.user = response.data;
+            const roleMatch = {
+              value: response.data.roleId,
+            };
+            this.onRoleChange(roleMatch);
           }
           this.cd.detectChanges();
         });

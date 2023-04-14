@@ -14,7 +14,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import { ExamAssignment } from '@msh/shared/domain-models';
+import { EmptySite, ExamAssignment } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-empty-site-grid',
@@ -33,23 +33,21 @@ import { ExamAssignment } from '@msh/shared/domain-models';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EmptySiteGridComponent {
-  @Input() examAssignments: ExamAssignment[] = [];
+  @Input() emptySites: EmptySite[] = [];
   @Input() totalRecords = 0;
 
   //Keep it local state because of Table Header checkbox not syncing
   selectedExamAssignments: ExamAssignment[] = [];
 
-  @Output() gridEvent = new EventEmitter<
-    GridEvent<ExamAssignment | ExamAssignment[]>
-  >();
+  @Output() gridEvent = new EventEmitter<GridEvent<EmptySite | EmptySite[]>>();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
-  onEmptySite(examAssignment: ExamAssignment) {
+  onEmptySite(emptySite: EmptySite) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
-      data: examAssignment,
-    } as GridEvent<ExamAssignment>);
+      data: emptySite,
+    } as GridEvent<EmptySite>);
   }
 
   loadRows($event: LazyLoadEvent) {
