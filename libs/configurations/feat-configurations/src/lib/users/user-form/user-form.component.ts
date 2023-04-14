@@ -183,7 +183,7 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
         .subscribe((response: any) => {
           if (response.isSuccessful) {
             this.user = response.data;
-            let roleMatch = {
+            const roleMatch = {
               value: response.data.roleId,
             };
             this.onRoleChange(roleMatch);
