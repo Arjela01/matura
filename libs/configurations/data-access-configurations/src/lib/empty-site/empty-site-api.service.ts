@@ -18,7 +18,7 @@ export class EmptySiteApiService {
   }
 
   emptySite(examDateId: number): Observable<ApiResult<EmptySite>> {
-    return this.apiService.post(`ExamAssignment/EmptySite`, {
+    return this.apiService.post(`/ExamAssignment/EmptySite`, {
       examDateId: examDateId,
     });
   }
