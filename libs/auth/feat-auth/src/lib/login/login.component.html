@@ -61,14 +61,6 @@
               class="p-error block">
               Përdoruesi është fushë e kërkuar!
             </small>
-            <small
-              *ngIf="
-                f.submitted && username.errors && username.errors['minlength']
-              "
-              class="p-error block">
-              Përdoruesi kërkon të paktën
-              {{ username.errors['minlength'].requiredLength }} karaktere!
-            </small>
           </div>
 
           <div class="field mb-3">
