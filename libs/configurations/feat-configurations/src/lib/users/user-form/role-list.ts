@@ -10,7 +10,7 @@ export const roleList = [
   },
 
   {
-    roleName: 'AdministrationOffice',
+    roleName: 'DAR/ZA',
     showUniversity: false,
     showUniversityDepartment: false,
     showAdministrationOffice: true,
@@ -37,7 +37,7 @@ export const roleList = [
     showHighSchools: false,
   },
   {
-    roleName: 'DV',
+    roleName: 'DV (Drejtoria e Vlerësimit)',
     showUniversity: false,
     showUniversityDepartment: false,
     showAdministrationOffice: false,
@@ -82,7 +82,7 @@ export const roleList = [
     showOverseerCode: false,
   },
   {
-    roleName: 'Overseer',
+    roleName: 'Mbikqyres Formularesh',
     showUniversity: false,
     showUniversityDepartment: false,
     showAdministrationOffice: false,

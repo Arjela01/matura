@@ -5,10 +5,10 @@
   <div class="col-12">
     <div class="card">
       <msh-empty-site-grid
-        [examAssignments]="(examAssignmentList$ | async) || []"
+        [emptySites]="(emptySiteList$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getExamAssignment($event)">
+        (lazyLoadData)="getEmptySites($event)">
       </msh-empty-site-grid>
     </div>
   </div>

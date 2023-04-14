@@ -11,6 +11,16 @@
         class="readonlyForm"
         [style]="{ width: '500px' }">
         <div>
+          <div class="fle ">
+            <a [routerLink]="['/configurations', 'students']">
+              <button
+                pButton
+                pRipple
+                label="Kthehu"
+                icon="pi pi-arrow-left"
+                class="w-auto mr-2 mb-3 back-button"></button>
+            </a>
+          </div>
           <div class="field">
             <label for="highSchool">Shkolla</label>
             <input
@@ -256,17 +266,7 @@
           </div>
         </div>
       </form>
-      <div class="flex justify-content-end">
-        <a [routerLink]="['/configurations', 'students']">
-          <button
-            pButton
-            pRipple
-            label="Kthehu"
-            icon="pi pi-arrow-left"
-            class="p-button-danger mr-2"
-            [ngStyle]="{ backgroundColor: 'var(--bluegray-600)' }"></button>
-        </a>
-      </div>
+
     </div>
   </div>
 </div>
