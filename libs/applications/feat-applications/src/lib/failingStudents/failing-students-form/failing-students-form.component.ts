@@ -64,9 +64,8 @@ export class FailingStudentsFormComponent implements OnInit {
   submitted = false;
 
   failingStudent: FailingStudent = {
-    id: 0,
+    id: '',
     subject: undefined,
-    studentId: undefined,
   };
 
   onCancelClick() {

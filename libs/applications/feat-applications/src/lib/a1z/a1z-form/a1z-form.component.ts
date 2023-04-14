@@ -1,4 +1,4 @@
-import {CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -11,10 +11,10 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import {FormsModule, NgForm} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {A1ZApiService} from '@msh/applications/data-access-applications';
-import {A1Z, CarriedGrade} from '@msh/applications/domain-application';
+import { FormsModule, NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { A1ZApiService } from '@msh/applications/data-access-applications';
+import { A1Z, CarriedGrade } from '@msh/applications/domain-application';
 import {
   A1ZCategoryApiService,
   AcademicYearApiService,
@@ -23,31 +23,37 @@ import {
   ExamTypeApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
-import {DropdownModel} from '@msh/shared/data-access-shared';
-import {Student} from '@msh/shared/domain-models';
-import {SharedStudent, SharedStudentLookupModule,} from '@msh/shared/student-lookup';
-import {GlobalToastService, GRID_ACTIONS, GridEvent,} from '@msh/shared/util-shared';
-import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
-import {ConfirmationService, LazyLoadEvent} from 'primeng/api';
-import {ButtonModule} from 'primeng/button';
-import {CalendarModule} from 'primeng/calendar';
-import {CheckboxModule} from 'primeng/checkbox';
-import {ConfirmDialogModule} from 'primeng/confirmdialog';
-import {DialogModule} from 'primeng/dialog';
-import {DropdownModule} from 'primeng/dropdown';
-import {InputNumberModule} from 'primeng/inputnumber';
-import {InputTextModule} from 'primeng/inputtext';
-import {InputTextareaModule} from 'primeng/inputtextarea';
-import {PasswordModule} from 'primeng/password';
-import {RadioButtonModule} from 'primeng/radiobutton';
-import {RippleModule} from 'primeng/ripple';
-import {SelectButtonModule} from 'primeng/selectbutton';
-import {TableModule} from 'primeng/table';
-import {TooltipModule} from 'primeng/tooltip';
-import {BehaviorSubject} from 'rxjs';
-import {A1zStudentSearchComponent} from '../a1z-student-search/a1z-student-search.component';
-import {EXAM_TYPES} from './exam-type.enum';
-import {Report} from "../../../../../../reports/reports-enum";
+import { DropdownModel } from '@msh/shared/data-access-shared';
+import { Student } from '@msh/shared/domain-models';
+import {
+  SharedStudent,
+  SharedStudentLookupModule,
+} from '@msh/shared/student-lookup';
+import {
+  GlobalToastService,
+  GridEvent,
+  GRID_ACTIONS,
+} from '@msh/shared/util-shared';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { PasswordModule } from 'primeng/password';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { RippleModule } from 'primeng/ripple';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
+import { BehaviorSubject } from 'rxjs';
+import { A1zStudentSearchComponent } from '../a1z-student-search/a1z-student-search.component';
+import { EXAM_TYPES } from './exam-type.enum';
 
 
 interface ChangeEvent<T> {
@@ -75,7 +81,6 @@ interface ChangeEvent<T> {
     ConfirmDialogModule,
     CalendarModule,
     DropdownModule,
-    A1zStudentSearchComponent,
     SharedStudentLookupModule,
     PasswordModule,
     SelectButtonModule,
@@ -125,7 +130,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
 
   a1z: A1Z = {
     id: 0,
-    highSchoolGraduationYear: ''
+    yearOfSchoolA1Z: ''
 
   };
 
@@ -198,7 +203,6 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         this.cd.detectChanges();
       });
     }
-    console.log('init');
   }
 
   ngOnChanges(): void {
@@ -209,23 +213,17 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
     switch (event.action) {
       case GRID_ACTIONS.EDIT:
         this.selectedStudent = Object.assign({}, event.data as Student);
-        console.log(event.data);
         this.showStudentModal = false;
         break;
     }
   }
-
-  onStudentInit(student: A1Z) {
-    this.studentService.getById(student.studentId).subscribe(data => {
-      if (data.isSuccessful) {
-        this.selectedStudent = data.data;
-        this.a1z.studentId = data.data.id;
-        this.studentInputData = this.getStudentDisplayName(data.data);
-        this.cd.detectChanges();
-      } else {
-        this.toastService.showError('Ndodhi një gabim në marrjen e studentit.');
-      }
-    });
+  onStudentInit(student: any) {
+    if (!student) {
+      this.studentInputData = ' ';
+    } else {
+      this.a1z.studentId = student.studentId;
+      this.studentInputData = student?.studentId + '-' + student?.studentFirstName;
+    }
   }
 
   onStudentChange(student: Student) {
@@ -233,27 +231,20 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       this.studentInputData = ' ';
     } else {
       this.a1z.studentId = student.id;
-      this.selectedStudent = student;
-
-      this.studentInputData = this.getStudentDisplayName(student);
+      this.studentInputData =
+        student?.studentId +
+        '-' +
+        student?.firstName +
+        '-' +
+        student?.middleName +
+        '-' +
+        student?.lastName;
     }
   }
 
-  private getStudentDisplayName(student: Student): string {
-    return (
-      student.id +
-      '-' +
-      student.firstName +
-      '-' +
-      student.middleName +
-      '-' +
-      student.lastName
-    );
-  }
-
   isGraduationYearValid(): boolean {
-    if (this.a1z.highSchoolGraduationYear !== undefined) {
-      const graduationYear = parseInt(this.a1z.highSchoolGraduationYear, 10);
+    if (this.a1z.yearOfSchoolA1Z !== undefined) {
+      const graduationYear = parseInt(this.a1z.yearOfSchoolA1Z, 10);
       return graduationYear <= this.currentYear;
     }
     return false;
@@ -322,7 +313,6 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       .loadStudents($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        console.log(response);
         this.studentList$$.next(response.data);
         this.totalRecords = response.total;
       });
