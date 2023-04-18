@@ -8,17 +8,14 @@
             {{ archiveFolder.examSubjectName }}
           </h2>
         </div>
-
         <div>
-          <a [routerLink]="['/evaluations', 'archive-folder']">
-            <button
-              pButton
-              pRipple
-              label="Kthehu"
-              icon="pi pi-arrow-left"
-              class="p-button-danger mr-2"
-              [ngStyle]="{ backgroundColor: 'var(--bluegray-600)' }"></button>
-          </a>
+          <button
+            pButton
+            pRipple
+            label="Kthehu"
+            icon="pi pi-arrow-left"
+            class="w-auto mr-2 back-button"
+            (click)="goBack()"></button>
 
           <button
             pButton

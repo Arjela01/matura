@@ -15,7 +15,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
-import {ArchiveExam, ArchiveFolder} from '@msh/evaluations/domain-evaluations';
+import {ArchiveExam} from '@msh/evaluations/domain-evaluations';
 
 @Component({
   selector: 'msh-barcode-correction-form',

@@ -74,33 +74,33 @@
       <th></th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-archiveFolder>
+  <ng-template pTemplate="body" let-barcodeCorrection>
     <tr>
       <td style="width: 14%; min-width: 10rem">
         <a
           pTooltip="Shiko Dosjen"
           tooltipPosition="bottom"
-          [routerLink]="['/evaluations', 'archive-view', archiveFolder.id]">
-          {{ this.archiveFolder.archiveFolderNr }}
+          [routerLink]="['/evaluations', 'archive-view', barcodeCorrection.archiveFolderId]">
+          {{ this.barcodeCorrection.archiveFolderNr }}
         </a>
       </td>
       <td style="width: 20%; min-width: 10rem">
-        {{ archiveFolder.examTypeName }}
+        {{ barcodeCorrection.examTypeName }}
       </td>
       <td style="width: 20%; min-width: 10rem">
-        {{ archiveFolder.createdByName }}
+        {{ barcodeCorrection.createdByName }}
       </td>
       <td style="width: 20%; min-width: 10rem">
-        {{ archiveFolder.barcode }}
+        {{ barcodeCorrection.barcode }}
       </td>
       <td style="width: 20%; min-width: 10rem">
         <span
           [ngClass]="
-            archiveFolder.isClosed === true
+            barcodeCorrection.isFolderClosed === true
               ? ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
               : ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
           ">
-          {{ archiveFolder.isClosed === true ? 'Mbyllur' : 'Hapur' }}
+          {{ barcodeCorrection.isFolderClosed === true ? 'Mbyllur' : 'Hapur' }}
         </span>
       </td>
       <td style="width: 10%; min-width: 10rem">
@@ -110,7 +110,7 @@
             class="p-button-rounded p-button-danger p-button-text pointer"
             pTooltip="Ndrysho"
             tooltipPosition="bottom"
-            (click)="onEditClick(archiveFolder)" />
+            (click)="onEditClick(barcodeCorrection)" />
         </div>
       </td>
     </tr>

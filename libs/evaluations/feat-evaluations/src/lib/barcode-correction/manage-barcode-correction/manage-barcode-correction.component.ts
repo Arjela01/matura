@@ -1,14 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   ConfirmationService,
@@ -26,20 +17,21 @@ import {
 } from '@msh/shared/util-shared';
 import { BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { NgForm } from '@angular/forms';
-import {ExamSubjectApiService, ExamTypeApiService} from '@msh/configurations/data-access-configurations';
+import {
+  ExamSubjectApiService,
+  ExamTypeApiService,
+} from '@msh/configurations/data-access-configurations';
 import {
   ArchiveExamApiService,
   ArchiveFolderApiService,
 } from '@msh/evaluations/data-access-evaluations';
 import {
   ArchiveExam,
-  ArchiveFolder,
+  BarcodeCorrection,
 } from '@msh/evaluations/domain-evaluations';
-import {BarcodeCorrectionGridComponent} from "../barcode-correction-grid/barcode-correction-grid.component";
-import {BarcodeCorrectionFormComponent} from "../barcode-correction-form/barcode-correction-form.component";
-import {DropdownModel} from "@msh/shared/data-access-shared";
-import {HttpClient} from "@angular/common/http";
+import { BarcodeCorrectionGridComponent } from '../barcode-correction-grid/barcode-correction-grid.component';
+import { BarcodeCorrectionFormComponent } from '../barcode-correction-form/barcode-correction-form.component';
+import { HttpClient } from '@angular/common/http';
 
 @UntilDestroy()
 @Component({
@@ -59,19 +51,18 @@ import {HttpClient} from "@angular/common/http";
   styleUrls: ['./manage-barcode-correction.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
-
 })
 export class ManageBarcodeCorrectionComponent {
-  private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[]>([]);
+  private archiveFolders$$ = new BehaviorSubject<BarcodeCorrection[]>([]);
 
   archiveFolders$ = this.archiveFolders$$.asObservable();
   filters: LazyLoadEvent | null = null;
   selectedArchiveExam: ArchiveExam | null = null;
-  selectedArchiveExams: ArchiveExam[] = [];
+  selectedArchiveExams: BarcodeCorrection[] = [];
   totalRecords = 0;
   id: any;
-  selectedArchiveFolder: ArchiveFolder | null = null;
-  selectedArchiveFolders: ArchiveFolder[] = [];
+  selectedArchiveFolder: BarcodeCorrection | null = null;
+  selectedArchiveFolders: BarcodeCorrection[] = [];
   displayModal = false;
 
   constructor(
@@ -89,7 +80,6 @@ export class ManageBarcodeCorrectionComponent {
     this.id = this.route.snapshot.paramMap.get('id');
   }
 
-
   onNewClick() {
     this.displayModal = true;
   }
@@ -103,34 +93,16 @@ export class ManageBarcodeCorrectionComponent {
     });
   }
 
-  onGridEvent(event: GridEvent<ArchiveFolder | ArchiveFolder[]>) {
+  onGridEvent(event: GridEvent<BarcodeCorrection | BarcodeCorrection[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
         this.selectedArchiveFolders = [
           ...this.selectedArchiveFolders,
-          event.data as ArchiveFolder,
+          event.data as BarcodeCorrection,
         ];
-        break;
-      case GRID_ACTIONS.UNSELECT_ROW:
-        this.selectedArchiveFolders = this.selectedArchiveFolders.filter(hs => {
-          hs.id !== (event.data as ArchiveFolder).id;
-        });
-        break;
-
-      case GRID_ACTIONS.SELECT_MANY:
-        this.selectedArchiveFolders = [
-          ...this.selectedArchiveFolders,
-          ...(event.data as ArchiveFolder[]),
-        ];
-        break;
-      case GRID_ACTIONS.UNSELECT_ALL:
-        this.selectedArchiveFolders = [];
         break;
       case GRID_ACTIONS.EDIT:
-        this.selectedArchiveExam = Object.assign(
-          {},
-          event.data as ArchiveExam
-        );
+        this.selectedArchiveExam = Object.assign({}, event.data as ArchiveExam);
         this.displayModal = true;
         break;
     }
@@ -140,11 +112,10 @@ export class ManageBarcodeCorrectionComponent {
     this.displayModal = false;
   }
 
-  onFormSave(archiveFolder: ArchiveExam) {
-    if (archiveFolder.id) {
-      this.updateArchiveFolder(archiveFolder);
+  onFormSave(archiveExam: ArchiveExam) {
+    if (archiveExam.id) {
+      this.updateArchiveFolder(archiveExam);
     }
-
   }
 
   getArchiveFolders($event: LazyLoadEvent) {
@@ -159,10 +130,9 @@ export class ManageBarcodeCorrectionComponent {
       });
   }
 
-
-  updateArchiveFolder(archiveFolder: ArchiveExam) {
+  updateArchiveFolder(archiveExam: ArchiveExam) {
     this.archiveExamService
-      .update(archiveFolder)
+      .update(archiveExam)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
@@ -177,6 +147,4 @@ export class ManageBarcodeCorrectionComponent {
           );
       });
   }
-
-
 }
