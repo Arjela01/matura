@@ -12,6 +12,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import { PaginatorModule } from 'primeng/paginator';
+import { ReportsApiService } from '../../../configurations/data-access-configurations/src';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'msh-dynamic-reports',
@@ -24,24 +28,57 @@ import { TooltipModule } from 'primeng/tooltip';
     TooltipModule,
     CheckboxModule,
     RippleModule,
+    PaginatorModule,
   ],
   templateUrl: './dynamic-reports.component.html',
   styleUrls: ['./dynamic-reports.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+@UntilDestroy()
 export class DynamicReportsComponent {
+  private reports$$ = new BehaviorSubject<any[]>([]);
   @Input() reports: any[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
+  // pagedReports: any[] = [];
+  currentPage = 1; // Current page number
+
+  pageSize = 6; // Number of items to display per page
 
   //Keep it local state because of Table Header checkbox not syncing
   selectedReports: Reports[] = [];
+  filters: LazyLoadEvent = {} as LazyLoadEvent;
 
   @Output() gridEvent = new EventEmitter<GridEvent<any | any[]>>();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private reportsApiService: ReportsApiService
+  ) {}
+
+  ngOnInit() {
+    const event = {
+      first: 0,
+      rows: 10,
+      sortOrder: 1,
+      filters: {},
+      globalFilter: null,
+    };
+
+    this.getReports(event);
+  }
+  getReports(event: any) {
+    this.reportsApiService
+      .loadRoleReports(event)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.reports$$.next(response.data);
+        this.totalRecords = response.total;
+      });
+  }
+
   onViewClick(reports: any) {
     this.router.navigate([`reports/${reports.reportId}`]);
   }
@@ -82,5 +119,15 @@ export class DynamicReportsComponent {
 
   loadRows($event: LazyLoadEvent) {
     this.lazyLoadData.emit($event);
+  }
+  onPageChange(event: any) {
+    this.currentPage = event.page + 1;
+    this.updatePage(this.currentPage);
+  }
+
+  updatePage(pageNumber: number) {
+    const startIndex = (pageNumber - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.reports = this.reports.slice(startIndex, endIndex);
   }
 }
