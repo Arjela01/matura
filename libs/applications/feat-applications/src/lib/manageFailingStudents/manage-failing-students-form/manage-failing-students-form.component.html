@@ -1,7 +1,8 @@
+<msh-global-spinner *ngIf="isLoading"></msh-global-spinner>
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="grid">
     <div class="field col-4">
-      <label for="firstName">Emri *</label>
+      <label for="firstName">Emri </label>
       <input
         type="text"
         pInputText
@@ -9,11 +10,10 @@
         name="firstName"
         [value]="student.firstName"
         disabled
-        required
         autofocus />
     </div>
     <div class="field col-4">
-      <label for="lastName">Mbiemri *</label>
+      <label for="lastName">Mbiemri </label>
       <input
         type="text"
         pInputText
@@ -21,11 +21,10 @@
         name="lastName"
         [value]="student.lastName"
         disabled
-        required
         autofocus />
     </div>
     <div class="field col-4">
-      <label for="email">Email *</label>
+      <label for="email">Email </label>
       <input
         type="text"
         pInputText
@@ -33,11 +32,10 @@
         name="email"
         [value]="student.email"
         disabled
-        required
         autofocus />
     </div>
     <div class="field col-4">
-      <label for="genderName">Gjinia *</label>
+      <label for="genderName">Gjinia </label>
       <input
         type="text"
         pInputText
@@ -45,11 +43,10 @@
         name="genderName"
         [value]="student.genderName"
         disabled
-        required
         autofocus />
     </div>
     <div class="field col-4">
-      <label for="highSchoolName">Shkolla e Mesme *</label>
+      <label for="highSchoolName">Shkolla e Mesme </label>
       <input
         type="text"
         pInputText
@@ -57,11 +54,10 @@
         name="highSchoolName"
         [value]="student.highSchoolName"
         disabled
-        required
         autofocus />
     </div>
     <div class="field col-4">
-      <label for="profileName">Profili *</label>
+      <label for="profileName">Profili </label>
       <input
         type="text"
         pInputText
@@ -69,11 +65,10 @@
         name="profileName"
         [value]="student.profileName"
         disabled
-        required
         autofocus />
     </div>
     <div class="field col-4">
-      <label for="birthPlace">Vendlindja *</label>
+      <label for="birthPlace">Vendlindja </label>
       <input
         type="text"
         pInputText
@@ -81,11 +76,10 @@
         name="birthPlace"
         [value]="student.birthPlace"
         disabled
-        required
         autofocus />
     </div>
     <div class="field col-4">
-      <label for="studentId">ID *</label>
+      <label for="studentId">ID </label>
       <input
         type="text"
         pInputText
@@ -93,11 +87,10 @@
         name="studentId"
         [value]="student.studentId"
         disabled
-        required
         autofocus />
     </div>
     <div class="field col-4">
-      <label for="birthDate">Datelindja *</label>
+      <label for="birthDate">Datëlindja </label>
       <input
         type="text"
         pInputText
@@ -105,13 +98,12 @@
         name="birthDate"
         [value]="student.birthDate | date"
         disabled
-        required
         autofocus />
     </div>
   </div>
 
   <div class="field">
-    <label for="subject">Lënda *</label>
+    <label for="subject">Lënda </label>
     <input
       type="text"
       pInputText

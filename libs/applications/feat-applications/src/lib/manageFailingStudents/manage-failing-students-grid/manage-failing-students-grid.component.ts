@@ -37,8 +37,6 @@ export class ManageFailingStudentsGridComponent {
   @Input() totalRecords = 0;
   @Input() loading = false;
 
-  // selectedFailingStudent: Failin
-
   @Output() gridEvent = new EventEmitter<
     GridEvent<FailingStudent | FailingStudent[]>
   >();

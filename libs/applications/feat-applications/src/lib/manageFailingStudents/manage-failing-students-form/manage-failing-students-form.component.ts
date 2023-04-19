@@ -5,7 +5,7 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input,
+  Input, OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -22,6 +22,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import {GlobalSpinnerComponent} from "@msh/shared/ui-shared";
 
 @UntilDestroy()
 @Component({
@@ -36,22 +37,23 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     InputTextareaModule,
     ButtonModule,
     CheckboxModule,
+    GlobalSpinnerComponent
   ],
   templateUrl: './manage-failing-students-form.component.html',
   styleUrls: ['./manage-failing-students-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ManageFailingStudentsFormComponent {
+export class ManageFailingStudentsFormComponent implements  OnInit {
   @Input() set failingStudentDetails(details: FailingStudent | null) {
     if (details) {
       this.failingStudent = Object.assign({}, details);
     }
   }
-
   @Output() formSave = new EventEmitter<FailingStudent>();
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
+  isLoading = false;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -61,7 +63,7 @@ export class ManageFailingStudentsFormComponent {
   ) {}
 
   ngOnInit(): void {
-   this.getFailingStudentById(this.failingStudent.id!);
+    this.getFailingStudentById(this.failingStudent.id!);
   }
 
   submitted = false;
@@ -128,13 +130,15 @@ export class ManageFailingStudentsFormComponent {
   }
 
   getStudentData(studentId: any) {
+    this.isLoading = true;
     this.studentService
       .getById(studentId)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.failingStudent = response.data;
-          this.failingStudent.studentId = this.student.studentId
+          this.isLoading = false;
+          this.student = response.data;
+          this.failingStudent.studentId = this.student.studentId;
           this.cd.detectChanges();
         }
       });

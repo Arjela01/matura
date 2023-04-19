@@ -18,6 +18,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { ManageFailingStudentsFormComponent } from '../manage-failing-students-form/manage-failing-students-form.component';
 import { ManageFailingStudentsGridComponent } from '../manage-failing-students-grid/manage-failing-students-grid.component';
+import { Student } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({
@@ -45,7 +46,9 @@ export class ManageFailingStudentsComponent {
 
   totalRecords = 0;
   selectedFailingStudent: FailingStudent | null = null;
+  student: Student | null = null;
   displayModal = false;
+  isLoading = false;
 
   constructor(
     private readonly failingStudentService: FailingStudentApiService,
@@ -60,6 +63,10 @@ export class ManageFailingStudentsComponent {
   onGridEvent(event: GridEvent<FailingStudent | FailingStudent[]>) {
     switch (event.action) {
       case GRID_ACTIONS.EDIT:
+        this.student = Object.assign(
+          {},
+          event.data as Student
+        );
         this.selectedFailingStudent = Object.assign(
           {},
           event.data as FailingStudent
@@ -80,10 +87,11 @@ export class ManageFailingStudentsComponent {
   onModalClose() {
     this.displayModal = false;
     this.selectedFailingStudent = null;
+    this.student = null;
   }
 
-  onFormSave(id: FailingStudent) {
-    this.updateFailingStudent(id);
+  onFormSave() {
+    this.updateFailingStudent();
   }
 
   getFailingStudents($event: LazyLoadEvent) {
@@ -114,23 +122,24 @@ export class ManageFailingStudentsComponent {
       });
   }
 
-  updateFailingStudent(failingStudent: FailingStudent) {
-    // eslint-disable-next-line no-debugger
-    debugger;
+  updateFailingStudent() {
+    this.isLoading = true;
     this.failingStudentService
-      .update(failingStudent)
+      .update(this.selectedFailingStudent)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Studenti u ndryshua me sukses!');
           this.displayModal = false;
           this.getFailingStudents(this.filters as LazyLoadEvent);
+          this.isLoading = false;
         }
 
         if (!response.isSuccessful)
           this.toastService.showError(
             'Ndodhi nje problem gjatë ndryshimit të studentit mbetes!'
           );
+        this.isLoading = false;
       });
   }
 }
