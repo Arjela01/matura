@@ -41,16 +41,16 @@ export class DynamicReportsComponent {
   @Input() totalRecords = 0;
   @Input() loading = false;
   // pagedReports: any[] = [];
-  currentPage = 1; // Current page number
+  currentPage = 1;
 
-  pageSize = 6; // Number of items to display per page
+  pageSize = 6;
 
   //Keep it local state because of Table Header checkbox not syncing
   selectedReports: Reports[] = [];
   filters: LazyLoadEvent = {} as LazyLoadEvent;
 
   @Output() gridEvent = new EventEmitter<GridEvent<any | any[]>>();
-
+  @Output() changePage = new EventEmitter()
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
   constructor(
@@ -58,26 +58,26 @@ export class DynamicReportsComponent {
     private reportsApiService: ReportsApiService
   ) {}
 
-  ngOnInit() {
-    const event = {
-      first: 0,
-      rows: 10,
-      sortOrder: 1,
-      filters: {},
-      globalFilter: null,
-    };
-
-    this.getReports(event);
-  }
-  getReports(event: any) {
-    this.reportsApiService
-      .loadRoleReports(event)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.reports$$.next(response.data);
-        this.totalRecords = response.total;
-      });
-  }
+  // ngOnInit() {
+  //   const event = {
+  //     first: 0,
+  //     rows: 10,
+  //     sortOrder: 1,
+  //     filters: {},
+  //     globalFilter: null,
+  //   };
+  //
+  //   this.getReports(event);
+  // }
+  // getReports(event: any) {
+  //   this.reportsApiService
+  //     .loadRoleReports(event)
+  //     .pipe(untilDestroyed(this))
+  //     .subscribe(response => {
+  //       this.reports$$.next(response.data);
+  //       this.totalRecords = response.total;
+  //     });
+  // }
 
   onViewClick(reports: any) {
     this.router.navigate([`reports/${reports.reportId}`]);
@@ -128,6 +128,7 @@ export class DynamicReportsComponent {
   updatePage(pageNumber: number) {
     const startIndex = (pageNumber - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
-    this.reports = this.reports.slice(startIndex, endIndex);
+    // this.reports = this.reports.slice(startIndex, endIndex);
+    this.changePage.emit((pageNumber - 1) * this.pageSize)
   }
 }

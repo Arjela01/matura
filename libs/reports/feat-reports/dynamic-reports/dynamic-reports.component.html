@@ -40,15 +40,21 @@
 <!--    </tr>-->
 <!--  </ng-template>-->
 <!--</p-table>-->
-<ng-container>hi
-<div class="card-container" >
+<ng-container>
+<div class="card-container cursor: pointer"  (click)="onViewClick(reports) ">
   <div class="card" *ngFor="let report of reports">
     <div class="card-header">
-      <h3 class="card-title">{{ report.reportName }}</h3>
+      <span class="card-title">{{ report.reportName }}</span>
+      <div style="display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;">
+        <img
+          src="/assets/images/report.svg"
+          alt="Access denied"
+          class="mb-5"
+          width="60%" />
     </div>
-    <div class="card-body">
-      <p class="card-text">teeesssttt</p>
-      <button class="btn btn-primary">View Report</button>
     </div>
   </div>
 </div>
