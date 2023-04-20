@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
   ReportsApiService,
   RolesApiService,
@@ -33,7 +33,7 @@ import { DynamicReportsComponent } from '../dynamic-reports/dynamic-reports.comp
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 @UntilDestroy()
-export class ManageDynamicReportsComponent implements OnInit{
+export class ManageDynamicReportsComponent implements OnInit {
   private reports$$ = new BehaviorSubject<any[]>([]);
   reports$ = this.reports$$.asObservable();
   filters: LazyLoadEvent = {} as LazyLoadEvent;
@@ -48,7 +48,7 @@ export class ManageDynamicReportsComponent implements OnInit{
     sortOrder: 1,
     filters: {},
     globalFilter: null,
-  }
+  };
   constructor(
     private readonly toastService: GlobalToastService,
     private reportsApiService: ReportsApiService,
@@ -79,8 +79,8 @@ export class ManageDynamicReportsComponent implements OnInit{
       });
   }
 
-  paginate($event:number){
-    this.event.first = $event
-    this.getReports(this.event)
+  paginate($event: number) {
+    this.event.first = $event;
+    this.getReports(this.event);
   }
 }
