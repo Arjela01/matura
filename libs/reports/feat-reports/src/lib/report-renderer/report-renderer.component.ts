@@ -4,7 +4,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  Inject,
+  Inject, OnInit,
   ViewChild,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -22,10 +22,11 @@ import { IframeAutoHeightDirective } from '../iframe-auto-height.directive';
   styleUrls: ['./report-renderer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ReportRendererComponent {
+export class ReportRendererComponent implements OnInit{
   @ViewChild('reportRenderer', { static: true })
   iframe!: ElementRef<HTMLIFrameElement>;
   id: string = this.route.snapshot.params['id'];
+  studentId: string = this.route.snapshot.queryParams['studentId'];
   iframeUrl = '';
   private readonly iframeLoaded$$ = new Subject<boolean>();
   private readonly iframeLoaded$ = this.iframeLoaded$$
@@ -52,12 +53,14 @@ export class ReportRendererComponent {
     private readonly route: ActivatedRoute,
     private cdr: ChangeDetectorRef
   ) {}
-
   onIframeLoad(): void {
     this.iframeLoaded$$.next(true);
   }
+
   ngOnInit() {
-    if (this.id) {
+    if (this.id && this.studentId) {
+      this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&studentId=${this.studentId}`;
+    } else {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}`;
     }
   }
