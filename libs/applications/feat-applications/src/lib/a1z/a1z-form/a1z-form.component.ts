@@ -110,6 +110,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   filters: LazyLoadEvent | null = null;
 
   formId: string | null;
+  chosenStudentId!: string | undefined;
 
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
@@ -186,6 +187,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.chosenStudentId = this.selectedStudent?.studentId;
     this.a1CategoryService.loadDropdownList().subscribe(response => {
       this.a1Categories = response.data;
     });
@@ -435,7 +437,11 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Formulari A1Z u shtua me sukses!');
-          this.router.navigate(['/reports', this.a1ZReport]).then();
+          this.router
+            .navigate([`/reports/${this.a1ZReport}`], {
+              queryParams: { studentId: this.a1z.studentId },
+            })
+            .then();
         }
         if (!response.isSuccessful) {
           this.toastService.showError(
@@ -455,7 +461,11 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Formulari A1Z u ndryshua me sukses!');
-          this.router.navigate(['/reports', this.a1ZReport]).then();
+          this.router
+            .navigate([`/reports/${this.a1ZReport}`], {
+              queryParams: { studentId: this.a1z?.studentId },
+            })
+            .then();
         }
 
         if (!response.isSuccessful) {
@@ -464,7 +474,6 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
               ? response.errorMessage
               : 'Ndodhi një problem gjatë ndryshimit të formularit A1Z!'
           );
-          console.log(response);
         }
       });
   }
