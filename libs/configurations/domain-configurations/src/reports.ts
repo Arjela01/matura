@@ -3,6 +3,8 @@ export interface Reports {
   roles: any;
   name: string;
   path: string;
+  reportName?: string,
+  reportId?: number
 }
 
 export interface ReportsTable {

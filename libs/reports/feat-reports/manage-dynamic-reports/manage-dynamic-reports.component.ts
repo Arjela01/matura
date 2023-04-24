@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
   ReportsApiService,
   RolesApiService,
@@ -33,7 +33,7 @@ import { DynamicReportsComponent } from '../dynamic-reports/dynamic-reports.comp
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 @UntilDestroy()
-export class ManageDynamicReportsComponent {
+export class ManageDynamicReportsComponent implements OnInit {
   private reports$$ = new BehaviorSubject<any[]>([]);
   reports$ = this.reports$$.asObservable();
   filters: LazyLoadEvent = {} as LazyLoadEvent;
@@ -42,7 +42,13 @@ export class ManageDynamicReportsComponent {
   selectedReport: any | null = null;
   selectedReports: any[] = [];
   displayModal = false;
-
+  event = {
+    first: 0,
+    rows: 10,
+    sortOrder: 1,
+    filters: {},
+    globalFilter: null,
+  };
   constructor(
     private readonly toastService: GlobalToastService,
     private reportsApiService: ReportsApiService,
@@ -59,6 +65,9 @@ export class ManageDynamicReportsComponent {
     this.selectedReport = null;
   }
 
+  ngOnInit() {
+    this.getReports(this.event);
+  }
   getReports($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
     this.reportsApiService
@@ -68,5 +77,10 @@ export class ManageDynamicReportsComponent {
         this.reports$$.next(response.data);
         this.totalRecords = response.total;
       });
+  }
+
+  paginate($event: number) {
+    this.event.first = $event;
+    this.getReports(this.event);
   }
 }
