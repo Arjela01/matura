@@ -238,7 +238,7 @@ export class A1FormComponent {
 
   initializeDialog() {
     this.ref = this.dialogService.open(ManageStudentsGridsDialogComponent, {
-      width: '70%',
+      width: '80%',
       position: 'center',
       contentStyle: { overflow: 'auto' },
       maximizable: true,

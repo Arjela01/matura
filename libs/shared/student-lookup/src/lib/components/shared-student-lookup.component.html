@@ -40,12 +40,12 @@
           field="firstName"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="fatherName" style="width: 20%">
+      <th pSortableColumn="middleName" style="width: 20%">
         Atësia
-        <p-sortIcon field="fatherName"></p-sortIcon>
+        <p-sortIcon field="middleName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="fatherName"
+          field="middleName"
           display="menu"></p-columnFilter>
       </th>
       <th pSortableColumn="lastName" style="width: 20%">
@@ -56,12 +56,12 @@
           field="lastName"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="studentId" style="width: 20%">
+      <th pSortableColumn="idCard" style="width: 20%">
         NID
-        <p-sortIcon field="studentId"></p-sortIcon>
+        <p-sortIcon field="idCard"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="studentId"
+          field="idCard"
           display="menu"></p-columnFilter>
       </th>
     </tr>
@@ -91,7 +91,7 @@
         {{ student.lastName }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ student.NID }}
+        {{ student.idCard }}
       </td>
     </tr>
   </ng-template>
