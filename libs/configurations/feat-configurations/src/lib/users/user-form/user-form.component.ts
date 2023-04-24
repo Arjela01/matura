@@ -186,13 +186,10 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
             const roleMatch = {
               value: response.data.roleId,
             };
-            console.log(33,response.data.roleId)
-
             this.onRoleChange(roleMatch);
           }
           this.cd.detectChanges();
         });
-
     }
   }
 
