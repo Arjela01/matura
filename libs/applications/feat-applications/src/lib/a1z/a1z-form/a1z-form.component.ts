@@ -110,7 +110,6 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   filters: LazyLoadEvent | null = null;
 
   formId: string | null;
-  chosenStudentId!: string | undefined;
 
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
@@ -187,7 +186,6 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.chosenStudentId = this.selectedStudent?.studentId;
     this.a1CategoryService.loadDropdownList().subscribe(response => {
       this.a1Categories = response.data;
     });
