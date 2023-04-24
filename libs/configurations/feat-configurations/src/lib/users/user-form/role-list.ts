@@ -5,7 +5,7 @@ export const roleList = [
     showUniversityDepartment: false,
     showAdministrationOffice: false,
     showStudyProgram: false,
-    showOverseerCode: false,
+    showOverseerCode: true,
     showHighSchools: false,
   },
 

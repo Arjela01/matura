@@ -435,7 +435,11 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Formulari A1Z u shtua me sukses!');
-          this.router.navigate(['/reports', this.a1ZReport]).then();
+          this.router
+            .navigate([`/reports/${this.a1ZReport}`], {
+              queryParams: { studentId: this.a1z.studentId },
+            })
+            .then();
         }
         if (!response.isSuccessful) {
           this.toastService.showError(
@@ -455,7 +459,11 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Formulari A1Z u ndryshua me sukses!');
-          this.router.navigate(['/reports', this.a1ZReport]).then();
+          this.router
+            .navigate([`/reports/${this.a1ZReport}`], {
+              queryParams: { studentId: this.a1z?.studentId },
+            })
+            .then();
         }
 
         if (!response.isSuccessful) {
@@ -464,7 +472,6 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
               ? response.errorMessage
               : 'Ndodhi një problem gjatë ndryshimit të formularit A1Z!'
           );
-          console.log(response);
         }
       });
   }

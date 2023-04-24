@@ -35,7 +35,7 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { combineLatest, Observable, of, switchMap } from 'rxjs';
 import { ManageStudentsGridsDialogComponent } from '../manage-students-grids-dialog/manage-students-grids-dialog.component';
-import {Report} from "../../../../../../reports/reports-enum";
+import { Report } from '../../../../../../reports/reports-enum';
 
 let INITIAL_FILTER = {};
 @Component({
@@ -104,9 +104,7 @@ export class A1FormComponent {
   id: string | null = null;
   studentId: string | null = null;
   formId: string | null;
-  a1Report : Report = Report.A1Form_Report
-
-
+  a1Report: Report = Report.A1Form_Report;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -359,7 +357,10 @@ export class A1FormComponent {
         next: (response: any) => {
           if (response.isSuccessful) {
             this.toastService.showSuccess('Formulari A1 u shtua me sukses!');
-            this.router.navigate(['/reports', this.a1Report])
+            this.router
+              .navigate(['/reports', this.a1Report], {
+                queryParams: { studentId: this.a1.studentId },
+              })
               .then();
           } else {
             response.errorMessage
@@ -394,7 +395,10 @@ export class A1FormComponent {
         next: (data: any) => {
           if (data.isSuccessful) {
             this.toastService.showSuccess('Formulari A1 u ndryshua me sukses!');
-            this.router.navigate(['/reports', this.a1Report])
+            this.router
+              .navigate([`/reports/${this.a1Report}`], {
+                queryParams: { studentId: this.a1?.studentId },
+              })
               .then();
           } else {
             data.errorMessage
