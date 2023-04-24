@@ -1,6 +1,8 @@
 export interface FailingStudent {
   id?: string;
 
+  studentId?: string;
+
   subject?: string;
 
   willRetryInFall?: boolean;

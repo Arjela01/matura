@@ -32,7 +32,7 @@ export class FailingStudentApiService {
   }
 
   update(
-    failingStudent: FailingStudent
+    failingStudent: any
   ): Observable<ApiResult<FailingStudent>> {
     return this.apiservice.put<ApiResult<FailingStudent>, FailingStudent>(
       `/FailingStudents`,
