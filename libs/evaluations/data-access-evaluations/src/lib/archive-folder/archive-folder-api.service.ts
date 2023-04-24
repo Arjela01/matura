@@ -5,8 +5,8 @@ import { LazyLoadEvent } from 'primeng/api';
 import { BehaviorSubject, Observable } from 'rxjs';
 import {
   ArchiveFolder,
-  ArchiveFolderBarcodeCorrection,
   ArchiveFolderTableView,
+  BarcodeCorrectionTableView,
 } from '@msh/evaluations/domain-evaluations';
 
 @Injectable({
@@ -34,8 +34,8 @@ export class ArchiveFolderApiService {
   // }
 
   barcodeCorrection(
-    event: LazyLoadEvent,
-  ): Observable<ArchiveFolderBarcodeCorrection> {
+    event: LazyLoadEvent
+  ): Observable<BarcodeCorrectionTableView> {
     return this.apiService.post(`/ArchiveFolder/BarcodeCorrection`, event);
   }
 

@@ -5,7 +5,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -18,11 +17,11 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { FormsModule, NgForm } from '@angular/forms';
-import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
-import {ArchiveExam, ArchiveFolder} from '@msh/evaluations/domain-evaluations';
-import {HttpClient} from "@angular/common/http";
-import {AcademicYearApiService} from "@msh/configurations/data-access-configurations";
+import { BarcodeCorrection } from '@msh/evaluations/domain-evaluations';
+import { HttpClient } from '@angular/common/http';
+import { AcademicYearApiService } from '@msh/configurations/data-access-configurations';
 
 @Component({
   selector: 'msh-barcode-correction-grid',
@@ -43,26 +42,26 @@ import {AcademicYearApiService} from "@msh/configurations/data-access-configurat
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BarcodeCorrectionGridComponent {
-  @Input() archiveFolders: ArchiveFolder[] = [];
+  @Input() archiveFolders: BarcodeCorrection[] = [];
 
   @Input() totalRecords = 0;
   @Input() loading = false;
 
   //Keep it local state because of Table Header checkbox not syncing
-  selectedArchiveFolders: ArchiveFolder[] = [];
+  selectedArchiveFolders: BarcodeCorrection[] = [];
 
   @Output() gridEvent = new EventEmitter<
-    GridEvent<ArchiveFolder | ArchiveFolder[]>
+    GridEvent<BarcodeCorrection | BarcodeCorrection[]>
   >();
 
-  @Output() formSave = new EventEmitter<ArchiveFolder>();
+  @Output() formSave = new EventEmitter<BarcodeCorrection>();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
   saving = false;
 
-  @Input() set archiveFolderDetails(details: ArchiveFolder | null) {
+  @Input() set archiveFolderDetails(details: BarcodeCorrection | null) {
     if (details) {
       this.archiveFolder = Object.assign({}, details);
     }
@@ -82,54 +81,50 @@ export class BarcodeCorrectionGridComponent {
     this.id = this.route.snapshot.paramMap.get('id');
   }
 
-  archiveFolder: ArchiveFolder = {
+  archiveFolder: BarcodeCorrection = {
+    index: 0,
+    archiveFolderId: 0,
+    archiveFolderNr: 0,
+    isFolderClosed: false,
+    barcode: '',
     examTypeName: '',
-    examTypeId: 0,
-    examSubjectId: '',
-    examSubjectName: '',
-    id: '',
-    isClosed: false,
-    lastUserId: undefined,
+    createdByName: '',
     totalArchiveExams: 0,
-    nr: 0,
+    id: 0,
   };
 
   submitted = false;
   id: any;
 
-  changeStatus(archive: ArchiveFolder): void {
+  changeStatus(archive: BarcodeCorrection): void {
     this.gridEvent.emit({
       action: GRID_ACTIONS.CUSTOM_ACTION1,
       data: archive,
-    } as GridEvent<ArchiveFolder>);
+    } as GridEvent<BarcodeCorrection>);
   }
 
-  onEditClick(archiveFolder: ArchiveFolder) {
+  onEditClick(archiveFolder: BarcodeCorrection) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
       data: archiveFolder,
-    } as GridEvent<ArchiveFolder>);
+    } as GridEvent<BarcodeCorrection>);
   }
 
-  onRowSelect({ data }: { data: ArchiveFolder }) {
+  onRowSelect({ data }: { data: BarcodeCorrection }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
       data: data.id,
-    } as GridEvent<ArchiveFolder>);
+    } as unknown as GridEvent<BarcodeCorrection>);
   }
 
-  onRowUnselect({ data }: { data: ArchiveFolder }) {
+  onRowUnselect({ data }: { data: BarcodeCorrection }) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
       data: data,
-    } as GridEvent<ArchiveFolder>);
+    } as GridEvent<BarcodeCorrection>);
   }
 
   loadRows($event: LazyLoadEvent) {
     this.lazyLoadData.emit($event);
-  }
-
-  persistArchiveFolder(archiveFolder: ArchiveFolder){
-    this.archiveFolderService.currentArchiveFolder$.next(archiveFolder);
   }
 }

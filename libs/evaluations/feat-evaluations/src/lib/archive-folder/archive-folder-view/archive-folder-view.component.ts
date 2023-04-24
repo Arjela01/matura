@@ -15,6 +15,8 @@ import {ArchiveExamApiService, ArchiveFolderApiService,} from '@msh/evaluations/
 import {ArchiveExam, ArchiveFolder,} from '@msh/evaluations/domain-evaluations';
 import {BehaviorSubject} from 'rxjs';
 import {GridEvent} from '@msh/shared/util-shared';
+import { Location } from '@angular/common';
+
 @UntilDestroy()
 @Component({
   selector: 'msh-archive-folder-view',
@@ -78,7 +80,8 @@ export class ArchiveFolderViewComponent implements OnInit {
     private archiveFolderService: ArchiveFolderApiService,
     private router: Router,
     private messageService: MessageService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
   ) {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -92,6 +95,9 @@ export class ArchiveFolderViewComponent implements OnInit {
       .getById(this.id)
       .subscribe(folder => (this.archiveFolder = { ...folder.data }));
     this.changeFolderStatus();
+  }
+  goBack(): void {
+    this.location.back();
   }
 
   onSubmit(): void {
