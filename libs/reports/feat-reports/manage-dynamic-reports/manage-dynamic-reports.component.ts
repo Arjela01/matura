@@ -42,6 +42,8 @@ export class ManageDynamicReportsComponent implements OnInit {
   selectedReport: any | null = null;
   selectedReports: any[] = [];
   displayModal = false;
+  reportName!: string;
+
   event = {
     first: 0,
     rows: 10,
@@ -49,7 +51,7 @@ export class ManageDynamicReportsComponent implements OnInit {
     filters: {},
     globalFilter: null,
   };
-  reportName: any;
+
   constructor(
     private readonly toastService: GlobalToastService,
     private reportsApiService: ReportsApiService,
