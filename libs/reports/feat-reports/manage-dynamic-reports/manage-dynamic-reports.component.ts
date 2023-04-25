@@ -2,9 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
   ReportsApiService,
-  RolesApiService,
 } from '@msh/configurations/data-access-configurations';
-
 import { GlobalToastService } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { LazyLoadEvent } from 'primeng/api';
@@ -15,6 +13,7 @@ import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { DynamicReportsComponent } from '../dynamic-reports/dynamic-reports.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'msh-manage-dynamic-reports',
@@ -27,6 +26,7 @@ import { DynamicReportsComponent } from '../dynamic-reports/dynamic-reports.comp
     DynamicReportsComponent,
     ToolbarModule,
     RippleModule,
+    FormsModule,
   ],
   templateUrl: './manage-dynamic-reports.component.html',
   styleUrls: ['./manage-dynamic-reports.component.scss'],
@@ -49,10 +49,10 @@ export class ManageDynamicReportsComponent implements OnInit {
     filters: {},
     globalFilter: null,
   };
+  reportName: any;
   constructor(
     private readonly toastService: GlobalToastService,
     private reportsApiService: ReportsApiService,
-    private rolesService: RolesApiService
   ) {}
 
   onNewClick() {
@@ -77,6 +77,20 @@ export class ManageDynamicReportsComponent implements OnInit {
         this.reports$$.next(response.data);
         this.totalRecords = response.total;
       });
+  }
+
+  getReportsName(reportName: string) {
+    if (reportName) {
+      this.reportsApiService
+        .getReportName(reportName)
+        .pipe(untilDestroyed(this))
+        .subscribe(response => {
+          this.reports$$.next(response.data);
+          this.totalRecords = response.data.length;
+        });
+    } else {
+      this.getReports(this.event);
+    }
   }
 
   paginate($event: number) {
