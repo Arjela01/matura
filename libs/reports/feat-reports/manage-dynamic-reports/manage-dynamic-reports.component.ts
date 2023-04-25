@@ -81,7 +81,7 @@ export class ManageDynamicReportsComponent implements OnInit {
       });
   }
 
-  getReportsName(reportName: string) {
+  searchReport(reportName: string) {
     if (reportName) {
       this.reportsApiService
         .getReportName(reportName)
