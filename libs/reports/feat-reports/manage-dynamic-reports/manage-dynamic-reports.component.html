@@ -3,7 +3,7 @@
         Raporte
     </h2>
   <div class="search-container">
-    <input type="text" placeholder="Kërko raport"  [(ngModel)]="reportName" (ngModelChange)="getReportsName(reportName)">
+    <input type="text" placeholder="Kërko raport ..."  [(ngModel)]="reportName" (ngModelChange)="getReportsName(reportName)">
     <div class="no-data" *ngIf="totalRecords === 0  && reportName">Nuk u gjet raport me këtë emër!</div>
 
   </div>
