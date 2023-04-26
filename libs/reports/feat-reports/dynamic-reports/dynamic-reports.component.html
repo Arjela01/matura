@@ -1,15 +1,11 @@
 <ng-container>
-  <div class="card-container">
-    <ng-container
-      *ngIf="
-        reports | reportFilter : reportName : 'reportName' as reportsResult
-      ">
+  <ng-container
+    *ngIf="reports | reportFilter : reportName : 'reportName' as reportsResult">
+    <div class="card-container">
       <div
         class="card"
         *ngFor="let report of reportsResult"
         (click)="onViewClick(report)">
-        <!--      <div class="no-data" *ngIf="result === 0  && reportName">Nuk u gjet raport me këtë emër!</div>-->
-
         <div class="card-header">
           <span class="card-title">{{ report.reportName }}</span>
           <div class="svg-container">
@@ -17,16 +13,18 @@
           </div>
         </div>
       </div>
-      <p>
-        Count: <b>{{ reportsResult.length }}</b>
-      </p>
+    </div>
 
-      <p-paginator
-        [rows]="10"
-        [totalRecords]="reportsResult.length"
-        (onPageChange)="onPageChange($event)">
-      </p-paginator>
-      
-    </ng-container>
-  </div>
+    <p>
+      <b>{{ reportsResult.length }} Raporte</b>
+    </p>
+
+    <p-paginator
+      [rows]="10"
+      [totalRecords]="reportName ? reportsResult.length : totalRecords"
+      (onPageChange)="onPageChange($event)">
+    </p-paginator>
+  </ng-container>
 </ng-container>
+
+

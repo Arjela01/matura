@@ -60,7 +60,6 @@ export class ManageDynamicReportsComponent implements OnInit {
   constructor(
     private readonly toastService: GlobalToastService,
     private reportsApiService: ReportsApiService,
-    private reportFilterPipe: ReportFilterPipe
   ) {}
 
   onNewClick() {

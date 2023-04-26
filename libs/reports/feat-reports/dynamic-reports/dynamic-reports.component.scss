@@ -6,7 +6,8 @@
   flex-wrap: wrap;
   padding-top: 19px;
   cursor: pointer;
-}
+  width: 100%;
+  max-width: none;}
 
 .card {
   width: 200px;
@@ -38,11 +39,7 @@
   margin-top: 30px;
 }
 
-.no-data {
-  margin: 6px 0 0 6px;
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  font-size: 12px;
-  color: darkred;
+p{
+  margin-left: 16px;
 }
+
