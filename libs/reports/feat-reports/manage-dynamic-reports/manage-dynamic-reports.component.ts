@@ -5,15 +5,16 @@ import {
 } from '@msh/configurations/data-access-configurations';
 import { GlobalToastService } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { LazyLoadEvent } from 'primeng/api';
+import { LazyLoadEvent} from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject } from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import { DynamicReportsComponent } from '../dynamic-reports/dynamic-reports.component';
 import { FormsModule } from '@angular/forms';
+import {ReportFilterPipe} from "../report-pipe/report-filter.pipe";
 
 @Component({
   selector: 'msh-manage-dynamic-reports',
@@ -27,9 +28,12 @@ import { FormsModule } from '@angular/forms';
     ToolbarModule,
     RippleModule,
     FormsModule,
+    ReportFilterPipe
   ],
   templateUrl: './manage-dynamic-reports.component.html',
   styleUrls: ['./manage-dynamic-reports.component.scss'],
+  providers: [ReportFilterPipe],
+
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 @UntilDestroy()
@@ -43,6 +47,7 @@ export class ManageDynamicReportsComponent implements OnInit {
   selectedReports: any[] = [];
   displayModal = false;
   reportName!: string;
+  filteredReports$: Observable<any[]> | undefined;
 
   event = {
     first: 0,
@@ -55,6 +60,7 @@ export class ManageDynamicReportsComponent implements OnInit {
   constructor(
     private readonly toastService: GlobalToastService,
     private reportsApiService: ReportsApiService,
+    private reportFilterPipe: ReportFilterPipe
   ) {}
 
   onNewClick() {
@@ -69,6 +75,7 @@ export class ManageDynamicReportsComponent implements OnInit {
 
   ngOnInit() {
     this.getReports(this.event);
+
   }
   getReports($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
@@ -79,20 +86,6 @@ export class ManageDynamicReportsComponent implements OnInit {
         this.reports$$.next(response.data);
         this.totalRecords = response.total;
       });
-  }
-
-  searchReport(reportName: string) {
-    if (reportName) {
-      this.reportsApiService
-        .getReportName(reportName)
-        .pipe(untilDestroyed(this))
-        .subscribe(response => {
-          this.reports$$.next(response.data);
-          this.totalRecords = response.data.length;
-        });
-    } else {
-      this.getReports(this.event);
-    }
   }
 
   paginate($event: number) {

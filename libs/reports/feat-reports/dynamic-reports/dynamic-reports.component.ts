@@ -13,6 +13,7 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { PaginatorModule } from 'primeng/paginator';
 import { UntilDestroy } from '@ngneat/until-destroy';
+import {ReportFilterPipe} from "../report-pipe/report-filter.pipe";
 
 @Component({
   selector: 'msh-dynamic-reports',
@@ -26,9 +27,12 @@ import { UntilDestroy } from '@ngneat/until-destroy';
     CheckboxModule,
     RippleModule,
     PaginatorModule,
+    ReportFilterPipe
   ],
   templateUrl: './dynamic-reports.component.html',
   styleUrls: ['./dynamic-reports.component.scss'],
+  providers: [ReportFilterPipe],
+
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 @UntilDestroy()
@@ -36,6 +40,7 @@ export class DynamicReportsComponent {
   @Input() reports: Reports[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
+  @Input() reportName !: string
   currentPage = 1;
 
   pageSize = 10;
@@ -46,6 +51,7 @@ export class DynamicReportsComponent {
   @Output() gridEvent = new EventEmitter<GridEvent<any | any[]>>();
   @Output() changePage = new EventEmitter();
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  result!: number;
 
   constructor(private router: Router) {}
 
