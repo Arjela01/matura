@@ -9,7 +9,7 @@
       name="examSiteId"
       [required]="true"
       (onChange)="refreshExamDates()"
-      [autoDisplayFirst]="false"
+      [autoDisplayFirst]="true"
       [(ngModel)]="examAssignment.examSiteId"
       [showClear]="true"
       [ngClass]="{
@@ -24,15 +24,15 @@
   </div>
 
   <div class="field">
-    <label for="ExamInfo"> Tipi dhe Data e Provimit *</label>
+    <label for="examInfo"> Tipi dhe Data e Provimit *</label>
     <p-dropdown
-      id="ExamInfo"
+      id="examInfo"
       [options]="examDates"
       optionValue="key"
       optionLabel="value"
       name="examInfoId"
       [required]="true"
-      [autoDisplayFirst]="false"
+      [autoDisplayFirst]="true"
       [(ngModel)]="examAssignment.examDateId"
       [showClear]="true"
       [ngClass]="{
@@ -52,7 +52,7 @@
       <p-button
         label="Kërko"
         icon="pi pi-search"
-        (click)="onNewClick()"
+        (click)="onSearchClick()"
         [style]="{ height: '100%' }"></p-button>
       <input
         [value]="studentInputData"
@@ -62,7 +62,6 @@
         name="studentInputData"
         [(ngModel)]="studentInputData"
         [required]="true"
-        autofocus
         [ngClass]="{
           'ng-invalid ng-dirty': submitted && !studentInputData
         }" />

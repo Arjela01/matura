@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   DoCheck,
   EventEmitter,
@@ -52,7 +52,6 @@ import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
   ],
   templateUrl: './exam-assignment-form.component.html',
   styleUrls: ['./exam-assignment-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
   private studentList$$ = new BehaviorSubject<Student[]>([]);
@@ -102,12 +101,13 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
     private readonly studentService: StudentsApiService,
     private readonly examDateService: ExamDateApiService,
     private readonly examSiteService: ExamSiteApiService,
-    private readonly activatedRoute: ActivatedRoute
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly cd: ChangeDetectorRef,
   ) {
     this.formId = this.activatedRoute.snapshot.paramMap.get('id');
   }
 
-  onNewClick() {
+  onSearchClick() {
     this.displayModal = true;
   }
 
@@ -139,17 +139,20 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
       this.onStudentChange(this.selectedStudent);
     } else {
       this.getExamSite();
+      this.getExamDate(this.examAssignment.examSiteId);
     }
   }
 
   getExamDate(examSiteId: string) {
     this.examDateService.forExamSiteId(examSiteId).subscribe(response => {
       this.examDates = response.data;
+      this.cd.markForCheck();
     });
   }
   getExamSite() {
     this.examSiteService.loadDropdownList().subscribe(response => {
       this.examSites = response.data;
+      this.cd.markForCheck();
     });
   }
   onGridEvent(event: GridEvent<Student | Student[]>) {
@@ -198,6 +201,7 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
       .subscribe(response => {
         this.studentList$$.next(response.data);
         this.totalRecords = response.total;
+        this.cd.markForCheck();
       });
   }
 
