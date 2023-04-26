@@ -57,8 +57,8 @@
       [(ngModel)]="date"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examDate.date}" />
-    <small class="p-error block" *ngIf="submitted && !examDate.date">
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !date}" />
+    <small class="p-error block" *ngIf="submitted && !date">
       Data është fushë e kërkuar.
     </small>
   </div>
@@ -73,7 +73,7 @@
       [(ngModel)]="examDate.time"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty':  submitted && !examDate.date }" />
+      [ngClass]="{ 'ng-invalid ng-dirty':  submitted && !examDate.time }" />
     <small class="p-error block" *ngIf="submitted && !examDate.time">
       Ora  është fushë e kërkuar.
     </small>
