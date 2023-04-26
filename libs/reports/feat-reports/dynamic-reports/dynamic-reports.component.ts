@@ -51,7 +51,6 @@ export class DynamicReportsComponent {
   @Output() gridEvent = new EventEmitter<GridEvent<any | any[]>>();
   @Output() changePage = new EventEmitter();
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
-  result!: number;
 
   constructor(private router: Router) {}
 

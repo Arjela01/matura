@@ -1,20 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import {
-  ReportsApiService,
-} from '@msh/configurations/data-access-configurations';
+import { ReportsApiService } from '@msh/configurations/data-access-configurations';
 import { GlobalToastService } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { LazyLoadEvent} from 'primeng/api';
+import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
-import {BehaviorSubject, Observable} from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { DynamicReportsComponent } from '../dynamic-reports/dynamic-reports.component';
 import { FormsModule } from '@angular/forms';
-import {ReportFilterPipe} from "../report-pipe/report-filter.pipe";
+import { ReportFilterPipe } from '../report-pipe/report-filter.pipe';
 
 @Component({
   selector: 'msh-manage-dynamic-reports',
@@ -28,7 +26,7 @@ import {ReportFilterPipe} from "../report-pipe/report-filter.pipe";
     ToolbarModule,
     RippleModule,
     FormsModule,
-    ReportFilterPipe
+    ReportFilterPipe,
   ],
   templateUrl: './manage-dynamic-reports.component.html',
   styleUrls: ['./manage-dynamic-reports.component.scss'],
@@ -47,7 +45,6 @@ export class ManageDynamicReportsComponent implements OnInit {
   selectedReports: any[] = [];
   displayModal = false;
   reportName!: string;
-  filteredReports$: Observable<any[]> | undefined;
 
   event = {
     first: 0,
@@ -59,7 +56,7 @@ export class ManageDynamicReportsComponent implements OnInit {
 
   constructor(
     private readonly toastService: GlobalToastService,
-    private reportsApiService: ReportsApiService,
+    private reportsApiService: ReportsApiService
   ) {}
 
   onNewClick() {
@@ -74,7 +71,6 @@ export class ManageDynamicReportsComponent implements OnInit {
 
   ngOnInit() {
     this.getReports(this.event);
-
   }
   getReports($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
