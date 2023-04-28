@@ -135,11 +135,15 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
     this.getExamDate(this.examAssignment.examSiteId);
   }
   ngOnInit(): void {
-    if (this.selectedStudent ) {
+    if (this.selectedStudent) {
       this.onStudentChange(this.selectedStudent);
     } else {
       this.getExamSite();
-      this.getExamDate(this.examAssignment.examSiteId);
+      if (this.examAssignment.examSiteId) {
+        this.getExamDate(this.examAssignment.examSiteId);
+      } else {
+        this.examDates = [];
+      }
     }
   }
 
