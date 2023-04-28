@@ -135,7 +135,7 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
     this.getExamDate(this.examAssignment.examSiteId);
   }
   ngOnInit(): void {
-    if (this.selectedStudent) {
+    if (this.selectedStudent ) {
       this.onStudentChange(this.selectedStudent);
     } else {
       this.getExamSite();
@@ -143,7 +143,7 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
     }
   }
 
-  getExamDate(examSiteId: string) {
+  getExamDate(examSiteId: string ) {
     this.examDateService.forExamSiteId(examSiteId).subscribe(response => {
       this.examDates = response.data;
       this.cd.markForCheck();
