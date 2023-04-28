@@ -20,7 +20,7 @@ import {
   AcademicYearApiService,
   CarriedGradeApiService,
   ExamSubjectApiService,
-  ExamTypeApiService,
+  ExamTypeApiService, ReportsApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
@@ -110,6 +110,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   filters: LazyLoadEvent | null = null;
 
   formId: string | null;
+  parameterUrl!: any;
 
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
@@ -167,7 +168,9 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
     private readonly activatedRoute: ActivatedRoute,
     private readonly carriedGradeService: CarriedGradeApiService,
     private readonly router: Router,
-    private readonly examSubjectService: ExamSubjectApiService
+    private readonly examSubjectService: ExamSubjectApiService,
+    private reportsApiService: ReportsApiService
+
   ) {
     this.formId = this.activatedRoute.snapshot.paramMap.get('id');
   }
@@ -201,6 +204,20 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         this.cd.detectChanges();
       });
     }
+
+    // this.reportsApiService
+    //   .loadRoleReports(this.event)
+    //   .pipe(untilDestroyed(this))
+    //   .subscribe(response => {
+    //     const a1ReportData = response.data.find(item => {
+    //       return item.reportId === 13;
+    //     });
+    //     const parametersArray = JSON.parse(a1ReportData?.parameters as never);
+    //     if (parametersArray.length > 0)
+    //       this.parameterUrl = parametersArray.find((item: string) => {
+    //         return ['studentid'].includes(item.toLowerCase());
+    //       });
+    //   });
   }
 
   ngOnChanges(): void {

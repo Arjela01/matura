@@ -13,6 +13,7 @@ import { A1Z } from '@msh/applications/domain-application';
 import {
   AcademicYearApiService,
   ExamSubjectApiService,
+  ReportsApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
@@ -33,9 +34,16 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
-import { combineLatest, Observable, of, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  Observable,
+  of,
+  switchMap,
+} from 'rxjs';
 import { ManageStudentsGridsDialogComponent } from '../manage-students-grids-dialog/manage-students-grids-dialog.component';
 import { Report } from '../../../../../../reports/reports-enum';
+import { LazyLoadEvent } from 'primeng/api';
 
 let INITIAL_FILTER = {};
 @Component({
@@ -72,6 +80,9 @@ export class A1FormComponent {
   d1Dropdown: DropdownModel<number>[] = [];
   d2Dropdown: DropdownModel<number>[] = [];
   @ViewChild('form', { static: false }) form!: NgForm;
+  totalRecords = 0;
+  parameterUrl!: any;
+
   @HostListener('window:popstate', ['$event'])
   onPopState() {
     //close modal when clicking back button on google
@@ -115,16 +126,37 @@ export class A1FormComponent {
     private examSubjectsService: ExamSubjectApiService,
     private dialogService: DialogService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private reportsApiService: ReportsApiService
   ) {
     this.formId = this.route.snapshot.paramMap.get('id');
   }
-
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
     this.studentId = this.route.snapshot.params['student'];
     this.initializeFormWithApiCalls();
+
+    this.reportsApiService
+      .loadRoleReports(this.event)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        const a1ReportData = response.data.find(item => {
+          return item.reportId === 13;
+        });
+        const parametersArray = JSON.parse(a1ReportData?.parameters as never);
+        if (parametersArray.length > 0)
+          this.parameterUrl = parametersArray.find((item: string) => {
+            return ['studentid'].includes(item.toLowerCase());
+          });
+      });
   }
+  event = {
+    first: 0,
+    rows: 10,
+    sortOrder: 1,
+    filters: {},
+    globalFilter: null,
+  };
 
   initializeFormWithApiCalls() {
     if (this.studentId != null) {
@@ -349,6 +381,8 @@ export class A1FormComponent {
     this.optionalSubjectChoosen = '';
   }
 
+
+
   addA1(a1: A1Z) {
     this.a1ApiService
       .save(a1)
@@ -357,11 +391,13 @@ export class A1FormComponent {
         next: (response: any) => {
           if (response.isSuccessful) {
             this.toastService.showSuccess('Formulari A1 u shtua me sukses!');
-            this.router
-              .navigate(['/reports', this.a1Report], {
-                queryParams: { studentId: this.a1.studentId },
-              })
-              .then();
+            const query: { queryParams: { [x: string]: string } } = {
+              queryParams: {},
+            };
+            if (this.parameterUrl && this.a1.studentId) {
+              query.queryParams[`${this.parameterUrl}`] = this.a1.studentId;
+            }
+            this.router.navigate([`/reports/${this.a1Report}`], query).then();
           } else {
             response.errorMessage
               ? this.toastService.showError(response.errorMessage)
@@ -395,11 +431,13 @@ export class A1FormComponent {
         next: (data: any) => {
           if (data.isSuccessful) {
             this.toastService.showSuccess('Formulari A1 u ndryshua me sukses!');
-            this.router
-              .navigate([`/reports/${this.a1Report}`], {
-                queryParams: { studentId: this.a1?.studentId },
-              })
-              .then();
+            const extras : {queryParams : {[x : string]: string } }={
+              queryParams:{}
+            }
+            if(this.parameterUrl && this.a1.studentId){
+              extras.queryParams[`${this.parameterUrl}`] = this.a1.studentId;
+            }
+            this.router.navigate([`/reports/${this.a1Report}`], extras).then();
           } else {
             data.errorMessage
               ? this.toastService.showError(data.errorMessage)
