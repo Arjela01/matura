@@ -1,18 +1,18 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ReportsApiService } from '@msh/configurations/data-access-configurations';
-import { GlobalToastService } from '@msh/shared/util-shared';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { LazyLoadEvent } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { DialogModule } from 'primeng/dialog';
-import { RippleModule } from 'primeng/ripple';
-import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject } from 'rxjs';
-import { DynamicReportsComponent } from '../dynamic-reports/dynamic-reports.component';
-import { FormsModule } from '@angular/forms';
-import { ReportFilterPipe } from '../report-pipe/report-filter.pipe';
+import {CommonModule} from '@angular/common';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ReportsApiService} from '@msh/configurations/data-access-configurations';
+import {GlobalToastService} from '@msh/shared/util-shared';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {LazyLoadEvent} from 'primeng/api';
+import {ButtonModule} from 'primeng/button';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {DialogModule} from 'primeng/dialog';
+import {RippleModule} from 'primeng/ripple';
+import {ToolbarModule} from 'primeng/toolbar';
+import {BehaviorSubject} from 'rxjs';
+import {DynamicReportsComponent} from '../dynamic-reports/dynamic-reports.component';
+import {FormsModule} from '@angular/forms';
+import {ReportFilterPipe} from '../report-pipe/report-filter.pipe';
 
 @Component({
   selector: 'msh-manage-dynamic-reports',
@@ -81,6 +81,65 @@ export class ManageDynamicReportsComponent implements OnInit {
         this.reports$$.next(response.data);
         this.totalRecords = response.total;
       });
+  }
+
+  searchReport() {
+    this.event.filters = {
+      ReportName: [
+        {
+          value: this.reportName,
+          matchMode: 'contains',
+          operator: 'and'
+        }
+      ],
+      // RoleId: [
+      //   {
+      //     value: null,
+      //     matchMode: 'contains',
+      //     operator: 'and'
+      //   }
+      // ],
+      // RoleName: [
+      //   {
+      //     value: null,
+      //     matchMode: 'contains',
+      //     operator: 'and'
+      //   }
+      // ],
+      // ReportId: [
+      //   {
+      //     value: null,
+      //     matchMode: 'contains',
+      //     operator: 'and'
+      //   }
+      // ],
+      // ReportPath: [
+      //   {
+      //     value: null,
+      //     matchMode: 'contains',
+      //     operator: 'and'
+      //   }
+      // ],
+      // Parameters: [
+      //   {
+      //     value: null,
+      //     matchMode: 'contains',
+      //     operator: 'and'
+      //   }
+      // ]
+    };
+
+    if (this.reportName) {
+      this.reportsApiService
+        .loadRoleReports(this.event)
+        .pipe(untilDestroyed(this))
+        .subscribe(response => {
+          this.reports$$.next(response.data);
+          this.totalRecords = response.data.length;
+        });
+    } else {
+      this.getReports(this.event);
+    }
   }
 
   paginate($event: number) {

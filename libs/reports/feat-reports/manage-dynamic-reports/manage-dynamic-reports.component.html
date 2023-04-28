@@ -3,7 +3,11 @@
         Raporte
     </h2>
   <div class="search-container">
-    <input type="text" placeholder="Kërko raport ..."  [(ngModel)]="reportName" >
+    <input type="text" placeholder="Kërko raport ..."  [(ngModel)]="reportName" (ngModelChange)="searchReport()">
+    <div class="no-data" *ngIf="totalRecords === 0  && reportName">Nuk u gjet raport me këtë emër!</div>
+<!--    <div *ngFor="let report of reports$ | async | reportFilter:reportName">-->
+<!--      {{reportName }}-->
+<!--    </div>-->
   </div>
 
 
@@ -12,7 +16,7 @@
     <div class="col-12">
         <div class="card">
             <msh-dynamic-reports [reports]="(reports$ | async) || []" [totalRecords]="totalRecords"
-                (lazyLoadData)="getReports($event)" (changePage) = paginate($event) [reportName]="reportName" >
+                (lazyLoadData)="getReports($event)" (changePage) = paginate($event)>
             </msh-dynamic-reports>
         </div>
     </div>

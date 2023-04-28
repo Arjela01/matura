@@ -1,10 +1,10 @@
 <ng-container>
   <ng-container
-    *ngIf="reports | reportFilter : reportName : 'reportName' as reportsResult">
+   >
     <div class="grid col-12 ">
       <div
         class="card  md:col-6 lg:col-2 my-lg-4"
-        *ngFor="let report of reportsResult"
+        *ngFor="let report of reports"
         (click)="onViewClick(report)">
         <div class="card-header ">
           <span class="card-title">{{ report.reportName }}</span>
@@ -16,12 +16,12 @@
     </div>
 
     <p>
-      <b>{{ reportsResult.length }} Raporte</b>
+<!--      <b>{{ reportsResult.length }} Raporte</b>-->
     </p>
 
     <p-paginator
       [rows]="10"
-      [totalRecords]="reportName ? reportsResult.length : totalRecords"
+      [totalRecords]="totalRecords"
       (onPageChange)="onPageChange($event)">
     </p-paginator>
   </ng-container>
