@@ -12,7 +12,6 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { DynamicReportsComponent } from '../dynamic-reports/dynamic-reports.component';
 import { FormsModule } from '@angular/forms';
-import { ReportFilterPipe } from '../report-pipe/report-filter.pipe';
 
 @Component({
   selector: 'msh-manage-dynamic-reports',
@@ -26,11 +25,9 @@ import { ReportFilterPipe } from '../report-pipe/report-filter.pipe';
     ToolbarModule,
     RippleModule,
     FormsModule,
-    ReportFilterPipe,
   ],
   templateUrl: './manage-dynamic-reports.component.html',
   styleUrls: ['./manage-dynamic-reports.component.scss'],
-  providers: [ReportFilterPipe],
 
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -95,6 +92,7 @@ export class ManageDynamicReportsComponent implements OnInit {
       ],
     };
     if (this.reportName) {
+      this.event.first = 0;
       this.reportsApiService
         .loadRoleReports(this.event)
         .pipe(untilDestroyed(this))
@@ -103,7 +101,6 @@ export class ManageDynamicReportsComponent implements OnInit {
           this.totalRecords = response.data.length;
         });
     } else {
-      console.log('here')
       this.getReports(this.event);
     }
   }

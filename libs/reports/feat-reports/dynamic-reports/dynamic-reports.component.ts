@@ -13,7 +13,6 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { PaginatorModule } from 'primeng/paginator';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import {ReportFilterPipe} from "../report-pipe/report-filter.pipe";
 
 @Component({
   selector: 'msh-dynamic-reports',
@@ -27,11 +26,9 @@ import {ReportFilterPipe} from "../report-pipe/report-filter.pipe";
     CheckboxModule,
     RippleModule,
     PaginatorModule,
-    ReportFilterPipe
   ],
   templateUrl: './dynamic-reports.component.html',
   styleUrls: ['./dynamic-reports.component.scss'],
-  providers: [ReportFilterPipe],
 
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
