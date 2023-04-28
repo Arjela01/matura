@@ -35,7 +35,6 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import {
-  BehaviorSubject,
   combineLatest,
   Observable,
   of,
@@ -43,7 +42,6 @@ import {
 } from 'rxjs';
 import { ManageStudentsGridsDialogComponent } from '../manage-students-grids-dialog/manage-students-grids-dialog.component';
 import { Report } from '../../../../../../reports/reports-enum';
-import { LazyLoadEvent } from 'primeng/api';
 
 let INITIAL_FILTER = {};
 @Component({
