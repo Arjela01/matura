@@ -66,7 +66,6 @@ export class ReportRendererComponent implements OnInit{
   }
 
   ngOnInit() {
-    console.log(6666,this.studentObj);
     if (this.id && this.studentObj) {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}`;
     } else {
