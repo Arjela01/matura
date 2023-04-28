@@ -40,7 +40,6 @@ export class DynamicReportsComponent {
   @Input() reports: Reports[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
-  @Input() reportName !: string
   currentPage = 1;
 
   pageSize = 10;

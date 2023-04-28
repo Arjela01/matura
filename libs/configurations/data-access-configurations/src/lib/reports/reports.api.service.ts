@@ -39,4 +39,10 @@ export class ReportsApiService {
   loadRoleReports(event: LazyLoadEvent): Observable<ReportsTable> {
     return this.apiService.post(`/RoleAppReport/TableData`, event);
   }
+
+  getReportName(reportName: string): Observable<ReportsTable> {
+    return this.apiService.get(
+      `/RoleAppReport/GetReport?ReportName=${reportName}`
+    );
+  }
 }
