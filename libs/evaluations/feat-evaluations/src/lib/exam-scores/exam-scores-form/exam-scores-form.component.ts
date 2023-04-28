@@ -78,7 +78,7 @@ export class ExamScoresFormComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this.examTypeId = this.examScore.examTypeId;
     this.examSubjectId = this.examScore.examSubjectId;
-    this.cd.detectChanges();
+    this.cd.markForCheck();
   }
 
   onCancelClick(): void {

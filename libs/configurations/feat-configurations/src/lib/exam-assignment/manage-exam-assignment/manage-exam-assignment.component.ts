@@ -98,8 +98,6 @@ export class ManageExamAssignmentComponent {
           {},
           event.data as ExamAssignment
         );
-        this.getExamSiteDropdown();
-        this.getExamDateDropdown();
         this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
@@ -124,7 +122,7 @@ export class ManageExamAssignmentComponent {
 
   onNewClick() {
     this.displayModal = true;
-    this.selectedExamAssignment ={} as ExamAssignment
+    //this.selectedExamAssignment ={} as ExamAssignment
   }
 
   onModalClose() {
@@ -185,6 +183,8 @@ export class ManageExamAssignmentComponent {
             'Caktimi në Qender Provimi u ndryshua me sukses!'
           );
           this.displayModal = false;
+          this.getExamSiteDropdown();
+          this.getExamDateDropdown();
           this.getExamAssignments(this.filters as LazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
