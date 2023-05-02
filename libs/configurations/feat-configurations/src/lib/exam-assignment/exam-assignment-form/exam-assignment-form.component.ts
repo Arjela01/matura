@@ -139,11 +139,15 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
       this.onStudentChange(this.selectedStudent);
     } else {
       this.getExamSite();
-      this.getExamDate(this.examAssignment.examSiteId);
+      if (this.examAssignment.examSiteId) {
+        this.getExamDate(this.examAssignment.examSiteId);
+      } else {
+        this.examDates = [];
+      }
     }
   }
 
-  getExamDate(examSiteId: string) {
+  getExamDate(examSiteId: string ) {
     this.examDateService.forExamSiteId(examSiteId).subscribe(response => {
       this.examDates = response.data;
       this.cd.markForCheck();

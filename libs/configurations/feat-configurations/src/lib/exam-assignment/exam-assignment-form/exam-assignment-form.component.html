@@ -9,7 +9,8 @@
       name="examSiteId"
       [required]="true"
       (onChange)="refreshExamDates()"
-      [autoDisplayFirst]="true"
+      (onClear)="refreshExamDates()"
+      [autoDisplayFirst]="false"
       [(ngModel)]="examAssignment.examSiteId"
       [showClear]="true"
       [ngClass]="{
@@ -32,7 +33,7 @@
       optionLabel="value"
       name="examInfoId"
       [required]="true"
-      [autoDisplayFirst]="true"
+      [autoDisplayFirst]="false"
       [(ngModel)]="examAssignment.examDateId"
       [showClear]="true"
       [ngClass]="{
