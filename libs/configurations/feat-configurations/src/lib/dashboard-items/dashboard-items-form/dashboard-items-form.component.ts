@@ -1,10 +1,11 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
   ViewChild,
@@ -27,7 +28,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   DashboardSectionApiService,
   RolesApiService,
@@ -55,7 +56,6 @@ import { CalendarModule } from 'primeng/calendar';
     AutoCompleteModule,
     MultiSelectModule,
     CalendarModule,
-
   ],
   templateUrl: './dashboard-items-form.component.html',
   styleUrls: ['./dashboard-items-form.component.scss'],
@@ -65,10 +65,22 @@ export class DashboardItemsFormComponent implements OnInit {
   @Input() roles: DropdownModel<number>[] = [];
   @Input() users: DropdownModel<number>[] = [];
   sectionDashboard: DropdownModel<number>[] = [];
+  formattedStartDate: any;
+  formattedEndDate: any;
 
   @Input() set setDashboardItemsDetails(details: DashboardItem | null) {
     if (details) {
       this.dashboardItem = Object.assign({}, details);
+      this.formattedStartDate = formatDate(
+        new Date(this.dashboardItem.startDate),
+        'dd/MM/yyyy',
+        'en'
+      );
+      this.formattedEndDate = formatDate(
+        new Date(this.dashboardItem.endDate),
+        'dd/MM/yyyy',
+        'en'
+      );
     }
   }
   @Output() formSave = new EventEmitter<DashboardItem>();
@@ -78,7 +90,18 @@ export class DashboardItemsFormComponent implements OnInit {
 
   submitted = false;
 
-  dashboardItem = {} as DashboardItem;
+  dashboardItem: DashboardItem = {
+    dashboardSectionId: 0,
+    description: '',
+    document: '',
+    documentName: '',
+    endDate: new Date(),
+    linkUrl: '',
+    roles: [],
+    startDate: new Date(),
+    title: '',
+    users: [],
+  };
   uploaded = false;
 
   onCancelClick() {
@@ -87,23 +110,31 @@ export class DashboardItemsFormComponent implements OnInit {
 
   constructor(
     private cd: ChangeDetectorRef,
-    private readonly dashboardSectionService: DashboardSectionApiService,
     private readonly rolesServices: RolesApiService,
-    private readonly usersServices: UserApiService
+    private readonly usersServices: UserApiService,
+    private readonly dashboardSectionService: DashboardSectionApiService
   ) {}
+
   ngOnInit(): void {
     this.dashboardSectionService.loadDropdownList().subscribe(response => {
       this.sectionDashboard = [...response.data];
-      this.cd.detectChanges();
+      this.cd.markForCheck();
     });
-    this.rolesServices.loadDropdownList().subscribe(response => {
-      this.roles = [...response.data];
-      this.cd.detectChanges();
-    });
-    this.usersServices.loadDropdownList().subscribe(response => {
-      this.users = [...response.data];
-      this.cd.detectChanges();
-    });
+    this.rolesServices
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.roles =  [...response.data];
+        this.cd.markForCheck();
+      });
+
+    this.usersServices
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.users = [...response.data];
+        this.cd.markForCheck();
+      });
   }
 
   selectFiles(event: any) {

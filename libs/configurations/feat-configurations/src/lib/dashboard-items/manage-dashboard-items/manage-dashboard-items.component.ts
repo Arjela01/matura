@@ -1,5 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component, OnInit,
+} from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -19,7 +23,11 @@ import { RippleModule } from 'primeng/ripple';
 import { DashboardItemsFormComponent } from '../dashboard-items-form/dashboard-items-form.component';
 import { DashboardItemsGridComponent } from '../dashboard-items-grid/dashboard-items-grid.component';
 import { DashboardItem } from '@msh/shared/domain-models';
-import { DashboardItemsApiService } from '@msh/configurations/data-access-configurations';
+import {
+  DashboardItemsApiService,
+  RolesApiService,
+  UserApiService,
+} from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
 @UntilDestroy()
@@ -56,7 +64,8 @@ export class ManageDashboardItemsComponent {
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly dashboardItemsService: DashboardItemsApiService
+    private readonly dashboardItemsService: DashboardItemsApiService,
+    private cd: ChangeDetectorRef
   ) {}
 
   onNewClick() {
@@ -77,7 +86,6 @@ export class ManageDashboardItemsComponent {
       },
     });
   }
-
   onGridEvent(event: GridEvent<DashboardItem | DashboardItem[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
@@ -150,7 +158,7 @@ export class ManageDashboardItemsComponent {
       byteNumbers[i] = byteCharacters.charCodeAt(i);
     }
     const byteArray = new Uint8Array(byteNumbers);
-    const mimeType = 'application/pdf'
+    const mimeType = 'application/pdf';
     const blob = new Blob([byteArray], { type: mimeType });
 
     const url = URL.createObjectURL(blob);
@@ -159,7 +167,6 @@ export class ManageDashboardItemsComponent {
     link.download = dashboardItem.documentName;
     link.click();
   }
-
 
   addDashboardItems(dashboardItems: DashboardItem) {
     this.dashboardItemsService
