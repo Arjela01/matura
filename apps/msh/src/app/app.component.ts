@@ -4,17 +4,13 @@ import { RouterOutlet } from '@angular/router';
 import { GlobalSpinnerComponent } from '@msh/shared/ui-shared';
 import { ToastModule } from 'primeng/toast';
 import { PrimeNGConfig } from 'primeng/api';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { LoadingInterceptor } from '../../../../libs/shared/ui-shared/src/lib/loader-interceptor/loader-interceptor';
+import {  HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'msh-root',
   template: `
-    <msh-global-spinner>
-    </msh-global-spinner>
-    <router-outlet>
-    </router-outlet>
+    <msh-global-spinner></msh-global-spinner>
+    <router-outlet></router-outlet>
     <p-toast></p-toast>
   `,
   styles: [],
@@ -25,13 +21,6 @@ import { LoadingInterceptor } from '../../../../libs/shared/ui-shared/src/lib/lo
     NgIf,
     ToastModule,
     HttpClientModule,
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: LoadingInterceptor,
-      multi: true,
-    },
   ],
 })
 export class AppComponent implements OnInit {
