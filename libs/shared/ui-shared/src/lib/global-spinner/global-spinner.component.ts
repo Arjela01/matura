@@ -1,21 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
+import { LoaderService} from "../loader-service/loader.service";
 
 @Component({
   selector: 'msh-global-spinner',
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="overlay">
-      <div class="lds-ring">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
+    <div *ngIf="this.loader.getLoading()" class="cssload-container">
+      <div class="cssload-speeding-wheel"></div>
     </div>
   `,
   styleUrls: ['./global-spinner.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.ShadowDom,
 })
-export class GlobalSpinnerComponent {}
+export class GlobalSpinnerComponent {
+  constructor( public loader : LoaderService) {
+  }
+}

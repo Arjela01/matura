@@ -1,29 +1,44 @@
 import { NgIf } from '@angular/common';
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { GlobalSpinnerComponent } from '@msh/shared/ui-shared';
 import { ToastModule } from 'primeng/toast';
-import {PrimeNGConfig} from "primeng/api";
+import { PrimeNGConfig } from 'primeng/api';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { LoadingInterceptor } from '../../../../libs/shared/ui-shared/src/lib/loader-interceptor/loader-interceptor';
 
 @Component({
   selector: 'msh-root',
   template: `
-    <router-outlet></router-outlet>
-    <msh-global-spinner *ngIf="isLoading"></msh-global-spinner>
+    <msh-global-spinner>
+    </msh-global-spinner>
+    <router-outlet>
+    </router-outlet>
     <p-toast></p-toast>
   `,
   styles: [],
   standalone: true,
-  imports: [RouterOutlet, GlobalSpinnerComponent, NgIf, ToastModule],
+  imports: [
+    RouterOutlet,
+    GlobalSpinnerComponent,
+    NgIf,
+    ToastModule,
+    HttpClientModule,
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true,
+    },
+  ],
 })
-
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   //Todo: Loading spinner global
-  isLoading = false;
 
   constructor(
-    private primengConfig : PrimeNGConfig,
-
+    private primengConfig: PrimeNGConfig,
   ) {}
 
   ngOnInit() {
@@ -31,7 +46,7 @@ export class AppComponent implements OnInit{
       startsWith: 'Fillon me',
       contains: 'Përmban',
       notContains: 'Nuk përmban',
-      endsWith:'Mbaron me',
+      endsWith: 'Mbaron me',
       equals: 'E njëjtë',
       notEquals: 'Jo e njëjtë',
       dateIs: 'Data është',
@@ -44,11 +59,10 @@ export class AppComponent implements OnInit{
       clear: 'Fshi',
       addRule: 'Shto Rregull',
       removeRule: 'Hiq Rregullin',
-      gt:'Më i madh se',
+      gt: 'Më i madh se',
       gte: 'Më i madh ose i barabartë',
       lt: 'Më i vogël se',
-      lte: 'Më i vogël ose i barabartë'
+      lte: 'Më i vogël ose i barabartë',
     });
   }
-
 }
