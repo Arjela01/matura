@@ -5,6 +5,7 @@ export interface Reports {
   path: string;
   reportName?: string,
   reportId?: number
+  parameters?: string;
 }
 
 export interface ReportsTable {
