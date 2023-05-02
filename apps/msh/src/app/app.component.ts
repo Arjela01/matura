@@ -1,7 +1,7 @@
 import { NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { GlobalSpinnerComponent } from '@msh/shared/ui-shared';
+import {GlobalSpinnerComponent, LoaderService} from '@msh/shared/ui-shared';
 import { ToastModule } from 'primeng/toast';
 import { PrimeNGConfig } from 'primeng/api';
 import {  HttpClientModule } from '@angular/common/http';
@@ -9,7 +9,7 @@ import {  HttpClientModule } from '@angular/common/http';
 @Component({
   selector: 'msh-root',
   template: `
-    <msh-global-spinner></msh-global-spinner>
+    <msh-global-spinner *ngIf="this.loader.getLoading()" ></msh-global-spinner>
     <router-outlet></router-outlet>
     <p-toast></p-toast>
   `,
@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private primengConfig: PrimeNGConfig,
+    public loader: LoaderService,
   ) {}
 
   ngOnInit() {
