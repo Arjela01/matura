@@ -66,8 +66,8 @@ export class ProfileFormComponent implements OnChanges {
 
   ngOnChanges(): void {
 
-    if (this.profileGroups && this.profile.profileGroupId) {
-      this.onProfileGroupChange({ value: this.profile.profileGroupId });
+    if (this.profileGroups && this.profile.profileGroupID) {
+      this.onProfileGroupChange({ value: this.profile.profileGroupID });
     }
   }
 

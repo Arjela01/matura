@@ -63,16 +63,15 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
 
   submitted = false;
   saving = false;
-  examTypeId: any;
-  examSubjectId: any;
+
   archiveFolder: ArchiveFolder = {
     nr: 0,
     isClosed: false,
     lastUserId: undefined,
-    examTypeId: 0,
-    examSubjectId: '',
     totalArchiveExams: 0,
   };
+  examTypeId: any;
+  examSubjectId: any;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -105,10 +104,12 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
   }
 
   onExamTypeChanged($event: any): void {
+    this.examTypeId = $event.value;
     this.examTypeChanged.emit(this.examTypeId);
   }
 
   onExamSubjectChanged($event: any): void {
+    this.examSubjectId = $event.value;
     this.examSubjectChanged.emit(this.examSubjectId);
   }
 }
