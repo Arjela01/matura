@@ -1,19 +1,35 @@
 <div class="flex center mb-2 page-header mb-header">
-    <h2 class="flex-1 mb-0">
-        Raporte
-    </h2>
+  <h2 class="flex-1 mb-0">Raporte</h2>
+  <div class="search-container">
+    <div class="flex">
+      <div class="search-input">
+        <input
+          type="text"
+          placeholder="Kërko raport ..."
+          [(ngModel)]="reportName" />
+        <span class="pi pi-times clear-icon" (click)="onClearSearch()"></span>
+      </div>
+      <button
+        class="pi pi-search search-button"
+        (click)="searchReport()"></button>
+    </div>
+    <div class="no-data" *ngIf="totalRecords === 0 && reportName">
+      Nuk u gjet raport me këtë emër!
+    </div>
+  </div>
 </div>
 <div class="grid">
-    <div class="col-12">
-        <div class="card">
-            <msh-dynamic-reports [reports]="(reports$ | async) || []" [totalRecords]="totalRecords"
-                (lazyLoadData)="getReports($event)" (changePage) = paginate($event)>
-            </msh-dynamic-reports>
-        </div>
+  <div class="col-12">
+    <div class="card">
+      <msh-dynamic-reports
+        [reports]="(reports$ | async) || []"
+        [totalRecords]="totalRecords"
+        (lazyLoadData)="getReports($event)"
+        (changePage)="paginate($event)">
+      </msh-dynamic-reports>
     </div>
+  </div>
 </div>
-
-
 
 <!-- <p-confirmDialog #cd header="Konfirmo" icon="pi pi-exclamation-triangle" [style]="{ width: '450px' }">
     <ng-template pTemplate="footer">

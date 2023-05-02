@@ -244,9 +244,10 @@ export class ManageExamScoresComponent implements OnInit {
             'Ndodhi një problem gjatë ngarkimit të dokumentit!'
           );
         if (!response.isSuccessful) {
-          this.toastService.showError('Nuk keni ngarkuar dokumentin e duhur!');
+          this.toastService.showError(response.errorMessage);
         }
       });
     };
+
   }
 }
