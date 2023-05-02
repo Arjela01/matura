@@ -94,16 +94,16 @@
       optionValue="key"
       optionLabel="value"
       appendTo="body"
-      [(ngModel)]="profile.profileGroupId"
+      [(ngModel)]="profile.profileGroupID"
       [autoDisplayFirst]="false"
       (onChange)="onProfileGroupChange($event)"
       [showClear]="true"
       [required]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !profile.profileGroupId
+        'ng-invalid ng-dirty': submitted && !profile.profileGroupID
       }">
     </p-dropdown>
-    <small class="p-error block" *ngIf="submitted && !profile.profileGroupId">
+    <small class="p-error block" *ngIf="submitted && !profile.profileGroupID">
       Grupi i profilit është fushë e kërkuar.
     </small>
   </div>
