@@ -29,6 +29,7 @@ import { UntilDestroy } from '@ngneat/until-destroy';
   ],
   templateUrl: './dynamic-reports.component.html',
   styleUrls: ['./dynamic-reports.component.scss'],
+
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 @UntilDestroy()

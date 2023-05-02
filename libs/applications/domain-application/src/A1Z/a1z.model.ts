@@ -8,7 +8,6 @@ export interface A1Z {
   yearOfSchoolA1Z?: string;
   overSeerCode?: string;
   isApplyingToForeignCountries?: boolean;
-
   subjectD1Id?: string;
   subjectNameD1?: string;
   scoreD1?: number;

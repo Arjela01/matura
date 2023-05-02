@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -41,7 +41,6 @@ import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
   ],
   templateUrl: './manage-exam-scores.component.html',
   styleUrls: ['./manage-exam-scores.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
 export class ManageExamScoresComponent implements OnInit {
@@ -64,7 +63,8 @@ export class ManageExamScoresComponent implements OnInit {
     private readonly toastService: GlobalToastService,
     private readonly examScoreService: ExamScoreApiService,
     private readonly examTypeService: ExamTypeApiService,
-    private readonly examSubjectService: ExamSubjectApiService
+    private readonly examSubjectService: ExamSubjectApiService,
+    private readonly cd: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -102,6 +102,7 @@ export class ManageExamScoresComponent implements OnInit {
       case GRID_ACTIONS.EDIT:
         this.selectedExamScore = Object.assign({}, event.data as ExamScore);
         this.getExamSubjects(this.selectedExamScore.examTypeId);
+        this.getExamTypes();
         this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
@@ -212,6 +213,7 @@ export class ManageExamScoresComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examTypes = response.data;
+        this.cd.markForCheck();
       });
   }
 
@@ -221,6 +223,7 @@ export class ManageExamScoresComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examSubjects = response.data;
+        this.cd.markForCheck();
       });
   }
 
@@ -241,9 +244,10 @@ export class ManageExamScoresComponent implements OnInit {
             'Ndodhi një problem gjatë ngarkimit të dokumentit!'
           );
         if (!response.isSuccessful) {
-          this.toastService.showError('Nuk keni ngarkuar dokumentin e duhur!');
+          this.toastService.showError(response.errorMessage);
         }
       });
     };
+
   }
 }

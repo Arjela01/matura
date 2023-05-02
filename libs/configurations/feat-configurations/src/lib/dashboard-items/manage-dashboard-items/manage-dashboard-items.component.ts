@@ -112,7 +112,7 @@ export class ManageDashboardItemsComponent {
       case GRID_ACTIONS.EDIT:
         this.selectedDashboardItem = Object.assign(
           {},
-          event.data as DashboardItem
+          event.data as DashboardItem,
         );
         this.displayModal = true;
         break;

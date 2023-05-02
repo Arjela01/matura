@@ -26,7 +26,7 @@ export class ReportRendererComponent implements OnInit{
   @ViewChild('reportRenderer', { static: true })
   iframe!: ElementRef<HTMLIFrameElement>;
   id: string = this.route.snapshot.params['id'];
-  studentId: string = this.route.snapshot.queryParams['studentId'];
+  studentObj: { value: string | number; key: string } | null = this.findStudentID(this.route.snapshot.queryParams);
   iframeUrl = '';
   private readonly iframeLoaded$$ = new Subject<boolean>();
   private readonly iframeLoaded$ = this.iframeLoaded$$
@@ -47,6 +47,14 @@ export class ReportRendererComponent implements OnInit{
     })
   );
 
+   findStudentID(obj :{[x : string]:string | number } ){
+    const key = Object.keys(obj).find(k => k.toLowerCase() === 'studentid');
+    if (key) {
+      return { key: key, value: obj[key] };
+    }
+    return null;
+  }
+
   constructor(
     @Inject(REPORTS_APP_URL) readonly reports_app_url: string,
     private readonly authFacade: AuthFacade,
@@ -58,8 +66,8 @@ export class ReportRendererComponent implements OnInit{
   }
 
   ngOnInit() {
-    if (this.id && this.studentId) {
-      this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&studentId=${this.studentId}`;
+    if (this.id && this.studentObj) {
+      this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}`;
     } else {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}`;
     }

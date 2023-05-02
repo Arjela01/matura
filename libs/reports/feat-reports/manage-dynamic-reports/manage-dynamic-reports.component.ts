@@ -1,10 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import {
-  ReportsApiService,
-  RolesApiService,
-} from '@msh/configurations/data-access-configurations';
-
+import { ReportsApiService } from '@msh/configurations/data-access-configurations';
 import { GlobalToastService } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { LazyLoadEvent } from 'primeng/api';
@@ -15,6 +11,7 @@ import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { DynamicReportsComponent } from '../dynamic-reports/dynamic-reports.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'msh-manage-dynamic-reports',
@@ -27,9 +24,11 @@ import { DynamicReportsComponent } from '../dynamic-reports/dynamic-reports.comp
     DynamicReportsComponent,
     ToolbarModule,
     RippleModule,
+    FormsModule,
   ],
   templateUrl: './manage-dynamic-reports.component.html',
   styleUrls: ['./manage-dynamic-reports.component.scss'],
+
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 @UntilDestroy()
@@ -42,6 +41,8 @@ export class ManageDynamicReportsComponent implements OnInit {
   selectedReport: any | null = null;
   selectedReports: any[] = [];
   displayModal = false;
+  reportName!: string;
+
   event = {
     first: 0,
     rows: 10,
@@ -49,10 +50,10 @@ export class ManageDynamicReportsComponent implements OnInit {
     filters: {},
     globalFilter: null,
   };
+
   constructor(
     private readonly toastService: GlobalToastService,
-    private reportsApiService: ReportsApiService,
-    private rolesService: RolesApiService
+    private reportsApiService: ReportsApiService
   ) {}
 
   onNewClick() {
@@ -68,6 +69,7 @@ export class ManageDynamicReportsComponent implements OnInit {
   ngOnInit() {
     this.getReports(this.event);
   }
+
   getReports($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
     this.reportsApiService
@@ -77,6 +79,36 @@ export class ManageDynamicReportsComponent implements OnInit {
         this.reports$$.next(response.data);
         this.totalRecords = response.total;
       });
+  }
+
+  searchReport() {
+    this.event.filters = {
+      ReportName: [
+        {
+          value: this.reportName,
+          matchMode: 'contains',
+          operator: 'and',
+        },
+      ],
+    };
+    if (this.reportName) {
+      this.event.first = 0;
+      this.reportsApiService
+        .loadRoleReports(this.event)
+        .pipe(untilDestroyed(this))
+        .subscribe(response => {
+          this.reports$$.next(response.data);
+          this.totalRecords = response.data.length;
+        });
+    } else {
+      this.getReports(this.event);
+    }
+  }
+
+  onClearSearch() {
+    this.reportName = '';
+    this.event.filters = {};
+    this.getReports(this.event);
   }
 
   paginate($event: number) {

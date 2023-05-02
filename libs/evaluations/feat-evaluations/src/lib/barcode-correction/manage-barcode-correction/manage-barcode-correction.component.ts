@@ -139,7 +139,7 @@ export class ManageBarcodeCorrectionComponent {
           this.toastService.showSuccess('Barkodi u ndryshua me sukses!');
           this.displayModal = false;
           this.getArchiveFolders(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(

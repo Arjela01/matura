@@ -101,13 +101,13 @@ export class ManageDiplomaRequirementExceptionComponent {
     this.studentService
       .confirmException({
         id: student.id,
-        isConfirmed: !student.isConfirmedBySupervisor,
+        isConfirmed: !student?.isConfirmedBySupervisor,
       })
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
-            response.data.isConfirmedBySupervisor
+            response.data?.isConfirmedBySupervisor
               ? 'Diploma u aprovua me sukses!'
               : 'Diploma u anullua me sukses!'
           );

@@ -84,7 +84,7 @@
             name="yearOfSchoolA1Z"
             [(ngModel)]="a1z.yearOfSchoolA1Z"
             autofocus />
-          <small class="p-error block" *ngIf="submitted && !isGraduationYearValid()">
+          <small class="p-error block" *ngIf="submitted && !isGraduationYearValid() && this.a1z.yearOfSchoolA1Z !=null">
             Viti i përfundimit të shkollës së mesme nuk mund të jetë më i madh
             se viti aktual
           </small>
