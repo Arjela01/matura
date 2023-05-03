@@ -149,7 +149,7 @@ export class ManageAcademicYearComponent {
           this.toastService.showSuccess('Viti u shtua me sukses!');
           this.displayModal = false;
           this.getAcademicYears(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -167,7 +167,7 @@ export class ManageAcademicYearComponent {
           this.toastService.showSuccess('Viti u ndryshua me sukses!');
           this.displayModal = false;
           this.getAcademicYears(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -184,7 +184,7 @@ export class ManageAcademicYearComponent {
         if (response.isSuccessful) {
           this.toastService.showInfo('Viti u fshi me sukses!');
           this.getAcademicYears(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(

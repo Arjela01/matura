@@ -199,7 +199,7 @@ export class ManageCarriedGradesComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('Nota u fshi me sukses!');
           this.getCarriedGrades(this.filters);
-        }
+        } else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(

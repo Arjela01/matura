@@ -139,7 +139,7 @@ export class ManageExamTypeComponent {
           this.toastService.showSuccess('Tipi i provimit u shtua me sukses!');
           this.displayModal = false;
           this.getExamTypes(this.filters as LazyLoadEvent);
-        }
+        }  else this.toastService.showError(response.errorMessage)
         if (response.isBadRequest)
           this.toastService.showError(
             'Ndodhi një problem gjatë ndryshimit së tipit të provimit!'
@@ -158,7 +158,7 @@ export class ManageExamTypeComponent {
           );
           this.displayModal = false;
           this.getExamTypes(this.filters as LazyLoadEvent);
-        }
+        }  else this.toastService.showError(response.errorMessage)
         if (response.isBadRequest)
           this.toastService.showError(
             'Ndodhi një problem gjatë ndryshimit së tipit të provimit!'
@@ -174,7 +174,7 @@ export class ManageExamTypeComponent {
         if (response.isSuccessful) {
           this.toastService.showInfo('Tipi i provimit u fshi me sukses!');
           this.getExamTypes(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(

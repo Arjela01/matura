@@ -155,7 +155,7 @@ export class ManageProfileGroupsComponent implements OnInit {
           this.displayModal = false;
           this.getProfileGroups(this.filters as LazyLoadEvent);
           this.cd.detectChanges();
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -175,7 +175,7 @@ export class ManageProfileGroupsComponent implements OnInit {
           );
           this.displayModal = false;
           this.getProfileGroups(this.filters as LazyLoadEvent);
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -192,7 +192,7 @@ export class ManageProfileGroupsComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('Grupi i profilit u fshi me sukses!');
           this.getProfileGroups(this.filters as LazyLoadEvent);
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(

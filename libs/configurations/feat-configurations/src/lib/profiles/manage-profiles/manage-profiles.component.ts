@@ -159,7 +159,7 @@ export class ManageProfilesComponent implements OnInit {
           this.getProfiles(this.filters as LazyLoadEvent);
           this.cd.detectChanges();
 
-        }
+        } else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -179,7 +179,7 @@ export class ManageProfilesComponent implements OnInit {
           );
           this.displayModal = false;
           this.getProfiles(this.filters as LazyLoadEvent);
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -196,7 +196,7 @@ export class ManageProfilesComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('Profili u fshi me sukses!');
           this.getProfiles(this.filters as LazyLoadEvent);
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(

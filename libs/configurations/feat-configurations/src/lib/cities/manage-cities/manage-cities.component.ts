@@ -154,7 +154,7 @@ export class ManageCitiesComponent implements OnInit {
           this.toastService.showSuccess('Qyteti u shtua me sukses!');
           this.displayModal = false;
           this.getCities(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -174,7 +174,7 @@ export class ManageCitiesComponent implements OnInit {
           );
           this.displayModal = false;
           this.getCities(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -191,7 +191,7 @@ export class ManageCitiesComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('Qyteti u fshi me sukses!');
           this.getCities(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(

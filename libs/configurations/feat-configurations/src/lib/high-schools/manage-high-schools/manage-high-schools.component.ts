@@ -162,7 +162,7 @@ export class ManageHighSchoolsComponent implements OnInit {
           this.toastService.showSuccess('Shkolla e mesme u shtua me sukses!');
           this.displayModal = false;
           this.getHighSchools(this.filters as LazyLoadEvent);
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -182,7 +182,7 @@ export class ManageHighSchoolsComponent implements OnInit {
           );
           this.displayModal = false;
           this.getHighSchools(this.filters as LazyLoadEvent);
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -199,7 +199,7 @@ export class ManageHighSchoolsComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('Shkolla e mesme u fshi me sukses!');
           this.getHighSchools(this.filters as LazyLoadEvent);
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(

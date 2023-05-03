@@ -166,7 +166,7 @@ export class ManageExamSubjectProfileComponent implements OnInit {
           this.toastService.showSuccess('Lënda e provimit u shtua me sukses!');
           this.displayModal = false;
           this.getExamSubjectProfiles(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -186,7 +186,7 @@ export class ManageExamSubjectProfileComponent implements OnInit {
           );
           this.displayModal = false;
           this.getExamSubjectProfiles(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -203,7 +203,7 @@ export class ManageExamSubjectProfileComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('Lënda e provimit u fshi me sukses!');
           this.getExamSubjectProfiles(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(

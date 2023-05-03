@@ -148,7 +148,7 @@ export class ManageRegionsComponent {
           this.toastService.showSuccess('Rajoni u shtua me sukses!');
           this.displayModal = false;
           this.getRegions(this.filters as LazyLoadEvent);
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -168,7 +168,7 @@ export class ManageRegionsComponent {
           );
           this.displayModal = false;
           this.getRegions(this.filters as LazyLoadEvent);
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -185,7 +185,7 @@ export class ManageRegionsComponent {
         if (response.isSuccessful) {
           this.toastService.showInfo('Rajoni u fshi me sukses!');
           this.getRegions(this.filters as LazyLoadEvent);
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(

@@ -135,7 +135,7 @@ export class ManageRolesComponent {
           this.toastService.showSuccess('Roli u shtua me sukses!');
           this.displayModal = false;
           this.getRoles(this.filters);
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -155,7 +155,7 @@ export class ManageRolesComponent {
           );
           this.displayModal = false;
           this.getRoles(this.filters);
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -172,7 +172,7 @@ export class ManageRolesComponent {
         if (response.isSuccessful) {
           this.toastService.showInfo('Roli u fshi me sukses!');
           this.getRoles(this.filters);
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
