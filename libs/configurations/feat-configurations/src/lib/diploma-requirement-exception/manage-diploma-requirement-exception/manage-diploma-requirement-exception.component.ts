@@ -113,7 +113,7 @@ export class ManageDiplomaRequirementExceptionComponent {
           );
           this.displayModal = false;
           this.getStudent(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage)
         if (response.isBadRequest)
           this.toastService.showError(
             'Ndodhi një problem gjatë ndryshimit së statusit të diplomës!'
@@ -132,14 +132,11 @@ export class ManageDiplomaRequirementExceptionComponent {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Dokumenti u shtua me sukses!');
           this.getStudent(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage)
         if (response.isBadRequest)
           this.toastService.showError(
             'Ndodhi një problem gjatë ngarkimit të dokumentit!'
           );
-        if (!response.isSuccessful) {
-          this.toastService.showError('Nuk keni ngarkuar dokumentin e duhur!');
-        }
       });
     };
   }

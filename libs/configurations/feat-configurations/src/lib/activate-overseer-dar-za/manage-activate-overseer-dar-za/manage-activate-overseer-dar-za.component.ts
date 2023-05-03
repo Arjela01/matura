@@ -197,7 +197,7 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
           this.toastService.showSuccess('DAR/ZA u shtua me sukses!');
           this.displayModal = false;
           this.getAdministrationOffices(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -215,7 +215,7 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
           this.toastService.showSuccess('DAR/ZA u ndryshua me sukses!');
           this.displayModal = false;
           this.getAdministrationOffices(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -232,7 +232,7 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('DAR/ZA u fshi me sukses!');
           this.getAdministrationOffices(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(

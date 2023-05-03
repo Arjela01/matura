@@ -141,7 +141,7 @@ export class ManageStudySubjectsComponent {
           this.toastService.showSuccess('Lenda e studimit u shtua me sukses!');
           this.displayModal = false;
           this.getStudySubjects(this.filters as LazyLoadEvent);
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -161,7 +161,7 @@ export class ManageStudySubjectsComponent {
           );
           this.displayModal = false;
           this.getStudySubjects(this.filters as LazyLoadEvent);
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -178,7 +178,7 @@ export class ManageStudySubjectsComponent {
         if (response.isSuccessful) {
           this.toastService.showInfo('Lenda e studimit u fshi me sukses!');
           this.getStudySubjects(this.filters as LazyLoadEvent);
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(

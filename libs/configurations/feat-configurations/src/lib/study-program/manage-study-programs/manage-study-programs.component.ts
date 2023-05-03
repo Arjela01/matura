@@ -160,7 +160,7 @@ export class ManageStudyProgramsComponent implements OnInit {
           );
           this.displayModal = false;
           this.getStudyPrograms(this.filters as LazyLoadEvent);
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (!response.isSuccessful)
           this.toastService.showError(
@@ -180,7 +180,7 @@ export class ManageStudyProgramsComponent implements OnInit {
           );
           this.displayModal = false;
           this.getStudyPrograms(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage)
 
         if (!response.isSuccessful)
           this.toastService.showError(
@@ -197,7 +197,7 @@ export class ManageStudyProgramsComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('Programi i Studimit u fshi me sukses!');
           this.getStudyPrograms(this.filters as LazyLoadEvent);
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (!response.isSuccessful)
           this.toastService.showError(

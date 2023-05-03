@@ -142,7 +142,7 @@ export class ManageGendersComponent {
           this.toastService.showSuccess('Gjinia u shtua me sukses!');
           this.displayModal = false;
           this.getGenders(this.filters as LazyLoadEvent);
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -160,7 +160,7 @@ export class ManageGendersComponent {
           this.toastService.showSuccess('Gjinia u ndryshua me sukses!');
           this.displayModal = false;
           this.getGenders(this.filters as LazyLoadEvent);
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -177,7 +177,7 @@ export class ManageGendersComponent {
         if (response.isSuccessful) {
           this.toastService.showInfo('Gjinia u fshi me sukses!');
           this.getGenders(this.filters as LazyLoadEvent);
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(

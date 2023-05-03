@@ -152,7 +152,7 @@ export class ManageExamVersionsComponent implements OnInit {
           );
           this.displayModal = false;
           this.getExamVersions(this.filters as LazyLoadEvent);
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -172,7 +172,7 @@ export class ManageExamVersionsComponent implements OnInit {
           );
           this.displayModal = false;
           this.getExamVersions(this.filters as LazyLoadEvent);
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -189,7 +189,7 @@ export class ManageExamVersionsComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('Teza u fshi me sukses!');
           this.getExamVersions(this.filters as LazyLoadEvent);
-        }
+        }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(

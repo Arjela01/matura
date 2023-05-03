@@ -147,7 +147,7 @@ export class ManageDashboardSectionsComponent implements OnInit {
           this.displayModal = false;
           this.getDashboardSections(this.filters as LazyLoadEvent);
           this.cd.detectChanges();
-        }
+        } else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -167,7 +167,7 @@ export class ManageDashboardSectionsComponent implements OnInit {
           );
           this.displayModal = false;
           this.getDashboardSections(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
