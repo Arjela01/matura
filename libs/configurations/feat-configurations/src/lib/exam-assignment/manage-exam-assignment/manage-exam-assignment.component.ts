@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -59,13 +59,14 @@ export class ManageExamAssignmentComponent {
 
   examDates: DropdownModel<number>[] = [];
   examSites: DropdownModel<number>[] = [];
-
+  time: any;
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examAssignmentService: ExamAssignmentApiService,
     private readonly examDateService: ExamDateApiService,
-    private readonly examSiteService: ExamSiteApiService
+    private readonly examSiteService: ExamSiteApiService,
+    private cd: ChangeDetectorRef,
   ) {}
 
   onGridEvent(event: GridEvent<ExamAssignment | ExamAssignment[]>) {
@@ -79,7 +80,8 @@ export class ManageExamAssignmentComponent {
       case GRID_ACTIONS.UNSELECT_ROW:
         this.selectedExamAssignments = this.selectedExamAssignments.filter(
           ea => {
-            ea.id !== (event.data as ExamAssignment).id;
+            const examAssignment: ExamAssignment = event.data as ExamAssignment
+            return ea.id !== examAssignment.id;
           }
         );
         break;
@@ -148,6 +150,13 @@ export class ManageExamAssignmentComponent {
       .loadExamAssignments($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
+        response.data.map(examAssignment => {
+          if(examAssignment?.examTypeDateTime)
+            return examAssignment.time = examAssignment.examTypeDateTime.split(' ')[2];
+
+          return examAssignment;
+          }
+        );
         this.examAssignments$$.next(response.data);
         this.totalRecords = response.total;
       });

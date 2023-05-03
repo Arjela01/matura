@@ -69,7 +69,6 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
       this.examAssignment = Object.assign({}, details);
     }
   }
-
   @Output() gridEvent = new EventEmitter<GridEvent<Student | Student[]>>();
   @Output() formSave = new EventEmitter<ExamAssignment>();
   @Output() formClose = new EventEmitter<undefined>();
@@ -83,6 +82,7 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
   studentInputData = '';
   formId: string | null;
 
+
   examAssignment: ExamAssignment = {
     id: '',
     studentId: '',
@@ -95,6 +95,7 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
     examSiteId: '',
     examTypeDateTime: '',
     takenSeats: 0,
+    time:'',
   };
 
   constructor(
@@ -102,7 +103,7 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
     private readonly examDateService: ExamDateApiService,
     private readonly examSiteService: ExamSiteApiService,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly cd: ChangeDetectorRef,
+    private readonly cd: ChangeDetectorRef
   ) {
     this.formId = this.activatedRoute.snapshot.paramMap.get('id');
   }
@@ -134,6 +135,7 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
     this.loadExamDates.emit(Object.assign({}, this.examAssignment));
     this.getExamDate(this.examAssignment.examSiteId);
   }
+
   ngOnInit(): void {
     if (this.selectedStudent) {
       this.onStudentChange(this.selectedStudent);
@@ -147,7 +149,7 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
     }
   }
 
-  getExamDate(examSiteId: string ) {
+  getExamDate(examSiteId: string) {
     this.examDateService.forExamSiteId(examSiteId).subscribe(response => {
       this.examDates = response.data;
       this.cd.markForCheck();
