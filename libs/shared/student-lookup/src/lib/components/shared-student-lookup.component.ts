@@ -45,7 +45,6 @@ export class SharedStudentLookupComponent {
   }
 
   onStudentSelect(student: SharedStudent) {
-    console.log(student);
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
       data: student,
