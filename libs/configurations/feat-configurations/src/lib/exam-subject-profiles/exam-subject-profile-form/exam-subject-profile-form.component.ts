@@ -36,6 +36,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
   templateUrl: './exam-subject-profile-form.component.html',
   styleUrls: ['./exam-subject-profile-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class ExamSubjectProfileFormComponent implements OnChanges {
   @Input() examTypes: DropdownModel<number>[] = [];
