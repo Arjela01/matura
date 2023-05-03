@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {GlobalSpinnerComponent, LoaderService} from '@msh/shared/ui-shared';
 import { ToastModule } from 'primeng/toast';
@@ -9,7 +9,6 @@ import {  HttpClientModule } from '@angular/common/http';
 @Component({
   selector: 'msh-root',
   template: `
-    <msh-global-spinner *ngIf="this.loader.getLoading()" ></msh-global-spinner>
     <router-outlet></router-outlet>
     <p-toast></p-toast>
   `,
@@ -23,12 +22,13 @@ import {  HttpClientModule } from '@angular/common/http';
     HttpClientModule,
   ],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit , AfterViewChecked{
   //Todo: Loading spinner global
 
   constructor(
     private primengConfig: PrimeNGConfig,
     public loader: LoaderService,
+    private cd : ChangeDetectorRef,
   ) {}
 
   ngOnInit() {
@@ -54,5 +54,8 @@ export class AppComponent implements OnInit {
       lt: 'Më i vogël se',
       lte: 'Më i vogël ose i barabartë',
     });
+  }
+  ngAfterViewChecked() {
+    this.cd.detectChanges();
   }
 }
