@@ -7,7 +7,7 @@ export interface Profile {
   d2Coefficient?: string;
   academicYearId?: number;
   academicYear?: string;
-  profileGroupId?: string;
+  profileGroupID?: string;
   profileGroupName?: string;
 }
 

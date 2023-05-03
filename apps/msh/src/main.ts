@@ -74,7 +74,6 @@ bootstrapApplication(AppComponent, {
       useClass: ErrorInterceptorService,
       multi: true,
     },
-
     MessageService,
   ],
 });
