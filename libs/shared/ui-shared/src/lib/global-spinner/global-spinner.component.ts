@@ -7,8 +7,8 @@ import { LoaderService} from "../loader-service/loader.service";
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div *ngIf="this.loader.getLoading()" class="cssload-container">
-      <div class="cssload-speeding-wheel"></div>
+    <div class="loader-container">
+      <div class="loader-speeding-wheel"></div>
     </div>
   `,
   styleUrls: ['./global-spinner.component.scss'],

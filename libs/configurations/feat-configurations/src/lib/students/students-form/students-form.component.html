@@ -330,15 +330,20 @@
             type="email"
             pInputText
             id="Email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
             name="Email"
             [(ngModel)]="student.email"
             required
             autofocus
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !student.email
-            }" />
-          <small class="p-error block" *ngIf="submitted && !student.email">
-            Email është fushë e kërkuar.
+              'ng-invalid ng-dirty':
+                submitted && (!emailInput.valid || !student.email)
+            }"
+            #emailInput="ngModel" />
+          <small
+            class="p-error block"
+            *ngIf="submitted && (!emailInput.valid || !student.email)">
+            Email-i është fushë e kërkuar dhe duhet të jetë në formatin e duhur.
           </small>
         </div>
 
