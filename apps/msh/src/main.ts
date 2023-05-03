@@ -36,7 +36,6 @@ import { MessageService } from 'primeng/api';
 import { AppComponent } from './app/app.component';
 import { APP_ROUTES } from './app/app.routes';
 import { getStoreDevToolsProvider } from './app/build-specifics';
-import {LoadingInterceptor} from "@msh/shared/ui-shared";
 
 if (environment.production) {
   enableProdMode();
@@ -74,9 +73,6 @@ bootstrapApplication(AppComponent, {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptorService,
       multi: true,
-    },
-    {
-      provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
     },
     MessageService,
   ],
