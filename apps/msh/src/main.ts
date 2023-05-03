@@ -36,6 +36,8 @@ import { MessageService } from 'primeng/api';
 import { AppComponent } from './app/app.component';
 import { APP_ROUTES } from './app/app.routes';
 import { getStoreDevToolsProvider } from './app/build-specifics';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import {LoadingInterceptor} from "../../../libs/shared/ui-shared/src/lib/loader-interceptor/loader-interceptor";
 
 if (environment.production) {
   enableProdMode();
@@ -43,6 +45,11 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true,
+    },
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimations(),
     provideRouter(
