@@ -72,7 +72,9 @@
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !dashboardItem.documentName
       }" />
-    <small class="p-error block" *ngIf="submitted && !dashboardItem.documentName">
+    <small
+      class="p-error block"
+      *ngIf="submitted && !dashboardItem.documentName">
       Emri dokumentit është fushë e kërkuar.
     </small>
   </div>
@@ -88,10 +90,13 @@
         (onSelect)="selectFiles($event)"
         accept=".pdf">
         <ng-template pTemplate="content">
-          <span *ngIf="
+          <span
+            *ngIf="
               dashboardItem.document && !uploaded && dashboardItem.document
-          "
-            alt="">{{dashboardItem.title}}.pdf</span>
+            "
+            alt=""
+            >{{ dashboardItem.title }}.pdf</span
+          >
         </ng-template>
       </p-fileUpload>
     </div>
@@ -109,12 +114,12 @@
   </div>
 
   <div class="field">
-    <label for="roles">Rolet</label>
+    <label for="Roles">Rolet</label>
     <p-multiSelect
-      id="roles"
+      id="Roles"
       name="roles"
       [options]="roles"
-      optionValue="value"
+      optionValue="key"
       optionLabel="value"
       [(ngModel)]="dashboardItem.roles"
       [required]="true"
@@ -122,9 +127,6 @@
       [showClear]="true"
       defaultLabel="Selekto Rolet"
       display="chip"></p-multiSelect>
-    <small class="p-error block" *ngIf="submitted && !dashboardItem.roles">
-      Roli/et është fushë e kërkuar.
-    </small>
   </div>
 
   <div class="field">
@@ -133,7 +135,7 @@
       id="Users"
       name="users"
       [options]="users"
-      optionValue="value"
+      optionValue="key"
       optionLabel="value"
       [(ngModel)]="dashboardItem.users"
       appendTo="body"
@@ -149,29 +151,33 @@
   <div class="field">
     <label for="startDate">E vlefshme nga *</label>
     <p-calendar
-      [(ngModel)]="dashboardItem.startDate"
+      [(ngModel)]="formattedStartDate"
       dateFormat="dd/mm/yy"
       inputId="startDate"
       id="startDate"
       name="startDate"
-      [required]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !dashboardItem.startDate
+        'ng-invalid ng-dirty': submitted && !formattedStartDate
       }"></p-calendar>
-    <small class="p-error block" *ngIf="submitted && !dashboardItem.startDate">
+    <small class="p-error block" *ngIf="submitted && !formattedStartDate">
       Data është fushë e kërkuar.
     </small>
   </div>
 
   <div class="field">
-    <label for="endDate">E vlefshme deri</label>
+    <label for="endDate">E vlefshme nga *</label>
     <p-calendar
-      [(ngModel)]="dashboardItem.endDate"
+      [(ngModel)]="formattedEndDate"
       dateFormat="dd/mm/yy"
       inputId="endDate"
       id="endDate"
-      [required]="true"
-      name="endDate"></p-calendar>
+      name="endDate"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !formattedEndDate
+      }"></p-calendar>
+    <small class="p-error block" *ngIf="submitted && !formattedEndDate">
+      Data është fushë e kërkuar.
+    </small>
   </div>
   <div class="flex justify-content-end">
     <button

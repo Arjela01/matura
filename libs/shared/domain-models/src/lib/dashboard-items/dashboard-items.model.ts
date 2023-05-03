@@ -8,9 +8,9 @@ export interface DashboardItem {
   hasDocument?  : boolean;
   hasLinkUrl? : boolean;
   documentName:string;
-  endDate: Date[];
+  endDate: Date;
   linkUrl:string;
-  startDate: Date[];
+  startDate: Date;
   title:string;
   userIds?: number;
   userName?: string;
