@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -66,7 +66,8 @@ export class ManageExamSubjectProfileComponent implements OnInit {
     private readonly examSubjectService: ExamSubjectApiService,
     private readonly academicYearsApiService: AcademicYearApiService,
     private readonly examTypesApiService: ExamTypeApiService,
-    private readonly profilesApiService: ProfileApiService
+    private readonly profilesApiService: ProfileApiService,
+    private readonly cd: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -233,6 +234,7 @@ export class ManageExamSubjectProfileComponent implements OnInit {
       .forExamType(examTypeId, academicYearId, examSubjectId)
       .subscribe(response => {
         this.examSubjects = response.data;
+        this.cd.markForCheck();
       });
   }
 
