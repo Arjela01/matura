@@ -34,14 +34,9 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
-import {
-  combineLatest,
-  Observable,
-  of,
-  switchMap,
-} from 'rxjs';
-import { ManageStudentsGridsDialogComponent } from '../manage-students-grids-dialog/manage-students-grids-dialog.component';
+import { Observable, combineLatest, of, switchMap } from 'rxjs';
 import { Report } from '../../../../../../reports/reports-enum';
+import { ManageStudentsGridsDialogComponent } from '../manage-students-grids-dialog/manage-students-grids-dialog.component';
 
 let INITIAL_FILTER = {};
 @Component({
@@ -80,6 +75,7 @@ export class A1FormComponent {
   @ViewChild('form', { static: false }) form!: NgForm;
   totalRecords = 0;
   parameterUrl!: any;
+  showSearch = true;
 
   @HostListener('window:popstate', ['$event'])
   onPopState() {
@@ -158,6 +154,7 @@ export class A1FormComponent {
 
   initializeFormWithApiCalls() {
     if (this.studentId != null) {
+      this.showSearch = false;
       this.getStudentById(this.studentId)
         .pipe(
           switchMap((student: ApiResult<Student>) => {
@@ -379,8 +376,6 @@ export class A1FormComponent {
     this.optionalSubjectChoosen = '';
   }
 
-
-
   addA1(a1: A1Z) {
     this.a1ApiService
       .save(a1)
@@ -429,10 +424,10 @@ export class A1FormComponent {
         next: (data: any) => {
           if (data.isSuccessful) {
             this.toastService.showSuccess('Formulari A1 u ndryshua me sukses!');
-            const extras : {queryParams : {[x : string]: string } }={
-              queryParams:{}
-            }
-            if(this.parameterUrl && this.a1.studentId){
+            const extras: { queryParams: { [x: string]: string } } = {
+              queryParams: {},
+            };
+            if (this.parameterUrl && this.a1.studentId) {
               extras.queryParams[`${this.parameterUrl}`] = this.a1.studentId;
             }
             this.router.navigate([`/reports/${this.a1Report}`], extras).then();
