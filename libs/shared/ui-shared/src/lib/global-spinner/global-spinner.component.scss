@@ -1,49 +1,63 @@
-.overlay {
-  background-color: rgba(255,255,255,0.7);;
-  z-index: 10000;
-  position: fixed;
-  opacity: 1;
-  height: 100%;
+.loader-container {
+  position: relative;
   width: 100%;
-  left: 0;
+  left: 10px;
+  right: 0;
+  top: 5px;
+  bottom: 0;
+  z-index: 9999;
+}
+
+.cssload-speeding-wheel {
+  content: "";
+  display: flex;
+  position: absolute;
+  left: 83%;
   top: 0;
-}
-
-.lds-ring {
-  display: block;
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  top: 48%;
-  left: 48%;
-}
-
-.lds-ring div {
-  box-sizing: border-box;
-  display: block;
-  position: absolute;
-  width: 64px;
-  height: 64px;
-  margin: 8px;
-  border: 8px solid #aeaeae;
+  width: 26px;
+  height: 26px;
+  margin: 0 auto;
+  border: 4px solid white;
   border-radius: 50%;
-  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #aeaeae transparent transparent transparent;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  animation: cssload-spin 500ms infinite linear;
+  -o-animation: cssload-spin 500ms infinite linear;
+  -ms-animation: cssload-spin 500ms infinite linear;
+  -webkit-animation: cssload-spin 500ms infinite linear;
+  -moz-animation: cssload-spin 500ms infinite linear;
 }
-.lds-ring div:nth-child(1) {
-  animation-delay: -0.45s;
-}
-.lds-ring div:nth-child(2) {
-  animation-delay: -0.3s;
-}
-.lds-ring div:nth-child(3) {
-  animation-delay: -0.15s;
-}
-@keyframes lds-ring {
-  0% {
-    transform: rotate(0deg);
-  }
+@keyframes cssload-spin {
   100% {
+    transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@-o-keyframes cssload-spin {
+  100% {
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@-ms-keyframes cssload-spin {
+  100% {
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes cssload-spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@-moz-keyframes cssload-spin {
+  100% {
+    -moz-transform: rotate(360deg);
     transform: rotate(360deg);
   }
 }

@@ -1,29 +1,34 @@
 import { NgIf } from '@angular/common';
-import {Component, OnInit} from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { GlobalSpinnerComponent } from '@msh/shared/ui-shared';
+import {GlobalSpinnerComponent, LoaderService} from '@msh/shared/ui-shared';
 import { ToastModule } from 'primeng/toast';
-import {PrimeNGConfig} from "primeng/api";
+import { PrimeNGConfig } from 'primeng/api';
+import {  HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'msh-root',
   template: `
     <router-outlet></router-outlet>
-    <msh-global-spinner *ngIf="isLoading"></msh-global-spinner>
     <p-toast></p-toast>
   `,
   styles: [],
   standalone: true,
-  imports: [RouterOutlet, GlobalSpinnerComponent, NgIf, ToastModule],
+  imports: [
+    RouterOutlet,
+    GlobalSpinnerComponent,
+    NgIf,
+    ToastModule,
+    HttpClientModule,
+  ],
 })
-
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit , AfterViewChecked{
   //Todo: Loading spinner global
-  isLoading = false;
 
   constructor(
-    private primengConfig : PrimeNGConfig,
-
+    private primengConfig: PrimeNGConfig,
+    public loader: LoaderService,
+    private cd : ChangeDetectorRef,
   ) {}
 
   ngOnInit() {
@@ -31,7 +36,7 @@ export class AppComponent implements OnInit{
       startsWith: 'Fillon me',
       contains: 'Përmban',
       notContains: 'Nuk përmban',
-      endsWith:'Mbaron me',
+      endsWith: 'Mbaron me',
       equals: 'E njëjtë',
       notEquals: 'Jo e njëjtë',
       dateIs: 'Data është',
@@ -44,11 +49,13 @@ export class AppComponent implements OnInit{
       clear: 'Fshi',
       addRule: 'Shto Rregull',
       removeRule: 'Hiq Rregullin',
-      gt:'Më i madh se',
+      gt: 'Më i madh se',
       gte: 'Më i madh ose i barabartë',
       lt: 'Më i vogël se',
-      lte: 'Më i vogël ose i barabartë'
+      lte: 'Më i vogël ose i barabartë',
     });
   }
-
+  ngAfterViewChecked() {
+    this.cd.detectChanges();
+  }
 }

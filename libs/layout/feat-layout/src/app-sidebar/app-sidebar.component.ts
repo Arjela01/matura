@@ -13,6 +13,12 @@ import { DialogModule } from 'primeng/dialog';
 import { AvatarModule } from 'primeng/avatar';
 import { UserProfile } from '@msh/shared/domain-models';
 import { UserProfileApiService } from '@msh/user-section/data-access-user-section';
+import {
+  GlobalSpinnerComponent,
+  LoaderService,
+  LoadingInterceptor,
+} from '@msh/shared/ui-shared';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @Component({
   selector: 'msh-app-sidebar',
@@ -24,8 +30,16 @@ import { UserProfileApiService } from '@msh/user-section/data-access-user-sectio
     RouterLink,
     DialogModule,
     AvatarModule,
+    GlobalSpinnerComponent,
   ],
-  providers: [MenuStore],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true,
+    },
+    [MenuStore],
+  ],
   templateUrl: './app-sidebar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -45,12 +59,17 @@ export class AppSidebarComponent implements OnInit {
     })
   );
 
+  loading$ = this.loader.loading$.pipe(
+    map(data => data)
+  )
+
   constructor(
     private readonly menuStore: MenuStore,
     private router: Router,
     public layoutService: LayoutService,
     private authFacade: AuthFacade,
-    private userProfileService: UserProfileApiService
+    private userProfileService: UserProfileApiService,
+    public loader: LoaderService
   ) {}
 
   ngOnInit() {
@@ -101,7 +120,7 @@ export class AppSidebarComponent implements OnInit {
   onLogoutClick() {
     this.authFacade.logout();
   }
-  onLogoClick(){
+  onLogoClick() {
     this.router.navigate(['/']).then();
   }
   onNewClick() {
