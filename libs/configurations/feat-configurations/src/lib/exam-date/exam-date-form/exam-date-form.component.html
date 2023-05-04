@@ -49,15 +49,16 @@
 
   <div class="field">
     <label for="date">Data *</label>
-    <input
-      placeholder="dd/mm/yyyy"
-      pInputText
-      id="date"
-      name="date"
+    <p-calendar
       [(ngModel)]="date"
-      required
-      autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !date}" />
+      dateFormat="dd/mm/yy"
+      inputId="date"
+      id="date"
+      appendTo="body"
+      name="date"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !date
+      }"></p-calendar>
     <small class="p-error block" *ngIf="submitted && !date">
       Data është fushë e kërkuar.
     </small>
@@ -72,7 +73,6 @@
       name="time"
       [(ngModel)]="examDate.time"
       required
-      autofocus
       [ngClass]="{ 'ng-invalid ng-dirty':  submitted && !examDate.time }" />
     <small class="p-error block" *ngIf="submitted && !examDate.time">
       Ora  është fushë e kërkuar.

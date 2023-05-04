@@ -27,6 +27,7 @@ import { BehaviorSubject } from 'rxjs';
 import { StudentsApiService } from '@msh/configurations/data-access-configurations';
 import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
 import { DialogModule } from 'primeng/dialog';
+import {CalendarModule} from "primeng/calendar";
 
 @UntilDestroy()
 @Component({
@@ -44,6 +45,7 @@ import { DialogModule } from 'primeng/dialog';
     DropdownModule,
     DialogModule,
     SharedStudentLookupModule,
+    CalendarModule,
   ],
   templateUrl: './student-ban-form.component.html',
   styleUrls: ['./student-ban-form.component.scss'],
@@ -106,6 +108,7 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
   }
   onNewClick() {
     this.displayStudentModal = true;
+    this.cd.detectChanges();
   }
   onModalClose() {
     this.displayStudentModal = false;
@@ -162,10 +165,13 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
       .subscribe(response => {
         this.studentList$$.next(response.data);
         this.totalRecords = response.total;
+        this.cd.detectChanges();
       });
   }
 
   onSubmit() {
+    this.studentBan.effectiveDate = this.effectiveDate;
+    this.studentBan.banRemovalDate = this.banRemovalDate;
     if (this.form.valid) {
       this.formSave.emit(this.studentBan);
     }

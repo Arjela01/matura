@@ -18,6 +18,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import {CalendarModule} from "primeng/calendar";
 
 @Component({
   selector: 'msh-exam-date-form',
@@ -32,6 +33,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     ButtonModule,
     CheckboxModule,
     DropdownModule,
+    CalendarModule,
   ],
   templateUrl: './exam-date-form.component.html',
   styleUrls: ['./exam-date-form.component.scss'],
@@ -76,6 +78,7 @@ export class ExamDateFormComponent {
   }
 
   onSubmit() {
+    this.examDate.date = this.date
     this.submitted = true;
     if (this.form.valid) {
       this.formSave.emit(this.examDate);
