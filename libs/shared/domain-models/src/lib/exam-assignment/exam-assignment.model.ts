@@ -12,7 +12,7 @@ export interface ExamAssignment {
   takenSeats?: number;
   examTypeId? : number;
   examTypeName? : string;
-
+  time: string;
 }
 
 export interface ExamAssignmentTableView {

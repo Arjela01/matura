@@ -58,6 +58,7 @@ export class ExamAssignmentGridComponent {
     examDateId: 0,
     examSiteId: '',
     examSiteName: '',
+    time: '',
   };
 
   onDeleteClick(examAssignment: ExamAssignment) {
