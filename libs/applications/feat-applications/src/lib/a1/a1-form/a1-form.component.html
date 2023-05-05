@@ -1,15 +1,29 @@
 <div class="grid">
   <div class="col-12">
-    <h2 class="flex-1 mb-0 mt-6">{{!formId ? 'Shto Formular A1': 'Ndrysho Formular A1'}}</h2>
+    <h2 class="flex-1 mb-0 mt-6">
+      {{ !formId ? 'Shto Formular A1' : 'Ndrysho Formular A1' }}
+    </h2>
     <div class="card-form px-6 py-6 mb-header mt-3">
       <form #form="ngForm" (ngSubmit)="onSubmit()">
         <div class="field mt-4 mb-4" [style]="{ width: '500px' }">
           <label for="studentInputData">Student *</label>
           <div class="p-inputgroup">
-            <p-button *ngIf="showSearch" label="Kërko" icon="pi pi-search" (click)="initializeDialog()"
+            <p-button
+              *ngIf="showSearch"
+              label="Kërko"
+              icon="pi pi-search"
+              (click)="initializeDialog()"
               [style]="{ height: '100%' }"></p-button>
-            <input type="text" [disabled]="!showSearch" pInputText id="studentInputData" name="studentInputData"
-              [(ngModel)]="choosenStudent" autofocus [required]="true" [ngClass]="{
+            <input
+              type="text"
+              [disabled]="!showSearch"
+              pInputText
+              id="studentInputData"
+              name="studentInputData"
+              [(ngModel)]="choosenStudent"
+              autofocus
+              [required]="true"
+              [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !choosenStudent
               }" />
           </div>
@@ -19,14 +33,27 @@
         </div>
         <div class="field xl:w-4 mt-5 lg:w-6 sm:w-full">
           <label for="d3Dubject">Lënda D3</label>
-          <p-dropdown id="d3Dubject" [options]="d3Dropdown" optionValue="key" autoWidth="false"
-            [style]="{ width: '100%' }" optionLabel="value" name="subjectD3Id" [required]="false" class="w-full block"
-            [(ngModel)]="a1.subjectD3Id" [autoDisplayFirst]="false" [showClear]="true" [ngClass]="{
+          <p-dropdown
+            id="d3Dubject"
+            [options]="d3Dropdown"
+            optionValue="key"
+            autoWidth="false"
+            [style]="{ width: '100%' }"
+            optionLabel="value"
+            name="subjectD3Id"
+            [required]="false"
+            class="w-full block"
+            [(ngModel)]="a1.subjectD3Id"
+            [autoDisplayFirst]="false"
+            [showClear]="true"
+            [ngClass]="{
               'ng-invalid ng-dirty':
                 submitted && (!a1.subjectD3Id || a1.subjectD3Id === '')
             }">
           </p-dropdown>
-          <small class="p-error block" *ngIf="submitted && (!a1.subjectD3Id || a1.subjectD3Id === '')">
+          <small
+            class="p-error block"
+            *ngIf="submitted && (!a1.subjectD3Id || a1.subjectD3Id === '')">
             Lënda D3 është fushë e kërkuar.
           </small>
         </div>
@@ -34,12 +61,18 @@
           <label class="mb-3">Aplikon jashtë vendit *</label>
           <div class="formgrid grid w-full">
             <div class="field-radiobutton col-6">
-              <p-radioButton id="isApplyingToForeignCountriesTrue" name="isApplyingToForeignCountries" [value]="true"
+              <p-radioButton
+                id="isApplyingToForeignCountriesTrue"
+                name="isApplyingToForeignCountries"
+                [value]="true"
                 [(ngModel)]="a1.isApplyingToForeignCountries"></p-radioButton>
               <label for="isApplyingToForeignCountriesTrue">Po</label>
             </div>
             <div class="field-radiobutton col-6">
-              <p-radioButton id="isApplyingToForeignCountriesFalse" name="isApplyingToForeignCountries" [value]="false"
+              <p-radioButton
+                id="isApplyingToForeignCountriesFalse"
+                name="isApplyingToForeignCountries"
+                [value]="false"
                 [(ngModel)]="a1.isApplyingToForeignCountries"></p-radioButton>
               <label for="isApplyingToForeignCountriesFalse">Jo</label>
             </div>
@@ -49,12 +82,18 @@
           <label class="mb-3">Keni marrë diplomë/dëftesë pjekurie</label>
           <div class="formgrid grid w-full">
             <div class="field-radiobutton col-6">
-              <p-radioButton id="alreadyHaveDiplomaTrue" name="alreadyHaveDiploma" [value]="true"
+              <p-radioButton
+                id="alreadyHaveDiplomaTrue"
+                name="alreadyHaveDiploma"
+                [value]="true"
                 [(ngModel)]="a1.alreadyHaveDiploma"></p-radioButton>
               <label for="alreadyHaveDiplomaTrue">Po</label>
             </div>
             <div class="field-radiobutton col-6">
-              <p-radioButton id="alreadyHaveDiplomaFalse" name="alreadyHaveDiploma" [value]="false"
+              <p-radioButton
+                id="alreadyHaveDiplomaFalse"
+                name="alreadyHaveDiploma"
+                [value]="false"
                 [(ngModel)]="a1.alreadyHaveDiploma"></p-radioButton>
               <label for="alreadyHaveDiplomaFalse">Jo</label>
             </div>
@@ -63,20 +102,42 @@
         <h5 class="uppercase mt-5">Lëndët me zgjedhje</h5>
         <div class="field xl:w-4 lg:w-6 smxs:w-full">
           <label for="optionalSubjects">Lëndët me zgjedhje</label>
-          <p-dropdown id="optionalSubjects" [options]="optionalSubjects" autoWidth="false" [style]="{ width: '100%' }"
-            optionLabel="value" name="optionalSubject" class="w-full block" [(ngModel)]="optionalSubjectChoosen"
-            [autoDisplayFirst]="false" [showClear]="true" [ngClass]="{
+          <p-dropdown
+            id="optionalSubjects"
+            [options]="optionalSubjects"
+            autoWidth="false"
+            [style]="{ width: '100%' }"
+            optionLabel="value"
+            name="optionalSubject"
+            class="w-full block"
+            [(ngModel)]="optionalSubjectChoosen"
+            [autoDisplayFirst]="false"
+            [showClear]="true"
+            [ngClass]="{
               'ng-invalid ng-dirty': submitted && subjectsChoosen.length < 1
             }">
           </p-dropdown>
         </div>
         <div [style]="{ width: '180px' }">
-          <button pButton pRipple type="button" label="Zgjidh" (click)="addSubject()"
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Zgjidh"
+            (click)="addSubject()"
             class="p-button-gray w-full"></button>
         </div>
-        <div class="field xl:w-4 lg:w-6 sm:w-full mt-5" *ngIf="subjectsChoosen && subjectsChoosen.length > 0">
+        <div
+          class="field xl:w-4 lg:w-6 sm:w-full mt-5"
+          *ngIf="subjectsChoosen && subjectsChoosen.length > 0">
           <h5 class="px-0">Ju zgjodhët lëndët</h5>
-          <p-table #dt dataKey="key" responsiveLayout="scroll" [value]="subjectsChoosen" [rows]="10" class="px-0 mt-5"
+          <p-table
+            #dt
+            dataKey="key"
+            responsiveLayout="scroll"
+            [value]="subjectsChoosen"
+            [rows]="10"
+            class="px-0 mt-5"
             [rowHover]="true">
             <ng-template pTemplate="header">
               <tr>
@@ -91,8 +152,13 @@
                 </td>
                 <td>
                   <div class="flex">
-                    <button pButton pRipple icon="pi pi-trash" (click)="onDeleteClick(rowIndex)"
-                      class="p-button-rounded p-button-danger p-button-text" pTooltip="Fshi"
+                    <button
+                      pButton
+                      pRipple
+                      icon="pi pi-trash"
+                      (click)="onDeleteClick(rowIndex)"
+                      class="p-button-rounded p-button-danger p-button-text"
+                      pTooltip="Fshi"
                       tooltipPosition="bottom"></button>
                   </div>
                 </td>
@@ -100,7 +166,9 @@
             </ng-template>
           </p-table>
         </div>
-        <small class="p-error block" *ngIf="submitted && subjectsChoosen.length < 1">
+        <small
+          class="p-error block"
+          *ngIf="submitted && subjectsChoosen.length < 1">
           *Duhet zgjedhur minimalisht 1 lëndë
         </small>
         <small class="p-error block" *ngIf="moreSubjectThanAllowed">
@@ -108,19 +176,37 @@
         </small>
         <div class="field lg:w-4 md:w-6 sm:w-full mt-5">
           <label for="isA1">Kodi i mbikqyrësit</label>
-          <input type="password" pInputText id="overSeerCode" class="w-full" required [(ngModel)]="a1.overSeerCode"
-            name="overSeerCode" [ngClass]="{
+          <input
+            type="password"
+            pInputText
+            id="overSeerCode"
+            class="w-full"
+            required
+            [(ngModel)]="a1.overSeerCode"
+            name="overSeerCode"
+            [ngClass]="{
               'ng-invalid ng-dirty':
                 submitted && (!a1.overSeerCode || a1.overSeerCode === '')
             }" />
         </div>
-        <small class="p-error block" *ngIf="submitted && (!a1.overSeerCode || a1.overSeerCode === '')">
+        <small
+          class="p-error block"
+          *ngIf="submitted && (!a1.overSeerCode || a1.overSeerCode === '')">
           Kodi i mbikqyrësit është fushë e kërkuar.
         </small>
         <div class="flex justify-content-end">
-          <button type="button" pButton label="Anullo" class="p-button-text w-auto mr-2"
+          <button
+            type="button"
+            pButton
+            label="Anullo"
+            class="p-button-text w-auto mr-2"
             (click)="onCancelClick()"></button>
-          <button [disabled]="form.invalid" type="submit" pButton label="Ruaj" class="p-button w-auto"></button>
+          <button
+            [disabled]="form.invalid"
+            type="submit"
+            pButton
+            label="Ruaj"
+            class="p-button w-auto"></button>
         </div>
       </form>
     </div>
