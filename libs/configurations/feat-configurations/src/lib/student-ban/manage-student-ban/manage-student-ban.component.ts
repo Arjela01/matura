@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -38,7 +38,6 @@ import { RippleModule } from 'primeng/ripple';
   ],
   templateUrl: './manage-student-ban.component.html',
   styleUrls: ['./manage-student-ban.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
 export class ManageStudentBanComponent {
@@ -54,7 +53,8 @@ export class ManageStudentBanComponent {
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly studentBannedService: StudentBanApiService
+    private readonly studentBannedService: StudentBanApiService,
+    private cd : ChangeDetectorRef,
   ) {}
 
   onNewClick() {
@@ -134,6 +134,7 @@ export class ManageStudentBanComponent {
       .subscribe(response => {
         this.bannedStudents$$.next(response.data);
         this.totalRecords = response.total;
+        this.cd.markForCheck();
       });
   }
 
@@ -152,6 +153,7 @@ export class ManageStudentBanComponent {
           this.toastService.showError(
             'Ndodhi një problem gjatë ndryshimit të studentit!'
           );
+        this.cd.markForCheck();
       });
   }
 

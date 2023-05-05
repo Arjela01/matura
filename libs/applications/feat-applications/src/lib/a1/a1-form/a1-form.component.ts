@@ -268,6 +268,7 @@ export class A1FormComponent {
       contentStyle: { overflow: 'auto' },
       maximizable: true,
       closable: true,
+      header:'Kërko Maturantin',
       data: {
         students: this.students?.data,
         config: this.studentsConfig,
