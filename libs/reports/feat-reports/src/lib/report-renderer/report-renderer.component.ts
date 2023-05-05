@@ -5,10 +5,11 @@ import {
   Component,
   ElementRef,
   Inject,
+  Input,
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { REPORTS_APP_URL, SafePipe } from '@msh/shared/util-shared';
 import RxPostmessenger from 'rx-postmessenger';
@@ -62,7 +63,8 @@ export class ReportRendererComponent implements OnInit {
     @Inject(REPORTS_APP_URL) readonly reports_app_url: string,
     private readonly authFacade: AuthFacade,
     private readonly route: ActivatedRoute,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) {}
   onIframeLoad(): void {
     this.iframeLoaded$$.next(true);
@@ -77,7 +79,12 @@ export class ReportRendererComponent implements OnInit {
   }
 
   goBack(): void {
-    window.history.go(-1);
-    window.history.go(-1);
+    if (this.id === '13') {
+      this.router.navigate(['applications/a1']).then();
+    } else if (this.id === '14') {
+      this.router.navigate(['applications/a1z']).then();
+    } else {
+      window.history.go(-2);
+    }
   }
 }
