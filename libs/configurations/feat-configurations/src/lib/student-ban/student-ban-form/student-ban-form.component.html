@@ -9,7 +9,7 @@
               label="Kërko"
               icon="pi pi-search"
               (click)="!studentBan.id ? onNewClick() : ''"
-              [disabled]="studentBan.id ? true : false"
+              [disabled]="!!studentBan.id"
               [style]="{ height: '100%' }"></p-button>
             <input
               [value]="studentInputData"
@@ -18,7 +18,6 @@
               id="studentInputData"
               name="studentInputData"
               [(ngModel)]="studentInputData"
-              autofocus
               [required]="true"
               [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !studentInputData
@@ -53,18 +52,16 @@
 
         <div class="field">
           <label for="effectiveDate">Data Efektive *</label>
-          <input
-            placeholder="dd/MM/yyyy"
-            type="text"
-            pInputText
+          <p-calendar
+            [(ngModel)]="effectiveDate"
+            dateFormat="dd/mm/yy"
+            inputId="effectiveDate"
             id="effectiveDate"
             name="effectiveDate"
-            [(ngModel)]="effectiveDate"
-            required
-            autofocus
+            appendTo="body"
             [ngClass]="{
               'ng-invalid ng-dirty': submitted && !effectiveDate
-            }" />
+            }"></p-calendar>
           <small class="p-error block" *ngIf="submitted && !effectiveDate">
             Data është fushë e kërkuar.
           </small>
@@ -72,18 +69,16 @@
 
         <div class="field">
           <label for="banRemovalDate">Data e heqjes se Skualifikimit *</label>
-          <input
-            placeholder="dd/MM/yyyy"
-            type="text"
-            pInputText
+          <p-calendar
+            [(ngModel)]="banRemovalDate"
+            dateFormat="dd/mm/yy"
+            inputId="banRemovalDate"
             id="banRemovalDate"
             name="banRemovalDate"
-            [(ngModel)]="banRemovalDate"
-            required
-            autofocus
+            appendTo="body"
             [ngClass]="{
               'ng-invalid ng-dirty': submitted && !banRemovalDate
-            }" />
+            }"></p-calendar>
           <small class="p-error block" *ngIf="submitted && !banRemovalDate">
             Data është fushë e kërkuar.
           </small>
