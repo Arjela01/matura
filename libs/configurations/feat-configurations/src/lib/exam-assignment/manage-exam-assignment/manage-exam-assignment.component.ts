@@ -230,7 +230,7 @@ export class ManageExamAssignmentComponent {
         const blob: any = new Blob([response], {
           type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         });
-        FileSaver.saveAs(blob, 'Nota_Pikë');
+        FileSaver.saveAs(blob, 'Lista_Emërore ');
       });
   }
   getExamDateDropdown() {
