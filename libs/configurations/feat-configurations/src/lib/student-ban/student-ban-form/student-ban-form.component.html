@@ -1,7 +1,7 @@
 <div class="grid">
   <div class="col-12 p-fluid">
     <div class="card" style="border: 0">
-      <form #form="ngForm" (ngSubmit)="onSubmit()">
+      <form #form="ngForm">
         <div class="field mt-4 mb-4">
           <label for="studentInputData">Student *</label>
           <div class="p-inputgroup">
@@ -117,7 +117,8 @@
             type="submit"
             pButton
             label="Ruaj"
-            class="p-button w-auto"></button>
+            class="p-button w-auto"
+            (click)="onSubmit()"></button>
         </div>
 
         <p-dialog
@@ -125,6 +126,7 @@
           [style]="{ width: '850px' }"
           [modal]="true"
           [draggable]="false"
+          header="Kërko Maturantin"
           [resizable]="false"
           class="p-fluid"
           (onHide)="onModalClose()">

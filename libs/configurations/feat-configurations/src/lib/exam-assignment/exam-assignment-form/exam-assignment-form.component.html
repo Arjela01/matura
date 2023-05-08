@@ -7,6 +7,7 @@
       optionValue="key"
       optionLabel="value"
       name="examSiteId"
+      appendTo="body"
       [required]="true"
       (onChange)="refreshExamDates()"
       [autoDisplayFirst]="false"
@@ -31,6 +32,7 @@
       optionValue="key"
       optionLabel="value"
       name="examInfoId"
+      appendTo="body"
       [required]="true"
       [autoDisplayFirst]="false"
       [(ngModel)]="examAssignment.examDateId"
@@ -90,6 +92,7 @@
 <p-dialog
   [(visible)]="displayModal"
   [modal]="true"
+  header="Kërko Maturantin"
   [draggable]="false"
   [resizable]="false"
   class="p-fluid"

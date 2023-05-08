@@ -15,24 +15,18 @@
   (onRowUnselect)="onRowUnselect($event)"
   (onLazyLoad)="loadRows($event)"
   [lazy]="true">
-  <ng-template pTemplate="caption">
-    <div
-      class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <h5 class="m-0">Kërko Maturantin</h5>
-    </div>
-  </ng-template>
   <ng-template pTemplate="header">
-    <tr>
-      <th style="width: 3rem"></th>
-      <th pSortableColumn="studentId" style="width: 20%">
+    <tr class="column row">
+      <th style="width: 3rem" class="row"></th>
+      <th pSortableColumn="studentId" class="row">
         Matura ID
-        <p-sortIcon field="studentId"></p-sortIcon>
+        <p-sortIcon field="studentId" ></p-sortIcon>
         <p-columnFilter
           type="numeric"
           field="studentId"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="firstName" style="width: 20%">
+      <th pSortableColumn="firstName" class="row">
         Emri
         <p-sortIcon field="firstName"></p-sortIcon>
         <p-columnFilter
@@ -40,7 +34,7 @@
           field="firstName"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="middleName" style="width: 20%">
+      <th pSortableColumn="middleName" class="row">
         Atësia
         <p-sortIcon field="middleName"></p-sortIcon>
         <p-columnFilter
@@ -48,7 +42,7 @@
           field="middleName"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="lastName" style="width: 20%">
+      <th pSortableColumn="lastName" class="row">
         Mbiemri
         <p-sortIcon field="lastName"></p-sortIcon>
         <p-columnFilter
@@ -56,7 +50,7 @@
           field="lastName"
           display="menu"></p-columnFilter>
       </th>
-      <th pSortableColumn="idCard" style="width: 20%">
+      <th pSortableColumn="idCard" class="row">
         NID
         <p-sortIcon field="idCard"></p-sortIcon>
         <p-columnFilter
