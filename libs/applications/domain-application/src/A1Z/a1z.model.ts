@@ -39,9 +39,9 @@ export interface A1Z {
   yearZ2?: number;
 
 
-  studentFirstName?:string;
-  studentFatherName?:string;
-  studentLastName?:string;
+  firstName?:string;
+  middleName?:string;
+  lastName?:string;
   studentBirthDate?:Date;
   studentBirthPlace?:string;
   studentIdentifier?:string;

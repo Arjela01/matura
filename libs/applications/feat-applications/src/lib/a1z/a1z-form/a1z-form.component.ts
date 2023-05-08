@@ -377,7 +377,8 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         const d2ExamType = x.data.find(
           d2 => d2.value === EXAM_TYPES.D2 || d2.value === EXAM_TYPES.D2_VJESHTA
         );
-        const d3ExamType = x.data.find(d3 => d3.value === EXAM_TYPES.D3);
+        const d3ExamType = x.data.find(
+          d3 => d3.value === EXAM_TYPES.D3);
         const d3ExamTypeFall = x.data.find(
           d3 => d3.value === EXAM_TYPES.D3_VJESHTA
         );
@@ -398,44 +399,53 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
               this.cd.detectChanges();
             });
         }
-
-        this.examSubjectService
-          .forExamType(d2ExamType!.key!, this.a1z.academicYearId)
-          .pipe(untilDestroyed(this))
-          .subscribe(y => {
-            this.d2ExamSubjects = y.data;
-            this.a1z.subjectD2Id = y.data[0]!.key!;
-            // this.a1z.carriedSubjectD2 = this.d2ExamSubjects[0].key!;
-            // this.a1z.subjectD2A1ZId = this.d2ExamSubjects[0].key!;
-            this.cd.detectChanges();
-          });
-
-        this.examSubjectService
-          .forExamType(d3ExamTypeFall!.key!, this.a1z.academicYearId)
-          .pipe(untilDestroyed(this))
-          .subscribe(y => {
-            this.d3ExamSubjectsFall = y.data;
-            this.cd.detectChanges();
-          });
-        this.examSubjectService
-          .forExamType(z1ExamTypeFall!.key!, this.a1z.academicYearId)
-          .pipe(untilDestroyed(this))
-          .subscribe(y => {
-            this.z1ExamSubjectsFall = y.data;
-          });
-
-        this.examSubjectService
-          .forExamType(d3ExamType!.key!, this.a1z.academicYearId)
-          .pipe(untilDestroyed(this))
-          .subscribe(y => {
-            this.d3ExamSubjects = this.d3ExamSubjectsFall.concat(y.data);
-          });
-        this.examSubjectService
-          .forExamType(z1ExamType!.key!, this.a1z.academicYearId)
-          .pipe(untilDestroyed(this))
-          .subscribe(y => {
-            this.z1ExamSubjects = this.z1ExamSubjectsFall.concat(y.data);
-          });
+        if (d2ExamType && d2ExamType.key) {
+          this.examSubjectService
+            .forExamType(d2ExamType.key, this.a1z.academicYearId)
+            .pipe(untilDestroyed(this))
+            .subscribe(y => {
+              this.d2ExamSubjects = y.data;
+              this.a1z.subjectD2Id = y.data[0]!.key!;
+              // this.a1z.carriedSubjectD2 = this.d2ExamSubjects[0].key!;
+              // this.a1z.subjectD2A1ZId = this.d2ExamSubjects[0].key!;
+              this.cd.detectChanges();
+            });
+        }
+        if (d3ExamType && d3ExamType.key) {
+          this.examSubjectService
+            .forExamType(d3ExamType.key, this.a1z.academicYearId)
+            .pipe(untilDestroyed(this))
+            .subscribe(y => {
+              this.d3ExamSubjects = y.data;
+              this.cd.detectChanges();
+            });
+        }
+        if (d3ExamTypeFall && d3ExamTypeFall.key) {
+          this.examSubjectService
+            .forExamType(d3ExamTypeFall.key, this.a1z.academicYearId)
+            .pipe(untilDestroyed(this))
+            .subscribe(y => {
+              this.d3ExamSubjectsFall = y.data;
+              this.cd.detectChanges();
+            });
+        }
+        if (z1ExamTypeFall && z1ExamTypeFall.key) {
+          this.examSubjectService
+            .forExamType(z1ExamTypeFall.key, this.a1z.academicYearId)
+            .pipe(untilDestroyed(this))
+            .subscribe(y => {
+              this.z1ExamSubjectsFall = y.data;
+            });
+        }
+        if (z1ExamType && z1ExamType.key) {
+          this.examSubjectService
+            .forExamType(z1ExamType.key, this.a1z.academicYearId)
+            .pipe(untilDestroyed(this))
+            .subscribe(y => {
+              this.z1ExamSubjects = this.z1ExamSubjectsFall.concat(y.data);
+              this.cd.detectChanges();
+            });
+        }
       });
   }
 
