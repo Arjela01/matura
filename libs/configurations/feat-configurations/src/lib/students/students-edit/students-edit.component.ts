@@ -183,5 +183,6 @@ export class StudentsEditComponent implements OnInit {
         });
       },
     });
+    this.cd.markForCheck();
   }
 }
