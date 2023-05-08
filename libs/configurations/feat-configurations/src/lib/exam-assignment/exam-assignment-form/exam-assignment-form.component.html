@@ -7,6 +7,7 @@
       optionValue="key"
       optionLabel="value"
       name="examSiteId"
+      appendTo="body"
       [required]="true"
       (onChange)="refreshExamDates()"
       [autoDisplayFirst]="false"
@@ -31,6 +32,7 @@
       optionValue="key"
       optionLabel="value"
       name="examInfoId"
+      appendTo="body"
       [required]="true"
       [autoDisplayFirst]="false"
       [(ngModel)]="examAssignment.examDateId"
@@ -89,13 +91,14 @@
 
 <p-dialog
   [(visible)]="displayModal"
-  [style]="{ width: '1000px' }"
   [modal]="true"
+  header="Kërko Maturantin"
   [draggable]="false"
   [resizable]="false"
   class="p-fluid"
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
+
     <msh-shared-student-lookup
       [students]="(studentList$ | async) || []"
       [totalRecords]="totalRecords"

@@ -108,7 +108,7 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
   }
   onNewClick() {
     this.displayStudentModal = true;
-    this.cd.detectChanges();
+    this.cd.markForCheck();
   }
   onModalClose() {
     this.displayStudentModal = false;
@@ -175,5 +175,6 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
     if (this.form.valid) {
       this.formSave.emit(this.studentBan);
     }
+    this.cd.markForCheck();
   }
 }

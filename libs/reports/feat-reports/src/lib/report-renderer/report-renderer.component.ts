@@ -4,29 +4,33 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  Inject, OnInit,
+  Inject,
+  Input,
+  OnInit,
   ViewChild,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { REPORTS_APP_URL, SafePipe } from '@msh/shared/util-shared';
 import RxPostmessenger from 'rx-postmessenger';
 import { Subject, first, forkJoin, map, tap } from 'rxjs';
 import { IframeAutoHeightDirective } from '../iframe-auto-height.directive';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'msh-report-renderer',
   standalone: true,
-  imports: [CommonModule, IframeAutoHeightDirective, SafePipe],
+  imports: [CommonModule, IframeAutoHeightDirective, SafePipe, ButtonModule],
   templateUrl: './report-renderer.component.html',
   styleUrls: ['./report-renderer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ReportRendererComponent implements OnInit{
+export class ReportRendererComponent implements OnInit {
   @ViewChild('reportRenderer', { static: true })
   iframe!: ElementRef<HTMLIFrameElement>;
   id: string = this.route.snapshot.params['id'];
-  studentObj: { value: string | number; key: string } | null = this.findStudentID(this.route.snapshot.queryParams);
+  studentObj: { value: string | number; key: string } | null =
+    this.findStudentID(this.route.snapshot.queryParams);
   iframeUrl = '';
   private readonly iframeLoaded$$ = new Subject<boolean>();
   private readonly iframeLoaded$ = this.iframeLoaded$$
@@ -47,7 +51,7 @@ export class ReportRendererComponent implements OnInit{
     })
   );
 
-   findStudentID(obj :{[x : string]:string | number } ){
+  findStudentID(obj: { [x: string]: string | number }) {
     const key = Object.keys(obj).find(k => k.toLowerCase() === 'studentid');
     if (key) {
       return { key: key, value: obj[key] };
@@ -59,7 +63,8 @@ export class ReportRendererComponent implements OnInit{
     @Inject(REPORTS_APP_URL) readonly reports_app_url: string,
     private readonly authFacade: AuthFacade,
     private readonly route: ActivatedRoute,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) {}
   onIframeLoad(): void {
     this.iframeLoaded$$.next(true);
@@ -70,6 +75,16 @@ export class ReportRendererComponent implements OnInit{
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}`;
     } else {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}`;
+    }
+  }
+
+  goBack(): void {
+    if (this.id === '13') {
+      this.router.navigate(['applications/a1']).then();
+    } else if (this.id === '14') {
+      this.router.navigate(['applications/a1z']).then();
+    } else {
+      window.history.go(-2);
     }
   }
 }
