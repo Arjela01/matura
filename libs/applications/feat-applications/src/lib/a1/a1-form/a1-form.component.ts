@@ -180,7 +180,7 @@ export class A1FormComponent {
           this.students = students;
           this.optionalSubjects = z1.data;
           this.initializeOptionalSubjects();
-          this.choosenStudent = `${this.a1.studentId}-${this.a1.firstName}-${this.a1.middleName}-${this.a1.lastName}`;
+          this.choosenStudent = `${this.a1.studentIdentifier}-${this.a1.firstName}-${this.a1.middleName}-${this.a1.lastName}`;
           this.cd.detectChanges();
         });
     } else if (!this.id) {
