@@ -3,8 +3,8 @@ export interface Reports {
   roles: any;
   name: string;
   path: string;
-  reportName?: string,
-  reportId?: number
+  reportName?: string;
+  reportId?: number;
   parameters?: string;
 }
 

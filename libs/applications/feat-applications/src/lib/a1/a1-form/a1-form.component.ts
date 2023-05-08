@@ -160,9 +160,9 @@ export class A1FormComponent {
           switchMap((student: ApiResult<Student>) => {
             this.a1.studentId = student.data.id;
             this.a1.studentIdentifier = student.data.idCard;
-            this.a1.studentFirstName = student.data.firstName;
-            this.a1.studentFatherName = student.data.middleName;
-            this.a1.studentLastName = student.data.lastName;
+            this.a1.firstName = student.data.firstName;
+            this.a1.middleName = student.data.middleName;
+            this.a1.lastName = student.data.lastName;
             return combineLatest([
               this.getAcademicYears(),
               this.getStudent(),
@@ -180,7 +180,7 @@ export class A1FormComponent {
           this.students = students;
           this.optionalSubjects = z1.data;
           this.initializeOptionalSubjects();
-          this.choosenStudent = `${this.a1.studentIdentifier}-${this.a1.studentFirstName}-${this.a1.studentFatherName}-${this.a1.studentLastName}`;
+          this.choosenStudent = `${this.a1.studentId}-${this.a1.firstName}-${this.a1.middleName}-${this.a1.lastName}`;
           this.cd.detectChanges();
         });
     } else if (!this.id) {
@@ -237,9 +237,7 @@ export class A1FormComponent {
           this.students = students;
           this.optionalSubjects = z1.data;
           this.initializeOptionalSubjects();
-          this.choosenStudent = `${this.a1.studentIdentifier}-${this.a1.studentFirstName}-${this.a1.studentFatherName}-${this.a1.studentLastName}`;
-
-          this.cd.detectChanges();
+          this.choosenStudent = `${this.a1.studentId}-${this.a1.firstName}-${this.a1.middleName}-${this.a1.lastName}`;
         });
     }
   }
@@ -247,14 +245,16 @@ export class A1FormComponent {
   initializeOptionalSubjects() {
     if (this.a1.subjectZ1Id) {
       this.subjectsChoosen.push(
-        this.optionalSubjects.find(x => x.key == x.key)
-      );
+        this.optionalSubjects.find(x => x.key == this.a1.subjectZ1Id as any)
+    );
     }
     if (this.a1.subjectZ2Id) {
       this.subjectsChoosen.push(
-        this.optionalSubjects.find(x => x.key == x.key)
+        this.optionalSubjects.find(x => x.key == this.a1.subjectZ2Id as any)
       );
+
     }
+    this.cd.detectChanges();
   }
 
   getStudentById(id: string): Observable<any> {
@@ -268,6 +268,7 @@ export class A1FormComponent {
       contentStyle: { overflow: 'auto' },
       maximizable: true,
       closable: true,
+      header:'Kërko Maturantin',
       data: {
         students: this.students?.data,
         config: this.studentsConfig,
@@ -374,6 +375,7 @@ export class A1FormComponent {
       this.a1.subjectZ1Id = this.subjectsChoosen[0].key;
     }
     this.optionalSubjectChoosen = '';
+
   }
 
   addA1(a1: A1Z) {
