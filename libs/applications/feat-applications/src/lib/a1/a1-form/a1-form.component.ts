@@ -76,6 +76,8 @@ export class A1FormComponent {
   totalRecords = 0;
   parameterUrl!: any;
   editing = false;
+  showSearch = true;
+
 
   @HostListener('window:popstate', ['$event'])
   onPopState() {
@@ -156,6 +158,9 @@ export class A1FormComponent {
   };
 
   initializeFormWithApiCalls() {
+    if (this.studentId != null) {
+      this.showSearch = false;
+    }
     if (this.studentId) {
       this.getStudentById(this.studentId)
         .pipe(
