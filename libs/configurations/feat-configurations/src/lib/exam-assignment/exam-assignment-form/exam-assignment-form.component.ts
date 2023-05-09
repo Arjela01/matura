@@ -185,7 +185,7 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
       this.studentInputData = '';
     } else {
       this.examAssignment.studentId = student.studentId;
-      this.studentInputData = `${student?.studentName}`;
+      this.studentInputData = student?.studentName;
     }
   }
   onStudentChange(student: Student) {
