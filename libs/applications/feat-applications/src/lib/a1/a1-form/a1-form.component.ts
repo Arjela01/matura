@@ -75,7 +75,7 @@ export class A1FormComponent {
   @ViewChild('form', { static: false }) form!: NgForm;
   totalRecords = 0;
   parameterUrl!: any;
-  showSearch = true;
+  editing = false;
 
   @HostListener('window:popstate', ['$event'])
   onPopState() {
@@ -126,6 +126,9 @@ export class A1FormComponent {
     this.formId = this.route.snapshot.paramMap.get('id');
   }
   ngOnInit() {
+    if (this.formId) {
+      this.editing = true;
+    }
     this.id = this.route.snapshot.params['id'];
     this.studentId = this.route.snapshot.params['student'];
     this.initializeFormWithApiCalls();
@@ -153,8 +156,7 @@ export class A1FormComponent {
   };
 
   initializeFormWithApiCalls() {
-    if (this.studentId != null) {
-      this.showSearch = false;
+    if (this.studentId) {
       this.getStudentById(this.studentId)
         .pipe(
           switchMap((student: ApiResult<Student>) => {
@@ -245,14 +247,13 @@ export class A1FormComponent {
   initializeOptionalSubjects() {
     if (this.a1.subjectZ1Id) {
       this.subjectsChoosen.push(
-        this.optionalSubjects.find(x => x.key == this.a1.subjectZ1Id as any)
-    );
+        this.optionalSubjects.find(x => x.key == (this.a1.subjectZ1Id as any))
+      );
     }
     if (this.a1.subjectZ2Id) {
       this.subjectsChoosen.push(
-        this.optionalSubjects.find(x => x.key == this.a1.subjectZ2Id as any)
+        this.optionalSubjects.find(x => x.key == (this.a1.subjectZ2Id as any))
       );
-
     }
     this.cd.detectChanges();
   }
@@ -268,7 +269,7 @@ export class A1FormComponent {
       contentStyle: { overflow: 'auto' },
       maximizable: true,
       closable: true,
-      header:'Kërko Maturantin',
+      header: 'Kërko Maturantin',
       data: {
         students: this.students?.data,
         config: this.studentsConfig,
@@ -375,7 +376,6 @@ export class A1FormComponent {
       this.a1.subjectZ1Id = this.subjectsChoosen[0].key;
     }
     this.optionalSubjectChoosen = '';
-
   }
 
   addA1(a1: A1Z) {

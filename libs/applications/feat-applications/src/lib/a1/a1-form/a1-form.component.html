@@ -9,20 +9,20 @@
           <label for="studentInputData">Student *</label>
           <div class="p-inputgroup">
             <p-button
-              *ngIf="showSearch"
+              *ngIf="!editing"
               label="Kërko"
               icon="pi pi-search"
               (click)="initializeDialog()"
               [style]="{ height: '100%' }"></p-button>
             <input
               type="text"
-              [disabled]="!showSearch"
               pInputText
               id="studentInputData"
               name="studentInputData"
               [(ngModel)]="choosenStudent"
               autofocus
               [required]="true"
+              [disabled]="editing"
               [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !choosenStudent
               }" />
