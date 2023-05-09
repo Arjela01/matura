@@ -1,92 +1,141 @@
-<p-table #dt dataKey="id" responsiveLayout="scroll" [value]="students" [totalRecords]="totalRecords" [rows]="10"
-  [paginator]="true" [rowsPerPageOptions]="[10, 20, 30]" [showCurrentPageReport]="true"
-  currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde" [rowHover]="true"
-  [(selection)]="selectedStudents" selectionMode="multiple" (onRowSelect)="onRowSelect($event)"
-  (onRowUnselect)="onRowUnselect($event)" (onLazyLoad)="loadRows($event)" [lazy]="true">
+<p-table
+  #dt
+  dataKey="id"
+  responsiveLayout="scroll"
+  [value]="students"
+  [totalRecords]="totalRecords"
+  [rows]="10"
+  [paginator]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
+  [rowHover]="true"
+  [(selection)]="selectedStudents"
+  selectionMode="multiple"
+  (onRowSelect)="onRowSelect($event)"
+  (onRowUnselect)="onRowUnselect($event)"
+  (onLazyLoad)="loadRows($event)"
+  [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="highSchoolName">
         Shkolla
         <div>
           <p-sortIcon field="highSchoolName"></p-sortIcon>
-          <p-columnFilter type="text" field="highSchoolName" display="menu"></p-columnFilter>
+          <p-columnFilter
+            type="text"
+            field="highSchoolName"
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="studentId">
         Matura ID
         <div>
           <p-sortIcon field="studentId"></p-sortIcon>
-          <p-columnFilter type="text" field="studentId" display="menu"></p-columnFilter>
+          <p-columnFilter
+            type="text"
+            field="studentId"
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="firstName">
         Emri
         <div>
           <p-sortIcon field="firstName"></p-sortIcon>
-          <p-columnFilter type="text" field="firstName" display="menu"></p-columnFilter>
+          <p-columnFilter
+            type="text"
+            field="firstName"
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="middleName">
         Atësia
         <div>
           <p-sortIcon field="middleName"></p-sortIcon>
-          <p-columnFilter type="text" field="middleName" display="menu"></p-columnFilter>
+          <p-columnFilter
+            type="text"
+            field="middleName"
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="lastName">
         Mbiemri
         <div>
           <p-sortIcon field="lastName"></p-sortIcon>
-          <p-columnFilter type="text" field="lastName" display="menu"></p-columnFilter>
+          <p-columnFilter
+            type="text"
+            field="lastName"
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="birthDate">
         Datëlindja
         <div>
           <p-sortIcon field="birthDate"></p-sortIcon>
-          <p-columnFilter type="date" field="birthDate" display="menu"></p-columnFilter>
+          <p-columnFilter
+            type="date"
+            field="birthDate"
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="idCard">
         NID
         <div>
           <p-sortIcon field="idCard"></p-sortIcon>
-          <p-columnFilter type="text" field="idCard" display="menu"></p-columnFilter>
+          <p-columnFilter
+            type="text"
+            field="idCard"
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="profileName">
         Profili
         <div>
           <p-sortIcon field="profileName"></p-sortIcon>
-          <p-columnFilter type="text" field="profileName" display="menu"></p-columnFilter>
+          <p-columnFilter
+            type="text"
+            field="profileName"
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="createdByName">
         Krijuar Nga
         <div>
           <p-sortIcon field="createdByName"></p-sortIcon>
-          <p-columnFilter type="text" field="createdByName" display="menu"></p-columnFilter>
+          <p-columnFilter
+            type="text"
+            field="createdByName"
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="createdOn">
         Data e Krijimit
         <div>
           <p-sortIcon field="createdOn"></p-sortIcon>
-          <p-columnFilter type="date" field="createdOn" display="menu"></p-columnFilter>
+          <p-columnFilter
+            type="date"
+            field="createdOn"
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="modifiedByName">
         Ndryshuar Nga
         <div>
           <p-sortIcon field="modifiedByName"></p-sortIcon>
-          <p-columnFilter type="text" field="modifiedByName" display="menu"></p-columnFilter>
+          <p-columnFilter
+            type="text"
+            field="modifiedByName"
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="modifiedOn">
         Data e Ndryshimit
         <div>
           <p-sortIcon field="modifiedOn"></p-sortIcon>
-          <p-columnFilter type="date" field="modifiedOn" display="menu"></p-columnFilter>
+          <p-columnFilter
+            type="date"
+            field="modifiedOn"
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th></th>
@@ -133,15 +182,25 @@
 
       <td style="width: 14%; min-width: 10rem">
         <div class="flex">
-          <img [routerLink]="['/configurations', 'student-view', student.id]" src="assets/svg/view-form.svg"
-            class="p-button-rounded p-button-warning p-button-text ml-m pointer" tooltipPosition="bottom"
+          <img
+            [routerLink]="['/configurations', 'student-view', student.id]"
+            src="assets/svg/view-form.svg"
+            class="p-button-rounded p-button-warning p-button-text ml-m pointer"
+            tooltipPosition="bottom"
             pTooltip="Shiko me shume" />
-          <img [routerLink]="['/configurations', 'student-edit', student.id]" src="assets/svg/edit-form.svg"
-            class="p-button-rounded p-button-warning p-button-text ml-m pointer" tooltipPosition="bottom"
+          <img
+            [routerLink]="['/configurations', 'student-edit', student.id]"
+            src="assets/svg/edit-form.svg"
+            class="p-button-rounded p-button-warning p-button-text ml-m pointer"
+            tooltipPosition="bottom"
             pTooltip="Ndrysho" />
           <div>
-            <img src="assets/svg/delete-form.svg" class="p-button-rounded p-button-danger p-button-text ml-m pointer"
-              pTooltip="Fshi" tooltipPosition="bottom" (click)="onDeleteClick(student)" />
+            <img
+              src="assets/svg/delete-form.svg"
+              class="p-button-rounded p-button-danger p-button-text ml-m pointer"
+              pTooltip="Fshi"
+              tooltipPosition="bottom"
+              (click)="onDeleteClick(student)" />
           </div>
         </div>
       </td>

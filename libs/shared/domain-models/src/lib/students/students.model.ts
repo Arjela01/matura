@@ -22,9 +22,9 @@ export interface Student extends SharedStudent {
   schoolProfile: string;
   profileId?: number;
   profileName: string;
-  session?: string;
+  session?: any;
   studentId: string;
-  studyClass?: string;
+  studyClass?: any;
   graduationYear?: number;
   highSchoolName: string;
   isFall: boolean;
