@@ -9,14 +9,14 @@
           <label for="studentInputData">Student *</label>
           <div class="p-inputgroup">
             <p-button
-              *ngIf="showSearch"
+              *ngIf="!editing && showSearch"
               label="Kërko"
               icon="pi pi-search"
               (click)="initializeDialog()"
               [style]="{ height: '100%' }"></p-button>
             <input
               type="text"
-              [disabled]="!showSearch"
+              [disabled]="!showSearch || editing"
               pInputText
               id="studentInputData"
               name="studentInputData"

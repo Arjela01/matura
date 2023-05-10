@@ -98,6 +98,8 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
+  editing = false;
+
 
   EXAM_TYPES = EXAM_TYPES;
 
@@ -196,6 +198,9 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   };
 
   ngOnInit(): void {
+    if (this.formId) {
+      this.editing = true;
+    }
     this.a1CategoryService.loadDropdownList().subscribe(response => {
       this.a1Categories = response.data;
     });
