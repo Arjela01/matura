@@ -7,10 +7,12 @@
           <label for="studentInputData">Student *</label>
           <div class="p-inputgroup">
             <p-button
-              label="Kerko"
+              *ngIf="!editing"
+              label="Kërko"
               icon="pi pi-search"
               (click)="onNewClick()"
-              [style]="{ height: '100%' }"></p-button>
+              [style]="{ height: '100%' }"
+              ></p-button>
             <input
               [value]="studentInputData"
               type="text"
@@ -20,6 +22,7 @@
               [(ngModel)]="studentInputData"
               required
               autofocus
+              [disabled]="editing"
               [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !studentInputData
               }" />
@@ -115,7 +118,7 @@
                 name="carriedSubjectD1"
                 [filter]="true"
                 [disabled]="true"
-                [autoDisplayFirst]="false"
+                [autoDisplayFirst]="true"
                 [(ngModel)]="a1z.subjectD1Id"
                 [showClear]="true">
               </p-dropdown>
@@ -199,7 +202,7 @@
                 name="carriedSubjectD2"
                 [filter]="true"
                 [disabled]="true"
-                [autoDisplayFirst]="false"
+                [autoDisplayFirst]="true"
                 [(ngModel)]="a1z.subjectD2Id"
                 [showClear]="true">
               </p-dropdown>
