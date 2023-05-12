@@ -50,10 +50,11 @@
           field="time"
           display="menu"></p-columnFilter>
       </th>
-      <th>
-        Studenti
+      <th pSortableColumn="studentName">
+        Emri i Studentit
+        <p-sortIcon field="studentName"></p-sortIcon>
         <p-columnFilter
-          type="custom"
+          type="text"
           field="studentName"
           display="menu"></p-columnFilter>
       </th>
@@ -69,7 +70,7 @@
         {{ examAssignment.examTypeName }}
       </td>
       <td style="width: 20%; min-width: 10rem">
-        {{ examAssignment.date | date : 'dd.MM.yyyy' }}
+        {{ examAssignment.date | date : 'dd/MM/yyyy' }}
       </td>
       <td style="width: 20%; min-width: 10rem">
         {{ examAssignment.time }}
