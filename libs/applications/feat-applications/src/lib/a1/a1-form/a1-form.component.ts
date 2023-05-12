@@ -166,7 +166,7 @@ export class A1FormComponent {
         .pipe(
           switchMap((student: ApiResult<Student>) => {
             this.a1.studentId = student.data.id;
-            this.a1.studentIdentifier = student.data.idCard;
+            this.a1.studentIdentifier = student.data.studentId;
             this.a1.firstName = student.data.firstName;
             this.a1.middleName = student.data.middleName;
             this.a1.lastName = student.data.lastName;

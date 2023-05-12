@@ -45,6 +45,7 @@ export interface A1Z {
   studentBirthDate?:Date;
   studentBirthPlace?:string;
   studentIdentifier?:string;
+  studentNid?: string,
 }
 
 
@@ -56,7 +57,7 @@ export interface A1ZTableRecord {
   firstName?: string,
   middleName?: string,
   lastName?: string,
-  nid?: string,
+  studentNid?: string,
   studentOldIdentifier?: string
   birthDate?: Date,
   birthPlace?: string,
