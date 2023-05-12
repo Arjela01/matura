@@ -73,7 +73,6 @@ export class ExamScoresFormComponent implements OnChanges {
   examTypeId: any;
   examSubjectId: any;
   currentYear = new Date().getFullYear();
-  archiveNr: any;
 
   @Input() set examScoreDetails(details: ExamScore | null) {
     if (details) {
