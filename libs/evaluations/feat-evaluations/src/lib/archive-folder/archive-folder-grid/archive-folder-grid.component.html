@@ -48,6 +48,16 @@
             display="menu"></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="examSubjectName">
+        Lënda Provimit
+        <div>
+          <p-sortIcon field="examSubjectName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="examSubjectName"
+            display="menu"></p-columnFilter>
+        </div>
+      </th>
       <th pSortableColumn="createdByName">
         Operatori
         <div>
@@ -87,6 +97,9 @@
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ archiveFolder.examTypeName }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ archiveFolder.examSubjectName }}
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ archiveFolder.createdByName }}
