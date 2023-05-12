@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { ExamSubjectApiService } from '@msh/configurations/data-access-configurations';
 import { GradesScaleService } from '@msh/evaluations/data-access-evaluations';
@@ -38,11 +43,10 @@ import { UploadGradeScaleFormComponent } from '../upload-grade-scale-form/upload
   ],
   templateUrl: './manage-grades-scale.component.html',
   styleUrls: ['./manage-grades-scale.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
 @UntilDestroy()
-export class ManageGradesScaleComponent {
+export class ManageGradesScaleComponent implements OnInit {
   private gradeScales$$ = new BehaviorSubject<GradesScale[]>([]);
   gradeScales$ = this.gradeScales$$.asObservable();
   filters: LazyLoadEvent | null = null;
@@ -52,17 +56,22 @@ export class ManageGradesScaleComponent {
   examSubjectDropdown: DropdownModel<number>[] = [];
   examTypeDropdown: DropdownModel<number>[] = [];
   displayModal = false;
-  private FileSaver: any;
+  submitted = false;
 
   constructor(
     private readonly gradesScaleApiService: GradesScaleService,
     private readonly router: Router,
     private readonly toastService: GlobalToastService,
-    private readonly examSubjectsService: ExamSubjectApiService
+    private readonly examSubjectsService: ExamSubjectApiService,
+    private readonly cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     this.getDropdownSubjects();
+  }
+  onFormSave() {
+    this.getGradeScales(this.filters as LazyLoadEvent);
+    this.displayModal = false;
   }
 
   getDropdownSubjects() {
@@ -94,6 +103,7 @@ export class ManageGradesScaleComponent {
       .subscribe((response: any) => {
         this.gradeScales$$.next(response.data);
         this.totalRecords = response.total;
+        this.cd.detectChanges();
       });
   }
 
@@ -107,39 +117,6 @@ export class ManageGradesScaleComponent {
         });
         FileSaver.saveAs(blob, 'Nota_Pikë');
       });
-  }
-
-  onSubmit(event: any) {
-    this.gradesScaleApiService.uploadExcelFile(event).subscribe({
-      next: (response: any) => {
-        this.displayModal = false;
-
-        if (response.isSuccessful) {
-          this.toastService.showSuccess('Dokumenti u shtua me sukses!');
-          this.getGradeScales(this.filters as LazyLoadEvent);
-        } else {
-          !response.errorMessage
-            ? this.toastService.showError(
-                'Ndodhi një problem gjatë ngarkimit të dokumentit!'
-              )
-            : this.toastService.showError(response.errorMessage);
-        }
-        if (response.isBadRequest)
-          this.toastService.showError(
-            'Ndodhi një problem gjatë ngarkimit të dokumentit!'
-          );
-      },
-      error: error => {
-        error.errorMessage
-          ? this.toastService.showError(error.errorMessage)
-          : this.toastService.showError(
-              'Ndodhi një problem gjatë ndryshimit të përshkallëzimit!'
-            );
-        this.toastService.showError(
-          'Ndodhi një problem gjatë ndryshimit të përshkallëzimit!'
-        );
-      },
-    });
   }
 
   onModalClose() {
