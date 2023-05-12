@@ -6,13 +6,14 @@
           <label for="studentInputData">Student *</label>
           <div class="p-inputgroup">
             <p-button
+              *ngIf="!studentBan.id"
               label="Kërko"
               icon="pi pi-search"
               (click)="!studentBan.id ? onNewClick() : ''"
-              [disabled]="!!studentBan.id"
               [style]="{ height: '100%' }"></p-button>
             <input
               [value]="studentInputData"
+              [disabled]="!!studentBan.id"
               type="text"
               pInputText
               id="studentInputData"
