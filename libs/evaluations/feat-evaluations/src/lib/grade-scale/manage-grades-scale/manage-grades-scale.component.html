@@ -34,7 +34,7 @@
 </div>
 <p-dialog
   [(visible)]="displayModal"
-  [style]="{ width: '650px', height: '350px' }"
+  [style]="{ width: '650px', height: '400px' }"
   header="Ngarko Përshkallëzim"
   [modal]="true"
   [draggable]="false"
@@ -45,7 +45,8 @@
     <msh-upload-grade-scale-form
       class="h-full"
       [examSubjectsDropdown]="examSubjectDropdown"
-      (upload)="onSubmit($event)">
+      (formClose)="onModalClose()"
+      (formSave)="onFormSave()">
     </msh-upload-grade-scale-form>
   </ng-template>
 </p-dialog>
