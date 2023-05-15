@@ -46,21 +46,53 @@
       Lënda e provimit është fushë e kërkuar.
     </small>
   </div>
-
   <div class="field">
     <label for="barcode">Barkodi *</label>
-    <input
-      type="text"
-      pInputText
-      id="barcode"
-      name="barcode"
-      [(ngModel)]="examScore.barcode"
-      required
-      autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examScore.barcode }" />
+    <div class="field barcode">
+      <input
+        type="text"
+        pInputText
+        id="barcode"
+        name="barcode"
+        pTooltip="Barkodi duhet të jetë një numër 7 shifror"
+        maxlength="7"
+        minlength="7"
+        [(ngModel)]="examScore.barcode"
+        required
+        autofocus
+        [ngClass]="{
+          'ng-invalid ng-dirty': submitted && !examScore.barcode
+        }" />
+      <button
+        type="button"
+        pButton
+        pRipple
+        class="pi pi-check tick"
+        (click)="onGetIndexClick(examScore.barcode)"></button>
+    </div>
     <small class="p-error block" *ngIf="submitted && !examScore.barcode">
       Barkodi është fushë e kërkuar.
     </small>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examScore.archiveFolderNumber">
+      Ky barkod nuk ekziston në asnjë dosje.
+    </small>
+  </div>
+  <div class="field">
+    <div class="archiveFolder" *ngIf="examScore.archiveFolderNumber">
+      <label for="archiveFolder">Dosja *</label>
+      <input
+        type="text"
+        pInputText
+        id="archiveFolder"
+        name="archiveFolder"
+        disabled
+        [(ngModel)]="examScore.archiveFolderNumber"
+        readonly
+        autofocus
+     />
+    </div>
   </div>
 
   <div class="field">

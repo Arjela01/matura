@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
 import { LazyLoadEvent } from 'primeng/api';
-import { ApiResult } from '@msh/shared/data-access-shared';
+import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import {
   ExamScore,
@@ -36,6 +36,12 @@ export class ExamScoreApiService {
   delete(examScoreId: number): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<ExamScore>>(
       `/ExamScores/${examScoreId}`
+    );
+  }
+
+  getIndex(barcode: string): Observable<ApiResult<ExamScore>> {
+    return this.apiService.post<ApiResult<ExamScore>,any>(
+      `/ExamScores/GetIndex`, {barcode: barcode}
     );
   }
 
