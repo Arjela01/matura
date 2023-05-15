@@ -22,6 +22,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
 import { TooltipModule } from 'primeng/tooltip';
+import { GlobalToastService } from '@msh/shared/util-shared';
 
 @Component({
   selector: 'msh-exam-score-form',
@@ -82,7 +83,8 @@ export class ExamScoresFormComponent implements OnChanges {
 
   constructor(
     private cd: ChangeDetectorRef,
-    private examScores: ExamScoreApiService
+    private examScores: ExamScoreApiService,
+    private readonly toastService: GlobalToastService
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -117,8 +119,14 @@ export class ExamScoresFormComponent implements OnChanges {
     this.examScores.getIndex(barcode).subscribe(res => {
       const archiveFolder = res.data?.archiveFolder;
       if (archiveFolder) {
-        const archiveNr = archiveFolder.nr;
-        this.examScore.archiveFolderNumber = archiveNr;
+        this.examScore.archiveFolderNumber = archiveFolder.nr;
+      } else {
+        this.examScore.archiveFolderNumber = Number('');
+      }
+
+      if (res.isBadRequest) this.toastService.showError('Ndodhi një problem!');
+      if (!res.isSuccessful) {
+        this.toastService.showError(res.errorMessage);
       }
       this.cd.markForCheck();
     });
