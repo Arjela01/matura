@@ -58,14 +58,7 @@ export class ManageStudySubjectsComponent {
     this.selectedStudySubject = {} as StudySubject;
   }
 
-  onDeleteSelectedClick() {
-    this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të fshini lendet e zgjedhura?',
-      accept: () => {
-        this.toastService.showWarning('Subjects deleted!');
-      },
-    });
-  }
+
 
   onGridEvent(event: GridEvent<StudySubject | StudySubject[]>) {
     switch (event.action) {
@@ -98,7 +91,7 @@ export class ManageStudySubjectsComponent {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të fshini lenden e zgjedhur?',
+          message: 'Jeni i sigurt që doni të fshini lëndën e zgjedhur?',
           accept: () => {
             this.deleteStudySubject(event.data as StudySubject);
           },
@@ -138,14 +131,14 @@ export class ManageStudySubjectsComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Lenda e studimit u shtua me sukses!');
+          this.toastService.showSuccess('Lënda e studimit u shtua me sukses!');
           this.displayModal = false;
           this.getStudySubjects(this.filters as LazyLoadEvent);
         }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së lendes se studimit!'
+            'Ndodhi një problem gjatë ndryshimit të lëndës së studimit!'
           );
       });
   }
@@ -157,7 +150,7 @@ export class ManageStudySubjectsComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
-            'Lenda e Studimit u ndryshua me sukses!'
+            'Lenda e studimit u ndryshua me sukses!'
           );
           this.displayModal = false;
           this.getStudySubjects(this.filters as LazyLoadEvent);
@@ -165,7 +158,7 @@ export class ManageStudySubjectsComponent {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së lendes se studimit!'
+            'Ndodhi një problem gjatë ndryshimit të lëndës së studimit!'
           );
       });
   }
@@ -176,13 +169,13 @@ export class ManageStudySubjectsComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showInfo('Lenda e studimit u fshi me sukses!');
+          this.toastService.showInfo('Lënda e studimit u fshi me sukses!');
           this.getStudySubjects(this.filters as LazyLoadEvent);
         }  else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë fshirjes së lendes se studimit!'
+            'Ndodhi një problem gjatë fshirjes së lendes së studimit!'
           );
       });
   }

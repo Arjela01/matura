@@ -65,14 +65,6 @@ export class ManageReportsComponent {
     this.selectedReport = {} as Reports;
   }
 
-  onDeleteSelectedClick() {
-    this.confirmationService.confirm({
-      message: 'Are you sure that you want to delete selected reports?',
-      accept: () => {
-        this.toastService.showWarning('Reports deleted!');
-      },
-    });
-  }
 
   onGridEvent(event: GridEvent<Reports | Reports[]>) {
     switch (event.action) {
@@ -99,7 +91,7 @@ export class ManageReportsComponent {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni te sigurt per fshirjen e raportit?',
+          message: 'Jeni i sigurt për fshirjen e raportit?',
           accept: () => {
             this.deleteReports(event.data as Reports);
           },
@@ -151,7 +143,7 @@ export class ManageReportsComponent {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit të raportit !'
+            'Ndodhi një problem gjatë ndryshimit të raportit!'
           );
       });
   }
@@ -169,7 +161,7 @@ export class ManageReportsComponent {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit të raportit!'
+            'Ndodhi një problem gjatë ndryshimit të raportit!'
           );
       });
   }
@@ -186,7 +178,7 @@ export class ManageReportsComponent {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë fshirjes së raportit!'
+            'Ndodhi një problem gjatë fshirjes së raportit!'
           );
       });
   }

@@ -75,7 +75,7 @@ export class ManageFailingStudentsComponent {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt qe deshironi te fshini studentin mbetes?',
+          message: 'Jeni i sigurt qe doni të fshini studentin mbetës?',
           accept: () => {
             this.deleteFailingStudent(event.data as FailingStudent);
           },
@@ -117,7 +117,7 @@ export class ManageFailingStudentsComponent {
         }
         if (!response.isSuccessful)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë fshirjes së studentit mbetes!'
+            'Ndodhi një problem gjatë fshirjes së studentit mbetës!'
           );
       });
   }
@@ -137,7 +137,7 @@ export class ManageFailingStudentsComponent {
 
         if (!response.isSuccessful)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit të studentit mbetes!'
+            'Ndodhi një problem gjatë ndryshimit të studentit mbetës!'
           );
         this.isLoading = false;
       });

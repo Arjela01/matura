@@ -50,9 +50,6 @@ export class ExamTypeFormComponent {
     this.formClose.emit();
   }
 
-
-
-
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {

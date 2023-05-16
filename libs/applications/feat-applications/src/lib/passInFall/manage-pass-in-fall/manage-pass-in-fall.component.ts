@@ -60,7 +60,7 @@ export class ManagePassInFallComponent {
       case GRID_ACTIONS.EDIT:
         console.log(event.data);
         this.confirmationService.confirm({
-          message: 'A jeni i sigurt qe ka kaluar ne vjeshte maturanti?',
+          message: 'A jeni i sigurt që ka kaluar në vjeshtë maturanti?',
           accept: () => {
             this.updateFailingStudent(event.data as FailingStudent);
             event.data as FailingStudent;
@@ -107,7 +107,7 @@ export class ManagePassInFallComponent {
 
               if (response.isSuccessful === false)
                 this.toastService.showError(
-                  'Ndodhi nje problem gjatë ndryshimit të studentit mbetes!'
+                  'Ndodhi një problem gjatë ndryshimit të studentit mbetës!'
                 );
             });
           this.cd.detectChanges();
@@ -115,7 +115,7 @@ export class ManagePassInFallComponent {
 
         if (response.isSuccessful === false) {
           this.toastService.showError(
-            'Ndodhi nje problem gjatë kerkimit te studentit mbetes!'
+            'Ndodhi një problem gjatë kerkimit të studentit mbetës!'
           );
         }
       });

@@ -23,7 +23,6 @@
       appendTo="body"
       defaultLabel="Zgjidh Tipin"
       name="ExamTypeID"
-      appendTo="body"
       [options]="examTypeDropdown"
       [ngModelOptions]="{ standalone: true }"
       [required]="true"
@@ -52,7 +51,7 @@
       autofocus
       [ngClass]="{ 'ng-invalid ng-dirty': submitted && !grades.examSubject }" />
     <small class="p-error block" *ngIf="submitted && !grades.examSubject">
-      Lenda është fushë e kërkuar.
+      Lënda është fushë e kërkuar.
     </small>
   </div>
   <div class="field">

@@ -64,14 +64,7 @@ export class ManageA1zComponent implements OnInit {
     this.hideA1ZForm = !this.hideA1ZForm;
     this.router.navigate(['/applications/a1z-form']);
   }
-  onDeleteSelectedClick() {
-    this.confirmationService.confirm({
-      message: 'Are you sure that you want to delete selected entities?',
-      accept: () => {
-        this.toastService.showWarning('A1Z deleted!');
-      },
-    });
-  }
+
 
   onGridEvent(event: GridEvent<A1ZTableRecord | A1ZTableRecord[]>) {
     switch (event.action) {
@@ -98,7 +91,7 @@ export class ManageA1zComponent implements OnInit {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Are you sure that you want to delete this entity?',
+          message: 'Jeni i sigurt që doni ta fshini këtë formular?',
           accept: () => {
             this.deleteA1Z(event.data as A1ZTableRecord);
           },
@@ -118,7 +111,7 @@ export class ManageA1zComponent implements OnInit {
         }
         if (!response.isSuccessful) {
           this.toastService.showError(
-            'Ndonje nje problem gjate fshirjes se formularit A1Z!'
+            'Ndonje një problem gjatë fshirjes së formularit A1Z!'
           );
         }
       });

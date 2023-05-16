@@ -54,14 +54,6 @@ export class ManageRolesComponent {
     this.selectedRole = {} as Role;
   }
 
-  onDeleteSelectedClick() {
-    this.confirmationService.confirm({
-      message: 'Are you sure that you want to delete selected entities?',
-      accept: () => {
-        this.toastService.showWarning('Roles deleted!');
-      },
-    });
-  }
 
   onGridEvent(event: GridEvent<Role | Role[]>) {
     switch (event.action) {
@@ -91,7 +83,7 @@ export class ManageRolesComponent {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni te sigurt per fshirjen e rolit?',
+          message: 'Jeni i sigurt për fshirjen e rolit?',
           accept: () => {
             this.deleteRole(event.data as Role);
             this.toastService.showWarning('Roli u fshi!');
@@ -139,7 +131,7 @@ export class ManageRolesComponent {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së shkollës së mesme!'
+            'Ndodhi një problem gjatë ndryshimit së shkollës së mesme!'
           );
       });
   }
@@ -159,7 +151,7 @@ export class ManageRolesComponent {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së shkollës së mesme!'
+            'Ndodhi një problem gjatë ndryshimit së shkollës së mesme!'
           );
       });
   }
@@ -176,7 +168,7 @@ export class ManageRolesComponent {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë fshirjes së rolit!'
+            'Ndodhi një problem gjatë fshirjes së rolit!'
           );
       });
   }

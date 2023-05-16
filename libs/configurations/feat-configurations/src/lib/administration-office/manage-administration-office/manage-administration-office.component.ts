@@ -164,7 +164,7 @@ export class ManageAdministrationOfficeComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së DAR/ZA!'
+            'Ndodhi një problem gjatë ndryshimit së DAR/ZA!'
           );
       });
   }
@@ -182,7 +182,7 @@ export class ManageAdministrationOfficeComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së shkollës së mesme!'
+            'Ndodhi një problem gjatë ndryshimit së shkollës së mesme!'
           );
       });
   }
@@ -199,7 +199,7 @@ export class ManageAdministrationOfficeComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë fshirjes DAR/ZA!'
+            'Ndodhi një problem gjatë fshirjes DAR/ZA!'
           );
       });
   }

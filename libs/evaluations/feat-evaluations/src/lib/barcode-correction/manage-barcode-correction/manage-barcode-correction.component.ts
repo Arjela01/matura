@@ -84,14 +84,6 @@ export class ManageBarcodeCorrectionComponent {
     this.displayModal = true;
   }
 
-  onDeleteSelectedClick() {
-    this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të fshini dosjen?',
-      accept: () => {
-        this.toastService.showWarning('Dosja u fshi!');
-      },
-    });
-  }
 
   onGridEvent(event: GridEvent<BarcodeCorrection | BarcodeCorrection[]>) {
     switch (event.action) {

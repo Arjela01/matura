@@ -79,7 +79,7 @@ export class ManageDashboardItemsComponent {
       message: 'Jeni i sigurt që doni të fshini konfigurimet të dashboard-it?',
       accept: () => {
         this.toastService.showWarning(
-          'Konfigurimet e dashboard-it e zgjedhur u fshinë!'
+          'Konfigurimet e dashboard-it të zgjedhur u fshinë!'
         );
       },
     });
@@ -120,7 +120,7 @@ export class ManageDashboardItemsComponent {
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
           message:
-            'Jeni i sigurt që doni të fshini konfigurimet të dashboard-it?',
+            'Jeni i sigurt që doni të fshini konfigurimet e dashboard-it?',
           accept: () => {
             this.deleteDashboardItems(event.data as DashboardItem);
           },

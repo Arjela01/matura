@@ -70,14 +70,7 @@ export class ManageCarriedGradesComponent implements OnInit {
     this.selectedCarriedGrade = {} as CarriedGrade;
   }
 
-  onDeleteSelectedClick() {
-    this.confirmationService.confirm({
-      message: 'Are you sure that you want to delete selected grades?',
-      accept: () => {
-        this.toastService.showWarning('Carried Grades deleted!');
-      },
-    });
-  }
+
 
   onGridEvent(event: GridEvent<CarriedGrade | CarriedGrade[]>) {
     switch (event.action) {
@@ -113,7 +106,7 @@ export class ManageCarriedGradesComponent implements OnInit {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni te sigurt per fshirjen e notës?',
+          message: 'Jeni i sigurt për fshirjen e notës?',
           accept: () => {
             this.deleteCarriedGrades(event.data as CarriedGrade);
           },
@@ -166,7 +159,7 @@ export class ManageCarriedGradesComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit të notës !'
+            'Ndodhi një problem gjatë ndryshimit të notës !'
           );
       });
   }
@@ -186,7 +179,7 @@ export class ManageCarriedGradesComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit të notës!'
+            'Ndodhi një problem gjatë ndryshimit të notës!'
           );
       });
   }
@@ -203,7 +196,7 @@ export class ManageCarriedGradesComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë fshirjes së notës!'
+            'Ndodhi një problem gjatë fshirjes së notës!'
           );
       });
   }

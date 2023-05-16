@@ -107,13 +107,13 @@ export class ManageDiplomaRequirementExceptionComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
-          'Ndryshimet u ruajten me sukses')
+          'Ndryshimet u ruajten me sukses!')
           this.displayModal = false;
           this.getStudent(this.filters as LazyLoadEvent);
         } else this.toastService.showError(response.errorMessage)
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së statusit të diplomës!'
+            'Ndodhi një problem gjatë ndryshimit të statusit të diplomës!'
           );
       });
   }

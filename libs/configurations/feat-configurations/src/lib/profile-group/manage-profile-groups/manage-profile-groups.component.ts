@@ -159,7 +159,7 @@ export class ManageProfileGroupsComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së grupit të profilit së mesme!'
+            'Ndodhi një problem gjatë ndryshimit së grupit të profilit së mesme!'
           );
       });
   }
@@ -171,7 +171,7 @@ export class ManageProfileGroupsComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
-            'Profilei i grupit u ndryshua me sukses!'
+            'Profili i grupit u ndryshua me sukses!'
           );
           this.displayModal = false;
           this.getProfileGroups(this.filters as LazyLoadEvent);
@@ -179,7 +179,7 @@ export class ManageProfileGroupsComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së profilit të grupit!'
+            'Ndodhi një problem gjatë ndryshimit të profilit të grupit!'
           );
       });
   }
@@ -196,7 +196,7 @@ export class ManageProfileGroupsComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë fshirjes së grupit të profilit!'
+            'Ndodhi një problem gjatë fshirjes të grupit të profilit!'
           );
       });
   }

@@ -58,15 +58,6 @@ export class ManageExamTypeComponent {
     this.selectedExamType = {} as ExamType;
   }
 
-  onDeleteSelectedClick() {
-    this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të fshini tipet e zgjedhura?',
-      accept: () => {
-        // this.examTypeService.deleteSelectedExamTypes();
-        this.toastService.showWarning('Tipi i provimit është fshirë');
-      },
-    });
-  }
 
   onGridEvent(event: GridEvent<ExamType | ExamType[]>) {
     switch (event.action) {

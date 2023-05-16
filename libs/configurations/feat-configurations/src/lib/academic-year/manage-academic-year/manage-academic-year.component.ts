@@ -66,9 +66,9 @@ export class ManageAcademicYearComponent {
 
   onDeleteSelectedClick() {
     this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të fshini vitet akademike te zgjedhura?',
+      message: 'Jeni i sigurt që doni të fshini vitet akademike të zgjedhura?',
       accept: () => {
-        this.toastService.showWarning('Vitet akademike te zgjedhura u fshinë!');
+        this.toastService.showWarning('Vitet akademike të zgjedhura u fshinë!');
       },
     });
   }

@@ -94,7 +94,7 @@ export class RefuseExamCopyComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful === false) {
           this.toastService.showError(
-            response.errorMessage ?? 'Ndodhi nje problem gjate refuzimit'
+            response.errorMessage ?? 'Ndodhi një problem gjatë refuzimit'
           );
         }
 

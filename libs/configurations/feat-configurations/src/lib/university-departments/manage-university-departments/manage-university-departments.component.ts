@@ -74,15 +74,7 @@ export class ManageUniversityDepartmentsComponent implements OnInit {
     this.selectedUniversityDepartment = {} as UniversityDepartment;
   }
 
-  onDeleteSelectedClick() {
-    this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të fshini rajonet e zgjedhura?',
-      accept: () => {
-        //this.universityDepartmentStore.deleteSelectedUniversities();
-        this.toastService.showWarning('Rajonet u fshin!');
-      },
-    });
-  }
+
 
   onGridEvent(event: GridEvent<UniversityDepartment | UniversityDepartment[]>) {
     switch (event.action) {
@@ -116,7 +108,7 @@ export class ManageUniversityDepartmentsComponent implements OnInit {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të fshini rajonin e zgjedhur?',
+          message: 'Jeni i sigurt që doni të fshini fakultetin e zgjedhur?',
           accept: () => {
             this.deleteUniversityDepartment(event.data as UniversityDepartment);
           },
@@ -156,14 +148,14 @@ export class ManageUniversityDepartmentsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Rajoni u shtua me sukses!');
+          this.toastService.showSuccess('Fakulteti u shtua me sukses!');
           this.displayModal = false;
           this.getUniversityDepartments(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit të rajonit!'
+            'Ndodhi një problem gjatë ndryshimit të fakultetit!'
           );
       });
   }
@@ -174,14 +166,14 @@ export class ManageUniversityDepartmentsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Rajoni u ndryshua me sukses!');
+          this.toastService.showSuccess('Fakulteti u ndryshua me sukses!');
           this.displayModal = false;
           this.getUniversityDepartments(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit të rajonit!'
+            'Ndodhi një problem gjatë departamentit të fakultetit!'
           );
       });
   }
@@ -192,13 +184,13 @@ export class ManageUniversityDepartmentsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showInfo('Rajoni u fshi me sukses!');
+          this.toastService.showInfo('Fakulteti u fshi me sukses!');
           this.getUniversityDepartments(this.filters as LazyLoadEvent);
         }
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë fshirjes së rajonit!'
+            'Ndodhi një problem gjatë fshirjes së fakultetit!'
           );
       });
   }

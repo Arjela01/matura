@@ -74,14 +74,7 @@ export class ManageStudyProgramsComponent implements OnInit {
     this.selectedstudyProgram = {} as StudyProgram;
   }
 
-  onDeleteSelectedClick() {
-    this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të fshini programet e zgjedhura?',
-      accept: () => {
-        this.toastService.showWarning('Programi u fshi!');
-      },
-    });
-  }
+
 
   onGridEvent(event: GridEvent<StudyProgram | StudyProgram[]>) {
     switch (event.action) {
@@ -164,7 +157,7 @@ export class ManageStudyProgramsComponent implements OnInit {
 
         if (!response.isSuccessful)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së programit te studimit!'
+            'Ndodhi një problem gjatë ndryshimit së programit të studimit!'
           );
       });
   }
@@ -184,7 +177,7 @@ export class ManageStudyProgramsComponent implements OnInit {
 
         if (!response.isSuccessful)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së programit te studimit!'
+            'Ndodhi një problem gjatë ndryshimit të programit të studimit!'
           );
       });
   }
@@ -201,7 +194,7 @@ export class ManageStudyProgramsComponent implements OnInit {
 
         if (!response.isSuccessful)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë fshirjes së programit te studimit!'
+            'Ndodhi një problem gjatë fshirjes së programit te studimit!'
           );
       });
   }

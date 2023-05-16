@@ -173,7 +173,7 @@ export class GradeScaleActionComponent {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë fshirjes së përshkallëzimit!'
+            'Ndodhi një problem gjatë fshirjes së përshkallëzimit!'
           );
       });
   }
@@ -236,7 +236,7 @@ export class GradeScaleActionComponent {
         }
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit të përshkallëzimit!'
+            'Ndodhi një problem gjatë ndryshimit të përshkallëzimit!'
           );
       });
   }

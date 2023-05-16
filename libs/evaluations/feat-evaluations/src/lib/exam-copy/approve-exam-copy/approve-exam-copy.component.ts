@@ -92,7 +92,7 @@ export class ApproveExamCopyComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful === false) {
           this.toastService.showError(
-            response.errorMessage ?? 'Ndodhi nje problem gjate konfirmimit'
+            response.errorMessage ?? 'Ndodhi një problem gjatë konfirmimit'
           );
         }
 

@@ -6,7 +6,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { BehaviorSubject } from 'rxjs';
-import {ExamSubject, ExamSubjectProfile} from '@msh/shared/domain-models';
+import { ExamSubjectProfile } from '@msh/shared/domain-models';
 import {
   GlobalToastService,
   GRID_ACTIONS,
