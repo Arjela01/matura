@@ -2,3 +2,14 @@
   display: block;
 }
 
+.barcode {
+  position: relative;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+.tick {
+  position: absolute;
+  min-width: 8% !important;
+  height: 100%;
+}

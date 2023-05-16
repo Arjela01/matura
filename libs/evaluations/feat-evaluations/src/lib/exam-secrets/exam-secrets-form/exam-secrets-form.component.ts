@@ -38,6 +38,7 @@ import {
 } from '@msh/configurations/data-access-configurations';
 import {  Router } from '@angular/router';
 import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
+import {TooltipModule} from "primeng/tooltip";
 
 @UntilDestroy()
 @Component({
@@ -55,6 +56,7 @@ import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
     AutoCompleteModule,
     DialogModule,
     SharedStudentLookupModule,
+    TooltipModule
   ],
   providers: [ConfirmationService],
 

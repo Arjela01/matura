@@ -107,10 +107,7 @@ export class ManageDiplomaRequirementExceptionComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
-            response.data?.isConfirmedBySupervisor
-              ? 'Diploma u aprovua me sukses!'
-              : 'Diploma u anullua me sukses!'
-          );
+          'Ndryshimet u ruajten me sukses')
           this.displayModal = false;
           this.getStudent(this.filters as LazyLoadEvent);
         } else this.toastService.showError(response.errorMessage)

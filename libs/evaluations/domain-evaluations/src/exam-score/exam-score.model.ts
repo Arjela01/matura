@@ -5,7 +5,6 @@ export interface ExamScore {
   studentName?: string;
   examTypeId?: number;
   examTypeName?: string;
-
   examSubjectId?: string;
   examSubjectName?: string;
   academicYearId?: number;
@@ -16,7 +15,10 @@ export interface ExamScore {
   documentName: string;
   maximumValueMultipleScore: number;
   maximumValueWritingScore: number;
-
+  archiveFolder?: {
+    nr: number;
+  };
+  archiveFolderNumber: number;
 }
 
 export interface ExamScoreTableView {

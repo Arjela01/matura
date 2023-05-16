@@ -20,6 +20,9 @@ import { ExamScore } from '@msh/evaluations/domain-evaluations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
+import { TooltipModule } from 'primeng/tooltip';
+import { GlobalToastService } from '@msh/shared/util-shared';
 
 @Component({
   selector: 'msh-exam-score-form',
@@ -34,6 +37,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     ButtonModule,
     DropdownModule,
     AutoCompleteModule,
+    TooltipModule,
   ],
   templateUrl: './exam-scores-form.component.html',
   styleUrls: ['./exam-scores-form.component.scss'],
@@ -62,6 +66,10 @@ export class ExamScoresFormComponent implements OnChanges {
     writingScore: 0,
     maximumValueMultipleScore: 0,
     maximumValueWritingScore: 0,
+    archiveFolderNumber: 0,
+    archiveFolder: {
+      nr: 0,
+    },
   };
   examTypeId: any;
   examSubjectId: any;
@@ -73,7 +81,11 @@ export class ExamScoresFormComponent implements OnChanges {
     }
   }
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(
+    private cd: ChangeDetectorRef,
+    private examScores: ExamScoreApiService,
+    private readonly toastService: GlobalToastService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.examTypeId = this.examScore.examTypeId;
@@ -101,5 +113,22 @@ export class ExamScoresFormComponent implements OnChanges {
     this.examSubjectId = $event.value;
     this.examSubjectChanged.emit(this.examSubjectId);
     this.examScore.examSubjectId = this.examSubjectId;
+  }
+
+  onGetIndexClick(barcode: string) {
+    this.examScores.getIndex(barcode).subscribe(res => {
+      const archiveFolder = res.data?.archiveFolder;
+      if (archiveFolder) {
+        this.examScore.archiveFolderNumber = archiveFolder.nr;
+      } else {
+        this.examScore.archiveFolderNumber = Number('');
+      }
+
+      if (res.isBadRequest) this.toastService.showError('Ndodhi një problem!');
+      if (!res.isSuccessful) {
+        this.toastService.showError(res.errorMessage);
+      }
+      this.cd.markForCheck();
+    });
   }
 }
