@@ -66,15 +66,6 @@ export class ManageRegionsComponent {
     this.selectedRegion = {} as Region;
   }
 
-  onDeleteSelectedClick() {
-    this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të fshini rajonet e zgjedhura?',
-      accept: () => {
-        //this.regionStore.deleteSelectedRegions();
-        this.toastService.showWarning('Rajonet u fshinë!');
-      },
-    });
-  }
 
   onGridEvent(event: GridEvent<Region | Region[]>) {
     switch (event.action) {

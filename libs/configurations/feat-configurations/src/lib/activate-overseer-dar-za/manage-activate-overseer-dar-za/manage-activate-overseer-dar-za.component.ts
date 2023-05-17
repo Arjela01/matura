@@ -115,7 +115,7 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
         break;
       case GRID_ACTIONS.CUSTOM_ACTION2:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt qe doni te ndryshoni statusin e perdoruesit?',
+          message: 'Jeni i sigurt që doni të ndryshoni statusin e përdoruesit?',
           accept: () => {
             this.changeStatus(event.data as AdministrationOffice);
           },
@@ -145,8 +145,8 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
             response.data.isAllowedToLogin
-              ? 'Perdoruesi u çaktivizua me sukses!'
-              : 'Perdoruesi u aktivizua me sukses!'
+              ? 'Përdoruesi u çaktivizua me sukses!'
+              : 'Përdoruesi u aktivizua me sukses!'
           );
           this.displayModal = false;
           this.getAdministrationOffices(this.filters as LazyLoadEvent);
@@ -201,7 +201,7 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së DAR/ZA!'
+            'Ndodhi një problem gjatë ndryshimit së DAR/ZA!'
           );
       });
   }
@@ -219,7 +219,7 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së shkollës së mesme!'
+            'Ndodhi një problem gjatë ndryshimit së shkollës së mesme!'
           );
       });
   }
@@ -236,7 +236,7 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë fshirjes DAR/ZA!'
+            'Ndodhi një problem gjatë fshirjes DAR/ZA!'
           );
       });
   }

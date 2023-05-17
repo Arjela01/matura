@@ -107,14 +107,7 @@ export class ManageUsersComponent implements OnInit {
     this.selectedUser = {} as User;
   }
 
-  onDeleteSelectedClick() {
-    this.confirmationService.confirm({
-      message: 'Are you sure that you want to delete selected entities?',
-      accept: () => {
-        this.toastService.showWarning('Users deleted!');
-      },
-    });
-  }
+
 
   onGridEvent(event: GridEvent<User | User[]>) {
     switch (event.action) {
@@ -134,7 +127,7 @@ export class ManageUsersComponent implements OnInit {
         break;
       case GRID_ACTIONS.CUSTOM_ACTION1:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni te gjeneroni nje fjalëkalim te ri?',
+          message: 'Jeni i sigurt që doni te gjeneroni nje fjalëkalim të ri?',
           accept: () => {
             this.passwordGenerate(event.data as User);
           },
@@ -289,7 +282,7 @@ export class ManageUsersComponent implements OnInit {
         }
         if (!response.isSuccessful) {
           this.toastService.showError(
-            'Ndonje nje problem gjate fshirjes se perdoruesit!'
+            'Ndodhi një problem gjatë fshirjes së përdoruesit!'
           );
         }
       });

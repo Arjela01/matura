@@ -105,7 +105,7 @@ export class ManageFailingStudentsComponent {
 
         if (!response.isSuccessful)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit të studentit mbetes!'
+            'Ndodhi një problem gjatë ndryshimit të studentit mbetës!'
           );
       });
   }

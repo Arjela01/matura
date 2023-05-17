@@ -72,14 +72,7 @@ export class ManageStudentsComponent implements OnInit {
   onNewClick() {
     this.hideStudentForm = !this.hideStudentForm;
   }
-  onDeleteSelectedClick() {
-    this.confirmationService.confirm({
-      message: 'Are you sure that you want to delete selected entities?',
-      accept: () => {
-        this.toastService.showWarning('Student deleted!');
-      },
-    });
-  }
+
 
   onGridEvent(event: GridEvent<Student | Student[]>) {
     switch (event.action) {
@@ -131,7 +124,7 @@ export class ManageStudentsComponent implements OnInit {
         }
         if (!response.isSuccessful) {
           this.toastService.showError(
-            'Ndonje një problem gjate fshirjes së studentit!'
+            'Ndodhi një problem gjatë fshirjes së studentit!'
           );
         }
       });

@@ -191,7 +191,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
         }
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së dosjes!'
+            'Ndodhi një problem gjatë ndryshimit të dosjes!'
           );
       });
   }
@@ -209,7 +209,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së dosjes!'
+            'Ndodhi një problem gjatë ndryshimit të dosjes!'
           );
       });
   }
@@ -232,7 +232,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së dosjes!'
+            'Ndodhi një problem gjatë ndryshimit të dosjes!'
           );
       });
   }

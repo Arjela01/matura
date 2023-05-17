@@ -75,14 +75,6 @@ export class ManageMenusComponent implements OnInit {
     this.selectedMenu = {} as Menu;
   }
 
-  onDeleteSelectedClick() {
-    this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të fshini menut e zgjedhura?',
-      accept: () => {
-        this.toastService.showWarning('Menus deleted!');
-      },
-    });
-  }
 
   onGridEvent(event: GridEvent<Menu | Menu[]>) {
     switch (event.action) {
@@ -155,7 +147,7 @@ export class ManageMenusComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së menusë!'
+            'Ndodhi një problem gjatë ndryshimit të menusë!'
           );
       });
   }
@@ -173,7 +165,7 @@ export class ManageMenusComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit të menusë!'
+            'Ndodhi një problem gjatë ndryshimit të menusë!'
           );
       });
   }
@@ -190,7 +182,7 @@ export class ManageMenusComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë fshirjes së menu-së!'
+            'Ndodhi një problem gjatë fshirjes të menu-së!'
           );
       });
   }

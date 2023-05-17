@@ -64,7 +64,7 @@ let INITIAL_FILTER = {};
 export class A1FormComponent {
   d3SubjectChoosen = '';
   optionalSubjectChoosen: any = null;
-  moreSubjectThanAllowed = false;
+  // moreSubjectThanAllowed = false;
   subjectsChoosen: any[] = [];
   choosenStudent: string | null = null;
   academicYear?: AcademicYear | null = null;
@@ -336,7 +336,7 @@ export class A1FormComponent {
   }
 
   onDeleteClick(index: number) {
-    this.moreSubjectThanAllowed = false;
+    // this.moreSubjectThanAllowed = false;
     this.subjectsChoosen.splice(index, 1);
     if (this.subjectsChoosen.length === 1) {
       this.a1.subjectZ1Id = this.subjectsChoosen[0].key;
@@ -355,7 +355,7 @@ export class A1FormComponent {
   }
 
   addSubject() {
-    this.moreSubjectThanAllowed = false;
+    // this.moreSubjectThanAllowed = false;
     const subjectIndexFound = this.subjectsChoosen.findIndex(
       subject => subject.key === this.optionalSubjectChoosen.key
     );
@@ -370,7 +370,7 @@ export class A1FormComponent {
       return;
     }
     if (this.subjectsChoosen.length === 2) {
-      this.moreSubjectThanAllowed = true;
+      // this.moreSubjectThanAllowed = true;
       return;
     }
     this.subjectsChoosen.push(this.optionalSubjectChoosen);

@@ -76,16 +76,6 @@ export class ManageProfilesComponent implements OnInit {
     this.selectedProfile = {} as Profile;
   }
 
-  onDeleteSelectedClick() {
-    this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të fshini profilet e zgjedhura?',
-      accept: () => {
-        //this.profileStore.deleteSelectedProfiles();
-        this.toastService.showWarning('Ptofile  deleted!');
-      },
-    });
-  }
-
   onGridEvent(event: GridEvent<Profile | Profile[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
@@ -163,7 +153,7 @@ export class ManageProfilesComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së profilit!'
+            'Ndodhi një problem gjatë ndryshimit të profilit!'
           );
       });
   }
@@ -183,7 +173,7 @@ export class ManageProfilesComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së profilit!'
+            'Ndodhi një problem gjatë ndryshimit të profilit!'
           );
       });
   }
@@ -200,7 +190,7 @@ export class ManageProfilesComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë fshirjes së profilit!'
+            'Ndodhi një problem gjatë fshirjes së profilit!'
           );
       });
   }

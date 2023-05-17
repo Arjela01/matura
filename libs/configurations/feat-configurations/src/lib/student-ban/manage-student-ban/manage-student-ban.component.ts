@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
+import { ChangeDetectorRef, Component} from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -66,14 +66,7 @@ export class ManageStudentBanComponent {
     this.displayModal = false;
   }
 
-  onDeleteSelectedClick() {
-    this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të fshini studentët e zgjedhur?',
-      accept: () => {
-        this.toastService.showWarning('Studentët e zgjedhur u fshinë!');
-      },
-    });
-  }
+
 
   onGridEvent(event: GridEvent<StudentBan | StudentBan[]>) {
     switch (event.action) {

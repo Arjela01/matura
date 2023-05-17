@@ -71,15 +71,7 @@ export class ManageUniversitiesComponent implements OnInit {
     this.selectedRegion = {} as University;
   }
 
-  onDeleteSelectedClick() {
-    this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të fshini rajonet e zgjedhura?',
-      accept: () => {
-        //this.regionStore.deleteSelectedUniversities();
-        this.toastService.showWarning('Rajonet u fshin!');
-      },
-    });
-  }
+
 
   onGridEvent(event: GridEvent<University | University[]>) {
     switch (event.action) {
@@ -109,7 +101,7 @@ export class ManageUniversitiesComponent implements OnInit {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të fshini rajonin e zgjedhur?',
+          message: 'Jeni i sigurt që doni të fshini universitetin e zgjedhur?',
           accept: () => {
             this.deleteRegion(event.data as University);
           },
@@ -156,7 +148,7 @@ export class ManageUniversitiesComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit të universiteti!'
+            'Ndodhi një problem gjatë ndryshimit të universitetit!'
           );
       });
   }
@@ -191,7 +183,7 @@ export class ManageUniversitiesComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë fshirjes së universiteti!'
+            'Ndodhi një problem gjatë fshirjes së universitetit!'
           );
       });
   }

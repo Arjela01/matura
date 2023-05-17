@@ -151,7 +151,7 @@ export class ManageDashboardSectionsComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së dashboard-it!'
+            'Ndodhi një problem gjatë ndryshimit së dashboard-it!'
           );
       });
   }
@@ -171,7 +171,7 @@ export class ManageDashboardSectionsComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë ndryshimit së dashboard-it!'
+            'Ndodhi një problem gjatë ndryshimit së dashboard-it!'
           );
       });
   }
@@ -188,7 +188,7 @@ export class ManageDashboardSectionsComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi nje problem gjatë fshirjes së grupit dashboard-it!'
+            'Ndodhi një problem gjatë fshirjes të grupit dashboard-it!'
           );
       });
   }
