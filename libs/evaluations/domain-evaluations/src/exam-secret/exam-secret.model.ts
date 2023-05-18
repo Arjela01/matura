@@ -8,7 +8,7 @@ export interface ExamSecret {
   isFall: boolean;
   studentInputData?: string;
   academicYearId?: number;
-
+  studentIdentifier?: string;
 }
 
 export interface ExamSecretTableView {
