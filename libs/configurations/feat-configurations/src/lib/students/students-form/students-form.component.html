@@ -152,20 +152,18 @@
             [ngClass]="{
               'ng-invalid ng-dirty': submitted && !student.idCard
             }" />
-          <small
-            class="p-error block"
-            *ngIf="submitted && (student.nid === '' || student.nid === null)">
+          <small class="p-error block" *ngIf="submitted && !student.idCard">
             NID është fushë e kërkuar.
           </small>
           <small
             class="p-error block"
             *ngIf="
-              nidModel.touched ||
-              ((nidModel.errors &&
-              nidModel.errors?.['albanianNidValidator']))
+              (nidModel.touched || nidModel.dirty) &&
+              (nidModel.errors?.['required'] ||
+                nidModel.errors?.['albanianNidValidator'])
             ">
             NID nuk i përshtatet formatit shqiptar. Duhet të përmbajë
-            minimimalisht 10 karaktere , duhet të fillojë dhe të mbarojë me gërme
+            minimimalisht 10 karaktere, duhet të fillojë dhe të mbarojë me gërma
             të madhe.
           </small>
         </div>
