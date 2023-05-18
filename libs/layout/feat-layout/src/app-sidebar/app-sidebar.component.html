@@ -10,10 +10,7 @@
 
   </div>
   <ul class="layout-menu mt-3 ">
-    <!-- <div class="mb-6">
-      <p-dropdown [options]="cities" class="academic-year" [style]="{'background':'#52485463','color':'#fff'}"
-        placeholder="Viti akademik" optionLabel="name"></p-dropdown>
-    </div> -->
+
     <ng-container *ngFor="let item of model$ | async; let i = index">
       <li msh-app-menuitem *ngIf="!item.separator" [item]="item" [index]="i" [root]="true"></li>
       <li *ngIf="item.separator" class="menu-separator"></li>
@@ -21,13 +18,16 @@
   </ul>
   <div class="profile-group">
     <div>
-
+      <div class="mb-6">
+        <p-button (click)="showModal()" styleClass="p-button-rounded">Viti Akademik {{academicYear?.year}}</p-button>
+      </div>
       <div class="container" *ngIf="userProfile$ | async as user">
         <div class="first-group">
           <div class="profile-photo" (click)="onNewClick()">
             <p-avatar label="{{ avatarLabel }}" shape="circle" [style]="{ background: '#ccc' }">
             </p-avatar>
           </div>
+
           <div class="name menu-title fs">
             {{ user.firstName }} {{ user.lastName }}
           </div>
@@ -45,3 +45,24 @@
     </div>
   </div>
 </div>
+<p-dialog [(visible)]="displayModal" [style]="{ width: '650px', height: '350px', display:'flex' }"
+  header="Zgjidh vitin Akademik" [modal]="true" [draggable]="false" [resizable]="false" class="p-fluid dialogYear"
+  (onHide)="onModalClose()">
+  <ng-template pTemplate="content" style="height: 100%">
+    <form #form="ngForm" style="display:grid" (ngSubmit)="changeAcademicYear()">
+      <div class="field">
+        <label for="City">Viti Akademik</label>
+        <p-dropdown [style]="{ minWidth: '250px' }" id="id" [options]="academicYears" optionLabel="value"
+          optionValue="key" [(ngModel)]="academicYearForm!!.id" name="id" [filter]="true" [autoDisplayFirst]="false"
+          [showClear]="true">
+        </p-dropdown>
+      </div>
+      <div class="flex justify-content-end " style="margin-top:auto">
+        <button type="button" pButton label="Anullo" class="p-button-text w-auto mr-2"
+          (click)="onModalClose()"></button>
+        <button type="submit" pButton [disabled]="!academicYearForm!!.id" label="Ruaj" class="p-button w-auto"></button>
+      </div>
+    </form>
+  </ng-template>
+
+</p-dialog>

@@ -14,11 +14,16 @@ export const selectIsLoading = createSelector(
   selectAuthState,
   (state: AuthState) => state.status === 'loading'
 );
+export const selectAcademicYear = createSelector(
+  selectAuthState,
+  (state: AuthState) => state.academicYear
+);
 
 export const authQuery = {
   selectAuthState,
   selectStatus,
   selectIsLoading,
+  selectAcademicYear,
   selectError,
   selectIsAuthenticated,
   selectUser,
