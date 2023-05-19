@@ -1,11 +1,16 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import {
+  ACADEMIC_YEAR_KEY,
+  AcademicYearApiService,
+} from '@msh/configurations/data-access-configurations';
 import { StorageService } from '@msh/shared/data-access-shared';
+import { AcademicYear } from '@msh/shared/domain-models';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import jwt_decode from 'jwt-decode';
-import { catchError, exhaustMap, map, of, tap } from 'rxjs';
-import { User, USER_STORAGE_KEY } from '../models/user.model';
+import { catchError, exhaustMap, map, of, switchMap, tap } from 'rxjs';
+import { USER_STORAGE_KEY, User } from '../models/user.model';
 import { AuthService } from '../services/auth.service';
 import { HeartbeatService } from '../services/heartbeat.service';
 import { TOKEN_STORAGE_KEY } from '../services/token.interceptor';
@@ -18,12 +23,19 @@ export class AuthEffects {
       map(() => {
         const token = this.storageService.getItem(TOKEN_STORAGE_KEY) as string;
         const user = this.storageService.getItem(USER_STORAGE_KEY) as User;
+        const academicYear = this.storageService.getItem(
+          ACADEMIC_YEAR_KEY
+        ) as AcademicYear;
         if (token && user && user?.username && user?.displayName) {
           const tokenStore: any = jwt_decode(token as string);
           if (!tokenStore.NeedResetPassword) {
             this.heartBeatService.startTime();
           }
-          return AuthActions.loadAuthSuccess({ token: token, user: user });
+          return AuthActions.loadAuthSuccess({
+            token: token,
+            user: user,
+            academicYear,
+          });
         }
         return AuthActions.logout();
       }),
@@ -71,25 +83,50 @@ export class AuthEffects {
     )
   );
 
-  loginSuccess$ = createEffect(
+  loginSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.loginSuccess),
+      exhaustMap(action => {
+        const user = {
+          displayName: action.loginResponse.displayName,
+          username: action.loginResponse.username,
+        } as User;
+        this.storageService.setItem(USER_STORAGE_KEY, user);
+        this.storageService.setItem(
+          TOKEN_STORAGE_KEY,
+          action.loginResponse.token
+        );
+        const token: any = jwt_decode(action.loginResponse.token as string);
+        return this.academicYearService.getAcademicYears().pipe(
+          map((years: any) => years.data.find((year: any) => year.isActive)),
+          switchMap(activeYear => {
+            console.log(activeYear);
+
+            if (!token.NeedResetPassword) {
+              this.heartBeatService.startTime();
+            }
+            return of(
+              AuthActions.initAcademicYear({
+                academicYear: activeYear,
+              })
+            );
+          })
+        );
+      })
+    )
+  );
+
+  initialiseAcademicYear$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(AuthActions.loginSuccess),
-        tap(action => {
-          const user = {
-            displayName: action.loginResponse.displayName,
-            username: action.loginResponse.username,
-          } as User;
-          this.storageService.setItem(USER_STORAGE_KEY, user);
-          this.storageService.setItem(
-            TOKEN_STORAGE_KEY,
-            action.loginResponse.token
-          );
-          const token: any = jwt_decode(action.loginResponse.token as string);
-          if (!token.NeedResetPassword) {
-            this.heartBeatService.startTime();
+        ofType(AuthActions.initAcademicYear),
+        map(action => {
+          if (action.academicYear) {
+            this.storageService.setItem(ACADEMIC_YEAR_KEY, action.academicYear);
+            this.router.navigate(['/']);
+          } else {
+            this.router.navigate(['/']);
           }
-          this.router.navigate(['/']);
         })
       ),
     { dispatch: false }
@@ -102,8 +139,24 @@ export class AuthEffects {
         tap(() => {
           this.storageService.removeItem(TOKEN_STORAGE_KEY);
           this.storageService.removeItem(USER_STORAGE_KEY);
+          this.storageService.removeItem(ACADEMIC_YEAR_KEY);
           this.heartBeatService.stopTimer();
           this.router.navigate(['/login']);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  changeAcademicYear$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.changeAcademicYear),
+        tap(action => {
+          this.storageService.setItem(ACADEMIC_YEAR_KEY, action.academicYear);
+          this.router.navigate(['/']);
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
         })
       ),
     { dispatch: false }
@@ -114,6 +167,7 @@ export class AuthEffects {
     private authService: AuthService,
     private storageService: StorageService,
     private router: Router,
-    private heartBeatService: HeartbeatService
+    private heartBeatService: HeartbeatService,
+    private academicYearService: AcademicYearApiService
   ) {}
 }

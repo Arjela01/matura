@@ -17,11 +17,12 @@ import {
 import { provideStore } from '@ngrx/store';
 
 import {
-  AuthEffects,
-  authFeature,
   AUTH_FEATURE_KEY,
-  loadAuthProvider,
+  AcademicYearInterceptor,
+  AuthEffects,
   TokenInterceptor,
+  authFeature,
+  loadAuthProvider,
 } from '@msh/auth/data-access-auth';
 import { getLocalStorageProvider } from '@msh/shared/data-access-shared';
 import { environment } from '@msh/shared/environments';
@@ -37,7 +38,7 @@ import { AppComponent } from './app/app.component';
 import { APP_ROUTES } from './app/app.routes';
 import { getStoreDevToolsProvider } from './app/build-specifics';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import {LoadingInterceptor} from "../../../libs/shared/ui-shared/src/lib/loader-interceptor/loader-interceptor";
+import { LoadingInterceptor } from '../../../libs/shared/ui-shared/src/lib/loader-interceptor/loader-interceptor';
 
 if (environment.production) {
   enableProdMode();
@@ -74,6 +75,11 @@ bootstrapApplication(AppComponent, {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AcademicYearInterceptor,
       multi: true,
     },
     {

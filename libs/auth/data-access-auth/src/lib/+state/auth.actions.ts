@@ -1,3 +1,4 @@
+import { AcademicYear } from '@msh/shared/domain-models';
 import {
   createAction,
   createActionGroup,
@@ -14,10 +15,20 @@ export const AuthActions = createActionGroup({
   source: 'Auth',
   events: {
     'Init Auth': emptyProps(),
-    'Load Auth Success': props<{ token: string; user: User }>(),
+    'Load Auth Success': props<{
+      token: string;
+      user: User;
+      academicYear: Partial<AcademicYear>;
+    }>(),
     Login: props<{ loginRequest: LoginRequest }>(),
+    'Init Academic Year': props<{
+      academicYear: Partial<AcademicYear>;
+    }>(),
+    'Change Academic Year': props<{ academicYear: Partial<AcademicYear> }>(),
     'Login Failure': props<{ error: Error }>(),
-    'Login Success': props<{ loginResponse: LoginResponse }>(),
+    'Login Success': props<{
+      loginResponse: LoginResponse;
+    }>(),
     Logout: emptyProps(),
   },
 });
