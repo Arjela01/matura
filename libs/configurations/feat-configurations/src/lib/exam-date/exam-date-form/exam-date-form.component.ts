@@ -56,6 +56,7 @@ export class ExamDateFormComponent {
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', {static: true}) form!: NgForm;
+  minimumDate = new Date();
 
   submitted = false;
   examDate: ExamDate = {

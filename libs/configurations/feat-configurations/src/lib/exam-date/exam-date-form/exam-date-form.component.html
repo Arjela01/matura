@@ -58,6 +58,7 @@
       id="date"
       appendTo="body"
       name="date"
+      [minDate]="minimumDate"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !date
       }"></p-calendar>
