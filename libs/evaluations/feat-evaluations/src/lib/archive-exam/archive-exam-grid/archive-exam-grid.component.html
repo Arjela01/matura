@@ -20,17 +20,19 @@
         #barcodeField
         name="barcode"
         [(ngModel)]="archiveExam.barcode"
-        pTooltip="Barkodi duhet te jete nje numer 7 shifror"
+        pTooltip="Barkodi duhet të përmbaje 7 karaktere alfanumerike"
         onfocus="this.value=''"
         tooltipPosition="top"
         required
-        (keyup.enter)="saveArchiveExam(archiveExam)" />
+        (keyup.enter)="saveArchiveExam(archiveExam)"
+
+      />
       <button
         pButton
         pRipple
         icon="pi pi-save"
         type="button"
-        [disabled]="!form.valid"
+        [disabled]="!lettersNumbersCheck(archiveExam.barcode)"
         label="Ruaj"
         class="p-button-success mr-2"
         style= "border-radius:0"
