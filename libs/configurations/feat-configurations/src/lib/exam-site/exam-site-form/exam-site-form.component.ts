@@ -39,7 +39,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 })
 export class ExamSiteFormComponent {
   @Input() administrationOffices: DropdownModel<number>[] = [];
-
+  @Input() highSchools : DropdownModel<string>[] =[];
   @Input() set examSitesDetails(details: ExamSite | null) {
     if (details) {
       this.examSite = Object.assign({}, details);
@@ -48,10 +48,14 @@ export class ExamSiteFormComponent {
 
   @Output() formSave = new EventEmitter<ExamSite>();
   @Output() formClose = new EventEmitter<undefined>();
+  @Output() administrationOfficeChanged = new EventEmitter<string>();
+  @Output() highSchoolChanged = new EventEmitter<string>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
 
   submitted = false;
+  administrationOfficeId:any;
+  highSchoolId: any;
 
   examSite: ExamSite = {
     id: 0,
@@ -69,7 +73,16 @@ export class ExamSiteFormComponent {
   onCancelClick() {
     this.formClose.emit();
   }
-
+  onAdministrationOfficeChanged($event:any):void{
+    this.administrationOfficeId = $event.value;
+    this.administrationOfficeChanged.emit(this.administrationOfficeId)
+    this.examSite.administrationOfficeId = this.administrationOfficeId
+  }
+  onHighSchoolChanged($event:any):void{
+    this.highSchoolId = $event.value;
+    this.highSchoolChanged.emit(this.highSchoolId)
+    this.examSite.highSchoolId = this.highSchoolId
+  }
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {

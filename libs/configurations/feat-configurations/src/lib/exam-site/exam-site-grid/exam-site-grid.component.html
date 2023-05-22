@@ -50,6 +50,14 @@
           field="administrationOfficeName"
           display="menu"></p-columnFilter>
       </th>
+      <th pSortableColumn="highSchoolName">
+        Shkolla
+        <p-sortIcon field="highSchoolName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="highSchoolName"
+          display="menu"></p-columnFilter>
+      </th>
       <th pSortableColumn="academicYear">
         Viti
         <p-sortIcon field="academicYear"></p-sortIcon>
@@ -61,22 +69,25 @@
       <th></th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-academicYear>
+  <ng-template pTemplate="body" let-examSite>
     <tr>
       <td style="width: 18%; min-width: 10rem">
-        {{ academicYear.name }}
+        {{ examSite.name }}
       </td>
       <td style="width: 18%; min-width: 10rem">
-        {{ academicYear.address }}
+        {{ examSite.address }}
       </td>
       <td style="width: 18%; min-width: 10rem">
-        {{ academicYear.quota }}
+        {{ examSite.quota }}
       </td>
       <td style="width: 18%; min-width: 10rem">
-        {{ academicYear.administrationOfficeName }}
+        {{ examSite.administrationOfficeName }}
       </td>
       <td style="width: 18%; min-width: 10rem">
-        {{ academicYear.academicYear }}
+        {{ examSite.highSchoolName }}
+      </td>
+      <td style="width: 18%; min-width: 10rem">
+        {{ examSite.academicYear }}
       </td>
       <td>
         <div class="flex">
@@ -84,7 +95,7 @@
             src="assets/svg/edit-form.svg"
             class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"
-            (click)="onEditClick(academicYear)"
+            (click)="onEditClick(examSite)"
             pTooltip="Ndrysho" />
 
           <img
@@ -92,7 +103,7 @@
             class="p-button-rounded p-button-danger p-button-text ml-m pointer"
             pTooltip="Fshi"
             tooltipPosition="bottom"
-            (click)="onDeleteClick(academicYear)" />
+            (click)="onDeleteClick(examSite)" />
         </div>
       </td>
     </tr>
