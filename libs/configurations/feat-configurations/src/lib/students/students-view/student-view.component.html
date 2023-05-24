@@ -66,6 +66,27 @@
               </div>
             </div>
           </div>
+          <div class="field" [style]="{ width: '500px' }">
+            <label class="mb-3">Aftësi Ndryshe? *</label>
+            <div class="formgrid grid">
+              <div class="field-radiobutton col-6">
+                <p-radioButton
+                  id="IsANTrue"
+                  name="IsAN"
+                  [value]="true"
+                  [(ngModel)]="student.isAN"></p-radioButton>
+                <label for="IsANTrue">Po</label>
+              </div>
+              <div class="field-radiobutton col-6">
+                <p-radioButton
+                  id="IsANFalse"
+                  name="IsAN"
+                  [value]="false"
+                  [(ngModel)]="student.isAN"></p-radioButton>
+                <label for="IsANFalse">Jo</label>
+              </div>
+            </div>
+          </div>
 
           <div class="field">
             <label for="SchoolFinished">Shkolla që ke perfunduar *</label>
