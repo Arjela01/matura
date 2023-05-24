@@ -91,7 +91,7 @@ export class ManageExamSiteComponent implements OnInit {
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
         this.selectedExamSites = this.selectedExamSites.filter(es => {
-          es.id !== (event.data as ExamSite).id;
+          return es.id !== (event.data as ExamSite).id;
         });
         break;
 
@@ -139,9 +139,9 @@ export class ManageExamSiteComponent implements OnInit {
       this.selectedExamSite.administrationOfficeId = administrationOfficeId;
     this.getHighSchools(administrationOfficeId);
   }
-  onHighSchoolChanged(highSchoolId: string) {
+  onHighSchoolChanged(highSchoolIds: number[]) {
     if (this.selectedExamSite !== null) {
-      this.selectedExamSite.highSchoolId = highSchoolId;
+      this.selectedExamSite.highSchoolIds = highSchoolIds;
     }
   }
 
@@ -154,7 +154,7 @@ export class ManageExamSiteComponent implements OnInit {
       .subscribe(response => {
         this.examSites$$.next(response.data);
         this.totalRecords = response.total;
-        this.cd.markForCheck();
+        this.cd.detectChanges();
       });
   }
 
@@ -164,11 +164,11 @@ export class ManageExamSiteComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.highSchools = response.data;
-        this.cd.markForCheck();
+        this.cd.detectChanges();
       });
   }
 
-  addExamSite(examSite: ExamSite) {
+  addExamSite(examSite?: ExamSite) {
     this.examSiteService
       .save(examSite)
       .pipe(untilDestroyed(this))
@@ -177,12 +177,15 @@ export class ManageExamSiteComponent implements OnInit {
           this.toastService.showSuccess('Qendra e provimit u shtua me sukses!');
           this.displayModal = false;
           this.getExamSites(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage);
+        } else {
+          this.toastService.showError(response.errorMessage);
+        }
 
-        if (response.isBadRequest)
+        if (response.isBadRequest) {
           this.toastService.showError(
             'Ndodhi një problem gjatë ndryshimit të qendrës së provimit!'
           );
+        }
       });
   }
 

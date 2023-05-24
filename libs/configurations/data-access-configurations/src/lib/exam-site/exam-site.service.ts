@@ -20,7 +20,7 @@ export class ExamSiteApiService {
     return this.apiService.post(`/ExamSite/TableData`, event);
   }
 
-  save(examSite: ExamSite): Observable<ApiResult<ExamSite>> {
+  save(examSite?: any): Observable<ApiResult<ExamSite>> {
     return this.apiService.post<ApiResult<ExamSite>, ExamSite>(
       `/ExamSite`,
       examSite

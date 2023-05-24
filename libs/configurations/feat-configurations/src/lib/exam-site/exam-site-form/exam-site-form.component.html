@@ -71,26 +71,27 @@
     </small>
   </div>
   <div class="field">
-    <label for="highSchool">Shkolla *</label>
-    <p-dropdown
-      id="highSchool"
+    <label for="highSchools">Shkolla *</label>
+    <p-multiSelect
+      id="highSchools"
       [options]="highSchools"
       optionValue="key"
+      defaultLabel="Selekto Shkollat"
       optionLabel="value"
-      name="highSchool"
-      [autoDisplayFirst]="false"
+      name="highSchools"
       (onChange)="onHighSchoolChanged($event)"
       (onClear)="onHighSchoolChanged($event)"
-      [(ngModel)]="examSite.highSchoolId"
+      [(ngModel)]="examSite.highSchoolIds"
       [required]="true"
       [showClear]="true"
+      display="chip"
       appendTo="body"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examSite.highSchoolId
+        'ng-invalid ng-dirty': submitted && !examSite.highSchoolIds
       }">
-    </p-dropdown>
-    <small class="p-error block" *ngIf="submitted && !examSite.highSchoolId">
-      DAR/ZA është fushë e kërkuar.
+    </p-multiSelect>
+    <small class="p-error block" *ngIf="submitted && !examSite.highSchoolIds">
+      Shkolla është fushë e kërkuar.
     </small>
   </div>
 
