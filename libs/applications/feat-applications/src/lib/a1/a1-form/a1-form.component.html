@@ -5,6 +5,16 @@
     </h2>
     <div class="card-form px-6 py-6 mb-header mt-3">
       <form #form="ngForm" (ngSubmit)="onSubmit()">
+        <div>
+          <button
+            *ngIf="!showSearch"
+            pButton
+            label="Kthehu te Maturanti"
+            icon="pi pi-arrow-left"
+            class="mr-2 back-button"
+            (click)="goBack()"></button>
+        </div>
+
         <div class="field mt-4 mb-4" [style]="{ width: '500px' }">
           <label for="studentInputData">Student *</label>
           <div class="p-inputgroup">
@@ -174,9 +184,9 @@
           *ngIf="submitted && subjectsChoosen.length < 1">
           *Duhet zgjedhur minimalisht 1 lëndë
         </small>
-<!--        <small class="p-error block" *ngIf="moreSubjectThanAllowed">-->
-<!--          *Duhen zgjedhur maksimalisht 2 lëndë-->
-<!--        </small>-->
+        <!--        <small class="p-error block" *ngIf="moreSubjectThanAllowed">-->
+        <!--          *Duhen zgjedhur maksimalisht 2 lëndë-->
+        <!--        </small>-->
         <div class="field lg:w-4 md:w-6 sm:w-full mt-5">
           <label for="isA1">Kodi i mbikqyrësit</label>
           <input

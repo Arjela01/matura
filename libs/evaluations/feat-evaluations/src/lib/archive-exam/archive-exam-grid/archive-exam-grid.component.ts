@@ -21,7 +21,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArchiveExamApiService } from '@msh/evaluations/data-access-evaluations';
 import { ArchiveExam } from '@msh/evaluations/domain-evaluations';
-import {BarcodeService} from "../services/barcode-service";
+import { BarcodeService } from '../services/barcode-service';
 
 @Component({
   selector: 'msh-archive-exam-grid',
@@ -43,7 +43,7 @@ import {BarcodeService} from "../services/barcode-service";
 export class ArchiveExamGridComponent implements OnInit {
   @ViewChild('form', { static: true }) form!: NgForm;
 
-  @ViewChild('barcodeField', {static: true}) barcodeField!: HTMLInputElement;
+  @ViewChild('barcodeField', { static: true }) barcodeField!: HTMLInputElement;
 
   @Input() set ArchiveExamsDetails(details: ArchiveExam | null) {
     if (details) {
@@ -96,13 +96,24 @@ export class ArchiveExamGridComponent implements OnInit {
       ...this.archiveExam,
       archiveFolderId: this.id as number,
     };
-    this.barcodeService.emptyBarcodeField$.subscribe((value) => {
-      if(value == true) {
+    this.barcodeService.emptyBarcodeField$.subscribe(value => {
+      if (value == true) {
         this.archiveExam.barcode = '';
-        this.barcodeField.focus();
-
+         this.barcodeField.focus();
       }
-    })
+    });
+  }
+
+  lettersNumbersCheck(input: any) {
+    const numberRegex = /\d/;
+    const characterRegex = /[a-zA-Z]/;
+    const barcode = this.archiveExam?.barcode;
+    return (
+      barcode &&
+      barcode.length === 7 &&
+      numberRegex.test(input) &&
+      characterRegex.test(input)
+    );
   }
 
   onSubmit(): void {
