@@ -16,6 +16,7 @@ import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
 import {ArchiveExam} from '@msh/evaluations/domain-evaluations';
+import {TooltipModule} from "primeng/tooltip";
 
 @Component({
   selector: 'msh-barcode-correction-form',
@@ -30,6 +31,7 @@ import {ArchiveExam} from '@msh/evaluations/domain-evaluations';
     ButtonModule,
     CheckboxModule,
     DropdownModule,
+    TooltipModule
   ],
   templateUrl: './barcode-correction-form.component.html',
   styleUrls: ['./barcode-correction-form.component.scss'],
@@ -60,5 +62,17 @@ export class BarcodeCorrectionFormComponent   {
     if (this.form.valid) {
       this.formSave.emit(this.archiveExam);
     }
+  }
+
+  lettersNumbersCheck(input: any) {
+    const numberRegex = /\d/;
+    const characterRegex = /[a-zA-Z]/;
+    const barcode = this.archiveExam?.barcode;
+    return (
+      barcode &&
+      barcode.length === 7 &&
+      numberRegex.test(input) &&
+      characterRegex.test(input)
+    );
   }
 }
