@@ -24,6 +24,14 @@ export class HighSchoolApiService {
     return this.apiService.post(`/HighSchool/TableData`, event);
   }
 
+  forAdministrationOffice(
+    administrationOfficeId?: string
+  ): Observable<ApiResult<DropdownModel<string>[]>> {
+    return this.apiService.get<ApiResult<DropdownModel<string>[]>>(
+      `/HighSchool/ForAdministrationOffice/${administrationOfficeId}`,
+    );
+  }
+
   save(highSchool: HighSchool): Observable<ApiResult<HighSchool>> {
     return this.apiService.post<ApiResult<HighSchool>, HighSchool>(
       `/HighSchool`,

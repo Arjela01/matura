@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { Observable } from 'rxjs';
-import {LazyLoadEvent} from "primeng/api";
-import {ExamSite, ExamSiteTableView} from "@msh/shared/domain-models";
+import { LazyLoadEvent } from 'primeng/api';
+import { ExamSite, ExamSiteTableView } from '@msh/shared/domain-models';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,7 @@ export class ExamSiteApiService {
     return this.apiService.post(`/ExamSite/TableData`, event);
   }
 
-  save(examSite: ExamSite): Observable<ApiResult<ExamSite>> {
+  save(examSite?: any): Observable<ApiResult<ExamSite>> {
     return this.apiService.post<ApiResult<ExamSite>, ExamSite>(
       `/ExamSite`,
       examSite

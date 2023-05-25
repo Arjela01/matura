@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -11,6 +16,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import {
   ExamSiteApiService,
   AdministrationOfficeApiService,
+  HighSchoolApiService,
 } from '@msh/configurations/data-access-configurations';
 import { ExamSite } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
@@ -55,11 +61,14 @@ export class ManageExamSiteComponent implements OnInit {
   selectedExamSites: ExamSite[] = [];
   displayModal = false;
   administrationOffices: DropdownModel<number>[] = [];
+  highSchools: DropdownModel<string>[] = [];
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examSiteService: ExamSiteApiService,
+    private readonly cd: ChangeDetectorRef,
+    private readonly highSchoolService: HighSchoolApiService,
     private readonly administrationOfficeApiService: AdministrationOfficeApiService
   ) {}
 
@@ -82,7 +91,7 @@ export class ManageExamSiteComponent implements OnInit {
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
         this.selectedExamSites = this.selectedExamSites.filter(es => {
-          es.id !== (event.data as ExamSite).id;
+          return es.id !== (event.data as ExamSite).id;
         });
         break;
 
@@ -97,6 +106,8 @@ export class ManageExamSiteComponent implements OnInit {
         break;
       case GRID_ACTIONS.EDIT:
         this.selectedExamSite = Object.assign({}, event.data as ExamSite);
+        this.getHighSchools(this.selectedExamSite.administrationOfficeId);
+        this.getAdministrationOfficeDropdown();
         this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
@@ -123,6 +134,16 @@ export class ManageExamSiteComponent implements OnInit {
       this.addExamSite(examSite);
     }
   }
+  onAdministrationOfficeChanged(administrationOfficeId: any) {
+    if (this.selectedExamSite != null)
+      this.selectedExamSite.administrationOfficeId = administrationOfficeId;
+    this.getHighSchools(administrationOfficeId);
+  }
+  onHighSchoolChanged(highSchoolIds: number[]) {
+    if (this.selectedExamSite !== null) {
+      this.selectedExamSite.highSchoolIds = highSchoolIds;
+    }
+  }
 
   getExamSites($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
@@ -133,10 +154,21 @@ export class ManageExamSiteComponent implements OnInit {
       .subscribe(response => {
         this.examSites$$.next(response.data);
         this.totalRecords = response.total;
+        this.cd.detectChanges();
       });
   }
 
-  addExamSite(examSite: ExamSite) {
+  getHighSchools(administrationOfficeId?: any) {
+    this.highSchoolService
+      .forAdministrationOffice(administrationOfficeId)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.highSchools = response.data;
+        this.cd.detectChanges();
+      });
+  }
+
+  addExamSite(examSite?: ExamSite) {
     this.examSiteService
       .save(examSite)
       .pipe(untilDestroyed(this))
@@ -145,12 +177,15 @@ export class ManageExamSiteComponent implements OnInit {
           this.toastService.showSuccess('Qendra e provimit u shtua me sukses!');
           this.displayModal = false;
           this.getExamSites(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage);
+        } else {
+          this.toastService.showError(response.errorMessage);
+        }
 
-        if (response.isBadRequest)
+        if (response.isBadRequest) {
           this.toastService.showError(
             'Ndodhi një problem gjatë ndryshimit të qendrës së provimit!'
           );
+        }
       });
   }
 
@@ -197,6 +232,7 @@ export class ManageExamSiteComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.administrationOffices = response.data;
+        this.cd.markForCheck();
       });
   }
 }

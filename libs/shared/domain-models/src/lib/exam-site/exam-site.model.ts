@@ -6,7 +6,8 @@ export interface ExamSite{
   administrationOfficeId: number;
   administrationOfficeName:string;
   academicYearId?: number,
-
+  highSchoolIds? : number[];
+  highSchoolsNames?:string[];
 }
 
 export interface ExamSiteTableView {

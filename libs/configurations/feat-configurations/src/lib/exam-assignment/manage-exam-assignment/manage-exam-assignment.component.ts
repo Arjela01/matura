@@ -183,7 +183,7 @@ export class ManageExamAssignmentComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
-            'Caktimi në Qendër Provimi u shtua me sukses!'
+            'Caktimi në qendër provimi u shtua me sukses!'
           );
           this.displayModal = false;
           this.getExamAssignments(this.filters as LazyLoadEvent);
@@ -191,7 +191,7 @@ export class ManageExamAssignmentComponent {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë shtimit të Caktimit në Qendër të provimit!'
+            'Ndodhi një problem gjatë shtimit të caktimit në qendër të provimit!'
           );
       });
   }
@@ -203,7 +203,7 @@ export class ManageExamAssignmentComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
-            'Caktimi në Qender Provimi u ndryshua me sukses!'
+            'Caktimi në qender provimi u ndryshua me sukses!'
           );
           this.displayModal = false;
           this.getExamSiteDropdown();
@@ -213,7 +213,7 @@ export class ManageExamAssignmentComponent {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit të Caktimit në Qendër të provimit!'
+            'Ndodhi një problem gjatë ndryshimit të caktimit në qendër të provimit!'
           );
       });
   }
@@ -225,7 +225,7 @@ export class ManageExamAssignmentComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo(
-            'Caktimi në Qendrën e provimit u fshi me sukses!'
+            'Caktimi në qendrën e provimit u fshi me sukses!'
           );
           this.getExamAssignments(this.filters as LazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
