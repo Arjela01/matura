@@ -1,5 +1,4 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
-
   <div class="field">
     <label for="Name">Emri *</label>
     <input
@@ -17,14 +16,13 @@
   </div>
 
   <div class="field">
-    <label for="Address">Adresa *</label>
+    <label for="Address">Adresa</label>
     <input
       type="text"
       pInputText
       id="address"
       name="Address"
       [(ngModel)]="examSite.address"
-      required
       autofocus
       [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examSite.address }" />
     <small class="p-error block" *ngIf="submitted && !examSite.address">
@@ -33,14 +31,13 @@
   </div>
 
   <div class="field">
-    <label for="quotes">Kuotat *</label>
+    <label for="quotes">Kuotat</label>
     <input
       type="text"
       pInputText
       id="quotes"
       name="quotes"
       [(ngModel)]="examSite.quota"
-      required
       autofocus
       [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examSite.quota }" />
     <small class="p-error block" *ngIf="submitted && !examSite.quota">
@@ -54,6 +51,8 @@
       id="AdministrationOffice"
       [options]="administrationOffices"
       optionValue="key"
+      (onChange)="onAdministrationOfficeChanged($event)"
+      (onClear)="onAdministrationOfficeChanged($event)"
       optionLabel="value"
       name="administrationOfficeId"
       [autoDisplayFirst]="false"
@@ -71,8 +70,30 @@
       DAR/ZA është fushë e kërkuar.
     </small>
   </div>
-
-
+  <div class="field">
+    <label for="highSchools">Shkolla *</label>
+    <p-multiSelect
+      id="highSchools"
+      [options]="highSchools"
+      optionValue="key"
+      defaultLabel="Selekto Shkollat"
+      optionLabel="value"
+      name="highSchools"
+      (onChange)="onHighSchoolChanged($event)"
+      (onClear)="onHighSchoolChanged($event)"
+      [(ngModel)]="examSite.highSchoolIds"
+      [required]="true"
+      [showClear]="true"
+      display="chip"
+      appendTo="body"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examSite.highSchoolIds
+      }">
+    </p-multiSelect>
+    <small class="p-error block" *ngIf="submitted && !examSite.highSchoolIds">
+      Shkolla është fushë e kërkuar.
+    </small>
+  </div>
 
   <div class="flex justify-content-end">
     <button
@@ -89,4 +110,3 @@
       class="p-button w-auto"></button>
   </div>
 </form>
-
