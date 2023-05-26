@@ -12,7 +12,7 @@ export interface ExamAssignment {
   takenSeats?: number;
   examTypeId? : number;
   examTypeName? : string;
-  administrationOfficeId?:string;
+  administrationOfficeId?:number;
   administrationOfficeName?:string;
   time: string;
 }

@@ -168,7 +168,7 @@ export class ManageExamSiteComponent implements OnInit {
       });
   }
 
-  addExamSite(examSite?: ExamSite) {
+  addExamSite(examSite: ExamSite) {
     this.examSiteService
       .save(examSite)
       .pipe(untilDestroyed(this))

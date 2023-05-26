@@ -13,6 +13,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import {
   AdministrationOffice,
   ExamAssignment,
+  ExamSite,
   Student,
 } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
@@ -31,10 +32,10 @@ import {
 } from '@msh/configurations/data-access-configurations';
 
 import { DialogModule } from 'primeng/dialog';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { LazyLoadEvent } from 'primeng/api';
 import { FileUploadModule } from 'primeng/fileupload';
-import {MultiSelectModule} from "primeng/multiselect";
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @UntilDestroy()
 @Component({
@@ -53,15 +54,15 @@ import {MultiSelectModule} from "primeng/multiselect";
     DialogModule,
     AssignAllFormComponent,
     FileUploadModule,
-    MultiSelectModule
+    MultiSelectModule,
   ],
   templateUrl: './assign-all-form.component.html',
   styleUrls: ['./assign-all-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AssignAllFormComponent implements OnInit {
-  @Input() examSites: DropdownModel<number>[] = [];
-  @Input() administrationOffices: AdministrationOffice[] = [];
+export class AssignAllFormComponent {
+  @Input() examSites: DropdownModel<any>[] = [];
+  @Input() administrationOffices: any;
   @Input() set examAssignmentsDetails(details: ExamAssignment | null) {
     if (details) {
       this.examAssignment = Object.assign({}, details);
@@ -72,12 +73,16 @@ export class AssignAllFormComponent implements OnInit {
   @Output() formSave = new EventEmitter<ExamAssignment>();
   @Output() formClose = new EventEmitter<undefined>();
   @Output() loadExamSites = new EventEmitter<ExamAssignment>();
+  @Output() administrationOfficeChanged = new EventEmitter<number>();
+  @Output() examSiteChanged = new EventEmitter<string>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
   filters: LazyLoadEvent | null = null;
   submitted = false;
   displayAssignAllModal = false;
   fileContent: string | ArrayBuffer | null | undefined;
+  administrationOfficeId = 0;
+  examSiteId = '';
 
   examAssignment: ExamAssignment = {
     date: new Date(),
@@ -93,32 +98,25 @@ export class AssignAllFormComponent implements OnInit {
   assigned = false;
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(
-    private cd: ChangeDetectorRef,
-    private readonly examAssignmentService: ExamAssignmentApiService,
-    private readonly toastService: GlobalToastService,
-    private readonly examSiteService: ExamSiteApiService,
-    private readonly administrationOfficeService: AdministrationOfficeApiService
-  ) {}
+  constructor() {}
 
   onCancelClick() {
     this.formClose.emit();
     this.displayAssignAllModal = false;
   }
-
-  ngOnInit(): void {
-    this.getExamSite();
+  onAdministrationOfficeChanged($event: any): void {
+    if ($event && $event.value) {
+      this.administrationOfficeId = $event.value;
+      this.administrationOfficeChanged.emit(this.administrationOfficeId);
+      this.examAssignment.administrationOfficeId = this.administrationOfficeId;
+    }
   }
-
-  getExamSite() {
-    this.examSiteService.loadDropdownList().subscribe(response => {
-      this.examSites = response.data;
-    });
-  }
-  getAdministrationOffices(event: LazyLoadEvent) {
-    this.administrationOfficeService
-      .loadAdministrationOffices(event)
-      .subscribe(res => (this.administrationOffices = res.data));
+  onExamSiteChanged($event: any): void {
+    if ($event && $event.value) {
+      this.examSiteId = $event.value;
+      this.examSiteChanged.emit(this.examSiteId);
+      this.examAssignment.examSiteId = this.examSiteId;
+    }
   }
 
   onSubmit() {

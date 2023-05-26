@@ -102,8 +102,10 @@
   <ng-template pTemplate="content">
     <msh-assign-all-form
       [examAssignmentsDetails]="selectedExamAssignment"
-      [examSites]="examSites"
+      [examSites]="examSiteForAdministrationOffice"
       [administrationOffices]="administrationOffices"
+      (administrationOfficeChanged)="onAdministrationOfficeChanged($event)"
+      (examSiteChanged)="onExamSiteChanged($event)"
       (formClose)="onAssignAllModalClose()"
       (formSave)="onFormSave($event)">
     </msh-assign-all-form>

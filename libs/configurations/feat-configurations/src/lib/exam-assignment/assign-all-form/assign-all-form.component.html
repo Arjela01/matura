@@ -4,24 +4,25 @@
       <form #form="ngForm" (ngSubmit)="onSubmit()">
         <div class="field mt-4 mb-4">
           <label for="ExamDate"> Dar/Za *</label>
-          <p-multiSelect
+          <p-dropdown
             class="mt-4 mb-4"
             id="ExamDate"
             [options]="administrationOffices"
             optionValue="key"
-            defaultLabel="Zgjidh Dar/Za"
             optionLabel="value"
+            (onChange)="onAdministrationOfficeChanged($event)"
+            (onClear)="onAdministrationOfficeChanged($event)"
             [virtualScroll]="true"
+            [autoDisplayFirst]="false"
             [virtualScrollItemSize]="43"
             name="ExamDate"
             appendTo="body"
-            display="chip"
             [(ngModel)]="examAssignment.administrationOfficeId"
             [showClear]="true"
             [ngClass]="{
               'ng-invalid ng-dirty': submitted && !examAssignment.administrationOfficeId
             }">
-          </p-multiSelect>
+          </p-dropdown>
           <small class="p-error block" *ngIf="submitted && !examAssignment.administrationOfficeId">
            Dar/Za është fushë e kërkuar.
           </small>
@@ -39,6 +40,8 @@
             optionLabel="value"
             name="ExamDate"
             appendTo="body"
+            (onClear)="onExamSiteChanged($event)"
+            (onChange)="onExamSiteChanged($event)"
             [virtualScrollItemSize]="43"
             [(ngModel)]="examAssignment.examSiteId"
             [showClear]="true"

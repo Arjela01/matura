@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component,
+  Component, OnInit,
 } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -16,7 +16,10 @@ import {
   ExamDateApiService,
   ExamSiteApiService,
 } from '@msh/configurations/data-access-configurations';
-import {AdministrationOffice, ExamAssignment} from '@msh/shared/domain-models';
+import {
+  AdministrationOffice,
+  ExamAssignment,
+} from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   GlobalToastService,
@@ -52,12 +55,13 @@ import { AssignAllFormComponent } from '../assign-all-form/assign-all-form.compo
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageExamAssignmentComponent {
+export class ManageExamAssignmentComponent implements OnInit{
   private examAssignments$$ = new BehaviorSubject<ExamAssignment[]>([]);
   examAssignments$ = this.examAssignments$$.asObservable();
   filters: LazyLoadEvent | null = null;
 
   totalRecords = 0;
+  examAssignment:ExamAssignment | null = null;
   selectedExamAssignment: ExamAssignment | null = null;
   selectedExamAssignments: ExamAssignment[] = [];
   displayModal = false;
@@ -66,6 +70,7 @@ export class ManageExamAssignmentComponent {
 
   examDates: DropdownModel<number>[] = [];
   examSites: DropdownModel<number>[] = [];
+  examSiteForAdministrationOffice: DropdownModel<string>[] = [];
   administrationOffices: any;
   time: any;
   constructor(
@@ -74,6 +79,7 @@ export class ManageExamAssignmentComponent {
     private readonly examAssignmentService: ExamAssignmentApiService,
     private readonly examDateService: ExamDateApiService,
     private readonly examSiteService: ExamSiteApiService,
+    private readonly cd: ChangeDetectorRef,
     private readonly administrationOfficeService: AdministrationOfficeApiService
   ) {}
 
@@ -124,6 +130,9 @@ export class ManageExamAssignmentComponent {
   onUploadClick() {
     this.displayUploadModal = true;
   }
+  ngOnInit(): void {
+    this.getAdministrationOfficeDropdown();
+  }
 
   onUploadClose() {
     this.displayUploadModal = false;
@@ -138,10 +147,10 @@ export class ManageExamAssignmentComponent {
   onModalClose() {
     this.displayModal = false;
   }
-  onAssignAllModalClose(){
+  onAssignAllModalClose() {
     this.displayAssignAllModal = false;
   }
-  onAssignAllClick(){
+  onAssignAllClick() {
     this.displayAssignAllModal = true;
   }
 
@@ -155,6 +164,22 @@ export class ManageExamAssignmentComponent {
   }
   onUploadFormSave() {
     this.getExamAssignments(this.filters as LazyLoadEvent);
+  }
+  onAdministrationOfficeChanged(administrationOfficeId: number) {
+      this.getExamSite(administrationOfficeId);
+  }
+  onExamSiteChanged(examSiteId: string) {
+    if (this.examAssignment != null ) {
+      this.examAssignment.examSiteId = examSiteId;
+    }
+  }
+
+  getExamSite(administrationOfficeId: any) {
+    this.examSiteService
+      .forAdministrationOffice(administrationOfficeId)
+      .pipe(untilDestroyed(this))
+      .subscribe(res => (this.examSiteForAdministrationOffice = res.data));
+    this.cd.detectChanges();
   }
 
   getExamAssignments($event: LazyLoadEvent) {
@@ -260,6 +285,11 @@ export class ManageExamAssignmentComponent {
   getAdministrationOfficeDropdown() {
     this.administrationOfficeService
       .loadDropdownList()
-      .subscribe(res => (this.administrationOffices = res.data));
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.administrationOffices = response.data;
+        this.cd.markForCheck();
+      });
   }
 }
+
