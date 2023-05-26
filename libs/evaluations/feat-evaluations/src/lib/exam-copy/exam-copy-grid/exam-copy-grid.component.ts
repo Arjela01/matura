@@ -6,7 +6,10 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import {ExamCopy, ExamCopyRequestStatusEnum} from '@msh/evaluations/domain-evaluations';
+import {
+  ExamCopy,
+  ExamCopyRequestStatusEnum,
+} from '@msh/evaluations/domain-evaluations';
 import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -35,6 +38,8 @@ import { ExamCopyRequestStatusPipe } from './exam-copy-request-status-pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamCopyGridComponent {
+  ExamCopyRequestStatusEnum = ExamCopyRequestStatusEnum;
+
   @Input() examCopies: ExamCopy[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
@@ -53,6 +58,4 @@ export class ExamCopyGridComponent {
   loadRows($event: LazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
-
-  ExamCopyRequestStatusEnum = ExamCopyRequestStatusEnum;
 }
