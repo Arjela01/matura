@@ -10,3 +10,4 @@ export * from './grades-scale/grades-scale.model';
 export * from './annual-grades/annual-grades.model';
 export * from './ial/ial-model';
 export * from './barcode-correction/barcode-correction.model';
+export * from './exam-copy/exam-copy-request-status-enum';
