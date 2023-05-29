@@ -107,13 +107,13 @@
         <span
           class="status"
           [ngClass]="
-            examCopy.status === 'Refuzuar'
+            examCopy.status === ExamCopyRequestStatusEnum.Declined
               ? ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
-              : examCopy.status === 'Pranuar'
+              : examCopy.status === ExamCopyRequestStatusEnum.Accepted
               ? ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
               : ['bg-yellow-300', 'yellow-text', 'px-3', 'py-1', 'fb']
           ">
-          {{ examCopy.status }}
+          {{ examCopy.status | examCopyRequestStatus }}
         </span>
       </td>
       <td style="width: 15%; min-width: 10rem">
@@ -122,14 +122,12 @@
       <td></td>
       <td>
         <div class="flex">
-          <button
-            pButton
-            pRipple
-            class="p-button-rounded p-button-plain p-button-text mr-2 pointer"
+          <img
+            src="assets/svg/edit-form.svg"
+            class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
+            tooltipPosition="bottom"
             (click)="onProceedClick(examCopy)"
-            [ngClass]="['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']">
-            Procedo
-          </button>
+            pTooltip="Detajet" />
         </div>
       </td>
     </tr>
