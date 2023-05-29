@@ -1,4 +1,4 @@
-import {CommonModule, formatDate} from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -18,7 +18,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import {CalendarModule} from "primeng/calendar";
+import { CalendarModule } from 'primeng/calendar';
 
 @Component({
   selector: 'msh-exam-date-form',
@@ -40,49 +40,53 @@ import {CalendarModule} from "primeng/calendar";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamDateFormComponent {
-
   @Input() examTypes: DropdownModel<number>[] = [];
   @Input() examSites: DropdownModel<number>[] = [];
-  date: any;
+  date: Date | null = null;
 
   @Input() set examDatesDetails(details: ExamDate | null) {
     if (details) {
-      this.examDate = Object.assign({}, details);
-      this.date = formatDate(new Date(this.examDate.date), 'dd/MM/yyyy', 'en');
+      this.examDate = { ...details };
+      if (details.date) {
+        this.date = new Date(details.date);
+      }
     }
   }
 
   @Output() formSave = new EventEmitter<ExamDate>();
   @Output() formClose = new EventEmitter<undefined>();
 
-  @ViewChild('form', {static: true}) form!: NgForm;
+  @ViewChild('form', { static: true }) form!: NgForm;
   minimumDate = new Date();
 
   submitted = false;
   examDate: ExamDate = {
     id: '',
-    date: new Date(),
-    time:'',
-    examTypeId:0,
-    examTypeName:'',
-    examSiteId:0,
-    examSiteName:'',
+    date: '',
+    time: '',
+    examTypeId: 0,
+    examTypeName: '',
+    examSiteId: 0,
+    examSiteName: '',
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private cd: ChangeDetectorRef) {
-
-  }
+  constructor(private cd: ChangeDetectorRef) {}
 
   onCancelClick() {
     this.formClose.emit();
   }
 
   onSubmit() {
-    this.examDate.date = this.date
     this.submitted = true;
+
     if (this.form.valid) {
+      if (this.date) {
+        const formattedDate = formatDate(this.date, 'yyyy-MM-dd', 'en-US');
+        this.examDate.date = formattedDate;
+      }
       this.formSave.emit(this.examDate);
     }
+
+    this.cd.detectChanges();
   }
-  }
+}
