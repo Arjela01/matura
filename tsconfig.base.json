@@ -40,9 +40,6 @@
       "@msh/audit-logs/domain-audit-log": [
         "libs/audit-logs/domain-audit-log/src/index.ts"
       ],
-      "@msh/audit-logs/domain-evaluations-audit-log": [
-        "libs/audit-logs/domain-evaluations-audit-log/src/index.ts"
-      ],
       "@msh/audit-logs/feat-audit-log": [
         "libs/audit-logs/feat-audit-log/src/index.ts"
       ],
