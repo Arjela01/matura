@@ -17,11 +17,12 @@ import {
 import { provideStore } from '@ngrx/store';
 
 import {
-  AuthEffects,
-  authFeature,
   AUTH_FEATURE_KEY,
-  loadAuthProvider,
+  AcademicYearInterceptor,
+  AuthEffects,
   TokenInterceptor,
+  authFeature,
+  loadAuthProvider,
 } from '@msh/auth/data-access-auth';
 import { getLocalStorageProvider } from '@msh/shared/data-access-shared';
 import { environment } from '@msh/shared/environments';
@@ -91,6 +92,11 @@ bootstrapApplication(AppComponent, {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AcademicYearInterceptor,
       multi: true,
     },
     {

@@ -2,6 +2,7 @@ export * from './lib/+state';
 export * from './lib/models/login-request.model';
 export * from './lib/models/login-response.model';
 export * from './lib/models/password-reset.model';
+export * from './lib/services/academic-year-interceptor';
 export * from './lib/services/auth.guard';
 export * from './lib/services/expired-password.guard';
 export * from './lib/services/heartbeat.service';

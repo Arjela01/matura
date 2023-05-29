@@ -1,24 +1,36 @@
 import { CommonModule } from '@angular/common';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { LayoutService } from '@msh/layout/util-layout';
-import { AppMenuitemComponent } from '../app-menuitem/app-menuitem.component';
-
-import { MenuItem } from 'primeng/api';
-import { MenuStore } from '@msh/layout/data-access-layout';
-import { map, Observable, Subject } from 'rxjs';
-import { MenuNode } from '@msh/layout/domain-layout';
+import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterLinkWithHref } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import { DialogModule } from 'primeng/dialog';
-import { AvatarModule } from 'primeng/avatar';
-import { UserProfile } from '@msh/shared/domain-models';
-import { UserProfileApiService } from '@msh/user-section/data-access-user-section';
+import { AcademicYearApiService } from '@msh/configurations/data-access-configurations';
+import { MenuStore } from '@msh/layout/data-access-layout';
+import { MenuNode } from '@msh/layout/domain-layout';
+import { LayoutService } from '@msh/layout/util-layout';
+import { AcademicYear, UserProfile } from '@msh/shared/domain-models';
 import {
   GlobalSpinnerComponent,
   LoaderService,
   LoadingInterceptor,
 } from '@msh/shared/ui-shared';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { UserProfileApiService } from '@msh/user-section/data-access-user-section';
+import { MenuItem } from 'primeng/api';
+import { AvatarModule } from 'primeng/avatar';
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import {
+  BehaviorSubject,
+  Observable,
+  Subject,
+  combineLatest,
+  map,
+  switchMap,
+} from 'rxjs';
+import { AppMenuitemComponent } from '../app-menuitem/app-menuitem.component';
 
 @Component({
   selector: 'msh-app-sidebar',
@@ -30,7 +42,12 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     RouterLink,
     DialogModule,
     AvatarModule,
+    FormsModule,
+    InputTextModule,
     GlobalSpinnerComponent,
+    ConfirmDialogModule,
+    ButtonModule,
+    DropdownModule,
   ],
   providers: [
     {
@@ -41,12 +58,19 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     [MenuStore],
   ],
   templateUrl: './app-sidebar.component.html',
+  styleUrls: ['./app-sidebar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppSidebarComponent implements OnInit {
   userProfile!: UserProfile;
   userProfile$ = new Subject<UserProfile>();
   avatarLabel!: string;
+  displayModal = false;
+  academicYears: any[] = [];
+  academicYearForm: Partial<AcademicYear> = {
+    id: 0,
+    year: '',
+  };
   //TODO: This will be dynamic
   model$: Observable<MenuItem[]> = this.menuStore.menus$.pipe(
     map(menus => {
@@ -59,22 +83,53 @@ export class AppSidebarComponent implements OnInit {
     })
   );
 
-  loading$ = this.loader.loading$.pipe(
-    map(data => data)
-  )
-
+  loading$ = this.loader.loading$.pipe(map(data => data));
+  academicYear$ = new BehaviorSubject<AcademicYear | null>(null);
+  academicYear: Partial<AcademicYear> | null = null;
   constructor(
     private readonly menuStore: MenuStore,
     private router: Router,
     public layoutService: LayoutService,
-    private authFacade: AuthFacade,
+    protected authFacade: AuthFacade,
     private userProfileService: UserProfileApiService,
-    public loader: LoaderService
+    public loader: LoaderService,
+    private academicApiService: AcademicYearApiService
   ) {}
 
   ngOnInit() {
     this.menuStore.loadMenus();
-    this.getUser();
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.authFacade.academicYear$
+        .pipe(
+          switchMap((data: any) => {
+            if (!data) {
+              try {
+                data = JSON.parse(
+                  localStorage.getItem('academicYear') as string
+                );
+              } catch (err) {
+                data = null;
+              }
+            }
+            this.academicYear = { ...data };
+            this.academicYearForm = Object.assign({}, { ...this.academicYear });
+
+            return combineLatest([this.getUser(), this.getAcademicYears()]);
+          })
+        )
+        .subscribe(([user, academicYear]) => {
+          this.userProfile$.next(user.data);
+          this.userProfile = Object.assign({}, user.data);
+          this.academicYears = academicYear.data;
+          this.avatarLabel =
+            user.data.firstName.charAt(0) + user.data.lastName.charAt(0);
+        });
+    }
+  }
+
+  showModal() {
+    this.displayModal = true;
   }
 
   private format(menus: MenuNode[]): MenuItem[] {
@@ -126,13 +181,22 @@ export class AppSidebarComponent implements OnInit {
   onNewClick() {
     this.router.navigate(['/user-section/user-profile']).then();
   }
-  getUser() {
-    this.userProfileService.getLoggedInUserData().subscribe(response => {
-      this.userProfile$.next(response.data);
-      this.userProfile = Object.assign({}, response.data);
-      this.avatarLabel =
-        this.userProfile.firstName.charAt(0) +
-        this.userProfile.lastName.charAt(0);
-    });
+  getUser(): Observable<any> {
+    return this.userProfileService.getLoggedInUserData();
+  }
+  onModalClose() {
+    this.displayModal = false;
+  }
+
+  getAcademicYears(): Observable<any> {
+    return this.academicApiService.getAcademicYearsFiltered();
+  }
+  changeAcademicYear() {
+    const yearToFind = this.academicYears.find(
+      year => year.key === this.academicYearForm.id
+    );
+    const { key: id, value: year } = yearToFind;
+    console.log({ id, year });
+    this.authFacade.changeAcademicYear({ id, year });
   }
 }

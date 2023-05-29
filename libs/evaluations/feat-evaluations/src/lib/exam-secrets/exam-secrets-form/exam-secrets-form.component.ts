@@ -3,7 +3,8 @@ import {
   ChangeDetectorRef,
   Component,
   DoCheck,
-  EventEmitter, Input,
+  EventEmitter,
+  Input,
   OnChanges,
   OnInit,
   Output,
@@ -17,12 +18,12 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ButtonModule } from 'primeng/button';
-import { ExamSecret} from '@msh/evaluations/domain-evaluations';
+import { ExamSecret } from '@msh/evaluations/domain-evaluations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { BehaviorSubject } from 'rxjs';
-import {ExamSubjectProfile, Student} from '@msh/shared/domain-models';
+import { ExamSubjectProfile, Student } from '@msh/shared/domain-models';
 import {
   GlobalToastService,
   GRID_ACTIONS,
@@ -32,13 +33,12 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import {
-
   ExamSubjectApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
-import {  Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
-import {TooltipModule} from "primeng/tooltip";
+import { TooltipModule } from 'primeng/tooltip';
 
 @UntilDestroy()
 @Component({
@@ -56,7 +56,7 @@ import {TooltipModule} from "primeng/tooltip";
     AutoCompleteModule,
     DialogModule,
     SharedStudentLookupModule,
-    TooltipModule
+    TooltipModule,
   ],
   providers: [ConfirmationService],
 
@@ -65,7 +65,6 @@ import {TooltipModule} from "primeng/tooltip";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
-
   @Output() formSave = new EventEmitter<ExamSecret>();
   @Output() formClose = new EventEmitter<undefined>();
   @ViewChild('form', { static: true }) form!: NgForm;
@@ -81,7 +80,6 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
   showStudentModal = false;
   selectedStudent: any = null;
   examSubjectId: any;
-
   examSecret: ExamSecret = {
     id: '',
     studentId: '',
@@ -107,8 +105,8 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
     private readonly router: Router,
     private readonly toastService: GlobalToastService,
     private readonly examSubjectService: ExamSubjectApiService,
-  ) {
-  }
+    private route: ActivatedRoute,
+  ) {}
 
   ngDoCheck(): void {
     if (this.examSecret.studentId !== undefined) {
@@ -139,7 +137,7 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
       this.studentInputData = ' ';
     } else {
       this.examSecret.studentId = student.studentId;
-      this.studentInputData = student?.studentId + '-' + student?.studentName;
+      this.studentInputData = student?.studentIdentifier + '-' + student?.studentName;
     }
   }
 
@@ -178,7 +176,6 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
     }
   }
 
-
   getStudents($event: LazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
     this.studentService
@@ -189,5 +186,4 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
         this.totalRecords = response.total;
       });
   }
-
 }

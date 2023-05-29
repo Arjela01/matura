@@ -10,7 +10,7 @@
       id="barcode"
       name="barcode"
       [(ngModel)]="archiveExam.barcode"
-      pTooltip="Barkodi duhet te permbaje 7 shifra"
+      pTooltip="Barkodi duhet të përmbaje 7 karaktere alfanumerike"
       tooltipPosition="top"
       required
       [ngClass]="{
@@ -30,7 +30,7 @@
       class="p-button-text w-auto mr-2"
       (click)="onCancelClick()"></button>
     <button
-      [disabled]="form.invalid"
+      [disabled]="!lettersNumbersCheck(archiveExam.barcode)"
       type="submit"
       pButton
       label="Ruaj"

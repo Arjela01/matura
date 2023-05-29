@@ -78,7 +78,6 @@ export class A1FormComponent {
   editing = false;
   showSearch = true;
 
-
   @HostListener('window:popstate', ['$event'])
   onPopState() {
     //close modal when clicking back button on google
@@ -464,5 +463,11 @@ export class A1FormComponent {
           );
         },
       });
+  }
+
+  goBack(): void {
+    this.router
+      .navigate([`/configurations/student-edit/${this.a1.studentId}`])
+      .then();
   }
 }

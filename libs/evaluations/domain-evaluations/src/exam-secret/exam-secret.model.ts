@@ -4,11 +4,13 @@ export interface ExamSecret {
   studentName: string;
   examSubjectId?: string;
   examSubjectName: string;
+  examSiteId?: string;
+  examSiteName?: string;
   barcode: string;
   isFall: boolean;
   studentInputData?: string;
   academicYearId?: number;
-
+  studentIdentifier?: string;
 }
 
 export interface ExamSecretTableView {

@@ -37,7 +37,10 @@
   <ng-template pTemplate="content">
     <msh-exam-site-form
       [examSitesDetails]="selectedExamSite"
+      [highSchools]="highSchools"
       [administrationOffices]="administrationOffices"
+      (administrationOfficeChanged)="onAdministrationOfficeChanged($event)"
+      (highSchoolChanged)="onHighSchoolChanged($event)"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
     </msh-exam-site-form>
@@ -66,4 +69,3 @@
       (click)="cd.accept()"></button>
   </ng-template>
 </p-confirmDialog>
-

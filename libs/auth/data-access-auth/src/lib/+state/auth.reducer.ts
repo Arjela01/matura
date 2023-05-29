@@ -1,4 +1,5 @@
 import { GenericStoreStatus } from '@msh/shared/data-access-shared';
+import { AcademicYear } from '@msh/shared/domain-models';
 import { Action, createFeature, createReducer, on } from '@ngrx/store';
 import { User } from '../models/user.model';
 import { AuthActions } from './auth.actions';
@@ -11,6 +12,7 @@ export interface AuthState {
   isAuthenticated: boolean;
   user: User;
   token: string;
+  academicYear: Partial<AcademicYear>;
 }
 
 export const initialAuthState: AuthState = {
@@ -22,6 +24,7 @@ export const initialAuthState: AuthState = {
     username: '',
   },
   token: '',
+  academicYear: { id: 0, year: '' },
 };
 
 export const authFeature = createFeature({
@@ -32,13 +35,15 @@ export const authFeature = createFeature({
       ...state,
       status: 'pending',
     })),
-    on(AuthActions.loadAuthSuccess, (state, { token, user }) => ({
+    on(AuthActions.loadAuthSuccess, (state, { token, user, academicYear }) => ({
       ...state,
-      status: 'success',
+      status: 'pending',
       isAuthenticated: true,
       token: token,
       user: user,
+      academicYear: academicYear,
     })),
+
     on(AuthActions.login, state => ({
       ...state,
       status: 'loading',
@@ -46,7 +51,7 @@ export const authFeature = createFeature({
     })),
     on(AuthActions.loginSuccess, (state, { loginResponse }) => ({
       ...state,
-      status: 'success',
+      status: 'loading',
       error: null,
       isAuthenticated: true,
       user: {
@@ -54,6 +59,20 @@ export const authFeature = createFeature({
         username: loginResponse.username,
       },
       token: loginResponse.token,
+    })),
+    on(AuthActions.initAcademicYear, (state, { academicYear }) => ({
+      ...state,
+      status: 'success',
+      error: null,
+      isAuthenticated: true,
+      academicYear: academicYear,
+    })),
+    on(AuthActions.changeAcademicYear, (state, { academicYear }) => ({
+      ...state,
+      status: 'success',
+      error: null,
+      isAuthenticated: true,
+      academicYear: academicYear,
     })),
     on(AuthActions.loginFailure, (state, { error }) => ({
       ...state,

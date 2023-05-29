@@ -69,9 +69,30 @@
             </div>
           </div>
         </div>
+        <div class="field" [style]="{ width: '500px' }">
+          <label class="mb-3">Aftësi Ndryshe? *</label>
+          <div class="formgrid grid">
+            <div class="field-radiobutton col-6">
+              <p-radioButton
+                id="IsANTrue"
+                name="IsAN"
+                [value]="true"
+                [(ngModel)]="student.isAN"></p-radioButton>
+              <label for="IsANTrue">Po</label>
+            </div>
+            <div class="field-radiobutton col-6">
+              <p-radioButton
+                id="IsANFalse"
+                name="IsAN"
+                [value]="false"
+                [(ngModel)]="student.isAN"></p-radioButton>
+              <label for="IsANFalse">Jo</label>
+            </div>
+          </div>
+        </div>
 
         <div class="field" [style]="{ width: '500px' }">
-          <label for="SchoolFinished">Shkolla që ke perfunduar *</label>
+          <label for="SchoolFinished">Shkolla që ke përfunduar *</label>
           <div class="formgrid grid">
             <div class="field-radiobutton col-6">
               <p-radioButton
@@ -152,21 +173,19 @@
             [ngClass]="{
               'ng-invalid ng-dirty': submitted && !student.idCard
             }" />
-          <small
-            class="p-error block"
-            *ngIf="submitted && (student.nid === '' || student.nid === null)">
+          <small class="p-error block" *ngIf="submitted && !student.idCard">
             NID është fushë e kërkuar.
           </small>
           <small
             class="p-error block"
             *ngIf="
-              nidModel.touched ||
-              ((nidModel.errors &&
-              nidModel.errors?.['albanianNidValidator']))
+              (nidModel.touched || nidModel.dirty) &&
+              (nidModel.errors?.['required'] ||
+                nidModel.errors?.['albanianNidValidator'])
             ">
             NID nuk i përshtatet formatit shqiptar. Duhet të përmbajë
-            minimimalisht 10 karaktere , duhet të fillojë dhe të mbarojë me gërme
-            të madhe.
+            10 karaktere, të fillojë dhe të mbarojë me gërma
+            të mëdha.
           </small>
         </div>
 
