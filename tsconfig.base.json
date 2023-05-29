@@ -30,6 +30,22 @@
       "@msh/applications/feat-applications": [
         "libs/applications/feat-applications/src/index.ts"
       ],
+      "@msh/audit-log": ["libs/audit-log/src/index.ts"],
+      "@msh/audit-log/data-access-audit-log": [
+        "libs/audit-log/data-access-audit-log/src/index.ts"
+      ],
+      "@msh/audit-logs/data-access-audit-log": [
+        "libs/audit-logs/data-access-audit-log/src/index.ts"
+      ],
+      "@msh/audit-logs/domain-audit-log": [
+        "libs/audit-logs/domain-audit-log/src/index.ts"
+      ],
+      "@msh/audit-logs/domain-evaluations-audit-log": [
+        "libs/audit-logs/domain-evaluations-audit-log/src/index.ts"
+      ],
+      "@msh/audit-logs/feat-audit-log": [
+        "libs/audit-logs/feat-audit-log/src/index.ts"
+      ],
       "@msh/auth/data-access-auth": ["libs/auth/data-access-auth/src/index.ts"],
       "@msh/auth/feat-auth": ["libs/auth/feat-auth/src/index.ts"],
       "@msh/configurations/data-access-configurations": [

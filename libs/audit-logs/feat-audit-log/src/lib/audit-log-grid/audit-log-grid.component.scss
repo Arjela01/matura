@@ -1,0 +1,87 @@
+:host {
+  display: block;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 12px;
+}
+
+th {
+  text-align: left;
+  padding: 0.5rem 1rem;
+  border: 1px solid #e4e4e4;
+  border-width: 0 0 1px 0;
+  font-weight: 500;
+  color: #475467;
+  transition: none;
+  background: #f9fafb;
+}
+
+td {
+  text-align: left;
+  border: 1px solid #e4e4e4;
+  border-width: 0 0 1px 0;
+  padding: 0.2rem 1rem;
+}
+
+.btn {
+  background: transparent;
+  border: none;
+  color: #495057;
+  font-size: 1rem;
+  padding: 0.375rem 0.75rem;
+  cursor: pointer;
+  outline: none;
+  transition: box-shadow 0.2s ease-in-out;
+
+}
+.btn:active {
+  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.1);
+}
+.pagination-link {
+  padding: 0.375rem 0.75rem;
+  color: #495057;
+  background-color: #fff;
+  cursor: pointer;
+  min-width: 3rem;
+  height: 3rem;
+  margin: 0.143rem;
+  transition: none;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination-link.active {
+  background: rgba(63, 81, 181, 0.12);
+  border-color: rgba(63, 81, 181, 0.12);
+  color: var(--background);
+}
+
+.pagination-link:hover {
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+
+
+.scroll{
+  overflow-x: auto;
+  display: flex;
+}
+
+.scroll::-webkit-scrollbar {
+  height: 9px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+  background-color: var(--table-scrollbar-200);
+  border-radius: 4px;
+}
+
+.scroll::-webkit-scrollbar-track {
+  background-color: var(--table-scrollbar-100);
+  border-radius: 4px;
+}
+

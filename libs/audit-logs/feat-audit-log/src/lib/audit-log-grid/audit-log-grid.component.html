@@ -1,0 +1,57 @@
+<div class="flex ml-2 mb-2 page-header mb-header">
+  <h2 class="flex-1">Query Name: {{ queryName }}</h2>
+</div>
+
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <div class="scroll">
+        <table>
+          <thead>
+            <ng-container *ngIf="data.length > 0; else noData">
+              <tr>
+                <th
+                  *ngFor="
+                    let key of data[indexHeader] | keyvalue
+                  ">
+                  {{ key.key }}
+                </th>
+              </tr>
+            </ng-container>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of data">
+              <td *ngFor="let key of item | keyvalue">{{ key.value }}</td>
+            </tr>
+            <ng-template #noData>
+              <tr>
+                <td colspan="2">No data available</td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+      </div>
+      <div class="my-2 flex sm:justify-content-center align-items-end">
+        <button
+          [disabled]="!hasPreviousPage"
+          class="my-2 btn"
+          (click)="goBack()">
+          <i class="pi pi-chevron-left"></i>
+        </button>
+        <span
+          class="pagination-link"
+          *ngFor="let page of paginationArray"
+          [class.active]="currentPage === page"
+          (click)="goToPage(page)">
+          {{ page }}
+        </span>
+        <button
+          [disabled]="!hasNextPage"
+          class="my-2 btn"
+          (click)="goNext()">
+          <i class="pi pi-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

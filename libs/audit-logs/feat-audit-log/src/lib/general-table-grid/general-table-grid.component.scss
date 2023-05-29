@@ -1,0 +1,27 @@
+:host {
+  display: block;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  text-align: left;
+  padding: 0.5rem 1rem;
+  border: 1px solid #e4e4e4;
+  border-width: 0 0 1px 0;
+  font-weight: 500;
+  color: #475467;
+  transition: none;
+  background: #f9fafb;
+}
+
+td {
+  text-align: left;
+  border: 1px solid #e4e4e4;
+  border-width: 0 0 1px 0;
+  padding: 1rem 1rem;
+  cursor: pointer;
+
+}
