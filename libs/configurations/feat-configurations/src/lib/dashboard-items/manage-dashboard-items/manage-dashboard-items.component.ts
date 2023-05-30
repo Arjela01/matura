@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component, OnInit,
+  Component,
 } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -13,20 +13,19 @@ import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
 import {
+  GRID_ACTIONS,
   GlobalToastService,
   GridEvent,
-  GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 
-import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
+import { DashboardItemsApiService } from '@msh/configurations/data-access-configurations';
+import { DropdownModel } from '@msh/shared/data-access-shared';
+import { DashboardItem } from '@msh/shared/domain-models';
 import { RippleModule } from 'primeng/ripple';
+import { BehaviorSubject } from 'rxjs';
 import { DashboardItemsFormComponent } from '../dashboard-items-form/dashboard-items-form.component';
 import { DashboardItemsGridComponent } from '../dashboard-items-grid/dashboard-items-grid.component';
-import { DashboardItem } from '@msh/shared/domain-models';
-import {
-  DashboardItemsApiService,
-} from '@msh/configurations/data-access-configurations';
-import { DropdownModel } from '@msh/shared/data-access-shared';
 
 @UntilDestroy()
 @Component({
@@ -63,12 +62,12 @@ export class ManageDashboardItemsComponent {
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly dashboardItemsService: DashboardItemsApiService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private router: Router
   ) {}
 
   onNewClick() {
-    this.displayModal = true;
-    this.selectedDashboardItem = {} as DashboardItem;
+    this.router.navigate(['configurations/dashboard-items/add']);
   }
   onModalClose() {
     this.displayModal = false;
@@ -84,7 +83,7 @@ export class ManageDashboardItemsComponent {
       },
     });
   }
-  onGridEvent(event: GridEvent<DashboardItem | DashboardItem[]>) {
+  onGridEvent(event: GridEvent<any>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
         this.selectedDashboardItems = [
@@ -108,11 +107,9 @@ export class ManageDashboardItemsComponent {
         this.selectedDashboardItems = [];
         break;
       case GRID_ACTIONS.EDIT:
-        this.selectedDashboardItem = Object.assign(
-          {},
-          event.data as DashboardItem,
-        );
-        this.displayModal = true;
+        this.router.navigate([
+          'configurations/dashboard-items/add/' + event.data?.id,
+        ]);
         break;
       case GRID_ACTIONS.CUSTOM_ACTION2:
         this.downloadDocument(event.data as DashboardItem);

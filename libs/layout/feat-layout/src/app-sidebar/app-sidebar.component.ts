@@ -122,8 +122,10 @@ export class AppSidebarComponent implements OnInit {
           this.userProfile$.next(user.data);
           this.userProfile = Object.assign({}, user.data);
           this.academicYears = academicYear.data;
-          this.avatarLabel =
-            user.data.firstName.charAt(0) + user.data.lastName.charAt(0);
+          if (user.data && user.data.firstName) {
+            this.avatarLabel =
+              user.data.firstName.charAt(0) + user.data.lastName.charAt(0);
+          }
         });
     }
   }
