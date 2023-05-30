@@ -40,7 +40,7 @@
         </button>
         <span
           class="pagination-link"
-          *ngFor="let page of paginationArray"
+          *ngFor="let page of visiblePages"
           [class.active]="currentPage === page"
           (click)="goToPage(page)">
           {{ page }}

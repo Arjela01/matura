@@ -1,4 +1,5 @@
-export const ADMINISTRATION_OFFICE_QUERY = `
+
+ export const ADMINISTRATION_OFFICE_QUERY = `
   query AdministrationOffice($pagesize: Int, $skip: Int) {
     administrationOffice(take: $pagesize, skip: $skip) {
     totalCount
@@ -1100,3 +1101,10 @@ export const A1_FORMS = `
       }
       }
       `
+ export const queriesMap: Map<string, string> = new Map([
+   ['a1Forms', A1_FORMS],
+   ['students', STUDENTS],
+   ['administrationOffice', ADMINISTRATION_OFFICE_QUERY],
+   ['examType', EXAM_TYPE_QUERY],
+   ['carriedGrade', CARRIED_GRADE],
+ ]);

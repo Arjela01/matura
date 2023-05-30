@@ -4,13 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from 'primeng/button';
-import {
-  A1_FORMS,
-  ADMINISTRATION_OFFICE_QUERY,
-  CARRIED_GRADE,
-  EXAM_TYPE_QUERY,
-  STUDENTS,
-} from './queries';
+import { queriesMap } from './queries';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -23,12 +17,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AuditLogGridComponent implements OnInit {
   data: any[] = [];
-  queryName!: string;
+  queryName!: any;
   baseQuery!: string;
+  visiblePages: number[] = [];
 
   hasNextPage = false;
   hasPreviousPage = false;
-  pagesize = 20;
+  pageSize = 20;
   totalCount = 0;
   indexHeader = 0;
   currentPage = 1;
@@ -55,25 +50,11 @@ export class AuditLogGridComponent implements OnInit {
     this.fetchData();
   }
   fetchData() {
-    const skip = (this.currentPage - 1) * this.pagesize;
-    switch (this.queryName) {
-      case 'administrationOffice':
-        this.baseQuery = ADMINISTRATION_OFFICE_QUERY;
-        break;
-      case 'examType':
-        this.baseQuery = EXAM_TYPE_QUERY;
-        break;
-      case 'carriedGrade':
-        this.baseQuery = CARRIED_GRADE;
-        break;
-      case 'students':
-        this.baseQuery = STUDENTS;
-        break;
-      case 'a1Forms':
-        this.baseQuery = A1_FORMS;
-        break;
-      default:
-        this.baseQuery = '';
+    const skip = (this.currentPage - 1) * this.pageSize;
+    this.baseQuery = queriesMap.get(this.queryName) || '';
+
+    if (this.baseQuery === '') {
+      return;
     }
 
     this.apollo
@@ -82,7 +63,7 @@ export class AuditLogGridComponent implements OnInit {
           ${this.baseQuery}
         `,
         variables: {
-          pagesize: this.pagesize,
+          pagesize: this.pageSize,
           skip: skip,
         },
       })
@@ -95,12 +76,25 @@ export class AuditLogGridComponent implements OnInit {
           result.data?.[this.queryName].pageInfo?.hasPreviousPage;
         this.hasNextPage = result.data?.[this.queryName].pageInfo?.hasNextPage;
         const totalRecords = result.data?.[this.queryName].totalCount || 0;
-        this.totalCount = Math.ceil(totalRecords / this.pagesize);
+        this.totalCount = Math.ceil(totalRecords / this.pageSize);
         this.updatePaginationArray();
       });
   }
 
   updatePaginationArray() {
+    const totalVisibleLinks = 5;
+    const halfVisibleLinks = Math.floor(totalVisibleLinks / 2);
+    const startPage = Math.max(this.currentPage - halfVisibleLinks, 1);
+    const endPage = Math.min(
+      startPage + totalVisibleLinks - 1,
+      this.totalCount
+    );
+
+    this.visiblePages = Array.from(
+      { length: endPage - startPage + 1 },
+      (_, i) => startPage + i
+    );
+
     this.paginationArray = Array.from(
       { length: this.totalCount },
       (_, i) => i + 1
