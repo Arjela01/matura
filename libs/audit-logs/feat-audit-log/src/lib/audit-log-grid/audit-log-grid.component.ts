@@ -44,7 +44,14 @@ export class AuditLogGridComponent implements OnInit {
     this.currentPage = page;
     this.fetchData();
   }
-
+  goToLastPage() {
+    this.currentPage = this.totalCount;
+    this.fetchData();
+  }
+  goToFirstPage(){
+    this.currentPage = 1;
+    this.fetchData();
+  }
   ngOnInit() {
     this.queryName = this.route.snapshot.queryParams['queryName'];
     this.fetchData();

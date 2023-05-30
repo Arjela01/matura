@@ -10,10 +10,7 @@
           <thead>
             <ng-container *ngIf="data.length > 0; else noData">
               <tr>
-                <th
-                  *ngFor="
-                    let key of data[indexHeader] | keyvalue
-                  ">
+                <th *ngFor="let key of data[indexHeader] | keyvalue">
                   {{ key.key }}
                 </th>
               </tr>
@@ -35,8 +32,14 @@
         <button
           [disabled]="!hasPreviousPage"
           class="my-2 btn"
+          (click)="goToFirstPage()">
+          <i class="pi pi-angle-double-left"></i>
+        </button>
+        <button
+          [disabled]="!hasPreviousPage"
+          class="my-2 btn"
           (click)="goBack()">
-          <i class="pi pi-chevron-left"></i>
+          <i class="pi pi-angle-left"></i>
         </button>
         <span
           class="pagination-link"
@@ -45,11 +48,14 @@
           (click)="goToPage(page)">
           {{ page }}
         </span>
+        <button [disabled]="!hasNextPage" class="my-2 btn" (click)="goNext()">
+          <i class="pi pi-angle-right"></i>
+        </button>
         <button
           [disabled]="!hasNextPage"
           class="my-2 btn"
-          (click)="goNext()">
-          <i class="pi pi-chevron-right"></i>
+          (click)="goToLastPage()">
+          <i class="pi pi-angle-double-right"></i>
         </button>
       </div>
     </div>
