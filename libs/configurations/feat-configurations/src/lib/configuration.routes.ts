@@ -69,7 +69,7 @@ export const CONFIGURATION_ROUTES: Route[] = [
     loadComponent: () =>
       import(
         './diploma-requirement-exception/manage-diploma-requirement-exception/manage-diploma-requirement-exception.component'
-        ).then(m => m.ManageDiplomaRequirementExceptionComponent),
+      ).then(m => m.ManageDiplomaRequirementExceptionComponent),
   },
   {
     path: 'menu',
@@ -238,6 +238,20 @@ export const CONFIGURATION_ROUTES: Route[] = [
       import(
         './dashboard-items/manage-dashboard-items/manage-dashboard-items.component'
       ).then(m => m.ManageDashboardItemsComponent),
+  },
+  {
+    path: 'dashboard-items/add',
+    loadComponent: () =>
+      import(
+        './dashboard-items/dashboard-items-form/dashboard-items-form.component'
+      ).then(m => m.DashboardItemsFormComponent),
+  },
+  {
+    path: 'dashboard-items/add/:id',
+    loadComponent: () =>
+      import(
+        './dashboard-items/dashboard-items-form/dashboard-items-form.component'
+      ).then(m => m.DashboardItemsFormComponent),
   },
   {
     path: 'dashboard-sections',

@@ -6,7 +6,8 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
+import { DashboardItem } from '@msh/shared/domain-models';
+import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -14,7 +15,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import {DashboardItem} from "@msh/shared/domain-models";
 
 @Component({
   selector: 'msh-dashboard-items-grid',
@@ -44,7 +44,6 @@ export class DashboardItemsGridComponent {
   >();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
-
 
   onDownloadClick(dashboardItems: DashboardItem) {
     this.gridEvent.emit({
