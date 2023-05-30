@@ -37,7 +37,13 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { CalendarModule } from 'primeng/calendar';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { Observable, forkJoin, of, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  combineLatest,
+  of,
+  switchMap,
+} from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -67,7 +73,8 @@ import { Observable, forkJoin, of, switchMap } from 'rxjs';
 export class DashboardItemsFormComponent implements OnInit {
   @Input() roles: DropdownModel<number>[] = [];
   @Input() users: DropdownModel<number>[] = [];
-  sectionDashboard: DropdownModel<number>[] = [];
+  sectionDashboard: BehaviorSubject<DropdownModel<number>[]> =
+    new BehaviorSubject<DropdownModel<number>[]>([]);
   formattedStartDate: any;
   formattedEndDate: any;
   rolesArray: any = [];
@@ -96,7 +103,7 @@ export class DashboardItemsFormComponent implements OnInit {
   submitted = false;
 
   dashboardItem: DashboardItem = {
-    dashboardSectionId: 0,
+    dashboardSectionId: '',
     description: '',
     document: '',
     documentName: '',
@@ -132,7 +139,7 @@ export class DashboardItemsFormComponent implements OnInit {
         .pipe(
           switchMap((item: any) => {
             // console.log(this.dashboardItem);
-            return forkJoin([
+            return combineLatest([
               this.getRoles(),
               this.getDashboardSections(),
               this.getUsers(),
@@ -149,25 +156,20 @@ export class DashboardItemsFormComponent implements OnInit {
           );
           item.users = this.usersArray;
           item.roles = this.rolesArray;
-          console.log(item.users);
-          this.sectionDashboard = [...sections.data];
+          this.sectionDashboard.next(sections.data);
           this.roles = [...roles.data];
-          this.users = [...users.data];
-          this.dashboardItem = Object.assign({}, item as DashboardItem);
-          console.log(this.dashboardItem);
-          this.cd.detectChanges();
+          this.dashboardItem = { ...item };
+          this.dashboardItem.dashboardSectionId = item.dashboardSectionId;
         });
     } else {
-      forkJoin([
+      combineLatest([
         this.getRoles(),
         this.getDashboardSections(),
         this.getUsers(),
       ]).subscribe(([roles, sections, users]) => {
-        this.sectionDashboard = [...sections.data];
+        this.sectionDashboard.next(sections.data);
         this.roles = [...roles.data];
         this.users = [...users.data];
-        this.cd.markForCheck();
-        console.log(this.submitted);
       });
     }
   }
@@ -206,11 +208,12 @@ export class DashboardItemsFormComponent implements OnInit {
       if (this.dashboardItem.id === 0) {
         delete this.dashboardItem.id;
       }
+      this.dashboardItem;
       this.dashboardItem.roles = this.dashboardItem.roles.map(
-        (data: any) => data.id
+        (data: any) => data.key
       );
       this.dashboardItem.users = this.dashboardItem.users.map(
-        (data: any) => data.id
+        (data: any) => data.key
       );
       this.dashboardItemsApiService
         .save(this.dashboardItem)
