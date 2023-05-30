@@ -200,5 +200,6 @@ export class AppSidebarComponent implements OnInit {
     const { key: id, value: year } = yearToFind;
     console.log({ id, year });
     this.authFacade.changeAcademicYear({ id, year });
+    this.displayModal = false;
   }
 }

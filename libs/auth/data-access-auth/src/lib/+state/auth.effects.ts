@@ -153,10 +153,10 @@ export class AuthEffects {
         ofType(AuthActions.changeAcademicYear),
         tap(action => {
           this.storageService.setItem(ACADEMIC_YEAR_KEY, action.academicYear);
-          this.router.navigate(['/']);
-          setTimeout(() => {
-            window.location.reload();
-          }, 500);
+          // this.router.navigate(['/']);
+          // setTimeout(() => {
+          //   window.location.reload();
+          // }, 500);
         })
       ),
     { dispatch: false }
