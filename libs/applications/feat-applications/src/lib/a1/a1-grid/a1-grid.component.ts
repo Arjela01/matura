@@ -23,7 +23,13 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
-import { BehaviorSubject, distinctUntilChanged, of, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  distinctUntilChanged,
+  map,
+  of,
+  switchMap,
+} from 'rxjs';
 @Component({
   selector: 'a1-grid',
   standalone: true,
@@ -77,10 +83,11 @@ export class A1GridComponent {
   ngOnInit() {
     this.authFacade.academicYear$
       .pipe(
+        map((data: any) => data.id),
         distinctUntilChanged(),
         switchMap(data => {
           if (this.filters) {
-            this.getA1(this.filters as LazyLoadEvent);
+            window.location.reload();
           }
 
           return of([]);
