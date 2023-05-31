@@ -98,7 +98,6 @@
   class="p-fluid"
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
-
     <msh-shared-student-lookup
       [students]="(studentList$ | async) || []"
       [totalRecords]="totalRecords"

@@ -17,14 +17,13 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { GlobalToastService, GridEvent } from '@msh/shared/util-shared';
+import { GridEvent } from '@msh/shared/util-shared';
 
 import { DialogModule } from 'primeng/dialog';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { LazyLoadEvent } from 'primeng/api';
 import { FileUploadModule } from 'primeng/fileupload';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { ExamAssignmentApiService } from '@msh/configurations/data-access-configurations';
 
 @UntilDestroy()
 @Component({
@@ -87,10 +86,7 @@ export class AssignAllFormComponent {
   assigned = false;
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(
-    private readonly examAssignmentService: ExamAssignmentApiService,
-    private readonly toastService: GlobalToastService
-  ) {}
+  constructor() {}
 
   onCancelClick() {
     this.formClose.emit();

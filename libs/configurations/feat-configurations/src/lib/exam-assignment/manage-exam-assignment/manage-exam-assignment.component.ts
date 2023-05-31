@@ -18,7 +18,6 @@ import {
   ExamSiteApiService,
 } from '@msh/configurations/data-access-configurations';
 import {
-  AdministrationOffice,
   ExamAssignment,
 } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
@@ -293,8 +292,7 @@ export class ManageExamAssignmentComponent implements OnInit {
       });
   }
   onAssignAllFormSave(examAssignment: any) {
-      this.assignAll(examAssignment.examSiteId);
-
+    this.assignAll(examAssignment.examSiteId);
   }
   assignAll(examAssignment: any) {
     this.examAssignmentService
