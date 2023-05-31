@@ -2,31 +2,30 @@
   <h2 class="flex-1">Query Name: {{ queryName }}</h2>
 </div>
 
+
 <div class="grid">
   <div class="col-12">
     <div class="card">
       <div class="scroll">
-        <table>
-          <thead>
-            <ng-container *ngIf="data.length > 0; else noData">
-              <tr>
-                <th *ngFor="let key of data[indexHeader] | keyvalue">
-                  {{ key.key }}
-                </th>
-              </tr>
-            </ng-container>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of data">
-              <td *ngFor="let key of item | keyvalue">{{ key.value }}</td>
+        <p-table [value]="data" [paginator]="false"  (onLazyLoad)="loadRows($event)" [lazy]="true">
+          <ng-template pTemplate="header">
+            <tr>
+              <th *ngFor="let key of (data[indexHeader] ?? defaultDataCol)  | keyvalue" p-tableHeader pSortableColumn="{{ key.key }}">
+                {{ key.key }}
+                <p-sortIcon field="{{ key.key }}"></p-sortIcon>
+                <p-columnFilter type="text" field="{{ key.key }}"  [maxConstraints] = "1" display="menu">
+                </p-columnFilter>
+              </th>
             </tr>
-            <ng-template #noData>
-              <tr>
-                <td colspan="2">No data available</td>
-              </tr>
-            </ng-template>
-          </tbody>
-        </table>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData>
+            <tr>
+              <td *ngFor="let value of rowData | keyvalue">
+                {{ value.value }}
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
       </div>
       <div class="my-2 flex sm:justify-content-center align-items-end">
         <button

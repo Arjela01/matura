@@ -13,7 +13,7 @@ import {GeneralTable} from "@msh/audit-logs/domain-audit-log";
 @Component({
   selector: 'msh-general-table-grid',
   standalone: true,
-  imports: [CommonModule, TableModule, RippleModule, ButtonModule, FormsModule,],
+  imports: [CommonModule, TableModule, RippleModule, ButtonModule, FormsModule],
   templateUrl: './general-table-grid.component.html',
   styleUrls: ['./general-table-grid.component.scss'],
   providers: [Apollo],

@@ -1,5 +1,4 @@
-
- export const ADMINISTRATION_OFFICE_QUERY = `
+export const ADMINISTRATION_OFFICE_QUERY = `
   query AdministrationOffice($pagesize: Int, $skip: Int) {
     administrationOffice(take: $pagesize, skip: $skip) {
     totalCount
@@ -80,9 +79,14 @@
     }
   }
 `;
+
 export const EXAM_TYPE_QUERY = `
-  query ExamType($pagesize: Int, $skip: Int) {
-    examType(take: $pagesize, skip: $skip) {
+   query ExamType ($pagesize: Int, $skip: Int,$where: ExamTypeAuditFilterInput){
+   examType(
+   skip: $skip
+   take: $pagesize
+   where: $where
+ ) {
     totalCount
       pageInfo {
         hasNextPage
@@ -321,7 +325,7 @@ export const STUDENTS = `
       }
 
 
-`
+`;
 export const CARRIED_GRADE = `
   query CarriedGrade($pagesize: Int, $skip: Int) {
     carriedGrade(take: $pagesize, skip: $skip) {
@@ -385,7 +389,7 @@ export const A1_FORMS = `
         hasNextPage
         hasPreviousPage
       }
-   items {
+        items {
             auditHostname
             auditSIDUsername
             auditUsername
@@ -789,20 +793,6 @@ export const A1_FORMS = `
                 modifiedBy
                 modifiedIP
                 modifiedOn
-                gender {
-                    name
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
                 highSchool {
                     code
                     name
@@ -821,214 +811,6 @@ export const A1_FORMS = `
                     modifiedBy
                     modifiedIP
                     modifiedOn
-                    administrationOffice {
-                        name
-                        directorName
-                        isRegionalOffice
-                        parentOfficeId
-                        signature
-                        isAllowedToLogin
-                        id
-                        isDeleted
-                        createdBy
-                        createdIP
-                        createdOn
-                        deletedBy
-                        deletedIP
-                        deletedOn
-                        modifiedBy
-                        modifiedIP
-                        modifiedOn
-                        parentOffice {
-                            name
-                            directorName
-                            isRegionalOffice
-                            parentOfficeId
-                            signature
-                            isAllowedToLogin
-                            id
-                            isDeleted
-                            createdBy
-                            createdIP
-                            createdOn
-                            deletedBy
-                            deletedIP
-                            deletedOn
-                            modifiedBy
-                            modifiedIP
-                            modifiedOn
-                            parentOffice {
-                                name
-                                directorName
-                                isRegionalOffice
-                                parentOfficeId
-                                signature
-                                isAllowedToLogin
-                                id
-                                isDeleted
-                                createdBy
-                                createdIP
-                                createdOn
-                                deletedBy
-                                deletedIP
-                                deletedOn
-                                modifiedBy
-                                modifiedIP
-                                modifiedOn
-                                parentOffice {
-                                    name
-                                    directorName
-                                    isRegionalOffice
-                                    parentOfficeId
-                                    signature
-                                    isAllowedToLogin
-                                    id
-                                    isDeleted
-                                    createdBy
-                                    createdIP
-                                    createdOn
-                                    deletedBy
-                                    deletedIP
-                                    deletedOn
-                                    modifiedBy
-                                    modifiedIP
-                                    modifiedOn
-                                    parentOffice {
-                                        name
-                                        directorName
-                                        isRegionalOffice
-                                        parentOfficeId
-                                        signature
-                                        isAllowedToLogin
-                                        id
-                                        isDeleted
-                                        createdBy
-                                        createdIP
-                                        createdOn
-                                        deletedBy
-                                        deletedIP
-                                        deletedOn
-                                        modifiedBy
-                                        modifiedIP
-                                        modifiedOn
-                                        parentOffice {
-                                            name
-                                            directorName
-                                            isRegionalOffice
-                                            parentOfficeId
-                                            signature
-                                            isAllowedToLogin
-                                            id
-                                            isDeleted
-                                            createdBy
-                                            createdIP
-                                            createdOn
-                                            deletedBy
-                                            deletedIP
-                                            deletedOn
-                                            modifiedBy
-                                            modifiedIP
-                                            modifiedOn
-                                            parentOffice {
-                                                name
-                                                directorName
-                                                isRegionalOffice
-                                                parentOfficeId
-                                                signature
-                                                isAllowedToLogin
-                                                id
-                                                isDeleted
-                                                createdBy
-                                                createdIP
-                                                createdOn
-                                                deletedBy
-                                                deletedIP
-                                                deletedOn
-                                                modifiedBy
-                                                modifiedIP
-                                                modifiedOn
-                                                parentOffice {
-                                                    name
-                                                    directorName
-                                                    isRegionalOffice
-                                                    parentOfficeId
-                                                    signature
-                                                    isAllowedToLogin
-                                                    id
-                                                    isDeleted
-                                                    createdBy
-                                                    createdIP
-                                                    createdOn
-                                                    deletedBy
-                                                    deletedIP
-                                                    deletedOn
-                                                    modifiedBy
-                                                    modifiedIP
-                                                    modifiedOn
-                                                    parentOffice {
-                                                        name
-                                                        directorName
-                                                        isRegionalOffice
-                                                        parentOfficeId
-                                                        isAllowedToLogin
-                                                        id
-                                                        isDeleted
-                                                        createdBy
-                                                        createdIP
-                                                        createdOn
-                                                        deletedBy
-                                                        deletedIP
-                                                        deletedOn
-                                                        modifiedBy
-                                                        modifiedIP
-                                                        modifiedOn
-                                                        parentOffice {
-                                                            name
-                                                            directorName
-                                                            isRegionalOffice
-                                                            parentOfficeId
-                                                            signature
-                                                            isAllowedToLogin
-                                                            id
-                                                            isDeleted
-                                                            createdBy
-                                                            createdIP
-                                                            createdOn
-                                                            deletedBy
-                                                            deletedIP
-                                                            deletedOn
-                                                            modifiedBy
-                                                            modifiedIP
-                                                            modifiedOn
-                                                            parentOffice {
-                                                                name
-                                                                directorName
-                                                                isRegionalOffice
-                                                                parentOfficeId
-                                                                signature
-                                                                isAllowedToLogin
-                                                                id
-                                                                isDeleted
-                                                                createdBy
-                                                                createdIP
-                                                                createdOn
-                                                                deletedBy
-                                                                deletedIP
-                                                                deletedOn
-                                                                modifiedBy
-                                                                modifiedIP
-                                                                modifiedOn
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
                 }
                 profile {
                     code
@@ -1048,63 +830,17 @@ export const A1_FORMS = `
                     modifiedBy
                     modifiedIP
                     modifiedOn
-                    academicYear {
-                        isActive
-                        year
-                        id
-                        isDeleted
-                        createdBy
-                        createdIP
-                        createdOn
-                        deletedBy
-                        deletedIP
-                        deletedOn
-                        modifiedBy
-                        modifiedIP
-                        modifiedOn
-                    }
-                    profileGroup {
-                        name
-                        ordering
-                        id
-                        isDeleted
-                        createdBy
-                        createdIP
-                        createdOn
-                        deletedBy
-                        deletedIP
-                        deletedOn
-                        modifiedBy
-                        modifiedIP
-                        modifiedOn
-                    }
-                }
-                registrationYear {
-                    isActive
-                    year
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
                 }
             }
         }
 
-
       }
       }
-      `
- export const queriesMap: Map<string, string> = new Map([
-   ['a1Forms', A1_FORMS],
-   ['students', STUDENTS],
-   ['administrationOffice', ADMINISTRATION_OFFICE_QUERY],
-   ['examType', EXAM_TYPE_QUERY],
-   ['carriedGrade', CARRIED_GRADE],
- ]);
+      `;
+export const queriesMap: Map<string, string> = new Map([
+  ['a1Forms', A1_FORMS],
+  ['students', STUDENTS],
+  ['administrationOffice', ADMINISTRATION_OFFICE_QUERY],
+  ['examType', EXAM_TYPE_QUERY],
+  ['carriedGrade', CARRIED_GRADE],
+]);
