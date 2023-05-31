@@ -84,7 +84,7 @@ export class ReportRendererComponent implements OnInit {
     } else if (this.id === '14') {
       this.router.navigate(['applications/a1z']).then();
     } else {
-      window.history.go(-2);
+      this.router.navigate(['reports']).then();
     }
   }
 }
