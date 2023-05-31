@@ -1,21 +1,14 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import {
-  AdministrationOffice,
-  ExamAssignment,
-  ExamSite,
-  Student,
-} from '@msh/shared/domain-models';
+import { ExamAssignment, Student } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -25,17 +18,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { GlobalToastService, GridEvent } from '@msh/shared/util-shared';
-import {
-  AdministrationOfficeApiService,
-  ExamAssignmentApiService,
-  ExamSiteApiService,
-} from '@msh/configurations/data-access-configurations';
 
 import { DialogModule } from 'primeng/dialog';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { LazyLoadEvent } from 'primeng/api';
 import { FileUploadModule } from 'primeng/fileupload';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { ExamAssignmentApiService } from '@msh/configurations/data-access-configurations';
 
 @UntilDestroy()
 @Component({
@@ -98,7 +87,10 @@ export class AssignAllFormComponent {
   assigned = false;
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor() {}
+  constructor(
+    private readonly examAssignmentService: ExamAssignmentApiService,
+    private readonly toastService: GlobalToastService
+  ) {}
 
   onCancelClick() {
     this.formClose.emit();
@@ -121,5 +113,8 @@ export class AssignAllFormComponent {
 
   onSubmit() {
     this.submitted = true;
+    if (this.form.valid) {
+      this.formSave.emit(this.examAssignment);
+    }
   }
 }

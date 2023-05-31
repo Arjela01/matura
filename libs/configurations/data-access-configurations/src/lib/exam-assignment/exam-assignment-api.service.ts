@@ -76,4 +76,10 @@ export class ExamAssignmentApiService {
       }
     );
   }
+
+  examAssign(examSiteIds: string) : Observable<ApiResult<ExamAssignment>>{
+    return this.apiService.post(`/ExamAssignment/ExamAssign`,{
+      examSiteIds: examSiteIds,
+    })
+  }
 }

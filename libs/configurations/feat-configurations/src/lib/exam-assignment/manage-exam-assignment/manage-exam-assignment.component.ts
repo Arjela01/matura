@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component, OnInit,
+  Component,
+  OnInit,
 } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -55,13 +56,13 @@ import { AssignAllFormComponent } from '../assign-all-form/assign-all-form.compo
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageExamAssignmentComponent implements OnInit{
+export class ManageExamAssignmentComponent implements OnInit {
   private examAssignments$$ = new BehaviorSubject<ExamAssignment[]>([]);
   examAssignments$ = this.examAssignments$$.asObservable();
   filters: LazyLoadEvent | null = null;
 
   totalRecords = 0;
-  examAssignment:ExamAssignment | null = null;
+  examAssignment: ExamAssignment | null = null;
   selectedExamAssignment: ExamAssignment | null = null;
   selectedExamAssignments: ExamAssignment[] = [];
   displayModal = false;
@@ -166,10 +167,10 @@ export class ManageExamAssignmentComponent implements OnInit{
     this.getExamAssignments(this.filters as LazyLoadEvent);
   }
   onAdministrationOfficeChanged(administrationOfficeId: number) {
-      this.getExamSite(administrationOfficeId);
+    this.getExamSite(administrationOfficeId);
   }
   onExamSiteChanged(examSiteId: string) {
-    if (this.examAssignment != null ) {
+    if (this.examAssignment != null) {
       this.examAssignment.examSiteId = examSiteId;
     }
   }
@@ -291,5 +292,28 @@ export class ManageExamAssignmentComponent implements OnInit{
         this.cd.markForCheck();
       });
   }
-}
+  onAssignAllFormSave(examAssignment: any) {
+      this.assignAll(examAssignment.examSiteId);
 
+  }
+  assignAll(examAssignment: any) {
+    this.examAssignmentService
+      .examAssign(examAssignment)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.examAssignment = response.data;
+        if (response.isSuccessful) {
+          this.toastService.showSuccess(
+            'Studentët u caktuan me sukses në qendrat e zgjedhura'
+          );
+          this.displayAssignAllModal = false;
+          this.getExamAssignments(this.filters as LazyLoadEvent);
+        } else this.toastService.showError(response.errorMessage);
+        if (response.isBadRequest) {
+          this.toastService.showError(
+            'Ndodhi një problem gjatë caktimit të studentëve në qendra'
+          );
+        }
+      });
+  }
+}
