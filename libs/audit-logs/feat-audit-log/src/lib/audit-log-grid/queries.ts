@@ -1,7 +1,9 @@
 export const ADMINISTRATION_OFFICE_QUERY = `
   query AdministrationOffice
-  ($pagesize: Int,$skip: Int,$where: AdministrationOfficeAuditFilterInput) {
-    administrationOffice(take: $pagesize, skip: $skip,where: $where) {
+  ($pagesize: Int,$skip: Int,$where: AdministrationOfficeAuditFilterInput,
+  $order:[AdministrationOfficeAuditSortInput!]) {
+    administrationOffice(take: $pagesize, skip: $skip,
+    where: $where,order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -80,13 +82,15 @@ export const ADMINISTRATION_OFFICE_QUERY = `
     }
   }
 `;
-
 export const EXAM_TYPE_QUERY = `
-   query ExamType ($pagesize: Int, $skip: Int,$where: ExamTypeAuditFilterInput){
+   query ExamType ($pagesize: Int, $skip: Int,$where: ExamTypeAuditFilterInput,
+    $order:[ExamTypeAuditSortInput!]){
    examType(
    skip: $skip
    take: $pagesize
    where: $where
+   order: $order
+
  ) {
     totalCount
       pageInfo {
@@ -119,8 +123,9 @@ export const EXAM_TYPE_QUERY = `
   }
 `;
 export const STUDENTS = `
-  query Students($pagesize: Int, $skip: Int,$where: StudentsAuditFilterInput) {
-    students(take: $pagesize, skip: $skip,where: $where
+  query Students($pagesize: Int, $skip: Int,$where: StudentsAuditFilterInput,
+  $order:[StudentsAuditSortInput!]) {
+    students(take: $pagesize, skip: $skip,where: $where,order: $order
 ) {
     totalCount
       pageInfo {
@@ -330,8 +335,9 @@ export const STUDENTS = `
 `;
 export const CARRIED_GRADE = `
   query CarriedGrade
-  ($pagesize: Int, $skip: Int,$where: CarriedGradeAuditFilterInput) {
-    carriedGrade(take: $pagesize, skip: $skip,where: $where) {
+  ($pagesize: Int, $skip: Int,$where: CarriedGradeAuditFilterInput,
+    $order:[CarriedGradeAuditSortInput!]) {
+    carriedGrade(take: $pagesize, skip: $skip,where: $where, order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -385,8 +391,9 @@ export const CARRIED_GRADE = `
 `;
 export const EXAM_SECRET = `
   query ExamSecret
-  ($pagesize: Int, $skip: Int,$where: ExamSecretAuditFilterInput) {
-    examSecret (take: $pagesize, skip: $skip,where: $where) {
+  ($pagesize: Int, $skip: Int,$where: ExamSecretAuditFilterInput,
+    $order:[ExamSecretSortInput!]) {
+    examSecret (take: $pagesize, skip: $skip,where: $where,order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -765,8 +772,9 @@ export const EXAM_SECRET = `
           `;
 export const EXAM_SCORE = `
   query ExamScore
-  ($pagesize: Int, $skip: Int,$where: ExamScoreAuditFilterInput) {
-    examScore (take: $pagesize, skip: $skip,where: $where) {
+  ($pagesize: Int, $skip: Int,$where: ExamScoreAuditFilterInput,
+   $order:[ExamScoreAuditSortInput!]) {
+    examScore (take: $pagesize, skip: $skip,where: $where,order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -1001,8 +1009,10 @@ export const EXAM_SCORE = `
        }
        `;
 export const A1_FORMS = `
-  query A1Forms($pagesize: Int, $skip: Int,$where: A1Z1FormAuditFilterInput ) {
-    a1Forms(take: $pagesize, skip: $skip,where: $where) {
+  query A1Forms($pagesize: Int, $skip: Int,$where: A1Z1FormAuditFilterInput,
+  $order:[A1Z1FormAuditSortInput!]) {
+    a1Forms(take: $pagesize, skip: $skip,where: $where,order: $order
+) {
     totalCount
       pageInfo {
         hasNextPage
@@ -1457,8 +1467,9 @@ export const A1_FORMS = `
       }
       `;
 export const A1Z_FORMS = `
-  query A1ZForms($pagesize: Int, $skip: Int,$where: A1Z1FormAuditFilterInput ) {
-    a1ZForms(take: $pagesize, skip: $skip,where: $where) {
+  query A1ZForms($pagesize: Int, $skip: Int,$where: A1Z1FormAuditFilterInput,
+  $order:[A1ZFormsAuditSortInput!]) {
+    a1ZForms(take: $pagesize, skip: $skip,where: $where,order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -1907,8 +1918,9 @@ export const A1Z_FORMS = `
 `;
 export const EXAM_DATE = `
   query ExamDate
-  ($pagesize: Int, $skip: Int,$where: ExamDateAuditFilterInput) {
-    examDate (take: $pagesize, skip: $skip,where: $where) {
+  ($pagesize: Int, $skip: Int,$where: ExamDateAuditFilterInput,
+  $order:[ExamDateAuditSortInput!]) {
+    examDate (take: $pagesize, skip: $skip,where: $where, order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -2020,8 +2032,9 @@ export const EXAM_DATE = `
 `;
 export const EXAM_COPY_REQUEST = `
   query ExamCopyRequest
-  ($pagesize: Int, $skip: Int,$where: ExamCopyRequestAuditFilterInput) {
-    examCopyRequest (take: $pagesize, skip: $skip,where: $where) {
+  ($pagesize: Int, $skip: Int,$where: ExamCopyRequestAuditFilterInput,
+  $order:[ExamCopyRequestAuditSortInput!]) {
+    examCopyRequest (take: $pagesize, skip: $skip,where: $where,order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -2080,8 +2093,9 @@ export const EXAM_COPY_REQUEST = `
 `;
 export const EXAM_ASSIGNMENT = `
   query ExamAssignment
-  ($pagesize: Int, $skip: Int,$where: ExamAssignmentAuditFilterInput) {
-    examAssignment (take: $pagesize, skip: $skip,where: $where) {
+  ($pagesize: Int, $skip: Int,$where: ExamAssignmentAuditFilterInput,
+  $order:[ExamAssignmentAuditSortInput!]) {
+    examAssignment (take: $pagesize, skip: $skip,where: $where,order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -2305,8 +2319,9 @@ export const EXAM_ASSIGNMENT = `
        `;
 export const ARCHIVE_EXAM = `
   query ArchiveExam
-  ($pagesize: Int, $skip: Int,$where: ArchiveExamAuditFilterInput) {
-    archiveExam (take: $pagesize, skip: $skip,where: $where) {
+  ($pagesize: Int, $skip: Int,$where: ArchiveExamAuditFilterInput,
+    $order:[ArchiveExamAuditSortInput!]) {
+    archiveExam (take: $pagesize, skip: $skip,where: $where,order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -2486,8 +2501,9 @@ export const ARCHIVE_EXAM = `
        `;
 export const ARCHIVE_FOLDER = `
   query ArchiveFolder
-  ($pagesize: Int, $skip: Int,$where: ArchiveFolderAuditFilterInput) {
-    archiveFolder (take: $pagesize, skip: $skip,where: $where) {
+  ($pagesize: Int, $skip: Int,$where: ArchiveFolderAuditFilterInput,
+   $order:[ArchiveFolderAuditSortInput!]) {
+    archiveFolder (take: $pagesize, skip: $skip,where: $where,order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -2617,8 +2633,9 @@ export const ARCHIVE_FOLDER = `
 `;
 export const AVERAGE_GRADE = `
   query AverageGrade
-  ($pagesize: Int, $skip: Int,$where: AverageGradeAuditFilterInput) {
-    averageGrade (take: $pagesize, skip: $skip,where: $where) {
+  ($pagesize: Int, $skip: Int,$where: AverageGradeAuditFilterInput,
+   $order:[AverageGradeAuditSortInput!]) {
+    averageGrade (take: $pagesize, skip: $skip,where: $where,order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -2768,8 +2785,9 @@ export const AVERAGE_GRADE = `
        `;
 export const PROFILE_GROUP = `
   query ProfileGroup
-  ($pagesize: Int, $skip: Int,$where: ProfileGroupAuditFilterInput) {
-    profileGroup (take: $pagesize, skip: $skip,where: $where) {
+  ($pagesize: Int, $skip: Int,$where: ProfileGroupAuditFilterInput,
+  $order:[ProfileGroupAuditSortInput!]) {
+    profileGroup (take: $pagesize, skip: $skip,where: $where,order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -2800,8 +2818,9 @@ export const PROFILE_GROUP = `
        `;
 export const PROFILE = `
   query Profile
-  ($pagesize: Int, $skip: Int,$where: ProfileAuditFilterInput) {
-    profile (take: $pagesize, skip: $skip,where: $where) {
+  ($pagesize: Int, $skip: Int,$where: ProfileAuditFilterInput,
+   $order:[ProfileAuditSortInput!]) {
+    profile (take: $pagesize, skip: $skip,where: $where,order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -2866,8 +2885,9 @@ export const PROFILE = `
        `;
 export const STUDENT_BAN = `
   query StudentBan
-  ($pagesize: Int, $skip: Int,$where: StudentBanAuditFilterInput) {
-    studentBan (take: $pagesize, skip: $skip,where: $where) {
+  ($pagesize: Int, $skip: Int,$where: StudentBanAuditFilterInput,
+   $order:[StudentBanAuditSortInput!]) {
+    studentBan (take: $pagesize, skip: $skip,where: $where,order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -3023,8 +3043,9 @@ export const STUDENT_BAN = `
       `;
 export const STUDY_PROGRAM = `
   query StudyProgram
-  ($pagesize: Int, $skip: Int,$where: StudyProgramAuditFilterInput) {
-    studyProgram (take: $pagesize, skip: $skip,where: $where) {
+  ($pagesize: Int, $skip: Int,$where: StudyProgramAuditFilterInput,
+   $order:[StudyProgramAuditSortInput!]) {
+    studyProgram (take: $pagesize, skip: $skip,where: $where,order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -3127,8 +3148,9 @@ export const STUDY_PROGRAM = `
 `;
 export const STUDY_SUBJECT = `
   query StudySubject
-  ($pagesize: Int, $skip: Int,$where: StudySubjectAuditFilterInput) {
-    studySubject (take: $pagesize, skip: $skip,where: $where) {
+  ($pagesize: Int, $skip: Int,$where: StudySubjectAuditFilterInput,
+   $order:[StudySubjectAuditSortInput!]) {
+    studySubject (take: $pagesize, skip: $skip,where: $where,order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -3158,8 +3180,9 @@ export const STUDY_SUBJECT = `
        }`;
 export const HIGH_SCHOOL = `
   query HighSchool
-  ($pagesize: Int, $skip: Int,$where: HighSchoolAuditFilterInput) {
-    highSchool (take: $pagesize, skip: $skip,where: $where) {
+  ($pagesize: Int, $skip: Int,$where: HighSchoolAuditFilterInput,
+    $order:[HighSchoolAuditSortInput!]) {
+    highSchool (take: $pagesize, skip: $skip,where: $where,order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -3256,11 +3279,12 @@ export const HIGH_SCHOOL = `
         }
        }
        }
-       `
+       `;
 export const GRADE_SCALE = `
   query GradeScale
-  ($pagesize: Int, $skip: Int,$where: GradeScaleAuditFilterInput) {
-    gradeScale (take: $pagesize, skip: $skip,where: $where) {
+  ($pagesize: Int, $skip: Int,$where: GradeScaleAuditFilterInput,
+  $order:[GradeScaleAuditSortInput!]) {
+    gradeScale (take: $pagesize, skip: $skip,where: $where,order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -3338,11 +3362,12 @@ export const GRADE_SCALE = `
 
        }
        }
-       `
+       `;
 export const FAILING_STUDENT = `
   query FailingStudent
-  ($pagesize: Int, $skip: Int,$where: FailingStudentAuditFilterInput) {
-    failingStudent (take: $pagesize, skip: $skip,where: $where) {
+  ($pagesize: Int, $skip: Int,$where: FailingStudentAuditFilterInput,
+   $order:[FailingStudentAuditSortInput!]) {
+    failingStudent (take: $pagesize, skip: $skip,where: $where, order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -3457,11 +3482,12 @@ export const FAILING_STUDENT = `
         }
        }
        }
-       `
+       `;
 export const EXAM_VERSION = `
   query ExamVersion
-  ($pagesize: Int, $skip: Int,$where: ExamVersionAuditFilterInput) {
-    examVersion (take: $pagesize, skip: $skip,where: $where) {
+  ($pagesize: Int, $skip: Int,$where: ExamVersionAuditFilterInput,
+   $order:[ExamVersionAuditSortInput!]) {
+    examVersion (take: $pagesize, skip: $skip,where: $where,order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -3573,11 +3599,12 @@ export const EXAM_VERSION = `
 
        }
        }
-       `
+       `;
 export const EXAM_SUBJECT = `
   query ExamSubject
-  ($pagesize: Int, $skip: Int,$where: ExamSubjectAuditFilterInput) {
-    examSubject (take: $pagesize, skip: $skip,where: $where) {
+  ($pagesize: Int, $skip: Int,$where: ExamSubjectAuditFilterInput,
+   $order:[ExamSubjectAuditSortInput!]) {
+    examSubject (take: $pagesize, skip: $skip,where: $where, order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -3639,11 +3666,13 @@ export const EXAM_SUBJECT = `
         }
        }
        }
-       `
+       `;
 export const EXAM_SUBJECT_PROFILE = `
   query ExamSubjectProfile
-  ($pagesize: Int, $skip: Int,$where: ExamSubjectProfileAuditFilterInput) {
-    examSubjectProfile (take: $pagesize, skip: $skip,where: $where) {
+  ($pagesize: Int, $skip: Int,$where: ExamSubjectProfileAuditFilterInput,
+   $order:[ExamSubjectProfileAuditSortInput!]) {
+    examSubjectProfile (take: $pagesize, skip: $skip,where: $where,
+    order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -3766,11 +3795,12 @@ export const EXAM_SUBJECT_PROFILE = `
             }
         }
 }
-}`
+}`;
 export const EXAM_SITE = `
   query ExamSite
-  ($pagesize: Int, $skip: Int,$where: ExamSiteAuditFilterInput) {
-    examSite (take: $pagesize, skip: $skip,where: $where) {
+  ($pagesize: Int, $skip: Int,$where: ExamSiteAuditFilterInput,
+    $order:[ExamSiteAuditSortInput!]) {
+    examSite (take: $pagesize, skip: $skip,where: $where,order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -3831,11 +3861,7 @@ export const EXAM_SITE = `
             }
         }
        }
-       }`
-
-
-
-
+       }`;
 
 export const queriesMap: Map<string, string> = new Map([
   ['a1Forms', A1_FORMS],
@@ -3863,5 +3889,5 @@ export const queriesMap: Map<string, string> = new Map([
   ['examVersion', EXAM_VERSION],
   ['examSubject', EXAM_SUBJECT],
   ['examSubjectProfile', EXAM_SUBJECT_PROFILE],
-  ['examSite', EXAM_SITE]
+  ['examSite', EXAM_SITE],
 ]);

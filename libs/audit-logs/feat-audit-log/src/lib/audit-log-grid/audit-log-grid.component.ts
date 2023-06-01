@@ -7,9 +7,11 @@ import { ButtonModule } from 'primeng/button';
 import { queriesMap } from './queries';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { FilterService, LazyLoadEvent, SelectItem } from 'primeng/api';
+import {  LazyLoadEvent, SelectItem } from 'primeng/api';
 import { WhereBuilder } from './query-builder';
 
+const SORT_ASC = 'ASC';
+const SORT_DESC = 'DESC';
 @Component({
   selector: 'msh-audit-log-grid',
   standalone: true,
@@ -32,17 +34,14 @@ export class AuditLogGridComponent implements OnInit {
   currentPage = 1;
   paginationArray: number[] = [];
   where: any = null;
-  order!: string[];
+  orderBy:any=null;
   filterValues: { [key: string]: any } = {};
-
   defaultDataCol: any[] = [];
-
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
   constructor(
     private apollo: Apollo,
     private route: ActivatedRoute,
-    private filterService: FilterService
   ) {}
 
   goNext() {
@@ -69,11 +68,13 @@ export class AuditLogGridComponent implements OnInit {
 
   ngOnInit() {
     this.queryName = this.route.snapshot.queryParams['queryName'];
+
   }
   fetchData() {
     const skip = (this.currentPage - 1) * this.pageSize;
-    this.baseQuery = queriesMap.get(this.queryName) || '';
 
+
+    this.baseQuery = queriesMap.get(this.queryName) || '';
     if (this.baseQuery === '') {
       return;
     }
@@ -86,8 +87,10 @@ export class AuditLogGridComponent implements OnInit {
           pagesize: this.pageSize,
           skip: skip,
           where: this.where,
+          order: this.orderBy
         },
       })
+
       .valueChanges.subscribe((result: any) => {
         this.data =
           this.flattenObjectArray(result?.data[this.queryName].items) || [];
@@ -164,6 +167,7 @@ export class AuditLogGridComponent implements OnInit {
 
   loadRows($event: LazyLoadEvent) {
     this.where = new WhereBuilder($event.filters).transformWhere();
+    this.orderBy = $event.sortField ? { [`${$event.sortField}`]: $event.sortOrder === 1 ? SORT_ASC : SORT_DESC } : null;
     this.fetchData();
   }
 }
