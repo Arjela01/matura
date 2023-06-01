@@ -1,15 +1,14 @@
 import { TableModule } from 'primeng/table';
 import { Apollo, gql } from 'apollo-angular';
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from 'primeng/button';
 import { queriesMap } from './queries';
 import { ActivatedRoute } from '@angular/router';
-import {FormsModule} from "@angular/forms";
-import { FilterService, LazyLoadEvent, SelectItem} from "primeng/api";
-import {FieldCondition, FilterValue, Mapper, WhereBuilder} from "./QueryBuilder";
-
+import { FormsModule } from '@angular/forms';
+import { FilterService, LazyLoadEvent, SelectItem } from 'primeng/api';
+import { WhereBuilder } from './query-builder';
 
 @Component({
   selector: 'msh-audit-log-grid',
@@ -33,17 +32,18 @@ export class AuditLogGridComponent implements OnInit {
   currentPage = 1;
   paginationArray: number[] = [];
   where: any = null;
-  order!: string[] ;
+  order!: string[];
   filterValues: { [key: string]: any } = {};
 
-  defaultDataCol : any[] = []
-
-
+  defaultDataCol: any[] = [];
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
-
-  constructor(private apollo: Apollo, private route: ActivatedRoute,private filterService: FilterService) {}
+  constructor(
+    private apollo: Apollo,
+    private route: ActivatedRoute,
+    private filterService: FilterService
+  ) {}
 
   goNext() {
     this.currentPage++;
@@ -62,7 +62,7 @@ export class AuditLogGridComponent implements OnInit {
     this.currentPage = this.totalCount;
     this.fetchData();
   }
-  goToFirstPage(){
+  goToFirstPage() {
     this.currentPage = 1;
     this.fetchData();
   }
@@ -85,7 +85,7 @@ export class AuditLogGridComponent implements OnInit {
         variables: {
           pagesize: this.pageSize,
           skip: skip,
-          where : this.where
+          where: this.where,
         },
       })
       .valueChanges.subscribe((result: any) => {
@@ -93,7 +93,7 @@ export class AuditLogGridComponent implements OnInit {
           this.flattenObjectArray(result?.data[this.queryName].items) || [];
         this.indexHeader = this.findIndexOfMostFields(this.data) || 0;
 
-        if(this.data.length) this.defaultDataCol = this.data[this.indexHeader]
+        if (this.data.length) this.defaultDataCol = this.data[this.indexHeader];
         this.queryName = Object.keys(result.data || {})[0] || '';
         this.hasPreviousPage =
           result.data?.[this.queryName].pageInfo?.hasPreviousPage;
@@ -162,15 +162,8 @@ export class AuditLogGridComponent implements OnInit {
     return maxFieldIndex;
   }
 
-
   loadRows($event: LazyLoadEvent) {
-    this.where = new WhereBuilder($event.filters).transformWhere()
+    this.where = new WhereBuilder($event.filters).transformWhere();
     this.fetchData();
   }
-
-
-
-
-
-
 }

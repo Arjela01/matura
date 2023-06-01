@@ -6,10 +6,10 @@
 <div class="grid">
   <div class="col-12">
     <div class="card">
-      <div class="scroll">
+      <div class="scroll" >
         <p-table [value]="data" [paginator]="false"  (onLazyLoad)="loadRows($event)" [lazy]="true">
           <ng-template pTemplate="header">
-            <tr>
+            <tr >
               <th *ngFor="let key of (data[indexHeader] ?? defaultDataCol)  | keyvalue" p-tableHeader pSortableColumn="{{ key.key }}">
                 {{ key.key }}
                 <p-sortIcon field="{{ key.key }}"></p-sortIcon>
