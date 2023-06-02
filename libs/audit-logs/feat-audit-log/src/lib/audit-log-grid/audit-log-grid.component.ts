@@ -7,7 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { queriesMap } from './queries';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import {  LazyLoadEvent, SelectItem } from 'primeng/api';
+import { LazyLoadEvent } from 'primeng/api';
 import { WhereBuilder } from './query-builder';
 
 const SORT_ASC = 'ASC';
@@ -25,7 +25,6 @@ export class AuditLogGridComponent implements OnInit {
   queryName!: any;
   baseQuery!: string;
   visiblePages: number[] = [];
-  matchModeOptions!: SelectItem[];
   hasNextPage = false;
   hasPreviousPage = false;
   pageSize = 20;
@@ -34,15 +33,12 @@ export class AuditLogGridComponent implements OnInit {
   currentPage = 1;
   paginationArray: number[] = [];
   where: any = null;
-  orderBy:any=null;
+  orderBy: any = null;
   filterValues: { [key: string]: any } = {};
   defaultDataCol: any[] = [];
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
-  constructor(
-    private apollo: Apollo,
-    private route: ActivatedRoute,
-  ) {}
+  constructor(private apollo: Apollo, private route: ActivatedRoute) {}
 
   goNext() {
     this.currentPage++;
@@ -68,11 +64,9 @@ export class AuditLogGridComponent implements OnInit {
 
   ngOnInit() {
     this.queryName = this.route.snapshot.queryParams['queryName'];
-
   }
   fetchData() {
     const skip = (this.currentPage - 1) * this.pageSize;
-
 
     this.baseQuery = queriesMap.get(this.queryName) || '';
     if (this.baseQuery === '') {
@@ -87,7 +81,7 @@ export class AuditLogGridComponent implements OnInit {
           pagesize: this.pageSize,
           skip: skip,
           where: this.where,
-          order: this.orderBy
+          order: this.orderBy,
         },
       })
 
@@ -136,12 +130,13 @@ export class AuditLogGridComponent implements OnInit {
 
     for (const [key, value] of Object.entries(obj)) {
       const newKey = parentKey ? `${parentKey}.${key}` : key;
-
-      if (typeof value === 'object' && value !== null) {
-        const nestedFlattened = this.flattenObject(value, newKey);
-        Object.assign(flattened, nestedFlattened);
-      } else {
-        flattened[newKey] = value;
+      if (key !== '__typename') {
+        if (typeof value === 'object' && value !== null) {
+          const nestedFlattened = this.flattenObject(value, newKey);
+          Object.assign(flattened, nestedFlattened);
+        } else {
+          flattened[newKey] = value;
+        }
       }
     }
 
@@ -167,7 +162,53 @@ export class AuditLogGridComponent implements OnInit {
 
   loadRows($event: LazyLoadEvent) {
     this.where = new WhereBuilder($event.filters).transformWhere();
-    this.orderBy = $event.sortField ? { [`${$event.sortField}`]: $event.sortOrder === 1 ? SORT_ASC : SORT_DESC } : null;
+    const flattenSort = $event.sortField
+      ? {
+          [`${$event.sortField}`]:
+            $event.sortOrder === 1 ? SORT_ASC : SORT_DESC,
+        }
+      : {};
+    this.orderBy = this.unflatten(flattenSort) || null;
     this.fetchData();
+  }
+
+  unflatten(obj: Record<string, any>): Record<string, any> {
+    const result: Record<string, any> = {};
+
+    for (const key in obj) {
+      const value = obj[key];
+      const keyParts = key.split('.');
+      let currentObj: Record<string, any> = result;
+
+      for (let i = 0; i < keyParts.length; i++) {
+        const part = keyParts[i];
+
+        if (!currentObj[part]) {
+          if (i === keyParts.length - 1) {
+            currentObj[part] = value;
+          } else {
+            currentObj[part] = {};
+          }
+        }
+
+        currentObj = currentObj[part];
+      }
+    }
+
+    return result;
+  }
+
+  findType(key: any): string {
+    const type = typeof key;
+    switch (type) {
+      case 'number':
+        return 'numeric';
+      case 'string':
+        return 'text';
+      case 'boolean':
+        return 'boolean';
+      default:
+        return 'text';
+    }
   }
 }

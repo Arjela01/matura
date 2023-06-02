@@ -2,18 +2,30 @@
   <h2 class="flex-1">Query Name: {{ queryName }}</h2>
 </div>
 
-
 <div class="grid">
   <div class="col-12">
     <div class="card">
-      <div class="scroll" >
-        <p-table [value]="data" [paginator]="false"  (onLazyLoad)="loadRows($event)" [lazy]="true">
+      <div class="scroll">
+        <p-table
+          [value]="data"
+          [paginator]="false"
+          (onLazyLoad)="loadRows($event)"
+          [lazy]="true">
           <ng-template pTemplate="header">
-            <tr >
-              <th *ngFor="let key of (data[indexHeader] ?? defaultDataCol)  | keyvalue" p-tableHeader pSortableColumn="{{ key.key }}">
+            <tr>
+              <th
+                *ngFor="
+                  let key of data[indexHeader] ?? defaultDataCol | keyvalue
+                "
+                p-tableHeader
+                pSortableColumn="{{ key.key }}">
                 {{ key.key }}
                 <p-sortIcon field="{{ key.key }}"></p-sortIcon>
-                <p-columnFilter type="text" field="{{ key.key }}"  [maxConstraints] = "1" display="menu">
+                <p-columnFilter
+                  [type]="findType(key.value)"
+                  field="{{ key.key }}"
+                  [maxConstraints]="1"
+                  display="menu">
                 </p-columnFilter>
               </th>
             </tr>

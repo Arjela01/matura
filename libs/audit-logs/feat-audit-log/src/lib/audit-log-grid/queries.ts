@@ -392,7 +392,7 @@ export const CARRIED_GRADE = `
 export const EXAM_SECRET = `
   query ExamSecret
   ($pagesize: Int, $skip: Int,$where: ExamSecretAuditFilterInput,
-    $order:[ExamSecretSortInput!]) {
+    $order:[ExamSecretAuditSortInput!]) {
     examSecret (take: $pagesize, skip: $skip,where: $where,order: $order) {
     totalCount
       pageInfo {
@@ -1468,7 +1468,7 @@ export const A1_FORMS = `
       `;
 export const A1Z_FORMS = `
   query A1ZForms($pagesize: Int, $skip: Int,$where: A1Z1FormAuditFilterInput,
-  $order:[A1ZFormsAuditSortInput!]) {
+    $order:[A1Z1FormAuditSortInput!]) {
     a1ZForms(take: $pagesize, skip: $skip,where: $where,order: $order) {
     totalCount
       pageInfo {
@@ -2070,7 +2070,6 @@ export const EXAM_COPY_REQUEST = `
             comments
             remarks
             subject
-            attachedDocument
             documentName
             status
             dateCreated

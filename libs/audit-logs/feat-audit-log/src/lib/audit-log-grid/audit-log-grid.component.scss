@@ -1,34 +1,17 @@
 :host {
   display: block;
 }
-table {
-  border-collapse: collapse;
-  width: 100%;
-  font-size: 12px;
+
+
+:host ::ng-deep  .p-datatable-tbody > tr > td {
+  padding: 0 1rem !important;
 }
 
-th {
-  text-align: left;
-  padding: 0.5rem 1rem;
-  border: 1px solid #e4e4e4;
-  border-width: 0 0 1px 0;
-  font-weight: 500;
-  color: #475467;
-  transition: none;
-  background: #f9fafb;
-}
-
-td {
-  text-align: left;
-  border: 1px solid #e4e4e4;
-  border-width: 0 0 1px 0;
-  padding: 0.2rem 1rem;
-}
 
 .btn {
   background: transparent;
   border: none;
-  color: #495057;
+  color: rgba(0, 0, 0, 0.6);
   font-size: 1rem;
   padding: 0.375rem 0.75rem;
   cursor: pointer;
@@ -65,6 +48,31 @@ td {
   border-color: #dee2e6;
 }
 
+.filter-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.filter-icon {
+  cursor: pointer;
+  margin-left: 4px;
+}
+
+.filter-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 4px;
+  display: none;
+}
+
+.filter-dropdown input {
+  width: 100%;
+  padding: 2px;
+}
 
 .scroll{
   overflow-x: auto;
