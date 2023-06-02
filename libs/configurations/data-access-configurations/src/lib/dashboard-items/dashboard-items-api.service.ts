@@ -1,13 +1,13 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
-import { APIService } from '@msh/shared/util-shared';
-import { Observable } from 'rxjs';
-import { LazyLoadEvent } from 'primeng/api';
 import {
   DashboardItem,
   DashboardItemsTableView,
 } from '@msh/shared/domain-models';
-import { HttpParams } from '@angular/common/http';
+import { APIService } from '@msh/shared/util-shared';
+import { LazyLoadEvent } from 'primeng/api';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -29,10 +29,12 @@ export class DashboardItemsApiService {
     return this.apiService.post(`/DashboardItems/TableData`, event);
   }
 
+  getById(id: string): Observable<ApiResult<DashboardItem>> {
+    return this.apiService.get(`/DashboardItems/${id}`);
+  }
+
   getAll(): Observable<ApiResult<any>> {
-    return this.apiService.get<ApiResult<any>>(
-      `/DashboardItems/GetAll`
-    );
+    return this.apiService.get<ApiResult<any>>(`/DashboardItems/GetAll`);
   }
 
   save(dashboardItems: DashboardItem): Observable<ApiResult<DashboardItem>> {
