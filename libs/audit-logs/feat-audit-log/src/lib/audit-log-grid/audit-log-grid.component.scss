@@ -2,11 +2,9 @@
   display: block;
 }
 
-
 :host ::ng-deep  .p-datatable-tbody > tr > td {
   padding: 0 1rem !important;
 }
-
 
 .btn {
   background: transparent;
@@ -48,32 +46,6 @@
   border-color: #dee2e6;
 }
 
-.filter-container {
-  display: flex;
-  align-items: center;
-  position: relative;
-}
-
-.filter-icon {
-  cursor: pointer;
-  margin-left: 4px;
-}
-
-.filter-dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  padding: 4px;
-  display: none;
-}
-
-.filter-dropdown input {
-  width: 100%;
-  padding: 2px;
-}
-
 .scroll{
   overflow-x: auto;
   display: flex;
@@ -92,4 +64,3 @@
   background-color: var(--table-scrollbar-100);
   border-radius: 4px;
 }
-

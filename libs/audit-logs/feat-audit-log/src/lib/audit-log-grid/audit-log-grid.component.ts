@@ -7,7 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { queriesMap } from './queries';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { LazyLoadEvent } from 'primeng/api';
+import { LazyLoadEvent, SelectItem } from 'primeng/api';
 import { WhereBuilder } from './query-builder';
 
 const SORT_ASC = 'ASC';
@@ -25,6 +25,7 @@ export class AuditLogGridComponent implements OnInit {
   queryName!: any;
   baseQuery!: string;
   visiblePages: number[] = [];
+  matchModeOptions!: SelectItem[];
   hasNextPage = false;
   hasPreviousPage = false;
   pageSize = 20;
@@ -124,7 +125,19 @@ export class AuditLogGridComponent implements OnInit {
   flattenObjectArray(arr: any[]): any[] {
     return arr.map(obj => this.flattenObject(obj));
   }
+   isDateStringValid(dateString: string): boolean {
+    const dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}\+\d{2}:\d{2}$/;
+    return dateRegex.test(dateString);
+  }
 
+   formatDateString(dateString: string): string {
+    if (!this.isDateStringValid(dateString)) {
+      throw new Error('Invalid date string format');
+    }
+
+    const date = new Date(dateString);
+    return date.toISOString().replace('T', ' ').split('.')[0];
+  }
   flattenObject(obj: any, parentKey = ''): any {
     const flattened: any = {};
 
@@ -134,9 +147,13 @@ export class AuditLogGridComponent implements OnInit {
         if (typeof value === 'object' && value !== null) {
           const nestedFlattened = this.flattenObject(value, newKey);
           Object.assign(flattened, nestedFlattened);
+        } else if (typeof value === 'string' && this.isDateStringValid(value)) {
+          const formattedValue = this.formatDateString(value);
+          flattened[newKey] = formattedValue;
         } else {
           flattened[newKey] = value;
         }
+
       }
     }
 
@@ -197,18 +214,53 @@ export class AuditLogGridComponent implements OnInit {
 
     return result;
   }
+  isGuid(str: string): boolean {
+    const guidRegex =
+      /^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/i;
+    return guidRegex.test(str);
+  }
 
   findType(key: any): string {
-    const type = typeof key;
+    let type = typeof key;
+    if (this.isGuid(key)) type = 'bigint';
     switch (type) {
       case 'number':
         return 'numeric';
-      case 'string':
-        return 'text';
       case 'boolean':
         return 'boolean';
       default:
         return 'text';
+    }
+  }
+  findDefaultMode(key: any): string {
+    let type = typeof key;
+    if (this.isGuid(key)) type = 'bigint';
+    switch (type) {
+      case 'number':
+      case 'bigint':
+      case 'boolean':
+        return 'equals';
+      default:
+        return 'contains';
+    }
+  }
+  findMatchModeOptions(key: any) {
+    let type = typeof key;
+    if (this.isGuid(key)) type = 'bigint';
+    switch (type) {
+      case 'number':
+      case 'bigint':
+      case 'boolean':
+        return [{ label: 'E barabartë', value: 'equals' },
+          { label: 'Jo e barabartë', value: 'notEquals' },
+        ];
+      default:
+        return [
+          { label: 'Përmban', value: 'contains' },
+          { label: 'Nuk përmban', value: 'ncontains' },
+          { label: 'Fillon me', value: 'startsWith' },
+          { label: 'Mbaron me', value: 'endsWith' },
+        ];
     }
   }
 }

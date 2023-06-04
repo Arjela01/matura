@@ -6,14 +6,14 @@ export class WhereBuilder {
     const fieldConditions =
       this._convertFilterToFieldConditions(filteredOutput);
     if (fieldConditions.length) {
-      const firstLevel = this._buildWhereCondition(fieldConditions)
+      const firstLevel = this._buildWhereCondition(fieldConditions);
       return this._transformObject(firstLevel);
     } else return null;
   }
 
-
   private _filterNullValues(obj: any): any {
     const filteredObj: any = {};
+
     for (const key in obj) {
       if (obj[key][0].value !== null) {
         filteredObj[key] = obj[key];
@@ -28,26 +28,20 @@ export class WhereBuilder {
     for (const key in obj) {
       const value = obj[key];
 
-      // Split the key by dot to get parent and child keys
       const keyParts = key.split('.');
 
-      // Initialize the current object as the transformed object
       let currentObj: Record<string, any> = transformedObj;
 
-      // Iterate through the key parts
       for (let i = 0; i < keyParts.length; i++) {
         const part = keyParts[i];
 
-        // If it's the last part, assign the value
         if (i === keyParts.length - 1) {
           currentObj[part] = value;
         } else {
-
           if (!currentObj[part]) {
             currentObj[part] = {};
           }
 
-          // Update the current object to the nested object
           currentObj = currentObj[part];
         }
       }
@@ -119,8 +113,8 @@ export interface FieldCondition {
 }
 
 export const Mapper = {
-  equals: 'eq',
-  notEquals: 'neq',
+  eq: 'equals',
+  neq: 'notEquals',
   contains: 'contains',
   notContains: 'ncontains',
   startsWith: 'startsWith',

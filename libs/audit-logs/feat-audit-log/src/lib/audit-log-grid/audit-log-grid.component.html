@@ -25,7 +25,9 @@
                   [type]="findType(key.value)"
                   field="{{ key.key }}"
                   [maxConstraints]="1"
-                  display="menu">
+                  [matchModeOptions]="findMatchModeOptions(key.value)"
+                  [matchMode]="findDefaultMode(key.value)"
+                      display="menu">
                 </p-columnFilter>
               </th>
             </tr>

@@ -5,17 +5,17 @@ import {
   Component,
   ElementRef,
   Inject,
-  Input,
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { REPORTS_APP_URL, SafePipe } from '@msh/shared/util-shared';
 import RxPostmessenger from 'rx-postmessenger';
 import { Subject, first, forkJoin, map, tap } from 'rxjs';
 import { IframeAutoHeightDirective } from '../iframe-auto-height.directive';
 import { ButtonModule } from 'primeng/button';
+import { ACADEMIC_YEAR_KEY } from '@msh/configurations/data-access-configurations';
 
 @Component({
   selector: 'msh-report-renderer',
@@ -29,8 +29,12 @@ export class ReportRendererComponent implements OnInit {
   @ViewChild('reportRenderer', { static: true })
   iframe!: ElementRef<HTMLIFrameElement>;
   id: string = this.route.snapshot.params['id'];
+  academicYear: any;
   studentObj: { value: string | number; key: string } | null =
     this.findStudentID(this.route.snapshot.queryParams);
+  yearObj: { value: string | number; key: string } | null = this.findYearID(
+    this.route.snapshot.queryParams
+  );
   iframeUrl = '';
   private readonly iframeLoaded$$ = new Subject<boolean>();
   private readonly iframeLoaded$ = this.iframeLoaded$$
@@ -51,8 +55,24 @@ export class ReportRendererComponent implements OnInit {
     })
   );
 
+  academicYearFilter = localStorage.getItem(ACADEMIC_YEAR_KEY);
+  if(academicYearFilter: string) {
+    this.academicYear = JSON.parse(academicYearFilter).id;
+    console.log(2222, academicYearFilter);
+  }
+
   findStudentID(obj: { [x: string]: string | number }) {
     const key = Object.keys(obj).find(k => k.toLowerCase() === 'studentid');
+    if (key) {
+      return { key: key, value: obj[key] };
+    }
+    return null;
+  }
+
+  findYearID(obj: { [x: string]: string | number }) {
+    const key = Object.keys(obj).find(
+      k => k.toLowerCase() === 'academicyearid'
+    );
     if (key) {
       return { key: key, value: obj[key] };
     }
@@ -71,10 +91,16 @@ export class ReportRendererComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.id && this.studentObj) {
-      this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}`;
-    } else {
-      this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}`;
+    const academicYearFilter = localStorage.getItem(ACADEMIC_YEAR_KEY);
+    if (academicYearFilter) {
+      this.academicYear = JSON.parse(academicYearFilter).id;
+    }
+
+    if (this.id && this.studentObj && this.yearObj) {
+      this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&
+      ${this.studentObj.key}=${this.studentObj.value}&${this.yearObj.key}=${this.yearObj.value}`;
+    } else if (this.academicYear && this.id) {
+      this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&academicyearid=${this.academicYear}`;
     }
   }
 
