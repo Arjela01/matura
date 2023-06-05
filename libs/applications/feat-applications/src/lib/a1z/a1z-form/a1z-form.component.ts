@@ -114,7 +114,6 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
 
   formId: string | null;
   parameterUrl!: any;
-  parameterYear!:any;
 
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
@@ -230,9 +229,6 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
           this.parameterUrl = parametersArray.find((item: string) => {
             return ['studentid'].includes(item.toLowerCase());
           });
-        this.parameterYear = parametersArray.find((item: string) => {
-          return ['academicyearid'].includes(item.toLowerCase());
-        });
       });
   }
 
@@ -481,9 +477,8 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
           const query: { queryParams: { [x: string]: string } } = {
             queryParams: {},
           };
-          if (this.parameterUrl && this.a1z.studentId && this.a1z.academicYearId) {
+          if (this.parameterUrl && this.a1z.studentId) {
             query.queryParams[`${this.parameterUrl}`] = this.a1z.studentId;
-            query.queryParams[`${this.parameterYear}`] = this.a1z.academicYearId.toString();
 
           }
           this.router.navigate([`/reports/${this.a1ZReport}`], query).then();
@@ -509,10 +504,8 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
           const query: { queryParams: { [x: string]: string } } = {
             queryParams: {},
           };
-          if (this.parameterUrl && this.a1z.studentId && this.a1z.academicYearId) {
+          if (this.parameterUrl && this.a1z.studentId ) {
             query.queryParams[`${this.parameterUrl}`] = this.a1z.studentId;
-            query.queryParams[`${this.parameterYear}`] = this.a1z.academicYearId.toString();
-
           }
           this.router.navigate([`/reports/${this.a1ZReport}`], query).then();
         }
