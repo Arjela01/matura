@@ -75,6 +75,7 @@ export class A1FormComponent {
   @ViewChild('form', { static: false }) form!: NgForm;
   totalRecords = 0;
   parameterUrl!: any;
+  parameterYear!: any;
   editing = false;
   showSearch = true;
 
@@ -146,6 +147,9 @@ export class A1FormComponent {
           this.parameterUrl = parametersArray.find((item: string) => {
             return ['studentid'].includes(item.toLowerCase());
           });
+        this.parameterYear = parametersArray.find((item: string) => {
+          return ['academicyearid'].includes(item.toLowerCase());
+        });
       });
   }
   event = {
@@ -393,8 +397,11 @@ export class A1FormComponent {
             const query: { queryParams: { [x: string]: string } } = {
               queryParams: {},
             };
-            if (this.parameterUrl && this.a1.studentId) {
+            if (this.parameterUrl && this.parameterYear
+              && this.a1.studentId && this.a1.academicYearId) {
               query.queryParams[`${this.parameterUrl}`] = this.a1.studentId;
+              query.queryParams[`${this.parameterYear}`] = this.a1.academicYearId.toString();
+
             }
             this.router.navigate([`/reports/${this.a1Report}`], query).then();
           } else {
@@ -433,8 +440,11 @@ export class A1FormComponent {
             const extras: { queryParams: { [x: string]: string } } = {
               queryParams: {},
             };
-            if (this.parameterUrl && this.a1.studentId) {
+            if (this.parameterUrl && this.parameterYear
+              && this.a1.studentId && this.a1.academicYearId) {
               extras.queryParams[`${this.parameterUrl}`] = this.a1.studentId;
+              extras.queryParams[`${this.parameterYear}`] = this.a1?.academicYearId.toString();
+
             }
             this.router.navigate([`/reports/${this.a1Report}`], extras).then();
           } else {
