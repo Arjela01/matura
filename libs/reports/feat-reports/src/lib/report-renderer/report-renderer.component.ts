@@ -55,11 +55,6 @@ export class ReportRendererComponent implements OnInit {
     })
   );
 
-  academicYearFilter = localStorage.getItem(ACADEMIC_YEAR_KEY);
-  if(academicYearFilter: string) {
-    this.academicYear = JSON.parse(academicYearFilter).id;
-    console.log(2222, academicYearFilter);
-  }
 
   findStudentID(obj: { [x: string]: string | number }) {
     const key = Object.keys(obj).find(k => k.toLowerCase() === 'studentid');
