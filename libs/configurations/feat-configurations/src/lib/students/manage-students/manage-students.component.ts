@@ -121,7 +121,7 @@ export class ManageStudentsComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Studenti u fshi me sukses!');
           this.getStudent(this.filters as LazyLoadEvent);
-        }
+        }else this.toastService.showError(response.errorMessage)
         if (!response.isSuccessful) {
           this.toastService.showError(
             'Ndodhi një problem gjatë fshirjes së studentit!'
