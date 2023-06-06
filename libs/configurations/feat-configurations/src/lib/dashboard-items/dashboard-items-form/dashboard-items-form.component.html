@@ -89,7 +89,7 @@
 
         <div class="field" [style]="{ width: '750px' }">
           <label for="startDate">E vlefshme nga *</label>
-          <p-calendar [style]="{ width: '100%' }" [(ngModel)]="formattedStartDate" dateFormat="dd/mm/yy"
+          <p-calendar [style]="{ width: '100%' }" [(ngModel)]="dashboardItem.startDate" dateFormat="dd/mm/yy" (ngModelChange)="updateFormattedDates()"
             inputId="startDate" id="startDate" name="startDate" [ngClass]="{
         'ng-invalid ng-dirty': submitted && !formattedStartDate
       }"></p-calendar>
@@ -100,7 +100,7 @@
 
         <div class="field" [style]="{ width: '750px' }">
           <label for="endDate">E vlefshme nga *</label>
-          <p-calendar [style]="{ width: '100%' }" [(ngModel)]="formattedEndDate" dateFormat="dd/mm/yy" inputId="endDate"
+          <p-calendar [style]="{ width: '100%' }" [(ngModel)]="dashboardItem.endDate" dateFormat="dd/mm/yy" inputId="endDate" (ngModelChange)="updateFormattedDates()"
             id="endDate" name="endDate" [ngClass]="{
         'ng-invalid ng-dirty': submitted && !formattedEndDate
       }"></p-calendar>

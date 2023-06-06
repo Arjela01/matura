@@ -79,20 +79,17 @@ export class DashboardItemsFormComponent implements OnInit {
   formattedEndDate: any;
   rolesArray: any = [];
   usersArray: any = [];
+  displayModal = false;
 
   @Input() set setDashboardItemsDetails(details: DashboardItem | null) {
     if (details) {
       this.dashboardItem = Object.assign({}, details);
-      this.formattedStartDate = formatDate(
-        new Date(this.dashboardItem.startDate),
-        'dd/MM/yyyy',
-        'en'
-      );
-      this.formattedEndDate = formatDate(
-        new Date(this.dashboardItem.endDate),
-        'dd/MM/yyyy',
-        'en'
-      );
+      if(details.endDate){
+        this.formattedEndDate = new Date(details.endDate)
+      }
+      if(details.startDate) {
+        this.formattedStartDate = new Date(details.startDate)
+      }
     }
   }
   @Output() formSave = new EventEmitter<DashboardItem>();
@@ -118,6 +115,7 @@ export class DashboardItemsFormComponent implements OnInit {
 
   onCancelClick() {
     this.formClose.emit();
+    this.router.navigate(['configurations/dashboard-items']);
   }
 
   constructor(
@@ -130,6 +128,21 @@ export class DashboardItemsFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {}
+
+  updateFormattedDates() {
+    const startDate = new Date(this.dashboardItem.startDate);
+    const endDate = new Date(this.dashboardItem.endDate);
+    this.formattedStartDate = formatDate(
+      startDate,
+      'dd/MM/yyyy',
+      'en'
+    );
+    this.formattedEndDate = formatDate(
+      endDate,
+      'dd/MM/yyyy',
+      'en'
+    );
+  }
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];
@@ -158,8 +171,11 @@ export class DashboardItemsFormComponent implements OnInit {
           item.roles = this.rolesArray;
           this.sectionDashboard.next(sections.data);
           this.roles = [...roles.data];
+          this.users = [...users.data];
           this.dashboardItem = { ...item };
           this.dashboardItem.dashboardSectionId = item.dashboardSectionId;
+          this.dashboardItem.endDate = this.formattedEndDate;
+          this.dashboardItem.startDate = this.formattedStartDate;
         });
     } else {
       combineLatest([
@@ -203,34 +219,76 @@ export class DashboardItemsFormComponent implements OnInit {
     }
   }
   onSubmit() {
+    const id = this.route.snapshot.params['id'];
     this.submitted = true;
     if (this.form.valid) {
       if (this.dashboardItem.id === 0) {
         delete this.dashboardItem.id;
       }
-      this.dashboardItem;
       this.dashboardItem.roles = this.dashboardItem.roles.map(
         (data: any) => data.key
       );
       this.dashboardItem.users = this.dashboardItem.users.map(
         (data: any) => data.key
       );
-      this.dashboardItemsApiService
-        .save(this.dashboardItem)
-        .pipe(untilDestroyed(this))
-        .subscribe(response => {
-          if (response.isSuccessful) {
-            this.toaster.showSuccess(
-              'Konfigurimi i dashboard-it u shtua me sukses!'
-            );
-            this.router.navigate(['configurations/dashboard-items']);
-          } else this.toaster.showError(response.errorMessage);
+      if (id) {
+        debugger;
+        this.dashboardItemsApiService
+          .update(this.dashboardItem)
+          .pipe(untilDestroyed(this))
+          .subscribe(
+            response => {
+              if (response.isSuccessful) {
+                this.toaster.showSuccess(
+                  'Konfigurimi i dashboard-it u ndryshua me sukses!'
+                );
+                this.router.navigate(['configurations/dashboard-items']);
+              } else {
+                this.toaster.showError(response.errorMessage);
+              }
 
-          if (response.isBadRequest)
-            this.toaster.showError(
-              'Ndodhi një problem gjatë ndryshimit konfigurimit të dashboard-it!'
-            );
-        });
+              if (response.isBadRequest) {
+                this.toaster.showError(
+                  'Ndodhi një problem gjatë konfigurimit të dashboard-it!'
+                );
+              }
+            },
+            error => {
+              console.error(error);
+              this.toaster.showError(
+                'An error occurred while saving the entity changes.'
+              );
+            }
+          );
+      } else {
+        this.dashboardItemsApiService
+          .save(this.dashboardItem)
+          .pipe(untilDestroyed(this))
+          .subscribe(
+            response => {
+              if (response.isSuccessful) {
+                this.toaster.showSuccess(
+                  'Konfigurimi i dashboard-it u shtua me sukses!'
+                );
+                this.router.navigate(['configurations/dashboard-items']);
+              } else {
+                this.toaster.showError(response.errorMessage);
+              }
+
+              if (response.isBadRequest) {
+                this.toaster.showError(
+                  'Ndodhi një problem gjatë ndryshimit konfigurimit të dashboard-it!'
+                );
+              }
+            },
+            error => {
+              console.error(error);
+              this.toaster.showError(
+                'An error occurred while saving the entity changes.'
+              );
+            }
+          );
+      }
     }
   }
 }
