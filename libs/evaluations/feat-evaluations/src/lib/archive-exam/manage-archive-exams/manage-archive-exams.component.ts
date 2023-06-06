@@ -9,6 +9,23 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { AuthFacade } from '@msh/auth/data-access-auth';
+import { ExamTypeApiService } from '@msh/configurations/data-access-configurations';
+import {
+  ArchiveExamApiService,
+  ArchiveFolderApiService,
+} from '@msh/evaluations/data-access-evaluations';
+import {
+  ArchiveExam,
+  ArchiveFolder,
+} from '@msh/evaluations/domain-evaluations';
+import {
+  GRID_ACTIONS,
+  GlobalToastService,
+  GridEvent,
+} from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   ConfirmationService,
@@ -19,26 +36,10 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
-import {
-  GlobalToastService,
-  GRID_ACTIONS,
-  GridEvent,
-} from '@msh/shared/util-shared';
-import { BehaviorSubject } from 'rxjs';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ArchiveExamGridComponent } from '../archive-exam-grid/archive-exam-grid.component';
-import { NgForm } from '@angular/forms';
+import { BehaviorSubject, of, switchMap } from 'rxjs';
 import { ArchiveFormComponent } from '../archive-exam-form/archive-form.component';
-import { ExamTypeApiService } from '@msh/configurations/data-access-configurations';
-import {
-  ArchiveExamApiService,
-  ArchiveFolderApiService,
-} from '@msh/evaluations/data-access-evaluations';
-import {
-  ArchiveExam,
-  ArchiveFolder,
-} from '@msh/evaluations/domain-evaluations';
-import {BarcodeService} from "../services/barcode-service";
+import { ArchiveExamGridComponent } from '../archive-exam-grid/archive-exam-grid.component';
+import { BarcodeService } from '../services/barcode-service';
 
 @UntilDestroy()
 @Component({
@@ -100,7 +101,8 @@ export class ManageArchiveExamsComponent implements OnInit {
     private messageService: MessageService,
     private archiveFolderService: ArchiveFolderApiService,
     private route: ActivatedRoute,
-    private barcodeService: BarcodeService
+    private barcodeService: BarcodeService,
+    protected authFacade: AuthFacade
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.archiveFolder = {};
@@ -110,6 +112,15 @@ export class ManageArchiveExamsComponent implements OnInit {
     this.archiveFolderService
       .getById(this.id)
       .subscribe(folder => (this.archiveFolder = { ...folder.data }));
+    this.authFacade.academicYear$
+      .pipe(
+        switchMap(data => {
+          console.log(data);
+          this.getArchiveExams(this.filters as LazyLoadEvent);
+          return of([]);
+        })
+      )
+      .subscribe();
   }
 
   onNewClick() {
