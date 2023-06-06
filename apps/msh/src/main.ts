@@ -38,7 +38,12 @@ import { AppComponent } from './app/app.component';
 import { APP_ROUTES } from './app/app.routes';
 import { getStoreDevToolsProvider } from './app/build-specifics';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { LoadingInterceptor } from '../../../libs/shared/ui-shared/src/lib/loader-interceptor/loader-interceptor';
+import {LoadingInterceptor} from "../../../libs/shared/ui-shared/src/lib/loader-interceptor/loader-interceptor";
+import { APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/core';
+
+
 
 if (environment.production) {
   enableProdMode();
@@ -50,6 +55,18 @@ bootstrapApplication(AppComponent, {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,
       multi: true,
+    },
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory(httpLink: HttpLink) {
+        return {
+          cache: new InMemoryCache(),
+          link: httpLink.create({
+            uri: 'https://localhost:44384/auditQuery',
+          }),
+        };
+      },
+      deps: [HttpLink],
     },
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimations(),

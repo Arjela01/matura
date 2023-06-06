@@ -1,0 +1,76 @@
+<div class="flex ml-2 mb-2 page-header mb-header">
+  <h2 class="flex-1">Query Name: {{ queryName }}</h2>
+</div>
+
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <div class="scroll">
+        <p-table
+          [value]="data"
+          [paginator]="false"
+          (onLazyLoad)="loadRows($event)"
+          [lazy]="true">
+          <ng-template pTemplate="header">
+            <tr>
+              <th
+                *ngFor="
+                  let key of data[indexHeader] ?? defaultDataCol | keyvalue
+                "
+                p-tableHeader
+                pSortableColumn="{{ key.key }}">
+                {{ key.key }}
+                <p-sortIcon field="{{ key.key }}"></p-sortIcon>
+                <p-columnFilter
+                  [type]="findType(key.value)"
+                  field="{{ key.key }}"
+                  [maxConstraints]="1"
+                  [matchModeOptions]="findMatchModeOptions(key.value)"
+                  [matchMode]="findDefaultMode(key.value)"
+                      display="menu">
+                </p-columnFilter>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData>
+            <tr>
+              <td *ngFor="let value of rowData | keyvalue">
+                {{ value.value }}
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+      <div class="my-2 flex sm:justify-content-center align-items-end">
+        <button
+          [disabled]="!hasPreviousPage"
+          class="my-2 btn"
+          (click)="goToFirstPage()">
+          <i class="pi pi-angle-double-left"></i>
+        </button>
+        <button
+          [disabled]="!hasPreviousPage"
+          class="my-2 btn"
+          (click)="goBack()">
+          <i class="pi pi-angle-left"></i>
+        </button>
+        <span
+          class="pagination-link"
+          *ngFor="let page of visiblePages"
+          [class.active]="currentPage === page"
+          (click)="goToPage(page)">
+          {{ page }}
+        </span>
+        <button [disabled]="!hasNextPage" class="my-2 btn" (click)="goNext()">
+          <i class="pi pi-angle-right"></i>
+        </button>
+        <button
+          [disabled]="!hasNextPage"
+          class="my-2 btn"
+          (click)="goToLastPage()">
+          <i class="pi pi-angle-double-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

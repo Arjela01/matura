@@ -44,6 +44,13 @@ export const ADMIN_SHELL_ROUTES: Route[] = [
             m => m.USER_SECTION_ROUTES
           ),
       },
+      {
+        path: 'audit-log',
+        loadChildren: () =>
+          import('@msh/audit-logs/feat-audit-log').then(
+            m => m.AUDIT_LOG_ROUTES
+          ),
+      },
     ],
   },
 ];
