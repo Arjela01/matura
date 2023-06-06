@@ -7,24 +7,40 @@ import {
 import { Injectable } from '@angular/core';
 import { ACADEMIC_YEAR_KEY } from '@msh/configurations/data-access-configurations';
 import { StorageService } from '@msh/shared/data-access-shared';
-import { Observable } from 'rxjs';
+import { Observable, distinctUntilChanged, first, switchMap } from 'rxjs';
+import { AuthFacade } from '../+state';
+import { TOKEN_STORAGE_KEY } from './token.interceptor';
 
 @Injectable()
 export class AcademicYearInterceptor implements HttpInterceptor {
-  constructor(private readonly storageService: StorageService) {}
+  constructor(
+    private readonly storageService: StorageService,
+    private authFacade: AuthFacade
+  ) {}
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
+    this.authFacade.academicYear$.pipe();
     const academicYearFilter: any = localStorage.getItem(ACADEMIC_YEAR_KEY);
-    if (academicYearFilter) {
-      request = request.clone({
-        setHeaders: {
-          AcademicYearIdFilter: `${JSON.parse(academicYearFilter).id}`,
-        },
-      });
-    }
-
-    return next.handle(request);
+    const token: any = localStorage.getItem(TOKEN_STORAGE_KEY);
+    return this.authFacade.academicYear$.pipe(
+      first(),
+      distinctUntilChanged(),
+      switchMap(accYear => {
+        if (accYear) {
+          const academicYear = token
+            ? request.clone({
+                setHeaders: {
+                  AcademicYearIdFilter: `${JSON.parse(academicYearFilter).id}`,
+                },
+              })
+            : request;
+          return next.handle(academicYear);
+        } else {
+          return next.handle(request);
+        }
+      })
+    );
   }
 }

@@ -4,9 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { A1ApiService } from '@msh/applications/data-access-applications';
 import { A1Z } from '@msh/applications/domain-application';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { AcademicYear, Student } from '@msh/shared/domain-models';
-import { GlobalToastService, GRID_ACTIONS } from '@msh/shared/util-shared';
+import { GRID_ACTIONS, GlobalToastService } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -22,8 +23,13 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
-import { BehaviorSubject } from 'rxjs';
-
+import {
+  BehaviorSubject,
+  distinctUntilChanged,
+  map,
+  of,
+  switchMap,
+} from 'rxjs';
 @Component({
   selector: 'a1-grid',
   standalone: true,
@@ -70,9 +76,25 @@ export class A1GridComponent {
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly a1ApiService: A1ApiService,
-    private router: Router
+    private router: Router,
+    private authFacade: AuthFacade
   ) {}
 
+  ngOnInit() {
+    this.authFacade.academicYear$
+      .pipe(
+        map((data: any) => data.id),
+        distinctUntilChanged(),
+        switchMap(data => {
+          if (this.filters) {
+            window.location.reload();
+          }
+
+          return of([]);
+        })
+      )
+      .subscribe();
+  }
   onNewClick() {
     this.router.navigate(['applications/save-a1']);
   }
