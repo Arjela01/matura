@@ -121,7 +121,7 @@ export class ManageStudentsComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Studenti u fshi me sukses!');
           this.getStudent(this.filters as LazyLoadEvent);
-        }
+        }else this.toastService.showError(response.errorMessage)
         if (!response.isSuccessful) {
           this.toastService.showError(
             'Ndodhi një problem gjatë fshirjes së studentit!'
@@ -137,7 +137,6 @@ export class ManageStudentsComponent implements OnInit {
       .loadStudents($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        console.log(response);
         const students = [...response.data];
         for(const student of students) {
           student.createdOn = new Date(student.createdOn);
@@ -157,7 +156,7 @@ export class ManageStudentsComponent implements OnInit {
           this.toastService.showSuccess(
             'Studenti u ndryshua me sukses!'
           );
-        }
+        } else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(

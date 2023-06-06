@@ -20,7 +20,15 @@ export class ExamSiteApiService {
     return this.apiService.post(`/ExamSite/TableData`, event);
   }
 
-  save(examSite?: any): Observable<ApiResult<ExamSite>> {
+  forAdministrationOffice(
+    administrationOfficeId?: number
+  ): Observable<ApiResult<DropdownModel<string>[]>> {
+    return this.apiService.get<ApiResult<DropdownModel<string>[]>>(
+      `/ExamSite/ForAdministrationOffice/${administrationOfficeId}`
+    );
+  }
+
+  save(examSite?: ExamSite): Observable<ApiResult<ExamSite>> {
     return this.apiService.post<ApiResult<ExamSite>, ExamSite>(
       `/ExamSite`,
       examSite

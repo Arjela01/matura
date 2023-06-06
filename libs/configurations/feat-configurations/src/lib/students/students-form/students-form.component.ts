@@ -34,7 +34,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import {AlbanianNidValidatorDirective} from "@msh/shared/util-shared";
+import {AlbanianNidValidatorDirective, GlobalToastService} from "@msh/shared/util-shared";
 
 @Component({
   selector: 'msh-students-form',
@@ -122,7 +122,8 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     private readonly profileService: ProfileApiService,
     private readonly genderService: GendersApiService,
     private academicYearService: AcademicYearApiService,
-    private router: Router
+    private router: Router,
+    private readonly toastService: GlobalToastService
   ) {
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 10);
   }
@@ -159,6 +160,12 @@ export class StudentsFormComponent implements OnInit, OnChanges {
 
     this.studentService.save(data).subscribe({
       next: response => {
+        if(response.isSuccessful){
+          this.toastService.showSuccess("Studenti u krijua me sukses");
+        } else this.toastService.showError(response.errorMessage);
+        if(response.isBadRequest){
+          this.toastService.showError("Ndodhi një problem gjatë krijimit të studentit")
+        }
         this.saving = false;
         this.router
           .navigate(['/applications/save-a1-student', response.data.id])

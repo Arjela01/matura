@@ -82,7 +82,6 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
   studentInputData = '';
   formId: string | null;
 
-
   examAssignment: ExamAssignment = {
     id: '',
     studentId: '',
@@ -95,7 +94,7 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
     examSiteId: '',
     examTypeDateTime: '',
     takenSeats: 0,
-    time:'',
+    time: '',
   };
 
   constructor(

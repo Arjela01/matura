@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -7,11 +12,14 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import {
+  AdministrationOfficeApiService,
   ExamAssignmentApiService,
   ExamDateApiService,
   ExamSiteApiService,
 } from '@msh/configurations/data-access-configurations';
-import { ExamAssignment } from '@msh/shared/domain-models';
+import {
+  ExamAssignment,
+} from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   GlobalToastService,
@@ -24,7 +32,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ExamAssignmentFormComponent } from '../exam-assignment-form/exam-assignment-form.component';
 import { UploadFormComponent } from '../upload-form/upload-form.component';
 import * as FileSaver from 'file-saver';
-
+import { AssignAllFormComponent } from '../assign-all-form/assign-all-form.component';
 
 @UntilDestroy()
 @Component({
@@ -40,25 +48,30 @@ import * as FileSaver from 'file-saver';
     ToolbarModule,
     FileUploadModule,
     UploadFormComponent,
+    AssignAllFormComponent,
   ],
   templateUrl: './manage-exam-assignment.component.html',
   styleUrls: ['./manage-exam-assignment.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageExamAssignmentComponent {
+export class ManageExamAssignmentComponent implements OnInit {
   private examAssignments$$ = new BehaviorSubject<ExamAssignment[]>([]);
   examAssignments$ = this.examAssignments$$.asObservable();
   filters: LazyLoadEvent | null = null;
 
   totalRecords = 0;
+  examAssignment: ExamAssignment | null = null;
   selectedExamAssignment: ExamAssignment | null = null;
   selectedExamAssignments: ExamAssignment[] = [];
   displayModal = false;
   displayUploadModal = false;
+  displayAssignAllModal = false;
 
   examDates: DropdownModel<number>[] = [];
   examSites: DropdownModel<number>[] = [];
+  examSiteForAdministrationOffice: DropdownModel<string>[] = [];
+  administrationOffices: any;
   time: any;
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -66,7 +79,8 @@ export class ManageExamAssignmentComponent {
     private readonly examAssignmentService: ExamAssignmentApiService,
     private readonly examDateService: ExamDateApiService,
     private readonly examSiteService: ExamSiteApiService,
-    private cd: ChangeDetectorRef,
+    private readonly cd: ChangeDetectorRef,
+    private readonly administrationOfficeService: AdministrationOfficeApiService
   ) {}
 
   onGridEvent(event: GridEvent<ExamAssignment | ExamAssignment[]>) {
@@ -80,7 +94,7 @@ export class ManageExamAssignmentComponent {
       case GRID_ACTIONS.UNSELECT_ROW:
         this.selectedExamAssignments = this.selectedExamAssignments.filter(
           ea => {
-            const examAssignment: ExamAssignment = event.data as ExamAssignment
+            const examAssignment: ExamAssignment = event.data as ExamAssignment;
             return ea.id !== examAssignment.id;
           }
         );
@@ -116,6 +130,9 @@ export class ManageExamAssignmentComponent {
   onUploadClick() {
     this.displayUploadModal = true;
   }
+  ngOnInit(): void {
+    this.getAdministrationOfficeDropdown();
+  }
 
   onUploadClose() {
     this.displayUploadModal = false;
@@ -124,11 +141,17 @@ export class ManageExamAssignmentComponent {
 
   onNewClick() {
     this.displayModal = true;
-    this.selectedExamAssignment ={} as ExamAssignment
+    this.selectedExamAssignment = {} as ExamAssignment;
   }
 
   onModalClose() {
     this.displayModal = false;
+  }
+  onAssignAllModalClose() {
+    this.displayAssignAllModal = false;
+  }
+  onAssignAllClick() {
+    this.displayAssignAllModal = true;
   }
 
   onFormSave(examAssignment: ExamAssignment) {
@@ -142,6 +165,22 @@ export class ManageExamAssignmentComponent {
   onUploadFormSave() {
     this.getExamAssignments(this.filters as LazyLoadEvent);
   }
+  onAdministrationOfficeChanged(administrationOfficeId: number) {
+    this.getExamSite(administrationOfficeId);
+  }
+  onExamSiteChanged(examSiteId: string) {
+    if (this.examAssignment != null) {
+      this.examAssignment.examSiteId = examSiteId;
+    }
+  }
+
+  getExamSite(administrationOfficeId: any) {
+    this.examSiteService
+      .forAdministrationOffice(administrationOfficeId)
+      .pipe(untilDestroyed(this))
+      .subscribe(res => (this.examSiteForAdministrationOffice = res.data));
+    this.cd.detectChanges();
+  }
 
   getExamAssignments($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
@@ -151,12 +190,12 @@ export class ManageExamAssignmentComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         response.data.map(examAssignment => {
-          if(examAssignment?.examTypeDateTime)
-            return examAssignment.time = examAssignment.examTypeDateTime.split(' ')[2];
+          if (examAssignment?.examTypeDateTime)
+            return (examAssignment.time =
+              examAssignment.examTypeDateTime.split(' ')[2]);
 
           return examAssignment;
-          }
-        );
+        });
         this.examAssignments$$.next(response.data);
         this.totalRecords = response.total;
       });
@@ -242,5 +281,37 @@ export class ManageExamAssignmentComponent {
     this.examSiteService.loadDropdownList().subscribe(response => {
       this.examSites = response.data;
     });
+  }
+  getAdministrationOfficeDropdown() {
+    this.administrationOfficeService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.administrationOffices = response.data;
+        this.cd.markForCheck();
+      });
+  }
+  onAssignAllFormSave(examAssignment: any) {
+    this.assignAll(examAssignment.examSiteId);
+  }
+  assignAll(examAssignment: any) {
+    this.examAssignmentService
+      .examAssign(examAssignment)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.examAssignment = response.data;
+        if (response.isSuccessful) {
+          this.toastService.showSuccess(
+            'Studentët u caktuan me sukses në qendrat e zgjedhura'
+          );
+          this.displayAssignAllModal = false;
+          this.getExamAssignments(this.filters as LazyLoadEvent);
+        } else this.toastService.showError(response.errorMessage);
+        if (response.isBadRequest) {
+          this.toastService.showError(
+            'Ndodhi një problem gjatë caktimit të studentëve në qendra'
+          );
+        }
+      });
   }
 }

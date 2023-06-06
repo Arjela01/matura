@@ -20,87 +20,117 @@
       (click)="downloadFile()"></button>
   </div>
   <div class="my-2 ml-2">
-  <button
-    pButton
-    pRipple
-    icon="pi pi-upload"
-    label="Ngarko"
-    (click)="onUploadClick()"></button>
+    <button
+      pButton
+      pRipple
+      icon="pi pi-upload"
+      label="Ngarko"
+      (click)="onUploadClick()"></button>
   </div>
-
+  <div class="my-2 ml-2">
+    <button
+      pButton
+      pRipple
+      icon="pi pi-plus"
+      label="Cakto të gjithë"
+      (click)="onAssignAllClick()"
+      ></button>
+  </div>
 </div>
-  <div class="grid">
-    <div class="col-12">
-      <div class="card">
-        <msh-exam-assignment-grid
-          [examAssignments]="(examAssignments$ | async) || []"
-          [totalRecords]="totalRecords"
-          (gridEvent)="onGridEvent($event)"
-          (lazyLoadData)="getExamAssignments($event)">
-        </msh-exam-assignment-grid>
-      </div>
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <msh-exam-assignment-grid
+        [examAssignments]="(examAssignments$ | async) || []"
+        [totalRecords]="totalRecords"
+        (gridEvent)="onGridEvent($event)"
+        (lazyLoadData)="getExamAssignments($event)">
+      </msh-exam-assignment-grid>
     </div>
   </div>
+</div>
 
-  <p-dialog
-    [(visible)]="displayUploadModal"
-    [style]="{ width: '600px' }"
-    [modal]="true"
-    header="Importo Dokument nga Exel"
-    [draggable]="false"
-    [resizable]="false"
-    [closable]="true"
-    class="p-fluid"
-    (onHide)="onUploadClose()">
-    <ng-template pTemplate="content">
-      <msh-upload-form
-        [examAssignmentsDetails]="selectedExamAssignment"
-        [examDates]="examDates"
-        (formClose)="onUploadClose()"
-        (formSave)="onUploadFormSave()">
-      </msh-upload-form>
-    </ng-template>
-  </p-dialog>
+<p-dialog
+  [(visible)]="displayUploadModal"
+  [style]="{ width: '600px' }"
+  [modal]="true"
+  header="Importo Dokument nga Exel"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="true"
+  class="p-fluid"
+  (onHide)="onUploadClose()">
+  <ng-template pTemplate="content">
+    <msh-upload-form
+      [examAssignmentsDetails]="selectedExamAssignment"
+      [examDates]="examDates"
+      (formClose)="onUploadClose()"
+      (formSave)="onUploadFormSave()">
+    </msh-upload-form>
+  </ng-template>
+</p-dialog>
 
-  <p-dialog
-    [(visible)]="displayModal"
-    [style]="{ width: '500px' }"
-    [modal]="true"
-    [draggable]="false"
-    [resizable]="false"
-    header="Detajet e Caktimit në Qendër Provimi"
-    class="p-fluid"
-    (onHide)="onModalClose()">
-    <ng-template pTemplate="content">
-      <msh-exam-assignment-form
-        [examAssignmentsDetails]="selectedExamAssignment"
-        [examSites]="examSites"
-        [examDates]="examDates"
-        (formClose)="onModalClose()"
-        (formSave)="onFormSave($event)">
-      </msh-exam-assignment-form>
-    </ng-template>
-  </p-dialog>
+<p-dialog
+  [(visible)]="displayModal"
+  [style]="{ width: '500px' }"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  header="Detajet e Caktimit në Qendër Provimi"
+  class="p-fluid"
+  (onHide)="onModalClose()">
+  <ng-template pTemplate="content">
+    <msh-exam-assignment-form
+      [examAssignmentsDetails]="selectedExamAssignment"
+      [examSites]="examSites"
+      [examDates]="examDates"
+      (formClose)="onModalClose()"
+      (formSave)="onFormSave($event)">
+    </msh-exam-assignment-form>
+  </ng-template>
+</p-dialog>
 
-  <p-confirmDialog
-    #cd
-    header="Konfirmo"
-    icon="pi pi-exclamation-triangle"
-    [style]="{ width: '450px' }">
-    <ng-template pTemplate="footer">
-      <button
-        type="button"
-        pButton
-        icon="pi pi-times"
-        label="Jo"
-        class="p-button-text"
-        (click)="cd.reject()"></button>
-      <button
-        type="button"
-        pButton
-        icon="pi pi-check"
-        label="Po"
-        class="p-button border"
-        (click)="cd.accept()"></button>
-    </ng-template>
-  </p-confirmDialog>
+<p-dialog
+  [(visible)]="displayAssignAllModal"
+  [style]="{ width: '500px' }"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  header="Cakto të gjithë studentët në qender"
+  class="p-fluid"
+  (onHide)="onAssignAllModalClose()">
+  <ng-template pTemplate="content">
+    <msh-assign-all-form
+      [examAssignmentsDetails]="selectedExamAssignment"
+      [examSites]="examSiteForAdministrationOffice"
+      [administrationOffices]="administrationOffices"
+      (administrationOfficeChanged)="onAdministrationOfficeChanged($event)"
+      (examSiteChanged)="onExamSiteChanged($event)"
+      (formClose)="onAssignAllModalClose()"
+      (formSave)="onAssignAllFormSave($event)">
+    </msh-assign-all-form>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog
+  #cd
+  header="Konfirmo"
+  icon="pi pi-exclamation-triangle"
+  [style]="{ width: '450px' }">
+  <ng-template pTemplate="footer">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Jo"
+      class="p-button-text"
+      (click)="cd.reject()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Po"
+      class="p-button border"
+      (click)="cd.accept()"></button>
+  </ng-template>
+</p-confirmDialog>

@@ -4,6 +4,7 @@
     <div class="flex">
       <div class="search-input">
         <input
+          (keyup.enter)="searchReport()"
           type="text"
           placeholder="Kërko raport ..."
           [(ngModel)]="reportName" />
