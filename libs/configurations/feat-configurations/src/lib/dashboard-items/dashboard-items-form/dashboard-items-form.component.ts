@@ -1,4 +1,4 @@
-import { CommonModule, formatDate } from '@angular/common';
+import { CommonModule, DatePipe, formatDate } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -69,14 +69,15 @@ import {
   templateUrl: './dashboard-items-form.component.html',
   styleUrls: ['./dashboard-items-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [DatePipe],
 })
 export class DashboardItemsFormComponent implements OnInit {
   @Input() roles: DropdownModel<number>[] = [];
   @Input() users: DropdownModel<number>[] = [];
   sectionDashboard: BehaviorSubject<DropdownModel<number>[]> =
     new BehaviorSubject<DropdownModel<number>[]>([]);
-  formattedStartDate: any;
-  formattedEndDate: any;
+  formattedStartDate: string | null = null;
+  formattedEndDate: string | null = null;
   rolesArray: any = [];
   usersArray: any = [];
   displayModal = false;
@@ -84,14 +85,15 @@ export class DashboardItemsFormComponent implements OnInit {
   @Input() set setDashboardItemsDetails(details: DashboardItem | null) {
     if (details) {
       this.dashboardItem = Object.assign({}, details);
-      if(details.endDate){
-        this.formattedEndDate = new Date(details.endDate)
-      }
-      if(details.startDate) {
-        this.formattedStartDate = new Date(details.startDate)
-      }
+    }
+    if (details?.endDate) {
+      this.dashboardItem.endDate = new Date(details?.endDate);
+    }
+    if (details?.startDate) {
+      this.dashboardItem.startDate = new Date(details?.startDate);
     }
   }
+
   @Output() formSave = new EventEmitter<DashboardItem>();
   @Output() formClose = new EventEmitter<undefined>();
 
@@ -114,7 +116,6 @@ export class DashboardItemsFormComponent implements OnInit {
   uploaded = false;
 
   onCancelClick() {
-    this.formClose.emit();
     this.router.navigate(['configurations/dashboard-items']);
   }
 
@@ -126,25 +127,12 @@ export class DashboardItemsFormComponent implements OnInit {
     private dashboardItemsApiService: DashboardItemsApiService,
     private toaster: GlobalToastService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private datePipe: DatePipe
   ) {}
 
-  updateFormattedDates() {
-    const startDate = new Date(this.dashboardItem.startDate);
-    const endDate = new Date(this.dashboardItem.endDate);
-    this.formattedStartDate = formatDate(
-      startDate,
-      'dd/MM/yyyy',
-      'en'
-    );
-    this.formattedEndDate = formatDate(
-      endDate,
-      'dd/MM/yyyy',
-      'en'
-    );
-  }
-
   ngOnInit(): void {
+    debugger;
     const id = this.route.snapshot.params['id'];
     if (id) {
       this.dashboardItemsApiService
@@ -174,8 +162,16 @@ export class DashboardItemsFormComponent implements OnInit {
           this.users = [...users.data];
           this.dashboardItem = { ...item };
           this.dashboardItem.dashboardSectionId = item.dashboardSectionId;
-          this.dashboardItem.endDate = this.formattedEndDate;
-          this.dashboardItem.startDate = this.formattedStartDate;
+          this.dashboardItem.endDate = item.endDate;
+          this.dashboardItem.startDate = item.startDate;
+          this.formattedEndDate = this.datePipe.transform(
+            this.dashboardItem.endDate,
+            'dd/MM/yyyy'
+          );
+          this.formattedStartDate = this.datePipe.transform(
+            this.dashboardItem.startDate,
+            'dd/MM/yyyy'
+          );
         });
     } else {
       combineLatest([
@@ -219,6 +215,10 @@ export class DashboardItemsFormComponent implements OnInit {
     }
   }
   onSubmit() {
+    if (this.dashboardItem.endDate && this.dashboardItem.startDate) {
+      this.dashboardItem.endDate = this.formattedEndDate;
+      this.dashboardItem.startDate = this.formattedStartDate;
+    }
     const id = this.route.snapshot.params['id'];
     this.submitted = true;
     if (this.form.valid) {
@@ -232,7 +232,6 @@ export class DashboardItemsFormComponent implements OnInit {
         (data: any) => data.key
       );
       if (id) {
-        debugger;
         this.dashboardItemsApiService
           .update(this.dashboardItem)
           .pipe(untilDestroyed(this))
@@ -246,7 +245,6 @@ export class DashboardItemsFormComponent implements OnInit {
               } else {
                 this.toaster.showError(response.errorMessage);
               }
-
               if (response.isBadRequest) {
                 this.toaster.showError(
                   'Ndodhi një problem gjatë konfigurimit të dashboard-it!'
@@ -263,9 +261,8 @@ export class DashboardItemsFormComponent implements OnInit {
       } else {
         this.dashboardItemsApiService
           .save(this.dashboardItem)
-          .pipe(untilDestroyed(this))
-          .subscribe(
-            response => {
+          .pipe(
+            switchMap(response => {
               if (response.isSuccessful) {
                 this.toaster.showSuccess(
                   'Konfigurimi i dashboard-it u shtua me sukses!'
@@ -274,13 +271,16 @@ export class DashboardItemsFormComponent implements OnInit {
               } else {
                 this.toaster.showError(response.errorMessage);
               }
-
               if (response.isBadRequest) {
                 this.toaster.showError(
                   'Ndodhi një problem gjatë ndryshimit konfigurimit të dashboard-it!'
                 );
               }
-            },
+              return of(response);
+            })
+          )
+          .subscribe(
+            () => {},
             error => {
               console.error(error);
               this.toaster.showError(
