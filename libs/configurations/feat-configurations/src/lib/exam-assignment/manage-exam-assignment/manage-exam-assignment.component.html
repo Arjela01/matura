@@ -103,9 +103,11 @@
     <msh-assign-all-form
       [examAssignmentsDetails]="selectedExamAssignment"
       [examSites]="examSiteForAdministrationOffice"
+      [examDates]=" examDatesForAssignAll"
       [administrationOffices]="administrationOffices"
       (administrationOfficeChanged)="onAdministrationOfficeChanged($event)"
       (examSiteChanged)="onExamSiteChanged($event)"
+      (examDateChanged)="onExamDateChanged($event)"
       (formClose)="onAssignAllModalClose()"
       (formSave)="onAssignAllFormSave($event)">
     </msh-assign-all-form>

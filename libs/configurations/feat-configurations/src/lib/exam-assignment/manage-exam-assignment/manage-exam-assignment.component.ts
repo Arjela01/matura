@@ -17,9 +17,7 @@ import {
   ExamDateApiService,
   ExamSiteApiService,
 } from '@msh/configurations/data-access-configurations';
-import {
-  ExamAssignment,
-} from '@msh/shared/domain-models';
+import { ExamAssignment } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   GlobalToastService,
@@ -68,6 +66,7 @@ export class ManageExamAssignmentComponent implements OnInit {
   displayUploadModal = false;
   displayAssignAllModal = false;
 
+  examDatesForAssignAll: DropdownModel<number>[] = [];
   examDates: DropdownModel<number>[] = [];
   examSites: DropdownModel<number>[] = [];
   examSiteForAdministrationOffice: DropdownModel<string>[] = [];
@@ -169,8 +168,11 @@ export class ManageExamAssignmentComponent implements OnInit {
     this.getExamSite(administrationOfficeId);
   }
   onExamSiteChanged(examSiteId: string) {
+    this.getExamDatesForAssignAll(examSiteId);
+  }
+  onExamDateChanged(examDateId: any) {
     if (this.examAssignment != null) {
-      this.examAssignment.examSiteId = examSiteId;
+      this.examAssignment.examDateId = examDateId;
     }
   }
 
@@ -277,6 +279,11 @@ export class ManageExamAssignmentComponent implements OnInit {
       this.examDates = response.data;
     });
   }
+  getExamDatesForAssignAll(examSiteId: string) {
+    this.examDateService.forExamSiteId(examSiteId).subscribe(response => {
+      this.examDatesForAssignAll = response.data;
+    });
+  }
   getExamSiteDropdown() {
     this.examSiteService.loadDropdownList().subscribe(response => {
       this.examSites = response.data;
@@ -292,11 +299,11 @@ export class ManageExamAssignmentComponent implements OnInit {
       });
   }
   onAssignAllFormSave(examAssignment: any) {
-    this.assignAll(examAssignment.examSiteId);
+    this.assignAll(examAssignment.examSiteId, examAssignment.examDateId);
   }
-  assignAll(examAssignment: any) {
+  assignAll(examSiteIds: any, examDateId: any) {
     this.examAssignmentService
-      .examAssign(examAssignment)
+      .examAssign(examSiteIds, examDateId)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examAssignment = response.data;

@@ -49,6 +49,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AssignAllFormComponent {
+  @Input() examDates: DropdownModel<number>[] = [];
   @Input() examSites: DropdownModel<any>[] = [];
   @Input() administrationOffices: any;
   @Input() set examAssignmentsDetails(details: ExamAssignment | null) {
@@ -63,6 +64,7 @@ export class AssignAllFormComponent {
   @Output() loadExamSites = new EventEmitter<ExamAssignment>();
   @Output() administrationOfficeChanged = new EventEmitter<number>();
   @Output() examSiteChanged = new EventEmitter<string>();
+  @Output() examDateChanged = new EventEmitter<any>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
   filters: LazyLoadEvent | null = null;
@@ -71,6 +73,7 @@ export class AssignAllFormComponent {
   fileContent: string | ArrayBuffer | null | undefined;
   administrationOfficeId = 0;
   examSiteId = '';
+  examDateId = 0;
 
   examAssignment: ExamAssignment = {
     date: new Date(),
@@ -104,6 +107,13 @@ export class AssignAllFormComponent {
       this.examSiteId = $event.value;
       this.examSiteChanged.emit(this.examSiteId);
       this.examAssignment.examSiteId = this.examSiteId;
+    }
+  }
+  onExamDateChanged($event: any): void {
+    if ($event && $event.value) {
+      this.examDateId = $event.value;
+      this.examDateChanged.emit(this.examDateId);
+      this.examAssignment.examDateId = this.examDateId;
     }
   }
 

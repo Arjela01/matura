@@ -11,7 +11,7 @@ import {
   ExamAssignmentTableView,
 } from '@msh/shared/domain-models';
 import { LazyLoadEvent } from 'primeng/api';
-import {HttpParams} from "@angular/common/http";
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -69,17 +69,18 @@ export class ExamAssignmentApiService {
     );
   }
   emptySite(examDateId: number): Observable<ApiResult<ExamAssignment>> {
-    return this.apiService.post(
-      `/ExamAssignment/EmptySite`,
-      {
-        examDateId: examDateId,
-      }
-    );
+    return this.apiService.post(`/ExamAssignment/EmptySite`, {
+      examDateId: examDateId,
+    });
   }
 
-  examAssign(examSiteIds: string) : Observable<ApiResult<ExamAssignment>>{
-    return this.apiService.post(`/ExamAssignment/ExamAssign`,{
+  examAssign(
+    examSiteIds: string,
+    examDateId: any
+  ): Observable<ApiResult<ExamAssignment>> {
+    return this.apiService.post(`/ExamAssignment/ExamAssign`, {
       examSiteIds: examSiteIds,
-    })
+      examSiteId: examDateId,
+    });
   }
 }
