@@ -17,4 +17,11 @@ export class DiplomasStudentApiService {
       'blob'
     );
   }
+  exportAllDiplomas(): Observable<ApiResult<unknown>> {
+    return this.apiService.get<any>(
+      `/PrintedDiplomas/GenerateDiplomasPdf?studentVersion=${1}&isPrinted=${true}&studentId=${231801168915}&academicYearId=${44}&darZaId=${18}`,
+      new HttpParams(),
+      'blob'
+    );
+  }
 }

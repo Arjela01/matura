@@ -78,7 +78,7 @@ export class ManageDiplomasStudentComponent {
   printDiplomas(event: GridEvent<Student>) {
     console.log(event.data);
     this.diplomasService
-      .exportDiplomasStudent(event.data?.id as string)
+      .exportDiplomasStudent(event.data?.studentId as string)
       .subscribe((response: any) => {
         const blob: any = new Blob([response], {
           type: 'application/pdf',
@@ -88,6 +88,14 @@ export class ManageDiplomasStudentComponent {
           `Diploma_${event.data?.firstName}_${event.data?.lastName}`
         );
       });
+  }
+  printAllDiplomas() {
+    this.diplomasService.exportAllDiplomas().subscribe((response: any) => {
+      const blob: any = new Blob([response], {
+        type: 'application/pdf',
+      });
+      FileSaver.saveAs(blob, `Diplomat`);
+    });
   }
 
   deleteStudent(Student: Student) {
