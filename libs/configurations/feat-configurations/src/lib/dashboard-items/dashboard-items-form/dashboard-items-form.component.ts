@@ -1,4 +1,4 @@
-import { CommonModule, formatDate } from '@angular/common';
+import { CommonModule, DatePipe, formatDate } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -69,32 +69,31 @@ import {
   templateUrl: './dashboard-items-form.component.html',
   styleUrls: ['./dashboard-items-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [DatePipe],
 })
 export class DashboardItemsFormComponent implements OnInit {
   @Input() roles: DropdownModel<number>[] = [];
   @Input() users: DropdownModel<number>[] = [];
   sectionDashboard: BehaviorSubject<DropdownModel<number>[]> =
     new BehaviorSubject<DropdownModel<number>[]>([]);
-  formattedStartDate: any;
-  formattedEndDate: any;
+  formattedStartDate: string | null = null;
+  formattedEndDate: string | null = null;
   rolesArray: any = [];
   usersArray: any = [];
+  displayModal = false;
 
   @Input() set setDashboardItemsDetails(details: DashboardItem | null) {
     if (details) {
       this.dashboardItem = Object.assign({}, details);
-      this.formattedStartDate = formatDate(
-        new Date(this.dashboardItem.startDate),
-        'dd/MM/yyyy',
-        'en'
-      );
-      this.formattedEndDate = formatDate(
-        new Date(this.dashboardItem.endDate),
-        'dd/MM/yyyy',
-        'en'
-      );
+    }
+    if (details?.endDate) {
+      this.dashboardItem.endDate = new Date(details?.endDate);
+    }
+    if (details?.startDate) {
+      this.dashboardItem.startDate = new Date(details?.startDate);
     }
   }
+
   @Output() formSave = new EventEmitter<DashboardItem>();
   @Output() formClose = new EventEmitter<undefined>();
 
@@ -117,7 +116,7 @@ export class DashboardItemsFormComponent implements OnInit {
   uploaded = false;
 
   onCancelClick() {
-    this.formClose.emit();
+    this.router.navigate(['configurations/dashboard-items']);
   }
 
   constructor(
@@ -128,10 +127,12 @@ export class DashboardItemsFormComponent implements OnInit {
     private dashboardItemsApiService: DashboardItemsApiService,
     private toaster: GlobalToastService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
+    debugger;
     const id = this.route.snapshot.params['id'];
     if (id) {
       this.dashboardItemsApiService
@@ -158,8 +159,19 @@ export class DashboardItemsFormComponent implements OnInit {
           item.roles = this.rolesArray;
           this.sectionDashboard.next(sections.data);
           this.roles = [...roles.data];
+          this.users = [...users.data];
           this.dashboardItem = { ...item };
           this.dashboardItem.dashboardSectionId = item.dashboardSectionId;
+          this.dashboardItem.endDate = item.endDate;
+          this.dashboardItem.startDate = item.startDate;
+          this.formattedEndDate = this.datePipe.transform(
+            this.dashboardItem.endDate,
+            'dd/MM/yyyy'
+          );
+          this.formattedStartDate = this.datePipe.transform(
+            this.dashboardItem.startDate,
+            'dd/MM/yyyy'
+          );
         });
     } else {
       combineLatest([
@@ -203,34 +215,80 @@ export class DashboardItemsFormComponent implements OnInit {
     }
   }
   onSubmit() {
+    if (this.dashboardItem.endDate && this.dashboardItem.startDate) {
+      this.dashboardItem.endDate = this.formattedEndDate;
+      this.dashboardItem.startDate = this.formattedStartDate;
+    }
+    const id = this.route.snapshot.params['id'];
     this.submitted = true;
     if (this.form.valid) {
       if (this.dashboardItem.id === 0) {
         delete this.dashboardItem.id;
       }
-      this.dashboardItem;
       this.dashboardItem.roles = this.dashboardItem.roles.map(
         (data: any) => data.key
       );
       this.dashboardItem.users = this.dashboardItem.users.map(
         (data: any) => data.key
       );
-      this.dashboardItemsApiService
-        .save(this.dashboardItem)
-        .pipe(untilDestroyed(this))
-        .subscribe(response => {
-          if (response.isSuccessful) {
-            this.toaster.showSuccess(
-              'Konfigurimi i dashboard-it u shtua me sukses!'
-            );
-            this.router.navigate(['configurations/dashboard-items']);
-          } else this.toaster.showError(response.errorMessage);
-
-          if (response.isBadRequest)
-            this.toaster.showError(
-              'Ndodhi një problem gjatë ndryshimit konfigurimit të dashboard-it!'
-            );
-        });
+      if (id) {
+        this.dashboardItemsApiService
+          .update(this.dashboardItem)
+          .pipe(untilDestroyed(this))
+          .subscribe(
+            response => {
+              if (response.isSuccessful) {
+                this.toaster.showSuccess(
+                  'Konfigurimi i dashboard-it u ndryshua me sukses!'
+                );
+                this.router.navigate(['configurations/dashboard-items']);
+              } else {
+                this.toaster.showError(response.errorMessage);
+              }
+              if (response.isBadRequest) {
+                this.toaster.showError(
+                  'Ndodhi një problem gjatë konfigurimit të dashboard-it!'
+                );
+              }
+            },
+            error => {
+              console.error(error);
+              this.toaster.showError(
+                'An error occurred while saving the entity changes.'
+              );
+            }
+          );
+      } else {
+        this.dashboardItemsApiService
+          .save(this.dashboardItem)
+          .pipe(
+            switchMap(response => {
+              if (response.isSuccessful) {
+                this.toaster.showSuccess(
+                  'Konfigurimi i dashboard-it u shtua me sukses!'
+                );
+                this.router.navigate(['configurations/dashboard-items']);
+              } else {
+                this.toaster.showError(response.errorMessage);
+              }
+              if (response.isBadRequest) {
+                this.toaster.showError(
+                  'Ndodhi një problem gjatë ndryshimit konfigurimit të dashboard-it!'
+                );
+              }
+              return of(response);
+            })
+          )
+          .subscribe(
+            () => {},
+            error => {
+              console.error(error);
+              this.toaster.showError(
+                'An error occurred while saving the entity changes.'
+              );
+            }
+          );
+      }
     }
   }
 }

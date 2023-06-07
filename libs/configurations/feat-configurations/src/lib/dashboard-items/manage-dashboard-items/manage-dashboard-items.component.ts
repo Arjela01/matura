@@ -125,15 +125,6 @@ export class ManageDashboardItemsComponent {
         break;
     }
   }
-  onFormSave(dashboardItems: DashboardItem) {
-    if (dashboardItems.id) {
-      this.updateDashboardItems(dashboardItems);
-    }
-    if (!dashboardItems.id) {
-      this.addDashboardItems(dashboardItems);
-    }
-  }
-
   getDashboardItems($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
@@ -180,25 +171,6 @@ export class ManageDashboardItemsComponent {
           this.toastService.showError(
             'Ndodhi një problem gjatë ndryshimit konfigurimit të dashboard-it!'
           );
-      });
-  }
-
-  updateDashboardItems(dashboardItems: DashboardItem) {
-    this.dashboardItemsService
-      .update(dashboardItems)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            'Konfigurimi i dashboard-it u ndryshua me sukses!'
-          );
-          this.getDashboardItems(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage);
-        if (response.isBadRequest)
-          this.toastService.showError(
-            'Ndodhi një problem gjatë konfigurimit të dashboard-it!'
-          );
-        this.displayModal = false;
       });
   }
 
