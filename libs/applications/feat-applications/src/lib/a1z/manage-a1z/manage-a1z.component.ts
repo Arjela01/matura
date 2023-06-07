@@ -4,10 +4,11 @@ import { Router } from '@angular/router';
 import { A1ZApiService } from '@msh/applications/data-access-applications';
 import { A1ZTableRecord } from '@msh/applications/domain-application';
 
+import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
+  GRID_ACTIONS,
   GlobalToastService,
   GridEvent,
-  GRID_ACTIONS
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -16,7 +17,13 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject } from 'rxjs';
+import {
+  BehaviorSubject,
+  distinctUntilChanged,
+  map,
+  of,
+  switchMap,
+} from 'rxjs';
 import { A1zFormComponent } from '../a1z-form/a1z-form.component';
 import { A1zGridComponent } from '../a1z-grid/a1z-grid.component';
 @UntilDestroy()
@@ -53,11 +60,24 @@ export class ManageA1zComponent implements OnInit {
     private readonly a1zservice: A1ZApiService,
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly router: Router
+    private readonly router: Router,
+    private authFacade: AuthFacade
   ) {}
 
-  ngOnInit(): void {
-    console.log('init');
+  ngOnInit() {
+    this.authFacade.academicYear$
+      .pipe(
+        map((data: any) => data.id),
+        distinctUntilChanged(),
+        switchMap(data => {
+          if (this.filters) {
+            window.location.reload();
+          }
+
+          return of([]);
+        })
+      )
+      .subscribe();
   }
 
   onNewClick() {
@@ -65,11 +85,13 @@ export class ManageA1zComponent implements OnInit {
     this.router.navigate(['/applications/a1z-form']);
   }
 
-
   onGridEvent(event: GridEvent<A1ZTableRecord | A1ZTableRecord[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
-        this.selectedA1ZList = [...this.selectedA1ZList, event.data as A1ZTableRecord];
+        this.selectedA1ZList = [
+          ...this.selectedA1ZList,
+          event.data as A1ZTableRecord,
+        ];
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
         this.selectedA1ZList = this.selectedA1ZList.filter(u => {
@@ -124,7 +146,7 @@ export class ManageA1zComponent implements OnInit {
       .loadA1Z($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        console.log(34,response);
+        console.log(34, response);
         this.a1zList$$.next(response.data);
         this.totalRecords = response.total;
       });

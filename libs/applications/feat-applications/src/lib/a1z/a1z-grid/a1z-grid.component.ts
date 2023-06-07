@@ -4,10 +4,11 @@ import {
   Component,
   EventEmitter,
   Input,
-  Output
+  Output,
 } from '@angular/core';
 import { A1ZTableRecord } from '@msh/applications/domain-application';
-import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
+import { AuthFacade } from '@msh/auth/data-access-auth';
+import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -35,9 +36,12 @@ import { TooltipModule } from 'primeng/tooltip';
 export class A1zGridComponent {
   @Input() a1z: A1ZTableRecord[] = [];
   @Input() totalRecords = 0;
+  constructor(private authFacade: AuthFacade) {}
   selectedA1Z: A1ZTableRecord[] = [];
 
-  @Output() gridEvent = new EventEmitter<GridEvent<A1ZTableRecord | A1ZTableRecord[]>>();
+  @Output() gridEvent = new EventEmitter<
+    GridEvent<A1ZTableRecord | A1ZTableRecord[]>
+  >();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 

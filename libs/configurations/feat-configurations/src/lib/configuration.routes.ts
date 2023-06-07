@@ -268,4 +268,11 @@ export const CONFIGURATION_ROUTES: Route[] = [
         './carried-grade/manage-carried-grade/manage-carried-grade.component'
       ).then(m => m.ManageCarriedGradesComponent),
   },
+  {
+    path: 'diplomas-student',
+    loadComponent: () =>
+      import(
+        './diplomas-student/manage-diplomas-student/manage-diplomas-student.component'
+      ).then(m => m.ManageDiplomasStudentComponent),
+  },
 ];

@@ -56,11 +56,6 @@ export class ManageStudentsGridsDialogComponent {
   ) {}
 
   loadRows($event: LazyLoadEvent) {
-    if (!this.loadedForTheFirstTime) {
-      $event.filters = {
-        ...$event.filters,
-        ...this.config.data.config.filters,
-      };
       this.studentsService
         .loadStudents($event)
         .pipe(untilDestroyed(this))
@@ -68,12 +63,7 @@ export class ManageStudentsGridsDialogComponent {
           this.students$$.next(response.data);
           this.totalRecords = response.total;
         });
-    } else {
-      // prevents the glitch when opening the dialog for the first time
-      this.students$$.next(this.config.data.students);
-      this.totalRecords = this.config.data.totalRecords;
-      this.loadedForTheFirstTime = false;
-    }
+    
   }
   selectStudent(event: Student) {
     this.ref.close({
