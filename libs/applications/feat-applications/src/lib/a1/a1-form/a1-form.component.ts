@@ -38,7 +38,6 @@ import { Observable, combineLatest, of, switchMap } from 'rxjs';
 import { Report } from '../../../../../../reports/reports-enum';
 import { ManageStudentsGridsDialogComponent } from '../manage-students-grids-dialog/manage-students-grids-dialog.component';
 
-let INITIAL_FILTER = {};
 @Component({
   selector: 'a1-form',
   standalone: true,
@@ -200,15 +199,6 @@ export class A1FormComponent {
             this.academicYear = academicYears['data'].find(
               (year: AcademicYear) => year.isActive
             );
-            INITIAL_FILTER = {
-              registrationYear: [
-                {
-                  value: this.academicYear?.year,
-                  matchMode: 'equals',
-                  operator: 'and',
-                },
-              ],
-            };
             return combineLatest([
               this.getStudent(),
               this.getOptionalSubjects(),
@@ -332,7 +322,6 @@ export class A1FormComponent {
   }
 
   getStudent(): Observable<StudentTableView> {
-    this.studentsConfig.filters = INITIAL_FILTER;
     return this.studentsApiService
       .loadStudents(this.studentsConfig)
       .pipe(untilDestroyed(this));
@@ -397,11 +386,15 @@ export class A1FormComponent {
             const query: { queryParams: { [x: string]: string } } = {
               queryParams: {},
             };
-            if (this.parameterUrl && this.parameterYear
-              && this.a1.studentId && this.a1.academicYearId) {
+            if (
+              this.parameterUrl &&
+              this.parameterYear &&
+              this.a1.studentId &&
+              this.a1.academicYearId
+            ) {
               query.queryParams[`${this.parameterUrl}`] = this.a1.studentId;
-              query.queryParams[`${this.parameterYear}`] = this.a1.academicYearId.toString();
-
+              query.queryParams[`${this.parameterYear}`] =
+                this.a1.academicYearId.toString();
             }
             this.router.navigate([`/reports/${this.a1Report}`], query).then();
           } else {
@@ -440,11 +433,15 @@ export class A1FormComponent {
             const extras: { queryParams: { [x: string]: string } } = {
               queryParams: {},
             };
-            if (this.parameterUrl && this.parameterYear
-              && this.a1.studentId && this.a1.academicYearId) {
+            if (
+              this.parameterUrl &&
+              this.parameterYear &&
+              this.a1.studentId &&
+              this.a1.academicYearId
+            ) {
               extras.queryParams[`${this.parameterUrl}`] = this.a1.studentId;
-              extras.queryParams[`${this.parameterYear}`] = this.a1?.academicYearId.toString();
-
+              extras.queryParams[`${this.parameterYear}`] =
+                this.a1?.academicYearId.toString();
             }
             this.router.navigate([`/reports/${this.a1Report}`], extras).then();
           } else {
