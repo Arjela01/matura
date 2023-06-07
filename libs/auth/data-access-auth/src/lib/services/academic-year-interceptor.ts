@@ -32,7 +32,7 @@ export class AcademicYearInterceptor implements HttpInterceptor {
           const academicYear = token
             ? request.clone({
                 setHeaders: {
-                  AcademicYearIdFilter: `${JSON.parse(academicYearFilter).id}`,
+                  AcademicYearIdFilter: `${accYear.id}`,
                 },
               })
             : request;

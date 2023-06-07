@@ -10,12 +10,12 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
+import { ACADEMIC_YEAR_KEY } from '@msh/configurations/data-access-configurations';
 import { REPORTS_APP_URL, SafePipe } from '@msh/shared/util-shared';
+import { ButtonModule } from 'primeng/button';
 import RxPostmessenger from 'rx-postmessenger';
 import { Subject, first, forkJoin, map, tap } from 'rxjs';
 import { IframeAutoHeightDirective } from '../iframe-auto-height.directive';
-import { ButtonModule } from 'primeng/button';
-import { ACADEMIC_YEAR_KEY } from '@msh/configurations/data-access-configurations';
 
 @Component({
   selector: 'msh-report-renderer',
@@ -55,7 +55,6 @@ export class ReportRendererComponent implements OnInit {
     })
   );
 
-
   findStudentID(obj: { [x: string]: string | number }) {
     const key = Object.keys(obj).find(k => k.toLowerCase() === 'studentid');
     if (key) {
@@ -91,9 +90,9 @@ export class ReportRendererComponent implements OnInit {
     }
 
     if (this.id && this.studentObj && this.yearObj) {
-      this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}&${this.yearObj.key}=${this.yearObj.value}`;
+      this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}`;
     } else if (this.academicYear && this.id) {
-      this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&academicyearid=${this.academicYear}`;
+      this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}`;
     }
   }
 
