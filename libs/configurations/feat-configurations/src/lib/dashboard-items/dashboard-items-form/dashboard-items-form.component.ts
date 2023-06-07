@@ -280,7 +280,6 @@ export class DashboardItemsFormComponent implements OnInit {
             })
           )
           .subscribe(
-            () => {},
             error => {
               console.error(error);
               this.toaster.showError(
