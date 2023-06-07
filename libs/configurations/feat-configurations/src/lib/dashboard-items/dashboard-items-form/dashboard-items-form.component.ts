@@ -132,7 +132,6 @@ export class DashboardItemsFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    debugger;
     const id = this.route.snapshot.params['id'];
     if (id) {
       this.dashboardItemsApiService
