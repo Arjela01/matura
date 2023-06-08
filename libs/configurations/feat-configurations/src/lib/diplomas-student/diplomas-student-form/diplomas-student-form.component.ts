@@ -74,7 +74,7 @@ export class DiplomasStudentFormComponent {
         initialUrl += `&schoolId=${this.diplomaFile.schoolId}`;
       }
       if (this.diplomaFile.darZaId !== 0) {
-        initialUrl += `&schoolId=${this.diplomaFile.schoolId}`;
+        initialUrl += `&darZaId=${this.diplomaFile.schoolId}`;
       }
       initialUrl += `&isPrinted=${this.diplomaFile.isPrinted}&isProffesional=${this.diplomaFile.isProfessional}&isForeign=${this.diplomaFile.isForeign}`;
       this.formSave.emit(initialUrl);
