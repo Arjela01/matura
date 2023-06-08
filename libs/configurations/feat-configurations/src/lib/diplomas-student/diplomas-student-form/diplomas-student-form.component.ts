@@ -61,8 +61,6 @@ export class DiplomasStudentFormComponent {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor(private cd: ChangeDetectorRef) {}
 
-  ngOnChanges(): void {}
-
   onCancelClick() {
     this.formClose.emit();
   }
