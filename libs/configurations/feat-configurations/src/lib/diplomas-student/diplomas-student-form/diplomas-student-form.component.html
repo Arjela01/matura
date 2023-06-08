@@ -1,1 +1,83 @@
-<p>diplomas-student-form works!</p>
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+
+
+
+
+    <div class="field">
+        <label for="studentVersion">Tipi i studentit *</label>
+        <p-dropdown id="studentVersion" [options]="studentVersions" optionValue="key" optionLabel="value"
+            name="studentVersion" [autoDisplayFirst]="false" [(ngModel)]="diplomaFile.studentVersion" [required]="true"
+            [showClear]="true" appendTo="body" [ngClass]="{
+          'ng-invalid ng-dirty': submitted && !diplomaFile.studentVersion
+        }">
+        </p-dropdown>
+        <small class="p-error block" *ngIf="submitted && !diplomaFile.studentVersion">
+            Tipi i studentit është fushë e kërkuar.
+        </small>
+    </div>
+    <div class="field">
+        <label for="darZa">DAR/ZA </label>
+        <p-dropdown id="darZa" [options]="administrationOffices" optionValue="key" optionLabel="value" name="darZa"
+            [autoDisplayFirst]="false" [(ngModel)]="diplomaFile.darZaId" [required]="false" [showClear]="true"
+            appendTo="body">
+        </p-dropdown>
+    </div>
+    <div class="field">
+        <label for="highSchool">Gjimnazet </label>
+        <p-dropdown id="highSchool" [options]="highSchools" optionValue="key" optionLabel="value" name="schoolId"
+            [autoDisplayFirst]="false" [(ngModel)]="diplomaFile.schoolId" [required]="false" [showClear]="true"
+            appendTo="body">
+        </p-dropdown>
+    </div>
+    <div class="field">
+        <label class="mb-3">Profesional *</label>
+        <div class="formgrid grid">
+            <div class="field-radiobutton col-6">
+                <p-radioButton id="isProffesional" name="isProffesionalTrue" [value]="true"
+                    [(ngModel)]="diplomaFile.isProfessional"></p-radioButton>
+                <label for="isProffesionalTrue">Po</label>
+            </div>
+            <div class="field-radiobutton col-6">
+                <p-radioButton id="isProffesionalFalse" name="isProffesionalFalse" [value]="false"
+                    [(ngModel)]="diplomaFile.isProfessional"></p-radioButton>
+                <label for="isProffesionalFalse">Jo</label>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label class="mb-3">I huaj *</label>
+        <div class="formgrid grid">
+            <div class="field-radiobutton col-6">
+                <p-radioButton id="isForeign" name="isForeignTrue" [value]="true"
+                    [(ngModel)]="diplomaFile.isForeign"></p-radioButton>
+                <label for="isForeignTrue">Po</label>
+            </div>
+            <div class="field-radiobutton col-6">
+                <p-radioButton id="isForeignFalse" name="isForeignFalse" [value]="false"
+                    [(ngModel)]="diplomaFile.isForeign"></p-radioButton>
+                <label for="isForeignFalse">Jo</label>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label class="mb-3">Diploma të printuara *</label>
+        <div class="formgrid grid">
+            <div class="field-radiobutton col-6">
+                <p-radioButton id="isPrinted" name="isPrinted" [value]="true"
+                    [(ngModel)]="diplomaFile.isPrinted"></p-radioButton>
+                <label for="isPrintedTrue">Po</label>
+            </div>
+            <div class="field-radiobutton col-6">
+                <p-radioButton id="isPrintedFalse" name="isRegionalOffice" [value]="false"
+                    [(ngModel)]="diplomaFile.isPrinted"></p-radioButton>
+                <label for="isPrintedFalse">Jo</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex justify-content-end">
+        <button type="button" pButton label="Anullo" class="p-button-text w-auto mr-2"
+            (click)="onCancelClick()"></button>
+        <button [disabled]="form.invalid" type="submit" pButton label="Printo" class="p-button w-auto"></button>
+    </div>
+</form>

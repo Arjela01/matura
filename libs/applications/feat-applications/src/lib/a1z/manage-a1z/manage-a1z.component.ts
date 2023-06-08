@@ -146,7 +146,6 @@ export class ManageA1zComponent implements OnInit {
       .loadA1Z($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        console.log(34, response);
         this.a1zList$$.next(response.data);
         this.totalRecords = response.total;
       });
