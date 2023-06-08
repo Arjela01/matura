@@ -2,10 +2,12 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
+  AdministrationOfficeApiService,
   DiplomasStudentApiService,
+  HighSchoolApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
-import { Student } from '@msh/shared/domain-models';
+import { Student, StudentVersion } from '@msh/shared/domain-models';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -47,25 +49,63 @@ export class ManageDiplomasStudentComponent {
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
   filters: LazyLoadEvent | null = null;
-
+  displayModal = false;
   hideStudentForm = true;
   totalRecords = 0;
   selectedStudent: Student | null = null;
   selectedStudentList: Student[] = [];
 
+  studentVersion: any[] = [
+    {
+      key: StudentVersion.CurrentStudent,
+      value: 'Student aktiv',
+      parentKey: null,
+    },
+    {
+      key: StudentVersion.PreviousStudent,
+      value: 'Student mbetës',
+      parentKey: null,
+    },
+  ];
+  administrationOffices: any[] = [];
+  highSchools: any[] = [];
+
   constructor(
     private readonly studentService: StudentsApiService,
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private diplomasService: DiplomasStudentApiService
+    private diplomasService: DiplomasStudentApiService,
+    private administrationOfficeApiService: AdministrationOfficeApiService,
+    private highschoolApiService: HighSchoolApiService
   ) {}
 
   ngOnInit(): void {
-    console.log('init');
+    this.getAdministrationOfficeDropdown();
+    this.getHighSchoolsDropdown();
   }
 
   onNewClick() {
-    this.hideStudentForm = !this.hideStudentForm;
+    this.displayModal = true;
+  }
+  onModalClose() {
+    this.displayModal = false;
+  }
+
+  getAdministrationOfficeDropdown() {
+    this.administrationOfficeApiService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe((response: any) => {
+        this.administrationOffices = response.data;
+      });
+  }
+  getHighSchoolsDropdown() {
+    this.highschoolApiService
+      .loadDropDownList()
+      .pipe(untilDestroyed(this))
+      .subscribe((response: any) => {
+        this.highSchools = response.data;
+      });
   }
 
   onGridEvent(event: GridEvent<Student>) {
@@ -89,8 +129,13 @@ export class ManageDiplomasStudentComponent {
         );
       });
   }
-  printAllDiplomas() {
-    this.diplomasService.exportAllDiplomas().subscribe((response: any) => {
+
+  onFormSave(data: string) {
+    this.printAllDiplomas(data);
+  }
+
+  printAllDiplomas(data: string) {
+    this.diplomasService.exportAllDiplomas(data).subscribe((response: any) => {
       const blob: any = new Blob([response], {
         type: 'application/pdf',
       });
