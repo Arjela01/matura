@@ -62,7 +62,7 @@ bootstrapApplication(AppComponent, {
         return {
           cache: new InMemoryCache(),
           link: httpLink.create({
-            uri: 'https://localhost:44384/auditQuery',
+            uri: 'https://matura-dev-api.azurewebsites.net/auditQuery',
           }),
         };
       },
