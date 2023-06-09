@@ -167,7 +167,7 @@ export class ManageExamAssignmentComponent implements OnInit {
   onAdministrationOfficeChanged(administrationOfficeId: number) {
     this.getExamSite(administrationOfficeId);
   }
-  onExamSiteChanged(examSiteId: string) {
+  onExamSiteChanged(examSiteId: string[]) {
     this.getExamDatesForAssignAll(examSiteId);
   }
   onExamDateChanged(examDateId: any) {
@@ -279,8 +279,8 @@ export class ManageExamAssignmentComponent implements OnInit {
       this.examDates = response.data;
     });
   }
-  getExamDatesForAssignAll(examSiteId: string) {
-    this.examDateService.forExamSiteId(examSiteId).subscribe(response => {
+  getExamDatesForAssignAll(examSiteId: string[]) {
+    this.examDateService.forExamSiteIds(examSiteId).subscribe(response => {
       this.examDatesForAssignAll = response.data;
     });
   }
@@ -301,22 +301,23 @@ export class ManageExamAssignmentComponent implements OnInit {
   onAssignAllFormSave(examAssignment: any) {
     this.assignAll(examAssignment.examSiteId, examAssignment.examDateId);
   }
-  assignAll(examSiteIds: any, examDateId: any) {
+  assignAll(examSiteIds: string[], examDateIds: string[]) {
+    debugger;
     this.examAssignmentService
-      .examAssign(examSiteIds, examDateId)
+      .examAssign(examSiteIds, examDateIds)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examAssignment = response.data;
         if (response.isSuccessful) {
           this.toastService.showSuccess(
-            'Studentët u caktuan me sukses në qendrat e zgjedhura'
+            'Studentët u caktuan me sukses në qendrat e zgjedhura.'
           );
           this.displayAssignAllModal = false;
           this.getExamAssignments(this.filters as LazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest) {
           this.toastService.showError(
-            'Ndodhi një problem gjatë caktimit të studentëve në qendra'
+            'Ndodhi një problem gjatë caktimit të studentëve në qendra.'
           );
         }
       });

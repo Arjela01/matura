@@ -63,7 +63,7 @@ export class AssignAllFormComponent {
   @Output() formClose = new EventEmitter<undefined>();
   @Output() loadExamSites = new EventEmitter<ExamAssignment>();
   @Output() administrationOfficeChanged = new EventEmitter<number>();
-  @Output() examSiteChanged = new EventEmitter<string>();
+  @Output() examSiteChanged = new EventEmitter<string[]>();
   @Output() examDateChanged = new EventEmitter<any>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
@@ -72,7 +72,7 @@ export class AssignAllFormComponent {
   displayAssignAllModal = false;
   fileContent: string | ArrayBuffer | null | undefined;
   administrationOfficeId = 0;
-  examSiteId = '';
+  examSiteId = [''];
   examDateId = 0;
 
   examAssignment: ExamAssignment = {

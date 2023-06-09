@@ -75,12 +75,12 @@ export class ExamAssignmentApiService {
   }
 
   examAssign(
-    examSiteIds: string,
-    examDateId: any
+    examSiteIds: string[],
+    examDateIds: string[]
   ): Observable<ApiResult<ExamAssignment>> {
     return this.apiService.post(`/ExamAssignment/ExamAssign`, {
       examSiteIds: examSiteIds,
-      examSiteId: examDateId,
+      examDateIds: examDateIds,
     });
   }
 }
