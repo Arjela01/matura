@@ -14,23 +14,30 @@ import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
 import {
-  ExamSiteApiService,
   AdministrationOfficeApiService,
+  ExamSiteApiService,
   HighSchoolApiService,
 } from '@msh/configurations/data-access-configurations';
-import { ExamSite } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import { ExamSite } from '@msh/shared/domain-models';
 
 import {
+  GRID_ACTIONS,
   GlobalToastService,
   GridEvent,
-  GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 
-import { BehaviorSubject } from 'rxjs';
+import { AuthFacade } from '@msh/auth/data-access-auth';
+import { RippleModule } from 'primeng/ripple';
+import {
+  BehaviorSubject,
+  distinctUntilChanged,
+  map,
+  of,
+  switchMap,
+} from 'rxjs';
 import { ExamSiteFormComponent } from '../exam-site-form/exam-site-form.component';
 import { ExamSiteGridComponent } from '../exam-site-grid/exam-site-grid.component';
-import { RippleModule } from 'primeng/ripple';
 
 @UntilDestroy()
 @Component({
@@ -69,11 +76,25 @@ export class ManageExamSiteComponent implements OnInit {
     private readonly examSiteService: ExamSiteApiService,
     private readonly cd: ChangeDetectorRef,
     private readonly highSchoolService: HighSchoolApiService,
-    private readonly administrationOfficeApiService: AdministrationOfficeApiService
+    private readonly administrationOfficeApiService: AdministrationOfficeApiService,
+    private authFacade: AuthFacade
   ) {}
 
   ngOnInit(): void {
     this.getAdministrationOfficeDropdown();
+    this.authFacade.academicYear$
+      .pipe(
+        map((data: any) => data.id),
+        distinctUntilChanged(),
+        switchMap(data => {
+          if (this.filters) {
+            window.location.reload();
+          }
+
+          return of([]);
+        })
+      )
+      .subscribe();
   }
 
   onNewClick() {
