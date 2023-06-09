@@ -302,7 +302,6 @@ export class ManageExamAssignmentComponent implements OnInit {
     this.assignAll(examAssignment.examSiteId, examAssignment.examDateId);
   }
   assignAll(examSiteIds: string[], examDateIds: string[]) {
-    debugger;
     this.examAssignmentService
       .examAssign(examSiteIds, examDateIds)
       .pipe(untilDestroyed(this))
