@@ -17,9 +17,7 @@ import {
   ExamDateApiService,
   ExamSiteApiService,
 } from '@msh/configurations/data-access-configurations';
-import {
-  ExamAssignment,
-} from '@msh/shared/domain-models';
+import { ExamAssignment } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   GlobalToastService,
@@ -68,6 +66,7 @@ export class ManageExamAssignmentComponent implements OnInit {
   displayUploadModal = false;
   displayAssignAllModal = false;
 
+  examDatesForAssignAll: DropdownModel<number>[] = [];
   examDates: DropdownModel<number>[] = [];
   examSites: DropdownModel<number>[] = [];
   examSiteForAdministrationOffice: DropdownModel<string>[] = [];
@@ -168,9 +167,12 @@ export class ManageExamAssignmentComponent implements OnInit {
   onAdministrationOfficeChanged(administrationOfficeId: number) {
     this.getExamSite(administrationOfficeId);
   }
-  onExamSiteChanged(examSiteId: string) {
+  onExamSiteChanged(examSiteId: string[]) {
+    this.getExamDatesForAssignAll(examSiteId);
+  }
+  onExamDateChanged(examDateId: any) {
     if (this.examAssignment != null) {
-      this.examAssignment.examSiteId = examSiteId;
+      this.examAssignment.examDateId = examDateId;
     }
   }
 
@@ -277,6 +279,11 @@ export class ManageExamAssignmentComponent implements OnInit {
       this.examDates = response.data;
     });
   }
+  getExamDatesForAssignAll(examSiteId: string[]) {
+    this.examDateService.forExamSiteIds(examSiteId).subscribe(response => {
+      this.examDatesForAssignAll = response.data;
+    });
+  }
   getExamSiteDropdown() {
     this.examSiteService.loadDropdownList().subscribe(response => {
       this.examSites = response.data;
@@ -292,24 +299,24 @@ export class ManageExamAssignmentComponent implements OnInit {
       });
   }
   onAssignAllFormSave(examAssignment: any) {
-    this.assignAll(examAssignment.examSiteId);
+    this.assignAll(examAssignment.examSiteId, examAssignment.examDateId);
   }
-  assignAll(examAssignment: any) {
+  assignAll(examSiteIds: string[], examDateIds: string[]) {
     this.examAssignmentService
-      .examAssign(examAssignment)
+      .examAssign(examSiteIds, examDateIds)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examAssignment = response.data;
         if (response.isSuccessful) {
           this.toastService.showSuccess(
-            'Studentët u caktuan me sukses në qendrat e zgjedhura'
+            'Studentët u caktuan me sukses në qendrat e zgjedhura.'
           );
           this.displayAssignAllModal = false;
           this.getExamAssignments(this.filters as LazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest) {
           this.toastService.showError(
-            'Ndodhi një problem gjatë caktimit të studentëve në qendra'
+            'Ndodhi një problem gjatë caktimit të studentëve në qendra.'
           );
         }
       });

@@ -54,6 +54,34 @@
           </small>
         </div>
 
+        <div class="field">
+          <label for="examInfo"> Tipi dhe Data e Provimit *</label>
+          <p-multiSelect
+            id="examInfo"
+            display="chip"
+            defaultLabel="Zgjidh Datën"
+            [virtualScrollItemSize]="43"
+            [options]="examDates"
+            optionValue="key"
+            optionLabel="value"
+            name="examInfoId"
+            appendTo="body"
+            [required]="true"
+            (onClear)="onExamDateChanged($event)"
+            (onChange)="onExamDateChanged($event)"
+            [(ngModel)]="examAssignment.examDateId"
+            [showClear]="true"
+            [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examAssignment.examDateId
+      }">
+          </p-multiSelect>
+          <small
+            class="p-error block"
+            *ngIf="submitted && !examAssignment.examDateId">
+            Data e Provimit është fushë e kërkuar.
+          </small>
+        </div>
+
 
         <div class="flex justify-content-end mt-4">
           <button

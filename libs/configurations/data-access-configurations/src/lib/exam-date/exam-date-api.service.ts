@@ -50,4 +50,11 @@ export class ExamDateApiService {
       `/ExamDate/ForExamSiteId/${examSiteId}`
     );
   }
+  forExamSiteIds(
+    examSiteIds?: string[]
+  ): Observable<ApiResult<DropdownModel<number>[]>> {
+    return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
+      `/ExamDate/ForExamSites/${examSiteIds}`
+    );
+  }
 }
