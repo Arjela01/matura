@@ -1,10 +1,15 @@
-import { NgIf } from '@angular/common';
-import { AfterViewChecked, ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import {GlobalSpinnerComponent, LoaderService} from '@msh/shared/ui-shared';
+import { NgIf} from '@angular/common';
+import {
+  AfterViewChecked,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
+import { RouterOutlet} from '@angular/router';
+import { GlobalSpinnerComponent, LoaderService } from '@msh/shared/ui-shared';
 import { ToastModule } from 'primeng/toast';
 import { PrimeNGConfig } from 'primeng/api';
-import {  HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'msh-root',
@@ -22,13 +27,12 @@ import {  HttpClientModule } from '@angular/common/http';
     HttpClientModule,
   ],
 })
-export class AppComponent implements OnInit , AfterViewChecked{
+export class AppComponent implements OnInit, AfterViewChecked {
   //Todo: Loading spinner global
-
   constructor(
     private primengConfig: PrimeNGConfig,
     public loader: LoaderService,
-    private cd : ChangeDetectorRef,
+    private cd: ChangeDetectorRef,
   ) {}
 
   ngOnInit() {
@@ -59,3 +63,4 @@ export class AppComponent implements OnInit , AfterViewChecked{
     this.cd.detectChanges();
   }
 }
+

@@ -6,7 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
+import {GridEvent, GRID_ACTIONS, ColumnFilterDirective} from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -28,6 +28,7 @@ import {  Student } from '@msh/shared/domain-models';
     TooltipModule,
     CheckboxModule,
     RippleModule,
+    ColumnFilterDirective
   ],
   templateUrl: './diploma-requirement-exception-grid.component.html',
   styleUrls: ['./diploma-requirement-exception-grid.component.scss'],

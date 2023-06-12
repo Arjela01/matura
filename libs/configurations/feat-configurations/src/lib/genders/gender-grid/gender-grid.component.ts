@@ -4,27 +4,31 @@ import {
   Component,
   EventEmitter,
   Input,
-  Output
+  Output,
 } from '@angular/core';
 import { Gender } from '@msh/shared/domain-models';
-import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
+import {GridEvent, GRID_ACTIONS, ColumnFilterDirective} from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import {RippleModule} from "primeng/ripple";
+import { RippleModule } from 'primeng/ripple';
 
 @Component({
   selector: 'msh-gender-grid',
   standalone: true,
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     TableModule,
     ButtonModule,
     InputTextModule,
     TooltipModule,
-    CheckboxModule, RippleModule,],
+    CheckboxModule,
+    RippleModule,
+    ColumnFilterDirective
+  ],
   templateUrl: './gender-grid.component.html',
   styleUrls: ['./gender-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -37,9 +41,7 @@ export class GenderGridComponent {
   //Keep it local state because of Table Header checkbox not syncing
   selectedGenders: Gender[] = [];
 
-  @Output() gridEvent = new EventEmitter<
-    GridEvent<Gender | Gender[]>
-  >();
+  @Output() gridEvent = new EventEmitter<GridEvent<Gender | Gender[]>>();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 

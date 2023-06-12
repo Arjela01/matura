@@ -9,7 +9,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
+import {ColumnFilterDirective, GRID_ACTIONS, GridEvent} from '@msh/shared/util-shared';
 import { LazyLoadEvent, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -35,6 +35,7 @@ import { BarcodeService } from '../services/barcode-service';
     CheckboxModule,
     RippleModule,
     FormsModule,
+    ColumnFilterDirective
   ],
   templateUrl: './archive-exam-grid.component.html',
   styleUrls: ['./archive-exam-grid.component.scss'],

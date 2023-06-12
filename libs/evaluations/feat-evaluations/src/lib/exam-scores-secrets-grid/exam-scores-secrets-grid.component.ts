@@ -13,6 +13,7 @@ import {
   ExamScoreApiService,
 } from '@msh/evaluations/data-access-evaluations';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {ColumnFilterDirective} from "@msh/shared/util-shared";
 @UntilDestroy()
 
 @Component({
@@ -26,6 +27,7 @@ import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
     TooltipModule,
     CheckboxModule,
     RippleModule,
+    ColumnFilterDirective
   ],
   templateUrl: './exam-scores-secrets-grid.component.html',
   styleUrls: ['./exam-scores-secrets-grid.component.scss'],

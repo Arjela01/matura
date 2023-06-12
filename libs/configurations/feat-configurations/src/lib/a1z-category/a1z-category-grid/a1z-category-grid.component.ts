@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { A1ZCategory } from '@msh/shared/domain-models';
-import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
+import {GridEvent, GRID_ACTIONS, ColumnFilterDirective} from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
@@ -34,7 +34,8 @@ import { TableModule } from 'primeng/table';
     TooltipModule,
     CheckboxModule,
     RippleModule,
-    TableModule
+    TableModule,
+    ColumnFilterDirective
   ],
   templateUrl: './a1z-category-grid.component.html',
   styleUrls: ['./a1z-category-grid.component.scss'],

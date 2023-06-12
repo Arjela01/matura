@@ -5,7 +5,7 @@ import {ButtonModule} from "primeng/button";
 import {InputTextModule} from "primeng/inputtext";
 import {TooltipModule} from "primeng/tooltip";
 import {CheckboxModule} from "primeng/checkbox";
-import {GRID_ACTIONS, GridEvent} from "@msh/shared/util-shared";
+import {ColumnFilterDirective, GRID_ACTIONS, GridEvent} from "@msh/shared/util-shared";
 import {ExamType} from "@msh/shared/domain-models";
 import {RippleModule} from "primeng/ripple";
 import {LazyLoadEvent} from "primeng/api";
@@ -21,6 +21,7 @@ import {LazyLoadEvent} from "primeng/api";
     TooltipModule,
     CheckboxModule,
     RippleModule,
+    ColumnFilterDirective
   ],
   templateUrl: './exam-type-grid.component.html',
   styleUrls: ['./exam-type-grid.component.scss'],

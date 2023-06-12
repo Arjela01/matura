@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { A1ZTableRecord } from '@msh/applications/domain-application';
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
+import {ColumnFilterDirective, GRID_ACTIONS, GridEvent} from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -28,6 +28,7 @@ import { TooltipModule } from 'primeng/tooltip';
     TooltipModule,
     CheckboxModule,
     RippleModule,
+    ColumnFilterDirective
   ],
   templateUrl: './a1z-grid.component.html',
   styleUrls: ['./a1z-grid.component.scss'],

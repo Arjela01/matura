@@ -7,7 +7,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
+import {GridEvent, GRID_ACTIONS, ColumnFilterDirective} from '@msh/shared/util-shared';
 import { LazyLoadEvent, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -32,6 +32,7 @@ import { AdministrationOfficeApiService } from '@msh/configurations/data-access-
     CheckboxModule,
     RippleModule,
     RouterLink,
+    ColumnFilterDirective
   ],
   templateUrl: './activate-overseer-dar-za-grid.component.html',
   styleUrls: ['./activate-overseer-dar-za-grid.component.scss'],

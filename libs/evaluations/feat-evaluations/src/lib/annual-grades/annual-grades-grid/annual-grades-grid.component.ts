@@ -19,7 +19,7 @@ import { ExamGrade } from '@msh/evaluations/domain-evaluations';
 import {AnnualGradesApiService, ExamGradeApiService} from '@msh/evaluations/data-access-evaluations';
 import { StudentsApiService } from '@msh/configurations/data-access-configurations';
 import { Student } from '@msh/shared/domain-models';
-import { GridEvent } from '@msh/shared/util-shared';
+import {ColumnFilterDirective, GridEvent} from '@msh/shared/util-shared';
 import * as FileSaver from "file-saver";
 
 @UntilDestroy()
@@ -35,6 +35,7 @@ import * as FileSaver from "file-saver";
     CheckboxModule,
     RippleModule,
     RouterLink,
+    ColumnFilterDirective
   ],
   templateUrl: './annual-grades-grid.component.html',
   styleUrls: ['./annual-grades-grid.component.scss'],

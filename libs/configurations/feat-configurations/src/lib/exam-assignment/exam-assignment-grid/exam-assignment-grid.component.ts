@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { ExamAssignment } from '@msh/shared/domain-models';
-import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
+import {GridEvent, GRID_ACTIONS, ColumnFilterDirective} from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -29,6 +29,7 @@ import { RouterLink } from '@angular/router';
     CheckboxModule,
     RippleModule,
     RouterLink,
+    ColumnFilterDirective
   ],
   templateUrl: './exam-assignment-grid.component.html',
   styleUrls: ['./exam-assignment-grid.component.scss'],

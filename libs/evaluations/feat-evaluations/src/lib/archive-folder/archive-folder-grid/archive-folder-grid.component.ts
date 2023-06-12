@@ -8,7 +8,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
+import {GridEvent, GRID_ACTIONS, ColumnFilterDirective} from '@msh/shared/util-shared';
 import { LazyLoadEvent, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -40,6 +40,7 @@ import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluation
     FormsModule,
     ToggleButtonModule,
     RadioButtonModule,
+    ColumnFilterDirective
   ],
   templateUrl: './archive-folder-grid.component.html',
   styleUrls: ['./archive-folder-grid.component.scss'],
