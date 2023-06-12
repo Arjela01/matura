@@ -140,15 +140,22 @@ export class ManageDiplomasStudentComponent {
     console.log(event.data);
     this.diplomasService
       .exportDiplomasStudent(event.data?.studentId as string)
-      .subscribe((response: any) => {
-        const blob: any = new Blob([response], {
-          type: 'application/pdf',
-        });
-        FileSaver.saveAs(
-          blob,
-          `Diploma_${event.data?.firstName}_${event.data?.lastName}`
-        );
-      });
+      .subscribe(
+        (response: any) => {
+          const blob: any = new Blob([response], {
+            type: 'application/pdf',
+          });
+          FileSaver.saveAs(
+            blob,
+            `Diploma_${event.data?.firstName}_${event.data?.lastName}`
+          );
+        },
+        err => {
+          console.log(err);
+          err;
+          debugger;
+        }
+      );
   }
 
   onFormSave(data: string) {
@@ -156,12 +163,19 @@ export class ManageDiplomasStudentComponent {
   }
 
   printAllDiplomas(data: string) {
-    this.diplomasService.exportAllDiplomas(data).subscribe((response: any) => {
-      const blob: any = new Blob([response], {
-        type: 'application/pdf',
-      });
-      FileSaver.saveAs(blob, `Diplomat`);
-    });
+    this.diplomasService.exportAllDiplomas(data).subscribe(
+      (response: any) => {
+        const blob: any = new Blob([response], {
+          type: 'application/pdf',
+        });
+        FileSaver.saveAs(blob, `Diplomat`);
+      },
+      err => {
+        console.log(err);
+        err;
+        debugger;
+      }
+    );
   }
 
   deleteStudent(Student: Student) {
