@@ -39,7 +39,6 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { distinctUntilChanged, map, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'msh-students-form',
@@ -134,17 +133,6 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 10);
   }
   ngOnInit(): void {
-    this.authFacade.academicYear$
-      .pipe(
-        map((data: any) => data.id),
-        distinctUntilChanged(),
-        switchMap(data => {
-          window.location.reload();
-
-          return of([]);
-        })
-      )
-      .subscribe();
     // todo ! maybe  switch to pipes
     this.highSchoolService.loadDropDownList().subscribe(response => {
       this.highSchool = response.data;

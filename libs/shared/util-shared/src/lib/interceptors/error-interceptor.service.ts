@@ -72,7 +72,7 @@ export class ErrorInterceptorService implements HttpInterceptor {
 
     if (error.status === 401) {
       localStorage.clear();
-      window.location.reload();
+      // window.location.reload();
     }
 
     this.notificationsService.showError(message);
