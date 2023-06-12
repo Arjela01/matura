@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { FailingStudent } from '@msh/applications/domain-application';
-import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
+import {ColumnFilterDirective, GRID_ACTIONS, GridEvent} from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -27,6 +27,7 @@ import { TooltipModule } from 'primeng/tooltip';
     TooltipModule,
     CheckboxModule,
     RippleModule,
+    ColumnFilterDirective,
   ],
   templateUrl: './manage-failing-students-grid.component.html',
   styleUrls: ['./manage-failing-students-grid.component.scss'],

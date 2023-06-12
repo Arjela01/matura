@@ -12,7 +12,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { CheckboxModule } from 'primeng/checkbox';
 import { RippleModule } from 'primeng/ripple';
-import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
+import {ColumnFilterDirective, GRID_ACTIONS, GridEvent} from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ExamSecret } from '@msh/evaluations/domain-evaluations';
 
@@ -27,6 +27,7 @@ import { ExamSecret } from '@msh/evaluations/domain-evaluations';
     TooltipModule,
     CheckboxModule,
     RippleModule,
+    ColumnFilterDirective
   ],
   templateUrl: './exam-secrets-grid.component.html',
   styleUrls: ['./exam-secrets-grid.component.scss'],

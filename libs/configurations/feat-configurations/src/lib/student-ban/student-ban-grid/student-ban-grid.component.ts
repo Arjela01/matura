@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import {StudentBan} from '@msh/shared/domain-models';
-import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
+import {GridEvent, GRID_ACTIONS, ColumnFilterDirective} from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -27,6 +27,7 @@ import { TooltipModule } from 'primeng/tooltip';
     TooltipModule,
     CheckboxModule,
     RippleModule,
+    ColumnFilterDirective
   ],
   templateUrl: './student-ban-grid.component.html',
   styleUrls: ['./student-ban-grid.component.scss'],

@@ -11,6 +11,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExamGradeApiService } from '@msh/evaluations/data-access-evaluations';
 import { BehaviorSubject } from 'rxjs';
 import {ExamGrade} from "@msh/evaluations/domain-evaluations";
+import {ColumnFilterDirective} from "@msh/shared/util-shared";
 
 @UntilDestroy()
 @Component({
@@ -24,6 +25,7 @@ import {ExamGrade} from "@msh/evaluations/domain-evaluations";
     TooltipModule,
     CheckboxModule,
     RippleModule,
+    ColumnFilterDirective
   ],
   templateUrl: './exam-grade-grid.component.html',
   styleUrls: ['./exam-grade-grid.component.scss'],

@@ -8,7 +8,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
+import {ColumnFilterDirective, GRID_ACTIONS, GridEvent} from '@msh/shared/util-shared';
 import { LazyLoadEvent, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -36,6 +36,7 @@ import { AcademicYearApiService } from '@msh/configurations/data-access-configur
     RippleModule,
     FormsModule,
     RouterLink,
+    ColumnFilterDirective
   ],
   templateUrl: './barcode-correction-grid.component.html',
   styleUrls: ['./barcode-correction-grid.component.scss'],

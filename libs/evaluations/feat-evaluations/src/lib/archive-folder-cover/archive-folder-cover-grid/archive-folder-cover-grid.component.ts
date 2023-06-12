@@ -10,7 +10,11 @@ import {
 
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
+import {
+  GridEvent,
+  GRID_ACTIONS,
+  ColumnFilterDirective,
+} from '@msh/shared/util-shared';
 import { TableModule } from 'primeng/table';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
@@ -21,7 +25,14 @@ import { ArchiveFolder } from '@msh/evaluations/domain-evaluations';
 @Component({
   selector: 'msh-archive-folder-cover-grid',
   standalone: true,
-  imports: [CommonModule, TableModule, FormsModule, ToastModule, StepsModule],
+  imports: [
+    CommonModule,
+    TableModule,
+    FormsModule,
+    ToastModule,
+    StepsModule,
+    ColumnFilterDirective,
+  ],
   templateUrl: './archive-folder-cover-grid.component.html',
   styleUrls: ['./archive-folder-cover-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -54,7 +65,6 @@ export class ArchiveFolderCoverGridComponent {
 
   onSubmit(): void {
     // DODO
-
   }
 
   onEditClick(archiveFolder: ArchiveFolder) {

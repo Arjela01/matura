@@ -7,7 +7,7 @@ import { A1Z } from '@msh/applications/domain-application';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { AcademicYear, Student } from '@msh/shared/domain-models';
-import { GRID_ACTIONS, GlobalToastService } from '@msh/shared/util-shared';
+import {GRID_ACTIONS, GlobalToastService, ColumnFilterDirective} from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -48,6 +48,7 @@ import {
     ToolbarModule,
     RippleModule,
     TableModule,
+    ColumnFilterDirective
   ],
   templateUrl: './a1-grid.component.html',
   styleUrls: ['./a1-grid.component.scss'],

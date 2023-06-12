@@ -7,12 +7,13 @@ import { ExamScore } from '@msh/evaluations/domain-evaluations';
 import { TableModule } from 'primeng/table';
 import { BehaviorSubject } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import {ColumnFilterDirective} from "@msh/shared/util-shared";
 
 @UntilDestroy()
 @Component({
   selector: 'msh-unmatched-exams-grid',
   standalone: true,
-  imports: [CommonModule, TableModule],
+  imports: [CommonModule, TableModule  , ColumnFilterDirective],
   templateUrl: './unmatched-exams-grid.component.html',
   styleUrls: ['./unmatched-exams-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

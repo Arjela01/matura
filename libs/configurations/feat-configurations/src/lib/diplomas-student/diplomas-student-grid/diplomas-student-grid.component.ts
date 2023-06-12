@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Student } from '@msh/shared/domain-models';
-import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
+import {ColumnFilterDirective, GRID_ACTIONS, GridEvent} from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -29,6 +29,7 @@ import { TooltipModule } from 'primeng/tooltip';
     CheckboxModule,
     RippleModule,
     RouterLink,
+    ColumnFilterDirective
   ],
   templateUrl: './diplomas-student-grid.component.html',
   styleUrls: ['./diplomas-student-grid.component.scss'],

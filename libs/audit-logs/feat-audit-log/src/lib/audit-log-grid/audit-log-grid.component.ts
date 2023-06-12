@@ -9,13 +9,14 @@ import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { LazyLoadEvent, SelectItem } from 'primeng/api';
 import { WhereBuilder } from './query-builder';
+import {ColumnFilterDirective} from "@msh/shared/util-shared";
 
 const SORT_ASC = 'ASC';
 const SORT_DESC = 'DESC';
 @Component({
   selector: 'msh-audit-log-grid',
   standalone: true,
-  imports: [CommonModule, TableModule, RippleModule, ButtonModule, FormsModule],
+  imports: [CommonModule, TableModule, RippleModule, ButtonModule, FormsModule, ColumnFilterDirective],
   templateUrl: './audit-log-grid.component.html',
   styleUrls: ['./audit-log-grid.component.scss'],
   providers: [Apollo],

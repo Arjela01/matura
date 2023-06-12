@@ -1,24 +1,33 @@
-
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { Role } from '@msh/shared/domain-models';
-import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
+import {GridEvent, GRID_ACTIONS, ColumnFilterDirective} from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import {RippleModule} from "primeng/ripple";
+import { RippleModule } from 'primeng/ripple';
 @Component({
   selector: 'msh-roles-grid',
   standalone: true,
-    imports: [CommonModule,
-        TableModule,
-        ButtonModule,
-        InputTextModule,
-        TooltipModule,
-        CheckboxModule, RippleModule],
+  imports: [
+    CommonModule,
+    TableModule,
+    ButtonModule,
+    InputTextModule,
+    TooltipModule,
+    CheckboxModule,
+    RippleModule,
+    ColumnFilterDirective
+  ],
   templateUrl: './roles-grid.component.html',
   styleUrls: ['./roles-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,9 +40,7 @@ export class RolesGridComponent {
   //Keep it local state because of Table Header checkbox not syncing
   selectedRoles: Role[] = [];
 
-  @Output() gridEvent = new EventEmitter<
-    GridEvent<Role | Role[]>
-  >();
+  @Output() gridEvent = new EventEmitter<GridEvent<Role | Role[]>>();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 

@@ -13,7 +13,7 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserApiService } from '@msh/configurations/data-access-configurations';
 import { User } from '@msh/shared/domain-models';
-import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
+import {GridEvent, GRID_ACTIONS, ColumnFilterDirective} from '@msh/shared/util-shared';
 import { LazyLoadEvent, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -33,6 +33,7 @@ import { TooltipModule } from 'primeng/tooltip';
     TooltipModule,
     CheckboxModule,
     RippleModule,
+    ColumnFilterDirective
   ],
   templateUrl: './user-grid.component.html',
   styleUrls: ['./user-grid.component.scss'],
