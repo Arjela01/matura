@@ -1,46 +1,57 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 
-import { Profile ,} from '@msh/shared/domain-models';
-import { DropdownModel, } from '@msh/shared/data-access-shared';
+import { DropdownModel } from '@msh/shared/data-access-shared';
+import { Profile } from '@msh/shared/domain-models';
 
 import {
+  GRID_ACTIONS,
   GlobalToastService,
   GridEvent,
-  GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 
-import { BehaviorSubject } from 'rxjs';
-import {ProfileFormComponent} from "../profile-form/profile-form.component";
-import {ProfileGridComponent} from "../profile-grid/profile-grid.component";
+import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
   ProfileApiService,
-  ProfileGroupApiService
-} from "@msh/configurations/data-access-configurations";
-import {ButtonModule} from "primeng/button";
-import {ToolbarModule} from "primeng/toolbar";
-import {RippleModule} from "primeng/ripple";
-
+  ProfileGroupApiService,
+} from '@msh/configurations/data-access-configurations';
+import { ButtonModule } from 'primeng/button';
+import { RippleModule } from 'primeng/ripple';
+import { ToolbarModule } from 'primeng/toolbar';
+import {
+  BehaviorSubject,
+  distinctUntilChanged,
+  map,
+  of,
+  switchMap,
+} from 'rxjs';
+import { ProfileFormComponent } from '../profile-form/profile-form.component';
+import { ProfileGridComponent } from '../profile-grid/profile-grid.component';
 
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-profiles',
   standalone: true,
-    imports: [
-        ButtonModule,
-        CommonModule,
-        DialogModule,
-        ConfirmDialogModule,
-        ProfileGridComponent,
-        ProfileFormComponent,
-        ToolbarModule,
-        RippleModule,
-    ],
+  imports: [
+    ButtonModule,
+    CommonModule,
+    DialogModule,
+    ConfirmDialogModule,
+    ProfileGridComponent,
+    ProfileFormComponent,
+    ToolbarModule,
+    RippleModule,
+  ],
   templateUrl: './manage-profiles.component.html',
   styleUrls: ['./manage-profiles.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -64,11 +75,24 @@ export class ManageProfilesComponent implements OnInit {
     private readonly profileService: ProfileApiService,
     private readonly ProfileGroupsApiService: ProfileGroupApiService,
     private readonly cd: ChangeDetectorRef,
-
+    private authFacade: AuthFacade
   ) {}
 
   ngOnInit(): void {
     this.getProfileGroupsDropdown();
+    this.authFacade.academicYear$
+      .pipe(
+        map((data: any) => data.id),
+        distinctUntilChanged(),
+        switchMap(data => {
+          if (this.filters) {
+            window.location.reload();
+          }
+
+          return of([]);
+        })
+      )
+      .subscribe();
   }
 
   onNewClick() {
@@ -148,8 +172,7 @@ export class ManageProfilesComponent implements OnInit {
           this.displayModal = false;
           this.getProfiles(this.filters as LazyLoadEvent);
           this.cd.detectChanges();
-
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -164,12 +187,10 @@ export class ManageProfilesComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            'Profili u ndryshua me sukses!'
-          );
+          this.toastService.showSuccess('Profili u ndryshua me sukses!');
           this.displayModal = false;
           this.getProfiles(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -186,7 +207,7 @@ export class ManageProfilesComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('Profili u fshi me sukses!');
           this.getProfiles(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -195,14 +216,11 @@ export class ManageProfilesComponent implements OnInit {
       });
   }
 
-
   getProfileGroupsDropdown() {
-    this.ProfileGroupsApiService
-      .loadDropdownList()
+    this.ProfileGroupsApiService.loadDropdownList()
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.ProfileGroups = response.data;
       });
   }
-
 }

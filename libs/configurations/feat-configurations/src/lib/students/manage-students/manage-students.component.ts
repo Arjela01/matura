@@ -1,9 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -13,37 +9,44 @@ import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
 import {
+  GRID_ACTIONS,
   GlobalToastService,
   GridEvent,
-  GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 
-import { BehaviorSubject } from 'rxjs';
+import { RouterLink } from '@angular/router';
+import { AuthFacade } from '@msh/auth/data-access-auth';
+import { StudentsApiService } from '@msh/configurations/data-access-configurations';
+import { Student } from '@msh/shared/domain-models';
+import { RippleModule } from 'primeng/ripple';
+import {
+  BehaviorSubject,
+  distinctUntilChanged,
+  map,
+  of,
+  switchMap,
+} from 'rxjs';
+import { StudentsEditComponent } from '../students-edit/students-edit.component';
 import { StudentsFormComponent } from '../students-form/students-form.component';
 import { StudentsGridComponent } from '../students-grid/students-grid.component';
-import { Student } from '@msh/shared/domain-models';
-import { StudentsApiService } from '@msh/configurations/data-access-configurations';
 import { StudentViewComponent } from '../students-view/student-view.component';
-import { StudentsEditComponent } from '../students-edit/students-edit.component';
-import { RippleModule } from 'primeng/ripple';
-import {RouterLink} from "@angular/router";
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-students',
   standalone: true,
-    imports: [
-        ButtonModule,
-        CommonModule,
-        DialogModule,
-        ConfirmDialogModule,
-        StudentsFormComponent,
-        StudentsGridComponent,
-        ToolbarModule,
-        StudentViewComponent,
-        StudentsEditComponent,
-        RippleModule,
-        RouterLink,
-    ],
+  imports: [
+    ButtonModule,
+    CommonModule,
+    DialogModule,
+    ConfirmDialogModule,
+    StudentsFormComponent,
+    StudentsGridComponent,
+    ToolbarModule,
+    StudentViewComponent,
+    StudentsEditComponent,
+    RippleModule,
+    RouterLink,
+  ],
   templateUrl: './manage-students.component.html',
   styleUrls: ['./manage-students.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -62,17 +65,29 @@ export class ManageStudentsComponent implements OnInit {
   constructor(
     private readonly studentService: StudentsApiService,
     private readonly confirmationService: ConfirmationService,
-    private readonly toastService: GlobalToastService
+    private readonly toastService: GlobalToastService,
+    private authFacade: AuthFacade
   ) {}
 
   ngOnInit(): void {
-    console.log('init');
+    this.authFacade.academicYear$
+      .pipe(
+        map((data: any) => data.id),
+        distinctUntilChanged(),
+        switchMap(data => {
+          if (this.filters) {
+            window.location.reload();
+          }
+
+          return of([]);
+        })
+      )
+      .subscribe();
   }
 
   onNewClick() {
     this.hideStudentForm = !this.hideStudentForm;
   }
-
 
   onGridEvent(event: GridEvent<Student | Student[]>) {
     switch (event.action) {
@@ -121,7 +136,7 @@ export class ManageStudentsComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Studenti u fshi me sukses!');
           this.getStudent(this.filters as LazyLoadEvent);
-        }else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
         if (!response.isSuccessful) {
           this.toastService.showError(
             'Ndodhi një problem gjatë fshirjes së studentit!'
@@ -138,9 +153,9 @@ export class ManageStudentsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         const students = [...response.data];
-        for(const student of students) {
+        for (const student of students) {
           student.createdOn = new Date(student.createdOn);
-          if(student.modifiedOn != null)
+          if (student.modifiedOn != null)
             student.modifiedOn = new Date(student.modifiedOn);
         }
         this.studentList$$.next(students);
@@ -153,10 +168,8 @@ export class ManageStudentsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            'Studenti u ndryshua me sukses!'
-          );
-        } else this.toastService.showError(response.errorMessage)
+          this.toastService.showSuccess('Studenti u ndryshua me sukses!');
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(

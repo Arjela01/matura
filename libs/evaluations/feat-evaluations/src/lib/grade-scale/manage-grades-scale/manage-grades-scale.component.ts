@@ -1,18 +1,15 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ExamSubjectApiService } from '@msh/configurations/data-access-configurations';
 import { GradesScaleService } from '@msh/evaluations/data-access-evaluations';
 import { GradesScale } from '@msh/evaluations/domain-evaluations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
+  GRID_ACTIONS,
   GlobalToastService,
   GridEvent,
-  GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import * as FileSaver from 'file-saver';
@@ -22,7 +19,13 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject } from 'rxjs';
+import {
+  BehaviorSubject,
+  distinctUntilChanged,
+  map,
+  of,
+  switchMap,
+} from 'rxjs';
 import { GradeScaleActionComponent } from '../grade-scale-action/grade-scale-action.component';
 import { GradeScaleGridComponent } from '../grade-scale-grid/grade-scale-grid.component';
 import { UploadGradeScaleFormComponent } from '../upload-grade-scale-form/upload-grade-scale-form.component';
@@ -62,10 +65,24 @@ export class ManageGradesScaleComponent implements OnInit {
     private readonly router: Router,
     private readonly toastService: GlobalToastService,
     private readonly examSubjectsService: ExamSubjectApiService,
-    private readonly cd: ChangeDetectorRef
+    private readonly cd: ChangeDetectorRef,
+    private authFacade: AuthFacade
   ) {}
 
   ngOnInit() {
+    this.authFacade.academicYear$
+      .pipe(
+        map((data: any) => data.id),
+        distinctUntilChanged(),
+        switchMap(data => {
+          if (this.filters) {
+            window.location.reload();
+          }
+
+          return of([]);
+        })
+      )
+      .subscribe();
     this.getDropdownSubjects();
   }
   onFormSave() {

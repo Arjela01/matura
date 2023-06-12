@@ -1,27 +1,34 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
   StudyProgramApiService,
   UniversityApiService,
   UniversityDepartmentApiService,
 } from '@msh/configurations/data-access-configurations';
-import { StudyProgram } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import { StudyProgram } from '@msh/shared/domain-models';
 import {
+  GRID_ACTIONS,
   GlobalToastService,
   GridEvent,
-  GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
+import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject } from 'rxjs';
+import {
+  BehaviorSubject,
+  distinctUntilChanged,
+  map,
+  of,
+  switchMap,
+} from 'rxjs';
 import { StudyProgramFormComponent } from '../study-program-form/study-program-form.component';
 import { StudyProgramGridComponent } from '../study-program-grid/study-program-grid.component';
-import {RippleModule} from "primeng/ripple";
 
 @UntilDestroy()
 @Component({
@@ -61,10 +68,23 @@ export class ManageStudyProgramsComponent implements OnInit {
     private readonly studyProgramService: StudyProgramApiService,
     private readonly universitiesService: UniversityApiService,
     private readonly universityDepartmentService: UniversityDepartmentApiService,
+    private authFacade: AuthFacade
   ) {}
 
   ngOnInit(): void {
-    console.log('Init');
+    this.authFacade.academicYear$
+      .pipe(
+        map((data: any) => data.id),
+        distinctUntilChanged(),
+        switchMap(data => {
+          if (this.filters) {
+            window.location.reload();
+          }
+
+          return of([]);
+        })
+      )
+      .subscribe();
     this.getUniversities();
     this.getUniversityDepartaments();
   }
@@ -73,8 +93,6 @@ export class ManageStudyProgramsComponent implements OnInit {
     this.displayModal = true;
     this.selectedstudyProgram = {} as StudyProgram;
   }
-
-
 
   onGridEvent(event: GridEvent<StudyProgram | StudyProgram[]>) {
     switch (event.action) {
@@ -153,7 +171,7 @@ export class ManageStudyProgramsComponent implements OnInit {
           );
           this.displayModal = false;
           this.getStudyPrograms(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (!response.isSuccessful)
           this.toastService.showError(
@@ -173,7 +191,7 @@ export class ManageStudyProgramsComponent implements OnInit {
           );
           this.displayModal = false;
           this.getStudyPrograms(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (!response.isSuccessful)
           this.toastService.showError(
@@ -190,7 +208,7 @@ export class ManageStudyProgramsComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('Programi i Studimit u fshi me sukses!');
           this.getStudyPrograms(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (!response.isSuccessful)
           this.toastService.showError(

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
+import { DropdownModel } from '@msh/shared/data-access-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   ConfirmationService,
@@ -11,20 +12,10 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
-import { DropdownModel } from '@msh/shared/data-access-shared';
 
-import {
-  GlobalToastService,
-  GRID_ACTIONS,
-  GridEvent,
-} from '@msh/shared/util-shared';
-import { BehaviorSubject } from 'rxjs';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ArchiveFolderGridComponent } from '../archive-folder-grid/archive-folder-grid.component';
-import { ArchiveOpenFolderFormComponent } from '../archive-open-folder-form/archive-open-folder-form.component';
-import { RippleModule } from 'primeng/ripple';
 import { HttpClient } from '@angular/common/http';
-import { ArchiveFolder } from '@msh/evaluations/domain-evaluations';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
   ExamSubjectApiService,
   ExamTypeApiService,
@@ -33,6 +24,22 @@ import {
   ArchiveExamApiService,
   ArchiveFolderApiService,
 } from '@msh/evaluations/data-access-evaluations';
+import { ArchiveFolder } from '@msh/evaluations/domain-evaluations';
+import {
+  GlobalToastService,
+  GRID_ACTIONS,
+  GridEvent,
+} from '@msh/shared/util-shared';
+import { RippleModule } from 'primeng/ripple';
+import {
+  BehaviorSubject,
+  distinctUntilChanged,
+  map,
+  of,
+  switchMap,
+} from 'rxjs';
+import { ArchiveFolderGridComponent } from '../archive-folder-grid/archive-folder-grid.component';
+import { ArchiveOpenFolderFormComponent } from '../archive-open-folder-form/archive-open-folder-form.component';
 
 @UntilDestroy()
 @Component({
@@ -78,13 +85,26 @@ export class ManageArchiveFoldersComponent implements OnInit {
     private router: Router,
     private http: HttpClient,
     private messageService: MessageService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authFacade: AuthFacade
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
 
   ngOnInit(): void {
-    this.getExamTypes();
+    this.authFacade.academicYear$
+      .pipe(
+        map((data: any) => data.id),
+        distinctUntilChanged(),
+        switchMap(data => {
+          if (this.filters) {
+            window.location.reload();
+          }
+
+          return of([]);
+        })
+      )
+      .subscribe();
   }
 
   onNewClick() {

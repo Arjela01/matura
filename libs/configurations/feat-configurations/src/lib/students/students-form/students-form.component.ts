@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
   AcademicYearApiService,
   GendersApiService,
@@ -25,6 +26,10 @@ import {
   StudentClassModel,
   StudentSectionModel,
 } from '@msh/shared/domain-models';
+import {
+  AlbanianNidValidatorDirective,
+  GlobalToastService,
+} from '@msh/shared/util-shared';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -34,7 +39,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import {AlbanianNidValidatorDirective, GlobalToastService} from "@msh/shared/util-shared";
+import { distinctUntilChanged, map, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'msh-students-form',
@@ -51,7 +56,7 @@ import {AlbanianNidValidatorDirective, GlobalToastService} from "@msh/shared/uti
     DropdownModule,
     CalendarModule,
     InputMaskModule,
-    AlbanianNidValidatorDirective
+    AlbanianNidValidatorDirective,
   ],
   templateUrl: './students-form.component.html',
   styleUrls: ['./students-form.component.scss'],
@@ -123,11 +128,23 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     private readonly genderService: GendersApiService,
     private academicYearService: AcademicYearApiService,
     private router: Router,
+    private authFacade: AuthFacade,
     private readonly toastService: GlobalToastService
   ) {
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 10);
   }
   ngOnInit(): void {
+    this.authFacade.academicYear$
+      .pipe(
+        map((data: any) => data.id),
+        distinctUntilChanged(),
+        switchMap(data => {
+          window.location.reload();
+
+          return of([]);
+        })
+      )
+      .subscribe();
     // todo ! maybe  switch to pipes
     this.highSchoolService.loadDropDownList().subscribe(response => {
       this.highSchool = response.data;
@@ -160,11 +177,13 @@ export class StudentsFormComponent implements OnInit, OnChanges {
 
     this.studentService.save(data).subscribe({
       next: response => {
-        if(response.isSuccessful){
-          this.toastService.showSuccess("Studenti u krijua me sukses");
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Studenti u krijua me sukses');
         } else this.toastService.showError(response.errorMessage);
-        if(response.isBadRequest){
-          this.toastService.showError("Ndodhi një problem gjatë krijimit të studentit")
+        if (response.isBadRequest) {
+          this.toastService.showError(
+            'Ndodhi një problem gjatë krijimit të studentit'
+          );
         }
         this.saving = false;
         this.router

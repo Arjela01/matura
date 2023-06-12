@@ -1,6 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
+import { AuthFacade } from '@msh/auth/data-access-auth';
+import {
+  ExamDateApiService,
+  ExamSiteApiService,
+  ExamTypeApiService,
+} from '@msh/configurations/data-access-configurations';
+import { DropdownModel } from '@msh/shared/data-access-shared';
+import { ExamDate } from '@msh/shared/domain-models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -9,23 +17,21 @@ import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
 import {
-  ExamDateApiService,
-  ExamSiteApiService,
-  ExamTypeApiService,
-} from '@msh/configurations/data-access-configurations';
-import { ExamDate } from '@msh/shared/domain-models';
-import { DropdownModel } from '@msh/shared/data-access-shared';
-
-import {
+  GRID_ACTIONS,
   GlobalToastService,
   GridEvent,
-  GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 
-import { BehaviorSubject } from 'rxjs';
+import { RippleModule } from 'primeng/ripple';
+import {
+  BehaviorSubject,
+  distinctUntilChanged,
+  map,
+  of,
+  switchMap,
+} from 'rxjs';
 import { ExamDateFormComponent } from '../exam-date-form/exam-date-form.component';
 import { ExamDateGridComponent } from '../exam-date-grid/exam-date-grid.component';
-import { RippleModule } from 'primeng/ripple';
 
 @UntilDestroy()
 @Component({
@@ -63,18 +69,31 @@ export class ManageExamDateComponent implements OnInit {
     private readonly toastService: GlobalToastService,
     private readonly examDateService: ExamDateApiService,
     private readonly examSitesApiService: ExamSiteApiService,
-    private readonly examTypesApiService: ExamTypeApiService
+    private readonly examTypesApiService: ExamTypeApiService,
+    private authFacade: AuthFacade
   ) {}
 
   ngOnInit(): void {
     this.getExamTypesDropdown();
     this.getExamSitesDropdown();
+    this.authFacade.academicYear$
+      .pipe(
+        map((data: any) => data.id),
+        distinctUntilChanged(),
+        switchMap(data => {
+          if (this.filters) {
+            window.location.reload();
+          }
+
+          return of([]);
+        })
+      )
+      .subscribe();
   }
 
   onNewClick() {
     this.displayModal = true;
     this.selectedExamDate = {} as ExamDate;
-
   }
 
   onGridEvent(event: GridEvent<ExamDate | ExamDate[]>) {

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
   AdministrationOfficeApiService,
   DiplomasStudentApiService,
@@ -21,7 +22,13 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject } from 'rxjs';
+import {
+  BehaviorSubject,
+  distinctUntilChanged,
+  map,
+  of,
+  switchMap,
+} from 'rxjs';
 import { DiplomasStudentFormComponent } from '../diplomas-student-form/diplomas-student-form.component';
 import { DiplomasStudentGridComponent } from '../diplomas-student-grid/diplomas-student-grid.component';
 
@@ -76,12 +83,26 @@ export class ManageDiplomasStudentComponent {
     private readonly toastService: GlobalToastService,
     private diplomasService: DiplomasStudentApiService,
     private administrationOfficeApiService: AdministrationOfficeApiService,
-    private highschoolApiService: HighSchoolApiService
+    private highschoolApiService: HighSchoolApiService,
+    private authFacade: AuthFacade
   ) {}
 
   ngOnInit(): void {
     this.getAdministrationOfficeDropdown();
     this.getHighSchoolsDropdown();
+    this.authFacade.academicYear$
+      .pipe(
+        map((data: any) => data.id),
+        distinctUntilChanged(),
+        switchMap(data => {
+          if (this.filters) {
+            window.location.reload();
+          }
+
+          return of([]);
+        })
+      )
+      .subscribe();
   }
 
   onNewClick() {
@@ -119,15 +140,22 @@ export class ManageDiplomasStudentComponent {
     console.log(event.data);
     this.diplomasService
       .exportDiplomasStudent(event.data?.studentId as string)
-      .subscribe((response: any) => {
-        const blob: any = new Blob([response], {
-          type: 'application/pdf',
-        });
-        FileSaver.saveAs(
-          blob,
-          `Diploma_${event.data?.firstName}_${event.data?.lastName}`
-        );
-      });
+      .subscribe(
+        (response: any) => {
+          const blob: any = new Blob([response], {
+            type: 'application/pdf',
+          });
+          FileSaver.saveAs(
+            blob,
+            `Diploma_${event.data?.firstName}_${event.data?.lastName}`
+          );
+        },
+        err => {
+          console.log(err);
+          err;
+          debugger;
+        }
+      );
   }
 
   onFormSave(data: string) {
@@ -135,12 +163,19 @@ export class ManageDiplomasStudentComponent {
   }
 
   printAllDiplomas(data: string) {
-    this.diplomasService.exportAllDiplomas(data).subscribe((response: any) => {
-      const blob: any = new Blob([response], {
-        type: 'application/pdf',
-      });
-      FileSaver.saveAs(blob, `Diplomat`);
-    });
+    this.diplomasService.exportAllDiplomas(data).subscribe(
+      (response: any) => {
+        const blob: any = new Blob([response], {
+          type: 'application/pdf',
+        });
+        FileSaver.saveAs(blob, `Diplomat`);
+      },
+      err => {
+        console.log(err);
+        err;
+        debugger;
+      }
+    );
   }
 
   deleteStudent(Student: Student) {
