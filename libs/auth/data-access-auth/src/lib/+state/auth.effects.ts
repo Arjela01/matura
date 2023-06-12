@@ -97,11 +97,12 @@ export class AuthEffects {
           action.loginResponse.token
         );
         const token: any = jwt_decode(action.loginResponse.token as string);
+        if (token.NeedResetPassword) {
+          return of(AuthActions.passwordchange());
+        }
         return this.academicYearService.getAcademicYears().pipe(
           map((years: any) => years.data.find((year: any) => year.isActive)),
           switchMap(activeYear => {
-            console.log(activeYear);
-
             if (!token.NeedResetPassword) {
               this.heartBeatService.startTime();
             }
@@ -153,6 +154,29 @@ export class AuthEffects {
         ofType(AuthActions.changeAcademicYear),
         tap(action => {
           this.storageService.setItem(ACADEMIC_YEAR_KEY, action.academicYear);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  passwordChange$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.passwordchange),
+        tap(action => {
+          this.router.navigate(['/reset-password']);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  resetToken$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.resettoken),
+        tap(action => {
+          this.storageService.removeItem(TOKEN_STORAGE_KEY);
+          this.heartBeatService.stopTimer();
         })
       ),
     { dispatch: false }

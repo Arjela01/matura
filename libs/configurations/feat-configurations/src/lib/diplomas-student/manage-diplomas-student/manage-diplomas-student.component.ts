@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
@@ -53,6 +53,7 @@ import { DiplomasStudentGridComponent } from '../diplomas-student-grid/diplomas-
 })
 @UntilDestroy()
 export class ManageDiplomasStudentComponent {
+  @Input() printed = false;
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
   filters: LazyLoadEvent | null = null;
@@ -136,6 +137,7 @@ export class ManageDiplomasStudentComponent {
         break;
     }
   }
+
   printDiplomas(event: GridEvent<Student>) {
     console.log(event.data);
     this.diplomasService
@@ -145,10 +147,7 @@ export class ManageDiplomasStudentComponent {
           const blob: any = new Blob([response], {
             type: 'application/pdf',
           });
-          FileSaver.saveAs(
-            blob,
-            `Diploma_${event.data?.firstName}_${event.data?.lastName}`
-          );
+          FileSaver.saveAs(blob, `Diploma_${event.data?.fullName}}`);
         },
         err => {
           console.log(err);
@@ -183,7 +182,7 @@ export class ManageDiplomasStudentComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Studenti u fshi me sukses!');
-          this.getStudent(this.filters as LazyLoadEvent);
+          this.getStudentDiplomas(this.filters as LazyLoadEvent);
         }
         if (!response.isSuccessful) {
           this.toastService.showError(
@@ -193,13 +192,13 @@ export class ManageDiplomasStudentComponent {
       });
   }
 
-  getStudent($event: LazyLoadEvent): void {
+  getStudentDiplomas($event: LazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
 
-    this.studentService
-      .loadStudents($event)
+    this.diplomasService
+      .loadStudentDiplomas($event)
       .pipe(untilDestroyed(this))
-      .subscribe(response => {
+      .subscribe((response: any) => {
         console.log(response);
         const students = [...response.data];
         for (const student of students) {

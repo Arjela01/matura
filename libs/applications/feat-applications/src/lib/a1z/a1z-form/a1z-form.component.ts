@@ -182,7 +182,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   }
 
   ngDoCheck(): void {
-    if (this.a1z.studentId !== undefined) {
+    if (this.a1z && this.a1z.studentId !== undefined) {
       this.onStudentInit(this.a1z);
     }
     if (this.selectedStudent !== null) {

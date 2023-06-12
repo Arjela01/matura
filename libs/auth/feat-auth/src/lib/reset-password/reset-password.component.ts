@@ -61,7 +61,7 @@ export class ResetPasswordComponent {
     this.resetPasswordService
       .userChangePassword(this.passwordResetModel)
       .subscribe(data => {
-        localStorage.clear();
+        this.authFacade.resetToken();
         this.authFacade.login({
           userName: name,
           password,

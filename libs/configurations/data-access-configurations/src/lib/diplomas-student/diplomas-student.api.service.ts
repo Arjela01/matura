@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { AcademicYear } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
-import { Observable } from 'rxjs';
+import { LazyLoadEvent } from 'primeng/api';
+import { Observable, catchError, map, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,13 @@ export class DiplomasStudentApiService {
       `/PrintedDiplomas/GenerateDiplomasPdf${data}`,
       new HttpParams(),
       'blob'
+    );
+  }
+
+  loadStudentDiplomas(event: LazyLoadEvent): Observable<any> {
+    return this.apiService.post(`/PrintedDiplomas/TableData`, event).pipe(
+      map((data: any) => data),
+      catchError(error => throwError(error))
     );
   }
 }

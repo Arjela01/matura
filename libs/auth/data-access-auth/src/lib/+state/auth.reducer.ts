@@ -89,6 +89,19 @@ export const authFeature = createFeature({
         username: '',
       },
       token: '',
+    })),
+    on(AuthActions.passwordchange, state => ({
+      ...state,
+      status: 'success',
+      error: null,
+      isAuthenticated: false,
+    })),
+    on(AuthActions.resettoken, state => ({
+      ...state,
+      status: 'success',
+      error: null,
+      isAuthenticated: false,
+      token: '',
     }))
   ),
 });

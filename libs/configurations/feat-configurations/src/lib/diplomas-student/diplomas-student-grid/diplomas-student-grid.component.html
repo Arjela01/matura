@@ -5,11 +5,11 @@
     (onRowUnselect)="onRowUnselect($event)" (onLazyLoad)="loadRows($event)" [lazy]="true">
     <ng-template pTemplate="header">
         <tr>
-            <th pSortableColumn="highSchoolName">
+            <th pSortableColumn="schoolName">
                 Shkolla
                 <div>
-                    <p-sortIcon field="highSchoolName"></p-sortIcon>
-                    <p-columnFilter type="text" field="highSchoolName" display="menu"></p-columnFilter>
+                    <p-sortIcon field="schoolName"></p-sortIcon>
+                    <p-columnFilter type="text" field="schoolName" display="menu"></p-columnFilter>
                 </div>
             </th>
             <th pSortableColumn="studentId">
@@ -19,32 +19,19 @@
                     <p-columnFilter type="text" field="studentId" display="menu"></p-columnFilter>
                 </div>
             </th>
-            <th pSortableColumn="firstName">
-                Emri
+            <th pSortableColumn="fullName">
+                Emri i plotë
                 <div>
-                    <p-sortIcon field="firstName"></p-sortIcon>
-                    <p-columnFilter type="text" field="firstName" display="menu"></p-columnFilter>
+                    <p-sortIcon field="fullName"></p-sortIcon>
+                    <p-columnFilter type="text" field="fullName" display="menu"></p-columnFilter>
                 </div>
             </th>
-            <th pSortableColumn="middleName">
-                Atësia
-                <div>
-                    <p-sortIcon field="middleName"></p-sortIcon>
-                    <p-columnFilter type="text" field="middleName" display="menu"></p-columnFilter>
-                </div>
-            </th>
-            <th pSortableColumn="lastName">
-                Mbiemri
-                <div>
-                    <p-sortIcon field="lastName"></p-sortIcon>
-                    <p-columnFilter type="text" field="lastName" display="menu"></p-columnFilter>
-                </div>
-            </th>
-            <th pSortableColumn="birthDate">
+
+            <th pSortableColumn="dateOfBirth">
                 Datëlindja
                 <div>
-                    <p-sortIcon field="birthDate"></p-sortIcon>
-                    <p-columnFilter type="date" field="birthDate" display="menu"></p-columnFilter>
+                    <p-sortIcon field="dateOfBirth"></p-sortIcon>
+                    <p-columnFilter type="date" field="dateOfBirth" display="menu"></p-columnFilter>
                 </div>
             </th>
             <th pSortableColumn="idCard">
@@ -54,13 +41,7 @@
                     <p-columnFilter type="text" field="idCard" display="menu"></p-columnFilter>
                 </div>
             </th>
-            <th pSortableColumn="profileName">
-                Profili
-                <div>
-                    <p-sortIcon field="profileName"></p-sortIcon>
-                    <p-columnFilter type="text" field="profileName" display="menu"></p-columnFilter>
-                </div>
-            </th>
+
 
             <th></th>
         </tr>
@@ -68,29 +49,22 @@
     <ng-template pTemplate="body" let-student>
         <tr>
             <td style="width: 14%; min-width: 10rem">
-                {{ student.highSchoolName }}
+                {{ student.schoolName }}
             </td>
             <td style="width: 14%; min-width: 10rem">
                 {{ student.studentId }}
             </td>
             <td style="width: 14%; min-width: 10rem">
-                {{ student.firstName }}
+                {{ student.fullName }}
             </td>
+
             <td style="width: 14%; min-width: 10rem">
-                {{ student.middleName }}
-            </td>
-            <td style="width: 14%; min-width: 10rem">
-                {{ student.lastName }}
-            </td>
-            <td style="width: 14%; min-width: 10rem">
-                {{ student.birthDate | date : 'dd/MM/yyyy' }}
+                {{ student.dateOfBirth | date : 'dd/MM/yyyy' }}
             </td>
             <td style="width: 14%; min-width: 10rem">
                 {{ student.idCard }}
             </td>
-            <td style="width: 14%; min-width: 10rem">
-                {{ student.profileName }}
-            </td>
+
 
 
             <td style="width: 14%; min-width: 10rem">

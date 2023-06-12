@@ -6,6 +6,7 @@ export interface Student extends SharedStudent {
   email: string;
   firstName: string;
   genderId?: number;
+  fullName?: string;
   highSchoolId?: number;
   idCard?: string;
   isA2A3: boolean;
@@ -36,7 +37,6 @@ export interface Student extends SharedStudent {
   modifiedOn?: Date;
   modifiedByName?: string;
   nid?: string;
-
 }
 
 export interface StudentTableView {
@@ -44,8 +44,8 @@ export interface StudentTableView {
   total: number;
 }
 export interface ConfirmDiplomaException {
-  id: string,
-  isConfirmed: boolean,
+  id: string;
+  isConfirmed: boolean;
 }
 export interface FileImport {
   file: string | ArrayBuffer | null;
