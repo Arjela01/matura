@@ -1,5 +1,5 @@
 <div class="flex center mb-2 page-header mb-header">
-    <h2 class="flex-1 mb-0">Maturantë</h2>
+    <h2 class="flex-1 mb-0">Diploma për maturantët</h2>
     <div class="flex align-items-right justify-content-right">
         <div class="my-2">
             <button pButton pRipple label="Shkarko dokument" icon="pi pi-plus" (click)="onNewClick()"
@@ -12,7 +12,7 @@
     <div class="col-12">
         <div class="card">
             <msh-diplomas-student-grid [students]="(studentList$ | async) || []" [totalRecords]="totalRecords"
-                (gridEvent)="onGridEvent($event)" (lazyLoadData)="getStudent($event)">
+                (gridEvent)="onGridEvent($event)" (lazyLoadData)="getStudentDiplomas($event)">
             </msh-diplomas-student-grid>
         </div>
     </div>

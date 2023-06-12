@@ -74,9 +74,12 @@ export class DiplomasStudentFormComponent {
         initialUrl += `&schoolId=${this.diplomaFile.schoolId}`;
       }
       if (this.diplomaFile.darZaId !== 0) {
-        initialUrl += `&darZaId=${this.diplomaFile.schoolId}`;
+        initialUrl += `&darZaId=${this.diplomaFile.darZaId}`;
       }
-      initialUrl += `&isPrinted=${this.diplomaFile.isPrinted}&isProffesional=${this.diplomaFile.isProfessional}&isForeign=${this.diplomaFile.isForeign}`;
+      const accademicYear = JSON.parse(
+        localStorage.getItem('academicYear') as any
+      );
+      initialUrl += `&isPrinted=${this.diplomaFile.isPrinted}&isProffesional=${this.diplomaFile.isProfessional}&isForeign=${this.diplomaFile.isForeign}&academicYearId=${accademicYear?.id}`;
       this.formSave.emit(initialUrl);
     }
   }

@@ -31,9 +31,9 @@ import {
   SharedStudentLookupModule,
 } from '@msh/shared/student-lookup';
 import {
+  GRID_ACTIONS,
   GlobalToastService,
   GridEvent,
-  GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -53,8 +53,8 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject } from 'rxjs';
-import { EXAM_TYPES } from './exam-type.enum';
 import { Report } from '../../../../../../reports/reports-enum';
+import { EXAM_TYPES } from './exam-type.enum';
 
 interface ChangeEvent<T> {
   originalEvent: Event;
@@ -100,7 +100,6 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   @ViewChild('form', { static: true }) form!: NgForm;
   editing = false;
 
-
   EXAM_TYPES = EXAM_TYPES;
 
   a1Categories: DropdownModel<number>[] = [];
@@ -114,7 +113,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
 
   formId: string | null;
   parameterUrl!: any;
-  parameterYear!:any;
+  parameterYear!: any;
 
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
@@ -183,7 +182,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   }
 
   ngDoCheck(): void {
-    if (this.a1z.studentId !== undefined) {
+    if (this.a1z && this.a1z.studentId !== undefined) {
       this.onStudentInit(this.a1z);
     }
     if (this.selectedStudent !== null) {
@@ -254,7 +253,11 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
     } else {
       this.a1z.studentId = student.studentId;
       this.studentInputData =
-        student?.studentId + '-' + student?.studentFirstName + '-' + student?.studentLastName;
+        student?.studentId +
+        '-' +
+        student?.studentFirstName +
+        '-' +
+        student?.studentLastName;
     }
   }
 
@@ -386,8 +389,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         const d2ExamType = x.data.find(
           d2 => d2.value === EXAM_TYPES.D2 || d2.value === EXAM_TYPES.D2_VJESHTA
         );
-        const d3ExamType = x.data.find(
-          d3 => d3.value === EXAM_TYPES.D3);
+        const d3ExamType = x.data.find(d3 => d3.value === EXAM_TYPES.D3);
         const d3ExamTypeFall = x.data.find(
           d3 => d3.value === EXAM_TYPES.D3_VJESHTA
         );
@@ -481,11 +483,15 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
           const query: { queryParams: { [x: string]: string } } = {
             queryParams: {},
           };
-          if (this.parameterUrl && this.parameterYear
-            && this.a1z.studentId && this.a1z.academicYearId){
+          if (
+            this.parameterUrl &&
+            this.parameterYear &&
+            this.a1z.studentId &&
+            this.a1z.academicYearId
+          ) {
             query.queryParams[`${this.parameterUrl}`] = this.a1z.studentId;
-            query.queryParams[`${this.parameterYear}`] = this.a1z.academicYearId.toString();
-
+            query.queryParams[`${this.parameterYear}`] =
+              this.a1z.academicYearId.toString();
           }
           this.router.navigate([`/reports/${this.a1ZReport}`], query).then();
         }
@@ -510,11 +516,15 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
           const query: { queryParams: { [x: string]: string } } = {
             queryParams: {},
           };
-          if (this.parameterUrl && this.parameterYear
-            && this.a1z.studentId && this.a1z.academicYearId) {
+          if (
+            this.parameterUrl &&
+            this.parameterYear &&
+            this.a1z.studentId &&
+            this.a1z.academicYearId
+          ) {
             query.queryParams[`${this.parameterUrl}`] = this.a1z.studentId;
-            query.queryParams[`${this.parameterYear}`] = this.a1z.academicYearId.toString();
-
+            query.queryParams[`${this.parameterYear}`] =
+              this.a1z.academicYearId.toString();
           }
           this.router.navigate([`/reports/${this.a1ZReport}`], query).then();
         }

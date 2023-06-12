@@ -1,3 +1,47 @@
+<p-table #dt dataKey="id" responsiveLayout="scroll" [value]="students" [totalRecords]="totalRecords" [rows]="10"
+    [paginator]="true" [rowsPerPageOptions]="[10, 20, 30]" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde" [rowHover]="true"
+    [(selection)]="selectedStudents" selectionMode="multiple" (onRowSelect)="onRowSelect($event)"
+    (onRowUnselect)="onRowUnselect($event)" (onLazyLoad)="loadRows($event)" [lazy]="true">
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="schoolName">
+                Shkolla
+                <div>
+                    <p-sortIcon field="schoolName"></p-sortIcon>
+                    <p-columnFilter type="text" field="schoolName" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="studentId">
+                Matura ID
+                <div>
+                    <p-sortIcon field="studentId"></p-sortIcon>
+                    <p-columnFilter type="text" field="studentId" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="fullName">
+                Emri i plotë
+                <div>
+                    <p-sortIcon field="fullName"></p-sortIcon>
+                    <p-columnFilter type="text" field="fullName" display="menu"></p-columnFilter>
+                </div>
+            </th>
+
+            <th pSortableColumn="dateOfBirth">
+                Datëlindja
+                <div>
+                    <p-sortIcon field="dateOfBirth"></p-sortIcon>
+                    <p-columnFilter type="date" field="dateOfBirth" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="idCard">
+                NID
+                <div>
+                    <p-sortIcon field="idCard"></p-sortIcon>
+                    <p-columnFilter type="text" field="idCard" display="menu"></p-columnFilter>
+                </div>
+            </th>
+
 <p-table
   #dt
   dataKey="id"
@@ -99,6 +143,28 @@
             display="menu"  mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-student>
+        <tr>
+            <td style="width: 14%; min-width: 10rem">
+                {{ student.schoolName }}
+            </td>
+            <td style="width: 14%; min-width: 10rem">
+                {{ student.studentId }}
+            </td>
+            <td style="width: 14%; min-width: 10rem">
+                {{ student.fullName }}
+            </td>
+
+            <td style="width: 14%; min-width: 10rem">
+                {{ student.dateOfBirth | date : 'dd/MM/yyyy' }}
+            </td>
+            <td style="width: 14%; min-width: 10rem">
+                {{ student.idCard }}
+            </td>
 
       <th></th>
     </tr>
