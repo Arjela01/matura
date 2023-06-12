@@ -153,7 +153,6 @@ export class ManageDiplomasStudentComponent {
         err => {
           console.log(err);
           err;
-          debugger;
         }
       );
   }
@@ -173,7 +172,6 @@ export class ManageDiplomasStudentComponent {
       err => {
         console.log(err);
         err;
-        debugger;
       }
     );
   }
