@@ -1,4 +1,3 @@
-import { DiplomasStudentFormComponent } from './../../../../../configurations/feat-configurations/src/lib/diplomas-student/diplomas-student-form/diplomas-student-form.component';
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -14,15 +13,21 @@ import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ACADEMIC_YEAR_KEY } from '@msh/configurations/data-access-configurations';
 import { REPORTS_APP_URL, SafePipe } from '@msh/shared/util-shared';
 import { ButtonModule } from 'primeng/button';
-import RxPostmessenger from 'rx-postmessenger';
-import { Subject, distinctUntilChanged, first, forkJoin, map, of, share, switchMap, take, tap } from 'rxjs';
-import { IframeAutoHeightDirective } from '../iframe-auto-height.directive';
 import { DialogModule } from 'primeng/dialog';
+import RxPostmessenger from 'rx-postmessenger';
+import { Subject, first, forkJoin, map, of, switchMap, take, tap } from 'rxjs';
+import { IframeAutoHeightDirective } from '../iframe-auto-height.directive';
 
 @Component({
   selector: 'msh-report-renderer',
   standalone: true,
-  imports: [CommonModule, IframeAutoHeightDirective, SafePipe, ButtonModule,DiplomasStudentFormComponent,DialogModule],
+  imports: [
+    CommonModule,
+    IframeAutoHeightDirective,
+    SafePipe,
+    ButtonModule,
+    DialogModule,
+  ],
   templateUrl: './report-renderer.component.html',
   styleUrls: ['./report-renderer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -37,7 +42,7 @@ export class ReportRendererComponent implements OnInit {
   yearObj: { value: string | number; key: string } | null = this.findYearID(
     this.route.snapshot.queryParams
   );
-  displayModal=false
+  displayModal = false;
   iframeUrl = '';
   private readonly iframeLoaded$$ = new Subject<boolean>();
   private readonly iframeLoaded$ = this.iframeLoaded$$
@@ -57,7 +62,7 @@ export class ReportRendererComponent implements OnInit {
       });
     })
   );
-  showDiplomasButton=false;
+  showDiplomasButton = false;
 
   findStudentID(obj: { [x: string]: string | number }) {
     const key = Object.keys(obj).find(k => k.toLowerCase() === 'studentid');
@@ -82,7 +87,7 @@ export class ReportRendererComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     private router: Router
-  ) { }
+  ) {}
   onIframeLoad(): void {
     this.iframeLoaded$$.next(true);
   }
@@ -92,22 +97,20 @@ export class ReportRendererComponent implements OnInit {
     if (academicYearFilter) {
       this.academicYear = JSON.parse(academicYearFilter).id;
     }
-    if(this.id === '16'){
-      this.showDiplomasButton=true
+    if (this.id === '16') {
+      this.showDiplomasButton = true;
     }
     this.authFacade.academicYear$
       .pipe(
         map((data: any) => {
-          return data.id
-        }
-        ),
+          return data.id;
+        }),
         take(1),
         switchMap(data => {
-
           if (this.id && this.studentObj && this.yearObj) {
-            this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}&${this.yearObj.key}=${this.yearObj.value}`;
+            this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}&${this.yearObj.key}=${data}`;
           } else if (this.academicYear && this.id) {
-            this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&academicyearid=${this.academicYear}`;
+            this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&academicyearid=${data}`;
           }
           if (data.id) {
             window.location.reload();

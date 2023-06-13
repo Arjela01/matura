@@ -28,7 +28,6 @@ export class AcademicYearInterceptor implements HttpInterceptor {
       first(),
       distinctUntilChanged(),
       switchMap(accYear => {
-        debugger
         if (accYear) {
           const academicYear = token
             ? request.clone({

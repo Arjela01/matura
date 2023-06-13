@@ -11,7 +11,8 @@ import {
   Component,
   HostBinding,
   Input,
-  OnChanges,OnInit,
+  OnChanges,
+  OnInit,
 } from '@angular/core';
 import {
   NavigationEnd,
@@ -20,8 +21,8 @@ import {
   RouterLinkActive,
   RouterLinkWithHref,
 } from '@angular/router';
-import { filter } from 'rxjs';
 import { RippleModule } from 'primeng/ripple';
+import { filter } from 'rxjs';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -157,8 +158,6 @@ export class AppMenuitemComponent implements OnChanges, OnInit {
   }
 
   updateActiveStateFromRoute() {
-   let a= this.item.routerLink[0]
-    debugger
     this.router.isActive(this.item.routerLink[0], {
       paths: 'exact',
       queryParams: 'ignored',
@@ -176,7 +175,6 @@ export class AppMenuitemComponent implements OnChanges, OnInit {
 
     // execute command
     if (this.item.command) {
-      
       this.item.command({ originalEvent: event, item: this.item });
     }
 

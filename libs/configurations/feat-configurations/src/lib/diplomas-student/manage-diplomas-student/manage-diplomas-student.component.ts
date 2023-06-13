@@ -54,7 +54,7 @@ let INITIAL_FILTER = {};
 @UntilDestroy()
 export class ManageDiplomasStudentComponent {
   @Input() printed = false;
-  @Input() title='Diplomat aktive'
+  @Input() title = 'Diplomat aktive';
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
   filters: LazyLoadEvent | null = null;
@@ -105,10 +105,6 @@ export class ManageDiplomasStudentComponent {
         })
       )
       .subscribe();
-
-      if(this.printed){
-
-      }
   }
 
   onNewClick() {
@@ -198,7 +194,7 @@ export class ManageDiplomasStudentComponent {
   }
 
   getStudentDiplomas($event: LazyLoadEvent): void {
-    if(this.printed){
+    if (this.printed) {
       INITIAL_FILTER = {
         isPrinted: [
           {
@@ -207,16 +203,14 @@ export class ManageDiplomasStudentComponent {
             operator: 'and',
           },
         ],
-      
       };
       $event.filters = {
         ...$event.filters,
         ...INITIAL_FILTER,
       };
-    }else {
+    } else {
       this.filters = Object.assign({}, $event);
     }
-
 
     this.diplomasService
       .loadStudentDiplomas($event)
