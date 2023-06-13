@@ -87,6 +87,7 @@ export class A1GridComponent {
         map((data: any) => data.id),
         distinctUntilChanged(),
         switchMap(data => {
+       
           if (this.filters) {
             window.location.reload();
           }

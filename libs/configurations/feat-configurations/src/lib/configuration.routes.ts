@@ -1,3 +1,4 @@
+import { PrintedDiplomasComponent } from './diplomas-student/printed-diplomas/printed-diplomas.component';
 import { Route } from '@angular/router';
 
 export const CONFIGURATION_ROUTES: Route[] = [
@@ -274,5 +275,12 @@ export const CONFIGURATION_ROUTES: Route[] = [
       import(
         './diplomas-student/manage-diplomas-student/manage-diplomas-student.component'
       ).then(m => m.ManageDiplomasStudentComponent),
+  },
+  {
+    path: 'printed-diplomas',
+    loadComponent: () =>
+      import(
+        './diplomas-student/printed-diplomas/printed-diplomas.component'
+      ).then(m => m.PrintedDiplomasComponent),
   },
 ];

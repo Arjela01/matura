@@ -157,6 +157,8 @@ export class AppMenuitemComponent implements OnChanges, OnInit {
   }
 
   updateActiveStateFromRoute() {
+   let a= this.item.routerLink[0]
+    debugger
     this.router.isActive(this.item.routerLink[0], {
       paths: 'exact',
       queryParams: 'ignored',
@@ -174,6 +176,7 @@ export class AppMenuitemComponent implements OnChanges, OnInit {
 
     // execute command
     if (this.item.command) {
+      
       this.item.command({ originalEvent: event, item: this.item });
     }
 

@@ -5,7 +5,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, map, of, switchMap } from 'rxjs';
 import {
   GlobalToastService,
   GRID_ACTIONS,
@@ -22,6 +22,7 @@ import { ExamSecretsFormComponent } from '../exam-secrets-form/exam-secrets-form
 import { ExamSecretsGridComponent } from '../exam-secrets-grid/exam-secrets-grid.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import * as FileSaver from 'file-saver';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
@@ -60,11 +61,26 @@ export class ManageExamSecretsComponent implements OnInit {
     private readonly toastService: GlobalToastService,
     private readonly examSecretService: ExamSecretApiService,
     private readonly router: Router,
-    private readonly examSubjectService: ExamSubjectApiService
+    private readonly examSubjectService: ExamSubjectApiService,
+    private authFacade:AuthFacade
   ) {}
 
   ngOnInit(): void {
     this.getExamSubjects();
+    this.authFacade.academicYear$
+      .pipe(
+        map((data: any) => data.id),
+        distinctUntilChanged(),
+        switchMap(data => {
+       
+          if (this.filters) {
+            window.location.reload();
+          }
+
+          return of([]);
+        })
+      )
+      .subscribe();
   }
 
   onNewClick() {
