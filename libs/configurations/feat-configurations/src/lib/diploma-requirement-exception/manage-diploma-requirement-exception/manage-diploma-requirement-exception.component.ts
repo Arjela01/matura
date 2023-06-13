@@ -14,10 +14,11 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, map, of, switchMap } from 'rxjs';
 import { RippleModule } from 'primeng/ripple';
 import { DiplomaRequirementExceptionGridComponent } from '../diploma-requirement-exception-grid/diploma-requirement-exception-grid.component';
 import {FileUploadModule} from "primeng/fileupload";
+import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
@@ -54,7 +55,8 @@ export class ManageDiplomaRequirementExceptionComponent {
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly studentService: StudentsApiService
+    private readonly studentService: StudentsApiService,
+    private authFacade:AuthFacade
   ) {}
 
   onUploadClick() {
@@ -136,5 +138,22 @@ export class ManageDiplomaRequirementExceptionComponent {
           );
       });
     };
+  }
+
+  ngOnInit(){
+    this.authFacade.academicYear$
+      .pipe(
+        map((data: any) => data.id),
+        distinctUntilChanged(),
+        switchMap(data => {
+      
+          if (this.filters) {
+            window.location.reload();
+          }
+
+          return of([]);
+        })
+      )
+      .subscribe();
   }
 }

@@ -11,7 +11,8 @@ import {
   Component,
   HostBinding,
   Input,
-  OnChanges,OnInit,
+  OnChanges,
+  OnInit,
 } from '@angular/core';
 import {
   NavigationEnd,
@@ -20,8 +21,8 @@ import {
   RouterLinkActive,
   RouterLinkWithHref,
 } from '@angular/router';
-import { filter } from 'rxjs';
 import { RippleModule } from 'primeng/ripple';
+import { filter } from 'rxjs';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector

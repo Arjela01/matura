@@ -1,17 +1,24 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TableModule } from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { TooltipModule } from 'primeng/tooltip';
-import { CheckboxModule } from 'primeng/checkbox';
-import { RippleModule } from 'primeng/ripple';
-import { LazyLoadEvent } from 'primeng/api';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ExamGradeApiService } from '@msh/evaluations/data-access-evaluations';
-import { BehaviorSubject } from 'rxjs';
-import {ExamGrade} from "@msh/evaluations/domain-evaluations";
-import {ColumnFilterDirective} from "@msh/shared/util-shared";
+import { ExamGrade } from '@msh/evaluations/domain-evaluations';
+import { ColumnFilterDirective } from '@msh/shared/util-shared';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { LazyLoadEvent } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { InputTextModule } from 'primeng/inputtext';
+import { RippleModule } from 'primeng/ripple';
+import { TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
+import {
+  BehaviorSubject,
+  distinctUntilChanged,
+  map,
+  of,
+  switchMap,
+} from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -25,7 +32,7 @@ import {ColumnFilterDirective} from "@msh/shared/util-shared";
     TooltipModule,
     CheckboxModule,
     RippleModule,
-    ColumnFilterDirective
+    ColumnFilterDirective,
   ],
   templateUrl: './exam-grade-grid.component.html',
   styleUrls: ['./exam-grade-grid.component.scss'],
@@ -37,7 +44,10 @@ export class ExamGradeGridComponent {
   totalRecords = 0;
   filters: LazyLoadEvent | null = null;
 
-  constructor(private readonly examGradeService: ExamGradeApiService) {}
+  constructor(
+    private readonly examGradeService: ExamGradeApiService,
+    private authFacade: AuthFacade
+  ) {}
 
   getExamGrades($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
@@ -49,5 +59,21 @@ export class ExamGradeGridComponent {
         this.annualExamGrade$$.next(response.data);
         this.totalRecords = response.total;
       });
+  }
+
+  ngOnInit() {
+    this.authFacade.academicYear$
+      .pipe(
+        map((data: any) => data.id),
+        distinctUntilChanged(),
+        switchMap(data => {
+          if (this.filters) {
+            window.location.reload();
+          }
+
+          return of([]);
+        })
+      )
+      .subscribe();
   }
 }

@@ -1,21 +1,25 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TableModule } from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { TooltipModule } from 'primeng/tooltip';
-import { CheckboxModule } from 'primeng/checkbox';
-import { RippleModule } from 'primeng/ripple';
-import { BehaviorSubject } from 'rxjs';
-import {  ExamScore } from '@msh/evaluations/domain-evaluations';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AuthFacade } from '@msh/auth/data-access-auth';
+import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
+import { ExamScore } from '@msh/evaluations/domain-evaluations';
+import { ColumnFilterDirective } from '@msh/shared/util-shared';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { LazyLoadEvent } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { InputTextModule } from 'primeng/inputtext';
+import { RippleModule } from 'primeng/ripple';
+import { TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
 import {
-  ExamScoreApiService,
-} from '@msh/evaluations/data-access-evaluations';
-import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
-import {ColumnFilterDirective} from "@msh/shared/util-shared";
+  BehaviorSubject,
+  distinctUntilChanged,
+  map,
+  of,
+  switchMap,
+} from 'rxjs';
 @UntilDestroy()
-
 @Component({
   selector: 'msh-exam-score-grid',
   standalone: true,
@@ -27,7 +31,7 @@ import {ColumnFilterDirective} from "@msh/shared/util-shared";
     TooltipModule,
     CheckboxModule,
     RippleModule,
-    ColumnFilterDirective
+    ColumnFilterDirective,
   ],
   templateUrl: './exam-scores-secrets-grid.component.html',
   styleUrls: ['./exam-scores-secrets-grid.component.scss'],
@@ -39,8 +43,26 @@ export class ExamScoresSecretsGridComponent {
   filters: LazyLoadEvent | null = null;
   totalRecords = 0;
 
-  constructor(private readonly examScoreService: ExamScoreApiService) {}
+  constructor(
+    private readonly examScoreService: ExamScoreApiService,
+    private authFacade: AuthFacade
+  ) {}
 
+  ngOnInit() {
+    this.authFacade.academicYear$
+      .pipe(
+        map((data: any) => data.id),
+        distinctUntilChanged(),
+        switchMap(data => {
+          if (this.filters) {
+            window.location.reload();
+          }
+
+          return of([]);
+        })
+      )
+      .subscribe();
+  }
   getExamScores($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 

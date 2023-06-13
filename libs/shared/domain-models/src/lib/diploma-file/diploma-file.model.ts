@@ -12,3 +12,8 @@ export enum StudentVersion {
   CurrentStudent = 1,
   PreviousStudent = 2,
 }
+
+export enum Status {
+  NOTPRINTED,
+  PRINTED
+}
