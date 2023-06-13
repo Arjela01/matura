@@ -160,9 +160,9 @@ export class ManageExamSiteComponent implements OnInit {
       this.selectedExamSite.administrationOfficeId = administrationOfficeId;
     this.getHighSchools(administrationOfficeId);
   }
-  onHighSchoolChanged(highSchoolIds: number[]) {
+  onHighSchoolChanged(highSchoolIds: any) {
     if (this.selectedExamSite !== null) {
-      this.selectedExamSite.highSchoolIds = highSchoolIds;
+      this.selectedExamSite.highschoolIds = highSchoolIds;
     }
   }
 
@@ -221,7 +221,7 @@ export class ManageExamSiteComponent implements OnInit {
           );
           this.displayModal = false;
           this.getExamSites(this.filters as LazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(

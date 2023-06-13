@@ -74,23 +74,23 @@
     <label for="highSchools">Shkolla *</label>
     <p-multiSelect
       id="highSchools"
-      [options]="highSchools"
+      [options]="highschools"
       optionValue="key"
-      defaultLabel="Zgjidh Shkollat"
+      [defaultLabel]="examSite.id ? '' : 'Zgjidh shkollat'"
       optionLabel="value"
       name="highSchools"
       (onChange)="onHighSchoolChanged($event)"
       (onClear)="onHighSchoolChanged($event)"
-      [(ngModel)]="examSite.highSchoolIds"
+      [(ngModel)]="examSite.highschoolIds"
       [required]="true"
       [showClear]="true"
       display="chip"
       appendTo="body"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examSite.highSchoolIds
+        'ng-invalid ng-dirty': submitted && !examSite.highschoolIds
       }">
     </p-multiSelect>
-    <small class="p-error block" *ngIf="submitted && !examSite.highSchoolIds">
+    <small class="p-error block" *ngIf="submitted && !examSite.highschoolIds">
       Shkolla është fushë e kërkuar.
     </small>
   </div>
