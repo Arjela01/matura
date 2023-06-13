@@ -11,7 +11,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { ExamSubjectFormComponent } from '../exam-subject-form/exam-subject-form.component';
 import { ExamSubjectGridComponent } from '../exam-subject-grid/exam-subject-grid.component';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, map, of, switchMap } from 'rxjs';
 import { ExamSubject } from '@msh/shared/domain-models';
 import {
   GlobalToastService,
@@ -25,6 +25,7 @@ import {
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { RippleModule } from 'primeng/ripple';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
@@ -61,11 +62,26 @@ export class ManageExamSubjectComponent implements OnInit {
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examSubjectService: ExamSubjectApiService,
-    private readonly examTypesApiService: ExamTypeApiService
+    private readonly examTypesApiService: ExamTypeApiService,
+    private authFacade:AuthFacade
   ) {}
 
   ngOnInit(): void {
     this.getExamTypesDropdown();
+    this.authFacade.academicYear$
+      .pipe(
+        map((data: any) => data.id),
+        distinctUntilChanged(),
+        switchMap(data => {
+       
+          if (this.filters) {
+            window.location.reload();
+          }
+
+          return of([]);
+        })
+      )
+      .subscribe();
   }
 
   onNewClick() {

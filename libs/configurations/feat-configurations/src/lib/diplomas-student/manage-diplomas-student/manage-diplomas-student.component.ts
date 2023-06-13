@@ -8,7 +8,7 @@ import {
   HighSchoolApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
-import { Student, StudentVersion } from '@msh/shared/domain-models';
+import { Status, Student, StudentVersion } from '@msh/shared/domain-models';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -31,7 +31,7 @@ import {
 } from 'rxjs';
 import { DiplomasStudentFormComponent } from '../diplomas-student-form/diplomas-student-form.component';
 import { DiplomasStudentGridComponent } from '../diplomas-student-grid/diplomas-student-grid.component';
-
+let INITIAL_FILTER = {};
 @Component({
   selector: 'msh-manage-diplomas-student',
   standalone: true,
@@ -54,6 +54,7 @@ import { DiplomasStudentGridComponent } from '../diplomas-student-grid/diplomas-
 @UntilDestroy()
 export class ManageDiplomasStudentComponent {
   @Input() printed = false;
+  @Input() title = 'Diplomat aktive';
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
   filters: LazyLoadEvent | null = null;
@@ -193,7 +194,23 @@ export class ManageDiplomasStudentComponent {
   }
 
   getStudentDiplomas($event: LazyLoadEvent): void {
-    this.filters = Object.assign({}, $event);
+    if (this.printed) {
+      INITIAL_FILTER = {
+        isPrinted: [
+          {
+            value: Status.NOTPRINTED,
+            matchMode: 'equals',
+            operator: 'and',
+          },
+        ],
+      };
+      $event.filters = {
+        ...$event.filters,
+        ...INITIAL_FILTER,
+      };
+    } else {
+      this.filters = Object.assign({}, $event);
+    }
 
     this.diplomasService
       .loadStudentDiplomas($event)

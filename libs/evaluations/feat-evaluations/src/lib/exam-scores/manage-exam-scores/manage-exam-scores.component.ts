@@ -1,3 +1,4 @@
+import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
@@ -7,7 +8,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { ExamScoresFormComponent } from '../exam-scores-form/exam-scores-form.component';
 import { ExamScoresGridComponent } from '../exam-scores-grid/exam-scores-grid.component';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, map, of, switchMap } from 'rxjs';
 import {
   GlobalToastService,
   GRID_ACTIONS,
@@ -65,10 +66,25 @@ export class ManageExamScoresComponent implements OnInit {
     private readonly examTypeService: ExamTypeApiService,
     private readonly examSubjectService: ExamSubjectApiService,
     private readonly cd: ChangeDetectorRef,
+    private authFacade:AuthFacade
   ) {}
 
   ngOnInit(): void {
     this.getExamTypes();
+    this.authFacade.academicYear$
+      .pipe(
+        map((data: any) => data.id),
+        distinctUntilChanged(),
+        switchMap(data => {
+       
+          if (this.filters) {
+            window.location.reload();
+          }
+
+          return of([]);
+        })
+      )
+      .subscribe();
   }
 
   onNewClick() {
