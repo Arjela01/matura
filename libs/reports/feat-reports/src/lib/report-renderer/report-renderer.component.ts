@@ -39,6 +39,8 @@ export class ReportRendererComponent implements OnInit {
   academicYear: any;
   studentObj: { value: string | number; key: string } | null =
     this.findStudentID(this.route.snapshot.queryParams);
+  folderObj: { value: string | number; key: string } | null =
+    this.findArchiveFolderNr(this.route.snapshot.queryParams);
   yearObj: { value: string | number; key: string } | null = this.findYearID(
     this.route.snapshot.queryParams
   );
@@ -80,6 +82,13 @@ export class ReportRendererComponent implements OnInit {
     }
     return null;
   }
+  findArchiveFolderNr(obj: { [x: string]: string | number }) {
+    const key = Object.keys(obj).find(k => k.toLowerCase() === 'foldernr');
+    if (key) {
+      return { key: key, value: obj[key] };
+    }
+    return null;
+  }
 
   constructor(
     @Inject(REPORTS_APP_URL) readonly reports_app_url: string,
@@ -111,6 +120,8 @@ export class ReportRendererComponent implements OnInit {
             this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}&${this.yearObj.key}=${data}`;
           } else if (this.academicYear && this.id) {
             this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&academicyearid=${data}`;
+          } else if (this.id && this.yearObj && this.folderObj) {
+            this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.folderObj.key}=${this.folderObj.value}`;
           }
           if (data.id) {
             window.location.reload();
@@ -123,6 +134,8 @@ export class ReportRendererComponent implements OnInit {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}&${this.yearObj.key}=${this.yearObj.value}`;
     } else if (this.academicYear && this.id) {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&academicyearid=${this.academicYear}`;
+    } else if (this.id && this.yearObj && this.folderObj) {
+      this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.folderObj.key}=${this.folderObj.value}`;
     }
   }
 

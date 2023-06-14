@@ -1,6 +1,6 @@
 
 export interface ArchiveFolder{
-  nr?: number;
+  nr?: any;
   id?: any;
   examTypeId?: number;
   examTypeName?: string;

@@ -12,7 +12,7 @@ import {
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import { ExamTypeApiService } from '@msh/configurations/data-access-configurations';
+import {ExamTypeApiService, ReportsApiService} from '@msh/configurations/data-access-configurations';
 import {
   ArchiveExamApiService,
   ArchiveFolderApiService,
@@ -40,6 +40,7 @@ import { BehaviorSubject, of, switchMap } from 'rxjs';
 import { ArchiveFormComponent } from '../archive-exam-form/archive-form.component';
 import { ArchiveExamGridComponent } from '../archive-exam-grid/archive-exam-grid.component';
 import { BarcodeService } from '../services/barcode-service';
+import {Report} from "../../../../../../reports/reports-enum";
 
 @UntilDestroy()
 @Component({
@@ -90,6 +91,17 @@ export class ManageArchiveExamsComponent implements OnInit {
   id: any;
   archiveFolder: ArchiveFolder = {} as ArchiveFolder;
   isBarcodeInputDisabled = false;
+  parameterUrl!: any;
+  parameterYear!: any;
+  archiveFolderReport: Report = Report.ArchiveFolder_Report;
+
+  event = {
+    first: 0,
+    rows: 10,
+    sortOrder: 1,
+    filters: {},
+    globalFilter: null,
+  };
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -102,7 +114,8 @@ export class ManageArchiveExamsComponent implements OnInit {
     private archiveFolderService: ArchiveFolderApiService,
     private route: ActivatedRoute,
     private barcodeService: BarcodeService,
-    protected authFacade: AuthFacade
+    protected authFacade: AuthFacade,
+    private reportApiService: ReportsApiService
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.archiveFolder = {};
@@ -112,15 +125,30 @@ export class ManageArchiveExamsComponent implements OnInit {
     this.archiveFolderService
       .getById(this.id)
       .subscribe(folder => (this.archiveFolder = { ...folder.data }));
+
     this.authFacade.academicYear$
-      .pipe(
-        switchMap(data => {
-          console.log(data);
-          this.getArchiveExams(this.filters as LazyLoadEvent);
-          return of([]);
-        })
-      )
-      .subscribe();
+      .pipe(untilDestroyed(this))
+      .subscribe(data => {
+        console.log(data);
+        this.getArchiveExams(this.event);
+      });
+
+    this.reportApiService
+      .loadRoleReports(this.event)
+      .pipe(untilDestroyed(this))
+      .subscribe(res => {
+        const archiveFolderData = res.data.find(item => {
+          return item.reportId === 12;
+        });
+        const parametersArray = JSON.parse(archiveFolderData?.parameters as never);
+        if (parametersArray.length > 0)
+          this.parameterUrl = parametersArray.find((item: string) => {
+            return ['foldernr'].includes(item.toLowerCase());
+          });
+        this.parameterYear = parametersArray.find((item: string) => {
+          return ['academicyearid'].includes(item.toLowerCase());
+        });
+      });
   }
 
   onNewClick() {
@@ -191,17 +219,18 @@ export class ManageArchiveExamsComponent implements OnInit {
   }
 
   getArchiveExams($event: LazyLoadEvent) {
-    this.filters = Object.assign({}, $event);
+      this.filters = Object.assign({}, $event);
+      this.archiveExamApiService
+        .loadArchiveExams($event,this.id)
+        .pipe(untilDestroyed(this))
+        .subscribe(response => {
+          this.archiveExams = response.data;
+          this.archiveExams$$.next(response.data);
+          this.totalRecords = response.total;
+          this.cd.markForCheck();
+        });
+    }
 
-    this.archiveExamApiService
-      .loadArchiveExams($event, this.id)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.archiveExams$$.next([]);
-        this.archiveExams$$.next(response.data);
-        this.totalRecords = response.total;
-      });
-  }
 
   addArchiveExams(archiveExam: ArchiveExam) {
     this.isBarcodeInputDisabled = true;
@@ -259,7 +288,6 @@ export class ManageArchiveExamsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.router.navigate(['./evaluations/archive-folder-cover', this.id]);
           this.toastService.showSuccess(
             this.archiveFolder?.isClosed
               ? 'Dosja u hap me sukses!'
@@ -267,6 +295,22 @@ export class ManageArchiveExamsComponent implements OnInit {
           );
 
           this.displayModal = false;
+          const query: { queryParams: { [x: string]: string } } = {
+            queryParams: {},
+          };
+          if (
+            this.parameterUrl &&
+            this.parameterYear &&
+            this.archiveFolder.nr &&
+            this.archiveFolder.academicYearId
+          ) {
+            query.queryParams[`${this.parameterUrl}`] = this.archiveFolder.nr;
+            query.queryParams[`${this.parameterYear}`] =
+              this.archiveFolder.academicYearId.toString();
+          }
+          this.router
+            .navigate([`/reports/${this.archiveFolderReport}`], query)
+            .then();
         }
 
         if (response.isBadRequest)
