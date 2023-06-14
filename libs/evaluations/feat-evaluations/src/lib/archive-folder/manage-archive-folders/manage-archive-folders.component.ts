@@ -26,8 +26,8 @@ import {
 } from '@msh/evaluations/data-access-evaluations';
 import { ArchiveFolder } from '@msh/evaluations/domain-evaluations';
 import {
-  GlobalToastService,
   GRID_ACTIONS,
+  GlobalToastService,
   GridEvent,
 } from '@msh/shared/util-shared';
 import { RippleModule } from 'primeng/ripple';

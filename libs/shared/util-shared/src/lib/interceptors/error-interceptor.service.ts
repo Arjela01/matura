@@ -1,11 +1,12 @@
 import {
+  HttpErrorResponse,
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, delay, mergeMap, of, retryWhen } from 'rxjs';
+import { Observable, delay, from, mergeMap, of, retryWhen } from 'rxjs';
 import {
   ERROR_400,
   ERROR_401,
@@ -33,6 +34,7 @@ export class ErrorInterceptorService implements HttpInterceptor {
       retryWhen((error): Observable<any> => {
         return error.pipe(
           mergeMap((error, index) => {
+            debugger;
             switch (error.status) {
               case 400:
                 return this.handleError(error, index, ERROR_400);
@@ -70,9 +72,25 @@ export class ErrorInterceptorService implements HttpInterceptor {
       return of(error).pipe(delay(delayMs));
     }
 
+    if (error.url.toString().includes('PrintedDiplomas')) {
+      if (error.error instanceof Blob) {
+        return from(
+          Promise.resolve(error).then(async x => {
+            throw new HttpErrorResponse({
+              error: JSON.parse(await x.error.text()),
+              headers: x.headers,
+              status: x.status,
+              statusText: x.statusText,
+              url: x.url ?? undefined,
+            });
+          })
+        );
+      }
+      throw error;
+    }
     if (error.status === 401) {
       localStorage.clear();
-      // window.location.reload();
+      window.location.reload();
     }
 
     this.notificationsService.showError(message);

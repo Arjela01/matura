@@ -97,9 +97,7 @@ export class ReportRendererComponent implements OnInit {
     if (academicYearFilter) {
       this.academicYear = JSON.parse(academicYearFilter).id;
     }
-    if (this.id === '16') {
-      this.showDiplomasButton = true;
-    }
+
     this.authFacade.academicYear$
       .pipe(
         map((data: any) => {

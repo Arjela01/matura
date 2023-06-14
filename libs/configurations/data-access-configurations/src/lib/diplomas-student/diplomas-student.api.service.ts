@@ -12,7 +12,10 @@ import { Observable, catchError, map, throwError } from 'rxjs';
 export class DiplomasStudentApiService {
   constructor(private apiService: APIService) {}
 
-  exportDiplomasStudent(id: string): Observable<ApiResult<unknown>> {
+  exportDiplomasStudent(
+    id: string,
+    allReports: boolean
+  ): Observable<ApiResult<unknown>> {
     const academicYear = JSON.parse(
       localStorage.getItem('academicYear') as string
     ) as AcademicYear;

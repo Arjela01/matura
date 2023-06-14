@@ -142,7 +142,7 @@ export class ManageDiplomasStudentComponent {
   printDiplomas(event: GridEvent<Student>) {
     console.log(event.data);
     this.diplomasService
-      .exportDiplomasStudent(event.data?.studentId as string)
+      .exportDiplomasStudent(event.data?.studentId as string, !this.printed)
       .subscribe(
         (response: any) => {
           const blob: any = new Blob([response], {
@@ -151,8 +151,7 @@ export class ManageDiplomasStudentComponent {
           FileSaver.saveAs(blob, `Diploma_${event.data?.fullName}}`);
         },
         err => {
-          console.log(err);
-          err;
+          this.toastService.showError(err.error);
         }
       );
   }
@@ -168,10 +167,10 @@ export class ManageDiplomasStudentComponent {
           type: 'application/pdf',
         });
         FileSaver.saveAs(blob, `Diplomat`);
+        this.displayModal = false;
       },
       err => {
-        console.log(err);
-        err;
+        this.toastService.showError(err.error);
       }
     );
   }
@@ -208,6 +207,7 @@ export class ManageDiplomasStudentComponent {
         ...$event.filters,
         ...INITIAL_FILTER,
       };
+      this.filters = $event.filters;
     } else {
       this.filters = Object.assign({}, $event);
     }
