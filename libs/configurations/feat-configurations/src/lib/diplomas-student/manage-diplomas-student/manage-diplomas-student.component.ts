@@ -31,6 +31,8 @@ import {
 } from 'rxjs';
 import { DiplomasStudentFormComponent } from '../diplomas-student-form/diplomas-student-form.component';
 import { DiplomasStudentGridComponent } from '../diplomas-student-grid/diplomas-student-grid.component';
+import { Dropdown } from 'primeng/dropdown';
+import { DropdownModel } from '@msh/shared/data-access-shared';
 let INITIAL_FILTER = {};
 @Component({
   selector: 'msh-manage-diplomas-student',
@@ -64,7 +66,7 @@ export class ManageDiplomasStudentComponent {
   selectedStudent: Student | null = null;
   selectedStudentList: Student[] = [];
 
-  studentVersion: any[] = [
+  studentVersion: DropdownModel<number>[] = [
     {
       key: StudentVersion.CurrentStudent,
       value: 'Student aktiv',
@@ -76,25 +78,24 @@ export class ManageDiplomasStudentComponent {
       parentKey: null,
     },
   ];
-  administrationOffices: any[] = [];
-  highSchools: any[] = [];
+  administrationOffices: DropdownModel<number>[] = [];
+  highSchools: DropdownModel<number>[] = [];
 
   constructor(
     private readonly studentService: StudentsApiService,
-    private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private diplomasService: DiplomasStudentApiService,
     private administrationOfficeApiService: AdministrationOfficeApiService,
     private highschoolApiService: HighSchoolApiService,
     private authFacade: AuthFacade
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getAdministrationOfficeDropdown();
     this.getHighSchoolsDropdown();
     this.authFacade.academicYear$
       .pipe(
-        map((data: any) => data.id),
+        map((data) => data.id),
         distinctUntilChanged(),
         switchMap(data => {
           if (this.filters) {
@@ -118,7 +119,7 @@ export class ManageDiplomasStudentComponent {
     this.administrationOfficeApiService
       .loadDropdownList()
       .pipe(untilDestroyed(this))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.administrationOffices = response.data;
       });
   }
@@ -126,7 +127,7 @@ export class ManageDiplomasStudentComponent {
     this.highschoolApiService
       .loadDropDownList()
       .pipe(untilDestroyed(this))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         this.highSchools = response.data;
       });
   }
@@ -134,21 +135,22 @@ export class ManageDiplomasStudentComponent {
   onGridEvent(event: GridEvent<Student>) {
     switch (event.action) {
       case GRID_ACTIONS.PRINT:
-        this.printDiplomas(event);
+        this.printDiploma(event);
         break;
     }
   }
 
-  printDiplomas(event: GridEvent<Student>) {
-    console.log(event.data);
+  printDiploma(event: GridEvent<Student>) {
     this.diplomasService
       .exportDiplomasStudent(event.data?.studentId as string, !this.printed)
       .subscribe(
-        (response: any) => {
-          const blob: any = new Blob([response], {
+        (response) => {
+
+          const blob = new Blob([response], {
             type: 'application/pdf',
           });
-          FileSaver.saveAs(blob, `Diploma_${event.data?.fullName}}`);
+          FileSaver.saveAs(blob, `Diploma_${event.data?.fullName}`);
+          this.getStudentDiplomas(this.filters as LazyLoadEvent)
         },
         err => {
           this.toastService.showError(err.error);
@@ -162,8 +164,8 @@ export class ManageDiplomasStudentComponent {
 
   printAllDiplomas(data: string) {
     this.diplomasService.exportAllDiplomas(data).subscribe(
-      (response: any) => {
-        const blob: any = new Blob([response], {
+      (response) => {
+        const blob = new Blob([response], {
           type: 'application/pdf',
         });
         FileSaver.saveAs(blob, `Diplomat`);
@@ -175,47 +177,28 @@ export class ManageDiplomasStudentComponent {
     );
   }
 
-  deleteStudent(Student: Student) {
-    this.studentService
-      .delete(Student.id.toString())
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showSuccess('Studenti u fshi me sukses!');
-          this.getStudentDiplomas(this.filters as LazyLoadEvent);
-        }
-        if (!response.isSuccessful) {
-          this.toastService.showError(
-            'Ndodhi një problem gjatë fshirjes së studentit!'
-          );
-        }
-      });
-  }
 
   getStudentDiplomas($event: LazyLoadEvent): void {
+    INITIAL_FILTER = {
+      isPrinted: [
+        {
+          value: Status.NOTPRINTED,
+          matchMode: 'equals',
+          operator: 'and',
+        },
+      ],
+    };
     if (this.printed) {
-      INITIAL_FILTER = {
-        isPrinted: [
-          {
-            value: Status.NOTPRINTED,
-            matchMode: 'equals',
-            operator: 'and',
-          },
-        ],
-      };
       $event.filters = {
         ...$event.filters,
         ...INITIAL_FILTER,
       };
-      this.filters = $event.filters;
-    } else {
-      this.filters = Object.assign({}, $event);
     }
-
+    this.filters = $event;
     this.diplomasService
       .loadStudentDiplomas($event)
       .pipe(untilDestroyed(this))
-      .subscribe((response: any) => {
+      .subscribe((response) => {
         console.log(response);
         const students = [...response.data];
         for (const student of students) {
@@ -225,21 +208,6 @@ export class ManageDiplomasStudentComponent {
         }
         this.studentList$$.next(students);
         this.totalRecords = response.total;
-      });
-  }
-  updateStudent(student: Student) {
-    this.studentService
-      .update(student)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showSuccess('Studenti u ndryshua me sukses!');
-        }
-
-        if (response.isBadRequest)
-          this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së studentit!'
-          );
       });
   }
 }
