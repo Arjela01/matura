@@ -19,13 +19,7 @@ import { AuthFacade } from '@msh/auth/data-access-auth';
 import { StudentsApiService } from '@msh/configurations/data-access-configurations';
 import { Student } from '@msh/shared/domain-models';
 import { RippleModule } from 'primeng/ripple';
-import {
-  BehaviorSubject,
-  distinctUntilChanged,
-  map,
-  of,
-  switchMap,
-} from 'rxjs';
+import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { StudentsEditComponent } from '../students-edit/students-edit.component';
 import { StudentsFormComponent } from '../students-form/students-form.component';
 import { StudentsGridComponent } from '../students-grid/students-grid.component';
@@ -68,22 +62,15 @@ export class ManageStudentsComponent implements OnInit {
     private readonly toastService: GlobalToastService,
     private authFacade: AuthFacade
   ) {}
-
-  ngOnInit(): void {
-    this.authFacade.academicYear$
-      .pipe(
-        map((data: any) => data.id),
-        distinctUntilChanged(),
-        switchMap(data => {
-          if (this.filters) {
-            window.location.reload();
-          }
-
-          return of([]);
-        })
-      )
-      .subscribe();
-  }
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    map(([_]) => {
+      if (this.filters) {
+        this.getStudent(this.filters as LazyLoadEvent);
+      }
+    }),
+    tap()
+  );
+  ngOnInit(): void {}
 
   onNewClick() {
     this.hideStudentForm = !this.hideStudentForm;

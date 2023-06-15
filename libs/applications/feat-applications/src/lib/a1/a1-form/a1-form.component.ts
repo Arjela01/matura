@@ -10,6 +10,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { A1ApiService } from '@msh/applications/data-access-applications';
 import { A1Z } from '@msh/applications/domain-application';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
   AcademicYearApiService,
   ExamSubjectApiService,
@@ -34,7 +35,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
-import { Observable, combineLatest, of, switchMap } from 'rxjs';
+import { Observable, combineLatest, map, of, switchMap, tap } from 'rxjs';
 import { Report } from '../../../../../../reports/reports-enum';
 import { ManageStudentsGridsDialogComponent } from '../manage-students-grids-dialog/manage-students-grids-dialog.component';
 
@@ -122,10 +123,15 @@ export class A1FormComponent {
     private dialogService: DialogService,
     private router: Router,
     private route: ActivatedRoute,
+    private authFacade: AuthFacade,
     private reportsApiService: ReportsApiService
   ) {
     this.formId = this.route.snapshot.paramMap.get('id');
   }
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    map(([_]) => {}),
+    tap()
+  );
   ngOnInit() {
     if (this.formId) {
       this.editing = true;

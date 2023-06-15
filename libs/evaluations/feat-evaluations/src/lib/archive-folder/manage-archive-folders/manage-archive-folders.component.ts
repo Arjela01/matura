@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -31,13 +31,7 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { RippleModule } from 'primeng/ripple';
-import {
-  BehaviorSubject,
-  distinctUntilChanged,
-  map,
-  of,
-  switchMap,
-} from 'rxjs';
+import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ArchiveFolderGridComponent } from '../archive-folder-grid/archive-folder-grid.component';
 import { ArchiveOpenFolderFormComponent } from '../archive-open-folder-form/archive-open-folder-form.component';
 
@@ -61,7 +55,7 @@ import { ArchiveOpenFolderFormComponent } from '../archive-open-folder-form/arch
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageArchiveFoldersComponent implements OnInit {
+export class ManageArchiveFoldersComponent {
   private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[]>([]);
   examTypes: DropdownModel<number>[] = [];
   examSubjects: DropdownModel<string>[] = [];
@@ -90,22 +84,14 @@ export class ManageArchiveFoldersComponent implements OnInit {
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
-
-  ngOnInit(): void {
-    this.authFacade.academicYear$
-      .pipe(
-        map((data: any) => data.id),
-        distinctUntilChanged(),
-        switchMap(data => {
-          if (this.filters) {
-            window.location.reload();
-          }
-
-          return of([]);
-        })
-      )
-      .subscribe();
-  }
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    map(([_]) => {
+      if (this.filters) {
+        this.getArchiveFolders(this.filters as LazyLoadEvent);
+      }
+    }),
+    tap()
+  );
 
   onNewClick() {
     this.displayModal = true;

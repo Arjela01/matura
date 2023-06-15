@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FailingStudentApiService } from '@msh/applications/data-access-applications';
 import { FailingStudent } from '@msh/applications/domain-application';
+import { AuthFacade } from '@msh/auth/data-access-auth';
+import { Student } from '@msh/shared/domain-models';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -15,10 +17,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ManageFailingStudentsFormComponent } from '../manage-failing-students-form/manage-failing-students-form.component';
 import { ManageFailingStudentsGridComponent } from '../manage-failing-students-grid/manage-failing-students-grid.component';
-import { Student } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({
@@ -49,11 +50,19 @@ export class ManageFailingStudentsComponent {
   student: Student | null = null;
   displayModal = false;
   isLoading = false;
-
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    map(([_]) => {
+      if (this.filters) {
+        this.getFailingStudents(this.filters as LazyLoadEvent);
+      }
+    }),
+    tap()
+  );
   constructor(
     private readonly failingStudentService: FailingStudentApiService,
     private readonly confirmationService: ConfirmationService,
-    private readonly toastService: GlobalToastService
+    private readonly toastService: GlobalToastService,
+    private authFacade: AuthFacade
   ) {}
 
   onNewClick() {
@@ -63,10 +72,7 @@ export class ManageFailingStudentsComponent {
   onGridEvent(event: GridEvent<FailingStudent | FailingStudent[]>) {
     switch (event.action) {
       case GRID_ACTIONS.EDIT:
-        this.student = Object.assign(
-          {},
-          event.data as Student
-        );
+        this.student = Object.assign({}, event.data as Student);
         this.selectedFailingStudent = Object.assign(
           {},
           event.data as FailingStudent

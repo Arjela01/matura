@@ -15,7 +15,7 @@ import { REPORTS_APP_URL, SafePipe } from '@msh/shared/util-shared';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import RxPostmessenger from 'rx-postmessenger';
-import { Subject, first, forkJoin, map, of, switchMap, take, tap } from 'rxjs';
+import { Subject, combineLatest, first, forkJoin, map, tap } from 'rxjs';
 import { IframeAutoHeightDirective } from '../iframe-auto-height.directive';
 
 @Component({
@@ -62,6 +62,17 @@ export class ReportRendererComponent implements OnInit {
       });
     })
   );
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    map(([data]) => {
+      if (this.id && this.studentObj && this.yearObj) {
+        this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}&${this.yearObj.key}=${data.id}`;
+      } else if (this.academicYear && this.id) {
+        this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&academicyearid=${data.id}`;
+      }
+    }),
+    tap()
+  );
+
   showDiplomasButton = false;
 
   findStudentID(obj: { [x: string]: string | number }) {
@@ -98,25 +109,6 @@ export class ReportRendererComponent implements OnInit {
       this.academicYear = JSON.parse(academicYearFilter).id;
     }
 
-    this.authFacade.academicYear$
-      .pipe(
-        map((data: any) => {
-          return data.id;
-        }),
-        take(1),
-        switchMap(data => {
-          if (this.id && this.studentObj && this.yearObj) {
-            this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}&${this.yearObj.key}=${data}`;
-          } else if (this.academicYear && this.id) {
-            this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&academicyearid=${data}`;
-          }
-          if (data.id) {
-            window.location.reload();
-          }
-          return of([]);
-        })
-      )
-      .subscribe();
     if (this.id && this.studentObj && this.yearObj) {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}&${this.yearObj.key}=${this.yearObj.value}`;
     } else if (this.academicYear && this.id) {

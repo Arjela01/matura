@@ -1,31 +1,35 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ToolbarModule } from 'primeng/toolbar';
-import { ExamSubjectFormComponent } from '../exam-subject-form/exam-subject-form.component';
-import { ExamSubjectGridComponent } from '../exam-subject-grid/exam-subject-grid.component';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { BehaviorSubject, distinctUntilChanged, map, of, switchMap } from 'rxjs';
-import { ExamSubject } from '@msh/shared/domain-models';
-import {
-  GlobalToastService,
-  GRID_ACTIONS,
-  GridEvent,
-} from '@msh/shared/util-shared';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
   ExamSubjectApiService,
   ExamTypeApiService,
 } from '@msh/configurations/data-access-configurations';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import { ExamSubject } from '@msh/shared/domain-models';
+import {
+  GRID_ACTIONS,
+  GlobalToastService,
+  GridEvent,
+} from '@msh/shared/util-shared';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
-import { AuthFacade } from '@msh/auth/data-access-auth';
+import { ToolbarModule } from 'primeng/toolbar';
+import {
+  BehaviorSubject,
+  combineLatest,
+  distinctUntilChanged,
+  map,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
+import { ExamSubjectFormComponent } from '../exam-subject-form/exam-subject-form.component';
+import { ExamSubjectGridComponent } from '../exam-subject-grid/exam-subject-grid.component';
 
 @UntilDestroy()
 @Component({
@@ -63,9 +67,17 @@ export class ManageExamSubjectComponent implements OnInit {
     private readonly toastService: GlobalToastService,
     private readonly examSubjectService: ExamSubjectApiService,
     private readonly examTypesApiService: ExamTypeApiService,
-    private authFacade:AuthFacade
+    private authFacade: AuthFacade
   ) {}
 
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    map(([_]) => {
+      if (this.filters) {
+        this.getExamSubjects(this.filters as LazyLoadEvent);
+      }
+    }),
+    tap()
+  );
   ngOnInit(): void {
     this.getExamTypesDropdown();
     this.authFacade.academicYear$
@@ -73,7 +85,6 @@ export class ManageExamSubjectComponent implements OnInit {
         map((data: any) => data.id),
         distinctUntilChanged(),
         switchMap(data => {
-       
           if (this.filters) {
             window.location.reload();
           }
@@ -171,7 +182,7 @@ export class ManageExamSubjectComponent implements OnInit {
           this.toastService.showSuccess('Lënda e provimit u shtua me sukses!');
           this.displayModal = false;
           this.getExamSubjects(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -191,7 +202,7 @@ export class ManageExamSubjectComponent implements OnInit {
           );
           this.displayModal = false;
           this.getExamSubjects(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -208,7 +219,7 @@ export class ManageExamSubjectComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('Lënda e provimit u fshi me sukses!');
           this.getExamSubjects(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
