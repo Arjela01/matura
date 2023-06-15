@@ -91,6 +91,5 @@ export class DiplomasStudentFormComponent {
     if ($event.value) {
       this.admOfficeChanged.emit($event.value.toString());
     }
-    return;
   }
 }
