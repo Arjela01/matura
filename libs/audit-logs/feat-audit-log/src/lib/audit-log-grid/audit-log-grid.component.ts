@@ -4,19 +4,19 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from 'primeng/button';
-import { queriesMap } from './queries';
+import { queriesMap, USERS } from './queries';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { LazyLoadEvent, SelectItem } from 'primeng/api';
 import { WhereBuilder } from './query-builder';
-import {ColumnFilterDirective} from "@msh/shared/util-shared";
+import {translations} from "./translations";
 
 const SORT_ASC = 'ASC';
 const SORT_DESC = 'DESC';
 @Component({
   selector: 'msh-audit-log-grid',
   standalone: true,
-  imports: [CommonModule, TableModule, RippleModule, ButtonModule, FormsModule, ColumnFilterDirective],
+  imports: [CommonModule, TableModule, RippleModule, ButtonModule, FormsModule],
   templateUrl: './audit-log-grid.component.html',
   styleUrls: ['./audit-log-grid.component.scss'],
   providers: [Apollo],
@@ -25,11 +25,13 @@ export class AuditLogGridComponent implements OnInit {
   data: any[] = [];
   queryName!: any;
   baseQuery!: string;
+  usersQuery!: string;
+
   visiblePages: number[] = [];
   matchModeOptions!: SelectItem[];
   hasNextPage = false;
   hasPreviousPage = false;
-  pageSize = 20;
+  pageSize = 15;
   totalCount = 0;
   indexHeader = 0;
   currentPage = 1;
@@ -39,6 +41,8 @@ export class AuditLogGridComponent implements OnInit {
   filterValues: { [key: string]: any } = {};
   defaultDataCol: any[] = [];
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+
+  userData: { [userId: string]: string } = {};
 
   constructor(private apollo: Apollo, private route: ActivatedRoute) {}
 
@@ -66,8 +70,24 @@ export class AuditLogGridComponent implements OnInit {
 
   ngOnInit() {
     this.queryName = this.route.snapshot.queryParams['queryName'];
+    this.usersQuery = queriesMap.get('users') || '';
+    this.apollo
+      .watchQuery<any>({
+        query: gql`
+          ${this.usersQuery}
+        `,
+      })
+
+      .valueChanges.subscribe((result: any) => {
+      const users = result?.data?.users || [];
+      users.forEach((user: any) => {
+        this.userData[user.id] = user.name;
+      });
+    });
   }
+
   fetchData() {
+
     const skip = (this.currentPage - 1) * this.pageSize;
 
     this.baseQuery = queriesMap.get(this.queryName) || '';
@@ -100,7 +120,8 @@ export class AuditLogGridComponent implements OnInit {
         const totalRecords = result.data?.[this.queryName].totalCount || 0;
         this.totalCount = Math.ceil(totalRecords / this.pageSize);
         this.updatePaginationArray();
-      });
+      },
+    );
   }
 
   updatePaginationArray() {
@@ -126,12 +147,13 @@ export class AuditLogGridComponent implements OnInit {
   flattenObjectArray(arr: any[]): any[] {
     return arr.map(obj => this.flattenObject(obj));
   }
-   isDateStringValid(dateString: string): boolean {
-    const dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}\+\d{2}:\d{2}$/;
+  isDateStringValid(dateString: string): boolean {
+    const dateRegex =
+      /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}\+\d{2}:\d{2}$/;
     return dateRegex.test(dateString);
   }
 
-   formatDateString(dateString: string): string {
+  formatDateString(dateString: string): string {
     if (!this.isDateStringValid(dateString)) {
       throw new Error('Invalid date string format');
     }
@@ -148,13 +170,14 @@ export class AuditLogGridComponent implements OnInit {
         if (typeof value === 'object' && value !== null) {
           const nestedFlattened = this.flattenObject(value, newKey);
           Object.assign(flattened, nestedFlattened);
+        } else if (this.isGuid(value as string)) {
+          flattened[newKey] = this.userData[value as string] || value;
         } else if (typeof value === 'string' && this.isDateStringValid(value)) {
           const formattedValue = this.formatDateString(value);
           flattened[newKey] = formattedValue;
         } else {
           flattened[newKey] = value;
         }
-
       }
     }
 
@@ -182,11 +205,16 @@ export class AuditLogGridComponent implements OnInit {
     this.where = new WhereBuilder($event.filters).transformWhere();
     const flattenSort = $event.sortField
       ? {
-          [`${$event.sortField}`]:
-            $event.sortOrder === 1 ? SORT_ASC : SORT_DESC,
-        }
+        [`${$event.sortField}`]:
+          $event.sortOrder === 1 ? SORT_ASC : SORT_DESC,
+      }
       : {};
-    this.orderBy = this.unflatten(flattenSort) || null;
+    const sortField = this.unflatten(flattenSort)
+    if (Object.keys(sortField).length === 0) {
+      this.orderBy = { auditTimestamp: "DESC"}
+    } else {
+      this.orderBy = this.unflatten(flattenSort)
+    }
     this.fetchData();
   }
 
@@ -208,7 +236,6 @@ export class AuditLogGridComponent implements OnInit {
             currentObj[part] = {};
           }
         }
-
         currentObj = currentObj[part];
       }
     }
@@ -252,7 +279,8 @@ export class AuditLogGridComponent implements OnInit {
       case 'number':
       case 'bigint':
       case 'boolean':
-        return [{ label: 'E barabartë', value: 'equals' },
+        return [
+          { label: 'E barabartë', value: 'equals' },
           { label: 'Jo e barabartë', value: 'notEquals' },
         ];
       default:
@@ -263,5 +291,12 @@ export class AuditLogGridComponent implements OnInit {
           { label: 'Mbaron me', value: 'endsWith' },
         ];
     }
+  }
+
+
+  translateKey(key: any) {
+    const translationMap = new Map(Object.entries(translations));
+    const keyTranslate = translationMap.get(key) || key;
+    return keyTranslate;
   }
 }
