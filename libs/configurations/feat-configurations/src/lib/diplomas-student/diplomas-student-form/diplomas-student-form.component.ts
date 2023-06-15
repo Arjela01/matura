@@ -42,8 +42,9 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 export class DiplomasStudentFormComponent {
   @Output() formSave = new EventEmitter<string>();
   @Output() formClose = new EventEmitter<undefined>();
+  @Output() admOfficeChanged = new EventEmitter<string>();
   @Input() studentVersions: DropdownModel<number>[] = [];
-  @Input() administrationOffices:DropdownModel<number>[] = [];
+  @Input() administrationOffices: DropdownModel<number>[] = [];
   @Input() highSchools: DropdownModel<number>[] = [];
   @ViewChild('form', { static: true }) form!: NgForm;
 
@@ -58,7 +59,7 @@ export class DiplomasStudentFormComponent {
     isProfessional: false,
     darZaId: 0,
   };
-  highSchoolFiltered: DropdownModel<number>[]=[];
+  highSchoolFiltered: DropdownModel<number>[] = [];
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor(private cd: ChangeDetectorRef) {}
@@ -85,10 +86,11 @@ export class DiplomasStudentFormComponent {
       this.formSave.emit(initialUrl);
     }
   }
- /**
-  TODO : Parent key of highschools is DAR/ZA?
-  */
-  // onAdministrationOfficeChange($event: DropdownModel<number>) {
-  //   this.highSchoolFiltered = this.highSchools.filter(c => c.parentKey == $event.value);
-  // }
+
+  onAdministrationOfficeChange($event: DropdownModel<number>) {
+    if ($event.value) {
+      this.admOfficeChanged.emit($event.value.toString());
+    }
+    return;
+  }
 }

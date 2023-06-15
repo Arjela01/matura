@@ -25,6 +25,7 @@ import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
 import {
   BehaviorSubject,
+  Observable,
   distinctUntilChanged,
   map,
   of,
@@ -78,7 +79,12 @@ export class ManageDiplomasStudentComponent {
     },
   ];
   administrationOffices: DropdownModel<number>[] = [];
-  highSchools: DropdownModel<number>[] = [];
+  highSchools$$: BehaviorSubject<DropdownModel<number>[]> = new BehaviorSubject<
+    DropdownModel<number>[]
+  >([]);
+  highSchools$ = this.highSchools$$.asObservable() as Observable<
+    DropdownModel<number>[]
+  >;
 
   constructor(
     private readonly studentService: StudentsApiService,
@@ -91,7 +97,6 @@ export class ManageDiplomasStudentComponent {
 
   ngOnInit(): void {
     this.getAdministrationOfficeDropdown();
-    this.getHighSchoolsDropdown();
     this.authFacade.academicYear$
       .pipe(
         map(data => data.id),
@@ -127,7 +132,7 @@ export class ManageDiplomasStudentComponent {
       .loadDropDownList()
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.highSchools = response.data;
+        this.highSchools$$.next(response.data);
       });
   }
 
@@ -137,6 +142,10 @@ export class ManageDiplomasStudentComponent {
         this.printDiploma(event);
         break;
     }
+  }
+
+  onAdmOfficeChange(id: string) {
+    this.getHighSchoolsByOffice(id);
   }
 
   printDiploma(event: GridEvent<Student>) {
@@ -174,6 +183,14 @@ export class ManageDiplomasStudentComponent {
         this.toastService.showError(err.error);
       }
     );
+  }
+
+  getHighSchoolsByOffice(administrationOfficeId: string): void {
+    this.highschoolApiService
+      .forAdministrationOffice(administrationOfficeId)
+      .subscribe(response => {
+        this.highSchools$$.next(response.data as any);
+      });
   }
 
   getStudentDiplomas($event: LazyLoadEvent): void {

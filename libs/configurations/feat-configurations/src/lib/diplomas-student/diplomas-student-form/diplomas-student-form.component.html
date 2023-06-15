@@ -18,13 +18,13 @@
     <div class="field">
         <label for="darZa">DAR/ZA </label>
         <p-dropdown id="darZa" [options]="administrationOffices" optionValue="key" optionLabel="value" name="darZa"
-            [autoDisplayFirst]="false" [(ngModel)]="diplomaFile.darZaId" [required]="false" [showClear]="true"
-            appendTo="body">
+            [autoDisplayFirst]="false" (onChange)="onAdministrationOfficeChange($event)"
+            [(ngModel)]="diplomaFile.darZaId" [required]="false" [showClear]="true" appendTo="body">
         </p-dropdown>
     </div>
     <div class="field">
         <label for="highSchool">Gjimnazet </label>
-        <p-dropdown id="highSchool"     [options]="highSchools" optionValue="key" optionLabel="value" name="schoolId"
+        <p-dropdown id="highSchool" [options]="highSchools" optionValue="key" optionLabel="value" name="schoolId"
             [autoDisplayFirst]="false" [(ngModel)]="diplomaFile.schoolId" [required]="false" [showClear]="true"
             appendTo="body">
         </p-dropdown>
