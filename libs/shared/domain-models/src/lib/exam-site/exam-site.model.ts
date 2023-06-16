@@ -1,13 +1,14 @@
 export interface ExamSite{
-  id: number;
+  id: any;
   name: string;
   address: string;
   quota: number;
   administrationOfficeId: number;
   administrationOfficeName:string;
-  academicYearId?: number,
-  highSchoolIds? : number[];
-  highSchoolsNames?:string[];
+  academicYearId?: number;
+  highschoolIds?: any;
+  highschoolsNames?:string[];
+  highSchools?: any;
 }
 
 export interface ExamSiteTableView {
