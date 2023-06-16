@@ -4,22 +4,24 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from 'primeng/button';
-import { queriesMap, USERS } from './queries';
+import { queriesMap } from './queries';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { LazyLoadEvent, SelectItem } from 'primeng/api';
 import { WhereBuilder } from './query-builder';
-import {translations} from "./translations";
+import {TranslationPipe} from "./translate-pipe";
+import {TranslationService} from "@msh/audit-logs/data-access-audit-log";
 
 const SORT_ASC = 'ASC';
 const SORT_DESC = 'DESC';
 @Component({
   selector: 'msh-audit-log-grid',
   standalone: true,
-  imports: [CommonModule, TableModule, RippleModule, ButtonModule, FormsModule],
+  imports: [CommonModule, TableModule, RippleModule, ButtonModule, FormsModule,TranslationPipe
+  ],
   templateUrl: './audit-log-grid.component.html',
   styleUrls: ['./audit-log-grid.component.scss'],
-  providers: [Apollo],
+  providers: [Apollo,TranslationService],
 })
 export class AuditLogGridComponent implements OnInit {
   data: any[] = [];
@@ -84,8 +86,8 @@ export class AuditLogGridComponent implements OnInit {
         this.userData[user.id] = user.name;
       });
     });
-  }
 
+  }
   fetchData() {
 
     const skip = (this.currentPage - 1) * this.pageSize;
@@ -105,13 +107,13 @@ export class AuditLogGridComponent implements OnInit {
           where: this.where,
           order: this.orderBy,
         },
+        fetchPolicy: 'cache-and-network'
       })
 
       .valueChanges.subscribe((result: any) => {
         this.data =
           this.flattenObjectArray(result?.data[this.queryName].items) || [];
         this.indexHeader = this.findIndexOfMostFields(this.data) || 0;
-
         if (this.data.length) this.defaultDataCol = this.data[this.indexHeader];
         this.queryName = Object.keys(result.data || {})[0] || '';
         this.hasPreviousPage =
@@ -293,10 +295,4 @@ export class AuditLogGridComponent implements OnInit {
     }
   }
 
-
-  translateKey(key: any) {
-    const translationMap = new Map(Object.entries(translations));
-    const keyTranslate = translationMap.get(key) || key;
-    return keyTranslate;
-  }
 }
