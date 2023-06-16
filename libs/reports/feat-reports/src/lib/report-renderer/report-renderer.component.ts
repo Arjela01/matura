@@ -15,7 +15,7 @@ import { REPORTS_APP_URL, SafePipe } from '@msh/shared/util-shared';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import RxPostmessenger from 'rx-postmessenger';
-import { Subject, combineLatest, first, forkJoin, map, tap } from 'rxjs';
+import { Subject, combineLatest, first, forkJoin, map, skip, tap } from 'rxjs';
 import { IframeAutoHeightDirective } from '../iframe-auto-height.directive';
 
 @Component({
@@ -63,12 +63,9 @@ export class ReportRendererComponent implements OnInit {
     })
   );
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
     map(([data]) => {
-      if (this.id && this.studentObj && this.yearObj) {
-        this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}&${this.yearObj.key}=${data.id}`;
-      } else if (this.academicYear && this.id) {
-        this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&academicyearid=${data.id}`;
-      }
+      this.router.navigate([`reports`]);
     }),
     tap()
   );

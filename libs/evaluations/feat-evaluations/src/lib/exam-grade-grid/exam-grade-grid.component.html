@@ -4,63 +4,43 @@
 <div class="grid">
   <div class="col-12">
     <div class="card">
-      <p-table
-        #dt
-        dataKey="id"
-        responsiveLayout="scroll"
-        [value]="(annualExamGrade$ | async) || []"
-        [totalRecords]="totalRecords"
-        [rows]="10"
-        [paginator]="true"
-        [rowsPerPageOptions]="[10, 20, 30]"
+      <p-table #dt dataKey="id" responsiveLayout="scroll" [value]="(annualExamGrade$ | async) || []"
+        [totalRecords]="totalRecords" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10, 20, 30]"
         [showCurrentPageReport]="true"
-        currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
-        [rowHover]="true"
-        selectionMode="multiple"
-        (onLazyLoad)="getExamGrades($event)"
-        [lazy]="true">
+        currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde" [rowHover]="true"
+        selectionMode="multiple" (onLazyLoad)="getExamGrades($event)" [lazy]="true">
         <ng-template pTemplate="header">
           <tr>
             <th pSortableColumn="studentName">
               Maturanti
               <div>
                 <p-sortIcon field="studentName"></p-sortIcon>
-                <p-columnFilter
-                  type="text"
-                  field="studentName"
-                  display="menu" mshColumnFilterDirective></p-columnFilter>
+                <p-columnFilter type="text" field="studentName" display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
             <th pSortableColumn="examSubjectName">
               Emri i lëndës së provimit
               <div>
                 <p-sortIcon field="examSubjectName"></p-sortIcon>
-                <p-columnFilter
-                  type="text"
-                  field="examSubjectName"
-                  display="menu" mshColumnFilterDirective></p-columnFilter>
+                <p-columnFilter type="text" field="examSubjectName" display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
             <th pSortableColumn="isCarriedOver">
               Është i mbartur?
               <div>
                 <p-sortIcon field="isCarriedOver"></p-sortIcon>
-                <p-columnFilter
-                  type="boolean"
-                  field="isCarriedOver"
-                  display="menu"
-                  matchMode="equals" mshColumnFilterDirective></p-columnFilter>
+                <p-columnFilter type="boolean" field="isCarriedOver" display="menu" matchMode="equals"
+                  mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
             <th pSortableColumn="grade">
               Nota
               <div>
                 <p-sortIcon field="grade"></p-sortIcon>
-                <p-columnFilter
-                  type="numeric"
-                  field="grade"
-                  display="menu"
-                  matchMode="equals" mshColumnFilterDirective></p-columnFilter>
+                <p-columnFilter type="numeric" field="grade" display="menu" matchMode="equals"
+                  mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
           </tr>
@@ -85,3 +65,4 @@
     </div>
   </div>
 </div>
+<ng-container *ngIf="academicYear$ | async"></ng-container>

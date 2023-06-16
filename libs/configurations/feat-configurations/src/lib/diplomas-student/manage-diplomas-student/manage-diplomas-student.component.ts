@@ -23,14 +23,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
-import {
-  BehaviorSubject,
-  Observable,
-  distinctUntilChanged,
-  map,
-  of,
-  switchMap,
-} from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, map, tap } from 'rxjs';
 import { DiplomasStudentFormComponent } from '../diplomas-student-form/diplomas-student-form.component';
 import { DiplomasStudentGridComponent } from '../diplomas-student-grid/diplomas-student-grid.component';
 let INITIAL_FILTER = {};
@@ -86,6 +79,14 @@ export class ManageDiplomasStudentComponent {
     DropdownModel<number>[]
   >;
 
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    map(([_]) => {
+      if (this.filters) {
+        this.getStudentDiplomas(this.filters as LazyLoadEvent);
+      }
+    }),
+    tap()
+  );
   constructor(
     private readonly studentService: StudentsApiService,
     private readonly toastService: GlobalToastService,
@@ -97,19 +98,6 @@ export class ManageDiplomasStudentComponent {
 
   ngOnInit(): void {
     this.getAdministrationOfficeDropdown();
-    this.authFacade.academicYear$
-      .pipe(
-        map(data => data.id),
-        distinctUntilChanged(),
-        switchMap(data => {
-          if (this.filters) {
-            window.location.reload();
-          }
-
-          return of([]);
-        })
-      )
-      .subscribe();
   }
 
   onNewClick() {
