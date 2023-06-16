@@ -131,7 +131,6 @@ export class ReportRendererComponent implements OnInit {
         })
       )
       .subscribe();
-    debugger;
     if (this.id && this.studentObj && this.yearObj) {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}&${this.yearObj.key}=${this.yearObj.value}`;
     } else if (this.yearObj && this.id && !this.folderObj) {
