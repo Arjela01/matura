@@ -87,7 +87,7 @@ export class A1FormComponent {
   submitted = false;
   a1: A1Z = {
     id: 0,
-    academicYearId: 0,
+    academicYearID: 0,
     studentId: '',
     isA1: true,
     isApplyingToForeignCountries: false,
@@ -184,7 +184,7 @@ export class A1FormComponent {
           this.academicYear = years['data'].find(
             (year: AcademicYear) => year.isActive
           );
-          this.a1.academicYearId = this.academicYear?.id;
+          this.a1.academicYearID = this.academicYear?.id;
           this.d3Dropdown = d3.data;
           this.students = students;
           this.optionalSubjects = z1.data;
@@ -206,7 +206,7 @@ export class A1FormComponent {
           })
         )
         .subscribe(([students, z1]) => {
-          this.a1.academicYearId = this.academicYear?.id;
+          this.a1.academicYearID = this.academicYear?.id;
           this.students = students;
           this.optionalSubjects = z1.data;
           this.cd.detectChanges();
@@ -390,11 +390,12 @@ export class A1FormComponent {
               this.parameterUrl &&
               this.parameterYear &&
               this.a1.studentId &&
-              this.a1.academicYearId
+              this.a1.academicYearID
             ) {
               query.queryParams[`${this.parameterUrl}`] = this.a1.studentId;
+              console.log(  333,query.queryParams[`${this.parameterUrl}`])
               query.queryParams[`${this.parameterYear}`] =
-                this.a1.academicYearId.toString();
+                this.a1.academicYearID.toString();
             }
             this.router.navigate([`/reports/${this.a1Report}`], query).then();
           } else {
@@ -428,22 +429,24 @@ export class A1FormComponent {
       .pipe(untilDestroyed(this))
       .subscribe({
         next: (data: any) => {
+          console.log(3333,data)
           if (data.isSuccessful) {
             this.toastService.showSuccess('Formulari A1 u ndryshua me sukses!');
-            const extras: { queryParams: { [x: string]: string } } = {
+            const query: { queryParams: { [x: string]: string } } = {
               queryParams: {},
             };
             if (
               this.parameterUrl &&
               this.parameterYear &&
               this.a1.studentId &&
-              this.a1.academicYearId
+              this.a1.academicYearID
             ) {
-              extras.queryParams[`${this.parameterUrl}`] = this.a1.studentId;
-              extras.queryParams[`${this.parameterYear}`] =
-                this.a1?.academicYearId.toString();
+              query.queryParams[`${this.parameterUrl}`] = this.a1.studentId;
+              console.log(  333,query.queryParams[`${this.parameterUrl}`])
+              query.queryParams[`${this.parameterYear}`] =
+                this.a1.academicYearID.toString();
             }
-            this.router.navigate([`/reports/${this.a1Report}`], extras).then();
+            this.router.navigate([`/reports/${this.a1Report}`], query).then();
           } else {
             data.errorMessage
               ? this.toastService.showError(data.errorMessage)
