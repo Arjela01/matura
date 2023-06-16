@@ -300,10 +300,13 @@ export class ManageArchiveExamsComponent implements OnInit {
           };
           if (
             this.parameterUrl &&
-            this.archiveFolder.nr
+            this.parameterYear &&
+            this.archiveFolder.nr &&
+            this.archiveFolder.academicYearId
           ) {
             query.queryParams[`${this.parameterUrl}`] = this.archiveFolder.nr;
-
+            query.queryParams[`${this.parameterYear}`] =
+              this.archiveFolder.academicYearId.toString();
           }
           this.router
             .navigate([`/reports/${this.archiveFolderReport}`], query)
