@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -18,8 +18,11 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import {MultiSelectModule} from "primeng/multiselect";
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ExamSiteApiService } from '@msh/configurations/data-access-configurations';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'msh-exam-site-form',
   standalone: true,
@@ -33,15 +36,14 @@ import {MultiSelectModule} from "primeng/multiselect";
     ButtonModule,
     CheckboxModule,
     DropdownModule,
-    MultiSelectModule
+    MultiSelectModule,
   ],
   templateUrl: './exam-site-form.component.html',
   styleUrls: ['./exam-site-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamSiteFormComponent {
+export class ExamSiteFormComponent implements OnInit {
   @Input() administrationOffices: DropdownModel<number>[] = [];
-  @Input() highSchools : DropdownModel<string>[] =[];
+  @Input() highschools: DropdownModel<string>[] = [];
   @Input() set examSitesDetails(details: ExamSite | null) {
     if (details) {
       this.examSite = Object.assign({}, details);
@@ -56,8 +58,9 @@ export class ExamSiteFormComponent {
   @ViewChild('form', { static: true }) form!: NgForm;
 
   submitted = false;
-  administrationOfficeId:any;
+  administrationOfficeId: any;
   highSchoolId: any;
+  highSchoolArray: any = [];
 
   examSite: ExamSite = {
     id: 0,
@@ -70,7 +73,10 @@ export class ExamSiteFormComponent {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(
+    private cd: ChangeDetectorRef,
+    private readonly examSiteService: ExamSiteApiService
+  ) {}
 
   onCancelClick() {
     this.formClose.emit();
@@ -87,13 +93,26 @@ export class ExamSiteFormComponent {
     if ($event && $event.value) {
       this.highSchoolId = $event.value;
       this.highSchoolChanged.emit(this.highSchoolId);
-      this.examSite.highSchoolIds = this.highSchoolId;
+      this.examSite.highschoolIds = this.highSchoolId;
     }
   }
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
       this.formSave.emit(this.examSite);
+    }
+  }
+  ngOnInit() {
+    if (this.examSite.id) {
+      this.examSiteService
+        .getExamSiteById(this.examSite.id)
+        .pipe(untilDestroyed(this))
+        .subscribe(response => {
+          this.examSite = response.data;
+          this.examSite.highschoolsNames = response.data.highschoolsNames;
+          this.examSite.highschoolIds = response.data.highschoolIds;
+          this.cd.markForCheck();
+        });
     }
   }
 }
