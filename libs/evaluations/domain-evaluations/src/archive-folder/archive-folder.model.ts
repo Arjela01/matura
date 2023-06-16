@@ -7,7 +7,7 @@ export interface ArchiveFolder{
   totalArchiveExams?: number;
   examSubjectId?: string;
   examSubjectName?: string;
-  academicYearID?: number;
+  academicYearId?: number;
   academicYearName?: string;
   isClosed?: boolean;
   lastUserId?: any;

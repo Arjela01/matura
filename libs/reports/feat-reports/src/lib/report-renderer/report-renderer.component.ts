@@ -83,6 +83,7 @@ export class ReportRendererComponent implements OnInit {
     return null;
   }
   findArchiveFolderNr(obj: { [x: string]: string | number }) {
+
     const key = Object.keys(obj).find(k => k.toLowerCase() === 'foldernr');
     if (key) {
       return { key: key, value: obj[key] };
@@ -118,9 +119,9 @@ export class ReportRendererComponent implements OnInit {
         switchMap(data => {
           if (this.id && this.studentObj && this.yearObj) {
             this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}&${this.yearObj.key}=${data}`;
-          } else if (this.academicYear && this.id) {
+          } else if (this.academicYear && this.id && !this.folderObj) {
             this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&academicyearid=${data}`;
-          } else if (this.id && this.yearObj && this.folderObj) {
+          } else if (this.id && this.folderObj) {
             this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.folderObj.key}=${this.folderObj.value}`;
           }
           if (data.id) {
@@ -132,9 +133,9 @@ export class ReportRendererComponent implements OnInit {
       .subscribe();
     if (this.id && this.studentObj && this.yearObj) {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}&${this.yearObj.key}=${this.yearObj.value}`;
-    } else if (this.academicYear && this.id) {
+    } else if (this.academicYear && this.id && !this.folderObj) {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&academicyearid=${this.academicYear}`;
-    } else if (this.id && this.yearObj && this.folderObj) {
+    } else if (this.id && this.folderObj) {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.folderObj.key}=${this.folderObj.value}`;
     }
   }
