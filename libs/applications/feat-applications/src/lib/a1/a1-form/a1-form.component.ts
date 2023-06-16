@@ -393,7 +393,6 @@ export class A1FormComponent {
               this.a1.academicYearID
             ) {
               query.queryParams[`${this.parameterUrl}`] = this.a1.studentId;
-              console.log(  333,query.queryParams[`${this.parameterUrl}`])
               query.queryParams[`${this.parameterYear}`] =
                 this.a1.academicYearID.toString();
             }
@@ -442,7 +441,6 @@ export class A1FormComponent {
               this.a1.academicYearID
             ) {
               query.queryParams[`${this.parameterUrl}`] = this.a1.studentId;
-              console.log(  333,query.queryParams[`${this.parameterUrl}`])
               query.queryParams[`${this.parameterYear}`] =
                 this.a1.academicYearID.toString();
             }
