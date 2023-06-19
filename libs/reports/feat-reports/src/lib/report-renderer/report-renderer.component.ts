@@ -15,7 +15,7 @@ import { REPORTS_APP_URL, SafePipe } from '@msh/shared/util-shared';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import RxPostmessenger from 'rx-postmessenger';
-import { Subject, combineLatest, first, forkJoin, map, skip, tap } from 'rxjs';
+import {Subject, combineLatest, first, forkJoin, map, skip, tap, take, switchMap, of} from 'rxjs';
 import { IframeAutoHeightDirective } from '../iframe-auto-height.directive';
 
 @Component({
