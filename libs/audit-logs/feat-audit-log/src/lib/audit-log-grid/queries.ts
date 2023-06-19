@@ -239,7 +239,6 @@ export const CARRIED_GRADE = `
             examSubject
             year
             grade
-            document
             id
             isDeleted
             createdBy
@@ -398,7 +397,6 @@ export const EXAM_SCORE = `
             multipleChoiceScore
             modificationReason
             documentName
-            document
             isGradeCalculated
             id
             isDeleted
