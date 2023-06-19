@@ -8,15 +8,19 @@
   <div class="flex align-items-right justify-content-right">
     <div class="my-2">
       <a [routerLink]="['/evaluations', 'archive-folder']">
-        <button pButton label="Kthehu" icon="pi pi-arrow-left" class="mr-2 back-button"></button>
+        <button
+          pButton
+          label="Kthehu"
+          icon="pi pi-arrow-left"
+          class="mr-2 back-button"></button>
       </a>
 
-      <button pButton [ngClass]="
-          archiveFolder.isClosed === true
-            ? ['bg-red-400', 'red-text', 'px-3', 'fb']
-            : ['bg-green-500', 'green-text', 'px-3', 'fb']
-        " icon="{{ !archiveFolder.isClosed ? 'pi pi-lock-open' : 'pi pi-lock' }}"
-        label=" {{ archiveFolder.isClosed === true ? 'Mbyllur' : 'Hapur' }}" (click)="changeFolderStatus()"></button>
+      <button
+        pButton
+        [ngClass]="['bg-red-400', 'red-text', 'px-3', 'fb']"
+        icon="pi pi-lock"
+        label="Mbyll"
+        (click)="changeFolderStatus()"></button>
     </div>
   </div>
 </div>

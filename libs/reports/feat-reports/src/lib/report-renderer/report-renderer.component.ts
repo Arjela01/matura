@@ -15,7 +15,7 @@ import { REPORTS_APP_URL, SafePipe } from '@msh/shared/util-shared';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import RxPostmessenger from 'rx-postmessenger';
-import { Subject, combineLatest, first, forkJoin, map, skip, tap } from 'rxjs';
+import {Subject, combineLatest, first, forkJoin, map, skip, tap, take, switchMap, of} from 'rxjs';
 import { IframeAutoHeightDirective } from '../iframe-auto-height.directive';
 
 @Component({
@@ -39,6 +39,8 @@ export class ReportRendererComponent implements OnInit {
   academicYear: any;
   studentObj: { value: string | number; key: string } | null =
     this.findStudentID(this.route.snapshot.queryParams);
+  folderObj: { value: string | number; key: string } | null =
+    this.findArchiveFolderNr(this.route.snapshot.queryParams);
   yearObj: { value: string | number; key: string } | null = this.findYearID(
     this.route.snapshot.queryParams
   );
@@ -88,6 +90,14 @@ export class ReportRendererComponent implements OnInit {
     }
     return null;
   }
+  findArchiveFolderNr(obj: { [x: string]: string | number }) {
+
+    const key = Object.keys(obj).find(k => k.toLowerCase() === 'foldernr');
+    if (key) {
+      return { key: key, value: obj[key] };
+    }
+    return null;
+  }
 
   constructor(
     @Inject(REPORTS_APP_URL) readonly reports_app_url: string,
@@ -105,11 +115,37 @@ export class ReportRendererComponent implements OnInit {
     if (academicYearFilter) {
       this.academicYear = JSON.parse(academicYearFilter).id;
     }
+    if (this.id === '16') {
+      this.showDiplomasButton = true;
+    }
+    this.authFacade.academicYear$
+      .pipe(
+        map((data: any) => {
+          return data.id;
+        }),
+        take(1),
+        switchMap(data => {
+          if (this.id && this.studentObj && this.yearObj) {
+            this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}&${this.yearObj.key}=${data}`;
+          } else if (this.yearObj && this.id && !this.folderObj) {
+            this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&academicyearid=${data}`;
+          } else if (this.id && this.folderObj && this.yearObj) {
+            this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.folderObj.key}=${this.folderObj.value}&${this.yearObj.key}=${data}`;
+          }
+          if (data.id) {
+            window.location.reload();
+          }
+          return of([]);
+        })
+      )
+      .subscribe();
 
     if (this.id && this.studentObj && this.yearObj) {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}&${this.yearObj.key}=${this.yearObj.value}`;
-    } else if (this.academicYear && this.id) {
+    } else if (this.yearObj && this.id && !this.folderObj) {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&academicyearid=${this.academicYear}`;
+    } else if (this.id && this.folderObj && this.yearObj) {
+      this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.folderObj.key}=${this.folderObj.value}&${this.yearObj.key}=${this.yearObj.value}`;
     }
   }
 
