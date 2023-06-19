@@ -1,4 +1,4 @@
-import { CommonModule, DatePipe, formatDate } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -163,14 +163,8 @@ export class DashboardItemsFormComponent implements OnInit {
           this.dashboardItem.dashboardSectionId = item.dashboardSectionId;
           this.dashboardItem.endDate = item.endDate;
           this.dashboardItem.startDate = item.startDate;
-          this.formattedEndDate = this.datePipe.transform(
-            this.dashboardItem.endDate,
-            'dd/MM/yyyy'
-          );
-          this.formattedStartDate = this.datePipe.transform(
-            this.dashboardItem.startDate,
-            'dd/MM/yyyy'
-          );
+          (this.formattedEndDate = this.dashboardItem.endDate),
+            (this.formattedStartDate = this.dashboardItem.startDate);
         });
     } else {
       combineLatest([
@@ -278,14 +272,12 @@ export class DashboardItemsFormComponent implements OnInit {
               return of(response);
             })
           )
-          .subscribe(
-            error => {
-              console.error(error);
-              this.toaster.showError(
-                'An error occurred while saving the entity changes.'
-              );
-            }
-          );
+          .subscribe(error => {
+            console.error(error);
+            this.toaster.showError(
+              'An error occurred while saving the entity changes.'
+            );
+          });
       }
     }
   }

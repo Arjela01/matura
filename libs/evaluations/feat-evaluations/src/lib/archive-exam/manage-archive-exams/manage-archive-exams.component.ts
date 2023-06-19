@@ -36,7 +36,7 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject, of, switchMap } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ArchiveFormComponent } from '../archive-exam-form/archive-form.component';
 import { ArchiveExamGridComponent } from '../archive-exam-grid/archive-exam-grid.component';
 import { BarcodeService } from '../services/barcode-service';
@@ -90,7 +90,14 @@ export class ManageArchiveExamsComponent implements OnInit {
   id: any;
   archiveFolder: ArchiveFolder = {} as ArchiveFolder;
   isBarcodeInputDisabled = false;
-
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    map(([_]) => {
+      if (this.filters) {
+        this.getArchiveExams(this.filters as LazyLoadEvent);
+      }
+    }),
+    tap()
+  );
   constructor(
     private cd: ChangeDetectorRef,
     private readonly confirmationService: ConfirmationService,
@@ -112,15 +119,6 @@ export class ManageArchiveExamsComponent implements OnInit {
     this.archiveFolderService
       .getById(this.id)
       .subscribe(folder => (this.archiveFolder = { ...folder.data }));
-    this.authFacade.academicYear$
-      .pipe(
-        switchMap(data => {
-          console.log(data);
-          this.getArchiveExams(this.filters as LazyLoadEvent);
-          return of([]);
-        })
-      )
-      .subscribe();
   }
 
   onNewClick() {

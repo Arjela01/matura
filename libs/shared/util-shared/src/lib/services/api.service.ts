@@ -34,9 +34,10 @@ export class APIService {
     });
   }
 
-  put<T, D>(url: string, data: D): Observable<T> {
+  put<T, D>(url: string, data: D, responseType = 'json'): Observable<T> {
     return this.http.put<T>(`${this.api_url}${url}`, data, {
       headers: this.headers,
+      responseType: responseType !== 'json' ? (responseType as 'json') : 'json',
     });
   }
 

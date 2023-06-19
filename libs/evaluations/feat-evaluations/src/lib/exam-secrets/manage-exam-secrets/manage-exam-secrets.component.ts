@@ -1,28 +1,28 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ToolbarModule } from 'primeng/toolbar';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { BehaviorSubject, distinctUntilChanged, map, of, switchMap } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthFacade } from '@msh/auth/data-access-auth';
+import { ExamSubjectApiService } from '@msh/configurations/data-access-configurations';
+import { ExamSecretApiService } from '@msh/evaluations/data-access-evaluations';
+import { ExamSecret } from '@msh/evaluations/domain-evaluations';
+import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
-  GlobalToastService,
   GRID_ACTIONS,
+  GlobalToastService,
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ExamSecret } from '@msh/evaluations/domain-evaluations';
-import { ExamSubjectApiService } from '@msh/configurations/data-access-configurations';
-import { DropdownModel } from '@msh/shared/data-access-shared';
+import * as FileSaver from 'file-saver';
+import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
+import { FileUploadModule } from 'primeng/fileupload';
 import { RippleModule } from 'primeng/ripple';
-import { ExamSecretApiService } from '@msh/evaluations/data-access-evaluations';
-import { Router } from '@angular/router';
+import { ToolbarModule } from 'primeng/toolbar';
+import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ExamSecretsFormComponent } from '../exam-secrets-form/exam-secrets-form.component';
 import { ExamSecretsGridComponent } from '../exam-secrets-grid/exam-secrets-grid.component';
-import { FileUploadModule } from 'primeng/fileupload';
-import * as FileSaver from 'file-saver';
-import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
@@ -49,38 +49,30 @@ export class ManageExamSecretsComponent implements OnInit {
   examSecrets$ = this.examSecrets$$.asObservable();
   filters: LazyLoadEvent | null = null;
   base64: string | ArrayBuffer | null | undefined;
-
   totalRecords = 0;
   selectedExamSecret: ExamSecret | null = null;
   selectedExamSecrets: ExamSecret[] = [];
   displayModal = false;
   examSubjects: DropdownModel<number>[] = [];
-
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    map(([_]) => {
+      if (this.filters) {
+        this.getExamSecrets(this.filters as LazyLoadEvent);
+      }
+    }),
+    tap()
+  );
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examSecretService: ExamSecretApiService,
     private readonly router: Router,
     private readonly examSubjectService: ExamSubjectApiService,
-    private authFacade:AuthFacade
+    private authFacade: AuthFacade
   ) {}
 
   ngOnInit(): void {
     this.getExamSubjects();
-    this.authFacade.academicYear$
-      .pipe(
-        map((data: any) => data.id),
-        distinctUntilChanged(),
-        switchMap(data => {
-       
-          if (this.filters) {
-            window.location.reload();
-          }
-
-          return of([]);
-        })
-      )
-      .subscribe();
   }
 
   onNewClick() {

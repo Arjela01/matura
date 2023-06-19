@@ -3,11 +3,7 @@
   <div class="flex align-items-right justify-content-right">
     <div class="my-2">
       <a [routerLink]="['/configurations', 'students', 'add']">
-        <button
-          pButton
-          pRipple
-          [label]="hideStudentForm === false ? 'Anullo' : 'Shto'"
-          icon="pi pi-plus"
+        <button pButton pRipple [label]="hideStudentForm === false ? 'Anullo' : 'Shto'" icon="pi pi-plus"
           class="p-button-success mr-2"></button>
       </a>
     </div>
@@ -16,35 +12,16 @@
 <div class="grid">
   <div class="col-12">
     <div class="card">
-      <msh-students-grid
-        [students]="(studentList$ | async) || []"
-        [totalRecords]="totalRecords"
-        (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getStudent($event)">
+      <msh-students-grid [students]="(studentList$ | async) || []" [totalRecords]="totalRecords"
+        (gridEvent)="onGridEvent($event)" (lazyLoadData)="getStudent($event)">
       </msh-students-grid>
     </div>
   </div>
 </div>
-
-<p-confirmDialog
-  #cd
-  header="Konfirmo"
-  icon="pi pi-exclamation-triangle"
-  [style]="{ width: '450px' }">
+<ng-container *ngIf="academicYear$ | async"></ng-container>
+<p-confirmDialog #cd header="Konfirmo" icon="pi pi-exclamation-triangle" [style]="{ width: '450px' }">
   <ng-template pTemplate="footer">
-    <button
-      type="button"
-      pButton
-      icon="pi pi-times"
-      label="Jo"
-      class="p-button-text"
-      (click)="cd.reject()"></button>
-    <button
-      type="button"
-      pButton
-      icon="pi pi-check"
-      label="Po"
-      class="p-button border"
-      (click)="cd.accept()"></button>
+    <button type="button" pButton icon="pi pi-times" label="Jo" class="p-button-text" (click)="cd.reject()"></button>
+    <button type="button" pButton icon="pi pi-check" label="Po" class="p-button border" (click)="cd.accept()"></button>
   </ng-template>
 </p-confirmDialog>

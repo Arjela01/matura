@@ -21,7 +21,6 @@ export class AcademicYearInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    this.authFacade.academicYear$.pipe();
     const academicYearFilter: any = localStorage.getItem(ACADEMIC_YEAR_KEY);
     const token: any = localStorage.getItem(TOKEN_STORAGE_KEY);
     return this.authFacade.academicYear$.pipe(

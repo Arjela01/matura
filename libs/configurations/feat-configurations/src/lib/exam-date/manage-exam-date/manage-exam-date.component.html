@@ -2,12 +2,7 @@
   <h2 class="flex-1 mb-0">Data Provimi</h2>
   <div class="flex align-items-right justify-content-right">
     <div class="my-2">
-      <button
-        pButton
-        pRipple
-        label="Shto"
-        icon="pi pi-plus"
-        class="p-button-success mr-2"
+      <button pButton pRipple label="Shto" icon="pi pi-plus" class="p-button-success mr-2"
         (click)="onNewClick()"></button>
     </div>
   </div>
@@ -16,56 +11,26 @@
 <div class="grid">
   <div class="col-12">
     <div class="card">
-      <msh-exam-date-grid
-        [examDates]="(examDates$ | async) || []"
-        [totalRecords]="totalRecords"
-        (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getExamDates($event)">
+      <msh-exam-date-grid [examDates]="(examDates$ | async) || []" [totalRecords]="totalRecords"
+        (gridEvent)="onGridEvent($event)" (lazyLoadData)="getExamDates($event)">
       </msh-exam-date-grid>
     </div>
   </div>
 </div>
 
-<p-dialog
-  [(visible)]="displayModal"
-  [style]="{ width: '500px' }"
-  header="Detajet e Datës së Provimit"
-  [modal]="true"
-  [draggable]="false"
-  [resizable]="false"
-  class="p-fluid"
-  (onHide)="onModalClose()">
+<p-dialog [(visible)]="displayModal" [style]="{ width: '500px' }" header="Detajet e Datës së Provimit" [modal]="true"
+  [draggable]="false" [resizable]="false" class="p-fluid" (onHide)="onModalClose()">
   <ng-template pTemplate="content">
-    <msh-exam-date-form
-      [examDatesDetails]="selectedExamDate"
-      [examSites]="examSites"
-      [examTypes]="examTypes"
-      (formClose)="onModalClose()"
-      (formSave)="onFormSave($event)">
+    <msh-exam-date-form [examDatesDetails]="selectedExamDate" [examSites]="examSites" [examTypes]="examTypes"
+      (formClose)="onModalClose()" (formSave)="onFormSave($event)">
     </msh-exam-date-form>
   </ng-template>
 </p-dialog>
 
-<p-confirmDialog
-  #cd
-  header="Konfirmo"
-  icon="pi pi-exclamation-triangle"
-  [style]="{ width: '450px' }">
+<p-confirmDialog #cd header="Konfirmo" icon="pi pi-exclamation-triangle" [style]="{ width: '450px' }">
   <ng-template pTemplate="footer">
-    <button
-      type="button"
-      pButton
-      icon="pi pi-times"
-      label="Jo"
-      class="p-button-text"
-      (click)="cd.reject()"></button>
-    <button
-      type="button"
-      pButton
-      icon="pi pi-check"
-      label="Po"
-      class="p-button border"
-      (click)="cd.accept()"></button>
+    <button type="button" pButton icon="pi pi-times" label="Jo" class="p-button-text" (click)="cd.reject()"></button>
+    <button type="button" pButton icon="pi pi-check" label="Po" class="p-button border" (click)="cd.accept()"></button>
   </ng-template>
 </p-confirmDialog>
-
+<ng-container *ngIf="academicYear$ | async"></ng-container>

@@ -7,7 +7,11 @@ import { A1Z } from '@msh/applications/domain-application';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { AcademicYear, Student } from '@msh/shared/domain-models';
-import {GRID_ACTIONS, GlobalToastService, ColumnFilterDirective} from '@msh/shared/util-shared';
+import {
+  ColumnFilterDirective,
+  GRID_ACTIONS,
+  GlobalToastService,
+} from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -23,13 +27,7 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
-import {
-  BehaviorSubject,
-  distinctUntilChanged,
-  map,
-  of,
-  switchMap,
-} from 'rxjs';
+import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 @Component({
   selector: 'a1-grid',
   standalone: true,
@@ -48,7 +46,7 @@ import {
     ToolbarModule,
     RippleModule,
     TableModule,
-    ColumnFilterDirective
+    ColumnFilterDirective,
   ],
   templateUrl: './a1-grid.component.html',
   styleUrls: ['./a1-grid.component.scss'],
@@ -80,23 +78,14 @@ export class A1GridComponent {
     private router: Router,
     private authFacade: AuthFacade
   ) {}
-
-  ngOnInit() {
-    this.authFacade.academicYear$
-      .pipe(
-        map((data: any) => data.id),
-        distinctUntilChanged(),
-        switchMap(data => {
-       
-          if (this.filters) {
-            window.location.reload();
-          }
-
-          return of([]);
-        })
-      )
-      .subscribe();
-  }
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    map(([_]) => {
+      if (this.filters) {
+        this.getA1(this.filters as LazyLoadEvent);
+      }
+    }),
+    tap()
+  );
   onNewClick() {
     this.router.navigate(['applications/save-a1']);
   }

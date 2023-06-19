@@ -12,13 +12,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import {
-  BehaviorSubject,
-  distinctUntilChanged,
-  map,
-  of,
-  switchMap,
-} from 'rxjs';
+import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -43,7 +37,14 @@ export class ExamGradeGridComponent {
   annualExamGrade$ = this.annualExamGrade$$.asObservable();
   totalRecords = 0;
   filters: LazyLoadEvent | null = null;
-
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    map(([_]) => {
+      if (this.filters) {
+        this.getExamGrades(this.filters as LazyLoadEvent);
+      }
+    }),
+    tap()
+  );
   constructor(
     private readonly examGradeService: ExamGradeApiService,
     private authFacade: AuthFacade
@@ -59,21 +60,5 @@ export class ExamGradeGridComponent {
         this.annualExamGrade$$.next(response.data);
         this.totalRecords = response.total;
       });
-  }
-
-  ngOnInit() {
-    this.authFacade.academicYear$
-      .pipe(
-        map((data: any) => data.id),
-        distinctUntilChanged(),
-        switchMap(data => {
-          if (this.filters) {
-            window.location.reload();
-          }
-
-          return of([]);
-        })
-      )
-      .subscribe();
   }
 }

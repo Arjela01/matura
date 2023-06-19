@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FailingStudentApiService } from '@msh/applications/data-access-applications';
 import { FailingStudent } from '@msh/applications/domain-application';
 
+import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -15,7 +16,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { FailingStudentsFormComponent } from '../failing-students-form/failing-students-form.component';
 import { FailingStudentsGridComponent } from '../failing-students-grid/failing-students-grid.component';
 
@@ -43,6 +44,14 @@ export class ManageFailingStudentsComponent {
   failingStudents$ = this.failingStudents$$.asObservable();
   filters: LazyLoadEvent | null = null;
 
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    map(([_]) => {
+      if (this.filters) {
+        this.getStudents(this.filters as LazyLoadEvent);
+      }
+    }),
+    tap()
+  );
   totalRecords = 0;
   selectedFailingStudent: FailingStudent | null = null;
   displayModal = false;
@@ -50,7 +59,8 @@ export class ManageFailingStudentsComponent {
   constructor(
     private readonly failingStudentService: FailingStudentApiService,
     private readonly confirmationService: ConfirmationService,
-    private readonly toastService: GlobalToastService
+    private readonly toastService: GlobalToastService,
+    private authFacade: AuthFacade
   ) {}
 
   onNewClick() {

@@ -18,8 +18,8 @@
     <div class="field">
         <label for="darZa">DAR/ZA </label>
         <p-dropdown id="darZa" [options]="administrationOffices" optionValue="key" optionLabel="value" name="darZa"
-            [autoDisplayFirst]="false" [(ngModel)]="diplomaFile.darZaId" [required]="false" [showClear]="true"
-            appendTo="body">
+            [autoDisplayFirst]="false" (onChange)="onAdministrationOfficeChange($event)"
+            [(ngModel)]="diplomaFile.darZaId" [required]="false" [showClear]="true" appendTo="body">
         </p-dropdown>
     </div>
     <div class="field">
@@ -59,21 +59,7 @@
             </div>
         </div>
     </div>
-    <div class="field">
-        <label class="mb-3">Diploma të printuara *</label>
-        <div class="formgrid grid">
-            <div class="field-radiobutton col-6">
-                <p-radioButton id="isPrinted" name="isPrinted" [value]="true"
-                    [(ngModel)]="diplomaFile.isPrinted"></p-radioButton>
-                <label for="isPrintedTrue">Po</label>
-            </div>
-            <div class="field-radiobutton col-6">
-                <p-radioButton id="isPrintedFalse" name="isRegionalOffice" [value]="false"
-                    [(ngModel)]="diplomaFile.isPrinted"></p-radioButton>
-                <label for="isPrintedFalse">Jo</label>
-            </div>
-        </div>
-    </div>
+
 
     <div class="flex justify-content-end">
         <button type="button" pButton label="Anullo" class="p-button-text w-auto mr-2"
