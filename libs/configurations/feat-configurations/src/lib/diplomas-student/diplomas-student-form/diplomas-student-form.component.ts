@@ -9,6 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
+import { DropdownModel } from '@msh/shared/data-access-shared';
 import { IDiplomaFile } from '@msh/shared/domain-models';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -41,9 +42,10 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 export class DiplomasStudentFormComponent {
   @Output() formSave = new EventEmitter<string>();
   @Output() formClose = new EventEmitter<undefined>();
-  @Input() studentVersions: any[] = [];
-  @Input() administrationOffices: any[] = [];
-  @Input() highSchools: any[] = [];
+  @Output() admOfficeChanged = new EventEmitter<string>();
+  @Input() studentVersions: DropdownModel<number>[] = [];
+  @Input() administrationOffices: DropdownModel<number>[] = [];
+  @Input() highSchools: DropdownModel<number>[] = [];
   @ViewChild('form', { static: true }) form!: NgForm;
 
   submitted = false;
@@ -57,6 +59,7 @@ export class DiplomasStudentFormComponent {
     isProfessional: false,
     darZaId: 0,
   };
+  highSchoolFiltered: DropdownModel<number>[] = [];
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor(private cd: ChangeDetectorRef) {}
@@ -81,6 +84,12 @@ export class DiplomasStudentFormComponent {
       );
       initialUrl += `&isPrinted=${this.diplomaFile.isPrinted}&isProffesional=${this.diplomaFile.isProfessional}&isForeign=${this.diplomaFile.isForeign}&academicYearId=${accademicYear?.id}`;
       this.formSave.emit(initialUrl);
+    }
+  }
+
+  onAdministrationOfficeChange($event: DropdownModel<number>) {
+    if ($event.value) {
+      this.admOfficeChanged.emit($event.value.toString());
     }
   }
 }

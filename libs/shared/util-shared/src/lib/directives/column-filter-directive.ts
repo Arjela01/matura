@@ -16,6 +16,19 @@ export class ColumnFilterDirective {
         filter.overlayVisible = false;
         filter.dt.cd.markForCheck();
       };
+
+      this.setMatchModeToContains(filter);
     }
+  }
+
+  private setMatchModeToContains(filter: ColumnFilter): void {
+    const originalApplyFilter = filter.applyFilter;
+    filter.applyFilter = (): void => {
+      let filterValue : any
+      filterValue ? filterValue.toString().toLowerCase() : null;
+      originalApplyFilter.call(filter);
+    };
+
+    filter.matchMode = 'contains';
   }
 }

@@ -29,13 +29,7 @@ import {
 
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { RippleModule } from 'primeng/ripple';
-import {
-  BehaviorSubject,
-  distinctUntilChanged,
-  map,
-  of,
-  switchMap,
-} from 'rxjs';
+import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ExamSiteFormComponent } from '../exam-site-form/exam-site-form.component';
 import { ExamSiteGridComponent } from '../exam-site-grid/exam-site-grid.component';
 
@@ -69,7 +63,14 @@ export class ManageExamSiteComponent implements OnInit {
   displayModal = false;
   administrationOffices: DropdownModel<number>[] = [];
   highSchools: DropdownModel<string>[] = [];
-
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    map(([_]) => {
+      if (this.filters) {
+        this.getExamSites(this.filters);
+      }
+    }),
+    tap()
+  );
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
@@ -82,19 +83,6 @@ export class ManageExamSiteComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAdministrationOfficeDropdown();
-    this.authFacade.academicYear$
-      .pipe(
-        map((data: any) => data.id),
-        distinctUntilChanged(),
-        switchMap(data => {
-          if (this.filters) {
-            window.location.reload();
-          }
-
-          return of([]);
-        })
-      )
-      .subscribe();
   }
 
   onNewClick() {
@@ -221,7 +209,7 @@ export class ManageExamSiteComponent implements OnInit {
           );
           this.displayModal = false;
           this.getExamSites(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(

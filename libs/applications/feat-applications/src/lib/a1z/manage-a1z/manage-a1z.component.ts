@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { A1ZApiService } from '@msh/applications/data-access-applications';
 import { A1ZTableRecord } from '@msh/applications/domain-application';
@@ -17,13 +17,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
-import {
-  BehaviorSubject,
-  distinctUntilChanged,
-  map,
-  of,
-  switchMap,
-} from 'rxjs';
+import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { A1zFormComponent } from '../a1z-form/a1z-form.component';
 import { A1zGridComponent } from '../a1z-grid/a1z-grid.component';
 @UntilDestroy()
@@ -45,7 +39,7 @@ import { A1zGridComponent } from '../a1z-grid/a1z-grid.component';
   ],
   providers: [ConfirmationService],
 })
-export class ManageA1zComponent implements OnInit {
+export class ManageA1zComponent {
   private a1zList$$ = new BehaviorSubject<A1ZTableRecord[]>([]);
   a1zList$ = this.a1zList$$.asObservable();
   filters: LazyLoadEvent | null = null;
@@ -63,22 +57,14 @@ export class ManageA1zComponent implements OnInit {
     private readonly router: Router,
     private authFacade: AuthFacade
   ) {}
-
-  ngOnInit() {
-    this.authFacade.academicYear$
-      .pipe(
-        map((data: any) => data.id),
-        distinctUntilChanged(),
-        switchMap(data => {
-          if (this.filters) {
-            window.location.reload();
-          }
-
-          return of([]);
-        })
-      )
-      .subscribe();
-  }
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    map(([_]) => {
+      if (this.filters) {
+        this.getA1Z(this.filters as LazyLoadEvent);
+      }
+    }),
+    tap()
+  );
 
   onNewClick() {
     this.hideA1ZForm = !this.hideA1ZForm;

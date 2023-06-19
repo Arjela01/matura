@@ -19,13 +19,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
-import {
-  BehaviorSubject,
-  distinctUntilChanged,
-  map,
-  of,
-  switchMap,
-} from 'rxjs';
+import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { GradeScaleActionComponent } from '../grade-scale-action/grade-scale-action.component';
 import { GradeScaleGridComponent } from '../grade-scale-grid/grade-scale-grid.component';
 import { UploadGradeScaleFormComponent } from '../upload-grade-scale-form/upload-grade-scale-form.component';
@@ -68,21 +62,15 @@ export class ManageGradesScaleComponent implements OnInit {
     private readonly cd: ChangeDetectorRef,
     private authFacade: AuthFacade
   ) {}
-
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    map(([_]) => {
+      if (this.filters) {
+        this.getGradeScales(this.filters as LazyLoadEvent);
+      }
+    }),
+    tap()
+  );
   ngOnInit() {
-    this.authFacade.academicYear$
-      .pipe(
-        map((data: any) => data.id),
-        distinctUntilChanged(),
-        switchMap(data => {
-          if (this.filters) {
-            window.location.reload();
-          }
-
-          return of([]);
-        })
-      )
-      .subscribe();
     this.getDropdownSubjects();
   }
   onFormSave() {

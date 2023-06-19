@@ -23,13 +23,7 @@ import {
 } from '@msh/shared/util-shared';
 
 import { RippleModule } from 'primeng/ripple';
-import {
-  BehaviorSubject,
-  distinctUntilChanged,
-  map,
-  of,
-  switchMap,
-} from 'rxjs';
+import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ExamDateFormComponent } from '../exam-date-form/exam-date-form.component';
 import { ExamDateGridComponent } from '../exam-date-grid/exam-date-grid.component';
 
@@ -63,7 +57,14 @@ export class ManageExamDateComponent implements OnInit {
   displayModal = false;
   examSites: DropdownModel<number>[] = [];
   examTypes: DropdownModel<number>[] = [];
-
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    map(([_]) => {
+      if (this.filters) {
+        this.getExamDates(this.filters as LazyLoadEvent);
+      }
+    }),
+    tap()
+  );
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
@@ -76,19 +77,6 @@ export class ManageExamDateComponent implements OnInit {
   ngOnInit(): void {
     this.getExamTypesDropdown();
     this.getExamSitesDropdown();
-    this.authFacade.academicYear$
-      .pipe(
-        map((data: any) => data.id),
-        distinctUntilChanged(),
-        switchMap(data => {
-          if (this.filters) {
-            window.location.reload();
-          }
-
-          return of([]);
-        })
-      )
-      .subscribe();
   }
 
   onNewClick() {

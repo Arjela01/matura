@@ -3,22 +3,22 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { StudentsApiService } from '@msh/configurations/data-access-configurations';
 import { Student } from '@msh/shared/domain-models';
 
+import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
+  GRID_ACTIONS,
   GlobalToastService,
   GridEvent,
-  GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
-import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject, distinctUntilChanged, map, of, switchMap } from 'rxjs';
+import { FileUploadModule } from 'primeng/fileupload';
 import { RippleModule } from 'primeng/ripple';
+import { ToolbarModule } from 'primeng/toolbar';
+import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { DiplomaRequirementExceptionGridComponent } from '../diploma-requirement-exception-grid/diploma-requirement-exception-grid.component';
-import {FileUploadModule} from "primeng/fileupload";
-import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
@@ -33,7 +33,6 @@ import { AuthFacade } from '@msh/auth/data-access-auth';
     RippleModule,
     DiplomaRequirementExceptionGridComponent,
     FileUploadModule,
-
   ],
   templateUrl: './manage-diploma-requirement-exception.component.html',
   styleUrls: ['./manage-diploma-requirement-exception.component.scss'],
@@ -52,11 +51,19 @@ export class ManageDiplomaRequirementExceptionComponent {
   displayModal = false;
   base64: string | ArrayBuffer | null | undefined;
 
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    map(([_]) => {
+      if (this.filters) {
+        this.getStudent(this.filters as LazyLoadEvent);
+      }
+    }),
+    tap()
+  );
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly studentService: StudentsApiService,
-    private authFacade:AuthFacade
+    private authFacade: AuthFacade
   ) {}
 
   onUploadClick() {
@@ -108,11 +115,10 @@ export class ManageDiplomaRequirementExceptionComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess(
-          'Ndryshimet u ruajten me sukses!')
+          this.toastService.showSuccess('Ndryshimet u ruajten me sukses!');
           this.displayModal = false;
           this.getStudent(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest)
           this.toastService.showError(
             'Ndodhi një problem gjatë ndryshimit të statusit të diplomës!'
@@ -131,29 +137,12 @@ export class ManageDiplomaRequirementExceptionComponent {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Dokumenti u shtua me sukses!');
           this.getStudent(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest)
           this.toastService.showError(
             'Ndodhi një problem gjatë ngarkimit të dokumentit!'
           );
       });
     };
-  }
-
-  ngOnInit(){
-    this.authFacade.academicYear$
-      .pipe(
-        map((data: any) => data.id),
-        distinctUntilChanged(),
-        switchMap(data => {
-      
-          if (this.filters) {
-            window.location.reload();
-          }
-
-          return of([]);
-        })
-      )
-      .subscribe();
   }
 }

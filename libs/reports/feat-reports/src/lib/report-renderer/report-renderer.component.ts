@@ -15,7 +15,7 @@ import { REPORTS_APP_URL, SafePipe } from '@msh/shared/util-shared';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import RxPostmessenger from 'rx-postmessenger';
-import { Subject, first, forkJoin, map, of, switchMap, take, tap } from 'rxjs';
+import { Subject, combineLatest, first, forkJoin, map, skip, tap } from 'rxjs';
 import { IframeAutoHeightDirective } from '../iframe-auto-height.directive';
 
 @Component({
@@ -64,6 +64,14 @@ export class ReportRendererComponent implements OnInit {
       });
     })
   );
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
+    map(([data]) => {
+      this.router.navigate([`reports`]);
+    }),
+    tap()
+  );
+
   showDiplomasButton = false;
 
   findStudentID(obj: { [x: string]: string | number }) {
@@ -131,6 +139,7 @@ export class ReportRendererComponent implements OnInit {
         })
       )
       .subscribe();
+
     if (this.id && this.studentObj && this.yearObj) {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}&${this.yearObj.key}=${this.yearObj.value}`;
     } else if (this.yearObj && this.id && !this.folderObj) {
