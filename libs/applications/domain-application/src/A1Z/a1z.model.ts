@@ -1,7 +1,7 @@
 export interface A1Z {
   id?: number;
   a1ZCategoryId?: string;
-  academicYearId?: number;
+  academicYearID?: number;
   studentId?: string;
   alreadyHaveDiploma?: boolean;
   isA1?: boolean;
