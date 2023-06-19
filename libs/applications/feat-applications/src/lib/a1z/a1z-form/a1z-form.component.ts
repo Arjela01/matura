@@ -402,7 +402,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
 
         if (d1ExamType && d1ExamType.key) {
           this.examSubjectService
-            .forExamType(d1ExamType.key, this.a1z.academicYearId)
+            .forExamType(d1ExamType.key, this.a1z.academicYearID)
             .pipe(untilDestroyed(this))
             .subscribe(y => {
               this.d1ExamSubjects = y.data;
@@ -412,7 +412,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         }
         if (d2ExamType && d2ExamType.key) {
           this.examSubjectService
-            .forExamType(d2ExamType.key, this.a1z.academicYearId)
+            .forExamType(d2ExamType.key, this.a1z.academicYearID)
             .pipe(untilDestroyed(this))
             .subscribe(y => {
               this.d2ExamSubjects = y.data;
@@ -424,7 +424,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         }
         if (d3ExamType && d3ExamType.key) {
           this.examSubjectService
-            .forExamType(d3ExamType.key, this.a1z.academicYearId)
+            .forExamType(d3ExamType.key, this.a1z.academicYearID)
             .pipe(untilDestroyed(this))
             .subscribe(y => {
               this.d3ExamSubjects = y.data;
@@ -433,7 +433,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         }
         if (d3ExamTypeFall && d3ExamTypeFall.key) {
           this.examSubjectService
-            .forExamType(d3ExamTypeFall.key, this.a1z.academicYearId)
+            .forExamType(d3ExamTypeFall.key, this.a1z.academicYearID)
             .pipe(untilDestroyed(this))
             .subscribe(y => {
               this.d3ExamSubjectsFall = y.data;
@@ -442,7 +442,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         }
         if (z1ExamTypeFall && z1ExamTypeFall.key) {
           this.examSubjectService
-            .forExamType(z1ExamTypeFall.key, this.a1z.academicYearId)
+            .forExamType(z1ExamTypeFall.key, this.a1z.academicYearID)
             .pipe(untilDestroyed(this))
             .subscribe(y => {
               this.z1ExamSubjectsFall = y.data;
@@ -450,7 +450,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         }
         if (z1ExamType && z1ExamType.key) {
           this.examSubjectService
-            .forExamType(z1ExamType.key, this.a1z.academicYearId)
+            .forExamType(z1ExamType.key, this.a1z.academicYearID)
             .pipe(untilDestroyed(this))
             .subscribe(y => {
               this.z1ExamSubjects = this.z1ExamSubjectsFall.concat(y.data);
@@ -487,11 +487,11 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
             this.parameterUrl &&
             this.parameterYear &&
             this.a1z.studentId &&
-            this.a1z.academicYearId
+            this.a1z.academicYearID
           ) {
             query.queryParams[`${this.parameterUrl}`] = this.a1z.studentId;
             query.queryParams[`${this.parameterYear}`] =
-              this.a1z.academicYearId.toString();
+              this.a1z.academicYearID.toString();
           }
           this.router.navigate([`/reports/${this.a1ZReport}`], query).then();
         }
@@ -520,11 +520,11 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
             this.parameterUrl &&
             this.parameterYear &&
             this.a1z.studentId &&
-            this.a1z.academicYearId
+            this.a1z.academicYearID
           ) {
             query.queryParams[`${this.parameterUrl}`] = this.a1z.studentId;
             query.queryParams[`${this.parameterYear}`] =
-              this.a1z.academicYearId.toString();
+              this.a1z.academicYearID.toString();
           }
           this.router.navigate([`/reports/${this.a1ZReport}`], query).then();
         }
