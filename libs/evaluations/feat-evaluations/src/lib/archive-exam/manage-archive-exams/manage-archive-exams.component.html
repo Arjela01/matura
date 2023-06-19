@@ -22,12 +22,6 @@
         icon="pi pi-lock"
         label="Mbyll"
         (click)="changeFolderStatus()"></button>
-      <button pButton [ngClass]="
-          archiveFolder.isClosed === true
-            ? ['bg-red-400', 'red-text', 'px-3', 'fb']
-            : ['bg-green-500', 'green-text', 'px-3', 'fb']
-        " icon="{{ !archiveFolder.isClosed ? 'pi pi-lock-open' : 'pi pi-lock' }}"
-        label=" {{ archiveFolder.isClosed === true ? 'Mbyllur' : 'Hapur' }}" (click)="changeFolderStatus()"></button>
     </div>
   </div>
 </div>
