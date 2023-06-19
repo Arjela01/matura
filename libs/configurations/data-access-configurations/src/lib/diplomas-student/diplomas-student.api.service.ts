@@ -1,6 +1,5 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiResult } from '@msh/shared/data-access-shared';
 import { AcademicYear } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
@@ -12,17 +11,17 @@ import { Observable, catchError, map, throwError } from 'rxjs';
 export class DiplomasStudentApiService {
   constructor(private apiService: APIService) {}
 
-  exportDiplomasStudent(id: string): Observable<ApiResult<unknown>> {
+  exportDiplomasStudent(id: string, allReports: boolean): Observable<BlobPart> {
     const academicYear = JSON.parse(
       localStorage.getItem('academicYear') as string
     ) as AcademicYear;
-    return this.apiService.get<any>(
+    return this.apiService.put<BlobPart, any>(
       `/PrintedDiplomas/${id}?academicYearId=${academicYear.id}`,
-      new HttpParams(),
+      {},
       'blob'
     );
   }
-  exportAllDiplomas(data: string): Observable<ApiResult<unknown>> {
+  exportAllDiplomas(data: string): Observable<BlobPart> {
     return this.apiService.get<any>(
       `/PrintedDiplomas/GenerateDiplomasPdf${data}`,
       new HttpParams(),

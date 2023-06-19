@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
-import {
-  HighSchool,
-  HighSchoolTableView,
-} from '@msh/shared/domain-models';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
+import { HighSchool, HighSchoolTableView } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
@@ -28,7 +25,7 @@ export class HighSchoolApiService {
     administrationOfficeId?: string
   ): Observable<ApiResult<DropdownModel<string>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<string>[]>>(
-      `/HighSchool/ForAdministrationOffice/${administrationOfficeId}`,
+      `/HighSchool/ForAdministrationOffice/${administrationOfficeId}`
     );
   }
 

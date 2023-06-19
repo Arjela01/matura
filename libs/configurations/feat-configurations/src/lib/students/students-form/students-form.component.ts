@@ -11,7 +11,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
   AcademicYearApiService,
@@ -56,6 +56,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     CalendarModule,
     InputMaskModule,
     AlbanianNidValidatorDirective,
+    RouterModule,
   ],
   templateUrl: './students-form.component.html',
   styleUrls: ['./students-form.component.scss'],
@@ -179,5 +180,8 @@ export class StudentsFormComponent implements OnInit, OnChanges {
           .then();
       },
     });
+  }
+  navigateToGrid() {
+    this.router.navigate(['/configurations/students']);
   }
 }

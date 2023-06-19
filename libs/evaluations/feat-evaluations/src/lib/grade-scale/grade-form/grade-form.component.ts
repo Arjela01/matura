@@ -9,6 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 import { GradesScale } from '@msh/evaluations/domain-evaluations';
 import { ButtonModule } from 'primeng/button';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -52,7 +53,7 @@ export class GradeModalFormComponent {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(private cd: ChangeDetectorRef, private authFacade: AuthFacade) {}
 
   onCancelClick() {
     this.formClose.emit();

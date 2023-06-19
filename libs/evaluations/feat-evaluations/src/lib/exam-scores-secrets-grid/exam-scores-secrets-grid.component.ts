@@ -12,13 +12,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import {
-  BehaviorSubject,
-  distinctUntilChanged,
-  map,
-  of,
-  switchMap,
-} from 'rxjs';
+import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 @UntilDestroy()
 @Component({
   selector: 'msh-exam-score-grid',
@@ -42,27 +36,19 @@ export class ExamScoresSecretsGridComponent {
   examScores$ = this.examScores$$.asObservable();
   filters: LazyLoadEvent | null = null;
   totalRecords = 0;
-
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    map(([_]) => {
+      if (this.filters) {
+        this.getExamScores(this.filters as LazyLoadEvent);
+      }
+    }),
+    tap()
+  );
   constructor(
     private readonly examScoreService: ExamScoreApiService,
     private authFacade: AuthFacade
   ) {}
 
-  ngOnInit() {
-    this.authFacade.academicYear$
-      .pipe(
-        map((data: any) => data.id),
-        distinctUntilChanged(),
-        switchMap(data => {
-          if (this.filters) {
-            window.location.reload();
-          }
-
-          return of([]);
-        })
-      )
-      .subscribe();
-  }
   getExamScores($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 

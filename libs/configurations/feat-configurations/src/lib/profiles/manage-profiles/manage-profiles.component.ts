@@ -28,13 +28,7 @@ import {
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
-import {
-  BehaviorSubject,
-  distinctUntilChanged,
-  map,
-  of,
-  switchMap,
-} from 'rxjs';
+import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ProfileFormComponent } from '../profile-form/profile-form.component';
 import { ProfileGridComponent } from '../profile-grid/profile-grid.component';
 
@@ -61,13 +55,19 @@ export class ManageProfilesComponent implements OnInit {
   private profiles$$ = new BehaviorSubject<Profile[]>([]);
   profiles$ = this.profiles$$.asObservable();
   filters: LazyLoadEvent | null = null;
-
   totalRecords = 0;
   selectedProfile: Profile | null = null;
   selectedProfiles: Profile[] = [];
   displayModal = false;
-
   ProfileGroups: DropdownModel<number>[] = [];
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    map(([_]) => {
+      if (this.filters) {
+        this.getProfiles(this.filters as LazyLoadEvent);
+      }
+    }),
+    tap()
+  );
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -80,19 +80,6 @@ export class ManageProfilesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProfileGroupsDropdown();
-    this.authFacade.academicYear$
-      .pipe(
-        map((data: any) => data.id),
-        distinctUntilChanged(),
-        switchMap(data => {
-          if (this.filters) {
-            window.location.reload();
-          }
-
-          return of([]);
-        })
-      )
-      .subscribe();
   }
 
   onNewClick() {

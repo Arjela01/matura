@@ -10,6 +10,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { A1ApiService } from '@msh/applications/data-access-applications';
 import { A1Z } from '@msh/applications/domain-application';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
   AcademicYearApiService,
   ExamSubjectApiService,
@@ -122,10 +123,12 @@ export class A1FormComponent {
     private dialogService: DialogService,
     private router: Router,
     private route: ActivatedRoute,
+    private authFacade: AuthFacade,
     private reportsApiService: ReportsApiService
   ) {
     this.formId = this.route.snapshot.paramMap.get('id');
   }
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe();
   ngOnInit() {
     if (this.formId) {
       this.editing = true;
