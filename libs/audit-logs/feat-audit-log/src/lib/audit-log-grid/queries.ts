@@ -239,7 +239,6 @@ export const CARRIED_GRADE = `
             examSubject
             year
             grade
-            document
             id
             isDeleted
             createdBy
@@ -398,7 +397,6 @@ export const EXAM_SCORE = `
             multipleChoiceScore
             modificationReason
             documentName
-            document
             isGradeCalculated
             id
             isDeleted
@@ -2121,96 +2119,8 @@ export const STUDENT_BAN = `
                 modifiedBy
                 modifiedIP
                 modifiedOn
-                highSchool {
-                    code
-                    name
-                    isPublic
-                    administrationOfficeId
-                    cityId
-                    regionId
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                    administrationOffice {
-                        name
-                        directorName
-                        isRegionalOffice
-                        parentOfficeId
-                        isAllowedToLogin
-                        id
-                        isDeleted
-                        createdBy
-                        createdIP
-                        createdOn
-                        deletedBy
-                        deletedIP
-                        deletedOn
-                        modifiedBy
-                        modifiedIP
-                        modifiedOn
-                    }
-                }
-                gender {
-                    name
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
-                profile {
-                    code
-                    name
-                    isTechnical
-                    d1Coefficient
-                    d2Coefficient
-                    fullName
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
-                registrationYear {
-                    isActive
-                    year
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
             }
         }
-
-
-
        }
        }
       `;
