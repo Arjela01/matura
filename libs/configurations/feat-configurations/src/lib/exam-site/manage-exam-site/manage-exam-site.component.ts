@@ -64,7 +64,11 @@ export class ManageExamSiteComponent implements OnInit {
   administrationOffices: DropdownModel<number>[] = [];
   highSchools: DropdownModel<string>[] = [];
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    map(([_]) => {}),
+    map(([_]) => {
+      if (this.filters) {
+        this.getExamSites(this.filters);
+      }
+    }),
     tap()
   );
   constructor(

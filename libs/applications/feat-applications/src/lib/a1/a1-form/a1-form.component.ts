@@ -35,7 +35,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
-import { Observable, combineLatest, map, of, switchMap, tap } from 'rxjs';
+import { Observable, combineLatest, of, switchMap } from 'rxjs';
 import { Report } from '../../../../../../reports/reports-enum';
 import { ManageStudentsGridsDialogComponent } from '../manage-students-grids-dialog/manage-students-grids-dialog.component';
 
@@ -128,10 +128,7 @@ export class A1FormComponent {
   ) {
     this.formId = this.route.snapshot.paramMap.get('id');
   }
-  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    map(([_]) => {}),
-    tap()
-  );
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe();
   ngOnInit() {
     if (this.formId) {
       this.editing = true;

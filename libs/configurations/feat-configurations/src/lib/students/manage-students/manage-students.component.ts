@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -46,7 +46,7 @@ import { StudentViewComponent } from '../students-view/student-view.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageStudentsComponent implements OnInit {
+export class ManageStudentsComponent {
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
   filters: LazyLoadEvent | null = null;
@@ -70,7 +70,6 @@ export class ManageStudentsComponent implements OnInit {
     }),
     tap()
   );
-  ngOnInit(): void {}
 
   onNewClick() {
     this.hideStudentForm = !this.hideStudentForm;
