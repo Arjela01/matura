@@ -118,34 +118,14 @@ export class ReportRendererComponent implements OnInit {
     if (this.id === '16') {
       this.showDiplomasButton = true;
     }
-    this.authFacade.academicYear$
-      .pipe(
-        map((data: any) => {
-          return data.id;
-        }),
-        take(1),
-        switchMap(data => {
-          if (this.id && this.studentObj && this.yearObj) {
-            this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}&${this.yearObj.key}=${data}`;
-          } else if (this.yearObj && this.id && !this.folderObj) {
-            this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&academicyearid=${data}`;
-          } else if (this.id && this.folderObj && this.yearObj) {
-            this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.folderObj.key}=${this.folderObj.value}&${this.yearObj.key}=${data}`;
-          }
-          if (data.id) {
-            window.location.reload();
-          }
-          return of([]);
-        })
-      )
-      .subscribe();
 
     if (this.id && this.studentObj && this.yearObj) {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}&${this.yearObj.key}=${this.yearObj.value}`;
-    } else if (this.yearObj && this.id && !this.folderObj) {
-      this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&academicyearid=${this.academicYear}`;
     } else if (this.id && this.folderObj && this.yearObj) {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.folderObj.key}=${this.folderObj.value}&${this.yearObj.key}=${this.yearObj.value}`;
+    }else{
+      this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&academicyearid=${this.academicYear}`;
+
     }
   }
 
