@@ -534,38 +534,7 @@ export const A1_FORMS = `
                 modifiedBy
                 modifiedIP
                 modifiedOn
-                examType {
-                    name
-                    isFall
-                    maximumValueWritingScore
-                    maximumValueMultipleScore
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
-                academicYear {
-                    isActive
-                    year
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
+
             }
             subjectD2 {
                 code
@@ -583,38 +552,7 @@ export const A1_FORMS = `
                 modifiedBy
                 modifiedIP
                 modifiedOn
-                examType {
-                    name
-                    isFall
-                    maximumValueWritingScore
-                    maximumValueMultipleScore
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
-                academicYear {
-                    isActive
-                    year
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
+
             }
             subjectD3 {
                 code
@@ -632,38 +570,7 @@ export const A1_FORMS = `
                 modifiedBy
                 modifiedIP
                 modifiedOn
-                examType {
-                    name
-                    isFall
-                    maximumValueWritingScore
-                    maximumValueMultipleScore
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
-                academicYear {
-                    isActive
-                    year
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
+
             }
             subjectZ1 {
                 code
@@ -681,38 +588,7 @@ export const A1_FORMS = `
                 modifiedBy
                 modifiedIP
                 modifiedOn
-                examType {
-                    name
-                    isFall
-                    maximumValueWritingScore
-                    maximumValueMultipleScore
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
-                academicYear {
-                    isActive
-                    year
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
+
             }
             subjectZ2 {
                 code
@@ -730,38 +606,6 @@ export const A1_FORMS = `
                 modifiedBy
                 modifiedIP
                 modifiedOn
-                examType {
-                    name
-                    isFall
-                    maximumValueWritingScore
-                    maximumValueMultipleScore
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
-                academicYear {
-                    isActive
-                    year
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
             }
             subjectZ3 {
                 code
@@ -779,38 +623,6 @@ export const A1_FORMS = `
                 modifiedBy
                 modifiedIP
                 modifiedOn
-                examType {
-                    name
-                    isFall
-                    maximumValueWritingScore
-                    maximumValueMultipleScore
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
-                academicYear {
-                    isActive
-                    year
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
             }
             academicYear {
                 isActive
@@ -1228,39 +1040,6 @@ export const EXAM_DATE = `
                 modifiedBy
                 modifiedIP
                 modifiedOn
-                administrationOffice {
-                    name
-                    directorName
-                    isRegionalOffice
-                    parentOfficeId
-                    isAllowedToLogin
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
-                academicYear {
-                    isActive
-                    year
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
             }
             academicYear {
                 isActive
@@ -1351,7 +1130,7 @@ export const EXAM_ASSIGNMENT = `
         hasNextPage
         hasPreviousPage
        }
-       items {
+              items {
             auditHostname
             auditSIDUsername
             auditUsername
@@ -1402,71 +1181,6 @@ export const EXAM_ASSIGNMENT = `
                 modifiedBy
                 modifiedIP
                 modifiedOn
-
-                profile {
-                    code
-                    name
-                    isTechnical
-                    d1Coefficient
-                    d2Coefficient
-                    fullName
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                    profileGroup {
-                        name
-                        ordering
-                        id
-                        isDeleted
-                        createdBy
-                        createdIP
-                        createdOn
-                        deletedBy
-                        deletedIP
-                        deletedOn
-                        modifiedBy
-                        modifiedIP
-                        modifiedOn
-                    }
-                    academicYear {
-                        isActive
-                        year
-                        id
-                        isDeleted
-                        createdBy
-                        createdIP
-                        createdOn
-                        deletedBy
-                        deletedIP
-                        deletedOn
-                        modifiedBy
-                        modifiedIP
-                        modifiedOn
-                    }
-                }
-                registrationYear {
-                    isActive
-                    year
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
             }
             examDate {
                 date
@@ -1482,54 +1196,6 @@ export const EXAM_ASSIGNMENT = `
                 modifiedBy
                 modifiedIP
                 modifiedOn
-                examType {
-                    name
-                    isFall
-                    maximumValueWritingScore
-                    maximumValueMultipleScore
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
-                examSite {
-                    name
-                    address
-                    quota
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
-                academicYear {
-                    isActive
-                    year
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
             }
         }
        }
@@ -2278,10 +1944,7 @@ export const HIGH_SCHOOL = `
                 modifiedBy
                 modifiedIP
                 modifiedOn
-                parentOffice {
-                    name
 
-                }
             }
             city {
                 name
@@ -2338,41 +2001,8 @@ export const GRADE_SCALE = `
                 modifiedBy
                 modifiedIP
                 modifiedOn
-                examType {
-                    name
-                    isFall
-                    maximumValueWritingScore
-                    maximumValueMultipleScore
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
-                academicYear {
-                    isActive
-                    year
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
             }
         }
-
        }
        }
        `;
@@ -2439,58 +2069,6 @@ export const FAILING_STUDENT = `
                 modifiedBy
                 modifiedIP
                 modifiedOn
-                gender {
-                    name
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
-                highSchool {
-                    code
-                    name
-                    isPublic
-                    administrationOfficeId
-                    cityId
-                    regionId
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
-                profile {
-                    code
-                    name
-                    isTechnical
-                    d1Coefficient
-                    d2Coefficient
-                    fullName
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
             }
         }
        }
@@ -2692,38 +2270,6 @@ export const EXAM_SUBJECT_PROFILE = `
                 modifiedBy
                 modifiedIP
                 modifiedOn
-                examType {
-                    name
-                    isFall
-                    maximumValueWritingScore
-                    maximumValueMultipleScore
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
-                academicYear {
-                    isActive
-                    year
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
             }
             profile {
                 code
@@ -2743,36 +2289,6 @@ export const EXAM_SUBJECT_PROFILE = `
                 modifiedBy
                 modifiedIP
                 modifiedOn
-                academicYear {
-                    isActive
-                    year
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
-                profileGroup {
-                    name
-                    ordering
-                    id
-                    isDeleted
-                    createdBy
-                    createdIP
-                    createdOn
-                    deletedBy
-                    deletedIP
-                    deletedOn
-                    modifiedBy
-                    modifiedIP
-                    modifiedOn
-                }
             }
         }
 }
