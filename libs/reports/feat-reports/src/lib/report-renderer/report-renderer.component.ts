@@ -15,7 +15,18 @@ import { REPORTS_APP_URL, SafePipe } from '@msh/shared/util-shared';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import RxPostmessenger from 'rx-postmessenger';
-import {Subject, combineLatest, first, forkJoin, map, skip, tap, take, switchMap, of} from 'rxjs';
+import {
+  Subject,
+  combineLatest,
+  first,
+  forkJoin,
+  map,
+  skip,
+  tap,
+  take,
+  switchMap,
+  of,
+} from 'rxjs';
 import { IframeAutoHeightDirective } from '../iframe-auto-height.directive';
 
 @Component({
@@ -91,7 +102,6 @@ export class ReportRendererComponent implements OnInit {
     return null;
   }
   findArchiveFolderNr(obj: { [x: string]: string | number }) {
-
     const key = Object.keys(obj).find(k => k.toLowerCase() === 'foldernr');
     if (key) {
       return { key: key, value: obj[key] };
@@ -118,22 +128,28 @@ export class ReportRendererComponent implements OnInit {
     if (this.id === '16') {
       this.showDiplomasButton = true;
     }
-
     if (this.id && this.studentObj && this.yearObj) {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}&${this.yearObj.key}=${this.yearObj.value}`;
     } else if (this.id && this.folderObj && this.yearObj) {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.folderObj.key}=${this.folderObj.value}&${this.yearObj.key}=${this.yearObj.value}`;
-    }else{
+    } else {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&academicyearid=${this.academicYear}`;
-
     }
   }
 
   goBack(): void {
     if (this.id === '13') {
-      this.router.navigate(['applications/a1']).then();
+      if (this.router.url === '/reports/13') {
+        this.router.navigate(['reports']).then();
+      } else {
+        this.router.navigate(['applications/a1']).then();
+      }
     } else if (this.id === '14') {
-      this.router.navigate(['applications/a1z']).then();
+      if (this.router.url === '/reports/14') {
+        this.router.navigate(['reports']).then();
+      } else {
+        this.router.navigate(['applications/a1z']).then();
+      }
     } else {
       this.router.navigate(['reports']).then();
     }
