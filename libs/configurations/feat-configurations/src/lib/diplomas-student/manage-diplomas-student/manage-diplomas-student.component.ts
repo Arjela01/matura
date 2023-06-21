@@ -9,7 +9,7 @@ import {
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import { Status, Student, StudentVersion } from '@msh/shared/domain-models';
+import { Status, Student, StudentType } from '@msh/shared/domain-models';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -59,14 +59,14 @@ export class ManageDiplomasStudentComponent {
   selectedStudent: Student | null = null;
   selectedStudentList: Student[] = [];
 
-  studentVersion: DropdownModel<number>[] = [
+  studentTypes: DropdownModel<number>[] = [
     {
-      key: StudentVersion.CurrentStudent,
+      key: StudentType.CurrentStudent,
       value: 'Student aktiv',
       parentKey: null,
     },
     {
-      key: StudentVersion.PreviousStudent,
+      key: StudentType.PreviousStudent,
       value: 'Student mbetës',
       parentKey: null,
     },

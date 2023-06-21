@@ -16,7 +16,7 @@ export class DiplomasStudentApiService {
       localStorage.getItem('academicYear') as string
     ) as AcademicYear;
     return this.apiService.put<BlobPart, any>(
-      `/PrintedDiplomas/${id}?academicYearId=${academicYear.id}`,
+      `/PrintedDiplomas/${id}?academicYearId=${academicYear.id}&isReportAll=${allReports}`,
       {},
       'blob'
     );
