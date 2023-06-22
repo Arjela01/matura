@@ -4,14 +4,14 @@
 
 
     <div class="field">
-        <label for="studentVersion">Tipi i studentit *</label>
-        <p-dropdown id="studentVersion" [options]="studentVersions" optionValue="key" optionLabel="value"
-            name="studentVersion" [autoDisplayFirst]="false" [(ngModel)]="diplomaFile.studentVersion" [required]="true"
+        <label for="studentType">Tipi i studentit *</label>
+        <p-dropdown id="studentVersion" [options]="studentTypes" optionValue="key" optionLabel="value"
+            name="studentType" [autoDisplayFirst]="false" [(ngModel)]="diplomaFile.studentType" [required]="true"
             [showClear]="true" appendTo="body" [ngClass]="{
-          'ng-invalid ng-dirty': submitted && !diplomaFile.studentVersion
+          'ng-invalid ng-dirty': submitted && !diplomaFile.studentType && diplomaFile.studentType!==0 
         }">
         </p-dropdown>
-        <small class="p-error block" *ngIf="submitted && !diplomaFile.studentVersion">
+        <small class="p-error block" *ngIf="submitted && !diplomaFile.studentType && diplomaFile.studentType!==0 ">
             Tipi i studentit është fushë e kërkuar.
         </small>
     </div>

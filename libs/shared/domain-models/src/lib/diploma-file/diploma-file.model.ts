@@ -1,5 +1,5 @@
 export interface IDiplomaFile {
-  studentVersion: StudentVersion;
+  studentType: StudentType;
   schoolId: number;
   darZaId: number;
   studentId: string;
@@ -8,12 +8,12 @@ export interface IDiplomaFile {
   isPrinted: boolean;
 }
 
-export enum StudentVersion {
-  CurrentStudent = 1,
-  PreviousStudent = 2,
+export enum StudentType {
+  CurrentStudent = 0,
+  PreviousStudent = 1,
 }
 
 export enum Status {
   NOTPRINTED,
-  PRINTED
+  PRINTED,
 }
