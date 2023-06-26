@@ -1,4 +1,4 @@
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, formatDate } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -76,8 +76,8 @@ export class DashboardItemsFormComponent implements OnInit {
   @Input() users: DropdownModel<number>[] = [];
   sectionDashboard: BehaviorSubject<DropdownModel<number>[]> =
     new BehaviorSubject<DropdownModel<number>[]>([]);
-  formattedStartDate: string | null = null;
-  formattedEndDate: string | null = null;
+  formattedStartDate: any | null = null;
+  formattedEndDate: any | null = null;
   rolesArray: any = [];
   usersArray: any = [];
   displayModal = false;
@@ -148,23 +148,32 @@ export class DashboardItemsFormComponent implements OnInit {
           })
         )
         .subscribe(([roles, sections, users, item]) => {
-          Object.entries(item.roles).forEach(([key, value]) =>
-            this.rolesArray.push({ key, value, parentKey: null })
+          item.roles.forEach((data: any) =>
+            this.rolesArray.push({
+              key: data.id,
+              value: data.name,
+              parentKey: null,
+            })
           );
-          Object.entries(item.users).forEach(([key, value]) =>
-            this.usersArray.push({ key, value, parentKey: null })
+          item.users.forEach((data: any) =>
+            this.usersArray.push({
+              key: data.id,
+              value: data.name,
+              parentKey: null,
+            })
           );
+          this.roles = [...roles.data];
+          this.users = [...users.data];
           item.users = this.usersArray;
           item.roles = this.rolesArray;
           this.sectionDashboard.next(sections.data);
-          this.roles = [...roles.data];
-          this.users = [...users.data];
           this.dashboardItem = { ...item };
           this.dashboardItem.dashboardSectionId = item.dashboardSectionId;
           this.dashboardItem.endDate = item.endDate;
           this.dashboardItem.startDate = item.startDate;
-          (this.formattedEndDate = this.dashboardItem.endDate),
-            (this.formattedStartDate = this.dashboardItem.startDate);
+          this.formattedEndDate = new Date(this.dashboardItem.endDate);
+          (this.formattedStartDate = new Date(this.dashboardItem.startDate)),
+            this.cd.detectChanges();
         });
     } else {
       combineLatest([
@@ -175,6 +184,7 @@ export class DashboardItemsFormComponent implements OnInit {
         this.sectionDashboard.next(sections.data);
         this.roles = [...roles.data];
         this.users = [...users.data];
+        this.cd.detectChanges();
       });
     }
   }
@@ -215,6 +225,16 @@ export class DashboardItemsFormComponent implements OnInit {
     const id = this.route.snapshot.params['id'];
     this.submitted = true;
     if (this.form.valid) {
+      this.dashboardItem.endDate = formatDate(
+        this.dashboardItem.endDate,
+        'yyyy-MM-dd',
+        'en-US'
+      );
+      this.dashboardItem.startDate = formatDate(
+        this.dashboardItem.startDate,
+        'yyyy-MM-dd',
+        'en-US'
+      );
       if (this.dashboardItem.id === 0) {
         delete this.dashboardItem.id;
       }

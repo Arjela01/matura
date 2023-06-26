@@ -43,7 +43,7 @@ export class DiplomasStudentFormComponent {
   @Output() formSave = new EventEmitter<string>();
   @Output() formClose = new EventEmitter<undefined>();
   @Output() admOfficeChanged = new EventEmitter<string>();
-  @Input() studentVersions: DropdownModel<number>[] = [];
+  @Input() studentTypes: DropdownModel<number>[] = [];
   @Input() administrationOffices: DropdownModel<number>[] = [];
   @Input() highSchools: DropdownModel<number>[] = [];
   @ViewChild('form', { static: true }) form!: NgForm;
@@ -51,7 +51,7 @@ export class DiplomasStudentFormComponent {
   submitted = false;
 
   diplomaFile: IDiplomaFile = {
-    studentVersion: 1,
+    studentType: 0,
     studentId: '',
     schoolId: 0,
     isForeign: false,
@@ -72,7 +72,7 @@ export class DiplomasStudentFormComponent {
     this.submitted = true;
 
     if (this.form.valid) {
-      let initialUrl = `?studentVersion=${this.diplomaFile.studentVersion}`;
+      let initialUrl = `?studentType=${this.diplomaFile.studentType}`;
       if (this.diplomaFile.schoolId !== 0) {
         initialUrl += `&schoolId=${this.diplomaFile.schoolId}`;
       }

@@ -21,7 +21,7 @@
     [draggable]="false" [resizable]="false" class="p-fluid" (onHide)="onModalClose()">
     <ng-template pTemplate="content">
         <msh-diplomas-student-form [administrationOffices]="administrationOffices"
-            [highSchools]="(highSchools$|async)!!" [studentVersions]="studentVersion"
+            [highSchools]="(highSchools$|async)!!" [studentTypes]="studentTypes"
             (admOfficeChanged)="getHighSchoolsByOffice($event)" (formClose)="onModalClose()"
             (formSave)="onFormSave($event)">
         </msh-diplomas-student-form>
