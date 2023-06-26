@@ -91,6 +91,7 @@ export class ReportRendererComponent implements OnInit {
     return null;
   }
   findArchiveFolderNr(obj: { [x: string]: string | number }) {
+
     const key = Object.keys(obj).find(k => k.toLowerCase() === 'foldernr');
     if (key) {
       return { key: key, value: obj[key] };
@@ -129,9 +130,9 @@ export class ReportRendererComponent implements OnInit {
 
   goBack(): void {
     if (this.id === '13') {
-      this.router.navigate(['applications/a1']).then();
+      this.router.navigate(this.router.url === '/reports/13' ? ['reports'] : ['applications/a1']).then();
     } else if (this.id === '14') {
-      this.router.navigate(['applications/a1z']).then();
+      this.router.navigate(this.router.url === '/reports/14' ? ['reports'] : ['applications/a1z']).then();
     } else {
       this.router.navigate(['reports']).then();
     }
