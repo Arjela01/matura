@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -55,7 +55,7 @@ import { ArchiveOpenFolderFormComponent } from '../archive-open-folder-form/arch
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageArchiveFoldersComponent {
+export class ManageArchiveFoldersComponent implements OnInit{
   private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[]>([]);
   examTypes: DropdownModel<number>[] = [];
   examSubjects: DropdownModel<string>[] = [];
@@ -92,6 +92,9 @@ export class ManageArchiveFoldersComponent {
     }),
     tap()
   );
+  ngOnInit() {
+    this.getExamTypes();
+  }
 
   onNewClick() {
     this.displayModal = true;
