@@ -17,7 +17,8 @@ import { DialogModule } from 'primeng/dialog';
 import RxPostmessenger from 'rx-postmessenger';
 import { Subject, combineLatest, first, forkJoin, map, skip, tap } from 'rxjs';
 import { IframeAutoHeightDirective } from '../iframe-auto-height.directive';
-import {Report} from "../../../../reports-enum";
+import { Report } from '../../../../reports-enum';
+import { Path } from './paths-enum';
 
 @Component({
   selector: 'msh-report-renderer',
@@ -49,6 +50,9 @@ export class ReportRendererComponent implements OnInit {
   iframeUrl = '';
   a1Report: Report = Report.A1Form_Report;
   a1ZReport: Report = Report.A1ZForm_Report;
+  reportsPath: Path = Path.Reports;
+  a1Path: Path = Path.ApplicationsA1;
+  a1ZPath: Path = Path.ApplicationsA1Z;
 
   private readonly iframeLoaded$$ = new Subject<boolean>();
   private readonly iframeLoaded$ = this.iframeLoaded$$
@@ -95,7 +99,6 @@ export class ReportRendererComponent implements OnInit {
     return null;
   }
   findArchiveFolderNr(obj: { [x: string]: string | number }) {
-
     const key = Object.keys(obj).find(k => k.toLowerCase() === 'foldernr');
     if (key) {
       return { key: key, value: obj[key] };
@@ -133,12 +136,22 @@ export class ReportRendererComponent implements OnInit {
   }
 
   goBack(): void {
+    const currentUrl = this.router.url;
+
     if (this.id === this.a1Report.toString()) {
-      this.router.navigate(this.router.url === '/reports/13' ? ['reports'] : ['applications/a1']).then();
+      const destinationPath =
+        currentUrl === `/${this.reportsPath}/${this.a1Report}`
+          ? this.reportsPath
+          : this.a1Path;
+      this.router.navigate([destinationPath]).then();
     } else if (this.id === this.a1ZReport.toString()) {
-      this.router.navigate(this.router.url === '/reports/14' ? ['reports'] : ['applications/a1z']).then();
+      const destinationPath =
+        currentUrl === `/${this.reportsPath}/${this.a1ZReport}`
+          ? this.reportsPath
+          : this.a1ZPath;
+      this.router.navigate([destinationPath]).then();
     } else {
-      this.router.navigate(['reports']).then();
+      this.router.navigate([this.reportsPath]).then();
     }
   }
 }
