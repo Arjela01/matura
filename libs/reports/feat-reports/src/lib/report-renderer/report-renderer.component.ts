@@ -17,6 +17,7 @@ import { DialogModule } from 'primeng/dialog';
 import RxPostmessenger from 'rx-postmessenger';
 import { Subject, combineLatest, first, forkJoin, map, skip, tap } from 'rxjs';
 import { IframeAutoHeightDirective } from '../iframe-auto-height.directive';
+import {Report} from "../../../../reports-enum";
 
 @Component({
   selector: 'msh-report-renderer',
@@ -46,6 +47,9 @@ export class ReportRendererComponent implements OnInit {
   );
   displayModal = false;
   iframeUrl = '';
+  a1Report: Report = Report.A1Form_Report;
+  a1ZReport: Report = Report.A1ZForm_Report;
+
   private readonly iframeLoaded$$ = new Subject<boolean>();
   private readonly iframeLoaded$ = this.iframeLoaded$$
     .asObservable()
@@ -129,9 +133,9 @@ export class ReportRendererComponent implements OnInit {
   }
 
   goBack(): void {
-    if (this.id === '13') {
+    if (this.id === this.a1Report.toString()) {
       this.router.navigate(this.router.url === '/reports/13' ? ['reports'] : ['applications/a1']).then();
-    } else if (this.id === '14') {
+    } else if (this.id === this.a1ZReport.toString()) {
       this.router.navigate(this.router.url === '/reports/14' ? ['reports'] : ['applications/a1z']).then();
     } else {
       this.router.navigate(['reports']).then();
