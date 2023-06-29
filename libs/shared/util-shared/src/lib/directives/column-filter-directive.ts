@@ -32,7 +32,7 @@ export class ColumnFilterDirective {
   onClick(event: MouseEvent): void {
     const targetElement = event.target as HTMLElement;
 
-    const menuItemSelector = 'span.layout-menuitem-text.ng-tns-c106-25';
+    const menuItemSelector = 'span.layout-menuitem-text';
 
     if (
       !this.elementRef.nativeElement.contains(targetElement) &&
