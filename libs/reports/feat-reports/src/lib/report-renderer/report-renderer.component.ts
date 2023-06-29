@@ -137,21 +137,20 @@ export class ReportRendererComponent implements OnInit {
 
   goBack(): void {
     const currentUrl = this.router.url;
-
+    let destinationPath = ''
     if (this.id === this.a1Report.toString()) {
-      const destinationPath =
+      destinationPath =
         currentUrl === `/${this.reportsPath}/${this.a1Report}`
           ? this.reportsPath
           : this.a1Path;
-      this.router.navigate([destinationPath]).then();
     } else if (this.id === this.a1ZReport.toString()) {
-      const destinationPath =
+      destinationPath =
         currentUrl === `/${this.reportsPath}/${this.a1ZReport}`
           ? this.reportsPath
           : this.a1ZPath;
-      this.router.navigate([destinationPath]).then();
     } else {
-      this.router.navigate([this.reportsPath]).then();
+      destinationPath = this.reportsPath
     }
+    this.router.navigate([destinationPath]).then();
   }
 }
