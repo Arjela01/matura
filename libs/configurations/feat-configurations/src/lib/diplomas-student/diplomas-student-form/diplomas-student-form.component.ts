@@ -70,8 +70,8 @@ export class DiplomasStudentFormComponent {
 
   onSubmit() {
     this.submitted = true;
-
-    if (this.form.valid) {
+    this.form;
+    if (this.form.valid && this.diplomaFile.darZaId !== 0) {
       let initialUrl = `?studentType=${this.diplomaFile.studentType}`;
       if (this.diplomaFile.schoolId !== 0) {
         initialUrl += `&schoolId=${this.diplomaFile.schoolId}`;
