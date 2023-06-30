@@ -19,7 +19,7 @@
         <label for="darZa">DAR/ZA </label>
         <p-dropdown id="darZa" [options]="administrationOffices" optionValue="key" optionLabel="value" name="darZa"
             [autoDisplayFirst]="false" (onChange)="onAdministrationOfficeChange($event)"
-            [(ngModel)]="diplomaFile.darZaId" [required]="false" [showClear]="true" appendTo="body" [ngClass]="{
+            [(ngModel)]="diplomaFile.darZaId" [required]="true" [showClear]="true" appendTo="body" [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !diplomaFile.darZaId
               }">
         </p-dropdown>
