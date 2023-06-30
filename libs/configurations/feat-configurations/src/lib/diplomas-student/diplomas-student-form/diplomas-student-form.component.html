@@ -19,8 +19,13 @@
         <label for="darZa">DAR/ZA </label>
         <p-dropdown id="darZa" [options]="administrationOffices" optionValue="key" optionLabel="value" name="darZa"
             [autoDisplayFirst]="false" (onChange)="onAdministrationOfficeChange($event)"
-            [(ngModel)]="diplomaFile.darZaId" [required]="false" [showClear]="true" appendTo="body">
+            [(ngModel)]="diplomaFile.darZaId" [required]="false" [showClear]="true" appendTo="body" [ngClass]="{
+                'ng-invalid ng-dirty': submitted && !diplomaFile.darZaId
+              }">
         </p-dropdown>
+        <small class="p-error block" *ngIf="submitted && !diplomaFile.studentType && diplomaFile.studentType!==0 ">
+            DAR/ZA është fushë e kërkuar.
+        </small>
     </div>
     <div class="field">
         <label for="highSchool">Gjimnazet </label>
