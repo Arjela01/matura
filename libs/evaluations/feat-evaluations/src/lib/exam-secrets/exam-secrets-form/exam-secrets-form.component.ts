@@ -23,7 +23,7 @@ import { DropdownModel } from '@msh/shared/data-access-shared';
 import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { BehaviorSubject } from 'rxjs';
-import { ExamSubjectProfile, Student } from '@msh/shared/domain-models';
+import {  Student } from '@msh/shared/domain-models';
 import {
   GlobalToastService,
   GRID_ACTIONS,
@@ -36,7 +36,7 @@ import {
   ExamSubjectApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
 import { TooltipModule } from 'primeng/tooltip';
 
@@ -105,7 +105,6 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
     private readonly router: Router,
     private readonly toastService: GlobalToastService,
     private readonly examSubjectService: ExamSubjectApiService,
-    private route: ActivatedRoute,
   ) {}
 
   ngDoCheck(): void {
@@ -155,6 +154,8 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
         '-' +
         student?.lastName;
     }
+      this.examSecret.isFall = student.isFall
+
   }
 
   onStudentShow() {

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
@@ -10,28 +10,28 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
-import { ExamAssignment, Student } from '@msh/shared/domain-models';
-import { DropdownModel } from '@msh/shared/data-access-shared';
-import { ButtonModule } from 'primeng/button';
-import { CheckboxModule } from 'primeng/checkbox';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
+import {FormsModule, NgForm} from '@angular/forms';
+import {ExamAssignment, Student} from '@msh/shared/domain-models';
+import {DropdownModel} from '@msh/shared/data-access-shared';
+import {ButtonModule} from 'primeng/button';
+import {CheckboxModule} from 'primeng/checkbox';
+import {DropdownModule} from 'primeng/dropdown';
+import {InputNumberModule} from 'primeng/inputnumber';
+import {InputTextModule} from 'primeng/inputtext';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {RadioButtonModule} from 'primeng/radiobutton';
+import {GRID_ACTIONS, GridEvent} from '@msh/shared/util-shared';
 import {
   ExamDateApiService,
   ExamSiteApiService,
+  StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
-import { StudentsApiService } from '@msh/configurations/data-access-configurations';
-import { ActivatedRoute } from '@angular/router';
-import { DialogModule } from 'primeng/dialog';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { LazyLoadEvent } from 'primeng/api';
-import { BehaviorSubject } from 'rxjs';
-import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
+import {ActivatedRoute} from '@angular/router';
+import {DialogModule} from 'primeng/dialog';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import { LazyLoadEvent} from 'primeng/api';
+import {BehaviorSubject} from 'rxjs';
+import {SharedStudentLookupModule} from '@msh/shared/student-lookup';
 
 @UntilDestroy()
 @Component({
@@ -63,6 +63,7 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
   @Input() examAssignments: DropdownModel<number>[] = [];
   @Input() examSites: DropdownModel<number>[] = [];
   examDatesFiltered: DropdownModel<number>[] = [];
+  hasAdditionalValue:any;
 
   @Input() set examAssignmentsDetails(details: ExamAssignment | null) {
     if (details) {
@@ -197,18 +198,24 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
     }
   }
 
+  getValue(event: any) {
+    this.hasAdditionalValue= this.examDates.find(item => item.key === event.value)
+  }
+
   getStudents($event: LazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
-
+    console.log(this.hasAdditionalValue)
     this.studentService
-      .loadStudents($event)
+      .loadStudents($event, !!this.hasAdditionalValue.additionalValue.includes('True'))
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.studentList$$.next(response.data);
+          this.studentList$$.next(response.data);
         this.totalRecords = response.total;
         this.cd.markForCheck();
       });
   }
+
+
 
   onSubmit() {
     this.submitted = true;

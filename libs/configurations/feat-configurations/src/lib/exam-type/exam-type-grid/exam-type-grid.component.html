@@ -43,6 +43,17 @@
           field="maximumValueMultipleScore"
           display="menu"  mshColumnFilterDirective></p-columnFilter>
       </th>
+      <th pSortableColumn="isFall">
+        Është Vjeshtë?
+        <div>
+          <p-sortIcon field="isFall"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            field="isFall"
+            matchMode="equals"
+            display="menu" mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
       <th></th>
     </tr>
   </ng-template>
@@ -56,6 +67,9 @@
       </td>
       <td style="width: 30%">
         {{ examType.maximumValueMultipleScore }}
+      </td>
+      <td style="width: 30%">
+        {{ examType.isFall? 'Po' : 'Jo'  }}
       </td>
       <td>
         <div class="flex">

@@ -34,6 +34,7 @@
       name="examInfoId"
       appendTo="body"
       [required]="true"
+      (onChange)="getValue($event)"
       [autoDisplayFirst]="false"
       [(ngModel)]="examAssignment.examDateId"
       [showClear]="true"
