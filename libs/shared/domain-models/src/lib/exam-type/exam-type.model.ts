@@ -3,6 +3,8 @@ export interface ExamType {
   name: string;
   maximumValueWritingScore: number;
   maximumValueMultipleScore: number;
+  isFall: boolean;
+  additionalValue?:boolean;
 
 }
 
