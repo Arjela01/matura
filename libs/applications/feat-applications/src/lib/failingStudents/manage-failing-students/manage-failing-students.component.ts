@@ -19,6 +19,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { FailingStudentsFormComponent } from '../failing-students-form/failing-students-form.component';
 import { FailingStudentsGridComponent } from '../failing-students-grid/failing-students-grid.component';
+import {StudentsApiService} from "@msh/configurations/data-access-configurations";
 
 @UntilDestroy()
 @Component({
@@ -58,6 +59,7 @@ export class ManageFailingStudentsComponent {
 
   constructor(
     private readonly failingStudentService: FailingStudentApiService,
+    private readonly studentService: StudentsApiService,
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private authFacade: AuthFacade
@@ -86,15 +88,15 @@ export class ManageFailingStudentsComponent {
   onFormSave(failingStudent: FailingStudent) {
     this.saveFailingStudent({
       ...failingStudent,
-      id: failingStudent.id,
+      studentId: failingStudent.id,
     });
   }
 
   getStudents($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    this.failingStudentService
-      .loadFailingStudents($event)
+    this.studentService
+      .loadStudents($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.failingStudents$$.next(response.data);
@@ -103,6 +105,7 @@ export class ManageFailingStudentsComponent {
   }
 
   saveFailingStudent(failingStudent: FailingStudent) {
+    debugger;
     this.failingStudentService
       .save(failingStudent)
       .pipe(untilDestroyed(this))
@@ -111,7 +114,8 @@ export class ManageFailingStudentsComponent {
           this.toastService.showSuccess('Studenti u ndryshua me sukses!');
           this.displayModal = false;
           this.getStudents(this.filters as LazyLoadEvent);
-        }
+          console.log(123 , failingStudent)
+        } else this.toastService.showError(response.errorMessage)
 
         if (!response.isSuccessful)
           this.toastService.showError(

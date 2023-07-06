@@ -5,27 +5,54 @@
 <div class="grid">
   <div class="col-12">
     <div class="card">
-      <msh-failing-students-grid [failingStudents]="(failingStudents$ | async) || []" [totalRecords]="totalRecords"
-        (gridEvent)="onGridEvent($event)" (lazyLoadData)="getStudents($event)">
+      <msh-failing-students-grid
+        [failingStudents]="(failingStudents$ | async) || []"
+        [totalRecords]="totalRecords"
+        (gridEvent)="onGridEvent($event)"
+        (lazyLoadData)="getStudents($event)">
       </msh-failing-students-grid>
     </div>
   </div>
 </div>
 
-<p-dialog [(visible)]="displayModal" [style]="{ width: '500px' }"
-  header="Vendosni lëndën në të cilen studenti ka ngelur." [modal]="true" [draggable]="false" [resizable]="false"
-  class="p-fluid" (onHide)="onModalClose()">
+<p-dialog
+  [(visible)]="displayModal"
+  [style]="{ width: '500px' }"
+  header="Vendosni lëndën në të cilen studenti ka ngelur."
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid"
+  (onHide)="onModalClose()">
   <ng-template pTemplate="content">
-    <msh-failing-students-form [failingStudentDetails]="selectedFailingStudent" (formClose)="onModalClose()"
+    <msh-failing-students-form
+      [failingStudentDetails]="selectedFailingStudent"
+      (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
     </msh-failing-students-form>
   </ng-template>
 </p-dialog>
 
-<p-confirmDialog #cd header="Konfirmo" icon="pi pi-exclamation-triangle" [style]="{ width: '450px' }">
+<p-confirmDialog
+  #cd
+  header="Konfirmo"
+  icon="pi pi-exclamation-triangle"
+  [style]="{ width: '450px' }">
   <ng-template pTemplate="footer">
-    <button type="button" pButton icon="pi pi-times" label="Jo" class="p-button-text" (click)="cd.reject()"></button>
-    <button type="button" pButton icon="pi pi-check" label="Po" class="p-button border" (click)="cd.accept()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Jo"
+      class="p-button-text"
+      (click)="cd.reject()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Po"
+      class="p-button border"
+      (click)="cd.accept()"></button>
   </ng-template>
 </p-confirmDialog>
 
