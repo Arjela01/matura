@@ -1,14 +1,15 @@
 <p-table
   #dt
-  [value]="carriedGrades"
+  dataKey="code"
   responsiveLayout="scroll"
+  [value]="carriedGrades"
+  [totalRecords]="totalRecords"
   [rows]="10"
   [paginator]="true"
   [rowsPerPageOptions]="[10, 20, 30]"
   [showCurrentPageReport]="true"
   currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
   [rowHover]="true"
-  dataKey="code"
   [(selection)]="selectedGrades"
   selectionMode="multiple"
   (onRowSelect)="onRowSelect($event)"
@@ -24,7 +25,8 @@
           <p-columnFilter
             type="text"
             field="id"
-            display="menu" mshColumnFilterDirective></p-columnFilter>
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="nid">
@@ -34,7 +36,8 @@
           <p-columnFilter
             type="text"
             field="nid"
-            display="menu" mshColumnFilterDirective></p-columnFilter>
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="examTypeName">
@@ -44,7 +47,8 @@
           <p-columnFilter
             type="text"
             field="examTypeName"
-            display="menu" mshColumnFilterDirective></p-columnFilter>
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="year">
@@ -54,7 +58,8 @@
           <p-columnFilter
             type="number"
             field="year"
-            display="menu"  mshColumnFilterDirective></p-columnFilter>
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="grade">
@@ -64,7 +69,8 @@
           <p-columnFilter
             type="number"
             field="grade"
-            display="menu"  mshColumnFilterDirective></p-columnFilter>
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="isDocument">
