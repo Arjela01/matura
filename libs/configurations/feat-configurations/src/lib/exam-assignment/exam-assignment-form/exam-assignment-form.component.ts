@@ -206,7 +206,7 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
     this.filters = Object.assign({}, $event);
     console.log(this.hasAdditionalValue)
     this.studentService
-      .loadStudents($event, !!this.hasAdditionalValue.additionalValue.includes('True'))
+      .loadSiteStudents($event, !!this.hasAdditionalValue.additionalValue.includes('True'))
       .pipe(untilDestroyed(this))
       .subscribe(response => {
           this.studentList$$.next(response.data);
