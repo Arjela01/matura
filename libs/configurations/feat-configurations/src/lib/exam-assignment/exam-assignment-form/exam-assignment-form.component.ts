@@ -63,7 +63,7 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
   @Input() examAssignments: DropdownModel<number>[] = [];
   @Input() examSites: DropdownModel<number>[] = [];
   examDatesFiltered: DropdownModel<number>[] = [];
-  hasAdditionalValue:any;
+  hasAdditionalValue: any;
 
   @Input() set examAssignmentsDetails(details: ExamAssignment | null) {
     if (details) {
