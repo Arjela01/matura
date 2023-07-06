@@ -17,10 +17,15 @@
     </div>
     <div class="field">
         <label for="darZa">DAR/ZA </label>
-        <p-dropdown id="darZa" [options]="administrationOffices" optionValue="key" optionLabel="value" name="darZa"
+        <p-dropdown id="darZa" [options]="administrationOffices" optionValue="key" optionLabel="value" name="darZaId"
             [autoDisplayFirst]="false" (onChange)="onAdministrationOfficeChange($event)"
-            [(ngModel)]="diplomaFile.darZaId" [required]="false" [showClear]="true" appendTo="body">
+            [(ngModel)]="diplomaFile.darZaId" [required]="true" [showClear]="true" appendTo="body" [ngClass]="{
+                'ng-invalid ng-dirty': submitted && (!diplomaFile.darZaId || diplomaFile.darZaId===0) 
+              }">
         </p-dropdown>
+        <small class="p-error block" *ngIf="submitted && !diplomaFile.darZaId  ">
+            DAR/ZA është fushë e kërkuar.
+        </small>
     </div>
     <div class="field">
         <label for="highSchool">Gjimnazet </label>
