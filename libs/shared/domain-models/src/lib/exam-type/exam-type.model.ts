@@ -4,7 +4,6 @@ export interface ExamType {
   maximumValueWritingScore: number;
   maximumValueMultipleScore: number;
   isFall: boolean;
-  additionalValue?:boolean;
 
 }
 

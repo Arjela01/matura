@@ -62,14 +62,15 @@ export class ManageDiplomasStudentComponent {
   studentTypes: DropdownModel<number>[] = [
     {
       key: StudentType.CurrentStudent,
-      value: 'Student aktiv',
+      value: 'Maturant i sivjetshëm',
       parentKey: null,
     },
     {
       key: StudentType.PreviousStudent,
-      value: 'Student mbetës',
+      value: 'Maturant i kaluar',
       parentKey: null,
     },
+
   ];
   administrationOffices: DropdownModel<number>[] = [];
   highSchools$$: BehaviorSubject<DropdownModel<number>[]> = new BehaviorSubject<
