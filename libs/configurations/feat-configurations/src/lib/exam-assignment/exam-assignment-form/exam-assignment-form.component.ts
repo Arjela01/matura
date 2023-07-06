@@ -216,9 +216,11 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
 
   getStudents($event: LazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
-    console.log(this.hasAdditionalValue)
+    const params = {
+      isFall: !!this.hasAdditionalValue.additionalValue.includes('True')
+    }
     this.studentService
-      .loadSiteStudents($event, !!this.hasAdditionalValue.additionalValue.includes('True'))
+      .loadStudents($event, params)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
           this.studentList$$.next(response.data);
