@@ -49,7 +49,7 @@ let INITIAL_FILTER = {};
 @UntilDestroy()
 export class ManageDiplomasStudentComponent {
   @Input() printed = false;
-  @Input() title = 'Diplomat aktive';
+  @Input() title = 'Diplomat';
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
   filters: LazyLoadEvent | null = null;

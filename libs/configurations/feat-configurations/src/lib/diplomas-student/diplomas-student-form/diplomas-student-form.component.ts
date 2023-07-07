@@ -55,7 +55,7 @@ export class DiplomasStudentFormComponent {
     studentId: '',
     schoolId: 0,
     isForeign: false,
-    isPrinted: true,
+    isPrinted: false,
     isProfessional: false,
     darZaId: 0,
 
