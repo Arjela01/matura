@@ -96,8 +96,11 @@ export class ManageFailingStudentsComponent {
     this.student = null;
   }
 
-  onFormSave() {
-    this.updateFailingStudent();
+  onFormSave(failingStudent: FailingStudent) {
+    this.updateFailingStudent({
+      ...failingStudent,
+      studentId: this.student?.studentId,
+    });
   }
 
   getFailingStudents($event: LazyLoadEvent) {
@@ -128,10 +131,11 @@ export class ManageFailingStudentsComponent {
       });
   }
 
-  updateFailingStudent() {
+  updateFailingStudent(failingStudent: FailingStudent) {
+    debugger;
     this.isLoading = true;
     this.failingStudentService
-      .update(this.selectedFailingStudent)
+      .update(failingStudent)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {

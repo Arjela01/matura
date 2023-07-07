@@ -5,27 +5,54 @@
 <div class="grid">
   <div class="col-12">
     <div class="card">
-      <msh-manage-failing-students-grid [failingStudents]="(failingStudents$ | async) || []"
-        [totalRecords]="totalRecords" (gridEvent)="onGridEvent($event)" (lazyLoadData)="getFailingStudents($event)">
+      <msh-manage-failing-students-grid
+        [failingStudents]="(failingStudents$ | async) || []"
+        [totalRecords]="totalRecords"
+        (gridEvent)="onGridEvent($event)"
+        (lazyLoadData)="getFailingStudents($event)">
       </msh-manage-failing-students-grid>
     </div>
   </div>
 </div>
 
-<p-dialog [(visible)]="displayModal" [style]="{ width: '800px' }"
-  header="Vendosni lëndën në të cilën studenti ka ngelur." [modal]="true" [draggable]="false" [resizable]="false"
-  class="p-fluid" (onHide)="onModalClose()">
+<p-dialog
+  [(visible)]="displayModal"
+  [style]="{ width: '800px' }"
+  header="Vendosni lëndën në të cilën studenti ka ngelur."
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid"
+  (onHide)="onModalClose()">
   <ng-template pTemplate="content">
-    <msh-manage-failing-students-form [failingStudentDetails]="selectedFailingStudent" (formClose)="onModalClose()"
-      (formSave)="onFormSave()">
+    <msh-manage-failing-students-form
+      [failingStudentDetails]="selectedFailingStudent"
+      (formClose)="onModalClose()"
+      (formSave)="onFormSave($event)">
     </msh-manage-failing-students-form>
   </ng-template>
 </p-dialog>
 
-<p-confirmDialog #cd header="Konfirmo" icon="pi pi-exclamation-triangle" [style]="{ width: '450px' }">
+<p-confirmDialog
+  #cd
+  header="Konfirmo"
+  icon="pi pi-exclamation-triangle"
+  [style]="{ width: '450px' }">
   <ng-template pTemplate="footer">
-    <button type="button" pButton icon="pi pi-times" label="Jo" class="p-button-text" (click)="cd.reject()"></button>
-    <button type="button" pButton icon="pi pi-check" label="Po" class="p-button border" (click)="cd.accept()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Jo"
+      class="p-button-text"
+      (click)="cd.reject()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Po"
+      class="p-button border"
+      (click)="cd.accept()"></button>
   </ng-template>
 </p-confirmDialog>
 <ng-container *ngIf="academicYear$ | async"></ng-container>
