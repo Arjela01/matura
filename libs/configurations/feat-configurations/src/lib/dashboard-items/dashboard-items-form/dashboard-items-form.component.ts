@@ -264,12 +264,6 @@ export class DashboardItemsFormComponent implements OnInit {
                 );
               }
             },
-            error => {
-              console.error(error);
-              this.toaster.showError(
-                'An error occurred while saving the entity changes.'
-              );
-            }
           );
       } else {
         this.dashboardItemsApiService
@@ -293,10 +287,7 @@ export class DashboardItemsFormComponent implements OnInit {
             })
           )
           .subscribe(error => {
-            console.error(error);
-            this.toaster.showError(
-              'An error occurred while saving the entity changes.'
-            );
+            console.log(error)
           });
       }
     }
