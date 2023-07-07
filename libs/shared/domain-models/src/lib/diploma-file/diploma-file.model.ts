@@ -9,8 +9,8 @@ export interface IDiplomaFile {
 }
 
 export enum StudentType {
-  CurrentStudent = 0,
-  PreviousStudent = 1,
+  PreviousStudent = 0,
+  CurrentStudent = 1,
 }
 
 export enum Status {

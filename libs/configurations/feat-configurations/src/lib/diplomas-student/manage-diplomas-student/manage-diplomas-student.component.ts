@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
@@ -47,7 +47,7 @@ let INITIAL_FILTER = {};
   providers: [ConfirmationService],
 })
 @UntilDestroy()
-export class ManageDiplomasStudentComponent {
+export class ManageDiplomasStudentComponent implements OnInit{
   @Input() printed = false;
   @Input() title = 'Diplomat';
   private studentList$$ = new BehaviorSubject<Student[]>([]);
@@ -61,13 +61,13 @@ export class ManageDiplomasStudentComponent {
 
   studentTypes: DropdownModel<number>[] = [
     {
-      key: StudentType.CurrentStudent,
-      value: 'Maturant i sivjetshëm',
+      key: StudentType.PreviousStudent,
+      value: 'Maturant i kaluar',
       parentKey: null,
     },
     {
-      key: StudentType.PreviousStudent,
-      value: 'Maturant i kaluar',
+      key: StudentType.CurrentStudent,
+      value: 'Maturant i sivjetshëm',
       parentKey: null,
     },
 
@@ -203,7 +203,6 @@ export class ManageDiplomasStudentComponent {
       .loadStudentDiplomas($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        console.log(response);
         const students = [...response.data];
         for (const student of students) {
           if (student.printedDate === '0001-01-01T00:00:00') {
