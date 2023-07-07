@@ -8,7 +8,7 @@
         <p-dropdown id="studentVersion" [options]="studentTypes" optionValue="key" optionLabel="value"
             name="studentType" [autoDisplayFirst]="false" [(ngModel)]="diplomaFile.studentType" [required]="true"
             [showClear]="true" appendTo="body" [ngClass]="{
-          'ng-invalid ng-dirty': submitted && !diplomaFile.studentType && diplomaFile.studentType!==0 
+          'ng-invalid ng-dirty': submitted && !diplomaFile.studentType && diplomaFile.studentType!==0
         }">
         </p-dropdown>
         <small class="p-error block" *ngIf="submitted && !diplomaFile.studentType && diplomaFile.studentType!==0 ">
@@ -20,7 +20,7 @@
         <p-dropdown id="darZa" [options]="administrationOffices" optionValue="key" optionLabel="value" name="darZaId"
             [autoDisplayFirst]="false" (onChange)="onAdministrationOfficeChange($event)"
             [(ngModel)]="diplomaFile.darZaId" [required]="true" [showClear]="true" appendTo="body" [ngClass]="{
-                'ng-invalid ng-dirty': submitted && (!diplomaFile.darZaId || diplomaFile.darZaId===0) 
+                'ng-invalid ng-dirty': submitted && (!diplomaFile.darZaId || diplomaFile.darZaId===0)
               }">
         </p-dropdown>
         <small class="p-error block" *ngIf="submitted && !diplomaFile.darZaId  ">
@@ -38,7 +38,7 @@
         <label class="mb-3">Profesional *</label>
         <div class="formgrid grid">
             <div class="field-radiobutton col-6">
-                <p-radioButton id="isProffesional" name="isProffesionalTrue" [value]="true"
+                <p-radioButton id="isProffesionalTrue" name="isProffesionalTrue" [value]="true"
                     [(ngModel)]="diplomaFile.isProfessional"></p-radioButton>
                 <label for="isProffesionalTrue">Po</label>
             </div>
@@ -50,10 +50,10 @@
         </div>
     </div>
     <div class="field">
-        <label class="mb-3">I huaj *</label>
+        <label class="mb-3">Aplikon jashtë? *</label>
         <div class="formgrid grid">
             <div class="field-radiobutton col-6">
-                <p-radioButton id="isForeign" name="isForeignTrue" [value]="true"
+                <p-radioButton id="isForeignTrue" name="isForeignTrue" [value]="true"
                     [(ngModel)]="diplomaFile.isForeign"></p-radioButton>
                 <label for="isForeignTrue">Po</label>
             </div>

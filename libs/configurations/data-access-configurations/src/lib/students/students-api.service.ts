@@ -19,8 +19,8 @@ export class StudentsApiService {
     return this.apiService.get<ApiResult<Student>>(`/Student/${id}`);
   }
 
-  loadStudents(event: LazyLoadEvent): Observable<StudentTableView> {
-    return this.apiService.post(`/Student/TableData`, event);
+  loadStudents(event: LazyLoadEvent, params = {}): Observable<StudentTableView> {
+    return this.apiService.postWithParams(`/Student/TableData`, event , params);
   }
 
   save(student: Student): Observable<ApiResult<Student>> {

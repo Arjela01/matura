@@ -55,9 +55,10 @@ export class DiplomasStudentFormComponent {
     studentId: '',
     schoolId: 0,
     isForeign: false,
-    isPrinted: false,
+    isPrinted: true,
     isProfessional: false,
     darZaId: 0,
+
   };
   highSchoolFiltered: DropdownModel<number>[] = [];
 
@@ -72,7 +73,8 @@ export class DiplomasStudentFormComponent {
     this.submitted = true;
     if (this.form.valid && this.diplomaFile.darZaId !== 0) {
       let initialUrl = `?studentType=${this.diplomaFile.studentType}`;
-      if (this.diplomaFile.schoolId !== 0) {
+
+      if (this.diplomaFile.schoolId && this.diplomaFile.schoolId !== 0) {
         initialUrl += `&schoolId=${this.diplomaFile.schoolId}`;
       }
       if (this.diplomaFile.darZaId !== 0) {
@@ -81,7 +83,7 @@ export class DiplomasStudentFormComponent {
       const accademicYear = JSON.parse(
         localStorage.getItem('academicYear') as any
       );
-      initialUrl += `&isPrinted=${this.diplomaFile.isPrinted}&isProffesional=${this.diplomaFile.isProfessional}&isForeign=${this.diplomaFile.isForeign}&academicYearId=${accademicYear?.id}`;
+      initialUrl += `&isPrinted=${this.diplomaFile.isPrinted}&isProfessional=${this.diplomaFile.isProfessional}&isForeign=${this.diplomaFile.isForeign}&academicYearId=${accademicYear?.id}`;
       this.formSave.emit(initialUrl);
     }
   }

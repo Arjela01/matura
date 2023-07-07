@@ -115,6 +115,7 @@
       [disabled]="showAdministrationOffice === false"
       name="administrationOfficeId"
       [autoDisplayFirst]="false"
+      appendTo="body"
       [(ngModel)]="user.administrationOfficeId"
       [showClear]="true">
     </p-dropdown>
@@ -130,6 +131,7 @@
       [disabled]="showUniversity === false"
       name="universityId"
       [autoDisplayFirst]="false"
+      appendTo="body"
       [(ngModel)]="user.universityId"
       [showClear]="true">
     </p-dropdown>
@@ -145,6 +147,7 @@
       [disabled]="showUniversityDepartment === false"
       name="universityDepartmentId"
       [autoDisplayFirst]="false"
+      appendTo="body"
       [(ngModel)]="user.universityDepartmentId"
       [showClear]="true">
     </p-dropdown>
@@ -159,6 +162,7 @@
       [options]="studyPrograms"
       [disabled]="showStudyProgram === false"
       name="studyProgramId"
+      appendTo="body"
       [autoDisplayFirst]="false"
       [(ngModel)]="user.studyProgramId"
       [showClear]="true">

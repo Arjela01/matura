@@ -44,6 +44,7 @@ export class ExamTypeFormComponent {
     name: '',
     maximumValueWritingScore: 0,
     maximumValueMultipleScore: 0,
+    isFall: false,
   };
 
   onCancelClick() {
