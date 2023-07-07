@@ -1,5 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+} from '@angular/core';
 import { FailingStudentApiService } from '@msh/applications/data-access-applications';
 import { FailingStudent } from '@msh/applications/domain-application';
 
@@ -19,7 +23,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { FailingStudentsFormComponent } from '../failing-students-form/failing-students-form.component';
 import { FailingStudentsGridComponent } from '../failing-students-grid/failing-students-grid.component';
-import {StudentsApiService} from "@msh/configurations/data-access-configurations";
+import { StudentsApiService } from '@msh/configurations/data-access-configurations';
 
 @UntilDestroy()
 @Component({
@@ -44,6 +48,7 @@ export class ManageFailingStudentsComponent {
   private failingStudents$$ = new BehaviorSubject<FailingStudent[]>([]);
   failingStudents$ = this.failingStudents$$.asObservable();
   filters: LazyLoadEvent | null = null;
+  hasAdditionalValue: any;
 
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([_]) => {
@@ -62,7 +67,8 @@ export class ManageFailingStudentsComponent {
     private readonly studentService: StudentsApiService,
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private authFacade: AuthFacade
+    private authFacade: AuthFacade,
+    private readonly cd: ChangeDetectorRef
   ) {}
 
   onNewClick() {
@@ -91,21 +97,26 @@ export class ManageFailingStudentsComponent {
       studentId: failingStudent.id,
     });
   }
-
   getStudents($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
+    const params = {
+      isFall: false,
+    };
 
     this.studentService
-      .loadStudents($event)
+      .loadStudents($event, params)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.failingStudents$$.next(response.data);
-        this.totalRecords = response.total;
+        const studentsWithAdditionalValueZero = response.data.filter(
+          student => !student.isFall
+        );
+        this.failingStudents$$.next(studentsWithAdditionalValueZero);
+        this.totalRecords = studentsWithAdditionalValueZero.length;
+        this.cd.markForCheck();
       });
   }
 
   saveFailingStudent(failingStudent: FailingStudent) {
-    debugger;
     this.failingStudentService
       .save(failingStudent)
       .pipe(untilDestroyed(this))
@@ -114,8 +125,8 @@ export class ManageFailingStudentsComponent {
           this.toastService.showSuccess('Studenti u ndryshua me sukses!');
           this.displayModal = false;
           this.getStudents(this.filters as LazyLoadEvent);
-          console.log(123 , failingStudent)
-        } else this.toastService.showError(response.errorMessage)
+          console.log(123, failingStudent);
+        } else this.toastService.showError(response.errorMessage);
 
         if (!response.isSuccessful)
           this.toastService.showError(
