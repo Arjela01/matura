@@ -45,6 +45,7 @@ export class DiplomasStudentFormComponent {
   @Output() admOfficeChanged = new EventEmitter<string>();
   @Input() studentTypes: DropdownModel<number>[] = [];
   @Input() administrationOffices: DropdownModel<number>[] = [];
+  @Input() isPrinted = false;
   @Input() highSchools: DropdownModel<number>[] = [];
   @ViewChild('form', { static: true }) form!: NgForm;
 
@@ -55,7 +56,7 @@ export class DiplomasStudentFormComponent {
     studentId: '',
     schoolId: 0,
     isForeign: false,
-    isPrinted: true,
+    isPrinted: this.isPrinted,
     isProfessional: false,
     darZaId: 0,
 
@@ -83,7 +84,7 @@ export class DiplomasStudentFormComponent {
       const accademicYear = JSON.parse(
         localStorage.getItem('academicYear') as any
       );
-      initialUrl += `&isPrinted=${this.diplomaFile.isPrinted}&isProfessional=${this.diplomaFile.isProfessional}&isForeign=${this.diplomaFile.isForeign}&academicYearId=${accademicYear?.id}`;
+      initialUrl += `&isPrinted=${this.isPrinted}&isProfessional=${this.diplomaFile.isProfessional}&isForeign=${this.diplomaFile.isForeign}&academicYearId=${accademicYear?.id}`;
       this.formSave.emit(initialUrl);
     }
   }

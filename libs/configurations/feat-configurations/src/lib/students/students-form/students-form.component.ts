@@ -96,6 +96,7 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     isA2A3: true,
     isEAlbaniaApplication: true,
     isFall: false,
+    isAN: false,
     lastName: '',
     genderName: '',
     highSchool: '',
