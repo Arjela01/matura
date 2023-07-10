@@ -132,7 +132,6 @@ export class ManageFailingStudentsComponent {
   }
 
   updateFailingStudent(failingStudent: FailingStudent) {
-    debugger;
     this.isLoading = true;
     this.failingStudentService
       .update(failingStudent)
