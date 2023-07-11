@@ -103,12 +103,15 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   EXAM_TYPES = EXAM_TYPES;
 
   a1Categories: DropdownModel<number>[] = [];
+
   d1ExamSubjects: DropdownModel<string>[] = [];
   d2ExamSubjects: DropdownModel<string>[] = [];
   d3ExamSubjects: DropdownModel<string>[] = [];
   z1ExamSubjects: DropdownModel<string>[] = [];
-  d3ExamSubjectsFall: DropdownModel<string>[] = [];
+
   z1ExamSubjectsFall: DropdownModel<string>[] = [];
+  d3ExamSubjectsFall: DropdownModel<string>[] = [];
+
   filters: LazyLoadEvent | null = null;
 
   formId: string | null;
@@ -246,6 +249,8 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   onGridEvent(event: GridEvent<SharedStudent | SharedStudent[]>) {
     switch (event.action) {
       case GRID_ACTIONS.EDIT:
+        this.getSubjectDropdown();
+
         this.selectedStudent = Object.assign({}, event.data as Student);
         this.showStudentModal = false;
         break;
@@ -406,7 +411,12 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
 
         if (d1ExamType && d1ExamType.key) {
           this.examSubjectService
-            .forExamType(d1ExamType.key, this.a1z.academicYearId)
+            .forExamType(
+              d1ExamType.key,
+              this.a1z.academicYearId,
+              undefined,
+              this.selectedStudent?.profileId
+            )
             .pipe(untilDestroyed(this))
             .subscribe(y => {
               this.d1ExamSubjects = y.data;
@@ -416,7 +426,12 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         }
         if (d2ExamType && d2ExamType.key) {
           this.examSubjectService
-            .forExamType(d2ExamType.key, this.a1z.academicYearId)
+            .forExamType(
+              d2ExamType.key,
+              this.a1z.academicYearId,
+              undefined,
+              this.selectedStudent?.profileId
+            )
             .pipe(untilDestroyed(this))
             .subscribe(y => {
               this.d2ExamSubjects = y.data;
@@ -428,7 +443,12 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         }
         if (d3ExamType && d3ExamType.key) {
           this.examSubjectService
-            .forExamType(d3ExamType.key, this.a1z.academicYearId)
+            .forExamType(
+              d3ExamType.key,
+              this.a1z.academicYearId,
+              undefined,
+              this.selectedStudent?.profileId
+            )
             .pipe(untilDestroyed(this))
             .subscribe(y => {
               this.d3ExamSubjects = y.data;
@@ -437,7 +457,12 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         }
         if (d3ExamTypeFall && d3ExamTypeFall.key) {
           this.examSubjectService
-            .forExamType(d3ExamTypeFall.key, this.a1z.academicYearId)
+            .forExamType(
+              d3ExamTypeFall.key,
+              this.a1z.academicYearId,
+              undefined,
+              this.selectedStudent?.profileId
+            )
             .pipe(untilDestroyed(this))
             .subscribe(y => {
               this.d3ExamSubjectsFall = y.data;
@@ -446,7 +471,12 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         }
         if (z1ExamTypeFall && z1ExamTypeFall.key) {
           this.examSubjectService
-            .forExamType(z1ExamTypeFall.key, this.a1z.academicYearId)
+            .forExamType(
+              z1ExamTypeFall.key,
+              this.a1z.academicYearId,
+              undefined,
+              this.selectedStudent?.profileId
+            )
             .pipe(untilDestroyed(this))
             .subscribe(y => {
               this.z1ExamSubjectsFall = y.data;
@@ -454,7 +484,12 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         }
         if (z1ExamType && z1ExamType.key) {
           this.examSubjectService
-            .forExamType(z1ExamType.key, this.a1z.academicYearId)
+            .forExamType(
+              z1ExamType.key,
+              this.a1z.academicYearId,
+              undefined,
+              this.selectedStudent?.profileId
+            )
             .pipe(untilDestroyed(this))
             .subscribe(y => {
               this.z1ExamSubjects = this.z1ExamSubjectsFall.concat(y.data);

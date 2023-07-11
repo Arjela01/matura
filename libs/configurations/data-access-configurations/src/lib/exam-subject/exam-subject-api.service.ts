@@ -3,7 +3,7 @@ import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { ExamSubject, ExamSubjectTableView } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
-import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
+import { Observable, catchError, map, shareReplay, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -56,17 +56,15 @@ export class ExamSubjectApiService {
     examTypeId?: number,
     academicYearId?: number,
     id?: string,
-    isFall?: boolean,
-    isOptionalSubject?: boolean
+    profileID?: number
   ): Observable<ApiResult<DropdownModel<string>[]>> {
     return this.apiService.post<ApiResult<DropdownModel<string>[]>, any>(
       `/ExamSubject/ForExamType`,
       {
         examTypeId: examTypeId,
         academicYearId: academicYearId,
+        profileID: profileID,
         id: id,
-        isFall,
-        isOptionalSubject,
       }
     );
   }
