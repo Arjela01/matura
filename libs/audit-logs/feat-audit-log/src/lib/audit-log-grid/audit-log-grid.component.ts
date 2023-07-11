@@ -72,20 +72,20 @@ export class AuditLogGridComponent implements OnInit {
 
   ngOnInit() {
     this.queryName = this.route.snapshot.queryParams['queryName'];
-    this.usersQuery = queriesMap.get('users') || '';
-    this.apollo
-      .watchQuery<any>({
-        query: gql`
-          ${this.usersQuery}
-        `,
-      })
-
-      .valueChanges.subscribe((result: any) => {
-      const users = result?.data?.users || [];
-      users.forEach((user: any) => {
-        this.userData[user.id] = user.name;
-      });
-    });
+    // this.usersQuery = queriesMap.get('users') || '';
+    // this.apollo
+    //   .watchQuery<any>({
+    //     query: gql`
+    //       ${this.usersQuery}
+    //     `,
+    //   })
+    //
+    //   .valueChanges.subscribe((result: any) => {
+    //   const users = result?.data?.users || [];
+    //   users.forEach((user: any) => {
+    //     this.userData[user.id] = user.name;
+    //   });
+    // });
 
   }
   fetchData() {
