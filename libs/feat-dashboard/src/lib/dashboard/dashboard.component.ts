@@ -10,8 +10,9 @@ import { ButtonModule } from 'primeng/button';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { TableModule } from 'primeng/table';
 import {DashboardItemsApiService, DashboardMetriciesApiService} from '@msh/configurations/data-access-configurations';
-import {DashboardItem, DashboardMetrics} from '@msh/shared/domain-models';
+import {DashboardItem, DashboardMetrics, UserProfile} from '@msh/shared/domain-models';
 import {UntilDestroy} from "@ngneat/until-destroy";
+import {UserProfileApiService} from "@msh/user-section/data-access-user-section";
 
 @UntilDestroy()
 @Component({
@@ -23,6 +24,8 @@ import {UntilDestroy} from "@ngneat/until-destroy";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent implements OnInit {
+  userData:any;
+  role:any;
   totalRecords = 0;
   submitted = false;
   id: any;
@@ -45,12 +48,14 @@ export class DashboardComponent implements OnInit {
     private readonly dashboardItemsApiService: DashboardItemsApiService,
     private readonly dashboardMetriciesService: DashboardMetriciesApiService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private userService: UserProfileApiService
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
 
   ngOnInit(): void {
+    this.getUser();
     this.dashboardMetriciesService
       .loadDashboardMetrics(this.id)
       .subscribe(result => {
@@ -78,5 +83,11 @@ export class DashboardComponent implements OnInit {
     link.href = url;
     link.download = dashboardItem.documentName;
     link.click();
+  }
+  getUser() {
+    this.userService.getLoggedInUserData().subscribe(response => {
+      this.userData = response.data
+      this.role = response.data.roleName
+    });
   }
 }

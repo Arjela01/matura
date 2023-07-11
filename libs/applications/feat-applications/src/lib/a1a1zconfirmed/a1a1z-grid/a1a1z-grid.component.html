@@ -107,10 +107,11 @@
         <div>
           <p-sortIcon field="isConfirmedBySupervisor"></p-sortIcon>
           <p-columnFilter
-            type="custom"
+            type="boolean"
             field="isConfirmedBySupervisor"
             display="menu"
-            mshColumnFilterDirective></p-columnFilter>
+            matchMode="equals"
+            ></p-columnFilter>
         </div>
       </th>
       <th></th>
