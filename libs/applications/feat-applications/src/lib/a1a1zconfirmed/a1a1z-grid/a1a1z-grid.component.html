@@ -107,10 +107,11 @@
         <div>
           <p-sortIcon field="isConfirmedBySupervisor"></p-sortIcon>
           <p-columnFilter
-            type="custom"
+            type="boolean"
             field="isConfirmedBySupervisor"
             display="menu"
-            mshColumnFilterDirective></p-columnFilter>
+            matchMode="equals"
+          ></p-columnFilter>
         </div>
       </th>
       <th></th>
@@ -149,41 +150,15 @@
             [ngClass]="
               student.isConfirmedBySupervisor === true
                 ? ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
-                : student.isConfirmedBySupervisor === false
-                ? ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
                 : ['surface-300', 'gray-text', 'px-3', 'py-1', 'fb']
             ">
             {{
-              student.isConfirmedBySupervisor == true
-                ? 'Aprovuar'
-                : student.isConfirmedBySupervisor === false
-                ? 'Refuzuar'
-                : 'Në pritje'
+            student.isConfirmedBySupervisor == true
+              ? 'Aprovuar'
+              : 'Në pritje'
             }}
           </span>
         </div>
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        <button
-          pButton
-          pRipple
-          icon="pi pi-check"
-          style="color: #12b76a"
-          pTooltip="Aprovo"
-          tooltipPosition="bottom"
-          class="p-button-success p-button-text mr-2"
-          *ngIf="student.isConfirmedBySupervisor !== true"
-          (click)="onApprove(student)"></button>
-        <button
-          pButton
-          icon="pi pi-times"
-          style="color: #f04438"
-          pTooltip="Refuzo"
-          tooltipPosition="bottom"
-          pRipple
-          class="p-button-danger p-button-text mr-2"
-          *ngIf="student.isConfirmedBySupervisor !== false"
-          (click)="onRefuse(student)"></button>
       </td>
     </tr>
   </ng-template>
