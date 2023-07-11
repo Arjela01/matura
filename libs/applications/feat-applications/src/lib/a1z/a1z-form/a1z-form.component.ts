@@ -214,6 +214,10 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         this.onSubjectD3Init(response.data);
         this.onSubjectZ1Init(response.data);
         this.cd.detectChanges();
+
+        this.studentService.getById(this.a1z.studentId).subscribe(response => {
+          this.selectedStudent = response.data;
+        });
       });
     }
 
@@ -479,7 +483,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.a1z.academicYearId = response.data.academicYearId
+          this.a1z.academicYearId = response.data.academicYearId;
           this.toastService.showSuccess('Formulari A1Z u shtua me sukses!');
           const query: { queryParams: { [x: string]: string } } = {
             queryParams: {},
@@ -611,5 +615,17 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         this.cd.detectChanges();
         break;
     }
+  }
+
+  addCarriedGrade() {
+    // redirect to configurations/carried-grades with queryParams
+    const queryParams: { queryParams: { [x: string]: string } } = {
+      queryParams: {},
+    };
+
+    queryParams.queryParams['nid'] =
+      this.selectedStudent?.idCard || 'undefined';
+
+    this.router.navigate(['/configurations/carried-grades'], queryParams);
   }
 }
