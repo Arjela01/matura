@@ -4,7 +4,7 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input,
+  Input, OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -37,7 +37,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
   styleUrls: ['./exam-subject-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamSubjectFormComponent {
+export class ExamSubjectFormComponent{
   @Input() examTypes: DropdownModel<number>[] = [];
 
   @Input() set examSubjectDetails(details: ExamSubject | null) {
@@ -49,8 +49,8 @@ export class ExamSubjectFormComponent {
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
+  selectedExamType!: string;
 
-  examTypesFiltered: DropdownModel<number>[] = [];
 
   submitted = false;
 
@@ -70,6 +70,12 @@ export class ExamSubjectFormComponent {
 
   onCancelClick() {
     this.formClose.emit();
+  }
+  findExamTypeValue() {
+    const selectedExamType
+      = this.examTypes.find(type => type.key === this.examSubject.examTypeId);
+    this.selectedExamType = selectedExamType?.value || '';
+    this.examSubject.isOptional = selectedExamType?.value?.startsWith('Z') ?? false;
   }
 
   onSubmit() {
