@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -8,17 +8,17 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthFacade } from '@msh/auth/data-access-auth';
-import { ACADEMIC_YEAR_KEY } from '@msh/configurations/data-access-configurations';
-import { REPORTS_APP_URL, SafePipe } from '@msh/shared/util-shared';
-import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthFacade} from '@msh/auth/data-access-auth';
+import {ACADEMIC_YEAR_KEY} from '@msh/configurations/data-access-configurations';
+import {REPORTS_APP_URL, SafePipe} from '@msh/shared/util-shared';
+import {ButtonModule} from 'primeng/button';
+import {DialogModule} from 'primeng/dialog';
 import RxPostmessenger from 'rx-postmessenger';
-import { Subject, combineLatest, first, forkJoin, map, skip, tap } from 'rxjs';
-import { IframeAutoHeightDirective } from '../iframe-auto-height.directive';
-import { Report } from '../../../../reports-enum';
-import { Path } from './paths-enum';
+import {combineLatest, first, forkJoin, map, skip, Subject, tap} from 'rxjs';
+import {IframeAutoHeightDirective} from '../iframe-auto-height.directive';
+import {Report} from '../../../../reports-enum';
+import {Path} from './paths-enum';
 
 @Component({
   selector: 'msh-report-renderer',
@@ -53,6 +53,8 @@ export class ReportRendererComponent implements OnInit {
   reportsPath: Path = Path.Reports;
   a1Path: Path = Path.ApplicationsA1;
   a1ZPath: Path = Path.ApplicationsA1Z;
+  archiveFolderPath: Path = Path.ArchiveReport;
+  archiveFolderReport : Report = Report.ArchiveFolder_Report;
 
   private readonly iframeLoaded$$ = new Subject<boolean>();
   private readonly iframeLoaded$ = this.iframeLoaded$$
@@ -148,6 +150,11 @@ export class ReportRendererComponent implements OnInit {
         currentUrl === `/${this.reportsPath}/${this.a1ZReport}`
           ? this.reportsPath
           : this.a1ZPath;
+    } else if (this.id === this.archiveFolderReport.toString()) {
+      destinationPath =
+        currentUrl === `/${this.reportsPath}/${this.archiveFolderReport}`
+          ? this.reportsPath
+          : this.archiveFolderPath
     } else {
       destinationPath = this.reportsPath
     }
