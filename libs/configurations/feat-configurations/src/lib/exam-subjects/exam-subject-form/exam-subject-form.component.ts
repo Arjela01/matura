@@ -4,7 +4,7 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input, OnInit,
+  Input,
   Output,
   ViewChild,
 } from '@angular/core';
