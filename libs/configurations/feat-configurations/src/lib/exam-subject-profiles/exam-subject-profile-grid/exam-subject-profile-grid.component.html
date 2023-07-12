@@ -22,7 +22,7 @@
         Profili
         <p-sortIcon field="profileName"></p-sortIcon>
         <p-columnFilter
-          type="number"
+          type="text"
           field="profileName"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
@@ -33,7 +33,8 @@
         <p-columnFilter
           type="numeric"
           field="code"
-          display="menu"  mshColumnFilterDirective></p-columnFilter>
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
       <th pSortableColumn="name">
         Emri
@@ -41,15 +42,17 @@
         <p-columnFilter
           type="text"
           field="name"
-          display="menu"  mshColumnFilterDirective></p-columnFilter>
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
       <th pSortableColumn="examTypeName">
         Tipi i provimit
         <p-sortIcon field="examTypeName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="examType"
-          display="menu"  mshColumnFilterDirective></p-columnFilter>
+          field="examTypeName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
       <th pSortableColumn="academicYear">
         Viti
@@ -57,7 +60,8 @@
         <p-columnFilter
           type="text"
           field="academicYear"
-          display="menu"  mshColumnFilterDirective></p-columnFilter>
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
       <th pSortableColumn="isOptional">
         Me Zgjedhje?

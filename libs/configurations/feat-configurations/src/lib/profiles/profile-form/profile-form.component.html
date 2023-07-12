@@ -54,35 +54,27 @@
   </div>
 
   <div class="field">
-    <label for="Code">Koefiçienti D1 *</label>
+    <label for="Code">Koefiçienti D1</label>
     <input
       type="number"
       pInputText
       id="D1Coefficient"
       name="D1Coefficient"
       [(ngModel)]="profile.d1Coefficient"
-      required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !profile.d1Coefficient }" />
-    <small class="p-error block" *ngIf="submitted && !profile.d1Coefficient">
-      Koefiçienti D1 është fushë e kërkuar.
-    </small>
+      />
   </div>
 
   <div class="field">
-    <label for="Code">Koefiçienti D2 *</label>
+    <label for="Code">Koefiçienti D2 </label>
     <input
       type="number"
       pInputText
       id="D2Coefficient"
       name="D2Coefficient"
       [(ngModel)]="profile.d2Coefficient"
-      required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !profile.d2Coefficient }" />
-    <small class="p-error block" *ngIf="submitted && !profile.d2Coefficient">
-      Koefiçienti D2 është fushë e kërkuar.
-    </small>
+      />
   </div>
 
   <div class="field mb-5">
