@@ -7,6 +7,7 @@ import {
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
+import { ActivatedRoute } from '@angular/router';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -54,23 +55,36 @@ export class ManageCarriedGradesComponent implements OnInit {
 
   examTypeDropdown: DropdownModel<number>[] = [];
 
+  nid: string | undefined = undefined;
+
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private carriedGradeApiService: CarriedGradeApiService,
-    private examTypeApiService: ExamTypeApiService
+    private examTypeApiService: ExamTypeApiService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.getExamTypeDropdown();
+
+    this.route.queryParams.subscribe(params => {
+      this.nid = params['nid'];
+
+      if (this.nid) {
+        this.onNewClick();
+      }
+    });
   }
 
   onNewClick() {
     this.displayModal = true;
     this.selectedCarriedGrade = {} as CarriedGrade;
+
+    if (this.nid) {
+      this.selectedCarriedGrade.nid = this.nid;
+    }
   }
-
-
 
   onGridEvent(event: GridEvent<CarriedGrade | CarriedGrade[]>) {
     switch (event.action) {
@@ -122,6 +136,10 @@ export class ManageCarriedGradesComponent implements OnInit {
   onModalClose() {
     this.displayModal = false;
     this.selectedCarriedGrade = null;
+
+    if (this.nid) {
+      window.history.back();
+    }
   }
 
   onFormSave(carriedGrade: CarriedGrade) {
@@ -192,7 +210,7 @@ export class ManageCarriedGradesComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('Nota u fshi me sukses!');
           this.getCarriedGrades(this.filters);
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
