@@ -4,18 +4,31 @@
 <div class="grid">
   <div class="col-12">
     <div class="card">
-      <p-table #dt dataKey="id" responsiveLayout="scroll" [value]="(annualExamGrade$ | async) || []"
-        [totalRecords]="totalRecords" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10, 20, 30]"
+      <p-table
+        #dt
+        dataKey="id"
+        responsiveLayout="scroll"
+        [value]="(annualExamGrade$ | async) || []"
+        [totalRecords]="totalRecords"
+        [rows]="10"
+        [paginator]="true"
+        [rowsPerPageOptions]="[10, 20, 30]"
         [showCurrentPageReport]="true"
-        currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde" [rowHover]="true"
-        selectionMode="multiple" (onLazyLoad)="getExamGrades($event)" [lazy]="true">
+        currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
+        [rowHover]="true"
+        selectionMode="multiple"
+        (onLazyLoad)="getExamGrades($event)"
+        [lazy]="true">
         <ng-template pTemplate="header">
           <tr>
             <th pSortableColumn="studentName">
               Maturanti
               <div>
                 <p-sortIcon field="studentName"></p-sortIcon>
-                <p-columnFilter type="text" field="studentName" display="menu"
+                <p-columnFilter
+                  type="text"
+                  field="studentName"
+                  display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
@@ -23,7 +36,10 @@
               Emri i lëndës së provimit
               <div>
                 <p-sortIcon field="examSubjectName"></p-sortIcon>
-                <p-columnFilter type="text" field="examSubjectName" display="menu"
+                <p-columnFilter
+                  type="text"
+                  field="examSubjectName"
+                  display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
@@ -31,7 +47,11 @@
               Është i mbartur?
               <div>
                 <p-sortIcon field="isCarriedOver"></p-sortIcon>
-                <p-columnFilter type="boolean" field="isCarriedOver" display="menu" matchMode="equals"
+                <p-columnFilter
+                  type="boolean"
+                  field="isCarriedOver"
+                  display="menu"
+                  matchMode="equals"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
@@ -39,7 +59,23 @@
               Nota
               <div>
                 <p-sortIcon field="grade"></p-sortIcon>
-                <p-columnFilter type="numeric" field="grade" display="menu" matchMode="equals"
+                <p-columnFilter
+                  type="numeric"
+                  field="grade"
+                  display="menu"
+                  matchMode="equals"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="isFall">
+              Është vjeshtë?
+              <div>
+                <p-sortIcon field="isFall"></p-sortIcon>
+                <p-columnFilter
+                  type="boolean"
+                  field="isFall"
+                  display="menu"
+                  matchMode="equals"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
@@ -53,11 +89,14 @@
             <td style="width: 25%">
               {{ annualExamGrade.examSubjectName }}
             </td>
-            <td style="width: 25%">
+            <td style="width: 20%">
               {{ annualExamGrade.isCarriedOver ? 'Po' : 'Jo' }}
             </td>
-            <td style="width: 25%">
+            <td style="width: 15%">
               {{ annualExamGrade.grade }}
+            </td>
+            <td style="width: 25%">
+              {{ annualExamGrade.isFall ? 'Po' : 'Jo'}}
             </td>
           </tr>
         </ng-template>
