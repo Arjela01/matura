@@ -14,6 +14,7 @@ import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
   AcademicYearApiService,
   ExamSubjectApiService,
+  ExamTypeApiService,
   ReportsApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
@@ -37,6 +38,7 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { Observable, combineLatest, of, switchMap } from 'rxjs';
 import { Report } from '../../../../../../reports/reports-enum';
+import { EXAM_TYPES } from '../../a1z/a1z-form/exam-type.enum';
 import { ManageStudentsGridsDialogComponent } from '../manage-students-grids-dialog/manage-students-grids-dialog.component';
 
 @Component({
@@ -124,7 +126,8 @@ export class A1FormComponent {
     private router: Router,
     private route: ActivatedRoute,
     private authFacade: AuthFacade,
-    private reportsApiService: ReportsApiService
+    private reportsApiService: ReportsApiService,
+    private examTypeService: ExamTypeApiService
   ) {
     this.formId = this.route.snapshot.paramMap.get('id');
   }
@@ -287,6 +290,7 @@ export class A1FormComponent {
           if (data) {
             this.choosenStudent = `${data.student.studentId}-${data.student.firstName}-${data.student.middleName}-${data.student.lastName}`;
             this.a1.studentId = data.student.id;
+            this.currentStudent = data.student;
             this.cd.detectChanges();
             return this.getD3Subjects(data.student.isFall);
           }
@@ -295,6 +299,11 @@ export class A1FormComponent {
       )
       .subscribe((d3: any) => {
         this.d3Dropdown = d3?.data;
+
+        this.getOptionalSubjects().subscribe((z1: any) => {
+          this.optionalSubjects = z1.data;
+          this.cd.detectChanges();
+        });
       });
   }
 
@@ -307,15 +316,39 @@ export class A1FormComponent {
   }
 
   getOptionalSubjects(): Observable<any> {
-    return this.examSubjectsService
-      .forExamType(undefined, undefined, undefined, undefined, true)
-      .pipe(untilDestroyed(this));
+    console.log(344, this.currentStudent);
+
+    return this.examTypeService.loadDropdownList().pipe(
+      switchMap(types => {
+        const z1 = types.data.find(x => x.value == EXAM_TYPES.Z1);
+        return this.examSubjectsService
+          .forExamType(
+            z1?.key ?? undefined,
+            undefined,
+            undefined,
+            this.currentStudent?.profileId
+          )
+          .pipe(untilDestroyed(this));
+      })
+    );
   }
 
   getD3Subjects(isFall: boolean, id?: string): Observable<any> {
-    return this.examSubjectsService
-      .forExamType(undefined, undefined, undefined, isFall, false)
-      .pipe(untilDestroyed(this));
+    return this.examTypeService.loadDropdownList().pipe(
+      switchMap(types => {
+        const d3 = types.data.find(
+          x => x.value == (isFall ? EXAM_TYPES.D3 : EXAM_TYPES.D3_VJESHTA)
+        );
+        return this.examSubjectsService
+          .forExamType(
+            d3?.key ?? undefined,
+            undefined,
+            undefined,
+            this.currentStudent?.profileId
+          )
+          .pipe(untilDestroyed(this));
+      })
+    );
   }
 
   getAcademicYears(): Observable<any> {
@@ -431,7 +464,7 @@ export class A1FormComponent {
       .pipe(untilDestroyed(this))
       .subscribe({
         next: (data: any) => {
-          console.log(3333,data)
+          console.log(3333, data);
           if (data.isSuccessful) {
             this.toastService.showSuccess('Formulari A1 u ndryshua me sukses!');
             const query: { queryParams: { [x: string]: string } } = {

@@ -1,6 +1,8 @@
 <div class="grid">
   <div class="col-12 p-fluid">
-    <h2 class="flex-1 mb-0 mt-6">{{!formId ? 'Shto Formular A1Z': 'Ndrysho Formular A1Z'}}</h2>
+    <h2 class="flex-1 mb-0 mt-6">
+      {{ !formId ? 'Shto Formular A1Z' : 'Ndrysho Formular A1Z' }}
+    </h2>
     <div class="card px-6 py-6 mt-3">
       <form #form="ngForm" (ngSubmit)="onSubmit()">
         <div class="field mt-4 mb-4" [style]="{ width: '500px' }">
@@ -11,8 +13,7 @@
               label="Kërko"
               icon="pi pi-search"
               (click)="onNewClick()"
-              [style]="{ height: '100%' }"
-              ></p-button>
+              [style]="{ height: '100%' }"></p-button>
             <input
               [value]="studentInputData"
               type="text"
@@ -87,7 +88,13 @@
             name="yearOfSchoolA1Z"
             [(ngModel)]="a1z.yearOfSchoolA1Z"
             autofocus />
-          <small class="p-error block" *ngIf="submitted && !isGraduationYearValid() && this.a1z.yearOfSchoolA1Z !=null">
+          <small
+            class="p-error block"
+            *ngIf="
+              submitted &&
+              !isGraduationYearValid() &&
+              this.a1z.yearOfSchoolA1Z != null
+            ">
             Viti i përfundimit të shkollës së mesme nuk mund të jetë më i madh
             se viti aktual
           </small>
@@ -573,6 +580,19 @@
           </td>
         </tr>
       </ng-template>
+      <ng-template pTemplate="footer">
+        <!-- add a butotn  -->
+        <tr>
+          <td colspan="6">
+            <button
+              pButton
+              pRipple
+              label="Shto Një Notë"
+              icon="pi pi-plus"
+              class="p-button-success mr-2"
+              (click)="addCarriedGrade()"></button>
+          </td></tr
+      ></ng-template>
     </p-table>
   </ng-template>
 </p-dialog>
