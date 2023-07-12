@@ -339,14 +339,17 @@ export class A1FormComponent {
         const d3 = types.data.find(
           x => x.value == (isFall ? EXAM_TYPES.D3 : EXAM_TYPES.D3_VJESHTA)
         );
-        return this.examSubjectsService
-          .forExamType(
-            d3?.key ?? undefined,
+
+        if (d3) {
+          return this.examSubjectsService.forExamType(
+            d3.key ?? undefined,
             undefined,
             undefined,
             this.currentStudent?.profileId
-          )
-          .pipe(untilDestroyed(this));
+          );
+        } else {
+          return of([]);
+        }
       })
     );
   }
