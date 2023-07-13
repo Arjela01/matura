@@ -664,7 +664,6 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   }
 
   addCarriedGrade() {
-    // redirect to configurations/carried-grades with queryParams
     const queryParams: { queryParams: { [x: string]: string } } = {
       queryParams: {},
     };
@@ -672,6 +671,10 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
     queryParams.queryParams['nid'] =
       this.selectedStudent?.idCard || 'undefined';
 
-    this.router.navigate(['/configurations/carried-grades'], queryParams);
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree(['/configurations/carried-grades'], queryParams)
+    );
+
+    window.open(url, '_blank');
   }
 }
