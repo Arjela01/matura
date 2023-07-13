@@ -75,9 +75,7 @@ export class DashboardItemsFormComponent implements OnInit {
   rolesArray: any = [];
   usersArray: any = [];
   displayModal = false;
-  private minEndDate: any;
-  private endDateCalendar: any;
-   disabledEndDate:any
+  disabledEndDate:any
 
   @Input() set setDashboardItemsDetails(details: DashboardItem | null) {
     if (details) {
