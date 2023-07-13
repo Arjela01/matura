@@ -1,5 +1,6 @@
 export enum Path {
   Reports = 'reports',
   ApplicationsA1 = 'applications/a1',
-  ApplicationsA1Z = 'applications/a1z'
+  ApplicationsA1Z = 'applications/a1z',
+  ArchiveReport = 'evaluations/archive-folder'
 }

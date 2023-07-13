@@ -294,11 +294,12 @@ export class A1FormComponent {
             this.cd.detectChanges();
             return this.getD3Subjects(data.student.isFall);
           }
-          return of([]);
+          return this.getD3Subjects(false);
         })
       )
       .subscribe((d3: any) => {
         this.d3Dropdown = d3?.data;
+        this.cd.detectChanges();
 
         this.getOptionalSubjects().subscribe((z1: any) => {
           this.optionalSubjects = z1.data;
@@ -336,16 +337,14 @@ export class A1FormComponent {
   getD3Subjects(isFall: boolean, id?: string): Observable<any> {
     return this.examTypeService.loadDropdownList().pipe(
       switchMap(types => {
-        const d3 = types.data.find(
-          x => x.value == (isFall ? EXAM_TYPES.D3 : EXAM_TYPES.D3_VJESHTA)
-        );
+        const d3 = types.data.find(x => x.value == EXAM_TYPES.D3);
 
         if (d3) {
           return this.examSubjectsService.forExamType(
             d3.key ?? undefined,
             undefined,
             undefined,
-            this.currentStudent?.profileId
+            undefined
           );
         } else {
           return of([]);
