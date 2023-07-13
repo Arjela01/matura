@@ -152,7 +152,6 @@
             [options]="users"
             optionLabel="value"
             [(ngModel)]="dashboardItem.users"
-            [required]="true"
             appendTo="body"
             [showClear]="true"
             defaultLabel="Selekto Përdoruesit"
@@ -168,6 +167,8 @@
             inputId="startDate"
             id="startDate"
             name="startDate"
+            (onSelect)="updateEndDateRange()"
+
             [ngClass]="{
               'ng-invalid ng-dirty': submitted && !formattedStartDate
             }"></p-calendar>
@@ -185,6 +186,7 @@
             inputId="endDate"
             id="endDate"
             name="endDate"
+            [disabledDates]="disabledEndDate"
             [ngClass]="{
               'ng-invalid ng-dirty': submitted && !formattedEndDate
             }"></p-calendar>
