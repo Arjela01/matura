@@ -24,6 +24,7 @@ import { DropdownModel } from '@msh/shared/data-access-shared';
 import { RippleModule } from 'primeng/ripple';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
+import * as FileSaver from "file-saver";
 
 @UntilDestroy()
 @Component({
@@ -76,7 +77,7 @@ export class ManageExamScoresComponent implements OnInit {
         map((data: any) => data.id),
         distinctUntilChanged(),
         switchMap(data => {
-       
+
           if (this.filters) {
             window.location.reload();
           }
@@ -240,6 +241,17 @@ export class ManageExamScoresComponent implements OnInit {
       .subscribe(response => {
         this.examSubjects = response.data;
         this.cd.markForCheck();
+      });
+  }
+  downloadFile() {
+    this.examScoreService
+      .export()
+      .pipe(untilDestroyed(this))
+      .subscribe((response: any) => {
+        const blob: any = new Blob([response], {
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        });
+        FileSaver.saveAs(blob, 'Lista_Emërore ');
       });
   }
 
