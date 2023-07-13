@@ -236,6 +236,10 @@ export class ManageArchiveExamsComponent implements OnInit {
           this.archiveExams$$.next(response.data);
           this.totalRecords = response.total;
           this.cd.markForCheck();
+
+          if(response.total === 50){
+            this.changeFolderStatus();
+          }
         });
     }
 

@@ -6,6 +6,7 @@ export interface ExamGrade {
   examSubjectName?: string;
   isCarriedOver?: boolean;
   grade?: number;
+  isFall?:boolean;
 }
 
 export interface ExamGradeTableView {
