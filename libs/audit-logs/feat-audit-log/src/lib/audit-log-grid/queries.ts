@@ -434,7 +434,7 @@ export const A1_FORMS = `
             reasonZ3
             yearZ3
             subjectNameZ3
-            highSchoolGraduationYear
+            yearOfSchoolA1Z
             isApplyingToForeignCountries
             alreadyHaveDiploma
             isEAlbaniaApplication
@@ -701,7 +701,7 @@ export const A1Z_FORMS = `
             reasonZ3
             yearZ3
             subjectNameZ3
-            highSchoolGraduationYear
+            yearOfSchoolA1Z
             isApplyingToForeignCountries
             alreadyHaveDiploma
             isEAlbaniaApplication
@@ -1132,7 +1132,7 @@ export const EXAM_ASSIGNMENT = `
         hasNextPage
         hasPreviousPage
        }
-              items {
+        items {
             auditHostname
             auditSIDUsername
             auditUsername
@@ -2692,7 +2692,6 @@ export const STUDENTS = `
 
 `;
 
-
 export const queriesMap: Map<string, string> = new Map([
   ['a1Forms', A1_FORMS],
   ['students', STUDENTS],
@@ -2721,5 +2720,4 @@ export const queriesMap: Map<string, string> = new Map([
   ['examSubjectProfile', EXAM_SUBJECT_PROFILE],
   ['examSite', EXAM_SITE],
   ['users', USERS],
-
 ]);
