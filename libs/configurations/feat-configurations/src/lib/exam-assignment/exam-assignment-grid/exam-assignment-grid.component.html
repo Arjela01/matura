@@ -45,12 +45,12 @@
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
-      <th pSortableColumn="time">
-        Ora e Provimit
-        <p-sortIcon field="time"></p-sortIcon>
+      <th pSortableColumn="studentId">
+        Matura ID
+        <p-sortIcon field="studentId"></p-sortIcon>
         <p-columnFilter
-          type="number"
-          field="time"
+          type="text"
+          field="studentId"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
@@ -78,7 +78,7 @@
         {{ examAssignment.date | date : 'dd/MM/yyyy' }}
       </td>
       <td style="width: 20%; min-width: 10rem">
-        {{ examAssignment.time }}
+        {{ examAssignment.studentId }}
       </td>
       <td style="width: 20%; min-width: 10rem">
         {{ examAssignment.studentName }}
