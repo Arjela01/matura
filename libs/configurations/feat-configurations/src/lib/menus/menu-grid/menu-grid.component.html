@@ -25,7 +25,8 @@
           <p-columnFilter
             type="text"
             field="text"
-            display="menu"  mshColumnFilterDirective></p-columnFilter>
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="url">
@@ -35,7 +36,8 @@
           <p-columnFilter
             type="text"
             field="url"
-            display="menu"  mshColumnFilterDirective></p-columnFilter>
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="displayOrder">
@@ -45,11 +47,32 @@
           <p-columnFilter
             type="numeric"
             field="displayOrder"
-            display="menu"  mshColumnFilterDirective></p-columnFilter>
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="parentText">Prindi</th>
-      <th pSortableColumn="roles">Rolet</th>
+      <th pSortableColumn="parentText">
+        Prindi
+        <div>
+          <p-sortIcon field="parentText"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="parentText"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="roles">
+        Rolet
+        <div>
+          <p-sortIcon field="roles"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="roles"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
       <th pSortableColumn="isVisible">
         Është e Dukshme?
         <div>
