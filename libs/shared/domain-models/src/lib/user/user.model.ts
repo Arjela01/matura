@@ -13,6 +13,7 @@ export interface User {
   studentId?: string | null;
   studyProgramId?: number;
   universityId: number;
+  highSchoolId?:number;
   username?: string;
   isDisabled: boolean;
   password: string;

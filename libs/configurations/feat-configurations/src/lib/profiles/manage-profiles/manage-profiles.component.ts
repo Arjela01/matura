@@ -31,6 +31,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ProfileFormComponent } from '../profile-form/profile-form.component';
 import { ProfileGridComponent } from '../profile-grid/profile-grid.component';
+import * as FileSaver from "file-saver";
 
 @UntilDestroy()
 @Component({
@@ -208,6 +209,18 @@ export class ManageProfilesComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.ProfileGroups = response.data;
+      });
+  }
+
+  downloadTemplateFile() {
+    this.profileService
+      .exportTemplate()
+      .pipe(untilDestroyed(this))
+      .subscribe((response: any) => {
+        const blob: any = new Blob([response], {
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        });
+        FileSaver.saveAs(blob, 'Profili_Template');
       });
   }
 }
