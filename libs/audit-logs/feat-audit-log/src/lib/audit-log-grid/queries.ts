@@ -1000,28 +1000,6 @@ export const EXAM_DATE = `
                 }
 
             }
-            examSite {
-                name
-                address
-                quota
-                id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
-            }
             academicYear {
                 isActive
                 year
