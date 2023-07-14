@@ -133,11 +133,11 @@
       [autoDisplayFirst]="false"
       appendTo="body"
       [(ngModel)]="user.universityId"
-     >
+      [showClear]="true">
     </p-dropdown>
   </div>
   <div class="field" [hidden]="showHighSchools === false">
-    <label for="universityId">Shkolla e mesme *</label>
+    <label for="universityId">Shkolla *</label>
     <p-dropdown
       id="highSchool"
       optionValue="key"
