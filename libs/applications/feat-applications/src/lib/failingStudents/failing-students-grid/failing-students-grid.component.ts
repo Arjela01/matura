@@ -16,6 +16,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import {ChipModule} from "primeng/chip";
 
 @Component({
   selector: 'msh-failing-students-grid',
@@ -28,6 +29,7 @@ import { TooltipModule } from 'primeng/tooltip';
     TooltipModule,
     CheckboxModule,
     RippleModule,
+    ChipModule,
     ColumnFilterDirective
   ],
   templateUrl: './failing-students-grid.component.html',
