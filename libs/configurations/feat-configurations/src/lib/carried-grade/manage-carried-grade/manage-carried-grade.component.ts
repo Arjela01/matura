@@ -136,10 +136,6 @@ export class ManageCarriedGradesComponent implements OnInit {
   onModalClose() {
     this.displayModal = false;
     this.selectedCarriedGrade = null;
-
-    if (this.nid) {
-      window.history.back();
-    }
   }
 
   onFormSave(carriedGrade: CarriedGrade) {

@@ -1,4 +1,4 @@
-import { CommonModule, DatePipe, formatDate } from '@angular/common';
+import {CommonModule, DatePipe, formatDate} from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -9,41 +9,35 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
-import { DashboardItem } from '@msh/shared/domain-models';
+import {FormsModule, NgForm} from '@angular/forms';
+import {DashboardItem} from '@msh/shared/domain-models';
 
-import { ButtonModule } from 'primeng/button';
-import { CheckboxModule } from 'primeng/checkbox';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { RadioButtonModule } from 'primeng/radiobutton';
+import {ButtonModule} from 'primeng/button';
+import {CheckboxModule} from 'primeng/checkbox';
+import {DropdownModule} from 'primeng/dropdown';
+import {InputNumberModule} from 'primeng/inputnumber';
+import {InputTextModule} from 'primeng/inputtext';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {RadioButtonModule} from 'primeng/radiobutton';
 
-import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
-import { DialogModule } from 'primeng/dialog';
-import { FileUploadModule } from 'primeng/fileupload';
+import {SharedStudentLookupModule} from '@msh/shared/student-lookup';
+import {DialogModule} from 'primeng/dialog';
+import {FileUploadModule} from 'primeng/fileupload';
 
-import { ActivatedRoute, Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {
   DashboardItemsApiService,
   DashboardSectionApiService,
   RolesApiService,
   UserApiService,
 } from '@msh/configurations/data-access-configurations';
-import { DropdownModel } from '@msh/shared/data-access-shared';
-import { GlobalToastService } from '@msh/shared/util-shared';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { AutoCompleteModule } from 'primeng/autocomplete';
-import { CalendarModule } from 'primeng/calendar';
-import { MultiSelectModule } from 'primeng/multiselect';
-import {
-  BehaviorSubject,
-  Observable,
-  combineLatest,
-  of,
-  switchMap,
-} from 'rxjs';
+import {DropdownModel} from '@msh/shared/data-access-shared';
+import {GlobalToastService} from '@msh/shared/util-shared';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import {CalendarModule} from 'primeng/calendar';
+import {MultiSelectModule} from 'primeng/multiselect';
+import {BehaviorSubject, combineLatest, Observable, of, switchMap,} from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -81,6 +75,7 @@ export class DashboardItemsFormComponent implements OnInit {
   rolesArray: any = [];
   usersArray: any = [];
   displayModal = false;
+  disabledEndDate:any
 
   @Input() set setDashboardItemsDetails(details: DashboardItem | null) {
     if (details) {
@@ -217,6 +212,23 @@ export class DashboardItemsFormComponent implements OnInit {
       };
     }
   }
+
+  updateEndDateRange() {
+    if (this.formattedStartDate) {
+      const startDate = new Date(this.formattedStartDate);
+      const endDate =  new Date(this.formattedEndDate);
+      startDate.setDate(startDate.getDate() + 1);
+
+      this.disabledEndDate = [];
+      while (endDate <  startDate) {
+        this.disabledEndDate.push(new Date(endDate));
+        endDate.setDate(endDate.getDate() + 1);
+      }
+    } else {
+      this.disabledEndDate = null;
+    }
+  }
+
   onSubmit() {
     if (this.dashboardItem.endDate && this.dashboardItem.startDate) {
       this.dashboardItem.endDate = this.formattedEndDate;

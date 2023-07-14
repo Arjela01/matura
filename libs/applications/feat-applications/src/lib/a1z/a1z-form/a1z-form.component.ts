@@ -25,7 +25,7 @@ import {
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import { Student } from '@msh/shared/domain-models';
+import { AcademicYear, Student } from '@msh/shared/domain-models';
 import {
   SharedStudent,
   SharedStudentLookupModule,
@@ -208,6 +208,17 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       this.a1Categories = response.data;
     });
     this.getSubjectDropdown();
+
+    this.academicYearService.getAcademicYears().subscribe(response => {
+      console.log(33, response, this.a1z.yearOfSchoolA1Z);
+      this.a1z.yearOfSchoolA1Z = (response as any).data
+        .filter((item: AcademicYear) => {
+          return item.isActive;
+        })
+        .at(0)?.year;
+
+      this.cd.detectChanges();
+    });
 
     if (this.formId !== null) {
       this.a1zService.getOne(parseInt(this.formId)).subscribe(response => {
@@ -653,7 +664,6 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   }
 
   addCarriedGrade() {
-    // redirect to configurations/carried-grades with queryParams
     const queryParams: { queryParams: { [x: string]: string } } = {
       queryParams: {},
     };
@@ -661,6 +671,10 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
     queryParams.queryParams['nid'] =
       this.selectedStudent?.idCard || 'undefined';
 
-    this.router.navigate(['/configurations/carried-grades'], queryParams);
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree(['/configurations/carried-grades'], queryParams)
+    );
+
+    window.open(url, '_blank');
   }
 }
