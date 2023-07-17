@@ -519,7 +519,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   }
 
   onExitForm() {
-    this.router.navigate(['/applications/a1z']);
+    this.router.navigate(['/configurations/students']);
   }
 
   onNewA1ZFormSubmit() {
