@@ -10,6 +10,14 @@
         class="p-button-success mr-2"
         (click)="onNewClick()"></button>
     </div>
+    <div class="my-2">
+      <button
+        pButton
+        pRipple
+        icon="pi pi-download"
+        label="Shkarko"
+        (click)="downloadFile()"></button>
+    </div>
     <p-fileUpload
       name="myfile[]"
       [multiple]="true"
