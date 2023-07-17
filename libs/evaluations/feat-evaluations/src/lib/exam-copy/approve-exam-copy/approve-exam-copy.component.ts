@@ -3,8 +3,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   Input,
   OnInit,
+  Output,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -19,6 +21,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { ExamAssignment } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({
@@ -52,6 +55,8 @@ export class ApproveExamCopyComponent implements OnInit {
   examCopy?: ExamCopy | null = null;
 
   @ViewChild('form', { static: true }) form!: NgForm;
+  @Output() formSave = new EventEmitter<ExamAssignment>();
+  @Output() formClose = new EventEmitter<undefined>();
 
   @Input() set examCopyDetails(details: ExamCopy | null) {
     if (details) {
@@ -64,13 +69,16 @@ export class ApproveExamCopyComponent implements OnInit {
     private readonly examCopyService: ExamCopyApiService,
     private readonly toastService: GlobalToastService
   ) {}
+  displayUploadModal = false;
+  submitted = false;
   ngOnInit(): void {
     this.confirmExamCopy.applicationId = this.examCopy?.applicationId;
     console.log(this.confirmExamCopy);
   }
 
   onCancelClick() {
-    window.location.reload();
+    this.formClose.emit();
+    this.displayUploadModal = false;
   }
 
   handleUpload(data: any) {
@@ -86,21 +94,25 @@ export class ApproveExamCopyComponent implements OnInit {
   }
 
   onConfirm() {
+    this.submitted = true;
+
     this.examCopyService
       .confirm(this.confirmExamCopy)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        if (response.isSuccessful === false) {
+        if (!response.isSuccessful) {
           this.toastService.showError(
             response.errorMessage ?? 'Ndodhi një problem gjatë konfirmimit'
           );
+          this.formClose.emit();
+          this.displayUploadModal = false;
         }
 
-        if (response.isSuccessful === true) {
+        if (response.isSuccessful) {
           this.toastService.showSuccess('Konfirmimi u krye me sukses');
-          window.location.reload();
+          this.formClose.emit();
+          this.displayUploadModal = false;
         }
-        console.log(response);
       });
   }
 }

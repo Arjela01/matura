@@ -225,93 +225,95 @@
 
   <div class="text-xl mt-2 mb-2 font-bold">Të dhënat e aplikimit</div>
   <div>
-  <div class="grid">
-    <div class="field col-2">
-      <label for="applicationId">Numër Aplikimi</label>
-      <input
-        type="text"
-        pInputText
-        id="applicationId"
-        disabled
-        name="applicationId"
-        [value]="examCopy.applicationId"
-        autofocus />
-    </div>
-    <div class="field col-2">
-      <label for="dateCreated">Datë aplikimi</label>
-      <input
-        type="text"
-        pInputText
-        id="dateCreated"
-        name="dateCreated"
-        disabled
-        [value]="examCopy.dateCreated | date"
-        autofocus />
-    </div>
-    <div class="field col-2">
-      <label for="decisionDueDate">Afati i Vendimit</label>
-      <input
-        type="text"
-        pInputText
-        id="decisionDueDate"
-        name="decisionDueDate"
-        disabled
-        [value]="examCopy.decisionDueDate | date"
-        autofocus />
-    </div>
-    <div class="field col-2 ">
-      <label for="decisionDate">Statusi</label>
-      <div
-        [ngClass]="
-          examCopy.status === 3
-            ? ['bg-red-300', 'red-text', 'px-6', 'py-3', 'fb']
-            : examCopy.status === 2
-            ? ['bg-green-300', 'green-text', 'px-6', 'py-3', 'fb']
-            : ['bg-yellow-300', 'yellow-text', 'px-6', 'py-3', 'fb']
-        ">
-        {{
-          examCopy.status === 1
-            ? 'Draft'
-            : examCopy.status === 2
-            ? 'Pranuar'
-            : 'Refuzuar'
-        }}
+    <div class="grid">
+      <div class="field col-2">
+        <label for="applicationId">Numër Aplikimi</label>
+        <input
+          type="text"
+          pInputText
+          id="applicationId"
+          disabled
+          name="applicationId"
+          [value]="examCopy.applicationId"
+          autofocus />
+      </div>
+      <div class="field col-2">
+        <label for="dateCreated">Datë aplikimi</label>
+        <input
+          type="text"
+          pInputText
+          id="dateCreated"
+          name="dateCreated"
+          disabled
+          [value]="examCopy.dateCreated | date"
+          autofocus />
+      </div>
+      <div class="field col-2">
+        <label for="decisionDueDate">Afati i Vendimit</label>
+        <input
+          type="text"
+          pInputText
+          id="decisionDueDate"
+          name="decisionDueDate"
+          disabled
+          [value]="examCopy.decisionDueDate | date"
+          autofocus />
+      </div>
+      <div class="field col-2">
+        <label for="decisionDate">Statusi</label>
+        <div
+          [ngClass]="
+            examCopy.status === 3
+              ? ['bg-red-300', 'red-text', 'px-6', 'py-3', 'fb']
+              : examCopy.status === 2
+              ? ['bg-green-300', 'green-text', 'px-6', 'py-3', 'fb']
+              : ['bg-yellow-300', 'yellow-text', 'px-6', 'py-3', 'fb']
+          ">
+          {{
+            examCopy.status === 1
+              ? 'Draft'
+              : examCopy.status === 2
+              ? 'Pranuar'
+              : 'Refuzuar'
+          }}
+        </div>
+      </div>
+      <div class="field col-2">
+        <label for="decisionDate">Datë Vendimi</label>
+        <input
+          type="text"
+          pInputText
+          id="decisionDate"
+          name="decisionDate"
+          disabled
+          [value]="examCopy.decisionDate | date"
+          autofocus />
+      </div>
+      <div class="field col-2">
+        <label for="comments">Komente</label>
+        <input
+          type="text"
+          pInputText
+          disabled
+          id="comments"
+          name="comments"
+          [value]="examCopy.comments"
+          autofocus />
       </div>
     </div>
-    <div class="field col-2">
-      <label for="decisionDate">Datë Vendimi</label>
-      <input
-        type="text"
-        pInputText
-        id="decisionDate"
-        name="decisionDate"
-        disabled
-        [value]="examCopy.decisionDate | date"
-        autofocus />
-    </div>
-    <div class="field col-2">
-      <label for="comments">Komente</label>
-      <input
-        type="text"
-        pInputText
-        disabled
-        id="comments"
-        name="comments"
-        [value]="examCopy.comments"
-        autofocus />
-    </div>
-  </div>
     <div class="flex justify-content-end">
-    <div *ngIf="examCopy.status === 2" class="field col-2 mt-2 mb-0 sm:mr-0" style="display:contents">
-      <button
-        pButton
-        pRipple
-        icon="pi pi-download"
-        label="Shkarko"
-        (click)="downloadFile(examCopy.attachedDocument)"></button>
+      <div
+        *ngIf="examCopy.status === 2"
+        class="field col-2 mt-2 mb-0 sm:mr-0"
+        style="display: contents">
+        <button
+          pButton
+          pRipple
+          icon="pi pi-download"
+          label="Shkarko"
+          (click)="downloadFile(examCopy.attachedDocument)"></button>
+      </div>
     </div>
-    </div>
-
   </div>
 
   <div *ngIf="examCopy.status === 1" class="flex justify-content-end">
@@ -346,7 +348,9 @@
   class="p-fluid"
   (onHide)="onConfirmModalClose()">
   <ng-template pTemplate="content">
-    <msh-approve-exam-copy [examCopyDetails]="examCopy">
+    <msh-approve-exam-copy
+      [examCopyDetails]="examCopy"
+      (formClose)="onConfirmModalClose()">
     </msh-approve-exam-copy>
   </ng-template>
 </p-dialog>
