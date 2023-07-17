@@ -66,4 +66,11 @@ export class ExamScoreApiService {
       'blob'
     );
   }
+  exportExamScoreSecret(): Observable<ApiResult<unknown>> {
+    return this.apiService.get<any>(
+      `/ExamScores/ExportExamScoreSecret`,
+      new HttpParams(),
+      'blob'
+    );
+  }
 }
