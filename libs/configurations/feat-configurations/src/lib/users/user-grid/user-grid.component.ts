@@ -85,6 +85,7 @@ export class UserGridComponent {
     password: '',
     roleId: '',
     universityId: 0,
+    highSchoolId:0,
     isDisabled: false,
   };
 

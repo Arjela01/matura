@@ -34,30 +34,30 @@
             appendTo="body">
         </p-dropdown>
     </div>
-    <div class="field">
-        <label class="mb-3">Profesional *</label>
-        <div class="formgrid grid">
-            <div class="field-radiobutton col-6">
-                <p-radioButton id="isProffesionalTrue" name="isProffesionalTrue" [value]="true"
-                    [(ngModel)]="diplomaFile.isProfessional"></p-radioButton>
-                <label for="isProffesionalTrue">Po</label>
-            </div>
-            <div class="field-radiobutton col-6">
-                <p-radioButton id="isProffesionalFalse" name="isProffesionalFalse" [value]="false"
-                    [(ngModel)]="diplomaFile.isProfessional"></p-radioButton>
-                <label for="isProffesionalFalse">Jo</label>
-            </div>
-        </div>
-    </div>
+<!--    <div class="field">-->
+<!--        <label class="mb-3">Profesional *</label>-->
+<!--        <div class="formgrid grid">-->
+<!--            <div class="field-radiobutton col-6">-->
+<!--                <p-radioButton id="isProffesionalTrue" name="isProffesionalTrue" [value]="true"-->
+<!--                    [(ngModel)]="diplomaFile.isProfessional"></p-radioButton>-->
+<!--                <label for="isProffesionalTrue">Po</label>-->
+<!--            </div>-->
+<!--            <div class="field-radiobutton col-6">-->
+<!--                <p-radioButton id="isProffesionalFalse" name="isProffesionalFalse" [value]="false"-->
+<!--                    [(ngModel)]="diplomaFile.isProfessional"></p-radioButton>-->
+<!--                <label for="isProffesionalFalse">Jo</label>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
     <div class="field">
         <label class="mb-3">Aplikon jashtë? *</label>
         <div class="formgrid grid">
-            <div class="field-radiobutton col-6">
+            <div class="field-radiobutton col-3">
                 <p-radioButton id="isForeignTrue" name="isForeignTrue" [value]="true"
                     [(ngModel)]="diplomaFile.isForeign"></p-radioButton>
                 <label for="isForeignTrue">Po</label>
             </div>
-            <div class="field-radiobutton col-6">
+            <div class="field-radiobutton col-3">
                 <p-radioButton id="isForeignFalse" name="isForeignFalse" [value]="false"
                     [(ngModel)]="diplomaFile.isForeign"></p-radioButton>
                 <label for="isForeignFalse">Jo</label>

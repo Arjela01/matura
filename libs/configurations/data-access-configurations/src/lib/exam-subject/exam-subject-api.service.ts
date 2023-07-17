@@ -4,6 +4,7 @@ import { ExamSubject, ExamSubjectTableView } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { Observable, catchError, map, shareReplay, throwError } from 'rxjs';
+import {HttpParams} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root',
@@ -66,6 +67,14 @@ export class ExamSubjectApiService {
         profileID: profileID,
         id: id,
       }
+    );
+  }
+
+  exportTemplate(): Observable<ApiResult<unknown>> {
+    return this.apiService.get<any>(
+      `/ExamSubject/Export`,
+      new HttpParams(),
+      'blob'
     );
   }
 }

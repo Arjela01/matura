@@ -58,6 +58,16 @@
             display="menu"  mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="role">
+        Roli
+        <div>
+          <p-sortIcon field="role"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="role"
+            display="menu"  mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
       <th pSortableColumn="administrationOfficeName">
         DAR/ZA
         <div>
@@ -94,6 +104,9 @@
       </td>
       <td style="width: 10%; min-width: 10rem">
         {{ user.username }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ user.roleName }}
       </td>
       <td style="width: 10%; min-width: 10rem">
         {{ user.administrationOfficeName }}
