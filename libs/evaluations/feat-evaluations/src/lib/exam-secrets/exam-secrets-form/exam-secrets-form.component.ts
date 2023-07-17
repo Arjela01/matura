@@ -33,7 +33,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import {
-  ExamSubjectApiService, ExamTypeApiService,
+  ExamSubjectApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
 import {Router} from '@angular/router';
@@ -68,10 +68,7 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
   @Output() formSave = new EventEmitter<ExamSecret>();
   @Output() formClose = new EventEmitter<undefined>();
   @ViewChild('form', { static: true }) form!: NgForm;
-  @Input() examSubjects: DropdownModel<string>[] = [];
-  @Input() examTypes: DropdownModel<number>[] = [];
-  @Output() examTypeChanged = new EventEmitter<string>();
-
+  @Input() examSubjects: DropdownModel<number>[] = [];
   filters: LazyLoadEvent | null = null;
 
   private studentList$$ = new BehaviorSubject<Student[]>([]);
@@ -83,14 +80,11 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
   showStudentModal = false;
   selectedStudent: any = null;
   examSubjectId: any;
-  examTypeId: any;
-
   examSecret: ExamSecret = {
     id: '',
     studentId: '',
     studentName: '',
     examSubjectName: '',
-    examTypeName: '',
     barcode: '',
     isFall: true,
     academicYearId: 1,
@@ -101,7 +95,6 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
     }
   }
   ngOnChanges(changes: SimpleChanges): void {
-    this.examTypeId = this.examSecret.examTypeId;
     this.examSubjectId = this.examSecret.examSubjectId;
     this.cd.detectChanges();
   }
@@ -112,8 +105,6 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
     private readonly router: Router,
     private readonly toastService: GlobalToastService,
     private readonly examSubjectService: ExamSubjectApiService,
-    private readonly examTypeService: ExamTypeApiService,
-
   ) {}
 
   ngDoCheck(): void {
@@ -126,15 +117,11 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
   }
 
   ngOnInit(): void {
-    this.examTypeService.loadDropdownList().subscribe(response => {
-      this.examTypes = response.data;
+    this.examSubjectService.loadDropdownList().subscribe(response => {
+      this.examSubjects = response.data;
     });
   }
-  onExamTypeChanged($event: any): void {
-    this.examTypeId = $event.value;
-    this.examTypeChanged.emit(this.examTypeId);
-    this.examSecret.examTypeId = this.examTypeId;
-  }
+
   onGridEvent(event: GridEvent<Student | Student[]>) {
     switch (event.action) {
       case GRID_ACTIONS.EDIT:
