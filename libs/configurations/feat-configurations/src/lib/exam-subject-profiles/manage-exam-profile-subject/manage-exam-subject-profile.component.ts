@@ -24,6 +24,7 @@ import { DropdownModel } from '@msh/shared/data-access-shared';
 import { RippleModule } from 'primeng/ripple';
 import { ExamSubjectProfileFormComponent } from '../exam-subject-profile-form/exam-subject-profile-form.component';
 import { ExamSubjectProfileGridComponent } from '../exam-subject-profile-grid/exam-subject-profile-grid.component';
+import * as FileSaver from "file-saver";
 
 @UntilDestroy()
 @Component({
@@ -253,5 +254,17 @@ export class ManageExamSubjectProfileComponent implements OnInit {
       $event.academicYearId,
       $event.examSubjectId
     );
+  }
+
+  downloadTemplateFile() {
+    this.examSubjectProfileService
+      .exportTemplate()
+      .pipe(untilDestroyed(this))
+      .subscribe((response: any) => {
+        const blob: any = new Blob([response], {
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        });
+        FileSaver.saveAs(blob, 'LendeProfili_Template');
+      });
   }
 }
