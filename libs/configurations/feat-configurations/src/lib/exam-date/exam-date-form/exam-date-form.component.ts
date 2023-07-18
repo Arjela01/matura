@@ -19,6 +19,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { CalendarModule } from 'primeng/calendar';
+import {MultiSelectModule} from "primeng/multiselect";
 
 @Component({
   selector: 'msh-exam-date-form',
@@ -34,6 +35,7 @@ import { CalendarModule } from 'primeng/calendar';
     CheckboxModule,
     DropdownModule,
     CalendarModule,
+    MultiSelectModule
   ],
   templateUrl: './exam-date-form.component.html',
   styleUrls: ['./exam-date-form.component.scss'],
@@ -66,6 +68,7 @@ export class ExamDateFormComponent {
     time: '',
     examTypeId: 0,
     examTypeName: '',
+    examSiteIds: 0,
     examSiteId: 0,
     examSiteName: '',
   };
