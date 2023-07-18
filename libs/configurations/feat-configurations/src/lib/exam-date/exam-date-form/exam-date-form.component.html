@@ -24,7 +24,7 @@
     </small>
   </div>
 
-  <div class="field">
+  <div class="field" *ngIf="examDate.id">
     <label for="ExamSite">Qendra e Provimit *</label>
     <p-dropdown
       id="ExamSite"
@@ -44,6 +44,30 @@
     <small
       class="p-error block"
       *ngIf="submitted && !examDate.examSiteId">
+      Qendra e Provimit është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field" *ngIf="!examDate.id">
+    <label for="ExamSites">Qendra e Provimit *</label>
+    <p-multiSelect
+      id="ExamSites"
+      [options]="examSites"
+      optionValue="key"
+      optionLabel="value"
+      name="examSiteId"
+      defaultLabel="Zgjidh Qendrën"
+      display="chip"
+      appendTo="body"
+      [(ngModel)]="examDate.examSiteIds"
+      [showClear]="true"
+      [required]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examDate.examSiteIds
+      }">
+    </p-multiSelect>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examDate.examSiteIds">
       Qendra e Provimit është fushë e kërkuar.
     </small>
   </div>
