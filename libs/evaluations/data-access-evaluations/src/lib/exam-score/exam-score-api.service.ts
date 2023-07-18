@@ -8,6 +8,7 @@ import {
   ExamScoreTableView,
   FileImport,
 } from '@msh/evaluations/domain-evaluations';
+import {HttpParams} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root',
@@ -57,5 +58,19 @@ export class ExamScoreApiService {
         catchError(error => throwError(error)),
         shareReplay()
       );
+  }
+  export(): Observable<ApiResult<unknown>> {
+    return this.apiService.get<any>(
+      `/ExamScores/Export`,
+      new HttpParams(),
+      'blob'
+    );
+  }
+  exportExamScoreSecret(): Observable<ApiResult<unknown>> {
+    return this.apiService.get<any>(
+      `/ExamScores/ExportExamScoreSecret`,
+      new HttpParams(),
+      'blob'
+    );
   }
 }

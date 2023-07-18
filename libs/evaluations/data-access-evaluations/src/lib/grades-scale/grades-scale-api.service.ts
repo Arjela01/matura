@@ -54,7 +54,7 @@ export class GradesScaleService {
     return this.apiService
       .post<ApiResult<any>, any>('/GradeScale/Import', {
         file: data.file,
-        examSubjectId: data.examSubjectId,
+        examTypeId: data.examTypeId,
       })
       .pipe(
         map(data => data),

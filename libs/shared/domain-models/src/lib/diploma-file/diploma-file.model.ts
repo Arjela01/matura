@@ -3,7 +3,7 @@ export interface IDiplomaFile {
   schoolId: number;
   darZaId: number;
   studentId: string;
-  isForeign: boolean;
+  isForeign: boolean | '';
   isProfessional: boolean;
   isPrinted: boolean;
 }

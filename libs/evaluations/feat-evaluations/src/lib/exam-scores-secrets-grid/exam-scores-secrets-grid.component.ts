@@ -13,6 +13,7 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
+import * as FileSaver from 'file-saver';
 @UntilDestroy()
 @Component({
   selector: 'msh-exam-score-grid',
@@ -58,6 +59,17 @@ export class ExamScoresSecretsGridComponent {
       .subscribe(response => {
         this.examScores$$.next(response.data);
         this.totalRecords = response.total;
+      });
+  }
+  downloadFile() {
+    this.examScoreService
+      .exportExamScoreSecret()
+      .pipe(untilDestroyed(this))
+      .subscribe((response: any) => {
+        const blob: any = new Blob([response], {
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        });
+        FileSaver.saveAs(blob, 'Piket e provimit pas sekretimit Export[TEMPLATE]');
       });
   }
 }

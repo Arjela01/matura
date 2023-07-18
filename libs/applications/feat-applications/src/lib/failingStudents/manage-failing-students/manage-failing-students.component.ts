@@ -111,7 +111,7 @@ export class ManageFailingStudentsComponent {
           student => !student.isFall
         );
         this.failingStudents$$.next(studentsWithAdditionalValueZero);
-        this.totalRecords = studentsWithAdditionalValueZero.length;
+        this.totalRecords = response.total;
         this.cd.markForCheck();
       });
   }

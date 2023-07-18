@@ -136,7 +136,21 @@
       [showClear]="true">
     </p-dropdown>
   </div>
-
+  <div class="field" [hidden]="showHighSchools === false">
+    <label for="universityId">Shkolla *</label>
+    <p-dropdown
+      id="highSchool"
+      optionValue="key"
+      optionLabel="value"
+      [options]="highSchools"
+      [disabled]="showHighSchools === false"
+      name="universityId"
+      [autoDisplayFirst]="false"
+      appendTo="body"
+      [(ngModel)]="user.highSchoolId"
+    >
+    </p-dropdown>
+  </div>
   <div class="field" [hidden]="showUniversityDepartment === false">
     <label for="universityDepartmentId">Fakulteti *</label>
     <p-dropdown

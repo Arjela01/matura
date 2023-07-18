@@ -6,14 +6,24 @@ import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from 'primeng/button';
 import { GeneralTableApiService } from '@msh/audit-logs/data-access-audit-log';
 import { FormsModule } from '@angular/forms';
-import { GlobalToastService } from '@msh/shared/util-shared';
+import {
+  ColumnFilterDirective,
+  GlobalToastService,
+} from '@msh/shared/util-shared';
 import { Router } from '@angular/router';
 import { GeneralTable } from '@msh/audit-logs/domain-audit-log';
 
 @Component({
   selector: 'msh-general-table-grid',
   standalone: true,
-  imports: [CommonModule, TableModule, RippleModule, ButtonModule, FormsModule],
+  imports: [
+    CommonModule,
+    TableModule,
+    RippleModule,
+    ButtonModule,
+    FormsModule,
+    ColumnFilterDirective,
+  ],
   templateUrl: './general-table-grid.component.html',
   styleUrls: ['./general-table-grid.component.scss'],
   providers: [Apollo],

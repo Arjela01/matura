@@ -22,6 +22,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { ExamCopyDetailsComponent } from '../exam-copy-details/exam-copy-details.component';
 import { ExamCopyGridComponent } from '../exam-copy-grid/exam-copy-grid.component';
+import * as FileSaver from "file-saver";
 
 @UntilDestroy()
 @Component({
@@ -83,70 +84,6 @@ export class ManageExamCopyComponent implements OnInit {
   }
 
   getExamCopies($event: any) {
-    // this.examCopies$$.next([
-    //   {
-    //     address: 'address',
-    //     city: 'city',
-    //     administrationOffice: 'administrationOffice',
-    //     applicationId: 'applicationId',
-    //     attachedDocument: 'attachedDocument',
-    //     cel: 'cel',
-    //     comments: 'comments',
-    //     dateOfBirth: 'dateOfBirth',
-    //     decisionDate: 'decisionDate',
-    //     documentName: 'documentName',
-    //     email: 'email',
-    //     fatherName: 'fatherName',
-    //     firstName: 'firstName',
-    //     gender: 'gender',
-    //     lastName: 'lastName',
-    //     maturaId: 'maturaId',
-    //     municipalityUnit: 'municipalityUnit',
-    //     nationality: 'nationality',
-    //     nid: 'nid',
-    //     placeOfBirth: 'placeOfBirth',
-    //     postalCode: 'postalCode',
-    //     region: 'region',
-    //     remarks: 'remarks',
-    //     schoolCode: 'schoolCode',
-    //     schoolName: 'schoolName',
-    //     service: 'service',
-    //     status: 0,
-    //     subject: 'subject',
-    //     telFix: 'telFix',
-    //   },
-    //   {
-    //     address: 'address',
-    //     city: 'city',
-    //     administrationOffice: 'administrationOffice',
-    //     applicationId: 'applicationId',
-    //     attachedDocument: 'attachedDocument',
-    //     cel: 'cel',
-    //     comments: 'comments',
-    //     dateOfBirth: 'dateOfBirth',
-    //     decisionDate: 'decisionDate',
-    //     documentName: 'documentName',
-    //     email: 'email',
-    //     fatherName: 'fatherName',
-    //     firstName: 'firstName',
-    //     gender: 'gender',
-    //     lastName: 'lastName',
-    //     maturaId: 'maturaId',
-    //     municipalityUnit: 'municipalityUnit',
-    //     nationality: 'nationality',
-    //     nid: 'nid',
-    //     placeOfBirth: 'placeOfBirth',
-    //     postalCode: 'postalCode',
-    //     region: 'region',
-    //     remarks: 'remarks',
-    //     schoolCode: 'schoolCode',
-    //     schoolName: 'schoolName',
-    //     service: 'service',
-    //     status: 1,
-    //     subject: 'subject',
-    //     telFix: 'telFix',
-    //   },
-    // ]);
     this.filters = Object.assign({}, $event);
     this.examCopyService
       .loadExamCopies($event)
@@ -160,5 +97,17 @@ export class ManageExamCopyComponent implements OnInit {
           this.toastService.showError(error);
         }
       );
+  }
+
+  downloadTemplateFile() {
+    this.examCopyService
+      .exportTemplate()
+      .pipe(untilDestroyed(this))
+      .subscribe((response: any) => {
+        const blob: any = new Blob([response], {
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        });
+        FileSaver.saveAs(blob, 'AplikimKopjeTesti_Template');
+      });
   }
 }

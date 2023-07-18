@@ -426,7 +426,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
               d1ExamType.key,
               this.a1z.academicYearId,
               undefined,
-              this.selectedStudent?.profileId
+              undefined
             )
             .pipe(untilDestroyed(this))
             .subscribe(y => {
@@ -441,7 +441,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
               d2ExamType.key,
               this.a1z.academicYearId,
               undefined,
-              this.selectedStudent?.profileId
+              undefined
             )
             .pipe(untilDestroyed(this))
             .subscribe(y => {
@@ -519,7 +519,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   }
 
   onExitForm() {
-    this.router.navigate(['/applications/a1z']);
+    this.router.navigate(['/configurations/students']);
   }
 
   onNewA1ZFormSubmit() {
