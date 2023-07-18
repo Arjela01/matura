@@ -23,7 +23,6 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ApproveExamCopyComponent } from '../approve-exam-copy/approve-exam-copy.component';
 import { RefuseExamCopyComponent } from '../refuse-exam-copy/refuse-exam-copy.component';
-import {FileUploadModule} from "primeng/fileupload";
 
 @UntilDestroy()
 @Component({
@@ -41,7 +40,6 @@ import {FileUploadModule} from "primeng/fileupload";
     ApproveExamCopyComponent,
     RefuseExamCopyComponent,
     CheckboxModule,
-    FileUploadModule,
   ],
   templateUrl: './exam-copy-details.component.html',
   styleUrls: ['./exam-copy-details.component.scss'],
