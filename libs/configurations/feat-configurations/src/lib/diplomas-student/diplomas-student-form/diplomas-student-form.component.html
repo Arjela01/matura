@@ -54,14 +54,19 @@
         <div class="formgrid grid">
             <div class="field-radiobutton col-3">
                 <p-radioButton id="isForeignTrue" name="isForeignTrue" [value]="true"
-                    [(ngModel)]="diplomaFile.isForeign"></p-radioButton>
+                    [(ngModel)]="isForeign"></p-radioButton>
                 <label for="isForeignTrue">Po</label>
             </div>
             <div class="field-radiobutton col-3">
                 <p-radioButton id="isForeignFalse" name="isForeignFalse" [value]="false"
-                    [(ngModel)]="diplomaFile.isForeign"></p-radioButton>
+                    [(ngModel)]="isForeign"></p-radioButton>
                 <label for="isForeignFalse">Jo</label>
             </div>
+          <div class="field-radiobutton col-3">
+            <p-radioButton id="isForeign" name="isForeign" [value]="emptyValue"
+                           [(ngModel)]="isForeign"></p-radioButton>
+            <label for="isForeign">Të dyja</label>
+          </div>
         </div>
     </div>
 
