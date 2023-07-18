@@ -43,6 +43,7 @@ export class AdministrationOfficeFormComponent {
   @Input() dars: DropdownModel<number>[] = [];
   @Input() set administrativeOffices(details: AdministrationOffice | null) {
     if (details) {
+      console.log(details);
       this.administrationOffice = Object.assign({}, details);
     }
   }
@@ -60,7 +61,9 @@ export class AdministrationOfficeFormComponent {
     isRegionalOffice: false,
     directorName: '',
     signature: '',
-    cityId: 0
+    cityId: 0,
+    parentOfficeNameId: 0,
+    parentOfficeId: 0,
   };
 
   onCancelClick() {
@@ -85,6 +88,8 @@ export class AdministrationOfficeFormComponent {
 
   onSubmit() {
     this.submitted = true;
+    this.administrationOffice.parentOfficeId =
+      this.administrationOffice.parentOfficeNameId;
     if (this.form.valid && this.administrationOffice.signature) {
       if (this.administrationOffice.id === 0) {
         delete this.administrationOffice.id;

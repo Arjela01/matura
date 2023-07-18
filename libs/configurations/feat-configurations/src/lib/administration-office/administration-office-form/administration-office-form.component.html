@@ -1,20 +1,11 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="field">
     <label for="Name">Emri *</label>
-    <input
-      type="text"
-      pInputText
-      id="Name"
-      name="Name"
-      [(ngModel)]="administrationOffice.name"
-      required
-      autofocus
+    <input type="text" pInputText id="Name" name="Name" [(ngModel)]="administrationOffice.name" required autofocus
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !administrationOffice.name
       }" />
-    <small
-      class="p-error block"
-      *ngIf="submitted && !administrationOffice.name">
+    <small class="p-error block" *ngIf="submitted && !administrationOffice.name">
       Emri është fushë e kërkuar.
     </small>
   </div>
@@ -23,18 +14,12 @@
     <label class="mb-3">Eshtë DAR *</label>
     <div class="formgrid grid">
       <div class="field-radiobutton col-6">
-        <p-radioButton
-          id="isRegionalOfficeTrue"
-          name="isRegionalOffice"
-          [value]="true"
+        <p-radioButton id="isRegionalOfficeTrue" name="isRegionalOffice" [value]="true"
           [(ngModel)]="administrationOffice.isRegionalOffice"></p-radioButton>
         <label for="isRegionalOfficeTrue">Po</label>
       </div>
       <div class="field-radiobutton col-6">
-        <p-radioButton
-          id="isRegionalOfficeFalse"
-          name="isRegionalOffice"
-          [value]="false"
+        <p-radioButton id="isRegionalOfficeFalse" name="isRegionalOffice" [value]="false"
           [(ngModel)]="administrationOffice.isRegionalOffice"></p-radioButton>
         <label for="isRegionalOfficeFalse">Jo</label>
       </div>
@@ -42,91 +27,47 @@
   </div>
   <div class="field">
     <label for="City">Varet nga DAR</label>
-    <p-dropdown
-      id="Dar"
-      [options]="dars"
-      optionValue="key"
-      optionLabel="value"
-      name="parentOfficeId"
-      [(ngModel)]="administrationOffice.parentOfficeId"
-      [autoDisplayFirst]="false"
-      [showClear]="true">
+    <p-dropdown id="Dar" [options]="dars" optionValue="key" optionLabel="value" name="parentOfficeNameId"
+      [(ngModel)]="administrationOffice.parentOfficeNameId" [autoDisplayFirst]="false" [showClear]="true">
     </p-dropdown>
   </div>
   <div class="field">
     <label for="City">Qyteti/Fshati *</label>
-    <p-dropdown
-      id="City"
-      [options]="cities"
-      optionValue="key"
-      optionLabel="value"
-      name="cityId"
-      [required]="true"
-      [(ngModel)]="administrationOffice.cityId"
-      [autoDisplayFirst]="false"
-      [showClear]="true"
-      [ngClass]="{
+    <p-dropdown id="City" [options]="cities" optionValue="key" optionLabel="value" name="cityId" [required]="true"
+      [(ngModel)]="administrationOffice.cityId" [autoDisplayFirst]="false" [showClear]="true" [ngClass]="{
         'ng-invalid ng-dirty': submitted && !administrationOffice.cityId
       }">
     </p-dropdown>
-    <small
-      class="p-error block"
-      *ngIf="submitted && !administrationOffice.cityId">
+    <small class="p-error block" *ngIf="submitted && !administrationOffice.cityId">
       Qyeti/Fshati është fushë e kërkuar.
     </small>
   </div>
 
   <div class="field">
     <label for="Name">Emri i drejtorit </label>
-    <input
-      type="text"
-      pInputText
-      id="DirectorName"
-      name="directorName"
-      [(ngModel)]="administrationOffice.directorName"
+    <input type="text" pInputText id="DirectorName" name="directorName" [(ngModel)]="administrationOffice.directorName"
       autofocus />
   </div>
   <div class="field">
     <label for="Name">Firma e drejtorit *</label>
     <div class="form-group drop-files noLabel">
-      <p-fileUpload
-        #uploader
-        [showUploadButton]="false"
-        class="ie-file-upload"
-        (onSelect)="selectFiles($event)"
+      <p-fileUpload #uploader [showUploadButton]="false" class="ie-file-upload" (onSelect)="selectFiles($event)"
         accept=".jpeg,.jpg,.png,.webp">
         <ng-template pTemplate="content">
-          <img
-            [src]="'data:image;base64,' + administrationOffice.signature"
-            width="100"
-            height="100"
-            *ngIf="
+          <img [src]="'data:image;base64,' + administrationOffice.signature" width="100" height="100" *ngIf="
               administrationOffice.id &&
               !uploaded &&
               administrationOffice.signature
-            "
-            alt="" />
+            " alt="" />
         </ng-template>
       </p-fileUpload>
-      <small
-        class="p-error block"
-        *ngIf="submitted && !administrationOffice.signature">
+      <small class="p-error block" *ngIf="submitted && !administrationOffice.signature">
         Firma është fushë e kërkuar.
       </small>
     </div>
   </div>
   <div class="flex justify-content-end">
-    <button
-      type="button"
-      pButton
-      label="Anullo"
-      class="p-button-text w-auto mr-2"
-      (click)="onCancelClick()"></button>
-    <button
-      [disabled]="form.invalid"
-      type="submit"
-      pButton
-      label="Ruaj"
-      class="p-button w-auto"></button>
+    <button type="button" pButton label="Anullo" class="p-button-text w-auto mr-2" (click)="onCancelClick()"></button>
+    <button [disabled]="form.invalid" type="submit" pButton label="Ruaj" class="p-button w-auto"></button>
   </div>
 </form>
