@@ -7,6 +7,7 @@ import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
+import {HttpParams} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root',
@@ -56,5 +57,12 @@ export class ExamSubjectProfileApiService {
         catchError(error => throwError(error)),
         shareReplay()
       );
+  }
+  exportTemplate(): Observable<ApiResult<unknown>> {
+    return this.apiService.get<any>(
+      `/ExamSubjectProfile/Export`,
+      new HttpParams(),
+      'blob'
+    );
   }
 }
