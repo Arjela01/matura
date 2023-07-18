@@ -4,6 +4,8 @@ export interface ExamSecret {
   studentName: string;
   examSubjectId?: string;
   examSubjectName: string;
+  examTypeId?: string;
+  examTypeName: string;
   examSiteId?: string;
   examSiteName?: string;
   barcode: string;
