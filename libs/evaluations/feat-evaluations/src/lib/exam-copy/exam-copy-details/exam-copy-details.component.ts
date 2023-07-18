@@ -12,7 +12,6 @@ import {
 import { FormsModule, NgForm } from '@angular/forms';
 import { ExamCopyApiService } from '@msh/evaluations/data-access-evaluations';
 import { ExamCopy } from '@msh/evaluations/domain-evaluations';
-import { GlobalToastService } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import * as FileSaver from 'file-saver';
 import { ButtonModule } from 'primeng/button';
@@ -25,7 +24,6 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { ApproveExamCopyComponent } from '../approve-exam-copy/approve-exam-copy.component';
 import { RefuseExamCopyComponent } from '../refuse-exam-copy/refuse-exam-copy.component';
 import {FileUploadModule} from "primeng/fileupload";
-import {combineLatest} from "rxjs/internal/operators/combineLatest";
 
 @UntilDestroy()
 @Component({
@@ -167,7 +165,6 @@ export class ExamCopyDetailsComponent implements OnInit {
 
   onFileUploaded(file: File) {
     this.updatedFile = file;
-    this.examCopy.attachedDocument = this.updatedFile ? this.updatedFile.name : '';
     this.examCopy.documentName = this.updatedFile ? this.updatedFile.name : '';
 
   }
