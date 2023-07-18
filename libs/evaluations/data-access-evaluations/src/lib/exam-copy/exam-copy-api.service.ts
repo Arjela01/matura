@@ -8,6 +8,7 @@ import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
+import {HttpParams} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +31,13 @@ export class ExamCopyApiService {
   getById(applicationId: string): Observable<ApiResult<ExamCopy>> {
     return this.apiService.get(
       `/ExamCopyRequest/GetByApplicationId/${applicationId}`
+    );
+  }
+  exportTemplate(): Observable<ApiResult<unknown>> {
+    return this.apiService.get<any>(
+      `/ExamCopyRequest/Export`,
+      new HttpParams(),
+      'blob'
     );
   }
 }

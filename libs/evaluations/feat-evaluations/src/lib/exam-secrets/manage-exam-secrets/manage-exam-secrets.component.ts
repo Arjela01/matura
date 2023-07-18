@@ -62,6 +62,7 @@ export class ManageExamSecretsComponent implements OnInit {
     }),
     tap()
   );
+
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
@@ -69,7 +70,8 @@ export class ManageExamSecretsComponent implements OnInit {
     private readonly router: Router,
     private readonly examSubjectService: ExamSubjectApiService,
     private authFacade: AuthFacade
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.getExamSubjects();
@@ -165,6 +167,7 @@ export class ManageExamSecretsComponent implements OnInit {
         });
     };
   }
+
   downloadFile() {
     this.examSecretService
       .export()
@@ -176,6 +179,7 @@ export class ManageExamSecretsComponent implements OnInit {
         FileSaver.saveAs(blob, 'Nota_Pikë');
       });
   }
+
   downloadTemplateFile() {
     this.examSecretService
       .exportTemplate()
