@@ -33,8 +33,17 @@
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
+      <th pSortableColumn="firstName">
+        Emri i Studentit
+        <p-sortIcon field="firstName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="firstName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
       <th pSortableColumn="lastName">
-        Emër Mbiemër
+        Mbiemri i Studentit
         <p-sortIcon field="lastName"></p-sortIcon>
         <p-columnFilter
           type="text"
@@ -61,7 +70,7 @@
           mshColumnFilterDirective></p-columnFilter>
       </th>
       <th pSortableColumn="subject">
-        Lënda
+        Lënda e Provimit
         <p-sortIcon field="subject"></p-sortIcon>
         <p-columnFilter
           type="text"
@@ -69,12 +78,12 @@
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
-      <th pSortableColumn="status">
-        Statusi i Aplikimit
-        <p-sortIcon field="status"></p-sortIcon>
+      <th pSortableColumn="examType">
+        Tipi i Provimit
+        <p-sortIcon field="examType"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="status"
+          field="examType"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
@@ -84,6 +93,24 @@
         <p-columnFilter
           type="date"
           field="decisionDate"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="decisionDate">
+        Data e Aplikimit
+        <p-sortIcon field="decisionDate"></p-sortIcon>
+        <p-columnFilter
+          type="date"
+          field="decisionDate"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="status">
+        Statusi i Aplikimit
+        <p-sortIcon field="status"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="status"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
@@ -100,7 +127,10 @@
         {{ examCopy.maturaId }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ examCopy.name }}
+        {{ examCopy.firstName }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ examCopy.lastName }}
       </td>
       <td style="width: 15%; min-width: 10rem">
         {{ examCopy.administrationOffice }}
@@ -110,6 +140,15 @@
       </td>
       <td style="width: 15%; min-width: 10rem">
         {{ examCopy.subject }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ examCopy.examTypeName }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ examCopy.decisionDate | date }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ examCopy.decisionDate }}
       </td>
       <td style="width: 15%; min-width: 10rem">
         <span
@@ -123,9 +162,6 @@
           ">
           {{ examCopy.status | examCopyRequestStatus }}
         </span>
-      </td>
-      <td style="width: 15%; min-width: 10rem">
-        {{ examCopy.decisionDate | date }}
       </td>
       <td></td>
       <td>
