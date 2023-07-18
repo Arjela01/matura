@@ -48,7 +48,7 @@ export class UploadGradeScaleFormComponent {
       this.gradeScale = Object.assign({}, details);
     }
   }
-  @Input() examSubjectsDropdown: DropdownModel<number>[] = [];
+  @Input() examTypesDropdown: DropdownModel<number>[] = [];
   @Output() formSave = new EventEmitter<GradesScale>();
   @Output() formClose = new EventEmitter<undefined>();
   @Output() upload = new EventEmitter<any>();
