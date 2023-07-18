@@ -57,6 +57,7 @@ export class ApproveExamCopyComponent implements OnInit {
   @ViewChild('form', { static: true }) form!: NgForm;
   @Output() formSave = new EventEmitter<ExamAssignment>();
   @Output() formClose = new EventEmitter<undefined>();
+  @Output() fileUploaded: EventEmitter<File> = new EventEmitter<File>();
 
   @Input() set examCopyDetails(details: ExamCopy | null) {
     if (details) {
@@ -90,6 +91,7 @@ export class ApproveExamCopyComponent implements OnInit {
       this.base64 = base64.split(',')[1];
       this.confirmExamCopy.attachedDocument = this.base64;
       this.confirmExamCopy.documentName = file.name;
+      this.fileUploaded.emit(file)
     };
   }
 
