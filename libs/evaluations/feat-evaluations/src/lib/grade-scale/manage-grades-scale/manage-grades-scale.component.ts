@@ -2,7 +2,10 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import { ExamSubjectApiService } from '@msh/configurations/data-access-configurations';
+import {
+  ExamSubjectApiService,
+  ExamTypeApiService,
+} from '@msh/configurations/data-access-configurations';
 import { GradesScaleService } from '@msh/evaluations/data-access-evaluations';
 import { GradesScale } from '@msh/evaluations/domain-evaluations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
@@ -49,7 +52,6 @@ export class ManageGradesScaleComponent implements OnInit {
   displayGradesModal = false;
   base64: string | ArrayBuffer | null | undefined;
   totalRecords = 0;
-  examSubjectDropdown: DropdownModel<number>[] = [];
   examTypeDropdown: DropdownModel<number>[] = [];
   displayModal = false;
   submitted = false;
@@ -59,6 +61,7 @@ export class ManageGradesScaleComponent implements OnInit {
     private readonly router: Router,
     private readonly toastService: GlobalToastService,
     private readonly examSubjectsService: ExamSubjectApiService,
+    private readonly examTypeService: ExamTypeApiService,
     private readonly cd: ChangeDetectorRef,
     private authFacade: AuthFacade
   ) {}
@@ -71,17 +74,16 @@ export class ManageGradesScaleComponent implements OnInit {
     tap()
   );
   ngOnInit() {
-    this.getDropdownSubjects();
+    this.getTypesDropdown();
   }
   onFormSave() {
     this.getGradeScales(this.filters as LazyLoadEvent);
     this.displayModal = false;
   }
-
-  getDropdownSubjects() {
-    this.examSubjectsService.loadDropdownList().subscribe(resp => {
-      this.examSubjectDropdown = resp.data;
-    });
+  getTypesDropdown() {
+    this.examTypeService
+      .loadDropdownList()
+      .subscribe(res => (this.examTypeDropdown = res.data));
   }
 
   onNewClick() {
