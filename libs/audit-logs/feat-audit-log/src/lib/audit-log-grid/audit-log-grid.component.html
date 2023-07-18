@@ -1,5 +1,5 @@
 <div class="flex ml-2 mb-2 page-header mb-header">
-  <h2 class="flex-1">{{ queryName | translation }}</h2>
+  <h2 class="flex-1">{{ queryName}}</h2>
 </div>
 
 <div class="grid">
@@ -19,7 +19,7 @@
                 "
                 p-tableHeader
                 pSortableColumn="{{ key.key }}">
-                {{ key.key | translation}}
+                {{ key.key }}
                 <p-sortIcon field="{{ key.key }}"></p-sortIcon>
                 <p-columnFilter
                   [type]="findType(key.value)"

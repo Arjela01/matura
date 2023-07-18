@@ -64,7 +64,11 @@ export class DiplomasStudentFormComponent {
   highSchoolFiltered: DropdownModel<number>[] = [];
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private cd: ChangeDetectorRef) {}
+  emptyValue!: '';
+  isForeign: boolean | '';
+  constructor(private cd: ChangeDetectorRef) {
+    this.isForeign= this.diplomaFile.isForeign
+  }
 
   onCancelClick() {
     this.formClose.emit();
@@ -84,9 +88,15 @@ export class DiplomasStudentFormComponent {
       const accademicYear = JSON.parse(
         localStorage.getItem('academicYear') as any
       );
-      initialUrl += `&isPrinted=${this.isPrinted}&isProfessional=${this.diplomaFile.isProfessional}&isForeign=${this.diplomaFile.isForeign}&academicYearId=${accademicYear?.id}`;
+      if (this.isForeign === this.emptyValue) {
+        this.diplomaFile.isForeign = '';
+      }else{
+        this.diplomaFile.isForeign = this.isForeign
+      }
+      initialUrl += `&isPrinted=${this.isPrinted}&isForeign=${this.diplomaFile.isForeign}&academicYearId=${accademicYear?.id}`;
       this.formSave.emit(initialUrl);
     }
+
   }
 
   onAdministrationOfficeChange($event: DropdownModel<number>) {
