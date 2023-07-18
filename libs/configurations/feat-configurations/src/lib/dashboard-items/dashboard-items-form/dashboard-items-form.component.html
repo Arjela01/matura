@@ -128,7 +128,7 @@
         </div>
 
         <div class="field" [style]="{ width: '750px' }">
-          <label for="Roles">Rolet</label>
+          <label for="Roles">Rolet *</label>
           <p-multiSelect
             [style]="{ width: '100%' }"
             id="Roles"
@@ -141,6 +141,11 @@
             [showClear]="true"
             defaultLabel="Selekto Rolet"
             display="chip"></p-multiSelect>
+          <small
+            class="p-error block"
+            *ngIf="submitted && !dashboardItem.roles">
+            Roli është fushë e kërkuar.
+          </small>
         </div>
 
         <div class="field" [style]="{ width: '750px' }">

@@ -24,6 +24,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ApproveExamCopyComponent } from '../approve-exam-copy/approve-exam-copy.component';
 import { RefuseExamCopyComponent } from '../refuse-exam-copy/refuse-exam-copy.component';
+import {LazyLoadEvent} from "primeng/api";
 
 @UntilDestroy()
 @Component({
