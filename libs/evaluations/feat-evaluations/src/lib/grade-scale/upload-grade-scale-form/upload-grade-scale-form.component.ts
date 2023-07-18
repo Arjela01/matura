@@ -60,7 +60,7 @@ export class UploadGradeScaleFormComponent {
   examSubjectDropdown: DropdownModel<number>[] = [];
 
   gradeScale: any = {
-    examSubjectId: '',
+    examTypeId: '',
     file: '',
   };
 
@@ -121,12 +121,12 @@ export class UploadGradeScaleFormComponent {
       const base64 = reader.result as string;
       this.base64 = base64.split(',')[1];
       if (
-        this.gradeScale.examSubjectId !== '' &&
-        this.gradeScale.examSubjectId
+        this.gradeScale.examTypeId !== '' &&
+        this.gradeScale.examTypeId
       ) {
         this.upload.emit({
           file: this.base64,
-          examSubjectId: this.gradeScale.examSubjectId,
+          examTypeId: this.gradeScale.examTypeId,
         });
         this.cd.markForCheck();
       }
