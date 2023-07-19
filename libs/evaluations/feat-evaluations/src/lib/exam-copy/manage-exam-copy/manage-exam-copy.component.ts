@@ -58,7 +58,6 @@ export class ManageExamCopyComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private readonly examCopyService: ExamCopyApiService,
     private readonly toastService: GlobalToastService,
-    private readonly confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {

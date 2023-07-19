@@ -350,7 +350,8 @@
   <ng-template pTemplate="content">
     <msh-approve-exam-copy
       [examCopyDetails]="examCopy"
-      (formClose)="onConfirmModalClose()">
+      (formClose)="onFormClose()"
+      (documentUploaded)="onDocumentUploaded()">
     </msh-approve-exam-copy>
   </ng-template>
 </p-dialog>

@@ -92,13 +92,13 @@ export class RefuseExamCopyComponent implements OnInit {
       .refuse(this.examCopyRefuse)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        if (response.isSuccessful === false) {
+        if (!response.isSuccessful) {
           this.toastService.showError(
             response.errorMessage ?? 'Ndodhi një problem gjatë refuzimit'
           );
         }
 
-        if (response.isSuccessful === true) {
+        if (response.isSuccessful) {
           this.toastService.showSuccess('Refuzimi u krye me sukses');
           window.location.reload();
         }

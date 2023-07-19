@@ -24,7 +24,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ApproveExamCopyComponent } from '../approve-exam-copy/approve-exam-copy.component';
 import { RefuseExamCopyComponent } from '../refuse-exam-copy/refuse-exam-copy.component';
-import {LazyLoadEvent} from "primeng/api";
+import { LazyLoadEvent } from 'primeng/api';
+import {Observable} from "rxjs";
 
 @UntilDestroy()
 @Component({
@@ -48,6 +49,7 @@ import {LazyLoadEvent} from "primeng/api";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamCopyDetailsComponent implements OnInit {
+  @Input() examCopies$: Observable<ExamCopy[]> | undefined
   submitted = false;
 
   confirmModal = false;
@@ -95,17 +97,23 @@ export class ExamCopyDetailsComponent implements OnInit {
 
   @Output() formSave = new EventEmitter<ExamCopy>();
   @Output() formClose = new EventEmitter<undefined>();
+  @Output() documentUploaded = new EventEmitter<boolean>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
 
   constructor(
     private cd: ChangeDetectorRef,
-    private readonly examCopyService: ExamCopyApiService,
-    private readonly toastService: GlobalToastService
+    private readonly examCopyService: ExamCopyApiService
   ) {}
 
   onConfirmModalClose() {
     this.confirmModal = false;
+  }
+  onFormClose() {
+    this.confirmModal = false;
+  }
+  onDocumentUploaded() {
+    this.documentUploaded.emit(true);
   }
 
   onRefuseModalClose() {
