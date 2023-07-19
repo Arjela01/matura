@@ -8,23 +8,10 @@
         <div class="field mt-4 mb-4" [style]="{ width: '500px' }">
           <label for="studentInputData">Student *</label>
           <div class="p-inputgroup">
-            <p-button
-              *ngIf="!editing"
-              label="Kërko"
-              icon="pi pi-search"
-              (click)="onNewClick()"
+            <p-button *ngIf="!editing && !studentId" label="Kërko" icon="pi pi-search" (click)="onNewClick()"
               [style]="{ height: '100%' }"></p-button>
-            <input
-              [value]="studentInputData"
-              type="text"
-              pInputText
-              id="studentInputData"
-              name="studentInputData"
-              [(ngModel)]="studentInputData"
-              required
-              autofocus
-              [disabled]="editing"
-              [ngClass]="{
+            <input [value]="studentInputData" type="text" pInputText id="studentInputData" name="studentInputData"
+              [(ngModel)]="studentInputData" required autofocus [disabled]="(editing || studentId!==null)" [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !studentInputData
               }" />
           </div>
@@ -37,18 +24,12 @@
           <label class="mb-3">Aplikon jashtë vendit? *</label>
           <div class="formgrid grid">
             <div class="field-radiobutton col-6">
-              <p-radioButton
-                id="isApplyingToForeignCountriesTrue"
-                name="isApplyingToForeignCountries"
-                [value]="true"
+              <p-radioButton id="isApplyingToForeignCountriesTrue" name="isApplyingToForeignCountries" [value]="true"
                 [(ngModel)]="a1z.isApplyingToForeignCountries"></p-radioButton>
               <label for="isApplyingToForeignCountriesTrue">Po</label>
             </div>
             <div class="field-radiobutton col-6">
-              <p-radioButton
-                id="isApplyingToForeignCountriesFalse"
-                name="isApplyingToForeignCountries"
-                [value]="false"
+              <p-radioButton id="isApplyingToForeignCountriesFalse" name="isApplyingToForeignCountries" [value]="false"
                 [(ngModel)]="a1z.isApplyingToForeignCountries"></p-radioButton>
               <label for="isApplyingToForeignCountriesFalse">Jo</label>
             </div>
@@ -59,18 +40,12 @@
           <label class="mb-3">Keni marre diplomë/dëftesë pjekurie? *</label>
           <div class="formgrid grid">
             <div class="field-radiobutton col-6">
-              <p-radioButton
-                id="alreadyHaveDiplomaTrue"
-                name="alreadyHaveDiploma"
-                [value]="true"
+              <p-radioButton id="alreadyHaveDiplomaTrue" name="alreadyHaveDiploma" [value]="true"
                 [(ngModel)]="a1z.alreadyHaveDiploma"></p-radioButton>
               <label for="alreadyHaveDiplomaTrue">Po</label>
             </div>
             <div class="field-radiobutton col-6">
-              <p-radioButton
-                id="alreadyHaveDiplomaFalse"
-                name="alreadyHaveDiploma"
-                [value]="false"
+              <p-radioButton id="alreadyHaveDiplomaFalse" name="alreadyHaveDiploma" [value]="false"
                 [(ngModel)]="a1z.alreadyHaveDiploma"></p-radioButton>
               <label for="alreadyHaveDiplomaFalse">Jo</label>
             </div>
@@ -78,19 +53,10 @@
         </div>
 
         <div class="field" [style]="{ width: '500px' }">
-          <label for="yearOfSchoolA1Z"
-            >Viti i përfundimit të shkollës së mesme</label
-          >
-          <input
-            type="number"
-            pInputText
-            id="yearOfSchoolA1Z"
-            name="yearOfSchoolA1Z"
-            [(ngModel)]="a1z.yearOfSchoolA1Z"
+          <label for="yearOfSchoolA1Z">Viti i përfundimit të shkollës së mesme</label>
+          <input type="number" pInputText id="yearOfSchoolA1Z" name="yearOfSchoolA1Z" [(ngModel)]="a1z.yearOfSchoolA1Z"
             autofocus />
-          <small
-            class="p-error block"
-            *ngIf="
+          <small class="p-error block" *ngIf="
               submitted &&
               !isGraduationYearValid() &&
               this.a1z.yearOfSchoolA1Z != null
@@ -115,83 +81,36 @@
           <tr>
             <td>D1</td>
             <td>
-              <p-dropdown
-                *ngIf="!a1z.subjectNameD1"
-                [style]="{ minWidth: '250px' }"
-                id="subjectD1Id"
-                [options]="d1ExamSubjects"
-                optionValue="key"
-                optionLabel="value"
-                name="carriedSubjectD1"
-                [filter]="true"
-                [disabled]="true"
-                [autoDisplayFirst]="false"
-                [(ngModel)]="a1z.subjectD1Id"
-                [showClear]="true">
+              <p-dropdown *ngIf="!a1z.subjectNameD1" [style]="{ minWidth: '250px' }" id="subjectD1Id"
+                [options]="d1ExamSubjects" optionValue="key" optionLabel="value" name="carriedSubjectD1" [filter]="true"
+                [disabled]="true" [autoDisplayFirst]="false" [(ngModel)]="a1z.subjectD1Id" [showClear]="true">
               </p-dropdown>
-              <input
-                *ngIf="a1z.subjectNameD1"
-                type="text"
-                pInputText
-                [disabled]="true"
-                id="subjectNameD1"
-                name="subjectNameD1"
-                [(ngModel)]="a1z.subjectNameD1"
-                autofocus />
+              <input *ngIf="a1z.subjectNameD1" type="text" pInputText [disabled]="true" id="subjectNameD1"
+                name="subjectNameD1" [(ngModel)]="a1z.subjectNameD1" autofocus />
             </td>
             <td>
-              <p-dropdown
-                id="carriedSubjectD1"
-                [options]="booly"
-                (onChange)="onSubjectD1Change($event)"
-                optionValue="key"
-                optionLabel="value"
-                name="enableD1Subject"
-                [filter]="false"
-                [disabled]="false"
-                [autoDisplayFirst]="false"
-                [(ngModel)]="enableD1Subject">
+              <p-dropdown id="carriedSubjectD1" [options]="booly" (onChange)="onSubjectD1Change($event)"
+                optionValue="key" optionLabel="value" name="enableD1Subject" [filter]="false" [disabled]="false"
+                [autoDisplayFirst]="false" [(ngModel)]="enableD1Subject">
               </p-dropdown>
             </td>
 
             <td>
-              <input
-                type="number"
-                pInputText
-                max="10"
-                [disabled]="true"
-                min="4"
-                id="scoreD1"
-                name="scoreD1"
-                [(ngModel)]="a1z.scoreD1"
+              <input type="number" pInputText max="10" [disabled]="true" min="4" id="scoreD1" name="scoreD1"
+                [(ngModel)]="a1z.scoreD1" autofocus />
+            </td>
+            <td>
+              <input type="text" pInputText [disabled]="true" id="yearD1" name="yearD1" [(ngModel)]="a1z.yearD1"
                 autofocus />
             </td>
             <td>
-              <input
-                type="text"
-                pInputText
-                [disabled]="true"
-                id="yearD1"
-                name="yearD1"
-                [(ngModel)]="a1z.yearD1"
-                autofocus />
-            </td>
-            <td>
-              <input
-                type="text"
-                pInputText
-                [disabled]="!enableD1Subject"
-                id="reasonD1"
-                name="reasonD1"
-                [(ngModel)]="a1z.reasonD1"
-                autofocus />
+              <input type="text" pInputText [disabled]="!enableD1Subject" id="reasonD1" name="reasonD1"
+                [(ngModel)]="a1z.reasonD1" autofocus />
             </td>
 
             <td *ngIf="selectedStudent && enableD1Subject">
               <div class="p-inputgroup">
-                <p-button
-                  icon="pi pi-book"
-                  (click)="onCarriedClick(EXAM_TYPES.D1)"
+                <p-button icon="pi pi-book" (click)="onCarriedClick(EXAM_TYPES.D1)"
                   [style]="{ height: '100%' }"></p-button>
               </div>
             </td>
@@ -199,83 +118,36 @@
           <tr>
             <td>D2</td>
             <td>
-              <p-dropdown
-                *ngIf="!a1z.subjectNameD2"
-                [style]="{ minWidth: '250px' }"
-                id="subjectD2Id"
-                [options]="d2ExamSubjects"
-                optionValue="key"
-                optionLabel="value"
-                name="carriedSubjectD2"
-                [filter]="true"
-                [disabled]="true"
-                [autoDisplayFirst]="false"
-                [(ngModel)]="a1z.subjectD2Id"
-                [showClear]="true">
+              <p-dropdown *ngIf="!a1z.subjectNameD2" [style]="{ minWidth: '250px' }" id="subjectD2Id"
+                [options]="d2ExamSubjects" optionValue="key" optionLabel="value" name="carriedSubjectD2" [filter]="true"
+                [disabled]="true" [autoDisplayFirst]="false" [(ngModel)]="a1z.subjectD2Id" [showClear]="true">
               </p-dropdown>
-              <input
-                *ngIf="a1z.subjectNameD2"
-                type="text"
-                pInputText
-                [disabled]="true"
-                id="subjectNameD2"
-                name="subjectNameD2"
-                [(ngModel)]="a1z.subjectNameD2"
-                autofocus />
+              <input *ngIf="a1z.subjectNameD2" type="text" pInputText [disabled]="true" id="subjectNameD2"
+                name="subjectNameD2" [(ngModel)]="a1z.subjectNameD2" autofocus />
             </td>
             <td>
-              <p-dropdown
-                id="carriedSubjectD2"
-                [options]="booly"
-                (onChange)="onSubjectD2Change($event)"
-                optionValue="key"
-                optionLabel="value"
-                name="enableD2Subject"
-                [filter]="false"
-                [disabled]="false"
-                [autoDisplayFirst]="false"
-                [(ngModel)]="enableD2Subject">
+              <p-dropdown id="carriedSubjectD2" [options]="booly" (onChange)="onSubjectD2Change($event)"
+                optionValue="key" optionLabel="value" name="enableD2Subject" [filter]="false" [disabled]="false"
+                [autoDisplayFirst]="false" [(ngModel)]="enableD2Subject">
               </p-dropdown>
             </td>
 
             <td>
-              <input
-                type="number"
-                pInputText
-                max="10"
-                [disabled]="true"
-                min="4"
-                id="scoreD2"
-                name="scoreD2"
-                [(ngModel)]="a1z.scoreD2"
+              <input type="number" pInputText max="10" [disabled]="true" min="4" id="scoreD2" name="scoreD2"
+                [(ngModel)]="a1z.scoreD2" autofocus />
+            </td>
+            <td>
+              <input type="text" pInputText [disabled]="true" id="yearD2" name="yearD2" [(ngModel)]="a1z.yearD2"
                 autofocus />
             </td>
             <td>
-              <input
-                type="text"
-                pInputText
-                [disabled]="true"
-                id="yearD2"
-                name="yearD2"
-                [(ngModel)]="a1z.yearD2"
-                autofocus />
-            </td>
-            <td>
-              <input
-                type="text"
-                pInputText
-                [disabled]="!enableD2Subject"
-                id="reasonD2"
-                name="reasonD2"
-                [(ngModel)]="a1z.reasonD2"
-                autofocus />
+              <input type="text" pInputText [disabled]="!enableD2Subject" id="reasonD2" name="reasonD2"
+                [(ngModel)]="a1z.reasonD2" autofocus />
             </td>
 
             <td *ngIf="selectedStudent && enableD2Subject">
               <div class="p-inputgroup">
-                <p-button
-                  icon="pi pi-book"
-                  (click)="onCarriedClick(EXAM_TYPES.D2)"
+                <p-button icon="pi pi-book" (click)="onCarriedClick(EXAM_TYPES.D2)"
                   [style]="{ height: '100%' }"></p-button>
               </div>
             </td>
@@ -283,83 +155,36 @@
           <tr>
             <td>D3</td>
             <td>
-              <p-dropdown
-                *ngIf="!a1z.subjectNameD3"
-                [style]="{ minWidth: '250px' }"
-                id="subjectD3Id"
-                [options]="d3ExamSubjects"
-                optionValue="key"
-                optionLabel="value"
-                name="carriedSubjectD3"
-                [filter]="true"
-                [disabled]="false"
-                [autoDisplayFirst]="false"
-                [(ngModel)]="a1z.subjectD3Id"
-                [showClear]="true">
+              <p-dropdown *ngIf="!a1z.subjectNameD3" [style]="{ minWidth: '250px' }" id="subjectD3Id"
+                [options]="d3ExamSubjects" optionValue="key" optionLabel="value" name="carriedSubjectD3" [filter]="true"
+                [disabled]="false" [autoDisplayFirst]="false" [(ngModel)]="a1z.subjectD3Id" [showClear]="true">
               </p-dropdown>
-              <input
-                *ngIf="a1z.subjectNameD3"
-                type="text"
-                pInputText
-                [disabled]="true"
-                id="subjectNameD3"
-                name="subjectNameD3"
-                [(ngModel)]="a1z.subjectNameD3"
-                autofocus />
+              <input *ngIf="a1z.subjectNameD3" type="text" pInputText [disabled]="true" id="subjectNameD3"
+                name="subjectNameD3" [(ngModel)]="a1z.subjectNameD3" autofocus />
             </td>
             <td>
-              <p-dropdown
-                id="carriedSubjectD3"
-                [options]="booly"
-                (onChange)="onSubjectD3Change($event)"
-                optionValue="key"
-                optionLabel="value"
-                name="enableD3Subject"
-                [filter]="false"
-                [disabled]="false"
-                [autoDisplayFirst]="false"
-                [(ngModel)]="enableD3Subject">
+              <p-dropdown id="carriedSubjectD3" [options]="booly" (onChange)="onSubjectD3Change($event)"
+                optionValue="key" optionLabel="value" name="enableD3Subject" [filter]="false" [disabled]="false"
+                [autoDisplayFirst]="false" [(ngModel)]="enableD3Subject">
               </p-dropdown>
             </td>
 
             <td>
-              <input
-                type="number"
-                pInputText
-                max="10"
-                [disabled]="true"
-                min="4"
-                id="scoreD3"
-                name="scoreD3"
-                [(ngModel)]="a1z.scoreD3"
+              <input type="number" pInputText max="10" [disabled]="true" min="4" id="scoreD3" name="scoreD3"
+                [(ngModel)]="a1z.scoreD3" autofocus />
+            </td>
+            <td>
+              <input type="text" pInputText [disabled]="true" id="yearD3" name="yearD3" [(ngModel)]="a1z.yearD3"
                 autofocus />
             </td>
             <td>
-              <input
-                type="text"
-                pInputText
-                [disabled]="true"
-                id="yearD3"
-                name="yearD3"
-                [(ngModel)]="a1z.yearD3"
-                autofocus />
-            </td>
-            <td>
-              <input
-                type="text"
-                pInputText
-                [disabled]="!enableD3Subject"
-                id="reasonD3"
-                name="reasonD3"
-                [(ngModel)]="a1z.reasonD3"
-                autofocus />
+              <input type="text" pInputText [disabled]="!enableD3Subject" id="reasonD3" name="reasonD3"
+                [(ngModel)]="a1z.reasonD3" autofocus />
             </td>
 
             <td *ngIf="selectedStudent && enableD3Subject">
               <div class="p-inputgroup">
-                <p-button
-                  icon="pi pi-book"
-                  (click)="onCarriedClick(EXAM_TYPES.D3)"
+                <p-button icon="pi pi-book" (click)="onCarriedClick(EXAM_TYPES.D3)"
                   [style]="{ height: '100%' }"></p-button>
               </div>
             </td>
@@ -380,83 +205,36 @@
           <tr>
             <td>Z1</td>
             <td>
-              <p-dropdown
-                *ngIf="!a1z.subjectNameZ1"
-                [style]="{ minWidth: '250px' }"
-                id="subjectZ1Id"
-                [options]="z1ExamSubjects"
-                optionValue="key"
-                optionLabel="value"
-                name="carriedSubjectZ1"
-                [filter]="true"
-                [disabled]="false"
-                [autoDisplayFirst]="false"
-                [(ngModel)]="a1z.subjectZ1Id"
-                [showClear]="true">
+              <p-dropdown *ngIf="!a1z.subjectNameZ1" [style]="{ minWidth: '250px' }" id="subjectZ1Id"
+                [options]="z1ExamSubjects" optionValue="key" optionLabel="value" name="carriedSubjectZ1" [filter]="true"
+                [disabled]="false" [autoDisplayFirst]="false" [(ngModel)]="a1z.subjectZ1Id" [showClear]="true">
               </p-dropdown>
-              <input
-                *ngIf="a1z.subjectNameZ1"
-                type="text"
-                pInputText
-                [disabled]="true"
-                id="subjectNameZ1"
-                name="subjectNameZ1"
-                [(ngModel)]="a1z.subjectNameZ1"
-                autofocus />
+              <input *ngIf="a1z.subjectNameZ1" type="text" pInputText [disabled]="true" id="subjectNameZ1"
+                name="subjectNameZ1" [(ngModel)]="a1z.subjectNameZ1" autofocus />
             </td>
             <td>
-              <p-dropdown
-                id="carriedSubjectZ1"
-                [options]="booly"
-                (onChange)="onSubjectZ1Change($event)"
-                optionValue="key"
-                optionLabel="value"
-                name="enableZ1Subject"
-                [filter]="false"
-                [disabled]="false"
-                [autoDisplayFirst]="false"
-                [(ngModel)]="enableZ1Subject">
+              <p-dropdown id="carriedSubjectZ1" [options]="booly" (onChange)="onSubjectZ1Change($event)"
+                optionValue="key" optionLabel="value" name="enableZ1Subject" [filter]="false" [disabled]="false"
+                [autoDisplayFirst]="false" [(ngModel)]="enableZ1Subject">
               </p-dropdown>
             </td>
 
             <td>
-              <input
-                type="number"
-                pInputText
-                max="10"
-                [disabled]="true"
-                min="4"
-                id="scoreZ1"
-                name="scoreZ1"
-                [(ngModel)]="a1z.scoreZ1"
+              <input type="number" pInputText max="10" [disabled]="true" min="4" id="scoreZ1" name="scoreZ1"
+                [(ngModel)]="a1z.scoreZ1" autofocus />
+            </td>
+            <td>
+              <input type="text" pInputText [disabled]="true" id="yearZ1" name="yearZ1" [(ngModel)]="a1z.yearZ1"
                 autofocus />
             </td>
             <td>
-              <input
-                type="text"
-                pInputText
-                [disabled]="true"
-                id="yearZ1"
-                name="yearZ1"
-                [(ngModel)]="a1z.yearZ1"
-                autofocus />
-            </td>
-            <td>
-              <input
-                type="text"
-                pInputText
-                [disabled]="!enableZ1Subject"
-                id="reasonZ1"
-                name="reasonZ1"
-                [(ngModel)]="a1z.reasonZ1"
-                autofocus />
+              <input type="text" pInputText [disabled]="!enableZ1Subject" id="reasonZ1" name="reasonZ1"
+                [(ngModel)]="a1z.reasonZ1" autofocus />
             </td>
 
             <td *ngIf="selectedStudent && enableZ1Subject">
               <div class="p-inputgroup">
-                <p-button
-                  icon="pi pi-book"
-                  (click)="onCarriedClick(EXAM_TYPES.Z1)"
+                <p-button icon="pi pi-book" (click)="onCarriedClick(EXAM_TYPES.Z1)"
                   [style]="{ height: '100%' }"></p-button>
               </div>
             </td>
@@ -467,74 +245,36 @@
 
         <div class="field" [style]="{ width: '500px' }">
           <label for="overseerCode">Kodi i Mbikqyrësit</label>
-          <input
-            type="password"
-            pPassword
-            [feedback]="false"
-            required
-            id="overseerCode"
-            name="overseerCode"
-            [(ngModel)]="a1z.overSeerCode"
-            autofocus />
+          <input type="password" pPassword [feedback]="false" required id="overseerCode" name="overseerCode"
+            [(ngModel)]="a1z.overSeerCode" autofocus />
           <small class="p-error block" *ngIf="submitted && !a1z.overSeerCode">
             Kodi i mbikqyrësit është fushë e kërkuar.
           </small>
         </div>
 
         <div class="flex justify-content-end">
-          <button
-            type="button"
-            pButton
-            label="Anullo"
-            class="p-button-text w-auto mr-2"
+          <button type="button" pButton label="Anullo" class="p-button-text w-auto mr-2"
             (click)="onExitForm()"></button>
-          <button
-            [disabled]="form.invalid"
-            type="submit"
-            pButton
-            label="Ruaj"
-            class="p-button w-auto"></button>
+          <button [disabled]="form.invalid" type="submit" pButton label="Ruaj" class="p-button w-auto"></button>
         </div>
       </form>
     </div>
   </div>
 </div>
 
-<p-dialog
-  [(visible)]="showStudentModal"
-  [style]="{ width: '1000px' }"
-  [modal]="true"
-  header="Kërko Maturantin"
-  [draggable]="false"
-  [resizable]="false"
-  class="p-fluid"
-  (onHide)="onStudentHide()">
+<p-dialog [(visible)]="showStudentModal" [style]="{ width: '1000px' }" [modal]="true" header="Kërko Maturantin"
+  [draggable]="false" [resizable]="false" class="p-fluid" (onHide)="onStudentHide()">
   <ng-template pTemplate="content">
-    <msh-shared-student-lookup
-      [students]="(studentList$ | async) || []"
-      [totalRecords]="totalRecords"
-      (gridEvent)="onGridEvent($event)"
-      (lazyLoadData)="getStudents($event)">
+    <msh-shared-student-lookup [students]="(studentList$ | async) || []" [totalRecords]="totalRecords"
+      (gridEvent)="onGridEvent($event)" (lazyLoadData)="getStudents($event)">
     </msh-shared-student-lookup>
   </ng-template>
 </p-dialog>
 
-<p-dialog
-  [(visible)]="showCarriedModal"
-  [style]="{ width: '600px' }"
-  header="Kërko Notën"
-  [modal]="true"
-  [draggable]="false"
-  [resizable]="false"
-  class="p-fluid"
-  (onHide)="onCarriedHide()">
+<p-dialog [(visible)]="showCarriedModal" [style]="{ width: '600px' }" header="Kërko Notën" [modal]="true"
+  [draggable]="false" [resizable]="false" class="p-fluid" (onHide)="onCarriedHide()">
   <ng-template pTemplate="content">
-    <p-table
-      #dt
-      dataKey="Id"
-      [value]="(carriedGrades$ | async) || []"
-      [rowHover]="true"
-      selectionMode="multiple">
+    <p-table #dt dataKey="Id" [value]="(carriedGrades$ | async) || []" [rowHover]="true" selectionMode="multiple">
       <ng-template pTemplate="header">
         <tr>
           <th style="width: 3rem"></th>
@@ -548,14 +288,8 @@
       <ng-template pTemplate="body" let-grade>
         <tr>
           <td>
-            <button
-              pButton
-              pRipple
-              icon="pi pi-check"
-              class="p-button-rounded p-button-success p-button-text mr-2"
-              pTooltip="Zgjidh"
-              tooltipPosition="bottom"
-              (click)="onGradeSelect(grade)"></button>
+            <button pButton pRipple icon="pi pi-check" class="p-button-rounded p-button-success p-button-text mr-2"
+              pTooltip="Zgjidh" tooltipPosition="bottom" (click)="onGradeSelect(grade)"></button>
           </td>
           <td style="width: 14%; min-width: 10rem">
             {{ grade.examTypeName }}
@@ -570,13 +304,9 @@
             {{ grade.grade }}
           </td>
           <td style="width: 14%; min-width: 10rem">
-            <img
-              *ngIf="grade.document"
-              src="assets/svg/download.svg"
-              class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
-              tooltipPosition="bottom"
-              pTooltip="Shkarko"
-              (click)="onDownloadClick(grade)" />
+            <img *ngIf="grade.document" src="assets/svg/download.svg"
+              class="p-button-rounded p-button-warning p-button-text mr-2 pointer" tooltipPosition="bottom"
+              pTooltip="Shkarko" (click)="onDownloadClick(grade)" />
           </td>
         </tr>
       </ng-template>
@@ -584,15 +314,11 @@
         <!-- add a butotn  -->
         <tr>
           <td colspan="6">
-            <button
-              pButton
-              pRipple
-              label="Shto Një Notë"
-              icon="pi pi-plus"
-              class="p-button-success mr-2"
+            <button pButton pRipple label="Shto Një Notë" icon="pi pi-plus" class="p-button-success mr-2"
               (click)="addCarriedGrade()"></button>
-          </td></tr
-      ></ng-template>
+          </td>
+        </tr>
+      </ng-template>
     </p-table>
   </ng-template>
 </p-dialog>
