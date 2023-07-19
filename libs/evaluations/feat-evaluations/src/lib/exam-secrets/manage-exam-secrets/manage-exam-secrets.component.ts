@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import { ExamSubjectApiService } from '@msh/configurations/data-access-configurations';
+import {ExamSubjectApiService, ExamTypeApiService} from '@msh/configurations/data-access-configurations';
 import { ExamSecretApiService } from '@msh/evaluations/data-access-evaluations';
 import { ExamSecret } from '@msh/evaluations/domain-evaluations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
@@ -23,6 +23,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ExamSecretsFormComponent } from '../exam-secrets-form/exam-secrets-form.component';
 import { ExamSecretsGridComponent } from '../exam-secrets-grid/exam-secrets-grid.component';
+import {ExamScoresFormComponent} from "../../exam-scores/exam-scores-form/exam-scores-form.component";
 
 @UntilDestroy()
 @Component({
@@ -53,7 +54,9 @@ export class ManageExamSecretsComponent implements OnInit {
   selectedExamSecret: ExamSecret | null = null;
   selectedExamSecrets: ExamSecret[] = [];
   displayModal = false;
-  examSubjects: DropdownModel<number>[] = [];
+  examSubjects: DropdownModel<string>[] = [];
+  examTypes: DropdownModel<number>[] = [];
+
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([_]) => {
       if (this.filters) {
@@ -62,18 +65,20 @@ export class ManageExamSecretsComponent implements OnInit {
     }),
     tap()
   );
-
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examSecretService: ExamSecretApiService,
     private readonly router: Router,
     private readonly examSubjectService: ExamSubjectApiService,
-    private authFacade: AuthFacade
-  ) {
-  }
+    private readonly examTypeService: ExamTypeApiService,
+    private authFacade: AuthFacade,
+    private readonly cd: ChangeDetectorRef,
+
+  ) {}
 
   ngOnInit(): void {
+    this.getExamTypes();
     this.getExamSubjects();
   }
 
@@ -105,12 +110,21 @@ export class ManageExamSecretsComponent implements OnInit {
     }
   }
 
-  getExamSubjects() {
+  getExamSubjects(examTypeId?: number) {
     this.examSubjectService
-      .loadDropdownList()
+      .forExamType(examTypeId)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examSubjects = response.data;
+        this.cd.markForCheck();
+      });
+  }
+  getExamTypes() {
+    this.examTypeService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.examTypes = response.data;
       });
   }
 
@@ -167,7 +181,6 @@ export class ManageExamSecretsComponent implements OnInit {
         });
     };
   }
-
   downloadFile() {
     this.examSecretService
       .export()
@@ -179,7 +192,6 @@ export class ManageExamSecretsComponent implements OnInit {
         FileSaver.saveAs(blob, 'Nota_Pikë');
       });
   }
-
   downloadTemplateFile() {
     this.examSecretService
       .exportTemplate()
@@ -243,5 +255,11 @@ export class ManageExamSecretsComponent implements OnInit {
           );
         }
       });
+  }
+
+  onExamTypeChanged(examTypeId: any) {
+    if (this.selectedExamSecret != null)
+      this.selectedExamSecret.examTypeId = examTypeId;
+    this.getExamSubjects(examTypeId);
   }
 }
