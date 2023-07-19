@@ -24,7 +24,8 @@
         <p-columnFilter
           type="text"
           field="name"
-          display="menu"  mshColumnFilterDirective></p-columnFilter>
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
       <th pSortableColumn="maximumValueWritingScore">
         Pikët maksimale me shtjellim
@@ -32,7 +33,8 @@
         <p-columnFilter
           type="numeric"
           field="maximumValueWritingScore"
-          display="menu"  mshColumnFilterDirective></p-columnFilter>
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
 
       <th pSortableColumn="maximumValueMultipleScore">
@@ -41,7 +43,8 @@
         <p-columnFilter
           type="numeric"
           field="maximumValueMultipleScore"
-          display="menu"  mshColumnFilterDirective></p-columnFilter>
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
       <th pSortableColumn="isFall">
         Është Vjeshtë?
@@ -51,7 +54,7 @@
             type="boolean"
             field="isFall"
             matchMode="equals"
-            display="menu" mshColumnFilterDirective></p-columnFilter>
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th></th>
@@ -69,7 +72,7 @@
         {{ examType.maximumValueMultipleScore }}
       </td>
       <td style="width: 30%">
-        {{ examType.isFall? 'Po' : 'Jo'  }}
+        {{ examType.isFall ? 'Po' : 'Jo' }}
       </td>
       <td>
         <div class="flex">
