@@ -1,6 +1,6 @@
 <div class="grid">
   <div class="col-12">
-    <h2 class="flex-1 mb-0 mt-6">Konfigurime Paneli</h2>
+    <h2 class="flex-1 mb-0 mt-6">Elemente Dashboardi</h2>
     <div class="card-form px-6 py-6 mb-header mt-3">
       <form #form="ngForm" (ngSubmit)="onSubmit()">
         <div class="field" [style]="{ width: '750px' }">
@@ -14,7 +14,6 @@
             [(ngModel)]="dashboardItem.dashboardSectionId"
             [style]="{ width: '100%' }"
             [autoDisplayFirst]="false"
-            [required]="true"
             [ngClass]="{
               'ng-invalid ng-dirty':
                 submitted && !dashboardItem.dashboardSectionId
@@ -35,7 +34,6 @@
             id="title"
             name="title"
             [(ngModel)]="dashboardItem.title"
-            required
             [style]="{ width: '100%' }"
             autofocus
             [ngClass]="{
@@ -51,7 +49,7 @@
         <div class="field" [style]="{ width: '750px' }">
           <label for="description">Përshkrimi *</label>
           <textarea
-            rows="2"
+            rows="5"
             cols="35"
             pInputTextarea
             id="description"
@@ -69,29 +67,15 @@
           </small>
         </div>
 
-        <div class="field" [style]="{ width: '750px' }">
-          <label for="documentName">Emri Dokumentit *</label>
-          <input
-            type="text"
-            pInputText
-            id="documentName"
-            [style]="{ width: '100%' }"
-            name="documentName"
-            [(ngModel)]="dashboardItem.documentName"
-            required
-            autofocus
-            [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !dashboardItem.documentName
-            }" />
-          <small
-            class="p-error block"
-            *ngIf="submitted && !dashboardItem.documentName">
-            Emri dokumentit është fushë e kërkuar.
-          </small>
-        </div>
+
 
         <div class="field" [style]="{ width: '300px' }">
-          <label for="document">Dokumenti</label>
+          <label for="document">Dokumenti
+            <p-button label="Download" styleClass="p-button-link m-0 p-0" (click)="downloadDocument()" *ngIf="dashboardItem.document"></p-button>
+            <p-button label="Clear" styleClass="p-button-link m-0 p-0" (click)="clearFile()"></p-button>
+
+
+          </label>
           <div class="form-group drop-files noLabel">
             <p-fileUpload
               #uploader
@@ -99,24 +83,26 @@
               [showUploadButton]="false"
               class="ie-file-upload"
               (onSelect)="selectFiles($event)"
+              [showCancelButton]="false"
               accept=".pdf">
-              <ng-template pTemplate="content">
-                <span
-                  *ngIf="
-                    dashboardItem.document &&
-                    !uploaded &&
-                    dashboardItem.document
-                  "
-                  alt=""
-                  >{{ dashboardItem.title }}.pdf</span
-                >
-              </ng-template>
             </p-fileUpload>
           </div>
         </div>
 
         <div class="field" [style]="{ width: '750px' }">
-          <label for="link">Link\URL</label>
+          <label for="documentName">Emri Dokumentit</label>
+          <input
+                  type="text"
+                  pInputText
+                  id="documentName"
+                  [style]="{ width: '100%' }"
+                  name="documentName"
+                  [(ngModel)]="dashboardItem.documentName"
+                  autofocus />
+        </div>
+
+        <div class="field" [style]="{ width: '750px' }">
+          <label for="link">Link (URL)</label>
           <input
             type="text"
             pInputText
@@ -128,24 +114,19 @@
         </div>
 
         <div class="field" [style]="{ width: '750px' }">
-          <label for="Roles">Rolet *</label>
+          <label for="Roles">Rolet</label>
           <p-multiSelect
             [style]="{ width: '100%' }"
             id="Roles"
             name="roles"
             [options]="roles"
-            optionLabel="value"
-            [(ngModel)]="dashboardItem.roles"
-            [required]="true"
+            [optionLabel]="'value'"
+            [optionValue]="'key'"
+            [(ngModel)]="selectedRoles"
             appendTo="body"
             [showClear]="true"
             defaultLabel="Selekto Rolet"
             display="chip"></p-multiSelect>
-          <small
-            class="p-error block"
-            *ngIf="submitted && !dashboardItem.roles">
-            Roli është fushë e kërkuar.
-          </small>
         </div>
 
         <div class="field" [style]="{ width: '750px' }">
@@ -156,7 +137,8 @@
             name="users"
             [options]="users"
             optionLabel="value"
-            [(ngModel)]="dashboardItem.users"
+            optionValue="key"
+            [(ngModel)]="selectedUsers"
             appendTo="body"
             [showClear]="true"
             defaultLabel="Selekto Përdoruesit"
@@ -173,7 +155,6 @@
             id="startDate"
             name="startDate"
             (onSelect)="updateEndDateRange()"
-
             [ngClass]="{
               'ng-invalid ng-dirty': submitted && !formattedStartDate
             }"></p-calendar>
@@ -183,7 +164,7 @@
         </div>
 
         <div class="field" [style]="{ width: '750px' }">
-          <label for="endDate">E vlefshme deri *</label>
+          <label for="endDate">E vlefshme deri</label>
           <p-calendar
             [style]="{ width: '100%' }"
             [(ngModel)]="formattedEndDate"
@@ -191,13 +172,7 @@
             inputId="endDate"
             id="endDate"
             name="endDate"
-            [disabledDates]="disabledEndDate"
-            [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !formattedEndDate
-            }"></p-calendar>
-          <small class="p-error block" *ngIf="submitted && !formattedEndDate">
-            Data është fushë e kërkuar.
-          </small>
+            [disabledDates]="disabledEndDate"></p-calendar>
         </div>
         <div class="flex justify-content-end">
           <button

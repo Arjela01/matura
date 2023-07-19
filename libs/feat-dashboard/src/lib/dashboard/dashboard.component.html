@@ -97,31 +97,31 @@
       </div>
 
       <div
-        class="col-12 xl:col-4"
-        *ngFor="let card of dashboardCards | slice : 0 : 3; let i = index">
-        <p-card
-          header="{{ card.dashboardSectionName }}"
-          subheader="{{ card.title }}"
-          [style]="{ width: 'auto' }"
-          styleClass="p-card-shadow">
-          <p>{{ card.description }}</p>
-          <ng-template pTemplate="footer">
-            <div class="grid">
-              <div *ngIf="card !== null" [hidden]="card.hasDocument === null">
-                <p-button
-                  label="Shkarko "
-                  (click)="downloadDocument(card)"
-                  icon="pi pi-download"></p-button>
+        class="col-12 xl:col-3"
+        *ngFor="let section of dashboardItems.keys()">
+        <h5>{{ section }}</h5>
+        <hr />
+        <ng-container *ngFor="let card of dashboardItems.get(section)">
+          <p-card header="{{card.title}}" [style]="{ width: 'auto' }" styleClass="p-card-shadow mb-3">
+            <p>{{ card.description }}</p>
+            <ng-template pTemplate="footer">
+              <div class="grid">
+                <div [hidden]="!card.documentName">
+                  <p-button
+                    label="Shkarko "
+                    (click)="downloadDocument(card)"
+                    icon="pi pi-download"></p-button>
+                </div>
+                <a *ngIf="card.linkUrl" href="{{ card.linkUrl }}">
+                  <p-button
+                    label="Link"
+                    icon="pi pi-link"
+                    [style]="{ 'margin-left': '.5em' }"></p-button>
+                </a>
               </div>
-              <a *ngIf="card.hasLinkUrl" href="{{ card.linkUrl }}">
-                <p-button
-                  label="Link"
-                  icon="pi pi-link"
-                  [style]="{ 'margin-left': '.5em' }"></p-button>
-              </a>
-            </div>
-          </ng-template>
-        </p-card>
+            </ng-template>
+          </p-card>
+        </ng-container>
       </div>
     </div>
   </div>

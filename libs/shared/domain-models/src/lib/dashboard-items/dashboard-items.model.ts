@@ -7,11 +7,10 @@ export interface DashboardItem {
   hasDocument?: boolean;
   hasLinkUrl?: boolean;
   documentName: string;
-  endDate: any;
+  endDate?: any;
   linkUrl: string;
   startDate: any;
   title: string;
-  userIds?: number;
   userName?: string;
   roles: string[];
   users: string[];
