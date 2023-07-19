@@ -12,7 +12,6 @@ import {
 import { FormsModule, NgForm } from '@angular/forms';
 import { ExamCopyApiService } from '@msh/evaluations/data-access-evaluations';
 import { ExamCopy } from '@msh/evaluations/domain-evaluations';
-import { GlobalToastService } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import * as FileSaver from 'file-saver';
 import { ButtonModule } from 'primeng/button';
@@ -24,7 +23,6 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ApproveExamCopyComponent } from '../approve-exam-copy/approve-exam-copy.component';
 import { RefuseExamCopyComponent } from '../refuse-exam-copy/refuse-exam-copy.component';
-import {LazyLoadEvent} from "primeng/api";
 
 @UntilDestroy()
 @Component({
@@ -52,6 +50,7 @@ export class ExamCopyDetailsComponent implements OnInit {
 
   confirmModal = false;
   refuseModal = false;
+  updatedFile!: File;
 
   examCopy: ExamCopy = {
     dateCreated: undefined,
@@ -92,7 +91,6 @@ export class ExamCopyDetailsComponent implements OnInit {
       this.examCopy = Object.assign({}, details);
     }
   }
-
   @Output() formSave = new EventEmitter<ExamCopy>();
   @Output() formClose = new EventEmitter<undefined>();
 
@@ -101,7 +99,6 @@ export class ExamCopyDetailsComponent implements OnInit {
   constructor(
     private cd: ChangeDetectorRef,
     private readonly examCopyService: ExamCopyApiService,
-    private readonly toastService: GlobalToastService
   ) {}
 
   onConfirmModalClose() {
@@ -116,7 +113,6 @@ export class ExamCopyDetailsComponent implements OnInit {
     if (this.examCopy.applicationId) {
       this.getDetails(this.examCopy.applicationId);
     }
-    console.log('init');
   }
 
   onCancelClick() {
@@ -135,8 +131,8 @@ export class ExamCopyDetailsComponent implements OnInit {
     this.examCopyService
       .getById(applicationId)
       .pipe(untilDestroyed(this))
-      .subscribe(repsonse => {
-        this.examCopy = repsonse.data;
+      .subscribe(response => {
+        this.examCopy = response.data;
         this.cd.detectChanges();
       });
   }
@@ -163,5 +159,11 @@ export class ExamCopyDetailsComponent implements OnInit {
     if (this.form.valid) {
       this.formSave.emit(this.examCopy);
     }
+  }
+
+  onFileUploaded(file: File) {
+    this.updatedFile = file;
+    this.examCopy.documentName = this.updatedFile ? this.updatedFile.name : '';
+
   }
 }
