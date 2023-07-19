@@ -132,6 +132,7 @@ export class ManageDashboardItemsComponent {
       .loadDashboardItems($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
+        console.log(response);
         this.dashboardItems$$.next(response.data);
         this.totalRecords = response.total;
       });
