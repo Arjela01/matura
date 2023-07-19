@@ -3,11 +3,12 @@ export interface AdministrationOffice {
   name: string;
   directorName: string;
   isRegionalOffice: boolean;
-  parentOfficeId?: number;
-  parentOfficeName?:string;
+  parentOfficeNameId?: number;
+  parentOfficeName?: string;
   cityId?: number;
-  cityName?:string;
+  cityName?: string;
   isAllowedToLogin: boolean;
+  parentOfficeId?: number;
   signature?: string;
 }
 
@@ -17,5 +18,5 @@ export interface AdministrationOfficeTableView {
 }
 export interface ChangeAdministrationOfficeStatusDto {
   id: string;
-  isAllowedToLogin:  boolean;
+  isAllowedToLogin: boolean;
 }
