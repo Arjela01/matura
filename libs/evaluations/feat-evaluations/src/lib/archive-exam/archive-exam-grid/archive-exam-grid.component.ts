@@ -117,14 +117,7 @@ export class ArchiveExamGridComponent implements OnInit {
     );
   }
 
-  onSubmit(): void {
-    const data = { ...this.archiveExam };
-    this.archiveExamApiService.save(data).subscribe({
-      next: () => {
-        this.submitted = false;
-      },
-    });
-  }
+
 
   saveArchiveExam(archiveExam: ArchiveExam): void {
     this.gridEvent.emit({
