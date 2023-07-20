@@ -124,7 +124,24 @@ export class ArchiveFolderViewComponent implements OnInit {
         this.archiveExams = response.data;
         this.archiveExams$$.next(response.data);
         this.totalRecords = response.total;
+
         this.cd.detectChanges();
+        if (response.total === 50) {
+          const allRecordsLoadEvent: LazyLoadEvent = {
+            first: 0,
+            rows: 50,
+            ...this.filters
+          };
+          this.archiveExamApiService
+            .loadArchiveExams(allRecordsLoadEvent, this.id)
+            .pipe(untilDestroyed(this))
+            .subscribe(responseWithAllRecords => {
+              this.archiveExams = responseWithAllRecords.data;
+              this.archiveExams$$.next(responseWithAllRecords.data);
+              this.totalRecords = responseWithAllRecords.total;
+              this.cd.markForCheck();
+            });
+        }
       });
   }
 }
