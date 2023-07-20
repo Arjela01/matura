@@ -171,7 +171,19 @@ export class StudentsEditComponent implements OnInit {
       next: value => {
         this.saving = false;
         if (value.isSuccessful) {
-          this.displayModal = true;
+          this.studentService
+            .getA1A1ZByStudentId(this.id as string)
+            .subscribe((forms: any) => {
+              const a1 = forms.data.find((exam: any) => exam.isA1);
+              const a1Z = forms.data.find((exam: any) => !exam.isA1);
+              if (a1) {
+                this.router.navigate([`/applications/save-a1/${a1.id}`]);
+              } else if (a1Z) {
+                this.router.navigate([`/applications/a1z-form/${a1Z.id}`]);
+              } else {
+                this.displayModal = true;
+              }
+            });
         } else {
           this.messageService.add({
             severity: 'error',
@@ -194,36 +206,16 @@ export class StudentsEditComponent implements OnInit {
   onFormSave(formType: FormType) {
     switch (formType) {
       case FormType.A1:
-        this.studentService
-          .getA1A1ZByStudentId(this.id as string)
-          .subscribe((forms: any) => {
-            const a1 = forms.data.find((exam: any) => exam.isA1);
-            if (!a1) {
-              this.router.navigate([
-                '/applications/save-a1-student',
-                this.student.id,
-              ]);
-            } else {
-              this.router.navigate([`/applications/save-a1/${a1.id}`]);
-            }
-          });
-
+        this.router.navigate([
+          '/applications/save-a1-student',
+          this.student.id,
+        ]);
         break;
       case FormType.A1Z:
-        this.studentService
-          .getA1A1ZByStudentId(this.id as string)
-          .subscribe((forms: any) => {
-            const a1Z = forms.data.find((exam: any) => !exam.isA1);
-            if (!a1Z) {
-              this.router.navigate([
-                '/applications/save-a1z-student',
-                this.student.id,
-              ]);
-            } else {
-              this.router.navigate([`/applications/a1z-form/${a1Z.id}`]);
-            }
-          });
-
+        this.router.navigate([
+          '/applications/save-a1z-student',
+          this.student.id,
+        ]);
         break;
     }
   }
