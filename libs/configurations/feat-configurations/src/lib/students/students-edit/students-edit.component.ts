@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormType } from '@msh/applications/domain-application';
 import {
   AcademicYearApiService,
   GendersApiService,
@@ -15,16 +16,19 @@ import {
   StudentClassModel,
   StudentSectionModel,
 } from '@msh/shared/domain-models';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { A1a1zConfirmationDialogComponent } from '../manage-students/a1a1z-confirmation-dialog/a1a1z-confirmation-dialog.component';
 
 @Component({
   selector: 'msh-students-edit',
@@ -37,13 +41,17 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     RadioButtonModule,
     InputTextareaModule,
     ButtonModule,
+    ConfirmDialogModule,
     CheckboxModule,
     DropdownModule,
     CalendarModule,
     InputMaskModule,
+    A1a1zConfirmationDialogComponent,
+    DialogModule,
   ],
   templateUrl: './students-edit.component.html',
   styleUrls: ['./students-edit.component.scss'],
+  providers: [ConfirmationService],
 })
 export class StudentsEditComponent implements OnInit {
   @ViewChild('form', { static: true }) form!: NgForm;
@@ -58,7 +66,7 @@ export class StudentsEditComponent implements OnInit {
   id?: string;
   maxDate = new Date();
   submitted = true;
-
+  displayModal = false;
   current = null;
   loading = false;
   student: Student = {
@@ -105,7 +113,8 @@ export class StudentsEditComponent implements OnInit {
     private readonly genderService: GendersApiService,
     private router: Router,
     private messageService: MessageService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private readonly confirmationService: ConfirmationService
   ) {
     this.id = this.route.snapshot.paramMap.get('id') as string;
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 10);
@@ -149,6 +158,10 @@ export class StudentsEditComponent implements OnInit {
     });
   }
 
+  onModalClose() {
+    this.displayModal = false;
+  }
+
   update(): void {
     if (this.finishedAtSameSchool) {
       this.student.schoolFinished = '';
@@ -158,14 +171,19 @@ export class StudentsEditComponent implements OnInit {
       next: value => {
         this.saving = false;
         if (value.isSuccessful) {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Studenti u ruajt me sukses.',
-          });
-          this.router
-            .navigate(['/applications/save-a1-student', this.student.id])
-            .then();
+          this.studentService
+            .getA1A1ZByStudentId(this.id as string)
+            .subscribe((forms: any) => {
+              const a1 = forms.data.find((exam: any) => exam.isA1);
+              const a1Z = forms.data.find((exam: any) => !exam.isA1);
+              if (a1) {
+                this.router.navigate([`/applications/save-a1/${a1.id}`]);
+              } else if (a1Z) {
+                this.router.navigate([`/applications/a1z-form/${a1Z.id}`]);
+              } else {
+                this.displayModal = true;
+              }
+            });
         } else {
           this.messageService.add({
             severity: 'error',
@@ -184,5 +202,21 @@ export class StudentsEditComponent implements OnInit {
       },
     });
     this.cd.markForCheck();
+  }
+  onFormSave(formType: FormType) {
+    switch (formType) {
+      case FormType.A1:
+        this.router.navigate([
+          '/applications/save-a1-student',
+          this.student.id,
+        ]);
+        break;
+      case FormType.A1Z:
+        this.router.navigate([
+          '/applications/save-a1z-student',
+          this.student.id,
+        ]);
+        break;
+    }
   }
 }

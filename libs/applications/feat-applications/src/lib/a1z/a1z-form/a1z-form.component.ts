@@ -149,6 +149,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   private carriedGrades$$ = new BehaviorSubject<CarriedGrade[]>([]);
   carriedGrades$ = this.carriedGrades$$.asObservable();
   a1ZReport: Report = Report.A1ZForm_Report;
+  studentId: string | null;
 
   onSubmit() {
     this.submitted = true;
@@ -178,6 +179,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
     private reportsApiService: ReportsApiService
   ) {
     this.formId = this.activatedRoute.snapshot.paramMap.get('id');
+    this.studentId = this.activatedRoute.snapshot.paramMap.get('student');
   }
 
   ngOnDestroy(): void {
@@ -204,6 +206,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
     if (this.formId) {
       this.editing = true;
     }
+
     this.a1CategoryService.loadDropdownList().subscribe(response => {
       this.a1Categories = response.data;
     });
@@ -220,6 +223,13 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       this.cd.detectChanges();
     });
 
+    if (this.studentId !== null) {
+      this.studentService.getById(this.studentId).subscribe(response => {
+        this.selectedStudent = response.data;
+
+        this.cd.detectChanges();
+      });
+    }
     if (this.formId !== null) {
       this.a1zService.getOne(parseInt(this.formId)).subscribe(response => {
         this.a1z = response.data;
@@ -426,7 +436,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
               d1ExamType.key,
               this.a1z.academicYearId,
               undefined,
-              undefined
+              this.selectedStudent?.profileId
             )
             .pipe(untilDestroyed(this))
             .subscribe(y => {
@@ -437,12 +447,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         }
         if (d2ExamType && d2ExamType.key) {
           this.examSubjectService
-            .forExamType(
-              d2ExamType.key,
-              this.a1z.academicYearId,
-              undefined,
-              undefined
-            )
+            .forExamType(d2ExamType.key, this.a1z.academicYearId, undefined)
             .pipe(untilDestroyed(this))
             .subscribe(y => {
               this.d2ExamSubjects = y.data;
@@ -458,7 +463,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
               d3ExamType.key,
               this.a1z.academicYearId,
               undefined,
-              undefined
+              this.selectedStudent?.profileId
             )
             .pipe(untilDestroyed(this))
             .subscribe(y => {

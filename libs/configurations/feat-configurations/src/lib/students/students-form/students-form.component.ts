@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { FormType } from '@msh/applications/domain-application';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
   AcademicYearApiService,
@@ -33,12 +34,14 @@ import {
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
+import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { A1a1zConfirmationDialogComponent } from '../manage-students/a1a1z-confirmation-dialog/a1a1z-confirmation-dialog.component';
 
 @Component({
   selector: 'msh-students-form',
@@ -57,6 +60,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     InputMaskModule,
     AlbanianNidValidatorDirective,
     RouterModule,
+    A1a1zConfirmationDialogComponent,
+    DialogModule,
   ],
   templateUrl: './students-form.component.html',
   styleUrls: ['./students-form.component.scss'],
@@ -75,6 +80,8 @@ export class StudentsFormComponent implements OnInit, OnChanges {
   schoolProfile: DropdownModel<number>[] = [];
   saving = false;
   academicYears: DropdownModel<number>[] = [];
+  displayModal = false;
+  studentId: any;
   @Input() set studentDetails(details: Student | null) {
     if (details) {
       this.student = Object.assign({}, details);
@@ -168,7 +175,9 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     this.studentService.save(data).subscribe({
       next: response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Studenti u krijua me sukses');
+          this.displayModal = true;
+          this.studentId = response.data.id;
+          this.cd.detectChanges();
         } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest) {
           this.toastService.showError(
@@ -176,13 +185,29 @@ export class StudentsFormComponent implements OnInit, OnChanges {
           );
         }
         this.saving = false;
-        this.router
-          .navigate(['/applications/save-a1-student', response.data.id])
-          .then();
       },
     });
   }
   navigateToGrid() {
     this.router.navigate(['/configurations/students']);
+  }
+  onModalClose() {
+    this.displayModal = false;
+    if (this.studentId) {
+      this.router.navigate([`/configurations/student-edit/${this.studentId}`]);
+    }
+  }
+  onFormSave(formType: FormType) {
+    switch (formType) {
+      case FormType.A1:
+        this.router.navigate(['/applications/save-a1-student', this.studentId]);
+        break;
+      case FormType.A1Z:
+        this.router.navigate([
+          '/applications/save-a1z-student',
+          this.studentId,
+        ]);
+        break;
+    }
   }
 }
