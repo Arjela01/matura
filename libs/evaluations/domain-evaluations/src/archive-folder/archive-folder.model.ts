@@ -14,6 +14,7 @@ export interface ArchiveFolder{
   profileGroupId?: string;
   profileGroupName?: string;
   barcode?: number;
+  isFall?: boolean;
 }
 
 export interface ArchiveFolderTableView{

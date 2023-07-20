@@ -39,6 +39,29 @@
         <label for="IsActiveFalse">Jo</label>
       </div>
     </div>
+
+    <div class="field">
+      <label class="mb-3">Është Vjeshtë? *</label>
+      <div class="form grid grid">
+        <div class="field-radiobutton col-6">
+          <p-radioButton
+                  id="IsFallTrue"
+                  name="IsFallTrue"
+                  [value]="true"
+                  [(ngModel)]="academicYear.isFall"></p-radioButton>
+          <label for="IsFallTrue">Po</label>
+        </div>
+        <div class="field-radiobutton col-6">
+          <p-radioButton
+                  id="IsFallFalse"
+                  name="IsFall"
+                  [value]="false"
+                  [(ngModel)]="academicYear.isFall"></p-radioButton>
+          <label for="IsFallFalse">Jo</label>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 

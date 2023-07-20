@@ -4,7 +4,7 @@ export interface ExamType {
   maximumValueWritingScore: number;
   maximumValueMultipleScore: number;
   isFall: boolean;
-
+  dependsOnSchoolProfile: boolean;
 }
 
 export interface ExamTypeTableView {

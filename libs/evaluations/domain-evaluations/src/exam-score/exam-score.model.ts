@@ -19,6 +19,7 @@ export interface ExamScore {
     nr: number;
   };
   archiveFolderNumber: number;
+  isFall?: boolean;
 }
 
 export interface ExamScoreTableView {
