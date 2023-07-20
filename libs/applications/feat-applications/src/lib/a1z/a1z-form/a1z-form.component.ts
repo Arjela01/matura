@@ -426,7 +426,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
               d1ExamType.key,
               this.a1z.academicYearId,
               undefined,
-              undefined
+              this.selectedStudent?.profileId
             )
             .pipe(untilDestroyed(this))
             .subscribe(y => {
@@ -437,12 +437,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         }
         if (d2ExamType && d2ExamType.key) {
           this.examSubjectService
-            .forExamType(
-              d2ExamType.key,
-              this.a1z.academicYearId,
-              undefined,
-              undefined
-            )
+            .forExamType(d2ExamType.key, this.a1z.academicYearId, undefined)
             .pipe(untilDestroyed(this))
             .subscribe(y => {
               this.d2ExamSubjects = y.data;
@@ -458,7 +453,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
               d3ExamType.key,
               this.a1z.academicYearId,
               undefined,
-              undefined
+              this.selectedStudent?.profileId
             )
             .pipe(untilDestroyed(this))
             .subscribe(y => {
