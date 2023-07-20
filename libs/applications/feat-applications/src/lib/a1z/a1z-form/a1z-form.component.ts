@@ -413,19 +413,13 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       .loadDropdownList()
       .pipe(untilDestroyed(this))
       .subscribe(x => {
-        const d1ExamType = x.data.find(
-          d1 => d1.value === EXAM_TYPES.D1 || d1.value === EXAM_TYPES.D1_VJESHTA
-        );
-        const d2ExamType = x.data.find(
-          d2 => d2.value === EXAM_TYPES.D2 || d2.value === EXAM_TYPES.D2_VJESHTA
-        );
+        const d1ExamType = x.data.find(d1 => d1.value === EXAM_TYPES.D1);
+        const d2ExamType = x.data.find(d2 => d2.value === EXAM_TYPES.D2);
         const d3ExamType = x.data.find(d3 => d3.value === EXAM_TYPES.D3);
         const d3ExamTypeFall = x.data.find(
           d3 => d3.value === EXAM_TYPES.D3_VJESHTA
         );
-        const z1ExamType = x.data.find(
-          z1 => z1.value === EXAM_TYPES.Z1 || z1.value === EXAM_TYPES.Z1_VJESHTA
-        );
+        const z1ExamType = x.data.find(z1 => z1.value === EXAM_TYPES.Z1);
         const z1ExamTypeFall = x.data.find(
           z1 => z1.value === EXAM_TYPES.Z1_VJESHTA
         );
@@ -463,7 +457,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
               d3ExamType.key,
               this.a1z.academicYearId,
               undefined,
-              this.selectedStudent?.profileId
+              undefined
             )
             .pipe(untilDestroyed(this))
             .subscribe(y => {
