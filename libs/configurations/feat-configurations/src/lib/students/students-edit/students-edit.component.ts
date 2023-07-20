@@ -194,30 +194,36 @@ export class StudentsEditComponent implements OnInit {
   onFormSave(formType: FormType) {
     switch (formType) {
       case FormType.A1:
-        // TODO : If student already have an A1 get with this endpoint by id student :
+        this.studentService
+          .getA1A1ZByStudentId(this.id as string)
+          .subscribe((forms: any) => {
+            const a1 = forms.data.find((exam: any) => exam.isA1);
+            if (!a1) {
+              this.router.navigate([
+                '/applications/save-a1-student',
+                this.student.id,
+              ]);
+            } else {
+              this.router.navigate([`/applications/save-a1/${a1.id}`]);
+            }
+          });
 
-        // this.studentService
-        //   .getA1A1ZByStudentId(this.id as string)
-        //   .subscribe(data => {
-        //     console.log(data);
-        //   });
-        this.router.navigate([
-          '/applications/save-a1-student',
-          this.student.id,
-        ]);
         break;
       case FormType.A1Z:
-        // TODO : If student already have an A1Z get with this endpoint by id student :
+        this.studentService
+          .getA1A1ZByStudentId(this.id as string)
+          .subscribe((forms: any) => {
+            const a1Z = forms.data.find((exam: any) => !exam.isA1);
+            if (!a1Z) {
+              this.router.navigate([
+                '/applications/save-a1z-student',
+                this.student.id,
+              ]);
+            } else {
+              this.router.navigate([`/applications/a1z-form/${a1Z.id}`]);
+            }
+          });
 
-        // this.studentService
-        //   .getA1A1ZByStudentId(this.id as string)
-        //   .subscribe(data => {
-        //     console.log(data);
-        //   });
-        this.router.navigate([
-          '/applications/save-a1z-student',
-          this.student.id,
-        ]);
         break;
     }
   }
