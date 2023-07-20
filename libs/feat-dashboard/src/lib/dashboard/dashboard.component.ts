@@ -7,12 +7,18 @@ import {
 import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TableModule } from 'primeng/table';
-import {DashboardItemsApiService, DashboardMetriciesApiService} from '@msh/configurations/data-access-configurations';
-import {DashboardItem, DashboardMetrics, UserProfile} from '@msh/shared/domain-models';
-import {UntilDestroy} from "@ngneat/until-destroy";
-import {UserProfileApiService} from "@msh/user-section/data-access-user-section";
+import {
+  DashboardItemsApiService,
+  DashboardMetriciesApiService,
+} from '@msh/configurations/data-access-configurations';
+import {
+  DashboardItem,
+  DashboardMetrics,
+} from '@msh/shared/domain-models';
+import { UntilDestroy } from '@ngneat/until-destroy';
+import { UserProfileApiService } from '@msh/user-section/data-access-user-section';
 
 @UntilDestroy()
 @Component({
@@ -24,24 +30,27 @@ import {UserProfileApiService} from "@msh/user-section/data-access-user-section"
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent implements OnInit {
-  userData:any;
-  role:any;
+  userData: any;
+  role: any;
   totalRecords = 0;
   submitted = false;
   id: any;
   loading = false;
 
-  dashboardCards: DashboardItem[] = [];
-  dashboardMetrics: DashboardMetrics ={
-
-  totalStudents: 0,
-  malePercentage: 0,
-  femalePercentage: 0,
-  a1ApplicationsPercentage: 0,
-  a1ZApplicationsPercentage: 0,
-  totalApplications: 0,
-  id: 0,
-}
+  dashboardItems: Map<string, DashboardItem[]> = new Map<
+    string,
+    DashboardItem[]
+  >();
+  dashboardSections: string[] = [];
+  dashboardMetrics: DashboardMetrics = {
+    totalStudents: 0,
+    malePercentage: 0,
+    femalePercentage: 0,
+    a1ApplicationsPercentage: 0,
+    a1ZApplicationsPercentage: 0,
+    totalApplications: 0,
+    id: 0,
+  };
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -59,11 +68,22 @@ export class DashboardComponent implements OnInit {
     this.dashboardMetriciesService
       .loadDashboardMetrics(this.id)
       .subscribe(result => {
-        this.dashboardMetrics = {...result.data};
+        this.dashboardMetrics = { ...result.data };
         this.cd.detectChanges();
       });
-    this.dashboardItemsApiService.getAll().subscribe(result => {
-      this.dashboardCards = [...result.data];
+    this.dashboardItemsApiService.forHome().subscribe(result => {
+      const items = [...result.data];
+      console.log(items)
+      this.dashboardSections = [
+        ...new Set(result.data.map(e => String(e.dashboardSectionName))),
+      ];
+      console.log(this.dashboardSections)
+      for (const section of this.dashboardSections) {
+        this.dashboardItems.set(
+          section,
+          items.filter(i => i.dashboardSectionName === section)
+        );
+      }
       this.cd.detectChanges();
     });
   }
@@ -75,7 +95,7 @@ export class DashboardComponent implements OnInit {
       byteNumbers[i] = byteCharacters.charCodeAt(i);
     }
     const byteArray = new Uint8Array(byteNumbers);
-    const mimeType = 'application/pdf'
+    const mimeType = 'application/pdf';
     const blob = new Blob([byteArray], { type: mimeType });
 
     const url = URL.createObjectURL(blob);
@@ -86,8 +106,10 @@ export class DashboardComponent implements OnInit {
   }
   getUser() {
     this.userService.getLoggedInUserData().subscribe(response => {
-      this.userData = response.data
-      this.role = response.data.roleName
+      this.userData = response.data;
+      this.role = response.data.roleName;
     });
   }
+
+  protected readonly Object = Object;
 }
