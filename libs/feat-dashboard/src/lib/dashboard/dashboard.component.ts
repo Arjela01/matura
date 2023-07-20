@@ -110,6 +110,4 @@ export class DashboardComponent implements OnInit {
       this.role = response.data.roleName;
     });
   }
-
-  protected readonly Object = Object;
 }
