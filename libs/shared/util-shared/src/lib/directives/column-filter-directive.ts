@@ -31,8 +31,6 @@ export class ColumnFilterDirective {
     filter.applyFilter = (): void => {
       let filterValue: any;
       filterValue ? filterValue.toString().toLowerCase() : null;
-      console.log('call')
-
       originalApplyFilter.call(filter);
     };
 
