@@ -33,8 +33,17 @@
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
+      <th pSortableColumn="firstName">
+        Emri i Studentit
+        <p-sortIcon field="firstName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="firstName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
       <th pSortableColumn="lastName">
-        Emër Mbiemër
+        Mbiemri i Studentit
         <p-sortIcon field="lastName"></p-sortIcon>
         <p-columnFilter
           type="text"
@@ -61,11 +70,40 @@
           mshColumnFilterDirective></p-columnFilter>
       </th>
       <th pSortableColumn="subject">
-        Lënda
+        Lënda e Provimit
         <p-sortIcon field="subject"></p-sortIcon>
         <p-columnFilter
           type="text"
           field="subject"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="examTypeName">
+        Tipi i Provimit
+        <p-sortIcon field="examTypeName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="examTypeName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="decisionDueDate">
+        Afati i vendimit
+        <p-sortIcon field="decisionDueDate"></p-sortIcon>
+        <p-columnFilter
+          type="date"
+          field="decisionDueDate"
+          display="menu"
+          matchMode="equals"></p-columnFilter>
+      </th>
+      <th
+        pSortableColumn="dateCreated">
+        Data e Aplikimit
+        <p-sortIcon
+          field="dateCreated"></p-sortIcon>
+        <p-columnFilter
+          type="date"
+          field="dateCreated"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
@@ -75,15 +113,6 @@
         <p-columnFilter
           type="text"
           field="status"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
-      </th>
-      <th pSortableColumn="decisionDate">
-        Afati i vendimit
-        <p-sortIcon field="decisionDate"></p-sortIcon>
-        <p-columnFilter
-          type="date"
-          field="decisionDate"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
@@ -100,7 +129,10 @@
         {{ examCopy.maturaId }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ examCopy.name }}
+        {{ examCopy.firstName }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ examCopy.lastName }}
       </td>
       <td style="width: 15%; min-width: 10rem">
         {{ examCopy.administrationOffice }}
@@ -110,6 +142,15 @@
       </td>
       <td style="width: 15%; min-width: 10rem">
         {{ examCopy.subject }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ examCopy.examTypeName }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ examCopy.decisionDueDate | date : 'dd/MM/yyyy'}}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ examCopy.dateCreated | date : 'dd/MM/yyyy' }}
       </td>
       <td style="width: 15%; min-width: 10rem">
         <span
@@ -123,9 +164,6 @@
           ">
           {{ examCopy.status | examCopyRequestStatus }}
         </span>
-      </td>
-      <td style="width: 15%; min-width: 10rem">
-        {{ examCopy.decisionDate | date }}
       </td>
       <td></td>
       <td>

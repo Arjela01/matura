@@ -370,7 +370,8 @@
     <msh-approve-exam-copy
       (fileUploaded)="onFileUploaded($event)"
       [examCopyDetails]="examCopy"
-      (formClose)="onConfirmModalClose()">
+      (formClose)="onFormClose()"
+      (documentUploaded)="onDocumentUploaded()">
     </msh-approve-exam-copy>
   </ng-template>
 </p-dialog>

@@ -2,7 +2,12 @@
   <h2 class="flex-1 mb-0">Aplikimet për kopje testi</h2>
   <div class="flex align-items-right justify-content-right"></div>
   <div class="my-2 ml-2">
-    <button pRipple icon="pi pi-download" pButton label="Shkarko Template" (click)="downloadTemplateFile()"></button>
+    <button
+      pRipple
+      icon="pi pi-download"
+      pButton
+      label="Shkarko Template"
+      (click)="downloadTemplateFile()"></button>
   </div>
 </div>
 <div class="grid">
@@ -31,7 +36,8 @@
     <msh-exam-copy-details
       [examCopyDetails]="selecetdExamCopy"
       (formClose)="onModalClose()"
-      (formSave)="onFormSave($event)">
+      (formSave)="onFormSave($event)"
+      (documentUploaded)="onModalClose()">
     </msh-exam-copy-details>
   </ng-template>
 </p-dialog>

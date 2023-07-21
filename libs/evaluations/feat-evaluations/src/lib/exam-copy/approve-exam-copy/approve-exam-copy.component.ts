@@ -22,6 +22,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ExamAssignment } from '@msh/shared/domain-models';
+import {Observable} from "rxjs";
 
 @UntilDestroy()
 @Component({
@@ -57,6 +58,7 @@ export class ApproveExamCopyComponent implements OnInit {
   @ViewChild('form', { static: true }) form!: NgForm;
   @Output() formSave = new EventEmitter<ExamAssignment>();
   @Output() formClose = new EventEmitter<undefined>();
+  @Output() documentUploaded = new EventEmitter<boolean>();
   @Output() fileUploaded: EventEmitter<File> = new EventEmitter<File>();
 
   @Input() set examCopyDetails(details: ExamCopy | null) {
@@ -70,8 +72,10 @@ export class ApproveExamCopyComponent implements OnInit {
     private readonly examCopyService: ExamCopyApiService,
     private readonly toastService: GlobalToastService
   ) {}
+
   displayUploadModal = false;
   submitted = false;
+
   ngOnInit(): void {
     this.confirmExamCopy.applicationId = this.examCopy?.applicationId;
     console.log(this.confirmExamCopy);
@@ -106,14 +110,13 @@ export class ApproveExamCopyComponent implements OnInit {
           this.toastService.showError(
             response.errorMessage ?? 'Ndodhi një problem gjatë konfirmimit'
           );
-          this.formClose.emit();
-          this.displayUploadModal = false;
         }
 
         if (response.isSuccessful) {
           this.toastService.showSuccess('Konfirmimi u krye me sukses');
           this.formClose.emit();
           this.displayUploadModal = false;
+          this.documentUploaded.emit(true);
         }
       });
   }
