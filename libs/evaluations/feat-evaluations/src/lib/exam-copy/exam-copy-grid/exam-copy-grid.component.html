@@ -147,10 +147,10 @@
         {{ examCopy.examTypeName }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ examCopy.decisionDueDate | date }}
+        {{ examCopy.decisionDueDate | date : 'dd/MM/yyyy'}}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ examCopy.dateCreated | date }}
+        {{ examCopy.dateCreated | date : 'dd/MM/yyyy' }}
       </td>
       <td style="width: 15%; min-width: 10rem">
         <span
