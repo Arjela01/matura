@@ -14,17 +14,6 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="highSchool">
-        Shkolla
-        <div>
-          <p-sortIcon field="highSchool"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="highSchool"
-            display="menu"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
       <th pSortableColumn="studentId">
         Matura ID
         <div>
@@ -32,6 +21,17 @@
           <p-columnFilter
             type="text"
             field="studentId"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="idCard">
+        NID
+        <div>
+          <p-sortIcon field="idCard"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="idCard"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
@@ -80,13 +80,13 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="idCard">
-        NID
+      <th pSortableColumn="highSchool">
+        Shkolla
         <div>
-          <p-sortIcon field="idCard"></p-sortIcon>
+          <p-sortIcon field="highSchool"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="idCard"
+            field="highSchool"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
@@ -102,6 +102,30 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="isAN">
+        AN?
+        <div>
+          <p-sortIcon field="isAN"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            matchMode="equals"
+            field="isAN"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="isFall">
+        Vjeshtë?
+        <div>
+          <p-sortIcon field="isFall"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            matchMode="equals"
+            field="isFall"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
       <th pSortableColumn="isConfirmedBySupervisor">
         Statusi
         <div>
@@ -110,8 +134,7 @@
             type="boolean"
             field="isConfirmedBySupervisor"
             display="menu"
-            matchMode="equals"
-            ></p-columnFilter>
+            matchMode="equals"></p-columnFilter>
         </div>
       </th>
       <th></th>
@@ -120,10 +143,14 @@
   <ng-template pTemplate="body" let-student>
     <tr>
       <td style="width: 14%; min-width: 10rem">
-        {{ student.highSchoolName }}
+        <a
+          [routerLink]="['/configurations/student-view', student.studentId]"
+          class="p-button-link"
+          >{{ student.studentId }}</a
+        >
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ student.studentId }}
+        {{ student.idCard }}
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ student.firstName }}
@@ -138,12 +165,17 @@
         {{ student.birthDate | date : 'dd/MM/yyyy' }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ student.idCard }}
+        {{ student.highSchoolName }}
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ student.profileName }}
       </td>
-
+      <td style="width: 14%; min-width: 10rem">
+        {{ student.isAN ? 'Po' : 'Jo' }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ student.isFall ? 'Po' : 'Jo' }}
+      </td>
       <td style="width: 14%; min-width: 10rem">
         <div class="flex">
           <span
@@ -153,9 +185,9 @@
                 : ['surface-300', 'gray-text', 'px-3', 'py-1', 'fb']
             ">
             {{
-            student.isConfirmedBySupervisor == true
-              ? 'Aprovuar'
-              : 'Në pritje'
+              student.isConfirmedBySupervisor == true
+                ? 'Konfirmuar'
+                : 'Në pritje'
             }}
           </span>
         </div>

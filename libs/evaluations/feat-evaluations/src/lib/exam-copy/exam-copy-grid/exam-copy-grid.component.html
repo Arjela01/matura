@@ -17,104 +17,125 @@
     <tr>
       <th pSortableColumn="firstName">
         Numri i Aplikimit
-        <p-sortIcon field="firstName"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="firstName"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+
+        <div>
+          <p-sortIcon field="firstName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="firstName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="maturaId">
-        Id e Maturantit
-        <p-sortIcon field="maturaId"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="maturaId"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+        Matura ID
+        <div>
+          <p-sortIcon field="maturaId"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="maturaId"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="firstName">
-        Emri i Studentit
-        <p-sortIcon field="firstName"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="firstName"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+        Emri
+        <div>
+          <p-sortIcon field="firstName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="firstName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="lastName">
-        Mbiemri i Studentit
-        <p-sortIcon field="lastName"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="lastName"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+        Mbiemri
+        <div>
+          <p-sortIcon field="lastName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="lastName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="administrationOffice">
         ZVAP
-        <p-sortIcon field="administrationOffice"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="administrationOffice"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+        <div>
+          <p-sortIcon field="administrationOffice"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="administrationOffice"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="schoolName">
         Shkolla e Mesme
-        <p-sortIcon field="schoolName"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="schoolName"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+        <div>
+          <p-sortIcon field="schoolName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="schoolName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="subject">
         Lënda e Provimit
-        <p-sortIcon field="subject"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="subject"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+        <div>
+          <p-sortIcon field="subject"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="subject"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="examTypeName">
         Tipi i Provimit
-        <p-sortIcon field="examTypeName"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="examTypeName"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+        <div>
+          <p-sortIcon field="examTypeName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="examTypeName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="decisionDueDate">
         Afati i vendimit
-        <p-sortIcon field="decisionDueDate"></p-sortIcon>
-        <p-columnFilter
-          type="date"
-          field="decisionDueDate"
-          display="menu"
-          matchMode="equals"></p-columnFilter>
+        <div>
+          <p-sortIcon field="decisionDueDate"></p-sortIcon>
+          <p-columnFilter
+            type="date"
+            field="decisionDueDate"
+            display="menu"
+            matchMode="equals"></p-columnFilter>
+        </div>
       </th>
-      <th
-        pSortableColumn="dateCreated">
+      <th pSortableColumn="dateCreated">
         Data e Aplikimit
-        <p-sortIcon
-          field="dateCreated"></p-sortIcon>
-        <p-columnFilter
-          type="date"
-          field="dateCreated"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+        <div>
+          <p-sortIcon field="dateCreated"></p-sortIcon>
+          <p-columnFilter
+            type="date"
+            field="dateCreated"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="status">
         Statusi i Aplikimit
-        <p-sortIcon field="status"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="status"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+        <div>
+          <p-sortIcon field="status"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="status"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th></th>
       <th>Procedo</th>
@@ -147,7 +168,7 @@
         {{ examCopy.examTypeName }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ examCopy.decisionDueDate | date : 'dd/MM/yyyy'}}
+        {{ examCopy.decisionDueDate | date : 'dd/MM/yyyy' }}
       </td>
       <td style="width: 15%; min-width: 10rem">
         {{ examCopy.dateCreated | date : 'dd/MM/yyyy' }}

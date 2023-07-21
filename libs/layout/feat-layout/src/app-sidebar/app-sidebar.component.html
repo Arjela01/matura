@@ -1,30 +1,41 @@
 <div class="sidebar">
-  <msh-global-spinner *ngIf="loading$ | async "></msh-global-spinner>
-  <div class="flex mt-3 mb-4 align-items-center cursor-pointer" (click)="onLogoClick()">
+  <msh-global-spinner *ngIf="loading$ | async"></msh-global-spinner>
+  <div
+    class="flex mt-3 mb-4 align-items-center cursor-pointer"
+    (click)="onLogoClick()">
     <div class="w-auto align-self-start">
       <img src="assets/images/eagle.png" style="width: 40px" class="pt-2" />
     </div>
     <div class="ml-3 pt-1 site-title text-white-alpha-80">
       Matura <br />Shtetërore
     </div>
-
   </div>
-  <ul class="layout-menu mt-3 ">
-
+  <ul class="layout-menu mt-3">
     <ng-container *ngFor="let item of model$ | async; let i = index">
-      <li msh-app-menuitem *ngIf="!item.separator" [item]="item" [index]="i" [root]="true"></li>
+      <li
+        msh-app-menuitem
+        *ngIf="!item.separator"
+        [item]="item"
+        [index]="i"
+        [root]="true"></li>
       <li *ngIf="item.separator" class="menu-separator"></li>
     </ng-container>
   </ul>
   <div class="profile-group">
     <div>
       <div class="mb-6">
-        <p-button (click)="showModal()" styleClass="p-button-rounded">Viti {{academicYear?.year}} {{academicYear?.isFall ? '- vjeshtë' : ''}}</p-button>
+        <p-button (click)="showModal()" styleClass="p-button-rounded"
+          >Viti {{ academicYear?.year }}
+          {{ academicYear?.isFall ? '- vjeshtë' : '' }}</p-button
+        >
       </div>
       <div class="container" *ngIf="userProfile$ | async as user">
         <div class="first-group">
           <div class="profile-photo" (click)="onNewClick()">
-            <p-avatar label="{{ avatarLabel }}" shape="circle" [style]="{ background: '#ccc' }">
+            <p-avatar
+              label="{{ avatarLabel }}"
+              shape="circle"
+              [style]="{ background: '#ccc' }">
             </p-avatar>
           </div>
 
@@ -35,34 +46,67 @@
         </div>
 
         <div class="second-group" (click)="onLogoutClick()">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg">
             <path
               d="M12.3333 13.1667L16.5 9M16.5 9L12.3333 4.83333M16.5 9H6.5M6.5 1.5H5.5C4.09987 1.5 3.3998 1.5 2.86502 1.77248C2.39462 2.01217 2.01217 2.39462 1.77248 2.86502C1.5 3.3998 1.5 4.09987 1.5 5.5V12.5C1.5 13.9001 1.5 14.6002 1.77248 15.135C2.01217 15.6054 2.39462 15.9878 2.86502 16.2275C3.3998 16.5 4.09987 16.5 5.5 16.5H6.5"
-              stroke="#98A2B3" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+              stroke="#98A2B3"
+              stroke-width="1.66667"
+              stroke-linecap="round"
+              stroke-linejoin="round" />
           </svg>
         </div>
       </div>
     </div>
   </div>
 </div>
-<p-dialog [(visible)]="displayModal" [style]="{ width: '650px', height: '350px', display:'flex' }"
-  header="Zgjidh vitin Akademik" [modal]="true" [draggable]="false" [resizable]="false" class="p-fluid dialogYear"
+<p-dialog
+  [(visible)]="displayModal"
+  [style]="{ width: '650px', height: '350px', display: 'flex' }"
+  header="Zgjidh Vitin Shkollor"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid dialogYear"
   (onHide)="onModalClose()">
   <ng-template pTemplate="content" style="height: 100%">
-    <form #form="ngForm" style="display:grid" (ngSubmit)="changeAcademicYear()">
+    <form
+      #form="ngForm"
+      style="display: grid"
+      (ngSubmit)="changeAcademicYear()">
       <div class="field">
-        <label for="City">Viti Akademik</label>
-        <p-dropdown [style]="{ minWidth: '250px' }" id="id" [options]="academicYears" optionLabel="value"
-          optionValue="key" [(ngModel)]="academicYearForm!!.id" name="id" [filter]="true" [autoDisplayFirst]="false"
+        <label for="academicYearSelect">Viti Shkollor</label>
+        <p-dropdown
+          [style]="{ minWidth: '250px' }"
+          id="academicYearSelect"
+          [options]="academicYears"
+          optionLabel="value"
+          optionValue="key"
+          [(ngModel)]="academicYearForm!!.id"
+          name="id"
+          [filter]="true"
+          [autoDisplayFirst]="false"
           [showClear]="true">
         </p-dropdown>
       </div>
-      <div class="flex justify-content-end " style="margin-top:auto">
-        <button type="button" pButton label="Anullo" class="p-button-text w-auto mr-2"
+      <div class="flex justify-content-end" style="margin-top: auto">
+        <button
+          type="button"
+          pButton
+          label="Anullo"
+          class="p-button-text w-auto mr-2"
           (click)="onModalClose()"></button>
-        <button type="submit" pButton [disabled]="!academicYearForm!!.id" label="Ruaj" class="p-button w-auto"></button>
+        <button
+          type="submit"
+          pButton
+          [disabled]="!academicYearForm!!.id"
+          label="Ruaj"
+          class="p-button w-auto"></button>
       </div>
     </form>
   </ng-template>
-
 </p-dialog>

@@ -1,5 +1,30 @@
-<div class="mb-header">
-  <h3 class="font-semibold">Detajet e Maturantit</h3>
+<div class="flex ml-2 mb-2 page-header mb-header">
+  <h2 class="flex-1 mb-0">Detajet e Maturantit</h2>
+  <div class="flex align-items-right justify-content-right">
+    <div class="my-2">
+      <p-button
+        type="button"
+        icon="pi pi-arrow-left"
+        styleClass="p-button-link"
+        [routerLink]="['/configurations', 'students']"
+        [label]="'Kthehu'"></p-button>
+
+      <button pButton label="Konfirmuar" icon="pi pi-check" class="p-button-success p-button-outlined mr-2"></button>
+
+      <ng-container *ngFor="let a1 of forms">
+        <p-button
+          type="button"
+          (click)="navigateToForm(a1)"
+          [label]="'Formulari A1'"
+          *ngIf="a1.isA1"></p-button>
+        <p-button
+          type="button"
+          (click)="navigateToForm(a1)"
+          [label]="'Formulari A1Z'"
+          *ngIf="!a1.isA1"></p-button>
+      </ng-container>
+    </div>
+  </div>
 </div>
 
 <div class="grid">
@@ -7,20 +32,11 @@
     <div class="card-form px-6 py-6">
       <form
         #form="ngForm"
-        *ngIf="student !== null"
+        *ngIf="student"
         class="readonlyForm"
         [style]="{ width: '500px' }">
         <div>
-          <div class="fle">
-            <a [routerLink]="['/configurations', 'students']">
-              <button
-                pButton
-                pRipple
-                label="Kthehu"
-                icon="pi pi-arrow-left"
-                class="w-auto mr-2 mb-3 back-button"></button>
-            </a>
-          </div>
+
           <div class="field">
             <label for="highSchool">Shkolla</label>
             <input

@@ -200,3 +200,19 @@
 .layout-menu::-webkit-scrollbar {
   width: 10px;
 }
+
+
+.p-avatar.p-avatar-circle {
+  border-radius: 50%;
+  overflow: hidden;
+  width: 40px;
+  height: 40px;
+}
+
+.first-group {
+  color: #fff;
+}
+
+.p-button {
+  border: 0;
+}

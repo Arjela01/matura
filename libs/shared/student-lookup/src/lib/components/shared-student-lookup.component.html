@@ -20,7 +20,7 @@
       <th style="width: 3rem" class="row"></th>
       <th pSortableColumn="studentId" class="row">
         Matura ID
-        <p-sortIcon field="studentId" ></p-sortIcon>
+        <p-sortIcon field="studentId"></p-sortIcon>
         <p-columnFilter
           type="text"
           field="studentId"
@@ -64,10 +64,11 @@
         <div>
           <p-sortIcon field="isFall"></p-sortIcon>
           <p-columnFilter
-                  type="boolean"
-                  field="isFall"
-                  matchMode="equals"
-                  display="menu" mshColumnFilterDirective></p-columnFilter>
+            type="boolean"
+            field="isFall"
+            matchMode="equals"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
     </tr>
@@ -75,14 +76,9 @@
   <ng-template pTemplate="body" let-student>
     <tr>
       <td>
-        <button
-          pButton
-          pRipple
-          icon="pi pi-check"
-          class="p-button-rounded p-button-success p-button-text mr-2"
-          pTooltip="Zgjidh"
-          tooltipPosition="bottom"
-          (click)="onStudentSelect(student)"></button>
+        <div>
+        <p-button icon="pi pi-check" styleClass="p-button-outlined" (click)="onStudentSelect(student)" ></p-button>
+        </div>
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ student.studentId }}

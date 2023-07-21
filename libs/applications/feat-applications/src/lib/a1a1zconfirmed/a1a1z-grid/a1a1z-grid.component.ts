@@ -16,6 +16,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'a1a1z-grid',
@@ -29,7 +30,8 @@ import { TooltipModule } from 'primeng/tooltip';
     CheckboxModule,
     RippleModule,
     ChipModule,
-    ColumnFilterDirective
+    ColumnFilterDirective,
+    RouterLink
   ],
   templateUrl: './a1a1z-grid.component.html',
   styleUrls: ['./a1a1z-grid.component.scss'],

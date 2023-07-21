@@ -11,7 +11,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
   GendersApiService,
   HighSchoolApiService,
@@ -30,7 +30,10 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { A1ZTableRecord } from '@msh/applications/domain-application';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'msh-students-form',
   standalone: true,
@@ -101,7 +104,7 @@ export class StudentViewComponent implements OnChanges, OnInit {
     firstName: '',
     graduationYear: undefined,
   };
-
+  forms: A1ZTableRecord[] = [];
   finishedAtSameSchool = true;
 
   id: string | null;
@@ -121,16 +124,35 @@ export class StudentViewComponent implements OnChanges, OnInit {
   }
 
   ngOnInit(): void {
-    this.studentService.getById(this.id).subscribe(result => {
-      this.student = { ...result.data };
-      this.finishedAtSameSchool =
-        this.student?.schoolFinished == '' ||
-        this.student?.schoolFinished == null;
-      this.cd.detectChanges();
-    });
+    this.studentService
+      .getById(this.id)
+      .pipe(untilDestroyed(this))
+      .subscribe(result => {
+        this.student = { ...result.data };
+        this.finishedAtSameSchool =
+          this.student?.schoolFinished == '' ||
+          this.student?.schoolFinished == null;
+        this.cd.detectChanges();
+      });
+
+    this.studentService
+      .getA1A1ZByStudentId(this.id as string)
+      .pipe(untilDestroyed(this))
+      .subscribe((response: any) => {
+        this.forms = response.data ?? [];
+        this.cd.detectChanges();
+      });
   }
 
   ngOnChanges(): void {
     this.showStudent = this.student.highSchoolId != null;
+  }
+
+  navigateToForm(a1: A1ZTableRecord) {
+    if (a1.isA1) {
+      this.router.navigate([`/applications/save-a1/${a1.id}`]);
+    } else {
+      this.router.navigate([`/applications/a1z-form/${a1.id}`]);
+    }
   }
 }

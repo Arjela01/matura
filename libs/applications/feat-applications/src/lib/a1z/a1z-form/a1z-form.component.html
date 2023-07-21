@@ -1,11 +1,11 @@
 <div class="flex center mb-2 page-header mb-header">
   <h2 class="flex-1 m-0">
-    {{ !formId ? 'Shto Formular A1Z' : 'Ndrysho Formular A1Z' }}
+    {{ !formId ? 'Shto Formularin A1Z' : 'Ndrysho Formularin A1Z' }}
   </h2>
 </div>
 <div class="grid">
   <div class="col-12 p-fluid">
-    <div class="card px-6 py-6 mt-3">
+    <div class="card px-6 py-4 mt-3">
       <form #form="ngForm" (ngSubmit)="onSubmit()">
         <div class="field mt-4 mb-4" [style]="{ width: '500px' }">
           <label for="studentInputData">Maturant *</label>
@@ -16,6 +16,7 @@
               pInputText
               id="studentInputData"
               name="studentInputData"
+              readonly="readonly"
               [(ngModel)]="studentInputData"
               required
               autofocus
@@ -523,7 +524,7 @@
 
 <p-dialog
   [(visible)]="showCarriedModal"
-  [style]="{ width: '600px' }"
+  [style]="{ minWidth: '700px' }"
   header="Kërko Notën"
   [modal]="true"
   [draggable]="false"
@@ -550,14 +551,10 @@
       <ng-template pTemplate="body" let-grade>
         <tr>
           <td>
-            <button
-              pButton
-              pRipple
+            <p-button
               icon="pi pi-check"
-              class="p-button-rounded p-button-success p-button-text mr-2"
-              pTooltip="Zgjidh"
-              tooltipPosition="bottom"
-              (click)="onGradeSelect(grade)"></button>
+              (click)="onGradeSelect(grade)"
+              styleClass="p-button-outlined"></p-button>
           </td>
           <td style="width: 14%; min-width: 10rem">
             {{ grade.examTypeName }}
@@ -583,7 +580,6 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="footer">
-        <!-- add a butotn  -->
         <tr>
           <td colspan="6">
             <button

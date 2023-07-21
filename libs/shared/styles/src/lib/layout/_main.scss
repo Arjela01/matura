@@ -1,3 +1,10 @@
+:root {
+    --primary-color: #155eef;
+    --primary-color-text: #f2f4f7;
+    --primary-color-navbar: #101828;
+    --primary-color-button: #155eef;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -25,4 +32,12 @@ a {
 
 .layout-wrapper {
     min-height: 100vh;
+}
+
+.p-button:focus {
+    box-shadow: none;
+}
+
+.pointer {
+    cursor:  pointer;
 }

@@ -3,25 +3,49 @@
 
   <div class="flex align-items-right justify-content-right">
     <div class="my-2">
-      <button pButton pRipple (click)="onNewClick()" [label]="hideA1ZForm === false ? 'Anullo' : 'Shto'"
-        icon="pi pi-plus" class="p-button-success mr-2"></button>
+      <button
+        pButton
+        pRipple
+        (click)="onNewClick()"
+        [label]="hideA1ZForm === false ? 'Anullo' : 'Shto'"
+        icon="pi pi-plus"
+        class="p-button-success mr-2"></button>
     </div>
   </div>
 </div>
 <div class="grid">
   <div class="col-12">
     <div class="card">
-      <msh-a1z-grid [a1z]="(a1zList$ | async) || []" (gridEvent)="onGridEvent($event)" [totalRecords]="totalRecords"
+      <msh-a1z-grid
+        [a1z]="(a1zList$ | async) || []"
+        (gridEvent)="onGridEvent($event)"
+        [totalRecords]="totalRecords"
         (lazyLoadData)="getA1Z($event)">
       </msh-a1z-grid>
     </div>
   </div>
 </div>
 
-<p-confirmDialog #cd header="Konfirmo" icon="pi pi-exclamation-triangle" [style]="{ width: '450px' }">
+<p-confirmDialog
+  #cd
+  header="Konfirmo"
+  icon="pi pi-exclamation-triangle"
+  [style]="{ width: '450px' }">
   <ng-template pTemplate="footer">
-    <button type="button" pButton icon="pi pi-times" label="Jo" class="p-button-text" (click)="cd.reject()"></button>
-    <button type="button" pButton icon="pi pi-check" label="Po" class="p-button border" (click)="cd.accept()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Jo"
+      class="p-button-text"
+      (click)="cd.reject()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Po"
+      class="p-button border"
+      (click)="cd.accept()"></button>
   </ng-template>
 </p-confirmDialog>
 <ng-container *ngIf="academicYear$ | async"></ng-container>

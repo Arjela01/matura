@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormType } from '@msh/applications/domain-application';
+import { A1ZTableRecord, FormType } from '@msh/applications/domain-application';
 import {
   AcademicYearApiService,
   GendersApiService,
@@ -29,7 +29,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { A1a1zConfirmationDialogComponent } from '../manage-students/a1a1z-confirmation-dialog/a1a1z-confirmation-dialog.component';
+import { RippleModule } from 'primeng/ripple';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'msh-students-edit',
   standalone: true,
@@ -48,6 +51,7 @@ import { A1a1zConfirmationDialogComponent } from '../manage-students/a1a1z-confi
     InputMaskModule,
     A1a1zConfirmationDialogComponent,
     DialogModule,
+    RippleModule,
   ],
   templateUrl: './students-edit.component.html',
   styleUrls: ['./students-edit.component.scss'],
@@ -101,7 +105,7 @@ export class StudentsEditComponent implements OnInit {
     registrationYearId: undefined,
     graduationYear: new Date().getFullYear(),
   };
-
+  forms: A1ZTableRecord[] = [];
   finishedAtSameSchool = true;
 
   constructor(
@@ -121,41 +125,64 @@ export class StudentsEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.highSchoolService.loadDropDownList().subscribe(response => {
-      this.highSchool = response.data;
-      this.cd.detectChanges();
-    });
+    this.highSchoolService
+      .loadDropDownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.highSchool = response.data;
+        this.cd.detectChanges();
+      });
 
-    this.genderService.loadDropdownList().subscribe(response => {
-      this.genders = response.data;
-      this.cd.detectChanges();
-    });
+    this.genderService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.genders = response.data;
+        this.cd.detectChanges();
+      });
 
-    this.profileService.loadDropdownList().subscribe(response => {
-      this.schoolProfile = response.data;
-      this.cd.detectChanges();
-    });
+    this.profileService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.schoolProfile = response.data;
+        this.cd.detectChanges();
+      });
 
-    this.studentService.getById(this.id).subscribe(result => {
-      this.student = {
-        ...result.data,
-        birthDate: new Date(result.data.birthDate),
-      };
-      if (!result.data.registrationYearId) {
-        this.academicYearService.loadDropdownList().subscribe(response => {
-          const activeYear: any = response.data.find(
-            (data: any) => data.value === new Date().getFullYear().toString()
-          );
-          if (activeYear) {
-            this.student.registrationYearId = activeYear.key;
-          }
-        });
-      }
-      this.finishedAtSameSchool =
-        this.student?.schoolFinished == '' ||
-        this.student?.schoolFinished == null;
-      this.cd.detectChanges();
-    });
+    this.studentService
+      .getById(this.id)
+      .pipe(untilDestroyed(this))
+      .subscribe(result => {
+        this.student = {
+          ...result.data,
+          birthDate: new Date(result.data.birthDate),
+        };
+        if (!result.data.registrationYearId) {
+          this.academicYearService
+            .loadDropdownList()
+            .pipe(untilDestroyed(this))
+            .subscribe(response => {
+              const activeYear: any = response.data.find(
+                (data: any) =>
+                  data.value === new Date().getFullYear().toString()
+              );
+              if (activeYear) {
+                this.student.registrationYearId = activeYear.key;
+              }
+            });
+        }
+        this.finishedAtSameSchool =
+          this.student?.schoolFinished == '' ||
+          this.student?.schoolFinished == null;
+        this.cd.detectChanges();
+      });
+
+    this.studentService
+      .getA1A1ZByStudentId(this.id as string)
+      .pipe(untilDestroyed(this))
+      .subscribe((response: any) => {
+        this.forms = response.data ?? [];
+      });
   }
 
   onModalClose() {
@@ -167,42 +194,42 @@ export class StudentsEditComponent implements OnInit {
       this.student.schoolFinished = '';
     }
     this.saving = true;
-    this.studentService.update({ id: this.id, ...this.student }).subscribe({
-      next: value => {
-        this.saving = false;
-        if (value.isSuccessful) {
-          this.studentService
-            .getA1A1ZByStudentId(this.id as string)
-            .subscribe((forms: any) => {
-              const a1 = forms.data.find((exam: any) => exam.isA1);
-              const a1Z = forms.data.find((exam: any) => !exam.isA1);
-              if (a1) {
-                this.router.navigate([`/applications/save-a1/${a1.id}`]);
-              } else if (a1Z) {
-                this.router.navigate([`/applications/a1z-form/${a1Z.id}`]);
-              } else {
-                this.displayModal = true;
-              }
+    this.studentService
+      .update({ id: this.id, ...this.student })
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: value => {
+          this.saving = false;
+          if (value.isSuccessful) {
+            const a1 = this.forms.find(exam => exam.isA1);
+            const a1Z = this.forms.find(exam => !exam.isA1);
+            if (a1) {
+              this.router.navigate([`/applications/save-a1/${a1.id}`]);
+            } else if (a1Z) {
+              this.router.navigate([`/applications/a1z-form/${a1Z.id}`]);
+            } else {
+              this.displayModal = true;
+            }
+          } else {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: value.errorMessage,
             });
-        } else {
+          }
+        },
+        error: error => {
+          this.saving = false;
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: value.errorMessage,
+            detail: `Studenti nuk mund te ruhet: ${error}`,
           });
-        }
-      },
-      error: error => {
-        this.saving = false;
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: `Studenti nuk mund te ruhet: ${error}`,
-        });
-      },
-    });
+        },
+      });
     this.cd.markForCheck();
   }
+
   onFormSave(formType: FormType) {
     switch (formType) {
       case FormType.A1:
@@ -217,6 +244,14 @@ export class StudentsEditComponent implements OnInit {
           this.student.id,
         ]);
         break;
+    }
+  }
+
+  navigateToForm(a1: A1ZTableRecord) {
+    if (a1.isA1) {
+      this.router.navigate([`/applications/save-a1/${a1.id}`]);
+    } else {
+      this.router.navigate([`/applications/a1z-form/${a1.id}`]);
     }
   }
 }

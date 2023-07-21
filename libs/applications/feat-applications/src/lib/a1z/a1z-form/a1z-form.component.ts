@@ -3,10 +3,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  DoCheck,
   EventEmitter,
   OnChanges,
-  OnDestroy,
   OnInit,
   Output,
   ViewChild,
@@ -31,8 +29,8 @@ import {
   SharedStudentLookupModule,
 } from '@msh/shared/student-lookup';
 import {
-  GRID_ACTIONS,
   GlobalToastService,
+  GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -93,7 +91,7 @@ interface ChangeEvent<T> {
   ],
   providers: [ConfirmationService],
 })
-export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
+export class A1zFormComponent implements OnInit, OnChanges {
   @Output() formSave = new EventEmitter<A1Z>();
   @Output() formClose = new EventEmitter<undefined>();
 
@@ -150,18 +148,13 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   carriedGrades$ = this.carriedGrades$$.asObservable();
   a1ZReport: Report = Report.A1ZForm_Report;
   studentId: string | null;
-
-  onSubmit() {
-    this.submitted = true;
-
-    if (this.form.valid) {
-      if (this.a1z.id === 0) {
-        this.onNewA1ZFormSubmit();
-      } else {
-        this.onEditA1ZFormSubmit();
-      }
-    }
-  }
+  event = {
+    first: 0,
+    rows: 10,
+    sortOrder: 1,
+    filters: {},
+    globalFilter: null,
+  };
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -182,67 +175,63 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
     this.studentId = this.activatedRoute.snapshot.paramMap.get('student');
   }
 
-  ngOnDestroy(): void {
-    console.log('destroyed');
-  }
-
-  ngDoCheck(): void {
-    if (this.a1z && this.a1z.studentId !== undefined) {
-      this.onStudentInit(this.selectedStudent);
-    }
-    if (this.selectedStudent !== null) {
-      this.onStudentChange(this.selectedStudent);
-    }
-  }
-  event = {
-    first: 0,
-    rows: 10,
-    sortOrder: 1,
-    filters: {},
-    globalFilter: null,
-  };
-
   ngOnInit(): void {
     if (this.formId) {
       this.editing = true;
     }
 
-    this.a1CategoryService.loadDropdownList().subscribe(response => {
-      this.a1Categories = response.data;
-    });
+    this.a1CategoryService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+
+      .subscribe(response => {
+        this.a1Categories = response.data;
+      });
     this.getSubjectDropdown();
 
-    this.academicYearService.getAcademicYears().subscribe(response => {
-      console.log(33, response, this.a1z.yearOfSchoolA1Z);
-      this.a1z.yearOfSchoolA1Z = (response as any).data
-        .filter((item: AcademicYear) => {
-          return item.isActive;
-        })
-        .at(0)?.year;
+    this.academicYearService
+      .getAcademicYears()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.a1z.yearOfSchoolA1Z = (response as any).data
+          .filter((item: AcademicYear) => {
+            return item.isActive;
+          })
+          .at(0)?.year;
 
-      this.cd.detectChanges();
-    });
+        this.cd.detectChanges();
+      });
 
     if (this.studentId !== null) {
-      this.studentService.getById(this.studentId).subscribe(response => {
-        this.selectedStudent = response.data;
+      this.studentService
+        .getById(this.studentId)
+        .pipe(untilDestroyed(this))
 
-        this.cd.detectChanges();
-      });
+        .subscribe(response => {
+          this.selectedStudent = response.data;
+
+          this.cd.detectChanges();
+        });
     }
     if (this.formId !== null) {
-      this.a1zService.getOne(parseInt(this.formId)).subscribe(response => {
-        this.a1z = response.data;
-        this.onSubjectD1Init(response.data);
-        this.onSubjectD2Init(response.data);
-        this.onSubjectD3Init(response.data);
-        this.onSubjectZ1Init(response.data);
-        this.cd.detectChanges();
+      this.a1zService
+        .getOne(parseInt(this.formId))
+        .pipe(untilDestroyed(this))
+        .subscribe(response => {
+          this.a1z = response.data;
+          this.onSubjectD1Init(response.data);
+          this.onSubjectD2Init(response.data);
+          this.onSubjectD3Init(response.data);
+          this.onSubjectZ1Init(response.data);
+          this.cd.detectChanges();
 
-        this.studentService.getById(this.a1z.studentId).subscribe(response => {
-          this.selectedStudent = response.data;
+          this.studentService
+            .getById(this.a1z.studentId)
+            .pipe(untilDestroyed(this))
+            .subscribe(response => {
+              this.setSelectedStudent(response.data);
+            });
         });
-      });
     }
 
     this.reportsApiService
@@ -272,12 +261,27 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       case GRID_ACTIONS.EDIT:
         this.getSubjectDropdown();
 
-        this.selectedStudent = Object.assign({}, event.data as Student);
+        this.setSelectedStudent(Object.assign({}, event.data as Student));
         this.showStudentModal = false;
         break;
     }
   }
-  onStudentInit(student: any) {
+
+  onSubmit() {
+    this.submitted = true;
+
+    if (this.form.valid) {
+      if (this.a1z.id === 0) {
+        this.onNewA1ZFormSubmit();
+      } else {
+        this.onEditA1ZFormSubmit();
+      }
+    }
+  }
+
+  setSelectedStudent(student: any) {
+    this.selectedStudent = student;
+
     if (!student) {
       this.studentInputData = ' ';
     } else {
@@ -286,26 +290,11 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       this.studentInputData =
         student?.studentId +
         '-' +
-        student?.studentFirstName +
+        (student?.firstName ?? student?.studentFirstName) +
         '-' +
-        student?.studentLastName;
+        (student?.lastName ?? student?.studentLastName);
     }
-  }
-
-  onStudentChange(student: Student) {
-    if (!student) {
-      this.studentInputData = ' ';
-    } else {
-      this.a1z.studentId = student.id;
-      this.studentInputData =
-        student?.studentId +
-        '-' +
-        student?.firstName +
-        '-' +
-        student?.middleName +
-        '-' +
-        student?.lastName;
-    }
+    this.cd.detectChanges();
   }
 
   isGraduationYearValid(): boolean {
@@ -397,7 +386,6 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
           },
           error: _ => {
             this.carriedGrades$$.next([]);
-            // this.toastService.showInfo('Studenti Nuk u Gjet');
           },
         });
     } else {
@@ -436,7 +424,9 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
             .pipe(untilDestroyed(this))
             .subscribe(y => {
               this.d1ExamSubjects = y.data;
-              this.a1z.subjectD1Id = y.data[0]!.key!;
+              if (y.data != null && y.data.length > 0) {
+                this.a1z.subjectD1Id = y.data[0]!.key!;
+              }
               this.cd.detectChanges();
             });
         }
@@ -446,9 +436,9 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
             .pipe(untilDestroyed(this))
             .subscribe(y => {
               this.d2ExamSubjects = y.data;
-              this.a1z.subjectD2Id = y.data[0]!.key!;
-              // this.a1z.carriedSubjectD2 = this.d2ExamSubjects[0].key!;
-              // this.a1z.subjectD2A1ZId = this.d2ExamSubjects[0].key!;
+              if (y.data != null && y.data.length > 0) {
+                this.a1z.subjectD2Id = y.data[0]!.key!;
+              }
               this.cd.detectChanges();
             });
         }
