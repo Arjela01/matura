@@ -78,30 +78,32 @@
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
-      <th pSortableColumn="examType">
+      <th pSortableColumn="examTypeName">
         Tipi i Provimit
-        <p-sortIcon field="examType"></p-sortIcon>
+        <p-sortIcon field="examTypeName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="examType"
+          field="examTypeName"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
-      <th pSortableColumn="decisionDate">
+      <th pSortableColumn="decisionDueDate">
         Afati i vendimit
-        <p-sortIcon field="decisionDate"></p-sortIcon>
+        <p-sortIcon field="decisionDueDate"></p-sortIcon>
         <p-columnFilter
           type="date"
-          field="decisionDate"
+          field="decisionDueDate"
           display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+          matchMode="equals"></p-columnFilter>
       </th>
-      <th pSortableColumn="decisionDate">
+      <th
+        pSortableColumn="dateCreated">
         Data e Aplikimit
-        <p-sortIcon field="decisionDate"></p-sortIcon>
+        <p-sortIcon
+          field="dateCreated"></p-sortIcon>
         <p-columnFilter
           type="date"
-          field="decisionDate"
+          field="dateCreated"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
@@ -145,10 +147,10 @@
         {{ examCopy.examTypeName }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ examCopy.decisionDate | date }}
+        {{ examCopy.decisionDueDate | date }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ examCopy.decisionDate }}
+        {{ examCopy.dateCreated | date }}
       </td>
       <td style="width: 15%; min-width: 10rem">
         <span
