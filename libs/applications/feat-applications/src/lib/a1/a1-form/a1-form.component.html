@@ -109,7 +109,7 @@
                 </div> -->
         <h5 class="uppercase mt-5">Lëndët me zgjedhje</h5>
         <div class="field xl:w-4 lg:w-6 smxs:w-full">
-          <label for="optionalSubjects">Lëndët me zgjedhje</label>
+          <label for="optionalSubjects">Shto lëndë me zgjedhje</label>
           <div class="p-inputgroup w-full">
             <p-dropdown
               id="optionalSubjects"
@@ -120,15 +120,11 @@
               [(ngModel)]="optionalSubjectChoosen"
               [autoDisplayFirst]="false"
               [showClear]="true"
+              (onChange)="addSubject()"
               [ngClass]="{
                 'ng-invalid ng-dirty': submitted && subjectsChoosen.length < 1
               }">
             </p-dropdown>
-            <p-button
-              label="Shto"
-              icon="pi"
-              (click)="addSubject()"
-              [style]="{ height: '100%' }"></p-button>
           </div>
         </div>
         <div

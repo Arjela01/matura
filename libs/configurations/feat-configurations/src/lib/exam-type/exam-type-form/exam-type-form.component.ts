@@ -45,7 +45,8 @@ export class ExamTypeFormComponent {
     maximumValueWritingScore: 0,
     maximumValueMultipleScore: 0,
     isFall: false,
-    dependsOnSchoolProfile: false
+    dependsOnSchoolProfile: false,
+    isOptional: false
   };
 
   onCancelClick() {
