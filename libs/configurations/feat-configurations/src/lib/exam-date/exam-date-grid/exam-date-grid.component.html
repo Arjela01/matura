@@ -54,22 +54,34 @@
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
+      <th pSortableColumn="isFall">
+        Është Vjeshtë?
+        <p-sortIcon field="time"></p-sortIcon>
+        <p-columnFilter
+                type="text"
+                field="isFall"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+      </th>
       <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-examDate>
     <tr>
-      <td style="width: 25%; min-width: 10rem">
+      <td style="width: 20%; min-width: 10rem">
         {{ examDate.examTypeName }}
       </td>
-      <td style="width: 25%; min-width: 10rem">
+      <td style="width: 20%; min-width: 10rem">
         {{ examDate.examSiteName }}
       </td>
-      <td style="width: 25%; min-width: 10rem">
+      <td style="width: 20%; min-width: 10rem">
         {{ examDate.date | date : 'dd/MM/yyyy'}}
       </td>
-      <td style="width: 25%; min-width: 10rem">
+      <td style="width: 20%; min-width: 10rem">
         {{ examDate.time}}
+      </td>
+      <td style="width: 20%">
+        {{ examDate.isFall ? 'Po' : 'Jo' }}
       </td>
       <td>
         <div class="flex">

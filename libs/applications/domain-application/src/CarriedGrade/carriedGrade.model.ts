@@ -1,7 +1,7 @@
 export interface CarriedGrade {
   id: number;
   nid: string;
-  examTypeId: number;
+  examTypeID: number;
   examTypeName: string;
   examSubject: string;
   year: number;

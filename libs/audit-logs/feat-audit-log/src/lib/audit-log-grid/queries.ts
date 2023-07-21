@@ -2527,30 +2527,13 @@ export const STUDENTS = `
         hasPreviousPage
        }
         items {
-            auditHostname
-            auditSIDUsername
-            auditUsername
-            auditOperation
-            auditTimestamp
-            birthDate
-            birthPlace
-            isConfirmedBySupervisor
-            isAN
-            email
-            firstName
-            idCard
-            isA2A3
-            isEAlbaniaApplication
-            lastName
-            middleName
-            mobilePhone
-            oldID
-            schoolFinished
-            schoolName
-            session
             studentId
-            studyClass
-            graduationYear
+            firstName
+            middleName
+            lastName
+            auditOperation
+            idCard
+            isEAlbaniaApplication
             isFall
             isPrinted
             diplomaPrintedDate
@@ -2562,97 +2545,6 @@ export const STUDENTS = `
             deletedOn
             modifiedIP
             modifiedOn
-            gender {
-                name
-                id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
-            }
-            highSchool {
-                code
-                name
-                isPublic
-                administrationOfficeId
-                cityId
-                regionId
-                id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
-            }
-            profile {
-                code
-                name
-                isTechnical
-                d1Coefficient
-                d2Coefficient
-                fullName
-                id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
-            }
-            registrationYear {
-                isActive
-                year
-                id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
-            }
             created {
                     displayName
                 }

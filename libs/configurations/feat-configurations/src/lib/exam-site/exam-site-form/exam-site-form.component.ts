@@ -91,15 +91,15 @@ export class ExamSiteFormComponent implements OnInit {
 
   onHighSchoolChanged($event: any): void {
     if ($event && $event.value) {
-      this.highSchoolId = $event.value;
+      this.highSchoolId = [...$event.value];
       this.highSchoolChanged.emit(this.highSchoolId);
-      this.examSite.highschoolIds = this.highSchoolId;
+      this.examSite.highschoolIds = [...this.highSchoolId];
     }
   }
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
-      this.formSave.emit(this.examSite);
+      this.formSave.emit({...this.examSite});
     }
   }
   ngOnInit() {
@@ -113,6 +113,15 @@ export class ExamSiteFormComponent implements OnInit {
           this.examSite.highschoolIds = response.data.highschoolIds;
           this.cd.markForCheck();
         });
+    } else {
+      this.examSite = {
+        address: "",
+        administrationOfficeId: 0,
+        administrationOfficeName: "",
+        id: null,
+        name: "",
+        quota: 0
+      };
     }
   }
 }

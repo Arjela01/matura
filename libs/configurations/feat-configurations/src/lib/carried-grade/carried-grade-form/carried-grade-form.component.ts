@@ -58,7 +58,7 @@ export class CarriedGradesFormComponent {
   grades: CarriedGrade = {
     id: 0,
     nid: '',
-    examTypeId: 0,
+    examTypeID: 0,
     examSubject: '',
     grade: 0,
     year: 0,

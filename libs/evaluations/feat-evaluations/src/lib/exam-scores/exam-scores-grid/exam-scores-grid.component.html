@@ -25,7 +25,8 @@
           <p-columnFilter
             type="text"
             field="academicYear"
-            display="menu" mshColumnFilterDirective></p-columnFilter>
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="examTypeName">
@@ -35,17 +36,19 @@
           <p-columnFilter
             type="text"
             field="examTypeName"
-            display="menu" mshColumnFilterDirective></p-columnFilter>
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="examSubjectName">
-       Lënda e Provimit
+        Lënda e Provimit
         <div>
           <p-sortIcon field="examSubjectName"></p-sortIcon>
           <p-columnFilter
             type="text"
             field="examSubjectName"
-            display="menu" mshColumnFilterDirective></p-columnFilter>
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="barcode">
@@ -53,9 +56,10 @@
         <div>
           <p-sortIcon field="barcode"></p-sortIcon>
           <p-columnFilter
-            type="numeric"
+            type="text"
             field="barcode"
-            display="menu" mshColumnFilterDirective></p-columnFilter>
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="writingScore">
@@ -65,7 +69,8 @@
           <p-columnFilter
             type="numeric"
             field="writingScore"
-            display="menu" mshColumnFilterDirective></p-columnFilter>
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="multipleChoiceScore">
@@ -73,9 +78,21 @@
         <div>
           <p-sortIcon field="multipleChoiceScore"></p-sortIcon>
           <p-columnFilter
-            type="numeric"
-            field="multipleChoiceScore"
-            display="menu" mshColumnFilterDirective></p-columnFilter>
+                  type="numeric"
+                  field="multipleChoiceScore"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="multipleChoiceScore">
+        Vjeshtë?
+        <div>
+          <p-sortIcon field="multipleChoiceScore"></p-sortIcon>
+          <p-columnFilter
+                  type="numeric"
+                  field="isFall"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th></th>
@@ -100,6 +117,9 @@
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ examScore.multipleChoiceScore }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ examScore.isFall ? 'Po' : 'Jo' }}
       </td>
       <td>
         <div class="flex">

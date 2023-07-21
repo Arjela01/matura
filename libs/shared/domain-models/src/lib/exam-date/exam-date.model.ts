@@ -7,6 +7,7 @@ export interface ExamDate{
   examSiteName:string;
   examTypeId: number;
   examTypeName?: string;
+  isFall?: boolean;
 }
 
 export interface ExamDateTableView {

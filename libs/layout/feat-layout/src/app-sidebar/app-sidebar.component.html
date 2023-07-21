@@ -19,7 +19,7 @@
   <div class="profile-group">
     <div>
       <div class="mb-6">
-        <p-button (click)="showModal()" styleClass="p-button-rounded">Viti Akademik {{academicYear?.year}}</p-button>
+        <p-button (click)="showModal()" styleClass="p-button-rounded">Viti {{academicYear?.year}} {{academicYear?.isFall ? '- vjeshtë' : ''}}</p-button>
       </div>
       <div class="container" *ngIf="userProfile$ | async as user">
         <div class="first-group">

@@ -136,6 +136,7 @@ export class ManageExamSiteComponent implements OnInit {
   }
 
   onFormSave(examSite: ExamSite) {
+    console.log(examSite)
     if (examSite.id) {
       this.updateExamSite(examSite);
     }

@@ -3,14 +3,8 @@
     <div class="card" style="border: 0">
       <form #form="ngForm">
         <div class="field mt-4 mb-4">
-          <label for="studentInputData">Student *</label>
+          <label for="studentInputData">Maturant *</label>
           <div class="p-inputgroup">
-            <p-button
-              *ngIf="!studentBan.id"
-              label="Kërko"
-              icon="pi pi-search"
-              (click)="!studentBan.id ? onNewClick() : ''"
-              [style]="{ height: '100%' }"></p-button>
             <input
               [value]="studentInputData"
               [disabled]="!!studentBan.id"
@@ -23,6 +17,12 @@
               [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !studentInputData
               }" />
+            <p-button
+                    *ngIf="!studentBan.id"
+                    label="Kërko"
+                    icon="pi pi-search"
+                    (click)="!studentBan.id ? onNewClick() : ''"
+                    [style]="{ height: '100%' }"></p-button>
           </div>
           <small class="p-error block" *ngIf="submitted && !studentInputData">
             Studenti është fushë e kërkuar.

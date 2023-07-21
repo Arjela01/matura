@@ -1,8 +1,11 @@
+<div class="flex center mb-2 page-header mb-header">
+  <h2 class="flex-1 m-0">
+    {{ !formId ? 'Shto Formular A1' : 'Ndrysho Formular A1' }}
+  </h2>
+</div>
+
 <div class="grid">
   <div class="col-12">
-    <h2 class="flex-1 mb-0 mt-6">
-      {{ !formId ? 'Shto Formular A1' : 'Ndrysho Formular A1' }}
-    </h2>
     <div class="card-form px-6 py-6 mb-header mt-3">
       <form #form="ngForm" (ngSubmit)="onSubmit()">
         <div>
@@ -15,15 +18,9 @@
             (click)="goBack()"></button>
         </div>
 
-        <div class="field mt-4 mb-4" [style]="{ width: '500px' }">
-          <label for="studentInputData">Student *</label>
+        <div class="field xl:w-4 mt-5 lg:w-6 sm:w-full">
+          <label for="studentInputData">Maturant *</label>
           <div class="p-inputgroup">
-            <p-button
-              *ngIf="!editing && showSearch"
-              label="Kërko"
-              icon="pi pi-search"
-              (click)="initializeDialog()"
-              [style]="{ height: '100%' }"></p-button>
             <input
               type="text"
               [disabled]="!showSearch || editing"
@@ -32,10 +29,17 @@
               name="studentInputData"
               [(ngModel)]="choosenStudent"
               autofocus
+              readonly="readonly"
               [required]="true"
               [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !choosenStudent
               }" />
+            <p-button
+              *ngIf="!editing && showSearch"
+              label="Kërko"
+              icon="pi pi-search"
+              (click)="initializeDialog()"
+              [style]="{ height: '100%' }"></p-button>
           </div>
           <small class="p-error block" *ngIf="submitted && !choosenStudent">
             Studenti është fushë e kërkuar.
@@ -89,52 +93,43 @@
           </div>
         </div>
         <!-- <div class="field xl:w-4 lg:w-6 sm:w-full">
-          <label class="mb-3">Keni marrë diplomë/dëftesë pjekurie</label>
-          <div class="formgrid grid w-full">
-            <div class="field-radiobutton col-6">
-              <p-radioButton id="alreadyHaveDiplomaTrue" name="alreadyHaveDiploma" [value]="true"
-                [(ngModel)]="a1.alreadyHaveDiploma"></p-radioButton>
-              <label for="alreadyHaveDiplomaTrue">Po</label>
-            </div>
-            <div class="field-radiobutton col-6">
-              <p-radioButton id="alreadyHaveDiplomaFalse" name="alreadyHaveDiploma" [value]="false"
-                [(ngModel)]="a1.alreadyHaveDiploma"></p-radioButton>
-              <label for="alreadyHaveDiplomaFalse">Jo</label>
-            </div>
-          </div>
-        </div> -->
+                  <label class="mb-3">Keni marrë diplomë/dëftesë pjekurie</label>
+                  <div class="formgrid grid w-full">
+                    <div class="field-radiobutton col-6">
+                      <p-radioButton id="alreadyHaveDiplomaTrue" name="alreadyHaveDiploma" [value]="true"
+                        [(ngModel)]="a1.alreadyHaveDiploma"></p-radioButton>
+                      <label for="alreadyHaveDiplomaTrue">Po</label>
+                    </div>
+                    <div class="field-radiobutton col-6">
+                      <p-radioButton id="alreadyHaveDiplomaFalse" name="alreadyHaveDiploma" [value]="false"
+                        [(ngModel)]="a1.alreadyHaveDiploma"></p-radioButton>
+                      <label for="alreadyHaveDiplomaFalse">Jo</label>
+                    </div>
+                  </div>
+                </div> -->
         <h5 class="uppercase mt-5">Lëndët me zgjedhje</h5>
         <div class="field xl:w-4 lg:w-6 smxs:w-full">
-          <label for="optionalSubjects">Lëndët me zgjedhje</label>
-          <p-dropdown
-            id="optionalSubjects"
-            [options]="optionalSubjects"
-            autoWidth="false"
-            [style]="{ width: '100%' }"
-            optionLabel="value"
-            name="optionalSubject"
-            class="w-full block"
-            [(ngModel)]="optionalSubjectChoosen"
-            [autoDisplayFirst]="false"
-            [showClear]="true"
-            [ngClass]="{
-              'ng-invalid ng-dirty': submitted && subjectsChoosen.length < 1
-            }">
-          </p-dropdown>
-        </div>
-        <div [style]="{ width: '180px' }">
-          <button
-            pButton
-            pRipple
-            type="button"
-            label="Zgjidh"
-            (click)="addSubject()"
-            class="p-button-gray w-full"></button>
+          <label for="optionalSubjects">Shto lëndë me zgjedhje</label>
+          <div class="p-inputgroup w-full">
+            <p-dropdown
+              id="optionalSubjects"
+              [options]="optionalSubjects"
+              [style]="{ width: '100%' }"
+              optionLabel="value"
+              name="optionalSubject"
+              [(ngModel)]="optionalSubjectChoosen"
+              [autoDisplayFirst]="false"
+              [showClear]="true"
+              (onChange)="addSubject()"
+              [ngClass]="{
+                'ng-invalid ng-dirty': submitted && subjectsChoosen.length < 1
+              }">
+            </p-dropdown>
+          </div>
         </div>
         <div
-          class="field xl:w-4 lg:w-6 sm:w-full mt-5"
+          class="field xl:w-4 lg:w-6 sm:w-full mt-5 ml-4"
           *ngIf="subjectsChoosen && subjectsChoosen.length > 0">
-          <h5 class="px-0">Ju zgjodhët lëndët</h5>
           <p-table
             #dt
             dataKey="key"
@@ -145,7 +140,7 @@
             [rowHover]="true">
             <ng-template pTemplate="header">
               <tr>
-                <th pSortableColumn="name" class="px-0">Emri</th>
+                <th pSortableColumn="name" class="px-2">Lëndët e Zgjedhura</th>
                 <th></th>
               </tr>
             </ng-template>
@@ -154,7 +149,7 @@
               let-subjectsChoosen
               let-rowIndex="rowIndex">
               <tr>
-                <td style="width: 100%; min-width: 10rem" class="px-0">
+                <td style="width: 100%; min-width: 10rem" class="px-2">
                   {{ subjectsChoosen.value }}
                 </td>
                 <td>
@@ -164,9 +159,7 @@
                       pRipple
                       icon="pi pi-trash"
                       (click)="onDeleteClick(rowIndex)"
-                      class="p-button-rounded p-button-danger p-button-text"
-                      pTooltip="Fshi"
-                      tooltipPosition="bottom"></button>
+                      class="p-button-danger"> Hiq</button>
                   </div>
                 </td>
               </tr>

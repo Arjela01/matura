@@ -37,6 +37,10 @@ export class DashboardItemsApiService {
     return this.apiService.get<ApiResult<any>>(`/DashboardItems/GetAll`);
   }
 
+  forHome(): Observable<ApiResult<DashboardItem[]>> {
+    return this.apiService.get<ApiResult<any>>(`/DashboardItems/ForHome`);
+  }
+
   save(dashboardItems: DashboardItem): Observable<ApiResult<DashboardItem>> {
     return this.apiService.post<ApiResult<DashboardItem>, DashboardItem>(
       `/DashboardItems`,

@@ -151,19 +151,8 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
 
   getExamDate(examSiteId: string): void {
     this.examDateService.forExamSiteId(examSiteId).subscribe(response => {
-      this.examDates = response.data.filter(data => {
-        const dateValueParts = data.value.match(/(\d{2})\.(\d{2})\.(\d{4})/);
-        if (!dateValueParts) {
-          return false;
-        }
-        const day = parseInt(dateValueParts[1], 10);
-        const month = parseInt(dateValueParts[2], 10) - 1;
-        const year = parseInt(dateValueParts[3], 10);
-        const dateValue = new Date(year, month, day);
-        const todayStartOfDay = new Date();
-        todayStartOfDay.setHours(0, 0, 0, 0);
-        return dateValue >= todayStartOfDay;
-      });
+      console.log(response)
+      this.examDates = [...response.data];
       this.cd.markForCheck();
     });
   }
@@ -219,7 +208,7 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
   getStudents($event: LazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
     const params = {
-      isFall: !!this.hasAdditionalValue.additionalValue.includes('True'),
+      isFall: !!this.hasAdditionalValue?.additionalValue.includes('True'),
     };
     this.studentService
       .loadStudents($event, params)

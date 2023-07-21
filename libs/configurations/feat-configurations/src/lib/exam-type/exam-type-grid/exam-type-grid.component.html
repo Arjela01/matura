@@ -24,7 +24,8 @@
         <p-columnFilter
           type="text"
           field="name"
-          display="menu"  mshColumnFilterDirective></p-columnFilter>
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
       <th pSortableColumn="maximumValueWritingScore">
         Pikët maksimale me shtjellim
@@ -32,44 +33,57 @@
         <p-columnFilter
           type="numeric"
           field="maximumValueWritingScore"
-          display="menu"  mshColumnFilterDirective></p-columnFilter>
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
-
       <th pSortableColumn="maximumValueMultipleScore">
         Pikët maksimale me alternativa
         <p-sortIcon field="maximumValueMultipleScore"></p-sortIcon>
         <p-columnFilter
           type="numeric"
           field="maximumValueMultipleScore"
-          display="menu"  mshColumnFilterDirective></p-columnFilter>
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
-      <th pSortableColumn="isFall">
-        Është Vjeshtë?
-        <div>
-          <p-sortIcon field="isFall"></p-sortIcon>
-          <p-columnFilter
-            type="boolean"
-            field="isFall"
-            matchMode="equals"
-            display="menu" mshColumnFilterDirective></p-columnFilter>
-        </div>
+      <th pSortableColumn="isOptional">
+        Me zgjedhje?
+        <p-sortIcon field="isOptional"></p-sortIcon>
+        <p-columnFilter
+                type="boolean"
+                field="isOptional"
+                display="menu"
+                matchMode="equals"
+                mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="isOptional">
+        Varet nga Profili?
+        <p-sortIcon field="dependsOnSchoolProfile"></p-sortIcon>
+        <p-columnFilter
+          type="boolean"
+          field="dependsOnSchoolProfile"
+          matchMode="equals"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
       <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-examType>
     <tr>
-      <td style="width: 30%">
+      <td style="width: 20%">
         {{ examType.name }}
       </td>
-      <td style="width: 30%">
+      <td style="width: 20%">
         {{ examType.maximumValueWritingScore }}
       </td>
-      <td style="width: 30%">
+      <td style="width: 20%">
         {{ examType.maximumValueMultipleScore }}
       </td>
-      <td style="width: 30%">
-        {{ examType.isFall? 'Po' : 'Jo'  }}
+      <td style="width: 20%">
+        {{ examType.isOptional ? 'Po' : 'Jo' }}
+      </td>
+      <td style="width: 20%">
+        {{ examType.dependsOnSchoolProfile ? 'Po' : 'Jo' }}
       </td>
       <td>
         <div class="flex">

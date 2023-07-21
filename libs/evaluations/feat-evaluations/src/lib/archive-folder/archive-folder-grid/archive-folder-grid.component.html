@@ -59,6 +59,17 @@
             display="menu"  mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="isFall">
+        Vjeshtë
+        <div>
+          <p-sortIcon field="isFall"></p-sortIcon>
+          <p-columnFilter
+                  type="boolean"
+                  field="isFall"
+                  matchMode="equals"
+                  display="menu" mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
       <th pSortableColumn="createdByName">
         Operatori
         <div>
@@ -101,6 +112,9 @@
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ archiveFolder.examSubjectName }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ archiveFolder.isFall ? 'Po' : 'Jo' }}
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ archiveFolder.createdByName }}

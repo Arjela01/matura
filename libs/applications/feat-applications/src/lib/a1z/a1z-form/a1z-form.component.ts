@@ -149,6 +149,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   private carriedGrades$$ = new BehaviorSubject<CarriedGrade[]>([]);
   carriedGrades$ = this.carriedGrades$$.asObservable();
   a1ZReport: Report = Report.A1ZForm_Report;
+  studentId: string | null;
 
   onSubmit() {
     this.submitted = true;
@@ -178,6 +179,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
     private reportsApiService: ReportsApiService
   ) {
     this.formId = this.activatedRoute.snapshot.paramMap.get('id');
+    this.studentId = this.activatedRoute.snapshot.paramMap.get('student');
   }
 
   ngOnDestroy(): void {
@@ -186,7 +188,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
 
   ngDoCheck(): void {
     if (this.a1z && this.a1z.studentId !== undefined) {
-      this.onStudentInit(this.a1z);
+      this.onStudentInit(this.selectedStudent);
     }
     if (this.selectedStudent !== null) {
       this.onStudentChange(this.selectedStudent);
@@ -204,6 +206,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
     if (this.formId) {
       this.editing = true;
     }
+
     this.a1CategoryService.loadDropdownList().subscribe(response => {
       this.a1Categories = response.data;
     });
@@ -220,6 +223,13 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       this.cd.detectChanges();
     });
 
+    if (this.studentId !== null) {
+      this.studentService.getById(this.studentId).subscribe(response => {
+        this.selectedStudent = response.data;
+
+        this.cd.detectChanges();
+      });
+    }
     if (this.formId !== null) {
       this.a1zService.getOne(parseInt(this.formId)).subscribe(response => {
         this.a1z = response.data;
@@ -272,6 +282,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       this.studentInputData = ' ';
     } else {
       this.a1z.studentId = student.studentId;
+      this.selectedStudent = student;
       this.studentInputData =
         student?.studentId +
         '-' +
@@ -403,19 +414,13 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       .loadDropdownList()
       .pipe(untilDestroyed(this))
       .subscribe(x => {
-        const d1ExamType = x.data.find(
-          d1 => d1.value === EXAM_TYPES.D1 || d1.value === EXAM_TYPES.D1_VJESHTA
-        );
-        const d2ExamType = x.data.find(
-          d2 => d2.value === EXAM_TYPES.D2 || d2.value === EXAM_TYPES.D2_VJESHTA
-        );
+        const d1ExamType = x.data.find(d1 => d1.value === EXAM_TYPES.D1);
+        const d2ExamType = x.data.find(d2 => d2.value === EXAM_TYPES.D2);
         const d3ExamType = x.data.find(d3 => d3.value === EXAM_TYPES.D3);
         const d3ExamTypeFall = x.data.find(
           d3 => d3.value === EXAM_TYPES.D3_VJESHTA
         );
-        const z1ExamType = x.data.find(
-          z1 => z1.value === EXAM_TYPES.Z1 || z1.value === EXAM_TYPES.Z1_VJESHTA
-        );
+        const z1ExamType = x.data.find(z1 => z1.value === EXAM_TYPES.Z1);
         const z1ExamTypeFall = x.data.find(
           z1 => z1.value === EXAM_TYPES.Z1_VJESHTA
         );
@@ -426,7 +431,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
               d1ExamType.key,
               this.a1z.academicYearId,
               undefined,
-              undefined
+              this.selectedStudent?.profileId
             )
             .pipe(untilDestroyed(this))
             .subscribe(y => {
@@ -437,12 +442,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
         }
         if (d2ExamType && d2ExamType.key) {
           this.examSubjectService
-            .forExamType(
-              d2ExamType.key,
-              this.a1z.academicYearId,
-              undefined,
-              undefined
-            )
+            .forExamType(d2ExamType.key, this.a1z.academicYearId, undefined)
             .pipe(untilDestroyed(this))
             .subscribe(y => {
               this.d2ExamSubjects = y.data;

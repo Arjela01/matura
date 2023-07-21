@@ -14,6 +14,7 @@
       Emri është fushë e kërkuar.
     </small>
   </div>
+
   <div class="field">
     <label for="MaximumValueWritingScore">Pikët maksimale me shtjellim *</label>
     <input
@@ -50,24 +51,47 @@
       Pikët maksimale është fushë e kërkuar.
     </small>
   </div>
+
   <div class="field">
-    <label class="mb-3">Është Vjeshtë? *</label>
+    <label class="mb-3">Me Zgjedhje? *</label>
     <div class="form grid grid">
       <div class="field-radiobutton col-6">
         <p-radioButton
-          id="IsFallTrue"
-          name="IsFallTrue"
-          [value]="true"
-          [(ngModel)]="examType.isFall"></p-radioButton>
-        <label for="IsFallTrue">Po</label>
+                id="IsOptionalTrue"
+                name="IsOptionalTrue"
+                [value]="true"
+                [(ngModel)]="examType.isOptional"></p-radioButton>
+        <label for="IsOptionalTrue">Po</label>
       </div>
       <div class="field-radiobutton col-6">
         <p-radioButton
-          id="IsFallFalse"
-          name="IsFall"
-          [value]="false"
-          [(ngModel)]="examType.isFall"></p-radioButton>
-        <label for="IsFallFalse">Jo</label>
+                id="IsOptionalFalse"
+                name="IsOptionalFalse"
+                [value]="false"
+                [(ngModel)]="examType.isOptional"></p-radioButton>
+        <label for="IsOptionalFalse">Jo</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="mb-3">Varet nga Profili i Shkollës? *</label>
+    <div class="form grid grid">
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+                id="DependsOnSchoolProfileTrue"
+                name="DependsOnSchoolProfileTrue"
+                [value]="true"
+                [(ngModel)]="examType.dependsOnSchoolProfile"></p-radioButton>
+        <label for="DependsOnSchoolProfileTrue">Po</label>
+      </div>
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+                id="DependsOnSchoolProfileFalse"
+                name="DependsOnSchoolProfileFalse"
+                [value]="false"
+                [(ngModel)]="examType.dependsOnSchoolProfile"></p-radioButton>
+        <label for="DependsOnSchoolProfileFalse">Jo</label>
       </div>
     </div>
   </div>

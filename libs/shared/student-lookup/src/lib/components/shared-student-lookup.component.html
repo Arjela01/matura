@@ -58,6 +58,18 @@
           field="idCard"
           display="menu"></p-columnFilter>
       </th>
+
+      <th pSortableColumn="isFall">
+        Vjeshtë?
+        <div>
+          <p-sortIcon field="isFall"></p-sortIcon>
+          <p-columnFilter
+                  type="boolean"
+                  field="isFall"
+                  matchMode="equals"
+                  display="menu" mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-student>
@@ -86,6 +98,9 @@
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ student.idCard }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ student.isFall ? 'Po' : 'Jo' }}
       </td>
     </tr>
   </ng-template>

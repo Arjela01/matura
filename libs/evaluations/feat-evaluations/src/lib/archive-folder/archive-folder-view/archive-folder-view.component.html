@@ -5,7 +5,7 @@
         <div>
           <h2 class="mb-0">
             Dosja: {{ archiveFolder.nr }} | {{ archiveFolder.examTypeName }} :
-            {{ archiveFolder.examSubjectName }}
+            {{ archiveFolder.examSubjectName }} {{archiveFolder.isFall ? '| Vjeshtë' : ''}}
           </h2>
         </div>
         <div>
@@ -49,8 +49,8 @@
           responsiveLayout="scroll"
           [value]="archiveExams"
           [totalRecords]="totalRecords"
-          [rows]="100"
-          [paginator]="true"
+          [rows]="10"
+          [paginator]="totalRecords !== 50"
           [rowsPerPageOptions]="[10, 20, 30]"
           [showCurrentPageReport]="true"
           currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"

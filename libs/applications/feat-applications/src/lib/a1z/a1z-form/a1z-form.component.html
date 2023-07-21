@@ -1,19 +1,15 @@
+<div class="flex center mb-2 page-header mb-header">
+  <h2 class="flex-1 m-0">
+    {{ !formId ? 'Shto Formular A1Z' : 'Ndrysho Formular A1Z' }}
+  </h2>
+</div>
 <div class="grid">
   <div class="col-12 p-fluid">
-    <h2 class="flex-1 mb-0 mt-6">
-      {{ !formId ? 'Shto Formular A1Z' : 'Ndrysho Formular A1Z' }}
-    </h2>
     <div class="card px-6 py-6 mt-3">
       <form #form="ngForm" (ngSubmit)="onSubmit()">
         <div class="field mt-4 mb-4" [style]="{ width: '500px' }">
-          <label for="studentInputData">Student *</label>
+          <label for="studentInputData">Maturant *</label>
           <div class="p-inputgroup">
-            <p-button
-              *ngIf="!editing"
-              label="Kërko"
-              icon="pi pi-search"
-              (click)="onNewClick()"
-              [style]="{ height: '100%' }"></p-button>
             <input
               [value]="studentInputData"
               type="text"
@@ -23,10 +19,16 @@
               [(ngModel)]="studentInputData"
               required
               autofocus
-              [disabled]="editing"
+              [disabled]="editing || studentId !== null"
               [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !studentInputData
               }" />
+            <p-button
+              *ngIf="!editing && !studentId"
+              label="Kërko"
+              icon="pi pi-search"
+              (click)="onNewClick()"
+              [style]="{ height: '100%' }"></p-button>
           </div>
           <small class="p-error block" *ngIf="submitted && !studentInputData">
             Studenti është fushë e kërkuar.
@@ -591,8 +593,9 @@
               icon="pi pi-plus"
               class="p-button-success mr-2"
               (click)="addCarriedGrade()"></button>
-          </td></tr
-      ></ng-template>
+          </td>
+        </tr>
+      </ng-template>
     </p-table>
   </ng-template>
 </p-dialog>
