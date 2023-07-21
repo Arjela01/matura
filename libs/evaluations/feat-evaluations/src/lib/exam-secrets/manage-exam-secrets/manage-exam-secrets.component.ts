@@ -23,7 +23,6 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ExamSecretsFormComponent } from '../exam-secrets-form/exam-secrets-form.component';
 import { ExamSecretsGridComponent } from '../exam-secrets-grid/exam-secrets-grid.component';
-import {ExamScoresFormComponent} from "../../exam-scores/exam-scores-form/exam-scores-form.component";
 
 @UntilDestroy()
 @Component({
@@ -108,6 +107,7 @@ export class ManageExamSecretsComponent implements OnInit {
         });
         break;
     }
+    this.cd.detectChanges();
   }
 
   getExamSubjects(examTypeId?: number) {

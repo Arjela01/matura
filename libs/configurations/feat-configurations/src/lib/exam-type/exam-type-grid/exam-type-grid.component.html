@@ -46,19 +46,31 @@
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
+      <th pSortableColumn="isOptional">
+        Varet nga Profili?
+        <p-sortIcon field="dependsOnSchoolProfile"></p-sortIcon>
+        <p-columnFilter
+                type="boolean"
+                field="dependsOnSchoolProfile"
+                matchMode="equals"
+                display="menu"  mshColumnFilterDirective></p-columnFilter>
+      </th>
       <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-examType>
     <tr>
-      <td style="width: 30%">
+      <td style="width: 25%">
         {{ examType.name }}
       </td>
-      <td style="width: 30%">
+      <td style="width: 25%">
         {{ examType.maximumValueWritingScore }}
       </td>
-      <td style="width: 30%">
+      <td style="width: 25%">
         {{ examType.maximumValueMultipleScore }}
+      </td>
+      <td style="width: 25%">
+        {{ examType.dependsOnSchoolProfile ? 'Po' : 'Jo' }}
       </td>
       <td>
         <div class="flex">

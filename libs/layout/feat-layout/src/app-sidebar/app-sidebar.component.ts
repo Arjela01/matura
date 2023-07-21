@@ -197,9 +197,9 @@ export class AppSidebarComponent implements OnInit {
     const yearToFind = this.academicYears.find(
       year => year.key === this.academicYearForm.id
     );
-    const { key: id, value: year } = yearToFind;
+    const { key: id, value: year, additionalValue: json } = yearToFind;
     console.log({ id, year });
-    this.authFacade.changeAcademicYear({ id, year });
+    this.authFacade.changeAcademicYear(JSON.parse(json));
     this.displayModal = false;
   }
 }

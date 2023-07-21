@@ -109,6 +109,17 @@
             display="menu"  mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="isFall">
+        Vjeshtë?
+        <div>
+          <p-sortIcon field="isFall"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            matchMode="equals"
+            field="isFall"
+            display="menu"  mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
       <th pSortableColumn="createdByName">
         Krijuar Nga
         <div>
@@ -180,6 +191,9 @@
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ student.isAN ? 'Po' : 'Jo' }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ student.isFall ? 'Po' : 'Jo' }}
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ student.createdByName }}

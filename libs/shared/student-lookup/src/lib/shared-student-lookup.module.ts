@@ -8,18 +8,20 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { RippleModule } from 'primeng/ripple';
 import { SharedStudentApiService } from './services/shared-student-api.service';
 import { SharedStudentLookupComponent } from './components/shared-student-lookup.component';
+import {ColumnFilterDirective} from "@msh/shared/util-shared";
 
 @NgModule({
   declarations: [SharedStudentLookupComponent],
-  imports: [
-    CommonModule,
-    TableModule,
-    ButtonModule,
-    InputTextModule,
-    TooltipModule,
-    CheckboxModule,
-    RippleModule,
-  ],
+    imports: [
+        CommonModule,
+        TableModule,
+        ButtonModule,
+        InputTextModule,
+        TooltipModule,
+        CheckboxModule,
+        RippleModule,
+        ColumnFilterDirective,
+    ],
   providers: [SharedStudentApiService],
   exports: [
     SharedStudentLookupComponent
