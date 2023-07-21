@@ -188,7 +188,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
 
   ngDoCheck(): void {
     if (this.a1z && this.a1z.studentId !== undefined) {
-      this.onStudentInit(this.a1z);
+      this.onStudentInit(this.selectedStudent);
     }
     if (this.selectedStudent !== null) {
       this.onStudentChange(this.selectedStudent);
@@ -282,6 +282,7 @@ export class A1zFormComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
       this.studentInputData = ' ';
     } else {
       this.a1z.studentId = student.studentId;
+      this.selectedStudent = student;
       this.studentInputData =
         student?.studentId +
         '-' +

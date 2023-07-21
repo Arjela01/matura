@@ -387,7 +387,7 @@ export class A1FormComponent {
   addSubject() {
     // this.moreSubjectThanAllowed = false;
     const subjectIndexFound = this.subjectsChoosen.findIndex(
-      subject => subject.key === this.optionalSubjectChoosen.key
+      subject => subject.key === this.optionalSubjectChoosen?.key
     );
     if (subjectIndexFound !== -1) {
       this.toastService.showError('Lënda është zgjedhur');
