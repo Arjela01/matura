@@ -27,15 +27,15 @@
       [ngModelOptions]="{ standalone: true }"
       [required]="true"
       [style]="{ width: '100%' }"
-      [(ngModel)]="grades.examTypeId"
+      [(ngModel)]="grades.examTypeID"
       [ngClass]="{
         'ng-invalid ng-dirty':
-          submitted && (!grades.examTypeId || grades.examTypeId === 0)
+          submitted && (!grades.examTypeID || grades.examTypeID === 0)
       }">
     </p-dropdown>
     <small
       class="p-error block"
-      *ngIf="submitted && (!grades.examTypeId || grades.examTypeId === 0)">
+      *ngIf="submitted && (!grades.examTypeID || grades.examTypeID === 0)">
       Tipi i provimit është fushë e kërkuar.
     </small>
   </div>
