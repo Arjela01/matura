@@ -20,7 +20,7 @@ import {
 } from '@msh/configurations/data-access-configurations';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import {
-  AcademicYear,
+  AcademicYear, EXAM_TYPES,
   Student,
   StudentTableView,
 } from '@msh/shared/domain-models';
@@ -37,9 +37,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { Observable, combineLatest, of, switchMap } from 'rxjs';
-import { Report } from '../../../../../../reports/reports-enum';
-import { EXAM_TYPES } from '../../a1z/a1z-form/exam-type.enum';
 import { ManageStudentsGridsDialogComponent } from '../manage-students-grids-dialog/manage-students-grids-dialog.component';
+import {Report} from "../../../../../../shared/domain-models/src/lib/reports/reports-enum";
 
 @Component({
   selector: 'a1-form',

@@ -40,7 +40,7 @@ import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ArchiveFormComponent } from '../archive-exam-form/archive-form.component';
 import { ArchiveExamGridComponent } from '../archive-exam-grid/archive-exam-grid.component';
 import { BarcodeService } from '../services/barcode-service';
-import {Report} from "../../../../../../reports/reports-enum";
+import {Report} from "../../../../../../shared/domain-models/src/lib/reports/reports-enum";
 
 @UntilDestroy()
 @Component({

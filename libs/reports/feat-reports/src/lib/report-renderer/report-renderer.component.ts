@@ -17,7 +17,7 @@ import {DialogModule} from 'primeng/dialog';
 import RxPostmessenger from 'rx-postmessenger';
 import {combineLatest, first, forkJoin, map, skip, Subject, tap} from 'rxjs';
 import {IframeAutoHeightDirective} from '../iframe-auto-height.directive';
-import {Report} from '../../../../reports-enum';
+import {Report} from '../../../../../shared/domain-models/src/lib/reports/reports-enum';
 import {Path} from './paths-enum';
 
 @Component({

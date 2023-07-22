@@ -95,7 +95,12 @@ export class ManageA1zComponent {
         break;
       case GRID_ACTIONS.EDIT:
         this.selectedA1Z = Object.assign({}, event.data as A1ZTableRecord);
-        this.router.navigate(['applications/a1z-form', this.selectedA1Z.id]);
+        this.router.navigate([
+          'applications',
+          'a1z',
+          'edit',
+          this.selectedA1Z.id,
+        ]);
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({

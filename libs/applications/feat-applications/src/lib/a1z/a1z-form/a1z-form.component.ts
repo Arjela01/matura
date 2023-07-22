@@ -23,7 +23,7 @@ import {
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import { AcademicYear, Student } from '@msh/shared/domain-models';
+import {AcademicYear, EXAM_TYPES, Report, Student} from '@msh/shared/domain-models';
 import {
   SharedStudent,
   SharedStudentLookupModule,
@@ -51,8 +51,6 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject } from 'rxjs';
-import { Report } from '../../../../../../reports/reports-enum';
-import { EXAM_TYPES } from './exam-type.enum';
 
 interface ChangeEvent<T> {
   originalEvent: Event;
