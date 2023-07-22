@@ -204,7 +204,7 @@ export class StudentsEditComponent implements OnInit {
             const a1 = this.forms.find(exam => exam.isA1);
             const a1Z = this.forms.find(exam => !exam.isA1);
             if (a1) {
-              this.router.navigate([`/applications/save-a1/${a1.id}`]);
+              this.router.navigate([`/applications/a1/edit/${a1.id}`]);
             } else if (a1Z) {
               this.router.navigate([`/applications/a1z-form/${a1Z.id}`]);
             } else {
@@ -234,13 +234,13 @@ export class StudentsEditComponent implements OnInit {
     switch (formType) {
       case FormType.A1:
         this.router.navigate([
-          '/applications/save-a1-student',
+          '/applications/a1/add-for-student',
           this.student.id,
         ]);
         break;
       case FormType.A1Z:
         this.router.navigate([
-          '/applications/save-a1z-student',
+          '/applications/a1z/add-for-student',
           this.student.id,
         ]);
         break;
@@ -249,7 +249,7 @@ export class StudentsEditComponent implements OnInit {
 
   navigateToForm(a1: A1ZTableRecord) {
     if (a1.isA1) {
-      this.router.navigate([`/applications/save-a1/${a1.id}`]);
+      this.router.navigate([`/applications/a1/edit/${a1.id}`]);
     } else {
       this.router.navigate([`/applications/a1z-form/${a1.id}`]);
     }

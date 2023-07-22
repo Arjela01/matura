@@ -36,7 +36,8 @@
           <p-columnFilter
             type="numeric"
             field="totalArchiveExams"
-            display="menu"  mshColumnFilterDirective></p-columnFilter>
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="examTypeName">
@@ -46,7 +47,8 @@
           <p-columnFilter
             type="text"
             field="examTypeName"
-            display="menu"  mshColumnFilterDirective></p-columnFilter>
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="examSubjectName">
@@ -56,7 +58,8 @@
           <p-columnFilter
             type="text"
             field="examSubjectName"
-            display="menu"  mshColumnFilterDirective></p-columnFilter>
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="isFall">
@@ -64,10 +67,11 @@
         <div>
           <p-sortIcon field="isFall"></p-sortIcon>
           <p-columnFilter
-                  type="boolean"
-                  field="isFall"
-                  matchMode="equals"
-                  display="menu" mshColumnFilterDirective></p-columnFilter>
+            type="boolean"
+            field="isFall"
+            matchMode="equals"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="createdByName">
@@ -77,7 +81,8 @@
           <p-columnFilter
             type="text"
             field="createdByName"
-            display="menu"  mshColumnFilterDirective></p-columnFilter>
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="isClosed">
@@ -88,7 +93,8 @@
             type="boolean"
             field="isClosed"
             matchMode="equals"
-            display="menu" mshColumnFilterDirective></p-columnFilter>
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th colspan="3" style="text-align: center">Veprime</th>
@@ -131,49 +137,31 @@
         </span>
       </td>
       <td>
-        <div [hidden]="archiveFolder.isClosed">
-          <div class="flex">
-            <a
-              [routerLink]="[
-                '/evaluations',
-                'archive-exams',
-                archiveFolder.id
-              ]">
-              <img
-                src="assets/svg/barcode.svg"
-                class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
-                tooltipPosition="bottom"
-                (click)="persistArchiveFolder(archiveFolder)"
-                pTooltip="Hidh Barkode" />
-            </a>
-          </div>
-        </div>
-      </td>
-      <td style="width: 14%; min-width: 10rem">
         <div class="flex">
-          <button
-            pButton
-            pRipple
-            class="file-unlock"
-            (click)="changeStatus(archiveFolder)"
-            icon="{{
-              !archiveFolder.isClosed ? 'pi pi-lock-open' : 'pi pi-lock'
-            }}">
-            &nbsp;
-            {{ !archiveFolder.isClosed ? 'Mbyll Dosjen' : 'Hap Dosjen' }}
-          </button>
-        </div>
-      </td>
-      <td>
-        <div>
-          <div class="flex">
+          <a [routerLink]="['/evaluations', 'archive-exams', archiveFolder.id]">
             <img
-              src="assets/svg/delete-form.svg"
-              class="p-button-rounded p-button-danger p-button-text pointer"
-              pTooltip="Fshi"
+              src="assets/svg/barcode.svg"
+              class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
               tooltipPosition="bottom"
-              (click)="onDeleteClick(archiveFolder)" />
-          </div>
+              (click)="persistArchiveFolder(archiveFolder)"
+              pTooltip="Hidh Barkode" />
+          </a>
+          <img
+            src="{{
+              !archiveFolder.isClosed
+                ? 'assets/svg/close.svg'
+                : 'assets/svg/open.svg'
+            }}"
+            class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
+            tooltipPosition="bottom"
+            (click)="changeStatus(archiveFolder)"
+            pTooltip="{{ !archiveFolder.isClosed ? 'Mbyll' : 'Hap' }}" />
+          <img
+            src="assets/svg/delete-form.svg"
+            class="p-button-rounded p-button-danger p-button-text pointer"
+            pTooltip="Fshi"
+            tooltipPosition="bottom"
+            (click)="onDeleteClick(archiveFolder)" />
         </div>
       </td>
     </tr>

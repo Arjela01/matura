@@ -150,7 +150,7 @@ export class StudentViewComponent implements OnChanges, OnInit {
 
   navigateToForm(a1: A1ZTableRecord) {
     if (a1.isA1) {
-      this.router.navigate([`/applications/save-a1/${a1.id}`]);
+      this.router.navigate([`/applications/a1/edit/${a1.id}`]);
     } else {
       this.router.navigate([`/applications/a1z-form/${a1.id}`]);
     }

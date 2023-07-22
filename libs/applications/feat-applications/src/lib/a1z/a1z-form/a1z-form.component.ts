@@ -172,7 +172,7 @@ export class A1zFormComponent implements OnInit, OnChanges {
     private reportsApiService: ReportsApiService
   ) {
     this.formId = this.activatedRoute.snapshot.paramMap.get('id');
-    this.studentId = this.activatedRoute.snapshot.paramMap.get('student');
+    this.studentId = this.activatedRoute.snapshot.paramMap.get('studentId');
   }
 
   ngOnInit(): void {
@@ -202,18 +202,8 @@ export class A1zFormComponent implements OnInit, OnChanges {
         this.cd.detectChanges();
       });
 
-    if (this.studentId !== null) {
-      this.studentService
-        .getById(this.studentId)
-        .pipe(untilDestroyed(this))
 
-        .subscribe(response => {
-          this.selectedStudent = response.data;
-
-          this.cd.detectChanges();
-        });
-    }
-    if (this.formId !== null) {
+    if (this.formId) {
       this.a1zService
         .getOne(parseInt(this.formId))
         .pipe(untilDestroyed(this))
@@ -232,6 +222,16 @@ export class A1zFormComponent implements OnInit, OnChanges {
               this.setSelectedStudent(response.data);
             });
         });
+    } else if (this.studentId !== null) {
+      this.studentService
+          .getById(this.studentId)
+          .pipe(untilDestroyed(this))
+
+          .subscribe(response => {
+            this.selectedStudent = response.data;
+
+            this.cd.detectChanges();
+          });
     }
 
     this.reportsApiService

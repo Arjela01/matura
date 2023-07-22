@@ -88,7 +88,7 @@ export class A1GridComponent {
     tap()
   );
   onNewClick() {
-    this.router.navigate(['applications/save-a1']);
+    this.router.navigate(['applications/a1/add']);
   }
   updateA1(a1: A1Z) {
     this.a1ApiService
@@ -119,7 +119,7 @@ export class A1GridComponent {
   onGridEvent(action: GRID_ACTIONS, event: any) {
     switch (action) {
       case GRID_ACTIONS.EDIT:
-        this.router.navigate([`applications/save-a1/${event.id}`]);
+        this.router.navigate([`applications/a1/edit/${event.id}`]);
         this.displayForm = true;
         break;
       case GRID_ACTIONS.DELETE:
