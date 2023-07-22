@@ -36,3 +36,4 @@ export * from './user-reset-password/user-reset-password.model';
 export * from './user/user.model';
 export * from './data-export/data-export.model';
 export * from './reports/reports-enum';
+export * from './enums/form-mode.enum';

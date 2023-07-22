@@ -6,8 +6,9 @@ import {
   Output,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { A1Z } from '@msh/applications/domain-application';
 import {A1FormComponent} from "../a1-form/a1-form.component";
+import {ActivatedRoute} from "@angular/router";
+import {A1FormModeEnum} from "../a1-form-mode.enum";
 
 @Component({
   selector: 'msh-a1-for-student-edit',
@@ -19,6 +20,13 @@ import {A1FormComponent} from "../a1-form/a1-form.component";
   providers: [],
 })
 export class A1ForStudentEditComponent {
-  @Output() formSave = new EventEmitter<A1Z>();
-  @Output() formClose = new EventEmitter<undefined>();
+  id = '';
+  studentId = '';
+
+  constructor(private  route: ActivatedRoute) {
+    this.id = this.route.snapshot.paramMap.get('id') ?? '';
+    this.studentId = this.route.snapshot.paramMap.get('studentId') ?? '';
+  }
+
+  protected readonly A1FormModeEnum = A1FormModeEnum;
 }

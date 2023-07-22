@@ -1,6 +1,6 @@
 <div class="flex center mb-2 page-header mb-header">
   <h2 class="flex-1 m-0">
-    {{ !formId ? 'Shto Formular A1' : 'Ndrysho Formular A1' }}
+    {{ A1FormModeEnum.Add == mode ? 'Shto Formular A1' : 'Ndrysho Formularin A1' }}
   </h2>
 </div>
 
@@ -10,7 +10,7 @@
       <form #form="ngForm" (ngSubmit)="onSubmit()">
         <div>
           <button
-            *ngIf="!showSearch"
+            *ngIf="!showStudentSearchButton"
             pButton
             label="Kthehu te Maturanti"
             icon="pi pi-arrow-left"
@@ -23,25 +23,25 @@
           <div class="p-inputgroup">
             <input
               type="text"
-              [disabled]="!showSearch || editing"
+              [disabled]="!showStudentSearchButton"
               pInputText
               id="studentInputData"
               name="studentInputData"
-              [(ngModel)]="choosenStudent"
+              [(ngModel)]="studentInputData"
               autofocus
               readonly="readonly"
               [required]="true"
               [ngClass]="{
-                'ng-invalid ng-dirty': submitted && !choosenStudent
+                'ng-invalid ng-dirty': submitted && !studentInputData
               }" />
             <p-button
-              *ngIf="!editing && showSearch"
+              *ngIf="showStudentSearchButton"
               label="Kërko"
               icon="pi pi-search"
-              (click)="initializeDialog()"
+              (click)="showStudentModal = true"
               [style]="{ height: '100%' }"></p-button>
           </div>
-          <small class="p-error block" *ngIf="submitted && !choosenStudent">
+          <small class="p-error block" *ngIf="submitted && !studentInputData">
             Studenti është fushë e kërkuar.
           </small>
         </div>
@@ -102,24 +102,24 @@
               [style]="{ width: '100%' }"
               optionLabel="value"
               name="optionalSubject"
-              [(ngModel)]="optionalSubjectChoosen"
+              [(ngModel)]="optionalSubjectChosen"
               [autoDisplayFirst]="false"
               [showClear]="true"
               (onChange)="addSubject()"
               [ngClass]="{
-                'ng-invalid ng-dirty': submitted && subjectsChoosen.length < 1
+                'ng-invalid ng-dirty': submitted && subjectsChosen.length < 1
               }">
             </p-dropdown>
           </div>
         </div>
         <div
           class="field xl:w-4 lg:w-6 sm:w-full mt-5 ml-4"
-          *ngIf="subjectsChoosen && subjectsChoosen.length > 0">
+          *ngIf="subjectsChosen && subjectsChosen.length > 0">
           <p-table
             #dt
             dataKey="key"
             responsiveLayout="scroll"
-            [value]="subjectsChoosen"
+            [value]="subjectsChosen"
             [rows]="10"
             class="px-0 mt-5"
             [rowHover]="true">
@@ -131,11 +131,11 @@
             </ng-template>
             <ng-template
               pTemplate="body"
-              let-subjectsChoosen
+              let-subjectsChosen
               let-rowIndex="rowIndex">
               <tr>
                 <td style="width: 100%; min-width: 10rem" class="px-2">
-                  {{ subjectsChoosen.value }}
+                  {{ subjectsChosen.value }}
                 </td>
                 <td>
                   <div class="flex">
@@ -143,7 +143,7 @@
                       pButton
                       pRipple
                       icon="pi pi-trash"
-                      (click)="onDeleteClick(rowIndex)"
+                      (click)="onDeleteChosenOptionalSubject(rowIndex)"
                       class="p-button-danger"> Hiq</button>
                   </div>
                 </td>
@@ -153,14 +153,11 @@
         </div>
         <small
           class="p-error block"
-          *ngIf="submitted && subjectsChoosen.length < 1">
+          *ngIf="submitted && subjectsChosen.length < 1">
           *Duhet zgjedhur minimalisht 1 lëndë
         </small>
-        <!--        <small class="p-error block" *ngIf="moreSubjectThanAllowed">-->
-        <!--          *Duhen zgjedhur maksimalisht 2 lëndë-->
-        <!--        </small>-->
         <div class="field lg:w-4 md:w-6 sm:w-full mt-5">
-          <label for="isA1">Kodi i mbikqyrësit</label>
+          <label for="overSeerCode">Kodi i mbikqyrësit</label>
           <input
             type="password"
             pInputText
@@ -198,3 +195,23 @@
   </div>
 </div>
 <ng-container *ngIf="academicYear$ | async"></ng-container>
+
+
+<p-dialog
+  [(visible)]="showStudentModal"
+  [style]="{ width: '1000px' }"
+  [modal]="true"
+  header="Kërko Maturantin"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid"
+  (onHide)="onStudentHide()">
+  <ng-template pTemplate="content">
+    <msh-shared-student-lookup
+      [students]="(studentList$ | async) || []"
+      [totalRecords]="totalStudentRecords"
+      (gridEvent)="onGridEvent($event)"
+      (lazyLoadData)="getStudents($event)">
+    </msh-shared-student-lookup>
+  </ng-template>
+</p-dialog>

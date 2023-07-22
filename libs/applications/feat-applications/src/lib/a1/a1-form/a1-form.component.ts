@@ -1,16 +1,17 @@
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   HostListener,
+  Input,
   ViewChild,
 } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { A1ApiService } from '@msh/applications/data-access-applications';
-import { A1Z } from '@msh/applications/domain-application';
-import { AuthFacade } from '@msh/auth/data-access-auth';
+import {FormsModule, NgForm} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {A1ApiService} from '@msh/applications/data-access-applications';
+import {A1Z} from '@msh/applications/domain-application';
+import {AuthFacade} from '@msh/auth/data-access-auth';
 import {
   AcademicYearApiService,
   ExamSubjectApiService,
@@ -18,27 +19,45 @@ import {
   ReportsApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
-import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
+import {ApiResult, DropdownModel} from '@msh/shared/data-access-shared';
 import {
-  AcademicYear, EXAM_TYPES, Report,
+  AcademicYear,
+  EXAM_TYPES,
+  Report,
   Student,
-  StudentTableView,
 } from '@msh/shared/domain-models';
-import { GlobalToastService } from '@msh/shared/util-shared';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ButtonModule } from 'primeng/button';
-import { CheckboxModule } from 'primeng/checkbox';
-import { DropdownModule } from 'primeng/dropdown';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { RippleModule } from 'primeng/ripple';
-import { TableModule } from 'primeng/table';
-import { Observable, combineLatest, of, switchMap } from 'rxjs';
-import { ManageStudentsGridsDialogComponent } from '../manage-students-grids-dialog/manage-students-grids-dialog.component';
+import {
+  GlobalToastService,
+  GRID_ACTIONS,
+  GridEvent,
+} from '@msh/shared/util-shared';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {ButtonModule} from 'primeng/button';
+import {CheckboxModule} from 'primeng/checkbox';
+import {DropdownModule} from 'primeng/dropdown';
+import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
+import {InputNumberModule} from 'primeng/inputnumber';
+import {InputTextModule} from 'primeng/inputtext';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {RadioButtonModule} from 'primeng/radiobutton';
+import {RippleModule} from 'primeng/ripple';
+import {TableModule} from 'primeng/table';
+import {
+  Observable,
+  combineLatest,
+  of,
+  switchMap,
+  BehaviorSubject,
+} from 'rxjs';
+import {DialogModule} from 'primeng/dialog';
+import {
+  SharedStudent,
+  SharedStudentLookupModule,
+} from '@msh/shared/student-lookup';
+import {A1FormModeEnum} from '../a1-form-mode.enum';
+import {LazyLoadEvent} from 'primeng/api';
 
+@UntilDestroy()
 @Component({
   selector: 'msh-a1-form',
   standalone: true,
@@ -54,6 +73,8 @@ import { ManageStudentsGridsDialogComponent } from '../manage-students-grids-dia
     DropdownModule,
     RippleModule,
     TableModule,
+    DialogModule,
+    SharedStudentLookupModule,
   ],
   templateUrl: './a1-form.component.html',
   styleUrls: ['./a1-form.component.scss'],
@@ -62,28 +83,34 @@ import { ManageStudentsGridsDialogComponent } from '../manage-students-grids-dia
 })
 @UntilDestroy()
 export class A1FormComponent {
-  d3SubjectChoosen = '';
-  optionalSubjectChoosen: any = null;
-  // moreSubjectThanAllowed = false;
-  subjectsChoosen: any[] = [];
-  choosenStudent: string | null = null;
+  @Input()
+  mode?: A1FormModeEnum;
+
+  @Input()
+  id?: string;
+
+  @Input()
+  studentId?: string;
+
+  protected readonly A1FormModeEnum = A1FormModeEnum;
+  showStudentModal = false;
+
+  optionalSubjectChosen: any = null;
+  subjectsChosen: any[] = [];
+  studentInputData: string | null = null;
   academicYear?: AcademicYear | null = null;
   optionalSubjects: DropdownModel<number>[] = [];
   d3Dropdown: DropdownModel<number>[] = [];
-  d1Dropdown: DropdownModel<number>[] = [];
-  d2Dropdown: DropdownModel<number>[] = [];
-  @ViewChild('form', { static: false }) form!: NgForm;
-  totalRecords = 0;
-  parameterUrl!: any;
-  parameterYear!: any;
-  editing = false;
-  showSearch = true;
+  @ViewChild('form', {static: false}) form!: NgForm;
+  totalStudentRecords = 0;
+  showStudentSearchButton = true;
+  selectedStudent?: SharedStudent;
 
   @HostListener('window:popstate', ['$event'])
   onPopState() {
-    //close modal when clicking back button on google
     this.ref?.destroy();
   }
+
   ref?: DynamicDialogRef;
   submitted = false;
   a1: A1Z = {
@@ -98,19 +125,8 @@ export class A1FormComponent {
     subjectZ2Id: undefined,
     overSeerCode: '',
   };
-  studentsConfig = {
-    first: 0,
-    rows: 10,
-    sortOrder: 1,
-    filters: {},
-    globalFilter: null,
-  };
-
-  students: StudentTableView | null = null;
-  currentStudent: Student | null = null;
-  id: string | null = null;
-  studentId: string | null = null;
-  formId: string | null;
+  private studentList$$ = new BehaviorSubject<Student[]>([]);
+  studentList$ = this.studentList$$.asObservable();
   a1Report: Report = Report.A1Form_Report;
 
   constructor(
@@ -127,34 +143,10 @@ export class A1FormComponent {
     private reportsApiService: ReportsApiService,
     private examTypeService: ExamTypeApiService
   ) {
-    this.formId = this.route.snapshot.paramMap.get('id');
   }
-  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe();
-  ngOnInit() {
-    if (this.formId) {
-      this.editing = true;
-    }
-    this.id = this.route.snapshot.params['id'];
-    this.studentId = this.route.snapshot.params['student'];
-    this.initializeFormWithApiCalls();
 
-    this.reportsApiService
-      .loadRoleReports(this.event)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        const a1ReportData = response.data.find(item => {
-          return item.reportId === 13;
-        });
-        const parametersArray = JSON.parse(a1ReportData?.parameters as never);
-        if (parametersArray.length > 0)
-          this.parameterUrl = parametersArray.find((item: string) => {
-            return ['studentid'].includes(item.toLowerCase());
-          });
-        this.parameterYear = parametersArray.find((item: string) => {
-          return ['academicyearid'].includes(item.toLowerCase());
-        });
-      });
-  }
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe();
+
   event = {
     first: 0,
     rows: 10,
@@ -163,160 +155,120 @@ export class A1FormComponent {
     globalFilter: null,
   };
 
-  initializeFormWithApiCalls() {
-    if (this.studentId != null) {
-      this.showSearch = false;
-    }
-    if (this.studentId) {
-      this.getStudentById(this.studentId)
-        .pipe(
-          switchMap((student: ApiResult<Student>) => {
-            this.a1.studentId = student.data.id;
-            this.a1.studentIdentifier = student.data.studentId;
-            this.a1.firstName = student.data.firstName;
-            this.a1.middleName = student.data.middleName;
-            this.a1.lastName = student.data.lastName;
-            return combineLatest([
-              this.getAcademicYears(),
-              this.getStudent(),
-              this.getOptionalSubjects(),
-              this.getD3Subjects(student.data.isFall),
-            ]);
-          })
-        )
-        .subscribe(([years, students, z1, d3]) => {
-          this.academicYear = years['data'].find(
-            (year: AcademicYear) => year.isActive
-          );
-          this.a1.academicYearId = this.academicYear?.id;
-          this.d3Dropdown = d3.data;
-          this.students = students;
-          this.optionalSubjects = z1.data;
-          this.initializeOptionalSubjects();
-          this.choosenStudent = `${this.a1.studentIdentifier}-${this.a1.firstName}-${this.a1.middleName}-${this.a1.lastName}`;
-          this.cd.detectChanges();
-        });
-    } else if (!this.id) {
-      this.getAcademicYears()
-        .pipe(
-          switchMap((academicYears: any) => {
-            this.academicYear = academicYears['data'].find(
-              (year: AcademicYear) => year.isActive
-            );
-            return combineLatest([
-              this.getStudent(),
-              this.getOptionalSubjects(),
-            ]);
-          })
-        )
-        .subscribe(([students, z1]) => {
-          this.a1.academicYearId = this.academicYear?.id;
-          this.students = students;
-          this.optionalSubjects = z1.data;
-          this.cd.detectChanges();
-        });
-    } else {
-      this.getA1ById()
-        .pipe(
-          switchMap((a1: ApiResult<A1Z>) => {
-            this.a1 = { ...a1?.data } as A1Z;
-            return this.studentsApiService.getById(a1.data.studentId);
-          }),
-          switchMap((student: ApiResult<Student>) => {
-            this.currentStudent = student.data;
+  ngOnInit() {
+    this.showStudentSearchButton = A1FormModeEnum.Add === this.mode;
 
-            return combineLatest([
-              this.getAcademicYears(),
-              this.getStudent(),
-              this.getOptionalSubjects(),
-              this.getD3Subjects(student.data.isFall ?? false),
-            ]);
-          })
-        )
-        .subscribe(([years, students, z1, d3]) => {
-          this.academicYear = years['data'].find(
-            (year: AcademicYear) => year.isActive
-          );
-          this.d3Dropdown = d3.data;
-          this.students = students;
-          this.optionalSubjects = z1.data;
-          this.initializeOptionalSubjects();
-          this.choosenStudent = `${this.a1.studentId}-${this.a1.firstName}-${this.a1.middleName}-${this.a1.lastName}`;
-        });
-    }
-  }
-
-  initializeOptionalSubjects() {
-    if (this.a1.subjectZ1Id) {
-      this.subjectsChoosen.push(
-        this.optionalSubjects.find(x => x.key == (this.a1.subjectZ1Id as any))
-      );
-    }
-    if (this.a1.subjectZ2Id) {
-      this.subjectsChoosen.push(
-        this.optionalSubjects.find(x => x.key == (this.a1.subjectZ2Id as any))
-      );
+    if (A1FormModeEnum.Add === this.mode) {
+      this.initWithAddMode();
+    } else if (A1FormModeEnum.AddWithStudent === this.mode) {
+      this.initWithAddWithStudentMode();
+    } else if (A1FormModeEnum.Edit === this.mode) {
+      this.initWithEditMode();
     }
     this.cd.detectChanges();
-  }
-
-  getStudentById(id: string): Observable<any> {
-    return this.studentsApiService.getById(id).pipe(untilDestroyed(this));
-  }
-
-  initializeDialog() {
-    this.ref = this.dialogService.open(ManageStudentsGridsDialogComponent, {
-      width: '80%',
-      position: 'center',
-      contentStyle: { overflow: 'auto' },
-      maximizable: true,
-      closable: true,
-      header: 'Kërko Maturantin',
-      data: {
-        students: this.students?.data,
-        config: this.studentsConfig,
-        totalRecords: this.students?.total,
-      },
-    });
-    this.ref.onClose
-      .pipe(
-        switchMap((data: any) => {
-          this.d3Dropdown = [];
-          this.subjectsChoosen = [];
-          this.submitted = false;
-          this.d3SubjectChoosen = '';
-          if (data) {
-            this.choosenStudent = `${data.student.studentId}-${data.student.firstName}-${data.student.middleName}-${data.student.lastName}`;
-            this.a1.studentId = data.student.id;
-            this.currentStudent = data.student;
-            this.cd.detectChanges();
-            return this.getD3Subjects(data.student.isFall);
-          }
-          return this.getD3Subjects(false);
-        })
-      )
-      .subscribe((d3: any) => {
-        this.d3Dropdown = d3?.data;
-        this.cd.detectChanges();
-
-        this.getOptionalSubjects().subscribe((z1: any) => {
-          this.optionalSubjects = z1.data;
-          this.cd.detectChanges();
-        });
-      });
   }
 
   onCancelClick() {
     this.router.navigate(['/applications/students']);
   }
 
-  getA1ById(): Observable<any> {
-    return this.a1ApiService.getById(this.id!).pipe(untilDestroyed(this));
+  onDeleteChosenOptionalSubject(index: number) {
+    this.subjectsChosen.splice(index, 1);
+    if (this.subjectsChosen.length === 1) {
+      this.a1.subjectZ1Id = this.subjectsChosen[0].key;
+    }
   }
 
-  getOptionalSubjects(): Observable<any> {
-    console.log(344, this.currentStudent);
+  private initWithEditMode() {
+    this.a1ApiService
+      .getById(this.id!)
+      .pipe(untilDestroyed(this))
+      .pipe(
+        switchMap((a1: ApiResult<A1Z>) => {
+          this.a1 = {...a1?.data} as A1Z;
+          return this.studentsApiService.getById(a1.data.studentId);
+        }),
+        switchMap((student: ApiResult<Student>) => {
+          this.selectedStudent = student.data;
 
+          return combineLatest([
+            this.getAcademicYears(),
+            this.getOptionalSubjects(),
+            this.getD3Subjects(),
+          ]);
+        })
+      )
+      .subscribe(([years, z1, d3]) => {
+        this.academicYear = years['data'].find(
+          (year: AcademicYear) => year.isActive
+        );
+        this.d3Dropdown = d3.data;
+        this.optionalSubjects = z1.data;
+        this.initializeOptionalSubjects();
+        this.studentInputData = `${this.selectedStudent?.studentId}-${this.a1.firstName}-${this.a1.middleName}-${this.a1.lastName}`;
+        this.cd.detectChanges();
+      });
+  }
+
+  private initWithAddWithStudentMode() {
+    this.getStudentById(this.studentId!)
+      .pipe(
+        switchMap((student: ApiResult<Student>) => {
+          this.a1.studentId = student.data.id;
+          this.a1.studentIdentifier = student.data.studentId;
+          this.a1.firstName = student.data.firstName;
+          this.a1.middleName = student.data.middleName;
+          this.a1.lastName = student.data.lastName;
+          return combineLatest([
+            this.getAcademicYears(),
+            this.getOptionalSubjects(),
+            this.getD3Subjects(),
+          ]);
+        })
+      )
+      .subscribe(([years, z1, d3]) => {
+        this.academicYear = years['data'].find(
+          (year: AcademicYear) => year.isActive
+        );
+        this.a1.academicYearId = this.academicYear?.id;
+        this.d3Dropdown = d3.data;
+        this.optionalSubjects = z1.data;
+        this.initializeOptionalSubjects();
+        this.studentInputData = `${this.a1.studentIdentifier}-${this.a1.firstName}-${this.a1.middleName}-${this.a1.lastName}`;
+        this.cd.detectChanges();
+      });
+  }
+
+  private initWithAddMode() {
+    this.getAcademicYears()
+      .pipe(untilDestroyed(this))
+      .subscribe((response) => {
+        this.academicYear = response['data'].find(
+          (year: AcademicYear) => year.isActive
+        );
+        this.a1.academicYearId = this.academicYear?.id;
+        this.cd.detectChanges();
+      });
+  }
+
+  private initializeOptionalSubjects() {
+    if (this.a1.subjectZ1Id) {
+      this.subjectsChosen.push(
+        this.optionalSubjects.find(x => x.key == (this.a1.subjectZ1Id as any))
+      );
+    }
+    if (this.a1.subjectZ2Id) {
+      this.subjectsChosen.push(
+        this.optionalSubjects.find(x => x.key == (this.a1.subjectZ2Id as any))
+      );
+    }
+  }
+
+  private getStudentById(id: string): Observable<any> {
+    return this.studentsApiService.getById(id).pipe(untilDestroyed(this));
+  }
+
+  private getOptionalSubjects(): Observable<any> {
     return this.examTypeService.loadDropdownList().pipe(
       switchMap(types => {
         const z1 = types.data.find(x => x.value == EXAM_TYPES.Z1);
@@ -325,14 +277,14 @@ export class A1FormComponent {
             z1?.key ?? undefined,
             undefined,
             undefined,
-            this.currentStudent?.profileId
+            this.selectedStudent?.profileId
           )
           .pipe(untilDestroyed(this));
       })
     );
   }
 
-  getD3Subjects(isFall: boolean, id?: string): Observable<any> {
+  private getD3Subjects(): Observable<any> {
     return this.examTypeService.loadDropdownList().pipe(
       switchMap(types => {
         const d3 = types.data.find(x => x.value == EXAM_TYPES.D3);
@@ -351,64 +303,56 @@ export class A1FormComponent {
     );
   }
 
-  getAcademicYears(): Observable<any> {
+  private getAcademicYears(): Observable<any> {
     return this.academicYearService
       .getAcademicYears()
       .pipe(untilDestroyed(this));
   }
 
-  getStudent(): Observable<StudentTableView> {
-    return this.studentsApiService
-      .loadStudents(this.studentsConfig)
-      .pipe(untilDestroyed(this));
-  }
-
-  onDeleteClick(index: number) {
-    // this.moreSubjectThanAllowed = false;
-    this.subjectsChoosen.splice(index, 1);
-    if (this.subjectsChoosen.length === 1) {
-      this.a1.subjectZ1Id = this.subjectsChoosen[0].key;
-    }
-  }
 
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
-      if (this.id) {
+      if (A1FormModeEnum.Edit === this.mode) {
         this.updateA1(this.a1);
-      } else {
+      } else if (
+        A1FormModeEnum.Add === this.mode ||
+        A1FormModeEnum.AddWithStudent === this.mode
+      ) {
         this.addA1(this.a1);
+      } else {
+        alert('Form mode cannot be determined');
       }
     }
   }
 
   addSubject() {
     // this.moreSubjectThanAllowed = false;
-    const subjectIndexFound = this.subjectsChoosen.findIndex(
-      subject => subject.key === this.optionalSubjectChoosen?.key
+    const subjectIndexFound = this.subjectsChosen.findIndex(
+      subject => subject.key === this.optionalSubjectChosen?.key
     );
     if (subjectIndexFound !== -1) {
       this.toastService.showError('Lënda është zgjedhur');
       return;
     }
     if (
-      this.optionalSubjectChoosen === null ||
-      this.optionalSubjectChoosen === ''
+      this.optionalSubjectChosen === null ||
+      this.optionalSubjectChosen === ''
     ) {
       return;
     }
-    if (this.subjectsChoosen.length === 2) {
+    if (this.subjectsChosen.length === 2) {
       // this.moreSubjectThanAllowed = true;
       return;
     }
-    this.subjectsChoosen.push(this.optionalSubjectChoosen);
-    if (this.subjectsChoosen.length > 1) {
-      this.a1.subjectZ1Id = this.subjectsChoosen[0].key;
-      this.a1.subjectZ2Id = this.subjectsChoosen[1].key;
+    this.subjectsChosen.push(this.optionalSubjectChosen);
+    if (this.subjectsChosen.length > 1) {
+      this.a1.subjectZ1Id = this.subjectsChosen[0].key;
+      this.a1.subjectZ2Id = this.subjectsChosen[1].key;
     } else {
-      this.a1.subjectZ1Id = this.subjectsChoosen[0].key;
+      this.a1.subjectZ1Id = this.subjectsChosen[0].key;
     }
-    this.optionalSubjectChoosen = '';
+    this.optionalSubjectChosen = '';
   }
 
   addA1(a1: A1Z) {
@@ -416,29 +360,17 @@ export class A1FormComponent {
       .save(a1)
       .pipe(untilDestroyed(this))
       .subscribe({
-        next: (response: any) => {
+        next: response => {
           if (response.isSuccessful) {
             this.toastService.showSuccess('Formulari A1 u shtua me sukses!');
-            const query: { queryParams: { [x: string]: string } } = {
-              queryParams: {},
-            };
-            if (
-              this.parameterUrl &&
-              this.parameterYear &&
-              this.a1.studentId &&
-              this.a1.academicYearId
-            ) {
-              query.queryParams[`${this.parameterUrl}`] = this.a1.studentId;
-              query.queryParams[`${this.parameterYear}`] =
-                this.a1.academicYearId.toString();
-            }
-            this.router.navigate([`/reports/${this.a1Report}`], query).then();
+
+            this.printConfirmation(response.data);
           } else {
             response.errorMessage
               ? this.toastService.showError(response.errorMessage)
               : this.toastService.showError(
-                  'Ndodhi një problem gjatë ndryshimit të formularit A1!'
-                );
+                'Ndodhi një problem gjatë ndryshimit të formularit A1!'
+              );
           }
           if (response.isBadRequest)
             this.toastService.showError(
@@ -449,8 +381,8 @@ export class A1FormComponent {
           error.errorMessage
             ? this.toastService.showError(error.errorMessage)
             : this.toastService.showError(
-                'Ndodhi një problem gjatë ndryshimit të formularit A1!'
-              );
+              'Ndodhi një problem gjatë ndryshimit të formularit A1!'
+            );
           this.toastService.showError(
             'Ndodhi një problem gjatë ndryshimit të formularit A1!'
           );
@@ -463,45 +395,32 @@ export class A1FormComponent {
       .update(a1)
       .pipe(untilDestroyed(this))
       .subscribe({
-        next: (data: any) => {
+        next: data => {
           console.log(3333, data);
           if (data.isSuccessful) {
             this.toastService.showSuccess('Formulari A1 u ndryshua me sukses!');
-            const query: { queryParams: { [x: string]: string } } = {
-              queryParams: {},
-            };
-            if (
-              this.parameterUrl &&
-              this.parameterYear &&
-              this.a1.studentId &&
-              this.a1.academicYearId
-            ) {
-              query.queryParams[`${this.parameterUrl}`] = this.a1.studentId;
-              query.queryParams[`${this.parameterYear}`] =
-                this.a1.academicYearId.toString();
-            }
-            this.router.navigate([`/reports/${this.a1Report}`], query).then();
+            this.printConfirmation(data.data);
           } else {
             data.errorMessage
               ? this.toastService.showError(data.errorMessage)
               : this.toastService.showError(
-                  'Ndodhi një problem gjatë ndryshimit të formularit A1!'
-                );
+                'Ndodhi një problem gjatë ndryshimit të formularit A1!'
+              );
           }
           if (data.isBadRequest) {
             data.errorMessage
               ? this.toastService.showError(data.errorMessage)
               : this.toastService.showError(
-                  'Ndodhi një problem gjatë ndryshimit të formularit A1!'
-                );
+                'Ndodhi një problem gjatë ndryshimit të formularit A1!'
+              );
           }
         },
         error: (error: any) => {
           error.errorMessage
             ? this.toastService.showError(error.errorMessage)
             : this.toastService.showError(
-                'Ndodhi një problem gjatë ndryshimit të formularit A1!'
-              );
+              'Ndodhi një problem gjatë ndryshimit të formularit A1!'
+            );
           this.toastService.showError(
             'Ndodhi një problem gjatë ndryshimit të formularit A1!'
           );
@@ -509,9 +428,93 @@ export class A1FormComponent {
       });
   }
 
+  private printConfirmation(a1: A1Z) {
+    this.reportsApiService
+      .loadRoleReports(this.event)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        let parameterUrl = '',
+          parameterYear = '';
+        const a1ReportData = response.data.find(item => {
+          return item.reportId === Report.A1Form_Report;
+        });
+        const parametersArray = JSON.parse(a1ReportData?.parameters as never);
+        if (parametersArray.length > 0)
+          parameterUrl = parametersArray.find((item: string) => {
+            return ['studentid'].includes(item.toLowerCase());
+          });
+        parameterYear = parametersArray.find((item: string) => {
+          return ['academicyearid'].includes(item.toLowerCase());
+        });
+
+        const query: { queryParams: { [x: string]: string } } = {
+          queryParams: {},
+        };
+        if (
+          parameterUrl &&
+          parameterYear &&
+          a1.studentId &&
+          a1.academicYearId
+        ) {
+          query.queryParams[`${parameterUrl}`] = a1.studentId;
+          query.queryParams[`${parameterYear}`] = a1.academicYearId.toString();
+        }
+        this.router.navigate([`/reports/${this.a1Report}`], query).then();
+      });
+  }
+
   goBack(): void {
     this.router
       .navigate([`/configurations/students/edit/${this.a1.studentId}`])
       .then();
+  }
+
+  onStudentHide() {
+    this.showStudentModal = false;
+  }
+
+  onGridEvent(event: GridEvent<SharedStudent | SharedStudent[]>) {
+    switch (event.action) {
+      case GRID_ACTIONS.EDIT:
+        this.setSelectedStudent(Object.assign({}, event.data as Student));
+        combineLatest([
+          this.getOptionalSubjects(),
+          this.getD3Subjects(),
+        ])
+          .subscribe(([z1, d3]) => {
+            this.d3Dropdown = d3.data;
+            this.optionalSubjects = z1.data;
+            this.cd.detectChanges();
+          });
+        this.showStudentModal = false;
+        break;
+    }
+  }
+
+  setSelectedStudent(student: any) {
+    this.selectedStudent = student;
+
+    if (!student) {
+      this.studentInputData = ' ';
+    } else {
+      this.a1.studentId = student.studentId;
+      this.studentInputData =
+        student?.studentId +
+        '-' +
+        (student?.firstName ?? student?.studentFirstName) +
+        '-' +
+        (student?.lastName ?? student?.studentLastName);
+    }
+    this.cd.detectChanges();
+  }
+
+  getStudents($event: LazyLoadEvent): void {
+    this.studentsApiService
+      .loadStudentsForA1A1Z($event)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.studentList$$.next(response.data);
+        this.totalStudentRecords = response.total;
+      });
   }
 }
