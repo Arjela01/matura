@@ -234,14 +234,16 @@ export class StudentsEditComponent implements OnInit {
     switch (formType) {
       case FormType.A1:
         this.router.navigate([
-          '/applications/a1/add-for-student',
+          '/applications/a1/for-student',
           this.student.id,
+          'add',
         ]);
         break;
       case FormType.A1Z:
         this.router.navigate([
-          '/applications/a1z/add-for-student',
+          '/applications/a1z/for-student',
           this.student.id,
+          'add',
         ]);
         break;
     }
@@ -249,9 +251,13 @@ export class StudentsEditComponent implements OnInit {
 
   navigateToForm(a1: A1ZTableRecord) {
     if (a1.isA1) {
-      this.router.navigate([`/applications/a1/edit/${a1.id}`]);
+      this.router.navigate([
+        `/applications/a1/for-student/${this.student.id}/edit/${a1.id}`,
+      ]);
     } else {
-      this.router.navigate([`/applications/a1z-form/${a1.id}`]);
+      this.router.navigate([
+        `/applications/a1/for-student/${this.student.id}/edit/${a1.id}`,
+      ]);
     }
   }
 }

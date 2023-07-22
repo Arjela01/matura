@@ -232,7 +232,7 @@ export class ManageExamSubjectProfileComponent implements OnInit {
     examSubjectId?: string
   ) {
     this.examSubjectService
-      .forExamType(examTypeId, academicYearId, examSubjectId)
+      .forExamType(examTypeId, academicYearId, examSubjectId, undefined, true)
       .subscribe(response => {
         this.examSubjects = response.data;
         this.cd.markForCheck();

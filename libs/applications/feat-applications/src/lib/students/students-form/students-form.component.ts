@@ -197,16 +197,14 @@ export class StudentsFormComponent implements OnInit, OnChanges {
       this.router.navigate([`/configurations/students/edit/${this.studentId}`]);
     }
   }
+  
   onFormSave(formType: FormType) {
     switch (formType) {
       case FormType.A1:
-        this.router.navigate(['/applications/a1/add-for-student', this.studentId]);
+        this.router.navigate(['/applications/a1/for-student', this.studentId, 'add']);
         break;
       case FormType.A1Z:
-        this.router.navigate([
-          '/applications/a1z/add-for-student',
-          this.studentId,
-        ]);
+        this.router.navigate(['/applications/a1z/for-student', this.studentId, 'add']);
         break;
     }
   }

@@ -1,4 +1,4 @@
-import {CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -8,17 +8,17 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {AuthFacade} from '@msh/auth/data-access-auth';
-import {ACADEMIC_YEAR_KEY} from '@msh/configurations/data-access-configurations';
-import {REPORTS_APP_URL, SafePipe} from '@msh/shared/util-shared';
-import {ButtonModule} from 'primeng/button';
-import {DialogModule} from 'primeng/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthFacade } from '@msh/auth/data-access-auth';
+import { ACADEMIC_YEAR_KEY } from '@msh/configurations/data-access-configurations';
+import { REPORTS_APP_URL, SafePipe } from '@msh/shared/util-shared';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
 import RxPostmessenger from 'rx-postmessenger';
-import {combineLatest, first, forkJoin, map, skip, Subject, tap} from 'rxjs';
-import {IframeAutoHeightDirective} from '../iframe-auto-height.directive';
-import {Report} from '../../../../../shared/domain-models/src/lib/reports/reports-enum';
-import {Path} from './paths-enum';
+import { combineLatest, first, forkJoin, map, skip, Subject, tap } from 'rxjs';
+import { IframeAutoHeightDirective } from '../iframe-auto-height.directive';
+import { Path } from './paths-enum';
+import { Report } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-report-renderer',
@@ -46,6 +46,7 @@ export class ReportRendererComponent implements OnInit {
   yearObj: { value: string | number; key: string } | null = this.findYearID(
     this.route.snapshot.queryParams
   );
+  returnUrl?: string | null = null;
   displayModal = false;
   iframeUrl = '';
   a1Report: Report = Report.A1Form_Report;
@@ -54,7 +55,7 @@ export class ReportRendererComponent implements OnInit {
   a1Path: Path = Path.ApplicationsA1;
   a1ZPath: Path = Path.ApplicationsA1Z;
   archiveFolderPath: Path = Path.ArchiveReport;
-  archiveFolderReport : Report = Report.ArchiveFolder_Report;
+  archiveFolderReport: Report = Report.ArchiveFolder_Report;
 
   private readonly iframeLoaded$$ = new Subject<boolean>();
   private readonly iframeLoaded$ = this.iframeLoaded$$
@@ -120,11 +121,12 @@ export class ReportRendererComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.returnUrl =  this.route.snapshot.queryParams['returnUrl'];
     const academicYearFilter = localStorage.getItem(ACADEMIC_YEAR_KEY);
     if (academicYearFilter) {
       this.academicYear = JSON.parse(academicYearFilter).id;
     }
-    if (this.id === '16') {
+    if (this.id === Report.PrintedDiplomasByDate_Report.toString()) {
       this.showDiplomasButton = true;
     }
 
@@ -139,24 +141,24 @@ export class ReportRendererComponent implements OnInit {
 
   goBack(): void {
     const currentUrl = this.router.url;
-    let destinationPath = ''
+    let destinationPath = '';
     if (this.id === this.a1Report.toString()) {
       destinationPath =
         currentUrl === `/${this.reportsPath}/${this.a1Report}`
           ? this.reportsPath
-          : this.a1Path;
+          : (this.returnUrl ? this.returnUrl : this.a1Path);
     } else if (this.id === this.a1ZReport.toString()) {
       destinationPath =
         currentUrl === `/${this.reportsPath}/${this.a1ZReport}`
           ? this.reportsPath
-          : this.a1ZPath;
+          : (this.returnUrl ? this.returnUrl :this.a1ZPath);
     } else if (this.id === this.archiveFolderReport.toString()) {
       destinationPath =
         currentUrl === `/${this.reportsPath}/${this.archiveFolderReport}`
           ? this.reportsPath
-          : this.archiveFolderPath
+          : this.archiveFolderPath;
     } else {
-      destinationPath = this.reportsPath
+      destinationPath = this.reportsPath;
     }
     this.router.navigate([destinationPath]).then();
   }

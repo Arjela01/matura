@@ -19,15 +19,14 @@ import { RadioButtonModule } from 'primeng/radiobutton';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class A1a1zConfirmationDialogComponent {
-  formType = FormType;
-  @Output() A1choosen = new EventEmitter<FormType>();
-  @Output() A1Zchoosen = new EventEmitter<FormType>();
+  @Output() A1Chosen = new EventEmitter<FormType>();
+  @Output() A1ZChosen = new EventEmitter<FormType>();
 
   onA1Click() {
-    this.A1Zchoosen.emit(FormType.A1);
+    this.A1Chosen.emit(FormType.A1);
   }
 
   onA1ZClick() {
-    this.A1choosen.emit(FormType.A1Z);
+    this.A1ZChosen.emit(FormType.A1Z);
   }
 }

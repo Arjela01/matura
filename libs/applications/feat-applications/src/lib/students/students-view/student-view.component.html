@@ -9,18 +9,27 @@
         [routerLink]="['/applications', 'students']"
         [label]="'Kthehu'"></p-button>
 
-      <button pButton label="Konfirmuar" icon="pi pi-check" class="p-button-success p-button-outlined mr-2"></button>
+      <button
+        pButton
+        label="Konfirmuar"
+        icon="pi pi-check"
+        class="p-button-success p-button-outlined mr-2"
+        *ngIf="student?.isConfirmedBySupervisor"></button>
 
       <ng-container *ngFor="let a1 of forms">
         <p-button
           type="button"
+          icon="pi pi-pencil  "
+          styleClass="p-button-secondary"
           (click)="navigateToForm(a1)"
-          [label]="'Formulari A1'"
+          [label]="'Ndrysho Formularin A1'"
           *ngIf="a1.isA1"></p-button>
         <p-button
           type="button"
+          icon="pi pi-pencil  "
+          styleClass="p-button-secondary"
           (click)="navigateToForm(a1)"
-          [label]="'Formulari A1Z'"
+          [label]="'Ndrysho Formularin A1Z'"
           *ngIf="!a1.isA1"></p-button>
       </ng-container>
     </div>
@@ -36,7 +45,6 @@
         class="readonlyForm"
         [style]="{ width: '500px' }">
         <div>
-
           <div class="field">
             <label for="highSchool">Shkolla</label>
             <input

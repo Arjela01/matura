@@ -1,12 +1,5 @@
 import {CommonModule} from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  HostListener,
-  Input,
-  ViewChild,
-} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, Input, ViewChild,} from '@angular/core';
 import {FormsModule, NgForm} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {A1ApiService} from '@msh/applications/data-access-applications';
@@ -20,17 +13,8 @@ import {
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
 import {ApiResult, DropdownModel} from '@msh/shared/data-access-shared';
-import {
-  AcademicYear,
-  EXAM_TYPES,
-  Report,
-  Student,
-} from '@msh/shared/domain-models';
-import {
-  GlobalToastService,
-  GRID_ACTIONS,
-  GridEvent,
-} from '@msh/shared/util-shared';
+import {AcademicYear, EXAM_TYPES, Report, Student,} from '@msh/shared/domain-models';
+import {GlobalToastService, GRID_ACTIONS, GridEvent,} from '@msh/shared/util-shared';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {ButtonModule} from 'primeng/button';
 import {CheckboxModule} from 'primeng/checkbox';
@@ -42,18 +26,9 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {RippleModule} from 'primeng/ripple';
 import {TableModule} from 'primeng/table';
-import {
-  Observable,
-  combineLatest,
-  of,
-  switchMap,
-  BehaviorSubject,
-} from 'rxjs';
+import {BehaviorSubject, combineLatest, Observable, of, switchMap,} from 'rxjs';
 import {DialogModule} from 'primeng/dialog';
-import {
-  SharedStudent,
-  SharedStudentLookupModule,
-} from '@msh/shared/student-lookup';
+import {SharedStudent, SharedStudentLookupModule,} from '@msh/shared/student-lookup';
 import {A1FormModeEnum} from '../a1-form-mode.enum';
 import {LazyLoadEvent} from 'primeng/api';
 
@@ -101,7 +76,7 @@ export class A1FormComponent {
   academicYear?: AcademicYear | null = null;
   optionalSubjects: DropdownModel<number>[] = [];
   d3Dropdown: DropdownModel<number>[] = [];
-  @ViewChild('form', {static: false}) form!: NgForm;
+  @ViewChild('form', { static: false }) form!: NgForm;
   totalStudentRecords = 0;
   showStudentSearchButton = true;
   selectedStudent?: SharedStudent;
@@ -142,8 +117,7 @@ export class A1FormComponent {
     private authFacade: AuthFacade,
     private reportsApiService: ReportsApiService,
     private examTypeService: ExamTypeApiService
-  ) {
-  }
+  ) {}
 
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe();
 
@@ -162,7 +136,10 @@ export class A1FormComponent {
       this.initWithAddMode();
     } else if (A1FormModeEnum.AddWithStudent === this.mode) {
       this.initWithAddWithStudentMode();
-    } else if (A1FormModeEnum.Edit === this.mode) {
+    } else if (
+      A1FormModeEnum.Edit === this.mode ||
+      A1FormModeEnum.EditWithStudent === this.mode
+    ) {
       this.initWithEditMode();
     }
     this.cd.detectChanges();
@@ -185,7 +162,7 @@ export class A1FormComponent {
       .pipe(untilDestroyed(this))
       .pipe(
         switchMap((a1: ApiResult<A1Z>) => {
-          this.a1 = {...a1?.data} as A1Z;
+          this.a1 = { ...a1?.data } as A1Z;
           return this.studentsApiService.getById(a1.data.studentId);
         }),
         switchMap((student: ApiResult<Student>) => {
@@ -219,6 +196,7 @@ export class A1FormComponent {
           this.a1.firstName = student.data.firstName;
           this.a1.middleName = student.data.middleName;
           this.a1.lastName = student.data.lastName;
+          this.selectedStudent = student.data;
           return combineLatest([
             this.getAcademicYears(),
             this.getOptionalSubjects(),
@@ -242,7 +220,7 @@ export class A1FormComponent {
   private initWithAddMode() {
     this.getAcademicYears()
       .pipe(untilDestroyed(this))
-      .subscribe((response) => {
+      .subscribe(response => {
         this.academicYear = response['data'].find(
           (year: AcademicYear) => year.isActive
         );
@@ -294,6 +272,7 @@ export class A1FormComponent {
             d3.key ?? undefined,
             undefined,
             undefined,
+            this.selectedStudent?.profileId,
             undefined
           );
         } else {
@@ -309,11 +288,13 @@ export class A1FormComponent {
       .pipe(untilDestroyed(this));
   }
 
-
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
-      if (A1FormModeEnum.Edit === this.mode) {
+      if (
+        A1FormModeEnum.Edit === this.mode ||
+        A1FormModeEnum.EditWithStudent === this.mode
+      ) {
         this.updateA1(this.a1);
       } else if (
         A1FormModeEnum.Add === this.mode ||
@@ -369,8 +350,8 @@ export class A1FormComponent {
             response.errorMessage
               ? this.toastService.showError(response.errorMessage)
               : this.toastService.showError(
-                'Ndodhi një problem gjatë ndryshimit të formularit A1!'
-              );
+                  'Ndodhi një problem gjatë ndryshimit të formularit A1!'
+                );
           }
           if (response.isBadRequest)
             this.toastService.showError(
@@ -381,8 +362,8 @@ export class A1FormComponent {
           error.errorMessage
             ? this.toastService.showError(error.errorMessage)
             : this.toastService.showError(
-              'Ndodhi një problem gjatë ndryshimit të formularit A1!'
-            );
+                'Ndodhi një problem gjatë ndryshimit të formularit A1!'
+              );
           this.toastService.showError(
             'Ndodhi një problem gjatë ndryshimit të formularit A1!'
           );
@@ -404,23 +385,23 @@ export class A1FormComponent {
             data.errorMessage
               ? this.toastService.showError(data.errorMessage)
               : this.toastService.showError(
-                'Ndodhi një problem gjatë ndryshimit të formularit A1!'
-              );
+                  'Ndodhi një problem gjatë ndryshimit të formularit A1!'
+                );
           }
           if (data.isBadRequest) {
             data.errorMessage
               ? this.toastService.showError(data.errorMessage)
               : this.toastService.showError(
-                'Ndodhi një problem gjatë ndryshimit të formularit A1!'
-              );
+                  'Ndodhi një problem gjatë ndryshimit të formularit A1!'
+                );
           }
         },
         error: (error: any) => {
           error.errorMessage
             ? this.toastService.showError(error.errorMessage)
             : this.toastService.showError(
-              'Ndodhi një problem gjatë ndryshimit të formularit A1!'
-            );
+                'Ndodhi një problem gjatë ndryshimit të formularit A1!'
+              );
           this.toastService.showError(
             'Ndodhi një problem gjatë ndryshimit të formularit A1!'
           );
@@ -433,39 +414,50 @@ export class A1FormComponent {
       .loadRoleReports(this.event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        let parameterUrl = '',
-          parameterYear = '';
         const a1ReportData = response.data.find(item => {
           return item.reportId === Report.A1Form_Report;
         });
-        const parametersArray = JSON.parse(a1ReportData?.parameters as never);
-        if (parametersArray.length > 0)
-          parameterUrl = parametersArray.find((item: string) => {
-            return ['studentid'].includes(item.toLowerCase());
-          });
-        parameterYear = parametersArray.find((item: string) => {
-          return ['academicyearid'].includes(item.toLowerCase());
-        });
 
         const query: { queryParams: { [x: string]: string } } = {
-          queryParams: {},
+          queryParams: { },
         };
-        if (
-          parameterUrl &&
-          parameterYear &&
-          a1.studentId &&
-          a1.academicYearId
-        ) {
-          query.queryParams[`${parameterUrl}`] = a1.studentId;
-          query.queryParams[`${parameterYear}`] = a1.academicYearId.toString();
+        if(this.mode === A1FormModeEnum.Add || this.mode === A1FormModeEnum.Edit)
+          query.queryParams['returnUrl'] = '/applications/a1';
+        else
+          query.queryParams['returnUrl'] = '/applications/students';
+
+        const parameters = JSON.parse(a1ReportData?.parameters as never);
+        if (parameters.length > 0) {
+          const parameterUrl = parameters.find(
+            (item: string) => 'studentid' === item.toLowerCase()
+          );
+          const parameterYear = parameters.find(
+            (item: string) => 'academicyearid' === item.toLowerCase()
+          );
+
+          if (
+            parameterUrl &&
+            parameterYear &&
+            a1.studentId &&
+            a1.academicYearId
+          ) {
+            query.queryParams[`${parameterUrl}`] = a1.studentId;
+            query.queryParams[`${parameterYear}`] =
+              a1.academicYearId.toString();
+          } else {
+            this.toastService.showError(
+              'Mungojne parametrat e konfigurimit te raportit'
+            );
+            return;
+          }
         }
-        this.router.navigate([`/reports/${this.a1Report}`], query).then();
+        this.router.navigate([`/reports/view/${this.a1Report}`], query).then();
       });
   }
 
   goBack(): void {
     this.router
-      .navigate([`/configurations/students/edit/${this.a1.studentId}`])
+      .navigate([`/applications/students/edit/${this.a1.studentId}`])
       .then();
   }
 
@@ -480,12 +472,11 @@ export class A1FormComponent {
         combineLatest([
           this.getOptionalSubjects(),
           this.getD3Subjects(),
-        ])
-          .subscribe(([z1, d3]) => {
-            this.d3Dropdown = d3.data;
-            this.optionalSubjects = z1.data;
-            this.cd.detectChanges();
-          });
+        ]).subscribe(([z1, d3]) => {
+          this.d3Dropdown = d3.data;
+          this.optionalSubjects = z1.data;
+          this.cd.detectChanges();
+        });
         this.showStudentModal = false;
         break;
     }

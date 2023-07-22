@@ -532,7 +532,7 @@ export class A1zFormComponent implements OnInit, OnChanges {
             query.queryParams[`${this.parameterYear}`] =
               this.a1z.academicYearId.toString();
           }
-          this.router.navigate([`/reports/${this.a1ZReport}`], query).then();
+          this.router.navigate([`/reports/view/${this.a1ZReport}`], query).then();
         }
         if (!response.isSuccessful) {
           this.toastService.showError(
@@ -565,7 +565,7 @@ export class A1zFormComponent implements OnInit, OnChanges {
             query.queryParams[`${this.parameterYear}`] =
               this.a1z.academicYearId.toString();
           }
-          this.router.navigate([`/reports/${this.a1ZReport}`], query).then();
+          this.router.navigate([`/reports/view/${this.a1ZReport}`], query).then();
         }
 
         if (!response.isSuccessful) {

@@ -51,7 +51,7 @@ export class DynamicReportsComponent {
   constructor(private router: Router) {}
 
   onViewClick(reports: Reports) {
-    this.router.navigate([`reports/${reports.reportId}`]).then();
+    this.router.navigate([`/reports/view/${reports.reportId}`]).then();
   }
 
   onPageChange(event: any) {

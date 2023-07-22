@@ -249,7 +249,7 @@
 <p-dialog [(visible)]="displayModal" [style]="{ width: '700px' }" header="Të dhënat e maturantit u ruajtën me sukses"
   [modal]="true" [draggable]="false" [resizable]="false" class="p-fluid p-3" (onHide)="onModalClose()">
   <ng-template pTemplate="content">
-    <msh-a1a1z-confirmation-dialog (A1choosen)="onFormSave($event)" (A1Zchoosen)="onFormSave($event)">
+    <msh-a1a1z-confirmation-dialog (A1Chosen)="onFormSave($event)" (A1ZChosen)="onFormSave($event)">
     </msh-a1a1z-confirmation-dialog>
   </ng-template>
 </p-dialog>

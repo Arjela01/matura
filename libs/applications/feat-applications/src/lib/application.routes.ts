@@ -20,7 +20,7 @@ export const APPLICATION_ROUTES: Route[] = [
       import('./a1z/a1z-form-add/a1-z-form-add.component').then(m => m.A1ZFormAddComponent),
   },
   {
-    path: 'a1z-form/edit/:id',
+    path: 'a1z/edit/:id',
     loadComponent: () =>
       import('./a1z/a1z-form-edit/a1-z-form-edit.component').then(m => m.A1ZFormEditComponent),
   },
