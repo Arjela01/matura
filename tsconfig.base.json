@@ -94,6 +94,9 @@
       ],
       "@msh/user-section/feat-user-section": [
         "libs/user-section/feat-user-section/src/index.ts"
+      ],
+      "@msh/reports/data-access-reports": [
+        "libs/reports/data-access-reports/src/index.ts"
       ]
     }
   },

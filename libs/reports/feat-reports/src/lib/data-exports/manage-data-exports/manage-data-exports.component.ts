@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -11,6 +11,8 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { DataExport } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { RippleModule } from 'primeng/ripple';
+import { DataExportApiService } from '@msh/reports/data-access-reports';
+import * as FileSaver from "file-saver";
 
 @UntilDestroy()
 @Component({
@@ -29,17 +31,31 @@ import { RippleModule } from 'primeng/ripple';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageDataExportsComponent {
-  filters: LazyLoadEvent | null = null;
-
-  totalRecords = 0;
-  selectedDataExport: DataExport | null = null;
-  displayModal = false;
+export class ManageDataExportsComponent implements OnInit {
+  dataExports: DataExport[] = [];
 
   roles: DropdownModel<number>[] = [];
 
-  onNewClick() {
-    this.displayModal = true;
-    this.selectedDataExport = {} as DataExport;
+  constructor(private dataExportApiService: DataExportApiService) {}
+
+  ngOnInit(): void {
+    this.dataExportApiService
+      .loadDataExports()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.dataExports = response;
+      });
+  }
+
+  download(dataExport: DataExport) {
+    this.dataExportApiService
+      .export(dataExport.id)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        const blob: any = new Blob([response], {
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        });
+        FileSaver.saveAs(blob, dataExport.text);
+      });
   }
 }
