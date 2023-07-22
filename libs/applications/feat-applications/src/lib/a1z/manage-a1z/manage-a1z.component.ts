@@ -68,7 +68,7 @@ export class ManageA1zComponent {
 
   onNewClick() {
     this.hideA1ZForm = !this.hideA1ZForm;
-    this.router.navigate(['/applications/a1z-form']);
+    this.router.navigate(['/applications/a1z/add']);
   }
 
   onGridEvent(event: GridEvent<A1ZTableRecord | A1ZTableRecord[]>) {

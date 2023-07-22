@@ -2,12 +2,11 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Output,
 } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
-import { A1Z } from '@msh/applications/domain-application';
+import { FormsModule } from '@angular/forms';
 import { A1zFormComponent } from '../a1z-form/a1z-form.component';
+import {ActivatedRoute} from "@angular/router";
+import {A1ZFormModeEnum} from "../a1z-form-mode.enum";
 
 @Component({
   selector: 'msh-a1z-form-add',
@@ -19,6 +18,13 @@ import { A1zFormComponent } from '../a1z-form/a1z-form.component';
   providers: [],
 })
 export class A1ZFormAddComponent {
-  @Output() formSave = new EventEmitter<A1Z>();
-  @Output() formClose = new EventEmitter<undefined>();
+  id = '';
+  studentId = '';
+
+  constructor(private  route: ActivatedRoute) {
+    this.id = this.route.snapshot.paramMap.get('id') ?? '';
+    this.studentId = this.route.snapshot.paramMap.get('studentId') ?? '';
+  }
+
+  protected readonly A1ZFormModeEnum = A1ZFormModeEnum;
 }

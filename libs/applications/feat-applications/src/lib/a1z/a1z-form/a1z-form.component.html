@@ -1,7 +1,24 @@
 <div class="flex center mb-2 page-header mb-header">
   <h2 class="flex-1 m-0">
-    {{ !formId ? 'Shto Formularin A1Z' : 'Ndrysho Formularin A1Z' }}
+    {{ A1ZFormModeEnum.Add === mode || A1ZFormModeEnum.AddWithStudent === mode ? 'Shto Formularin A1Z' : 'Ndrysho Formularin A1Z' }}
   </h2>
+  <div class="flex align-items-right justify-content-right">
+    <div class="my-2">
+      <button
+        pButton
+        label="Konfirmuar"
+        icon="pi pi-check"
+        class="p-button-success p-button-outlined mr-2"
+        *ngIf="selectedStudent?.isConfirmedBySupervisor"></button>
+      <button
+        *ngIf="!showStudentSearchButton"
+        pButton
+        label="Ndrysho Maturantin"
+        icon="pi pi-pencil  "
+        class="mr-2 p-button-secondary"
+        (click)="editStudent()"></button>
+    </div>
+  </div>
 </div>
 
 
@@ -23,12 +40,12 @@
               [(ngModel)]="studentInputData"
               required
               autofocus
-              [disabled]="editing || studentId !== null"
+              [disabled]="!showStudentSearchButton"
               [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !studentInputData
               }" />
             <p-button
-              *ngIf="!editing && !studentId"
+              *ngIf="showStudentSearchButton"
               label="Kërko"
               icon="pi pi-search"
               (click)="onNewClick()"
@@ -598,3 +615,5 @@
     </p-table>
   </ng-template>
 </p-dialog>
+
+<pre>{{a1z | json}}</pre>

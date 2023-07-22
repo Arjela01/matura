@@ -455,7 +455,7 @@ export class A1FormComponent {
       });
   }
 
-  goBack(): void {
+  editStudent(): void {
     this.router
       .navigate([`/applications/students/edit/${this.a1.studentId}`])
       .then();

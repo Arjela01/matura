@@ -16,7 +16,7 @@ export class A1ZApiService {
     return this.apiService.post('/A1Z/TableData', event);
   }
 
-  getOne(id: number): Observable<ApiResult<A1Z>> {
+  getOne(id: any): Observable<ApiResult<A1Z>> {
     return this.apiService.get(`/A1Z/${id}`);
   }
 

@@ -3,10 +3,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
-  OnChanges,
+  Input,
   OnInit,
-  Output,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -23,7 +21,12 @@ import {
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import {AcademicYear, EXAM_TYPES, Report, Student} from '@msh/shared/domain-models';
+import {
+  AcademicYear,
+  EXAM_TYPES,
+  Report,
+  Student,
+} from '@msh/shared/domain-models';
 import {
   SharedStudent,
   SharedStudentLookupModule,
@@ -51,6 +54,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject } from 'rxjs';
+import { A1ZFormModeEnum } from '../a1z-form-mode.enum';
 
 interface ChangeEvent<T> {
   originalEvent: Event;
@@ -89,12 +93,17 @@ interface ChangeEvent<T> {
   ],
   providers: [ConfirmationService],
 })
-export class A1zFormComponent implements OnInit, OnChanges {
-  @Output() formSave = new EventEmitter<A1Z>();
-  @Output() formClose = new EventEmitter<undefined>();
+export class A1zFormComponent implements OnInit {
+  @Input()
+  mode?: A1ZFormModeEnum;
+
+  @Input()
+  id?: string;
+
+  @Input()
+  studentId?: string;
 
   @ViewChild('form', { static: true }) form!: NgForm;
-  editing = false;
 
   EXAM_TYPES = EXAM_TYPES;
 
@@ -105,14 +114,7 @@ export class A1zFormComponent implements OnInit, OnChanges {
   d3ExamSubjects: DropdownModel<string>[] = [];
   z1ExamSubjects: DropdownModel<string>[] = [];
 
-  z1ExamSubjectsFall: DropdownModel<string>[] = [];
-  d3ExamSubjectsFall: DropdownModel<string>[] = [];
-
   filters: LazyLoadEvent | null = null;
-
-  formId: string | null;
-  parameterUrl!: any;
-  parameterYear!: any;
 
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
@@ -127,8 +129,7 @@ export class A1zFormComponent implements OnInit, OnChanges {
   enableD3Subject = false;
   enableZ1Subject = false;
   submitted = false;
-
-  currentYear = new Date().getFullYear();
+  showStudentSearchButton = true;
 
   a1z: A1Z = {
     id: 0,
@@ -145,7 +146,6 @@ export class A1zFormComponent implements OnInit, OnChanges {
   private carriedGrades$$ = new BehaviorSubject<CarriedGrade[]>([]);
   carriedGrades$ = this.carriedGrades$$.asObservable();
   a1ZReport: Report = Report.A1ZForm_Report;
-  studentId: string | null;
   event = {
     first: 0,
     rows: 10,
@@ -168,24 +168,17 @@ export class A1zFormComponent implements OnInit, OnChanges {
     private readonly router: Router,
     private readonly examSubjectService: ExamSubjectApiService,
     private reportsApiService: ReportsApiService
-  ) {
-    this.formId = this.activatedRoute.snapshot.paramMap.get('id');
-    this.studentId = this.activatedRoute.snapshot.paramMap.get('studentId');
-  }
+  ) {}
 
   ngOnInit(): void {
-    if (this.formId) {
-      this.editing = true;
-    }
+    this.showStudentSearchButton = A1ZFormModeEnum.Add === this.mode;
 
     this.a1CategoryService
       .loadDropdownList()
       .pipe(untilDestroyed(this))
-
       .subscribe(response => {
         this.a1Categories = response.data;
       });
-    this.getSubjectDropdown();
 
     this.academicYearService
       .getAcademicYears()
@@ -200,13 +193,15 @@ export class A1zFormComponent implements OnInit, OnChanges {
         this.cd.detectChanges();
       });
 
-
-    if (this.formId) {
+    if (
+      A1ZFormModeEnum.Edit === this.mode ||
+      A1ZFormModeEnum.EditWithStudent === this.mode
+    ) {
       this.a1zService
-        .getOne(parseInt(this.formId))
+        .getOne(this.id)
         .pipe(untilDestroyed(this))
         .subscribe(response => {
-          this.a1z = response.data;
+          this.a1z = {...response.data};
           this.onSubjectD1Init(response.data);
           this.onSubjectD2Init(response.data);
           this.onSubjectD3Init(response.data);
@@ -218,48 +213,27 @@ export class A1zFormComponent implements OnInit, OnChanges {
             .pipe(untilDestroyed(this))
             .subscribe(response => {
               this.setSelectedStudent(response.data);
+              this.loadSubjectDropdowns();
+              this.cd.detectChanges();
             });
         });
-    } else if (this.studentId !== null) {
+    } else if (A1ZFormModeEnum.AddWithStudent === this.mode) {
       this.studentService
-          .getById(this.studentId)
-          .pipe(untilDestroyed(this))
-
-          .subscribe(response => {
-            this.selectedStudent = response.data;
-
-            this.cd.detectChanges();
-          });
+        .getById(this.studentId)
+        .pipe(untilDestroyed(this))
+        .subscribe(response => {
+          this.setSelectedStudent(response.data);
+          this.loadSubjectDropdowns();
+          this.cd.detectChanges();
+        });
     }
-
-    this.reportsApiService
-      .loadRoleReports(this.event)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        const a1ReportData = response.data.find(item => {
-          return item.reportId === 14;
-        });
-        const parametersArray = JSON.parse(a1ReportData?.parameters as never);
-        if (parametersArray.length > 0)
-          this.parameterUrl = parametersArray.find((item: string) => {
-            return ['studentid'].includes(item.toLowerCase());
-          });
-        this.parameterYear = parametersArray.find((item: string) => {
-          return ['academicyearid'].includes(item.toLowerCase());
-        });
-      });
-  }
-
-  ngOnChanges(): void {
-    this.getSubjectDropdown();
   }
 
   onGridEvent(event: GridEvent<SharedStudent | SharedStudent[]>) {
     switch (event.action) {
       case GRID_ACTIONS.EDIT:
-        this.getSubjectDropdown();
-
         this.setSelectedStudent(Object.assign({}, event.data as Student));
+        this.loadSubjectDropdowns();
         this.showStudentModal = false;
         break;
     }
@@ -269,10 +243,12 @@ export class A1zFormComponent implements OnInit, OnChanges {
     this.submitted = true;
 
     if (this.form.valid) {
-      if (this.a1z.id === 0) {
+      if (A1ZFormModeEnum.Add === this.mode || A1ZFormModeEnum.AddWithStudent == this.mode) {
         this.onNewA1ZFormSubmit();
-      } else {
+      } else if (A1ZFormModeEnum.Edit === this.mode || A1ZFormModeEnum.EditWithStudent == this.mode) {
         this.onEditA1ZFormSubmit();
+      } else {
+        this.toastService.showError('Nuk dallohet qëllimi i kësaj forme.')
       }
     }
   }
@@ -298,7 +274,7 @@ export class A1zFormComponent implements OnInit, OnChanges {
   isGraduationYearValid(): boolean {
     if (this.a1z.yearOfSchoolA1Z !== undefined) {
       const graduationYear = parseInt(this.a1z.yearOfSchoolA1Z, 10);
-      return graduationYear <= this.currentYear;
+      return graduationYear <= new Date().getFullYear();
     }
     return false;
   }
@@ -363,7 +339,7 @@ export class A1zFormComponent implements OnInit, OnChanges {
     this.filters = Object.assign({}, $event);
 
     this.studentService
-      .loadStudents($event)
+      .loadStudentsForA1A1Z($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.studentList$$.next(response.data);
@@ -372,8 +348,6 @@ export class A1zFormComponent implements OnInit, OnChanges {
   }
 
   getGrades(type: EXAM_TYPES) {
-    //    this.selectedStudent!.idCard
-
     if (this.selectedStudent?.idCard) {
       this.carriedGradeService
         .getByNid(this.selectedStudent.idCard, type)
@@ -395,7 +369,7 @@ export class A1zFormComponent implements OnInit, OnChanges {
     this.carriedGradeService.downloadDocument(grade);
   }
 
-  getSubjectDropdown() {
+  loadSubjectDropdowns() {
     this.examTypeService
       .loadDropdownList()
       .pipe(untilDestroyed(this))
@@ -403,13 +377,7 @@ export class A1zFormComponent implements OnInit, OnChanges {
         const d1ExamType = x.data.find(d1 => d1.value === EXAM_TYPES.D1);
         const d2ExamType = x.data.find(d2 => d2.value === EXAM_TYPES.D2);
         const d3ExamType = x.data.find(d3 => d3.value === EXAM_TYPES.D3);
-        const d3ExamTypeFall = x.data.find(
-          d3 => d3.value === EXAM_TYPES.D3_VJESHTA
-        );
         const z1ExamType = x.data.find(z1 => z1.value === EXAM_TYPES.Z1);
-        const z1ExamTypeFall = x.data.find(
-          z1 => z1.value === EXAM_TYPES.Z1_VJESHTA
-        );
 
         if (d1ExamType && d1ExamType.key) {
           this.examSubjectService
@@ -430,7 +398,12 @@ export class A1zFormComponent implements OnInit, OnChanges {
         }
         if (d2ExamType && d2ExamType.key) {
           this.examSubjectService
-            .forExamType(d2ExamType.key, this.a1z.academicYearId, undefined)
+            .forExamType(
+              d2ExamType.key,
+              this.a1z.academicYearId,
+              undefined,
+              this.selectedStudent?.profileId
+            )
             .pipe(untilDestroyed(this))
             .subscribe(y => {
               this.d2ExamSubjects = y.data;
@@ -446,39 +419,12 @@ export class A1zFormComponent implements OnInit, OnChanges {
               d3ExamType.key,
               this.a1z.academicYearId,
               undefined,
-              undefined
+              this.selectedStudent?.profileId
             )
             .pipe(untilDestroyed(this))
             .subscribe(y => {
               this.d3ExamSubjects = y.data;
               this.cd.detectChanges();
-            });
-        }
-        if (d3ExamTypeFall && d3ExamTypeFall.key) {
-          this.examSubjectService
-            .forExamType(
-              d3ExamTypeFall.key,
-              this.a1z.academicYearId,
-              undefined,
-              this.selectedStudent?.profileId
-            )
-            .pipe(untilDestroyed(this))
-            .subscribe(y => {
-              this.d3ExamSubjectsFall = y.data;
-              this.cd.detectChanges();
-            });
-        }
-        if (z1ExamTypeFall && z1ExamTypeFall.key) {
-          this.examSubjectService
-            .forExamType(
-              z1ExamTypeFall.key,
-              this.a1z.academicYearId,
-              undefined,
-              this.selectedStudent?.profileId
-            )
-            .pipe(untilDestroyed(this))
-            .subscribe(y => {
-              this.z1ExamSubjectsFall = y.data;
             });
         }
         if (z1ExamType && z1ExamType.key) {
@@ -491,15 +437,11 @@ export class A1zFormComponent implements OnInit, OnChanges {
             )
             .pipe(untilDestroyed(this))
             .subscribe(y => {
-              this.z1ExamSubjects = this.z1ExamSubjectsFall.concat(y.data);
+              this.z1ExamSubjects = y.data;
               this.cd.detectChanges();
             });
         }
       });
-  }
-
-  onStudentShow() {
-    this.showStudentModal = true;
   }
 
   onStudentHide() {
@@ -519,20 +461,8 @@ export class A1zFormComponent implements OnInit, OnChanges {
         if (response.isSuccessful) {
           this.a1z.academicYearId = response.data.academicYearId;
           this.toastService.showSuccess('Formulari A1Z u shtua me sukses!');
-          const query: { queryParams: { [x: string]: string } } = {
-            queryParams: {},
-          };
-          if (
-            this.parameterUrl &&
-            this.parameterYear &&
-            this.a1z.studentId &&
-            this.a1z.academicYearId
-          ) {
-            query.queryParams[`${this.parameterUrl}`] = this.a1z.studentId;
-            query.queryParams[`${this.parameterYear}`] =
-              this.a1z.academicYearId.toString();
-          }
-          this.router.navigate([`/reports/view/${this.a1ZReport}`], query).then();
+
+          this.printConfirmation(response.data);
         }
         if (!response.isSuccessful) {
           this.toastService.showError(
@@ -552,20 +482,8 @@ export class A1zFormComponent implements OnInit, OnChanges {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Formulari A1Z u ndryshua me sukses!');
-          const query: { queryParams: { [x: string]: string } } = {
-            queryParams: {},
-          };
-          if (
-            this.parameterUrl &&
-            this.parameterYear &&
-            this.a1z.studentId &&
-            this.a1z.academicYearId
-          ) {
-            query.queryParams[`${this.parameterUrl}`] = this.a1z.studentId;
-            query.queryParams[`${this.parameterYear}`] =
-              this.a1z.academicYearId.toString();
-          }
-          this.router.navigate([`/reports/view/${this.a1ZReport}`], query).then();
+
+          this.printConfirmation(response.data);
         }
 
         if (!response.isSuccessful) {
@@ -665,4 +583,61 @@ export class A1zFormComponent implements OnInit, OnChanges {
 
     window.open(url, '_blank');
   }
+
+  private printConfirmation(a1: A1Z) {
+    this.reportsApiService
+      .loadRoleReports(this.event)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        const a1ReportData = response.data.find(item => {
+          return item.reportId === Report.A1ZForm_Report;
+        });
+
+        const query: { queryParams: { [x: string]: string } } = {
+          queryParams: {},
+        };
+        if (
+          this.mode === A1ZFormModeEnum.Add ||
+          this.mode === A1ZFormModeEnum.Edit
+        )
+          query.queryParams['returnUrl'] = '/applications/a1z';
+        else query.queryParams['returnUrl'] = '/applications/students';
+
+        const parameters = JSON.parse(a1ReportData?.parameters as never);
+        if (parameters.length > 0) {
+          const parameterUrl = parameters.find(
+            (item: string) => 'studentid' === item.toLowerCase()
+          );
+          const parameterYear = parameters.find(
+            (item: string) => 'academicyearid' === item.toLowerCase()
+          );
+
+          if (
+            parameterUrl &&
+            parameterYear &&
+            a1.studentId &&
+            a1.academicYearId
+          ) {
+            query.queryParams[`${parameterUrl}`] = a1.studentId;
+            query.queryParams[`${parameterYear}`] =
+              a1.academicYearId.toString();
+          } else {
+            this.toastService.showError(
+              'Mungojne parametrat e konfigurimit te raportit'
+            );
+            return;
+          }
+        }
+        this.router.navigate([`/reports/view/${this.a1ZReport}`], query).then();
+      });
+  }
+
+  editStudent() {
+    this.router.navigate([
+      '/applications/students/edit',
+      this.selectedStudent?.id,
+    ]);
+  }
+
+  protected readonly A1ZFormModeEnum = A1ZFormModeEnum;
 }

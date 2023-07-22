@@ -1,11 +1,7 @@
-<div class="flex center mb-2 page-header mb-header">
-  <h2 class="flex-1 m-0"></h2>
-</div>
-
 <div class="flex ml-2 mb-2 page-header mb-header">
   <h2 class="flex-1 mb-0">
     {{
-      A1FormModeEnum.Add == mode ? 'Shto Formular A1' : 'Ndrysho Formularin A1'
+      A1FormModeEnum.Add === mode || A1FormModeEnum.AddWithStudent === mode ? 'Shto Formular A1' : 'Ndrysho Formularin A1'
     }}
   </h2>
   <div class="flex align-items-right justify-content-right">
@@ -22,7 +18,7 @@
         label="Ndrysho Maturantin"
         icon="pi pi-pencil  "
         class="mr-2 p-button-secondary"
-        (click)="goBack()"></button>
+        (click)="editStudent()"></button>
     </div>
   </div>
 </div>

@@ -256,7 +256,7 @@ export class StudentsEditComponent implements OnInit {
       ]);
     } else {
       this.router.navigate([
-        `/applications/a1/for-student/${this.student.id}/edit/${a1.id}`,
+        `/applications/a1z/for-student/${this.student.id}/edit/${a1.id}`,
       ]);
     }
   }
