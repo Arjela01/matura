@@ -136,7 +136,7 @@
   <ng-template pTemplate="body" let-student>
     <tr>
       <td style="width: 14%; min-width: 10rem">
-        <a [routerLink]="['/configurations/student-view', student.studentId]" class="p-button-link">{{ student.studentId }}</a>
+        <a [routerLink]="['/applications/students/view', student.studentId]" class="p-button-link">{{ student.studentId }}</a>
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ student.idCard }}
@@ -168,13 +168,13 @@
       <td style="width: 14%; min-width: 10rem">
         <div class="flex">
           <img
-            [routerLink]="['/configurations', 'student-view', student.id]"
+            [routerLink]="['/applications', 'students', 'view', student.id]"
             src="assets/svg/view-form.svg"
             class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"
             pTooltip="Shiko me shume" />
           <img
-            [routerLink]="['/configurations', 'student-edit', student.id]"
+            [routerLink]="['/applications', 'students', 'edit', student.id]"
             src="assets/svg/edit-form.svg"
             class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"

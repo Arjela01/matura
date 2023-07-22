@@ -86,14 +86,14 @@ export const APPLICATION_ROUTES: Route[] = [
         ),
   },
   {
-    path: 'student-view/:id',
+    path: 'students/view/:id',
     loadComponent: () =>
         import('./students/students-view/student-view.component').then(
             m => m.StudentViewComponent
         ),
   },
   {
-    path: 'student-edit/:id',
+    path: 'students/edit/:id',
     loadComponent: () =>
         import('./students/students-edit/students-edit.component').then(
             m => m.StudentsEditComponent

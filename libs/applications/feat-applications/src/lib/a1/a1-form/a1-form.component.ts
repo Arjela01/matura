@@ -309,7 +309,7 @@ export class A1FormComponent {
   }
 
   onCancelClick() {
-    this.router.navigate(['/configurations/students']);
+    this.router.navigate(['/applications/students']);
   }
 
   getA1ById(): Observable<any> {
@@ -513,7 +513,7 @@ export class A1FormComponent {
 
   goBack(): void {
     this.router
-      .navigate([`/configurations/student-edit/${this.a1.studentId}`])
+      .navigate([`/configurations/students/edit/${this.a1.studentId}`])
       .then();
   }
 }

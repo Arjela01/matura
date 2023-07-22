@@ -189,12 +189,12 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     });
   }
   navigateToGrid() {
-    this.router.navigate(['/configurations/students']);
+    this.router.navigate(['/applications/students']);
   }
   onModalClose() {
     this.displayModal = false;
     if (this.studentId) {
-      this.router.navigate([`/configurations/student-edit/${this.studentId}`]);
+      this.router.navigate([`/configurations/students/edit/${this.studentId}`]);
     }
   }
   onFormSave(formType: FormType) {

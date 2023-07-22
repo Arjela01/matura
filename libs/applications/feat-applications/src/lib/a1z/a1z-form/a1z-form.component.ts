@@ -509,7 +509,7 @@ export class A1zFormComponent implements OnInit, OnChanges {
   }
 
   onExitForm() {
-    this.router.navigate(['/configurations/students']);
+    this.router.navigate(['/applications/students']);
   }
 
   onNewA1ZFormSubmit() {
@@ -662,7 +662,7 @@ export class A1zFormComponent implements OnInit, OnChanges {
       this.selectedStudent?.idCard || 'undefined';
 
     const url = this.router.serializeUrl(
-      this.router.createUrlTree(['/configurations/carried-grades'], queryParams)
+      this.router.createUrlTree(['/applications/carried-grades'], queryParams)
     );
 
     window.open(url, '_blank');
