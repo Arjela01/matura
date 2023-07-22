@@ -1,4 +1,3 @@
-import { PrintedDiplomasComponent } from './diplomas-student/printed-diplomas/printed-diplomas.component';
 import { Route } from '@angular/router';
 
 export const CONFIGURATION_ROUTES: Route[] = [
@@ -23,34 +22,7 @@ export const CONFIGURATION_ROUTES: Route[] = [
         m => m.ManageProfilesComponent
       ),
   },
-  {
-    path: 'students',
-    loadComponent: () =>
-      import('./students/manage-students/manage-students.component').then(
-        m => m.ManageStudentsComponent
-      ),
-  },
-  {
-    path: 'students/add',
-    loadComponent: () =>
-      import('./students/students-form/students-form.component').then(
-        m => m.StudentsFormComponent
-      ),
-  },
-  {
-    path: 'student-view/:id',
-    loadComponent: () =>
-      import('./students/students-view/student-view.component').then(
-        m => m.StudentViewComponent
-      ),
-  },
-  {
-    path: 'student-edit/:id',
-    loadComponent: () =>
-      import('./students/students-edit/students-edit.component').then(
-        m => m.StudentsEditComponent
-      ),
-  },
+
   {
     path: 'administration-offices',
     loadComponent: () =>
@@ -219,13 +191,7 @@ export const CONFIGURATION_ROUTES: Route[] = [
         './exam-assignment/manage-exam-assignment/manage-exam-assignment.component'
       ).then(m => m.ManageExamAssignmentComponent),
   },
-  {
-    path: 'student-ban',
-    loadComponent: () =>
-      import(
-        './student-ban/manage-student-ban/manage-student-ban.component'
-      ).then(m => m.ManageStudentBanComponent),
-  },
+
   {
     path: 'empty-site',
     loadComponent: () =>
@@ -260,27 +226,5 @@ export const CONFIGURATION_ROUTES: Route[] = [
       import(
         './dashboard-sections/manage-dashboard-sections/manage-dashboard-sections.component'
       ).then(m => m.ManageDashboardSectionsComponent),
-  },
-
-  {
-    path: 'carried-grades',
-    loadComponent: () =>
-      import(
-        './carried-grade/manage-carried-grade/manage-carried-grade.component'
-      ).then(m => m.ManageCarriedGradesComponent),
-  },
-  {
-    path: 'diplomas-student',
-    loadComponent: () =>
-      import(
-        './diplomas-student/manage-diplomas-student/manage-diplomas-student.component'
-      ).then(m => m.ManageDiplomasStudentComponent),
-  },
-  {
-    path: 'printed-diplomas',
-    loadComponent: () =>
-      import(
-        './diplomas-student/printed-diplomas/printed-diplomas.component'
-      ).then(m => m.PrintedDiplomasComponent),
   },
 ];

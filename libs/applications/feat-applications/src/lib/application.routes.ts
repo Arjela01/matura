@@ -71,4 +71,61 @@ export const APPLICATION_ROUTES: Route[] = [
         './passInFall/manage-pass-in-fall/manage-pass-in-fall.component'
       ).then(m => m.ManagePassInFallComponent),
   },
+  {
+    path: 'students',
+    loadComponent: () =>
+        import('./students/manage-students/manage-students.component').then(
+            m => m.ManageStudentsComponent
+        ),
+  },
+  {
+    path: 'students/add',
+    loadComponent: () =>
+        import('./students/students-form/students-form.component').then(
+            m => m.StudentsFormComponent
+        ),
+  },
+  {
+    path: 'student-view/:id',
+    loadComponent: () =>
+        import('./students/students-view/student-view.component').then(
+            m => m.StudentViewComponent
+        ),
+  },
+  {
+    path: 'student-edit/:id',
+    loadComponent: () =>
+        import('./students/students-edit/students-edit.component').then(
+            m => m.StudentsEditComponent
+        ),
+  },
+  {
+    path: 'student-ban',
+    loadComponent: () =>
+        import(
+            './student-ban/manage-student-ban/manage-student-ban.component'
+            ).then(m => m.ManageStudentBanComponent),
+  },
+
+  {
+    path: 'carried-grades',
+    loadComponent: () =>
+        import(
+            './carried-grade/manage-carried-grade/manage-carried-grade.component'
+            ).then(m => m.ManageCarriedGradesComponent),
+  },
+  {
+    path: 'diplomas-student',
+    loadComponent: () =>
+        import(
+            './diplomas-student/manage-diplomas-student/manage-diplomas-student.component'
+            ).then(m => m.ManageDiplomasStudentComponent),
+  },
+  {
+    path: 'printed-diplomas',
+    loadComponent: () =>
+        import(
+            './diplomas-student/printed-diplomas/printed-diplomas.component'
+            ).then(m => m.PrintedDiplomasComponent),
+  },
 ];
