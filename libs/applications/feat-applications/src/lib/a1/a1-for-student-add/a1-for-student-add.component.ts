@@ -7,18 +7,18 @@ import {
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { A1Z } from '@msh/applications/domain-application';
-import { A1zFormComponent } from '../a1z-form/a1z-form.component';
+import {A1FormComponent} from "../a1-form/a1-form.component";
 
 @Component({
-  selector: 'msh-a1z-form-add',
+  selector: 'msh-a1-for-student-add',
   standalone: true,
-  templateUrl: './a1-z-form-add.component.html',
-  styleUrls: ['./a1-z-form-add.component.scss'],
+  templateUrl: './a1-for-student-add.component.html',
+  styleUrls: ['./a1-for-student-add.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, FormsModule, A1zFormComponent],
+  imports: [CommonModule, FormsModule, A1FormComponent],
   providers: [],
 })
-export class A1ZFormAddComponent {
+export class A1ForStudentAddComponent {
   @Output() formSave = new EventEmitter<A1Z>();
   @Output() formClose = new EventEmitter<undefined>();
 }

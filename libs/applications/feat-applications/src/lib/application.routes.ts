@@ -1,22 +1,38 @@
 import { Route } from '@angular/router';
+import {A1ZForStudentAddComponent} from "./a1z/a1z-for-student-add/a1-z-for-student-add.component";
+import {A1ZForStudentEditComponent} from "./a1z/a1z-for-student-edit/a1-z-for-student-edit.component";
+import {A1ForStudentAddComponent} from "./a1/a1-for-student-add/a1-for-student-add.component";
+import {A1ForStudentEditComponent} from "./a1/a1-for-student-edit/a1-for-student-edit.component";
+import {A1FormEditComponent} from "./a1/a1-form-edit/a1-form-edit.component";
+import {A1FormAddComponent} from "./a1/a1-form-add/a1-form-add.component";
 
 export const APPLICATION_ROUTES: Route[] = [
-  {
-    path: 'a1z-form',
-    loadComponent: () =>
-      import('./a1z/a1z-form/a1z-form.component').then(m => m.A1zFormComponent),
-  },
-  {
-    path: 'a1z-form/:id',
-    loadComponent: () =>
-      import('./a1z/a1z-form/a1z-form.component').then(m => m.A1zFormComponent),
-  },
   {
     path: 'a1z',
     loadComponent: () =>
       import('./a1z/manage-a1z/manage-a1z.component').then(
         m => m.ManageA1zComponent
       ),
+  },
+  {
+    path: 'a1z/add',
+    loadComponent: () =>
+      import('./a1z/a1z-form-add/a1-z-form-add.component').then(m => m.A1ZFormAddComponent),
+  },
+  {
+    path: 'a1z-form/edit/:id',
+    loadComponent: () =>
+      import('./a1z/a1z-form-edit/a1-z-form-edit.component').then(m => m.A1ZFormEditComponent),
+  },
+  {
+    path: 'a1z/for-student/:studentId/add',
+    loadComponent: () =>
+      import('./a1z/a1z-for-student-add/a1-z-for-student-add.component').then(m => m.A1ZForStudentAddComponent),
+  },
+  {
+    path: 'a1z/for-student/:studentId/edit/:id',
+    loadComponent: () =>
+      import('./a1z/a1z-for-student-edit/a1-z-for-student-edit.component').then(m => m.A1ZForStudentEditComponent),
   },
   {
     path: 'a1',
@@ -26,22 +42,22 @@ export const APPLICATION_ROUTES: Route[] = [
   {
     path: 'a1/add',
     loadComponent: () =>
-      import('./a1/a1-form/a1-form.component').then(m => m.A1FormComponent),
+      import('./a1/a1-form-add/a1-form-add.component').then(m => m.A1FormAddComponent),
   },
   {
     path: 'a1/edit/:id',
     loadComponent: () =>
-      import('./a1/a1-form/a1-form.component').then(m => m.A1FormComponent),
+      import('./a1/a1-form-edit/a1-form-edit.component').then(m => m.A1FormEditComponent),
   },
   {
-    path: 'a1/add-for-student/:student',
+    path: 'a1/for-student/:studentId/add',
     loadComponent: () =>
-      import('./a1/a1-form/a1-form.component').then(m => m.A1FormComponent),
+      import('./a1/a1-for-student-add/a1-for-student-add.component').then(m => m.A1ForStudentAddComponent),
   },
   {
-    path: 'a1z/add-for-student/:studentId',
+    path: 'a1/for-student/:studentId/edit/:id',
     loadComponent: () =>
-      import('./a1z/a1z-form/a1z-form.component').then(m => m.A1zFormComponent),
+      import('./a1/a1-for-student-edit/a1-for-student-edit.component').then(m => m.A1ForStudentEditComponent),
   },
   {
     path: 'confirmed-a1a1z',

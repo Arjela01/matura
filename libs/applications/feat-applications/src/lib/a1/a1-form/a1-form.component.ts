@@ -20,7 +20,7 @@ import {
 } from '@msh/configurations/data-access-configurations';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import {
-  AcademicYear, EXAM_TYPES,
+  AcademicYear, EXAM_TYPES, Report,
   Student,
   StudentTableView,
 } from '@msh/shared/domain-models';
@@ -38,10 +38,9 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { Observable, combineLatest, of, switchMap } from 'rxjs';
 import { ManageStudentsGridsDialogComponent } from '../manage-students-grids-dialog/manage-students-grids-dialog.component';
-import {Report} from "../../../../../../shared/domain-models/src/lib/reports/reports-enum";
 
 @Component({
-  selector: 'a1-form',
+  selector: 'msh-a1-form',
   standalone: true,
   imports: [
     CommonModule,

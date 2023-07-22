@@ -10,10 +10,10 @@ import {A1Z} from "@msh/applications/domain-application";
 import {A1zFormComponent} from "../a1z-form/a1z-form.component";
 
 @Component({
-  selector: 'msh-a1z-form-edit',
+  selector: 'msh-a1z-for-student-edit',
   standalone: true,
-  templateUrl: './a1-z-form-edit.component.html',
-  styleUrls: ['./a1-z-form-edit.component.scss'],
+  templateUrl: './a1-z-for-student-edit.component.html',
+  styleUrls: ['./a1-z-for-student-edit.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
@@ -22,7 +22,7 @@ import {A1zFormComponent} from "../a1z-form/a1z-form.component";
   ],
   providers: [],
 })
-export class A1ZFormEditComponent {
+export class A1ZForStudentEditComponent {
   @Output() formSave = new EventEmitter<A1Z>();
   @Output() formClose = new EventEmitter<undefined>();
 }
