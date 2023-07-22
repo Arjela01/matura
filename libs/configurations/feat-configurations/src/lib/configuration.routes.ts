@@ -22,7 +22,6 @@ export const CONFIGURATION_ROUTES: Route[] = [
         m => m.ManageProfilesComponent
       ),
   },
-
   {
     path: 'administration-offices',
     loadComponent: () =>
@@ -49,6 +48,13 @@ export const CONFIGURATION_ROUTES: Route[] = [
     loadComponent: () =>
       import('./menus/manage-menus/manage-menus.component').then(
         m => m.ManageMenusComponent
+      ),
+  },
+  {
+    path: 'data-export',
+    loadComponent: () =>
+      import('./data-exports/manage-data-exports/manage-data-exports.component').then(
+        m => m.ManageDataExportsComponent
       ),
   },
   {

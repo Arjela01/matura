@@ -1,0 +1,103 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="Text">Emërtimi *</label>
+    <input
+      type="text"
+      pInputText
+      id="Text"
+      name="Text"
+      [(ngModel)]="dataExport.text"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !dataExport.text }" />
+    <small class="p-error block" *ngIf="submitted && !dataExport.text">
+      Emërtimi është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Procedure">Url *</label>
+    <input
+      type="text"
+      pInputText
+      id="Procedure"
+      name="Procedure"
+      [(ngModel)]="dataExport.procedure"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !dataExport.procedure }" />
+    <small class="p-error block" *ngIf="submitted && !dataExport.procedure">
+      Url është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="Roles">Rolet</label>
+    <p-multiSelect
+      id="Roles"
+      name="roles"
+      [options]="roles"
+      optionValue="value"
+      optionLabel="value"
+      [(ngModel)]="dataExport.roles"
+      [required]="true"
+      appendTo="body"
+      [showClear]="true"
+      defaultLabel="Selekto Rolet"
+      display="chip"></p-multiSelect>
+
+  </div>
+
+  <div class="field">
+    <label for="displayOrder">Renditja *</label>
+    <input
+      type="number"
+      pInputText
+      id="displayOrder"
+      name="displayOrder"
+      [(ngModel)]="dataExport.displayOrder"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !dataExport.displayOrder && dataExport.displayOrder !== 0 }" />
+    <small class="p-error block" *ngIf="submitted && !dataExport.displayOrder && dataExport.displayOrder !== 0">
+      Renditja është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label class="mb-3">Është e dukshme *</label>
+    <div class="formgrid grid">
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="IsVisibleTrue"
+          name="IsVisible"
+          [value]="true"
+          [(ngModel)]="dataExport.isVisible"></p-radioButton>
+        <label for="IsVisibleTrue">Po</label>
+      </div>
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="IsVisibleFalse"
+          name="IsVisible"
+          [value]="false"
+          [(ngModel)]="dataExport.isVisible"></p-radioButton>
+        <label for="IsVisibleFalse">Jo</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      [disabled]="form.invalid"
+      type="submit"
+      pButton
+      label="Ruaj"
+      class="p-button w-auto"></button>
+  </div>
+</form>
