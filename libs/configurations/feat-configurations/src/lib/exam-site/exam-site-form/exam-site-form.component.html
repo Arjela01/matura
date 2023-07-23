@@ -23,11 +23,7 @@
       id="address"
       name="Address"
       [(ngModel)]="examSite.address"
-      autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examSite.address }" />
-    <small class="p-error block" *ngIf="submitted && !examSite.address">
-      Adresa është fushë e kërkuar.
-    </small>
+      autofocus />
   </div>
 
   <div class="field">
