@@ -6,27 +6,27 @@
       pInputText
       id="Text"
       name="Text"
-      [(ngModel)]="dataExport.text"
+      [(ngModel)]="dataExport.name"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !dataExport.text }" />
-    <small class="p-error block" *ngIf="submitted && !dataExport.text">
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !dataExport.name }" />
+    <small class="p-error block" *ngIf="submitted && !dataExport.name">
       Emërtimi është fushë e kërkuar.
     </small>
   </div>
 
   <div class="field">
-    <label for="Procedure">Url *</label>
+    <label for="query">Proçedura *</label>
     <input
       type="text"
       pInputText
-      id="Procedure"
-      name="Procedure"
-      [(ngModel)]="dataExport.procedure"
+      id="query"
+      name="query"
+      [(ngModel)]="dataExport.query"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !dataExport.procedure }" />
-    <small class="p-error block" *ngIf="submitted && !dataExport.procedure">
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !dataExport.query }" />
+    <small class="p-error block" *ngIf="submitted && !dataExport.query">
       Url është fushë e kërkuar.
     </small>
   </div>

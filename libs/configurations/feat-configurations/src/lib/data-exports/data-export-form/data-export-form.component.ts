@@ -60,8 +60,8 @@ export class DataExportFormComponent implements OnChanges {
     id: 0,
     displayOrder: 0,
     isVisible: false,
-    procedure: '',
-    text: '',
+    query: '',
+    name: '',
     roles: [],
   };
 

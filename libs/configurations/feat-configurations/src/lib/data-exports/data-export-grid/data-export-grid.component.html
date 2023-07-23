@@ -25,18 +25,18 @@
           <p-columnFilter
             type="text"
             field="text"
-            display="dataExport"
+            display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="procedure">
-        Url
+        Proçedura
         <div>
-          <p-sortIcon field="procedure"></p-sortIcon>
+          <p-sortIcon field="query"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="procedure"
-            display="dataExport"
+            field="query"
+            display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
@@ -47,7 +47,7 @@
           <p-columnFilter
             type="numeric"
             field="displayOrder"
-            display="dataExport"
+            display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
@@ -58,7 +58,7 @@
           <p-columnFilter
             type="text"
             field="roles"
-            display="dataExport"
+            display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
@@ -74,10 +74,10 @@
   <ng-template pTemplate="body" let-dataExport>
     <tr>
       <td style="width: 25%; min-width: 10rem">
-        {{ dataExport.text }}
+        {{ dataExport.name }}
       </td>
       <td style="width: 25%; min-width: 10rem">
-        {{ dataExport.procedure }}
+        {{ dataExport.query }}
       </td>
       <td style="width: 25%; min-width: 10rem">
         {{ dataExport.displayOrder }}

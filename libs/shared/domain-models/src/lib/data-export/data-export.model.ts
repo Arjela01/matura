@@ -2,8 +2,8 @@ export interface DataExport {
   id: number;
   isVisible: boolean;
   displayOrder: number;
-  text: string;
-  procedure: string;
+  name: string;
+  query: string;
   roles: string[];
 }
 export interface DataExportTableView {

@@ -9,10 +9,10 @@ export class DataExportApiService {
   constructor(private apiService: APIService) {}
 
   loadDataExports(): Observable<any> {
-    return this.apiService.post(`/DataExport`, event);
+    return this.apiService.get(`/DataExport`);
   }
 
   export(id: number): Observable<any> {
-    return this.apiService.post(`/DataExport/Export/${id}`, event);
+    return this.apiService.get(`/DataExport/Export/${id}`);
   }
 }

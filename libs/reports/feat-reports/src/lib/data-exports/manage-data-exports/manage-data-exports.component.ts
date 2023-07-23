@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -36,14 +36,16 @@ export class ManageDataExportsComponent implements OnInit {
 
   roles: DropdownModel<number>[] = [];
 
-  constructor(private dataExportApiService: DataExportApiService) {}
+  constructor(private dataExportApiService: DataExportApiService,
+              private cd: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.dataExportApiService
       .loadDataExports()
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.dataExports = response;
+        this.dataExports = (response.data as DataExport[]).filter(x => x.isVisible);
+        this.cd.detectChanges();
       });
   }
 
@@ -52,10 +54,16 @@ export class ManageDataExportsComponent implements OnInit {
       .export(dataExport.id)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        const blob: any = new Blob([response], {
+        const byteCharacters = atob(response.data);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob: any = new Blob([byteArray], {
           type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         });
-        FileSaver.saveAs(blob, dataExport.text);
+        FileSaver.saveAs(blob, dataExport.name);
       });
   }
 }
