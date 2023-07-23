@@ -300,7 +300,7 @@ export class ManageCarriedGradesComponent implements OnInit {
 
   getStudents($event: LazyLoadEvent): void {
     this.studentsApiService
-      .loadStudentsForA1A1Z($event)
+      .loadStudents($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.studentList$$.next(response.data);

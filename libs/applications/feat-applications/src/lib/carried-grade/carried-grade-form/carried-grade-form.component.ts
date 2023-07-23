@@ -107,7 +107,11 @@ export class CarriedGradesFormComponent implements OnChanges {
     if (changes['gradeDetails'] && changes['gradeDetails'].currentValue) {
       const g = changes['gradeDetails'].currentValue;
       this.grade = g;
-      this.studentInputData = `${g.nid} - ${g?.studentFullName?.replace(/\s/g, '-')}`;
+      if(g.nid) {
+        this.studentInputData = `${g.nid} - ${g?.studentFullName?.replace(/\s/g, '-')}`;
+      } else{
+        this.studentInputData = '';
+      }
     }
   }
 
