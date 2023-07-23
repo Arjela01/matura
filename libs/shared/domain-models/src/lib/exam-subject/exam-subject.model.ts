@@ -8,6 +8,7 @@ export interface ExamSubject {
   academicYear?: string;
   credits: number;
   isOptional: boolean;
+  isNotGraded: boolean;
 }
 
 export interface ExamSubjectTableView {

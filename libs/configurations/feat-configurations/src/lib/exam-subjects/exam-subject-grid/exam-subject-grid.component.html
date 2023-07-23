@@ -59,6 +59,15 @@
           matchMode="equals"
           display="menu"  mshColumnFilterDirective></p-columnFilter>
       </th>
+      <th pSortableColumn="isNotGraded">
+        Nuk Vlerësohet?
+        <p-sortIcon field="isNotGraded"></p-sortIcon>
+        <p-columnFilter
+          type="boolean"
+          field="isNotGraded"
+          matchMode="equals"
+          display="menu"  mshColumnFilterDirective></p-columnFilter>
+      </th>
       <th></th>
       <th></th>
     </tr>
@@ -68,19 +77,22 @@
       <td style="width: 14%; min-width: 10rem">
         {{ examSubject.code }}
       </td>
-      <td style="width: 25%; min-width: 10rem">
+      <td style="width: 18%; min-width: 10rem">
         {{ examSubject.name }}
       </td>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 18%; min-width: 10rem">
         {{ examSubject.examTypeName }}
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ examSubject.academicYear }}
       </td>
-      <td style="width: 24%; min-width: 10rem">
+      <td style="width: 10%; min-width: 10rem">
         {{ examSubject.isOptional ? 'Po' : 'Jo' }}
       </td>
-      <td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ examSubject.isNotGraded ? 'Po' : 'Jo' }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
         <div class="flex">
           <img
             src="assets/svg/edit-form.svg"

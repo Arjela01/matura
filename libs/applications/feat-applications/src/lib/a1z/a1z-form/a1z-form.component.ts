@@ -153,6 +153,7 @@ export class A1zFormComponent implements OnInit {
     filters: {},
     globalFilter: null,
   };
+  private currentCarriedGradesExamType?: EXAM_TYPES;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -532,6 +533,7 @@ export class A1zFormComponent implements OnInit {
   }
 
   onCarriedClick(type: EXAM_TYPES) {
+    this.currentCarriedGradesExamType = type;
     this.getGrades(type);
     this.showCarriedModal = true;
     this.carriedModalType = type;
@@ -643,4 +645,9 @@ export class A1zFormComponent implements OnInit {
   }
 
   protected readonly A1ZFormModeEnum = A1ZFormModeEnum;
+
+  reloadCarriedGrades() {
+    if(this.currentCarriedGradesExamType)
+      this.getGrades(this.currentCarriedGradesExamType);
+  }
 }

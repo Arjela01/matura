@@ -1,6 +1,10 @@
 <div class="flex center mb-2 page-header mb-header">
   <h2 class="flex-1 m-0">
-    {{ A1ZFormModeEnum.Add === mode || A1ZFormModeEnum.AddWithStudent === mode ? 'Shto Formularin A1Z' : 'Ndrysho Formularin A1Z' }}
+    {{
+      A1ZFormModeEnum.Add === mode || A1ZFormModeEnum.AddWithStudent === mode
+        ? 'Shto Formularin A1Z'
+        : 'Ndrysho Formularin A1Z'
+    }}
   </h2>
   <div class="flex align-items-right justify-content-right">
     <div class="my-2">
@@ -20,8 +24,6 @@
     </div>
   </div>
 </div>
-
-
 
 <div class="grid">
   <div class="col-12 p-fluid">
@@ -551,6 +553,23 @@
   [resizable]="false"
   class="p-fluid"
   (onHide)="onCarriedHide()">
+  <ng-template pTemplate="header">
+    <div class="flex w-full">
+      <h4 class="align-items-stretch flex-grow-1">Kërko Notën</h4>
+      <button
+        pButton
+        pRipple
+        icon="pi pi-plus"
+        class="p-button-rounded p-button-secondary p-button-text mr-2 justify-items-end"
+        (click)="addCarriedGrade()"></button>
+      <button
+        pButton
+        pRipple
+        icon="pi pi-refresh"
+        class="p-button-rounded p-button-secondary p-button-text mr-2 justify-items-end"
+        (click)="reloadCarriedGrades()"></button>
+    </div>
+  </ng-template>
   <ng-template pTemplate="content">
     <p-table
       #dt
@@ -599,21 +618,8 @@
           </td>
         </tr>
       </ng-template>
-      <ng-template pTemplate="footer">
-        <tr>
-          <td colspan="6">
-            <button
-              pButton
-              pRipple
-              label="Shto Një Notë"
-              icon="pi pi-plus"
-              class="p-button-success mr-2"
-              (click)="addCarriedGrade()"></button>
-          </td>
-        </tr>
-      </ng-template>
     </p-table>
   </ng-template>
 </p-dialog>
 
-<pre>{{a1z | json}}</pre>
+<pre>{{ a1z | json }}</pre>
