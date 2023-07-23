@@ -202,10 +202,7 @@ export class A1zFormComponent implements OnInit {
         .pipe(untilDestroyed(this))
         .subscribe(response => {
           this.a1z = {...response.data};
-          this.onSubjectD1Init(response.data);
-          this.onSubjectD2Init(response.data);
-          this.onSubjectD3Init(response.data);
-          this.onSubjectZ1Init(response.data);
+
           this.cd.detectChanges();
 
           this.studentService
@@ -214,6 +211,12 @@ export class A1zFormComponent implements OnInit {
             .subscribe(response => {
               this.setSelectedStudent(response.data);
               this.loadSubjectDropdowns();
+
+              this.onSubjectD1Init(response.data);
+              this.onSubjectD2Init(response.data);
+              this.onSubjectD3Init(response.data);
+              this.onSubjectZ1Init(response.data);
+
               this.cd.detectChanges();
             });
         });
@@ -384,7 +387,7 @@ export class A1zFormComponent implements OnInit {
             .forExamType(
               d1ExamType.key,
               this.a1z.academicYearId,
-              undefined,
+              this.a1z.subjectD1Id,
               this.selectedStudent?.profileId
             )
             .pipe(untilDestroyed(this))
@@ -401,7 +404,7 @@ export class A1zFormComponent implements OnInit {
             .forExamType(
               d2ExamType.key,
               this.a1z.academicYearId,
-              undefined,
+              this.a1z.subjectD2Id,
               this.selectedStudent?.profileId
             )
             .pipe(untilDestroyed(this))
@@ -418,7 +421,7 @@ export class A1zFormComponent implements OnInit {
             .forExamType(
               d3ExamType.key,
               this.a1z.academicYearId,
-              undefined,
+              this.a1z.subjectD3Id,
               this.selectedStudent?.profileId
             )
             .pipe(untilDestroyed(this))
@@ -432,7 +435,7 @@ export class A1zFormComponent implements OnInit {
             .forExamType(
               z1ExamType.key,
               this.a1z.academicYearId,
-              undefined,
+              this.a1z.subjectZ1Id,
               this.selectedStudent?.profileId
             )
             .pipe(untilDestroyed(this))
