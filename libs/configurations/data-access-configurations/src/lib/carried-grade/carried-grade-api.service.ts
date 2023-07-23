@@ -47,6 +47,9 @@ export class CarriedGradeApiService {
   }
 
   downloadDocument(carriedGrade: CarriedGrade) {
+    if(!carriedGrade.document)
+      return;
+
     const byteCharacters = atob(carriedGrade.document);
     const header = byteCharacters.substring(0, 4);
     let extension = '';

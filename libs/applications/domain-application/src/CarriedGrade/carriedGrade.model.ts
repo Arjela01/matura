@@ -1,15 +1,17 @@
 export interface CarriedGrade {
   id: number;
   academicYearId?: number;
+  academicYearName?: string;
   studentId?: string;
+  studentFullName?: string;
   examSubjectId?: string;
-  nid: string;
-  examTypeID: number;
-  examTypeName: string;
-  examSubject: string;
+  examSubjectName?: string;
+  nid?: string;
+  examTypeId?: number;
+  examTypeName?: string;
   year: number;
   grade: number;
-  document: string;
+  document?: string;
 }
 
 export interface CarriedGradeTable {

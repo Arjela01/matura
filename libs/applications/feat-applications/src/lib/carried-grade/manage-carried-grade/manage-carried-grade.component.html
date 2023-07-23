@@ -41,6 +41,8 @@
       (formSave)="onFormSave($event)"
       (openStudentModal)="this.showStudentModal = true"
       (examTypeChanged)="getSubjectsDropdown($event)"
+      [examSubjectDropdown]="examSubjectsDropdown"
+      [selectedStudent]="selectedStudent"
       [academicYearDropdown]="academicYearsDropdown">
     </msh-carried-grade-form>
   </ng-template>

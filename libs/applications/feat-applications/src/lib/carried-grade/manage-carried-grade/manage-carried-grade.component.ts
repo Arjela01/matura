@@ -64,7 +64,7 @@ export class ManageCarriedGradesComponent implements OnInit {
   filters: LazyLoadEvent = {} as LazyLoadEvent;
 
   totalRecords = 0;
-  selectedCarriedGrade: CarriedGrade | null = null;
+  selectedCarriedGrade?: CarriedGrade;
   selectedCarriedGrades: CarriedGrade[] = [];
   displayModal = false;
 
@@ -76,7 +76,7 @@ export class ManageCarriedGradesComponent implements OnInit {
   showStudentSearchButton = true;
   studentInputData = '';
   showStudentModal = false;
-  selectedStudent = null;
+  selectedStudent?: SharedStudent;
 
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
@@ -139,11 +139,16 @@ export class ManageCarriedGradesComponent implements OnInit {
         this.selectedCarriedGrades = [];
         break;
       case GRID_ACTIONS.EDIT:
+        this.displayModal = true;
         this.selectedCarriedGrade = Object.assign(
           {},
           event.data as CarriedGrade
         );
-        this.displayModal = true;
+        this.getSubjectsDropdown({
+          examTypeId: this.selectedCarriedGrade.examTypeId,
+          academicYearId: this.selectedCarriedGrade.academicYearId,
+        });
+        console.log(this.selectedCarriedGrade);
         break;
       case GRID_ACTIONS.CUSTOM_ACTION2:
         this.downloadDocument(event.data as CarriedGrade);
@@ -165,7 +170,7 @@ export class ManageCarriedGradesComponent implements OnInit {
 
   onModalClose() {
     this.displayModal = false;
-    this.selectedCarriedGrade = null;
+    this.selectedCarriedGrade = undefined;
   }
 
   onFormSave(carriedGrade: CarriedGrade) {
@@ -259,6 +264,7 @@ export class ManageCarriedGradesComponent implements OnInit {
       case GRID_ACTIONS.EDIT:
         this.setSelectedStudent(Object.assign({}, event.data as Student));
         this.showStudentModal = false;
+        this.cd.detectChanges();
         break;
     }
   }
@@ -273,26 +279,22 @@ export class ManageCarriedGradesComponent implements OnInit {
       academicYearId: number;
     };
     this.examSubjectApiService
-      .forExamType(data.examTypeId, data.academicYearId)
+      .forExamType(
+        data.examTypeId,
+        data.academicYearId,
+        undefined,
+        undefined,
+        true
+      )
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examSubjectsDropdown = response.data;
+        this.cd.detectChanges();
       });
   }
 
   setSelectedStudent(student: any) {
     this.selectedStudent = student;
-
-    if (!student) {
-      this.studentInputData = ' ';
-    } else {
-      this.studentInputData =
-        student?.studentId +
-        '-' +
-        (student?.firstName ?? student?.studentFirstName) +
-        '-' +
-        (student?.lastName ?? student?.studentLastName);
-    }
     this.cd.detectChanges();
   }
 
@@ -303,6 +305,7 @@ export class ManageCarriedGradesComponent implements OnInit {
       .subscribe(response => {
         this.studentList$$.next(response.data);
         this.totalStudentRecords = response.total;
+        this.cd.detectChanges();
       });
   }
 

@@ -550,25 +550,25 @@ export class A1zFormComponent implements OnInit {
       case EXAM_TYPES.D1:
         this.a1z.yearD1 = $event.year;
         this.a1z.scoreD1 = $event.grade;
-        this.a1z.subjectNameD1 = $event.examSubject;
+        this.a1z.subjectNameD1 = $event.examSubjectName;
         this.cd.detectChanges();
         break;
       case EXAM_TYPES.D2:
         this.a1z.yearD2 = $event.year;
         this.a1z.scoreD2 = $event.grade;
-        this.a1z.subjectNameD2 = $event.examSubject;
+        this.a1z.subjectNameD2 = $event.examSubjectName;
         this.cd.detectChanges();
         break;
       case EXAM_TYPES.D3:
         this.a1z.yearD3 = $event.year;
         this.a1z.scoreD3 = $event.grade;
-        this.a1z.subjectNameD3 = $event.examSubject;
+        this.a1z.subjectNameD3 = $event.examSubjectName;
         this.cd.detectChanges();
         break;
       case EXAM_TYPES.Z1:
         this.a1z.yearZ1 = $event.year;
         this.a1z.scoreZ1 = $event.grade;
-        this.a1z.subjectNameZ1 = $event.examSubject;
+        this.a1z.subjectNameZ1 = $event.examSubjectName;
         this.cd.detectChanges();
         break;
     }

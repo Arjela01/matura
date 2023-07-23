@@ -26,31 +26,6 @@
       Studenti është fushë e kërkuar.
     </small>
   </div>
-  <div class="field">
-    <label for="academicYearId">Viti *</label>
-
-    <p-dropdown
-      id="academicYearId"
-      optionValue="key"
-      optionLabel="value"
-      appendTo="body"
-      defaultLabel="Zgjidh Vitin"
-      name="ExamTypeID"
-      [options]="academicYearDropdown"
-      [ngModelOptions]="{ standalone: true }"
-      [required]="true"
-      [style]="{ width: '100%' }"
-      [(ngModel)]="grade.academicYearId"
-      [ngClass]="{
-        'ng-invalid ng-dirty':
-          submitted && (!grade.examTypeID || grade.examTypeID === 0)
-      }">
-    </p-dropdown>
-
-    <small class="p-error block" *ngIf="submitted && !grade.academicYearId">
-      Viti është fushë e kërkuar.
-    </small>
-  </div>
 
   <div class="field">
     <label for="nid">NID i maturantit *</label>
@@ -68,6 +43,32 @@
     </small>
   </div>
   <div class="field">
+    <label for="academicYearId">Viti *</label>
+    <p-dropdown
+      id="academicYearId"
+      optionValue="key"
+      optionLabel="value"
+      appendTo="body"
+      defaultLabel="Zgjidh Vitin"
+      name="ExamTypeID"
+      [options]="academicYearDropdown"
+      [ngModelOptions]="{ standalone: true }"
+      [required]="true"
+      [autoDisplayFirst]="false"
+      [style]="{ width: '100%' }"
+      [(ngModel)]="grade.academicYearId"
+      [ngClass]="{
+        'ng-invalid ng-dirty':
+          submitted && (!grade.academicYearId || grade.academicYearId === 0)
+      }">
+    </p-dropdown>
+
+    <small class="p-error block" *ngIf="submitted && !grade.academicYearId">
+      Viti është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
     <label for="ExamTypeID">Tipi I Provimit *</label>
     <p-dropdown
       id="ExamTypeID"
@@ -79,33 +80,48 @@
       [options]="examTypeDropdown"
       [ngModelOptions]="{ standalone: true }"
       [required]="true"
+      [autoDisplayFirst]="false"
       [style]="{ width: '100%' }"
-      [(ngModel)]="grade.examTypeID"
+      [(ngModel)]="grade.examTypeId"
       (onChange)="examTypeChangedLocally()"
       [ngClass]="{
         'ng-invalid ng-dirty':
-          submitted && (!grade.examTypeID || grade.examTypeID === 0)
+          submitted && (!grade.examTypeId || grade.examTypeId === 0)
       }">
     </p-dropdown>
     <small
       class="p-error block"
-      *ngIf="submitted && (!grade.examTypeID || grade.examTypeID === 0)">
+      *ngIf="submitted && (!grade.examTypeId || grade.examTypeId === 0)">
       Tipi i provimit është fushë e kërkuar.
     </small>
   </div>
   <div class="field">
-    <label for="ExamSubject">Lënda *</label>
-    <input
-      type="text"
-      pInputText
-      id="ExamSubject"
-      name="ExamSubject"
-      [(ngModel)]="grade.examSubject"
-      required
-      autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !grade.examSubject }" />
-    <small class="p-error block" *ngIf="submitted && !grade.examSubject">
-      Lënda është fushë e kërkuar.
+    <label for="ExamSubjectID">Lënda *</label>
+    <p-dropdown
+      id="ExamSubjectID"
+      optionValue="key"
+      optionLabel="value"
+      appendTo="body"
+      defaultLabel="Zgjidh Lëndën"
+      name="ExamSubjectID"
+      [options]="examSubjectDropdown"
+      [ngModelOptions]="{ standalone: true }"
+      [required]="true"
+      [autoDisplayFirst]="false"
+      [virtualScrollItemSize]="10"
+      [filter]="true"
+      [virtualScroll]="true"
+      [style]="{ width: '100%' }"
+      [(ngModel)]="grade.examSubjectId"
+      [ngClass]="{
+        'ng-invalid ng-dirty':
+          submitted && !grade.examSubjectId
+      }">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !grade.examSubjectId">
+      Tipi i provimit është fushë e kërkuar.
     </small>
   </div>
   <div class="field">
@@ -124,7 +140,7 @@
     </small>
   </div>
   <div class="field">
-    <label for="document">Dokumenti</label>
+    <label for="document">Dokumenti <a class="p-button-text cursor-pointer" (click)="clearFile()">Fshi</a></label>
     <div class="form-group drop-files noLabel">
       <p-fileUpload
         #uploader
@@ -135,7 +151,7 @@
         accept=".pdf,.docx,.jpg,.png,.txt,.xlsx,.">
         <ng-template pTemplate="content">
           <img
-            [src]="'data:image;base64,' + grade.document"
+              [src]="'data:image;base64,' + grade.document"
             width="100"
             height="100"
             *ngIf="grade.document && !uploaded && grade.document"

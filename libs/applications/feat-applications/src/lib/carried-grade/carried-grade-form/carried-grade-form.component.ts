@@ -1,29 +1,31 @@
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input,
+  Input, OnChanges,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
-import { CarriedGrade } from '@msh/applications/domain-application';
-import { DropdownModel } from '@msh/shared/data-access-shared';
-import { ButtonModule } from 'primeng/button';
-import { CheckboxModule } from 'primeng/checkbox';
-import { DropdownModule } from 'primeng/dropdown';
-import { FileUploadModule } from 'primeng/fileupload';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { DialogModule } from 'primeng/dialog';
+import {FormsModule, NgForm} from '@angular/forms';
+import {CarriedGrade} from '@msh/applications/domain-application';
+import {DropdownModel} from '@msh/shared/data-access-shared';
+import {ButtonModule} from 'primeng/button';
+import {CheckboxModule} from 'primeng/checkbox';
+import {DropdownModule} from 'primeng/dropdown';
+import {FileUploadModule} from 'primeng/fileupload';
+import {InputNumberModule} from 'primeng/inputnumber';
+import {InputTextModule} from 'primeng/inputtext';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {RadioButtonModule} from 'primeng/radiobutton';
+import {DialogModule} from 'primeng/dialog';
 import {
   SharedStudent,
   SharedStudentLookupModule,
 } from '@msh/shared/student-lookup';
+import {Student} from "@msh/shared/domain-models";
 
 @Component({
   selector: 'msh-carried-grade-form',
@@ -46,15 +48,12 @@ import {
   styleUrls: ['./carried-grade-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CarriedGradesFormComponent {
-  @Input() set gradeDetails(details: CarriedGrade | null) {
-    if (details) {
-      this.grade = Object.assign({}, details);
-    }
-  }
-
+export class CarriedGradesFormComponent implements OnChanges {
+  @Input() gradeDetails?: CarriedGrade;
   @Input() academicYearDropdown: DropdownModel<number>[] = [];
   @Input() examTypeDropdown: DropdownModel<number>[] = [];
+  @Input() examSubjectDropdown: DropdownModel<string>[] = [];
+  @Input() selectedStudent?: SharedStudent;
 
   @Output() examTypeChanged = new EventEmitter<{
     examTypeId?: number;
@@ -66,16 +65,14 @@ export class CarriedGradesFormComponent {
   @Output() formSave = new EventEmitter<CarriedGrade>();
   @Output() formClose = new EventEmitter<undefined>();
 
-  @ViewChild('form', { static: true }) form!: NgForm;
+  @ViewChild('form', {static: true}) form!: NgForm;
 
   submitted = false;
-  selectedStudent?: SharedStudent;
 
   grade: CarriedGrade = {
     id: 0,
     nid: '',
-    examTypeID: 0,
-    examSubject: '',
+    examTypeId: 0,
     grade: 0,
     year: 0,
     examTypeName: '',
@@ -87,7 +84,32 @@ export class CarriedGradesFormComponent {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   showStudentSearchButton = true;
   studentInputData = '';
-  constructor(private cd: ChangeDetectorRef) {}
+
+  constructor(private cd: ChangeDetectorRef) {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['selectedStudent']) {
+      if (changes['selectedStudent'].currentValue) {
+        const student = changes['selectedStudent'].currentValue as SharedStudent;
+        this.grade.studentId = student.id;
+        this.studentInputData =
+          student?.idCard +
+          '-' +
+          (student?.firstName ?? student?.firstName) +
+          '-' +
+          (student?.lastName ?? student?.lastName);
+        this.grade.nid = student.idCard;
+      } else {
+        this.studentInputData = ' ';
+      }
+    }
+    if (changes['gradeDetails'] && changes['gradeDetails'].currentValue) {
+      const g = changes['gradeDetails'].currentValue;
+      this.grade = g;
+      this.studentInputData = `${g.nid} - ${g?.studentFullName?.replace(/\s/g, '-')}`;
+    }
+  }
 
   onCancelClick() {
     this.formClose.emit();
@@ -116,8 +138,12 @@ export class CarriedGradesFormComponent {
 
   examTypeChangedLocally() {
     this.examTypeChanged.emit({
-      examTypeId: this.grade.examTypeID,
+      examTypeId: this.grade.examTypeId,
       academicYearId: this.grade.academicYearId,
     });
+  }
+
+  clearFile() {
+    this.grade.document = undefined;
   }
 }

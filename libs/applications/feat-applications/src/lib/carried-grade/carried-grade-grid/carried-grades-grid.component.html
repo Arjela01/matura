@@ -40,8 +40,19 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="NID">
+        Studenti
+        <div>
+          <p-sortIcon field="StudentFullName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="StudentFullName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
       <th pSortableColumn="examTypeName">
-        Tipi I Provimit
+        Tipi
         <div>
           <p-sortIcon field="examTypeName"></p-sortIcon>
           <p-columnFilter
@@ -51,13 +62,24 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="year">
+      <th pSortableColumn="examSubjectName">
+        Lënda
+        <div>
+          <p-sortIcon field="examSubjectName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="examSubjectName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="academicYearName">
         Viti
         <div>
-          <p-sortIcon field="year"></p-sortIcon>
+          <p-sortIcon field="academicYearName"></p-sortIcon>
           <p-columnFilter
             type="numeric"
-            field="year"
+            field="academicYearName"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
@@ -75,26 +97,34 @@
       </th>
       <th pSortableColumn="isDocument">
         Dokument?
-        <p-sortIcon field="isDocument"></p-sortIcon>
+        <div>
+          <p-sortIcon field="isDocument"></p-sortIcon>
+        </div>
       </th>
       <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-grade>
     <tr>
-      <td style="width: 50%">
+      <td style="width: 5%">
         {{ grade.id }}
       </td>
-      <td style="width: 50%; min-width: 10rem">
+      <td style="width: 5%; min-width: 10rem">
         {{ grade.nid }}
       </td>
-      <td style="width: 50%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
+        {{ grade.studentFullName }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
         {{ grade.examTypeName }}
       </td>
-      <td style="width: 50%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
+        {{ grade.examSubjectName }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
         {{ grade.year }}
       </td>
-      <td style="width: 50%; min-width: 10rem">
+      <td style="width: 5%; min-width: 10rem">
         {{ grade.grade }}
       </td>
       <td style="width: 14%; min-width: 10rem">
