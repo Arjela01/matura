@@ -1,4 +1,57 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field w-full">
+    <label for="studentInputData">Maturant *</label>
+    <div class="p-inputgroup">
+      <input
+        type="text"
+        [disabled]="!showStudentSearchButton"
+        pInputText
+        id="studentInputData"
+        name="studentInputData"
+        [(ngModel)]="studentInputData"
+        autofocus
+        readonly="readonly"
+        [required]="true"
+        [ngClass]="{
+          'ng-invalid ng-dirty': submitted && !studentInputData
+        }" />
+      <p-button
+        *ngIf="showStudentSearchButton"
+        label="Kërko"
+        icon="pi pi-search"
+        (click)="openStudentModal.emit()"
+        [style]="{ height: '100%' }"></p-button>
+    </div>
+    <small class="p-error block" *ngIf="submitted && !studentInputData">
+      Studenti është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="academicYearId">Viti *</label>
+
+    <p-dropdown
+      id="academicYearId"
+      optionValue="key"
+      optionLabel="value"
+      appendTo="body"
+      defaultLabel="Zgjidh Vitin"
+      name="ExamTypeID"
+      [options]="academicYearDropdown"
+      [ngModelOptions]="{ standalone: true }"
+      [required]="true"
+      [style]="{ width: '100%' }"
+      [(ngModel)]="grade.academicYearId"
+      [ngClass]="{
+        'ng-invalid ng-dirty':
+          submitted && (!grade.examTypeID || grade.examTypeID === 0)
+      }">
+    </p-dropdown>
+
+    <small class="p-error block" *ngIf="submitted && !grade.academicYearId">
+      Viti është fushë e kërkuar.
+    </small>
+  </div>
+
   <div class="field">
     <label for="nid">NID i maturantit *</label>
     <input
@@ -6,11 +59,11 @@
       pInputText
       id="nid"
       name="nid"
-      [(ngModel)]="grades.nid"
+      [(ngModel)]="grade.nid"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !grades.nid }" />
-    <small class="p-error block" *ngIf="submitted && !grades.nid">
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !grade.nid }" />
+    <small class="p-error block" *ngIf="submitted && !grade.nid">
       NID është fushë e kërkuar.
     </small>
   </div>
@@ -27,15 +80,16 @@
       [ngModelOptions]="{ standalone: true }"
       [required]="true"
       [style]="{ width: '100%' }"
-      [(ngModel)]="grades.examTypeID"
+      [(ngModel)]="grade.examTypeID"
+      (onChange)="examTypeChangedLocally()"
       [ngClass]="{
         'ng-invalid ng-dirty':
-          submitted && (!grades.examTypeID || grades.examTypeID === 0)
+          submitted && (!grade.examTypeID || grade.examTypeID === 0)
       }">
     </p-dropdown>
     <small
       class="p-error block"
-      *ngIf="submitted && (!grades.examTypeID || grades.examTypeID === 0)">
+      *ngIf="submitted && (!grade.examTypeID || grade.examTypeID === 0)">
       Tipi i provimit është fushë e kërkuar.
     </small>
   </div>
@@ -46,11 +100,11 @@
       pInputText
       id="ExamSubject"
       name="ExamSubject"
-      [(ngModel)]="grades.examSubject"
+      [(ngModel)]="grade.examSubject"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !grades.examSubject }" />
-    <small class="p-error block" *ngIf="submitted && !grades.examSubject">
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !grade.examSubject }" />
+    <small class="p-error block" *ngIf="submitted && !grade.examSubject">
       Lënda është fushë e kërkuar.
     </small>
   </div>
@@ -61,27 +115,12 @@
       pInputText
       id="Grade"
       name="Grade"
-      [(ngModel)]="grades.grade"
+      [(ngModel)]="grade.grade"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !grades.grade }" />
-    <small class="p-error block" *ngIf="submitted && !grades.grade">
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !grade.grade }" />
+    <small class="p-error block" *ngIf="submitted && !grade.grade">
       Nota është fushë e kërkuar.
-    </small>
-  </div>
-  <div class="field">
-    <label for="year">Viti *</label>
-    <input
-      type="number"
-      pInputText
-      id="year"
-      name="year"
-      [(ngModel)]="grades.year"
-      required
-      autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !grades.year }" />
-    <small class="p-error block" *ngIf="submitted && !grades.year">
-      Viti është fushë e kërkuar.
     </small>
   </div>
   <div class="field">
@@ -96,10 +135,10 @@
         accept=".pdf,.docx,.jpg,.png,.txt,.xlsx,.">
         <ng-template pTemplate="content">
           <img
-            [src]="'data:image;base64,' + grades.document"
+            [src]="'data:image;base64,' + grade.document"
             width="100"
             height="100"
-            *ngIf="grades.document && !uploaded && grades.document"
+            *ngIf="grade.document && !uploaded && grade.document"
             alt="" />
         </ng-template>
       </p-fileUpload>

@@ -55,7 +55,7 @@ export class ManageExamVersionsComponent implements OnInit {
   displayModal = false;
   profileGroups: DropdownModel<number>[] = [];
   examTypes: DropdownModel<number>[] = [];
-  examSubjects: DropdownModel<number>[] = [];
+  examSubjects: DropdownModel<string>[] = [];
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,

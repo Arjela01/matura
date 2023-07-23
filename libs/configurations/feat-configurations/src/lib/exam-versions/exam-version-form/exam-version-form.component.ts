@@ -5,19 +5,19 @@ import {
   EventEmitter,
   Input,
   Output,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {DropdownModel} from "@msh/shared/data-access-shared";
-import {ExamVersion} from "@msh/shared/domain-models";
-import {FormsModule, NgForm} from "@angular/forms";
-import {InputTextModule} from "primeng/inputtext";
-import {InputNumberModule} from "primeng/inputnumber";
-import {RadioButtonModule} from "primeng/radiobutton";
-import {InputTextareaModule} from "primeng/inputtextarea";
-import {ButtonModule} from "primeng/button";
-import {CheckboxModule} from "primeng/checkbox";
-import {DropdownModule} from "primeng/dropdown";
+import { CommonModule } from '@angular/common';
+import { DropdownModel } from '@msh/shared/data-access-shared';
+import { ExamVersion } from '@msh/shared/domain-models';
+import { FormsModule, NgForm } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'msh-exam-version-form',
@@ -32,7 +32,6 @@ import {DropdownModule} from "primeng/dropdown";
     ButtonModule,
     CheckboxModule,
     DropdownModule,
-
   ],
   templateUrl: './exam-version-form.component.html',
   styleUrls: ['./exam-version-form.component.scss'],
@@ -40,7 +39,7 @@ import {DropdownModule} from "primeng/dropdown";
 })
 export class ExamVersionFormComponent {
   @Input() examTypes: DropdownModel<number>[] = [];
-  @Input() examSubjects: DropdownModel<number>[] = [];
+  @Input() examSubjects: DropdownModel<string>[] = [];
   @Input() profileGroups: DropdownModel<number>[] = [];
 
   @Input() set examVersionDetails(details: ExamVersion | null) {
@@ -52,7 +51,7 @@ export class ExamVersionFormComponent {
   @Output() formSave = new EventEmitter<ExamVersion>();
   @Output() formClose = new EventEmitter<undefined>();
 
-  @ViewChild('form', {static: true}) form!: NgForm;
+  @ViewChild('form', { static: true }) form!: NgForm;
 
   examTypesFiltered: DropdownModel<number>[] = [];
 
@@ -63,16 +62,15 @@ export class ExamVersionFormComponent {
     name: '',
     numberOfQuestions: 0,
     variant: '',
-    code: ''
+    code: '',
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private cd: ChangeDetectorRef) {
-  }
+  constructor(private cd: ChangeDetectorRef) {}
 
   ngOnChanges(): void {
     if (this.profileGroups && this.examVersion.examTypeId) {
-      this.onExamTypeChange({value: this.examVersion.examTypeId});
+      this.onExamTypeChange({ value: this.examVersion.examTypeId });
     }
   }
 
@@ -88,6 +86,8 @@ export class ExamVersionFormComponent {
   }
 
   onExamTypeChange($event: any) {
-    this.examTypesFiltered = this.examTypes.filter(e => e.parentKey == $event.value);
+    this.examTypesFiltered = this.examTypes.filter(
+      e => e.parentKey == $event.value
+    );
   }
 }

@@ -1,9 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { CarriedGrade } from '@msh/applications/domain-application';
 import {
+  AcademicYearApiService,
   CarriedGradeApiService,
+  ExamSubjectApiService,
   ExamTypeApiService,
+  StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
@@ -20,9 +28,15 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, switchMap } from 'rxjs';
 import { CarriedGradesFormComponent } from '../carried-grade-form/carried-grade-form.component';
 import { CarriedGradesGridComponent } from '../carried-grade-grid/carried-grades-grid.component';
+import {
+  SharedStudent,
+  SharedStudentLookupModule,
+} from '@msh/shared/student-lookup';
+import { EXAM_TYPES, Student } from '@msh/shared/domain-models';
+import { resolve } from '@angular/compiler-cli';
 
 @Component({
   selector: 'msh-manage-carried-grades',
@@ -40,6 +54,7 @@ import { CarriedGradesGridComponent } from '../carried-grade-grid/carried-grades
     ToolbarModule,
     RippleModule,
     CarriedGradesFormComponent,
+    SharedStudentLookupModule,
   ],
 })
 @UntilDestroy()
@@ -54,18 +69,33 @@ export class ManageCarriedGradesComponent implements OnInit {
   displayModal = false;
 
   examTypeDropdown: DropdownModel<number>[] = [];
+  examSubjectsDropdown: DropdownModel<string>[] = [];
+  academicYearsDropdown: DropdownModel<number>[] = [];
 
   nid: string | undefined = undefined;
+  showStudentSearchButton = true;
+  studentInputData = '';
+  showStudentModal = false;
+  selectedStudent = null;
+
+  private studentList$$ = new BehaviorSubject<Student[]>([]);
+  studentList$ = this.studentList$$.asObservable();
+  totalStudentRecords = 0;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private carriedGradeApiService: CarriedGradeApiService,
     private examTypeApiService: ExamTypeApiService,
-    private route: ActivatedRoute
+    private academicYearApiService: AcademicYearApiService,
+    private studentsApiService: StudentsApiService,
+    private examSubjectApiService: ExamSubjectApiService,
+    private route: ActivatedRoute,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
+    this.getAcademicYearsDropdown();
     this.getExamTypeDropdown();
 
     this.route.queryParams.subscribe(params => {
@@ -140,10 +170,10 @@ export class ManageCarriedGradesComponent implements OnInit {
 
   onFormSave(carriedGrade: CarriedGrade) {
     if (carriedGrade.id) {
-      this.updateCarriedGrades(carriedGrade);
+      this.updateCarriedGrade(carriedGrade);
     }
     if (!carriedGrade.id) {
-      this.addCarriedGrades(carriedGrade);
+      this.addCarriedGrade(carriedGrade);
     }
   }
 
@@ -158,7 +188,7 @@ export class ManageCarriedGradesComponent implements OnInit {
       });
   }
 
-  addCarriedGrades(carriedGrades: CarriedGrade) {
+  addCarriedGrade(carriedGrades: CarriedGrade) {
     this.carriedGradeApiService
       .save(carriedGrades)
       .pipe(untilDestroyed(this))
@@ -178,7 +208,7 @@ export class ManageCarriedGradesComponent implements OnInit {
       });
   }
 
-  updateCarriedGrades(carriedGrade: CarriedGrade) {
+  updateCarriedGrade(carriedGrade: CarriedGrade) {
     this.carriedGradeApiService
       .update(carriedGrade)
       .pipe(untilDestroyed(this))
@@ -221,6 +251,67 @@ export class ManageCarriedGradesComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examTypeDropdown = response.data;
+      });
+  }
+
+  onStudentGridEvent(event: GridEvent<SharedStudent | SharedStudent[]>) {
+    switch (event.action) {
+      case GRID_ACTIONS.EDIT:
+        this.setSelectedStudent(Object.assign({}, event.data as Student));
+        this.showStudentModal = false;
+        break;
+    }
+  }
+
+  onStudentHide() {
+    this.showStudentModal = false;
+  }
+
+  getSubjectsDropdown($event: any) {
+    const data = $event as {
+      examTypeId: number;
+      academicYearId: number;
+    };
+    this.examSubjectApiService
+      .forExamType(data.examTypeId, data.academicYearId)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.examSubjectsDropdown = response.data;
+      });
+  }
+
+  setSelectedStudent(student: any) {
+    this.selectedStudent = student;
+
+    if (!student) {
+      this.studentInputData = ' ';
+    } else {
+      this.studentInputData =
+        student?.studentId +
+        '-' +
+        (student?.firstName ?? student?.studentFirstName) +
+        '-' +
+        (student?.lastName ?? student?.studentLastName);
+    }
+    this.cd.detectChanges();
+  }
+
+  getStudents($event: LazyLoadEvent): void {
+    this.studentsApiService
+      .loadStudentsForA1A1Z($event)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.studentList$$.next(response.data);
+        this.totalStudentRecords = response.total;
+      });
+  }
+
+  getAcademicYearsDropdown(): void {
+    this.academicYearApiService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.academicYearsDropdown = response.data;
       });
   }
 }

@@ -150,7 +150,6 @@ export class A1FormComponent {
   }
 
   onDeleteChosenOptionalSubject(index: number) {
-    debugger
     this.chosenOptionalSubjects.splice(index, 1);
     if (this.chosenOptionalSubjects.length === 1) {
       this.a1.subjectZ1Id = this.chosenOptionalSubjects[0].key;

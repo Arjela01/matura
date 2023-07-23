@@ -19,6 +19,11 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { DialogModule } from 'primeng/dialog';
+import {
+  SharedStudent,
+  SharedStudentLookupModule,
+} from '@msh/shared/student-lookup';
 
 @Component({
   selector: 'msh-carried-grade-form',
@@ -34,6 +39,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     CheckboxModule,
     DropdownModule,
     FileUploadModule,
+    DialogModule,
+    SharedStudentLookupModule,
   ],
   templateUrl: './carried-grade-form.component.html',
   styleUrls: ['./carried-grade-form.component.scss'],
@@ -42,11 +49,19 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 export class CarriedGradesFormComponent {
   @Input() set gradeDetails(details: CarriedGrade | null) {
     if (details) {
-      this.grades = Object.assign({}, details);
+      this.grade = Object.assign({}, details);
     }
   }
 
+  @Input() academicYearDropdown: DropdownModel<number>[] = [];
   @Input() examTypeDropdown: DropdownModel<number>[] = [];
+
+  @Output() examTypeChanged = new EventEmitter<{
+    examTypeId?: number;
+    academicYearId?: number;
+  }>();
+
+  @Output() openStudentModal = new EventEmitter();
 
   @Output() formSave = new EventEmitter<CarriedGrade>();
   @Output() formClose = new EventEmitter<undefined>();
@@ -54,8 +69,9 @@ export class CarriedGradesFormComponent {
   @ViewChild('form', { static: true }) form!: NgForm;
 
   submitted = false;
+  selectedStudent?: SharedStudent;
 
-  grades: CarriedGrade = {
+  grade: CarriedGrade = {
     id: 0,
     nid: '',
     examTypeID: 0,
@@ -69,6 +85,8 @@ export class CarriedGradesFormComponent {
   uploaded = false;
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
+  showStudentSearchButton = true;
+  studentInputData = '';
   constructor(private cd: ChangeDetectorRef) {}
 
   onCancelClick() {
@@ -78,7 +96,7 @@ export class CarriedGradesFormComponent {
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
-      this.formSave.emit(this.grades);
+      this.formSave.emit(this.grade);
     }
   }
 
@@ -90,9 +108,16 @@ export class CarriedGradesFormComponent {
       fileReader.onload = () => {
         if (fileReader.result) {
           const parts = fileReader.result.toString().split(';base64,');
-          this.grades.document = parts[1] as string;
+          this.grade.document = parts[1] as string;
         }
       };
     }
+  }
+
+  examTypeChangedLocally() {
+    this.examTypeChanged.emit({
+      examTypeId: this.grade.examTypeID,
+      academicYearId: this.grade.academicYearId,
+    });
   }
 }

@@ -38,7 +38,10 @@
       [gradeDetails]="selectedCarriedGrade"
       [examTypeDropdown]="examTypeDropdown"
       (formClose)="onModalClose()"
-      (formSave)="onFormSave($event)">
+      (formSave)="onFormSave($event)"
+      (openStudentModal)="this.showStudentModal = true"
+      (examTypeChanged)="getSubjectsDropdown($event)"
+      [academicYearDropdown]="academicYearsDropdown">
     </msh-carried-grade-form>
   </ng-template>
 </p-dialog>
@@ -65,3 +68,22 @@
       (click)="cd.accept()"></button>
   </ng-template>
 </p-confirmDialog>
+
+<p-dialog
+  [(visible)]="showStudentModal"
+  [style]="{ width: '1000px' }"
+  [modal]="true"
+  header="Kërko Maturantin"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid"
+  (onHide)="onStudentHide()">
+  <ng-template pTemplate="content">
+    <msh-shared-student-lookup
+      [students]="(studentList$ | async) || []"
+      [totalRecords]="totalStudentRecords"
+      (gridEvent)="onStudentGridEvent($event)"
+      (lazyLoadData)="getStudents($event)">
+    </msh-shared-student-lookup>
+  </ng-template>
+</p-dialog>

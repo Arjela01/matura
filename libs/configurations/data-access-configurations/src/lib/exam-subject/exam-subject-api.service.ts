@@ -48,8 +48,8 @@ export class ExamSubjectApiService {
         shareReplay()
       );
   }
-  loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
-    return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
+  loadDropdownList(): Observable<ApiResult<DropdownModel<string>[]>> {
+    return this.apiService.get<ApiResult<DropdownModel<string>[]>>(
       `/ExamSubject/DropdownList`
     );
   }
