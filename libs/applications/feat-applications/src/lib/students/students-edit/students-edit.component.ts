@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { A1ZTableRecord, FormType } from '@msh/applications/domain-application';
 import {
   AcademicYearApiService,
@@ -36,23 +36,24 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 @Component({
   selector: 'msh-students-edit',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    InputTextModule,
-    InputNumberModule,
-    RadioButtonModule,
-    InputTextareaModule,
-    ButtonModule,
-    ConfirmDialogModule,
-    CheckboxModule,
-    DropdownModule,
-    CalendarModule,
-    InputMaskModule,
-    A1a1zConfirmationDialogComponent,
-    DialogModule,
-    RippleModule,
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        InputTextModule,
+        InputNumberModule,
+        RadioButtonModule,
+        InputTextareaModule,
+        ButtonModule,
+        ConfirmDialogModule,
+        CheckboxModule,
+        DropdownModule,
+        CalendarModule,
+        InputMaskModule,
+        A1a1zConfirmationDialogComponent,
+        DialogModule,
+        RippleModule,
+        RouterLink,
+    ],
   templateUrl: './students-edit.component.html',
   styleUrls: ['./students-edit.component.scss'],
   providers: [ConfirmationService],

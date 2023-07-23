@@ -506,19 +506,19 @@
           </small>
         </div>
 
-        <div class="flex justify-content-end">
-          <button
-            type="button"
-            pButton
-            label="Anullo"
-            class="p-button-text w-auto mr-2"
-            (click)="onExitForm()"></button>
+        <div class="flex justify-content-start pt-3">
           <button
             [disabled]="form.invalid"
             type="submit"
             pButton
             label="Ruaj"
             class="p-button w-auto"></button>
+          <button
+            type="button"
+            pButton
+            label="Anullo"
+            class="p-button-text w-auto mr-2"
+            (click)="onExitForm()"></button>
         </div>
       </form>
     </div>
@@ -621,5 +621,3 @@
     </p-table>
   </ng-template>
 </p-dialog>
-
-<pre>{{ a1z | json }}</pre>

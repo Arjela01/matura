@@ -1,7 +1,9 @@
 <div class="flex ml-2 mb-2 page-header mb-header">
   <h2 class="flex-1 mb-0">
     {{
-      A1FormModeEnum.Add === mode || A1FormModeEnum.AddWithStudent === mode ? 'Shto Formular A1' : 'Ndrysho Formularin A1'
+      A1FormModeEnum.Add === mode || A1FormModeEnum.AddWithStudent === mode
+        ? 'Shto Formular A1'
+        : 'Ndrysho Formularin A1'
     }}
   </h2>
   <div class="flex align-items-right justify-content-right">
@@ -103,7 +105,7 @@
         </div>
         <h5 class="uppercase mt-5">Lëndët me zgjedhje</h5>
         <div class="field xl:w-4 lg:w-6 smxs:w-full">
-          <label for="optionalSubjects">Shto lëndë me zgjedhje</label>
+          <label for="optionalSubjects">Përzgjidh lëndën mëposhtë</label>
           <div class="p-inputgroup w-full">
             <p-dropdown
               id="optionalSubjects"
@@ -111,30 +113,30 @@
               [style]="{ width: '100%' }"
               optionLabel="value"
               name="optionalSubject"
-              [(ngModel)]="optionalSubjectChosen"
+              [(ngModel)]="selectedOptionalSubject"
               [autoDisplayFirst]="false"
               [showClear]="true"
               (onChange)="addSubject()"
               [ngClass]="{
-                'ng-invalid ng-dirty': submitted && subjectsChosen.length < 1
+                'ng-invalid ng-dirty': submitted && chosenOptionalSubjects.length < 1
               }">
             </p-dropdown>
           </div>
         </div>
         <div
           class="field xl:w-4 lg:w-6 sm:w-full mt-5 ml-4"
-          *ngIf="subjectsChosen && subjectsChosen.length > 0">
+          *ngIf="chosenOptionalSubjects && chosenOptionalSubjects.length > 0">
           <p-table
             #dt
             dataKey="key"
             responsiveLayout="scroll"
-            [value]="subjectsChosen"
+            [value]="chosenOptionalSubjects"
             [rows]="10"
             class="px-0 mt-5"
             [rowHover]="true">
             <ng-template pTemplate="header">
               <tr>
-                <th pSortableColumn="name" class="px-2">Lëndët e Zgjedhura</th>
+                <th pSortableColumn="name" class="px-2">Lëndët e Përzgjedhura</th>
                 <th></th>
               </tr>
             </ng-template>
@@ -152,6 +154,7 @@
                       pButton
                       pRipple
                       icon="pi pi-trash"
+                      type="button"
                       (click)="onDeleteChosenOptionalSubject(rowIndex)"
                       class="p-button-danger">
                       Hiq
@@ -164,7 +167,7 @@
         </div>
         <small
           class="p-error block"
-          *ngIf="submitted && subjectsChosen.length < 1">
+          *ngIf="submitted && chosenOptionalSubjects.length < 1">
           *Duhet zgjedhur minimalisht 1 lëndë
         </small>
         <div class="field lg:w-4 md:w-6 sm:w-full mt-5">
@@ -187,19 +190,19 @@
           *ngIf="submitted && (!a1.overSeerCode || a1.overSeerCode === '')">
           Kodi i mbikqyrësit është fushë e kërkuar.
         </small>
-        <div class="flex justify-content-end">
-          <button
-            type="button"
-            pButton
-            label="Anullo"
-            class="p-button-text w-auto mr-2"
-            (click)="onCancelClick()"></button>
+        <div class="flex justify-content-start">
           <button
             [disabled]="form.invalid"
             type="submit"
             pButton
             label="Ruaj"
             class="p-button w-auto"></button>
+          <button
+            type="button"
+            pButton
+            label="Anullo"
+            class="p-button-text w-auto mr-2"
+            (click)="onCancelClick()"></button>
         </div>
       </form>
     </div>

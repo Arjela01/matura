@@ -70,8 +70,8 @@ export class A1FormComponent {
   protected readonly A1FormModeEnum = A1FormModeEnum;
   showStudentModal = false;
 
-  optionalSubjectChosen: any = null;
-  subjectsChosen: any[] = [];
+  selectedOptionalSubject: any = null;
+  chosenOptionalSubjects: any[] = [];
   studentInputData: string | null = null;
   academicYear?: AcademicYear | null = null;
   optionalSubjects: DropdownModel<number>[] = [];
@@ -150,9 +150,10 @@ export class A1FormComponent {
   }
 
   onDeleteChosenOptionalSubject(index: number) {
-    this.subjectsChosen.splice(index, 1);
-    if (this.subjectsChosen.length === 1) {
-      this.a1.subjectZ1Id = this.subjectsChosen[0].key;
+    debugger
+    this.chosenOptionalSubjects.splice(index, 1);
+    if (this.chosenOptionalSubjects.length === 1) {
+      this.a1.subjectZ1Id = this.chosenOptionalSubjects[0].key;
     }
   }
 
@@ -231,12 +232,12 @@ export class A1FormComponent {
 
   private initializeOptionalSubjects() {
     if (this.a1.subjectZ1Id) {
-      this.subjectsChosen.push(
+      this.chosenOptionalSubjects.push(
         this.optionalSubjects.find(x => x.key == (this.a1.subjectZ1Id as any))
       );
     }
     if (this.a1.subjectZ2Id) {
-      this.subjectsChosen.push(
+      this.chosenOptionalSubjects.push(
         this.optionalSubjects.find(x => x.key == (this.a1.subjectZ2Id as any))
       );
     }
@@ -308,32 +309,31 @@ export class A1FormComponent {
   }
 
   addSubject() {
-    // this.moreSubjectThanAllowed = false;
-    const subjectIndexFound = this.subjectsChosen.findIndex(
-      subject => subject.key === this.optionalSubjectChosen?.key
+    const subjectIndexFound = this.chosenOptionalSubjects.findIndex(
+      subject => subject.key === this.selectedOptionalSubject?.key
     );
     if (subjectIndexFound !== -1) {
       this.toastService.showError('Lënda është zgjedhur');
       return;
     }
     if (
-      this.optionalSubjectChosen === null ||
-      this.optionalSubjectChosen === ''
+      this.selectedOptionalSubject === null ||
+      this.selectedOptionalSubject === ''
     ) {
       return;
     }
-    if (this.subjectsChosen.length === 2) {
+    if (this.chosenOptionalSubjects.length === 2) {
       // this.moreSubjectThanAllowed = true;
       return;
     }
-    this.subjectsChosen.push(this.optionalSubjectChosen);
-    if (this.subjectsChosen.length > 1) {
-      this.a1.subjectZ1Id = this.subjectsChosen[0].key;
-      this.a1.subjectZ2Id = this.subjectsChosen[1].key;
+    this.chosenOptionalSubjects.push(this.selectedOptionalSubject);
+    if (this.chosenOptionalSubjects.length > 1) {
+      this.a1.subjectZ1Id = this.chosenOptionalSubjects[0].key;
+      this.a1.subjectZ2Id = this.chosenOptionalSubjects[1].key;
     } else {
-      this.a1.subjectZ1Id = this.subjectsChosen[0].key;
+      this.a1.subjectZ1Id = this.chosenOptionalSubjects[0].key;
     }
-    this.optionalSubjectChosen = '';
+    this.selectedOptionalSubject = '';
   }
 
   addA1(a1: A1Z) {
