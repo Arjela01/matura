@@ -4,7 +4,7 @@ import { ExamSubject, ExamSubjectTableView } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { Observable, catchError, map, shareReplay, throwError } from 'rxjs';
-import {HttpParams} from "@angular/common/http";
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +17,21 @@ export class ExamSubjectApiService {
 
   loadDropDownList(id: string): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get(`/ExamSubject/DropdownList/${id}`);
+  }
+
+  loadDropDownListNotMappedToProfiles(
+    academicYearId?: number,
+    profileId?: number,
+    examTypeId?: number,
+    examSubjectId?: string
+  ): Observable<ApiResult<DropdownModel<string>[]>> {
+    const query = {
+      academicYearId: academicYearId,
+      profileId: profileId,
+      examTypeId: examTypeId,
+      id: examSubjectId,
+    };
+    return this.apiService.post(`/ExamSubject/NotMappedToProfiles`, query);
   }
 
   save(examSubject: ExamSubject): Observable<ApiResult<ExamSubject>> {
@@ -67,7 +82,7 @@ export class ExamSubjectApiService {
         academicYearId: academicYearId,
         profileID: profileID,
         id: id,
-        isProfileCheckDisabled: isProfileCheckDisabled
+        isProfileCheckDisabled: isProfileCheckDisabled,
       }
     );
   }

@@ -75,9 +75,9 @@ export class ManageAdministrationOfficeComponent implements OnInit {
 
   onDeleteSelectedClick() {
     this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të fshini DAR/ZA?',
+      message: 'Jeni i sigurt që doni të fshini ZVAP?',
       accept: () => {
-        this.toastService.showWarning('DAR/ZA u fshi!');
+        this.toastService.showWarning('ZVAP u fshi!');
       },
     });
   }
@@ -114,7 +114,7 @@ export class ManageAdministrationOfficeComponent implements OnInit {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të fshini DAR/ZA?',
+          message: 'Jeni i sigurt që doni të fshini ZVAP?',
           accept: () => {
             this.deleteAdministrationOffices(
               event.data as AdministrationOffice
@@ -157,14 +157,14 @@ export class ManageAdministrationOfficeComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('DAR/ZA u shtua me sukses!');
+          this.toastService.showSuccess('ZVAP u shtua me sukses!');
           this.displayModal = false;
           this.getAdministrationOffices(this.filters as LazyLoadEvent);
         } else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së DAR/ZA!'
+            'Ndodhi një problem gjatë ndryshimit së ZVAP!'
           );
       });
   }
@@ -175,7 +175,7 @@ export class ManageAdministrationOfficeComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('DAR/ZA u ndryshua me sukses!');
+          this.toastService.showSuccess('ZVAP u ndryshua me sukses!');
           this.displayModal = false;
           this.getAdministrationOffices(this.filters as LazyLoadEvent);
         } else this.toastService.showError(response.errorMessage)
@@ -193,13 +193,13 @@ export class ManageAdministrationOfficeComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showInfo('DAR/ZA u fshi me sukses!');
+          this.toastService.showInfo('ZVAP u fshi me sukses!');
           this.getAdministrationOffices(this.filters as LazyLoadEvent);
         } else this.toastService.showError(response.errorMessage)
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë fshirjes DAR/ZA!'
+            'Ndodhi një problem gjatë fshirjes ZVAP!'
           );
       });
   }

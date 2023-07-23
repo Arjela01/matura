@@ -249,11 +249,16 @@ export class ManageExamSubjectProfileComponent implements OnInit {
   }
 
   loadExamSubjects($event: ExamSubjectProfile) {
-    this.getExamSubjects(
+    this.examSubjectService.loadDropDownListNotMappedToProfiles($event.academicYearId,
+      $event.profileId,
       $event.examTypeId,
-      $event.academicYearId,
       $event.examSubjectId
-    );
+      )
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.examSubjects = response.data;
+        this.cd.detectChanges();
+      });
   }
 
   downloadTemplateFile() {
