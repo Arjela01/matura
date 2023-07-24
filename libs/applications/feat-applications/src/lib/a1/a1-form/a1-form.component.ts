@@ -54,7 +54,7 @@ import {
   SharedStudent,
   SharedStudentLookupModule,
 } from '@msh/shared/student-lookup';
-import { A1FormModeEnum } from '../a1-form-mode.enum';
+import { A1FormModeEnum, ApplicationFormType } from '../a1-form-mode.enum';
 import { LazyLoadEvent } from 'primeng/api';
 
 @UntilDestroy()
@@ -105,6 +105,7 @@ export class A1FormComponent {
   totalStudentRecords = 0;
   showStudentSearchButton = true;
   selectedStudent?: SharedStudent;
+  applicationTypeA1 = ApplicationFormType.A1;
 
   @HostListener('window:popstate', ['$event'])
   onPopState() {
@@ -298,7 +299,8 @@ export class A1FormComponent {
             undefined,
             undefined,
             this.selectedStudent?.profileId,
-            undefined
+            undefined,
+            this.applicationTypeA1
           );
         } else {
           return of([]);
