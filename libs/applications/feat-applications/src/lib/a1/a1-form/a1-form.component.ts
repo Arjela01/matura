@@ -281,7 +281,7 @@ export class A1FormComponent {
             z1?.key ?? undefined,
             undefined,
             undefined,
-            this.selectedStudent?.profileId,
+            this.selectedStudent?.profileId
           )
           .pipe(untilDestroyed(this));
       })
@@ -300,7 +300,7 @@ export class A1FormComponent {
             undefined,
             this.selectedStudent?.profileId,
             undefined,
-            this.applicationTypeA1,
+            this.applicationTypeA1
           );
         } else {
           return of([]);
