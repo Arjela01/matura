@@ -75,7 +75,7 @@ export class ExamSubjectApiService {
     id?: string,
     profileID?: number,
     isProfileCheckDisabled?: boolean,
-    applicationFormType?: any
+    applicationFormType?: string
   ): Observable<ApiResult<DropdownModel<string>[]>> {
     return this.apiService.post<ApiResult<DropdownModel<string>[]>, any>(
       `/ExamSubject/ForExamType`,
