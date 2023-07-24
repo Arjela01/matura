@@ -31,6 +31,7 @@ import { RippleModule } from 'primeng/ripple';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
 import * as FileSaver from 'file-saver';
+import { AcademicYear } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({
@@ -65,6 +66,7 @@ export class ManageExamScoresComponent implements OnInit {
   examTypes: DropdownModel<number>[] = [];
   examSubjects: DropdownModel<string>[] = [];
   base64: string | ArrayBuffer | null | undefined;
+  currentAcademicYear?: Partial<AcademicYear>;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -80,9 +82,8 @@ export class ManageExamScoresComponent implements OnInit {
     this.getExamTypes();
     this.authFacade.academicYear$
       .pipe(
-        map((data: any) => data.id),
-        distinctUntilChanged(),
         switchMap(data => {
+          this.currentAcademicYear = data;
           if (this.filters) {
             window.location.reload();
           }
@@ -98,6 +99,7 @@ export class ManageExamScoresComponent implements OnInit {
     this.selectedExamScore = {
       writingScore: 0,
       multipleChoiceScore: 0,
+      isFall: this.currentAcademicYear?.isFall ?? false,
     } as ExamScore;
   }
 

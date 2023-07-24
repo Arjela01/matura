@@ -8,7 +8,7 @@ import {
   ExamTypeApiService,
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import { ExamDate } from '@msh/shared/domain-models';
+import { AcademicYear, ExamDate } from '@msh/shared/domain-models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -58,13 +58,15 @@ export class ManageExamDateComponent implements OnInit {
   examSites: DropdownModel<number>[] = [];
   examTypes: DropdownModel<number>[] = [];
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    map(([_]) => {
+    map(([data]) => {
+      this.currentAcademicYear = data;
       if (this.filters) {
         this.getExamDates(this.filters as LazyLoadEvent);
       }
     }),
     tap()
   );
+  currentAcademicYear?: Partial<AcademicYear>;
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
@@ -81,7 +83,9 @@ export class ManageExamDateComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
-    this.selectedExamDate = {} as ExamDate;
+    this.selectedExamDate = {
+      isFall: this.currentAcademicYear?.isFall ?? false,
+    } as ExamDate;
   }
 
   onGridEvent(event: GridEvent<ExamDate | ExamDate[]>) {
