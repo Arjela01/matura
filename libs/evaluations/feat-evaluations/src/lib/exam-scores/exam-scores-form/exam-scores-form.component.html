@@ -60,38 +60,46 @@
         [(ngModel)]="examScore.barcode"
         required
         autofocus
+        (change)="onGetIndexClick(examScore.barcode)"
         [ngClass]="{
           'ng-invalid ng-dirty': submitted && !examScore.barcode
         }" />
-      <button
-        type="button"
-        pButton
-        pRipple
-        class="pi pi-check tick"
-        (click)="onGetIndexClick(examScore.barcode)"></button>
     </div>
     <small class="p-error block" *ngIf="submitted && !examScore.barcode">
       Barkodi është fushë e kërkuar.
     </small>
   </div>
-  <div class="field">
-    <div class="archiveFolder" *ngIf="examScore.archiveFolderNumber">
-      <label for="archiveFolder">Dosja *</label>
+  <div class="field" *ngIf="examScore.archiveFolderNr">
+    <div class="archiveFolderNr">
+      <label for="archiveFolderNr">Dosja</label>
       <input
         type="text"
         pInputText
-        id="archiveFolder"
-        name="archiveFolder"
+        id="archiveFolderNr"
+        name="archiveFolderNr"
         disabled
-        [(ngModel)]="examScore.archiveFolderNumber"
+        [(ngModel)]="examScore.archiveFolderNr"
         readonly
-        autofocus
-     />
+        autofocus />
+    </div>
+  </div>
+  <div class="field" *ngIf="examScore.archiveFolderIndex">
+    <div class="archiveExamIndex">
+      <label for="archiveExamIndex">Index</label>
+      <input
+        type="text"
+        pInputText
+        id="archiveExamIndex"
+        name="archiveExamIndex"
+        disabled
+        [(ngModel)]="examScore.archiveFolderIndex"
+        readonly
+        autofocus />
     </div>
   </div>
 
   <div class="field">
-    <label for="WritingScore">Pikët me shtjellim *</label>
+    <label for="WritingScore">Pikët Totale *</label>
     <input
       type="number"
       pInputText
@@ -108,7 +116,7 @@
     </small>
   </div>
 
-  <div class="field">
+  <div class="field" [hidden]="true">
     <label for="MultipleChoiceScore">Pikët me alternativa *</label>
     <input
       type="number"
@@ -121,31 +129,25 @@
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examScore.multipleChoiceScore
       }" />
-    <small
-      class="p-error block"
-      *ngIf="submitted && !examScore.multipleChoiceScore">
-      Pikët me alternativa është fushë e kërkuar.
-    </small>
   </div>
-
 
   <div class="field">
     <label class="mb-3">Është Vjeshtë? *</label>
     <div class="form grid grid">
       <div class="field-radiobutton col-6">
         <p-radioButton
-                id="IsFallTrue"
-                name="IsFallTrue"
-                [value]="true"
-                [(ngModel)]="examScore.isFall"></p-radioButton>
+          id="IsFallTrue"
+          name="IsFallTrue"
+          [value]="true"
+          [(ngModel)]="examScore.isFall"></p-radioButton>
         <label for="IsFallTrue">Po</label>
       </div>
       <div class="field-radiobutton col-6">
         <p-radioButton
-                id="IsFallFalse"
-                name="IsFall"
-                [value]="false"
-                [(ngModel)]="examScore.isFall"></p-radioButton>
+          id="IsFallFalse"
+          name="IsFall"
+          [value]="false"
+          [(ngModel)]="examScore.isFall"></p-radioButton>
         <label for="IsFallFalse">Jo</label>
       </div>
     </div>

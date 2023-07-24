@@ -64,11 +64,11 @@ export class ArchiveFolderViewComponent implements OnInit {
   id: any;
   archiveFolder: ArchiveFolder = {}  as ArchiveFolder;
   archiveExam: ArchiveExam = {
+    archiveFolderNr: 0,
     id: undefined,
     index: 0,
     archiveFolderId: 0,
-    barcode: '',
-    examSubjectName: ''
+    barcode: ''
   };
   archiveExams: ArchiveExam[] = [];
   totalRecords = 0;

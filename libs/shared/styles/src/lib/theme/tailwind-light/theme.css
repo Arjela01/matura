@@ -4628,12 +4628,9 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 
 .p-fileupload .p-fileupload-buttonbar {
   background: #fafafa;
-  padding: 1.25rem;
-  border: 1px solid #e5e7eb;
+  padding: 0.45rem;
   color: #3f3f46;
   border-bottom: 0 none;
-  border-top-right-radius: 0.375rem;
-  border-top-left-radius: 0.375rem;
 }
 .p-fileupload .p-fileupload-buttonbar .p-button {
   margin-right: 0.5rem;

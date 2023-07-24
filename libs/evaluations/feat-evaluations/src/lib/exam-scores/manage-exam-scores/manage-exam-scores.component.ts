@@ -90,7 +90,7 @@ export class ManageExamScoresComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
-    this.selectedExamScore = {} as ExamScore;
+    this.selectedExamScore = {writingScore: 0, multipleChoiceScore: 0} as ExamScore;
   }
 
   onGridEvent(event: GridEvent<ExamScore | ExamScore[]>) {
@@ -236,7 +236,7 @@ export class ManageExamScoresComponent implements OnInit {
 
   getExamSubjects(examTypeId?: number) {
     this.examSubjectService
-      .forExamType(examTypeId)
+      .forExamType(examTypeId, undefined, undefined, undefined, true)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examSubjects = response.data;

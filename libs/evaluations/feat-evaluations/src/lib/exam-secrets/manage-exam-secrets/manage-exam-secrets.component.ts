@@ -112,7 +112,7 @@ export class ManageExamSecretsComponent implements OnInit {
 
   getExamSubjects(examTypeId?: number) {
     this.examSubjectService
-      .forExamType(examTypeId)
+      .forExamType(examTypeId, undefined, undefined, undefined, true)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examSubjects = response.data;

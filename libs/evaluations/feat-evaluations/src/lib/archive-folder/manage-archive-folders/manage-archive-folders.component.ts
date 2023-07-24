@@ -274,7 +274,7 @@ export class ManageArchiveFoldersComponent implements OnInit{
 
   getExamSubjects(id: any) {
     this.examSubjectApiService
-      .forExamType(id)
+      .forExamType(id, undefined, undefined, undefined, true)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examSubjects = response.data;

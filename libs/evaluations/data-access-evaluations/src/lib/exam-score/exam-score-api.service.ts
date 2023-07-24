@@ -4,6 +4,7 @@ import { LazyLoadEvent } from 'primeng/api';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import {
+  ArchiveExam,
   ExamScore,
   ExamScoreTableView,
   FileImport,
@@ -40,8 +41,8 @@ export class ExamScoreApiService {
     );
   }
 
-  getIndex(barcode: string): Observable<ApiResult<ExamScore>> {
-    return this.apiService.post<ApiResult<ExamScore>,any>(
+  getIndex(barcode: string): Observable<ApiResult<ArchiveExam>> {
+    return this.apiService.post<ApiResult<ArchiveExam>,any>(
       `/ExamScores/GetIndex`, {barcode: barcode}
     );
   }

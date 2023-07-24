@@ -82,10 +82,11 @@ export class ManageArchiveExamsComponent implements OnInit {
   selectedArchiveExams: ArchiveExam[] = [];
   displayModal = false;
   archiveExam: ArchiveExam = {
+    archiveFolderNr: 0,
     id: undefined,
     index: 0,
     archiveFolderId: 0,
-    barcode: '',
+    barcode: ''
   };
   id: any;
   archiveFolder: ArchiveFolder = {} as ArchiveFolder;

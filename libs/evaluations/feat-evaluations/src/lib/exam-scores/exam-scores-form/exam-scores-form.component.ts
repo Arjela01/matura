@@ -56,6 +56,8 @@ export class ExamScoresFormComponent implements OnChanges {
   submitted = false;
 
   examScore: ExamScore = {
+    archiveFolderIndex: 0,
+    archiveFolderNr: 0,
     barcode: '',
     documentName: '',
     examSecretId: '',
@@ -66,10 +68,7 @@ export class ExamScoresFormComponent implements OnChanges {
     writingScore: 0,
     maximumValueMultipleScore: 0,
     maximumValueWritingScore: 0,
-    archiveFolderNumber: 0,
-    archiveFolder: {
-      nr: 0,
-    },
+    isFall: false,
   };
   examTypeId: any;
   examSubjectId: any;
@@ -117,12 +116,8 @@ export class ExamScoresFormComponent implements OnChanges {
 
   onGetIndexClick(barcode: string) {
     this.examScores.getIndex(barcode).subscribe(res => {
-      const archiveFolder = res.data?.archiveFolder;
-      if (archiveFolder) {
-        this.examScore.archiveFolderNumber = archiveFolder.nr;
-      } else {
-        this.examScore.archiveFolderNumber = Number('');
-      }
+      this.examScore.archiveFolderIndex = res.data?.index;
+      this.examScore.archiveFolderNr = res.data?.archiveFolderNr;
 
       if (res.isBadRequest) this.toastService.showError('Ndodhi një problem!');
       if (!res.isSuccessful) {

@@ -15,11 +15,9 @@ export interface ExamScore {
   documentName: string;
   maximumValueMultipleScore: number;
   maximumValueWritingScore: number;
-  archiveFolder?: {
-    nr: number;
-  };
-  archiveFolderNumber: number;
-  isFall?: boolean;
+  archiveFolderNr?: number;
+  archiveFolderIndex?: number;
+  isFall: boolean;
 }
 
 export interface ExamScoreTableView {

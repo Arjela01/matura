@@ -2,9 +2,9 @@ export interface ArchiveExam {
   id:any;
   index?: number;
   archiveFolderId: number;
+  archiveFolderNr: number;
   barcode?: string;
-  totalArchiveExams?: 0;
-  examSubjectName?:string;
+  isFall?: boolean;
 }
 
 export interface ArchiveExamView {

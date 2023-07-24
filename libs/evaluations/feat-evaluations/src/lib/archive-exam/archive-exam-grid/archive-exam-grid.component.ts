@@ -73,9 +73,10 @@ export class ArchiveExamGridComponent implements OnInit {
   isBarcodeInputDisabled = false;
 
   archiveExam: ArchiveExam = {
+    archiveFolderNr: 0,
     id: undefined,
     barcode: '',
-    archiveFolderId: this.id,
+    archiveFolderId: this.id
   };
 
   constructor(
