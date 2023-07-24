@@ -68,12 +68,14 @@ export class ExamSubjectApiService {
       `/ExamSubject/DropdownList`
     );
   }
+
   forExamType(
     examTypeId?: number,
     academicYearId?: number,
     id?: string,
     profileID?: number,
-    isProfileCheckDisabled?: boolean
+    isProfileCheckDisabled?: boolean,
+    applicationFormType?: any
   ): Observable<ApiResult<DropdownModel<string>[]>> {
     return this.apiService.post<ApiResult<DropdownModel<string>[]>, any>(
       `/ExamSubject/ForExamType`,
@@ -83,6 +85,7 @@ export class ExamSubjectApiService {
         profileID: profileID,
         id: id,
         isProfileCheckDisabled: isProfileCheckDisabled,
+        applicationFormType: applicationFormType,
       }
     );
   }

@@ -279,14 +279,8 @@ export class ManageCarriedGradesComponent implements OnInit {
       academicYearId: number;
     };
     this.examSubjectApiService
-      .forExamType(
-        data.examTypeId,
-        data.academicYearId,
-        undefined,
-        undefined,
-        true
-      )
-      .pipe(untilDestroyed(this))
+      .forExamType(data.examTypeId, data.academicYearId, undefined, undefined, true)
+        .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examSubjectsDropdown = response.data;
         this.cd.detectChanges();
