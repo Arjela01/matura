@@ -137,7 +137,7 @@ export class ArchiveFolderGridComponent {
     this.lazyLoadData.emit($event);
   }
 
-  persistArchiveFolder(archiveFolder: ArchiveFolder) {
+  addBarcodes(archiveFolder: ArchiveFolder) {
     this.archiveFolderService.currentArchiveFolder$.next(archiveFolder);
   }
 }

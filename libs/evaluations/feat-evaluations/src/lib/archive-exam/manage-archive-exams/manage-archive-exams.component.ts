@@ -138,7 +138,6 @@ export class ManageArchiveExamsComponent implements OnInit {
       .subscribe(folder => (this.archiveFolder = { ...folder.data }));
 
     this.authFacade.academicYear$.pipe(untilDestroyed(this)).subscribe(data => {
-      console.log(data);
       this.getArchiveExams(this.event);
     });
 
@@ -240,7 +239,7 @@ export class ManageArchiveExamsComponent implements OnInit {
         this.totalRecords = response.total;
         this.cd.markForCheck();
 
-        if (response.total === 50) {
+        if (response.total === 50 && this.archiveFolder.isClosed !== true) {
           this.changeFolderStatus();
         }
       });
@@ -323,7 +322,7 @@ export class ManageArchiveExamsComponent implements OnInit {
               this.archiveFolder.academicYearId.toString();
           }
           this.router
-            .navigate([`/reports/${this.archiveFolderReport}`], query)
+            .navigate([`/reports/view/${this.archiveFolderReport}`], query)
             .then();
         }
 
