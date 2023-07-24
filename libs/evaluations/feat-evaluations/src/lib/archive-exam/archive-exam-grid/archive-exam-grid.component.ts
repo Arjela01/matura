@@ -9,7 +9,11 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import {ColumnFilterDirective, GRID_ACTIONS, GridEvent} from '@msh/shared/util-shared';
+import {
+  ColumnFilterDirective,
+  GRID_ACTIONS,
+  GridEvent,
+} from '@msh/shared/util-shared';
 import { LazyLoadEvent, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -35,7 +39,7 @@ import { BarcodeService } from '../services/barcode-service';
     CheckboxModule,
     RippleModule,
     FormsModule,
-    ColumnFilterDirective
+    ColumnFilterDirective,
   ],
   templateUrl: './archive-exam-grid.component.html',
   styleUrls: ['./archive-exam-grid.component.scss'],
@@ -43,8 +47,6 @@ import { BarcodeService } from '../services/barcode-service';
 })
 export class ArchiveExamGridComponent implements OnInit {
   @ViewChild('form', { static: true }) form!: NgForm;
-
-  @ViewChild('barcodeField', { static: true }) barcodeField!: HTMLInputElement;
 
   @Input() set ArchiveExamsDetails(details: ArchiveExam | null) {
     if (details) {
@@ -76,7 +78,7 @@ export class ArchiveExamGridComponent implements OnInit {
     archiveFolderNr: 0,
     id: undefined,
     barcode: '',
-    archiveFolderId: this.id
+    archiveFolderId: this.id,
   };
 
   constructor(
@@ -101,7 +103,6 @@ export class ArchiveExamGridComponent implements OnInit {
     this.barcodeService.emptyBarcodeField$.subscribe(value => {
       if (value == true) {
         this.archiveExam.barcode = '';
-         this.barcodeField.focus();
       }
     });
   }
@@ -117,8 +118,6 @@ export class ArchiveExamGridComponent implements OnInit {
       characterRegex.test(input)
     );
   }
-
-
 
   saveArchiveExam(archiveExam: ArchiveExam): void {
     this.gridEvent.emit({

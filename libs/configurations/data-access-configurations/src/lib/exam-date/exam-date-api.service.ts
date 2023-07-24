@@ -3,10 +3,7 @@ import { Observable } from 'rxjs';
 import { LazyLoadEvent } from 'primeng/api';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import {
-  ExamDate,
-  ExamDateTableView
-} from "@msh/shared/domain-models";
+import { ExamDate, ExamDateTableView } from '@msh/shared/domain-models';
 
 @Injectable({
   providedIn: 'root',

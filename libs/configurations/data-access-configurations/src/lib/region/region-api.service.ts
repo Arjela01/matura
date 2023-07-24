@@ -3,10 +3,7 @@ import { Injectable } from '@angular/core';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { Observable } from 'rxjs';
 import { LazyLoadEvent } from 'primeng/api';
-import {
-  Region,
-  RegionTableView,
-} from '@msh/shared/domain-models';
+import { Region, RegionTableView } from '@msh/shared/domain-models';
 
 @Injectable({
   providedIn: 'root',

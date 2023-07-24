@@ -8,9 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import {
-  GradesScale,
-} from '@msh/evaluations/domain-evaluations';
+import { GradesScale } from '@msh/evaluations/domain-evaluations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
@@ -69,7 +67,7 @@ export class UploadGradeScaleFormComponent {
     private readonly cd: ChangeDetectorRef,
     private readonly gradesScaleApiService: GradesScaleService,
     private readonly router: Router,
-    private readonly toastService: GlobalToastService,
+    private readonly toastService: GlobalToastService
   ) {}
 
   onCancelClick() {
@@ -79,7 +77,7 @@ export class UploadGradeScaleFormComponent {
 
   onSubmit() {
     this.submitted = true;
-    this.gradeScale.file = this.base64
+    this.gradeScale.file = this.base64;
     this.gradesScaleApiService.uploadExcelFile(this.gradeScale).subscribe({
       next: (response: any) => {
         this.displayModal = false;
@@ -120,10 +118,7 @@ export class UploadGradeScaleFormComponent {
     reader.onload = () => {
       const base64 = reader.result as string;
       this.base64 = base64.split(',')[1];
-      if (
-        this.gradeScale.examTypeId !== '' &&
-        this.gradeScale.examTypeId
-      ) {
+      if (this.gradeScale.examTypeId !== '' && this.gradeScale.examTypeId) {
         this.upload.emit({
           file: this.base64,
           examTypeId: this.gradeScale.examTypeId,

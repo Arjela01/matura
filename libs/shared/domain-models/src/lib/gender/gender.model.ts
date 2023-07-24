@@ -1,11 +1,9 @@
 export interface Gender {
-    id: number,
-    name: string,
-
+  id: number;
+  name: string;
 }
 
 export interface GenderTableView {
-    data: Gender[];
-    total: number;
-  }
-
+  data: Gender[];
+  total: number;
+}

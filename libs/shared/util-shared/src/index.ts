@@ -12,4 +12,4 @@ export * from './lib/pipe/safe-pipe';
 export * from './lib/services/api.service';
 export * from './lib/services/global-toast.service';
 export * from './lib/validators/validation';
-export * from './lib/directives/column-filter-directive'
+export * from './lib/directives/column-filter-directive';

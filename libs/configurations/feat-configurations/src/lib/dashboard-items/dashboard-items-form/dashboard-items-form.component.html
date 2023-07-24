@@ -67,14 +67,18 @@
           </small>
         </div>
 
-
-
         <div class="field" [style]="{ width: '300px' }">
-          <label for="document">Dokumenti
-            <p-button label="Download" styleClass="p-button-link m-0 p-0" (click)="downloadDocument()" *ngIf="dashboardItem.document"></p-button>
-            <p-button label="Clear" styleClass="p-button-link m-0 p-0" (click)="clearFile()"></p-button>
-
-
+          <label for="document"
+            >Dokumenti
+            <p-button
+              label="Download"
+              styleClass="p-button-link m-0 p-0"
+              (click)="downloadDocument()"
+              *ngIf="dashboardItem.document"></p-button>
+            <p-button
+              label="Clear"
+              styleClass="p-button-link m-0 p-0"
+              (click)="clearFile()"></p-button>
           </label>
           <div class="form-group drop-files noLabel">
             <p-fileUpload
@@ -92,13 +96,13 @@
         <div class="field" [style]="{ width: '750px' }">
           <label for="documentName">Emri Dokumentit</label>
           <input
-                  type="text"
-                  pInputText
-                  id="documentName"
-                  [style]="{ width: '100%' }"
-                  name="documentName"
-                  [(ngModel)]="dashboardItem.documentName"
-                  autofocus />
+            type="text"
+            pInputText
+            id="documentName"
+            [style]="{ width: '100%' }"
+            name="documentName"
+            [(ngModel)]="dashboardItem.documentName"
+            autofocus />
         </div>
 
         <div class="field" [style]="{ width: '750px' }">

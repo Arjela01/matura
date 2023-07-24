@@ -9,7 +9,7 @@ import {
   ExamScoreTableView,
   FileImport,
 } from '@msh/evaluations/domain-evaluations';
-import {HttpParams} from "@angular/common/http";
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -42,8 +42,9 @@ export class ExamScoreApiService {
   }
 
   getIndex(barcode: string): Observable<ApiResult<ArchiveExam>> {
-    return this.apiService.post<ApiResult<ArchiveExam>,any>(
-      `/ExamScores/GetIndex`, {barcode: barcode}
+    return this.apiService.post<ApiResult<ArchiveExam>, any>(
+      `/ExamScores/GetIndex`,
+      { barcode: barcode }
     );
   }
 

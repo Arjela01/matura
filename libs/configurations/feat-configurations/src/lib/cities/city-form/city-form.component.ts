@@ -42,7 +42,6 @@ export class CityFormComponent implements OnChanges {
   @Input() regions: DropdownModel<number>[] = [];
   @Input() cities: DropdownModel<number>[] = [];
 
-
   @Input() set cityDetails(details: City | null) {
     if (details) {
       this.city = Object.assign({}, details);
@@ -67,7 +66,7 @@ export class CityFormComponent implements OnChanges {
   constructor(private cd: ChangeDetectorRef) {}
 
   ngOnChanges(): void {
-    if ( this.city.regionId) {
+    if (this.city.regionId) {
       this.onRegionChange({ value: this.city.regionId });
     }
   }
@@ -83,9 +82,7 @@ export class CityFormComponent implements OnChanges {
     }
   }
 
-
   onRegionChange($event: any) {
     this.citiesFiltered = this.cities.filter(c => c.parentKey == $event.value);
   }
 }
-

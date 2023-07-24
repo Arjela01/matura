@@ -10,7 +10,7 @@ import {
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
-import {ExamSubject, ExamVersion} from '@msh/shared/domain-models';
+import { ExamSubject, ExamVersion } from '@msh/shared/domain-models';
 
 import { BehaviorSubject } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -76,7 +76,6 @@ export class ManageExamVersionsComponent implements OnInit {
     this.selectedExamVersion = {} as ExamVersion;
   }
 
-
   onGridEvent(event: GridEvent<ExamVersion | ExamVersion[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
@@ -105,8 +104,7 @@ export class ManageExamVersionsComponent implements OnInit {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message:
-            'Jeni i sigurt që doni të fshini tezën zgjedhur?',
+          message: 'Jeni i sigurt që doni të fshini tezën zgjedhur?',
           accept: () => {
             this.deleteExamVersion(event.data as ExamVersion);
           },
@@ -147,12 +145,10 @@ export class ManageExamVersionsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            'Teza u shtua me sukses!'
-          );
+          this.toastService.showSuccess('Teza u shtua me sukses!');
           this.displayModal = false;
           this.getExamVersions(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -167,12 +163,10 @@ export class ManageExamVersionsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            'Teza u ndryshua me sukses!'
-          );
+          this.toastService.showSuccess('Teza u ndryshua me sukses!');
           this.displayModal = false;
           this.getExamVersions(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -189,7 +183,7 @@ export class ManageExamVersionsComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('Teza u fshi me sukses!');
           this.getExamVersions(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(

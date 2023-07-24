@@ -4,12 +4,20 @@
 <div class="grid">
   <div class="col-12">
     <div class="card p-6">
-        <div *ngFor="let dataExport of dataExports">
-          <div class="flex align-content-between">
-          <p-button icon="pi pi-download" (onClick)="download(dataExport)" styleClass="flex align-items-center"></p-button>
-          <a (click)="download(dataExport)" class="p-button-link" [className]="'flex align-items-center ml-3 cursor-pointer text-lg'">{{dataExport.name}}</a>
-          </div>
+      <div *ngFor="let dataExport of dataExports">
+        <div class="flex align-content-between">
+          <p-button
+            icon="pi pi-download"
+            (onClick)="download(dataExport)"
+            styleClass="flex align-items-center"></p-button>
+          <a
+            (click)="download(dataExport)"
+            class="p-button-link"
+            [className]="'flex align-items-center ml-3 cursor-pointer text-lg'"
+            >{{ dataExport.name }}</a
+          >
         </div>
+      </div>
     </div>
   </div>
 </div>

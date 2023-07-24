@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
@@ -47,7 +52,7 @@ let INITIAL_FILTER = {};
   providers: [ConfirmationService],
 })
 @UntilDestroy()
-export class ManageDiplomasStudentComponent implements OnInit{
+export class ManageDiplomasStudentComponent implements OnInit {
   @Input() printed = false;
   @Input() title = 'Diplomat';
   private studentList$$ = new BehaviorSubject<Student[]>([]);
@@ -70,7 +75,6 @@ export class ManageDiplomasStudentComponent implements OnInit{
       value: 'Maturant i sivjetshëm',
       parentKey: null,
     },
-
   ];
   administrationOffices: DropdownModel<number>[] = [];
   highSchools$$: BehaviorSubject<DropdownModel<number>[]> = new BehaviorSubject<

@@ -6,8 +6,8 @@ import {
   ApplicationProcessTableView,
   Process,
 } from '@msh/evaluations/domain-evaluations';
-import {ApiResult} from "@msh/shared/data-access-shared";
-import {HttpParams} from "@angular/common/http";
+import { ApiResult } from '@msh/shared/data-access-shared';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',

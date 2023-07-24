@@ -75,11 +75,13 @@ export class ManageDataExportsComponent implements OnInit {
     this.selectedDataExport = {} as DataExport;
   }
 
-
   onGridEvent(event: GridEvent<DataExport | DataExport[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
-        this.selectedDataExports = [...this.selectedDataExports, event.data as DataExport];
+        this.selectedDataExports = [
+          ...this.selectedDataExports,
+          event.data as DataExport,
+        ];
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
         this.selectedDataExports = this.selectedDataExports.filter(hs => {
@@ -87,7 +89,10 @@ export class ManageDataExportsComponent implements OnInit {
         });
         break;
       case GRID_ACTIONS.SELECT_MANY:
-        this.selectedDataExports = [...this.selectedDataExports, ...(event.data as DataExport[])];
+        this.selectedDataExports = [
+          ...this.selectedDataExports,
+          ...(event.data as DataExport[]),
+        ];
         break;
       case GRID_ACTIONS.UNSELECT_ALL:
         this.selectedDataExports = [];
@@ -143,7 +148,7 @@ export class ManageDataExportsComponent implements OnInit {
           this.toastService.showSuccess('DataExportja u shtua me sukses!');
           this.displayModal = false;
           this.getDataExports(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -161,7 +166,7 @@ export class ManageDataExportsComponent implements OnInit {
           this.toastService.showSuccess('DataExportja u ndryshua me sukses!');
           this.displayModal = false;
           this.getDataExports(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -178,7 +183,7 @@ export class ManageDataExportsComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('data-export-ja u fshi me sukses!');
           this.getDataExports(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(

@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
   AdministrationOfficeApiService,
   CityApiService,
 } from '@msh/configurations/data-access-configurations';
-import {AdministrationOffice} from '@msh/shared/domain-models';
+import { AdministrationOffice } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   GlobalToastService,
@@ -18,10 +18,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
-import {RippleModule} from "primeng/ripple";
-import {
-  ActivateOverseerDarZaGridComponent
-} from "../activate-overseer-dar-za-grid/activate-overseer-dar-za-grid.component";
+import { RippleModule } from 'primeng/ripple';
+import { ActivateOverseerDarZaGridComponent } from '../activate-overseer-dar-za-grid/activate-overseer-dar-za-grid.component';
 
 @UntilDestroy()
 @Component({
@@ -40,8 +38,6 @@ import {
   styleUrls: ['./manage-activate-overseer-dar-za.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
-
-
 })
 export class ManageActivateOverseerDarZaComponent implements OnInit {
   private administrativeOffices$$ = new BehaviorSubject<AdministrationOffice[]>(
@@ -137,8 +133,8 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
   changeStatus(administrationOffice: AdministrationOffice) {
     this.adminOfficeApiService
       .changeStatus({
-        "id": administrationOffice.id,
-        "isAllowedToLogin": !administrationOffice.isAllowedToLogin
+        id: administrationOffice.id,
+        isAllowedToLogin: !administrationOffice.isAllowedToLogin,
       })
       .pipe(untilDestroyed(this))
       .subscribe(response => {
@@ -158,9 +154,6 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
           );
       });
   }
-
-
-
 
   onModalClose() {
     this.displayModal = false;
@@ -197,7 +190,7 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
           this.toastService.showSuccess('DAR/ZA u shtua me sukses!');
           this.displayModal = false;
           this.getAdministrationOffices(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -215,7 +208,7 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
           this.toastService.showSuccess('DAR/ZA u ndryshua me sukses!');
           this.displayModal = false;
           this.getAdministrationOffices(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -232,7 +225,7 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('DAR/ZA u fshi me sukses!');
           this.getAdministrationOffices(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(

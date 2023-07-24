@@ -14,7 +14,7 @@ import {
   HighSchoolApiService,
   RegionApiService,
 } from '@msh/configurations/data-access-configurations';
-import {HighSchool} from '@msh/shared/domain-models';
+import { HighSchool } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
 import {
@@ -26,22 +26,22 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { HighSchoolFormComponent } from '../high-school-form/high-school-form.component';
 import { HighSchoolGridComponent } from '../high-school-grid/high-school-grid.component';
-import {RippleModule} from "primeng/ripple";
+import { RippleModule } from 'primeng/ripple';
 
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-high-schools',
   standalone: true,
-    imports: [
-        ButtonModule,
-        CommonModule,
-        DialogModule,
-        ConfirmDialogModule,
-        HighSchoolGridComponent,
-        HighSchoolFormComponent,
-        ToolbarModule,
-        RippleModule,
-    ],
+  imports: [
+    ButtonModule,
+    CommonModule,
+    DialogModule,
+    ConfirmDialogModule,
+    HighSchoolGridComponent,
+    HighSchoolFormComponent,
+    ToolbarModule,
+    RippleModule,
+  ],
   templateUrl: './manage-high-schools.component.html',
   styleUrls: ['./manage-high-schools.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -85,7 +85,7 @@ export class ManageHighSchoolsComponent implements OnInit {
       message: 'Jeni i sigurt që doni të fshini shkollat e zgjedhura?',
       accept: () => {
         //this.highSchoolStore.deleteSelectedHighSchools();
-          this.toastService.showWarning('Shkollat e zgjedhura u fshinë!');
+        this.toastService.showWarning('Shkollat e zgjedhura u fshinë!');
       },
     });
   }
@@ -162,7 +162,7 @@ export class ManageHighSchoolsComponent implements OnInit {
           this.toastService.showSuccess('Shkolla e mesme u shtua me sukses!');
           this.displayModal = false;
           this.getHighSchools(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -182,7 +182,7 @@ export class ManageHighSchoolsComponent implements OnInit {
           );
           this.displayModal = false;
           this.getHighSchools(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -199,7 +199,7 @@ export class ManageHighSchoolsComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('Shkolla e mesme u fshi me sukses!');
           this.getHighSchools(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(

@@ -1,13 +1,13 @@
-export interface ExamSite{
+export interface ExamSite {
   id: any;
   name: string;
   address: string;
   quota: number;
   administrationOfficeId: number;
-  administrationOfficeName:string;
+  administrationOfficeName: string;
   academicYearId?: number;
   highschoolIds?: any;
-  highschoolsNames?:string[];
+  highschoolsNames?: string[];
   highSchools?: any;
 }
 

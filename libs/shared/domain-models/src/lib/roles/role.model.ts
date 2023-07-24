@@ -1,11 +1,10 @@
 export interface Role {
-    id: string;
-    name: string;
-    description?:string
+  id: string;
+  name: string;
+  description?: string;
 }
 
 export interface RoleTableView {
-    data: Role[];
-    total: number;
-  }
-  
+  data: Role[];
+  total: number;
+}

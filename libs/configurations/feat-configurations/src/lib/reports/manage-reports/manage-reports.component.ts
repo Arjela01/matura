@@ -65,7 +65,6 @@ export class ManageReportsComponent {
     this.selectedReport = {} as Reports;
   }
 
-
   onGridEvent(event: GridEvent<Reports | Reports[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
@@ -139,7 +138,7 @@ export class ManageReportsComponent {
           this.toastService.showSuccess('Raporti u shtua me sukses!');
           this.displayModal = false;
           this.getReports(this.filters);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -157,7 +156,7 @@ export class ManageReportsComponent {
           this.toastService.showSuccess('Raporti u ndryshua me sukses!');
           this.displayModal = false;
           this.getReports(this.filters);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -174,7 +173,7 @@ export class ManageReportsComponent {
         if (response.isSuccessful) {
           this.toastService.showInfo('Raporti u fshi me sukses!');
           this.getReports(this.filters);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(

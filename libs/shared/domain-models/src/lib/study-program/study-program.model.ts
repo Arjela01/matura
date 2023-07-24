@@ -9,7 +9,7 @@ export interface StudyProgram {
 
   minAverageGrade: string;
 
-  academicYearId?: number,
+  academicYearId?: number;
 
   quota: string;
 

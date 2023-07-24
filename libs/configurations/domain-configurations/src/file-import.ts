@@ -1,3 +1,3 @@
 export interface FileImport {
-    file: string | ArrayBuffer | null;
+  file: string | ArrayBuffer | null;
 }

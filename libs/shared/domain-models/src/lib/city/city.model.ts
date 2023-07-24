@@ -1,7 +1,7 @@
 export interface City {
   id: number;
   name: string;
-  isCity:boolean;
+  isCity: boolean;
   regionId?: number;
   regionName?: string;
 }

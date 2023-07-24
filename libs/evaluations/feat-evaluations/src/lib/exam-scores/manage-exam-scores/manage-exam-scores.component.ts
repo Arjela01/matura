@@ -1,5 +1,5 @@
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import { ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -8,7 +8,13 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { ExamScoresFormComponent } from '../exam-scores-form/exam-scores-form.component';
 import { ExamScoresGridComponent } from '../exam-scores-grid/exam-scores-grid.component';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { BehaviorSubject, distinctUntilChanged, map, of, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  distinctUntilChanged,
+  map,
+  of,
+  switchMap,
+} from 'rxjs';
 import {
   GlobalToastService,
   GRID_ACTIONS,
@@ -24,7 +30,7 @@ import { DropdownModel } from '@msh/shared/data-access-shared';
 import { RippleModule } from 'primeng/ripple';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
-import * as FileSaver from "file-saver";
+import * as FileSaver from 'file-saver';
 
 @UntilDestroy()
 @Component({
@@ -67,7 +73,7 @@ export class ManageExamScoresComponent implements OnInit {
     private readonly examTypeService: ExamTypeApiService,
     private readonly examSubjectService: ExamSubjectApiService,
     private readonly cd: ChangeDetectorRef,
-    private authFacade:AuthFacade
+    private authFacade: AuthFacade
   ) {}
 
   ngOnInit(): void {
@@ -77,7 +83,6 @@ export class ManageExamScoresComponent implements OnInit {
         map((data: any) => data.id),
         distinctUntilChanged(),
         switchMap(data => {
-
           if (this.filters) {
             window.location.reload();
           }
@@ -90,7 +95,10 @@ export class ManageExamScoresComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
-    this.selectedExamScore = {writingScore: 0, multipleChoiceScore: 0} as ExamScore;
+    this.selectedExamScore = {
+      writingScore: 0,
+      multipleChoiceScore: 0,
+    } as ExamScore;
   }
 
   onGridEvent(event: GridEvent<ExamScore | ExamScore[]>) {
@@ -276,6 +284,5 @@ export class ManageExamScoresComponent implements OnInit {
         }
       });
     };
-
   }
 }

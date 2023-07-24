@@ -1,12 +1,9 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { A1zFormComponent } from '../a1z-form/a1z-form.component';
-import {ActivatedRoute} from "@angular/router";
-import {A1ZFormModeEnum} from "../a1z-form-mode.enum";
+import { ActivatedRoute } from '@angular/router';
+import { A1ZFormModeEnum } from '../a1z-form-mode.enum';
 
 @Component({
   selector: 'msh-a1z-form-add',
@@ -21,7 +18,7 @@ export class A1ZFormAddComponent {
   id = '';
   studentId = '';
 
-  constructor(private  route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute) {
     this.id = this.route.snapshot.paramMap.get('id') ?? '';
     this.studentId = this.route.snapshot.paramMap.get('studentId') ?? '';
   }

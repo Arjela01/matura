@@ -1,13 +1,20 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule, NgForm} from "@angular/forms";
-import {InputTextModule} from "primeng/inputtext";
-import {InputNumberModule} from "primeng/inputnumber";
-import {RadioButtonModule} from "primeng/radiobutton";
-import {InputTextareaModule} from "primeng/inputtextarea";
-import {ButtonModule} from "primeng/button";
-import {CheckboxModule} from "primeng/checkbox";
-import {ExamType} from "@msh/shared/domain-models";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, NgForm } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ExamType } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-exam-type-form',
@@ -20,7 +27,8 @@ import {ExamType} from "@msh/shared/domain-models";
     RadioButtonModule,
     InputTextareaModule,
     ButtonModule,
-    CheckboxModule,],
+    CheckboxModule,
+  ],
   templateUrl: './exam-type-form.component.html',
   styleUrls: ['./exam-type-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,7 +43,7 @@ export class ExamTypeFormComponent {
   @Output() formSave = new EventEmitter<ExamType>();
   @Output() formClose = new EventEmitter<undefined>();
 
-  @ViewChild('form', {static: true}) form!: NgForm;
+  @ViewChild('form', { static: true }) form!: NgForm;
 
   submitted = false;
 
@@ -46,7 +54,7 @@ export class ExamTypeFormComponent {
     maximumValueMultipleScore: 0,
     isFall: false,
     dependsOnSchoolProfile: false,
-    isOptional: false
+    isOptional: false,
   };
 
   onCancelClick() {

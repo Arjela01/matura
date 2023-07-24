@@ -15,9 +15,7 @@ export class ArchiveExamApiService {
   constructor(private apiService: APIService) {}
 
   getById(id: any): Observable<ApiResult<ArchiveExam>> {
-    return this.apiService.get<ApiResult<ArchiveExam>>(
-      `/ArchiveExam/${id}`
-    );
+    return this.apiService.get<ApiResult<ArchiveExam>>(`/ArchiveExam/${id}`);
   }
 
   // getFolderByExamId(id: any): Observable<ArchiveFolder> {

@@ -7,7 +7,11 @@ import {
   Output,
 } from '@angular/core';
 import { DataExport } from '@msh/shared/domain-models';
-import {GridEvent, GRID_ACTIONS, ColumnFilterDirective} from '@msh/shared/util-shared';
+import {
+  GridEvent,
+  GRID_ACTIONS,
+  ColumnFilterDirective,
+} from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -27,7 +31,7 @@ import { TooltipModule } from 'primeng/tooltip';
     TooltipModule,
     CheckboxModule,
     RippleModule,
-    ColumnFilterDirective
+    ColumnFilterDirective,
   ],
   templateUrl: './data-export-grid.component.html',
   styleUrls: ['./data-export-grid.component.scss'],
@@ -41,7 +45,9 @@ export class DataExportGridComponent {
   //Keep it local state because of Table Header checkbox not syncing
   selectedDataExports: DataExport[] = [];
 
-  @Output() gridEvent = new EventEmitter<GridEvent<DataExport | DataExport[]>>();
+  @Output() gridEvent = new EventEmitter<
+    GridEvent<DataExport | DataExport[]>
+  >();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 

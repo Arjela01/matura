@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import {ApiResult, DropdownModel} from '@msh/shared/data-access-shared';
+import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
-import {Profile, ProfileTableView} from "@msh/shared/domain-models";
-import {HttpParams} from "@angular/common/http";
+import { Profile, ProfileTableView } from '@msh/shared/domain-models';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -35,9 +35,7 @@ export class ProfileApiService {
   }
 
   delete(profileId: number): Observable<ApiResult<unknown>> {
-    return this.apiService.delete<ApiResult<Profile>>(
-      `/Profile/${profileId}`
-    );
+    return this.apiService.delete<ApiResult<Profile>>(`/Profile/${profileId}`);
   }
 
   exportTemplate(): Observable<ApiResult<unknown>> {

@@ -1,11 +1,11 @@
 <ng-container>
   <ng-container>
-    <div class="grid col-12 ">
+    <div class="grid col-12">
       <div
-        class="card  md:col-6 lg:col-2 my-lg-4"
+        class="card md:col-6 lg:col-2 my-lg-4"
         *ngFor="let report of reports"
         (click)="onViewClick(report)">
-        <div class="card-header ">
+        <div class="card-header">
           <span class="card-title">{{ report.reportName }}</span>
           <div class="svg-container">
             <img src="/assets/images/report.svg" class="mb-5" width="60%" />

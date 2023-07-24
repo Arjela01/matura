@@ -107,8 +107,6 @@ export class ManageUsersComponent implements OnInit {
     this.selectedUser = {} as User;
   }
 
-
-
   onGridEvent(event: GridEvent<User | User[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:

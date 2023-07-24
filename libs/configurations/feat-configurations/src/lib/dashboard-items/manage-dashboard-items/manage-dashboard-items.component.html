@@ -2,7 +2,12 @@
   <h2 class="flex-1 mb-0">Elemente të Dashboard-it</h2>
   <div class="flex align-items-right justify-content-right">
     <div class="my-2">
-      <button pButton pRipple label="Shto" icon="pi pi-plus" class="p-button-success mr-2"
+      <button
+        pButton
+        pRipple
+        label="Shto"
+        icon="pi pi-plus"
+        class="p-button-success mr-2"
         (click)="onNewClick()"></button>
     </div>
   </div>
@@ -10,8 +15,11 @@
 <div class="grid">
   <div class="col-12">
     <div class="card">
-      <msh-dashboard-items-grid [dashboardItems]="(dashboardItems$ | async) || []" [totalRecords]="totalRecords"
-        (gridEvent)="onGridEvent($event)" (lazyLoadData)="getDashboardItems($event)">
+      <msh-dashboard-items-grid
+        [dashboardItems]="(dashboardItems$ | async) || []"
+        [totalRecords]="totalRecords"
+        (gridEvent)="onGridEvent($event)"
+        (lazyLoadData)="getDashboardItems($event)">
       </msh-dashboard-items-grid>
     </div>
   </div>
@@ -37,9 +45,25 @@
   </ng-template>
 </p-dialog> -->
 
-<p-confirmDialog #cd header="Konfirmo" icon="pi pi-exclamation-triangle" [style]="{ width: '450px' }">
+<p-confirmDialog
+  #cd
+  header="Konfirmo"
+  icon="pi pi-exclamation-triangle"
+  [style]="{ width: '450px' }">
   <ng-template pTemplate="footer">
-    <button type="button" pButton icon="pi pi-times" label="Jo" class="p-button-text" (click)="cd.reject()"></button>
-    <button type="button" pButton icon="pi pi-check" label="Po" class="p-button border" (click)="cd.accept()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Jo"
+      class="p-button-text"
+      (click)="cd.reject()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Po"
+      class="p-button border"
+      (click)="cd.accept()"></button>
   </ng-template>
 </p-confirmDialog>

@@ -1,5 +1,4 @@
-
-export interface ArchiveFolder{
+export interface ArchiveFolder {
   nr?: any;
   id?: any;
   examTypeId?: number;
@@ -17,11 +16,11 @@ export interface ArchiveFolder{
   isFall?: boolean;
 }
 
-export interface ArchiveFolderTableView{
-  data: ArchiveFolder [];
+export interface ArchiveFolderTableView {
+  data: ArchiveFolder[];
   total: number;
 }
-export interface ArchiveFolderBarcodeCorrection{
-  data: ArchiveFolder [];
+export interface ArchiveFolderBarcodeCorrection {
+  data: ArchiveFolder[];
   total: number;
 }

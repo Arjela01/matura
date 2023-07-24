@@ -18,11 +18,11 @@
                 'ng-invalid ng-dirty': submitted && !studentInputData
               }" />
             <p-button
-                    *ngIf="!studentBan.id"
-                    label="Kërko"
-                    icon="pi pi-search"
-                    (click)="!studentBan.id ? onNewClick() : ''"
-                    [style]="{ height: '100%' }"></p-button>
+              *ngIf="!studentBan.id"
+              label="Kërko"
+              icon="pi pi-search"
+              (click)="!studentBan.id ? onNewClick() : ''"
+              [style]="{ height: '100%' }"></p-button>
           </div>
           <small class="p-error block" *ngIf="submitted && !studentInputData">
             Studenti është fushë e kërkuar.

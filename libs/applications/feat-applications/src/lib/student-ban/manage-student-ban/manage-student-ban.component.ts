@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component} from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -54,7 +54,7 @@ export class ManageStudentBanComponent {
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly studentBannedService: StudentBanApiService,
-    private cd : ChangeDetectorRef,
+    private cd: ChangeDetectorRef
   ) {}
 
   onNewClick() {
@@ -65,8 +65,6 @@ export class ManageStudentBanComponent {
   onModalClose() {
     this.displayModal = false;
   }
-
-
 
   onGridEvent(event: GridEvent<StudentBan | StudentBan[]>) {
     switch (event.action) {

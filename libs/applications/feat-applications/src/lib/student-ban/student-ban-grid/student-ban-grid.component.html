@@ -18,16 +18,15 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="id">
-        ID e Maturës
-      </th>
+      <th pSortableColumn="id">ID e Maturës</th>
       <th pSortableColumn="studentName">
         Emri i Studentit
         <p-sortIcon field="studentName"></p-sortIcon>
         <p-columnFilter
           type="text"
           field="studentName"
-          display="menu"  mshColumnFilterDirective></p-columnFilter>
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
       <th pSortableColumn="isBanned">
         Është Skualifikuar?
@@ -36,7 +35,8 @@
           type="boolean"
           field="isBanned"
           matchMode="equals"
-          display="menu"  mshColumnFilterDirective></p-columnFilter>
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
       <th pSortableColumn="effectiveDate">
         Data efektive
@@ -44,7 +44,8 @@
         <p-columnFilter
           type="date"
           field="effectiveDate"
-          display="menu"  mshColumnFilterDirective></p-columnFilter>
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
       <th pSortableColumn="banRemovalDate">
         Data e heqjes së Skualifikimit
@@ -52,7 +53,8 @@
         <p-columnFilter
           type="date"
           field="banRemovalDate"
-          display="menu"  mshColumnFilterDirective></p-columnFilter>
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
       <th pSortableColumn="description">
         Përshkrimi
@@ -60,7 +62,8 @@
         <p-columnFilter
           type="text"
           field="description"
-          display="menu"  mshColumnFilterDirective></p-columnFilter>
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
       <th></th>
     </tr>

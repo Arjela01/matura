@@ -7,7 +7,11 @@ import {
   Output,
 } from '@angular/core';
 import { Gender } from '@msh/shared/domain-models';
-import {GridEvent, GRID_ACTIONS, ColumnFilterDirective} from '@msh/shared/util-shared';
+import {
+  GridEvent,
+  GRID_ACTIONS,
+  ColumnFilterDirective,
+} from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -27,7 +31,7 @@ import { RippleModule } from 'primeng/ripple';
     TooltipModule,
     CheckboxModule,
     RippleModule,
-    ColumnFilterDirective
+    ColumnFilterDirective,
   ],
   templateUrl: './gender-grid.component.html',
   styleUrls: ['./gender-grid.component.scss'],

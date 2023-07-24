@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -34,6 +34,7 @@ import { RippleModule } from 'primeng/ripple';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ArchiveFolderGridComponent } from '../archive-folder-grid/archive-folder-grid.component';
 import { ArchiveOpenFolderFormComponent } from '../archive-open-folder-form/archive-open-folder-form.component';
+import { AcademicYear } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({
@@ -55,7 +56,7 @@ import { ArchiveOpenFolderFormComponent } from '../archive-open-folder-form/arch
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageArchiveFoldersComponent implements OnInit{
+export class ManageArchiveFoldersComponent implements OnInit {
   private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[]>([]);
   examTypes: DropdownModel<number>[] = [];
   examSubjects: DropdownModel<string>[] = [];
@@ -68,6 +69,7 @@ export class ManageArchiveFoldersComponent implements OnInit{
   selectedArchiveFolder: ArchiveFolder | null = null;
   selectedArchiveFolders: ArchiveFolder[] = [];
   displayModal = false;
+  currentAcademicYear?: Partial<AcademicYear>;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -85,7 +87,8 @@ export class ManageArchiveFoldersComponent implements OnInit{
     this.id = this.route.snapshot.paramMap.get('id');
   }
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    map(([_]) => {
+    map(([academicYear]) => {
+      this.currentAcademicYear = academicYear;
       if (this.filters) {
         this.getArchiveFolders(this.filters as LazyLoadEvent);
       }
@@ -98,6 +101,9 @@ export class ManageArchiveFoldersComponent implements OnInit{
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedArchiveFolder = {
+      isFall: this.currentAcademicYear?.isFall ?? false,
+    } as ArchiveFolder;
   }
 
   onDeleteSelectedClick() {

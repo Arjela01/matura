@@ -1,5 +1,4 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
-
   <div class="field">
     <label for="Name">Emri *</label>
     <input
@@ -10,12 +9,15 @@
       [(ngModel)]="universityDepartment.name"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !universityDepartment.name }" />
-    <small class="p-error block" *ngIf="submitted && !universityDepartment.name">
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !universityDepartment.name
+      }" />
+    <small
+      class="p-error block"
+      *ngIf="submitted && !universityDepartment.name">
       Emri është fushë e kërkuar.
     </small>
   </div>
-
 
   <div class="field">
     <label for="City">Universiteti *</label>

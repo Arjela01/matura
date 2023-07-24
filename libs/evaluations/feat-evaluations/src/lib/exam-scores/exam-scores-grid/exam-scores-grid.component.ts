@@ -12,7 +12,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { CheckboxModule } from 'primeng/checkbox';
 import { RippleModule } from 'primeng/ripple';
-import {ColumnFilterDirective, GRID_ACTIONS, GridEvent} from '@msh/shared/util-shared';
+import {
+  ColumnFilterDirective,
+  GRID_ACTIONS,
+  GridEvent,
+} from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ExamScore } from '@msh/evaluations/domain-evaluations';
 
@@ -27,7 +31,7 @@ import { ExamScore } from '@msh/evaluations/domain-evaluations';
     TooltipModule,
     CheckboxModule,
     RippleModule,
-    ColumnFilterDirective
+    ColumnFilterDirective,
   ],
   templateUrl: './exam-scores-grid.component.html',
   styleUrls: ['./exam-scores-grid.component.scss'],

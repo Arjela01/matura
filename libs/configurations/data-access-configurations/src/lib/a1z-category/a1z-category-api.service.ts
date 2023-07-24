@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  A1ZCategory,
-  A1ZCategoryTableView,
-} from '@msh/shared/domain-models';
+import { A1ZCategory, A1ZCategoryTableView } from '@msh/shared/domain-models';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';

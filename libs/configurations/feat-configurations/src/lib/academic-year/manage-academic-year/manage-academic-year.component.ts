@@ -22,6 +22,7 @@ import { BehaviorSubject } from 'rxjs';
 import { AcademicYearFormComponent } from '../academic-year-form/academic-year-form.component';
 import { AcademicYearGridComponent } from '../academic-year-grid/academic-year-grid.component';
 import { RippleModule } from 'primeng/ripple';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
@@ -56,7 +57,8 @@ export class ManageAcademicYearComponent {
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly academicYearService: AcademicYearApiService
+    private readonly academicYearService: AcademicYearApiService,
+    private authFacade: AuthFacade
   ) {}
 
   onNewClick() {
@@ -149,7 +151,7 @@ export class ManageAcademicYearComponent {
           this.toastService.showSuccess('Viti u shtua me sukses!');
           this.displayModal = false;
           this.getAcademicYears(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -167,7 +169,10 @@ export class ManageAcademicYearComponent {
           this.toastService.showSuccess('Viti u ndryshua me sukses!');
           this.displayModal = false;
           this.getAcademicYears(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage)
+          if (response.data.isActive) {
+            this.authFacade.changeAcademicYear(response.data);
+          }
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -184,7 +189,7 @@ export class ManageAcademicYearComponent {
         if (response.isSuccessful) {
           this.toastService.showInfo('Viti u fshi me sukses!');
           this.getAcademicYears(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(

@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
-import { GlobalToastService} from '@msh/shared/util-shared';
-import {
-  ApplicationProcess,
-} from '@msh/evaluations/domain-evaluations';
-import {CalculationProcessesApiService} from "../calculation-processes/calculation-processes-api.service";
-import {LazyLoadEvent} from "primeng/api";
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {formatDate} from "@angular/common";
+import { BehaviorSubject } from 'rxjs';
+import { GlobalToastService } from '@msh/shared/util-shared';
+import { ApplicationProcess } from '@msh/evaluations/domain-evaluations';
+import { CalculationProcessesApiService } from '../calculation-processes/calculation-processes-api.service';
+import { LazyLoadEvent } from 'primeng/api';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { formatDate } from '@angular/common';
 
 @UntilDestroy()
 @Injectable({
@@ -21,13 +19,12 @@ export class ProcessesApiService {
   executionLog!: string;
   endDate: any;
 
-
   constructor(
     private readonly calculateGradesService: CalculationProcessesApiService,
     private readonly toastService: GlobalToastService
   ) {}
 
-  getData($event: LazyLoadEvent, processType: number ) {
+  getData($event: LazyLoadEvent, processType: number) {
     this.filters = { ...$event };
     this.calculateGradesService
       .loadProcessData(processType)

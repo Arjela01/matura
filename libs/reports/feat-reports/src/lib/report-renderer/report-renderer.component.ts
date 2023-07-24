@@ -121,7 +121,7 @@ export class ReportRendererComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.returnUrl =  this.route.snapshot.queryParams['returnUrl'];
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'];
     const academicYearFilter = localStorage.getItem(ACADEMIC_YEAR_KEY);
     if (academicYearFilter) {
       this.academicYear = JSON.parse(academicYearFilter).id;
@@ -146,12 +146,16 @@ export class ReportRendererComponent implements OnInit {
       destinationPath =
         currentUrl === `/${this.reportsPath}/${this.a1Report}`
           ? this.reportsPath
-          : (this.returnUrl ? this.returnUrl : this.a1Path);
+          : this.returnUrl
+          ? this.returnUrl
+          : this.a1Path;
     } else if (this.id === this.a1ZReport.toString()) {
       destinationPath =
         currentUrl === `/${this.reportsPath}/${this.a1ZReport}`
           ? this.reportsPath
-          : (this.returnUrl ? this.returnUrl :this.a1ZPath);
+          : this.returnUrl
+          ? this.returnUrl
+          : this.a1ZPath;
     } else if (this.id === this.archiveFolderReport.toString()) {
       destinationPath =
         currentUrl === `/${this.reportsPath}/${this.archiveFolderReport}`

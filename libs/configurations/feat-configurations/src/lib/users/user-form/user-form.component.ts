@@ -108,7 +108,7 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
     nid: '',
     studyProgramId: 0,
     universityId: 0,
-    highSchoolId:0,
+    highSchoolId: 0,
     universityDepartmentId: 0,
   };
 

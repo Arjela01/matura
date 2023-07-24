@@ -6,12 +6,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { RippleModule } from 'primeng/ripple';
 import { GridComponent } from '../grid/grid.component';
-import {
-  ProcessesApiService,
-} from '@msh/evaluations/data-access-evaluations';
+import { ProcessesApiService } from '@msh/evaluations/data-access-evaluations';
 import { LazyLoadEvent } from 'primeng/api';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import {  tap } from 'rxjs';
+import { tap } from 'rxjs';
 import { Application_Process } from '../grid/grid-type.enum';
 
 @UntilDestroy()
@@ -52,9 +50,7 @@ export class CalculateGradesComponent {
     })
   );
 
-  constructor(
-    private readonly process: ProcessesApiService
-  ) {}
+  constructor(private readonly process: ProcessesApiService) {}
 
   getProcessData($event: LazyLoadEvent, processType: number) {
     this.filters = { ...$event };

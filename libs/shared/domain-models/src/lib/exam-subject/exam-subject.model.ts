@@ -1,7 +1,7 @@
 export interface ExamSubject {
   id: string;
   name: string;
-  code: string,
+  code: string;
   examTypeId?: number;
   examTypeName?: string;
   academicYearId?: number;

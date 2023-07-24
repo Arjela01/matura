@@ -1,40 +1,72 @@
 <div class="flex center mb-2 page-header mb-header">
-    <h2 class="flex-1 mb-0">{{title}}</h2>
-    <div class="flex align-items-right justify-content-right">
-        <div class="my-2">
-            <button pButton pRipple label="Printo diploma" icon="pi pi-print" (click)="onNewClick()"
-                class="p-button-success mr-2"></button>
-        </div>
+  <h2 class="flex-1 mb-0">{{ title }}</h2>
+  <div class="flex align-items-right justify-content-right">
+    <div class="my-2">
+      <button
+        pButton
+        pRipple
+        label="Printo diploma"
+        icon="pi pi-print"
+        (click)="onNewClick()"
+        class="p-button-success mr-2"></button>
     </div>
-
+  </div>
 </div>
 <div class="grid">
-    <div class="col-12">
-        <div class="card">
-            <msh-diplomas-student-grid [students]="(studentList$ | async) || []" [totalRecords]="totalRecords"
-                (gridEvent)="onGridEvent($event)" (lazyLoadData)="getStudentDiplomas($event)">
-            </msh-diplomas-student-grid>
-        </div>
+  <div class="col-12">
+    <div class="card">
+      <msh-diplomas-student-grid
+        [students]="(studentList$ | async) || []"
+        [totalRecords]="totalRecords"
+        (gridEvent)="onGridEvent($event)"
+        (lazyLoadData)="getStudentDiplomas($event)">
+      </msh-diplomas-student-grid>
     </div>
+  </div>
 </div>
-<p-dialog [(visible)]="displayModal" [style]="{ width: '500px' }" header="Informacionet rreth diplomës" [modal]="true"
-    [draggable]="false" [resizable]="false" class="p-fluid" (onHide)="onModalClose()">
-    <ng-template pTemplate="content">
-        <msh-diplomas-student-form [administrationOffices]="administrationOffices" [isPrinted]="!printed"
-            [highSchools]="(highSchools$|async)!!" [studentTypes]="studentTypes"
-            (admOfficeChanged)="getHighSchoolsByOffice($event)" (formClose)="onModalClose()"
-            (formSave)="onFormSave($event)">
-        </msh-diplomas-student-form>
-    </ng-template>
+<p-dialog
+  [(visible)]="displayModal"
+  [style]="{ width: '500px' }"
+  header="Informacionet rreth diplomës"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid"
+  (onHide)="onModalClose()">
+  <ng-template pTemplate="content">
+    <msh-diplomas-student-form
+      [administrationOffices]="administrationOffices"
+      [isPrinted]="!printed"
+      [highSchools]="(highSchools$ | async)!!"
+      [studentTypes]="studentTypes"
+      (admOfficeChanged)="getHighSchoolsByOffice($event)"
+      (formClose)="onModalClose()"
+      (formSave)="onFormSave($event)">
+    </msh-diplomas-student-form>
+  </ng-template>
 </p-dialog>
 
-<p-confirmDialog #cd header="Konfirmo" icon="pi pi-exclamation-triangle" [style]="{ width: '450px' }">
-    <ng-template pTemplate="footer">
-        <button type="button" pButton icon="pi pi-times" label="Jo" class="p-button-text"
-            (click)="cd.reject()"></button>
-        <button type="button" pButton icon="pi pi-check" label="Po" class="p-button border"
-            (click)="cd.accept()"></button>
-    </ng-template>
+<p-confirmDialog
+  #cd
+  header="Konfirmo"
+  icon="pi pi-exclamation-triangle"
+  [style]="{ width: '450px' }">
+  <ng-template pTemplate="footer">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Jo"
+      class="p-button-text"
+      (click)="cd.reject()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Po"
+      class="p-button border"
+      (click)="cd.accept()"></button>
+  </ng-template>
 </p-confirmDialog>
 
 <ng-container *ngIf="academicYear$ | async"></ng-container>

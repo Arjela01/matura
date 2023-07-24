@@ -6,9 +6,9 @@ import {
   Output,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {A1FormComponent} from "../a1-form/a1-form.component";
-import {ActivatedRoute} from "@angular/router";
-import {A1FormModeEnum} from "../a1-form-mode.enum";
+import { A1FormComponent } from '../a1-form/a1-form.component';
+import { ActivatedRoute } from '@angular/router';
+import { A1FormModeEnum } from '../a1-form-mode.enum';
 
 @Component({
   selector: 'msh-a1-for-student-edit',
@@ -23,7 +23,7 @@ export class A1ForStudentEditComponent {
   id = '';
   studentId = '';
 
-  constructor(private  route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute) {
     this.id = this.route.snapshot.paramMap.get('id') ?? '';
     this.studentId = this.route.snapshot.paramMap.get('studentId') ?? '';
   }

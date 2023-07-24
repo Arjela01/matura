@@ -71,8 +71,6 @@ export class ManageUniversitiesComponent implements OnInit {
     this.selectedRegion = {} as University;
   }
 
-
-
   onGridEvent(event: GridEvent<University | University[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
@@ -144,7 +142,7 @@ export class ManageUniversitiesComponent implements OnInit {
           this.toastService.showSuccess('Universiteti u shtua me sukses!');
           this.displayModal = false;
           this.getUniversities(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -162,7 +160,7 @@ export class ManageUniversitiesComponent implements OnInit {
           this.toastService.showSuccess('Universiteti u ndryshua me sukses!');
           this.displayModal = false;
           this.getUniversities(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(

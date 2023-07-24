@@ -4,11 +4,10 @@ export interface EmptySite {
   date: Date;
   time: string;
   examSiteId: string;
-  examSiteName?:string;
+  examSiteName?: string;
   takenSeats?: number;
-  examTypeId? : number;
-  examTypeName? : string;
-
+  examTypeId?: number;
+  examTypeName?: string;
 }
 
 export interface EmptySiteTableView {

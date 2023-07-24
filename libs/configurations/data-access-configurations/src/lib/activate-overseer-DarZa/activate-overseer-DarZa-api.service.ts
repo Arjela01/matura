@@ -3,7 +3,10 @@ import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
-import {ActivateOverseerDarZa, ActivateOverseerDarZaTableView} from "@msh/shared/domain-models";
+import {
+  ActivateOverseerDarZa,
+  ActivateOverseerDarZaTableView,
+} from '@msh/shared/domain-models';
 
 @Injectable({
   providedIn: 'root',

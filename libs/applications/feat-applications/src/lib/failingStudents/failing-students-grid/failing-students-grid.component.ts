@@ -8,7 +8,11 @@ import {
 } from '@angular/core';
 import { FailingStudent } from '@msh/applications/domain-application';
 import { Student } from '@msh/shared/domain-models';
-import {ColumnFilterDirective, GRID_ACTIONS, GridEvent} from '@msh/shared/util-shared';
+import {
+  ColumnFilterDirective,
+  GRID_ACTIONS,
+  GridEvent,
+} from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -16,7 +20,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import {ChipModule} from "primeng/chip";
+import { ChipModule } from 'primeng/chip';
 
 @Component({
   selector: 'msh-failing-students-grid',
@@ -30,7 +34,7 @@ import {ChipModule} from "primeng/chip";
     CheckboxModule,
     RippleModule,
     ChipModule,
-    ColumnFilterDirective
+    ColumnFilterDirective,
   ],
   templateUrl: './failing-students-grid.component.html',
   styleUrls: ['./failing-students-grid.component.scss'],

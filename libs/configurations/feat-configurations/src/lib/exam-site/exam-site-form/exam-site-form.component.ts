@@ -99,7 +99,7 @@ export class ExamSiteFormComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
-      this.formSave.emit({...this.examSite});
+      this.formSave.emit({ ...this.examSite });
     }
   }
   ngOnInit() {
@@ -115,12 +115,12 @@ export class ExamSiteFormComponent implements OnInit {
         });
     } else {
       this.examSite = {
-        address: "",
+        address: '',
         administrationOfficeId: 0,
-        administrationOfficeName: "",
+        administrationOfficeName: '',
         id: null,
-        name: "",
-        quota: 0
+        name: '',
+        quota: 0,
       };
     }
   }

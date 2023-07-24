@@ -8,10 +8,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
-import { CityApiService } from '@msh/configurations/data-access-configurations'
-import {
-  RegionApiService,
-} from '@msh/configurations/data-access-configurations';
+import { CityApiService } from '@msh/configurations/data-access-configurations';
+import { RegionApiService } from '@msh/configurations/data-access-configurations';
 import { City } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
@@ -24,22 +22,22 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { CityFormComponent } from '../city-form/city-form.component';
 import { CityGridComponent } from '../city-grid/city-grid.component';
-import {RippleModule} from "primeng/ripple";
+import { RippleModule } from 'primeng/ripple';
 
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-cities',
   standalone: true,
-    imports: [
-        ButtonModule,
-        CommonModule,
-        DialogModule,
-        ConfirmDialogModule,
-        CityGridComponent,
-        CityFormComponent,
-        ToolbarModule,
-        RippleModule,
-    ],
+  imports: [
+    ButtonModule,
+    CommonModule,
+    DialogModule,
+    ConfirmDialogModule,
+    CityGridComponent,
+    CityFormComponent,
+    ToolbarModule,
+    RippleModule,
+  ],
   templateUrl: './manage-cities.component.html',
   styleUrls: ['./manage-cities.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -54,7 +52,6 @@ export class ManageCitiesComponent implements OnInit {
   selectedCity: City | null = null;
   selectedCities: City[] = [];
   displayModal = false;
-
 
   regions: DropdownModel<number>[] = [];
 
@@ -86,10 +83,7 @@ export class ManageCitiesComponent implements OnInit {
   onGridEvent(event: GridEvent<City | City[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
-        this.selectedCities = [
-          ...this.selectedCities,
-          event.data as City,
-        ];
+        this.selectedCities = [...this.selectedCities, event.data as City];
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
         this.selectedCities = this.selectedCities.filter(c => {
@@ -154,7 +148,7 @@ export class ManageCitiesComponent implements OnInit {
           this.toastService.showSuccess('Qyteti u shtua me sukses!');
           this.displayModal = false;
           this.getCities(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -169,12 +163,10 @@ export class ManageCitiesComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            'Qyteti u ndryshua me sukses!'
-          );
+          this.toastService.showSuccess('Qyteti u ndryshua me sukses!');
           this.displayModal = false;
           this.getCities(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -191,7 +183,7 @@ export class ManageCitiesComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('Qyteti u fshi me sukses!');
           this.getCities(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -209,4 +201,3 @@ export class ManageCitiesComponent implements OnInit {
       });
   }
 }
-

@@ -1,1 +1,1 @@
-export * from './lib/user-section.routes'
+export * from './lib/user-section.routes';

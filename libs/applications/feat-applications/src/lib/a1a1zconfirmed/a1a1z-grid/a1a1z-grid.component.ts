@@ -7,7 +7,11 @@ import {
   Output,
 } from '@angular/core';
 import { Student } from '@msh/shared/domain-models';
-import {GridEvent, GRID_ACTIONS, ColumnFilterDirective} from '@msh/shared/util-shared';
+import {
+  GridEvent,
+  GRID_ACTIONS,
+  ColumnFilterDirective,
+} from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -16,7 +20,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import {RouterLink} from "@angular/router";
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'a1a1z-grid',
@@ -31,7 +35,7 @@ import {RouterLink} from "@angular/router";
     RippleModule,
     ChipModule,
     ColumnFilterDirective,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './a1a1z-grid.component.html',
   styleUrls: ['./a1a1z-grid.component.scss'],

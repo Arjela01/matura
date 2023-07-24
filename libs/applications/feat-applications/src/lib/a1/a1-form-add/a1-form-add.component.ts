@@ -7,8 +7,8 @@ import {
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { A1Z } from '@msh/applications/domain-application';
-import {A1FormComponent} from "../a1-form/a1-form.component";
-import {A1FormModeEnum} from "../a1-form-mode.enum";
+import { A1FormComponent } from '../a1-form/a1-form.component';
+import { A1FormModeEnum } from '../a1-form-mode.enum';
 
 @Component({
   selector: 'msh-a1-form-add',

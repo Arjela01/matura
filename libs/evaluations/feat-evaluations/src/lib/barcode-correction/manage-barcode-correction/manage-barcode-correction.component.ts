@@ -84,7 +84,6 @@ export class ManageBarcodeCorrectionComponent {
     this.displayModal = true;
   }
 
-
   onGridEvent(event: GridEvent<BarcodeCorrection | BarcodeCorrection[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:

@@ -1,6 +1,12 @@
-import {Directive, ElementRef, HostListener} from '@angular/core';
-import {AbstractControl, NG_VALIDATORS, ValidationErrors, Validator, ValidatorFn} from '@angular/forms';
-import {ALBANIAN_NID_REGEXP} from '../constants/validation-regexes';
+import { Directive, ElementRef, HostListener } from '@angular/core';
+import {
+  AbstractControl,
+  NG_VALIDATORS,
+  ValidationErrors,
+  Validator,
+  ValidatorFn,
+} from '@angular/forms';
+import { ALBANIAN_NID_REGEXP } from '../constants/validation-regexes';
 
 export function albanianNidValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {

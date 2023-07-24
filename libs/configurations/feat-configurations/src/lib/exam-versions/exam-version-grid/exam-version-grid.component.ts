@@ -7,7 +7,11 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExamVersion } from '@msh/shared/domain-models';
-import {ColumnFilterDirective, GRID_ACTIONS, GridEvent} from '@msh/shared/util-shared';
+import {
+  ColumnFilterDirective,
+  GRID_ACTIONS,
+  GridEvent,
+} from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -27,7 +31,7 @@ import { RippleModule } from 'primeng/ripple';
     TooltipModule,
     CheckboxModule,
     RippleModule,
-    ColumnFilterDirective
+    ColumnFilterDirective,
   ],
   templateUrl: './exam-version-grid.component.html',
   styleUrls: ['./exam-version-grid.component.scss'],

@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -6,10 +5,10 @@ import {
   EventEmitter,
   Input,
   Output,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import {DashboardSection} from '@msh/shared/domain-models';
+import { DashboardSection } from '@msh/shared/domain-models';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -19,14 +18,17 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 @Component({
   selector: 'msh-dashboard-sections-form',
   standalone: true,
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     FormsModule,
     InputTextModule,
     InputNumberModule,
     RadioButtonModule,
     InputTextareaModule,
     ButtonModule,
-    CheckboxModule,],  templateUrl: './dashboard-sections-form.component.html',
+    CheckboxModule,
+  ],
+  templateUrl: './dashboard-sections-form.component.html',
   styleUrls: ['./dashboard-sections-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -45,7 +47,7 @@ export class DashboardSectionsFormComponent {
 
   dashboardSections: DashboardSection = {
     id: 0,
-    name: ''
+    name: '',
   };
 
   onCancelClick() {

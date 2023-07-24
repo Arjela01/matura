@@ -138,7 +138,7 @@ export class ManageA1zCategoriesComponent {
           this.toastService.showSuccess('Kategoria A1Z u shtua me sukses!');
           this.displayModal = false;
           this.getA1zCategories(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -156,7 +156,7 @@ export class ManageA1zCategoriesComponent {
           this.toastService.showSuccess('Kategoria A1Z u ndryshua me sukses!');
           this.displayModal = false;
           this.getA1zCategories(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -173,7 +173,7 @@ export class ManageA1zCategoriesComponent {
         if (response.isSuccessful) {
           this.toastService.showInfo('Kategoria A1Z u fshi me sukses!');
           this.getA1zCategories(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(

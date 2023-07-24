@@ -1,8 +1,8 @@
-import {BehaviorSubject} from "rxjs";
-import {Injectable} from "@angular/core";
+import { BehaviorSubject } from 'rxjs';
+import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BarcodeService {
   private emptyBarcodeField$$ = new BehaviorSubject<boolean>(true);

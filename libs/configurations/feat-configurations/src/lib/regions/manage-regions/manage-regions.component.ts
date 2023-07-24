@@ -8,11 +8,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
-import {
-  RegionApiService,
-} from '@msh/configurations/data-access-configurations';
+import { RegionApiService } from '@msh/configurations/data-access-configurations';
 import { Region } from '@msh/shared/domain-models';
-
 
 import {
   GlobalToastService,
@@ -23,22 +20,22 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { RegionFormComponent } from '../region-form/region-form.component';
 import { RegionGridComponent } from '../region-grid/region-grid.component';
-import {RippleModule} from "primeng/ripple";
+import { RippleModule } from 'primeng/ripple';
 
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-regions',
   standalone: true,
-    imports: [
-        ButtonModule,
-        CommonModule,
-        DialogModule,
-        ConfirmDialogModule,
-        RegionGridComponent,
-        RegionFormComponent,
-        ToolbarModule,
-        RippleModule,
-    ],
+  imports: [
+    ButtonModule,
+    CommonModule,
+    DialogModule,
+    ConfirmDialogModule,
+    RegionGridComponent,
+    RegionFormComponent,
+    ToolbarModule,
+    RippleModule,
+  ],
   templateUrl: './manage-regions.component.html',
   styleUrls: ['./manage-regions.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -58,22 +55,17 @@ export class ManageRegionsComponent {
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly regionService: RegionApiService
-  ) {
-  }
+  ) {}
 
   onNewClick() {
     this.displayModal = true;
     this.selectedRegion = {} as Region;
   }
 
-
   onGridEvent(event: GridEvent<Region | Region[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
-        this.selectedRegions = [
-          ...this.selectedRegions,
-          event.data as Region,
-        ];
+        this.selectedRegions = [...this.selectedRegions, event.data as Region];
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
         this.selectedRegions = this.selectedRegions.filter(r => {
@@ -127,7 +119,6 @@ export class ManageRegionsComponent {
         this.regions$$.next(response.data);
         this.totalRecords = response.total;
       });
-
   }
 
   addRegion(region: Region) {
@@ -139,7 +130,7 @@ export class ManageRegionsComponent {
           this.toastService.showSuccess('Rajoni u shtua me sukses!');
           this.displayModal = false;
           this.getRegions(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -154,12 +145,10 @@ export class ManageRegionsComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            'Rajoni u ndryshua me sukses!'
-          );
+          this.toastService.showSuccess('Rajoni u ndryshua me sukses!');
           this.displayModal = false;
           this.getRegions(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -176,7 +165,7 @@ export class ManageRegionsComponent {
         if (response.isSuccessful) {
           this.toastService.showInfo('Rajoni u fshi me sukses!');
           this.getRegions(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -184,5 +173,4 @@ export class ManageRegionsComponent {
           );
       });
   }
-
 }

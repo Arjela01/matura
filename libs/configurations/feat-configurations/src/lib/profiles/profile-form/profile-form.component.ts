@@ -61,11 +61,9 @@ export class ProfileFormComponent implements OnChanges {
     name: '',
     isTechnical: true,
     academicYearId: 1,
-
   };
 
   ngOnChanges(): void {
-
     if (this.profileGroups && this.profile.profileGroupID) {
       this.onProfileGroupChange({ value: this.profile.profileGroupID });
     }
@@ -81,7 +79,6 @@ export class ProfileFormComponent implements OnChanges {
       this.formSave.emit(this.profile);
     }
   }
-
 
   onProfileGroupChange($event: any) {
     this.profileGroupsFiltered = this.profileGroups.filter(

@@ -8,6 +8,7 @@ import {
   OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -23,6 +24,7 @@ import {
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
+  AcademicYear,
   Student,
   StudentClassModel,
   StudentSectionModel,
@@ -42,6 +44,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { A1a1zConfirmationDialogComponent } from '../manage-students/a1a1z-confirmation-dialog/a1a1z-confirmation-dialog.component';
+import { untilDestroyed } from '@ngneat/until-destroy';
 
 @Component({
   selector: 'msh-students-form',
@@ -127,6 +130,7 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     isConfirmedBySupervisor: false,
   };
   finishedAtSameSchool = true;
+  currentAcademicYear?: Partial<AcademicYear>;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -160,9 +164,15 @@ export class StudentsFormComponent implements OnInit, OnChanges {
         this.student.registrationYearId = activeYear.key;
       }
     });
+    this.authFacade.academicYear$.subscribe(data => {
+      this.currentAcademicYear = data;
+      if (!this.student.id) {
+        this.student.isFall = this.currentAcademicYear?.isFall ?? false;
+      }
+    });
   }
 
-  ngOnChanges(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.showStudent = this.student.highSchoolId != null;
   }
 
@@ -197,14 +207,22 @@ export class StudentsFormComponent implements OnInit, OnChanges {
       this.router.navigate([`/configurations/students/edit/${this.studentId}`]);
     }
   }
-  
+
   onFormSave(formType: FormType) {
     switch (formType) {
       case FormType.A1:
-        this.router.navigate(['/applications/a1/for-student', this.studentId, 'add']);
+        this.router.navigate([
+          '/applications/a1/for-student',
+          this.studentId,
+          'add',
+        ]);
         break;
       case FormType.A1Z:
-        this.router.navigate(['/applications/a1z/for-student', this.studentId, 'add']);
+        this.router.navigate([
+          '/applications/a1z/for-student',
+          this.studentId,
+          'add',
+        ]);
         break;
     }
   }

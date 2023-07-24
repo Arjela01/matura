@@ -74,8 +74,6 @@ export class ManageUniversityDepartmentsComponent implements OnInit {
     this.selectedUniversityDepartment = {} as UniversityDepartment;
   }
 
-
-
   onGridEvent(event: GridEvent<UniversityDepartment | UniversityDepartment[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:

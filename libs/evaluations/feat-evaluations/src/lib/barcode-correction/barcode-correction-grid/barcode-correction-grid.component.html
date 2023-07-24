@@ -25,19 +25,19 @@
           <p-columnFilter
             type="numeric"
             field="archiveFolderNr"
-            display="menu"  mshColumnFilterDirective></p-columnFilter>
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th
-        pSortableColumn="examTypeName">
+      <th pSortableColumn="examTypeName">
         Tipi i Provimit
         <div>
-          <p-sortIcon
-            field="examTypeName"></p-sortIcon>
+          <p-sortIcon field="examTypeName"></p-sortIcon>
           <p-columnFilter
             type="text"
             field="examTypeName"
-            display="menu"  mshColumnFilterDirective></p-columnFilter>
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="createdByName">
@@ -47,7 +47,8 @@
           <p-columnFilter
             type="text"
             field="createdByName"
-            display="menu"  mshColumnFilterDirective></p-columnFilter>
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="barcode">
@@ -57,7 +58,8 @@
           <p-columnFilter
             type="text"
             field="barcode"
-            display="menu"  mshColumnFilterDirective></p-columnFilter>
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="isFolderClosed">
@@ -68,7 +70,8 @@
             type="boolean"
             field="isFolderClosed"
             matchMode="equals"
-            display="menu"  mshColumnFilterDirective></p-columnFilter>
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th></th>
@@ -80,7 +83,11 @@
         <a
           pTooltip="Shiko Dosjen"
           tooltipPosition="bottom"
-          [routerLink]="['/evaluations', 'archive-view', barcodeCorrection.archiveFolderId]">
+          [routerLink]="[
+            '/evaluations',
+            'archive-view',
+            barcodeCorrection.archiveFolderId
+          ]">
           {{ this.barcodeCorrection.archiveFolderNr }}
         </a>
       </td>

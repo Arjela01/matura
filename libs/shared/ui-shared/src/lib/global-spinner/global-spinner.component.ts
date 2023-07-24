@@ -1,6 +1,10 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
-import { LoaderService} from "../loader-service/loader.service";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ViewEncapsulation,
+} from '@angular/core';
+import { LoaderService } from '../loader-service/loader.service';
 
 @Component({
   selector: 'msh-global-spinner',
@@ -16,6 +20,5 @@ import { LoaderService} from "../loader-service/loader.service";
   encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class GlobalSpinnerComponent {
-  constructor( public loader : LoaderService) {
-  }
+  constructor(public loader: LoaderService) {}
 }

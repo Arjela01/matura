@@ -6,7 +6,7 @@ import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GendersApiService {
   constructor(private apiService: APIService) {}
@@ -16,23 +16,15 @@ export class GendersApiService {
   }
 
   save(gender: Gender): Observable<ApiResult<Gender>> {
-    return this.apiService.post<ApiResult<Gender>, Gender>(
-      `/Gender`,
-      gender
-    );
+    return this.apiService.post<ApiResult<Gender>, Gender>(`/Gender`, gender);
   }
 
   update(gender: Gender): Observable<ApiResult<Gender>> {
-    return this.apiService.put<ApiResult<Gender>, Gender>(
-      `/Gender`,
-      gender
-    );
+    return this.apiService.put<ApiResult<Gender>, Gender>(`/Gender`, gender);
   }
 
   delete(genderId: number): Observable<ApiResult<unknown>> {
-    return this.apiService.delete<ApiResult<Gender>>(
-      `/Gender/${genderId}`
-    );
+    return this.apiService.delete<ApiResult<Gender>>(`/Gender/${genderId}`);
   }
   loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(

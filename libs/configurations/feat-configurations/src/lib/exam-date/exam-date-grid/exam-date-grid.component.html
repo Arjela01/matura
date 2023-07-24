@@ -58,10 +58,10 @@
         Është Vjeshtë?
         <p-sortIcon field="time"></p-sortIcon>
         <p-columnFilter
-                type="text"
-                field="isFall"
-                display="menu"
-                mshColumnFilterDirective></p-columnFilter>
+          type="text"
+          field="isFall"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
       <th></th>
     </tr>
@@ -75,10 +75,10 @@
         {{ examDate.examSiteName }}
       </td>
       <td style="width: 20%; min-width: 10rem">
-        {{ examDate.date | date : 'dd/MM/yyyy'}}
+        {{ examDate.date | date : 'dd/MM/yyyy' }}
       </td>
       <td style="width: 20%; min-width: 10rem">
-        {{ examDate.time}}
+        {{ examDate.time }}
       </td>
       <td style="width: 20%">
         {{ examDate.isFall ? 'Po' : 'Jo' }}
@@ -103,5 +103,3 @@
     </tr>
   </ng-template>
 </p-table>
-
-

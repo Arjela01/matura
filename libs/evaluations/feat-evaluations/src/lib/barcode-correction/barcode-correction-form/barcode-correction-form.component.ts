@@ -15,8 +15,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
-import {ArchiveExam} from '@msh/evaluations/domain-evaluations';
-import {TooltipModule} from "primeng/tooltip";
+import { ArchiveExam } from '@msh/evaluations/domain-evaluations';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'msh-barcode-correction-form',
@@ -31,13 +31,13 @@ import {TooltipModule} from "primeng/tooltip";
     ButtonModule,
     CheckboxModule,
     DropdownModule,
-    TooltipModule
+    TooltipModule,
   ],
   templateUrl: './barcode-correction-form.component.html',
   styleUrls: ['./barcode-correction-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BarcodeCorrectionFormComponent   {
+export class BarcodeCorrectionFormComponent {
   @Input() set archiveExamDetails(details: ArchiveExam | null) {
     if (details) {
       this.archiveExam = Object.assign({}, details);
@@ -51,7 +51,11 @@ export class BarcodeCorrectionFormComponent   {
 
   submitted = false;
 
-  archiveExam: ArchiveExam = {archiveFolderNr: 0, id: undefined, archiveFolderId: 0 };
+  archiveExam: ArchiveExam = {
+    archiveFolderNr: 0,
+    id: undefined,
+    archiveFolderId: 0,
+  };
 
   onCancelClick() {
     this.formClose.emit();

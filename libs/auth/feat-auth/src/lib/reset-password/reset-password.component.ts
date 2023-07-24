@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
@@ -38,7 +43,7 @@ export class ResetPasswordComponent {
   userName: string | null = null;
   error$ = this.authFacade.error$;
   user$ = this.authFacade.user$;
-  errorMessage=''
+  errorMessage = '';
   passwordNotMatch = false;
   passwordResetModel: UserResetPasswordModel = {
     password: '',
@@ -50,7 +55,7 @@ export class ResetPasswordComponent {
     readonly authFacade: AuthFacade,
     private resetPasswordService: UserResetPasswordApiService,
     private storageService: StorageService,
-    private cdr:ChangeDetectorRef
+    private cdr: ChangeDetectorRef
   ) {}
 
   onLoginSubmit(): void {
@@ -63,18 +68,18 @@ export class ResetPasswordComponent {
     this.resetPasswordService
       .userChangePassword(this.passwordResetModel)
       .subscribe(data => {
-       if(data.isSuccessful){
-        this.authFacade.resetToken();
-        this.authFacade.login({
-          userName: name,
-          password,
-        } as any);
-        this.errorMessage=''
-       }else {
-        this.errorMessage=data.errorMessage
-       }
+        if (data.isSuccessful) {
+          this.authFacade.resetToken();
+          this.authFacade.login({
+            userName: name,
+            password,
+          } as any);
+          this.errorMessage = '';
+        } else {
+          this.errorMessage = data.errorMessage;
+        }
 
-       this.cdr.detectChanges()
+        this.cdr.detectChanges();
       });
   }
 }

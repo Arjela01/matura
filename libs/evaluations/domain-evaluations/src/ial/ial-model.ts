@@ -1,9 +1,9 @@
 export interface IalModel {
-  id:string;
+  id: string;
   name: string;
-  averageGrade:any;
+  averageGrade: any;
 }
-export interface IalTableView{
+export interface IalTableView {
   data: IalModel[];
   total: number;
 }

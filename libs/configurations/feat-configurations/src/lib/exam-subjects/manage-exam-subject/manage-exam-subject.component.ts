@@ -30,7 +30,7 @@ import {
 } from 'rxjs';
 import { ExamSubjectFormComponent } from '../exam-subject-form/exam-subject-form.component';
 import { ExamSubjectGridComponent } from '../exam-subject-grid/exam-subject-grid.component';
-import * as FileSaver from "file-saver";
+import * as FileSaver from 'file-saver';
 
 @UntilDestroy()
 @Component({
@@ -98,7 +98,10 @@ export class ManageExamSubjectComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
-    this.selectedExamSubject = {isNotGraded: false, isOptional: false} as ExamSubject;
+    this.selectedExamSubject = {
+      isNotGraded: false,
+      isOptional: false,
+    } as ExamSubject;
   }
 
   onDeleteSelectedClick() {

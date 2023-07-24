@@ -23,10 +23,10 @@
         <div>
           <p-sortIcon field="studentId"></p-sortIcon>
           <p-columnFilter
-                  type="text"
-                  field="studentId"
-                  display="menu"
-                  mshColumnFilterDirective></p-columnFilter>
+            type="text"
+            field="studentId"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="NID">
@@ -34,10 +34,10 @@
         <div>
           <p-sortIcon field="NID"></p-sortIcon>
           <p-columnFilter
-                  type="text"
-                  field="NID"
-                  display="menu"
-                  mshColumnFilterDirective></p-columnFilter>
+            type="text"
+            field="NID"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="firstName">
@@ -111,10 +111,10 @@
         <div>
           <p-sortIcon field="academicYear"></p-sortIcon>
           <p-columnFilter
-                  type="text"
-                  field="academicYear"
-                  display="menu"
-                  mshColumnFilterDirective></p-columnFilter>
+            type="text"
+            field="academicYear"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th></th>
@@ -123,7 +123,11 @@
   <ng-template pTemplate="body" let-a1z>
     <tr>
       <td style="width: 10%; min-width: 10rem">
-        <a [routerLink]="['/applications/students/view', a1z.studentId]" class="p-button-link">{{ a1z.studentId }}</a>
+        <a
+          [routerLink]="['/applications/students/view', a1z.studentId]"
+          class="p-button-link"
+          >{{ a1z.studentId }}</a
+        >
       </td>
       <td style="width: 10%; min-width: 10rem">
         {{ a1z.nid }}

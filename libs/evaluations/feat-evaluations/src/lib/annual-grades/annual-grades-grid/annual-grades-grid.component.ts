@@ -16,11 +16,14 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExamGrade } from '@msh/evaluations/domain-evaluations';
-import {AnnualGradesApiService, ExamGradeApiService} from '@msh/evaluations/data-access-evaluations';
+import {
+  AnnualGradesApiService,
+  ExamGradeApiService,
+} from '@msh/evaluations/data-access-evaluations';
 import { StudentsApiService } from '@msh/configurations/data-access-configurations';
 import { Student } from '@msh/shared/domain-models';
-import {ColumnFilterDirective, GridEvent} from '@msh/shared/util-shared';
-import * as FileSaver from "file-saver";
+import { ColumnFilterDirective, GridEvent } from '@msh/shared/util-shared';
+import * as FileSaver from 'file-saver';
 
 @UntilDestroy()
 @Component({
@@ -35,7 +38,7 @@ import * as FileSaver from "file-saver";
     CheckboxModule,
     RippleModule,
     RouterLink,
-    ColumnFilterDirective
+    ColumnFilterDirective,
   ],
   templateUrl: './annual-grades-grid.component.html',
   styleUrls: ['./annual-grades-grid.component.scss'],
@@ -57,7 +60,7 @@ export class AnnualGradesGridComponent {
     private readonly examGradeApiService: ExamGradeApiService,
     private readonly studentApiService: StudentsApiService,
     private route: ActivatedRoute,
-    private readonly annualGradeService: AnnualGradesApiService,
+    private readonly annualGradeService: AnnualGradesApiService
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
@@ -85,5 +88,4 @@ export class AnnualGradesGridComponent {
         FileSaver.saveAs(blob, 'Lista e aplikimeve IAL');
       });
   }
-
 }

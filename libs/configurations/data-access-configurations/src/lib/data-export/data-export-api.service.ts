@@ -26,14 +26,22 @@ export class DataExportApiService {
   }
 
   save(dataExport: DataExport): Observable<ApiResult<DataExport>> {
-    return this.apiService.post<ApiResult<DataExport>, DataExport>(`/DataExport`, dataExport);
+    return this.apiService.post<ApiResult<DataExport>, DataExport>(
+      `/DataExport`,
+      dataExport
+    );
   }
 
   update(dataExport: DataExport): Observable<ApiResult<DataExport>> {
-    return this.apiService.put<ApiResult<DataExport>, DataExport>(`/DataExport`, dataExport);
+    return this.apiService.put<ApiResult<DataExport>, DataExport>(
+      `/DataExport`,
+      dataExport
+    );
   }
 
   delete(dataExport: number): Observable<ApiResult<unknown>> {
-    return this.apiService.delete<ApiResult<DataExport>>(`/DataExport/${dataExport}`);
+    return this.apiService.delete<ApiResult<DataExport>>(
+      `/DataExport/${dataExport}`
+    );
   }
 }

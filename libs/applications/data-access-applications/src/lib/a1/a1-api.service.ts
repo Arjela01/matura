@@ -33,13 +33,13 @@ export class A1ApiService {
 
   save(a1: A1Z): Observable<ApiResult<A1Z>> {
     return this.apiService.post<ApiResult<A1Z>, A1Z>(`/A1`, a1).pipe(
-      map((data) => data),
+      map(data => data),
       catchError(error => throwError(error))
     );
   }
   update(a1: A1Z): Observable<ApiResult<A1Z>> {
     return this.apiService.put<ApiResult<A1Z>, A1Z>(`/A1`, a1).pipe(
-      map((data) => data),
+      map(data => data),
       catchError(error => throwError(error))
     );
   }

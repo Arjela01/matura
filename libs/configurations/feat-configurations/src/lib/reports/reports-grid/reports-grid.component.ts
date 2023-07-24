@@ -3,7 +3,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { EventEmitter, Input, Output } from '@angular/core';
 import { Reports } from '@msh/configurations/domain-configurations';
-import {GridEvent, GRID_ACTIONS, ColumnFilterDirective} from '@msh/shared/util-shared';
+import {
+  GridEvent,
+  GRID_ACTIONS,
+  ColumnFilterDirective,
+} from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -22,7 +26,7 @@ import { TooltipModule } from 'primeng/tooltip';
     TooltipModule,
     CheckboxModule,
     RippleModule,
-    ColumnFilterDirective
+    ColumnFilterDirective,
   ],
   templateUrl: './reports-grid.component.html',
   styleUrls: ['./reports-grid.component.scss'],

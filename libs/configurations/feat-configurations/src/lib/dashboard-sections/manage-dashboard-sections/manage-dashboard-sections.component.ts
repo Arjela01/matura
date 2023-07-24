@@ -12,7 +12,7 @@ import {
   GridEvent,
   GRID_ACTIONS,
 } from '@msh/shared/util-shared';
-import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -102,8 +102,7 @@ export class ManageDashboardSectionsComponent implements OnInit {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message:
-            'Jeni i sigurt që doni të fshini seksionin e zgjedhur?',
+          message: 'Jeni i sigurt që doni të fshini seksionin e zgjedhur?',
           accept: () => {
             this.deleteDashboardSection(event.data as DashboardSection);
           },
@@ -143,11 +142,13 @@ export class ManageDashboardSectionsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Seksioni i dashboard-it u shtua me sukses!');
+          this.toastService.showSuccess(
+            'Seksioni i dashboard-it u shtua me sukses!'
+          );
           this.displayModal = false;
           this.getDashboardSections(this.filters as LazyLoadEvent);
           this.cd.detectChanges();
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -167,7 +168,7 @@ export class ManageDashboardSectionsComponent implements OnInit {
           );
           this.displayModal = false;
           this.getDashboardSections(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -182,7 +183,9 @@ export class ManageDashboardSectionsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showInfo('Seksioni i dashboard-it u fshi me sukses!');
+          this.toastService.showInfo(
+            'Seksioni i dashboard-it u fshi me sukses!'
+          );
           this.getDashboardSections(this.filters as LazyLoadEvent);
         }
 

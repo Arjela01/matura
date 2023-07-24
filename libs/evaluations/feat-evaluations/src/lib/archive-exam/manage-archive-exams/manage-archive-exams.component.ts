@@ -12,7 +12,10 @@ import {
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import {ExamTypeApiService, ReportsApiService} from '@msh/configurations/data-access-configurations';
+import {
+  ExamTypeApiService,
+  ReportsApiService,
+} from '@msh/configurations/data-access-configurations';
 import {
   ArchiveExamApiService,
   ArchiveFolderApiService,
@@ -40,7 +43,7 @@ import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ArchiveFormComponent } from '../archive-exam-form/archive-form.component';
 import { ArchiveExamGridComponent } from '../archive-exam-grid/archive-exam-grid.component';
 import { BarcodeService } from '../services/barcode-service';
-import {Report} from "@msh/shared/domain-models";
+import { Report } from '@msh/shared/domain-models';
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-archive-exams',
@@ -86,7 +89,7 @@ export class ManageArchiveExamsComponent implements OnInit {
     id: undefined,
     index: 0,
     archiveFolderId: 0,
-    barcode: ''
+    barcode: '',
   };
   id: any;
   archiveFolder: ArchiveFolder = {} as ArchiveFolder;
@@ -134,12 +137,10 @@ export class ManageArchiveExamsComponent implements OnInit {
       .getById(this.id)
       .subscribe(folder => (this.archiveFolder = { ...folder.data }));
 
-    this.authFacade.academicYear$
-      .pipe(untilDestroyed(this))
-      .subscribe(data => {
-        console.log(data);
-        this.getArchiveExams(this.event);
-      });
+    this.authFacade.academicYear$.pipe(untilDestroyed(this)).subscribe(data => {
+      console.log(data);
+      this.getArchiveExams(this.event);
+    });
 
     this.reportApiService
       .loadRoleReports(this.event)
@@ -148,7 +149,9 @@ export class ManageArchiveExamsComponent implements OnInit {
         const archiveFolderData = res.data.find(item => {
           return item.reportId === 12;
         });
-        const parametersArray = JSON.parse(archiveFolderData?.parameters as never);
+        const parametersArray = JSON.parse(
+          archiveFolderData?.parameters as never
+        );
         if (parametersArray.length > 0)
           this.parameterUrl = parametersArray.find((item: string) => {
             return ['foldernr'].includes(item.toLowerCase());
@@ -227,22 +230,21 @@ export class ManageArchiveExamsComponent implements OnInit {
   }
 
   getArchiveExams($event: LazyLoadEvent) {
-      this.filters = Object.assign({}, $event);
-      this.archiveExamApiService
-        .loadArchiveExams($event,this.id)
-        .pipe(untilDestroyed(this))
-        .subscribe(response => {
-          this.archiveExams = response.data;
-          this.archiveExams$$.next(response.data);
-          this.totalRecords = response.total;
-          this.cd.markForCheck();
+    this.filters = Object.assign({}, $event);
+    this.archiveExamApiService
+      .loadArchiveExams($event, this.id)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.archiveExams = response.data;
+        this.archiveExams$$.next(response.data);
+        this.totalRecords = response.total;
+        this.cd.markForCheck();
 
-          if(response.total === 50){
-            this.changeFolderStatus();
-          }
-        });
-    }
-
+        if (response.total === 50) {
+          this.changeFolderStatus();
+        }
+      });
+  }
 
   addArchiveExams(archiveExam: ArchiveExam) {
     this.isBarcodeInputDisabled = true;

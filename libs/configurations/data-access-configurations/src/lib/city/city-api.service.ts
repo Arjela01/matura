@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { Observable } from 'rxjs';
-import {LazyLoadEvent} from "primeng/api";
-import {City, CityTableView} from "@msh/shared/domain-models";
+import { LazyLoadEvent } from 'primeng/api';
+import { City, CityTableView } from '@msh/shared/domain-models';
 
 @Injectable({
   providedIn: 'root',
@@ -21,21 +21,13 @@ export class CityApiService {
   }
 
   save(city: City): Observable<ApiResult<City>> {
-    return this.apiService.post<ApiResult<City>, City>(
-      `/City`,
-      city
-    );
+    return this.apiService.post<ApiResult<City>, City>(`/City`, city);
   }
   update(city: City): Observable<ApiResult<City>> {
-    return this.apiService.put<ApiResult<City>, City>(
-      `/City`,
-      city
-    );
+    return this.apiService.put<ApiResult<City>, City>(`/City`, city);
   }
 
   delete(cityId: number): Observable<ApiResult<unknown>> {
-    return this.apiService.delete<ApiResult<City>>(
-      `/City/${cityId}`
-    );
+    return this.apiService.delete<ApiResult<City>>(`/City/${cityId}`);
   }
 }

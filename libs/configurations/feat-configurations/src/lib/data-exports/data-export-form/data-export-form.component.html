@@ -45,7 +45,6 @@
       [showClear]="true"
       defaultLabel="Selekto Rolet"
       display="chip"></p-multiSelect>
-
   </div>
 
   <div class="field">
@@ -58,8 +57,15 @@
       [(ngModel)]="dataExport.displayOrder"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !dataExport.displayOrder && dataExport.displayOrder !== 0 }" />
-    <small class="p-error block" *ngIf="submitted && !dataExport.displayOrder && dataExport.displayOrder !== 0">
+      [ngClass]="{
+        'ng-invalid ng-dirty':
+          submitted && !dataExport.displayOrder && dataExport.displayOrder !== 0
+      }" />
+    <small
+      class="p-error block"
+      *ngIf="
+        submitted && !dataExport.displayOrder && dataExport.displayOrder !== 0
+      ">
       Renditja është fushë e kërkuar.
     </small>
   </div>

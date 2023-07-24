@@ -1,5 +1,5 @@
 export interface ArchiveExam {
-  id:any;
+  id: any;
   index?: number;
   archiveFolderId: number;
   archiveFolderNr: number;

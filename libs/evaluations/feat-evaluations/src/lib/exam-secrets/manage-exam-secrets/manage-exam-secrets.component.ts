@@ -1,8 +1,16 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import {ExamSubjectApiService, ExamTypeApiService} from '@msh/configurations/data-access-configurations';
+import {
+  ExamSubjectApiService,
+  ExamTypeApiService,
+} from '@msh/configurations/data-access-configurations';
 import { ExamSecretApiService } from '@msh/evaluations/data-access-evaluations';
 import { ExamSecret } from '@msh/evaluations/domain-evaluations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
@@ -72,8 +80,7 @@ export class ManageExamSecretsComponent implements OnInit {
     private readonly examSubjectService: ExamSubjectApiService,
     private readonly examTypeService: ExamTypeApiService,
     private authFacade: AuthFacade,
-    private readonly cd: ChangeDetectorRef,
-
+    private readonly cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {

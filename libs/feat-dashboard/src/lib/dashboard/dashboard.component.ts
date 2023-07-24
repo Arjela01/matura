@@ -13,10 +13,7 @@ import {
   DashboardItemsApiService,
   DashboardMetriciesApiService,
 } from '@msh/configurations/data-access-configurations';
-import {
-  DashboardItem,
-  DashboardMetrics,
-} from '@msh/shared/domain-models';
+import { DashboardItem, DashboardMetrics } from '@msh/shared/domain-models';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { UserProfileApiService } from '@msh/user-section/data-access-user-section';
 
@@ -73,11 +70,11 @@ export class DashboardComponent implements OnInit {
       });
     this.dashboardItemsApiService.forHome().subscribe(result => {
       const items = [...result.data];
-      console.log(items)
+      console.log(items);
       this.dashboardSections = [
         ...new Set(result.data.map(e => String(e.dashboardSectionName))),
       ];
-      console.log(this.dashboardSections)
+      console.log(this.dashboardSections);
       for (const section of this.dashboardSections) {
         this.dashboardItems.set(
           section,

@@ -1,4 +1,9 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -24,7 +29,7 @@ import { DropdownModel } from '@msh/shared/data-access-shared';
 import { RippleModule } from 'primeng/ripple';
 import { ExamSubjectProfileFormComponent } from '../exam-subject-profile-form/exam-subject-profile-form.component';
 import { ExamSubjectProfileGridComponent } from '../exam-subject-profile-grid/exam-subject-profile-grid.component';
-import * as FileSaver from "file-saver";
+import * as FileSaver from 'file-saver';
 
 @UntilDestroy()
 @Component({
@@ -68,7 +73,7 @@ export class ManageExamSubjectProfileComponent implements OnInit {
     private readonly academicYearsApiService: AcademicYearApiService,
     private readonly examTypesApiService: ExamTypeApiService,
     private readonly profilesApiService: ProfileApiService,
-    private readonly cd: ChangeDetectorRef,
+    private readonly cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -168,7 +173,7 @@ export class ManageExamSubjectProfileComponent implements OnInit {
           this.toastService.showSuccess('Lënda e provimit u shtua me sukses!');
           this.displayModal = false;
           this.getExamSubjectProfiles(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -188,7 +193,7 @@ export class ManageExamSubjectProfileComponent implements OnInit {
           );
           this.displayModal = false;
           this.getExamSubjectProfiles(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -205,7 +210,7 @@ export class ManageExamSubjectProfileComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('Lënda e provimit u fshi me sukses!');
           this.getExamSubjectProfiles(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -249,10 +254,12 @@ export class ManageExamSubjectProfileComponent implements OnInit {
   }
 
   loadExamSubjects($event: ExamSubjectProfile) {
-    this.examSubjectService.loadDropDownListNotMappedToProfiles($event.academicYearId,
-      $event.profileId,
-      $event.examTypeId,
-      $event.examSubjectId
+    this.examSubjectService
+      .loadDropDownListNotMappedToProfiles(
+        $event.academicYearId,
+        $event.profileId,
+        $event.examTypeId,
+        $event.examSubjectId
       )
       .pipe(untilDestroyed(this))
       .subscribe(response => {

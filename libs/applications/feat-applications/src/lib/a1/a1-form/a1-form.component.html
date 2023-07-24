@@ -118,7 +118,8 @@
               [showClear]="true"
               (onChange)="addSubject()"
               [ngClass]="{
-                'ng-invalid ng-dirty': submitted && chosenOptionalSubjects.length < 1
+                'ng-invalid ng-dirty':
+                  submitted && chosenOptionalSubjects.length < 1
               }">
             </p-dropdown>
           </div>
@@ -136,7 +137,9 @@
             [rowHover]="true">
             <ng-template pTemplate="header">
               <tr>
-                <th pSortableColumn="name" class="px-2">Lëndët e Përzgjedhura</th>
+                <th pSortableColumn="name" class="px-2">
+                  Lëndët e Përzgjedhura
+                </th>
                 <th></th>
               </tr>
             </ng-template>

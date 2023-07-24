@@ -107,7 +107,7 @@ export class UploadFormComponent implements OnInit {
         this.toastService.showSuccess('Dokumenti u shtua me sukses!');
         this.formClose.emit();
         this.displayUploadModal = false;
-      } else this.toastService.showError(response.errorMessage)
+      } else this.toastService.showError(response.errorMessage);
       if (response.isBadRequest)
         this.toastService.showError(
           'Ndodhi një problem gjatë ngarkimit të dokumentit!'

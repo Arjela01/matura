@@ -1,10 +1,17 @@
-import {CommonModule} from '@angular/common';
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, Input, ViewChild,} from '@angular/core';
-import {FormsModule, NgForm} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {A1ApiService} from '@msh/applications/data-access-applications';
-import {A1Z} from '@msh/applications/domain-application';
-import {AuthFacade} from '@msh/auth/data-access-auth';
+import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  HostListener,
+  Input,
+  ViewChild,
+} from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { A1ApiService } from '@msh/applications/data-access-applications';
+import { A1Z } from '@msh/applications/domain-application';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
   AcademicYearApiService,
   ExamSubjectApiService,
@@ -12,25 +19,43 @@ import {
   ReportsApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
-import {ApiResult, DropdownModel} from '@msh/shared/data-access-shared';
-import {AcademicYear, EXAM_TYPES, Report, Student,} from '@msh/shared/domain-models';
-import {GlobalToastService, GRID_ACTIONS, GridEvent,} from '@msh/shared/util-shared';
-import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
-import {ButtonModule} from 'primeng/button';
-import {CheckboxModule} from 'primeng/checkbox';
-import {DropdownModule} from 'primeng/dropdown';
-import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
-import {InputNumberModule} from 'primeng/inputnumber';
-import {InputTextModule} from 'primeng/inputtext';
-import {InputTextareaModule} from 'primeng/inputtextarea';
-import {RadioButtonModule} from 'primeng/radiobutton';
-import {RippleModule} from 'primeng/ripple';
-import {TableModule} from 'primeng/table';
-import {BehaviorSubject, combineLatest, Observable, of, switchMap,} from 'rxjs';
-import {DialogModule} from 'primeng/dialog';
-import {SharedStudent, SharedStudentLookupModule,} from '@msh/shared/student-lookup';
-import {A1FormModeEnum} from '../a1-form-mode.enum';
-import {LazyLoadEvent} from 'primeng/api';
+import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
+import {
+  AcademicYear,
+  EXAM_TYPES,
+  Report,
+  Student,
+} from '@msh/shared/domain-models';
+import {
+  GlobalToastService,
+  GRID_ACTIONS,
+  GridEvent,
+} from '@msh/shared/util-shared';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DropdownModule } from 'primeng/dropdown';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { RippleModule } from 'primeng/ripple';
+import { TableModule } from 'primeng/table';
+import {
+  BehaviorSubject,
+  combineLatest,
+  Observable,
+  of,
+  switchMap,
+} from 'rxjs';
+import { DialogModule } from 'primeng/dialog';
+import {
+  SharedStudent,
+  SharedStudentLookupModule,
+} from '@msh/shared/student-lookup';
+import { A1FormModeEnum } from '../a1-form-mode.enum';
+import { LazyLoadEvent } from 'primeng/api';
 
 @UntilDestroy()
 @Component({
@@ -418,12 +443,14 @@ export class A1FormComponent {
         });
 
         const query: { queryParams: { [x: string]: string } } = {
-          queryParams: { },
+          queryParams: {},
         };
-        if(this.mode === A1FormModeEnum.Add || this.mode === A1FormModeEnum.Edit)
+        if (
+          this.mode === A1FormModeEnum.Add ||
+          this.mode === A1FormModeEnum.Edit
+        )
           query.queryParams['returnUrl'] = '/applications/a1';
-        else
-          query.queryParams['returnUrl'] = '/applications/students';
+        else query.queryParams['returnUrl'] = '/applications/students';
 
         const parameters = JSON.parse(a1ReportData?.parameters as never);
         if (parameters.length > 0) {

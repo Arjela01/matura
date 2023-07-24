@@ -7,7 +7,11 @@ import {
   Output,
 } from '@angular/core';
 import { University } from '@msh/shared/domain-models';
-import {GridEvent, GRID_ACTIONS, ColumnFilterDirective} from '@msh/shared/util-shared';
+import {
+  GridEvent,
+  GRID_ACTIONS,
+  ColumnFilterDirective,
+} from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -27,7 +31,7 @@ import { TooltipModule } from 'primeng/tooltip';
     TooltipModule,
     CheckboxModule,
     RippleModule,
-    ColumnFilterDirective
+    ColumnFilterDirective,
   ],
   templateUrl: './university-grid.component.html',
   styleUrls: ['./university-grid.component.scss'],
@@ -43,7 +47,7 @@ export class UniversityGridComponent {
 
   @Output() gridEvent = new EventEmitter<
     GridEvent<University | University[]>
-    >();
+  >();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 

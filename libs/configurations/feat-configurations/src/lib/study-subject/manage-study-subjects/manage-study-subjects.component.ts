@@ -16,22 +16,22 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { StudySubjectFormComponent } from '../study-subject-form/study-subject-form.component';
 import { StudySubjectGridComponent } from '../study-subject-grid/study-subject-grid.component';
-import {RippleModule} from "primeng/ripple";
+import { RippleModule } from 'primeng/ripple';
 
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-study-subjects',
   standalone: true,
-    imports: [
-        ButtonModule,
-        CommonModule,
-        DialogModule,
-        ConfirmDialogModule,
-        ToolbarModule,
-        StudySubjectFormComponent,
-        StudySubjectGridComponent,
-        RippleModule,
-    ],
+  imports: [
+    ButtonModule,
+    CommonModule,
+    DialogModule,
+    ConfirmDialogModule,
+    ToolbarModule,
+    StudySubjectFormComponent,
+    StudySubjectGridComponent,
+    RippleModule,
+  ],
   templateUrl: './manage-study-subjects.component.html',
   styleUrls: ['./manage-study-subjects.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -57,8 +57,6 @@ export class ManageStudySubjectsComponent {
     this.displayModal = true;
     this.selectedStudySubject = {} as StudySubject;
   }
-
-
 
   onGridEvent(event: GridEvent<StudySubject | StudySubject[]>) {
     switch (event.action) {
@@ -134,7 +132,7 @@ export class ManageStudySubjectsComponent {
           this.toastService.showSuccess('Lënda e studimit u shtua me sukses!');
           this.displayModal = false;
           this.getStudySubjects(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -154,7 +152,7 @@ export class ManageStudySubjectsComponent {
           );
           this.displayModal = false;
           this.getStudySubjects(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -171,7 +169,7 @@ export class ManageStudySubjectsComponent {
         if (response.isSuccessful) {
           this.toastService.showInfo('Lënda e studimit u fshi me sukses!');
           this.getStudySubjects(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(

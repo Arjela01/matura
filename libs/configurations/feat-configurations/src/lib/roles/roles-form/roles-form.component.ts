@@ -6,7 +6,7 @@ import {
   EventEmitter,
   Input,
   Output,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Role } from '@msh/shared/domain-models';
@@ -20,20 +20,21 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 @Component({
   selector: 'msh-roles-form',
   standalone: true,
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     FormsModule,
     InputTextModule,
     InputNumberModule,
     RadioButtonModule,
     InputTextareaModule,
     ButtonModule,
-    CheckboxModule,],
+    CheckboxModule,
+  ],
   templateUrl: './roles-form.component.html',
   styleUrls: ['./roles-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RolesFormComponent {
-
   @Input() set rolesDetails(details: Role | null) {
     if (details) {
       this.role = Object.assign({}, details);
@@ -44,18 +45,16 @@ export class RolesFormComponent {
 
   @ViewChild('form', { static: true }) form!: NgForm;
 
-
   submitted = false;
 
   role: Role = {
     id: '',
     name: '',
-    description:''
+    description: '',
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor(private cd: ChangeDetectorRef) {}
-
 
   onCancelClick() {
     this.formClose.emit();

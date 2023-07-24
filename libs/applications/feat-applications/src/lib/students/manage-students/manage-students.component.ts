@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -17,7 +17,7 @@ import {
 import { RouterLink } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { StudentsApiService } from '@msh/configurations/data-access-configurations';
-import { Student } from '@msh/shared/domain-models';
+import { AcademicYear, Student } from '@msh/shared/domain-models';
 import { RippleModule } from 'primeng/ripple';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { StudentsEditComponent } from '../students-edit/students-edit.component';
@@ -55,6 +55,7 @@ export class ManageStudentsComponent {
   totalRecords = 0;
   selectedStudent: Student | null = null;
   selectedStudentList: Student[] = [];
+  academicYear?: Partial<AcademicYear> = undefined;
 
   constructor(
     private readonly studentService: StudentsApiService,
@@ -62,10 +63,12 @@ export class ManageStudentsComponent {
     private readonly toastService: GlobalToastService,
     private authFacade: AuthFacade
   ) {}
+
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    map(([_]) => {
+    map(([academicYear]) => {
       if (this.filters) {
         this.getStudent(this.filters as LazyLoadEvent);
+        this.academicYear = academicYear;
       }
     }),
     tap()
@@ -73,6 +76,9 @@ export class ManageStudentsComponent {
 
   onNewClick() {
     this.hideStudentForm = !this.hideStudentForm;
+    this.selectedStudent = {
+      isFall: this.academicYear?.isFall,
+    } as Student;
   }
 
   onGridEvent(event: GridEvent<Student | Student[]>) {

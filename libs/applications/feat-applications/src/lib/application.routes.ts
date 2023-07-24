@@ -1,10 +1,10 @@
 import { Route } from '@angular/router';
-import {A1ZForStudentAddComponent} from "./a1z/a1z-for-student-add/a1-z-for-student-add.component";
-import {A1ZForStudentEditComponent} from "./a1z/a1z-for-student-edit/a1-z-for-student-edit.component";
-import {A1ForStudentAddComponent} from "./a1/a1-for-student-add/a1-for-student-add.component";
-import {A1ForStudentEditComponent} from "./a1/a1-for-student-edit/a1-for-student-edit.component";
-import {A1FormEditComponent} from "./a1/a1-form-edit/a1-form-edit.component";
-import {A1FormAddComponent} from "./a1/a1-form-add/a1-form-add.component";
+import { A1ZForStudentAddComponent } from './a1z/a1z-for-student-add/a1-z-for-student-add.component';
+import { A1ZForStudentEditComponent } from './a1z/a1z-for-student-edit/a1-z-for-student-edit.component';
+import { A1ForStudentAddComponent } from './a1/a1-for-student-add/a1-for-student-add.component';
+import { A1ForStudentEditComponent } from './a1/a1-for-student-edit/a1-for-student-edit.component';
+import { A1FormEditComponent } from './a1/a1-form-edit/a1-form-edit.component';
+import { A1FormAddComponent } from './a1/a1-form-add/a1-form-add.component';
 
 export const APPLICATION_ROUTES: Route[] = [
   {
@@ -17,22 +17,30 @@ export const APPLICATION_ROUTES: Route[] = [
   {
     path: 'a1z/add',
     loadComponent: () =>
-      import('./a1z/a1z-form-add/a1-z-form-add.component').then(m => m.A1ZFormAddComponent),
+      import('./a1z/a1z-form-add/a1-z-form-add.component').then(
+        m => m.A1ZFormAddComponent
+      ),
   },
   {
     path: 'a1z/edit/:id',
     loadComponent: () =>
-      import('./a1z/a1z-form-edit/a1-z-form-edit.component').then(m => m.A1ZFormEditComponent),
+      import('./a1z/a1z-form-edit/a1-z-form-edit.component').then(
+        m => m.A1ZFormEditComponent
+      ),
   },
   {
     path: 'a1z/for-student/:studentId/add',
     loadComponent: () =>
-      import('./a1z/a1z-for-student-add/a1-z-for-student-add.component').then(m => m.A1ZForStudentAddComponent),
+      import('./a1z/a1z-for-student-add/a1-z-for-student-add.component').then(
+        m => m.A1ZForStudentAddComponent
+      ),
   },
   {
     path: 'a1z/for-student/:studentId/edit/:id',
     loadComponent: () =>
-      import('./a1z/a1z-for-student-edit/a1-z-for-student-edit.component').then(m => m.A1ZForStudentEditComponent),
+      import('./a1z/a1z-for-student-edit/a1-z-for-student-edit.component').then(
+        m => m.A1ZForStudentEditComponent
+      ),
   },
   {
     path: 'a1',
@@ -42,22 +50,30 @@ export const APPLICATION_ROUTES: Route[] = [
   {
     path: 'a1/add',
     loadComponent: () =>
-      import('./a1/a1-form-add/a1-form-add.component').then(m => m.A1FormAddComponent),
+      import('./a1/a1-form-add/a1-form-add.component').then(
+        m => m.A1FormAddComponent
+      ),
   },
   {
     path: 'a1/edit/:id',
     loadComponent: () =>
-      import('./a1/a1-form-edit/a1-form-edit.component').then(m => m.A1FormEditComponent),
+      import('./a1/a1-form-edit/a1-form-edit.component').then(
+        m => m.A1FormEditComponent
+      ),
   },
   {
     path: 'a1/for-student/:studentId/add',
     loadComponent: () =>
-      import('./a1/a1-for-student-add/a1-for-student-add.component').then(m => m.A1ForStudentAddComponent),
+      import('./a1/a1-for-student-add/a1-for-student-add.component').then(
+        m => m.A1ForStudentAddComponent
+      ),
   },
   {
     path: 'a1/for-student/:studentId/edit/:id',
     loadComponent: () =>
-      import('./a1/a1-for-student-edit/a1-for-student-edit.component').then(m => m.A1ForStudentEditComponent),
+      import('./a1/a1-for-student-edit/a1-for-student-edit.component').then(
+        m => m.A1ForStudentEditComponent
+      ),
   },
   {
     path: 'confirmed-a1a1z',
@@ -90,58 +106,58 @@ export const APPLICATION_ROUTES: Route[] = [
   {
     path: 'students',
     loadComponent: () =>
-        import('./students/manage-students/manage-students.component').then(
-            m => m.ManageStudentsComponent
-        ),
+      import('./students/manage-students/manage-students.component').then(
+        m => m.ManageStudentsComponent
+      ),
   },
   {
     path: 'students/add',
     loadComponent: () =>
-        import('./students/students-form/students-form.component').then(
-            m => m.StudentsFormComponent
-        ),
+      import('./students/students-form/students-form.component').then(
+        m => m.StudentsFormComponent
+      ),
   },
   {
     path: 'students/view/:id',
     loadComponent: () =>
-        import('./students/students-view/student-view.component').then(
-            m => m.StudentViewComponent
-        ),
+      import('./students/students-view/student-view.component').then(
+        m => m.StudentViewComponent
+      ),
   },
   {
     path: 'students/edit/:id',
     loadComponent: () =>
-        import('./students/students-edit/students-edit.component').then(
-            m => m.StudentsEditComponent
-        ),
+      import('./students/students-edit/students-edit.component').then(
+        m => m.StudentsEditComponent
+      ),
   },
   {
     path: 'student-ban',
     loadComponent: () =>
-        import(
-            './student-ban/manage-student-ban/manage-student-ban.component'
-            ).then(m => m.ManageStudentBanComponent),
+      import(
+        './student-ban/manage-student-ban/manage-student-ban.component'
+      ).then(m => m.ManageStudentBanComponent),
   },
 
   {
     path: 'carried-grades',
     loadComponent: () =>
-        import(
-            './carried-grade/manage-carried-grade/manage-carried-grade.component'
-            ).then(m => m.ManageCarriedGradesComponent),
+      import(
+        './carried-grade/manage-carried-grade/manage-carried-grade.component'
+      ).then(m => m.ManageCarriedGradesComponent),
   },
   {
     path: 'diplomas-student',
     loadComponent: () =>
-        import(
-            './diplomas-student/manage-diplomas-student/manage-diplomas-student.component'
-            ).then(m => m.ManageDiplomasStudentComponent),
+      import(
+        './diplomas-student/manage-diplomas-student/manage-diplomas-student.component'
+      ).then(m => m.ManageDiplomasStudentComponent),
   },
   {
     path: 'printed-diplomas',
     loadComponent: () =>
-        import(
-            './diplomas-student/printed-diplomas/printed-diplomas.component'
-            ).then(m => m.PrintedDiplomasComponent),
+      import(
+        './diplomas-student/printed-diplomas/printed-diplomas.component'
+      ).then(m => m.PrintedDiplomasComponent),
   },
 ];

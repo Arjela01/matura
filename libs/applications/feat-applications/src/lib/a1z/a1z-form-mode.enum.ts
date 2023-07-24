@@ -1,6 +1,6 @@
 export enum A1ZFormModeEnum {
-  Add ,
+  Add,
   Edit,
   AddWithStudent,
-  EditWithStudent
+  EditWithStudent,
 }

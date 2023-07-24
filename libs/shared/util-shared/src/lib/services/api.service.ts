@@ -33,7 +33,7 @@ export class APIService {
       headers: this.headers,
     });
   }
-  postWithParams<T, D>(url: string, data?: D, params?: any ): Observable<T> {
+  postWithParams<T, D>(url: string, data?: D, params?: any): Observable<T> {
     return this.http.post<T>(`${this.api_url}${url}`, data, {
       params,
     });

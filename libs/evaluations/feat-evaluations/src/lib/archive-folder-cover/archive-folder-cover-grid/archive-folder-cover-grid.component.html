@@ -14,13 +14,11 @@
   selectionMode="multiple"
   (onLazyLoad)="loadRows($event)"
   [lazy]="true">
-  <ng-template pTemplate="caption" >
+  <ng-template pTemplate="caption">
     <div
       class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
       <h5 class="m-0">Raporti</h5>
-      <span class="block mt-2 md:mt-0 p-input-icon-left">
-
-      </span>
+      <span class="block mt-2 md:mt-0 p-input-icon-left"> </span>
     </div>
   </ng-template>
   <ng-template pTemplate="header">
@@ -31,7 +29,8 @@
         <p-columnFilter
           type="numeric"
           field="folder"
-          display="menu"  mshColumnFilterDirective></p-columnFilter>
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
       <th pSortableColumn="barcode">
         Barkodi
@@ -39,7 +38,8 @@
         <p-columnFilter
           type="text"
           field="barcode"
-          display="menu"  mshColumnFilterDirective></p-columnFilter>
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
     </tr>
   </ng-template>

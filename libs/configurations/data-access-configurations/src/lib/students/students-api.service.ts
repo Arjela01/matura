@@ -31,7 +31,11 @@ export class StudentsApiService {
     event: LazyLoadEvent,
     params = {}
   ): Observable<StudentTableView> {
-    return this.apiService.postWithParams(`/Student/TableDataForA1A1Z`, event, params);
+    return this.apiService.postWithParams(
+      `/Student/TableDataForA1A1Z`,
+      event,
+      params
+    );
   }
 
   save(student: Student): Observable<ApiResult<Student>> {

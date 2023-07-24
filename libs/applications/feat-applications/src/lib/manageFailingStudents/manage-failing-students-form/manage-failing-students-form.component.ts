@@ -5,7 +5,8 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input, OnInit,
+  Input,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -22,7 +23,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import {GlobalSpinnerComponent} from "@msh/shared/ui-shared";
+import { GlobalSpinnerComponent } from '@msh/shared/ui-shared';
 
 @UntilDestroy()
 @Component({
@@ -37,13 +38,13 @@ import {GlobalSpinnerComponent} from "@msh/shared/ui-shared";
     InputTextareaModule,
     ButtonModule,
     CheckboxModule,
-    GlobalSpinnerComponent
+    GlobalSpinnerComponent,
   ],
   templateUrl: './manage-failing-students-form.component.html',
   styleUrls: ['./manage-failing-students-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ManageFailingStudentsFormComponent implements  OnInit {
+export class ManageFailingStudentsFormComponent implements OnInit {
   @Input() set failingStudentDetails(details: FailingStudent | null) {
     if (details) {
       this.failingStudent = Object.assign({}, details);

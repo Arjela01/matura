@@ -1,4 +1,4 @@
-<form #form="ngForm" >
+<form #form="ngForm">
   <div class="flex flex-column mt-2 md:align-items-center" style="width: 300px">
     <div class="p-inputgroup">
       <button
@@ -8,7 +8,7 @@
         icon="pi pi-database"
         disabled
         label="{{ totalRecords }}/50"
-        style= "border-radius:0"
+        style="border-radius: 0"
         class="p-button-info mr-2"></button>
       <input
         type="text"
@@ -17,6 +17,7 @@
         pInputText
         placeholder="Barkodi"
         id="barcode"
+        autofocus
         #barcodeField
         name="barcode"
         [(ngModel)]="archiveExam.barcode"
@@ -24,9 +25,7 @@
         onfocus="this.value=''"
         tooltipPosition="top"
         required
-        (keyup.enter)="saveArchiveExam(archiveExam)"
-
-      />
+        (keyup.enter)="saveArchiveExam(archiveExam)" />
       <button
         pButton
         pRipple
@@ -35,12 +34,12 @@
         [disabled]="!lettersNumbersCheck(archiveExam.barcode)"
         label="Ruaj"
         class="p-button-success mr-2"
-        style= "border-radius:0"
+        style="border-radius: 0"
         (click)="saveArchiveExam(archiveExam)"></button>
     </div>
   </div>
 </form>
-<br>
+<br />
 <p-table
   #dt
   dataKey="id"
@@ -67,7 +66,8 @@
         <p-columnFilter
           type="numeric"
           field="folder"
-          display="menu"  mshColumnFilterDirective></p-columnFilter>
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
       <th pSortableColumn="barcode">
         Barkodi
@@ -75,7 +75,8 @@
         <p-columnFilter
           type="text"
           field="barcode"
-          display="menu"  mshColumnFilterDirective></p-columnFilter>
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
       <th></th>
     </tr>

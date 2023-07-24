@@ -110,7 +110,9 @@
         'ng-invalid ng-dirty': submitted && !examVersion.examSubjectId
       }">
     </p-dropdown>
-    <small class="p-error block" *ngIf="submitted && !examVersion.examSubjectId">
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examVersion.examSubjectId">
       Lënda e Provimit është fushë e kërkuar.
     </small>
   </div>

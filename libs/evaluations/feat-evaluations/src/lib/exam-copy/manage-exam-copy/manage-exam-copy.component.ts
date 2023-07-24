@@ -22,7 +22,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { ExamCopyDetailsComponent } from '../exam-copy-details/exam-copy-details.component';
 import { ExamCopyGridComponent } from '../exam-copy-grid/exam-copy-grid.component';
-import * as FileSaver from "file-saver";
+import * as FileSaver from 'file-saver';
 
 @UntilDestroy()
 @Component({
@@ -57,7 +57,7 @@ export class ManageExamCopyComponent implements OnInit {
   constructor(
     private cd: ChangeDetectorRef,
     private readonly examCopyService: ExamCopyApiService,
-    private readonly toastService: GlobalToastService,
+    private readonly toastService: GlobalToastService
   ) {}
 
   ngOnInit(): void {

@@ -24,7 +24,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { ApproveExamCopyComponent } from '../approve-exam-copy/approve-exam-copy.component';
 import { RefuseExamCopyComponent } from '../refuse-exam-copy/refuse-exam-copy.component';
 import { LazyLoadEvent } from 'primeng/api';
-import {Observable} from "rxjs";
+import { Observable } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -48,7 +48,7 @@ import {Observable} from "rxjs";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamCopyDetailsComponent implements OnInit {
-  @Input() examCopies$: Observable<ExamCopy[]> | undefined
+  @Input() examCopies$: Observable<ExamCopy[]> | undefined;
   submitted = false;
 
   confirmModal = false;
@@ -174,6 +174,5 @@ export class ExamCopyDetailsComponent implements OnInit {
   onFileUploaded(file: File) {
     this.updatedFile = file;
     this.examCopy.documentName = this.updatedFile ? this.updatedFile.name : '';
-
   }
 }

@@ -19,8 +19,6 @@ export class UserResetPasswordApiService {
     >(`/User/ChangePassword`, userResetPassword);
   }
   getNewPassword(): Observable<ApiResult<UserResetPasswordModel>> {
-    return this.apiService.get(
-      `/User/ChangePassword`
-    );
+    return this.apiService.get(`/User/ChangePassword`);
   }
 }

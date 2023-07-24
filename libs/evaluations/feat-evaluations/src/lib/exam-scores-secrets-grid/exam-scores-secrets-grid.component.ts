@@ -69,7 +69,10 @@ export class ExamScoresSecretsGridComponent {
         const blob: any = new Blob([response], {
           type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         });
-        FileSaver.saveAs(blob, 'Piket e provimit pas sekretimit Export[TEMPLATE]');
+        FileSaver.saveAs(
+          blob,
+          'Piket e provimit pas sekretimit Export[TEMPLATE]'
+        );
       });
   }
 }

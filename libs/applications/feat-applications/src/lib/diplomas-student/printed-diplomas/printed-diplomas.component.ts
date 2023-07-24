@@ -5,7 +5,7 @@ import { ManageDiplomasStudentComponent } from '../manage-diplomas-student/manag
 @Component({
   selector: 'msh-printed-diplomas',
   standalone: true,
-  imports: [CommonModule,ManageDiplomasStudentComponent],
+  imports: [CommonModule, ManageDiplomasStudentComponent],
   templateUrl: './printed-diplomas.component.html',
   styleUrls: ['./printed-diplomas.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

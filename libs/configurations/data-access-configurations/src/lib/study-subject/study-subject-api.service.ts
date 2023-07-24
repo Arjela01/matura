@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  StudySubject,
-  StudySubjectTableView,
-} from '@msh/shared/domain-models';
+import { StudySubject, StudySubjectTableView } from '@msh/shared/domain-models';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';

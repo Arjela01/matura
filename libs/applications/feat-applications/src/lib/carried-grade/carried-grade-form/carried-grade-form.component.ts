@@ -1,31 +1,32 @@
-import {CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input, OnChanges,
+  Input,
+  OnChanges,
   Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import {FormsModule, NgForm} from '@angular/forms';
-import {CarriedGrade} from '@msh/applications/domain-application';
-import {DropdownModel} from '@msh/shared/data-access-shared';
-import {ButtonModule} from 'primeng/button';
-import {CheckboxModule} from 'primeng/checkbox';
-import {DropdownModule} from 'primeng/dropdown';
-import {FileUploadModule} from 'primeng/fileupload';
-import {InputNumberModule} from 'primeng/inputnumber';
-import {InputTextModule} from 'primeng/inputtext';
-import {InputTextareaModule} from 'primeng/inputtextarea';
-import {RadioButtonModule} from 'primeng/radiobutton';
-import {DialogModule} from 'primeng/dialog';
+import { FormsModule, NgForm } from '@angular/forms';
+import { CarriedGrade } from '@msh/applications/domain-application';
+import { DropdownModel } from '@msh/shared/data-access-shared';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DropdownModule } from 'primeng/dropdown';
+import { FileUploadModule } from 'primeng/fileupload';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { DialogModule } from 'primeng/dialog';
 import {
   SharedStudent,
   SharedStudentLookupModule,
 } from '@msh/shared/student-lookup';
-import {Student} from "@msh/shared/domain-models";
+import { Student } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-carried-grade-form',
@@ -65,7 +66,7 @@ export class CarriedGradesFormComponent implements OnChanges {
   @Output() formSave = new EventEmitter<CarriedGrade>();
   @Output() formClose = new EventEmitter<undefined>();
 
-  @ViewChild('form', {static: true}) form!: NgForm;
+  @ViewChild('form', { static: true }) form!: NgForm;
 
   submitted = false;
 
@@ -85,13 +86,13 @@ export class CarriedGradesFormComponent implements OnChanges {
   showStudentSearchButton = true;
   studentInputData = '';
 
-  constructor(private cd: ChangeDetectorRef) {
-  }
+  constructor(private cd: ChangeDetectorRef) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['selectedStudent']) {
       if (changes['selectedStudent'].currentValue) {
-        const student = changes['selectedStudent'].currentValue as SharedStudent;
+        const student = changes['selectedStudent']
+          .currentValue as SharedStudent;
         this.grade.studentId = student.id;
         this.studentInputData =
           student?.idCard +
@@ -107,9 +108,12 @@ export class CarriedGradesFormComponent implements OnChanges {
     if (changes['gradeDetails'] && changes['gradeDetails'].currentValue) {
       const g = changes['gradeDetails'].currentValue;
       this.grade = g;
-      if(g.nid) {
-        this.studentInputData = `${g.nid} - ${g?.studentFullName?.replace(/\s/g, '-')}`;
-      } else{
+      if (g.nid) {
+        this.studentInputData = `${g.nid} - ${g?.studentFullName?.replace(
+          /\s/g,
+          '-'
+        )}`;
+      } else {
         this.studentInputData = '';
       }
     }

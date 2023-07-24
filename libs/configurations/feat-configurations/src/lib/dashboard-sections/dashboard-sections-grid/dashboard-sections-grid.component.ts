@@ -6,7 +6,11 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import {GridEvent, GRID_ACTIONS, ColumnFilterDirective} from '@msh/shared/util-shared';
+import {
+  GridEvent,
+  GRID_ACTIONS,
+  ColumnFilterDirective,
+} from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -14,7 +18,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import {DashboardSection} from "@msh/shared/domain-models";
+import { DashboardSection } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-dashboard-sections-grid',
@@ -27,7 +31,7 @@ import {DashboardSection} from "@msh/shared/domain-models";
     TooltipModule,
     CheckboxModule,
     RippleModule,
-    ColumnFilterDirective
+    ColumnFilterDirective,
   ],
   templateUrl: './dashboard-sections-grid.component.html',
   styleUrls: ['./dashboard-sections-grid.component.scss'],

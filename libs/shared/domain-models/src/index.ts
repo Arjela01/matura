@@ -1,2 +1,2 @@
 export * from './lib/shared-domain-models.module';
-export * from './lib/index'
+export * from './lib/index';

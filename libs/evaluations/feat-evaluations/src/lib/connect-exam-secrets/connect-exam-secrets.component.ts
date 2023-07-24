@@ -50,9 +50,7 @@ export class ConnectExamSecretsComponent {
       return res;
     })
   );
-  constructor(
-    private readonly process: ProcessesApiService
-  ) {}
+  constructor(private readonly process: ProcessesApiService) {}
 
   getProcessData($event: LazyLoadEvent, processType: number) {
     this.filters = { ...$event };

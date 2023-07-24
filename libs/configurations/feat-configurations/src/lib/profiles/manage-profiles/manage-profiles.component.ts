@@ -31,7 +31,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ProfileFormComponent } from '../profile-form/profile-form.component';
 import { ProfileGridComponent } from '../profile-grid/profile-grid.component';
-import * as FileSaver from "file-saver";
+import * as FileSaver from 'file-saver';
 
 @UntilDestroy()
 @Component({

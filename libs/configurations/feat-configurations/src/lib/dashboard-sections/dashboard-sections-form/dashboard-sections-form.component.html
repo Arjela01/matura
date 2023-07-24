@@ -9,7 +9,9 @@
       [(ngModel)]="dashboardSections.name"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !dashboardSections.name }" />
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !dashboardSections.name
+      }" />
     <small class="p-error block" *ngIf="submitted && !dashboardSections.name">
       Emri i seksionit është fushë e kërkuar.
     </small>

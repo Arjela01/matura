@@ -10,7 +10,11 @@ import {
   ExamCopy,
   ExamCopyRequestStatusEnum,
 } from '@msh/evaluations/domain-evaluations';
-import {ColumnFilterDirective, GRID_ACTIONS, GridEvent} from '@msh/shared/util-shared';
+import {
+  ColumnFilterDirective,
+  GRID_ACTIONS,
+  GridEvent,
+} from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -32,7 +36,7 @@ import { ExamCopyRequestStatusPipe } from './exam-copy-request-status-pipe';
     CheckboxModule,
     RippleModule,
     ExamCopyRequestStatusPipe,
-    ColumnFilterDirective
+    ColumnFilterDirective,
   ],
   templateUrl: './exam-copy-grid.component.html',
   styleUrls: ['./exam-copy-grid.component.scss'],

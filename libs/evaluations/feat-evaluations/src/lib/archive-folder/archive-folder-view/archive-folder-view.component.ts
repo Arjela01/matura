@@ -1,20 +1,34 @@
-import {CommonModule} from '@angular/common';
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild,} from '@angular/core';
-import {LazyLoadEvent, MessageService} from 'primeng/api';
-import {ButtonModule} from 'primeng/button';
-import {CheckboxModule} from 'primeng/checkbox';
-import {InputTextModule} from 'primeng/inputtext';
-import {RippleModule} from 'primeng/ripple';
-import {TableModule} from 'primeng/table';
-import {TooltipModule} from 'primeng/tooltip';
-import {FormsModule, NgForm} from '@angular/forms';
-import {ActivatedRoute, Router, RouterLink} from '@angular/router';
-import {ToolbarModule} from 'primeng/toolbar';
-import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
-import {ArchiveExamApiService, ArchiveFolderApiService,} from '@msh/evaluations/data-access-evaluations';
-import {ArchiveExam, ArchiveFolder,} from '@msh/evaluations/domain-evaluations';
-import {BehaviorSubject} from 'rxjs';
-import {GridEvent} from '@msh/shared/util-shared';
+import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { LazyLoadEvent, MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { InputTextModule } from 'primeng/inputtext';
+import { RippleModule } from 'primeng/ripple';
+import { TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
+import { FormsModule, NgForm } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ToolbarModule } from 'primeng/toolbar';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import {
+  ArchiveExamApiService,
+  ArchiveFolderApiService,
+} from '@msh/evaluations/data-access-evaluations';
+import {
+  ArchiveExam,
+  ArchiveFolder,
+} from '@msh/evaluations/domain-evaluations';
+import { BehaviorSubject } from 'rxjs';
+import { GridEvent } from '@msh/shared/util-shared';
 import { Location } from '@angular/common';
 
 @UntilDestroy()
@@ -62,13 +76,13 @@ export class ArchiveFolderViewComponent implements OnInit {
   submitted = false;
 
   id: any;
-  archiveFolder: ArchiveFolder = {}  as ArchiveFolder;
+  archiveFolder: ArchiveFolder = {} as ArchiveFolder;
   archiveExam: ArchiveExam = {
     archiveFolderNr: 0,
     id: undefined,
     index: 0,
     archiveFolderId: 0,
-    barcode: ''
+    barcode: '',
   };
   archiveExams: ArchiveExam[] = [];
   totalRecords = 0;
@@ -130,7 +144,7 @@ export class ArchiveFolderViewComponent implements OnInit {
           const allRecordsLoadEvent: LazyLoadEvent = {
             first: 0,
             rows: 50,
-            ...this.filters
+            ...this.filters,
           };
           this.archiveExamApiService
             .loadArchiveExams(allRecordsLoadEvent, this.id)

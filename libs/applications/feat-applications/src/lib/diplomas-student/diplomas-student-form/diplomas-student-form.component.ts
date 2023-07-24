@@ -59,7 +59,6 @@ export class DiplomasStudentFormComponent {
     isPrinted: this.isPrinted,
     isProfessional: false,
     darZaId: 0,
-
   };
   highSchoolFiltered: DropdownModel<number>[] = [];
 
@@ -67,7 +66,7 @@ export class DiplomasStudentFormComponent {
   emptyValue!: '';
   isForeign: boolean | '';
   constructor(private cd: ChangeDetectorRef) {
-    this.isForeign= this.diplomaFile.isForeign
+    this.isForeign = this.diplomaFile.isForeign;
   }
 
   onCancelClick() {
@@ -90,13 +89,12 @@ export class DiplomasStudentFormComponent {
       );
       if (this.isForeign === this.emptyValue) {
         this.diplomaFile.isForeign = '';
-      }else{
-        this.diplomaFile.isForeign = this.isForeign
+      } else {
+        this.diplomaFile.isForeign = this.isForeign;
       }
       initialUrl += `&isPrinted=${this.isPrinted}&isForeign=${this.diplomaFile.isForeign}&academicYearId=${accademicYear?.id}`;
       this.formSave.emit(initialUrl);
     }
-
   }
 
   onAdministrationOfficeChange($event: DropdownModel<number>) {

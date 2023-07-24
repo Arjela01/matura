@@ -23,7 +23,7 @@ import { DropdownModel } from '@msh/shared/data-access-shared';
 import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { BehaviorSubject } from 'rxjs';
-import {  Student } from '@msh/shared/domain-models';
+import { Student } from '@msh/shared/domain-models';
 import {
   GlobalToastService,
   GRID_ACTIONS,
@@ -33,10 +33,11 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import {
-  ExamSubjectApiService, ExamTypeApiService,
+  ExamSubjectApiService,
+  ExamTypeApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
 import { TooltipModule } from 'primeng/tooltip';
 
@@ -112,8 +113,7 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
     private readonly router: Router,
     private readonly toastService: GlobalToastService,
     private readonly examSubjectService: ExamSubjectApiService,
-    private readonly examTypeService: ExamTypeApiService,
-
+    private readonly examTypeService: ExamTypeApiService
   ) {}
 
   ngDoCheck(): void {
@@ -149,7 +149,8 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
       this.studentInputData = ' ';
     } else {
       this.examSecret.studentId = student.studentId;
-      this.studentInputData = student?.studentIdentifier + '-' + student?.studentName;
+      this.studentInputData =
+        student?.studentIdentifier + '-' + student?.studentName;
     }
   }
 
@@ -167,8 +168,7 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
         '-' +
         student?.lastName;
     }
-    this.examSecret.isFall = student.isFall
-
+    this.examSecret.isFall = student.isFall;
   }
 
   onStudentShow() {

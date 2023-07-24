@@ -7,7 +7,11 @@ import {
   Output,
 } from '@angular/core';
 import { City } from '@msh/shared/domain-models';
-import {GridEvent, GRID_ACTIONS, ColumnFilterDirective} from '@msh/shared/util-shared';
+import {
+  GridEvent,
+  GRID_ACTIONS,
+  ColumnFilterDirective,
+} from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -27,7 +31,7 @@ import { TooltipModule } from 'primeng/tooltip';
     TooltipModule,
     CheckboxModule,
     RippleModule,
-    ColumnFilterDirective
+    ColumnFilterDirective,
   ],
   templateUrl: './city-grid.component.html',
   styleUrls: ['./city-grid.component.scss'],
@@ -41,9 +45,7 @@ export class CityGridComponent {
   //Keep it local state because of Table Header checkbox not syncing
   selectedCities: City[] = [];
 
-  @Output() gridEvent = new EventEmitter<
-    GridEvent<City | City[]>
-    >();
+  @Output() gridEvent = new EventEmitter<GridEvent<City | City[]>>();
 
   @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
 
@@ -92,4 +94,3 @@ export class CityGridComponent {
     this.lazyLoadData.emit($event);
   }
 }
-

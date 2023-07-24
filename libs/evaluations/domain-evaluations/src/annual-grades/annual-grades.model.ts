@@ -1,5 +1,5 @@
 export interface AnnualGrades {
-  id:any;
+  id: any;
   birthDate: Date;
   firstName: string;
   genderId?: number;
@@ -7,14 +7,14 @@ export interface AnnualGrades {
   studentId: string;
   idCard?: string;
   lastName?: string;
-  school?:string;
+  school?: string;
   middleName?: string;
   highSchool?: string;
   schoolName?: string;
   genderName?: string;
   highSchoolName?: string;
   formTypeId?: number;
-  formTypeName:string;
+  formTypeName: string;
   creationDate: Date;
   nid?: string;
   formularType?: string;

@@ -11,6 +11,5 @@ export default {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory:
-    '../../../coverage/libs/reports/data-access-reports',
+  coverageDirectory: '../../../coverage/libs/reports/data-access-reports',
 };

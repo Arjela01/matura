@@ -12,8 +12,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { CheckboxModule } from 'primeng/checkbox';
 import { RippleModule } from 'primeng/ripple';
-import { ExamSubjectProfile} from '@msh/shared/domain-models';
-import {ColumnFilterDirective, GRID_ACTIONS, GridEvent} from '@msh/shared/util-shared';
+import { ExamSubjectProfile } from '@msh/shared/domain-models';
+import {
+  ColumnFilterDirective,
+  GRID_ACTIONS,
+  GridEvent,
+} from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 
 @Component({
@@ -27,7 +31,7 @@ import { LazyLoadEvent } from 'primeng/api';
     TooltipModule,
     CheckboxModule,
     RippleModule,
-    ColumnFilterDirective
+    ColumnFilterDirective,
   ],
   templateUrl: './exam-subject-profile-grid.component.html',
   styleUrls: ['./exam-subject-profile-grid.component.scss'],

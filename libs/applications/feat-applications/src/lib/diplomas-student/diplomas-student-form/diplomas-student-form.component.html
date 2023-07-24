@@ -1,79 +1,125 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
-
-
-
-
-    <div class="field">
-        <label for="studentType">Tipi i studentit *</label>
-        <p-dropdown id="studentVersion" [options]="studentTypes" optionValue="key" optionLabel="value"
-            name="studentType" [autoDisplayFirst]="false" [(ngModel)]="diplomaFile.studentType" [required]="true"
-            [showClear]="true" appendTo="body" [ngClass]="{
-          'ng-invalid ng-dirty': submitted && !diplomaFile.studentType && diplomaFile.studentType!==0
-        }">
-        </p-dropdown>
-        <small class="p-error block" *ngIf="submitted && !diplomaFile.studentType && diplomaFile.studentType!==0 ">
-            Tipi i studentit është fushë e kërkuar.
-        </small>
+  <div class="field">
+    <label for="studentType">Tipi i studentit *</label>
+    <p-dropdown
+      id="studentVersion"
+      [options]="studentTypes"
+      optionValue="key"
+      optionLabel="value"
+      name="studentType"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="diplomaFile.studentType"
+      [required]="true"
+      [showClear]="true"
+      appendTo="body"
+      [ngClass]="{
+        'ng-invalid ng-dirty':
+          submitted && !diplomaFile.studentType && diplomaFile.studentType !== 0
+      }">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="
+        submitted && !diplomaFile.studentType && diplomaFile.studentType !== 0
+      ">
+      Tipi i studentit është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="darZa">DAR/ZA </label>
+    <p-dropdown
+      id="darZa"
+      [options]="administrationOffices"
+      optionValue="key"
+      optionLabel="value"
+      name="darZaId"
+      [autoDisplayFirst]="false"
+      (onChange)="onAdministrationOfficeChange($event)"
+      [(ngModel)]="diplomaFile.darZaId"
+      [required]="true"
+      [showClear]="true"
+      appendTo="body"
+      [ngClass]="{
+        'ng-invalid ng-dirty':
+          submitted && (!diplomaFile.darZaId || diplomaFile.darZaId === 0)
+      }">
+    </p-dropdown>
+    <small class="p-error block" *ngIf="submitted && !diplomaFile.darZaId">
+      DAR/ZA është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="highSchool">Gjimnazet </label>
+    <p-dropdown
+      id="highSchool"
+      [options]="highSchools"
+      optionValue="key"
+      optionLabel="value"
+      name="schoolId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="diplomaFile.schoolId"
+      [required]="false"
+      [showClear]="true"
+      appendTo="body">
+    </p-dropdown>
+  </div>
+  <!--    <div class="field">-->
+  <!--        <label class="mb-3">Profesional *</label>-->
+  <!--        <div class="formgrid grid">-->
+  <!--            <div class="field-radiobutton col-6">-->
+  <!--                <p-radioButton id="isProffesionalTrue" name="isProffesionalTrue" [value]="true"-->
+  <!--                    [(ngModel)]="diplomaFile.isProfessional"></p-radioButton>-->
+  <!--                <label for="isProffesionalTrue">Po</label>-->
+  <!--            </div>-->
+  <!--            <div class="field-radiobutton col-6">-->
+  <!--                <p-radioButton id="isProffesionalFalse" name="isProffesionalFalse" [value]="false"-->
+  <!--                    [(ngModel)]="diplomaFile.isProfessional"></p-radioButton>-->
+  <!--                <label for="isProffesionalFalse">Jo</label>-->
+  <!--            </div>-->
+  <!--        </div>-->
+  <!--    </div>-->
+  <div class="field">
+    <label class="mb-3">Aplikon jashtë? *</label>
+    <div class="formgrid grid">
+      <div class="field-radiobutton col-3">
+        <p-radioButton
+          id="isForeignTrue"
+          name="isForeignTrue"
+          [value]="true"
+          [(ngModel)]="isForeign"></p-radioButton>
+        <label for="isForeignTrue">Po</label>
+      </div>
+      <div class="field-radiobutton col-3">
+        <p-radioButton
+          id="isForeignFalse"
+          name="isForeignFalse"
+          [value]="false"
+          [(ngModel)]="isForeign"></p-radioButton>
+        <label for="isForeignFalse">Jo</label>
+      </div>
+      <div class="field-radiobutton col-3">
+        <p-radioButton
+          id="isForeign"
+          name="isForeign"
+          [value]="emptyValue"
+          [(ngModel)]="isForeign"></p-radioButton>
+        <label for="isForeign">Të dyja</label>
+      </div>
     </div>
-    <div class="field">
-        <label for="darZa">DAR/ZA </label>
-        <p-dropdown id="darZa" [options]="administrationOffices" optionValue="key" optionLabel="value" name="darZaId"
-            [autoDisplayFirst]="false" (onChange)="onAdministrationOfficeChange($event)"
-            [(ngModel)]="diplomaFile.darZaId" [required]="true" [showClear]="true" appendTo="body" [ngClass]="{
-                'ng-invalid ng-dirty': submitted && (!diplomaFile.darZaId || diplomaFile.darZaId===0)
-              }">
-        </p-dropdown>
-        <small class="p-error block" *ngIf="submitted && !diplomaFile.darZaId  ">
-            DAR/ZA është fushë e kërkuar.
-        </small>
-    </div>
-    <div class="field">
-        <label for="highSchool">Gjimnazet </label>
-        <p-dropdown id="highSchool" [options]="highSchools" optionValue="key" optionLabel="value" name="schoolId"
-            [autoDisplayFirst]="false" [(ngModel)]="diplomaFile.schoolId" [required]="false" [showClear]="true"
-            appendTo="body">
-        </p-dropdown>
-    </div>
-<!--    <div class="field">-->
-<!--        <label class="mb-3">Profesional *</label>-->
-<!--        <div class="formgrid grid">-->
-<!--            <div class="field-radiobutton col-6">-->
-<!--                <p-radioButton id="isProffesionalTrue" name="isProffesionalTrue" [value]="true"-->
-<!--                    [(ngModel)]="diplomaFile.isProfessional"></p-radioButton>-->
-<!--                <label for="isProffesionalTrue">Po</label>-->
-<!--            </div>-->
-<!--            <div class="field-radiobutton col-6">-->
-<!--                <p-radioButton id="isProffesionalFalse" name="isProffesionalFalse" [value]="false"-->
-<!--                    [(ngModel)]="diplomaFile.isProfessional"></p-radioButton>-->
-<!--                <label for="isProffesionalFalse">Jo</label>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-    <div class="field">
-        <label class="mb-3">Aplikon jashtë? *</label>
-        <div class="formgrid grid">
-            <div class="field-radiobutton col-3">
-                <p-radioButton id="isForeignTrue" name="isForeignTrue" [value]="true"
-                    [(ngModel)]="isForeign"></p-radioButton>
-                <label for="isForeignTrue">Po</label>
-            </div>
-            <div class="field-radiobutton col-3">
-                <p-radioButton id="isForeignFalse" name="isForeignFalse" [value]="false"
-                    [(ngModel)]="isForeign"></p-radioButton>
-                <label for="isForeignFalse">Jo</label>
-            </div>
-          <div class="field-radiobutton col-3">
-            <p-radioButton id="isForeign" name="isForeign" [value]="emptyValue"
-                           [(ngModel)]="isForeign"></p-radioButton>
-            <label for="isForeign">Të dyja</label>
-          </div>
-        </div>
-    </div>
+  </div>
 
-
-    <div class="flex justify-content-end">
-        <button type="button" pButton label="Anullo" class="p-button-text w-auto mr-2"
-            (click)="onCancelClick()"></button>
-        <button [disabled]="form.invalid" type="submit" pButton label="Printo" class="p-button w-auto"></button>
-    </div>
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      [disabled]="form.invalid"
+      type="submit"
+      pButton
+      label="Printo"
+      class="p-button w-auto"></button>
+  </div>
 </form>

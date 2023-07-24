@@ -15,4 +15,3 @@ export interface HighSchoolTableView {
   data: HighSchool[];
   total: number;
 }
-

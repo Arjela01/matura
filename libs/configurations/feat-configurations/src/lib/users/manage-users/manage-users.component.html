@@ -49,19 +49,16 @@
   </ng-template>
 </p-dialog>
 
-
 <p-dialog
   [(visible)]="resetPasswordGenerated"
   [style]="{ width: '500px' }"
   header="Fjalëkalimi i ri"
   [modal]="true"
-
   [resizable]="false"
   class="p-fluid">
   <ng-template pTemplate="content">
     <msh-users-password-reset-view
-      [userDetails]="newUserPasswordObj"
-   ></msh-users-password-reset-view>
+      [userDetails]="newUserPasswordObj"></msh-users-password-reset-view>
   </ng-template>
 </p-dialog>
 

@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
-import {
-  ProfileGroup,
-  ProfileGroupTableView,
-} from '@msh/shared/domain-models';
-import {ApiResult, DropdownModel} from '@msh/shared/data-access-shared';
+import { ProfileGroup, ProfileGroupTableView } from '@msh/shared/domain-models';
+import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
@@ -11,12 +8,13 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class ProfileGroupApiService  {
+export class ProfileGroupApiService {
   constructor(private apiService: APIService) {}
 
   loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
-      `/ProfileGroup/DropdownList`);
+      `/ProfileGroup/DropdownList`
+    );
   }
 
   loadProfileGroups(event: LazyLoadEvent): Observable<ProfileGroupTableView> {

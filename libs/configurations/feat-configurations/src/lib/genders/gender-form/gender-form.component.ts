@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -6,7 +5,7 @@ import {
   EventEmitter,
   Input,
   Output,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Gender } from '@msh/shared/domain-models';
@@ -19,14 +18,16 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 @Component({
   selector: 'msh-gender-form',
   standalone: true,
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     FormsModule,
     InputTextModule,
     InputNumberModule,
     RadioButtonModule,
     InputTextareaModule,
     ButtonModule,
-    CheckboxModule,],
+    CheckboxModule,
+  ],
   templateUrl: './gender-form.component.html',
   styleUrls: ['./gender-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -46,7 +47,7 @@ export class GenderFormComponent {
 
   gender: Gender = {
     id: 0,
-    name: ''
+    name: '',
   };
 
   onCancelClick() {

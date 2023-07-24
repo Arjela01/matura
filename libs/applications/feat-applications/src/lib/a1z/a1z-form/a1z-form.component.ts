@@ -202,7 +202,7 @@ export class A1zFormComponent implements OnInit {
         .getOne(this.id)
         .pipe(untilDestroyed(this))
         .subscribe(response => {
-          this.a1z = {...response.data};
+          this.a1z = { ...response.data };
 
           this.cd.detectChanges();
 
@@ -247,12 +247,18 @@ export class A1zFormComponent implements OnInit {
     this.submitted = true;
 
     if (this.form.valid) {
-      if (A1ZFormModeEnum.Add === this.mode || A1ZFormModeEnum.AddWithStudent == this.mode) {
+      if (
+        A1ZFormModeEnum.Add === this.mode ||
+        A1ZFormModeEnum.AddWithStudent == this.mode
+      ) {
         this.onNewA1ZFormSubmit();
-      } else if (A1ZFormModeEnum.Edit === this.mode || A1ZFormModeEnum.EditWithStudent == this.mode) {
+      } else if (
+        A1ZFormModeEnum.Edit === this.mode ||
+        A1ZFormModeEnum.EditWithStudent == this.mode
+      ) {
         this.onEditA1ZFormSubmit();
       } else {
-        this.toastService.showError('Nuk dallohet qëllimi i kësaj forme.')
+        this.toastService.showError('Nuk dallohet qëllimi i kësaj forme.');
       }
     }
   }
@@ -647,7 +653,7 @@ export class A1zFormComponent implements OnInit {
   protected readonly A1ZFormModeEnum = A1ZFormModeEnum;
 
   reloadCarriedGrades() {
-    if(this.currentCarriedGradesExamType)
+    if (this.currentCarriedGradesExamType)
       this.getGrades(this.currentCarriedGradesExamType);
   }
 }

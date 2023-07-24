@@ -8,9 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import {
-  UniversityDepartment,
-} from '@msh/shared/domain-models';
+import { UniversityDepartment } from '@msh/shared/domain-models';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
@@ -18,7 +16,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import {DropdownModel} from "@msh/shared/data-access-shared";
+import { DropdownModel } from '@msh/shared/data-access-shared';
 
 @Component({
   selector: 'msh-university-department-form',

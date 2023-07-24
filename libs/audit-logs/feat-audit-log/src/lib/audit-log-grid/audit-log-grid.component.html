@@ -1,5 +1,5 @@
 <div class="flex ml-2 mb-2 page-header mb-header">
-  <h2 class="flex-1">{{ queryName}}</h2>
+  <h2 class="flex-1">{{ queryName }}</h2>
 </div>
 
 <div class="grid">
@@ -36,7 +36,7 @@
           <ng-template pTemplate="body" let-rowData>
             <tr>
               <td *ngFor="let value of rowData | keyvalue">
-                {{value.value }}
+                {{ value.value }}
               </td>
             </tr>
           </ng-template>

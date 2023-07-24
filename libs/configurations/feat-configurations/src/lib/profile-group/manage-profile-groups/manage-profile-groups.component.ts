@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -20,22 +25,22 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { ProfileGroupFormComponent } from '../profile-group-form/profile-group-form.component';
 import { ProfileGroupGridComponent } from '../profile-group-grid/profile-group-grid.component';
-import {RippleModule} from "primeng/ripple";
+import { RippleModule } from 'primeng/ripple';
 
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-profile-groups',
   standalone: true,
-    imports: [
-        ButtonModule,
-        CommonModule,
-        DialogModule,
-        ConfirmDialogModule,
-        ProfileGroupFormComponent,
-        ProfileGroupGridComponent,
-        ToolbarModule,
-        RippleModule,
-    ],
+  imports: [
+    ButtonModule,
+    CommonModule,
+    DialogModule,
+    ConfirmDialogModule,
+    ProfileGroupFormComponent,
+    ProfileGroupGridComponent,
+    ToolbarModule,
+    RippleModule,
+  ],
   templateUrl: './manage-profile-groups.component.html',
   styleUrls: ['./manage-profile-groups.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -155,7 +160,7 @@ export class ManageProfileGroupsComponent implements OnInit {
           this.displayModal = false;
           this.getProfileGroups(this.filters as LazyLoadEvent);
           this.cd.detectChanges();
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -175,7 +180,7 @@ export class ManageProfileGroupsComponent implements OnInit {
           );
           this.displayModal = false;
           this.getProfileGroups(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -192,7 +197,7 @@ export class ManageProfileGroupsComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('Grupi i profilit u fshi me sukses!');
           this.getProfileGroups(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(

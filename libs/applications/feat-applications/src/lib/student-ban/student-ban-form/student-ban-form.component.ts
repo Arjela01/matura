@@ -27,7 +27,7 @@ import { BehaviorSubject } from 'rxjs';
 import { StudentsApiService } from '@msh/configurations/data-access-configurations';
 import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
 import { DialogModule } from 'primeng/dialog';
-import {CalendarModule} from "primeng/calendar";
+import { CalendarModule } from 'primeng/calendar';
 
 @UntilDestroy()
 @Component({

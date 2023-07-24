@@ -33,8 +33,7 @@
       pRipple
       icon="pi pi-plus"
       label="Cakto të gjithë"
-      (click)="onAssignAllClick()"
-      ></button>
+      (click)="onAssignAllClick()"></button>
   </div>
 </div>
 <div class="grid">
@@ -103,7 +102,7 @@
     <msh-assign-all-form
       [examAssignmentsDetails]="selectedExamAssignment"
       [examSites]="examSiteForAdministrationOffice"
-      [examDates]=" examDatesForAssignAll"
+      [examDates]="examDatesForAssignAll"
       [administrationOffices]="administrationOffices"
       (administrationOfficeChanged)="onAdministrationOfficeChanged($event)"
       (examSiteChanged)="onExamSiteChanged($event)"

@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
-import {
-  University,
-  UniversityTableView,
-} from '@msh/shared/domain-models';
-import {ApiResult, DropdownModel} from '@msh/shared/data-access-shared';
+import { University, UniversityTableView } from '@msh/shared/domain-models';
+import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
@@ -40,7 +37,7 @@ export class UniversityApiService {
 
   loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
-        `/University/DropdownList`
+      `/University/DropdownList`
     );
   }
 }

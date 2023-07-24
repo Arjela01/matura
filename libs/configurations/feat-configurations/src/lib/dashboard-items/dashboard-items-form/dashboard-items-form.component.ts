@@ -22,7 +22,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 
 import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
 import { DialogModule } from 'primeng/dialog';
-import {FileUpload, FileUploadModule} from 'primeng/fileupload';
+import { FileUpload, FileUploadModule } from 'primeng/fileupload';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import {

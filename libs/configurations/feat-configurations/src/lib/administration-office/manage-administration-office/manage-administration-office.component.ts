@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
   AdministrationOfficeApiService,
   CityApiService,
@@ -20,21 +20,21 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { AdministrationOfficeFormComponent } from '../administration-office-form/administration-office-form.component';
 import { AdministrationOfficeGridComponent } from '../administration-office-grid/administration-office-grid.component';
-import {RippleModule} from "primeng/ripple";
+import { RippleModule } from 'primeng/ripple';
 
 @Component({
   selector: 'msh-manage-administration-office',
   standalone: true,
-    imports: [
-        ButtonModule,
-        CommonModule,
-        DialogModule,
-        ConfirmDialogModule,
-        AdministrationOfficeFormComponent,
-        AdministrationOfficeGridComponent,
-        ToolbarModule,
-        RippleModule,
-    ],
+  imports: [
+    ButtonModule,
+    CommonModule,
+    DialogModule,
+    ConfirmDialogModule,
+    AdministrationOfficeFormComponent,
+    AdministrationOfficeGridComponent,
+    ToolbarModule,
+    RippleModule,
+  ],
   templateUrl: './manage-administration-office.component.html',
   styleUrls: ['./manage-administration-office.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -160,7 +160,7 @@ export class ManageAdministrationOfficeComponent implements OnInit {
           this.toastService.showSuccess('ZVAP u shtua me sukses!');
           this.displayModal = false;
           this.getAdministrationOffices(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -178,7 +178,7 @@ export class ManageAdministrationOfficeComponent implements OnInit {
           this.toastService.showSuccess('ZVAP u ndryshua me sukses!');
           this.displayModal = false;
           this.getAdministrationOffices(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -195,7 +195,7 @@ export class ManageAdministrationOfficeComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('ZVAP u fshi me sukses!');
           this.getAdministrationOffices(this.filters as LazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(

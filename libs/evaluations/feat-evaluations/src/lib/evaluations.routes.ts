@@ -1,8 +1,5 @@
 import { Route } from '@angular/router';
 
-
-
-
 export const EVALUATION_ROUTES: Route[] = [
   {
     path: 'exam-score',
@@ -14,9 +11,9 @@ export const EVALUATION_ROUTES: Route[] = [
   {
     path: 'exam-score-secret',
     loadComponent: () =>
-      import('./exam-scores-secrets-grid/exam-scores-secrets-grid.component').then(
-        m => m.ExamScoresSecretsGridComponent
-      ),
+      import(
+        './exam-scores-secrets-grid/exam-scores-secrets-grid.component'
+      ).then(m => m.ExamScoresSecretsGridComponent),
   },
   {
     path: 'archive-exam',
@@ -37,7 +34,7 @@ export const EVALUATION_ROUTES: Route[] = [
     loadComponent: () =>
       import(
         './barcode-correction/manage-barcode-correction/manage-barcode-correction.component'
-        ).then(m => m.ManageBarcodeCorrectionComponent),
+      ).then(m => m.ManageBarcodeCorrectionComponent),
   },
 
   {

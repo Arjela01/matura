@@ -14,7 +14,13 @@
     <small class="p-error block" *ngIf="submitted && !academicYear.year">
       Viti është fushë e kërkuar.
     </small>
-    <small class="p-error block" *ngIf="academicYear.year !== '' && academicYear.year !== null && +academicYear.year < 2000">
+    <small
+      class="p-error block"
+      *ngIf="
+        academicYear.year !== '' &&
+        academicYear.year !== null &&
+        +academicYear.year < 2000
+      ">
       Viti duhet të jetë më i madh se 2000.
     </small>
   </div>
@@ -45,25 +51,23 @@
       <div class="form grid grid">
         <div class="field-radiobutton col-6">
           <p-radioButton
-                  id="IsFallTrue"
-                  name="IsFallTrue"
-                  [value]="true"
-                  [(ngModel)]="academicYear.isFall"></p-radioButton>
+            id="IsFallTrue"
+            name="IsFallTrue"
+            [value]="true"
+            [(ngModel)]="academicYear.isFall"></p-radioButton>
           <label for="IsFallTrue">Po</label>
         </div>
         <div class="field-radiobutton col-6">
           <p-radioButton
-                  id="IsFallFalse"
-                  name="IsFall"
-                  [value]="false"
-                  [(ngModel)]="academicYear.isFall"></p-radioButton>
+            id="IsFallFalse"
+            name="IsFall"
+            [value]="false"
+            [(ngModel)]="academicYear.isFall"></p-radioButton>
           <label for="IsFallFalse">Jo</label>
         </div>
       </div>
     </div>
-
   </div>
-
 
   <div class="flex justify-content-end">
     <button

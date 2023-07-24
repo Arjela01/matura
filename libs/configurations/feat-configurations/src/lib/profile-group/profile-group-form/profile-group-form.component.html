@@ -25,12 +25,13 @@
       [(ngModel)]="profileGroup.ordering"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !profileGroup.ordering }" />
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !profileGroup.ordering
+      }" />
     <small class="p-error block" *ngIf="submitted && !profileGroup.ordering">
       Renditja është fushë e kërkuar.
     </small>
   </div>
-
 
   <div class="flex justify-content-end">
     <button

@@ -22,7 +22,7 @@ import {
   ExamTypeApiService,
   ExamVersionApiService,
 } from '@msh/configurations/data-access-configurations';
-import {RippleModule} from "primeng/ripple";
+import { RippleModule } from 'primeng/ripple';
 
 @Component({
   selector: 'msh-manage-archive-folder-cover',
@@ -79,8 +79,6 @@ export class ManageArchiveFolderCoverComponent implements OnInit {
   onPrint() {
     console.log();
   }
-
-
 
   onGridEvent(event: GridEvent<ArchiveFolder | ArchiveFolder[]>) {
     switch (event.action) {
@@ -173,9 +171,7 @@ export class ManageArchiveFolderCoverComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            'Dosja u ndryshua me sukses!'
-          );
+          this.toastService.showSuccess('Dosja u ndryshua me sukses!');
           this.displayModal = false;
           this.getArchiveFolders(this.filters as LazyLoadEvent);
         }
@@ -212,5 +208,4 @@ export class ManageArchiveFolderCoverComponent implements OnInit {
         this.examType = response.data;
       });
   }
-
 }

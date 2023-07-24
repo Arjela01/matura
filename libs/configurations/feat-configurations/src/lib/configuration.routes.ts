@@ -53,9 +53,9 @@ export const CONFIGURATION_ROUTES: Route[] = [
   {
     path: 'data-exports',
     loadComponent: () =>
-      import('./data-exports/manage-data-exports/manage-data-exports.component').then(
-        m => m.ManageDataExportsComponent
-      ),
+      import(
+        './data-exports/manage-data-exports/manage-data-exports.component'
+      ).then(m => m.ManageDataExportsComponent),
   },
   {
     path: 'reports',

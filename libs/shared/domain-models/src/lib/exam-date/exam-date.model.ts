@@ -1,10 +1,10 @@
-export interface ExamDate{
+export interface ExamDate {
   id: string;
   date: any;
   time: string;
   examSiteIds: number;
   examSiteId: number;
-  examSiteName:string;
+  examSiteName: string;
   examTypeId: number;
   examTypeName?: string;
   isFall?: boolean;

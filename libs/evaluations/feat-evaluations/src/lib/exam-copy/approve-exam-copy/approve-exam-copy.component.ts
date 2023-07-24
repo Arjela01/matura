@@ -22,7 +22,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ExamAssignment } from '@msh/shared/domain-models';
-import {Observable} from "rxjs";
+import { Observable } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -95,7 +95,7 @@ export class ApproveExamCopyComponent implements OnInit {
       this.base64 = base64.split(',')[1];
       this.confirmExamCopy.attachedDocument = this.base64;
       this.confirmExamCopy.documentName = file.name;
-      this.fileUploaded.emit(file)
+      this.fileUploaded.emit(file);
     };
   }
 

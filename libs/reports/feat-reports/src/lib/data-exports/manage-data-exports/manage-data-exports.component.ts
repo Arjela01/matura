@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -12,7 +17,7 @@ import { DataExport } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { RippleModule } from 'primeng/ripple';
 import { DataExportApiService } from '@msh/reports/data-access-reports';
-import * as FileSaver from "file-saver";
+import * as FileSaver from 'file-saver';
 
 @UntilDestroy()
 @Component({
@@ -36,15 +41,19 @@ export class ManageDataExportsComponent implements OnInit {
 
   roles: DropdownModel<number>[] = [];
 
-  constructor(private dataExportApiService: DataExportApiService,
-              private cd: ChangeDetectorRef) {}
+  constructor(
+    private dataExportApiService: DataExportApiService,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.dataExportApiService
       .loadDataExports()
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.dataExports = (response.data as DataExport[]).filter(x => x.isVisible);
+        this.dataExports = (response.data as DataExport[]).filter(
+          x => x.isVisible
+        );
         this.cd.detectChanges();
       });
   }

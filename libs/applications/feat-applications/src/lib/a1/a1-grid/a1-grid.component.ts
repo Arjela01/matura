@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {Router, RouterLink} from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { A1ApiService } from '@msh/applications/data-access-applications';
 import { A1Z } from '@msh/applications/domain-application';
 import { AuthFacade } from '@msh/auth/data-access-auth';
@@ -31,24 +31,24 @@ import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 @Component({
   selector: 'a1-grid',
   standalone: true,
-    imports: [
-        CommonModule,
-        FormsModule,
-        InputTextModule,
-        InputNumberModule,
-        RadioButtonModule,
-        InputTextareaModule,
-        ButtonModule,
-        TooltipModule,
-        CheckboxModule,
-        DialogModule,
-        ConfirmDialogModule,
-        ToolbarModule,
-        RippleModule,
-        TableModule,
-        ColumnFilterDirective,
-        RouterLink,
-    ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    InputTextModule,
+    InputNumberModule,
+    RadioButtonModule,
+    InputTextareaModule,
+    ButtonModule,
+    TooltipModule,
+    CheckboxModule,
+    DialogModule,
+    ConfirmDialogModule,
+    ToolbarModule,
+    RippleModule,
+    TableModule,
+    ColumnFilterDirective,
+    RouterLink,
+  ],
   templateUrl: './a1-grid.component.html',
   styleUrls: ['./a1-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -301,12 +301,15 @@
           autofocus />
       </div>
       <div class="field col-2" *ngIf="examCopy.status === 2">
-        <label >Dokumenti</label>
-        <input style="min-width: 200px !important;"
+        <label>Dokumenti</label>
+        <input
+          style="min-width: 200px !important"
           disabled
           pInputText
           type="text"
-               [value]="(updatedFile ? updatedFile.name : '') || examCopy.documentName">
+          [value]="
+            (updatedFile ? updatedFile.name : '') || examCopy.documentName
+          " />
       </div>
     </div>
     <div class="flex justify-content-end">
@@ -323,7 +326,7 @@
       </div>
       <div
         *ngIf="examCopy.status === 2"
-        class="field col-2 mt-2 mb-0 sm:mr-0 "
+        class="field col-2 mt-2 mb-0 sm:mr-0"
         style="display: contents">
         <button
           type="button"

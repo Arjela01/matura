@@ -75,7 +75,6 @@ export class ManageMenusComponent implements OnInit {
     this.selectedMenu = {} as Menu;
   }
 
-
   onGridEvent(event: GridEvent<Menu | Menu[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
@@ -143,7 +142,7 @@ export class ManageMenusComponent implements OnInit {
           this.toastService.showSuccess('Menuja u shtua me sukses!');
           this.displayModal = false;
           this.getMenus(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -161,7 +160,7 @@ export class ManageMenusComponent implements OnInit {
           this.toastService.showSuccess('Menuja u ndryshua me sukses!');
           this.displayModal = false;
           this.getMenus(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
@@ -178,7 +177,7 @@ export class ManageMenusComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('Menu-ja u fshi me sukses!');
           this.getMenus(this.filters as LazyLoadEvent);
-        }  else this.toastService.showError(response.errorMessage)
+        } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(

@@ -9,19 +9,25 @@ import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { LazyLoadEvent, SelectItem } from 'primeng/api';
 import { WhereBuilder } from './query-builder';
-import {TranslationPipe} from "./translate-pipe";
-import {TranslationService} from "@msh/audit-logs/data-access-audit-log";
+import { TranslationPipe } from './translate-pipe';
+import { TranslationService } from '@msh/audit-logs/data-access-audit-log';
 
 const SORT_ASC = 'ASC';
 const SORT_DESC = 'DESC';
 @Component({
   selector: 'msh-audit-log-grid',
   standalone: true,
-  imports: [CommonModule, TableModule, RippleModule, ButtonModule, FormsModule,TranslationPipe
+  imports: [
+    CommonModule,
+    TableModule,
+    RippleModule,
+    ButtonModule,
+    FormsModule,
+    TranslationPipe,
   ],
   templateUrl: './audit-log-grid.component.html',
   styleUrls: ['./audit-log-grid.component.scss'],
-  providers: [Apollo,TranslationService],
+  providers: [Apollo, TranslationService],
 })
 export class AuditLogGridComponent implements OnInit {
   data: any[] = [];
@@ -74,7 +80,6 @@ export class AuditLogGridComponent implements OnInit {
     this.queryName = this.route.snapshot.queryParams['queryName'];
   }
   fetchData() {
-
     const skip = (this.currentPage - 1) * this.pageSize;
 
     this.baseQuery = queriesMap.get(this.queryName) || '';
@@ -92,7 +97,7 @@ export class AuditLogGridComponent implements OnInit {
           where: this.where,
           order: this.orderBy,
         },
-        fetchPolicy: 'cache-and-network'
+        fetchPolicy: 'cache-and-network',
       })
 
       .valueChanges.subscribe((result: any) => {
@@ -107,8 +112,7 @@ export class AuditLogGridComponent implements OnInit {
         const totalRecords = result.data?.[this.queryName].totalCount || 0;
         this.totalCount = Math.ceil(totalRecords / this.pageSize);
         this.updatePaginationArray();
-      },
-    );
+      });
   }
 
   updatePaginationArray() {
@@ -192,15 +196,15 @@ export class AuditLogGridComponent implements OnInit {
     this.where = new WhereBuilder($event.filters).transformWhere();
     const flattenSort = $event.sortField
       ? {
-        [`${$event.sortField}`]:
-          $event.sortOrder === 1 ? SORT_ASC : SORT_DESC,
-      }
+          [`${$event.sortField}`]:
+            $event.sortOrder === 1 ? SORT_ASC : SORT_DESC,
+        }
       : {};
-    const sortField = this.unflatten(flattenSort)
+    const sortField = this.unflatten(flattenSort);
     if (Object.keys(sortField).length === 0) {
-      this.orderBy = { auditTimestamp: "DESC"}
+      this.orderBy = { auditTimestamp: 'DESC' };
     } else {
-      this.orderBy = this.unflatten(flattenSort)
+      this.orderBy = this.unflatten(flattenSort);
     }
     this.fetchData();
   }
@@ -279,5 +283,4 @@ export class AuditLogGridComponent implements OnInit {
         ];
     }
   }
-
 }
