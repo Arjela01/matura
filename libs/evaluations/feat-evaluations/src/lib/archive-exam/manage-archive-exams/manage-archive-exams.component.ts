@@ -322,7 +322,7 @@ export class ManageArchiveExamsComponent implements OnInit {
               this.archiveFolder.academicYearId.toString();
           }
           this.router
-            .navigate([`/reports/${this.archiveFolderReport}`], query)
+            .navigate([`/reports/view/${this.archiveFolderReport}`], query)
             .then();
         }
 
