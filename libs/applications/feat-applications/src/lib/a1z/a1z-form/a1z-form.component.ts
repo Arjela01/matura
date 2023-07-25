@@ -255,8 +255,7 @@ export class A1zFormComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Nota u shtua me sukses!');
           this.displayModal = false;
-          const newCarriedGrade = response.data;
-          this.carriedGrades$$.next([...this.carriedGrades$$.getValue(), newCarriedGrade]);
+          this.reloadCarriedGrades()
         } else {
           this.toastService.showError(response.errorMessage);
         }
@@ -637,6 +636,7 @@ export class A1zFormComponent implements OnInit {
         this.a1z.carriedGradeD1Id = $event.id;
         this.a1z.scoreD1 = $event.grade;
         this.a1z.subjectD1Name = $event.examSubjectName;
+        this.a1z.reasonD1 = $event.reason;
         this.cd.detectChanges();
         break;
       case EXAM_TYPES.D2:
@@ -644,6 +644,7 @@ export class A1zFormComponent implements OnInit {
         this.a1z.academicYearD2Id = $event.academicYearId;
         this.a1z.carriedGradeD2Id = $event.id;
         this.a1z.scoreD2 = $event.grade;
+        this.a1z.reasonD2 = $event.reason;
         this.a1z.subjectD2Name = $event.examSubjectName;
         this.cd.detectChanges();
         break;
@@ -653,6 +654,7 @@ export class A1zFormComponent implements OnInit {
         this.a1z.carriedGradeD3Id = $event.id;
         this.a1z.scoreD3 = $event.grade;
         this.a1z.subjectD3Name = $event.examSubjectName;
+        this.a1z.reasonD3 = $event.reason;
         this.cd.detectChanges();
         break;
       case EXAM_TYPES.Z1:
@@ -660,6 +662,7 @@ export class A1zFormComponent implements OnInit {
         this.a1z.academicYearZ1Id = $event.academicYearId;
         this.a1z.carriedGradeZ1Id = $event.id;
         this.a1z.scoreZ1 = $event.grade;
+        this.a1z.reasonZ1 = $event.reason;
         this.a1z.subjectZ1Name = $event.examSubjectName;
         this.cd.detectChanges();
         break;

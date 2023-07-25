@@ -578,6 +578,8 @@
           <th style="width: 20%">Viti</th>
           <th style="width: 20%">Nota</th>
           <th style="width: 20%">Dokumenti Mbështetës</th>
+          <th style="width: 20%">Arsyeja</th>
+
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-grade>
@@ -608,6 +610,9 @@
               tooltipPosition="bottom"
               pTooltip="Shkarko"
               (click)="onDownloadClick(grade)" />
+          </td>
+          <td style="width: 14%; min-width: 10rem">
+            {{ grade.reason }}
           </td>
         </tr>
       </ng-template>
