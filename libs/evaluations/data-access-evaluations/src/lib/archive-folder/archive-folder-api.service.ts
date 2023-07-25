@@ -39,11 +39,15 @@ export class ArchiveFolderApiService {
     return this.apiService.post(`/ArchiveFolder/BarcodeCorrection`, event);
   }
 
-  changeFolderStatus(id: number): Observable<ApiResult<ArchiveFolder>> {
+  changeFolderStatus(
+    id: number,
+    isClosed?: boolean
+  ): Observable<ApiResult<ArchiveFolder>> {
     return this.apiService.put<ApiResult<ArchiveFolder>, any>(
       `/ArchiveFolder/UpdateStatus`,
       {
         id: id,
+        isClosed: !isClosed,
       }
     );
   }

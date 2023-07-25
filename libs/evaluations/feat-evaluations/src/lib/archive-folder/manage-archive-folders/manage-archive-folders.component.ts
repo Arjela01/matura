@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -53,7 +58,6 @@ import { AcademicYear } from '@msh/shared/domain-models';
   ],
   templateUrl: './manage-archive-folders.component.html',
   styleUrls: ['./manage-archive-folders.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
 export class ManageArchiveFoldersComponent implements OnInit {
@@ -61,13 +65,16 @@ export class ManageArchiveFoldersComponent implements OnInit {
   examTypes: DropdownModel<number>[] = [];
   examSubjects: DropdownModel<string>[] = [];
 
-  archiveFolders$ = this.archiveFolders$$.asObservable();
+  archiveFolders$ = this.archiveFolders$$
+    .asObservable()
+    .pipe(tap(data => console.log('Updated Archive Folders:', data)));
   filters: LazyLoadEvent | null = null;
 
   totalRecords = 0;
   id: any;
   selectedArchiveFolder: ArchiveFolder | null = null;
   selectedArchiveFolders: ArchiveFolder[] = [];
+  archiveFolder: ArchiveFolder = {} as ArchiveFolder;
   displayModal = false;
   currentAcademicYear?: Partial<AcademicYear>;
 
@@ -82,7 +89,8 @@ export class ManageArchiveFoldersComponent implements OnInit {
     private http: HttpClient,
     private messageService: MessageService,
     private route: ActivatedRoute,
-    private authFacade: AuthFacade
+    private authFacade: AuthFacade,
+    private cd: ChangeDetectorRef
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
@@ -231,7 +239,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
 
   changeFolderStatus(archiveFolder: ArchiveFolder) {
     this.archiveFolderService
-      .changeFolderStatus(archiveFolder.id)
+      .changeFolderStatus(archiveFolder.id , archiveFolder.isClosed)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {

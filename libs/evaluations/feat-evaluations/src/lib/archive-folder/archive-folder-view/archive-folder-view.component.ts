@@ -125,7 +125,7 @@ export class ArchiveFolderViewComponent implements OnInit {
 
   changeFolderStatus() {
     this.archiveFolderService
-      .changeFolderStatus(this.id)
+      .changeFolderStatus(this.id, this.archiveFolder.isClosed)
       .pipe(untilDestroyed(this));
     this.cd.detectChanges();
   }
