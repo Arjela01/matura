@@ -45,6 +45,15 @@
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
+      <th pSortableColumn="isFall">
+        Vjeshtë
+        <p-sortIcon field="isFall"></p-sortIcon>
+        <p-columnFilter
+          type="boolean"
+          field="isFall"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
       <th pSortableColumn="studentId">
         Matura ID
         <p-sortIcon field="studentId"></p-sortIcon>
@@ -71,11 +80,14 @@
       <td style="width: 23%; min-width: 10rem">
         {{ examAssignment.examSiteName }}
       </td>
-      <td style="width: 20%; min-width: 10rem">
+      <td style="width: 10%; min-width: 10rem">
         {{ examAssignment.examTypeName }}
       </td>
-      <td style="width: 20%; min-width: 10rem">
+      <td style="width: 10%; min-width: 10rem">
         {{ examAssignment.date | date : 'dd/MM/yyyy' }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ examAssignment.isFall ? 'Po' : 'Jo' }}
       </td>
       <td style="width: 20%; min-width: 10rem">
         {{ examAssignment.studentId }}
