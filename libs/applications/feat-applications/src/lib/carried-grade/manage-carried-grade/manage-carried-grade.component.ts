@@ -28,15 +28,14 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject, combineLatest, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { CarriedGradesFormComponent } from '../carried-grade-form/carried-grade-form.component';
 import { CarriedGradesGridComponent } from '../carried-grade-grid/carried-grades-grid.component';
 import {
   SharedStudent,
   SharedStudentLookupModule,
 } from '@msh/shared/student-lookup';
-import { EXAM_TYPES, Student } from '@msh/shared/domain-models';
-import { resolve } from '@angular/compiler-cli';
+import { Student } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-manage-carried-grades',

@@ -26,7 +26,6 @@ import {
   SharedStudent,
   SharedStudentLookupModule,
 } from '@msh/shared/student-lookup';
-import { Student } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-carried-grade-form',
