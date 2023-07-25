@@ -78,7 +78,6 @@ import { LazyLoadEvent } from 'primeng/api';
   ],
   templateUrl: './a1-form.component.html',
   styleUrls: ['./a1-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [DialogService],
 })
 @UntilDestroy()
@@ -112,18 +111,7 @@ export class A1FormComponent {
 
   ref?: DynamicDialogRef;
   submitted = false;
-  a1: A1Z = {
-    id: 0,
-    academicYearId: 0,
-    studentId: '',
-    isA1: true,
-    isApplyingToForeignCountries: false,
-    alreadyHaveDiploma: false,
-    subjectD3Id: '',
-    subjectZ1Id: '',
-    subjectZ2Id: undefined,
-    overSeerCode: '',
-  };
+  a1: A1Z = {};
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
   a1Report: Report = Report.A1Form_Report;
@@ -180,6 +168,7 @@ export class A1FormComponent {
       .pipe(
         switchMap((a1: ApiResult<A1Z>) => {
           this.a1 = { ...a1?.data } as A1Z;
+
           return this.studentsApiService.getById(a1.data.studentId);
         }),
         switchMap((student: ApiResult<Student>) => {
@@ -196,14 +185,17 @@ export class A1FormComponent {
         this.academicYear = years['data'].find(
           (year: AcademicYear) => year.isActive
         );
-        this.d3Dropdown = d3.data;
-        this.optionalSubjects = z1.data;
         this.studentInputData = [
-          this.a1.studentIdentifier,
+          this.a1.studentNid,
           this.a1.studentFirstName,
           this.a1.studentMiddleName,
           this.a1.studentLastName,
         ].join('-');
+        this.d3Dropdown = d3.data;
+        this.optionalSubjects = z1.data;
+        this.cd.detectChanges();
+
+        this.a1.subjectD3Id = String(this.a1.subjectD3Id);
         this.cd.detectChanges();
       });
   }
@@ -267,7 +259,9 @@ export class A1FormComponent {
             z1?.key ?? undefined,
             undefined,
             undefined,
-            this.selectedStudent?.profileId
+            this.selectedStudent?.profileId,
+            undefined,
+            this.applicationTypeA1
           )
           .pipe(untilDestroyed(this));
       })

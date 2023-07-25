@@ -127,9 +127,7 @@ export class A1zFormComponent implements OnInit {
   submitted = false;
   showStudentSearchButton = true;
 
-  a1z: A1Z = {
-    id: 0,
-  };
+  a1z: A1Z = {};
 
   booly: DropdownModel<boolean>[] = [
     { value: 'Po', key: true },
