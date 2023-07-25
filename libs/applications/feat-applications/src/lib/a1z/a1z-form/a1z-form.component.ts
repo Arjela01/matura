@@ -616,12 +616,43 @@ export class A1zFormComponent implements OnInit {
   }
 
   onCarriedClick(type: EXAM_TYPES) {
-    this.currentCarriedGradesExamType = type;
-    this.getGrades(type);
-    this.showCarriedModal = true;
-    this.carriedModalType = type;
+    switch (type) {
+      case EXAM_TYPES.D1:
+        if (this.a1z.carryD1) {
+          this.currentCarriedGradesExamType = type;
+          this.getGrades(type);
+          this.showCarriedModal = true;
+          this.carriedModalType = type;
+        }
+        break;
+      case EXAM_TYPES.D2:
+        if (this.a1z.carryD2) {
+          this.currentCarriedGradesExamType = type;
+          this.getGrades(type);
+          this.showCarriedModal = true;
+          this.carriedModalType = type;
+        }
+        break;
+      case EXAM_TYPES.D3:
+        if (this.a1z.carryD3) {
+          this.currentCarriedGradesExamType = type;
+          this.getGrades(type);
+          this.showCarriedModal = true;
+          this.carriedModalType = type;
+        }
+        break;
+      case EXAM_TYPES.Z1:
+        if (this.a1z.carryZ1) {
+          this.currentCarriedGradesExamType = type;
+          this.getGrades(type);
+          this.showCarriedModal = true;
+          this.carriedModalType = type;
+        }
+        break;
+      default:
+        break;
+    }
   }
-
   onCarriedHide() {
     this.showCarriedModal = false;
   }
