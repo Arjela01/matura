@@ -239,33 +239,24 @@ export class ManageArchiveFoldersComponent implements OnInit {
 
   changeFolderStatus(archiveFolder: ArchiveFolder) {
     this.archiveFolderService
-      .changeFolderStatus(archiveFolder.id, archiveFolder.isClosed)
-      .pipe(
-        untilDestroyed(this),
-        tap(response => {
-          if (response.isSuccessful) {
-            this.toastService.showSuccess(
-              !archiveFolder.isClosed
-                ? 'Dosja u mbyll me sukses!'
-                : 'Dosja u hap me sukses!'
-            );
-            archiveFolder.isClosed = !archiveFolder.isClosed;
-            const updatedFolders = this.archiveFolders$$
-              .getValue()
-              .map(folder => {
-                return folder.id === archiveFolder.id ? archiveFolder : folder;
-              });
-            this.archiveFolders$$.next(updatedFolders);
-          } else {
-            this.toastService.showError(
-              'Ndodhi një problem gjatë ndryshimit të dosjes!'
-            );
-          }
-        })
-      )
-      .subscribe(() => {
-        this.displayModal = false;
-        this.cd.detectChanges();
+      .changeFolderStatus(archiveFolder.id , archiveFolder.isClosed)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess(
+            !archiveFolder.isClosed
+              ? 'Dosja u mbyll me sukses!'
+              : 'Dosja u hap me sukses!'
+          );
+
+          this.displayModal = false;
+          this.getArchiveFolders(this.filters as LazyLoadEvent);
+        }
+
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi një problem gjatë ndryshimit të dosjes!'
+          );
       });
   }
 
