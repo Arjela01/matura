@@ -55,6 +55,7 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject } from 'rxjs';
 import { A1ZFormModeEnum } from '../a1z-form-mode.enum';
+import {CarriedGradesFormComponent} from "../../carried-grade/carried-grade-form/carried-grade-form.component";
 
 interface ChangeEvent<T> {
   originalEvent: Event;
@@ -90,6 +91,7 @@ interface ChangeEvent<T> {
     TooltipModule,
     CheckboxModule,
     RippleModule,
+    CarriedGradesFormComponent,
   ],
   providers: [ConfirmationService],
 })
@@ -120,12 +122,21 @@ export class A1zFormComponent implements OnInit {
   studentList$ = this.studentList$$.asObservable();
   totalRecords = 0;
 
-  selectedStudent: Student | null = null;
+  selectedStudent!: Student;
   studentInputData = '';
 
   showStudentModal = false;
+  examTypeDropdown: DropdownModel<number>[] = [];
+  examSubjectsDropdown: DropdownModel<string>[] = [];
+  academicYearsDropdown: DropdownModel<number>[] = [];
+
+  enableD1Subject = false;
+  enableD2Subject = false;
+  enableD3Subject = false;
+  enableZ1Subject = false;
   submitted = false;
   showStudentSearchButton = true;
+  displayModal = false;
 
   a1z: A1Z = {};
 
@@ -161,7 +172,11 @@ export class A1zFormComponent implements OnInit {
     private readonly carriedGradeService: CarriedGradeApiService,
     private readonly router: Router,
     private readonly examSubjectService: ExamSubjectApiService,
-    private reportsApiService: ReportsApiService
+    private reportsApiService: ReportsApiService,
+    private academicYearApiService: AcademicYearApiService,
+    private examTypeApiService: ExamTypeApiService,
+    private examSubjectApiService: ExamSubjectApiService,
+    private carriedGradeApiService: CarriedGradeApiService,
   ) {}
 
   ngOnInit(): void {
@@ -196,7 +211,6 @@ export class A1zFormComponent implements OnInit {
         .pipe(untilDestroyed(this))
         .subscribe(response => {
           this.a1z = { ...response.data };
-          console.log(this.a1z);
 
           this.cd.detectChanges();
 
@@ -225,6 +239,51 @@ export class A1zFormComponent implements OnInit {
           this.cd.detectChanges();
         });
     }
+  }
+  onModalClose() {
+    this.displayModal = false;
+  }
+  onFormSave(carriedGrade: CarriedGrade) {
+      this.saveCarriedGrade(carriedGrade);
+  }
+
+  saveCarriedGrade(carriedGrades: CarriedGrade) {
+    this.carriedGradeApiService
+      .save(carriedGrades)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Nota u shtua me sukses!');
+          this.displayModal = false;
+          this.reloadCarriedGrades()
+        } else {
+          this.toastService.showError(response.errorMessage);
+        }
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi një problem gjatë ndryshimit të notës !'
+          );
+      });
+  }
+
+  getSubjectsDropdown($event: any) {
+    const data = $event as {
+      examTypeId: number;
+      academicYearId: number;
+    };
+    this.examSubjectApiService
+      .forExamType(
+        data.examTypeId,
+        data.academicYearId,
+        undefined,
+        undefined,
+        true
+      )
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.examSubjectsDropdown = response.data;
+        this.cd.detectChanges();
+      });
   }
 
   onGridEvent(event: GridEvent<SharedStudent | SharedStudent[]>) {
@@ -577,6 +636,7 @@ export class A1zFormComponent implements OnInit {
         this.a1z.carriedGradeD1Id = $event.id;
         this.a1z.scoreD1 = $event.grade;
         this.a1z.subjectD1Name = $event.examSubjectName;
+        this.a1z.reasonD1 = $event.reason;
         this.cd.detectChanges();
         break;
       case EXAM_TYPES.D2:
@@ -584,6 +644,7 @@ export class A1zFormComponent implements OnInit {
         this.a1z.academicYearD2Id = $event.academicYearId;
         this.a1z.carriedGradeD2Id = $event.id;
         this.a1z.scoreD2 = $event.grade;
+        this.a1z.reasonD2 = $event.reason;
         this.a1z.subjectD2Name = $event.examSubjectName;
         this.cd.detectChanges();
         break;
@@ -593,6 +654,7 @@ export class A1zFormComponent implements OnInit {
         this.a1z.carriedGradeD3Id = $event.id;
         this.a1z.scoreD3 = $event.grade;
         this.a1z.subjectD3Name = $event.examSubjectName;
+        this.a1z.reasonD3 = $event.reason;
         this.cd.detectChanges();
         break;
       case EXAM_TYPES.Z1:
@@ -600,6 +662,7 @@ export class A1zFormComponent implements OnInit {
         this.a1z.academicYearZ1Id = $event.academicYearId;
         this.a1z.carriedGradeZ1Id = $event.id;
         this.a1z.scoreZ1 = $event.grade;
+        this.a1z.reasonZ1 = $event.reason;
         this.a1z.subjectZ1Name = $event.examSubjectName;
         this.cd.detectChanges();
         break;
@@ -607,20 +670,26 @@ export class A1zFormComponent implements OnInit {
   }
 
   addCarriedGrade() {
-    const queryParams: { queryParams: { [x: string]: string } } = {
-      queryParams: {},
-    };
-
-    queryParams.queryParams['nid'] =
-      this.selectedStudent?.idCard || 'undefined';
-
-    const url = this.router.serializeUrl(
-      this.router.createUrlTree(['/applications/carried-grades'], queryParams)
-    );
-
-    window.open(url, '_blank');
+    this.displayModal = true;
+    this.getAcademicYearsDropdown();
+    this.getExamTypeDropdown();
   }
-
+  getAcademicYearsDropdown(): void {
+    this.academicYearApiService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.academicYearsDropdown = response.data;
+      });
+  }
+  getExamTypeDropdown() {
+    this.examTypeApiService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.examTypeDropdown = response.data;
+      });
+  }
   private printConfirmation(a1: A1Z) {
     this.reportsApiService
       .loadRoleReports(this.event)
@@ -677,6 +746,7 @@ export class A1zFormComponent implements OnInit {
   }
 
   protected readonly A1ZFormModeEnum = A1ZFormModeEnum;
+
 
   reloadCarriedGrades() {
     if (this.currentCarriedGradesExamType)

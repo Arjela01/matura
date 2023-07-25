@@ -533,6 +533,28 @@
         icon="pi pi-plus"
         class="p-button-rounded p-button-secondary p-button-text mr-2 justify-items-end"
         (click)="addCarriedGrade()"></button>
+      <p-dialog
+        [(visible)]="displayModal"
+        [style]="{maxHeight: '745px', minWidth: '500px'}"
+        header="Shto notë"
+        [modal]="true"
+        [draggable]="false"
+        [resizable]="false"
+        class="p-fluid"
+        (onHide)="onModalClose()">
+        <ng-template pTemplate="content">
+          <msh-carried-grade-form
+            [examTypeDropdown]="examTypeDropdown"
+            (formClose)="onModalClose()"
+            (formSave)="onFormSave($event)"
+            (openStudentModal)="this.showStudentModal = false"
+            (examTypeChanged)="getSubjectsDropdown($event)"
+            [examSubjectDropdown]="examSubjectsDropdown"
+            [selectedStudent]="selectedStudent"
+            [academicYearDropdown]="academicYearsDropdown">
+          </msh-carried-grade-form>
+        </ng-template>
+      </p-dialog>
       <button
         pButton
         pRipple
@@ -556,6 +578,8 @@
           <th style="width: 20%">Viti</th>
           <th style="width: 20%">Nota</th>
           <th style="width: 20%">Dokumenti Mbështetës</th>
+          <th style="width: 20%">Arsyeja</th>
+
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-grade>
@@ -586,6 +610,9 @@
               tooltipPosition="bottom"
               pTooltip="Shkarko"
               (click)="onDownloadClick(grade)" />
+          </td>
+          <td style="width: 14%; min-width: 10rem">
+            {{ grade.reason }}
           </td>
         </tr>
       </ng-template>
