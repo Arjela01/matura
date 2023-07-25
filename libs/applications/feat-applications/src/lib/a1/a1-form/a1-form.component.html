@@ -29,183 +29,153 @@
   <div class="col-12">
     <div class="card-form px-6 py-4 mb-header mt-3">
       <form #form="ngForm" (ngSubmit)="onSubmit()">
-        <div class="field xl:w-4 mt-5 lg:w-6 sm:w-full">
-          <label for="studentInputData">Maturant *</label>
-          <div class="p-inputgroup">
+        <div [style]="{ maxWidth: '500px' }">
+          <div>
+            <label for="studentInputData">Maturant *</label>
+            <div class="p-inputgroup">
+              <input
+                type="text"
+                [disabled]="!showStudentSearchButton"
+                pInputText
+                id="studentInputData"
+                name="studentInputData"
+                [(ngModel)]="studentInputData"
+                autofocus
+                readonly="readonly"
+                [required]="true"
+                [ngClass]="{
+                  'ng-invalid ng-dirty': submitted && !studentInputData
+                }" />
+              <p-button
+                *ngIf="showStudentSearchButton"
+                label="Kërko"
+                icon="pi pi-search"
+                (click)="showStudentModal = true"
+                [style]="{ height: '100%' }"></p-button>
+            </div>
+            <small class="p-error block" *ngIf="submitted && !studentInputData">
+              Studenti është fushë e kërkuar.
+            </small>
+          </div>
+          <div class="pt-3">
+            <label class="block pb-3">Aplikon jashtë vendit *</label>
+            <div class="formgrid grid w-full">
+              <div class="field-radiobutton col-6">
+                <p-radioButton
+                  id="isApplyingToForeignCountriesTrue"
+                  name="isApplyingToForeignCountries"
+                  [value]="true"
+                  [(ngModel)]="a1.isApplyingToForeignCountries"></p-radioButton>
+                <label for="isApplyingToForeignCountriesTrue">Po</label>
+              </div>
+              <div class="field-radiobutton col-6">
+                <p-radioButton
+                  id="isApplyingToForeignCountriesFalse"
+                  name="isApplyingToForeignCountries"
+                  [value]="false"
+                  [(ngModel)]="a1.isApplyingToForeignCountries"></p-radioButton>
+                <label for="isApplyingToForeignCountriesFalse">Jo</label>
+              </div>
+            </div>
+          </div>
+          <h5 class="mt-5">Lëndë me Detyrim</h5>
+          <div class="field w-full">
+            <div class="flex align-items-center w-full">
+              <div class="pr-2">D3:</div>
+              <div class="w-full">
+                <p-dropdown
+                  [style]="{ width: '100%', minWidth: '250px' }"
+                  id="subjectD3Id"
+                  [options]="d3Dropdown"
+                  optionValue="key"
+                  optionLabel="value"
+                  name="subjectD3Id"
+                  [filter]="true"
+                  [autoDisplayFirst]="false"
+                  [(ngModel)]="a1.subjectD3Id"
+                  [showClear]="true">
+                </p-dropdown>
+              </div>
+            </div>
+          </div>
+
+          <h5 class="mt-5">Lëndë me Zgjedhje</h5>
+          <div class="field w-full">
+            <div class="p-inputgroup flex align-items-center w-full mb-3">
+              <div class="flex align-items-center justify-content-center pr-2">
+                Z1:
+              </div>
+              <div
+                class="flex align-items-center justify-content-center flex-grow-1">
+                <p-dropdown
+                  [style]="{ width: '100%' }"
+                  id="subjectZ1Id"
+                  [options]="optionalSubjects"
+                  optionValue="key"
+                  optionLabel="value"
+                  name="subjectZ1Id"
+                  [filter]="true"
+                  [autoDisplayFirst]="false"
+                  [(ngModel)]="a1.subjectZ1Id"
+                  [showClear]="true">
+                </p-dropdown>
+              </div>
+            </div>
+            <div class="p-inputgroup flex align-items-center w-full">
+              <div class="flex align-items-center justify-content-center pr-2">
+                <label for="subjectZ2Id">Z2:</label>
+              </div>
+              <div
+                class="flex align-items-center justify-content-center flex-grow-1">
+                <p-dropdown
+                  [style]="{ width: '100%' }"
+                  id="subjectZ2Id"
+                  [options]="optionalSubjects"
+                  optionValue="key"
+                  optionLabel="value"
+                  name="subjectZ2Id"
+                  [filter]="true"
+                  [autoDisplayFirst]="false"
+                  [(ngModel)]="a1.subjectZ2Id"
+                  [showClear]="true">
+                </p-dropdown>
+              </div>
+            </div>
+          </div>
+          <div class="w-full pb-3">
+            <label for="overSeerCode" class="block pb-2">Kodi i mbikqyrësit</label>
             <input
-              type="text"
-              [disabled]="!showStudentSearchButton"
+              type="password"
               pInputText
-              id="studentInputData"
-              name="studentInputData"
-              [(ngModel)]="studentInputData"
-              autofocus
-              readonly="readonly"
-              [required]="true"
-              [ngClass]="{
-                'ng-invalid ng-dirty': submitted && !studentInputData
-              }" />
-            <p-button
-              *ngIf="showStudentSearchButton"
-              label="Kërko"
-              icon="pi pi-search"
-              (click)="showStudentModal = true"
-              [style]="{ height: '100%' }"></p-button>
-          </div>
-          <small class="p-error block" *ngIf="submitted && !studentInputData">
-            Studenti është fushë e kërkuar.
-          </small>
-        </div>
-        <div class="field xl:w-4 mt-5 lg:w-6 sm:w-full">
-          <label for="d3Dubject">Lënda D3</label>
-          <p-dropdown
-            id="d3Dubject"
-            [options]="d3Dropdown"
-            optionValue="key"
-            autoWidth="false"
-            [style]="{ width: '100%' }"
-            optionLabel="value"
-            name="subjectD3Id"
-            [required]="false"
-            class="w-full block"
-            [(ngModel)]="a1.subjectD3Id"
-            [autoDisplayFirst]="false"
-            [showClear]="true"
-            [ngClass]="{
-              'ng-invalid ng-dirty':
-                submitted && (!a1.subjectD3Id || a1.subjectD3Id === '')
-            }">
-          </p-dropdown>
-          <small
-            class="p-error block"
-            *ngIf="submitted && (!a1.subjectD3Id || a1.subjectD3Id === '')">
-            Lënda D3 është fushë e kërkuar.
-          </small>
-        </div>
-        <div class="field xl:w-4 lg:w-6 sm:w-full">
-          <label class="mb-3">Aplikon jashtë vendit *</label>
-          <div class="formgrid grid w-full">
-            <div class="field-radiobutton col-6">
-              <p-radioButton
-                id="isApplyingToForeignCountriesTrue"
-                name="isApplyingToForeignCountries"
-                [value]="true"
-                [(ngModel)]="a1.isApplyingToForeignCountries"></p-radioButton>
-              <label for="isApplyingToForeignCountriesTrue">Po</label>
-            </div>
-            <div class="field-radiobutton col-6">
-              <p-radioButton
-                id="isApplyingToForeignCountriesFalse"
-                name="isApplyingToForeignCountries"
-                [value]="false"
-                [(ngModel)]="a1.isApplyingToForeignCountries"></p-radioButton>
-              <label for="isApplyingToForeignCountriesFalse">Jo</label>
-            </div>
-          </div>
-        </div>
-        <h5 class="uppercase mt-5">Lëndët me zgjedhje</h5>
-        <div class="field xl:w-4 lg:w-6 smxs:w-full">
-          <label for="optionalSubjects">Përzgjidh lëndën mëposhtë</label>
-          <div class="p-inputgroup w-full">
-            <p-dropdown
-              id="optionalSubjects"
-              [options]="optionalSubjects"
-              [style]="{ width: '100%' }"
-              optionLabel="value"
-              name="optionalSubject"
-              [(ngModel)]="selectedOptionalSubject"
-              [autoDisplayFirst]="false"
-              [showClear]="true"
-              (onChange)="addSubject()"
+              id="overSeerCode"
+              class="w-full"
+              required
+              [(ngModel)]="a1.overSeerCode"
+              name="overSeerCode"
               [ngClass]="{
                 'ng-invalid ng-dirty':
-                  submitted && chosenOptionalSubjects.length < 1
-              }">
-            </p-dropdown>
+                  submitted && (!a1.overSeerCode || a1.overSeerCode === '')
+              }" />
           </div>
-        </div>
-        <div
-          class="field xl:w-4 lg:w-6 sm:w-full mt-5 ml-4"
-          *ngIf="chosenOptionalSubjects && chosenOptionalSubjects.length > 0">
-          <p-table
-            #dt
-            dataKey="key"
-            responsiveLayout="scroll"
-            [value]="chosenOptionalSubjects"
-            [rows]="10"
-            class="px-0 mt-5"
-            [rowHover]="true">
-            <ng-template pTemplate="header">
-              <tr>
-                <th pSortableColumn="name" class="px-2">
-                  Lëndët e Përzgjedhura
-                </th>
-                <th></th>
-              </tr>
-            </ng-template>
-            <ng-template
-              pTemplate="body"
-              let-subjectsChosen
-              let-rowIndex="rowIndex">
-              <tr>
-                <td style="width: 100%; min-width: 10rem" class="px-2">
-                  {{ subjectsChosen.value }}
-                </td>
-                <td>
-                  <div class="flex">
-                    <button
-                      pButton
-                      pRipple
-                      icon="pi pi-trash"
-                      type="button"
-                      (click)="onDeleteChosenOptionalSubject(rowIndex)"
-                      class="p-button-danger">
-                      Hiq
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </ng-template>
-          </p-table>
-        </div>
-        <small
-          class="p-error block"
-          *ngIf="submitted && chosenOptionalSubjects.length < 1">
-          *Duhet zgjedhur minimalisht 1 lëndë
-        </small>
-        <div class="field lg:w-4 md:w-6 sm:w-full mt-5">
-          <label for="overSeerCode">Kodi i mbikqyrësit</label>
-          <input
-            type="password"
-            pInputText
-            id="overSeerCode"
-            class="w-full"
-            required
-            [(ngModel)]="a1.overSeerCode"
-            name="overSeerCode"
-            [ngClass]="{
-              'ng-invalid ng-dirty':
-                submitted && (!a1.overSeerCode || a1.overSeerCode === '')
-            }" />
-        </div>
-        <small
-          class="p-error block"
-          *ngIf="submitted && (!a1.overSeerCode || a1.overSeerCode === '')">
-          Kodi i mbikqyrësit është fushë e kërkuar.
-        </small>
-        <div class="flex justify-content-start">
-          <button
-            [disabled]="form.invalid"
-            type="submit"
-            pButton
-            label="Ruaj"
-            class="p-button w-auto"></button>
-          <button
-            type="button"
-            pButton
-            label="Anullo"
-            class="p-button-text w-auto mr-2"
-            (click)="onCancelClick()"></button>
+          <small
+            class="p-error block"
+            *ngIf="submitted && (!a1.overSeerCode || a1.overSeerCode === '')">
+            Kodi i mbikqyrësit është fushë e kërkuar.
+          </small>
+          <div class="flex justify-content-start">
+            <button
+              [disabled]="form.invalid"
+              type="submit"
+              pButton
+              label="Ruaj"
+              class="p-button w-auto"></button>
+            <button
+              type="button"
+              pButton
+              label="Anullo"
+              class="p-button-text w-auto mr-2"
+              (click)="onCancelClick()"></button>
+          </div>
         </div>
       </form>
     </div>

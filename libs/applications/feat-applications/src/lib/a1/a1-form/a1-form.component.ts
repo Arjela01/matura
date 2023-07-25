@@ -54,7 +54,7 @@ import {
   SharedStudent,
   SharedStudentLookupModule,
 } from '@msh/shared/student-lookup';
-import { A1FormModeEnum } from '../a1-form-mode.enum';
+import { A1FormModeEnum, ApplicationFormType } from '../a1-form-mode.enum';
 import { LazyLoadEvent } from 'primeng/api';
 
 @UntilDestroy()
@@ -78,7 +78,6 @@ import { LazyLoadEvent } from 'primeng/api';
   ],
   templateUrl: './a1-form.component.html',
   styleUrls: ['./a1-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [DialogService],
 })
 @UntilDestroy()
@@ -95,8 +94,6 @@ export class A1FormComponent {
   protected readonly A1FormModeEnum = A1FormModeEnum;
   showStudentModal = false;
 
-  selectedOptionalSubject: any = null;
-  chosenOptionalSubjects: any[] = [];
   studentInputData: string | null = null;
   academicYear?: AcademicYear | null = null;
   optionalSubjects: DropdownModel<number>[] = [];
@@ -105,6 +102,7 @@ export class A1FormComponent {
   totalStudentRecords = 0;
   showStudentSearchButton = true;
   selectedStudent?: SharedStudent;
+  applicationTypeA1 = ApplicationFormType.A1;
 
   @HostListener('window:popstate', ['$event'])
   onPopState() {
@@ -113,18 +111,7 @@ export class A1FormComponent {
 
   ref?: DynamicDialogRef;
   submitted = false;
-  a1: A1Z = {
-    id: 0,
-    academicYearId: 0,
-    studentId: '',
-    isA1: true,
-    isApplyingToForeignCountries: false,
-    alreadyHaveDiploma: false,
-    subjectD3Id: '',
-    subjectZ1Id: '',
-    subjectZ2Id: undefined,
-    overSeerCode: '',
-  };
+  a1: A1Z = {};
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
   a1Report: Report = Report.A1Form_Report;
@@ -174,13 +161,6 @@ export class A1FormComponent {
     this.router.navigate(['/applications/students']);
   }
 
-  onDeleteChosenOptionalSubject(index: number) {
-    this.chosenOptionalSubjects.splice(index, 1);
-    if (this.chosenOptionalSubjects.length === 1) {
-      this.a1.subjectZ1Id = this.chosenOptionalSubjects[0].key;
-    }
-  }
-
   private initWithEditMode() {
     this.a1ApiService
       .getById(this.id!)
@@ -188,6 +168,7 @@ export class A1FormComponent {
       .pipe(
         switchMap((a1: ApiResult<A1Z>) => {
           this.a1 = { ...a1?.data } as A1Z;
+
           return this.studentsApiService.getById(a1.data.studentId);
         }),
         switchMap((student: ApiResult<Student>) => {
@@ -204,10 +185,17 @@ export class A1FormComponent {
         this.academicYear = years['data'].find(
           (year: AcademicYear) => year.isActive
         );
+        this.studentInputData = [
+          this.a1.studentNid,
+          this.a1.studentFirstName,
+          this.a1.studentMiddleName,
+          this.a1.studentLastName,
+        ].join('-');
         this.d3Dropdown = d3.data;
         this.optionalSubjects = z1.data;
-        this.initializeOptionalSubjects();
-        this.studentInputData = `${this.selectedStudent?.studentId}-${this.a1.firstName}-${this.a1.middleName}-${this.a1.lastName}`;
+        this.cd.detectChanges();
+
+        this.a1.subjectD3Id = String(this.a1.subjectD3Id);
         this.cd.detectChanges();
       });
   }
@@ -218,9 +206,9 @@ export class A1FormComponent {
         switchMap((student: ApiResult<Student>) => {
           this.a1.studentId = student.data.id;
           this.a1.studentIdentifier = student.data.studentId;
-          this.a1.firstName = student.data.firstName;
-          this.a1.middleName = student.data.middleName;
-          this.a1.lastName = student.data.lastName;
+          this.a1.studentFirstName = student.data.firstName;
+          this.a1.studentMiddleName = student.data.middleName;
+          this.a1.studentLastName = student.data.lastName;
           this.selectedStudent = student.data;
           return combineLatest([
             this.getAcademicYears(),
@@ -236,8 +224,12 @@ export class A1FormComponent {
         this.a1.academicYearId = this.academicYear?.id;
         this.d3Dropdown = d3.data;
         this.optionalSubjects = z1.data;
-        this.initializeOptionalSubjects();
-        this.studentInputData = `${this.a1.studentIdentifier}-${this.a1.firstName}-${this.a1.middleName}-${this.a1.lastName}`;
+        this.studentInputData = [
+          this.a1.studentIdentifier,
+          this.a1.studentFirstName,
+          this.a1.studentMiddleName,
+          this.a1.studentLastName,
+        ].join('-');
         this.cd.detectChanges();
       });
   }
@@ -254,19 +246,6 @@ export class A1FormComponent {
       });
   }
 
-  private initializeOptionalSubjects() {
-    if (this.a1.subjectZ1Id) {
-      this.chosenOptionalSubjects.push(
-        this.optionalSubjects.find(x => x.key == (this.a1.subjectZ1Id as any))
-      );
-    }
-    if (this.a1.subjectZ2Id) {
-      this.chosenOptionalSubjects.push(
-        this.optionalSubjects.find(x => x.key == (this.a1.subjectZ2Id as any))
-      );
-    }
-  }
-
   private getStudentById(id: string): Observable<any> {
     return this.studentsApiService.getById(id).pipe(untilDestroyed(this));
   }
@@ -280,7 +259,9 @@ export class A1FormComponent {
             z1?.key ?? undefined,
             undefined,
             undefined,
-            this.selectedStudent?.profileId
+            this.selectedStudent?.profileId,
+            undefined,
+            this.applicationTypeA1
           )
           .pipe(untilDestroyed(this));
       })
@@ -298,7 +279,8 @@ export class A1FormComponent {
             undefined,
             undefined,
             this.selectedStudent?.profileId,
-            undefined
+            undefined,
+            this.applicationTypeA1
           );
         } else {
           return of([]);
@@ -330,34 +312,6 @@ export class A1FormComponent {
         alert('Form mode cannot be determined');
       }
     }
-  }
-
-  addSubject() {
-    const subjectIndexFound = this.chosenOptionalSubjects.findIndex(
-      subject => subject.key === this.selectedOptionalSubject?.key
-    );
-    if (subjectIndexFound !== -1) {
-      this.toastService.showError('Lënda është zgjedhur');
-      return;
-    }
-    if (
-      this.selectedOptionalSubject === null ||
-      this.selectedOptionalSubject === ''
-    ) {
-      return;
-    }
-    if (this.chosenOptionalSubjects.length === 2) {
-      // this.moreSubjectThanAllowed = true;
-      return;
-    }
-    this.chosenOptionalSubjects.push(this.selectedOptionalSubject);
-    if (this.chosenOptionalSubjects.length > 1) {
-      this.a1.subjectZ1Id = this.chosenOptionalSubjects[0].key;
-      this.a1.subjectZ2Id = this.chosenOptionalSubjects[1].key;
-    } else {
-      this.a1.subjectZ1Id = this.chosenOptionalSubjects[0].key;
-    }
-    this.selectedOptionalSubject = '';
   }
 
   addA1(a1: A1Z) {

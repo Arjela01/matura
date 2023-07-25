@@ -32,21 +32,43 @@
       <th pSortableColumn="NID">
         NID
         <div>
-          <p-sortIcon field="NID"></p-sortIcon>
+          <p-sortIcon field="StudentNid"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="NID"
+            field="StudentNid"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="NID">
-        Studenti
+      <th pSortableColumn="studentFirstName">
+        Emri
         <div>
-          <p-sortIcon field="StudentFullName"></p-sortIcon>
+          <p-sortIcon field="studentFirstName"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="StudentFullName"
+            field="studentFirstName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="StudentMiddleName">
+        Atësia
+        <div>
+          <p-sortIcon field="StudentMiddleName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="StudentMiddleName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="StudentLastName">
+        Mbiemri
+        <div>
+          <p-sortIcon field="StudentLastName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="StudentLastName"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
@@ -95,6 +117,17 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="reason">
+        Arsyetimi
+        <div>
+          <p-sortIcon field="reason"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="reason"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
       <th pSortableColumn="isDocument">
         Dokument?
         <div>
@@ -110,10 +143,16 @@
         {{ grade.id }}
       </td>
       <td style="width: 5%; min-width: 10rem">
-        {{ grade.nid }}
+        {{ grade.studentNid }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ grade.studentFullName }}
+        {{ grade.studentFirstName }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ grade.studentMiddleName }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ grade.studentLastName }}
       </td>
       <td style="width: 15%; min-width: 10rem">
         {{ grade.examTypeName }}
@@ -126,6 +165,9 @@
       </td>
       <td style="width: 5%; min-width: 10rem">
         {{ grade.grade }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ grade.reason }}
       </td>
       <td style="width: 14%; min-width: 10rem">
         <div *ngIf="grade.document">

@@ -109,10 +109,6 @@ export class ManageCarriedGradesComponent implements OnInit {
   onNewClick() {
     this.displayModal = true;
     this.selectedCarriedGrade = {} as CarriedGrade;
-
-    if (this.nid) {
-      this.selectedCarriedGrade.nid = this.nid;
-    }
   }
 
   onGridEvent(event: GridEvent<CarriedGrade | CarriedGrade[]>) {
@@ -278,14 +274,8 @@ export class ManageCarriedGradesComponent implements OnInit {
       academicYearId: number;
     };
     this.examSubjectApiService
-      .forExamType(
-        data.examTypeId,
-        data.academicYearId,
-        undefined,
-        undefined,
-        true
-      )
-      .pipe(untilDestroyed(this))
+      .forExamType(data.examTypeId, data.academicYearId, undefined, undefined, true)
+        .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examSubjectsDropdown = response.data;
         this.cd.detectChanges();

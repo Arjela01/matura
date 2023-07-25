@@ -6,7 +6,7 @@ export interface CarriedGrade {
   studentFullName?: string;
   examSubjectId?: string;
   examSubjectName?: string;
-  nid?: string;
+  reason?: string;
   examTypeId?: number;
   examTypeName?: string;
   year: number;

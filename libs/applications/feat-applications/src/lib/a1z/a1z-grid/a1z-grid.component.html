@@ -29,46 +29,46 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="NID">
+      <th pSortableColumn="studentNid">
         NID
         <div>
           <p-sortIcon field="NID"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="NID"
+            field="studentNid"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="firstName">
+      <th pSortableColumn="studentFirstName">
         Emri i Studentit
         <div>
-          <p-sortIcon field="firstName"></p-sortIcon>
+          <p-sortIcon field="studentFirstName"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="firstName"
+            field="studentFirstName"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="middleName">
+      <th pSortableColumn="studentMiddleName">
         Atësia
         <div>
-          <p-sortIcon field="middleName"></p-sortIcon>
+          <p-sortIcon field="studentMiddleName"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="middleName"
+            field="studentMiddleName"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="lastName">
+      <th pSortableColumn="studentLastName">
         Mbiemri
         <div>
-          <p-sortIcon field="lastName"></p-sortIcon>
+          <p-sortIcon field="studentLastName"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="lastName"
+            field="studentLastName"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
@@ -84,35 +84,35 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="birthDate">
+      <th pSortableColumn="studentBirthDate">
         Datëlindja
         <div>
-          <p-sortIcon field="birthDate"></p-sortIcon>
+          <p-sortIcon field="studentBirthDate"></p-sortIcon>
           <p-columnFilter
             type="date"
-            field="birthDate"
+            field="studentBirthDate"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="birthPlace">
+      <th pSortableColumn="studentBirthPlace">
         Vendlindja
         <div>
-          <p-sortIcon field="birthPlace"></p-sortIcon>
+          <p-sortIcon field="studentBirthPlace"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="birthPlace"
+            field="studentBirthPlace"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="academicYear">
+      <th pSortableColumn="a1ZCategoryName">
         Viti
         <div>
-          <p-sortIcon field="academicYear"></p-sortIcon>
+          <p-sortIcon field="a1ZCategoryName"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="academicYear"
+            field="a1ZCategoryName"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
@@ -124,34 +124,34 @@
     <tr>
       <td style="width: 10%; min-width: 10rem">
         <a
-          [routerLink]="['/applications/students/view', a1z.studentId]"
+          [routerLink]="['/applications/students/view', a1z.studentStudentId]"
           class="p-button-link"
-          >{{ a1z.studentId }}</a
+          >{{ a1z.studentStudentId }}</a
         >
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ a1z.nid }}
+        {{ a1z.studentNid }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ a1z.firstName }}
+        {{ a1z.studentFirstName }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ a1z.middleName }}
+        {{ a1z.studentMiddleName }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ a1z.lastName }}
+        {{ a1z.studentLastName }}
       </td>
       <td style="width: 10%; min-width: 10rem">
         {{ a1z.studentOldIdentifier }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ a1z.birthDate | date }}
+        {{ a1z.studentBirthDate | date }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ a1z.birthPlace }}
+        {{ a1z.studentBirthPlace }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ a1z.academicYear }}
+        {{ a1z.academicYearName }}
       </td>
       <td>
         <div class="flex">
