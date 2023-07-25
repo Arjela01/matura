@@ -297,10 +297,10 @@ export class ManageArchiveExamsComponent implements OnInit {
 
   changeFolderStatus() {
     this.archiveFolderService
-      .changeFolderStatus(this.id)
+      .changeFolderStatus(this.id, this.archiveFolder.isClosed)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        if (response.isSuccessful && !this.archiveFolder.isClosed) {
+        if (response.isSuccessful) {
           this.toastService.showSuccess(
             this.archiveFolder?.isClosed
               ? 'Dosja u hap me sukses!'
