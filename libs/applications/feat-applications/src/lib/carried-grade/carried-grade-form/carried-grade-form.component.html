@@ -28,21 +28,6 @@
   </div>
 
   <div class="field">
-    <label for="nid">NID i maturantit *</label>
-    <input
-      type="text"
-      pInputText
-      id="nid"
-      name="nid"
-      [(ngModel)]="grade.nid"
-      required
-      autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !grade.nid }" />
-    <small class="p-error block" *ngIf="submitted && !grade.nid">
-      NID është fushë e kërkuar.
-    </small>
-  </div>
-  <div class="field">
     <label for="academicYearId">Viti *</label>
     <p-dropdown
       id="academicYearId"
@@ -134,6 +119,22 @@
       [ngClass]="{ 'ng-invalid ng-dirty': submitted && !grade.grade }" />
     <small class="p-error block" *ngIf="submitted && !grade.grade">
       Nota është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="reason">Arsyetimi *</label>
+    <textarea
+      type="text"
+      pInputTextarea
+      id="reason"
+      name="reason"
+      [(ngModel)]="grade.reason"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !grade.reason }"
+      rows="5"></textarea>
+    <small class="p-error block" *ngIf="submitted && !grade.reason">
+      NID është fushë e kërkuar.
     </small>
   </div>
   <div class="field">

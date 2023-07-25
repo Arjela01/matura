@@ -110,10 +110,6 @@ export class ManageCarriedGradesComponent implements OnInit {
   onNewClick() {
     this.displayModal = true;
     this.selectedCarriedGrade = {} as CarriedGrade;
-
-    if (this.nid) {
-      this.selectedCarriedGrade.nid = this.nid;
-    }
   }
 
   onGridEvent(event: GridEvent<CarriedGrade | CarriedGrade[]>) {

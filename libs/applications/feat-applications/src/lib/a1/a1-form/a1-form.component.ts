@@ -95,8 +95,6 @@ export class A1FormComponent {
   protected readonly A1FormModeEnum = A1FormModeEnum;
   showStudentModal = false;
 
-  selectedOptionalSubject: any = null;
-  chosenOptionalSubjects: any[] = [];
   studentInputData: string | null = null;
   academicYear?: AcademicYear | null = null;
   optionalSubjects: DropdownModel<number>[] = [];
@@ -175,13 +173,6 @@ export class A1FormComponent {
     this.router.navigate(['/applications/students']);
   }
 
-  onDeleteChosenOptionalSubject(index: number) {
-    this.chosenOptionalSubjects.splice(index, 1);
-    if (this.chosenOptionalSubjects.length === 1) {
-      this.a1.subjectZ1Id = this.chosenOptionalSubjects[0].key;
-    }
-  }
-
   private initWithEditMode() {
     this.a1ApiService
       .getById(this.id!)
@@ -207,8 +198,12 @@ export class A1FormComponent {
         );
         this.d3Dropdown = d3.data;
         this.optionalSubjects = z1.data;
-        this.initializeOptionalSubjects();
-        this.studentInputData = `${this.selectedStudent?.studentId}-${this.a1.firstName}-${this.a1.middleName}-${this.a1.lastName}`;
+        this.studentInputData = [
+          this.a1.studentIdentifier,
+          this.a1.studentFirstName,
+          this.a1.studentMiddleName,
+          this.a1.studentLastName,
+        ].join('-');
         this.cd.detectChanges();
       });
   }
@@ -219,9 +214,9 @@ export class A1FormComponent {
         switchMap((student: ApiResult<Student>) => {
           this.a1.studentId = student.data.id;
           this.a1.studentIdentifier = student.data.studentId;
-          this.a1.firstName = student.data.firstName;
-          this.a1.middleName = student.data.middleName;
-          this.a1.lastName = student.data.lastName;
+          this.a1.studentFirstName = student.data.firstName;
+          this.a1.studentMiddleName = student.data.middleName;
+          this.a1.studentLastName = student.data.lastName;
           this.selectedStudent = student.data;
           return combineLatest([
             this.getAcademicYears(),
@@ -237,8 +232,12 @@ export class A1FormComponent {
         this.a1.academicYearId = this.academicYear?.id;
         this.d3Dropdown = d3.data;
         this.optionalSubjects = z1.data;
-        this.initializeOptionalSubjects();
-        this.studentInputData = `${this.a1.studentIdentifier}-${this.a1.firstName}-${this.a1.middleName}-${this.a1.lastName}`;
+        this.studentInputData = [
+          this.a1.studentIdentifier,
+          this.a1.studentFirstName,
+          this.a1.studentMiddleName,
+          this.a1.studentLastName,
+        ].join('-');
         this.cd.detectChanges();
       });
   }
@@ -253,19 +252,6 @@ export class A1FormComponent {
         this.a1.academicYearId = this.academicYear?.id;
         this.cd.detectChanges();
       });
-  }
-
-  private initializeOptionalSubjects() {
-    if (this.a1.subjectZ1Id) {
-      this.chosenOptionalSubjects.push(
-        this.optionalSubjects.find(x => x.key == (this.a1.subjectZ1Id as any))
-      );
-    }
-    if (this.a1.subjectZ2Id) {
-      this.chosenOptionalSubjects.push(
-        this.optionalSubjects.find(x => x.key == (this.a1.subjectZ2Id as any))
-      );
-    }
   }
 
   private getStudentById(id: string): Observable<any> {
@@ -332,34 +318,6 @@ export class A1FormComponent {
         alert('Form mode cannot be determined');
       }
     }
-  }
-
-  addSubject() {
-    const subjectIndexFound = this.chosenOptionalSubjects.findIndex(
-      subject => subject.key === this.selectedOptionalSubject?.key
-    );
-    if (subjectIndexFound !== -1) {
-      this.toastService.showError('Lënda është zgjedhur');
-      return;
-    }
-    if (
-      this.selectedOptionalSubject === null ||
-      this.selectedOptionalSubject === ''
-    ) {
-      return;
-    }
-    if (this.chosenOptionalSubjects.length === 2) {
-      // this.moreSubjectThanAllowed = true;
-      return;
-    }
-    this.chosenOptionalSubjects.push(this.selectedOptionalSubject);
-    if (this.chosenOptionalSubjects.length > 1) {
-      this.a1.subjectZ1Id = this.chosenOptionalSubjects[0].key;
-      this.a1.subjectZ2Id = this.chosenOptionalSubjects[1].key;
-    } else {
-      this.a1.subjectZ1Id = this.chosenOptionalSubjects[0].key;
-    }
-    this.selectedOptionalSubject = '';
   }
 
   addA1(a1: A1Z) {

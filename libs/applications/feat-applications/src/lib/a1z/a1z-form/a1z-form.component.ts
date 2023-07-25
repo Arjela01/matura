@@ -124,16 +124,11 @@ export class A1zFormComponent implements OnInit {
   studentInputData = '';
 
   showStudentModal = false;
-  enableD1Subject = false;
-  enableD2Subject = false;
-  enableD3Subject = false;
-  enableZ1Subject = false;
   submitted = false;
   showStudentSearchButton = true;
 
   a1z: A1Z = {
     id: 0,
-    yearOfSchoolA1Z: '',
   };
 
   booly: DropdownModel<boolean>[] = [
@@ -203,6 +198,7 @@ export class A1zFormComponent implements OnInit {
         .pipe(untilDestroyed(this))
         .subscribe(response => {
           this.a1z = { ...response.data };
+          console.log(this.a1z);
 
           this.cd.detectChanges();
 
@@ -274,74 +270,99 @@ export class A1zFormComponent implements OnInit {
       this.studentInputData =
         student?.studentId +
         '-' +
-        (student?.firstName ?? student?.studentFirstName) +
+        (student?.firstName ?? '') +
         '-' +
-        (student?.lastName ?? student?.studentLastName);
+        (student?.lastName ?? '');
     }
     this.cd.detectChanges();
   }
 
   isGraduationYearValid(): boolean {
     if (this.a1z.yearOfSchoolA1Z !== undefined) {
-      const graduationYear = parseInt(this.a1z.yearOfSchoolA1Z, 10);
+      const graduationYear = this.a1z.yearOfSchoolA1Z;
       return graduationYear <= new Date().getFullYear();
     }
     return false;
   }
 
   onSubjectD1Change($event: ChangeEvent<boolean>) {
-    this.enableD1Subject = $event.value;
+    this.a1z.carryD1 = $event.value;
     if (!$event.value) {
       this.a1z.scoreD1 = undefined;
-      this.a1z.yearD1 = undefined;
+      this.a1z.academicYearD1Name = undefined;
+      this.a1z.academicYearD1Id = undefined;
+      this.a1z.carriedGradeD1Id = undefined;
+    }
+    if (this.a1z.carryD1) {
+      this.carriedGrades$$.next([]);
+      this.onCarriedClick(EXAM_TYPES.D1);
     }
   }
 
   onSubjectD2Change($event: ChangeEvent<boolean>) {
-    this.enableD2Subject = $event.value;
+    this.a1z.carryD2 = $event.value;
     if (!$event.value) {
       this.a1z.scoreD2 = undefined;
-      this.a1z.yearD2 = undefined;
+      this.a1z.academicYearD2Name = undefined;
+      this.a1z.academicYearD2Id = undefined;
+      this.a1z.carriedGradeD2Id = undefined;
+    }
+    if (this.a1z.carryD2) {
+      this.carriedGrades$$.next([]);
+      this.onCarriedClick(EXAM_TYPES.D2);
     }
   }
 
   onSubjectD3Change($event: ChangeEvent<boolean>) {
-    this.enableD3Subject = $event.value;
+    this.a1z.carryD3 = $event.value;
     if (!$event.value) {
       this.a1z.scoreD3 = undefined;
-      this.a1z.yearD3 = undefined;
+      this.a1z.academicYearD3Name = undefined;
+      this.a1z.academicYearD3Id = undefined;
+      this.a1z.carriedGradeD3Id = undefined;
+
+    }
+    if (this.a1z.carryD3) {
+      this.carriedGrades$$.next([]);
+      this.onCarriedClick(EXAM_TYPES.D3);
     }
   }
 
   onSubjectZ1Change($event: ChangeEvent<boolean>) {
-    this.enableZ1Subject = $event.value;
+    this.a1z.carryZ1 = $event.value;
     if (!$event.value) {
       this.a1z.scoreZ1 = undefined;
-      this.a1z.yearZ1 = undefined;
+      this.a1z.academicYearZ1Name = undefined;
+      this.a1z.academicYearZ1Id = undefined;
+      this.a1z.carriedGradeZ1Id = undefined;
+    }
+    if (this.a1z.carryZ1) {
+      this.carriedGrades$$.next([]);
+      this.onCarriedClick(EXAM_TYPES.Z1);
     }
   }
 
   onSubjectD1Init(data: A1Z) {
     if (data.scoreD1) {
-      this.enableD1Subject = true;
+      this.a1z.carryD1 = true;
     }
   }
 
   onSubjectD2Init(data: A1Z) {
     if (data.scoreD2) {
-      this.enableD2Subject = true;
+      this.a1z.carryD2 = true;
     }
   }
 
   onSubjectD3Init(data: A1Z) {
     if (data.scoreD3) {
-      this.enableD3Subject = true;
+      this.a1z.carryD3 = true;
     }
   }
 
   onSubjectZ1Init(data: A1Z) {
     if (data.scoreZ1) {
-      this.enableZ1Subject = true;
+      this.a1z.carryZ1 = true;
     }
   }
 
@@ -507,30 +528,29 @@ export class A1zFormComponent implements OnInit {
   }
 
   manageSubjects() {
-    if (!this.enableD1Subject) {
+    if (!this.a1z.carryD1) {
       this.a1z.scoreD1 = undefined;
       this.a1z.reasonD1 = undefined;
-      this.a1z.yearD1 = undefined;
+      this.a1z.academicYearD1Name = undefined;
+      this.a1z.academicYearD1Id = undefined;
     }
-    if (!this.enableD2Subject) {
+    if (!this.a1z.carryD2) {
       this.a1z.scoreD2 = undefined;
       this.a1z.reasonD2 = undefined;
-      this.a1z.yearD2 = undefined;
+      this.a1z.academicYearD2Name = undefined;
+      this.a1z.academicYearD2Id = undefined;
     }
-    if (!this.enableD3Subject) {
+    if (!this.a1z.carryD3) {
       this.a1z.scoreD3 = undefined;
       this.a1z.reasonD3 = undefined;
-      this.a1z.yearD3 = undefined;
+      this.a1z.academicYearD3Name = undefined;
+      this.a1z.academicYearD3Id = undefined;
     }
-    if (this.a1z.subjectD3Id !== undefined) {
-      this.a1z.scoreD3 = undefined;
-      this.a1z.reasonD3 = undefined;
-      this.a1z.yearD3 = undefined;
-    }
-    if (this.a1z.subjectZ1Id !== undefined) {
+    if (this.a1z.carryZ1) {
       this.a1z.scoreZ1 = undefined;
       this.a1z.reasonZ1 = undefined;
-      this.a1z.yearZ1 = undefined;
+      this.a1z.academicYearZ1Name = undefined;
+      this.a1z.academicYearZ1Id = undefined;
     }
   }
 
@@ -554,27 +574,35 @@ export class A1zFormComponent implements OnInit {
 
     switch ($event.examTypeName) {
       case EXAM_TYPES.D1:
-        this.a1z.yearD1 = $event.year;
+        this.a1z.academicYearD1Name = $event.academicYearName;
+        this.a1z.academicYearD1Id = $event.academicYearId;
+        this.a1z.carriedGradeD1Id = $event.id;
         this.a1z.scoreD1 = $event.grade;
-        this.a1z.subjectNameD1 = $event.examSubjectName;
+        this.a1z.subjectD1Name = $event.examSubjectName;
         this.cd.detectChanges();
         break;
       case EXAM_TYPES.D2:
-        this.a1z.yearD2 = $event.year;
+        this.a1z.academicYearD2Name = $event.academicYearName;
+        this.a1z.academicYearD2Id = $event.academicYearId;
+        this.a1z.carriedGradeD2Id = $event.id;
         this.a1z.scoreD2 = $event.grade;
-        this.a1z.subjectNameD2 = $event.examSubjectName;
+        this.a1z.subjectD2Name = $event.examSubjectName;
         this.cd.detectChanges();
         break;
       case EXAM_TYPES.D3:
-        this.a1z.yearD3 = $event.year;
+        this.a1z.academicYearD3Name = $event.academicYearName;
+        this.a1z.academicYearD3Id = $event.academicYearId;
+        this.a1z.carriedGradeD3Id = $event.id;
         this.a1z.scoreD3 = $event.grade;
-        this.a1z.subjectNameD3 = $event.examSubjectName;
+        this.a1z.subjectD3Name = $event.examSubjectName;
         this.cd.detectChanges();
         break;
       case EXAM_TYPES.Z1:
-        this.a1z.yearZ1 = $event.year;
+        this.a1z.academicYearZ1Name = $event.academicYearName;
+        this.a1z.academicYearZ1Id = $event.academicYearId;
+        this.a1z.carriedGradeZ1Id = $event.id;
         this.a1z.scoreZ1 = $event.grade;
-        this.a1z.subjectNameZ1 = $event.examSubjectName;
+        this.a1z.subjectZ1Name = $event.examSubjectName;
         this.cd.detectChanges();
         break;
     }

@@ -72,7 +72,6 @@ export class CarriedGradesFormComponent implements OnChanges {
 
   grade: CarriedGrade = {
     id: 0,
-    nid: '',
     examTypeId: 0,
     grade: 0,
     year: 0,
@@ -100,7 +99,6 @@ export class CarriedGradesFormComponent implements OnChanges {
           (student?.firstName ?? student?.firstName) +
           '-' +
           (student?.lastName ?? student?.lastName);
-        this.grade.nid = student.idCard;
       } else {
         this.studentInputData = ' ';
       }
@@ -108,11 +106,13 @@ export class CarriedGradesFormComponent implements OnChanges {
     if (changes['gradeDetails'] && changes['gradeDetails'].currentValue) {
       const g = changes['gradeDetails'].currentValue;
       this.grade = g;
-      if (g.nid) {
-        this.studentInputData = `${g.nid} - ${g?.studentFullName?.replace(
-          /\s/g,
-          '-'
-        )}`;
+      if (g.studentNid) {
+        this.studentInputData = [
+          g.studentNid,
+          g.studentFirstName,
+          g.studentMiddleName,
+          g.studentLastName,
+        ].join('-');
       } else {
         this.studentInputData = '';
       }

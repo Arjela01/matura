@@ -33,7 +33,7 @@
         <ng-template pTemplate="header">
           <tr>
             <th pSortableColumn="studentId">
-              ID maturanti
+              ID Maturanti
               <div>
                 <p-sortIcon field="studentId"></p-sortIcon>
                 <p-columnFilter
@@ -43,51 +43,50 @@
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="NID">
+            <th pSortableColumn="studentNid">
               NID
               <div>
                 <p-sortIcon field="NID"></p-sortIcon>
                 <p-columnFilter
                   type="text"
-                  field="NID"
+                  field="studentNid"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="firstName">
-              Emri
+            <th pSortableColumn="studentFirstName">
+              Emri i Studentit
               <div>
-                <p-sortIcon field="firstName"></p-sortIcon>
+                <p-sortIcon field="studentFirstName"></p-sortIcon>
                 <p-columnFilter
                   type="text"
-                  field="firstName"
+                  field="studentFirstName"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="middleName">
+            <th pSortableColumn="studentMiddleName">
               Atësia
               <div>
-                <p-sortIcon field="middleName"></p-sortIcon>
+                <p-sortIcon field="studentMiddleName"></p-sortIcon>
                 <p-columnFilter
                   type="text"
-                  field="middleName"
+                  field="studentMiddleName"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="lastName">
+            <th pSortableColumn="studentLastName">
               Mbiemri
               <div>
-                <p-sortIcon field="lastName"></p-sortIcon>
+                <p-sortIcon field="studentLastName"></p-sortIcon>
                 <p-columnFilter
                   type="text"
-                  field="lastName"
+                  field="studentLastName"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-
             <th pSortableColumn="studentOldIdentifier">
               ID e vjetër
               <div>
@@ -99,36 +98,35 @@
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="isApplyingToForeignCountries">
-              Aplikon jashtë
+            <th pSortableColumn="studentBirthDate">
+              Datëlindja
               <div>
-                <p-sortIcon field="isApplyingToForeignCountries"></p-sortIcon>
+                <p-sortIcon field="studentBirthDate"></p-sortIcon>
                 <p-columnFilter
-                  type="boolean"
-                  field="isApplyingToForeignCountries"
+                  type="date"
+                  field="studentBirthDate"
                   display="menu"
-                  matchMode="equals"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="birthplace">
+            <th pSortableColumn="studentBirthPlace">
               Vendlindja
               <div>
-                <p-sortIcon field="birthplace"></p-sortIcon>
+                <p-sortIcon field="studentBirthPlace"></p-sortIcon>
                 <p-columnFilter
                   type="text"
-                  field="birthplace"
+                  field="studentBirthPlace"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="academicYear">
+            <th pSortableColumn="a1CategoryName">
               Viti
               <div>
-                <p-sortIcon field="academicYear"></p-sortIcon>
+                <p-sortIcon field="a1CategoryName"></p-sortIcon>
                 <p-columnFilter
-                  type="string"
-                  field="academicYear"
+                  type="text"
+                  field="a1CategoryName"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
@@ -140,34 +138,37 @@
           <tr>
             <td style="width: 10%; min-width: 10rem">
               <a
-                [routerLink]="['/applications/students/view', a1.studentId]"
+                [routerLink]="[
+                  '/applications/students/view',
+                  a1.studentStudentId
+                ]"
                 class="p-button-link"
-                >{{ a1.studentId }}</a
+                >{{ a1.studentStudentId }}</a
               >
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ a1.nid }}
+              {{ a1.studentNid }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ a1.firstName }}
+              {{ a1.studentFirstName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ a1.middleName }}
+              {{ a1.studentMiddleName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ a1.lastName }}
+              {{ a1.studentLastName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ a1.studentOldIdentifier }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ a1.isApplyingToForeignCountries ? 'Po' : 'Jo' }}
+              {{ a1.studentBirthDate | date }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ a1.birthPlace }}
+              {{ a1.studentBirthPlace }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ a1.academicYear }}
+              {{ a1.academicYearName }}
             </td>
             <td>
               <div class="flex">

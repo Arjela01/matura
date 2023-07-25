@@ -207,7 +207,7 @@ export class StudentsEditComponent implements OnInit {
             if (a1) {
               this.router.navigate([`/applications/a1/edit/${a1.id}`]);
             } else if (a1Z) {
-              this.router.navigate([`/applications/a1z-form/${a1Z.id}`]);
+              this.router.navigate([`/applications/a1z/edit/${a1Z.id}`]);
             } else {
               this.displayModal = true;
             }

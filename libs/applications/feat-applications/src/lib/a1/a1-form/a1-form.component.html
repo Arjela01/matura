@@ -1,9 +1,9 @@
 <div class="flex ml-2 mb-2 page-header mb-header">
   <h2 class="flex-1 mb-0">
     {{
-      A1FormModeEnum.Add === mode || A1FormModeEnum.AddWithStudent === mode
-        ? 'Shto Formular A1'
-        : 'Ndrysho Formularin A1'
+    A1FormModeEnum.Add === mode || A1FormModeEnum.AddWithStudent === mode
+      ? 'Shto Formular A1'
+      : 'Ndrysho Formularin A1'
     }}
   </h2>
   <div class="flex align-items-right justify-content-right">
@@ -44,7 +44,7 @@
               [required]="true"
               [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !studentInputData
-              }" />
+              }"/>
             <p-button
               *ngIf="showStudentSearchButton"
               label="Kërko"
@@ -56,33 +56,7 @@
             Studenti është fushë e kërkuar.
           </small>
         </div>
-        <div class="field xl:w-4 mt-5 lg:w-6 sm:w-full">
-          <label for="d3Dubject">Lënda D3</label>
-          <p-dropdown
-            id="d3Dubject"
-            [options]="d3Dropdown"
-            optionValue="key"
-            autoWidth="false"
-            [style]="{ width: '100%' }"
-            optionLabel="value"
-            name="subjectD3Id"
-            [required]="false"
-            class="w-full block"
-            [(ngModel)]="a1.subjectD3Id"
-            [autoDisplayFirst]="false"
-            [showClear]="true"
-            [ngClass]="{
-              'ng-invalid ng-dirty':
-                submitted && (!a1.subjectD3Id || a1.subjectD3Id === '')
-            }">
-          </p-dropdown>
-          <small
-            class="p-error block"
-            *ngIf="submitted && (!a1.subjectD3Id || a1.subjectD3Id === '')">
-            Lënda D3 është fushë e kërkuar.
-          </small>
-        </div>
-        <div class="field xl:w-4 lg:w-6 sm:w-full">
+        <div class="field pt-3 xl:w-4 lg:w-6 sm:w-full">
           <label class="mb-3">Aplikon jashtë vendit *</label>
           <div class="formgrid grid w-full">
             <div class="field-radiobutton col-6">
@@ -103,76 +77,72 @@
             </div>
           </div>
         </div>
-        <h5 class="uppercase mt-5">Lëndët me zgjedhje</h5>
+        <h5 class="mt-5">Lëndë me Detyrim</h5>
         <div class="field xl:w-4 lg:w-6 smxs:w-full">
-          <label for="optionalSubjects">Përzgjidh lëndën mëposhtë</label>
-          <div class="p-inputgroup w-full">
-            <p-dropdown
-              id="optionalSubjects"
-              [options]="optionalSubjects"
-              [style]="{ width: '100%' }"
-              optionLabel="value"
-              name="optionalSubject"
-              [(ngModel)]="selectedOptionalSubject"
-              [autoDisplayFirst]="false"
-              [showClear]="true"
-              (onChange)="addSubject()"
-              [ngClass]="{
-                'ng-invalid ng-dirty':
-                  submitted && chosenOptionalSubjects.length < 1
-              }">
-            </p-dropdown>
+          <div class="p-inputgroup flex align-items-center w-full mb-3">
+            <div class="flex align-items-center justify-content-center pr-2">
+              D3:
+            </div>
+            <div
+              class="flex align-items-center justify-content-center flex-grow-1">
+              <p-dropdown
+                id="optionalSubjects2"
+                [options]="d3Dropdown"
+                [style]="{ width: '100%' }"
+                optionLabel="value"
+                optionValue="key"
+                name="optionalSubject"
+                defaultLabel="Zgjidh Lëndën"
+                [(ngModel)]="a1.subjectD3Id"
+                [autoDisplayFirst]="false"
+                [showClear]="true">
+              </p-dropdown>
+            </div>
           </div>
         </div>
-        <div
-          class="field xl:w-4 lg:w-6 sm:w-full mt-5 ml-4"
-          *ngIf="chosenOptionalSubjects && chosenOptionalSubjects.length > 0">
-          <p-table
-            #dt
-            dataKey="key"
-            responsiveLayout="scroll"
-            [value]="chosenOptionalSubjects"
-            [rows]="10"
-            class="px-0 mt-5"
-            [rowHover]="true">
-            <ng-template pTemplate="header">
-              <tr>
-                <th pSortableColumn="name" class="px-2">
-                  Lëndët e Përzgjedhura
-                </th>
-                <th></th>
-              </tr>
-            </ng-template>
-            <ng-template
-              pTemplate="body"
-              let-subjectsChosen
-              let-rowIndex="rowIndex">
-              <tr>
-                <td style="width: 100%; min-width: 10rem" class="px-2">
-                  {{ subjectsChosen.value }}
-                </td>
-                <td>
-                  <div class="flex">
-                    <button
-                      pButton
-                      pRipple
-                      icon="pi pi-trash"
-                      type="button"
-                      (click)="onDeleteChosenOptionalSubject(rowIndex)"
-                      class="p-button-danger">
-                      Hiq
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </ng-template>
-          </p-table>
+
+        <h5 class="mt-5">Lëndë me Zgjedhje</h5>
+        <div class="field xl:w-4 lg:w-6 smxs:w-full">
+          <div class="p-inputgroup flex align-items-center w-full mb-3">
+            <div class="flex align-items-center justify-content-center pr-2">
+              Z1:
+            </div>
+            <div
+              class="flex align-items-center justify-content-center flex-grow-1">
+              <p-dropdown
+                id="optionalSubjects"
+                [options]="optionalSubjects"
+                [style]="{ width: '100%' }"
+                optionLabel="value"
+                optionValue="key"
+                name="optionalSubject"
+                [(ngModel)]="a1.subjectD1Id"
+                [autoDisplayFirst]="false"
+                [showClear]="true">
+              </p-dropdown>
+            </div>
+          </div>
+          <div class="p-inputgroup flex align-items-center w-full">
+            <div class="flex align-items-center justify-content-center pr-2">
+              <label for="subjectZ2Id">Z2:</label>
+            </div>
+            <div
+              class="flex align-items-center justify-content-center flex-grow-1">
+              <p-dropdown
+                id="subjectZ2Id"
+                [options]="optionalSubjects"
+                [style]="{ width: '100%' }"
+                optionLabel="value"
+                optionValue="key"
+                name="optionalSubject"
+                defaultLabel="Zgjidh Lëndën (Opsionale)"
+                [(ngModel)]="a1.subjectZ2Id"
+                [autoDisplayFirst]="false"
+                [showClear]="true">
+              </p-dropdown>
+            </div>
+          </div>
         </div>
-        <small
-          class="p-error block"
-          *ngIf="submitted && chosenOptionalSubjects.length < 1">
-          *Duhet zgjedhur minimalisht 1 lëndë
-        </small>
         <div class="field lg:w-4 md:w-6 sm:w-full mt-5">
           <label for="overSeerCode">Kodi i mbikqyrësit</label>
           <input
@@ -186,7 +156,7 @@
             [ngClass]="{
               'ng-invalid ng-dirty':
                 submitted && (!a1.overSeerCode || a1.overSeerCode === '')
-            }" />
+            }"/>
         </div>
         <small
           class="p-error block"
