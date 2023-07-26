@@ -101,12 +101,11 @@
 
           <h5 class="mt-5">Lëndë me Zgjedhje</h5>
           <div class="field w-full">
-            <div class="p-inputgroup flex align-items-center w-full mb-3">
-              <div class="flex align-items-center justify-content-center pr-2">
+            <div class="flex align-items-center w-full">
+              <div class="pr-2">
                 Z1:
               </div>
-              <div
-                class="flex align-items-center justify-content-center flex-grow-1">
+              <div class="w-full">
                 <p-dropdown
                   [style]="{ width: '100%' }"
                   id="subjectZ1Id"
@@ -120,6 +119,7 @@
                   [showClear]="true">
                 </p-dropdown>
               </div>
+              {{optionalSubjects | json }}
             </div>
           </div>
           <div class="w-full pb-3">
