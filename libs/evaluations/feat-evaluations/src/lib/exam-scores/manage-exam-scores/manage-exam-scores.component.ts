@@ -261,7 +261,7 @@ export class ManageExamScoresComponent implements OnInit {
         const blob: any = new Blob([response], {
           type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         });
-        FileSaver.saveAs(blob, 'Pikë Provimi Export[TEMPLATE].xlsx ');
+        FileSaver.saveAs(blob, 'Pikë Provimi Export[TEMPLATE].xlsx');
       });
   }
 

@@ -108,10 +108,7 @@ export class ManageDiplomaRequirementExceptionComponent {
 
   changeStatus(student: Student) {
     this.studentService
-      .confirmException({
-        id: student.id,
-        isConfirmed: !student?.isConfirmedBySupervisor,
-      })
+      .confirmException(student.id, student.isDiplomaRequirementException)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
