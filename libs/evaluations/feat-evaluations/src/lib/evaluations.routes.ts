@@ -150,4 +150,11 @@ export const EVALUATION_ROUTES: Route[] = [
         m => m.ManageExamCopyComponent
       ),
   },
+  {
+    path: 'exam-secrets-list',
+    loadComponent: () =>
+      import('./exam-secrets-list/manage-exam-secrets-list/manage-exam-secrets-list.component').then(
+        m => m.ManageExamSecretsListComponent
+      ),
+  },
 ];
