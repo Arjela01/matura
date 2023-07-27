@@ -55,14 +55,16 @@ export class StudentsApiService {
   delete(studentId: number): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<Student>>(`/Student/${studentId}`);
   }
-
-  confirmException(exceptedDiploma: {
-    isConfirmed: boolean;
-    id: any;
-  }): Observable<ApiResult<Student>> {
+  confirmException(
+    id: string,
+    isConfirmed?: boolean
+  ): Observable<ApiResult<Student>> {
     return this.apiService.post<ApiResult<Student>, ConfirmDiplomaException>(
       '/Student/SetConfirm',
-      exceptedDiploma
+      {
+        id: id,
+        isConfirmed: !isConfirmed,
+      }
     );
   }
 
