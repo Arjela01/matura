@@ -85,6 +85,7 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th class="text-center">Barcode</th>
       <th pSortableColumn="isClosed">
         Statusi
         <div>
@@ -97,12 +98,24 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th colspan="3" style="text-align: center">Veprime</th>
+      <th pSortableColumn="isClosed">
+        Hap/Mbyll
+        <div>
+          <p-sortIcon field="isClosed"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            field="isClosed"
+            matchMode="equals"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th style="text-align: center">Veprime</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-archiveFolder>
     <tr>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 5%; min-width: 10rem">
         <a
           pTooltip="Shiko Dosjen"
           tooltipPosition="bottom"
@@ -110,59 +123,67 @@
           {{ this.archiveFolder.nr }}
         </a>
       </td>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 5%; min-width: 10rem">
         {{ archiveFolder.totalArchiveExams }}
       </td>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 5%; min-width: 10rem">
         {{ archiveFolder.examTypeName }}
       </td>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 25%; min-width: 10rem">
         {{ archiveFolder.examSubjectName }}
       </td>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 5%; min-width: 10rem">
         {{ archiveFolder.isFall ? 'Po' : 'Jo' }}
       </td>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 10%; min-width: 10rem">
         {{ archiveFolder.createdByName }}
       </td>
-
-      <td style="width: 14%; min-width: 10rem">
-        <span
-          [ngClass]="
-            archiveFolder.isClosed === true
-              ? ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
-              : ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
-          ">
-          {{ archiveFolder.isClosed === true ? 'Mbyllur' : 'Hapur' }}
-        </span>
-      </td>
-      <td>
-        <div class="flex">
-          <a [routerLink]="['/evaluations', 'archive-exams', archiveFolder.id]">
-            <img
-              src="assets/svg/barcode.svg"
-              class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
-              tooltipPosition="bottom"
-              (click)="addBarcodes(archiveFolder)"
-              pTooltip="Hidh Barkode" />
-          </a>
+      <td class="text-center" style="width: 10%">
+        <a
+          [routerLink]="['/evaluations', 'archive-exams', archiveFolder.id]"
+          *ngIf="!archiveFolder.isClosed">
           <img
-            src="{{
-              !archiveFolder.isClosed
-                ? 'assets/svg/close.svg'
-                : 'assets/svg/open.svg'
-            }}"
+            src="assets/svg/barcode.svg"
             class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"
-            (click)="changeStatus(archiveFolder)"
-            pTooltip="{{ !archiveFolder.isClosed ? 'Mbyll' : 'Hap' }}" />
-          <img
-            src="assets/svg/delete-form.svg"
-            class="p-button-rounded p-button-danger p-button-text pointer"
-            pTooltip="Fshi"
-            tooltipPosition="bottom"
-            (click)="onDeleteClick(archiveFolder)" />
+            (click)="addBarcodes(archiveFolder)"
+            pTooltip="Hidh Barkode" />
+        </a>
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        <div class="flex">
+          <span
+            [ngClass]="
+              archiveFolder.isClosed === true
+                ? ['text-red-700', 'px-1', 'py-1', 'fb']
+                : ['text-green-500', 'px-1', 'py-1', 'fb']
+            ">
+            {{ archiveFolder.isClosed === true ? 'Mbyllur' : 'Hapur' }}
+          </span>
         </div>
+      </td>
+      <td>
+        <div class="flex pointer"
+             (click)="changeStatus(archiveFolder)">
+        <img
+          src="{{
+            !archiveFolder.isClosed
+              ? 'assets/svg/close.svg'
+              : 'assets/svg/open.svg'
+          }}"
+          class="p-button-rounded p-button-warning p-button-text mr-2 "
+           />
+          {{ !archiveFolder.isClosed ? 'Mbyll' : 'Hap' }}
+        </div>
+      </td>
+
+      <td class="text-center" style="width: 5%; min-width: 10rem">
+        <img
+          src="assets/svg/delete-form.svg"
+          class="p-button-rounded p-button-danger p-button-text pointer"
+          pTooltip="Fshi"
+          tooltipPosition="bottom"
+          (click)="onDeleteClick(archiveFolder)" />
       </td>
     </tr>
   </ng-template>

@@ -83,26 +83,28 @@
   </ng-template>
   <ng-template pTemplate="body" let-archiveExam>
     <tr>
-      <td style="width: 50%; min-width: 10rem">
+      <td style="width: 5%; min-width: 10rem">
         {{ archiveExam.index }}
       </td>
-      <td style="width: 50%; min-width: 10rem">
+      <td>
         {{ archiveExam.barcode }}
       </td>
-      <td style="width: 40%; min-width: 10rem">
-        <img
-          src="assets/svg/edit-form.svg"
-          class="p-button-rounded p-button-warning p-button-text ml-m pointer"
-          tooltipPosition="bottom"
-          (click)="onEditClick(archiveExam)"
-          pTooltip="Ndrysho" />
+      <td style="width: 5%; min-width: 10rem">
+        <div class="flex">
+          <img
+            src="assets/svg/edit-form.svg"
+            class="p-button-rounded p-button-warning p-button-text ml-m pointer"
+            tooltipPosition="bottom"
+            (click)="onEditClick(archiveExam)"
+            pTooltip="Ndrysho" />
 
-        <img
-          src="assets/svg/delete-form.svg"
-          class="p-button-rounded p-button-danger p-button-text ml-m pointer"
-          pTooltip="Fshi"
-          tooltipPosition="bottom"
-          (click)="onDeleteClick(archiveExam)" />
+          <img
+            src="assets/svg/delete-form.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
+            pTooltip="Fshi"
+            tooltipPosition="bottom"
+            (click)="onDeleteClick(archiveExam)" />
+        </div>
       </td>
     </tr>
   </ng-template>

@@ -1,6 +1,6 @@
 <div class="grid">
   <div class="col-12">
-    <div class="mb-2 mt-6">
+    <div class="mb-2">
       <div class="flex justify-content-between">
         <div>
           <h2 class="mb-0">
@@ -42,7 +42,7 @@
         </div>
       </div>
     </div>
-    <div class="card">
+    <div class="card mt-4">
       <div>
         <p-table
           #dt
@@ -77,26 +77,15 @@
                   field="barcode"
                   display="menu"></p-columnFilter>
               </th>
-              <th pSortableColumn="name">
-                Emri
-                <p-sortIcon field="name"></p-sortIcon>
-                <p-columnFilter
-                  type="text"
-                  field="name"
-                  display="menu"></p-columnFilter>
-              </th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-archiveExam>
             <tr>
-              <td style="width: 14%; min-width: 10rem">
+              <td style="width: 5%; min-width: 10rem">
                 {{ archiveExam.index }}
               </td>
-              <td style="width: 14%; min-width: 10rem">
+              <td >
                 {{ archiveExam.barcode }}
-              </td>
-              <td style="width: 14%; min-width: 10rem">
-                {{ archiveFolder.examSubjectName }}
               </td>
             </tr>
           </ng-template>
