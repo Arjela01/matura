@@ -115,5 +115,8 @@ export class ManageExamSecretsListComponent {
         });
 
   }
-
+  paginate($event: number) {
+    this.event.first = $event;
+    this.getExamSecretsList(this.event);
+  }
 }

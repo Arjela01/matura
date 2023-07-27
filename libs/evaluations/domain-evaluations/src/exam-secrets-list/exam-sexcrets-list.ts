@@ -14,6 +14,6 @@ export interface ExamSecretList{
   studentName?:string;
   studentId?:number;
   isFall?:boolean;
-  barcode?:boolean;
+  barcode?:any;
 
 }
