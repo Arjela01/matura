@@ -80,12 +80,12 @@
             class="p-button-rounded p-button-plain p-button-text mr-2 pointer"
             (click)="changeStatus(student)"
             [ngClass]="
-              student.isConfirmedBySupervisor === true
+              student.isDiplomaRequirementException === true
                 ? ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
                 : ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
             ">
             {{
-              student.isConfirmedBySupervisor === true ? 'Anullo' : 'Konfirmo'
+              student.isDiplomaRequirementException === true ? 'Anullo' : 'Konfirmo'
             }}
           </button>
         </div>
