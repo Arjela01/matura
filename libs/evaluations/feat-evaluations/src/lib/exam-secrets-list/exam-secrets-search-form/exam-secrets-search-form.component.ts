@@ -61,7 +61,7 @@ export class ExamSecretsSearchFormComponent implements OnInit {
     filters: {},
     globalFilter: null,
   };
-  examSecretList: ExamSecretList = {
+  examSecretFilterForm: ExamSecretList = {
     administrationOfficeId: 0,
     administrationOfficeName: '',
     examSiteName: '',
@@ -71,6 +71,7 @@ export class ExamSecretsSearchFormComponent implements OnInit {
     examTypeName: '',
     examSubjectId: '',
     examSubjectName: '',
+    id:''
   };
   isFall!: any[];
   hasBarcode!: any[];
@@ -118,20 +119,20 @@ export class ExamSecretsSearchFormComponent implements OnInit {
 
     onAdministrationOfficeChanged(): void {
       this.administrationOffices.map(el => {
-        if (el.key == this.examSecretList.administrationOfficeId) {
-          this.examSecretList.administrationOfficeName = el.value
+        if (el.key == this.examSecretFilterForm.administrationOfficeId) {
+          this.examSecretFilterForm.administrationOfficeName = el.value
         }
       })
-      this.administrationOfficeChanged.emit(Object.assign({}, this.examSecretList));
+      this.administrationOfficeChanged.emit(Object.assign({}, this.examSecretFilterForm));
   }
   refreshExamDates() {
     this.examSites.map(el => {
-      if (el.key == this.examSecretList.examSiteId) {
-        this.examSecretList.examSiteName = el.value
+      if (el.key == this.examSecretFilterForm.examSiteId) {
+        this.examSecretFilterForm.examSiteName = el.value
       }
     })
-    this.loadExamDates.emit(Object.assign({}, this.examSecretList));
-    this.getExamDate(this.examSecretList.examSiteId);
+    this.loadExamDates.emit(Object.assign({}, this.examSecretFilterForm));
+    this.getExamDate(this.examSecretFilterForm.examSiteId);
 
   }
   getExamSite() {
@@ -168,51 +169,51 @@ export class ExamSecretsSearchFormComponent implements OnInit {
   }
   onExamSubjectChanged(): void {
     this.examSubjects.map(el => {
-      if (el.key == this.examSecretList.examSubjectId) {
-        this.examSecretList.examSubjectName = el.value
+      if (el.key == this.examSecretFilterForm.examSubjectId) {
+        this.examSecretFilterForm.examSubjectName = el.value
       }
     })
-    this.examSubjectChanged.emit(Object.assign({}, this.examSecretList));
+    this.examSubjectChanged.emit(Object.assign({}, this.examSecretFilterForm));
   }
 
   refreshExamSubject() {
     this.examTypes.map(el => {
-      if (el.key == this.examSecretList.examTypeId) {
-        this.examSecretList.examTypeName = el.value
+      if (el.key == this.examSecretFilterForm.examTypeId) {
+        this.examSecretFilterForm.examTypeName = el.value
       }
     })
-    this.loadExamSubjects.emit(Object.assign({}, this.examSecretList));
-    this.getExamSubjects(this.examSecretList.examTypeId)
+    this.loadExamSubjects.emit(Object.assign({}, this.examSecretFilterForm));
+    this.getExamSubjects(this.examSecretFilterForm.examTypeId)
   }
   onDateChange() {
     this.examDates.map(el => {
-      if (el.key == this.examSecretList.examDateId) {
-        this.examSecretList.examTypeDateTime = el.value as any
+      if (el.key == this.examSecretFilterForm.examDateId) {
+        this.examSecretFilterForm.examTypeDateTime = el.value as any
       }
     })
-    this.loadDates.emit(Object.assign({}, this.examSecretList));
+    this.loadDates.emit(Object.assign({}, this.examSecretFilterForm));
   }
   onBarcodeChanged() {
     this.hasBarcode.map(el => {
-      if (el.key == this.examSecretList.barcode) {
-        this.examSecretList.barcode = el.value
+      if (el.key == this.examSecretFilterForm.barcode) {
+        this.examSecretFilterForm.barcode = el.value
       }
     })
-    this.loadBarcode.emit(Object.assign({}, this.examSecretList));
+    this.loadBarcode.emit(Object.assign({}, this.examSecretFilterForm));
   }
 
   onFallChanged() {
     this.isFall.map(el => {
-      if (el.key == this.examSecretList.isFall) {
-        this.examSecretList.isFall = el.value
+      if (el.key == this.examSecretFilterForm.isFall) {
+        this.examSecretFilterForm.isFall = el.value
       }
     })
-    this.loadBarcode.emit(Object.assign({}, this.examSecretList));
+    this.loadBarcode.emit(Object.assign({}, this.examSecretFilterForm));
   }
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
-      this.formSave.emit(this.examSecretList);
+      this.formSave.emit(this.examSecretFilterForm);
     }
   }
 

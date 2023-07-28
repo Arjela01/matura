@@ -9,8 +9,9 @@ import {ConfirmationService, LazyLoadEvent} from "primeng/api";
 import {GlobalToastService} from "@msh/shared/util-shared";
 import {ExamAssignmentApiService} from "@msh/configurations/data-access-configurations";
 import {ExamSecretsGridComponent} from "../../exam-secrets/exam-secrets-grid/exam-secrets-grid.component";
-import {BehaviorSubject} from "rxjs";
-import {ExamSecretList} from "@msh/evaluations/domain-evaluations";
+import {BehaviorSubject, forkJoin} from "rxjs";
+import { ExamSecretList} from "@msh/evaluations/domain-evaluations";
+import {ExamSecretApiService} from "@msh/evaluations/data-access-evaluations";
 
 
 @UntilDestroy()
@@ -25,13 +26,13 @@ import {ExamSecretList} from "@msh/evaluations/domain-evaluations";
 
 })
 export class ManageExamSecretsListComponent {
-  private examSecretsList$$ = new BehaviorSubject<any[]>([]);
-  examSecretsList$ = this.examSecretsList$$.asObservable();
+  private examSecretsFilterForm$$ = new BehaviorSubject<any[]>([]);
+  examSecretsFilterForm$ = this.examSecretsFilterForm$$.asObservable();
   filters: LazyLoadEvent | null = null;
   totalRecords = 0;
   event = {
     first: 0,
-    rows: 10,
+    rows: 1000,
     sortOrder: 1,
     filters: {},
     globalFilter: null,
@@ -42,6 +43,7 @@ export class ManageExamSecretsListComponent {
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examAssignmentService: ExamAssignmentApiService,
+    private readonly examSecretService: ExamSecretApiService,
     private readonly cd: ChangeDetectorRef
   ) {  this.selectedExamSecretList = {} as ExamSecretList;
   }
@@ -51,16 +53,24 @@ export class ManageExamSecretsListComponent {
     this.search();
   }
 
-  getExamSecretsList($event: LazyLoadEvent){
-    this.filters = Object.assign({}, $event);
-    this.examAssignmentService
-      .loadExamAssignments($event)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.examSecretsList$$.next(response.data);
 
-        this.totalRecords = response.total;
-        console.log(2222,response.data)
+  getExamSecretsList($event: LazyLoadEvent) {
+    this.filters = Object.assign({}, $event);
+    const examAssignments$ = this.examAssignmentService.loadExamAssignments($event);
+    const examSecrets$ = this.examSecretService.loadExamSecrets($event);
+
+    forkJoin([examAssignments$, examSecrets$])
+      .pipe(untilDestroyed(this))
+      .subscribe(([examAssignmentsResponse, examSecretsResponse]) => {
+        this.examSecretsFilterForm$$.next(examAssignmentsResponse.data);
+        this.totalRecords = examAssignmentsResponse.total;
+        examSecretsResponse.data.map(el => el.hasBarcode = true)
+
+        this.examSecretsFilterForm$$.next([...this.examSecretsFilterForm$$.getValue(), ...examSecretsResponse.data]);
+        this.totalRecords += examSecretsResponse.total;
+        console.log(222,examAssignmentsResponse.data)
+        console.log(222,examSecretsResponse.data)
+
       });
   }
 
@@ -106,17 +116,20 @@ export class ManageExamSecretsListComponent {
       ],
     };
       this.event.first = 0;
-      this.examAssignmentService
-        .loadExamAssignments(this.event)
-        .pipe(untilDestroyed(this))
-        .subscribe(response => {
-          this.examSecretsList$$.next(response.data);
-          this.totalRecords = response.data.length;
-        });
+      // this.examAssignmentService
+      //   .loadExamAssignments(this.event)
+      //   .pipe(untilDestroyed(this))
+      //   .subscribe(response => {
+      //     this.examSecretsFilterForm$$.next(response.data);
+      //     this.totalRecords = response.data.length;
+      //   });
+    this.getExamSecretsList(this.event)
 
   }
   paginate($event: number) {
     this.event.first = $event;
     this.getExamSecretsList(this.event);
   }
+
+
 }

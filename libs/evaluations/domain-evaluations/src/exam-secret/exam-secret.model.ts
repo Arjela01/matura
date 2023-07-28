@@ -1,18 +1,19 @@
 export interface ExamSecret {
   id: string;
   studentId?: string;
-  studentName: string;
+  studentName?: string;
   examSubjectId?: string;
-  examSubjectName: string;
+  examSubjectName?: string;
   examTypeId?: string;
-  examTypeName: string;
+  examTypeName?: string;
   examSiteId?: string;
   examSiteName?: string;
-  barcode: string;
-  isFall: boolean;
+  barcode?: string;
+  isFall?: boolean;
   studentInputData?: string;
   academicYearId?: number;
   studentIdentifier?: string;
+  hasBarcode?: boolean
 }
 
 export interface ExamSecretTableView {
