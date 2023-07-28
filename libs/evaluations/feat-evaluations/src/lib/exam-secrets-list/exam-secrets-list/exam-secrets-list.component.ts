@@ -36,7 +36,6 @@ export class ExamSecretsListComponent implements OnInit{
   >();
 
   @Output() lazyLoadData = new EventEmitter<any>();
-  currentPage = 1;
 
   event = {
     first: 0,
@@ -45,8 +44,6 @@ export class ExamSecretsListComponent implements OnInit{
     filters: {},
     globalFilter: null,
   };
-  pageSize = 1000;
-   barcodeValue: any;
 
   constructor(
     private readonly examSecretService: ExamSecretApiService,
@@ -62,17 +59,6 @@ ngOnInit(){
   loadRows() {
     this.lazyLoadData.emit(this.event);
   }
-  updatePage(pageNumber: number) {
-    const startIndex = (pageNumber - 1) * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    this.changePage.emit((pageNumber - 1) * this.pageSize);
-  }
-
-  onPageChange(event: any) {
-    this.currentPage = event.page + 1;
-    this.updatePage(this.currentPage);
-  }
-
 
   update(examSecret: ExamSecret) {
     this.examSecretService
@@ -82,7 +68,6 @@ ngOnInit(){
         console.log(2222,examSecret)
         if (response.isSuccessful) {
           this.toastService.showSuccess('Barkodi u shtua me sukses!');
-          // this.getExamSecrets(this.filters as LazyLoadEvent);
         } else {
           this.toastService.showError(response.errorMessage);
         }

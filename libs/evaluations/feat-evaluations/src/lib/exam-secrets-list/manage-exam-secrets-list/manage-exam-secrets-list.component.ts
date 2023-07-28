@@ -116,19 +116,8 @@ export class ManageExamSecretsListComponent {
       ],
     };
       this.event.first = 0;
-      // this.examAssignmentService
-      //   .loadExamAssignments(this.event)
-      //   .pipe(untilDestroyed(this))
-      //   .subscribe(response => {
-      //     this.examSecretsFilterForm$$.next(response.data);
-      //     this.totalRecords = response.data.length;
-      //   });
-    this.getExamSecretsList(this.event)
+      this.getExamSecretsList(this.event)
 
-  }
-  paginate($event: number) {
-    this.event.first = $event;
-    this.getExamSecretsList(this.event);
   }
 
 
