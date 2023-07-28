@@ -24,8 +24,12 @@ import { ExamSecretsGridComponent } from '../../exam-secrets/exam-secrets-grid/e
 import { BehaviorSubject, forkJoin } from 'rxjs';
 import { ExamSecretApiService } from '@msh/evaluations/data-access-evaluations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import {ExamSecret, ExamSecretSearchModel, ExamSecretTabularDataEntryItem} from '@msh/evaluations/domain-evaluations';
-import {ExamDate, ExamDateTableView} from "@msh/shared/domain-models";
+import {
+  ExamSecret,
+  ExamSecretSearchModel,
+  ExamSecretTabularDataEntryItem,
+} from '@msh/evaluations/domain-evaluations';
+import { ExamDate, ExamDateTableView } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({
@@ -45,7 +49,9 @@ import {ExamDate, ExamDateTableView} from "@msh/shared/domain-models";
   providers: [ConfirmationService],
 })
 export class ManageExamSecretTabularDataEntryComponent implements OnInit {
-  private dataEntryItemList$$ = new BehaviorSubject<ExamSecretTabularDataEntryItem[]>([]);
+  private dataEntryItemList$$ = new BehaviorSubject<
+    ExamSecretTabularDataEntryItem[]
+  >([]);
   dataEntryItemList$ = this.dataEntryItemList$$.asObservable();
   filters: LazyLoadEvent | null = null;
   totalRecords = 0;
@@ -83,16 +89,17 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
     ])
       .pipe(untilDestroyed(this))
       .subscribe(([examAssignmentsResponse, examSecretsResponse]) => {
-        const result =examAssignmentsResponse.data.map(x => {
+        const result = examAssignmentsResponse.data.map(x => {
           return {
             examAssignment: x,
-            examSecret: examSecretsResponse.data.find(i => i.examTypeId == x.examTypeId && i.studentId == x.studentId) ??
-                {} as ExamSecret
+            examSecret:
+              examSecretsResponse.data.find(
+                i => i.examTypeId == x.examTypeId && i.studentId == x.studentId
+              ) ?? ({} as ExamSecret),
           } as ExamSecretTabularDataEntryItem;
         });
         this.dataEntryItemList$$.next(result);
       });
-
   }
 
   loadAdministrationOffices() {
@@ -139,10 +146,11 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
   }
 
   loadExamDates($event: ExamSecretSearchModel) {
-    this.examDateService.forExamSiteAndExamType($event.examSiteId, $event.examTypeId)
-        .subscribe(response => {
-      this.examDates = [...response.data];
-      this.cd.markForCheck();
-    });
+    this.examDateService
+      .forExamSiteAndExamType($event.examSiteId, $event.examTypeId)
+      .subscribe(response => {
+        this.examDates = [...response.data];
+        this.cd.markForCheck();
+      });
   }
 }

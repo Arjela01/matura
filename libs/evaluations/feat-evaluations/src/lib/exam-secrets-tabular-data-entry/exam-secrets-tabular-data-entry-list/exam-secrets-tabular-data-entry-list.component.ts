@@ -3,7 +3,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -34,7 +33,7 @@ import { ExamSecretApiService } from '@msh/evaluations/data-access-evaluations';
   styleUrls: ['./exam-secrets-tabular-data-entry-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamSecretsTabularDataEntryListComponent implements OnInit {
+export class ExamSecretsTabularDataEntryListComponent {
   @Input() dataEntryItemList: ExamSecretTabularDataEntryItem[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
@@ -42,8 +41,6 @@ export class ExamSecretsTabularDataEntryListComponent implements OnInit {
   @Output() gridEvent = new EventEmitter<
     GridEvent<ExamSecret | ExamSecret[]>
   >();
-
-  @Output() lazyLoadData = new EventEmitter<any>();
 
   event = {
     first: 0,
@@ -57,14 +54,6 @@ export class ExamSecretsTabularDataEntryListComponent implements OnInit {
     private readonly examSecretService: ExamSecretApiService,
     private readonly toastService: GlobalToastService
   ) {}
-
-  ngOnInit() {
-    this.loadRows();
-  }
-
-  loadRows() {
-    this.lazyLoadData.emit(this.event);
-  }
 
   update(examSecret: ExamSecret) {
     this.examSecretService
