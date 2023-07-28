@@ -1,0 +1,15 @@
+<div>
+  <h2 class="flex-1 mb-0">Lista e Pikeve te Provimit</h2>
+  <div class="mt-4">
+    <msh-exam-score-view-filters
+      (formSave)="onFormSave($event)"
+    ></msh-exam-score-view-filters>
+  </div>
+  <div class="mt-4">
+    <msh-exam-score-view-table
+      [examScoreLists]="(examScoreList$ | async) || []"
+      [totalRecords]="totalRecords"
+      (lazyLoadData)="getExamScoresList($event)"
+    ></msh-exam-score-view-table>
+  </div>
+</div>

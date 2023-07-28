@@ -1,0 +1,37 @@
+<table>
+  <thead>
+  <tr>
+    <th>Dosja</th>
+    <th>Numer</th>
+    <th>Tipi i Provimit</th>
+    <th>Lenda e Provimit</th>
+    <th>Barkodi</th>
+    <th>Pike Total</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let rowData of examScoreLists">
+    <td>{{ rowData.archiveFolderId }}</td>
+    <td>{{ rowData.archiveFolderNr }}</td>
+    <td>{{ rowData.examTypeName }}</td>
+    <td>{{ rowData.examSubjectName }}</td>
+    <td>{{ rowData.barcode }}</td>
+    <td>
+      <ng-container *ngIf="!rowData.hasWritingScore; else inputField">
+        <input
+          type="text"
+          pInputText
+          id="writingScore"
+          name="writingScore"
+          [(ngModel)]="rowData.writingScore"
+          (keyup.enter)="saveWritingScoreChanges(rowData)"
+        />
+      </ng-container>
+      <ng-template #inputField>
+        {{ rowData.writingScore }}
+      </ng-template>
+    </td>
+  </tr>
+  </tbody>
+</table>
+

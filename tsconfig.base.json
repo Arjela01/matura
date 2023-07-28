@@ -75,6 +75,9 @@
       "@msh/layout/feat-layout": ["libs/layout/feat-layout/src/index.ts"],
       "@msh/layout/util-layout": ["libs/layout/util-layout/src/index.ts"],
       "@msh/profile-group": ["libs/profile-group/src/index.ts"],
+      "@msh/reports/data-access-reports": [
+        "libs/reports/data-access-reports/src/index.ts"
+      ],
       "@msh/reports/feat-reports": ["libs/reports/feat-reports/src/index.ts"],
       "@msh/shared/assets": ["libs/shared/assets/src/index.ts"],
       "@msh/shared/data-access-shared": [
@@ -94,9 +97,6 @@
       ],
       "@msh/user-section/feat-user-section": [
         "libs/user-section/feat-user-section/src/index.ts"
-      ],
-      "@msh/reports/data-access-reports": [
-        "libs/reports/data-access-reports/src/index.ts"
       ]
     }
   },

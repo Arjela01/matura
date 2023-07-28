@@ -150,4 +150,11 @@ export const EVALUATION_ROUTES: Route[] = [
         m => m.ManageExamCopyComponent
       ),
   },
+  {
+    path: 'exam-score-view',
+    loadComponent: () =>
+      import('./exam-score-view/manage-exam-score-view/manage-exam-score-view.component').then(
+        m => m.ManageExamScoreViewComponent
+      ),
+  },
 ];

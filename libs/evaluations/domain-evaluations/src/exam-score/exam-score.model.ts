@@ -8,16 +8,17 @@ export interface ExamScore {
   examSubjectId?: string;
   examSubjectName?: string;
   academicYearId?: number;
-  barcode: string;
-  writingScore: number;
-  multipleChoiceScore: number;
-  modificationReason: string;
-  documentName: string;
-  maximumValueMultipleScore: number;
-  maximumValueWritingScore: number;
+  barcode?: string;
+  writingScore?: number;
+  multipleChoiceScore?: number;
+  modificationReason?: string;
+  documentName?: string;
+  maximumValueMultipleScore?: number;
+  maximumValueWritingScore?: number;
   archiveFolderNr?: number;
   archiveFolderIndex?: number;
-  isFall: boolean;
+  isFall?: boolean;
+  hasWritingScore?:boolean;
 }
 
 export interface ExamScoreTableView {
