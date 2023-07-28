@@ -68,6 +68,7 @@ export class ExamAssignmentApiService {
       'blob'
     );
   }
+
   emptySite(examDateId: number): Observable<ApiResult<ExamAssignment>> {
     return this.apiService.post(`/ExamAssignment/EmptySite`, {
       examDateId: examDateId,
@@ -82,5 +83,9 @@ export class ExamAssignmentApiService {
       examSiteIds: examSiteIds,
       examDateIds: examDateIds,
     });
+  }
+
+  forExamDateId(examDateId: number): Observable<ApiResult<ExamAssignment[]>> {
+    return this.apiService.get(`/ExamAssignment/forExamDateId/${examDateId}`);
   }
 }

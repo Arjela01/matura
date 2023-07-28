@@ -1,0 +1,109 @@
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { DropdownModule } from 'primeng/dropdown';
+import { DropdownModel } from '@msh/shared/data-access-shared';
+import { ExamSecretSearchModel } from '@msh/evaluations/domain-evaluations';
+import { UntilDestroy } from '@ngneat/until-destroy';
+import { FormsModule, NgForm } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { LazyLoadEvent } from 'primeng/api';
+import {GlobalToastService} from "@msh/shared/util-shared";
+
+@UntilDestroy()
+@Component({
+  selector: 'msh-exam-secrets-tabular-data-entry-form',
+  standalone: true,
+  imports: [CommonModule, DropdownModule, FormsModule, ButtonModule],
+  templateUrl: './exam-secrets-tabular-data-entry-form.component.html',
+  styleUrls: ['./exam-secrets-tabular-data-entry-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class ExamSecretsTabularDataEntryFormComponent {
+  @ViewChild('form', { static: true }) form!: NgForm;
+
+  @Input() administrationOffices: DropdownModel<number>[] = [];
+  @Input() examSites: DropdownModel<string>[] = [];
+  @Input() examDates: DropdownModel<number>[] = [];
+  @Input() examTypes: DropdownModel<number>[] = [];
+  @Input() examSubjects: DropdownModel<string>[] = [];
+  @Output() applySearch = new EventEmitter<ExamSecretSearchModel>();
+
+  @Output() loadExamSites = new EventEmitter<ExamSecretSearchModel>();
+  @Output() loadExamTypes = new EventEmitter<ExamSecretSearchModel>();
+  @Output() loadDates = new EventEmitter<ExamSecretSearchModel>();
+  @Output() loadExamDates = new EventEmitter<ExamSecretSearchModel>();
+  @Output() loadBarcode = new EventEmitter<ExamSecretSearchModel>();
+  @Output() loadExamSubjects = new EventEmitter<ExamSecretSearchModel>();
+
+  submitted = false;
+  @Input() totalRecords = 0;
+  filters: LazyLoadEvent | null = null;
+
+  examTypeId: any;
+  examSubjectId: any;
+  event = {
+    first: 0,
+    rows: 10,
+    sortOrder: 1,
+    filters: {},
+    globalFilter: null,
+  };
+  isFall!: any[];
+  hasBarcode!: any[];
+  examSecretSearchModal: ExamSecretSearchModel = {} as ExamSecretSearchModel;
+
+  constructor(
+      private readonly toastService: GlobalToastService,
+      private readonly cd: ChangeDetectorRef) {
+    this.isFall = [
+      { key: 'true', value: 'Po' },
+      { key: 'false', value: 'Jo' },
+    ];
+    this.isFall = [...this.isFall];
+
+    this.hasBarcode = [
+      { key: 'true', value: 'Po' },
+      { key: 'false', value: 'Jo' },
+    ];
+    this.hasBarcode = [...this.hasBarcode];
+  }
+
+  onAdministrationOfficeChanged(): void {
+    this.loadExamSites.emit(this.examSecretSearchModal);
+  }
+
+  onExamSiteChanged() {
+    this.loadExamTypes.emit(this.examSecretSearchModal);
+  }
+
+  onExamTypeChanged() {
+    this.loadExamDates.emit(this.examSecretSearchModal);
+    this.loadExamSubjects.emit(this.examSecretSearchModal);
+  }
+
+  onSubmit() {
+    if (this.isSearchValid(this.examSecretSearchModal)) {
+      this.applySearch.emit(this.examSecretSearchModal);
+    } else {
+      this.toastService.showError('Ju lutem plotësoni të gjitha fushat e kërkuara.');
+    }
+  }
+
+  private isSearchValid(searchModal: ExamSecretSearchModel) {
+    return (
+      searchModal.administrationOfficeId &&
+      searchModal.examSiteId &&
+      searchModal.examSubjectId &&
+      searchModal.examDateId &&
+      searchModal.examTypeId
+    );
+  }
+}

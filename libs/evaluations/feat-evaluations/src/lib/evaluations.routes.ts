@@ -151,10 +151,10 @@ export const EVALUATION_ROUTES: Route[] = [
       ),
   },
   {
-    path: 'exam-secrets-list',
+    path: 'exam-secret-tabular-data-entry',
     loadComponent: () =>
-      import('./exam-secrets-list/manage-exam-secrets-list/manage-exam-secrets-list.component').then(
-        m => m.ManageExamSecretsListComponent
+      import('./exam-secrets-list/manage-exam-secret-tabular-data-entry/manage-exam-secret-tabular-data-entry.component').then(
+        m => m.ManageExamSecretTabularDataEntryComponent
       ),
   },
 ];

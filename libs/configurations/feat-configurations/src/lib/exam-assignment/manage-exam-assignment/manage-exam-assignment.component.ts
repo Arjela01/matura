@@ -68,7 +68,7 @@ export class ManageExamAssignmentComponent implements OnInit {
 
   examDatesForAssignAll: DropdownModel<number>[] = [];
   examDates: DropdownModel<number>[] = [];
-  examSites: DropdownModel<number>[] = [];
+  examSites: DropdownModel<string>[] = [];
   examSiteForAdministrationOffice: DropdownModel<string>[] = [];
   administrationOffices: any;
   time: any;

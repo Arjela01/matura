@@ -65,11 +65,16 @@ export class ExamSecretApiService {
       'blob'
     );
   }
+
   exportTemplate(): Observable<ApiResult<unknown>> {
     return this.apiService.get<any>(
       `/ExamSecrets/ExportTemplate`,
       new HttpParams(),
       'blob'
     );
+  }
+
+  forExamSubjectId(examSubjectId: string): Observable<ApiResult<ExamSecret[]>> {
+    return this.apiService.get(`/ExamSecrets/ForExamSubjectId/${examSubjectId}`);
   }
 }

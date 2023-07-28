@@ -4,30 +4,38 @@ import {
   EventEmitter,
   Input,
   OnInit,
-  Output
+  Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {DropdownModule} from "primeng/dropdown";
-import {ExamSecret, ExamSecretList} from "@msh/evaluations/domain-evaluations";
-import {GlobalToastService, GridEvent} from "@msh/shared/util-shared";
-import {TableModule} from "primeng/table";
-import {PaginatorModule} from "primeng/paginator";
-import {InputTextModule} from "primeng/inputtext";
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {ExamSecretApiService} from "@msh/evaluations/data-access-evaluations";
+import { DropdownModule } from 'primeng/dropdown';
+import {
+  ExamSecret,
+  ExamSecretTabularDataEntryItem,
+} from '@msh/evaluations/domain-evaluations';
+import { GlobalToastService, GridEvent } from '@msh/shared/util-shared';
+import { TableModule } from 'primeng/table';
+import { PaginatorModule } from 'primeng/paginator';
+import { InputTextModule } from 'primeng/inputtext';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ExamSecretApiService } from '@msh/evaluations/data-access-evaluations';
 
 @UntilDestroy()
-
 @Component({
-  selector: 'msh-exam-secrets-list',
+  selector: 'msh-exam-secrets-tabular-data-entry-list',
   standalone: true,
-  imports: [CommonModule, DropdownModule, TableModule, PaginatorModule, InputTextModule],
-  templateUrl: './exam-secrets-list.component.html',
-  styleUrls: ['./exam-secrets-list.component.scss'],
+  imports: [
+    CommonModule,
+    DropdownModule,
+    TableModule,
+    PaginatorModule,
+    InputTextModule,
+  ],
+  templateUrl: './exam-secrets-tabular-data-entry-list.component.html',
+  styleUrls: ['./exam-secrets-tabular-data-entry-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamSecretsListComponent implements OnInit{
-  @Input() examSecretForm: ExamSecretList[] = [];
+export class ExamSecretsTabularDataEntryListComponent implements OnInit {
+  @Input() dataEntryItemList: ExamSecretTabularDataEntryItem[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
   @Output() changePage = new EventEmitter();
@@ -47,14 +55,12 @@ export class ExamSecretsListComponent implements OnInit{
 
   constructor(
     private readonly examSecretService: ExamSecretApiService,
-    private readonly toastService: GlobalToastService,
+    private readonly toastService: GlobalToastService
+  ) {}
 
-  ){}
-
-
-ngOnInit(){
-  this.loadRows()
-}
+  ngOnInit() {
+    this.loadRows();
+  }
 
   loadRows() {
     this.lazyLoadData.emit(this.event);
@@ -65,7 +71,7 @@ ngOnInit(){
       .save(examSecret)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        console.log(2222,examSecret)
+        console.log(2222, examSecret);
         if (response.isSuccessful) {
           this.toastService.showSuccess('Barkodi u shtua me sukses!');
         } else {
@@ -76,16 +82,16 @@ ngOnInit(){
             'Ndodhi një problem gjatë shtimit të barkodit!'
           );
         }
-      });  }
+      });
+  }
 
   onFocusOutEvent(row: any) {
-    if(row?.barcode){
-      const examSecret: ExamSecret = {id: row.studentId, barcode: row?.barcode};
+    if (row?.barcode) {
+      const examSecret: ExamSecret = {
+        id: row.studentId,
+        barcode: row?.barcode,
+      };
       this.update(examSecret);
-
+    }
   }
 }
-}
-
-
-
