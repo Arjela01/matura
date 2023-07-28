@@ -79,11 +79,12 @@ ngOnInit(){
       });  }
 
   onFocusOutEvent(row: any) {
+    if(row?.barcode){
       const examSecret: ExamSecret = {id: row.studentId, barcode: row?.barcode};
       this.update(examSecret);
 
   }
-
+}
 }
 
 

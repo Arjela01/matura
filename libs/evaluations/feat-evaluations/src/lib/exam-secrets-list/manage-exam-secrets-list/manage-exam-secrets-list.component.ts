@@ -107,16 +107,16 @@ export class ManageExamSecretsListComponent {
           matchMode: 'contains',
           operator: 'and',
         }],
-      barcode:[
+      hasBarcode:[
         {
-          value: this.selectedExamSecretList.barcode,
-          matchMode: 'contains',
+          value: this.selectedExamSecretList.hasBarcode,
+          matchMode: 'equals',
           operator: 'and',
         }],
       isFall:[
         {
           value: this.selectedExamSecretList.isFall,
-          matchMode: 'contains',
+          matchMode: 'equals',
           operator: 'and',
         }],
 

@@ -20,6 +20,9 @@ import {
 import {FormsModule, NgForm} from "@angular/forms";
 import {ButtonModule} from "primeng/button";
 import {LazyLoadEvent} from "primeng/api";
+
+
+
 @UntilDestroy()
 @Component({
   selector: 'msh-exam-secrets-search-form',
@@ -29,6 +32,9 @@ import {LazyLoadEvent} from "primeng/api";
   styleUrls: ['./exam-secrets-search-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+
+
+
 export class ExamSecretsSearchFormComponent implements OnInit {
   @ViewChild('form', { static: true }) form!: NgForm;
 
@@ -88,14 +94,14 @@ export class ExamSecretsSearchFormComponent implements OnInit {
 
   ) {
     this.isFall = [
-      { key: 'Po', value: 'Po' },
-      { key: 'Jo', value: 'Jo' },
+      { key: 'true', value: 'Po' },
+      { key: 'false', value: 'Jo' },
     ];
     this.isFall = [...this.isFall];
 
     this.hasBarcode = [
-      { key: 'Po', value: 'Po' },
-      { key: 'Jo', value: 'Jo' },
+      { key: 'true', value: 'Po' },
+      { key: 'false', value: 'Jo' },
     ];
     this.hasBarcode = [...this.hasBarcode];
 
@@ -194,7 +200,7 @@ export class ExamSecretsSearchFormComponent implements OnInit {
   onBarcodeChanged() {
     this.hasBarcode.map(el => {
       if (el.key == this.examSecretFilterForm.barcode) {
-        this.examSecretFilterForm.barcode = el.value
+        this.examSecretFilterForm.barcode = el.key
       }
     })
     this.loadBarcode.emit(Object.assign({}, this.examSecretFilterForm));
@@ -203,7 +209,7 @@ export class ExamSecretsSearchFormComponent implements OnInit {
   onFallChanged() {
     this.isFall.map(el => {
       if (el.key == this.examSecretFilterForm.isFall) {
-        this.examSecretFilterForm.isFall = el.value
+        this.examSecretFilterForm.isFall = el.key
       }
     })
     this.loadBarcode.emit(Object.assign({}, this.examSecretFilterForm));
