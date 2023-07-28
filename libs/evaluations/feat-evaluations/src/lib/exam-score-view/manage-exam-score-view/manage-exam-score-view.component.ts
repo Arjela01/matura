@@ -73,6 +73,29 @@ export class ManageExamScoreViewComponent {
       this.selectedExamScoreList?.archiveFolderId
     );
     const examScores$ = this.examScoreService.loadExamScores($event);
+    this.event.filters = {
+      archiveFolderId: [
+        {
+          value: this.selectedExamScoreList?.archiveFolderId,
+          matchMode: 'equals',
+          operator: 'or',
+        },
+      ],
+      barcode: [
+        {
+          value: this.selectedExamScoreList?.barcode,
+          matchMode: 'equals',
+          operator: 'or',
+        },
+      ],
+      examSubjectId: [
+        {
+          value: this.selectedExamScoreList?.examSubjectId,
+          matchMode: 'contains',
+          operator: 'and',
+        },
+      ],
+    };
     forkJoin([archiveFolder$, examScores$])
       .pipe(untilDestroyed(this))
       .subscribe(([archiveFolder, examScore]) => {
@@ -90,16 +113,6 @@ export class ManageExamScoreViewComponent {
   }
 
   search() {
-    this.event.filters = {
-      archiveFolderNr: [
-        {
-          value: this.selectedExamScoreList?.archiveFolderNr,
-          matchMode: 'contains',
-          operator: 'and',
-        },
-      ],
-    };
-    this.event.first = 0;
     this.getExamScoresListById(this.event);
   }
 }
