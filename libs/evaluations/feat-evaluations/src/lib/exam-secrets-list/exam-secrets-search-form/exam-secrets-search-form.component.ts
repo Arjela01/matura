@@ -48,7 +48,6 @@ export class ExamSecretsSearchFormComponent implements OnInit {
   @Output() administrationOfficeChanged = new EventEmitter<ExamSecretList>();
 
   submitted = false;
-  administrationOfficeId: any;
   @Input() totalRecords = 0;
   filters: LazyLoadEvent | null = null;
 
@@ -75,7 +74,6 @@ export class ExamSecretsSearchFormComponent implements OnInit {
   };
   isFall!: any[];
   hasBarcode!: any[];
-  examSiteName!: string;
 
 
   constructor(

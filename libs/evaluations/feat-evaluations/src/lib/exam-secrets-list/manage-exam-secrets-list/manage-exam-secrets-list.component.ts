@@ -82,40 +82,45 @@ export class ManageExamSecretsListComponent {
           value: this.selectedExamSecretList.examSiteName,
           matchMode: 'contains',
           operator: 'and',
-        },
+        }],
+      administrationOfficeName: [
         {
           value: this.selectedExamSecretList.administrationOfficeName,
           matchMode: 'contains',
           operator: 'and',
-        },
+        }],
+      examTypeName:[
         {
           value: this.selectedExamSecretList.examTypeName,
           matchMode: 'contains',
           operator: 'and',
-        },
+        }],
+        examTypeDateTime: [
         {
           value: this.selectedExamSecretList.examTypeDateTime,
           matchMode: 'contains',
           operator: 'and',
-        },
+        }],
+       examSubjectName:[
         {
           value: this.selectedExamSecretList.examSubjectName,
           matchMode: 'contains',
           operator: 'and',
-        },
+        }],
+      barcode:[
         {
           value: this.selectedExamSecretList.barcode,
           matchMode: 'contains',
           operator: 'and',
-        },
+        }],
+      isFall:[
         {
           value: this.selectedExamSecretList.isFall,
           matchMode: 'contains',
           operator: 'and',
-        },
-      ],
+        }],
+
     };
-      this.event.first = 0;
       this.getExamSecretsList(this.event)
 
   }
