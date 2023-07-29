@@ -55,7 +55,7 @@ export class ManageExamDateComponent implements OnInit {
   selectedExamDate: ExamDate | null = null;
   selectedExamDates: ExamDate[] = [];
   displayModal = false;
-  examSites: DropdownModel<number>[] = [];
+  examSites: DropdownModel<string>[] = [];
   examTypes: DropdownModel<number>[] = [];
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([data]) => {

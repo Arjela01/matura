@@ -150,4 +150,11 @@ export const EVALUATION_ROUTES: Route[] = [
         m => m.ManageExamCopyComponent
       ),
   },
+  {
+    path: 'exam-secret-tabular-data-entry',
+    loadComponent: () =>
+      import('./exam-secrets-tabular-data-entry/manage-exam-secret-tabular-data-entry/manage-exam-secret-tabular-data-entry.component').then(
+        m => m.ManageExamSecretTabularDataEntryComponent
+      ),
+  },
 ];
