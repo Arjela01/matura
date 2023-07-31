@@ -43,7 +43,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 })
 export class ExamDateFormComponent {
   @Input() examTypes: DropdownModel<number>[] = [];
-  @Input() examSites: DropdownModel<number>[] = [];
+  @Input() examSites: DropdownModel<string>[] = [];
   date: Date | null = null;
 
   @Input() set examDatesDetails(details: ExamDate | null) {

@@ -11,8 +11,8 @@ import { ExamSite, ExamSiteTableView, User } from '@msh/shared/domain-models';
 export class ExamSiteApiService {
   constructor(private apiService: APIService) {}
 
-  loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
-    return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
+  loadDropdownList(): Observable<ApiResult<DropdownModel<string>[]>> {
+    return this.apiService.get<ApiResult<DropdownModel<string>[]>>(
       `/ExamSite/DropdownList`
     );
   }
