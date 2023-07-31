@@ -153,15 +153,15 @@ export const EVALUATION_ROUTES: Route[] = [
   {
     path: 'exam-secret-tabular-data-entry',
     loadComponent: () =>
-      import('./exam-secrets-tabular-data-entry/manage-exam-secret-tabular-data-entry/manage-exam-secret-tabular-data-entry.component').then(
-        m => m.ManageExamSecretTabularDataEntryComponent
-      ),
+      import(
+        './exam-secrets-tabular-data-entry/manage-exam-secret-tabular-data-entry/manage-exam-secret-tabular-data-entry.component'
+      ).then(m => m.ManageExamSecretTabularDataEntryComponent),
   },
   {
-    path: 'exam-score-view',
+    path: 'exam-score-tabular-data-entry',
     loadComponent: () =>
-      import('./exam-score-view/manage-exam-score-view/manage-exam-score-view.component').then(
-        m => m.ManageExamScoreViewComponent
-      ),
+      import(
+        './exam-score-tabular-data-entry/manage-exam-score-tabular-data-entry/manage-exam-score-tabular-data-entry.component'
+      ).then(m => m.ManageExamScoreTabularDataEntryComponent),
   },
 ];

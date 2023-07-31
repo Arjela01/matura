@@ -15,19 +15,17 @@ import {
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
 import {
-  ExamScore,
   ExamScoreDataEntry,
   ExamScores,
 } from '@msh/evaluations/domain-evaluations';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { LazyLoadEvent } from 'primeng/api';
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-exam-score-view-table',
+  selector: 'msh-exam-score-tabular-data-entry-list',
   standalone: true,
   imports: [
     CommonModule,
@@ -37,10 +35,10 @@ import { LazyLoadEvent } from 'primeng/api';
     InputTextModule,
     ButtonModule,
   ],
-  templateUrl: './exam-score-view-table.component.html',
-  styleUrls: ['./exam-score-view-table.component.scss'],
+  templateUrl: './exam-score-tabular-data-entry-list.component.html',
+  styleUrls: ['./exam-score-tabular-data-entry-list.component.scss'],
 })
-export class ExamScoreViewTableComponent {
+export class ExamScoreTabularDataEntryListComponent {
   @Input() examScoreLists: ExamScoreDataEntry[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;

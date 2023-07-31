@@ -13,10 +13,10 @@ import {
   ExamScores,
 } from '@msh/evaluations/domain-evaluations';
 import { DropdownModule } from 'primeng/dropdown';
-import { ExamScoreViewFiltersComponent } from '../exam-score-view-filters/exam-score-view-filters.component';
+import { ExamScoreTabularDataEntryFiltersComponent } from '../exam-score-tabular-data-entry-filters/exam-score-tabular-data-entry-filters.component';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ExamScoreViewTableComponent } from '../exam-score-view-table/exam-score-view-table.component';
+import { ExamScoreTabularDataEntryListComponent } from '../exam-score-tabular-data-entry-list/exam-score-tabular-data-entry-list.component';
 import {
   GlobalToastService,
   GRID_ACTIONS,
@@ -26,21 +26,21 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-manage-exam-score-view',
+  selector: 'msh-manage-exam-score-tabular-data-entry',
   standalone: true,
   imports: [
     CommonModule,
     DropdownModule,
-    ExamScoreViewFiltersComponent,
-    ExamScoreViewTableComponent,
+    ExamScoreTabularDataEntryFiltersComponent,
+    ExamScoreTabularDataEntryListComponent,
     ConfirmDialogModule,
   ],
-  templateUrl: './manage-exam-score-view.component.html',
-  styleUrls: ['./manage-exam-score-view.component.scss'],
+  templateUrl: './manage-exam-score-tabular-data-entry.component.html',
+  styleUrls: ['./manage-exam-score-tabular-data-entry.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageExamScoreViewComponent implements OnInit {
+export class ManageExamScoreTabularDataEntryComponent implements OnInit {
   private examScoreList$$ = new BehaviorSubject<ExamScoreDataEntry[]>([]);
   examScoreList$ = this.examScoreList$$.asObservable();
   totalRecords = 0;

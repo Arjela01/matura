@@ -17,14 +17,14 @@ import { GlobalToastService } from '@msh/shared/util-shared';
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-exam-score-view-filters',
+  selector: 'msh-exam-score-tabular-data-entry-filters',
   standalone: true,
   imports: [CommonModule, DropdownModule, FormsModule, ButtonModule],
-  templateUrl: './exam-score-view-filters.component.html',
-  styleUrls: ['./exam-score-view-filters.component.scss'],
+  templateUrl: './exam-score-tabular-data-entry-filters.component.html',
+  styleUrls: ['./exam-score-tabular-data-entry-filters.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamScoreViewFiltersComponent {
+export class ExamScoreTabularDataEntryFiltersComponent {
   @ViewChild('form', { static: true }) form!: NgForm;
 
   @Input() archiveFolder: DropdownModel<number>[] = [];
