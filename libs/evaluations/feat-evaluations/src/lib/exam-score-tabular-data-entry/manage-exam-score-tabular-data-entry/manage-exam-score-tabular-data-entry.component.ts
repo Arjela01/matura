@@ -47,6 +47,8 @@ export class ManageExamScoreTabularDataEntryComponent implements OnInit {
   filters: LazyLoadEvent | null = null;
   archiveFolder: DropdownModel<number>[] = [];
   selectedExamScoreList: any | null;
+  examTypeId: '' | undefined;
+  examSubjectId: '' | undefined;
 
   event = {
     first: 0,
@@ -70,9 +72,6 @@ export class ManageExamScoreTabularDataEntryComponent implements OnInit {
 
   onGridEvent(event: GridEvent<ExamScores | ExamScores[]>) {
     switch (event.action) {
-      case GRID_ACTIONS.EDIT:
-        this.selectedExamScoreList = Object.assign({}, event.data);
-        break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
           message:
@@ -83,6 +82,54 @@ export class ManageExamScoreTabularDataEntryComponent implements OnInit {
         });
         break;
     }
+  }
+  getExamScoresListById($event: any) {
+    this.filters = Object.assign({}, $event);
+    this.event.filters = {
+      archiveFolderId: [
+        {
+          value: $event.archiveFolderId,
+          matchMode: 'contains',
+          operator: 'and',
+        },
+      ],
+      hasWritingScore: [
+        {
+          value: $event.hasWritingScore,
+          matchMode: 'contains',
+          operator: 'and',
+        },
+      ],
+    };
+    forkJoin([
+      this.archiveExamService.getExamsByFolderId($event.archiveFolderId),
+      this.examScoreService.loadExamScores(this.event),
+    ])
+      .pipe(untilDestroyed(this))
+      .subscribe(([archiveExams, examScores]) => {
+        examScores.data.map(
+          (item: any) => (
+            (item.hasWritingScore = true),
+            (this.examSubjectId = item.examSubjectId),
+            (this.examTypeId = item.examTypeId),
+            console.log(12, item)
+          )
+        );
+        const result = archiveExams.data.map(
+          (archiveExam: { barcode: string }) => {
+            return {
+              archiveExam: archiveExam,
+              examScore:
+                examScores.data.find(
+                  (examScore: { barcode: string }) =>
+                    examScore.barcode == archiveExam.barcode
+                ) ?? ({} as ExamScore),
+            } as unknown as ExamScoreDataEntry;
+          }
+        );
+        this.examScoreList$$.next(result);
+        console.log(12, result);
+      });
   }
 
   saveExamScore(examScore: any) {
@@ -103,7 +150,7 @@ export class ManageExamScoreTabularDataEntryComponent implements OnInit {
         }
       });
   }
-  updateExamScore(examScore: ExamScore) {
+  updateExamScore(examScore: any) {
     this.examScoreService
       .update(examScore)
       .pipe(untilDestroyed(this))
@@ -125,11 +172,12 @@ export class ManageExamScoreTabularDataEntryComponent implements OnInit {
 
   saveWritingScoreChanges(rowData: ExamScoreDataEntry) {
     const examScore: any = {
+      id: rowData.examScore.id,
       archiveFolderId: rowData.archiveExam.archiveFolderId,
       archiveFolderNr: rowData.archiveExam.archiveFolderNr,
-      examSubjectId: rowData.examScore.examSubjectId,
+      examSubjectId: this.examSubjectId,
       barcode: rowData.archiveExam.barcode,
-      examTypeId: rowData.examScore.examTypeId,
+      examTypeId: this.examTypeId,
       writingScore: rowData.examScore.writingScore,
       multipleChoiceScore: rowData.examScore.multipleChoiceScore,
     };
@@ -162,49 +210,6 @@ export class ManageExamScoreTabularDataEntryComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.archiveFolder = response.data;
-      });
-  }
-
-  getExamScoresListById($event: any) {
-    this.filters = Object.assign({}, $event);
-    this.event.filters = {
-      archiveFolderId: [
-        {
-          value: $event.archiveFolderId,
-          matchMode: 'contains',
-          operator: 'and',
-        },
-      ],
-      hasWritingScore: [
-        {
-          value: $event.hasWritingScore,
-          matchMode: 'contains',
-          operator: 'and',
-        },
-      ],
-    };
-    forkJoin([
-      this.archiveExamService.getExamsByFolderId($event.archiveFolderId),
-      this.examScoreService.loadExamScores(this.event),
-    ])
-      .pipe(untilDestroyed(this))
-      .subscribe(([archiveExams, examScores]) => {
-        examScores.data.map(
-          (item: { hasWritingScore: boolean }) => (item.hasWritingScore = true)
-        );
-        const result = archiveExams.data.map(
-          (archiveExam: { barcode: string }) => {
-            return {
-              archiveExam: archiveExam,
-              examScore:
-                examScores.data.find(
-                  (examScore: { barcode: string }) =>
-                    examScore.barcode == archiveExam.barcode
-                ) ?? ({} as ExamScore),
-            } as unknown as ExamScoreDataEntry;
-          }
-        );
-        this.examScoreList$$.next(result);
       });
   }
 }
