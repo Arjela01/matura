@@ -7,30 +7,34 @@
       <th>Lenda e Provimit</th>
       <th>Barkodi</th>
       <th>Pike Total</th>
+      <th>Veprime</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let rowData of examScoreLists">
-      <td>{{ rowData.archiveExam.archiveFolderId}}</td>
+      <td>{{ rowData.archiveExam.archiveFolderId }}</td>
       <td>{{ rowData.archiveExam.archiveFolderNr }}</td>
       <td>{{ rowData.examScore.examTypeName }}</td>
       <td>{{ rowData.examScore.examSubjectName }}</td>
       <td>{{ rowData.archiveExam.barcode }}</td>
       <td>
-        <ng-container
-          *ngIf="rowData.examScore.hasWritingScore === undefined; else inputField">
+        <ng-container>
           <input
             type="text"
             pInputText
             id="writingScore"
             name="writingScore"
             [(ngModel)]="rowData.examScore.writingScore"
-            (keyup.enter)="saveWritingScoreChanges(rowData)"
-            />
+            (keyup.enter)="onExamScoreAddOrUpdate(rowData)" />
         </ng-container>
-        <ng-template #inputField>
-          {{ rowData.examScore.writingScore }}
-        </ng-template>
+      </td>
+      <td>
+        <button
+          pButton
+          icon="pi pi-trash"
+          class="p-button-danger p-button-text justify-content-center ml-4"
+          *ngIf="rowData.examScore.hasWritingScore"
+          (click)="onDeleteClick(rowData.examScore)"></button>
       </td>
     </tr>
   </tbody>

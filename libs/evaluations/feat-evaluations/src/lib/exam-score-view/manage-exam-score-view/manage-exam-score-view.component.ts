@@ -14,9 +14,15 @@ import {
 } from '@msh/evaluations/domain-evaluations';
 import { DropdownModule } from 'primeng/dropdown';
 import { ExamScoreViewFiltersComponent } from '../exam-score-view-filters/exam-score-view-filters.component';
-import { LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExamScoreViewTableComponent } from '../exam-score-view-table/exam-score-view-table.component';
+import {
+  GlobalToastService,
+  GRID_ACTIONS,
+  GridEvent,
+} from '@msh/shared/util-shared';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @UntilDestroy()
 @Component({
@@ -27,10 +33,12 @@ import { ExamScoreViewTableComponent } from '../exam-score-view-table/exam-score
     DropdownModule,
     ExamScoreViewFiltersComponent,
     ExamScoreViewTableComponent,
+    ConfirmDialogModule,
   ],
   templateUrl: './manage-exam-score-view.component.html',
   styleUrls: ['./manage-exam-score-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ConfirmationService],
 })
 export class ManageExamScoreViewComponent implements OnInit {
   private examScoreList$$ = new BehaviorSubject<ExamScoreDataEntry[]>([]);
@@ -38,7 +46,7 @@ export class ManageExamScoreViewComponent implements OnInit {
   totalRecords = 0;
   filters: LazyLoadEvent | null = null;
   archiveFolder: DropdownModel<number>[] = [];
-  selectedExamScoreList: ExamScores | null | undefined;
+  selectedExamScoreList: any | null;
 
   event = {
     first: 0,
@@ -51,12 +59,101 @@ export class ManageExamScoreViewComponent implements OnInit {
   constructor(
     private readonly archiveExamService: ArchiveExamApiService,
     private readonly examScoreService: ExamScoreApiService,
-    private readonly archiveFolderService: ArchiveFolderApiService
+    private readonly archiveFolderService: ArchiveFolderApiService,
+    private readonly confirmationService: ConfirmationService,
+    private readonly toastService: GlobalToastService
   ) {}
 
   ngOnInit() {
-    //this.getExamScores(this.event);
     this.getArchiveFolders();
+  }
+
+  onGridEvent(event: GridEvent<ExamScores | ExamScores[]>) {
+    switch (event.action) {
+      case GRID_ACTIONS.EDIT:
+        this.selectedExamScoreList = Object.assign({}, event.data);
+        break;
+      case GRID_ACTIONS.DELETE:
+        this.confirmationService.confirm({
+          message:
+            'Jeni i sigurt që doni të fshini rezultatin e  provimit të zgjedhur?',
+          accept: () => {
+            this.deleteExamScore(event.data as ExamScores);
+          },
+        });
+        break;
+    }
+  }
+
+  saveExamScore(examScore: any) {
+    this.examScoreService
+      .save(examScore)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Piket Totale u shtuan me sukses!');
+          this.getExamScoresListById(this.filters as LazyLoadEvent);
+        } else {
+          this.toastService.showError(response.errorMessage);
+        }
+        if (response.isBadRequest) {
+          this.toastService.showError(
+            'Ndodhi një problem gjatë shtimit të pikeve!'
+          );
+        }
+      });
+  }
+  updateExamScore(examScore: ExamScore) {
+    this.examScoreService
+      .update(examScore)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess(
+            'Rezultati i provimit u ndryshua me sukses!'
+          );
+          this.getExamScoresListById(this.filters as LazyLoadEvent);
+        } else {
+          this.toastService.showError(response.errorMessage);
+        }
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi një problem gjatë ndryshimit së rezultatit të provimit!'
+          );
+      });
+  }
+
+  saveWritingScoreChanges(rowData: ExamScoreDataEntry) {
+    const examScore: any = {
+      archiveFolderId: rowData.archiveExam.archiveFolderId,
+      archiveFolderNr: rowData.archiveExam.archiveFolderNr,
+      examSubjectId: rowData.examScore.examSubjectId,
+      barcode: rowData.archiveExam.barcode,
+      examTypeId: rowData.examScore.examTypeId,
+      writingScore: rowData.examScore.writingScore,
+      multipleChoiceScore: rowData.examScore.multipleChoiceScore,
+    };
+    if (!rowData.examScore.hasWritingScore) {
+      this.saveExamScore(examScore);
+    } else {
+      this.updateExamScore(examScore);
+    }
+  }
+
+  deleteExamScore(examScore: any) {
+    this.examScoreService
+      .delete(examScore.id)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showInfo('Rezultati i provimit u fshi me sukses!');
+          this.getExamScoresListById(this.filters as LazyLoadEvent);
+        }
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi një problem gjatë fshirjes së rezultatit të provimit!'
+          );
+      });
   }
 
   getArchiveFolders() {
@@ -67,17 +164,6 @@ export class ManageExamScoreViewComponent implements OnInit {
         this.archiveFolder = response.data;
       });
   }
-  // getExamScores($event: LazyLoadEvent) {
-  //   this.filters = Object.assign({}, $event);
-  //
-  //   this.examScoreService
-  //     .loadExamScores($event)
-  //     .pipe(untilDestroyed(this))
-  //     .subscribe(response => {
-  //       this.examScoreList$$.next(response.data);
-  //       this.totalRecords = response.total;
-  //     });
-  // }
 
   getExamScoresListById($event: any) {
     this.filters = Object.assign({}, $event);
@@ -104,7 +190,7 @@ export class ManageExamScoreViewComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(([archiveExams, examScores]) => {
         examScores.data.map(
-          (item: { hasWritingScore: boolean }) => (item.hasWritingScore = false)
+          (item: { hasWritingScore: boolean }) => (item.hasWritingScore = true)
         );
         const result = archiveExams.data.map(
           (archiveExam: { barcode: string }) => {
@@ -119,7 +205,6 @@ export class ManageExamScoreViewComponent implements OnInit {
           }
         );
         this.examScoreList$$.next(result);
-        console.log(123, result);
       });
   }
 }

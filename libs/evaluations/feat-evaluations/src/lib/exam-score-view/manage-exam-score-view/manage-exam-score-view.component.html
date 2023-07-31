@@ -10,6 +10,30 @@
     <msh-exam-score-view-table
       [examScoreLists]="(examScoreList$ | async) || []"
       [totalRecords]="totalRecords"
+      (gridEvent)="onGridEvent($event)"
+      (writingScoreChange)="saveWritingScoreChanges($event)"
     ></msh-exam-score-view-table>
   </div>
 </div>
+<p-confirmDialog
+  #cd
+  header="Konfirmo"
+  icon="pi pi-exclamation-triangle"
+  [style]="{ width: '450px' }">
+  <ng-template pTemplate="footer">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Jo"
+      class="p-button-text"
+      (click)="cd.reject()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Po"
+      class="p-button border"
+      (click)="cd.accept()"></button>
+  </ng-template>
+</p-confirmDialog>
