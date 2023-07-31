@@ -104,15 +104,15 @@ export class ManageExamScoreViewComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(([archiveExams, examScores]) => {
         examScores.data.map(
-          (item: { hasWritingScore: boolean }) => (item.hasWritingScore = true)
+          (item: { hasWritingScore: boolean }) => (item.hasWritingScore = false)
         );
         const result = archiveExams.data.map(
-          (archiveExam: { barcode: string; examSubjectId: string }) => {
+          (archiveExam: { barcode: string }) => {
             return {
               archiveExam: archiveExam,
               examScore:
                 examScores.data.find(
-                  (examScore: { barcode: string; examSubjectId: string }) =>
+                  (examScore: { barcode: string }) =>
                     examScore.barcode == archiveExam.barcode
                 ) ?? ({} as ExamScore),
             } as unknown as ExamScoreDataEntry;

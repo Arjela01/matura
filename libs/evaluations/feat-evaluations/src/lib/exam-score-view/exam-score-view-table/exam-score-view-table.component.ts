@@ -15,10 +15,14 @@ import {
 } from '@msh/shared/util-shared';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
-import {ExamScore, ExamScoreDataEntry, ExamScores} from '@msh/evaluations/domain-evaluations';
+import {
+  ExamScore,
+  ExamScoreDataEntry,
+  ExamScores,
+} from '@msh/evaluations/domain-evaluations';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
-import {LazyLoadEvent} from "primeng/api";
+import { LazyLoadEvent } from 'primeng/api';
 
 @UntilDestroy()
 @Component({
@@ -77,7 +81,7 @@ export class ExamScoreViewTableComponent implements OnInit {
       });
   }
   deleteExamScore(examScore: any) {
-    console.log(123 ,examScore)
+    console.log(123, examScore);
     this.examScoreService
       .delete(examScore.id)
       .pipe(untilDestroyed(this))
@@ -95,8 +99,12 @@ export class ExamScoreViewTableComponent implements OnInit {
 
   saveWritingScoreChanges(rowData: any) {
     const examScore: ExamScores = {
-      ...rowData,
-      writingScore: rowData.writingScore,
+      archiveFolderId: rowData.archiveExam.archiveFolderId,
+      archiveFolderNr: rowData.archiveExam.archiveFolderNr,
+      examSubjectId: rowData.examScore.examSubjectId,
+      barcode: rowData.archiveExam.barcode,
+      examTypeId: rowData.examScore.examTypeId,
+      writingScore: rowData.examScore.writingScore,
     };
     this.saveExamScore(examScore);
   }
