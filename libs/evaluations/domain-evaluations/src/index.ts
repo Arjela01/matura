@@ -12,3 +12,4 @@ export * from './ial/ial-model';
 export * from './barcode-correction/barcode-correction.model';
 export * from './exam-copy/exam-copy-request-status-enum';
 export * from './exam-score-view/exam-score-view.model';
+export * from './exam-score-view/exam-score-data-entry.model';

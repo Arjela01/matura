@@ -3,18 +3,17 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ExamScores } from '@msh/evaluations/domain-evaluations';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { FormsModule, NgForm } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
+import { GlobalToastService } from '@msh/shared/util-shared';
 
 @UntilDestroy()
 @Component({
@@ -25,7 +24,7 @@ import { ButtonModule } from 'primeng/button';
   styleUrls: ['./exam-score-view-filters.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamScoreViewFiltersComponent implements OnInit {
+export class ExamScoreViewFiltersComponent {
   @ViewChild('form', { static: true }) form!: NgForm;
 
   @Input() archiveFolder: DropdownModel<number>[] = [];
@@ -38,48 +37,30 @@ export class ExamScoreViewFiltersComponent implements OnInit {
   submitted = false;
   hasWritingScore!: any[];
 
-
-  constructor(private readonly archiveFolderService: ArchiveFolderApiService) {
+  constructor(private readonly toastService: GlobalToastService) {
     this.hasWritingScore = [
-      { key: 'Po', value: 'Po' },
-      { key: 'Jo', value: 'Jo' },
+      { key: 'true', value: 'Po' },
+      { key: 'false', value: 'Jo' },
     ];
     this.hasWritingScore = [...this.hasWritingScore];
   }
 
-  ngOnInit() {
-    this.getArchiveFolders();
-  }
-
-  getArchiveFolders() {
-    this.archiveFolderService
-      .loadDropdownList()
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.archiveFolder = response.data;
-      });
-  }
   onArchiveFolderChanged(): void {
-    this.archiveFolder.map(item => {
-      if (item.key == this.examScoreList.archiveFolderId) {
-        this.examScoreList.archiveFolderNr = item.value
-      }
-    })
     this.archiveFolderChanged.emit(Object.assign({}, this.examScoreList));
   }
   onWritingScoreChange() {
-    this.hasWritingScore.map(item => {
-      if (item.key == this.examScoreList.writingScore) {
-        this.examScoreList.writingScore = item.value
-      }
-    })
     this.loadWritingScore.emit(Object.assign({}, this.examScoreList));
   }
-
   onSubmit() {
-    this.submitted = true;
-    if (this.form.valid) {
+    if (this.isSearchValid(this.examScoreList)) {
       this.formSave.emit(this.examScoreList);
+    } else {
+      this.toastService.showError(
+        'Ju lutem plotësoni të gjitha fushat e kërkuara.'
+      );
     }
+  }
+  isSearchValid(searchModal: any) {
+    return searchModal.archiveFolderId;
   }
 }

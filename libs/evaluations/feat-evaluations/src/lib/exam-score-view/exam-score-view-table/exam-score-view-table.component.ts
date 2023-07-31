@@ -15,9 +15,10 @@ import {
 } from '@msh/shared/util-shared';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
-import { ExamScore, ExamScores } from '@msh/evaluations/domain-evaluations';
+import {ExamScore, ExamScoreDataEntry, ExamScores} from '@msh/evaluations/domain-evaluations';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
+import {LazyLoadEvent} from "primeng/api";
 
 @UntilDestroy()
 @Component({
@@ -28,7 +29,7 @@ import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
   styleUrls: ['./exam-score-view-table.component.scss'],
 })
 export class ExamScoreViewTableComponent implements OnInit {
-  @Input() examScoreLists: ExamScores[] = [];
+  @Input() examScoreLists: ExamScoreDataEntry[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
   @Output() changePage = new EventEmitter();
@@ -73,6 +74,22 @@ export class ExamScoreViewTableComponent implements OnInit {
             'Ndodhi një problem gjatë shtimit të pikeve!'
           );
         }
+      });
+  }
+  deleteExamScore(examScore: any) {
+    console.log(123 ,examScore)
+    this.examScoreService
+      .delete(examScore.id)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showInfo('Rezultati i provimit u fshi me sukses!');
+          //this.getExamScores(this.filters as LazyLoadEvent);
+        }
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi një problem gjatë fshirjes së rezultatit të provimit!'
+          );
       });
   }
 

@@ -1,12 +1,17 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   ArchiveExamApiService,
+  ArchiveFolderApiService,
   ExamScoreApiService,
 } from '@msh/evaluations/data-access-evaluations';
-import { BehaviorSubject, forkJoin, switchMap } from 'rxjs';
-import { ExamScores } from '@msh/evaluations/domain-evaluations';
+import { BehaviorSubject, forkJoin } from 'rxjs';
+import {
+  ExamScore,
+  ExamScoreDataEntry,
+  ExamScores,
+} from '@msh/evaluations/domain-evaluations';
 import { DropdownModule } from 'primeng/dropdown';
 import { ExamScoreViewFiltersComponent } from '../exam-score-view-filters/exam-score-view-filters.component';
 import { LazyLoadEvent } from 'primeng/api';
@@ -27,8 +32,8 @@ import { ExamScoreViewTableComponent } from '../exam-score-view-table/exam-score
   styleUrls: ['./manage-exam-score-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ManageExamScoreViewComponent {
-  private examScoreList$$ = new BehaviorSubject<any[]>([]);
+export class ManageExamScoreViewComponent implements OnInit {
+  private examScoreList$$ = new BehaviorSubject<ExamScoreDataEntry[]>([]);
   examScoreList$ = this.examScoreList$$.asObservable();
   totalRecords = 0;
   filters: LazyLoadEvent | null = null;
@@ -45,74 +50,76 @@ export class ManageExamScoreViewComponent {
 
   constructor(
     private readonly archiveExamService: ArchiveExamApiService,
-    private readonly examScoreService: ExamScoreApiService
+    private readonly examScoreService: ExamScoreApiService,
+    private readonly archiveFolderService: ArchiveFolderApiService
   ) {}
 
-  onFormSave(event: any) {
-    this.selectedExamScoreList = event;
-    this.search();
+  ngOnInit() {
+    //this.getExamScores(this.event);
+    this.getArchiveFolders();
   }
 
-  getExamScoresList($event: any) {
-    this.filters = Object.assign({}, $event);
-    this.examScoreService
-      .loadExamScores(this.event)
+  getArchiveFolders() {
+    this.archiveFolderService
+      .loadDropdownList()
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.examScoreList$$.next(response.data);
-        this.totalRecords = response.data.length;
-        response.data.map(
-          (item: { hasWritingScore: boolean }) => (item.hasWritingScore = true)
-        );
-        console.log(2222, response.data);
+        this.archiveFolder = response.data;
       });
   }
+  // getExamScores($event: LazyLoadEvent) {
+  //   this.filters = Object.assign({}, $event);
+  //
+  //   this.examScoreService
+  //     .loadExamScores($event)
+  //     .pipe(untilDestroyed(this))
+  //     .subscribe(response => {
+  //       this.examScoreList$$.next(response.data);
+  //       this.totalRecords = response.total;
+  //     });
+  // }
+
   getExamScoresListById($event: any) {
     this.filters = Object.assign({}, $event);
-    const archiveFolder$ = this.archiveExamService.getExamsByFolderId(
-      this.selectedExamScoreList?.archiveFolderId
-    );
-    const examScores$ = this.examScoreService.loadExamScores($event);
     this.event.filters = {
       archiveFolderId: [
         {
-          value: this.selectedExamScoreList?.archiveFolderId,
-          matchMode: 'equals',
-          operator: 'or',
+          value: $event.archiveFolderId,
+          matchMode: 'contains',
+          operator: 'and',
         },
       ],
-      barcode: [
+      hasWritingScore: [
         {
-          value: this.selectedExamScoreList?.barcode,
-          matchMode: 'equals',
-          operator: 'or',
-        },
-      ],
-      examSubjectId: [
-        {
-          value: this.selectedExamScoreList?.examSubjectId,
+          value: $event.hasWritingScore,
           matchMode: 'contains',
           operator: 'and',
         },
       ],
     };
-    forkJoin([archiveFolder$, examScores$])
+    forkJoin([
+      this.archiveExamService.getExamsByFolderId($event.archiveFolderId),
+      this.examScoreService.loadExamScores(this.event),
+    ])
       .pipe(untilDestroyed(this))
-      .subscribe(([archiveFolder, examScore]) => {
-        this.examScoreList$$.next(archiveFolder.data);
-        this.totalRecords = archiveFolder.data.length;
-        this.examScoreList$$.next([
-          ...this.examScoreList$$.getValue(),
-          ...examScore.data,
-        ]);
-        this.totalRecords = examScore.total;
-        examScore.data.map(
+      .subscribe(([archiveExams, examScores]) => {
+        examScores.data.map(
           (item: { hasWritingScore: boolean }) => (item.hasWritingScore = true)
         );
+        const result = archiveExams.data.map(
+          (archiveExam: { barcode: string; examSubjectId: string }) => {
+            return {
+              archiveExam: archiveExam,
+              examScore:
+                examScores.data.find(
+                  (examScore: { barcode: string; examSubjectId: string }) =>
+                    examScore.barcode == archiveExam.barcode
+                ) ?? ({} as ExamScore),
+            } as unknown as ExamScoreDataEntry;
+          }
+        );
+        this.examScoreList$$.next(result);
+        console.log(123, result);
       });
-  }
-
-  search() {
-    this.getExamScoresListById(this.event);
   }
 }
