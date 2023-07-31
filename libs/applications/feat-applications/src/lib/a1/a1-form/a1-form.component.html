@@ -1,17 +1,26 @@
 <div class="flex ml-2 mb-2 page-header mb-header">
   <h2 class="flex-1 mb-0">
     {{
-    A1FormModeEnum.Add === mode || A1FormModeEnum.AddWithStudent === mode
-    ? 'Shto Formular A1'
-    : 'Ndrysho Formularin A1'
+      A1FormModeEnum.Add === mode || A1FormModeEnum.AddWithStudent === mode
+        ? 'Shto Formular A1'
+        : 'Ndrysho Formularin A1'
     }}
   </h2>
   <div class="flex align-items-right justify-content-right">
     <div class="my-2">
-      <button pButton label="Konfirmuar" icon="pi pi-check" class="p-button-success p-button-outlined mr-2"
+      <button
+        pButton
+        label="Konfirmuar"
+        icon="pi pi-check"
+        class="p-button-success p-button-outlined mr-2"
         *ngIf="selectedStudent?.isConfirmedBySupervisor"></button>
-      <button *ngIf="!showStudentSearchButton" pButton label="Ndrysho Maturantin" icon="pi pi-pencil  "
-        class="mr-2 p-button-secondary" (click)="editStudent()"></button>
+      <button
+        *ngIf="!showStudentSearchButton"
+        pButton
+        label="Ndrysho Maturantin"
+        icon="pi pi-pencil  "
+        class="mr-2 p-button-secondary"
+        (click)="editStudent()"></button>
     </div>
   </div>
 </div>
@@ -24,13 +33,25 @@
           <div>
             <label for="studentInputData">Maturant *</label>
             <div class="p-inputgroup">
-              <input type="text" [disabled]="!showStudentSearchButton" pInputText id="studentInputData"
-                name="studentInputData" [(ngModel)]="studentInputData" autofocus readonly="readonly" [required]="true"
+              <input
+                type="text"
+                [disabled]="!showStudentSearchButton"
+                pInputText
+                id="studentInputData"
+                name="studentInputData"
+                [(ngModel)]="studentInputData"
+                autofocus
+                readonly="readonly"
+                [required]="true"
                 [ngClass]="{
                   'ng-invalid ng-dirty': submitted && !studentInputData
                 }" />
-              <p-button *ngIf="showStudentSearchButton" label="Kërko" icon="pi pi-search"
-                (click)="showStudentModal = true" [style]="{ height: '100%' }"></p-button>
+              <p-button
+                *ngIf="showStudentSearchButton"
+                label="Kërko"
+                icon="pi pi-search"
+                (click)="showStudentModal = true"
+                [style]="{ height: '100%' }"></p-button>
             </div>
             <small class="p-error block" *ngIf="submitted && !studentInputData">
               Studenti është fushë e kërkuar.
@@ -40,13 +61,19 @@
             <label class="block pb-3">Aplikon jashtë vendit *</label>
             <div class="formgrid grid w-full">
               <div class="field-radiobutton col-6">
-                <p-radioButton id="isApplyingToForeignCountriesTrue" name="isApplyingToForeignCountries" [value]="true"
+                <p-radioButton
+                  id="isApplyingToForeignCountriesTrue"
+                  name="isApplyingToForeignCountries"
+                  [value]="true"
                   [(ngModel)]="a1.isApplyingToForeignCountries"></p-radioButton>
                 <label for="isApplyingToForeignCountriesTrue">Po</label>
               </div>
               <div class="field-radiobutton col-6">
-                <p-radioButton id="isApplyingToForeignCountriesFalse" name="isApplyingToForeignCountries"
-                  [value]="false" [(ngModel)]="a1.isApplyingToForeignCountries"></p-radioButton>
+                <p-radioButton
+                  id="isApplyingToForeignCountriesFalse"
+                  name="isApplyingToForeignCountries"
+                  [value]="false"
+                  [(ngModel)]="a1.isApplyingToForeignCountries"></p-radioButton>
                 <label for="isApplyingToForeignCountriesFalse">Jo</label>
               </div>
             </div>
@@ -56,9 +83,17 @@
             <div class="flex align-items-center w-full">
               <div class="pr-2">D3:</div>
               <div class="w-full">
-                <p-dropdown [style]="{ width: '100%', minWidth: '250px' }" id="subjectD3Id" [options]="d3Dropdown"
-                  optionValue="key" optionLabel="value" name="subjectD3Id" [filter]="true" [autoDisplayFirst]="false"
-                  [(ngModel)]="a1.subjectD3Id" [showClear]="true">
+                <p-dropdown
+                  [style]="{ width: '100%', minWidth: '250px' }"
+                  id="subjectD3Id"
+                  [options]="d3Dropdown"
+                  optionValue="key"
+                  optionLabel="value"
+                  name="subjectD3Id"
+                  [filter]="true"
+                  [autoDisplayFirst]="false"
+                  [(ngModel)]="a1.subjectD3Id"
+                  [showClear]="true">
                 </p-dropdown>
               </div>
             </div>
@@ -67,32 +102,58 @@
           <h5 class="mt-5">Lëndë me Zgjedhje</h5>
           <div class="field w-full">
             <div class="flex align-items-center w-full">
-              <div class="pr-2">
-                Z1:
-              </div>
+              <div class="pr-2">Z1:</div>
               <div class="w-full">
-                <p-dropdown [style]="{ width: '100%' }" id="subjectZ1Id" [options]="optionalSubjects" optionValue="key"
-                  optionLabel="value" name="subjectZ1Id" [filter]="true" [autoDisplayFirst]="false"
-                  [(ngModel)]="a1.subjectZ1Id" [showClear]="true">
+                <p-dropdown
+                  [style]="{ width: '100%' }"
+                  id="subjectZ1Id"
+                  [options]="optionalSubjects"
+                  optionValue="key"
+                  optionLabel="value"
+                  name="subjectZ1Id"
+                  [filter]="true"
+                  [autoDisplayFirst]="false"
+                  [(ngModel)]="a1.subjectZ1Id"
+                  [showClear]="true">
                 </p-dropdown>
               </div>
-              {{optionalSubjects }}
+              {{ optionalSubjects }}
             </div>
           </div>
           <div class="w-full pb-3">
-            <label for="overSeerCode" class="block pb-2">Kodi i mbikqyrësit</label>
-            <input type="password" pInputText id="overSeerCode" class="w-full" required [(ngModel)]="a1.overSeerCode"
-              name="overSeerCode" [ngClass]="{
+            <label for="overSeerCode" class="block pb-2"
+              >Kodi i mbikqyrësit</label
+            >
+            <input
+              type="password"
+              pInputText
+              id="overSeerCode"
+              class="w-full"
+              required
+              [(ngModel)]="a1.overSeerCode"
+              name="overSeerCode"
+              [ngClass]="{
                 'ng-invalid ng-dirty':
                   submitted && (!a1.overSeerCode || a1.overSeerCode === '')
               }" />
           </div>
-          <small class="p-error block" *ngIf="submitted && (!a1.overSeerCode || a1.overSeerCode === '')">
+          <small
+            class="p-error block"
+            *ngIf="submitted && (!a1.overSeerCode || a1.overSeerCode === '')">
             Kodi i mbikqyrësit është fushë e kërkuar.
           </small>
           <div class="flex justify-content-start">
-            <button [disabled]="form.invalid" type="submit" pButton label="Ruaj" class="p-button w-auto"></button>
-            <button type="button" pButton label="Anullo" class="p-button-text w-auto mr-2"
+            <button
+              [disabled]="form.invalid"
+              type="submit"
+              pButton
+              label="Ruaj"
+              class="p-button w-auto"></button>
+            <button
+              type="button"
+              pButton
+              label="Anullo"
+              class="p-button-text w-auto mr-2"
               (click)="onCancelClick()"></button>
           </div>
         </div>
@@ -102,11 +163,21 @@
 </div>
 <ng-container *ngIf="academicYear$ | async"></ng-container>
 
-<p-dialog [(visible)]="showStudentModal" [style]="{ width: '1000px' }" [modal]="true" header="Kërko Maturantin"
-  [draggable]="false" [resizable]="false" class="p-fluid" (onHide)="onStudentHide()">
+<p-dialog
+  [(visible)]="showStudentModal"
+  [style]="{ width: '1000px' }"
+  [modal]="true"
+  header="Kërko Maturantin"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid"
+  (onHide)="onStudentHide()">
   <ng-template pTemplate="content">
-    <msh-shared-student-lookup [students]="(studentList$ | async) || []" [totalRecords]="totalStudentRecords"
-      (gridEvent)="onGridEvent($event)" (lazyLoadData)="getStudents($event)">
+    <msh-shared-student-lookup
+      [students]="(studentList$ | async) || []"
+      [totalRecords]="totalStudentRecords"
+      (gridEvent)="onGridEvent($event)"
+      (lazyLoadData)="getStudents($event)">
     </msh-shared-student-lookup>
   </ng-template>
 </p-dialog>
