@@ -12,8 +12,8 @@
   </thead>
   <tbody>
     <tr *ngFor="let rowData of examScoreLists">
-      <td>{{ rowData.archiveExam.archiveFolderId }}</td>
       <td>{{ rowData.archiveExam.archiveFolderNr }}</td>
+      <td>{{ rowData.archiveExam.index }}</td>
       <td>{{ this.examTypeName }}</td>
       <td>{{ this.examSubjectName }}</td>
       <td>{{ rowData.archiveExam.barcode }}</td>

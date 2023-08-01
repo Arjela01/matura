@@ -23,25 +23,6 @@
       Dosja është fushë e kërkuar.
     </small>
   </div>
-  <div class="field colmn">
-    <label for="hasWritingScore">Ka Pikë?</label>
-    <p-dropdown
-      class="width"
-      id="hasWritingScore"
-      [options]="hasWritingScore"
-      optionValue="key"
-      optionLabel="value"
-      name="hasWritingScore"
-      [autoDisplayFirst]="false"
-      [required]="false"
-      (onChange)="onWritingScoreChange()"
-      [(ngModel)]="examScoreList.hasWritingScore"
-      [showClear]="true"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !hasWritingScore
-      }">
-    </p-dropdown>
-  </div>
   <div class="text-center">
     <button pButton class="btn btn-primary" type="submit">Kërko</button>
   </div>
