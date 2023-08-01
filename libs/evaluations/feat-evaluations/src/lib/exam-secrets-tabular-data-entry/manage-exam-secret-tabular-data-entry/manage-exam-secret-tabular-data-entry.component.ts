@@ -98,7 +98,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
           message:
-            'Jeni i sigurt që doni të fshini rezultatin e  provimit të zgjedhur?',
+            'Jeni i sigurt që doni të fshini barkodin e zgjedhur?',
           accept: () => {
             this.deleteExamSecret(event.data as ExamSecret);
           },
@@ -109,7 +109,6 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
 
   onApplySearch($event: ExamSecretSearchModel) {
     this.filters = Object.assign({}, $event);
-    debugger;
     forkJoin([
       this.examAssignmentApiService.forExamDateId($event.examDateId),
       this.examSecretService.forExamSubjectId($event.examSubjectId),
