@@ -42,6 +42,8 @@ export class ExamScoreTabularDataEntryListComponent {
   @Input() examScoreLists: ExamScoreDataEntry[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
+  @Input() examSubjectName : any;
+  @Input() examTypeName : any;
   @Output() gridEvent = new EventEmitter<
     GridEvent<ExamScores | ExamScores[]>
   >();

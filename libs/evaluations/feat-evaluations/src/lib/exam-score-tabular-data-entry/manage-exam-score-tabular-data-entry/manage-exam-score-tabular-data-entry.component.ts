@@ -47,8 +47,10 @@ export class ManageExamScoreTabularDataEntryComponent implements OnInit {
   filters: LazyLoadEvent | null = null;
   archiveFolder: DropdownModel<number>[] = [];
   selectedExamScoreList: any | null;
-  examTypeId: '' | undefined;
-  examSubjectId: '' | undefined;
+  examTypeId: any;
+  examSubjectId: any;
+  examTypeName: any;
+  examSubjectName: any;
 
   event = {
     first: 0,
@@ -84,6 +86,7 @@ export class ManageExamScoreTabularDataEntryComponent implements OnInit {
     }
   }
   getExamScoresListById($event: any) {
+    debugger;
     this.filters = Object.assign({}, $event);
     this.event.filters = {
       archiveFolderId: [
@@ -104,17 +107,15 @@ export class ManageExamScoreTabularDataEntryComponent implements OnInit {
     forkJoin([
       this.archiveExamService.getExamsByFolderId($event.archiveFolderId),
       this.examScoreService.loadExamScores(this.event),
+      this.archiveFolderService.getById($event.archiveFolderId),
     ])
       .pipe(untilDestroyed(this))
-      .subscribe(([archiveExams, examScores]) => {
-        examScores.data.map(
-          (item: any) => (
-            (item.hasWritingScore = true),
-            (this.examSubjectId = item.examSubjectId),
-            (this.examTypeId = item.examTypeId),
-            console.log(12, item)
-          )
-        );
+      .subscribe(([archiveExams, examScores, archiveFolders]) => {
+        (this.examSubjectId = archiveFolders.data.examSubjectId),
+          (this.examTypeId = archiveFolders.data.examTypeId),
+          (this.examTypeName = archiveFolders.data.examTypeName),
+          (this.examSubjectName = archiveFolders.data.examSubjectName),
+          examScores.data.map((item: any) => (item.hasWritingScore = true));
         const result = archiveExams.data.map(
           (archiveExam: { barcode: string }) => {
             return {
