@@ -11,7 +11,11 @@ import { ExamSecretsTabularDataEntryFormComponent } from '../exam-secrets-tabula
 import { ExamSecretsFormComponent } from '../../exam-secrets/exam-secrets-form/exam-secrets-form.component';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { GlobalToastService } from '@msh/shared/util-shared';
+import {
+  GlobalToastService,
+  GRID_ACTIONS,
+  GridEvent,
+} from '@msh/shared/util-shared';
 import {
   AdministrationOfficeApiService,
   ExamAssignmentApiService,
@@ -29,7 +33,9 @@ import {
   ExamSecretSearchModel,
   ExamSecretTabularDataEntryItem,
 } from '@msh/evaluations/domain-evaluations';
-import { ExamDate, ExamDateTableView } from '@msh/shared/domain-models';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @UntilDestroy()
 @Component({
@@ -42,6 +48,8 @@ import { ExamDate, ExamDateTableView } from '@msh/shared/domain-models';
     ExamSecretsTabularDataEntryFormComponent,
     ExamSecretsFormComponent,
     ExamSecretsGridComponent,
+    ButtonModule,
+    ConfirmDialogModule,
   ],
   templateUrl: './manage-exam-secret-tabular-data-entry.component.html',
   styleUrls: ['./manage-exam-secret-tabular-data-entry.component.scss'],
@@ -53,7 +61,8 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
     ExamSecretTabularDataEntryItem[]
   >([]);
   dataEntryItemList$ = this.dataEntryItemList$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: ExamSecretSearchModel| null = null;
+  examSecretSubjects: any = [];
   totalRecords = 0;
   event = {
     first: 0,
@@ -68,6 +77,8 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
   administrationOffices: DropdownModel<number>[] = [];
   examSubjects: DropdownModel<string>[] = [];
   examDates: DropdownModel<number>[] = [];
+  examSubjectId: any;
+  subjectName: any;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -82,13 +93,36 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
     private readonly cd: ChangeDetectorRef
   ) {}
 
-  onApplySearch(event: ExamSecretSearchModel) {
+  onGridEvent(event: GridEvent<ExamSecret | ExamSecret[]>) {
+    switch (event.action) {
+      case GRID_ACTIONS.DELETE:
+        this.confirmationService.confirm({
+          message:
+            'Jeni i sigurt që doni të fshini rezultatin e  provimit të zgjedhur?',
+          accept: () => {
+            this.deleteExamSecret(event.data as ExamSecret);
+          },
+        });
+        break;
+    }
+  }
+
+  onApplySearch($event: ExamSecretSearchModel) {
+    this.filters = Object.assign({}, $event);
+    debugger;
     forkJoin([
-      this.examAssignmentApiService.forExamDateId(event.examDateId),
-      this.examSecretService.forExamSubjectId(event.examSubjectId),
+      this.examAssignmentApiService.forExamDateId($event.examDateId),
+      this.examSecretService.forExamSubjectId($event.examSubjectId),
     ])
       .pipe(untilDestroyed(this))
       .subscribe(([examAssignmentsResponse, examSecretsResponse]) => {
+        examSecretsResponse.data.map(
+          (item: any) => (
+            (item.hasBarcode = true),
+            (this.examSubjectId = item.examSubjectId),
+            (this.subjectName = item.examSubjectName)
+          )
+        );
         const result = examAssignmentsResponse.data.map(x => {
           return {
             examAssignment: x,
@@ -152,5 +186,75 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
         this.examDates = [...response.data];
         this.cd.markForCheck();
       });
+  }
+  save(examSecret: ExamSecret) {
+    this.examSecretService
+      .save(examSecret)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Barkodi u shtua me sukses!');
+          this.onApplySearch(this.filters as ExamSecretSearchModel);
+        } else {
+          this.toastService.showError(response.errorMessage);
+        }
+        if (response.isBadRequest) {
+          this.toastService.showError(
+            'Ndodhi një problem gjatë shtimit të barkodit!'
+          );
+        }
+      });
+  }
+  update(examSecret: ExamSecret) {
+    this.examSecretService
+      .update(examSecret)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Barkodi u ndryshua me sukses!');
+          this.onApplySearch(this.filters as ExamSecretSearchModel);
+        } else {
+          this.toastService.showError(response.errorMessage);
+        }
+        if (response.isBadRequest) {
+          this.toastService.showError(
+            'Ndodhi një problem gjatë ndryshimit të barkodit!'
+          );
+        }
+      });
+  }
+  deleteExamSecret(examSecret: ExamSecret) {
+    this.examSecretService
+      .delete(examSecret.id)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Sekretimi u fshi!');
+          this.onApplySearch(this.filters as ExamSecretSearchModel);
+        } else {
+          this.toastService.showError(response.errorMessage);
+        }
+        if (response.isBadRequest) {
+          this.toastService.showError(
+            'Ndodhi një problem gjatë fshires të sekretimit!'
+          );
+        }
+      });
+  }
+
+  addOrUpdateExamSecret(filterResults: any) {
+    const examSecret: ExamSecret = {
+      id: filterResults.examAssignment.id,
+      studentId: filterResults.examAssignment.studentId,
+      barcode: filterResults.examSecret.barcode,
+      examTypeId: filterResults.examAssignment.examTypeId,
+      examSubjectId: this.examSubjectId,
+      isFall: filterResults.examAssignment.isFall,
+    };
+    if (!filterResults.examSecret.hasBarcode) {
+      this.save(examSecret);
+    } else {
+      this.update(filterResults.examSecret);
+    }
   }
 }

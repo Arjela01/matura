@@ -38,7 +38,7 @@ export class ExamSecretApiService {
     return this.apiService.get(`/ExamSecrets/${id}`);
   }
 
-  delete(examSecretId: string): Observable<ApiResult<unknown>> {
+  delete(examSecretId?: string): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<ExamSecret>>(
       `/ExamSecrets/${examSecretId}`
     );

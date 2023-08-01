@@ -1,10 +1,4 @@
 import { Route } from '@angular/router';
-import { A1ZForStudentAddComponent } from './a1z/a1z-for-student-add/a1-z-for-student-add.component';
-import { A1ZForStudentEditComponent } from './a1z/a1z-for-student-edit/a1-z-for-student-edit.component';
-import { A1ForStudentAddComponent } from './a1/a1-for-student-add/a1-for-student-add.component';
-import { A1ForStudentEditComponent } from './a1/a1-for-student-edit/a1-for-student-edit.component';
-import { A1FormEditComponent } from './a1/a1-form-edit/a1-form-edit.component';
-import { A1FormAddComponent } from './a1/a1-form-add/a1-form-add.component';
 
 export const APPLICATION_ROUTES: Route[] = [
   {

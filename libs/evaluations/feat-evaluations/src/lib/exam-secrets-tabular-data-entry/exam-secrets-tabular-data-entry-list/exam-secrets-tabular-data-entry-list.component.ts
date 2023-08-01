@@ -11,12 +11,17 @@ import {
   ExamSecret,
   ExamSecretTabularDataEntryItem,
 } from '@msh/evaluations/domain-evaluations';
-import { GlobalToastService, GridEvent } from '@msh/shared/util-shared';
+import {
+  GlobalToastService,
+  GRID_ACTIONS,
+  GridEvent,
+} from '@msh/shared/util-shared';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExamSecretApiService } from '@msh/evaluations/data-access-evaluations';
+import { ButtonModule } from 'primeng/button';
 
 @UntilDestroy()
 @Component({
@@ -28,6 +33,7 @@ import { ExamSecretApiService } from '@msh/evaluations/data-access-evaluations';
     TableModule,
     PaginatorModule,
     InputTextModule,
+    ButtonModule,
   ],
   templateUrl: './exam-secrets-tabular-data-entry-list.component.html',
   styleUrls: ['./exam-secrets-tabular-data-entry-list.component.scss'],
@@ -37,50 +43,20 @@ export class ExamSecretsTabularDataEntryListComponent {
   @Input() dataEntryItemList: ExamSecretTabularDataEntryItem[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
-  @Output() changePage = new EventEmitter();
+  @Input() subjectName: any;
+  @Input() examSecretSubject: any;
+  @Output() barcodeChange = new EventEmitter<any>();
   @Output() gridEvent = new EventEmitter<
     GridEvent<ExamSecret | ExamSecret[]>
   >();
 
-  event = {
-    first: 0,
-    rows: 100,
-    sortOrder: 1,
-    filters: {},
-    globalFilter: null,
-  };
-
-  constructor(
-    private readonly examSecretService: ExamSecretApiService,
-    private readonly toastService: GlobalToastService
-  ) {}
-
-  update(examSecret: ExamSecret) {
-    this.examSecretService
-      .save(examSecret)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        console.log(2222, examSecret);
-        if (response.isSuccessful) {
-          this.toastService.showSuccess('Barkodi u shtua me sukses!');
-        } else {
-          this.toastService.showError(response.errorMessage);
-        }
-        if (response.isBadRequest) {
-          this.toastService.showError(
-            'Ndodhi një problem gjatë shtimit të barkodit!'
-          );
-        }
-      });
+  onDeleteClick(examSecret: ExamSecret) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.DELETE,
+      data: examSecret,
+    } as GridEvent<ExamSecret>);
   }
-
-  onFocusOutEvent(row: any) {
-    if (row?.barcode) {
-      const examSecret: ExamSecret = {
-        id: row.studentId,
-        barcode: row?.barcode,
-      };
-      this.update(examSecret);
-    }
+  onExamSecretAddOrUpdate(examScores: any) {
+    this.barcodeChange.emit(examScores);
   }
 }

@@ -6,4 +6,5 @@ export interface ExamSecretSearchModel {
   examSubjectId: string;
   hasBarcode?: number;
   isFall?: number;
+  subjectName?:string;
 }
