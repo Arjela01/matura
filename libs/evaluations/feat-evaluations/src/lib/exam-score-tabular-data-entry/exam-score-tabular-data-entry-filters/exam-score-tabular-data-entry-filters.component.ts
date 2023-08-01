@@ -28,28 +28,21 @@ export class ExamScoreTabularDataEntryFiltersComponent {
   @ViewChild('form', { static: true }) form!: NgForm;
 
   @Input() archiveFolder: DropdownModel<number>[] = [];
+  @Input() examType: DropdownModel<number>[] = [];
 
   @Output() formSave = new EventEmitter<ExamScores>();
   @Output() archiveFolderChanged = new EventEmitter<ExamScores>();
+  @Output() examTypeChanged = new EventEmitter<ExamScores>();
   @Output() loadWritingScore = new EventEmitter<ExamScores>();
 
   examScoreList: ExamScores = {} as ExamScores;
   submitted = false;
   hasWritingScore!: any[];
 
-  constructor(private readonly toastService: GlobalToastService) {
-    this.hasWritingScore = [
-      { key: 'true', value: 'Po' },
-      { key: 'false', value: 'Jo' },
-    ];
-    this.hasWritingScore = [...this.hasWritingScore];
-  }
+  constructor(private readonly toastService: GlobalToastService) {}
 
-  onArchiveFolderChanged(): void {
+  onExamTypeChanged(): void {
     this.archiveFolderChanged.emit(Object.assign({}, this.examScoreList));
-  }
-  onWritingScoreChange() {
-    this.loadWritingScore.emit(Object.assign({}, this.examScoreList));
   }
   onSubmit() {
     if (this.isSearchValid(this.examScoreList)) {
@@ -61,6 +54,6 @@ export class ExamScoreTabularDataEntryFiltersComponent {
     }
   }
   isSearchValid(searchModal: any) {
-    return searchModal.archiveFolderId;
+    return searchModal.archiveFolderId && searchModal.examTypeId;
   }
 }

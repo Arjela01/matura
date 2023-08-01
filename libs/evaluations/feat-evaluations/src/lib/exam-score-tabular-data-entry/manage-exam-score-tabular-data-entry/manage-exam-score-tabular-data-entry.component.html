@@ -3,8 +3,9 @@
   <div class="mt-4">
     <msh-exam-score-tabular-data-entry-filters
       (formSave)="getExamScoresListById($event)"
+      (archiveFolderChanged)="getArchiveFolders($event)"
       [archiveFolder]="archiveFolder"
-    ></msh-exam-score-tabular-data-entry-filters>
+      [examType]="examType"></msh-exam-score-tabular-data-entry-filters>
   </div>
   <div class="mt-4">
     <msh-exam-score-tabular-data-entry-list
@@ -13,8 +14,7 @@
       (gridEvent)="onGridEvent($event)"
       (writingScoreChange)="saveWritingScoreChanges($event)"
       [examSubjectName]="examSubjectName"
-      [examTypeName]="examTypeName"
-    ></msh-exam-score-tabular-data-entry-list>
+      [examTypeName]="examTypeName"></msh-exam-score-tabular-data-entry-list>
   </div>
 </div>
 <p-confirmDialog

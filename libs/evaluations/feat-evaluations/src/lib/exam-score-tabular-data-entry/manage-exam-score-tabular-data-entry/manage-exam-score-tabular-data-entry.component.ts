@@ -23,6 +23,7 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ExamTypeApiService } from '@msh/configurations/data-access-configurations';
 
 @UntilDestroy()
 @Component({
@@ -46,6 +47,7 @@ export class ManageExamScoreTabularDataEntryComponent implements OnInit {
   totalRecords = 0;
   filters: LazyLoadEvent | null = null;
   archiveFolder: DropdownModel<number>[] = [];
+  examType: DropdownModel<number>[] = [];
   selectedExamScoreList: any | null;
   examTypeId: any;
   examSubjectId: any;
@@ -65,11 +67,12 @@ export class ManageExamScoreTabularDataEntryComponent implements OnInit {
     private readonly examScoreService: ExamScoreApiService,
     private readonly archiveFolderService: ArchiveFolderApiService,
     private readonly confirmationService: ConfirmationService,
-    private readonly toastService: GlobalToastService
+    private readonly toastService: GlobalToastService,
+    private readonly examTypeService: ExamTypeApiService
   ) {}
 
   ngOnInit() {
-    this.getArchiveFolders();
+    this.getExamTypeDropdown();
   }
 
   onGridEvent(event: GridEvent<ExamScores | ExamScores[]>) {
@@ -86,7 +89,6 @@ export class ManageExamScoreTabularDataEntryComponent implements OnInit {
     }
   }
   getExamScoresListById($event: any) {
-    debugger;
     this.filters = Object.assign({}, $event);
     this.event.filters = {
       archiveFolderId: [
@@ -96,10 +98,10 @@ export class ManageExamScoreTabularDataEntryComponent implements OnInit {
           operator: 'and',
         },
       ],
-      hasWritingScore: [
+      examTypeId: [
         {
-          value: $event.hasWritingScore,
-          matchMode: 'contains',
+          value: $event.examTypeId,
+          matchMode: 'equals',
           operator: 'and',
         },
       ],
@@ -204,10 +206,17 @@ export class ManageExamScoreTabularDataEntryComponent implements OnInit {
           );
       });
   }
-
-  getArchiveFolders() {
-    this.archiveFolderService
+  getExamTypeDropdown() {
+    this.examTypeService
       .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.examType = response.data;
+      });
+  }
+  getArchiveFolders($event: any) {
+    this.archiveFolderService
+      .loadDropdownListForExamType($event.examTypeId)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.archiveFolder = response.data;
