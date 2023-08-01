@@ -1,5 +1,5 @@
 export interface ExamSecret {
-  id: string;
+  id?: string;
   studentId?: string;
   studentName?: string;
   examSubjectId?: string;

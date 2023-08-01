@@ -63,17 +63,6 @@ export class ExamSecretsTabularDataEntryFormComponent {
   constructor(
       private readonly toastService: GlobalToastService,
       private readonly cd: ChangeDetectorRef) {
-    this.isFall = [
-      { key: 'true', value: 'Po' },
-      { key: 'false', value: 'Jo' },
-    ];
-    this.isFall = [...this.isFall];
-
-    this.hasBarcode = [
-      { key: 'true', value: 'Po' },
-      { key: 'false', value: 'Jo' },
-    ];
-    this.hasBarcode = [...this.hasBarcode];
   }
 
   onAdministrationOfficeChanged(): void {
