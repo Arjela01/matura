@@ -12,8 +12,8 @@
   </thead>
   <tbody>
     <tr *ngFor="let rowData of examScoreLists">
-      <td>{{ rowData.archiveExam.archiveFolderId }}</td>
       <td>{{ rowData.archiveExam.archiveFolderNr }}</td>
+      <td>{{ rowData.archiveExam.index }}</td>
       <td>{{ this.examTypeName }}</td>
       <td>{{ this.examSubjectName }}</td>
       <td>{{ rowData.archiveExam.barcode }}</td>
@@ -22,8 +22,9 @@
           <input
             type="text"
             pInputText
-            id="writingScore"
             name="writingScore"
+            [attr.archiveExamId]="rowData.examScore.id"
+            tabindex="1"
             [(ngModel)]="rowData.examScore.writingScore"
             (keyup.enter)="onExamScoreAddOrUpdate(rowData)" />
         </ng-container>
