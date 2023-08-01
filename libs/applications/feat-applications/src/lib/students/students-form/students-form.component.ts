@@ -192,13 +192,16 @@ export class StudentsFormComponent implements OnInit, OnChanges {
       },
     });
   }
+
   navigateToGrid() {
     this.router.navigate(['/applications/students']);
   }
+
   onModalClose() {
     this.displayModal = false;
     if (this.studentId) {
-      this.router.navigate([`/configurations/students/edit/${this.studentId}`]);
+      this.toastService.showSuccess('Maturanti u shtua me sukses');
+      this.navigateToGrid();
     }
   }
 
@@ -217,6 +220,9 @@ export class StudentsFormComponent implements OnInit, OnChanges {
           this.studentId,
           'add',
         ]);
+        break;
+      default:
+        this.displayModal = false;
         break;
     }
   }
