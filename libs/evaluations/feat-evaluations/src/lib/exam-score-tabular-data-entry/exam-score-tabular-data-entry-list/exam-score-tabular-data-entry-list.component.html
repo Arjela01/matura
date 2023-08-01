@@ -22,8 +22,9 @@
           <input
             type="text"
             pInputText
-            id="writingScore"
             name="writingScore"
+            [attr.archiveExamId]="rowData.examScore.id"
+            tabindex="1"
             [(ngModel)]="rowData.examScore.writingScore"
             (keyup.enter)="onExamScoreAddOrUpdate(rowData)" />
         </ng-container>

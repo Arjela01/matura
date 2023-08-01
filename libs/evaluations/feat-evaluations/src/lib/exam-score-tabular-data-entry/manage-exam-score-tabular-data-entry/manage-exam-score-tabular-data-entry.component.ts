@@ -85,7 +85,7 @@ export class ManageExamScoreTabularDataEntryComponent implements OnInit {
         break;
     }
   }
-  getExamScoresListById($event: any) {
+  getExamScoresListById($event: any, examScore?: ExamScore) {
     debugger;
     this.filters = Object.assign({}, $event);
     this.event.filters = {
@@ -129,7 +129,11 @@ export class ManageExamScoreTabularDataEntryComponent implements OnInit {
           }
         );
         this.examScoreList$$.next(result);
-        console.log(12, result);
+        if(examScore != undefined) {
+          setTimeout(() => {
+            document.querySelector<HTMLInputElement>(`[archiveExamId='${examScore.id}']`)?.focus();
+          }, 100);
+        }
       });
   }
 
@@ -140,7 +144,7 @@ export class ManageExamScoreTabularDataEntryComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Piket Totale u shtuan me sukses!');
-          this.getExamScoresListById(this.filters as LazyLoadEvent);
+          this.getExamScoresListById(this.filters as LazyLoadEvent, response.data);
         } else {
           this.toastService.showError(response.errorMessage);
         }
@@ -160,7 +164,7 @@ export class ManageExamScoreTabularDataEntryComponent implements OnInit {
           this.toastService.showSuccess(
             'Rezultati i provimit u ndryshua me sukses!'
           );
-          this.getExamScoresListById(this.filters as LazyLoadEvent);
+          this.getExamScoresListById(this.filters as LazyLoadEvent, response.data);
         } else {
           this.toastService.showError(response.errorMessage);
         }
