@@ -109,7 +109,6 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
 
   onApplySearch($event: ExamSecretSearchModel) {
     this.filters = Object.assign({}, $event);
-    debugger;
     forkJoin([
       this.examAssignmentApiService.forExamDateId($event.examDateId),
       this.examSecretService.forExamSubjectId($event.examSubjectId),
