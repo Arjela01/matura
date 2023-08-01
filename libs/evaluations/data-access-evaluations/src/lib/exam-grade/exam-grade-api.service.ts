@@ -15,8 +15,15 @@ export class ExamGradeApiService {
     return this.apiService.get<ApiResult<any>>(`/ExamGrade/${id}`);
   }
 
-  loadAnnualExamGrades(event: LazyLoadEvent): Observable<ExamGradeTableView> {
+  loadExamGrades(event: LazyLoadEvent): Observable<ExamGradeTableView> {
     return this.apiService.post(`/ExamGrade/TableData`, event).pipe(
+      map((data: any) => data),
+      catchError(error => throwError(error))
+    );
+  }
+
+  forStudentId(id: any, type: string) {
+    return this.apiService.get(`/ExamGrade/ForStudentId/${id}/${type}`).pipe(
       map((data: any) => data),
       catchError(error => throwError(error))
     );

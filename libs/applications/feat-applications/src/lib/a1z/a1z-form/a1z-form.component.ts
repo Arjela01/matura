@@ -55,7 +55,9 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject } from 'rxjs';
 import { A1ZFormModeEnum } from '../a1z-form-mode.enum';
-import {CarriedGradesFormComponent} from "../../carried-grade/carried-grade-form/carried-grade-form.component";
+import { CarriedGradesFormComponent } from '../../carried-grade/carried-grade-form/carried-grade-form.component';
+import { ExamGrade } from '@msh/evaluations/domain-evaluations';
+import {ExamGradeApiService} from "@msh/evaluations/data-access-evaluations";
 
 interface ChangeEvent<T> {
   originalEvent: Event;
@@ -147,8 +149,13 @@ export class A1zFormComponent implements OnInit {
 
   showCarriedModal = false;
   carriedModalType = EXAM_TYPES.D1;
+
   private carriedGrades$$ = new BehaviorSubject<CarriedGrade[]>([]);
   carriedGrades$ = this.carriedGrades$$.asObservable();
+
+  private examGrades$$ = new BehaviorSubject<ExamGrade[]>([]);
+  examGrades$ = this.examGrades$$.asObservable();
+
   a1ZReport: Report = Report.A1ZForm_Report;
   event = {
     first: 0,
@@ -170,13 +177,14 @@ export class A1zFormComponent implements OnInit {
     private readonly examTypeService: ExamTypeApiService,
     private readonly activatedRoute: ActivatedRoute,
     private readonly carriedGradeService: CarriedGradeApiService,
+    private readonly examGradeApiService: ExamGradeApiService,
     private readonly router: Router,
     private readonly examSubjectService: ExamSubjectApiService,
     private reportsApiService: ReportsApiService,
     private academicYearApiService: AcademicYearApiService,
     private examTypeApiService: ExamTypeApiService,
     private examSubjectApiService: ExamSubjectApiService,
-    private carriedGradeApiService: CarriedGradeApiService,
+    private carriedGradeApiService: CarriedGradeApiService
   ) {}
 
   ngOnInit(): void {
@@ -240,11 +248,13 @@ export class A1zFormComponent implements OnInit {
         });
     }
   }
+
   onModalClose() {
     this.displayModal = false;
   }
+
   onFormSave(carriedGrade: CarriedGrade) {
-      this.saveCarriedGrade(carriedGrade);
+    this.saveCarriedGrade(carriedGrade);
   }
 
   saveCarriedGrade(carriedGrades: CarriedGrade) {
@@ -255,7 +265,7 @@ export class A1zFormComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Nota u shtua me sukses!');
           this.displayModal = false;
-          this.reloadCarriedGrades()
+          this.reloadCarriedGrades();
         } else {
           this.toastService.showError(response.errorMessage);
         }
@@ -286,7 +296,7 @@ export class A1zFormComponent implements OnInit {
       });
   }
 
-  onGridEvent(event: GridEvent<SharedStudent | SharedStudent[]>) {
+  onStudentGridEvent(event: GridEvent<SharedStudent | SharedStudent[]>) {
     switch (event.action) {
       case GRID_ACTIONS.EDIT:
         this.setSelectedStudent(Object.assign({}, event.data as Student));
@@ -352,6 +362,7 @@ export class A1zFormComponent implements OnInit {
     }
     if (this.a1z.carryD1) {
       this.carriedGrades$$.next([]);
+      this.examGrades$$.next([]);
       this.onCarriedClick(EXAM_TYPES.D1);
     }
   }
@@ -366,6 +377,7 @@ export class A1zFormComponent implements OnInit {
     }
     if (this.a1z.carryD2) {
       this.carriedGrades$$.next([]);
+      this.examGrades$$.next([]);
       this.onCarriedClick(EXAM_TYPES.D2);
     }
   }
@@ -377,10 +389,10 @@ export class A1zFormComponent implements OnInit {
       this.a1z.academicYearD3Name = undefined;
       this.a1z.academicYearD3Id = undefined;
       this.a1z.carriedGradeD3Id = undefined;
-
     }
     if (this.a1z.carryD3) {
       this.carriedGrades$$.next([]);
+      this.examGrades$$.next([]);
       this.onCarriedClick(EXAM_TYPES.D3);
     }
   }
@@ -395,6 +407,7 @@ export class A1zFormComponent implements OnInit {
     }
     if (this.a1z.carryZ1) {
       this.carriedGrades$$.next([]);
+      this.examGrades$$.next([]);
       this.onCarriedClick(EXAM_TYPES.Z1);
     }
   }
@@ -438,7 +451,7 @@ export class A1zFormComponent implements OnInit {
   getGrades(type: EXAM_TYPES) {
     if (this.selectedStudent?.idCard) {
       this.carriedGradeService
-        .getByNid(this.selectedStudent.idCard, type)
+        .getByStudentId(this.selectedStudent.id, type)
         .pipe(untilDestroyed(this))
         .subscribe({
           next: value => {
@@ -448,8 +461,20 @@ export class A1zFormComponent implements OnInit {
             this.carriedGrades$$.next([]);
           },
         });
+      this.examGradeApiService
+        .forStudentId(this.selectedStudent.id, type)
+        .pipe(untilDestroyed(this))
+        .subscribe({
+          next: value => {
+            this.examGrades$$.next(value.data);
+          },
+          error: _ => {
+            this.examGrades$$.next([]);
+          },
+        });
     } else {
       this.carriedGrades$$.next([]);
+      this.examGrades$$.next([]);
     }
   }
 
@@ -657,7 +682,7 @@ export class A1zFormComponent implements OnInit {
     this.showCarriedModal = false;
   }
 
-  onGradeSelect($event: CarriedGrade) {
+  onCarriedGradeSelect($event: CarriedGrade) {
     this.onCarriedHide();
 
     switch ($event.examTypeName) {
@@ -778,9 +803,58 @@ export class A1zFormComponent implements OnInit {
 
   protected readonly A1ZFormModeEnum = A1ZFormModeEnum;
 
-
   reloadCarriedGrades() {
     if (this.currentCarriedGradesExamType)
       this.getGrades(this.currentCarriedGradesExamType);
+  }
+
+  onExamGradeSelect($event: ExamGrade) {
+    this.carriedGradeService.ensureExamGradeIsCarried($event).subscribe(response => {
+      if(response.isSuccessful) {
+        this.onCarriedHide();
+
+        switch ($event.examTypeName) {
+          case EXAM_TYPES.D1:
+            this.a1z.academicYearD1Name = $event.academicYearName;
+            this.a1z.academicYearD1Id = $event.academicYearId;
+            this.a1z.carriedGradeD1Id = $event.id;
+            this.a1z.scoreD1 = $event.grade;
+            this.a1z.subjectD1Name = $event.examSubjectName;
+            this.a1z.reasonD1 = '';
+            this.cd.detectChanges();
+            break;
+          case EXAM_TYPES.D2:
+            this.a1z.academicYearD2Name = $event.academicYearName;
+            this.a1z.academicYearD2Id = $event.academicYearId;
+            this.a1z.carriedGradeD2Id = $event.id;
+            this.a1z.scoreD2 = $event.grade;
+            this.a1z.reasonD2 = '';
+            this.a1z.subjectD2Name = $event.examSubjectName;
+            this.cd.detectChanges();
+            break;
+          case EXAM_TYPES.D3:
+            this.a1z.academicYearD3Name = $event.academicYearName;
+            this.a1z.academicYearD3Id = $event.academicYearId;
+            this.a1z.carriedGradeD3Id = $event.id;
+            this.a1z.scoreD3 = $event.grade;
+            this.a1z.subjectD3Name = $event.examSubjectName;
+            this.a1z.reasonD3 = '';
+            this.cd.detectChanges();
+            break;
+          case EXAM_TYPES.Z1:
+            this.a1z.academicYearZ1Name = $event.academicYearName;
+            this.a1z.academicYearZ1Id = $event.academicYearId;
+            this.a1z.carriedGradeZ1Id = $event.id;
+            this.a1z.scoreZ1 = $event.grade;
+            this.a1z.reasonZ1 = '';
+            this.a1z.subjectZ1Name = $event.examSubjectName;
+            this.cd.detectChanges();
+            break;
+        }
+      } else {
+        this.toastService.showError(response.errorMessage);
+      }
+    });
+
   }
 }

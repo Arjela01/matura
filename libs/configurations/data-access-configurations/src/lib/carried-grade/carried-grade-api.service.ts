@@ -10,6 +10,7 @@ import { LazyLoadEvent } from 'primeng/api';
 import { map, Observable } from 'rxjs';
 
 import * as FileSaver from 'file-saver';
+import {ExamGrade} from "@msh/evaluations/domain-evaluations";
 
 @Injectable({
   providedIn: 'root',
@@ -85,15 +86,11 @@ export class CarriedGradeApiService {
     FileSaver.saveAs(blob, `document.${extension}`);
   }
 
-  getByNid(nid: string, type: string): Observable<ApiResult<CarriedGrade[]>> {
-    return this.apiService.get(
-      `/CarriedGrade`,
-      new HttpParams({
-        fromObject: {
-          nid: nid,
-          type: type,
-        },
-      })
-    );
+  getByStudentId(id: string, type: string): Observable<ApiResult<CarriedGrade[]>> {
+    return this.apiService.get(`/CarriedGrade/ForStudentId/${id}/${type}`);
+  }
+
+  ensureExamGradeIsCarried(examGrade: ExamGrade) : Observable<ApiResult<CarriedGrade>> {
+    return this.apiService.post(`/CarriedGrade/EnsureExamGradeIsCarried/${examGrade.id}`);
   }
 }

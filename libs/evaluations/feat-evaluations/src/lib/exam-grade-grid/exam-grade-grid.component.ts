@@ -33,8 +33,8 @@ import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamGradeGridComponent {
-  private annualExamGrade$$ = new BehaviorSubject<ExamGrade[]>([]);
-  annualExamGrade$ = this.annualExamGrade$$.asObservable();
+  private examGrade$$ = new BehaviorSubject<ExamGrade[]>([]);
+  examGrade$ = this.examGrade$$.asObservable();
   totalRecords = 0;
   filters: LazyLoadEvent | null = null;
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
@@ -54,10 +54,10 @@ export class ExamGradeGridComponent {
     this.filters = Object.assign({}, $event);
 
     this.examGradeService
-      .loadAnnualExamGrades($event)
+      .loadExamGrades($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.annualExamGrade$$.next(response.data);
+        this.examGrade$$.next(response.data);
         this.totalRecords = response.total;
       });
   }
