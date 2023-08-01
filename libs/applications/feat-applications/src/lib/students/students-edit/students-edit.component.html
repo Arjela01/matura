@@ -41,6 +41,7 @@
               name="highSchool"
               optionValue="key"
               optionLabel="value"
+              [required]="true"
               [(ngModel)]="student.highSchoolId"
               [autoDisplayFirst]="false"
               [showClear]="true"
@@ -63,6 +64,7 @@
               name="schoolProfile"
               optionValue="key"
               optionLabel="value"
+              [required]="true"
               [(ngModel)]="student.profileId"
               [autoDisplayFirst]="false"
               [showClear]="true"
@@ -411,6 +413,7 @@
           <button
             type="submit"
             pButton
+            [disabled]="form.invalid"
             label="Ruaj"
             class="p-button w-auto"></button>
           <button

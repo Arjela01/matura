@@ -1,50 +1,86 @@
-<p-table #dt dataKey="id" responsiveLayout="scroll" [value]="users" [totalRecords]="totalRecords" [rows]="10"
-  [paginator]="true" [rowsPerPageOptions]="[10, 20, 30]" [showCurrentPageReport]="true"
-  currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde" [rowHover]="true"
-  [(selection)]="selectedUsers" selectionMode="multiple" (onRowSelect)="onRowSelect($event)"
-  (onRowUnselect)="onRowUnselect($event)" (onLazyLoad)="loadRows($event)" [lazy]="true">
+<p-table
+  #dt
+  dataKey="id"
+  responsiveLayout="scroll"
+  [value]="users"
+  [totalRecords]="totalRecords"
+  [rows]="10"
+  [paginator]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
+  [rowHover]="true"
+  [(selection)]="selectedUsers"
+  selectionMode="multiple"
+  (onRowSelect)="onRowSelect($event)"
+  (onRowUnselect)="onRowUnselect($event)"
+  (onLazyLoad)="loadRows($event)"
+  [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="nid">
         NID
         <div>
           <p-sortIcon field="nid"></p-sortIcon>
-          <p-columnFilter type="text" field="nid" display="menu" mshColumnFilterDirective></p-columnFilter>
+          <p-columnFilter
+            type="text"
+            field="nid"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="name">
         Emri
         <div>
           <p-sortIcon field="name"></p-sortIcon>
-          <p-columnFilter type="text" field="name" display="menu" mshColumnFilterDirective></p-columnFilter>
+          <p-columnFilter
+            type="text"
+            field="name"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="lastName">
         Mbiemri
         <div>
           <p-sortIcon field="lastName"></p-sortIcon>
-          <p-columnFilter type="text" field="lastName" display="menu" mshColumnFilterDirective></p-columnFilter>
+          <p-columnFilter
+            type="text"
+            field="lastName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="username">
         Username
         <div>
           <p-sortIcon field="username"></p-sortIcon>
-          <p-columnFilter type="text" field="username" display="menu" mshColumnFilterDirective></p-columnFilter>
+          <p-columnFilter
+            type="text"
+            field="username"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="roleName">
         Roli
         <div>
           <p-sortIcon field="roleName"></p-sortIcon>
-          <p-columnFilter type="text" field="roleName" display="menu" mshColumnFilterDirective></p-columnFilter>
+          <p-columnFilter
+            type="text"
+            field="roleName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="administrationOfficeName">
         ZVAP
         <div>
           <p-sortIcon field="administrationOfficeName"></p-sortIcon>
-          <p-columnFilter type="text" field="administrationOfficeName" display="menu"
+          <p-columnFilter
+            type="text"
+            field="administrationOfficeName"
+            display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
@@ -52,7 +88,11 @@
         Statusi
         <div>
           <p-sortIcon field="isDisabled"></p-sortIcon>
-          <p-columnFilter type="boolean" field="isDisabled" matchMode="equals" display="menu"></p-columnFilter>
+          <p-columnFilter
+            type="boolean"
+            field="isDisabled"
+            matchMode="equals"
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th>Veprime</th>
@@ -79,7 +119,8 @@
         {{ user.administrationOfficeName }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        <span [ngClass]="
+        <span
+          [ngClass]="
             user.isDisabled === true
               ? ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
               : ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
@@ -89,8 +130,12 @@
       </td>
       <td style="width: 14%; min-width: 10rem">
         <div class="flex">
-          <button pButton pRipple class="p-button-rounded p-button-plain p-button-text mr-2 pointer"
-            (click)="changeUserStatus(user)" [ngClass]="
+          <button
+            pButton
+            pRipple
+            class="p-button-rounded p-button-plain p-button-text mr-2 pointer"
+            (click)="changeUserStatus(user)"
+            [ngClass]="
               user.isDisabled === true
                 ? ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
                 : ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
@@ -98,13 +143,25 @@
             {{ user.isDisabled === true ? 'Aktivizo' : 'Çaktivizo' }}
           </button>
 
-          <img src="assets/svg/password-key.svg" class="p-button-rounded p-button-danger p-button-text ml-m pointer"
-            tooltipPosition="bottom" (click)="onChangePassClick(user)" pTooltip="Ndrysho Fjalëkalimin" />
-          <img src="assets/svg/edit-form.svg" class="p-button-rounded p-button-warning p-button-text ml-m pointer"
-            tooltipPosition="bottom" (click)="onEditClick(user)" pTooltip="Ndrysho" />
+          <img
+            src="assets/svg/password-key.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
+            tooltipPosition="bottom"
+            (click)="onChangePassClick(user)"
+            pTooltip="Ndrysho Fjalëkalimin" />
+          <img
+            src="assets/svg/edit-form.svg"
+            class="p-button-rounded p-button-warning p-button-text ml-m pointer"
+            tooltipPosition="bottom"
+            (click)="onEditClick(user)"
+            pTooltip="Ndrysho" />
 
-          <img src="assets/svg/delete-form.svg" class="p-button-rounded p-button-danger p-button-text ml-m pointer"
-            pTooltip="Fshi" tooltipPosition="bottom" (click)="onDeleteClick(user)" />
+          <img
+            src="assets/svg/delete-form.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
+            pTooltip="Fshi"
+            tooltipPosition="bottom"
+            (click)="onDeleteClick(user)" />
         </div>
       </td>
     </tr>

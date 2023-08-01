@@ -102,9 +102,7 @@
           <h5 class="mt-5">Lëndë me Zgjedhje</h5>
           <div class="field w-full">
             <div class="flex align-items-center w-full">
-              <div class="pr-2">
-                Z1:
-              </div>
+              <div class="pr-2">Z1:</div>
               <div class="w-full">
                 <p-dropdown
                   [style]="{ width: '100%' }"
@@ -119,11 +117,12 @@
                   [showClear]="true">
                 </p-dropdown>
               </div>
-              {{optionalSubjects | json }}
             </div>
           </div>
           <div class="w-full pb-3">
-            <label for="overSeerCode" class="block pb-2">Kodi i mbikqyrësit</label>
+            <label for="overSeerCode" class="block pb-2"
+              >Kodi i mbikqyrësit</label
+            >
             <input
               type="password"
               pInputText
