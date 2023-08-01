@@ -16,6 +16,7 @@ import {
   StudentClassModel,
   StudentSectionModel,
 } from '@msh/shared/domain-models';
+import { GlobalToastService } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -117,7 +118,8 @@ export class StudentsEditComponent implements OnInit {
     private router: Router,
     private messageService: MessageService,
     private route: ActivatedRoute,
-    private readonly confirmationService: ConfirmationService
+    private readonly confirmationService: ConfirmationService,
+    private toasterService: GlobalToastService
   ) {
     this.id = this.route.snapshot.paramMap.get('id') as string;
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 10);
@@ -184,8 +186,14 @@ export class StudentsEditComponent implements OnInit {
       });
   }
 
+  navigateToGrid() {
+    this.router.navigate(['/applications/students']);
+  }
+
   onModalClose() {
     this.displayModal = false;
+    this.toasterService.showSuccess('Maturanti u modifikua me sukses');
+    this.navigateToGrid();
   }
 
   update(): void {
