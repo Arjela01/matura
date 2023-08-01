@@ -16,6 +16,7 @@ import {
   StudentClassModel,
   StudentSectionModel,
 } from '@msh/shared/domain-models';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
@@ -28,9 +29,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { A1a1zConfirmationDialogComponent } from '../manage-students/a1a1z-confirmation-dialog/a1a1z-confirmation-dialog.component';
 import { RippleModule } from 'primeng/ripple';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { A1a1zConfirmationDialogComponent } from '../manage-students/a1a1z-confirmation-dialog/a1a1z-confirmation-dialog.component';
 
 @UntilDestroy()
 @Component({
@@ -96,11 +96,9 @@ export class StudentsEditComponent implements OnInit {
     highSchoolName: '',
     schoolName: '',
     schoolFinishedName: '',
-    highSchoolId: 0,
     session: '',
     studentId: '',
     studyClass: '',
-    profileId: 0,
     profileName: '',
     firstName: '',
     registrationYearId: undefined,

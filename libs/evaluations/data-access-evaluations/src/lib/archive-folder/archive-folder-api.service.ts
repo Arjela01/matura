@@ -51,9 +51,17 @@ export class ArchiveFolderApiService {
       }
     );
   }
-  loadDropdownList(): Observable<ApiResult<DropdownModel<any>[]>> {
+  loadDropdownList(
+  ): Observable<ApiResult<DropdownModel<any>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<any>[]>>(
       '/ArchiveFolder/DropdownList'
+    );
+  }
+  loadDropdownListForExamType(
+    examTypeId: string
+  ): Observable<ApiResult<DropdownModel<any>[]>> {
+    return this.apiService.get<ApiResult<DropdownModel<any>[]>>(
+      `/ArchiveFolder/DropdownList/${examTypeId}`
     );
   }
 

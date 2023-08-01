@@ -13,6 +13,7 @@
             [options]="highSchool"
             name="highSchool"
             optionValue="key"
+            [required]="true"
             optionLabel="value"
             [(ngModel)]="student.highSchoolId"
             [virtualScroll]="true"
@@ -39,6 +40,7 @@
             name="schoolProfile"
             optionValue="key"
             optionLabel="value"
+            [required]="true"
             [(ngModel)]="student.profileId"
             [autoDisplayFirst]="false"
             [showClear]="true"
@@ -301,10 +303,12 @@
             name="genders"
             optionValue="key"
             optionLabel="value"
+            [required]="true"
             [(ngModel)]="student.genderId"
             [autoDisplayFirst]="false"
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !student.genderId
+              'ng-invalid ng-dirty':
+                submitted && (!student.genderId || student.genderId === 0)
             }">
           </p-dropdown>
           <small class="p-error block" *ngIf="submitted && !student.genderId">
@@ -317,16 +321,15 @@
           <p-dropdown
             id="studyClass"
             [options]="studentClass"
-            name="schoolProfile"
+            name="studyClass"
             [(ngModel)]="student.studyClass"
             [autoDisplayFirst]="false"
+            [required]="true"
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !student.schoolProfile
+              'ng-invalid ng-dirty': submitted && !student.studyClass
             }">
           </p-dropdown>
-          <small
-            class="p-error block"
-            *ngIf="submitted && !student.schoolProfile">
+          <small class="p-error block" *ngIf="submitted && !student.studyClass">
             Klasa është fushë e kërkuar.
           </small>
         </div>
@@ -336,16 +339,15 @@
           <p-dropdown
             id="session"
             [options]="studentSection"
-            name="schoolProfile"
+            name="session"
             [(ngModel)]="student.session"
             [autoDisplayFirst]="false"
+            [required]="true"
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !student.schoolProfile
+              'ng-invalid ng-dirty': submitted && !student.session
             }">
           </p-dropdown>
-          <small
-            class="p-error block"
-            *ngIf="submitted && !student.schoolProfile">
+          <small class="p-error block" *ngIf="submitted && !student.session">
             Seksioni shkollës është fushë e kërkuar.
           </small>
         </div>

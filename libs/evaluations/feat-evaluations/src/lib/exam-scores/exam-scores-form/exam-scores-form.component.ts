@@ -114,7 +114,7 @@ export class ExamScoresFormComponent implements OnChanges {
     this.examScore.examSubjectId = this.examSubjectId;
   }
 
-  onGetIndexClick(barcode: string) {
+  onGetIndexClick(barcode: any) {
     this.examScores.getIndex(barcode).subscribe(res => {
       this.examScore.archiveFolderIndex = res.data?.index;
       this.examScore.archiveFolderNr = res.data?.archiveFolderNr;

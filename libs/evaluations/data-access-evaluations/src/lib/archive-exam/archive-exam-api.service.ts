@@ -51,4 +51,11 @@ export class ArchiveExamApiService {
       `/ArchiveExam/${archiveExamId}`
     );
   }
+  getExamsByFolderId(
+    archiveFolderId?: number
+  ): Observable<ApiResult<any>> {
+    return this.apiService.get<ApiResult<ArchiveExam>>(
+      `/ArchiveExam/GetById/${archiveFolderId}`
+    );
+  }
 }

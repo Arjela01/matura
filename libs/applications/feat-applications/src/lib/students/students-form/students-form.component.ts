@@ -44,7 +44,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { A1a1zConfirmationDialogComponent } from '../manage-students/a1a1z-confirmation-dialog/a1a1z-confirmation-dialog.component';
-import { untilDestroyed } from '@ngneat/until-destroy';
 
 @Component({
   selector: 'msh-students-form',
@@ -101,7 +100,6 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     birthDate: this.maxDate,
     birthPlace: '',
     email: '',
-    genderId: 0,
     idCard: '',
     isA2A3: true,
     isEAlbaniaApplication: true,
@@ -114,20 +112,16 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     mobilePhone: '',
     oldID: '',
     schoolFinished: '',
-    schoolProfile: '',
     highSchoolName: '',
     schoolName: '',
-    highSchoolId: 0,
-    session: '',
     studentId: '',
-    studyClass: '',
-    profileId: 0,
     profileName: '',
     firstName: '',
     schoolFinishedName: '',
     registrationYearId: 0,
     graduationYear: undefined,
     isConfirmedBySupervisor: false,
+    schoolProfile: '',
   };
   finishedAtSameSchool = true;
   currentAcademicYear?: Partial<AcademicYear>;
