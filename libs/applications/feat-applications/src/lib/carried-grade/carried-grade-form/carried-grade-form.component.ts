@@ -13,19 +13,19 @@ import {
 import { FormsModule, NgForm } from '@angular/forms';
 import { CarriedGrade } from '@msh/applications/domain-application';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import {
+  SharedStudent,
+  SharedStudentLookupModule,
+} from '@msh/shared/student-lookup';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
+import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { DialogModule } from 'primeng/dialog';
-import {
-  SharedStudent,
-  SharedStudentLookupModule,
-} from '@msh/shared/student-lookup';
 
 @Component({
   selector: 'msh-carried-grade-form',
@@ -87,6 +87,9 @@ export class CarriedGradesFormComponent implements OnChanges {
   constructor(private cd: ChangeDetectorRef) {}
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (!this.isObjectEmpty(this.gradeDetails)) {
+      this.showStudentSearchButton = false;
+    }
     if (changes['selectedStudent']) {
       if (changes['selectedStudent'].currentValue) {
         const student = changes['selectedStudent']
@@ -152,5 +155,12 @@ export class CarriedGradesFormComponent implements OnChanges {
 
   clearFile() {
     this.grade.document = undefined;
+  }
+
+  isObjectEmpty(object: any) {
+    for (const key in object) {
+      return false;
+    }
+    return true;
   }
 }
