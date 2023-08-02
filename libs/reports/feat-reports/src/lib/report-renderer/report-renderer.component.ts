@@ -11,14 +11,14 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ACADEMIC_YEAR_KEY } from '@msh/configurations/data-access-configurations';
+import { Report } from '@msh/shared/domain-models';
 import { REPORTS_APP_URL, SafePipe } from '@msh/shared/util-shared';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import RxPostmessenger from 'rx-postmessenger';
-import { combineLatest, first, forkJoin, map, skip, Subject, tap } from 'rxjs';
+import { Subject, combineLatest, first, forkJoin, map, skip, tap } from 'rxjs';
 import { IframeAutoHeightDirective } from '../iframe-auto-height.directive';
 import { Path } from './paths-enum';
-import { Report } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-report-renderer',
@@ -46,6 +46,7 @@ export class ReportRendererComponent implements OnInit {
   yearObj: { value: string | number; key: string } | null = this.findYearID(
     this.route.snapshot.queryParams
   );
+  filters: { value: boolean; key: string } = this.initFilters();
   returnUrl?: string | null = null;
   displayModal = false;
   iframeUrl = '';
@@ -101,6 +102,12 @@ export class ReportRendererComponent implements OnInit {
     }
     return null;
   }
+  initFilters(): { key: string; value: boolean } {
+    const key = 'showFilters';
+
+    // if its from folders or from a1 and a1z forms disable filters
+    return { key: key, value: Boolean(!this.studentObj && !this.folderObj) };
+  }
   findArchiveFolderNr(obj: { [x: string]: string | number }) {
     const key = Object.keys(obj).find(k => k.toLowerCase() === 'foldernr');
     if (key) {
@@ -136,6 +143,13 @@ export class ReportRendererComponent implements OnInit {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.folderObj.key}=${this.folderObj.value}&${this.yearObj.key}=${this.yearObj.value}`;
     } else {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&academicyearid=${this.academicYear}`;
+    }
+
+    if (
+      this.id === Report.A1Form_Report.toString() ||
+      this.id === Report.A1ZForm_Report.toString()
+    ) {
+      this.iframeUrl += `&${this.filters.key}=${this.filters.value}`;
     }
   }
 
