@@ -12,15 +12,13 @@ import {
   ExamSecretTabularDataEntryItem,
 } from '@msh/evaluations/domain-evaluations';
 import {
-  GlobalToastService,
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ExamSecretApiService } from '@msh/evaluations/data-access-evaluations';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { ButtonModule } from 'primeng/button';
 
 @UntilDestroy()
