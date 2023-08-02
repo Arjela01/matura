@@ -42,7 +42,9 @@ export class ExamScoreTabularDataEntryFiltersComponent {
   constructor(private readonly toastService: GlobalToastService) {}
 
   onExamTypeChanged(): void {
-    this.archiveFolderChanged.emit(Object.assign({}, this.examScoreList));
+    if (this.examScoreList.examTypeId) {
+      this.archiveFolderChanged.emit(Object.assign({}, this.examScoreList));
+    }
   }
   onSubmit() {
     if (this.isSearchValid(this.examScoreList)) {
