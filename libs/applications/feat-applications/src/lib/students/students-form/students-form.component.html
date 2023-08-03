@@ -398,7 +398,7 @@
         <div class="flex justify-content-start pt-3">
           <button
             type="submit"
-            [disabled]="form.invalid"
+            [disabled]="form.invalid || disabled"
             pButton
             label="Ruaj"
             class="p-button w-auto"></button>

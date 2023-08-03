@@ -84,6 +84,7 @@ export class StudentsFormComponent implements OnInit, OnChanges {
   academicYears: DropdownModel<number>[] = [];
   displayModal = false;
   studentId: any;
+  disabled = false;
   @Input() set studentDetails(details: Student | null) {
     if (details) {
       this.student = Object.assign({}, details);
@@ -175,15 +176,19 @@ export class StudentsFormComponent implements OnInit, OnChanges {
       this.student.schoolFinished = '';
     }
     const data = { ...this.student };
-
+    this.disabled = true;
     this.studentService.save(data).subscribe({
       next: response => {
         if (response.isSuccessful) {
           this.displayModal = true;
           this.studentId = response.data.id;
           this.cd.detectChanges();
-        } else this.toastService.showError(response.errorMessage);
+        } else {
+          this.enableSaveButton();
+          this.toastService.showError(response.errorMessage);
+        }
         if (response.isBadRequest) {
+          this.enableSaveButton();
           this.toastService.showError(
             'Ndodhi një problem gjatë krijimit të studentit'
           );
@@ -225,5 +230,9 @@ export class StudentsFormComponent implements OnInit, OnChanges {
         this.displayModal = false;
         break;
     }
+  }
+  private enableSaveButton() {
+    this.disabled = false;
+    this.cd.detectChanges();
   }
 }

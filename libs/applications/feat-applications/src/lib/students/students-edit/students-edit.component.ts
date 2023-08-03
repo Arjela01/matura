@@ -107,6 +107,7 @@ export class StudentsEditComponent implements OnInit {
   };
   forms: A1ZTableRecord[] = [];
   finishedAtSameSchool = true;
+  disabled = false;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -200,6 +201,7 @@ export class StudentsEditComponent implements OnInit {
     if (this.finishedAtSameSchool) {
       this.student.schoolFinished = '';
     }
+    this.disabled = true;
     this.saving = true;
     this.studentService
       .update({ id: this.id, ...this.student })
@@ -218,6 +220,7 @@ export class StudentsEditComponent implements OnInit {
               this.displayModal = true;
             }
           } else {
+            this.enableSaveButton();
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
@@ -226,6 +229,7 @@ export class StudentsEditComponent implements OnInit {
           }
         },
         error: error => {
+          this.enableSaveButton();
           this.saving = false;
           this.messageService.add({
             severity: 'error',
@@ -266,5 +270,10 @@ export class StudentsEditComponent implements OnInit {
         `/applications/a1z/for-student/${this.student.id}/edit/${a1.id}`,
       ]);
     }
+  }
+
+  private enableSaveButton() {
+    this.disabled = false;
+    this.cd.detectChanges();
   }
 }
