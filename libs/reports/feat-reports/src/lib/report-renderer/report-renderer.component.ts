@@ -153,7 +153,6 @@ export class ReportRendererComponent implements OnInit {
         this.iframeUrl += `&${this.filters.key}=${fromReportPath}`;
         break;
       default:
-        this.iframeUrl += `&${this.filters.key}=${this.filters.value}`;
         break;
     }
   }
