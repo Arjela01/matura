@@ -18,17 +18,6 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="academicYear">
-        Viti
-        <div>
-          <p-sortIcon field="academicYear"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="academicYear"
-            display="menu"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
       <th pSortableColumn="examTypeName">
         Tipi i Provimit
         <div>
@@ -100,13 +89,10 @@
   </ng-template>
   <ng-template pTemplate="body" let-examScore>
     <tr>
-      <td style="width: 20%; min-width: 10rem">
-        {{ examScore.academicYear }}
-      </td>
-      <td style="width: 20%; min-width: 10rem">
+      <td style="width: 10%; min-width: 10rem">
         {{ examScore.examTypeName }}
       </td>
-      <td style="width: 20%; min-width: 10rem">
+      <td style="width: 30%; min-width: 10rem">
         {{ examScore.examSubjectName }}
       </td>
       <td style="width: 20%; min-width: 10rem">
