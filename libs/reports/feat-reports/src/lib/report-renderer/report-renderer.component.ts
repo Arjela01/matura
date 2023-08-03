@@ -104,9 +104,7 @@ export class ReportRendererComponent implements OnInit {
   }
   initFilters(): { key: string; value: boolean } {
     const key = 'showFilters';
-
-    // if its from folders or from a1 and a1z forms disable filters
-    return { key: key, value: Boolean(!this.studentObj && !this.folderObj) };
+    return { key: key, value: true };
   }
   findArchiveFolderNr(obj: { [x: string]: string | number }) {
     const key = Object.keys(obj).find(k => k.toLowerCase() === 'foldernr');
@@ -136,7 +134,6 @@ export class ReportRendererComponent implements OnInit {
     if (this.id === Report.PrintedDiplomasByDate_Report.toString()) {
       this.showDiplomasButton = true;
     }
-
     if (this.id && this.studentObj && this.yearObj) {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}&${this.yearObj.key}=${this.yearObj.value}`;
     } else if (this.id && this.folderObj && this.yearObj) {
@@ -144,12 +141,19 @@ export class ReportRendererComponent implements OnInit {
     } else {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&academicyearid=${this.academicYear}`;
     }
+    this.showFiltersByReport(+this.id);
+  }
 
-    if (
-      this.id === Report.A1Form_Report.toString() ||
-      this.id === Report.A1ZForm_Report.toString()
-    ) {
-      this.iframeUrl += `&${this.filters.key}=${this.filters.value}`;
+  showFiltersByReport(reportType: Report) {
+    switch (reportType) {
+      case Report.A1Form_Report:
+      case Report.A1ZForm_Report:
+        const fromReportPath = !this.studentObj && !this.folderObj;
+        this.iframeUrl += `&${this.filters.key}=${fromReportPath}`;
+        break;
+      default:
+        this.iframeUrl += `&${this.filters.key}=${this.filters.value}`;
+        break;
     }
   }
 
