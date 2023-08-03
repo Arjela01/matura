@@ -149,10 +149,11 @@ export class ReportRendererComponent implements OnInit {
     switch (reportType) {
       case Report.A1Form_Report:
       case Report.A1ZForm_Report:
-      case Report.ArchiveFolder_Report:
+      case Report.ArchiveFolder_Report: {
         const fromReportPath = !this.studentObj && !this.folderObj;
         this.iframeUrl += `&${this.filters.key}=${fromReportPath}`;
         break;
+      }
       default:
         break;
     }
