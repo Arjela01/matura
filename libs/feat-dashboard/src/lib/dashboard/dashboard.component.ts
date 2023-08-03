@@ -1,21 +1,27 @@
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   OnInit,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { CardModule } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { TableModule } from 'primeng/table';
 import {
   DashboardItemsApiService,
   DashboardMetriciesApiService,
 } from '@msh/configurations/data-access-configurations';
-import { DashboardItem, DashboardMetrics } from '@msh/shared/domain-models';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { ApiResult } from '@msh/shared/data-access-shared';
+import {
+  DashboardItem,
+  DashboardMetrics,
+  UserProfile,
+} from '@msh/shared/domain-models';
 import { UserProfileApiService } from '@msh/user-section/data-access-user-section';
+import { UntilDestroy } from '@ngneat/until-destroy';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { TableModule } from 'primeng/table';
+import { Observable, combineLatest } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -56,25 +62,22 @@ export class DashboardComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private userService: UserProfileApiService
-  ) {
-    this.id = this.route.snapshot.paramMap.get('id');
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.getUser();
-    this.dashboardMetriciesService
-      .loadDashboardMetrics(this.id)
-      .subscribe(result => {
-        this.dashboardMetrics = { ...result.data };
-        this.cd.detectChanges();
-      });
-    this.dashboardItemsApiService.forHome().subscribe(result => {
-      const items = [...result.data];
-      console.log(items);
+    this.id = this.route.snapshot.paramMap.get('id');
+    combineLatest([
+      this.getUser(),
+      this.getDashboardMetricrs(),
+      this.getDashboardSections(),
+    ]).subscribe(([users, metrics, sections]) => {
+      this.userData = users.data;
+      this.role = users.data.roleName;
+      const items = [...sections.data];
+      this.dashboardMetrics = { ...metrics.data };
       this.dashboardSections = [
-        ...new Set(result.data.map(e => String(e.dashboardSectionName))),
+        ...new Set(sections.data.map(e => String(e.dashboardSectionName))),
       ];
-      console.log(this.dashboardSections);
       for (const section of this.dashboardSections) {
         this.dashboardItems.set(
           section,
@@ -101,10 +104,14 @@ export class DashboardComponent implements OnInit {
     link.download = dashboardItem.documentName;
     link.click();
   }
-  getUser() {
-    this.userService.getLoggedInUserData().subscribe(response => {
-      this.userData = response.data;
-      this.role = response.data.roleName;
-    });
+
+  getUser(): Observable<ApiResult<UserProfile>> {
+    return this.userService.getLoggedInUserData();
+  }
+  getDashboardMetricrs(): Observable<ApiResult<any>> {
+    return this.dashboardMetriciesService.loadDashboardMetrics(this.id);
+  }
+  getDashboardSections(): Observable<ApiResult<DashboardItem[]>> {
+    return this.dashboardItemsApiService.forHome();
   }
 }
