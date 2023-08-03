@@ -141,10 +141,11 @@ export class ReportRendererComponent implements OnInit {
     } else {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&academicyearid=${this.academicYear}`;
     }
-    this.showFiltersByReport(+this.id);
+    this.showFiltersByReport();
   }
 
-  showFiltersByReport(reportType: Report) {
+  showFiltersByReport() {
+    const reportType = +this.id;
     switch (reportType) {
       case Report.A1Form_Report:
       case Report.A1ZForm_Report:
