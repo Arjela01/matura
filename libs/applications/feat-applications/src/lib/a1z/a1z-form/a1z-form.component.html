@@ -479,7 +479,7 @@
 
         <div class="flex justify-content-start pt-3">
           <button
-            [disabled]="form.invalid"
+            [disabled]="form.invalid || disabled"
             type="submit"
             pButton
             label="Ruaj"
@@ -535,7 +535,7 @@
         (click)="addCarriedGrade()"></button>
       <p-dialog
         [(visible)]="displayModal"
-        [style]="{maxHeight: '745px', minWidth: '500px'}"
+        [style]="{ maxHeight: '745px', minWidth: '500px' }"
         header="Shto notë"
         [modal]="true"
         [draggable]="false"
@@ -579,7 +579,6 @@
           <th style="width: 20%">Nota</th>
           <th style="width: 20%">Dokumenti Mbështetës</th>
           <th style="width: 20%">Arsyeja</th>
-
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-grade>
