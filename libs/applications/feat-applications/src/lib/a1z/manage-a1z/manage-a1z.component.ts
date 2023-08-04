@@ -43,9 +43,6 @@ export class ManageA1zComponent {
   private a1zList$$ = new BehaviorSubject<A1ZTableRecord[]>([]);
   a1zList$ = this.a1zList$$.asObservable();
   filters: LazyLoadEvent | null = null;
-
-  hideA1ZForm = true;
-
   totalRecords = 0;
   selectedA1Z: A1ZTableRecord | null = null;
   selectedA1ZList: A1ZTableRecord[] = [];
@@ -67,7 +64,6 @@ export class ManageA1zComponent {
   );
 
   onNewClick() {
-    this.hideA1ZForm = !this.hideA1ZForm;
     this.router.navigate(['/applications/a1z/add']);
   }
 

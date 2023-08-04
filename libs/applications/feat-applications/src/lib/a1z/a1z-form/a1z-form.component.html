@@ -479,7 +479,7 @@
 
         <div class="flex justify-content-start pt-3">
           <button
-            [disabled]="form.invalid"
+            [disabled]="form.invalid || disabled"
             type="submit"
             pButton
             label="Ruaj"

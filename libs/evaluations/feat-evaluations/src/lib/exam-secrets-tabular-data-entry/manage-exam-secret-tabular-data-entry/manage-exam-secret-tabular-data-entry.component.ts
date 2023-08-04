@@ -10,7 +10,7 @@ import { ExamSecretsTabularDataEntryListComponent } from '../exam-secrets-tabula
 import { ExamSecretsTabularDataEntryFormComponent } from '../exam-secrets-tabular-data-entry-form/exam-secrets-tabular-data-entry-form.component';
 import { ExamSecretsFormComponent } from '../../exam-secrets/exam-secrets-form/exam-secrets-form.component';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import {
   GlobalToastService,
   GRID_ACTIONS,
@@ -34,7 +34,6 @@ import {
   ExamSecretTabularDataEntryItem,
 } from '@msh/evaluations/domain-evaluations';
 import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @UntilDestroy()
@@ -61,7 +60,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
     ExamSecretTabularDataEntryItem[]
   >([]);
   dataEntryItemList$ = this.dataEntryItemList$$.asObservable();
-  filters: ExamSecretSearchModel| null = null;
+  filters: ExamSecretSearchModel | null = null;
   examSecretSubjects: any = [];
   totalRecords = 0;
   event = {
@@ -97,8 +96,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
     switch (event.action) {
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message:
-            'Jeni i sigurt që doni të fshini barkodin e zgjedhur?',
+          message: 'Jeni i sigurt që doni të fshini barkodin e zgjedhur?',
           accept: () => {
             this.deleteExamSecret(event.data as ExamSecret);
           },
@@ -107,7 +105,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
     }
   }
 
-  onApplySearch($event: ExamSecretSearchModel) {
+  onApplySearch($event: ExamSecretSearchModel, examSecret?: ExamSecret) {
     this.filters = Object.assign({}, $event);
     forkJoin([
       this.examAssignmentApiService.forExamDateId($event.examDateId),
@@ -132,6 +130,15 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
           } as ExamSecretTabularDataEntryItem;
         });
         this.dataEntryItemList$$.next(result);
+        if (examSecret != undefined) {
+          setTimeout(() => {
+            document
+              .querySelector<HTMLInputElement>(
+                `[examAssignmentId='${examSecret.id}']`
+              )
+              ?.focus();
+          }, 100);
+        }
       });
   }
 
@@ -193,7 +200,10 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Barkodi u shtua me sukses!');
-          this.onApplySearch(this.filters as ExamSecretSearchModel);
+          this.onApplySearch(
+            this.filters as ExamSecretSearchModel,
+            response.data
+          );
         } else {
           this.toastService.showError(response.errorMessage);
         }
@@ -211,7 +221,10 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Barkodi u ndryshua me sukses!');
-          this.onApplySearch(this.filters as ExamSecretSearchModel);
+          this.onApplySearch(
+            this.filters as ExamSecretSearchModel,
+            response.data
+          );
         } else {
           this.toastService.showError(response.errorMessage);
         }

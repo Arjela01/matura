@@ -15,7 +15,7 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { LazyLoadEvent } from 'primeng/api';
-import {GlobalToastService} from "@msh/shared/util-shared";
+import { GlobalToastService } from '@msh/shared/util-shared';
 
 @UntilDestroy()
 @Component({
@@ -61,28 +61,37 @@ export class ExamSecretsTabularDataEntryFormComponent {
   examSecretSearchModal: ExamSecretSearchModel = {} as ExamSecretSearchModel;
 
   constructor(
-      private readonly toastService: GlobalToastService,
-      private readonly cd: ChangeDetectorRef) {
+    private readonly toastService: GlobalToastService,
+    private readonly cd: ChangeDetectorRef
+  ) {}
+
+  onAdministrationOfficeChanged(selectedValue: any): void {
+    this.examSecretSearchModal.administrationOfficeId = selectedValue
+    if(selectedValue !== null){
+      this.loadExamSites.emit(this.examSecretSearchModal);
+    }
   }
 
-  onAdministrationOfficeChanged(): void {
-    this.loadExamSites.emit(this.examSecretSearchModal);
+  onExamSiteChanged(): void {
+    if (this.examSecretSearchModal.examSiteId) {
+      this.loadExamTypes.emit(this.examSecretSearchModal);
+    }
   }
 
-  onExamSiteChanged() {
-    this.loadExamTypes.emit(this.examSecretSearchModal);
-  }
-
-  onExamTypeChanged() {
-    this.loadExamDates.emit(this.examSecretSearchModal);
-    this.loadExamSubjects.emit(this.examSecretSearchModal);
+  onExamTypeChanged(): void {
+    if (this.examSecretSearchModal.examSiteId) {
+      this.loadExamDates.emit(this.examSecretSearchModal);
+      this.loadExamSubjects.emit(this.examSecretSearchModal);
+    }
   }
 
   onSubmit() {
     if (this.isSearchValid(this.examSecretSearchModal)) {
       this.applySearch.emit(this.examSecretSearchModal);
     } else {
-      this.toastService.showError('Ju lutem plotësoni të gjitha fushat e kërkuara.');
+      this.toastService.showError(
+        'Ju lutem plotësoni të gjitha fushat e kërkuara.'
+      );
     }
   }
 

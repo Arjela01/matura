@@ -29,8 +29,19 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="index">
+        Numri
+        <div>
+          <p-sortIcon field="index"></p-sortIcon>
+          <p-columnFilter
+            type="numeric"
+            field="index"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
       <th pSortableColumn="examTypeName">
-        Tipi i Provimit
+        Tipi
         <div>
           <p-sortIcon field="examTypeName"></p-sortIcon>
           <p-columnFilter
@@ -40,13 +51,13 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="createdByName">
-        Operatori
+      <th pSortableColumn="examSubjectName">
+        Lënda
         <div>
-          <p-sortIcon field="createdByName"></p-sortIcon>
+          <p-sortIcon field="examSubjectName"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="createdByName"
+            field="examSubjectName"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
@@ -58,6 +69,17 @@
           <p-columnFilter
             type="text"
             field="barcode"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="createdByName">
+        Operatori
+        <div>
+          <p-sortIcon field="createdByName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="createdByName"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
@@ -79,7 +101,7 @@
   </ng-template>
   <ng-template pTemplate="body" let-barcodeCorrection>
     <tr>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 5%; min-width: 10rem">
         <a
           pTooltip="Shiko Dosjen"
           tooltipPosition="bottom"
@@ -91,16 +113,22 @@
           {{ this.barcodeCorrection.archiveFolderNr }}
         </a>
       </td>
-      <td style="width: 20%; min-width: 10rem">
+      <td style="width: 5%; min-width: 10rem">
+        {{ this.barcodeCorrection.index }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
         {{ barcodeCorrection.examTypeName }}
       </td>
-      <td style="width: 20%; min-width: 10rem">
-        {{ barcodeCorrection.createdByName }}
+      <td style="width: 30%; min-width: 10rem">
+        {{ barcodeCorrection.examSubjectName }}
       </td>
       <td style="width: 20%; min-width: 10rem">
         {{ barcodeCorrection.barcode }}
       </td>
       <td style="width: 20%; min-width: 10rem">
+        {{ barcodeCorrection.createdByName }}
+      </td>
+      <td>
         <span
           [ngClass]="
             barcodeCorrection.isFolderClosed === true

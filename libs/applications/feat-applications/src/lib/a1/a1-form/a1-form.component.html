@@ -129,6 +129,7 @@
               id="overSeerCode"
               class="w-full"
               required
+              autocomplete="new-password"
               [(ngModel)]="a1.overSeerCode"
               name="overSeerCode"
               [ngClass]="{
@@ -143,7 +144,7 @@
           </small>
           <div class="flex justify-content-start">
             <button
-              [disabled]="form.invalid"
+              [disabled]="form.invalid || this.disabled"
               type="submit"
               pButton
               label="Ruaj"
