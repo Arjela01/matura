@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UnmatchedExamsApiService } from '@msh/evaluations/data-access-evaluations';
+import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
 import { LazyLoadEvent } from 'primeng/api';
 
 import { TableModule } from 'primeng/table';
@@ -24,14 +24,12 @@ export class UnmatchedExamsGridComponent {
   totalRecords = 0;
   filters: LazyLoadEvent | null = null;
 
-  constructor(
-    private readonly unmatchedExamsService: UnmatchedExamsApiService
-  ) {}
+  constructor(private readonly examScoreApiService: ExamScoreApiService) {}
 
   unmatchedExamScore($event: LazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    this.unmatchedExamsService
+    this.examScoreApiService
       .loadUnmatchedExamScores($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {

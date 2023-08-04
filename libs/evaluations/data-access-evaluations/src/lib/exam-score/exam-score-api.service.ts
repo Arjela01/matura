@@ -3,7 +3,8 @@ import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { HttpParams } from '@angular/common/http';
-import { ArchiveExam, ExamScore, FileImport } from '@msh/shared/domain-models';
+import {ArchiveExam, ExamScore, ExamScoreTableView, FileImport} from '@msh/shared/domain-models';
+import {LazyLoadEvent} from "primeng/api";
 
 @Injectable({
   providedIn: 'root',
@@ -55,6 +56,7 @@ export class ExamScoreApiService {
         shareReplay()
       );
   }
+
   export(): Observable<ApiResult<unknown>> {
     return this.apiService.get<any>(
       `/ExamScores/Export`,
@@ -62,11 +64,30 @@ export class ExamScoreApiService {
       'blob'
     );
   }
+
   exportExamScoreSecret(): Observable<ApiResult<unknown>> {
     return this.apiService.get<any>(
       `/ExamScores/ExportExamScoreSecret`,
       new HttpParams(),
       'blob'
+    );
+  }
+
+  loadUnmatchedExamScores(
+      event: LazyLoadEvent
+  ): Observable<ExamScoreTableView> {
+    return this.apiService.post(`/ExamScores/UnmatchedExams`, event).pipe(
+        map((data: any) => data),
+        catchError(error => throwError(error))
+    );
+  }
+
+  loadMatchedExamScores(
+      event: LazyLoadEvent
+  ): Observable<ExamScoreTableView> {
+    return this.apiService.post(`/ExamScores/MatchedExams`, event).pipe(
+        map((data: any) => data),
+        catchError(error => throwError(error))
     );
   }
 }

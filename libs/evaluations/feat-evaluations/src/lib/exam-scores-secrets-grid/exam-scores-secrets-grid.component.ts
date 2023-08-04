@@ -54,13 +54,14 @@ export class ExamScoresSecretsGridComponent {
     this.filters = Object.assign({}, $event);
 
     this.examScoreService
-      .loadExamScores($event)
+      .loadMatchedExamScores($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examScores$$.next(response.data);
         this.totalRecords = response.total;
       });
   }
+
   downloadFile() {
     this.examScoreService
       .exportExamScoreSecret()
