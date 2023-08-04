@@ -2,7 +2,11 @@ export interface ExamScore {
   id: number;
   examSecretId?: string;
   studentId?: string;
-  studentName?: string;
+  studentStudentId?: string;
+  studentFirstName?: string;
+  studentMiddleName?: string;
+  studentLastName?: string;
+  studentNid?: string;
   examTypeId?: number;
   examTypeName?: string;
   examSubjectId?: string;
