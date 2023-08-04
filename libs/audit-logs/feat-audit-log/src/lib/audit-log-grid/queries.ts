@@ -91,7 +91,6 @@ export const EXAM_TYPE_QUERY = `
             auditOperation
             auditTimestamp
             name
-            isFall
             maximumValueWritingScore
             maximumValueMultipleScore
             isDeleted
@@ -132,52 +131,35 @@ export const CARRIED_GRADE = `
             auditUsername
             auditOperation
             auditTimestamp
-            nid
-            examSubject
-            year
             grade
             isDeleted
             createdIP
             createdOn
             deletedIP
             deletedOn
-            modifiedIP
-            modifiedOn
+             examGrade {
+                id
+                grade
+             }
+             examSubject {
+                code
+                id
+                name
+            }
+             student {
+                id
+             }
+            academicYear {
+                isActive
+                year
+            }
             examType {
                 id
                 name
-                isFall
-                maximumValueWritingScore
-                maximumValueMultipleScore
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
-            }
-            created {
-                displayName
-            }
-            modified {
-                displayName
-            }
-            deleted {
-                displayName
             }
         }
       }
-      }
+    }
 
 `;
 export const EXAM_SECRET = `
@@ -206,7 +188,7 @@ export const EXAM_SECRET = `
             deletedOn
             modifiedIP
             modifiedOn
-            student {
+               student {
                 id
                 birthDate
                 birthPlace
@@ -247,7 +229,7 @@ export const EXAM_SECRET = `
                     displayName
                 }
             }
-            examSubject {
+                examSubject {
                 id
                 code
                 name
@@ -270,7 +252,7 @@ export const EXAM_SECRET = `
                     displayName
                 }
             }
-            examVersion {
+                examVersion {
                 id
                 code
                 name
@@ -410,30 +392,6 @@ export const A1_FORMS = `
             auditUsername
             auditOperation
             auditTimestamp
-            scoreD1
-            reasonD1
-            yearD1
-            subjectNameD1
-            scoreD2
-            reasonD2
-            yearD2
-            subjectNameD2
-            scoreD3
-            reasonD3
-            yearD3
-            subjectNameD3
-            scoreZ1
-            reasonZ1
-            yearZ1
-            subjectNameZ1
-            scoreZ2
-            reasonZ2
-            yearZ2
-            subjectNameZ2
-            scoreZ3
-            reasonZ3
-            yearZ3
-            subjectNameZ3
             yearOfSchoolA1Z
             isApplyingToForeignCountries
             alreadyHaveDiploma
@@ -448,6 +406,26 @@ export const A1_FORMS = `
             deletedOn
             modifiedIP
             modifiedOn
+            carriedGradeD1 {
+                id
+                grade
+                reason
+            }
+            carriedGradeD2 {
+                id
+                grade
+                reason
+            }
+            carriedGradeD3 {
+                 id
+                 grade
+                 reason
+            }
+            carriedGradeZ1 {
+                 id
+                 grade
+                 reason
+            }
             subjectD1 {
                 code
                 name
@@ -677,30 +655,6 @@ export const A1Z_FORMS = `
             auditUsername
             auditOperation
             auditTimestamp
-            scoreD1
-            reasonD1
-            yearD1
-            subjectNameD1
-            scoreD2
-            reasonD2
-            yearD2
-            subjectNameD2
-            scoreD3
-            reasonD3
-            yearD3
-            subjectNameD3
-            scoreZ1
-            reasonZ1
-            yearZ1
-            subjectNameZ1
-            scoreZ2
-            reasonZ2
-            yearZ2
-            subjectNameZ2
-            scoreZ3
-            reasonZ3
-            yearZ3
-            subjectNameZ3
             yearOfSchoolA1Z
             isApplyingToForeignCountries
             alreadyHaveDiploma
@@ -715,6 +669,26 @@ export const A1Z_FORMS = `
             deletedOn
             modifiedIP
             modifiedOn
+               carriedGradeD1 {
+                id
+                grade
+                reason
+            }
+            carriedGradeD2 {
+                id
+                grade
+                reason
+            }
+            carriedGradeD3 {
+                 id
+                 grade
+                 reason
+            }
+            carriedGradeZ1 {
+                 id
+                 grade
+                 reason
+            }
             subjectD1 {
                 code
                 name
@@ -978,7 +952,6 @@ export const EXAM_DATE = `
             modifiedOn
             examType {
                 name
-                isFall
                 maximumValueWritingScore
                 maximumValueMultipleScore
                 id
@@ -1263,7 +1236,6 @@ export const ARCHIVE_EXAM = `
                 }
                 examType {
                     name
-                    isFall
                     maximumValueWritingScore
                     maximumValueMultipleScore
                     id
@@ -1327,7 +1299,6 @@ export const ARCHIVE_EXAM = `
                 modifiedOn
                 examType {
                     name
-                    isFall
                     maximumValueWritingScore
                     maximumValueMultipleScore
                     id
@@ -1434,7 +1405,6 @@ export const ARCHIVE_FOLDER = `
             }
             examType {
                 name
-                isFall
                 maximumValueWritingScore
                 maximumValueMultipleScore
                 id
@@ -2174,7 +2144,6 @@ export const EXAM_VERSION = `
             modifiedOn
             examType {
                 name
-                isFall
                 maximumValueWritingScore
                 maximumValueMultipleScore
                 id
@@ -2283,7 +2252,6 @@ export const EXAM_SUBJECT = `
             modifiedOn
             examType {
                 name
-                isFall
                 maximumValueWritingScore
                 maximumValueMultipleScore
                 id
@@ -2534,6 +2502,7 @@ export const STUDENTS = `
             auditOperation
             idCard
             isEAlbaniaApplication
+            isDiplomaRequirementException
             isFall
             isPrinted
             diplomaPrintedDate
