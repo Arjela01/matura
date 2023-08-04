@@ -1,4 +1,3 @@
-import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   CarriedGrade,
@@ -10,7 +9,7 @@ import { LazyLoadEvent } from 'primeng/api';
 import { map, Observable } from 'rxjs';
 
 import * as FileSaver from 'file-saver';
-import {ExamGrade} from "@msh/evaluations/domain-evaluations";
+import { ExamGrade } from '@msh/shared/domain-models';
 
 @Injectable({
   providedIn: 'root',
@@ -86,11 +85,18 @@ export class CarriedGradeApiService {
     FileSaver.saveAs(blob, `document.${extension}`);
   }
 
-  getByStudentId(id: string, type: string): Observable<ApiResult<CarriedGrade[]>> {
+  getByStudentId(
+    id: string,
+    type: string
+  ): Observable<ApiResult<CarriedGrade[]>> {
     return this.apiService.get(`/CarriedGrade/ForStudentId/${id}/${type}`);
   }
 
-  ensureExamGradeIsCarried(examGrade: ExamGrade) : Observable<ApiResult<CarriedGrade>> {
-    return this.apiService.post(`/CarriedGrade/EnsureExamGradeIsCarried/${examGrade.id}`);
+  ensureExamGradeIsCarried(
+    examGrade: ExamGrade
+  ): Observable<ApiResult<CarriedGrade>> {
+    return this.apiService.post(
+      `/CarriedGrade/EnsureExamGradeIsCarried/${examGrade.id}`
+    );
   }
 }

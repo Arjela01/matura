@@ -5,6 +5,6 @@ export enum A1FormModeEnum {
   EditWithStudent,
 }
 export enum ApplicationFormType {
-  A1Z = "A1Z",
-  A1 = "A1",
+  A1Z = 'A1Z',
+  A1 = 'A1',
 }

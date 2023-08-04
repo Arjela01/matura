@@ -56,14 +56,16 @@ export class ExamDateApiService {
     );
   }
 
-  forExamSiteAndExamType(examSiteId: string, examTypeId: number | undefined)
-      : Observable<ApiResult<DropdownModel<number>[]>> {
+  forExamSiteAndExamType(
+    examSiteId: string,
+    examTypeId: number | undefined
+  ): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.post<ApiResult<DropdownModel<number>[]>, any>(
-        `/ExamDate/ForExamSiteAndExamType`,
-        {
-          examSiteId: examSiteId,
-          examTypeId: examTypeId
-        }
+      `/ExamDate/ForExamSiteAndExamType`,
+      {
+        examSiteId: examSiteId,
+        examTypeId: examTypeId,
+      }
     );
   }
 }

@@ -6,7 +6,6 @@ import {
   OnInit,
 } from '@angular/core';
 import { ExamCopyApiService } from '@msh/evaluations/data-access-evaluations';
-import { ExamCopy } from '@msh/evaluations/domain-evaluations';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -23,6 +22,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ExamCopyDetailsComponent } from '../exam-copy-details/exam-copy-details.component';
 import { ExamCopyGridComponent } from '../exam-copy-grid/exam-copy-grid.component';
 import * as FileSaver from 'file-saver';
+import { ExamCopy } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({

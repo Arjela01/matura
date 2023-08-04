@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ExamCopyRequestStatusEnum } from '@msh/evaluations/domain-evaluations';
+import { ExamCopyRequestStatusEnum } from '@msh/shared/domain-models';
 @Pipe({ name: 'examCopyRequestStatus', standalone: true })
 export class ExamCopyRequestStatusPipe implements PipeTransform {
   transform(status: number): string {

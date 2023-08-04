@@ -13,7 +13,7 @@ export interface ExamSecret {
   studentInputData?: string;
   academicYearId?: number;
   studentIdentifier?: string;
-  hasBarcode?: boolean
+  hasBarcode?: boolean;
 }
 
 export interface ExamSecretTableView {

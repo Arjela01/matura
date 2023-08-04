@@ -14,14 +14,11 @@ import {
 } from '@msh/shared/util-shared';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
-import {
-  ExamScoreDataEntry,
-  ExamScores,
-} from '@msh/evaluations/domain-evaluations';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { LazyLoadEvent } from 'primeng/api';
+import { ExamScoreDataEntry, ExamScores } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({

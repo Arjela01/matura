@@ -7,7 +7,6 @@ import {
   ExamTypeApiService,
 } from '@msh/configurations/data-access-configurations';
 import { GradesScaleService } from '@msh/evaluations/data-access-evaluations';
-import { GradesScale } from '@msh/evaluations/domain-evaluations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   GRID_ACTIONS,
@@ -26,6 +25,7 @@ import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { GradeScaleActionComponent } from '../grade-scale-action/grade-scale-action.component';
 import { GradeScaleGridComponent } from '../grade-scale-grid/grade-scale-grid.component';
 import { UploadGradeScaleFormComponent } from '../upload-grade-scale-form/upload-grade-scale-form.component';
+import { GradesScale } from '@msh/shared/domain-models';
 @Component({
   selector: 'msh-manage-grades-scale',
   standalone: true,

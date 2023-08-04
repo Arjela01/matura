@@ -22,8 +22,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
-import { ArchiveFolder } from '@msh/evaluations/domain-evaluations';
 import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
+import { ArchiveFolder } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-archive-open-folder-form',

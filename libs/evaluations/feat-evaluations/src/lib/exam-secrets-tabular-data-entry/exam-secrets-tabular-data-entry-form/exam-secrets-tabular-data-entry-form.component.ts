@@ -10,12 +10,12 @@ import {
 import { CommonModule } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import { ExamSecretSearchModel } from '@msh/evaluations/domain-evaluations';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { LazyLoadEvent } from 'primeng/api';
 import { GlobalToastService } from '@msh/shared/util-shared';
+import { ExamSecretSearchModel } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({
@@ -66,8 +66,8 @@ export class ExamSecretsTabularDataEntryFormComponent {
   ) {}
 
   onAdministrationOfficeChanged(selectedValue: any): void {
-    this.examSecretSearchModal.administrationOfficeId = selectedValue
-    if(selectedValue !== null){
+    this.examSecretSearchModal.administrationOfficeId = selectedValue;
+    if (selectedValue !== null) {
       this.loadExamSites.emit(this.examSecretSearchModal);
     }
   }

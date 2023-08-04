@@ -13,14 +13,14 @@
   font-size: 15px;
   transition: border-color 0.2s ease-in-out;
 }
-.search-input{
+.search-input {
   position: relative;
   display: flex;
   justify-content: end;
   align-items: center;
 }
 
-.clear-icon{
+.clear-icon {
   position: absolute;
   margin-right: 10px;
   cursor: pointer;
@@ -51,6 +51,3 @@
   font-size: 12px;
   color: darkred;
 }
-
-
-

@@ -15,7 +15,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { InputMaskModule } from 'primeng/inputmask';
-import { Student } from '@msh/shared/domain-models';
+import { IalModel, Student } from '@msh/shared/domain-models';
 import {
   AcademicYearApiService,
   StudentsApiService,
@@ -27,7 +27,6 @@ import {
   ExamGradeApiService,
 } from '@msh/evaluations/data-access-evaluations';
 import { TableModule } from 'primeng/table';
-import { IalModel } from '@msh/evaluations/domain-evaluations';
 import { GlobalToastService } from '@msh/shared/util-shared';
 
 @Component({

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { LazyLoadEvent } from 'primeng/api';
 import { APIService } from '@msh/shared/util-shared';
-import { ExamGradeTableView } from '@msh/evaluations/domain-evaluations';
 import { ApiResult } from '@msh/shared/data-access-shared';
+import { ExamGradeTableView } from '@msh/shared/domain-models';
 
 @Injectable({
   providedIn: 'root',
@@ -17,13 +17,6 @@ export class ExamGradeApiService {
 
   loadExamGrades(event: LazyLoadEvent): Observable<ExamGradeTableView> {
     return this.apiService.post(`/ExamGrade/TableData`, event).pipe(
-      map((data: any) => data),
-      catchError(error => throwError(error))
-    );
-  }
-
-  forStudentId(id: any, type: string) {
-    return this.apiService.get(`/ExamGrade/ForStudentId/${id}/${type}`).pipe(
       map((data: any) => data),
       catchError(error => throwError(error))
     );

@@ -41,7 +41,9 @@ export class ExamTypeApiService {
     );
   }
 
-  getExamTypesForSiteId(examSiteId: string): Observable<ApiResult<DropdownModel<number>[]>> {
+  getExamTypesForSiteId(
+    examSiteId: string
+  ): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
       `/ExamSite/GetExamTypesForSiteId/${examSiteId}`
     );

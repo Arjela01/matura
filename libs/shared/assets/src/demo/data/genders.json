@@ -1,14 +1,14 @@
 {
-    "data": [
-        {
-            "Id": 1,
-            "code": "Femer",
-            "name": "Femër"
-        },
-        {
-            "Id": 2,
-            "code": "Mashkull",
-            "name": "Mashkull"
-        }
-    ]
+  "data": [
+    {
+      "Id": 1,
+      "code": "Femer",
+      "name": "Femër"
+    },
+    {
+      "Id": 2,
+      "code": "Mashkull",
+      "name": "Mashkull"
+    }
+  ]
 }

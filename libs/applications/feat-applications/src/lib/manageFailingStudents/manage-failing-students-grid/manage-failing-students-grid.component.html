@@ -1,38 +1,73 @@
-<p-table #dt dataKey="id" responsiveLayout="scroll" [value]="failingStudents" [totalRecords]="totalRecords" [rows]="10"
-  [paginator]="true" [rowsPerPageOptions]="[10, 20, 30]" [showCurrentPageReport]="true"
-  currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde" [rowHover]="true"
-  selectionMode="multiple" (onLazyLoad)="loadRows($event)" [lazy]="true">
+<p-table
+  #dt
+  dataKey="id"
+  responsiveLayout="scroll"
+  [value]="failingStudents"
+  [totalRecords]="totalRecords"
+  [rows]="10"
+  [paginator]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
+  [rowHover]="true"
+  selectionMode="multiple"
+  (onLazyLoad)="loadRows($event)"
+  [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="firstName">
         Emri
         <p-sortIcon field="firstName"></p-sortIcon>
-        <p-columnFilter type="text" field="firstName" display="menu" mshColumnFilterDirective></p-columnFilter>
+        <p-columnFilter
+          type="text"
+          field="firstName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
       <th pSortableColumn="middleName">
         Atësia
         <p-sortIcon field="middleName"></p-sortIcon>
-        <p-columnFilter type="text" field="middleName" display="menu" mshColumnFilterDirective></p-columnFilter>
+        <p-columnFilter
+          type="text"
+          field="middleName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
       <th pSortableColumn="lastName">
         Mbiemri
         <p-sortIcon field="lastName"></p-sortIcon>
-        <p-columnFilter type="text" field="lastName" display="menu" mshColumnFilterDirective></p-columnFilter>
+        <p-columnFilter
+          type="text"
+          field="lastName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
       <th pSortableColumn="studentIdentifier">
         Id e Maturantit
         <p-sortIcon field="studentIdentifier"></p-sortIcon>
-        <p-columnFilter type="text" field="studentIdentifier" display="menu" mshColumnFilterDirective></p-columnFilter>
+        <p-columnFilter
+          type="text"
+          field="studentIdentifier"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
       <th pSortableColumn="personalIdentifier">
         NID
         <p-sortIcon field="personalIdentifier"></p-sortIcon>
-        <p-columnFilter type="text" field="personalIdentifier" display="menu" mshColumnFilterDirective></p-columnFilter>
+        <p-columnFilter
+          type="text"
+          field="personalIdentifier"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
       <th pSortableColumn="schoolName">
         Shkolla e Mesme
         <p-sortIcon field="schoolName"></p-sortIcon>
-        <p-columnFilter type="text" field="schoolName" display="menu" mshColumnFilterDirective></p-columnFilter>
+        <p-columnFilter
+          type="text"
+          field="schoolName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
       </th>
       <th></th>
     </tr>
@@ -59,10 +94,18 @@
       </td>
       <td>
         <div class="flex">
-          <img src="assets/svg/edit-form.svg" class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
-            tooltipPosition="bottom" (click)="onEditClick(failingStudent)" pTooltip="Ndrysho" />
-          <img src="assets/svg/delete-form.svg" class="p-button-rounded p-button-danger p-button-text ml-m pointer"
-            pTooltip="Fshi" tooltipPosition="bottom" (click)="onDeleteClick(failingStudent)" />
+          <img
+            src="assets/svg/edit-form.svg"
+            class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
+            tooltipPosition="bottom"
+            (click)="onEditClick(failingStudent)"
+            pTooltip="Ndrysho" />
+          <img
+            src="assets/svg/delete-form.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
+            pTooltip="Fshi"
+            tooltipPosition="bottom"
+            (click)="onDeleteClick(failingStudent)" />
         </div>
       </td>
     </tr>

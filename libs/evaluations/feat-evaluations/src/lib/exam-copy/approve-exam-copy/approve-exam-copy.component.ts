@@ -11,7 +11,6 @@ import {
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ExamCopyApiService } from '@msh/evaluations/data-access-evaluations';
-import { ExamCopy, ExamCopyConfirm } from '@msh/evaluations/domain-evaluations';
 import { GlobalToastService } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ButtonModule } from 'primeng/button';
@@ -21,7 +20,11 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { ExamAssignment } from '@msh/shared/domain-models';
+import {
+  ExamAssignment,
+  ExamCopy,
+  ExamCopyConfirm,
+} from '@msh/shared/domain-models';
 import { Observable } from 'rxjs';
 
 @UntilDestroy()

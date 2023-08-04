@@ -23,13 +23,10 @@ import {
   ArchiveExamApiService,
   ArchiveFolderApiService,
 } from '@msh/evaluations/data-access-evaluations';
-import {
-  ArchiveExam,
-  ArchiveFolder,
-} from '@msh/evaluations/domain-evaluations';
 import { BehaviorSubject } from 'rxjs';
 import { GridEvent } from '@msh/shared/util-shared';
 import { Location } from '@angular/common';
+import { ArchiveExam, ArchiveFolder } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({

@@ -2,6 +2,8 @@
   display: block;
 }
 
-:host ::ng-deep .p-card-content, :host .p-card-content, .p-card-content {
+:host ::ng-deep .p-card-content,
+:host .p-card-content,
+.p-card-content {
   margin: 0 !important;
 }

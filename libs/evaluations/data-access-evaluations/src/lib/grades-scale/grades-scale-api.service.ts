@@ -1,13 +1,10 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  GradesScale,
-  GradesScaleTableView,
-} from '@msh/evaluations/domain-evaluations';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
+import { GradesScale, GradesScaleTableView } from '@msh/shared/domain-models';
 
 @Injectable({
   providedIn: 'root',

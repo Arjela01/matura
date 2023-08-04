@@ -1,34 +1,32 @@
-
-  [
-    {
-      "key": 2,
-      "value": "a student",
-      "parentKey": 0
-    },
-    {
-      "key": 4,
-      "value": "b student",
-      "parentKey": 0
-    },
-    {
-      "key": 21,
-      "value": "c student",
-      "parentKey": 0
-    },
-    {
-      "key": 22,
-      "value": "d student",
-      "parentKey": 0
-    },
-    {
-      "key": 23,
-      "value": "e student",
-      "parentKey": 0
-    },
-    {
-      "key": 24,
-      "value": "f student",
-      "parentKey": 0
-    }
-  ]
-
+[
+  {
+    "key": 2,
+    "value": "a student",
+    "parentKey": 0
+  },
+  {
+    "key": 4,
+    "value": "b student",
+    "parentKey": 0
+  },
+  {
+    "key": 21,
+    "value": "c student",
+    "parentKey": 0
+  },
+  {
+    "key": 22,
+    "value": "d student",
+    "parentKey": 0
+  },
+  {
+    "key": 23,
+    "value": "e student",
+    "parentKey": 0
+  },
+  {
+    "key": 24,
+    "value": "f student",
+    "parentKey": 0
+  }
+]

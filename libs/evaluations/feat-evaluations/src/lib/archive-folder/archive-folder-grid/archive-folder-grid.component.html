@@ -163,16 +163,14 @@
         </div>
       </td>
       <td>
-        <div class="flex pointer"
-             (click)="changeStatus(archiveFolder)">
-        <img
-          src="{{
-            !archiveFolder.isClosed
-              ? 'assets/svg/close.svg'
-              : 'assets/svg/open.svg'
-          }}"
-          class="p-button-rounded p-button-warning p-button-text mr-2 "
-           />
+        <div class="flex pointer" (click)="changeStatus(archiveFolder)">
+          <img
+            src="{{
+              !archiveFolder.isClosed
+                ? 'assets/svg/close.svg'
+                : 'assets/svg/open.svg'
+            }}"
+            class="p-button-rounded p-button-warning p-button-text mr-2" />
           {{ !archiveFolder.isClosed ? 'Mbyll' : 'Hap' }}
         </div>
       </td>

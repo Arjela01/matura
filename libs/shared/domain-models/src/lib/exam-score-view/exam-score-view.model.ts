@@ -8,7 +8,7 @@ export interface ExamScores {
   examSubjectName?: string;
   barcode?: string;
   writingScore?: number;
-  hasWritingScore?:boolean;
+  hasWritingScore?: boolean;
 }
 
 export interface ExamScoresView {

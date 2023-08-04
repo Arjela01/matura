@@ -8,12 +8,12 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import { ExamScores } from '@msh/evaluations/domain-evaluations';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { FormsModule, NgForm } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
 import { GlobalToastService } from '@msh/shared/util-shared';
+import { ExamScores } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({

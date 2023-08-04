@@ -18,7 +18,7 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
-import { ExamScore } from '@msh/evaluations/domain-evaluations';
+import { ExamScore } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-exam-score-grid',

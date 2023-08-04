@@ -7,7 +7,7 @@ import {
   ArchiveFolder,
   ArchiveFolderTableView,
   BarcodeCorrectionTableView,
-} from '@msh/evaluations/domain-evaluations';
+} from '@msh/shared/domain-models';
 
 @Injectable({
   providedIn: 'root',
@@ -51,8 +51,7 @@ export class ArchiveFolderApiService {
       }
     );
   }
-  loadDropdownList(
-  ): Observable<ApiResult<DropdownModel<any>[]>> {
+  loadDropdownList(): Observable<ApiResult<DropdownModel<any>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<any>[]>>(
       '/ArchiveFolder/DropdownList'
     );

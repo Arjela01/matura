@@ -16,13 +16,13 @@ import { Router } from '@angular/router';
 import { untilDestroyed } from '@ngneat/until-destroy';
 import { StepsModule } from 'primeng/steps';
 import { ToastModule } from 'primeng/toast';
-import { ArchiveFolder } from '@msh/evaluations/domain-evaluations';
 import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
 import {
   ExamTypeApiService,
   ExamVersionApiService,
 } from '@msh/configurations/data-access-configurations';
 import { RippleModule } from 'primeng/ripple';
+import { ArchiveFolder } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-manage-archive-folder-cover',

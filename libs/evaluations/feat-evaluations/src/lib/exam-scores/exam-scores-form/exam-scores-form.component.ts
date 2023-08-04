@@ -16,13 +16,13 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ButtonModule } from 'primeng/button';
-import { ExamScore } from '@msh/evaluations/domain-evaluations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
 import { TooltipModule } from 'primeng/tooltip';
 import { GlobalToastService } from '@msh/shared/util-shared';
+import { ExamScore } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-exam-score-form',

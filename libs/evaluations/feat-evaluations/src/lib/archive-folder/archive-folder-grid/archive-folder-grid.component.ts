@@ -25,9 +25,9 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { HttpClient } from '@angular/common/http';
-import { ArchiveFolder } from '@msh/evaluations/domain-evaluations';
 import { AcademicYearApiService } from '@msh/configurations/data-access-configurations';
 import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
+import { ArchiveFolder } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-archive-folder-grid',

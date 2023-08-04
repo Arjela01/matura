@@ -3,12 +3,12 @@ import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
 import { LazyLoadEvent } from 'primeng/api';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
+import { HttpParams } from '@angular/common/http';
 import {
   ExamSecret,
   ExamSecretTableView,
   FileImport,
-} from '@msh/evaluations/domain-evaluations';
-import { HttpParams } from '@angular/common/http';
+} from '@msh/shared/domain-models';
 
 @Injectable({
   providedIn: 'root',
@@ -75,6 +75,8 @@ export class ExamSecretApiService {
   }
 
   forExamSubjectId(examSubjectId: string): Observable<ApiResult<ExamSecret[]>> {
-    return this.apiService.get(`/ExamSecrets/ForExamSubjectId/${examSubjectId}`);
+    return this.apiService.get(
+      `/ExamSecrets/ForExamSubjectId/${examSubjectId}`
+    );
   }
 }

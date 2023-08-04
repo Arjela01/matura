@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { APIService } from '@msh/shared/util-shared';
-import {
-  ApplicationProcess,
-  ApplicationProcessTableView,
-  Process,
-} from '@msh/evaluations/domain-evaluations';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { HttpParams } from '@angular/common/http';
+import {
+  ApplicationProcessTableView,
+  Process,
+} from '@msh/shared/domain-models';
 
 @Injectable({
   providedIn: 'root',

@@ -28,13 +28,13 @@ import { ExamSecretsGridComponent } from '../../exam-secrets/exam-secrets-grid/e
 import { BehaviorSubject, forkJoin } from 'rxjs';
 import { ExamSecretApiService } from '@msh/evaluations/data-access-evaluations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import {
   ExamSecret,
   ExamSecretSearchModel,
   ExamSecretTabularDataEntryItem,
-} from '@msh/evaluations/domain-evaluations';
-import { ButtonModule } from 'primeng/button';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
+} from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({

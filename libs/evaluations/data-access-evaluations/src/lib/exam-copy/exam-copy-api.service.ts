@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import {
-  ExamCopy,
-  ExamCopyConfirm,
-  ExamCopyTableView,
-} from '@msh/evaluations/domain-evaluations';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
+import {
+  ExamCopy,
+  ExamCopyConfirm,
+  ExamCopyTableView,
+} from '@msh/shared/domain-models';
 
 @Injectable({
   providedIn: 'root',

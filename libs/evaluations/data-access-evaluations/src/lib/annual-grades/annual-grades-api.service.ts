@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { LazyLoadEvent } from 'primeng/api';
 import { APIService } from '@msh/shared/util-shared';
-import { AnnualGradesView } from '@msh/evaluations/domain-evaluations';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { HttpParams } from '@angular/common/http';
+import { AnnualGradesView } from '@msh/shared/domain-models';
 
 @Injectable({
   providedIn: 'root',

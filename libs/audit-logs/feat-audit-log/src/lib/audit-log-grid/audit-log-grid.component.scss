@@ -2,7 +2,7 @@
   display: block;
 }
 
-:host ::ng-deep  .p-datatable-tbody > tr > td {
+:host ::ng-deep .p-datatable-tbody > tr > td {
   padding: 0 1rem !important;
 }
 
@@ -15,7 +15,6 @@
   cursor: pointer;
   outline: none;
   transition: box-shadow 0.2s ease-in-out;
-
 }
 .btn:active {
   box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.1);
@@ -46,7 +45,7 @@
   border-color: #dee2e6;
 }
 
-.scroll{
+.scroll {
   overflow-x: auto;
   display: flex;
 }

@@ -8,7 +8,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { GradesScale } from '@msh/evaluations/domain-evaluations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
@@ -20,6 +19,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { GradesScaleService } from '@msh/evaluations/data-access-evaluations';
 import { Router } from '@angular/router';
 import { GlobalToastService } from '@msh/shared/util-shared';
+import { GradesScale } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-upload-grade-scale-form',

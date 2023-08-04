@@ -1,15 +1,9 @@
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
-import { LazyLoadEvent } from 'primeng/api';
-import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
+import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import {
-  ArchiveExam,
-  ExamScore,
-  ExamScoreTableView,
-  FileImport,
-} from '@msh/evaluations/domain-evaluations';
 import { HttpParams } from '@angular/common/http';
+import { ArchiveExam, ExamScore, FileImport } from '@msh/shared/domain-models';
 
 @Injectable({
   providedIn: 'root',

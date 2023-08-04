@@ -89,7 +89,6 @@
         box-sizing: border-box;
       }
 
-
       &:focus {
         @include focused-inset();
       }
@@ -200,7 +199,6 @@
 .layout-menu::-webkit-scrollbar {
   width: 10px;
 }
-
 
 .p-avatar.p-avatar-circle {
   border-radius: 50%;

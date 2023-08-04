@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ApiResult } from '@msh/shared/data-access-shared';
+import { ArchiveExam, ArchiveExamView } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
 import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
-import {
-  ArchiveExam,
-  ArchiveExamView,
-} from '@msh/evaluations/domain-evaluations';
 
 @Injectable({
   providedIn: 'root',
@@ -51,9 +48,7 @@ export class ArchiveExamApiService {
       `/ArchiveExam/${archiveExamId}`
     );
   }
-  getExamsByFolderId(
-    archiveFolderId?: number
-  ): Observable<ApiResult<any>> {
+  getExamsByFolderId(archiveFolderId?: number): Observable<ApiResult<any>> {
     return this.apiService.get<ApiResult<ArchiveExam>>(
       `/ArchiveExam/GetById/${archiveFolderId}`
     );

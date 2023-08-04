@@ -19,7 +19,7 @@ import { TableModule } from 'primeng/table';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { StepsModule } from 'primeng/steps';
-import { ArchiveFolder } from '@msh/evaluations/domain-evaluations';
+import { ArchiveFolder } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({

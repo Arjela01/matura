@@ -24,8 +24,8 @@ import { TooltipModule } from 'primeng/tooltip';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArchiveExamApiService } from '@msh/evaluations/data-access-evaluations';
-import { ArchiveExam } from '@msh/evaluations/domain-evaluations';
 import { BarcodeService } from '../services/barcode-service';
+import { ArchiveExam } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-archive-exam-grid',

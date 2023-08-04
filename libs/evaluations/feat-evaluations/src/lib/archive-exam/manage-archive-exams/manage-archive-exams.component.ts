@@ -21,10 +21,6 @@ import {
   ArchiveFolderApiService,
 } from '@msh/evaluations/data-access-evaluations';
 import {
-  ArchiveExam,
-  ArchiveFolder,
-} from '@msh/evaluations/domain-evaluations';
-import {
   GRID_ACTIONS,
   GlobalToastService,
   GridEvent,
@@ -43,7 +39,7 @@ import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ArchiveFormComponent } from '../archive-exam-form/archive-form.component';
 import { ArchiveExamGridComponent } from '../archive-exam-grid/archive-exam-grid.component';
 import { BarcodeService } from '../services/barcode-service';
-import { Report } from '@msh/shared/domain-models';
+import { ArchiveExam, ArchiveFolder, Report } from '@msh/shared/domain-models';
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-archive-exams',

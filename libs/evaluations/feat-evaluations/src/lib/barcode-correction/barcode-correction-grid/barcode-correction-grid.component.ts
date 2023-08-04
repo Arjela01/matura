@@ -23,9 +23,9 @@ import { TooltipModule } from 'primeng/tooltip';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
-import { BarcodeCorrection } from '@msh/evaluations/domain-evaluations';
 import { HttpClient } from '@angular/common/http';
 import { AcademicYearApiService } from '@msh/configurations/data-access-configurations';
+import { BarcodeCorrection } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-barcode-correction-grid',

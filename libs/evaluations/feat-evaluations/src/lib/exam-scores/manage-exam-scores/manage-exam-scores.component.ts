@@ -21,7 +21,6 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ExamScore } from '@msh/evaluations/domain-evaluations';
 import {
   ExamSubjectApiService,
   ExamTypeApiService,
@@ -31,7 +30,7 @@ import { RippleModule } from 'primeng/ripple';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
 import * as FileSaver from 'file-saver';
-import { AcademicYear } from '@msh/shared/domain-models';
+import { AcademicYear, ExamScore } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({

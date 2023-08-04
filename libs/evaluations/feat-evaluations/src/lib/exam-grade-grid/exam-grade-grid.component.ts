@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ExamGradeApiService } from '@msh/evaluations/data-access-evaluations';
-import { ExamGrade } from '@msh/evaluations/domain-evaluations';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { LazyLoadEvent } from 'primeng/api';
@@ -13,6 +12,7 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
+import { ExamGrade } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({

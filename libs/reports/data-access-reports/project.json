@@ -9,9 +9,7 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/reports/data-access-reports/**/*.ts"
-        ]
+        "lintFilePatterns": ["libs/reports/data-access-reports/**/*.ts"]
       }
     },
     "test": {

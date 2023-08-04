@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ExamSubjectApiService } from '@msh/configurations/data-access-configurations';
 import { GradesScaleService } from '@msh/evaluations/data-access-evaluations';
-import { GradesScale } from '@msh/evaluations/domain-evaluations';
 import { GlobalToastService } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService } from 'primeng/api';
@@ -18,6 +17,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { TableModule } from 'primeng/table';
 import { BehaviorSubject, Observable, combineLatest, map, tap } from 'rxjs';
 import { GradeModalFormComponent } from '../grade-form/grade-form.component';
+import { GradesScale } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-grade-scale-action',

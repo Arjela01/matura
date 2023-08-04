@@ -7,11 +7,6 @@ import {
   ExamScoreApiService,
 } from '@msh/evaluations/data-access-evaluations';
 import { BehaviorSubject, forkJoin } from 'rxjs';
-import {
-  ExamScore,
-  ExamScoreDataEntry,
-  ExamScores,
-} from '@msh/evaluations/domain-evaluations';
 import { DropdownModule } from 'primeng/dropdown';
 import { ExamScoreTabularDataEntryFiltersComponent } from '../exam-score-tabular-data-entry-filters/exam-score-tabular-data-entry-filters.component';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
@@ -24,6 +19,11 @@ import {
 } from '@msh/shared/util-shared';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ExamTypeApiService } from '@msh/configurations/data-access-configurations';
+import {
+  ExamScore,
+  ExamScoreDataEntry,
+  ExamScores,
+} from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({

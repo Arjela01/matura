@@ -10,12 +10,12 @@ import {
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import { GradesScale } from '@msh/evaluations/domain-evaluations';
 import { ButtonModule } from 'primeng/button';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { GradesScale } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-grade-form',

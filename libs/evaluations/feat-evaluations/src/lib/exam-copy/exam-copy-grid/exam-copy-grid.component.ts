@@ -7,10 +7,6 @@ import {
   Output,
 } from '@angular/core';
 import {
-  ExamCopy,
-  ExamCopyRequestStatusEnum,
-} from '@msh/evaluations/domain-evaluations';
-import {
   ColumnFilterDirective,
   GRID_ACTIONS,
   GridEvent,
@@ -23,6 +19,7 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { ExamCopyRequestStatusPipe } from './exam-copy-request-status-pipe';
+import { ExamCopy, ExamCopyRequestStatusEnum } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-exam-copy-grid',

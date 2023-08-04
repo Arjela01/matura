@@ -11,7 +11,6 @@ import {
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ExamCopyApiService } from '@msh/evaluations/data-access-evaluations';
-import { ExamCopy } from '@msh/evaluations/domain-evaluations';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import * as FileSaver from 'file-saver';
 import { ButtonModule } from 'primeng/button';
@@ -25,6 +24,7 @@ import { ApproveExamCopyComponent } from '../approve-exam-copy/approve-exam-copy
 import { RefuseExamCopyComponent } from '../refuse-exam-copy/refuse-exam-copy.component';
 import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
+import { ExamCopy } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({

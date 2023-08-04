@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { GlobalToastService } from '@msh/shared/util-shared';
-import { ApplicationProcess } from '@msh/evaluations/domain-evaluations';
 import { CalculationProcessesApiService } from '../calculation-processes/calculation-processes-api.service';
 import { LazyLoadEvent } from 'primeng/api';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { formatDate } from '@angular/common';
+import { ApplicationProcess } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Injectable({

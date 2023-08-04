@@ -7,19 +7,16 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
-import {
-  ExamSecret,
-  ExamSecretTabularDataEntryItem,
-} from '@msh/evaluations/domain-evaluations';
-import {
-  GRID_ACTIONS,
-  GridEvent,
-} from '@msh/shared/util-shared';
+import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { ButtonModule } from 'primeng/button';
+import {
+  ExamSecret,
+  ExamSecretTabularDataEntryItem,
+} from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({

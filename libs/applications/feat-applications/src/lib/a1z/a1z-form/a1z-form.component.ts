@@ -8,8 +8,11 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { A1ZApiService } from '@msh/applications/data-access-applications';
+import { Router } from '@angular/router';
+import {
+  A1ZApiService,
+  ExamGradeApiService,
+} from '@msh/applications/data-access-applications';
 import { A1Z, CarriedGrade } from '@msh/applications/domain-application';
 import {
   A1ZCategoryApiService,
@@ -24,6 +27,7 @@ import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   AcademicYear,
   EXAM_TYPES,
+  ExamGrade,
   Report,
   Student,
 } from '@msh/shared/domain-models';
@@ -31,7 +35,6 @@ import {
   SharedStudent,
   SharedStudentLookupModule,
 } from '@msh/shared/student-lookup';
-import { LoaderService } from '@msh/shared/ui-shared';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -57,8 +60,6 @@ import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject } from 'rxjs';
 import { CarriedGradesFormComponent } from '../../carried-grade/carried-grade-form/carried-grade-form.component';
 import { A1ZFormModeEnum } from '../a1z-form-mode.enum';
-import { ExamGrade } from '@msh/evaluations/domain-evaluations';
-import {ExamGradeApiService} from "@msh/evaluations/data-access-evaluations";
 
 interface ChangeEvent<T> {
   originalEvent: Event;
@@ -133,10 +134,6 @@ export class A1zFormComponent implements OnInit {
   examSubjectsDropdown: DropdownModel<string>[] = [];
   academicYearsDropdown: DropdownModel<number>[] = [];
 
-  enableD1Subject = false;
-  enableD2Subject = false;
-  enableD3Subject = false;
-  enableZ1Subject = false;
   submitted = false;
   showStudentSearchButton = true;
   displayModal = false;
@@ -172,12 +169,10 @@ export class A1zFormComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private readonly academicYearService: AcademicYearApiService,
     private readonly a1CategoryService: A1ZCategoryApiService,
-    private readonly confirmationService: ConfirmationService,
     private readonly studentService: StudentsApiService,
     private readonly toastService: GlobalToastService,
     private readonly a1zService: A1ZApiService,
     private readonly examTypeService: ExamTypeApiService,
-    private readonly activatedRoute: ActivatedRoute,
     private readonly carriedGradeService: CarriedGradeApiService,
     private readonly examGradeApiService: ExamGradeApiService,
     private readonly router: Router,
@@ -186,8 +181,7 @@ export class A1zFormComponent implements OnInit {
     private academicYearApiService: AcademicYearApiService,
     private examTypeApiService: ExamTypeApiService,
     private examSubjectApiService: ExamSubjectApiService,
-    private carriedGradeApiService: CarriedGradeApiService,
-    private loaderService: LoaderService
+    private carriedGradeApiService: CarriedGradeApiService
   ) {}
 
   ngOnInit(): void {
@@ -819,52 +813,53 @@ export class A1zFormComponent implements OnInit {
   }
 
   onExamGradeSelect($event: ExamGrade) {
-    this.carriedGradeService.ensureExamGradeIsCarried($event).subscribe(response => {
-      if(response.isSuccessful) {
-        this.onCarriedHide();
+    this.carriedGradeService
+      .ensureExamGradeIsCarried($event)
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.onCarriedHide();
 
-        switch ($event.examTypeName) {
-          case EXAM_TYPES.D1:
-            this.a1z.academicYearD1Name = $event.academicYearName;
-            this.a1z.academicYearD1Id = $event.academicYearId;
-            this.a1z.carriedGradeD1Id = $event.id;
-            this.a1z.scoreD1 = $event.grade;
-            this.a1z.subjectD1Name = $event.examSubjectName;
-            this.a1z.reasonD1 = '';
-            this.cd.detectChanges();
-            break;
-          case EXAM_TYPES.D2:
-            this.a1z.academicYearD2Name = $event.academicYearName;
-            this.a1z.academicYearD2Id = $event.academicYearId;
-            this.a1z.carriedGradeD2Id = $event.id;
-            this.a1z.scoreD2 = $event.grade;
-            this.a1z.reasonD2 = '';
-            this.a1z.subjectD2Name = $event.examSubjectName;
-            this.cd.detectChanges();
-            break;
-          case EXAM_TYPES.D3:
-            this.a1z.academicYearD3Name = $event.academicYearName;
-            this.a1z.academicYearD3Id = $event.academicYearId;
-            this.a1z.carriedGradeD3Id = $event.id;
-            this.a1z.scoreD3 = $event.grade;
-            this.a1z.subjectD3Name = $event.examSubjectName;
-            this.a1z.reasonD3 = '';
-            this.cd.detectChanges();
-            break;
-          case EXAM_TYPES.Z1:
-            this.a1z.academicYearZ1Name = $event.academicYearName;
-            this.a1z.academicYearZ1Id = $event.academicYearId;
-            this.a1z.carriedGradeZ1Id = $event.id;
-            this.a1z.scoreZ1 = $event.grade;
-            this.a1z.reasonZ1 = '';
-            this.a1z.subjectZ1Name = $event.examSubjectName;
-            this.cd.detectChanges();
-            break;
+          switch ($event.examTypeName) {
+            case EXAM_TYPES.D1:
+              this.a1z.academicYearD1Name = $event.academicYearName;
+              this.a1z.academicYearD1Id = $event.academicYearId;
+              this.a1z.carriedGradeD1Id = $event.id;
+              this.a1z.scoreD1 = $event.grade;
+              this.a1z.subjectD1Name = $event.examSubjectName;
+              this.a1z.reasonD1 = '';
+              this.cd.detectChanges();
+              break;
+            case EXAM_TYPES.D2:
+              this.a1z.academicYearD2Name = $event.academicYearName;
+              this.a1z.academicYearD2Id = $event.academicYearId;
+              this.a1z.carriedGradeD2Id = $event.id;
+              this.a1z.scoreD2 = $event.grade;
+              this.a1z.reasonD2 = '';
+              this.a1z.subjectD2Name = $event.examSubjectName;
+              this.cd.detectChanges();
+              break;
+            case EXAM_TYPES.D3:
+              this.a1z.academicYearD3Name = $event.academicYearName;
+              this.a1z.academicYearD3Id = $event.academicYearId;
+              this.a1z.carriedGradeD3Id = $event.id;
+              this.a1z.scoreD3 = $event.grade;
+              this.a1z.subjectD3Name = $event.examSubjectName;
+              this.a1z.reasonD3 = '';
+              this.cd.detectChanges();
+              break;
+            case EXAM_TYPES.Z1:
+              this.a1z.academicYearZ1Name = $event.academicYearName;
+              this.a1z.academicYearZ1Id = $event.academicYearId;
+              this.a1z.carriedGradeZ1Id = $event.id;
+              this.a1z.scoreZ1 = $event.grade;
+              this.a1z.reasonZ1 = '';
+              this.a1z.subjectZ1Name = $event.examSubjectName;
+              this.cd.detectChanges();
+              break;
+          }
+        } else {
+          this.toastService.showError(response.errorMessage);
         }
-      } else {
-        this.toastService.showError(response.errorMessage);
-      }
-    });
-
+      });
   }
 }

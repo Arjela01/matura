@@ -29,7 +29,6 @@ import {
   ArchiveExamApiService,
   ArchiveFolderApiService,
 } from '@msh/evaluations/data-access-evaluations';
-import { ArchiveFolder } from '@msh/evaluations/domain-evaluations';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -39,7 +38,7 @@ import { RippleModule } from 'primeng/ripple';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ArchiveFolderGridComponent } from '../archive-folder-grid/archive-folder-grid.component';
 import { ArchiveOpenFolderFormComponent } from '../archive-open-folder-form/archive-open-folder-form.component';
-import { AcademicYear } from '@msh/shared/domain-models';
+import { AcademicYear, ArchiveFolder } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({
@@ -239,7 +238,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
 
   changeFolderStatus(archiveFolder: ArchiveFolder) {
     this.archiveFolderService
-      .changeFolderStatus(archiveFolder.id , archiveFolder.isClosed)
+      .changeFolderStatus(archiveFolder.id, archiveFolder.isClosed)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {

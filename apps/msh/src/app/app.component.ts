@@ -1,11 +1,11 @@
-import { NgIf} from '@angular/common';
+import { NgIf } from '@angular/common';
 import {
   AfterViewChecked,
   ChangeDetectorRef,
   Component,
   OnInit,
 } from '@angular/core';
-import { RouterOutlet} from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { GlobalSpinnerComponent, LoaderService } from '@msh/shared/ui-shared';
 import { ToastModule } from 'primeng/toast';
 import { PrimeNGConfig } from 'primeng/api';
@@ -32,7 +32,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
   constructor(
     private primengConfig: PrimeNGConfig,
     public loader: LoaderService,
-    private cd: ChangeDetectorRef,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -63,4 +63,3 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.cd.detectChanges();
   }
 }
-

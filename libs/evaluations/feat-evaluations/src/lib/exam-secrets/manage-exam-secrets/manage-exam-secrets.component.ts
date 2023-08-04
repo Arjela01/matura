@@ -12,7 +12,6 @@ import {
   ExamTypeApiService,
 } from '@msh/configurations/data-access-configurations';
 import { ExamSecretApiService } from '@msh/evaluations/data-access-evaluations';
-import { ExamSecret } from '@msh/evaluations/domain-evaluations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   GRID_ACTIONS,
@@ -31,6 +30,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ExamSecretsFormComponent } from '../exam-secrets-form/exam-secrets-form.component';
 import { ExamSecretsGridComponent } from '../exam-secrets-grid/exam-secrets-grid.component';
+import { ExamSecret } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({

@@ -2,12 +2,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UnmatchedExamsApiService } from '@msh/evaluations/data-access-evaluations';
 import { LazyLoadEvent } from 'primeng/api';
-import { ExamScore } from '@msh/evaluations/domain-evaluations';
 
 import { TableModule } from 'primeng/table';
 import { BehaviorSubject } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
+import { ExamScore } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({

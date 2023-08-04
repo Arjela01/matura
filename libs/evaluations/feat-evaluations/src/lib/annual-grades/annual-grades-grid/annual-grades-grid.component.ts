@@ -15,13 +15,12 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ExamGrade } from '@msh/evaluations/domain-evaluations';
 import {
   AnnualGradesApiService,
   ExamGradeApiService,
 } from '@msh/evaluations/data-access-evaluations';
 import { StudentsApiService } from '@msh/configurations/data-access-configurations';
-import { Student } from '@msh/shared/domain-models';
+import { ExamGrade, Student } from '@msh/shared/domain-models';
 import { ColumnFilterDirective, GridEvent } from '@msh/shared/util-shared';
 import * as FileSaver from 'file-saver';
 

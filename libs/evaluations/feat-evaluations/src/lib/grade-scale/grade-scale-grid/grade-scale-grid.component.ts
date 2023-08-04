@@ -6,7 +6,6 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { GradesScale } from '@msh/evaluations/domain-evaluations';
 import {
   GridEvent,
   GRID_ACTIONS,
@@ -19,6 +18,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import { GradesScale } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-grade-scale-grid',

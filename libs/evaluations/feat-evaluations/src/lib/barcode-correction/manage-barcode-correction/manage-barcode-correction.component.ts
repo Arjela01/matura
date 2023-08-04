@@ -25,13 +25,10 @@ import {
   ArchiveExamApiService,
   ArchiveFolderApiService,
 } from '@msh/evaluations/data-access-evaluations';
-import {
-  ArchiveExam,
-  BarcodeCorrection,
-} from '@msh/evaluations/domain-evaluations';
 import { BarcodeCorrectionGridComponent } from '../barcode-correction-grid/barcode-correction-grid.component';
 import { BarcodeCorrectionFormComponent } from '../barcode-correction-form/barcode-correction-form.component';
 import { HttpClient } from '@angular/common/http';
+import { ArchiveExam, BarcodeCorrection } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({
