@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   HostListener,
@@ -27,13 +26,19 @@ import {
   Student,
 } from '@msh/shared/domain-models';
 import {
-  GlobalToastService,
+  SharedStudent,
+  SharedStudentLookupModule,
+} from '@msh/shared/student-lookup';
+import {
   GRID_ACTIONS,
+  GlobalToastService,
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
+import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -44,18 +49,12 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import {
   BehaviorSubject,
-  combineLatest,
   Observable,
+  combineLatest,
   of,
   switchMap,
 } from 'rxjs';
-import { DialogModule } from 'primeng/dialog';
-import {
-  SharedStudent,
-  SharedStudentLookupModule,
-} from '@msh/shared/student-lookup';
 import { A1FormModeEnum, ApplicationFormType } from '../a1-form-mode.enum';
-import { LazyLoadEvent } from 'primeng/api';
 
 @UntilDestroy()
 @Component({
@@ -103,6 +102,7 @@ export class A1FormComponent {
   showStudentSearchButton = true;
   selectedStudent?: SharedStudent;
   applicationTypeA1 = ApplicationFormType.A1;
+  disabled = false;
 
   @HostListener('window:popstate', ['$event'])
   onPopState() {
@@ -315,6 +315,7 @@ export class A1FormComponent {
   }
 
   addA1(a1: A1Z) {
+    this.disabled = true;
     this.a1ApiService
       .save(a1)
       .pipe(untilDestroyed(this))
@@ -322,21 +323,24 @@ export class A1FormComponent {
         next: response => {
           if (response.isSuccessful) {
             this.toastService.showSuccess('Formulari A1 u shtua me sukses!');
-
             this.printConfirmation(response.data);
           } else {
+            this.enableSaveButton();
             response.errorMessage
               ? this.toastService.showError(response.errorMessage)
               : this.toastService.showError(
                   'Ndodhi një problem gjatë ndryshimit të formularit A1!'
                 );
           }
-          if (response.isBadRequest)
+          if (response.isBadRequest) {
+            this.enableSaveButton();
             this.toastService.showError(
               'Ndodhi një problem gjatë ndryshimit të formularit A1!'
             );
+          }
         },
         error: error => {
+          this.enableSaveButton();
           error.errorMessage
             ? this.toastService.showError(error.errorMessage)
             : this.toastService.showError(
@@ -350,16 +354,17 @@ export class A1FormComponent {
   }
 
   updateA1(a1: A1Z) {
+    this.disabled = true;
     this.a1ApiService
       .update(a1)
       .pipe(untilDestroyed(this))
       .subscribe({
         next: data => {
-          console.log(3333, data);
           if (data.isSuccessful) {
             this.toastService.showSuccess('Formulari A1 u ndryshua me sukses!');
             this.printConfirmation(data.data);
           } else {
+            this.enableSaveButton();
             data.errorMessage
               ? this.toastService.showError(data.errorMessage)
               : this.toastService.showError(
@@ -367,6 +372,7 @@ export class A1FormComponent {
                 );
           }
           if (data.isBadRequest) {
+            this.enableSaveButton();
             data.errorMessage
               ? this.toastService.showError(data.errorMessage)
               : this.toastService.showError(
@@ -375,6 +381,7 @@ export class A1FormComponent {
           }
         },
         error: (error: any) => {
+          this.enableSaveButton();
           error.errorMessage
             ? this.toastService.showError(error.errorMessage)
             : this.toastService.showError(
@@ -385,6 +392,11 @@ export class A1FormComponent {
           );
         },
       });
+  }
+
+  private enableSaveButton() {
+    this.disabled = false;
+    this.cd.detectChanges();
   }
 
   private printConfirmation(a1: A1Z) {

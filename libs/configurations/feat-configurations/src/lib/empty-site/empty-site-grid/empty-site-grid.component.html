@@ -18,48 +18,58 @@
     <tr>
       <th pSortableColumn="examSiteName">
         Qendra e Provimit
-        <p-sortIcon field="examSiteName"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="examSiteName"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+        <div>
+          <p-sortIcon field="examSiteName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="examSiteName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="date">
         Data e Provimit
-        <p-sortIcon field="date"></p-sortIcon>
-        <p-columnFilter
-          type="date"
-          field="date"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+        <div>
+          <p-sortIcon field="date"></p-sortIcon>
+          <p-columnFilter
+            type="date"
+            field="date"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="time">
         Ora e Provimit
-        <p-sortIcon field="time"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="time"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+        <div>
+          <p-sortIcon field="time"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="time"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="examTypeName">
         Tipi i Provimit
-        <p-sortIcon field="examTypeName"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="examTypeName"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+        <div>
+          <p-sortIcon field="examTypeName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="examTypeName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="takenSeats">
         Vendet e Zëna
-        <p-sortIcon field="takenSeats"></p-sortIcon>
-        <p-columnFilter
-          type="numeric"
-          field="takenSeats"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+        <div>
+          <p-sortIcon field="takenSeats"></p-sortIcon>
+          <p-columnFilter
+            type="numeric"
+            field="takenSeats"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th></th>
     </tr>
@@ -75,7 +85,7 @@
       <td style="width: 25%; min-width: 10rem">
         {{ emptySite.date | date : 'hh:mm' }}
       </td>
-      <td style="width: 25%; min-width: 10rem">
+      <td style="width: 10%; min-width: 10rem">
         {{ emptySite.examTypeName }}
       </td>
       <td style="width: 25%; min-width: 10rem">

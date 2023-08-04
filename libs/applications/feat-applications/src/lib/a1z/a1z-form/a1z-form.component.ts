@@ -31,9 +31,10 @@ import {
   SharedStudent,
   SharedStudentLookupModule,
 } from '@msh/shared/student-lookup';
+import { LoaderService } from '@msh/shared/ui-shared';
 import {
-  GlobalToastService,
   GRID_ACTIONS,
+  GlobalToastService,
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -54,8 +55,8 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject } from 'rxjs';
+import { CarriedGradesFormComponent } from '../../carried-grade/carried-grade-form/carried-grade-form.component';
 import { A1ZFormModeEnum } from '../a1z-form-mode.enum';
-import {CarriedGradesFormComponent} from "../../carried-grade/carried-grade-form/carried-grade-form.component";
 
 interface ChangeEvent<T> {
   originalEvent: Event;
@@ -158,6 +159,7 @@ export class A1zFormComponent implements OnInit {
     globalFilter: null,
   };
   private currentCarriedGradesExamType?: EXAM_TYPES;
+  disabled = false;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -177,6 +179,7 @@ export class A1zFormComponent implements OnInit {
     private examTypeApiService: ExamTypeApiService,
     private examSubjectApiService: ExamSubjectApiService,
     private carriedGradeApiService: CarriedGradeApiService,
+    private loaderService: LoaderService
   ) {}
 
   ngOnInit(): void {
@@ -244,7 +247,7 @@ export class A1zFormComponent implements OnInit {
     this.displayModal = false;
   }
   onFormSave(carriedGrade: CarriedGrade) {
-      this.saveCarriedGrade(carriedGrade);
+    this.saveCarriedGrade(carriedGrade);
   }
 
   saveCarriedGrade(carriedGrades: CarriedGrade) {
@@ -255,7 +258,7 @@ export class A1zFormComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Nota u shtua me sukses!');
           this.displayModal = false;
-          this.reloadCarriedGrades()
+          this.reloadCarriedGrades();
         } else {
           this.toastService.showError(response.errorMessage);
         }
@@ -377,7 +380,6 @@ export class A1zFormComponent implements OnInit {
       this.a1z.academicYearD3Name = undefined;
       this.a1z.academicYearD3Id = undefined;
       this.a1z.carriedGradeD3Id = undefined;
-
     }
     if (this.a1z.carryD3) {
       this.carriedGrades$$.next([]);
@@ -542,6 +544,7 @@ export class A1zFormComponent implements OnInit {
 
   onNewA1ZFormSubmit() {
     this.manageSubjects();
+    this.disabled = true;
     this.a1zService
       .save(this.a1z)
       .pipe(untilDestroyed(this))
@@ -553,6 +556,7 @@ export class A1zFormComponent implements OnInit {
           this.printConfirmation(response.data);
         }
         if (!response.isSuccessful) {
+          this.enableSaveButton();
           this.toastService.showError(
             response.errorMessage
               ? response.errorMessage
@@ -563,6 +567,7 @@ export class A1zFormComponent implements OnInit {
   }
 
   onEditA1ZFormSubmit() {
+    this.disabled = true;
     this.manageSubjects();
     this.a1zService
       .update(this.a1z)
@@ -575,6 +580,7 @@ export class A1zFormComponent implements OnInit {
         }
 
         if (!response.isSuccessful) {
+          this.enableSaveButton();
           this.toastService.showError(
             response.errorMessage
               ? response.errorMessage
@@ -614,7 +620,10 @@ export class A1zFormComponent implements OnInit {
   onNewClick() {
     this.showStudentModal = true;
   }
-
+  private enableSaveButton() {
+    this.disabled = false;
+    this.cd.detectChanges();
+  }
   onCarriedClick(type: EXAM_TYPES) {
     switch (type) {
       case EXAM_TYPES.D1:
@@ -777,7 +786,6 @@ export class A1zFormComponent implements OnInit {
   }
 
   protected readonly A1ZFormModeEnum = A1ZFormModeEnum;
-
 
   reloadCarriedGrades() {
     if (this.currentCarriedGradesExamType)
