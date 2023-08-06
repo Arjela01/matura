@@ -27,7 +27,7 @@ import { BehaviorSubject } from 'rxjs';
 import { HighSchoolFormComponent } from '../high-school-form/high-school-form.component';
 import { HighSchoolGridComponent } from '../high-school-grid/high-school-grid.component';
 import { RippleModule } from 'primeng/ripple';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({

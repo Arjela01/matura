@@ -9,7 +9,7 @@ import {
   GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -18,7 +18,7 @@ import { BehaviorSubject } from 'rxjs';
 import { GenderFormComponent } from '../gender-form/gender-form.component';
 import { GenderGridComponent } from '../gender-grid/gender-grid.component';
 import { RippleModule } from 'primeng/ripple';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @Component({
   selector: 'msh-manage-genders',

@@ -4,7 +4,7 @@ import { StorageService } from '@msh/shared/data-access-shared';
 import jwt_decode from 'jwt-decode';
 
 @Injectable({ providedIn: 'root' })
-export class ExpiredPasswordGuard  {
+export class ExpiredPasswordGuard {
   constructor(private storageService: StorageService) {}
   token: any = '';
   canActivate(): boolean {

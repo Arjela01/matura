@@ -23,7 +23,9 @@ export class AcademicYearApiService {
       `/AcademicYear/DropdownList`
     );
   }
-  loadAcademicYears(event: TableLazyLoadEvent): Observable<AcademicYearTableView> {
+  loadAcademicYears(
+    event: TableLazyLoadEvent
+  ): Observable<AcademicYearTableView> {
     return this.apiService.post(`/AcademicYear/TableData`, event);
   }
 

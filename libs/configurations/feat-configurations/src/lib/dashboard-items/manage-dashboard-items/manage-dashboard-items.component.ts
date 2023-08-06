@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -26,7 +26,7 @@ import { RippleModule } from 'primeng/ripple';
 import { BehaviorSubject } from 'rxjs';
 import { DashboardItemsFormComponent } from '../dashboard-items-form/dashboard-items-form.component';
 import { DashboardItemsGridComponent } from '../dashboard-items-grid/dashboard-items-grid.component';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({

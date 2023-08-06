@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -23,7 +23,7 @@ import { AcademicYearFormComponent } from '../academic-year-form/academic-year-f
 import { AcademicYearGridComponent } from '../academic-year-grid/academic-year-grid.component';
 import { RippleModule } from 'primeng/ripple';
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({

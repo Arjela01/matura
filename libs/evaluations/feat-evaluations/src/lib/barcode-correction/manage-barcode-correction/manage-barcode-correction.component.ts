@@ -1,10 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {
-  ConfirmationService,
-  MessageService,
-} from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -28,7 +25,7 @@ import { BarcodeCorrectionGridComponent } from '../barcode-correction-grid/barco
 import { BarcodeCorrectionFormComponent } from '../barcode-correction-form/barcode-correction-form.component';
 import { HttpClient } from '@angular/common/http';
 import { ArchiveExam, BarcodeCorrection } from '@msh/shared/domain-models';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({

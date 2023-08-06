@@ -12,7 +12,7 @@ import {
   GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -21,7 +21,7 @@ import { BehaviorSubject } from 'rxjs';
 import { AdministrationOfficeFormComponent } from '../administration-office-form/administration-office-form.component';
 import { AdministrationOfficeGridComponent } from '../administration-office-grid/administration-office-grid.component';
 import { RippleModule } from 'primeng/ripple';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @Component({
   selector: 'msh-manage-administration-office',

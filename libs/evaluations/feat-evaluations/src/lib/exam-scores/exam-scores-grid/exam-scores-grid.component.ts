@@ -6,7 +6,11 @@ import {
   Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {TableModule, TableRowSelectEvent, TableRowUnSelectEvent} from 'primeng/table';
+import {
+  TableModule,
+  TableRowSelectEvent,
+  TableRowUnSelectEvent,
+} from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';

@@ -26,7 +26,7 @@ import { UniversityFormComponent } from '../university-form/university-form.comp
 import { UniversityGridComponent } from '../university-grid/university-grid.component';
 import { RippleModule } from 'primeng/ripple';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({

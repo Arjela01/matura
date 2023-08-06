@@ -1,7 +1,5 @@
 import { Route } from '@angular/router';
-import {
-  ExamSecretFolderMismatchComponent
-} from "./exam-secrets/exam-secret-folder-mismatch/exam-secret-folder-mismatch.component";
+import { ExamSecretFolderMismatchComponent } from './exam-secrets/exam-secret-folder-mismatch/exam-secret-folder-mismatch.component';
 
 export const EVALUATION_ROUTES: Route[] = [
   {

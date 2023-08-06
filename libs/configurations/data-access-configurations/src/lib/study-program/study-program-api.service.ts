@@ -20,7 +20,9 @@ export class StudyProgramApiService {
     );
   }
 
-  loadStudyPrograms(event: TableLazyLoadEvent): Observable<StudyProgramsTableView> {
+  loadStudyPrograms(
+    event: TableLazyLoadEvent
+  ): Observable<StudyProgramsTableView> {
     return this.apiService.post(`/StudyProgram/TableData`, event);
   }
 

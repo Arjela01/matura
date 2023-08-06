@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 
@@ -32,7 +32,7 @@ import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ProfileFormComponent } from '../profile-form/profile-form.component';
 import { ProfileGridComponent } from '../profile-grid/profile-grid.component';
 import * as FileSaver from 'file-saver';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({

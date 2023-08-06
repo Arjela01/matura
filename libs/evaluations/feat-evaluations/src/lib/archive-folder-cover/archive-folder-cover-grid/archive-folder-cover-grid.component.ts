@@ -15,7 +15,7 @@ import {
   GRID_ACTIONS,
   ColumnFilterDirective,
 } from '@msh/shared/util-shared';
-import {TableLazyLoadEvent, TableModule} from 'primeng/table';
+import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { StepsModule } from 'primeng/steps';

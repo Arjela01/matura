@@ -13,7 +13,7 @@ import {
   GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -22,7 +22,7 @@ import { BehaviorSubject } from 'rxjs';
 import { RippleModule } from 'primeng/ripple';
 import { DashboardSectionsGridComponent } from '../dashboard-sections-grid/dashboard-sections-grid.component';
 import { DashboardSectionsFormComponent } from '../dashboard-sections-form/dashboard-sections-form.component';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @Component({
   selector: 'msh-manage-dashboard-sections',

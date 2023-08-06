@@ -11,7 +11,9 @@ import { APIService } from '@msh/shared/util-shared';
 export class ExamVersionApiService {
   constructor(private apiService: APIService) {}
 
-  loadExamVersions(event: TableLazyLoadEvent): Observable<ExamVersionTableView> {
+  loadExamVersions(
+    event: TableLazyLoadEvent
+  ): Observable<ExamVersionTableView> {
     return this.apiService.post(`/ExamVersion/TableData`, event);
   }
 

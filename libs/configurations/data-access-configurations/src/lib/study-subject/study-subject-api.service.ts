@@ -11,7 +11,9 @@ import { Observable } from 'rxjs';
 export class StudySubjectApiService {
   constructor(private apiService: APIService) {}
 
-  loadStudySubjects(event: TableLazyLoadEvent): Observable<StudySubjectTableView> {
+  loadStudySubjects(
+    event: TableLazyLoadEvent
+  ): Observable<StudySubjectTableView> {
     return this.apiService.post(`/StudySubject/TableData`, event);
   }
 

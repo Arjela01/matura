@@ -20,7 +20,9 @@ export class ExamSecretApiService {
     return this.apiService.post(`/ExamSecrets/TableData`, event);
   }
 
-  loadExamSecretFolderMismatch(event: TableLazyLoadEvent): Observable<ExamSecretTableView> {
+  loadExamSecretFolderMismatch(
+    event: TableLazyLoadEvent
+  ): Observable<ExamSecretTableView> {
     return this.apiService.post(`/ExamSecrets/FolderMismatch`, event);
   }
 

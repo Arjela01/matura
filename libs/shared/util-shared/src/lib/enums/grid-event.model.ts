@@ -11,7 +11,7 @@ export enum GRID_ACTIONS {
   CUSTOM_ACTION1,
   CUSTOM_ACTION2,
   PRINT,
-  HISTORY
+  HISTORY,
 }
 
 export interface GridEvent<T> {

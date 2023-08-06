@@ -31,7 +31,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
 import * as FileSaver from 'file-saver';
 import { AcademicYear, ExamScore } from '@msh/shared/domain-models';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({

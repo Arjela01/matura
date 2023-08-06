@@ -25,7 +25,10 @@ export class ArchiveExamApiService {
   //   );
   // }
 
-  loadArchiveExams(event: TableLazyLoadEvent, id: any): Observable<ArchiveExamView> {
+  loadArchiveExams(
+    event: TableLazyLoadEvent,
+    id: any
+  ): Observable<ArchiveExamView> {
     return this.apiService.post(`/ArchiveExam/TableData/${id}`, event);
   }
 

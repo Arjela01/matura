@@ -64,7 +64,9 @@ export class ArchiveFolderApiService {
     );
   }
 
-  loadArchiveFolder(event: TableLazyLoadEvent): Observable<ArchiveFolderTableView> {
+  loadArchiveFolder(
+    event: TableLazyLoadEvent
+  ): Observable<ArchiveFolderTableView> {
     return this.apiService.post(`/ArchiveFolder/TableData`, event);
   }
 

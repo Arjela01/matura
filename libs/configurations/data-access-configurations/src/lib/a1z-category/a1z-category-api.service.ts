@@ -16,7 +16,9 @@ export class A1ZCategoryApiService {
       `/A1ZCategory/DropdownList`
     );
   }
-  loadA1ZCategories(event: TableLazyLoadEvent): Observable<A1ZCategoryTableView> {
+  loadA1ZCategories(
+    event: TableLazyLoadEvent
+  ): Observable<A1ZCategoryTableView> {
     return this.apiService.post(`/A1ZCategory/TableData`, event);
   }
 

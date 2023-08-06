@@ -13,7 +13,7 @@ import {
   GlobalToastService,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -24,13 +24,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
-import {TableLazyLoadEvent, TableModule} from 'primeng/table';
+import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
-import {
-  AuditLogGridComponent
-} from "../../../../../../audit-logs/feat-audit-log/src/lib/audit-log-grid/audit-log-grid.component";
+import { AuditLogGridComponent } from '../../../../../../audit-logs/feat-audit-log/src/lib/audit-log-grid/audit-log-grid.component';
 @Component({
   selector: 'a1-grid',
   standalone: true,

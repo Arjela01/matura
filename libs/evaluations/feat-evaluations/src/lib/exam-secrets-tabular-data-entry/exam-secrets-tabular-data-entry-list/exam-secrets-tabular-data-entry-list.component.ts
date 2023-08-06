@@ -17,7 +17,7 @@ import {
   ExamSecret,
   ExamSecretTabularDataEntryItem,
 } from '@msh/shared/domain-models';
-import {TooltipModule} from "primeng/tooltip";
+import { TooltipModule } from 'primeng/tooltip';
 
 @UntilDestroy()
 @Component({

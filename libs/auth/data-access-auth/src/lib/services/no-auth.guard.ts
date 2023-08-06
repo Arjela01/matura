@@ -5,7 +5,7 @@ import { map, take } from 'rxjs/operators';
 import { AuthFacade } from '../+state';
 
 @Injectable({ providedIn: 'root' })
-export class NoAuthGuard  {
+export class NoAuthGuard {
   constructor(private authFacade: AuthFacade, private router: Router) {}
 
   canActivate(): Observable<boolean> {

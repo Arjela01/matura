@@ -6,7 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -31,7 +31,7 @@ import { ExamAssignmentFormComponent } from '../exam-assignment-form/exam-assign
 import { UploadFormComponent } from '../upload-form/upload-form.component';
 import * as FileSaver from 'file-saver';
 import { AssignAllFormComponent } from '../assign-all-form/assign-all-form.component';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({

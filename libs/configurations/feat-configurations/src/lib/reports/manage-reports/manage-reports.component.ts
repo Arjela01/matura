@@ -21,7 +21,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { ReportsFormComponent } from '../reports-form/reports-form.component';
 import { ReportsGridComponent } from '../reports-grid/reports-grid.component';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @Component({
   selector: 'msh-manage-reports',

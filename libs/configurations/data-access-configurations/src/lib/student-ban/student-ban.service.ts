@@ -16,7 +16,9 @@ export class StudentBanApiService {
       `/StudentBan/DropdownList`
     );
   }
-  loadBannedStudents(event: TableLazyLoadEvent): Observable<StudentBanTableView> {
+  loadBannedStudents(
+    event: TableLazyLoadEvent
+  ): Observable<StudentBanTableView> {
     return this.apiService.post(`/StudentBan/TableData`, event);
   }
 

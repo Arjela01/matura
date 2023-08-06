@@ -21,7 +21,7 @@ import { BehaviorSubject } from 'rxjs';
 import { RegionFormComponent } from '../region-form/region-form.component';
 import { RegionGridComponent } from '../region-grid/region-grid.component';
 import { RippleModule } from 'primeng/ripple';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({

@@ -16,7 +16,7 @@ import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { ArchiveExam } from '@msh/shared/domain-models';
-import {TooltipModule} from "primeng/tooltip";
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'msh-archive-exam-form',

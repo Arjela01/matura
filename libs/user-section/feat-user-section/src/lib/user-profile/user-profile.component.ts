@@ -16,7 +16,7 @@ import { UserProfile } from '@msh/shared/domain-models';
 import { DialogModule } from 'primeng/dialog';
 import { UserResetPasswordComponent } from '../user-reset-password/user-reset-password.component';
 import { Subject } from 'rxjs';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({

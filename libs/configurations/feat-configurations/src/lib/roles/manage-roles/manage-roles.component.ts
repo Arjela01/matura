@@ -18,7 +18,7 @@ import { BehaviorSubject } from 'rxjs';
 import { RolesFormComponent } from '../roles-form/roles-form.component';
 import { RolesGridComponent } from '../roles-grid/roles-grid.component';
 import { RippleModule } from 'primeng/ripple';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @Component({
   selector: 'msh-manage-roles',

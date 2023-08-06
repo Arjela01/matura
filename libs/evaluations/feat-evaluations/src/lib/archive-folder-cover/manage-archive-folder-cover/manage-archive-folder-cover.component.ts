@@ -23,7 +23,7 @@ import {
 } from '@msh/configurations/data-access-configurations';
 import { RippleModule } from 'primeng/ripple';
 import { ArchiveFolder } from '@msh/shared/domain-models';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @Component({
   selector: 'msh-manage-archive-folder-cover',

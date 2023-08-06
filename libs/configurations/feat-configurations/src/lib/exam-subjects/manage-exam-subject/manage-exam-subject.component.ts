@@ -13,7 +13,7 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -31,7 +31,7 @@ import {
 import { ExamSubjectFormComponent } from '../exam-subject-form/exam-subject-form.component';
 import { ExamSubjectGridComponent } from '../exam-subject-grid/exam-subject-grid.component';
 import * as FileSaver from 'file-saver';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({

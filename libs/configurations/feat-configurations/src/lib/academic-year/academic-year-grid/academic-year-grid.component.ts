@@ -12,7 +12,7 @@ import {
   GRID_ACTIONS,
   ColumnFilterDirective,
 } from '@msh/shared/util-shared';
-import {TableLazyLoadEvent, TableRowUnSelectEvent} from 'primeng/table';
+import { TableLazyLoadEvent, TableRowUnSelectEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';

@@ -17,7 +17,7 @@ import { BehaviorSubject } from 'rxjs';
 import { StudySubjectFormComponent } from '../study-subject-form/study-subject-form.component';
 import { StudySubjectGridComponent } from '../study-subject-grid/study-subject-grid.component';
 import { RippleModule } from 'primeng/ripple';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({

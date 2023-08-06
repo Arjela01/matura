@@ -17,7 +17,9 @@ export class ProfileGroupApiService {
     );
   }
 
-  loadProfileGroups(event: TableLazyLoadEvent): Observable<ProfileGroupTableView> {
+  loadProfileGroups(
+    event: TableLazyLoadEvent
+  ): Observable<ProfileGroupTableView> {
     return this.apiService.post(`/ProfileGroup/TableData`, event);
   }
 

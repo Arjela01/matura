@@ -26,7 +26,7 @@ import { GradeScaleActionComponent } from '../grade-scale-action/grade-scale-act
 import { GradeScaleGridComponent } from '../grade-scale-grid/grade-scale-grid.component';
 import { UploadGradeScaleFormComponent } from '../upload-grade-scale-form/upload-grade-scale-form.component';
 import { GradesScale } from '@msh/shared/domain-models';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 @Component({
   selector: 'msh-manage-grades-scale',
   standalone: true,

@@ -21,7 +21,9 @@ export class ConfirmedA1A1ZService {
         catchError(error => throwError(error))
       );
   }
-  loadStudentToConfirm(event: TableLazyLoadEvent): Observable<StudentTableView> {
+  loadStudentToConfirm(
+    event: TableLazyLoadEvent
+  ): Observable<StudentTableView> {
     return this.apiService.post(`/A1A1ZConfirmation/TableData`, event);
   }
   refuseA1A1Z(studentId: string): Observable<ApiResult<Student>> {

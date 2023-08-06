@@ -1,4 +1,4 @@
-import {TableLazyLoadEvent, TableModule} from 'primeng/table';
+import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { Apollo, gql } from 'apollo-angular';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -11,7 +11,7 @@ import { SelectItem } from 'primeng/api';
 import { WhereBuilder } from './query-builder';
 import { TranslationPipe } from './translate-pipe';
 import { TranslationService } from '@msh/audit-logs/data-access-audit-log';
-import {ColumnFilterDirective} from "@msh/shared/util-shared";
+import { ColumnFilterDirective } from '@msh/shared/util-shared';
 
 const SORT_ASC = 'ASC';
 const SORT_DESC = 'DESC';

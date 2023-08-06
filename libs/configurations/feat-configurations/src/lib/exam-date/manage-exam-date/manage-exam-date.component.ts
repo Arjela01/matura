@@ -10,7 +10,7 @@ import {
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { AcademicYear, ExamDate } from '@msh/shared/domain-models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -26,7 +26,7 @@ import { RippleModule } from 'primeng/ripple';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ExamDateFormComponent } from '../exam-date-form/exam-date-form.component';
 import { ExamDateGridComponent } from '../exam-date-grid/exam-date-grid.component';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({

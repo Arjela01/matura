@@ -23,7 +23,7 @@ import { ExamCopyDetailsComponent } from '../exam-copy-details/exam-copy-details
 import { ExamCopyGridComponent } from '../exam-copy-grid/exam-copy-grid.component';
 import * as FileSaver from 'file-saver';
 import { ExamCopy } from '@msh/shared/domain-models';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({

@@ -39,7 +39,7 @@ import {
 import { Router } from '@angular/router';
 import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
 import { TooltipModule } from 'primeng/tooltip';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({

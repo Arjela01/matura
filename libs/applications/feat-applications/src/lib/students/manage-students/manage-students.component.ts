@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -24,7 +24,7 @@ import { StudentsEditComponent } from '../students-edit/students-edit.component'
 import { StudentsFormComponent } from '../students-form/students-form.component';
 import { StudentsGridComponent } from '../students-grid/students-grid.component';
 import { StudentViewComponent } from '../students-view/student-view.component';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-students',

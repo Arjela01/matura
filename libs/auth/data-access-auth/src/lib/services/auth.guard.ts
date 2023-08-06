@@ -6,7 +6,7 @@ import { AuthFacade } from '../+state';
 import { ExpiredPasswordGuard } from './expired-password.guard';
 
 @Injectable({ providedIn: 'root' })
-export class AuthGuard  {
+export class AuthGuard {
   constructor(
     private authFacade: AuthFacade,
     private router: Router,

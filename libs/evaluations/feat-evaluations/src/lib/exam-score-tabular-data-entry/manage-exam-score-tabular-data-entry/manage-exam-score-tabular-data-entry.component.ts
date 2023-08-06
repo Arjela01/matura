@@ -24,7 +24,7 @@ import {
   ExamScoreDataEntry,
   ExamScores,
 } from '@msh/shared/domain-models';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({

@@ -26,7 +26,7 @@ import {
   AnnualGradesApiService,
   ExamGradeApiService,
 } from '@msh/evaluations/data-access-evaluations';
-import {TableLazyLoadEvent, TableModule} from 'primeng/table';
+import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { GlobalToastService } from '@msh/shared/util-shared';
 
 @Component({

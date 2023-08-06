@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 import { A1ZCategory } from '@msh/shared/domain-models';
-import { ConfirmationService, } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import {
   GlobalToastService,
   GridEvent,
@@ -17,7 +17,7 @@ import { A1zCategoryFormComponent } from '../a1z-category-form/a1z-category-form
 import { A1zCategoryGridComponent } from '../a1z-category-grid/a1z-category-grid.component';
 import { ToolbarModule } from 'primeng/toolbar';
 import { RippleModule } from 'primeng/ripple';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-a1z-categories',

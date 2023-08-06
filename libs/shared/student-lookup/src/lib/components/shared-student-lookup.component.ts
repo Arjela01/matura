@@ -6,7 +6,11 @@ import {
   Output,
 } from '@angular/core';
 import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
-import {TableLazyLoadEvent, TableRowSelectEvent, TableRowUnSelectEvent} from 'primeng/table';
+import {
+  TableLazyLoadEvent,
+  TableRowSelectEvent,
+  TableRowUnSelectEvent,
+} from 'primeng/table';
 import { SharedStudent } from '../models/shared-student';
 
 @Component({

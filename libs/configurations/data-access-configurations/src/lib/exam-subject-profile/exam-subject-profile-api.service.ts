@@ -15,7 +15,9 @@ import { HttpParams } from '@angular/common/http';
 export class ExamSubjectProfileApiService {
   constructor(private apiService: APIService) {}
 
-  loadTableData(event: TableLazyLoadEvent): Observable<ExamSubjectProfileTableView> {
+  loadTableData(
+    event: TableLazyLoadEvent
+  ): Observable<ExamSubjectProfileTableView> {
     return this.apiService.post(`/ExamSubjectProfile/TableData`, event);
   }
 

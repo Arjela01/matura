@@ -9,7 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToolbarModule } from 'primeng/toolbar';
-import { ConfirmationService, } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { BehaviorSubject } from 'rxjs';
 import { ExamSubjectProfile } from '@msh/shared/domain-models';
 import {
@@ -30,7 +30,7 @@ import { RippleModule } from 'primeng/ripple';
 import { ExamSubjectProfileFormComponent } from '../exam-subject-profile-form/exam-subject-profile-form.component';
 import { ExamSubjectProfileGridComponent } from '../exam-subject-profile-grid/exam-subject-profile-grid.component';
 import * as FileSaver from 'file-saver';
-import {TableLazyLoadEvent} from "primeng/table";
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
