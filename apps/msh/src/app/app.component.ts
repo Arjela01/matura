@@ -9,7 +9,7 @@ import { RouterOutlet } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
 import { PrimeNGConfig } from 'primeng/api';
 import { HttpClientModule } from '@angular/common/http';
-import { GlobalSpinnerComponent, LoaderService } from '@msh/shared/ui-shared';
+import {GlobalSpinnerComponent, LoaderService} from '@msh/shared/util-shared';
 
 @Component({
   selector: 'msh-root',

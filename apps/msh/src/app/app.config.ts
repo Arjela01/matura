@@ -32,10 +32,10 @@ import { MessageService } from 'primeng/api';
 import {
   API_URL,
   ErrorInterceptorService,
+  LoadingInterceptor,
   REPORTS_APP_URL,
 } from '@msh/shared/util-shared';
 import { APOLLO_OPTIONS } from 'apollo-angular';
-import { LoadingInterceptor } from '@msh/shared/ui-shared';
 
 export const appConfig: ApplicationConfig = {
   providers: [
