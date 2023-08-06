@@ -6,9 +6,7 @@ import { AuthFacade } from '@msh/auth/data-access-auth';
 import { AcademicYearApiService } from '@msh/configurations/data-access-configurations';
 import { MenuStore } from '@msh/layout/data-access-layout';
 import { MenuNode } from '@msh/layout/domain-layout';
-import { LayoutService } from '@msh/layout/util-layout';
 import { AcademicYear, UserProfile } from '@msh/shared/domain-models';
-import { GlobalSpinnerComponent, LoaderService } from '@msh/shared/ui-shared';
 import { UserProfileApiService } from '@msh/user-section/data-access-user-section';
 import { MenuItem } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
@@ -26,6 +24,7 @@ import {
   switchMap,
 } from 'rxjs';
 import { AppMenuitemComponent } from '../app-menuitem/app-menuitem.component';
+import { GlobalSpinnerComponent, LoaderService } from '@msh/shared/util-shared';
 
 @Component({
   selector: 'msh-app-sidebar',
@@ -77,7 +76,6 @@ export class AppSidebarComponent implements OnInit {
   constructor(
     private readonly menuStore: MenuStore,
     private router: Router,
-    public layoutService: LayoutService,
     protected authFacade: AuthFacade,
     private userProfileService: UserProfileApiService,
     public loader: LoaderService,
