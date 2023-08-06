@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService, } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -21,6 +21,7 @@ import { BehaviorSubject } from 'rxjs';
 import { StudentBanFormComponent } from '../student-ban-form/student-ban-form.component';
 import { StudentBanGridComponent } from '../student-ban-grid/student-ban-grid.component';
 import { RippleModule } from 'primeng/ripple';
+import {TableLazyLoadEvent} from "primeng/table";
 
 @UntilDestroy()
 @Component({
@@ -43,7 +44,7 @@ import { RippleModule } from 'primeng/ripple';
 export class ManageStudentBanComponent {
   private bannedStudents$$ = new BehaviorSubject<StudentBan[]>([]);
   bannedStudents$ = this.bannedStudents$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedBannedStudent: StudentBan | null = null;
@@ -116,7 +117,7 @@ export class ManageStudentBanComponent {
     }
   }
 
-  getBannedStudents($event: LazyLoadEvent) {
+  getBannedStudents($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.studentBannedService
@@ -137,7 +138,7 @@ export class ManageStudentBanComponent {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Studenti u shtua me sukses!');
           this.displayModal = false;
-          this.getBannedStudents(this.filters as LazyLoadEvent);
+          this.getBannedStudents(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -155,7 +156,7 @@ export class ManageStudentBanComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Studenti u ndryshua me sukses!');
-          this.getBannedStudents(this.filters as LazyLoadEvent);
+          this.getBannedStudents(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest)
           this.toastService.showError(
@@ -172,7 +173,7 @@ export class ManageStudentBanComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Studenti u fshi me sukses!');
-          this.getBannedStudents(this.filters as LazyLoadEvent);
+          this.getBannedStudents(this.filters as TableLazyLoadEvent);
         }
 
         if (response.isBadRequest)

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -21,6 +21,7 @@ import { BehaviorSubject } from 'rxjs';
 import { RegionFormComponent } from '../region-form/region-form.component';
 import { RegionGridComponent } from '../region-grid/region-grid.component';
 import { RippleModule } from 'primeng/ripple';
+import {TableLazyLoadEvent} from "primeng/table";
 
 @UntilDestroy()
 @Component({
@@ -44,7 +45,7 @@ import { RippleModule } from 'primeng/ripple';
 export class ManageRegionsComponent {
   private regions$$ = new BehaviorSubject<Region[]>([]);
   regions$ = this.regions$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedRegion: Region | null = null;
@@ -109,7 +110,7 @@ export class ManageRegionsComponent {
     }
   }
 
-  getRegions($event: LazyLoadEvent) {
+  getRegions($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.regionService
@@ -129,7 +130,7 @@ export class ManageRegionsComponent {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Rajoni u shtua me sukses!');
           this.displayModal = false;
-          this.getRegions(this.filters as LazyLoadEvent);
+          this.getRegions(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -147,7 +148,7 @@ export class ManageRegionsComponent {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Rajoni u ndryshua me sukses!');
           this.displayModal = false;
-          this.getRegions(this.filters as LazyLoadEvent);
+          this.getRegions(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -164,7 +165,7 @@ export class ManageRegionsComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Rajoni u fshi me sukses!');
-          this.getRegions(this.filters as LazyLoadEvent);
+          this.getRegions(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)

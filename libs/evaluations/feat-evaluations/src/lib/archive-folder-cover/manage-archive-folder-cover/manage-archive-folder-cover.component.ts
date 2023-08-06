@@ -5,7 +5,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ArchiveFolderCoverGridComponent } from '../archive-folder-cover-grid/archive-folder-cover-grid.component';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
-import { ConfirmationService, LazyLoadEvent, MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem } from 'primeng/api';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   GlobalToastService,
@@ -23,6 +23,7 @@ import {
 } from '@msh/configurations/data-access-configurations';
 import { RippleModule } from 'primeng/ripple';
 import { ArchiveFolder } from '@msh/shared/domain-models';
+import {TableLazyLoadEvent} from "primeng/table";
 
 @Component({
   selector: 'msh-manage-archive-folder-cover',
@@ -45,7 +46,7 @@ import { ArchiveFolder } from '@msh/shared/domain-models';
 export class ManageArchiveFolderCoverComponent implements OnInit {
   private archiveFolders$$ = new BehaviorSubject<ArchiveFolder[]>([]);
   archiveFolders$ = this.archiveFolders$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
   totalRecords = 0;
 
   selectedArchiveFolder: ArchiveFolder | null = null;
@@ -135,7 +136,7 @@ export class ManageArchiveFolderCoverComponent implements OnInit {
     }
   }
 
-  getArchiveFolders($event: LazyLoadEvent) {
+  getArchiveFolders($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.archiveFolderService
@@ -155,7 +156,7 @@ export class ManageArchiveFolderCoverComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Dosja u shtua me sukses!');
           this.displayModal = false;
-          this.getArchiveFolders(this.filters as LazyLoadEvent);
+          this.getArchiveFolders(this.filters as TableLazyLoadEvent);
         }
 
         if (response.isBadRequest)
@@ -173,7 +174,7 @@ export class ManageArchiveFolderCoverComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Dosja u ndryshua me sukses!');
           this.displayModal = false;
-          this.getArchiveFolders(this.filters as LazyLoadEvent);
+          this.getArchiveFolders(this.filters as TableLazyLoadEvent);
         }
 
         if (response.isBadRequest)
@@ -190,7 +191,7 @@ export class ManageArchiveFolderCoverComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Dosja u fshi me sukses!');
-          this.getArchiveFolders(this.filters as LazyLoadEvent);
+          this.getArchiveFolders(this.filters as TableLazyLoadEvent);
         }
 
         if (response.isBadRequest)

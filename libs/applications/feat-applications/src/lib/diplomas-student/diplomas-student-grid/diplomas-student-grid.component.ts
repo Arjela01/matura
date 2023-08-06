@@ -13,7 +13,7 @@ import {
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import {TableLazyLoadEvent, TableRowSelectEvent, TableRowUnSelectEvent} from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -50,7 +50,7 @@ export class DiplomasStudentGridComponent {
 
   @Output() gridEvent = new EventEmitter<GridEvent<Student>>();
 
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
   student: Student[] = [];
   // onEditClick(student: Student) {
@@ -67,10 +67,10 @@ export class DiplomasStudentGridComponent {
     } as GridEvent<Student>);
   }
 
-  onRowSelect({ data }: { data: Student }) {
+  onRowSelect($event: TableRowSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
-      data: data,
+      data: $event.data,
     } as GridEvent<Student>);
   }
 
@@ -81,14 +81,14 @@ export class DiplomasStudentGridComponent {
     } as GridEvent<Student>);
   }
 
-  onRowUnselect({ data }: { data: Student }) {
+  onRowUnselect($event: TableRowUnSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
-      data: data,
+      data: $event.data,
     } as GridEvent<Student>);
   }
 
-  loadRows($event: LazyLoadEvent) {
+  loadRows($event: TableLazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
 }

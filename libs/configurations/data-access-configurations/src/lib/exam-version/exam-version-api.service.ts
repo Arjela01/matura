@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ExamVersion, ExamVersionTableView } from '@msh/shared/domain-models';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
@@ -11,7 +11,7 @@ import { APIService } from '@msh/shared/util-shared';
 export class ExamVersionApiService {
   constructor(private apiService: APIService) {}
 
-  loadExamVersions(event: LazyLoadEvent): Observable<ExamVersionTableView> {
+  loadExamVersions(event: TableLazyLoadEvent): Observable<ExamVersionTableView> {
     return this.apiService.post(`/ExamVersion/TableData`, event);
   }
 

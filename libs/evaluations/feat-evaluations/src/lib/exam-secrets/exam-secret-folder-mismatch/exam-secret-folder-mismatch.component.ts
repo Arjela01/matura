@@ -17,7 +17,7 @@ import {
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ExamSecret } from '@msh/shared/domain-models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExamSecretApiService } from '@msh/evaluations/data-access-evaluations';
@@ -68,7 +68,7 @@ export class ExamSecretFolderMismatchComponent {
     } as GridEvent<ExamSecret>);
   }
 
-  loadRows($event: LazyLoadEvent) {
+  loadRows($event: TableLazyLoadEvent) {
     this.examSecretApiService
       .loadExamSecretFolderMismatch($event)
       .pipe(untilDestroyed(this))

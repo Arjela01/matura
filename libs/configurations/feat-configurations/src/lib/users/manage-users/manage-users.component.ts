@@ -24,7 +24,7 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -34,6 +34,7 @@ import { BehaviorSubject } from 'rxjs';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { UserGridComponent } from '../user-grid/user-grid.component';
 import { UsersPasswordResetViewComponent } from '../users-password-reset-view/users-password-reset-view.component';
+import {TableLazyLoadEvent} from "primeng/table";
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-users',
@@ -57,7 +58,7 @@ import { UsersPasswordResetViewComponent } from '../users-password-reset-view/us
 export class ManageUsersComponent implements OnInit {
   private users$$ = new BehaviorSubject<User[]>([]);
   users$ = this.users$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedUser: User | null = null;
@@ -167,7 +168,7 @@ export class ManageUsersComponent implements OnInit {
     }
   }
 
-  getUsers($event: LazyLoadEvent): void {
+  getUsers($event: TableLazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
 
     this.userService
@@ -194,7 +195,7 @@ export class ManageUsersComponent implements OnInit {
               : 'Përdoruesi u aktivizua me sukses!'
           );
           this.displayModal = false;
-          this.getUsers(this.filters as LazyLoadEvent);
+          this.getUsers(this.filters as TableLazyLoadEvent);
         }
 
         if (response.isBadRequest)
@@ -212,7 +213,7 @@ export class ManageUsersComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Përdoruesi u shtua me sukses');
           this.userDialog = false;
-          this.getUsers(this.filters as LazyLoadEvent);
+          this.getUsers(this.filters as TableLazyLoadEvent);
         }
 
         if (!response.isSuccessful) {
@@ -234,7 +235,7 @@ export class ManageUsersComponent implements OnInit {
           this.toastService.showSuccess('Përdoruesi u ndryshua me sukses!');
 
           this.userDialog = false;
-          this.getUsers(this.filters as LazyLoadEvent);
+          this.getUsers(this.filters as TableLazyLoadEvent);
         }
         if (!response.isSuccessful) {
           this.toastService.showError(
@@ -276,7 +277,7 @@ export class ManageUsersComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Perdoruesi u fshi me sukses!');
-          this.getUsers(this.filters as LazyLoadEvent);
+          this.getUsers(this.filters as TableLazyLoadEvent);
         }
         if (!response.isSuccessful) {
           this.toastService.showError(

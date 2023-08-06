@@ -29,7 +29,7 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import {
   ExamSubjectApiService,
@@ -39,6 +39,7 @@ import {
 import { Router } from '@angular/router';
 import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
 import { TooltipModule } from 'primeng/tooltip';
+import {TableLazyLoadEvent} from "primeng/table";
 
 @UntilDestroy()
 @Component({
@@ -72,7 +73,7 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
   @Input() examTypes: DropdownModel<number>[] = [];
   @Output() examTypeChanged = new EventEmitter<string>();
 
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
@@ -189,7 +190,7 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
     }
   }
 
-  getStudents($event: LazyLoadEvent): void {
+  getStudents($event: TableLazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
     this.studentService
       .loadStudents($event)

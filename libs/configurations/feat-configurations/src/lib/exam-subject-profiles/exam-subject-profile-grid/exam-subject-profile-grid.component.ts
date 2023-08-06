@@ -6,7 +6,7 @@ import {
   Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TableModule } from 'primeng/table';
+import {TableModule, TableRowSelectEvent, TableRowUnSelectEvent} from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
@@ -18,7 +18,7 @@ import {
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @Component({
   selector: 'msh-exam-subject-profile-grid',
@@ -49,7 +49,7 @@ export class ExamSubjectProfileGridComponent {
     GridEvent<ExamSubjectProfile | ExamSubjectProfile[]>
   >();
 
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
   onEditClick(examSubject: ExamSubjectProfile) {
     this.gridEvent.emit({
@@ -78,21 +78,21 @@ export class ExamSubjectProfileGridComponent {
     }
   }
 
-  onRowSelect({ data }: { data: ExamSubjectProfile }) {
+  onRowSelect($event: TableRowSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
-      data: data,
+      data: $event.data,
     } as GridEvent<ExamSubjectProfile>);
   }
 
-  onRowUnselect({ data }: { data: ExamSubjectProfile }) {
+  onRowUnselect($event: TableRowUnSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
-      data: data,
+      data: $event.data,
     } as GridEvent<ExamSubjectProfile>);
   }
 
-  loadRows($event: LazyLoadEvent) {
+  loadRows($event: TableLazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
 }

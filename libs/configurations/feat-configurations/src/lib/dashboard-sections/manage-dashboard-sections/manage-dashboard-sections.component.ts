@@ -13,7 +13,7 @@ import {
   GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService, } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -22,6 +22,7 @@ import { BehaviorSubject } from 'rxjs';
 import { RippleModule } from 'primeng/ripple';
 import { DashboardSectionsGridComponent } from '../dashboard-sections-grid/dashboard-sections-grid.component';
 import { DashboardSectionsFormComponent } from '../dashboard-sections-form/dashboard-sections-form.component';
+import {TableLazyLoadEvent} from "primeng/table";
 
 @Component({
   selector: 'msh-manage-dashboard-sections',
@@ -45,7 +46,7 @@ import { DashboardSectionsFormComponent } from '../dashboard-sections-form/dashb
 export class ManageDashboardSectionsComponent implements OnInit {
   private dashboardSections$$ = new BehaviorSubject<DashboardSection[]>([]);
   dashboardSections$ = this.dashboardSections$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedDashboardSection: DashboardSection | null = null;
@@ -124,7 +125,7 @@ export class ManageDashboardSectionsComponent implements OnInit {
     }
   }
 
-  getDashboardSections($event: LazyLoadEvent) {
+  getDashboardSections($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.dashboardSectionService
@@ -146,7 +147,7 @@ export class ManageDashboardSectionsComponent implements OnInit {
             'Seksioni i dashboard-it u shtua me sukses!'
           );
           this.displayModal = false;
-          this.getDashboardSections(this.filters as LazyLoadEvent);
+          this.getDashboardSections(this.filters as TableLazyLoadEvent);
           this.cd.detectChanges();
         } else this.toastService.showError(response.errorMessage);
 
@@ -167,7 +168,7 @@ export class ManageDashboardSectionsComponent implements OnInit {
             'Seksioni i dashboard-it u ndryshua me sukses!'
           );
           this.displayModal = false;
-          this.getDashboardSections(this.filters as LazyLoadEvent);
+          this.getDashboardSections(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -186,7 +187,7 @@ export class ManageDashboardSectionsComponent implements OnInit {
           this.toastService.showInfo(
             'Seksioni i dashboard-it u fshi me sukses!'
           );
-          this.getDashboardSections(this.filters as LazyLoadEvent);
+          this.getDashboardSections(this.filters as TableLazyLoadEvent);
         }
 
         if (response.isBadRequest)

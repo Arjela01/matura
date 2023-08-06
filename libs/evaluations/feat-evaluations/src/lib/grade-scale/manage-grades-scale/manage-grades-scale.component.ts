@@ -15,7 +15,7 @@ import {
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import * as FileSaver from 'file-saver';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -26,6 +26,7 @@ import { GradeScaleActionComponent } from '../grade-scale-action/grade-scale-act
 import { GradeScaleGridComponent } from '../grade-scale-grid/grade-scale-grid.component';
 import { UploadGradeScaleFormComponent } from '../upload-grade-scale-form/upload-grade-scale-form.component';
 import { GradesScale } from '@msh/shared/domain-models';
+import {TableLazyLoadEvent} from "primeng/table";
 @Component({
   selector: 'msh-manage-grades-scale',
   standalone: true,
@@ -48,8 +49,7 @@ import { GradesScale } from '@msh/shared/domain-models';
 export class ManageGradesScaleComponent implements OnInit {
   private gradeScales$$ = new BehaviorSubject<GradesScale[]>([]);
   gradeScales$ = this.gradeScales$$.asObservable();
-  filters: LazyLoadEvent | null = null;
-  displayGradesModal = false;
+  filters: TableLazyLoadEvent | null = null;
   base64: string | ArrayBuffer | null | undefined;
   totalRecords = 0;
   examTypeDropdown: DropdownModel<number>[] = [];
@@ -68,7 +68,7 @@ export class ManageGradesScaleComponent implements OnInit {
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([_]) => {
       if (this.filters) {
-        this.getGradeScales(this.filters as LazyLoadEvent);
+        this.getGradeScales(this.filters as TableLazyLoadEvent);
       }
     }),
     tap()
@@ -77,7 +77,7 @@ export class ManageGradesScaleComponent implements OnInit {
     this.getTypesDropdown();
   }
   onFormSave() {
-    this.getGradeScales(this.filters as LazyLoadEvent);
+    this.getGradeScales(this.filters as TableLazyLoadEvent);
     this.displayModal = false;
   }
   getTypesDropdown() {
@@ -101,7 +101,7 @@ export class ManageGradesScaleComponent implements OnInit {
     }
   }
 
-  getGradeScales($event: LazyLoadEvent) {
+  getGradeScales($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
     this.examSubjectsService
       .loadExamSubjects($event)

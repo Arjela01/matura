@@ -14,7 +14,7 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -23,6 +23,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { StudyProgramFormComponent } from '../study-program-form/study-program-form.component';
 import { StudyProgramGridComponent } from '../study-program-grid/study-program-grid.component';
+import {TableLazyLoadEvent} from "primeng/table";
 
 @UntilDestroy()
 @Component({
@@ -46,7 +47,7 @@ import { StudyProgramGridComponent } from '../study-program-grid/study-program-g
 export class ManageStudyProgramsComponent implements OnInit {
   private studyPrograms$$ = new BehaviorSubject<StudyProgram[]>([]);
   studyPrograms$ = this.studyPrograms$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedstudyProgram: StudyProgram | null = null;
@@ -67,7 +68,7 @@ export class ManageStudyProgramsComponent implements OnInit {
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([_]) => {
       if (this.filters) {
-        this.getStudyPrograms(this.filters as LazyLoadEvent);
+        this.getStudyPrograms(this.filters as TableLazyLoadEvent);
       }
     }),
     tap()
@@ -136,7 +137,7 @@ export class ManageStudyProgramsComponent implements OnInit {
     }
   }
 
-  getStudyPrograms($event: LazyLoadEvent) {
+  getStudyPrograms($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.studyProgramService
@@ -158,7 +159,7 @@ export class ManageStudyProgramsComponent implements OnInit {
             'Programi i Studimit u shtua me sukses!'
           );
           this.displayModal = false;
-          this.getStudyPrograms(this.filters as LazyLoadEvent);
+          this.getStudyPrograms(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (!response.isSuccessful)
@@ -178,7 +179,7 @@ export class ManageStudyProgramsComponent implements OnInit {
             'Programi i studimit u ndryshua me sukses!'
           );
           this.displayModal = false;
-          this.getStudyPrograms(this.filters as LazyLoadEvent);
+          this.getStudyPrograms(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (!response.isSuccessful)
@@ -195,7 +196,7 @@ export class ManageStudyProgramsComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Programi i Studimit u fshi me sukses!');
-          this.getStudyPrograms(this.filters as LazyLoadEvent);
+          this.getStudyPrograms(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (!response.isSuccessful)

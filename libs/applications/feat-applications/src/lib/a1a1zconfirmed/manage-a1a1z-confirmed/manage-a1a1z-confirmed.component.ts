@@ -10,7 +10,7 @@ import {
   GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService, } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -18,6 +18,7 @@ import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { A1a1zGridComponent } from '../a1a1z-grid/a1a1z-grid.component';
+import {TableLazyLoadEvent} from "primeng/table";
 
 @Component({
   selector: 'manage-a1a1z-confirmed',
@@ -41,7 +42,7 @@ import { A1a1zGridComponent } from '../a1a1z-grid/a1a1z-grid.component';
 export class ManageA1a1zConfirmedComponent {
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
   totalRecords = 0;
 
   constructor(
@@ -79,7 +80,7 @@ export class ManageA1a1zConfirmedComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Formulari u refuzua me sukses!');
-          this.getStudent(this.filters as LazyLoadEvent);
+          this.getStudent(this.filters as TableLazyLoadEvent);
         }
         if (!response.isSuccessful) {
           this.toastService.showError('Ndodhi një problem!');
@@ -93,7 +94,7 @@ export class ManageA1a1zConfirmedComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Formulari u aprovua me sukses!');
-          this.getStudent(this.filters as LazyLoadEvent);
+          this.getStudent(this.filters as TableLazyLoadEvent);
         }
         if (!response.isSuccessful) {
           this.toastService.showError('Ndodhi një problem!');
@@ -101,7 +102,7 @@ export class ManageA1a1zConfirmedComponent {
       });
   }
 
-  getStudent($event: LazyLoadEvent): void {
+  getStudent($event: TableLazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
     this.a1a1zService
       .loadStudentToConfirm($event)

@@ -7,7 +7,7 @@ import {
   UserTableView,
 } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -16,7 +16,7 @@ import { Observable } from 'rxjs';
 export class UserApiService {
   constructor(private http: HttpClient, private apiService: APIService) {}
 
-  loadUsers(event: LazyLoadEvent): Observable<UserTableView> {
+  loadUsers(event: TableLazyLoadEvent): Observable<UserTableView> {
     return this.apiService.post(`/User/TableData`, event);
   }
 

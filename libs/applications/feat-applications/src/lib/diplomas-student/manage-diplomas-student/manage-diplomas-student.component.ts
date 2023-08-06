@@ -22,7 +22,7 @@ import {
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import * as FileSaver from 'file-saver';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService, } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -31,6 +31,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject, Observable, combineLatest, map, tap } from 'rxjs';
 import { DiplomasStudentFormComponent } from '../diplomas-student-form/diplomas-student-form.component';
 import { DiplomasStudentGridComponent } from '../diplomas-student-grid/diplomas-student-grid.component';
+import {TableLazyLoadEvent} from "primeng/table";
 let INITIAL_FILTER = {};
 @Component({
   selector: 'msh-manage-diplomas-student',
@@ -57,7 +58,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
   @Input() title = 'Diplomat';
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
   displayModal = false;
   hideStudentForm = true;
   totalRecords = 0;
@@ -87,7 +88,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([_]) => {
       if (this.filters) {
-        this.getStudentDiplomas(this.filters as LazyLoadEvent);
+        this.getStudentDiplomas(this.filters as TableLazyLoadEvent);
       }
     }),
     tap()
@@ -150,7 +151,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
             type: 'application/pdf',
           });
           FileSaver.saveAs(blob, `Diploma_${event.data?.fullName}`);
-          this.getStudentDiplomas(this.filters as LazyLoadEvent);
+          this.getStudentDiplomas(this.filters as TableLazyLoadEvent);
         },
         err => {
           this.toastService.showError(err.error);
@@ -170,7 +171,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
         });
         FileSaver.saveAs(blob, `Diplomat`);
         this.displayModal = false;
-        this.getStudentDiplomas(this.filters as LazyLoadEvent);
+        this.getStudentDiplomas(this.filters as TableLazyLoadEvent);
       },
       err => {
         this.toastService.showError(err.error);
@@ -186,7 +187,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
       });
   }
 
-  getStudentDiplomas($event: LazyLoadEvent): void {
+  getStudentDiplomas($event: TableLazyLoadEvent): void {
     INITIAL_FILTER = {
       isPrinted: [
         {

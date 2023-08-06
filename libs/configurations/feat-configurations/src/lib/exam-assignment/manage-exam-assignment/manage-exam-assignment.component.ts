@@ -6,7 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService, } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -31,6 +31,7 @@ import { ExamAssignmentFormComponent } from '../exam-assignment-form/exam-assign
 import { UploadFormComponent } from '../upload-form/upload-form.component';
 import * as FileSaver from 'file-saver';
 import { AssignAllFormComponent } from '../assign-all-form/assign-all-form.component';
+import {TableLazyLoadEvent} from "primeng/table";
 
 @UntilDestroy()
 @Component({
@@ -56,7 +57,7 @@ import { AssignAllFormComponent } from '../assign-all-form/assign-all-form.compo
 export class ManageExamAssignmentComponent implements OnInit {
   private examAssignments$$ = new BehaviorSubject<ExamAssignment[]>([]);
   examAssignments$ = this.examAssignments$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   examAssignment: ExamAssignment | null = null;
@@ -135,7 +136,7 @@ export class ManageExamAssignmentComponent implements OnInit {
 
   onUploadClose() {
     this.displayUploadModal = false;
-    this.getExamAssignments(this.filters as LazyLoadEvent);
+    this.getExamAssignments(this.filters as TableLazyLoadEvent);
   }
 
   onNewClick() {
@@ -162,7 +163,7 @@ export class ManageExamAssignmentComponent implements OnInit {
     }
   }
   onUploadFormSave() {
-    this.getExamAssignments(this.filters as LazyLoadEvent);
+    this.getExamAssignments(this.filters as TableLazyLoadEvent);
   }
   onAdministrationOfficeChanged(administrationOfficeId: number) {
     this.getExamSite(administrationOfficeId);
@@ -184,7 +185,7 @@ export class ManageExamAssignmentComponent implements OnInit {
     this.cd.detectChanges();
   }
 
-  getExamAssignments($event: LazyLoadEvent) {
+  getExamAssignments($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.examAssignmentService
@@ -213,7 +214,7 @@ export class ManageExamAssignmentComponent implements OnInit {
             'Caktimi në qendër provimi u shtua me sukses!'
           );
           this.displayModal = false;
-          this.getExamAssignments(this.filters as LazyLoadEvent);
+          this.getExamAssignments(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -235,7 +236,7 @@ export class ManageExamAssignmentComponent implements OnInit {
           this.displayModal = false;
           this.getExamSiteDropdown();
           this.getExamDateDropdown();
-          this.getExamAssignments(this.filters as LazyLoadEvent);
+          this.getExamAssignments(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -254,7 +255,7 @@ export class ManageExamAssignmentComponent implements OnInit {
           this.toastService.showInfo(
             'Caktimi në qendrën e provimit u fshi me sukses!'
           );
-          this.getExamAssignments(this.filters as LazyLoadEvent);
+          this.getExamAssignments(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -312,7 +313,7 @@ export class ManageExamAssignmentComponent implements OnInit {
             'Studentët u caktuan me sukses në qendrat e zgjedhura.'
           );
           this.displayAssignAllModal = false;
-          this.getExamAssignments(this.filters as LazyLoadEvent);
+          this.getExamAssignments(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest) {
           this.toastService.showError(

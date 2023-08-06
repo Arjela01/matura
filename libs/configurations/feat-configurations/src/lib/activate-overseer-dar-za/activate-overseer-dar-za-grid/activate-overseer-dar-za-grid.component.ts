@@ -12,12 +12,12 @@ import {
   GRID_ACTIONS,
   ColumnFilterDirective,
 } from '@msh/shared/util-shared';
-import { LazyLoadEvent, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
-import { TableModule } from 'primeng/table';
+import {TableLazyLoadEvent, TableModule, TableRowSelectEvent, TableRowUnSelectEvent} from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { AdministrationOffice } from '@msh/shared/domain-models';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -46,7 +46,7 @@ export class ActivateOverseerDarZaGridComponent {
   @Input() administrationOffices: AdministrationOffice[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
   @Output() gridEvent = new EventEmitter<
     GridEvent<AdministrationOffice | AdministrationOffice[]>
@@ -90,21 +90,21 @@ export class ActivateOverseerDarZaGridComponent {
     } as GridEvent<AdministrationOffice>);
   }
 
-  onRowSelect({ data }: { data: AdministrationOffice }) {
+  onRowSelect($event: TableRowSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
-      data: data.id,
+      data: $event.data,
     } as GridEvent<AdministrationOffice>);
   }
 
-  onRowUnselect({ data }: { data: AdministrationOffice }) {
+  onRowUnselect($event: TableRowUnSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
-      data: data,
+      data: $event.data,
     } as GridEvent<AdministrationOffice>);
   }
 
-  loadRows($event: LazyLoadEvent) {
+  loadRows($event: TableLazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
 }

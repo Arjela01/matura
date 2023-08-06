@@ -5,7 +5,7 @@ import {
 } from '@msh/shared/domain-models';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 
@@ -15,7 +15,7 @@ import { HttpParams } from '@angular/common/http';
 export class ExamSubjectProfileApiService {
   constructor(private apiService: APIService) {}
 
-  loadTableData(event: LazyLoadEvent): Observable<ExamSubjectProfileTableView> {
+  loadTableData(event: TableLazyLoadEvent): Observable<ExamSubjectProfileTableView> {
     return this.apiService.post(`/ExamSubjectProfile/TableData`, event);
   }
 

@@ -12,7 +12,7 @@ import {
   GRID_ACTIONS,
   ColumnFilterDirective,
 } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ChipModule } from 'primeng/chip';
@@ -49,7 +49,7 @@ export class A1a1zGridComponent {
 
   @Output() gridEvent = new EventEmitter<GridEvent<Student | Student[]>>();
 
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
   student: Student[] = [];
   // onEditClick(student: Student) {
@@ -72,7 +72,7 @@ export class A1a1zGridComponent {
     } as GridEvent<Student>);
   }
 
-  loadRows($event: LazyLoadEvent) {
+  loadRows($event: TableLazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
 }

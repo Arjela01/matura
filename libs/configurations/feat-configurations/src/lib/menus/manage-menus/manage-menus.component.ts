@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService, } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -25,6 +25,7 @@ import { MenuGridComponent } from '../menu-grid/menu-grid.component';
 import { MenuFormComponent } from '../menu-form/menu-form.component';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { RippleModule } from 'primeng/ripple';
+import {TableLazyLoadEvent} from "primeng/table";
 
 @UntilDestroy()
 @Component({
@@ -48,7 +49,7 @@ import { RippleModule } from 'primeng/ripple';
 export class ManageMenusComponent implements OnInit {
   private menus$$ = new BehaviorSubject<Menu[]>([]);
   menus$ = this.menus$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedMenu: Menu | null = null;
@@ -121,7 +122,7 @@ export class ManageMenusComponent implements OnInit {
     }
   }
 
-  getMenus($event: LazyLoadEvent) {
+  getMenus($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.menuService
@@ -141,7 +142,7 @@ export class ManageMenusComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Menuja u shtua me sukses!');
           this.displayModal = false;
-          this.getMenus(this.filters as LazyLoadEvent);
+          this.getMenus(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -159,7 +160,7 @@ export class ManageMenusComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Menuja u ndryshua me sukses!');
           this.displayModal = false;
-          this.getMenus(this.filters as LazyLoadEvent);
+          this.getMenus(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -176,7 +177,7 @@ export class ManageMenusComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Menu-ja u fshi me sukses!');
-          this.getMenus(this.filters as LazyLoadEvent);
+          this.getMenus(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)

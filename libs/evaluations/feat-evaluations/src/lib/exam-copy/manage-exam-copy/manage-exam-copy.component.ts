@@ -12,7 +12,7 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -23,6 +23,7 @@ import { ExamCopyDetailsComponent } from '../exam-copy-details/exam-copy-details
 import { ExamCopyGridComponent } from '../exam-copy-grid/exam-copy-grid.component';
 import * as FileSaver from 'file-saver';
 import { ExamCopy } from '@msh/shared/domain-models';
+import {TableLazyLoadEvent} from "primeng/table";
 
 @UntilDestroy()
 @Component({
@@ -47,7 +48,7 @@ import { ExamCopy } from '@msh/shared/domain-models';
 export class ManageExamCopyComponent implements OnInit {
   private examCopies$$ = new BehaviorSubject<ExamCopy[]>([]);
   examCopies$ = this.examCopies$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   selecetdExamCopy: ExamCopy | null = null;
 

@@ -4,7 +4,7 @@ import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { HttpParams } from '@angular/common/http';
 import {ArchiveExam, ExamScore, ExamScoreTableView, FileImport} from '@msh/shared/domain-models';
-import {LazyLoadEvent} from "primeng/api";
+import {TableLazyLoadEvent} from "primeng/table";
 
 @Injectable({
   providedIn: 'root',
@@ -80,7 +80,7 @@ export class ExamScoreApiService {
   }
 
   loadUnmatchedExamScores(
-      event: LazyLoadEvent
+      event: TableLazyLoadEvent
   ): Observable<ExamScoreTableView> {
     return this.apiService.post(`/ExamScores/UnmatchedExams`, event).pipe(
         map((data: any) => data),
@@ -89,7 +89,7 @@ export class ExamScoreApiService {
   }
 
   loadMatchedExamScores(
-      event: LazyLoadEvent
+      event: TableLazyLoadEvent
   ): Observable<ExamScoreTableView> {
     return this.apiService.post(`/ExamScores/MatchedExams`, event).pipe(
         map((data: any) => data),

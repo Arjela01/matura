@@ -5,7 +5,7 @@ import {
 } from '@msh/shared/domain-models';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -20,7 +20,7 @@ export class StudyProgramApiService {
     );
   }
 
-  loadStudyPrograms(event: LazyLoadEvent): Observable<StudyProgramsTableView> {
+  loadStudyPrograms(event: TableLazyLoadEvent): Observable<StudyProgramsTableView> {
     return this.apiService.post(`/StudyProgram/TableData`, event);
   }
 

@@ -22,7 +22,7 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService, } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -36,6 +36,7 @@ import {
   SharedStudentLookupModule,
 } from '@msh/shared/student-lookup';
 import { Student } from '@msh/shared/domain-models';
+import {TableLazyLoadEvent} from "primeng/table";
 
 @Component({
   selector: 'msh-manage-carried-grades',
@@ -60,7 +61,7 @@ import { Student } from '@msh/shared/domain-models';
 export class ManageCarriedGradesComponent implements OnInit {
   private carriedGrades$$ = new BehaviorSubject<CarriedGrade[]>([]);
   carriedGrades$ = this.carriedGrades$$.asObservable();
-  filters: LazyLoadEvent = {} as LazyLoadEvent;
+  filters: TableLazyLoadEvent = {} as TableLazyLoadEvent;
 
   totalRecords = 0;
   selectedCarriedGrade?: CarriedGrade;
@@ -177,7 +178,7 @@ export class ManageCarriedGradesComponent implements OnInit {
     }
   }
 
-  getCarriedGrades($event: LazyLoadEvent) {
+  getCarriedGrades($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
     this.carriedGradeApiService
       .loadCarriedGrades($event)
@@ -293,7 +294,7 @@ export class ManageCarriedGradesComponent implements OnInit {
     this.cd.detectChanges();
   }
 
-  getStudents($event: LazyLoadEvent): void {
+  getStudents($event: TableLazyLoadEvent): void {
     this.studentsApiService
       .loadStudents($event)
       .pipe(untilDestroyed(this))

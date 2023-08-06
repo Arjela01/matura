@@ -4,7 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToolbarModule } from 'primeng/toolbar';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService, } from 'primeng/api';
 import {
   GlobalToastService,
   GRID_ACTIONS,
@@ -24,6 +24,7 @@ import { ExamVersionFormComponent } from '../exam-version-form/exam-version-form
 import { ExamVersionGridComponent } from '../exam-version-grid/exam-version-grid.component';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { RippleModule } from 'primeng/ripple';
+import {TableLazyLoadEvent} from "primeng/table";
 
 @UntilDestroy()
 @Component({
@@ -47,7 +48,7 @@ import { RippleModule } from 'primeng/ripple';
 export class ManageExamVersionsComponent implements OnInit {
   examVersions$$ = new BehaviorSubject<ExamVersion[]>([]);
   examVersions$ = this.examVersions$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedExamVersion: ExamVersion | null = null;
@@ -127,7 +128,7 @@ export class ManageExamVersionsComponent implements OnInit {
     this.displayModal = false;
   }
 
-  getExamVersions($event: LazyLoadEvent) {
+  getExamVersions($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.examVersionService
@@ -147,7 +148,7 @@ export class ManageExamVersionsComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Teza u shtua me sukses!');
           this.displayModal = false;
-          this.getExamVersions(this.filters as LazyLoadEvent);
+          this.getExamVersions(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -165,7 +166,7 @@ export class ManageExamVersionsComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Teza u ndryshua me sukses!');
           this.displayModal = false;
-          this.getExamVersions(this.filters as LazyLoadEvent);
+          this.getExamVersions(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -182,7 +183,7 @@ export class ManageExamVersionsComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Teza u fshi me sukses!');
-          this.getExamVersions(this.filters as LazyLoadEvent);
+          this.getExamVersions(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)

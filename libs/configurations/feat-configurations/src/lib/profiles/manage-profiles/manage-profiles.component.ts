@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService, } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 
@@ -32,6 +32,7 @@ import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ProfileFormComponent } from '../profile-form/profile-form.component';
 import { ProfileGridComponent } from '../profile-grid/profile-grid.component';
 import * as FileSaver from 'file-saver';
+import {TableLazyLoadEvent} from "primeng/table";
 
 @UntilDestroy()
 @Component({
@@ -55,7 +56,7 @@ import * as FileSaver from 'file-saver';
 export class ManageProfilesComponent implements OnInit {
   private profiles$$ = new BehaviorSubject<Profile[]>([]);
   profiles$ = this.profiles$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
   totalRecords = 0;
   selectedProfile: Profile | null = null;
   selectedProfiles: Profile[] = [];
@@ -64,7 +65,7 @@ export class ManageProfilesComponent implements OnInit {
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([_]) => {
       if (this.filters) {
-        this.getProfiles(this.filters as LazyLoadEvent);
+        this.getProfiles(this.filters as TableLazyLoadEvent);
       }
     }),
     tap()
@@ -138,7 +139,7 @@ export class ManageProfilesComponent implements OnInit {
     }
   }
 
-  getProfiles($event: LazyLoadEvent) {
+  getProfiles($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.profileService
@@ -158,7 +159,7 @@ export class ManageProfilesComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Profili u shtua me sukses!');
           this.displayModal = false;
-          this.getProfiles(this.filters as LazyLoadEvent);
+          this.getProfiles(this.filters as TableLazyLoadEvent);
           this.cd.detectChanges();
         } else this.toastService.showError(response.errorMessage);
 
@@ -177,7 +178,7 @@ export class ManageProfilesComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Profili u ndryshua me sukses!');
           this.displayModal = false;
-          this.getProfiles(this.filters as LazyLoadEvent);
+          this.getProfiles(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -194,7 +195,7 @@ export class ManageProfilesComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Profili u fshi me sukses!');
-          this.getProfiles(this.filters as LazyLoadEvent);
+          this.getProfiles(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)

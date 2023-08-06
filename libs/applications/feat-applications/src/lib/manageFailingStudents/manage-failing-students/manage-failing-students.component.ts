@@ -11,7 +11,7 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService, } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -20,6 +20,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ManageFailingStudentsFormComponent } from '../manage-failing-students-form/manage-failing-students-form.component';
 import { ManageFailingStudentsGridComponent } from '../manage-failing-students-grid/manage-failing-students-grid.component';
+import {TableLazyLoadEvent} from "primeng/table";
 
 @UntilDestroy()
 @Component({
@@ -43,7 +44,7 @@ import { ManageFailingStudentsGridComponent } from '../manage-failing-students-g
 export class ManageFailingStudentsComponent {
   private failingStudents$$ = new BehaviorSubject<FailingStudent[]>([]);
   failingStudents$ = this.failingStudents$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedFailingStudent: FailingStudent | null = null;
@@ -53,7 +54,7 @@ export class ManageFailingStudentsComponent {
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([_]) => {
       if (this.filters) {
-        this.getFailingStudents(this.filters as LazyLoadEvent);
+        this.getFailingStudents(this.filters as TableLazyLoadEvent);
       }
     }),
     tap()
@@ -103,7 +104,7 @@ export class ManageFailingStudentsComponent {
     });
   }
 
-  getFailingStudents($event: LazyLoadEvent) {
+  getFailingStudents($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.failingStudentService
@@ -122,7 +123,7 @@ export class ManageFailingStudentsComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Studenti u fshi me sukses!');
-          this.getFailingStudents(this.filters as LazyLoadEvent);
+          this.getFailingStudents(this.filters as TableLazyLoadEvent);
         }
         if (!response.isSuccessful)
           this.toastService.showError(
@@ -140,7 +141,7 @@ export class ManageFailingStudentsComponent {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Studenti u ndryshua me sukses!');
           this.displayModal = false;
-          this.getFailingStudents(this.filters as LazyLoadEvent);
+          this.getFailingStudents(this.filters as TableLazyLoadEvent);
           this.isLoading = false;
         }
 

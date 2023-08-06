@@ -14,7 +14,7 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService, } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -24,6 +24,7 @@ import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { FailingStudentsFormComponent } from '../failing-students-form/failing-students-form.component';
 import { FailingStudentsGridComponent } from '../failing-students-grid/failing-students-grid.component';
 import { StudentsApiService } from '@msh/configurations/data-access-configurations';
+import {TableLazyLoadEvent} from "primeng/table";
 
 @UntilDestroy()
 @Component({
@@ -47,13 +48,13 @@ import { StudentsApiService } from '@msh/configurations/data-access-configuratio
 export class ManageFailingStudentsComponent {
   private failingStudents$$ = new BehaviorSubject<FailingStudent[]>([]);
   failingStudents$ = this.failingStudents$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
   hasAdditionalValue: any;
 
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([_]) => {
       if (this.filters) {
-        this.getStudents(this.filters as LazyLoadEvent);
+        this.getStudents(this.filters as TableLazyLoadEvent);
       }
     }),
     tap()
@@ -97,7 +98,7 @@ export class ManageFailingStudentsComponent {
       studentId: failingStudent.id,
     });
   }
-  getStudents($event: LazyLoadEvent) {
+  getStudents($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
     const params = {
       isFall: false,
@@ -124,7 +125,7 @@ export class ManageFailingStudentsComponent {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Studenti u ndryshua me sukses!');
           this.displayModal = false;
-          this.getStudents(this.filters as LazyLoadEvent);
+          this.getStudents(this.filters as TableLazyLoadEvent);
           console.log(123, failingStudent);
         } else this.toastService.showError(response.errorMessage);
 

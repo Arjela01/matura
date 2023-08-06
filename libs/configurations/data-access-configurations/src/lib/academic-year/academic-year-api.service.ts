@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { AcademicYear, AcademicYearTableView } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
 
 export const ACADEMIC_YEAR_KEY = 'academicYear';
@@ -23,7 +23,7 @@ export class AcademicYearApiService {
       `/AcademicYear/DropdownList`
     );
   }
-  loadAcademicYears(event: LazyLoadEvent): Observable<AcademicYearTableView> {
+  loadAcademicYears(event: TableLazyLoadEvent): Observable<AcademicYearTableView> {
     return this.apiService.post(`/AcademicYear/TableData`, event);
   }
 

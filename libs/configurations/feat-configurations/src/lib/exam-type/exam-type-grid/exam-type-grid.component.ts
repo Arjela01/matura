@@ -6,7 +6,7 @@ import {
   Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TableModule } from 'primeng/table';
+import {TableModule, TableRowSelectEvent, TableRowUnSelectEvent} from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
@@ -18,7 +18,7 @@ import {
 } from '@msh/shared/util-shared';
 import { ExamType } from '@msh/shared/domain-models';
 import { RippleModule } from 'primeng/ripple';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @Component({
   selector: 'msh-exam-type-grid',
@@ -46,7 +46,7 @@ export class ExamTypeGridComponent {
   selectedExamTypes: ExamType[] = [];
 
   @Output() gridEvent = new EventEmitter<GridEvent<ExamType | ExamType[]>>();
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
   onEditClick(examType: ExamType) {
     this.gridEvent.emit({
@@ -75,21 +75,21 @@ export class ExamTypeGridComponent {
     }
   }
 
-  onRowSelect({ data }: { data: ExamType }) {
+  onRowSelect($event: TableRowSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
-      data: data,
+      data: $event.data,
     } as GridEvent<ExamType>);
   }
 
-  onRowUnselect({ data }: { data: ExamType }) {
+  onRowUnselect($event: TableRowUnSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
-      data: data,
+      data: $event.data,
     } as GridEvent<ExamType>);
   }
 
-  loadRows($event: LazyLoadEvent) {
+  loadRows($event: TableLazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
 }

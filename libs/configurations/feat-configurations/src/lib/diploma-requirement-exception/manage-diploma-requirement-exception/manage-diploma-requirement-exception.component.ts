@@ -10,7 +10,7 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService, } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -19,6 +19,7 @@ import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { DiplomaRequirementExceptionGridComponent } from '../diploma-requirement-exception-grid/diploma-requirement-exception-grid.component';
+import {TableLazyLoadEvent} from "primeng/table";
 
 @UntilDestroy()
 @Component({
@@ -42,7 +43,7 @@ import { DiplomaRequirementExceptionGridComponent } from '../diploma-requirement
 export class ManageDiplomaRequirementExceptionComponent {
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedStudent: Student | null = null;
@@ -54,7 +55,7 @@ export class ManageDiplomaRequirementExceptionComponent {
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([_]) => {
       if (this.filters) {
-        this.getStudent(this.filters as LazyLoadEvent);
+        this.getStudent(this.filters as TableLazyLoadEvent);
       }
     }),
     tap()
@@ -74,7 +75,7 @@ export class ManageDiplomaRequirementExceptionComponent {
     this.displayUploadModal = false;
   }
 
-  getStudent($event: LazyLoadEvent): void {
+  getStudent($event: TableLazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
 
     this.studentService
@@ -114,7 +115,7 @@ export class ManageDiplomaRequirementExceptionComponent {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Ndryshimet u ruajten me sukses!');
           this.displayModal = false;
-          this.getStudent(this.filters as LazyLoadEvent);
+          this.getStudent(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest)
           this.toastService.showError(
@@ -133,7 +134,7 @@ export class ManageDiplomaRequirementExceptionComponent {
       this.studentService.uploadExcelFile(this.base64).subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Dokumenti u shtua me sukses!');
-          this.getStudent(this.filters as LazyLoadEvent);
+          this.getStudent(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest)
           this.toastService.showError(

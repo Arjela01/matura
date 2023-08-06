@@ -5,7 +5,7 @@ import {
 } from '@msh/applications/domain-application';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { map, Observable } from 'rxjs';
 
 import * as FileSaver from 'file-saver';
@@ -17,7 +17,7 @@ import { ExamGrade } from '@msh/shared/domain-models';
 export class CarriedGradeApiService {
   constructor(private apiService: APIService) {}
 
-  loadCarriedGrades(event: LazyLoadEvent): Observable<CarriedGradeTable> {
+  loadCarriedGrades(event: TableLazyLoadEvent): Observable<CarriedGradeTable> {
     return this.apiService.post(`/CarriedGrade/TableData`, event).pipe(
       map(x => {
         console.log(x);

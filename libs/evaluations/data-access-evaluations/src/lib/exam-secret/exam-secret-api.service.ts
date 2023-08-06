@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { HttpParams } from '@angular/common/http';
@@ -16,11 +16,11 @@ import {
 export class ExamSecretApiService {
   constructor(private apiService: APIService) {}
 
-  loadExamSecrets(event: LazyLoadEvent): Observable<ExamSecretTableView> {
+  loadExamSecrets(event: TableLazyLoadEvent): Observable<ExamSecretTableView> {
     return this.apiService.post(`/ExamSecrets/TableData`, event);
   }
 
-  loadExamSecretFolderMismatch(event: LazyLoadEvent): Observable<ExamSecretTableView> {
+  loadExamSecretFolderMismatch(event: TableLazyLoadEvent): Observable<ExamSecretTableView> {
     return this.apiService.post(`/ExamSecrets/FolderMismatch`, event);
   }
 

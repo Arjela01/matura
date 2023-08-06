@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Student, StudentTableView } from '@msh/shared/domain-models';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { catchError, map, Observable, throwError } from 'rxjs';
 
 @Injectable({
@@ -21,7 +21,7 @@ export class ConfirmedA1A1ZService {
         catchError(error => throwError(error))
       );
   }
-  loadStudentToConfirm(event: LazyLoadEvent): Observable<StudentTableView> {
+  loadStudentToConfirm(event: TableLazyLoadEvent): Observable<StudentTableView> {
     return this.apiService.post(`/A1A1ZConfirmation/TableData`, event);
   }
   refuseA1A1Z(studentId: string): Observable<ApiResult<Student>> {

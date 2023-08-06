@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { Observable } from 'rxjs';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { StudentBan, StudentBanTableView } from '@msh/shared/domain-models';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class StudentBanApiService {
       `/StudentBan/DropdownList`
     );
   }
-  loadBannedStudents(event: LazyLoadEvent): Observable<StudentBanTableView> {
+  loadBannedStudents(event: TableLazyLoadEvent): Observable<StudentBanTableView> {
     return this.apiService.post(`/StudentBan/TableData`, event);
   }
 

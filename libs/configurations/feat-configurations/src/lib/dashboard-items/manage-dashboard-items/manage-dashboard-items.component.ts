@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService, } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -26,6 +26,7 @@ import { RippleModule } from 'primeng/ripple';
 import { BehaviorSubject } from 'rxjs';
 import { DashboardItemsFormComponent } from '../dashboard-items-form/dashboard-items-form.component';
 import { DashboardItemsGridComponent } from '../dashboard-items-grid/dashboard-items-grid.component';
+import {TableLazyLoadEvent} from "primeng/table";
 
 @UntilDestroy()
 @Component({
@@ -49,7 +50,7 @@ import { DashboardItemsGridComponent } from '../dashboard-items-grid/dashboard-i
 export class ManageDashboardItemsComponent {
   private dashboardItems$$ = new BehaviorSubject<DashboardItem[]>([]);
   dashboardItems$ = this.dashboardItems$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
   users: DropdownModel<number>[] = [];
   roles: DropdownModel<number>[] = [];
 
@@ -125,7 +126,7 @@ export class ManageDashboardItemsComponent {
         break;
     }
   }
-  getDashboardItems($event: LazyLoadEvent) {
+  getDashboardItems($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.dashboardItemsService
@@ -165,7 +166,7 @@ export class ManageDashboardItemsComponent {
             'Konfigurimi i dashboard-it u shtua me sukses!'
           );
           this.displayModal = false;
-          this.getDashboardItems(this.filters as LazyLoadEvent);
+          this.getDashboardItems(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -184,7 +185,7 @@ export class ManageDashboardItemsComponent {
           this.toastService.showInfo(
             'Konfigurimi i dashboard-it u fshi me sukses!'
           );
-          this.getDashboardItems(this.filters as LazyLoadEvent);
+          this.getDashboardItems(this.filters as TableLazyLoadEvent);
         }
 
         if (response.isBadRequest)

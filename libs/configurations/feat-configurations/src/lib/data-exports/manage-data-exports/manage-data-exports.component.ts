@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService, } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -25,6 +25,7 @@ import { DataExportGridComponent } from '../data-export-grid/data-export-grid.co
 import { DataExportFormComponent } from '../data-export-form/data-export-form.component';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { RippleModule } from 'primeng/ripple';
+import {TableLazyLoadEvent} from "primeng/table";
 
 @UntilDestroy()
 @Component({
@@ -48,7 +49,7 @@ import { RippleModule } from 'primeng/ripple';
 export class ManageDataExportsComponent implements OnInit {
   private dataExports$$ = new BehaviorSubject<DataExport[]>([]);
   dataExports$ = this.dataExports$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedDataExport: DataExport | null = null;
@@ -127,7 +128,7 @@ export class ManageDataExportsComponent implements OnInit {
     }
   }
 
-  getDataExports($event: LazyLoadEvent) {
+  getDataExports($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.dataExportService
@@ -147,7 +148,7 @@ export class ManageDataExportsComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('DataExportja u shtua me sukses!');
           this.displayModal = false;
-          this.getDataExports(this.filters as LazyLoadEvent);
+          this.getDataExports(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -165,7 +166,7 @@ export class ManageDataExportsComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('DataExportja u ndryshua me sukses!');
           this.displayModal = false;
-          this.getDataExports(this.filters as LazyLoadEvent);
+          this.getDataExports(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -182,7 +183,7 @@ export class ManageDataExportsComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('data-export-ja u fshi me sukses!');
-          this.getDataExports(this.filters as LazyLoadEvent);
+          this.getDataExports(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)

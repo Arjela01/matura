@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ReportsApiService } from '@msh/configurations/data-access-configurations';
 import { GlobalToastService } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -35,7 +35,7 @@ import { FormsModule } from '@angular/forms';
 export class ManageDynamicReportsComponent implements OnInit {
   private reports$$ = new BehaviorSubject<any[]>([]);
   reports$ = this.reports$$.asObservable();
-  filters: LazyLoadEvent = {} as LazyLoadEvent;
+  filters: TableLazyLoadEvent = {} as TableLazyLoadEvent;
   rolesDropdown: any;
   totalRecords = 0;
   selectedReport: any | null = null;
@@ -70,7 +70,7 @@ export class ManageDynamicReportsComponent implements OnInit {
     this.getReports(this.event);
   }
 
-  getReports($event: LazyLoadEvent) {
+  getReports($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
     this.reportsApiService
       .loadRoleReports($event)

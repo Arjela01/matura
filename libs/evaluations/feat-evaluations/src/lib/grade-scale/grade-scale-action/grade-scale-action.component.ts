@@ -48,7 +48,7 @@ export class GradeScaleActionComponent {
   examSubjectId: any;
   @Input() hasActions = true;
   @Input() examSubjectIdDialog = null;
-  displayModal?: boolean;
+  displayModal = false;
   selectedGradeScale: GradesScale | null = null;
   examSubject: BehaviorSubject<string> = new BehaviorSubject('');
 

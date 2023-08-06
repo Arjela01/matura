@@ -17,7 +17,7 @@ import {
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ExamScore } from '@msh/shared/domain-models';
 import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -66,7 +66,7 @@ export class ExamScoreFolderMismatchComponent {
     } as GridEvent<ExamScore>);
   }
 
-  loadRows($event: LazyLoadEvent) {
+  loadRows($event: TableLazyLoadEvent) {
     this.examScoreApiService
       .loadExamScoreFolderMismatch($event)
       .pipe(untilDestroyed(this))

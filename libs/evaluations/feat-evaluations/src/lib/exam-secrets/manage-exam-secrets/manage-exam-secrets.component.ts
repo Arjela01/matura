@@ -20,7 +20,7 @@ import {
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import * as FileSaver from 'file-saver';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -31,6 +31,7 @@ import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ExamSecretsFormComponent } from '../exam-secrets-form/exam-secrets-form.component';
 import { ExamSecretsGridComponent } from '../exam-secrets-grid/exam-secrets-grid.component';
 import { ExamSecret } from '@msh/shared/domain-models';
+import {TableLazyLoadEvent} from "primeng/table";
 
 @UntilDestroy()
 @Component({
@@ -55,7 +56,7 @@ import { ExamSecret } from '@msh/shared/domain-models';
 export class ManageExamSecretsComponent implements OnInit {
   private examSecrets$$ = new BehaviorSubject<ExamSecret[]>([]);
   examSecrets$ = this.examSecrets$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
   base64: string | ArrayBuffer | null | undefined;
   totalRecords = 0;
   selectedExamSecret: ExamSecret | null = null;
@@ -67,7 +68,7 @@ export class ManageExamSecretsComponent implements OnInit {
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([_]) => {
       if (this.filters) {
-        this.getExamSecrets(this.filters as LazyLoadEvent);
+        this.getExamSecrets(this.filters as TableLazyLoadEvent);
       }
     }),
     tap()
@@ -135,7 +136,7 @@ export class ManageExamSecretsComponent implements OnInit {
       });
   }
 
-  getExamSecrets($event: LazyLoadEvent) {
+  getExamSecrets($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.examSecretService
@@ -154,7 +155,7 @@ export class ManageExamSecretsComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Sekretimi u fshi me sukses!');
-          this.getExamSecrets(this.filters as LazyLoadEvent);
+          this.getExamSecrets(this.filters as TableLazyLoadEvent);
         }
 
         if (response.isBadRequest)
@@ -176,7 +177,7 @@ export class ManageExamSecretsComponent implements OnInit {
         .subscribe(response => {
           if (response.isSuccessful) {
             this.toastService.showSuccess('Dokumenti u shtua me sukses!');
-            this.getExamSecrets(this.filters as LazyLoadEvent);
+            this.getExamSecrets(this.filters as TableLazyLoadEvent);
           }
           if (response.isBadRequest)
             this.toastService.showError(
@@ -232,7 +233,7 @@ export class ManageExamSecretsComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Sekretimi u shtua me sukses!');
           this.displayModal = false;
-          this.getExamSecrets(this.filters as LazyLoadEvent);
+          this.getExamSecrets(this.filters as TableLazyLoadEvent);
         } else {
           this.toastService.showError(response.errorMessage);
         }
@@ -252,7 +253,7 @@ export class ManageExamSecretsComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Sekretimi u ndryshua me sukses!');
           this.displayModal = false;
-          this.getExamSecrets(this.filters as LazyLoadEvent);
+          this.getExamSecrets(this.filters as TableLazyLoadEvent);
         } else {
           this.toastService.showError(response.errorMessage);
         }

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -25,6 +25,7 @@ import {
   UniversityDepartmentApiService,
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import {TableLazyLoadEvent} from "primeng/table";
 
 @UntilDestroy()
 @Component({
@@ -50,7 +51,7 @@ export class ManageUniversityDepartmentsComponent implements OnInit {
     []
   );
   universityDepartments$ = this.universityDepartments$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedUniversityDepartment: UniversityDepartment | null = null;
@@ -128,7 +129,7 @@ export class ManageUniversityDepartmentsComponent implements OnInit {
     }
   }
 
-  getUniversityDepartments($event: LazyLoadEvent) {
+  getUniversityDepartments($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.universityDepartmentService
@@ -148,7 +149,7 @@ export class ManageUniversityDepartmentsComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Fakulteti u shtua me sukses!');
           this.displayModal = false;
-          this.getUniversityDepartments(this.filters as LazyLoadEvent);
+          this.getUniversityDepartments(this.filters as TableLazyLoadEvent);
         }
 
         if (response.isBadRequest)
@@ -166,7 +167,7 @@ export class ManageUniversityDepartmentsComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Fakulteti u ndryshua me sukses!');
           this.displayModal = false;
-          this.getUniversityDepartments(this.filters as LazyLoadEvent);
+          this.getUniversityDepartments(this.filters as TableLazyLoadEvent);
         }
 
         if (response.isBadRequest)
@@ -183,7 +184,7 @@ export class ManageUniversityDepartmentsComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Fakulteti u fshi me sukses!');
-          this.getUniversityDepartments(this.filters as LazyLoadEvent);
+          this.getUniversityDepartments(this.filters as TableLazyLoadEvent);
         }
 
         if (response.isBadRequest)
