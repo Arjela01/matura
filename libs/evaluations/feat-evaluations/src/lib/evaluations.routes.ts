@@ -164,4 +164,11 @@ export const EVALUATION_ROUTES: Route[] = [
         './exam-score-tabular-data-entry/manage-exam-score-tabular-data-entry/manage-exam-score-tabular-data-entry.component'
       ).then(m => m.ManageExamScoreTabularDataEntryComponent),
   },
+  {
+    path: 'exam-scores-folder-mismatch',
+    loadComponent: () =>
+      import(
+        './exam-scores/exam-score-folder-mismatch/exam-score-folder-mismatch.component'
+      ).then(m => m.ExamScoreFolderMismatchComponent),
+  },
 ];

@@ -16,6 +16,12 @@ export class ExamScoreApiService {
     return this.apiService.post(`/ExamScores/TableData`, event);
   }
 
+
+  loadExamScoreFolderMismatch(event: any): Observable<any> {
+    return this.apiService.post(`/ExamScores/FolderMismatch`, event);
+  }
+
+
   save(examScore: ExamScore): Observable<ApiResult<ExamScore>> {
     return this.apiService.post<ApiResult<ExamScore>, ExamScore>(
       `/ExamScores`,
