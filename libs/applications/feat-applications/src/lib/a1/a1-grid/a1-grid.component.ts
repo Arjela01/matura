@@ -28,7 +28,6 @@ import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
-import { AuditLogGridComponent } from '../../../../../../audit-logs/feat-audit-log/src/lib/audit-log-grid/audit-log-grid.component';
 @Component({
   selector: 'a1-grid',
   standalone: true,
@@ -49,7 +48,6 @@ import { AuditLogGridComponent } from '../../../../../../audit-logs/feat-audit-l
     TableModule,
     ColumnFilterDirective,
     RouterLink,
-    AuditLogGridComponent,
   ],
   templateUrl: './a1-grid.component.html',
   styleUrls: ['./a1-grid.component.scss'],

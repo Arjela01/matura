@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { LoaderService } from '../loader-service/loader.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class LoadingInterceptor implements HttpInterceptor {
   private totalRequests = 0;
   private urlsWithoutSpinner = ['VerifyToken', 'Auth'];

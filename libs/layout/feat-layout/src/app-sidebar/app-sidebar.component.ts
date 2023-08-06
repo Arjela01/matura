@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterLinkWithHref } from '@angular/router';
@@ -9,11 +8,7 @@ import { MenuStore } from '@msh/layout/data-access-layout';
 import { MenuNode } from '@msh/layout/domain-layout';
 import { LayoutService } from '@msh/layout/util-layout';
 import { AcademicYear, UserProfile } from '@msh/shared/domain-models';
-import {
-  GlobalSpinnerComponent,
-  LoaderService,
-  LoadingInterceptor,
-} from '@msh/shared/ui-shared';
+import { GlobalSpinnerComponent, LoaderService } from '@msh/shared/ui-shared';
 import { UserProfileApiService } from '@msh/user-section/data-access-user-section';
 import { MenuItem } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
@@ -49,14 +44,7 @@ import { AppMenuitemComponent } from '../app-menuitem/app-menuitem.component';
     ButtonModule,
     DropdownModule,
   ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: LoadingInterceptor,
-      multi: true,
-    },
-    [MenuStore],
-  ],
+  providers: [[MenuStore]],
   templateUrl: './app-sidebar.component.html',
   styleUrls: ['./app-sidebar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

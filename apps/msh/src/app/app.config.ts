@@ -29,9 +29,14 @@ import { getStoreDevToolsProvider } from './build-specifics';
 import { getLocalStorageProvider } from '@msh/shared/data-access-shared';
 import { provideEffects } from '@ngrx/effects';
 import { MessageService } from 'primeng/api';
-import {API_URL, ErrorInterceptorService, REPORTS_APP_URL} from "@msh/shared/util-shared";
-import {LoadingInterceptor} from "@msh/shared/ui-shared";
-import {APOLLO_OPTIONS} from "apollo-angular";
+import {
+  API_URL,
+  ErrorInterceptorService,
+  REPORTS_APP_URL,
+} from '@msh/shared/util-shared';
+import { APOLLO_OPTIONS } from 'apollo-angular';
+import { LoadingInterceptor } from '@msh/shared/ui-shared';
+
 export const appConfig: ApplicationConfig = {
   providers: [
     {
