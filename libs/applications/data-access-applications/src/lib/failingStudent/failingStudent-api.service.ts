@@ -6,6 +6,7 @@ import {
 } from '@msh/applications/domain-application';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
+
 import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
 
@@ -22,7 +23,7 @@ export class FailingStudentApiService {
   }
 
   loadStudentsToFail(
-    event: LazyLoadEvent
+    event: TableLazyLoadEvent
   ): Observable<FailingStudentTableView> {
     return this.apiservice.post(
       '/FailingStudents/TableDataForStudentsOnly',
