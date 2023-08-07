@@ -179,4 +179,11 @@ export const EVALUATION_ROUTES: Route[] = [
         './exam-secrets/exam-secret-folder-mismatch/exam-secret-folder-mismatch.component'
       ).then(m => m.ExamSecretFolderMismatchComponent),
   },
+  {
+    path: 'barcode-without-score',
+    loadComponent: () =>
+      import(
+        './barcode-without-score/barcode-without-score-grid/barcode-without-score-grid.component'
+      ).then(m => m.BarcodeWithoutScoreGridComponent),
+  },
 ];
