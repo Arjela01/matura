@@ -7,13 +7,6 @@
   dataKey="id"
   responsiveLayout="scroll"
   [value]="(barcodeWithoutScoresList$ | async) || []"
-  [totalRecords]="totalRecords"
-  [rows]="10"
-  [paginator]="true"
-  [rowsPerPageOptions]="[10, 20, 30]"
-  [showCurrentPageReport]="true"
-  currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
-  [rowHover]="true"
   selectionMode="multiple"
   [lazy]="true">
   <ng-template pTemplate="header">
@@ -84,6 +77,18 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="isFolderClosed">
+        Statusi
+        <div>
+          <p-sortIcon field="isFolderClosed"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            field="isFolderClosed"
+            matchMode="equals"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
       <th></th>
     </tr>
   </ng-template>
@@ -115,6 +120,16 @@
       </td>
       <td style="width: 20%; min-width: 10rem">
         {{ barcodeWithoutScoresList.createdByName }}
+      </td>
+      <td>
+        <span
+          [ngClass]="
+            barcodeWithoutScoresList.isFolderClosed === true
+              ? ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
+              : ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
+          ">
+          {{ barcodeWithoutScoresList.isFolderClosed === true ? 'Mbyllur' : 'Hapur' }}
+        </span>
       </td>
     </tr>
   </ng-template>

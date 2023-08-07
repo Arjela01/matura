@@ -37,8 +37,6 @@ import { RouterLink } from '@angular/router';
 export class BarcodeWithoutScoreGridComponent implements OnInit {
   private barcodeWithoutScoresList$$ = new BehaviorSubject<ExamGrade[]>([]);
   barcodeWithoutScoresList$ = this.barcodeWithoutScoresList$$.asObservable();
-  totalRecords = 0;
-  filters: LazyLoadEvent | null = null;
 
   constructor(private readonly archiveExamService: ArchiveExamApiService) {}
   ngOnInit() {
@@ -51,7 +49,6 @@ export class BarcodeWithoutScoreGridComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.barcodeWithoutScoresList$$.next(response.data);
-        this.totalRecords = response.data.length;
         console.log(123,response.data)
       });
   }
