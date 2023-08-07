@@ -6,10 +6,10 @@ import {
   OnInit,
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { GlobalSpinnerComponent, LoaderService } from '@msh/shared/ui-shared';
 import { ToastModule } from 'primeng/toast';
 import { PrimeNGConfig } from 'primeng/api';
 import { HttpClientModule } from '@angular/common/http';
+import {GlobalSpinnerComponent, LoaderService} from '@msh/shared/util-shared';
 
 @Component({
   selector: 'msh-root',
@@ -41,6 +41,28 @@ export class AppComponent implements OnInit, AfterViewChecked {
       contains: 'Përmban',
       notContains: 'Nuk përmban',
       endsWith: 'Mbaron me',
+      am: 'PD',
+      chooseDate: 'Data e zgjedhur',
+      chooseMonth: 'Muaji i zgjedhur',
+      chooseYear: 'Viti i zgjedhur',
+      emptySearchMessage: 'Kërko',
+      emptySelectionMessage: '',
+      nextDecade: 'Dekada tjetër',
+      nextHour: 'Ora që vjen',
+      nextMinute: 'Minuti që vjen',
+      nextMonth: 'Muaji që vjen',
+      nextSecond: 'Sekonda që vjen',
+      nextYear: 'Viti që vjen',
+      pending: 'Në proçes',
+      pm: 'PD',
+      prevDecade: 'Dekada e mëparshme',
+      prevHour: 'Ora e mëparshme',
+      prevMinute: 'Minuti e mëparshme',
+      prevMonth: 'Muaji e mëparshme',
+      prevSecond: 'Sekonda e mëparshme',
+      prevYear: 'Viti e mëparshme',
+      searchMessage: 'Kërko',
+      selectionMessage: '',
       equals: 'E njëjtë',
       notEquals: 'Jo e njëjtë',
       dateIs: 'Data është',

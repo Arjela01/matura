@@ -8,7 +8,6 @@ export const APP_ROUTES: Routes = [
       import('@msh/feat-admin-shell').then(m => m.ADMIN_SHELL_ROUTES),
     canActivate: [AuthGuard],
   },
-
   {
     path: 'login',
     loadComponent: () =>

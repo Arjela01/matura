@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { BehaviorSubject, Observable } from 'rxjs';
 import {
   ArchiveFolder,
@@ -25,8 +25,8 @@ export class ArchiveFolderApiService {
   }
 
   // barcodeCorrection(
-  //   Nr:  LazyLoadEvent,
-  //   ExamTypeName:  LazyLoadEvent,
+  //   Nr:  TableLazyLoadEvent,
+  //   ExamTypeName:  TableLazyLoadEvent,
   // ):Observable<ApiResult<ArchiveFolder>> {
   //   return this.apiService.post<ApiResult<ArchiveFolder>, ArchiveFolder>(
   //     `/ArchiveFolder/BarcodeCorrection/${Nr},${ExamTypeName}`,
@@ -34,7 +34,7 @@ export class ArchiveFolderApiService {
   // }
 
   barcodeCorrection(
-    event: LazyLoadEvent
+    event: TableLazyLoadEvent
   ): Observable<BarcodeCorrectionTableView> {
     return this.apiService.post(`/ArchiveFolder/BarcodeCorrection`, event);
   }
@@ -64,7 +64,9 @@ export class ArchiveFolderApiService {
     );
   }
 
-  loadArchiveFolder(event: LazyLoadEvent): Observable<ArchiveFolderTableView> {
+  loadArchiveFolder(
+    event: TableLazyLoadEvent
+  ): Observable<ArchiveFolderTableView> {
     return this.apiService.post(`/ArchiveFolder/TableData`, event);
   }
 

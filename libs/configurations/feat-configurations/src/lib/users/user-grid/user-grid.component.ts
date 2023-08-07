@@ -18,12 +18,17 @@ import {
   GRID_ACTIONS,
   ColumnFilterDirective,
 } from '@msh/shared/util-shared';
-import { LazyLoadEvent, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
-import { TableModule } from 'primeng/table';
+import {
+  TableLazyLoadEvent,
+  TableModule,
+  TableRowSelectEvent,
+  TableRowUnSelectEvent,
+} from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
@@ -59,7 +64,7 @@ export class UserGridComponent {
 
   @Output() gridEvent = new EventEmitter<GridEvent<User | User[]>>();
 
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
   @Input() set usersDetails(details: User | null) {
     if (details) {
       this.user = Object.assign({}, details);
@@ -123,21 +128,21 @@ export class UserGridComponent {
     } as GridEvent<User>);
   }
 
-  onRowSelect({ data }: { data: User }) {
+  onRowSelect($event: TableRowSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
-      data: data.id,
+      data: $event.data,
     } as GridEvent<User>);
   }
 
-  onRowUnselect({ data }: { data: User }) {
+  onRowUnselect($event: TableRowUnSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
-      data: data,
+      data: $event.data,
     } as GridEvent<User>);
   }
 
-  loadRows($event: LazyLoadEvent) {
+  loadRows($event: TableLazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
 }

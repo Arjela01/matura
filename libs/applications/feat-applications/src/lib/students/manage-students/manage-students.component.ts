@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -24,6 +24,7 @@ import { StudentsEditComponent } from '../students-edit/students-edit.component'
 import { StudentsFormComponent } from '../students-form/students-form.component';
 import { StudentsGridComponent } from '../students-grid/students-grid.component';
 import { StudentViewComponent } from '../students-view/student-view.component';
+import { TableLazyLoadEvent } from 'primeng/table';
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-students',
@@ -49,7 +50,7 @@ import { StudentViewComponent } from '../students-view/student-view.component';
 export class ManageStudentsComponent {
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   hideStudentForm = true;
   totalRecords = 0;
@@ -67,7 +68,7 @@ export class ManageStudentsComponent {
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([academicYear]) => {
       if (this.filters) {
-        this.getStudent(this.filters as LazyLoadEvent);
+        this.getStudent(this.filters as TableLazyLoadEvent);
         this.academicYear = academicYear;
       }
     }),
@@ -127,7 +128,7 @@ export class ManageStudentsComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Studenti u fshi me sukses!');
-          this.getStudent(this.filters as LazyLoadEvent);
+          this.getStudent(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
         if (!response.isSuccessful) {
           this.toastService.showError(
@@ -137,7 +138,7 @@ export class ManageStudentsComponent {
       });
   }
 
-  getStudent($event: LazyLoadEvent): void {
+  getStudent($event: TableLazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
 
     this.studentService

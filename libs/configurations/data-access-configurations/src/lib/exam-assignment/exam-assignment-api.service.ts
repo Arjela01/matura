@@ -10,7 +10,7 @@ import {
   ExamAssignment,
   ExamAssignmentTableView,
 } from '@msh/shared/domain-models';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { HttpParams } from '@angular/common/http';
 
 @Injectable({
@@ -25,7 +25,7 @@ export class ExamAssignmentApiService {
     );
   }
   loadExamAssignments(
-    event: LazyLoadEvent
+    event: TableLazyLoadEvent
   ): Observable<ExamAssignmentTableView> {
     return this.apiService.post(`/ExamAssignment/TableData`, event);
   }

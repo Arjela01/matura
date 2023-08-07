@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { ArchiveExam, ArchiveExamView } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -25,7 +25,10 @@ export class ArchiveExamApiService {
   //   );
   // }
 
-  loadArchiveExams(event: LazyLoadEvent, id: any): Observable<ArchiveExamView> {
+  loadArchiveExams(
+    event: TableLazyLoadEvent,
+    id: any
+  ): Observable<ArchiveExamView> {
     return this.apiService.post(`/ArchiveExam/TableData/${id}`, event);
   }
 

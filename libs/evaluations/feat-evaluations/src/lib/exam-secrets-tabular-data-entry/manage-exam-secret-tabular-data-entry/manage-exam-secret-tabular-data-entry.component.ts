@@ -157,6 +157,9 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
       .forAdministrationOffice($event.administrationOfficeId)
       .subscribe(response => {
         this.examSites = response.data;
+        this.examSubjects = [];
+        this.examTypes = [];
+        this.examDates = [];
         this.cd.markForCheck();
       });
   }
@@ -167,6 +170,8 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examTypes = response.data;
+        this.examDates = [];
+        this.examSubjects = [];
         this.cd.markForCheck();
       });
   }

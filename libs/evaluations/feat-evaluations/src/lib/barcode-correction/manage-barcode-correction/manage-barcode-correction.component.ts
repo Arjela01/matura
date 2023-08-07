@@ -1,11 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {
-  ConfirmationService,
-  LazyLoadEvent,
-  MessageService,
-} from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -29,6 +25,7 @@ import { BarcodeCorrectionGridComponent } from '../barcode-correction-grid/barco
 import { BarcodeCorrectionFormComponent } from '../barcode-correction-form/barcode-correction-form.component';
 import { HttpClient } from '@angular/common/http';
 import { ArchiveExam, BarcodeCorrection } from '@msh/shared/domain-models';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -53,7 +50,7 @@ export class ManageBarcodeCorrectionComponent {
   private archiveFolders$$ = new BehaviorSubject<BarcodeCorrection[]>([]);
 
   archiveFolders$ = this.archiveFolders$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
   selectedArchiveExam: ArchiveExam | null = null;
   selectedArchiveExams: BarcodeCorrection[] = [];
   totalRecords = 0;
@@ -106,7 +103,7 @@ export class ManageBarcodeCorrectionComponent {
     }
   }
 
-  getArchiveFolders($event: LazyLoadEvent) {
+  getArchiveFolders($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.archiveFolderService
@@ -126,7 +123,7 @@ export class ManageBarcodeCorrectionComponent {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Barkodi u ndryshua me sukses!');
           this.displayModal = false;
-          this.getArchiveFolders(this.filters as LazyLoadEvent);
+          this.getArchiveFolders(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)

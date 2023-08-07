@@ -14,12 +14,17 @@ import {
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
-import { LazyLoadEvent, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
-import { TableModule } from 'primeng/table';
+import {
+  TableLazyLoadEvent,
+  TableModule,
+  TableRowSelectEvent,
+  TableRowUnSelectEvent,
+} from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -65,7 +70,7 @@ export class ArchiveExamGridComponent implements OnInit {
 
   @Output() formClose = new EventEmitter<undefined>();
 
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
   @Output() formSave = new EventEmitter<ArchiveExam>();
 
   submitted = false;
@@ -125,16 +130,18 @@ export class ArchiveExamGridComponent implements OnInit {
       data: archiveExam,
     } as GridEvent<ArchiveExam>);
   }
-  onRowUnselect({ data }: { data: ArchiveExam }) {
+
+  onRowUnselect($event: TableRowUnSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
-      data: data,
+      data: $event.data,
     } as GridEvent<ArchiveExam>);
   }
-  onRowSelect({ data }: { data: ArchiveExam }) {
+
+  onRowSelect($event: TableRowSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
-      data: data,
+      data: $event.data,
     } as GridEvent<ArchiveExam>);
   }
 
@@ -151,7 +158,7 @@ export class ArchiveExamGridComponent implements OnInit {
     } as GridEvent<ArchiveExam>);
   }
 
-  loadRows($event: LazyLoadEvent) {
+  loadRows($event: TableLazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
 }

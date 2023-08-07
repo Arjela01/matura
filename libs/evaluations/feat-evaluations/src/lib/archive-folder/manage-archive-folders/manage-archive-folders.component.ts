@@ -8,11 +8,7 @@ import {
 
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {
-  ConfirmationService,
-  LazyLoadEvent,
-  MessageService,
-} from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -39,6 +35,7 @@ import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ArchiveFolderGridComponent } from '../archive-folder-grid/archive-folder-grid.component';
 import { ArchiveOpenFolderFormComponent } from '../archive-open-folder-form/archive-open-folder-form.component';
 import { AcademicYear, ArchiveFolder } from '@msh/shared/domain-models';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -67,7 +64,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
   archiveFolders$ = this.archiveFolders$$
     .asObservable()
     .pipe(tap(data => console.log('Updated Archive Folders:', data)));
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   id: any;
@@ -97,7 +94,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
     map(([academicYear]) => {
       this.currentAcademicYear = academicYear;
       if (this.filters) {
-        this.getArchiveFolders(this.filters as LazyLoadEvent);
+        this.getArchiveFolders(this.filters as TableLazyLoadEvent);
       }
     }),
     tap()
@@ -184,7 +181,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
     }
   }
 
-  getArchiveFolders($event: LazyLoadEvent) {
+  getArchiveFolders($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.archiveFolderService
@@ -226,7 +223,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Dosja u ndryshua me sukses!');
           this.displayModal = false;
-          this.getArchiveFolders(this.filters as LazyLoadEvent);
+          this.getArchiveFolders(this.filters as TableLazyLoadEvent);
         }
 
         if (response.isBadRequest)
@@ -249,7 +246,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
           );
 
           this.displayModal = false;
-          this.getArchiveFolders(this.filters as LazyLoadEvent);
+          this.getArchiveFolders(this.filters as TableLazyLoadEvent);
         }
 
         if (response.isBadRequest)
@@ -266,7 +263,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Dosja u fshi me sukses!');
-          this.getArchiveFolders(this.filters as LazyLoadEvent);
+          this.getArchiveFolders(this.filters as TableLazyLoadEvent);
         }
 
         if (response.isBadRequest)

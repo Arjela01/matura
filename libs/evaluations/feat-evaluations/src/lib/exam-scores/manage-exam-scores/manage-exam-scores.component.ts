@@ -7,7 +7,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ExamScoresFormComponent } from '../exam-scores-form/exam-scores-form.component';
 import { ExamScoresGridComponent } from '../exam-scores-grid/exam-scores-grid.component';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import {
   BehaviorSubject,
   distinctUntilChanged,
@@ -31,6 +31,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
 import * as FileSaver from 'file-saver';
 import { AcademicYear, ExamScore } from '@msh/shared/domain-models';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -54,7 +55,7 @@ import { AcademicYear, ExamScore } from '@msh/shared/domain-models';
 export class ManageExamScoresComponent implements OnInit {
   private examScores$$ = new BehaviorSubject<ExamScore[]>([]);
   examScores$ = this.examScores$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedExamScore: ExamScore | null = null;
@@ -155,7 +156,7 @@ export class ManageExamScoresComponent implements OnInit {
     }
   }
 
-  getExamScores($event: LazyLoadEvent) {
+  getExamScores($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.examScoreService
@@ -186,7 +187,7 @@ export class ManageExamScoresComponent implements OnInit {
             'Rezultati i provimit u shtua me sukses!'
           );
           this.displayModal = false;
-          this.getExamScores(this.filters as LazyLoadEvent);
+          this.getExamScores(this.filters as TableLazyLoadEvent);
         } else {
           this.toastService.showError(response.errorMessage);
         }
@@ -206,7 +207,7 @@ export class ManageExamScoresComponent implements OnInit {
             'Rezultati i provimit u ndryshua me sukses!'
           );
           this.displayModal = false;
-          this.getExamScores(this.filters as LazyLoadEvent);
+          this.getExamScores(this.filters as TableLazyLoadEvent);
         } else {
           this.toastService.showError(response.errorMessage);
         }
@@ -224,7 +225,7 @@ export class ManageExamScoresComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Rezultati i provimit u fshi me sukses!');
-          this.getExamScores(this.filters as LazyLoadEvent);
+          this.getExamScores(this.filters as TableLazyLoadEvent);
         }
         if (response.isBadRequest)
           this.toastService.showError(
@@ -274,7 +275,7 @@ export class ManageExamScoresComponent implements OnInit {
       this.examScoreService.uploadExcelFile(this.base64).subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Dokumenti u shtua me sukses!');
-          this.getExamScores(this.filters as LazyLoadEvent);
+          this.getExamScores(this.filters as TableLazyLoadEvent);
         }
         if (response.isBadRequest)
           this.toastService.showError(

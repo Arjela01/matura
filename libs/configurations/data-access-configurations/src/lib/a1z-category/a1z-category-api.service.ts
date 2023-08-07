@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { A1ZCategory, A1ZCategoryTableView } from '@msh/shared/domain-models';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -16,7 +16,9 @@ export class A1ZCategoryApiService {
       `/A1ZCategory/DropdownList`
     );
   }
-  loadA1ZCategories(event: LazyLoadEvent): Observable<A1ZCategoryTableView> {
+  loadA1ZCategories(
+    event: TableLazyLoadEvent
+  ): Observable<A1ZCategoryTableView> {
     return this.apiService.post(`/A1ZCategory/TableData`, event);
   }
 

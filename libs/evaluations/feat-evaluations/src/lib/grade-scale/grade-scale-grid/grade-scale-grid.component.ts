@@ -11,7 +11,7 @@ import {
   GRID_ACTIONS,
   ColumnFilterDirective,
 } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -44,7 +44,7 @@ export class GradeScaleGridComponent {
 
   @Output() gridEvent = new EventEmitter<GridEvent<GradesScale>>();
 
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
   onEditClick(scale: GradesScale) {
     this.gridEvent.emit({
@@ -60,7 +60,7 @@ export class GradeScaleGridComponent {
     } as GridEvent<GradesScale>);
   }
 
-  loadRows($event: LazyLoadEvent) {
+  loadRows($event: TableLazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
 }

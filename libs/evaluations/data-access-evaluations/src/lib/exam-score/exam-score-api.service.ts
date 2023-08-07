@@ -3,8 +3,13 @@ import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { HttpParams } from '@angular/common/http';
-import {ArchiveExam, ExamScore, ExamScoreTableView, FileImport} from '@msh/shared/domain-models';
-import {LazyLoadEvent} from "primeng/api";
+import {
+  ArchiveExam,
+  ExamScore,
+  ExamScoreTableView,
+  FileImport,
+} from '@msh/shared/domain-models';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +19,10 @@ export class ExamScoreApiService {
 
   loadExamScores(event: any): Observable<any> {
     return this.apiService.post(`/ExamScores/TableData`, event);
+  }
+
+  loadExamScoreFolderMismatch(event: any): Observable<any> {
+    return this.apiService.post(`/ExamScores/FolderMismatch`, event);
   }
 
   save(examScore: ExamScore): Observable<ApiResult<ExamScore>> {
@@ -74,20 +83,20 @@ export class ExamScoreApiService {
   }
 
   loadUnmatchedExamScores(
-      event: LazyLoadEvent
+    event: TableLazyLoadEvent
   ): Observable<ExamScoreTableView> {
     return this.apiService.post(`/ExamScores/UnmatchedExams`, event).pipe(
-        map((data: any) => data),
-        catchError(error => throwError(error))
+      map((data: any) => data),
+      catchError(error => throwError(error))
     );
   }
 
   loadMatchedExamScores(
-      event: LazyLoadEvent
+    event: TableLazyLoadEvent
   ): Observable<ExamScoreTableView> {
     return this.apiService.post(`/ExamScores/MatchedExams`, event).pipe(
-        map((data: any) => data),
-        catchError(error => throwError(error))
+      map((data: any) => data),
+      catchError(error => throwError(error))
     );
   }
 }

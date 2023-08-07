@@ -13,7 +13,7 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -31,6 +31,7 @@ import {
 import { ExamSubjectFormComponent } from '../exam-subject-form/exam-subject-form.component';
 import { ExamSubjectGridComponent } from '../exam-subject-grid/exam-subject-grid.component';
 import * as FileSaver from 'file-saver';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -54,7 +55,7 @@ import * as FileSaver from 'file-saver';
 export class ManageExamSubjectComponent implements OnInit {
   private examSubjects$$ = new BehaviorSubject<ExamSubject[]>([]);
   examSubjects$ = this.examSubjects$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedExamSubjects: ExamSubject[] = [];
@@ -74,7 +75,7 @@ export class ManageExamSubjectComponent implements OnInit {
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([_]) => {
       if (this.filters) {
-        this.getExamSubjects(this.filters as LazyLoadEvent);
+        this.getExamSubjects(this.filters as TableLazyLoadEvent);
       }
     }),
     tap()
@@ -165,7 +166,7 @@ export class ManageExamSubjectComponent implements OnInit {
     }
   }
 
-  getExamSubjects($event: LazyLoadEvent) {
+  getExamSubjects($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.examSubjectService
@@ -185,7 +186,7 @@ export class ManageExamSubjectComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Lënda e provimit u shtua me sukses!');
           this.displayModal = false;
-          this.getExamSubjects(this.filters as LazyLoadEvent);
+          this.getExamSubjects(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -205,7 +206,7 @@ export class ManageExamSubjectComponent implements OnInit {
             'Lënda e provimit u ndryshua me sukses!'
           );
           this.displayModal = false;
-          this.getExamSubjects(this.filters as LazyLoadEvent);
+          this.getExamSubjects(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -222,7 +223,7 @@ export class ManageExamSubjectComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Lënda e provimit u fshi me sukses!');
-          this.getExamSubjects(this.filters as LazyLoadEvent);
+          this.getExamSubjects(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { A1Z } from '@msh/applications/domain-application';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { catchError, map, Observable, throwError } from 'rxjs';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class A1ApiService {
     );
   }
 
-  loadA1(event: LazyLoadEvent): Observable<A1Z> {
+  loadA1(event: TableLazyLoadEvent): Observable<A1Z> {
     return this.apiService.post(`/A1/TableData`, event).pipe(
       map((data: any) => data),
       catchError(error => throwError(error))

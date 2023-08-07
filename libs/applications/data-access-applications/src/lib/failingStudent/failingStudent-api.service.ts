@@ -6,7 +6,7 @@ import {
 } from '@msh/applications/domain-application';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class FailingStudentApiService {
   constructor(private http: HttpClient, private apiservice: APIService) {}
 
   loadFailingStudents(
-    event: LazyLoadEvent
+    event: TableLazyLoadEvent
   ): Observable<FailingStudentTableView> {
     return this.apiservice.post('/FailingStudents/TableData', event);
   }

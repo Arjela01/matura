@@ -17,7 +17,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ExamScoreDataEntry, ExamScores } from '@msh/shared/domain-models';
 
 @UntilDestroy()
@@ -46,7 +46,7 @@ export class ExamScoreTabularDataEntryListComponent {
   >();
 
   @Output() writingScoreChange = new EventEmitter<any>();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   event = {
     first: 0,

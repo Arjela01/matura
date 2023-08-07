@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { DataExport, DataExportTableView } from '@msh/shared/domain-models';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 
@@ -12,7 +12,7 @@ import { HttpParams } from '@angular/common/http';
 export class DataExportApiService {
   constructor(private apiService: APIService) {}
 
-  loadDataExports(event: LazyLoadEvent): Observable<DataExportTableView> {
+  loadDataExports(event: TableLazyLoadEvent): Observable<DataExportTableView> {
     return this.apiService.post(`/DataExport/TableData`, event);
   }
 

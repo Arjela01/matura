@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { A1Z, A1ZTableView } from '@msh/applications/domain-application';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 export class A1ZApiService {
   constructor(private http: HttpClient, private apiService: APIService) {}
 
-  loadA1Z(event: LazyLoadEvent): Observable<A1ZTableView> {
+  loadA1Z(event: TableLazyLoadEvent): Observable<A1ZTableView> {
     return this.apiService.post('/A1Z/TableData', event);
   }
 

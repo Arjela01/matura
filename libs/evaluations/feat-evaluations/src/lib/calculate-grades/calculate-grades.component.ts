@@ -7,7 +7,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { RippleModule } from 'primeng/ripple';
 import { GridComponent } from '../grid/grid.component';
 import { ProcessesApiService } from '@msh/evaluations/data-access-evaluations';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { tap } from 'rxjs';
 import { Application_Process } from '../grid/grid-type.enum';
@@ -30,7 +30,7 @@ import { Application_Process } from '../grid/grid-type.enum';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalculateGradesComponent {
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
   processType: Application_Process = Application_Process.CalculateGrades;
   appProcessType!: string;
   executionLog!: string;
@@ -52,7 +52,7 @@ export class CalculateGradesComponent {
 
   constructor(private readonly process: ProcessesApiService) {}
 
-  getProcessData($event: LazyLoadEvent, processType: number) {
+  getProcessData($event: TableLazyLoadEvent, processType: number) {
     this.filters = { ...$event };
     this.process.getData($event, processType);
   }

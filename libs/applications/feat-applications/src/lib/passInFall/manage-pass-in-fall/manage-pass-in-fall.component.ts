@@ -13,7 +13,7 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -21,6 +21,7 @@ import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { PassInFallGridComponent } from '../pass-in-fall-grid/pass-in-fall-grid.component';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -43,7 +44,7 @@ import { PassInFallGridComponent } from '../pass-in-fall-grid/pass-in-fall-grid.
 export class ManagePassInFallComponent {
   private failingStudents$$ = new BehaviorSubject<FailingStudent[]>([]);
   failingStudents$ = this.failingStudents$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedFailingStudent: FailingStudent | null = null;
@@ -74,7 +75,7 @@ export class ManagePassInFallComponent {
     this.updateFailingStudent(failingStudent);
   }
 
-  getFailingStudents($event: LazyLoadEvent) {
+  getFailingStudents($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.failingStudentService
@@ -102,7 +103,7 @@ export class ManagePassInFallComponent {
             .subscribe(response => {
               if (response.isSuccessful === true) {
                 this.toastService.showSuccess('Studenti u ndryshua me sukses!');
-                this.getFailingStudents(this.filters as LazyLoadEvent);
+                this.getFailingStudents(this.filters as TableLazyLoadEvent);
               }
 
               if (response.isSuccessful === false)

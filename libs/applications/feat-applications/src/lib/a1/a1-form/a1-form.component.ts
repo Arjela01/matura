@@ -35,7 +35,7 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
@@ -491,7 +491,7 @@ export class A1FormComponent {
     this.cd.detectChanges();
   }
 
-  getStudents($event: LazyLoadEvent): void {
+  getStudents($event: TableLazyLoadEvent): void {
     this.studentsApiService
       .loadStudentsForA1A1Z($event)
       .pipe(untilDestroyed(this))

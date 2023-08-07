@@ -12,7 +12,11 @@ import {
   GRID_ACTIONS,
   ColumnFilterDirective,
 } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import {
+  TableLazyLoadEvent,
+  TableRowSelectEvent,
+  TableRowUnSelectEvent,
+} from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -51,7 +55,7 @@ export class ExamAssignmentGridComponent {
     GridEvent<ExamAssignment | ExamAssignment[]>
   >();
 
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
   examAssignment: ExamAssignment = {
     id: '',
@@ -73,17 +77,17 @@ export class ExamAssignmentGridComponent {
     } as GridEvent<ExamAssignment>);
   }
 
-  onRowSelect({ data }: { data: ExamAssignment }) {
+  onRowSelect($event: TableRowSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
-      data: data,
+      data: $event.data,
     } as GridEvent<ExamAssignment>);
   }
 
-  onRowUnselect({ data }: { data: ExamAssignment }) {
+  onRowUnselect($event: TableRowUnSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
-      data: data,
+      data: $event.data,
     } as GridEvent<ExamAssignment>);
   }
 
@@ -94,7 +98,7 @@ export class ExamAssignmentGridComponent {
     } as GridEvent<ExamAssignment>);
   }
 
-  loadRows($event: LazyLoadEvent) {
+  loadRows($event: TableLazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
 }
