@@ -164,4 +164,11 @@ export const EVALUATION_ROUTES: Route[] = [
         './exam-score-tabular-data-entry/manage-exam-score-tabular-data-entry/manage-exam-score-tabular-data-entry.component'
       ).then(m => m.ManageExamScoreTabularDataEntryComponent),
   },
+  {
+    path: 'barcode-without-score',
+    loadComponent: () =>
+      import(
+        './barcode-without-score/barcode-without-score-grid/barcode-without-score-grid.component'
+      ).then(m => m.BarcodeWithoutScoreGridComponent),
+  },
 ];

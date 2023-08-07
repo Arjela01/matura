@@ -53,4 +53,9 @@ export class ArchiveExamApiService {
       `/ArchiveExam/GetById/${archiveFolderId}`
     );
   }
+  getBarcodeWithoutScore(): Observable<ApiResult<any>> {
+    return this.apiService.get<ApiResult<ArchiveExam>>(
+      '/ArchiveExam/GetArchiveExamsWithoutScores'
+    );
+  }
 }
