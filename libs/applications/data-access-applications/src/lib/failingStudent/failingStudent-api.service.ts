@@ -21,6 +21,15 @@ export class FailingStudentApiService {
     return this.apiservice.post('/FailingStudents/TableData', event);
   }
 
+  loadStudentsToFail(
+    event: LazyLoadEvent
+  ): Observable<FailingStudentTableView> {
+    return this.apiservice.post(
+      '/FailingStudents/TableDataForStudentsOnly',
+      event
+    );
+  }
+
   delete(id: string): Observable<ApiResult<unknown>> {
     return this.apiservice.delete<ApiResult<FailingStudent>>(
       `/FailingStudents/${id}`
