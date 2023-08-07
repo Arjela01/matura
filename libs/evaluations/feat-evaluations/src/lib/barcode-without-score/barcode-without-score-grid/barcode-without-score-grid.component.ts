@@ -49,7 +49,6 @@ export class BarcodeWithoutScoreGridComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.barcodeWithoutScoresList$$.next(response.data);
-        console.log(123,response.data)
       });
   }
 }
