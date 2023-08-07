@@ -8,23 +8,23 @@ import { FailingStudentApiService } from '@msh/applications/data-access-applicat
 import { FailingStudent } from '@msh/applications/domain-application';
 
 import { AuthFacade } from '@msh/auth/data-access-auth';
+import { StudentsApiService } from '@msh/configurations/data-access-configurations';
 import {
   GRID_ACTIONS,
   GlobalToastService,
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { FailingStudentsFormComponent } from '../failing-students-form/failing-students-form.component';
 import { FailingStudentsGridComponent } from '../failing-students-grid/failing-students-grid.component';
-import { StudentsApiService } from '@msh/configurations/data-access-configurations';
-import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -100,18 +100,12 @@ export class ManageFailingStudentsComponent {
   }
   getStudents($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
-    const params = {
-      isFall: false,
-    };
 
-    this.studentService
-      .loadStudents($event, params)
+    this.failingStudentService
+      .loadStudentsToFail($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        const studentsWithAdditionalValueZero = response.data.filter(
-          student => !student.isFall
-        );
-        this.failingStudents$$.next(studentsWithAdditionalValueZero);
+        this.failingStudents$$.next(response.data);
         this.totalRecords = response.total;
         this.cd.markForCheck();
       });
@@ -125,8 +119,7 @@ export class ManageFailingStudentsComponent {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Studenti u ndryshua me sukses!');
           this.displayModal = false;
-          this.getStudents(this.filters as TableLazyLoadEvent);
-          console.log(123, failingStudent);
+          this.getStudents(this.filters as LazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (!response.isSuccessful)

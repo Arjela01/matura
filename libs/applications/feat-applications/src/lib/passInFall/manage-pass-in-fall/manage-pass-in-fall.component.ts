@@ -95,7 +95,8 @@ export class ManagePassInFallComponent {
         if (response.isSuccessful === true) {
           this.failingStudentService
             .update({
-              ...failingStudent,
+              studentId: failingStudent.studentId,
+              subject: failingStudent.subjectName,
               id: response.data.id,
               willRetryInFall: true,
             })
