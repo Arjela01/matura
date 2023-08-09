@@ -62,7 +62,7 @@ export class A1HistoryGridComponent {
   SORT_ASC = 'ASC';
   SORT_DESC = 'DESC';
 
-  @Input() recordId: any = 575;
+  @Input() recordId:any;
   @Input() recordData: any;
   @Output() gridEvent = new EventEmitter<
     GridEvent<FailingStudent | FailingStudent[]>
@@ -75,7 +75,7 @@ export class A1HistoryGridComponent {
   where: any = null;
   orderBy: any = null;
 
-  constructor(private activatedRoute: ActivatedRoute, private apollo: Apollo) {}
+  constructor( private apollo: Apollo) {}
 
   loadRows($event: TableLazyLoadEvent) {
     this.where = new WhereBuilder($event.filters).transformWhere();
