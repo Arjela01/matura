@@ -10,8 +10,7 @@
 
 <div class="grid">
   <div class="col-12">
-    <div class="card">
-      <div class="scroll">
+      <div class="card scroll">
         <p-table
           [value]="data"
           [paginator]="false"
@@ -19,7 +18,7 @@
           [lazy]="true">
           <ng-template pTemplate="header">
             <tr>
-              <th style="width: 300px"
+              <th
                 *ngFor="
                   let key of data[indexHeader] ?? defaultDataCol | keyvalue
                 "
@@ -80,4 +79,3 @@
       </div>
     </div>
   </div>
-</div>
