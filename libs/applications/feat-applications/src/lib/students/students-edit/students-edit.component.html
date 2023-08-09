@@ -391,12 +391,13 @@
           <div class="field">
             <label for="Cel">Cel *</label>
             <input
-              type="tel"
+              type="text"
               pInputText
               id="Cel"
               name="Cel"
               [(ngModel)]="student.mobilePhone"
               required
+              pattern="[0-9]+"
               autofocus
               [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !student.mobilePhone
