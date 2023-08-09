@@ -20,7 +20,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { RippleModule } from 'primeng/ripple';
-import {TableLazyLoadEvent, TableModule} from 'primeng/table';
+import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { A1_FORMS } from '../query-a1';
 import { Apollo, gql } from 'apollo-angular';
@@ -59,7 +59,7 @@ export class A1HistoryGridComponent implements OnInit {
   SORT_ASC = 'ASC';
   SORT_DESC = 'DESC';
 
-  @Input() recordId: any;
+  @Input() recordId: any = 575;
   @Input() recordData: any;
   @Output() gridEvent = new EventEmitter<
     GridEvent<FailingStudent | FailingStudent[]>
@@ -71,6 +71,7 @@ export class A1HistoryGridComponent implements OnInit {
   visiblePages: number[] = [];
   paginationArray: number[] = [];
   userData: { [userId: string]: string } = {};
+  recordDataArray: { key: string; value: any }[] = [];
   pageSize = 15;
   totalCount = 0;
   currentPage = 1;
@@ -79,18 +80,36 @@ export class A1HistoryGridComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute, private apollo: Apollo) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.fetchRecordData();
   }
-  fetchRecordData(): void {
+
+  loadRows($event: TableLazyLoadEvent) {
+    this.where = new WhereBuilder($event.filters).transformWhere();
+    const flattenSort = $event.sortField
+      ? {
+          [`${$event.sortField}`]:
+            $event.sortOrder === 1 ? this.SORT_ASC : this.SORT_DESC,
+        }
+      : {};
+    const sortField = flattenSort;
+
+    if (Object.keys(sortField).length === 0) {
+      this.orderBy = { auditTimestamp: 'DESC' };
+    } else {
+      this.orderBy = flattenSort;
+    }
+    this.fetchRecordData();
+  }
+
+  fetchRecordData() {
     const skip = (this.currentPage - 1) * this.pageSize;
-    const query = gql`
-      ${A1_FORMS}
-    `;
 
     this.apollo
       .watchQuery<any>({
-        query,
+        query: gql`
+          ${A1_FORMS}
+        `,
         variables: {
           pagesize: this.pageSize,
           skip: skip,
@@ -103,11 +122,9 @@ export class A1HistoryGridComponent implements OnInit {
         (response: any) => {
           const items = response?.data[this.queryName].items || [];
           this.recordData =
-            items.find((item: { id: number }) => item.id === this.recordId) ||
+            items.filter((item: any) => item.student.id === this.recordId) ||
             [];
-          const totalRecords = response.data?.[this.queryName].totalCount || 0;
-          this.totalCount = Math.ceil(totalRecords / this.pageSize);
-          console.log(123, this.recordData);
+          this.totalCount = this.recordData.length;
         },
         error => {
           console.error('GraphQL Query Error:', error);
@@ -115,20 +132,4 @@ export class A1HistoryGridComponent implements OnInit {
       );
   }
 
-  loadRows($event: TableLazyLoadEvent) {
-    this.where = new WhereBuilder($event.filters).transformWhere();
-    const flattenSort = $event.sortField
-      ? {
-          [`${$event.sortField}`]:
-            $event.sortOrder === 1 ? this.SORT_ASC : this.SORT_DESC,
-        }
-      : {};
-    const sortField = flattenSort;
-    if (Object.keys(sortField).length === 0) {
-      this.orderBy = { auditTimestamp: 'DESC' };
-    } else {
-      this.orderBy = flattenSort;
-    }
-    this.fetchRecordData();
-  }
 }
