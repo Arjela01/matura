@@ -1,5 +1,11 @@
 <div class="flex ml-2 mb-2 page-header mb-header">
   <h2 class="flex-1">{{ queryName }}</h2>
+  <button
+    pButton
+    label="Kthehu"
+    icon="pi pi-arrow-left"
+    class="mr-2 back-button"
+    (click)="goToGeneralTable()"></button>
 </div>
 
 <div class="grid">
@@ -13,7 +19,7 @@
           [lazy]="true">
           <ng-template pTemplate="header">
             <tr>
-              <th
+              <th style="width: 300px"
                 *ngFor="
                   let key of data[indexHeader] ?? defaultDataCol | keyvalue
                 "

@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from 'primeng/button';
 import { queriesMap } from './queries';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { LazyLoadEvent, SelectItem } from 'primeng/api';
 import { WhereBuilder } from './query-builder';
@@ -52,7 +52,11 @@ export class AuditLogGridComponent implements OnInit {
 
   userData: { [userId: string]: string } = {};
 
-  constructor(private apollo: Apollo, private route: ActivatedRoute) {}
+  constructor(
+    private apollo: Apollo,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   goNext() {
     this.currentPage++;
@@ -61,6 +65,9 @@ export class AuditLogGridComponent implements OnInit {
   goBack() {
     this.currentPage--;
     this.fetchData();
+  }
+  goToGeneralTable() {
+    this.router.navigate(['/audit-log/general-table']);
   }
 
   goToPage(page: number) {

@@ -1280,23 +1280,6 @@ export const ARCHIVE_EXAM = `
                     modifiedIP
                     modifiedOn
                 }
-            }
-            examVersion {
-                code
-                name
-                numberOfQuestions
-                variant
-                id
-                isDeleted
-                createdBy
-                createdIP
-                createdOn
-                deletedBy
-                deletedIP
-                deletedOn
-                modifiedBy
-                modifiedIP
-                modifiedOn
                 examType {
                     name
                     maximumValueWritingScore
