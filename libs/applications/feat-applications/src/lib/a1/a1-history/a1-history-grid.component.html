@@ -1,34 +1,20 @@
-<div class="flex center mb-2 page-header mb-header">
-  <h2 class="flex-1 mb-0">Formularë A1</h2>
-  <div class="flex align-items-right justify-content-right">
-    <div class="my-2 hidden">
-      <button
-        pButton
-        pRipple
-        label="Shto"
-        icon="pi pi-plus"
-        class="p-button-success mr-2"
-        (click)="onNewClick()"></button>
-    </div>
-  </div>
-</div>
-
 <div class="grid">
   <div class="col-12">
     <div class="card">
+      {{recordData| json}}
       <p-table
         #dt
         dataKey="id"
         responsiveLayout="scroll"
-        [value]="(a1$ | async) || []"
-        [totalRecords]="totalRecords"
+        [value]="recordData"
+        [totalRecords]="totalCount"
         [rows]="10"
         [paginator]="true"
         [rowsPerPageOptions]="[10, 20, 30]"
         [showCurrentPageReport]="true"
-        currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
+        currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
         [rowHover]="true"
-        (onLazyLoad)="getA1($event)"
+        (onLazyLoad)="loadRows($event)"
         [lazy]="true">
         <ng-template pTemplate="header">
           <tr>
@@ -131,67 +117,58 @@
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
+            <th pSortableColumn="auditOperation">
+              auditOperation
+              <div>
+                <p-sortIcon field="auditOperation"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="auditOperation"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
             <th></th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-a1>
+        <ng-template pTemplate="body" let-recordData>
           <tr>
             <td style="width: 10%; min-width: 10rem">
               <a
                 [routerLink]="[
                   '/applications/students/view',
-                  a1.studentStudentId
+                  recordData.student.studentId
                 ]"
                 class="p-button-link"
-                >{{ a1.studentStudentId }}</a
+                >{{ recordData.student.studentId }}</a
               >
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ a1.studentNid }}
+              {{ recordData.student.studentNid }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ a1.studentFirstName }}
+              {{ recordData.student.studentFirstName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ a1.studentMiddleName }}
+              {{ recordData.student.studentMiddleName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ a1.studentLastName }}
+              {{ recordData.student.studentLastName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ a1.studentOldIdentifier }}
+              {{ recordData.student.studentOldIdentifier }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ a1.studentBirthDate | date }}
+              {{ recordData.student.studentBirthDate | date }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ a1.studentBirthPlace }}
+              {{ recordData.student.studentBirthPlace }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ a1.academicYearName }}
+              {{ recordData.academicYear.academicYearName }}
             </td>
-            <td>
-              <div class="flex">
-                <img
-                  src="assets/svg/edit-form.svg"
-                  class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
-                  tooltipPosition="bottom"
-                  (click)="onGridEvent(gridAction.EDIT, a1)"
-                  pTooltip="Ndrysho" />
-                <img
-                  src="assets/svg/history.svg"
-                  class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
-                  tooltipPosition="bottom"
-                  (click)="onGridEvent(gridAction.HISTORY, a1)"
-                  pTooltip="Historia" />
-
-                <img
-                  src="assets/svg/delete-form.svg"
-                  class="p-button-rounded p-button-danger p-button-text ml-m pointer"
-                  pTooltip="Fshi"
-                  tooltipPosition="bottom"
-                  (click)="onGridEvent(gridAction.DELETE, a1)" />
-              </div>
+            <td style="width: 10%; min-width: 10rem">
+              {{ recordData.auditOperation }}
             </td>
           </tr>
         </ng-template>
@@ -199,43 +176,3 @@
     </div>
   </div>
 </div>
-<p-confirmDialog
-  #cd
-  header="Konfirmo"
-  icon="pi pi-exclamation-triangle"
-  [style]="{ width: '450px' }">
-  <ng-template pTemplate="footer">
-    <button
-      type="button"
-      pButton
-      icon="pi pi-times"
-      label="Jo"
-      class="p-button-text"
-      (click)="cd.reject()"></button>
-    <button
-      type="button"
-      pButton
-      icon="pi pi-check"
-      label="Po"
-      class="p-button"
-      (click)="cd.accept()"></button>
-  </ng-template>
-</p-confirmDialog>
-<p-dialog
-  [(visible)]="displayHistoryForm"
-  [modal]="true"
-  header="Shiko Historinë"
-  [draggable]="false"
-  [resizable]="false"
-  class="p-fluid"
-  (onHide)="onHistoryModalClose()">
-  <ng-template pTemplate="content">
-    <msh-a1-history-grid
-      [recordId]="studentId"
-      [recordData]="selectedRecord"
-      (gridEvent)="onGridEvent(gridAction.HISTORY,$event)"
-      >
-    </msh-a1-history-grid>
-  </ng-template>
-</p-dialog>
-<ng-container *ngIf="academicYear$ | async"></ng-container>
