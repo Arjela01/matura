@@ -5,7 +5,7 @@
         #dt
         dataKey="id"
         responsiveLayout="scroll"
-        [value]="recordData"
+        [value]="recordData || []"
         [totalRecords]="totalCount"
         [rows]="10"
         [paginator]="true"
@@ -72,17 +72,6 @@
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="studentOldIdentifier">
-              ID e vjetër
-              <div>
-                <p-sortIcon field="studentOldIdentifier"></p-sortIcon>
-                <p-columnFilter
-                  type="text"
-                  field="studentOldIdentifier"
-                  display="menu"
-                  mshColumnFilterDirective></p-columnFilter>
-              </div>
-            </th>
             <th pSortableColumn="studentBirthDate">
               Datëlindja
               <div>
@@ -127,47 +116,101 @@
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
+            <th pSortableColumn="auditHostname">
+              auditHostname
+              <div>
+                <p-sortIcon field="auditHostname"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="auditHostname"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="auditSIDUsername">
+              auditSIDUsername
+              <div>
+                <p-sortIcon field="auditSIDUsername"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="auditSIDUsername"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="auditTimestamp">
+              auditTimestamp
+              <div>
+                <p-sortIcon field="auditTimestamp"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="auditTimestamp"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="auditUsername">
+              auditUsername
+              <div>
+                <p-sortIcon field="auditUsername"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="auditUsername"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
             <th></th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-recordData>
+
+        <ng-template pTemplate="body" let-record>
           <tr>
             <td style="width: 10%; min-width: 10rem">
               <a
                 [routerLink]="[
                   '/applications/students/view',
-                  recordData.student.studentId
+                  record.student?.studentId
                 ]"
                 class="p-button-link"
-                >{{ recordData.student.studentId }}</a
+                >{{ record.student?.studentId }}</a
               >
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ recordData.student.studentNid }}
+              {{ record.student?.idCard}}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ recordData.student.studentFirstName }}
+              {{ record.student?.firstName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ recordData.student.studentMiddleName }}
+              {{ record.student?.middleName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ recordData.student.studentLastName }}
+              {{ record.student?.lastName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ recordData.student.studentOldIdentifier }}
+              {{ record.student?.birthDate | date }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ recordData.student.studentBirthDate | date }}
+              {{ record.student?.birthPlace }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ recordData.student.studentBirthPlace }}
+              {{ record.academicYear?.year }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ recordData.academicYear.academicYearName }}
+              {{ record?.auditOperation }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ recordData.auditOperation }}
+              {{ record?.auditHostname }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.auditSIDUsername }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.auditTimestamp | date }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.auditUsername }}
             </td>
           </tr>
         </ng-template>
