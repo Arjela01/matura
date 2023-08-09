@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { University, UniversityTableView } from '@msh/shared/domain-models';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 export class UniversityApiService {
   constructor(private apiService: APIService) {}
 
-  loadUniversities(event: LazyLoadEvent): Observable<UniversityTableView> {
+  loadUniversities(event: TableLazyLoadEvent): Observable<UniversityTableView> {
     return this.apiService.post(`/University/TableData`, event);
   }
 

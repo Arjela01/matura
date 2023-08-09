@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
 import {
   ActivateOverseerDarZa,
@@ -29,7 +29,7 @@ export class ActivateOverseerDarZaApiService {
   }
 
   loadActivateOverseerDarZa(
-    event: LazyLoadEvent
+    event: TableLazyLoadEvent
   ): Observable<ActivateOverseerDarZaTableView> {
     return this.apiService.post(`/ArchiveFolder/TableData`, event);
   }

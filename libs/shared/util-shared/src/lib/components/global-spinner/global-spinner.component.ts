@@ -4,7 +4,7 @@ import {
   Component,
   ViewEncapsulation,
 } from '@angular/core';
-import { LoaderService } from '../loader-service/loader.service';
+import { LoaderService } from '../../services/loader.service';
 
 @Component({
   selector: 'msh-global-spinner',

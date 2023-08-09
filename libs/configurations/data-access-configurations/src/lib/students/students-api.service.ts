@@ -7,7 +7,7 @@ import {
   StudentTableView,
 } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable, catchError, map, shareReplay, throwError } from 'rxjs';
 
 @Injectable({
@@ -21,14 +21,14 @@ export class StudentsApiService {
   }
 
   loadStudents(
-    event: LazyLoadEvent,
+    event: TableLazyLoadEvent,
     params = {}
   ): Observable<StudentTableView> {
     return this.apiService.postWithParams(`/Student/TableData`, event, params);
   }
 
   loadStudentsForA1A1Z(
-    event: LazyLoadEvent,
+    event: TableLazyLoadEvent,
     params = {}
   ): Observable<StudentTableView> {
     return this.apiService.postWithParams(

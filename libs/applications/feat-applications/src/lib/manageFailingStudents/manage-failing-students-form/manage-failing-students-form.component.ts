@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -23,7 +22,6 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { GlobalSpinnerComponent } from '@msh/shared/ui-shared';
 
 @UntilDestroy()
 @Component({
@@ -38,7 +36,6 @@ import { GlobalSpinnerComponent } from '@msh/shared/ui-shared';
     InputTextareaModule,
     ButtonModule,
     CheckboxModule,
-    GlobalSpinnerComponent,
   ],
   templateUrl: './manage-failing-students-form.component.html',
   styleUrls: ['./manage-failing-students-form.component.scss'],

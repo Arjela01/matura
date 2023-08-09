@@ -9,7 +9,7 @@ import {
   GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -18,6 +18,7 @@ import { BehaviorSubject } from 'rxjs';
 import { GenderFormComponent } from '../gender-form/gender-form.component';
 import { GenderGridComponent } from '../gender-grid/gender-grid.component';
 import { RippleModule } from 'primeng/ripple';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @Component({
   selector: 'msh-manage-genders',
@@ -41,7 +42,7 @@ import { RippleModule } from 'primeng/ripple';
 export class ManageGendersComponent {
   private genders$$ = new BehaviorSubject<Gender[]>([]);
   genders$ = this.genders$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedGender: Gender | null = null;
@@ -121,7 +122,7 @@ export class ManageGendersComponent {
     }
   }
 
-  getGenders($event: LazyLoadEvent) {
+  getGenders($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.genderService
@@ -141,7 +142,7 @@ export class ManageGendersComponent {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Gjinia u shtua me sukses!');
           this.displayModal = false;
-          this.getGenders(this.filters as LazyLoadEvent);
+          this.getGenders(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -159,7 +160,7 @@ export class ManageGendersComponent {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Gjinia u ndryshua me sukses!');
           this.displayModal = false;
-          this.getGenders(this.filters as LazyLoadEvent);
+          this.getGenders(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -176,7 +177,7 @@ export class ManageGendersComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Gjinia u fshi me sukses!');
-          this.getGenders(this.filters as LazyLoadEvent);
+          this.getGenders(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)

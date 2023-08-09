@@ -4,7 +4,7 @@ import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ExamGradeApiService } from '@msh/evaluations/data-access-evaluations';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -36,11 +36,11 @@ export class ExamGradeGridComponent {
   private examGrade$$ = new BehaviorSubject<ExamGrade[]>([]);
   examGrade$ = this.examGrade$$.asObservable();
   totalRecords = 0;
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([_]) => {
       if (this.filters) {
-        this.getExamGrades(this.filters as LazyLoadEvent);
+        this.getExamGrades(this.filters as TableLazyLoadEvent);
       }
     }),
     tap()
@@ -50,7 +50,7 @@ export class ExamGradeGridComponent {
     private authFacade: AuthFacade
   ) {}
 
-  getExamGrades($event: LazyLoadEvent) {
+  getExamGrades($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.examGradeService

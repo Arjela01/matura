@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { ExamDate, ExamDateTableView } from '@msh/shared/domain-models';
@@ -11,7 +11,7 @@ import { ExamDate, ExamDateTableView } from '@msh/shared/domain-models';
 export class ExamDateApiService {
   constructor(private apiService: APIService) {}
 
-  loadExamDates(event: LazyLoadEvent): Observable<ExamDateTableView> {
+  loadExamDates(event: TableLazyLoadEvent): Observable<ExamDateTableView> {
     return this.apiService.post(`/ExamDate/TableData`, event);
   }
 

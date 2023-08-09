@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { GlobalToastService } from '@msh/shared/util-shared';
 import { CalculationProcessesApiService } from '../calculation-processes/calculation-processes-api.service';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { formatDate } from '@angular/common';
 import { ApplicationProcess } from '@msh/shared/domain-models';
@@ -14,7 +14,7 @@ import { ApplicationProcess } from '@msh/shared/domain-models';
 export class ProcessesApiService {
   private calculateGrade$$ = new BehaviorSubject<ApplicationProcess[]>([]);
   calculateGrade$ = this.calculateGrade$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
   appProcessType!: string;
   executionLog!: string;
   endDate: any;
@@ -24,7 +24,7 @@ export class ProcessesApiService {
     private readonly toastService: GlobalToastService
   ) {}
 
-  getData($event: LazyLoadEvent, processType: number) {
+  getData($event: TableLazyLoadEvent, processType: number) {
     this.filters = { ...$event };
     this.calculateGradesService
       .loadProcessData(processType)

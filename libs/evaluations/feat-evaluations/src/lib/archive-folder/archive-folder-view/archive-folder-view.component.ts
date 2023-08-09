@@ -8,12 +8,12 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { LazyLoadEvent, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
-import { TableModule } from 'primeng/table';
+import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -55,7 +55,7 @@ export class ArchiveFolderViewComponent implements OnInit {
   >();
   @Input() barCodes: ArchiveExam[] = [];
 
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
   @Input() set barCodeDetails(details: ArchiveExam | null) {
     if (details) {
@@ -68,7 +68,7 @@ export class ArchiveFolderViewComponent implements OnInit {
   @ViewChild('form', { static: true }) form!: NgForm;
   private archiveExams$$ = new BehaviorSubject<ArchiveExam[]>([]);
 
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   submitted = false;
 
@@ -127,7 +127,7 @@ export class ArchiveFolderViewComponent implements OnInit {
     this.cd.detectChanges();
   }
 
-  loadRows($event: LazyLoadEvent) {
+  loadRows($event: TableLazyLoadEvent) {
     this.archiveExamApiService
       .loadArchiveExams($event, this.id)
       .pipe(untilDestroyed(this))
@@ -138,7 +138,7 @@ export class ArchiveFolderViewComponent implements OnInit {
 
         this.cd.detectChanges();
         if (response.total === 50) {
-          const allRecordsLoadEvent: LazyLoadEvent = {
+          const allRecordsLoadEvent: TableLazyLoadEvent = {
             first: 0,
             rows: 50,
             ...this.filters,

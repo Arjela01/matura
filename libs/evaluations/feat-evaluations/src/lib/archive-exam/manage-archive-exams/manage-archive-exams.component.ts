@@ -26,11 +26,7 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {
-  ConfirmationService,
-  LazyLoadEvent,
-  MessageService,
-} from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -40,6 +36,7 @@ import { ArchiveFormComponent } from '../archive-exam-form/archive-form.componen
 import { ArchiveExamGridComponent } from '../archive-exam-grid/archive-exam-grid.component';
 import { BarcodeService } from '../services/barcode-service';
 import { ArchiveExam, ArchiveFolder, Report } from '@msh/shared/domain-models';
+import { TableLazyLoadEvent } from 'primeng/table';
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-archive-exams',
@@ -70,12 +67,12 @@ export class ManageArchiveExamsComponent implements OnInit {
   @Output() gridEvent = new EventEmitter<
     GridEvent<ArchiveExam | ArchiveFolder[]>
   >();
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
   @Output() formSave = new EventEmitter<ArchiveExam[] | ArchiveFolder[]>();
   @ViewChild('form', { static: true }) form!: NgForm;
   archiveExams$$ = new BehaviorSubject<ArchiveExam[]>([]);
   archiveExams$ = this.archiveExams$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
   totalRecords = 0;
   selectedArchiveExam: ArchiveExam | null = null;
   selectedArchiveExams: ArchiveExam[] = [];
@@ -105,7 +102,7 @@ export class ManageArchiveExamsComponent implements OnInit {
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([_]) => {
       if (this.filters) {
-        this.getArchiveExams(this.filters as LazyLoadEvent);
+        this.getArchiveExams(this.filters as TableLazyLoadEvent);
       }
     }),
     tap()
@@ -224,7 +221,7 @@ export class ManageArchiveExamsComponent implements OnInit {
     }
   }
 
-  getArchiveExams($event: LazyLoadEvent) {
+  getArchiveExams($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
     this.archiveExamApiService
       .loadArchiveExams($event, this.id)
@@ -253,7 +250,7 @@ export class ManageArchiveExamsComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Barkodi u ruajt me sukses!');
           this.displayModal = false;
-          this.getArchiveExams(this.filters as LazyLoadEvent);
+          this.getArchiveExams(this.filters as TableLazyLoadEvent);
           this.barcodeService.emptyBarcodeField();
         }
 
@@ -278,7 +275,7 @@ export class ManageArchiveExamsComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Barkodi u ndryshua me sukses!');
           this.displayModal = false;
-          this.getArchiveExams(this.filters as LazyLoadEvent);
+          this.getArchiveExams(this.filters as TableLazyLoadEvent);
         }
 
         if (response.isBadRequest)
@@ -336,7 +333,7 @@ export class ManageArchiveExamsComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Barkodi u fshi me sukses!');
-          this.getArchiveExams(this.filters as LazyLoadEvent);
+          this.getArchiveExams(this.filters as TableLazyLoadEvent);
         }
 
         if (response.isBadRequest)

@@ -21,7 +21,7 @@ import { GridEvent } from '@msh/shared/util-shared';
 
 import { DialogModule } from 'primeng/dialog';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { FileUploadModule } from 'primeng/fileupload';
 import { MultiSelectModule } from 'primeng/multiselect';
 
@@ -67,7 +67,7 @@ export class AssignAllFormComponent {
   @Output() examDateChanged = new EventEmitter<any>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
   submitted = false;
   displayAssignAllModal = false;
   fileContent: string | ArrayBuffer | null | undefined;

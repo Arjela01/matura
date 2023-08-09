@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { HighSchool, HighSchoolTableView } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class HighSchoolApiService {
     );
   }
 
-  loadHighSchools(event: LazyLoadEvent): Observable<HighSchoolTableView> {
+  loadHighSchools(event: TableLazyLoadEvent): Observable<HighSchoolTableView> {
     return this.apiService.post(`/HighSchool/TableData`, event);
   }
 

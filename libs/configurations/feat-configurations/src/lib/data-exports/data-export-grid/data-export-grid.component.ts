@@ -12,7 +12,11 @@ import {
   GRID_ACTIONS,
   ColumnFilterDirective,
 } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import {
+  TableLazyLoadEvent,
+  TableRowSelectEvent,
+  TableRowUnSelectEvent,
+} from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -49,7 +53,7 @@ export class DataExportGridComponent {
     GridEvent<DataExport | DataExport[]>
   >();
 
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
   onEditClick(dataExport: DataExport) {
     this.gridEvent.emit({
@@ -78,21 +82,21 @@ export class DataExportGridComponent {
     }
   }
 
-  onRowSelect({ data }: { data: DataExport }) {
+  onRowSelect($event: TableRowSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
-      data: data,
+      data: $event.data,
     } as GridEvent<DataExport>);
   }
 
-  onRowUnselect({ data }: { data: DataExport }) {
+  onRowUnselect($event: TableRowUnSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
-      data: data,
+      data: $event.data,
     } as GridEvent<DataExport>);
   }
 
-  loadRows($event: LazyLoadEvent) {
+  loadRows($event: TableLazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
 }

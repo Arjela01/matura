@@ -12,7 +12,7 @@ import {
   GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -21,6 +21,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { ReportsFormComponent } from '../reports-form/reports-form.component';
 import { ReportsGridComponent } from '../reports-grid/reports-grid.component';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @Component({
   selector: 'msh-manage-reports',
@@ -44,7 +45,7 @@ import { ReportsGridComponent } from '../reports-grid/reports-grid.component';
 export class ManageReportsComponent {
   private reports$$ = new BehaviorSubject<Reports[]>([]);
   reports$ = this.reports$$.asObservable();
-  filters: LazyLoadEvent = {} as LazyLoadEvent;
+  filters: TableLazyLoadEvent = {} as TableLazyLoadEvent;
   rolesDropdown: any;
   totalRecords = 0;
   selectedReport: Reports | null = null;
@@ -113,7 +114,7 @@ export class ManageReportsComponent {
     }
   }
 
-  getReports($event: LazyLoadEvent) {
+  getReports($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
     this.reportsApiService
       .loadReports($event)

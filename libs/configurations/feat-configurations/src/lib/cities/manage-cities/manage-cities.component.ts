@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -23,6 +23,7 @@ import { BehaviorSubject } from 'rxjs';
 import { CityFormComponent } from '../city-form/city-form.component';
 import { CityGridComponent } from '../city-grid/city-grid.component';
 import { RippleModule } from 'primeng/ripple';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -46,7 +47,7 @@ import { RippleModule } from 'primeng/ripple';
 export class ManageCitiesComponent implements OnInit {
   private cities$$ = new BehaviorSubject<City[]>([]);
   cities$ = this.cities$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedCity: City | null = null;
@@ -127,7 +128,7 @@ export class ManageCitiesComponent implements OnInit {
     }
   }
 
-  getCities($event: LazyLoadEvent) {
+  getCities($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.cityService
@@ -147,7 +148,7 @@ export class ManageCitiesComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Qyteti u shtua me sukses!');
           this.displayModal = false;
-          this.getCities(this.filters as LazyLoadEvent);
+          this.getCities(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -165,7 +166,7 @@ export class ManageCitiesComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Qyteti u ndryshua me sukses!');
           this.displayModal = false;
-          this.getCities(this.filters as LazyLoadEvent);
+          this.getCities(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -182,7 +183,7 @@ export class ManageCitiesComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Qyteti u fshi me sukses!');
-          this.getCities(this.filters as LazyLoadEvent);
+          this.getCities(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)

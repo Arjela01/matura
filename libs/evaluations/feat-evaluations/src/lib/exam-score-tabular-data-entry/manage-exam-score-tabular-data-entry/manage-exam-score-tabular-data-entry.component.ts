@@ -9,7 +9,7 @@ import {
 import { BehaviorSubject, forkJoin } from 'rxjs';
 import { DropdownModule } from 'primeng/dropdown';
 import { ExamScoreTabularDataEntryFiltersComponent } from '../exam-score-tabular-data-entry-filters/exam-score-tabular-data-entry-filters.component';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExamScoreTabularDataEntryListComponent } from '../exam-score-tabular-data-entry-list/exam-score-tabular-data-entry-list.component';
 import {
@@ -24,6 +24,7 @@ import {
   ExamScoreDataEntry,
   ExamScores,
 } from '@msh/shared/domain-models';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -45,7 +46,7 @@ export class ManageExamScoreTabularDataEntryComponent implements OnInit {
   private examScoreList$$ = new BehaviorSubject<ExamScoreDataEntry[]>([]);
   examScoreList$ = this.examScoreList$$.asObservable();
   totalRecords = 0;
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
   archiveFolder: DropdownModel<number>[] = [];
   examType: DropdownModel<number>[] = [];
   selectedExamScoreList: any | null;
@@ -151,7 +152,7 @@ export class ManageExamScoreTabularDataEntryComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Piket Totale u shtuan me sukses!');
           this.getExamScoresListById(
-            this.filters as LazyLoadEvent,
+            this.filters as TableLazyLoadEvent,
             response.data
           );
         } else {
@@ -174,7 +175,7 @@ export class ManageExamScoreTabularDataEntryComponent implements OnInit {
             'Rezultati i provimit u ndryshua me sukses!'
           );
           this.getExamScoresListById(
-            this.filters as LazyLoadEvent,
+            this.filters as TableLazyLoadEvent,
             response.data
           );
         } else {
@@ -212,7 +213,7 @@ export class ManageExamScoreTabularDataEntryComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Rezultati i provimit u fshi me sukses!');
-          this.getExamScoresListById(this.filters as LazyLoadEvent);
+          this.getExamScoresListById(this.filters as TableLazyLoadEvent);
         }
         if (response.isBadRequest)
           this.toastService.showError(

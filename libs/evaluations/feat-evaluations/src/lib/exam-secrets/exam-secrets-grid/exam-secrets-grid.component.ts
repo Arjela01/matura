@@ -17,7 +17,7 @@ import {
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ExamSecret } from '@msh/shared/domain-models';
 
 @Component({
@@ -49,7 +49,7 @@ export class ExamSecretsGridComponent {
     GridEvent<ExamSecret | ExamSecret[]>
   >();
 
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
   onEditClick(examScore: ExamSecret) {
     this.gridEvent.emit({
@@ -78,7 +78,7 @@ export class ExamSecretsGridComponent {
     }
   }
 
-  loadRows($event: LazyLoadEvent) {
+  loadRows($event: TableLazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
 }

@@ -6,7 +6,7 @@ import {
 } from '@msh/shared/domain-models';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -36,7 +36,7 @@ export class AdministrationOfficeApiService {
     );
   }
   loadAdministrationOffices(
-    event: LazyLoadEvent
+    event: TableLazyLoadEvent
   ): Observable<AdministrationOfficeTableView> {
     return this.apiService.post(`/AdministrationOffice/TableData`, event);
   }

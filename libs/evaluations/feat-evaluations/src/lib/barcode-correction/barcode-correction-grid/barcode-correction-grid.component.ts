@@ -13,12 +13,17 @@ import {
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
-import { LazyLoadEvent, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
-import { TableModule } from 'primeng/table';
+import {
+  TableLazyLoadEvent,
+  TableModule,
+  TableRowSelectEvent,
+  TableRowUnSelectEvent,
+} from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -61,7 +66,7 @@ export class BarcodeCorrectionGridComponent {
 
   @Output() formSave = new EventEmitter<BarcodeCorrection>();
 
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
   saving = false;
@@ -115,21 +120,21 @@ export class BarcodeCorrectionGridComponent {
     } as GridEvent<BarcodeCorrection>);
   }
 
-  onRowSelect({ data }: { data: BarcodeCorrection }) {
+  onRowSelect($event: TableRowSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
-      data: data.id,
+      data: $event.data,
     } as unknown as GridEvent<BarcodeCorrection>);
   }
 
-  onRowUnselect({ data }: { data: BarcodeCorrection }) {
+  onRowUnselect($event: TableRowUnSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
-      data: data,
+      data: $event.data,
     } as GridEvent<BarcodeCorrection>);
   }
 
-  loadRows($event: LazyLoadEvent) {
+  loadRows($event: TableLazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
 }

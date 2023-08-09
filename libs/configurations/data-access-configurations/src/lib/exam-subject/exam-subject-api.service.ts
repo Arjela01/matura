@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { ExamSubject, ExamSubjectTableView } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable, catchError, map, shareReplay, throwError } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 
@@ -11,7 +11,9 @@ import { HttpParams } from '@angular/common/http';
 })
 export class ExamSubjectApiService {
   constructor(private apiService: APIService) {}
-  loadExamSubjects(event: LazyLoadEvent): Observable<ExamSubjectTableView> {
+  loadExamSubjects(
+    event: TableLazyLoadEvent
+  ): Observable<ExamSubjectTableView> {
     return this.apiService.post(`/ExamSubject/TableData`, event);
   }
 

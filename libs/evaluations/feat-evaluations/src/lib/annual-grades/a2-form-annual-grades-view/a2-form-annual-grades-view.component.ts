@@ -21,12 +21,12 @@ import {
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { LazyLoadEvent, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import {
   AnnualGradesApiService,
   ExamGradeApiService,
 } from '@msh/evaluations/data-access-evaluations';
-import { TableModule } from 'primeng/table';
+import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { GlobalToastService } from '@msh/shared/util-shared';
 
 @Component({
@@ -53,7 +53,7 @@ import { GlobalToastService } from '@msh/shared/util-shared';
 })
 export class A2FormAnnualGradesViewComponent implements OnInit {
   totalRecords = 0;
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
   submitted = false;
   id: any;
   student: Student = {

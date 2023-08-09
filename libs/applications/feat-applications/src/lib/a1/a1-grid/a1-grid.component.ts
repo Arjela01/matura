@@ -13,7 +13,7 @@ import {
   GlobalToastService,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -24,7 +24,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
-import { TableModule } from 'primeng/table';
+import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
@@ -58,7 +58,7 @@ import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 export class A1GridComponent {
   private a1$$ = new BehaviorSubject<A1Z[]>([]);
   a1$ = this.a1$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
   students: Student[] = [];
   totalRecords = 0;
   selectedA1: A1Z | null = null;
@@ -82,7 +82,7 @@ export class A1GridComponent {
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([_]) => {
       if (this.filters) {
-        this.getA1(this.filters as LazyLoadEvent);
+        this.getA1(this.filters as TableLazyLoadEvent);
       }
     }),
     tap()
@@ -97,7 +97,7 @@ export class A1GridComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Formulari A1 u ndryshua me sukses!');
-          this.getA1(this.filters as LazyLoadEvent);
+          this.getA1(this.filters as TableLazyLoadEvent);
         }
 
         if (response.isBadRequest)
@@ -141,7 +141,7 @@ export class A1GridComponent {
       .subscribe((response: any) => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Formulari A1 u fshi me sukses!');
-          this.getA1(this.filters as LazyLoadEvent);
+          this.getA1(this.filters as TableLazyLoadEvent);
         }
 
         if (response.isBadRequest)
@@ -151,7 +151,7 @@ export class A1GridComponent {
       });
   }
 
-  getA1($event: LazyLoadEvent) {
+  getA1($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
     this.a1ApiService
       .loadA1($event)

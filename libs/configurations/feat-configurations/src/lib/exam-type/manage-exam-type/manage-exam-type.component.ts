@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import {
   GlobalToastService,
   GRID_ACTIONS,
@@ -17,6 +17,7 @@ import { BehaviorSubject } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExamTypeApiService } from '@msh/configurations/data-access-configurations';
 import { RippleModule } from 'primeng/ripple';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -41,7 +42,7 @@ import { RippleModule } from 'primeng/ripple';
 export class ManageExamTypeComponent {
   private examTypes$$ = new BehaviorSubject<ExamType[]>([]);
   examTypes$ = this.examTypes$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedExamTypes: ExamType[] = [];
@@ -111,7 +112,7 @@ export class ManageExamTypeComponent {
     }
   }
 
-  getExamTypes($event: LazyLoadEvent) {
+  getExamTypes($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.examTypeService
@@ -131,7 +132,7 @@ export class ManageExamTypeComponent {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Tipi i provimit u shtua me sukses!');
           this.displayModal = false;
-          this.getExamTypes(this.filters as LazyLoadEvent);
+          this.getExamTypes(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest)
           this.toastService.showError(
@@ -150,7 +151,7 @@ export class ManageExamTypeComponent {
             'Tipi i provimit u ndryshua me sukses!'
           );
           this.displayModal = false;
-          this.getExamTypes(this.filters as LazyLoadEvent);
+          this.getExamTypes(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest)
           this.toastService.showError(
@@ -166,7 +167,7 @@ export class ManageExamTypeComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Tipi i provimit u fshi me sukses!');
-          this.getExamTypes(this.filters as LazyLoadEvent);
+          this.getExamTypes(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)

@@ -8,6 +8,7 @@ import { FailingStudentApiService } from '@msh/applications/data-access-applicat
 import { FailingStudent } from '@msh/applications/domain-application';
 
 import { AuthFacade } from '@msh/auth/data-access-auth';
+import { StudentsApiService } from '@msh/configurations/data-access-configurations';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -19,11 +20,11 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { FailingStudentsFormComponent } from '../failing-students-form/failing-students-form.component';
 import { FailingStudentsGridComponent } from '../failing-students-grid/failing-students-grid.component';
-import { StudentsApiService } from '@msh/configurations/data-access-configurations';
 
 @UntilDestroy()
 @Component({
@@ -47,13 +48,13 @@ import { StudentsApiService } from '@msh/configurations/data-access-configuratio
 export class ManageFailingStudentsComponent {
   private failingStudents$$ = new BehaviorSubject<FailingStudent[]>([]);
   failingStudents$ = this.failingStudents$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
   hasAdditionalValue: any;
 
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([_]) => {
       if (this.filters) {
-        this.getStudents(this.filters as LazyLoadEvent);
+        this.getStudents(this.filters as TableLazyLoadEvent);
       }
     }),
     tap()
@@ -97,20 +98,14 @@ export class ManageFailingStudentsComponent {
       studentId: failingStudent.id,
     });
   }
-  getStudents($event: LazyLoadEvent) {
+  getStudents($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
-    const params = {
-      isFall: false,
-    };
 
-    this.studentService
-      .loadStudents($event, params)
+    this.failingStudentService
+      .loadStudentsToFail($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        const studentsWithAdditionalValueZero = response.data.filter(
-          student => !student.isFall
-        );
-        this.failingStudents$$.next(studentsWithAdditionalValueZero);
+        this.failingStudents$$.next(response.data);
         this.totalRecords = response.total;
         this.cd.markForCheck();
       });
@@ -125,7 +120,6 @@ export class ManageFailingStudentsComponent {
           this.toastService.showSuccess('Studenti u ndryshua me sukses!');
           this.displayModal = false;
           this.getStudents(this.filters as LazyLoadEvent);
-          console.log(123, failingStudent);
         } else this.toastService.showError(response.errorMessage);
 
         if (!response.isSuccessful)

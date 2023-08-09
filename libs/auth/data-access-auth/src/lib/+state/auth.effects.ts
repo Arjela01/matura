@@ -98,7 +98,7 @@ export class AuthEffects {
         );
         const token: any = jwt_decode(action.loginResponse.token as string);
         if (token.NeedResetPassword) {
-          return of(AuthActions.passwordchange());
+          return of(AuthActions.passwordChange());
         }
         return this.academicYearService.getAcademicYears().pipe(
           map((years: any) => years.data.find((year: any) => year.isActive)),
@@ -162,7 +162,7 @@ export class AuthEffects {
   passwordChange$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(AuthActions.passwordchange),
+        ofType(AuthActions.passwordChange),
         tap(action => {
           this.router.navigate(['/reset-password']);
         })
@@ -173,7 +173,7 @@ export class AuthEffects {
   resetToken$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(AuthActions.resettoken),
+        ofType(AuthActions.resetToken),
         tap(action => {
           this.storageService.removeItem(TOKEN_STORAGE_KEY);
           this.heartBeatService.stopTimer();

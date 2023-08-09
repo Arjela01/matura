@@ -2,7 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AcademicYear } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable, catchError, map, throwError } from 'rxjs';
 
 @Injectable({
@@ -29,7 +29,7 @@ export class DiplomasStudentApiService {
     );
   }
 
-  loadStudentDiplomas(event: LazyLoadEvent): Observable<any> {
+  loadStudentDiplomas(event: TableLazyLoadEvent): Observable<any> {
     return this.apiService.post(`/PrintedDiplomas/TableData`, event).pipe(
       map((data: any) => data),
       catchError(error => throwError(error))

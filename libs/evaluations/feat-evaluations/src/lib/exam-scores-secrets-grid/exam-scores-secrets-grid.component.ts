@@ -4,7 +4,7 @@ import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -35,12 +35,12 @@ import { ExamScore } from '@msh/shared/domain-models';
 export class ExamScoresSecretsGridComponent {
   private examScores$$ = new BehaviorSubject<ExamScore[]>([]);
   examScores$ = this.examScores$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
   totalRecords = 0;
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([_]) => {
       if (this.filters) {
-        this.getExamScores(this.filters as LazyLoadEvent);
+        this.getExamScores(this.filters as TableLazyLoadEvent);
       }
     }),
     tap()
@@ -50,7 +50,7 @@ export class ExamScoresSecretsGridComponent {
     private authFacade: AuthFacade
   ) {}
 
-  getExamScores($event: LazyLoadEvent) {
+  getExamScores($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.examScoreService
