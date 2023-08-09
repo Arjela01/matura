@@ -222,9 +222,9 @@
 </p-confirmDialog>
 <p-dialog
   [(visible)]="displayHistoryForm"
-  [style]="{ width: '1000px' }"
+  [style]="{ width: '70%' }"
   [modal]="true"
-  header="Shiko Historinë"
+  [header]="headerText"
   [draggable]="false"
   [resizable]="false"
   class="p-fluid"
@@ -233,8 +233,7 @@
     <msh-a1-history-grid
       [recordId]="studentId"
       [recordData]="selectedRecord"
-      (gridEvent)="onGridEvent(gridAction.HISTORY,$event)"
-      >
+      (gridEvent)="onGridEvent(gridAction.HISTORY, $event)">
     </msh-a1-history-grid>
   </ng-template>
 </p-dialog>

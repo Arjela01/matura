@@ -7,7 +7,6 @@ import {
   Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LazyLoadEvent } from 'primeng/api';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -24,9 +23,12 @@ import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { A1_FORMS } from '../query-a1';
 import { Apollo, gql } from 'apollo-angular';
-import { WhereBuilder } from '../../../../../../audit-logs/feat-audit-log/src/lib/audit-log-grid/query-builder';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { GridEvent } from '@msh/shared/util-shared';
+import {
+  ColumnFilterDirective,
+  GridEvent,
+  WhereBuilder,
+} from '@msh/shared/util-shared';
 import { FailingStudent } from '@msh/applications/domain-application';
 
 @Component({
@@ -48,6 +50,7 @@ import { FailingStudent } from '@msh/applications/domain-application';
     RippleModule,
     TableModule,
     RouterLink,
+    ColumnFilterDirective,
   ],
   templateUrl: './a1-history-grid.component.html',
   styleUrls: ['./a1-history-grid.component.scss'],
@@ -55,7 +58,7 @@ import { FailingStudent } from '@msh/applications/domain-application';
   providers: [Apollo],
 })
 @UntilDestroy()
-export class A1HistoryGridComponent implements OnInit {
+export class A1HistoryGridComponent {
   SORT_ASC = 'ASC';
   SORT_DESC = 'DESC';
 
@@ -66,12 +69,6 @@ export class A1HistoryGridComponent implements OnInit {
   >();
 
   queryName = 'a1Forms';
-  hasNextPage = false;
-  hasPreviousPage = false;
-  visiblePages: number[] = [];
-  paginationArray: number[] = [];
-  userData: { [userId: string]: string } = {};
-  recordDataArray: { key: string; value: any }[] = [];
   pageSize = 15;
   totalCount = 0;
   currentPage = 1;
@@ -79,10 +76,6 @@ export class A1HistoryGridComponent implements OnInit {
   orderBy: any = null;
 
   constructor(private activatedRoute: ActivatedRoute, private apollo: Apollo) {}
-
-  ngOnInit() {
-    this.fetchRecordData();
-  }
 
   loadRows($event: TableLazyLoadEvent) {
     this.where = new WhereBuilder($event.filters).transformWhere();
@@ -131,5 +124,4 @@ export class A1HistoryGridComponent implements OnInit {
         }
       );
   }
-
 }

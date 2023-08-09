@@ -8,10 +8,9 @@ import { queriesMap } from './queries';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
-import { WhereBuilder } from './query-builder';
 import { TranslationPipe } from './translate-pipe';
 import { TranslationService } from '@msh/audit-logs/data-access-audit-log';
-import { ColumnFilterDirective } from '@msh/shared/util-shared';
+import {ColumnFilterDirective, WhereBuilder} from '@msh/shared/util-shared';
 
 const SORT_ASC = 'ASC';
 const SORT_DESC = 'DESC';

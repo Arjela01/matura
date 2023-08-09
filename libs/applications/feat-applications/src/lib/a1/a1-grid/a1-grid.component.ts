@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { A1ApiService } from '@msh/applications/data-access-applications';
-import { A1Z, FailingStudent } from '@msh/applications/domain-application';
+import { A1Z } from '@msh/applications/domain-application';
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import { DropdownModel } from '@msh/shared/data-access-shared';
 import { AcademicYear, Student } from '@msh/shared/domain-models';
 import {
   ColumnFilterDirective,
@@ -64,6 +63,7 @@ export class A1GridComponent {
   students: Student[] = [];
   totalRecords = 0;
   displayForm = false;
+  headerText: any;
   displayHistoryForm = false;
   gridAction = GRID_ACTIONS;
   ref: DynamicDialogRef | null = null;
@@ -124,6 +124,7 @@ export class A1GridComponent {
       case GRID_ACTIONS.HISTORY:
         this.selectedRecord = Object.assign({}, event.data);
         this.studentId = event.studentId;
+        this.headerText = `Historiku për Formularin A1 {${event.id}}`;
         this.displayHistoryForm = true;
         break;
       case GRID_ACTIONS.EDIT:
