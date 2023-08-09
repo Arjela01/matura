@@ -22,14 +22,14 @@
     </ng-container>
   </ul>
   <div class="profile-group">
-    <div>
-      <div class="mb-6">
+    <div *ngIf="userProfile$ | async as user">
+      <div class="mb-6" *ngIf="user.roleName === 'Admin'">
         <p-button (click)="showModal()" styleClass="p-button-rounded"
           >Viti {{ academicYear?.year }}
           {{ academicYear?.isFall ? '- vjeshtë' : '' }}</p-button
         >
       </div>
-      <div class="container" *ngIf="userProfile$ | async as user">
+      <div class="container">
         <div class="first-group">
           <div class="profile-photo" (click)="onNewClick()">
             <p-avatar
