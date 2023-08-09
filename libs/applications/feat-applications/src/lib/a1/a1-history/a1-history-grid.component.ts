@@ -20,7 +20,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { RippleModule } from 'primeng/ripple';
-import { TableModule } from 'primeng/table';
+import {TableLazyLoadEvent, TableModule} from 'primeng/table';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { A1_FORMS } from '../query-a1';
 import { Apollo, gql } from 'apollo-angular';
@@ -115,7 +115,7 @@ export class A1HistoryGridComponent implements OnInit {
       );
   }
 
-  loadRows($event: LazyLoadEvent) {
+  loadRows($event: TableLazyLoadEvent) {
     this.where = new WhereBuilder($event.filters).transformWhere();
     const flattenSort = $event.sortField
       ? {
@@ -123,37 +123,12 @@ export class A1HistoryGridComponent implements OnInit {
             $event.sortOrder === 1 ? this.SORT_ASC : this.SORT_DESC,
         }
       : {};
-    const sortField = this.unflatten(flattenSort);
+    const sortField = flattenSort;
     if (Object.keys(sortField).length === 0) {
       this.orderBy = { auditTimestamp: 'DESC' };
     } else {
-      this.orderBy = this.unflatten(flattenSort);
+      this.orderBy = flattenSort;
     }
     this.fetchRecordData();
-  }
-
-  unflatten(obj: Record<string, any>): Record<string, any> {
-    const result: Record<string, any> = {};
-
-    for (const key in obj) {
-      const value = obj[key];
-      const keyParts = key.split('.');
-      let currentObj: Record<string, any> = result;
-
-      for (let i = 0; i < keyParts.length; i++) {
-        const part = keyParts[i];
-
-        if (!currentObj[part]) {
-          if (i === keyParts.length - 1) {
-            currentObj[part] = value;
-          } else {
-            currentObj[part] = {};
-          }
-        }
-        currentObj = currentObj[part];
-      }
-    }
-
-    return result;
   }
 }
