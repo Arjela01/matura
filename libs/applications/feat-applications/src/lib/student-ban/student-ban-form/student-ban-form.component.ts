@@ -21,7 +21,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BehaviorSubject } from 'rxjs';
 import { StudentsApiService } from '@msh/configurations/data-access-configurations';
@@ -62,7 +62,7 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
 
   effectiveDate: any;
   banRemovalDate: any;
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   @Input() set bannedStudentsDetails(details: StudentBan | null) {
     if (details) {
@@ -157,7 +157,7 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
       this.onStudentChange(this.selectedStudent);
     }
   }
-  getStudents($event: LazyLoadEvent): void {
+  getStudents($event: TableLazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
     this.studentService
       .loadStudents($event)

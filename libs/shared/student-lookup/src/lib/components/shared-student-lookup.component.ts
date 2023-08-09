@@ -6,7 +6,11 @@ import {
   Output,
 } from '@angular/core';
 import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import {
+  TableLazyLoadEvent,
+  TableRowSelectEvent,
+  TableRowUnSelectEvent,
+} from 'primeng/table';
 import { SharedStudent } from '../models/shared-student';
 
 @Component({
@@ -24,23 +28,23 @@ export class SharedStudentLookupComponent {
     GridEvent<SharedStudent | SharedStudent[]>
   >();
 
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
-  onRowSelect({ data }: { data: SharedStudent }) {
+  onRowSelect($event: TableRowSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
-      data: data,
+      data: $event.data,
     } as GridEvent<SharedStudent>);
   }
 
-  onRowUnselect({ data }: { data: SharedStudent }) {
+  onRowUnselect($event: TableRowUnSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
-      data: data,
+      data: $event.data,
     } as GridEvent<SharedStudent>);
   }
 
-  loadRows($event: LazyLoadEvent) {
+  loadRows($event: TableLazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
 

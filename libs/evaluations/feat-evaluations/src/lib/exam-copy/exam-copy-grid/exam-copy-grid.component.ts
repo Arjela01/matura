@@ -11,7 +11,7 @@ import {
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -48,7 +48,7 @@ export class ExamCopyGridComponent {
 
   @Output() gridEvent = new EventEmitter<GridEvent<ExamCopy | ExamCopy[]>>();
 
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
   onProceedClick(examCopy: ExamCopy) {
     this.gridEvent.emit({
@@ -57,7 +57,7 @@ export class ExamCopyGridComponent {
     } as GridEvent<ExamCopy>);
   }
 
-  loadRows($event: LazyLoadEvent) {
+  loadRows($event: TableLazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
 }

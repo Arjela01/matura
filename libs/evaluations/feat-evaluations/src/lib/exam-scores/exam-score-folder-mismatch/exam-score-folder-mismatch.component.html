@@ -1,0 +1,201 @@
+<div class="flex ml-2 mb-2 page-header mb-header">
+  <h2 class="flex-1">Mospërputhje Pikë/Dosje</h2>
+</div>
+
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <p-table
+        #dt
+        dataKey="id"
+        responsiveLayout="scroll"
+        [value]="examScores"
+        [totalRecords]="totalRecords"
+        [rows]="10"
+        [paginator]="true"
+        [rowsPerPageOptions]="[10, 20, 30]"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
+        [rowHover]="true"
+        selectionMode="multiple"
+        (onLazyLoad)="loadRows($event)"
+        [lazy]="true">
+        <ng-template pTemplate="header">
+          <tr>
+            <th
+              colspan="6"
+              class="text-center font-bold bg-gray-100 border-1 border-200">
+              Pikët
+            </th>
+            <th
+              colspan="5"
+              class="text-center font-bold bg-gray-100 border-1 border-200">
+              Dosja
+            </th>
+          </tr>
+          <tr>
+            <th pSortableColumn="examTypeName">
+              Tipi
+              <div>
+                <p-sortIcon field="examTypeName"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="examTypeName"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="examSubjectName">
+              Lënda
+              <div>
+                <p-sortIcon field="examSubjectName"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="examSubjectName"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="barcode">
+              Barkodi
+              <div>
+                <p-sortIcon field="barcode"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="barcode"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="writingScore">
+              Pikët me shtjellim
+              <div>
+                <p-sortIcon field="writingScore"></p-sortIcon>
+                <p-columnFilter
+                  type="numeric"
+                  field="writingScore"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="multipleChoiceScore">
+              Pikët me aternativa
+              <div>
+                <p-sortIcon field="multipleChoiceScore"></p-sortIcon>
+                <p-columnFilter
+                  type="numeric"
+                  field="multipleChoiceScore"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="isFall" style="border-right: 1px solid #ddd">
+              Vjeshtë?
+              <div>
+                <p-sortIcon field="isFall"></p-sortIcon>
+                <p-columnFilter
+                  type="boolean"
+                  field="isFall"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="archiveFolderNr">
+              Dosja
+              <div>
+                <p-sortIcon field="archiveFolderNr"></p-sortIcon>
+                <p-columnFilter
+                  type="string"
+                  field="archiveFolderNr"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="archiveExamIndex">
+              Indeks
+              <div>
+                <p-sortIcon field="archiveExamIndex"></p-sortIcon>
+                <p-columnFilter
+                  type="number"
+                  field="archiveExamIndex"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="archiveFolderExamTypeName">
+              Tipi
+              <div>
+                <p-sortIcon field="archiveFolderExamTypeName"></p-sortIcon>
+                <p-columnFilter
+                  type="string"
+                  field="archiveFolderExamTypeName"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="archiveFolderExamSubjectName">
+              Lënda
+              <div>
+                <p-sortIcon field="archiveFolderExamSubjectName"></p-sortIcon>
+                <p-columnFilter
+                  type="string"
+                  field="archiveFolderExamSubjectName"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="archiveExamBarcode">
+              Barkodi
+              <div>
+                <p-sortIcon field="archiveExamBarcode"></p-sortIcon>
+                <p-columnFilter
+                  type="string"
+                  field="archiveExamBarcode"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-examScore>
+          <tr>
+            <td style="width: 10%; min-width: 10rem">
+              {{ examScore.examTypeName }}
+            </td>
+            <td style="width: 20%; min-width: 10rem">
+              {{ examScore.examSubjectName }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ examScore.barcode }}
+            </td>
+            <td style="width: 5%; min-width: 10rem">
+              {{ examScore.writingScore }}
+            </td>
+            <td style="width: 5%; min-width: 10rem">
+              {{ examScore.multipleChoiceScore }}
+            </td>
+            <td
+              style="width: 5%; min-width: 10rem; border-right: 1px solid #ddd">
+              {{ examScore.isFall ? 'Po' : 'Jo' }}
+            </td>
+            <td style="width: 5%; min-width: 10rem">
+              {{ examScore.archiveFolderNr }}
+            </td>
+            <td style="width: 5%; min-width: 10rem">
+              {{ examScore.archiveExamIndex }}
+            </td>
+            <td style="width: 5%; min-width: 10rem">
+              {{ examScore.archiveFolderExamTypeName }}
+            </td>
+            <td style="width: 20%; min-width: 10rem">
+              {{ examScore.archiveFolderExamSubjectName }}
+            </td>
+            <td style="width: 5%; min-width: 10rem">
+              {{ examScore.archiveExamBarcode }}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

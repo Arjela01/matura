@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -26,6 +26,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ProfileGroupFormComponent } from '../profile-group-form/profile-group-form.component';
 import { ProfileGroupGridComponent } from '../profile-group-grid/profile-group-grid.component';
 import { RippleModule } from 'primeng/ripple';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -49,7 +50,7 @@ import { RippleModule } from 'primeng/ripple';
 export class ManageProfileGroupsComponent implements OnInit {
   private profileGroups$$ = new BehaviorSubject<ProfileGroup[]>([]);
   profileGroups$ = this.profileGroups$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedProfileGroup: ProfileGroup | null = null;
@@ -138,7 +139,7 @@ export class ManageProfileGroupsComponent implements OnInit {
     }
   }
 
-  getProfileGroups($event: LazyLoadEvent) {
+  getProfileGroups($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.profileGroupService
@@ -158,7 +159,7 @@ export class ManageProfileGroupsComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Grupi i profilit u shtua me sukses!');
           this.displayModal = false;
-          this.getProfileGroups(this.filters as LazyLoadEvent);
+          this.getProfileGroups(this.filters as TableLazyLoadEvent);
           this.cd.detectChanges();
         } else this.toastService.showError(response.errorMessage);
 
@@ -179,7 +180,7 @@ export class ManageProfileGroupsComponent implements OnInit {
             'Profili i grupit u ndryshua me sukses!'
           );
           this.displayModal = false;
-          this.getProfileGroups(this.filters as LazyLoadEvent);
+          this.getProfileGroups(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -196,7 +197,7 @@ export class ManageProfileGroupsComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Grupi i profilit u fshi me sukses!');
-          this.getProfileGroups(this.filters as LazyLoadEvent);
+          this.getProfileGroups(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)

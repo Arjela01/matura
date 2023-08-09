@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Gender, GenderTableView } from '@msh/shared/domain-models';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 export class GendersApiService {
   constructor(private apiService: APIService) {}
 
-  loadGenders(event: LazyLoadEvent): Observable<GenderTableView> {
+  loadGenders(event: TableLazyLoadEvent): Observable<GenderTableView> {
     return this.apiService.post(`/Gender/TableData`, event);
   }
 

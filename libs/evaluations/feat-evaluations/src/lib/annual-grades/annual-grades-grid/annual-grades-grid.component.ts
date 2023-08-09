@@ -5,7 +5,7 @@ import {
   EventEmitter,
   Output,
 } from '@angular/core';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -49,11 +49,11 @@ export class AnnualGradesGridComponent {
   id: any;
   student$ = this.student$$.asObservable();
   @Output() gridEvent = new EventEmitter<GridEvent<ExamGrade | Student[]>>();
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
   @Output() formSave = new EventEmitter<ExamGrade[] | Student[]>();
   annualGrade$ = this.annualGrade$$.asObservable();
   totalRecords = 0;
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   constructor(
     private readonly examGradeApiService: ExamGradeApiService,
@@ -64,7 +64,7 @@ export class AnnualGradesGridComponent {
     this.id = this.route.snapshot.paramMap.get('id');
   }
 
-  getStudent($event: LazyLoadEvent) {
+  getStudent($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.studentApiService

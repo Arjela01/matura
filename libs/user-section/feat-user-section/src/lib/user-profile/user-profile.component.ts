@@ -15,8 +15,8 @@ import { UserProfileApiService } from '@msh/user-section/data-access-user-sectio
 import { UserProfile } from '@msh/shared/domain-models';
 import { DialogModule } from 'primeng/dialog';
 import { UserResetPasswordComponent } from '../user-reset-password/user-reset-password.component';
-import { LazyLoadEvent } from 'primeng/api';
 import { Subject } from 'rxjs';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -40,7 +40,7 @@ import { Subject } from 'rxjs';
 export class UserProfileComponent implements OnInit {
   submitted = false;
   displayPasswordModal = false;
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   @ViewChild('form', { static: true }) form!: NgForm;
 

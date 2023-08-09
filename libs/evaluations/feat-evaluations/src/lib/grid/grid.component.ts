@@ -13,7 +13,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { CheckboxModule } from 'primeng/checkbox';
 import { RippleModule } from 'primeng/ripple';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -37,7 +37,7 @@ export class GridComponent {
   @Input() gridData: any[] = [];
   @Output() dataEmitted = new EventEmitter<any>();
 
-  loadRows($event: LazyLoadEvent) {
+  loadRows($event: TableLazyLoadEvent) {
     this.dataEmitted.emit($event);
   }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ProfileGroup, ProfileGroupTableView } from '@msh/shared/domain-models';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -17,7 +17,9 @@ export class ProfileGroupApiService {
     );
   }
 
-  loadProfileGroups(event: LazyLoadEvent): Observable<ProfileGroupTableView> {
+  loadProfileGroups(
+    event: TableLazyLoadEvent
+  ): Observable<ProfileGroupTableView> {
     return this.apiService.post(`/ProfileGroup/TableData`, event);
   }
 

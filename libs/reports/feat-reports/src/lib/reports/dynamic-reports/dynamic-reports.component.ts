@@ -4,7 +4,7 @@ import { EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Reports } from '@msh/configurations/domain-configurations';
 import { GridEvent } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -46,7 +46,7 @@ export class DynamicReportsComponent {
 
   @Output() gridEvent = new EventEmitter<GridEvent<any | any[]>>();
   @Output() changePage = new EventEmitter();
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
   constructor(private router: Router) {}
 
