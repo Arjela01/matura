@@ -5,7 +5,6 @@ import { Router, RouterLink } from '@angular/router';
 import { A1ApiService } from '@msh/applications/data-access-applications';
 import { A1Z } from '@msh/applications/domain-application';
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import { DropdownModel } from '@msh/shared/data-access-shared';
 import { AcademicYear, Student } from '@msh/shared/domain-models';
 import {
   ColumnFilterDirective,
@@ -28,6 +27,7 @@ import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
+import { A1HistoryGridComponent } from '../a1-history/a1-history-grid.component';
 @Component({
   selector: 'a1-grid',
   standalone: true,
@@ -48,6 +48,7 @@ import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
     TableModule,
     ColumnFilterDirective,
     RouterLink,
+    A1HistoryGridComponent,
   ],
   templateUrl: './a1-grid.component.html',
   styleUrls: ['./a1-grid.component.scss'],
@@ -61,17 +62,16 @@ export class A1GridComponent {
   filters: TableLazyLoadEvent | null = null;
   students: Student[] = [];
   totalRecords = 0;
-  selectedA1: A1Z | null = null;
-  selectedA1Forms: A1Z[] = [];
   displayForm = false;
-  d3Dropdown: DropdownModel<number>[] = [];
+  headerText: any;
+  displayHistoryForm = false;
   gridAction = GRID_ACTIONS;
-  d3Subject: DropdownModel<number>[] = [];
   ref: DynamicDialogRef | null = null;
-  optionalSubjects: DropdownModel<number>[] = [];
-  studentsTotalRecords = 0;
-  choosenStudent: Student | null = null;
   academicYear: AcademicYear | null = null;
+
+  studentId: number | undefined;
+  selectedRecord: any;
+
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
@@ -89,6 +89,9 @@ export class A1GridComponent {
   );
   onNewClick() {
     this.router.navigate(['applications/a1/add']);
+  }
+  onHistoryModalClose() {
+    this.displayHistoryForm = false;
   }
   updateA1(a1: A1Z) {
     this.a1ApiService
@@ -118,6 +121,12 @@ export class A1GridComponent {
 
   onGridEvent(action: GRID_ACTIONS, event: any) {
     switch (action) {
+      case GRID_ACTIONS.HISTORY:
+        this.selectedRecord = Object.assign({}, event.data);
+        this.studentId = event.studentId;
+        this.headerText = `Historiku për Formularin A1 {${event.id}}`;
+        this.displayHistoryForm = true;
+        break;
       case GRID_ACTIONS.EDIT:
         this.router.navigate([`applications/a1/edit/${event.id}`]);
         this.displayForm = true;

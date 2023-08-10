@@ -180,7 +180,7 @@
                   pTooltip="Ndrysho" />
                 <img
                   src="assets/svg/history.svg"
-                  class="p-button-rounded p-button-warning p-button-text mr-2 pointer hidden"
+                  class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
                   tooltipPosition="bottom"
                   (click)="onGridEvent(gridAction.HISTORY, a1)"
                   pTooltip="Historia" />
@@ -220,4 +220,21 @@
       (click)="cd.accept()"></button>
   </ng-template>
 </p-confirmDialog>
+<p-dialog
+  [(visible)]="displayHistoryForm"
+  [style]="{ width: '80%' }"
+  [modal]="true"
+  [header]="headerText"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid"
+  (onHide)="onHistoryModalClose()">
+  <ng-template pTemplate="content">
+    <msh-a1-history-grid
+      [recordId]="studentId"
+      [recordData]="selectedRecord"
+      (gridEvent)="onGridEvent(gridAction.HISTORY, $event)">
+    </msh-a1-history-grid>
+  </ng-template>
+</p-dialog>
 <ng-container *ngIf="academicYear$ | async"></ng-container>

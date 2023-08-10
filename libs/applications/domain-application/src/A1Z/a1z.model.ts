@@ -85,6 +85,7 @@ export interface A1Z {
 // TODO: ADD STUDENT IDENTIFIER TO TABLE RECORD
 export interface A1ZTableRecord {
   id?: number;
+  studentId?: string;
   academicYear?: number;
   academicYearActive?: boolean;
   firstName?: string;
