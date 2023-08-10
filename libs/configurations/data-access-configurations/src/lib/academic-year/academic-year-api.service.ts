@@ -15,7 +15,7 @@ export class AcademicYearApiService {
   getAcademicYears(): Observable<AcademicYear> {
     return this.apiService.get(`/AcademicYear`);
   }
-  getAcademicYearsFiltered(): Observable<AcademicYear> {
+  getAcademicYearsFiltered(): Observable<any> {
     return this.apiService.get(`/AcademicYear/DropdownListFilter`);
   }
   loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
