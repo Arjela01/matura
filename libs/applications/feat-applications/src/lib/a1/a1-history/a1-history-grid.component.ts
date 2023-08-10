@@ -28,7 +28,7 @@ import {
   WhereBuilder,
 } from '@msh/shared/util-shared';
 import { FailingStudent } from '@msh/applications/domain-application';
-import {A1Z_FORMS} from "../../a1z/query-a1z";
+import {A1_FORMS} from "../query-a1";
 
 @Component({
   selector: 'msh-a1-history-grid',
@@ -66,7 +66,7 @@ export class A1HistoryGridComponent {
     GridEvent<FailingStudent | FailingStudent[]>
   >();
 
-  queryName = 'a1ZForms';
+  queryName = 'a1Forms';
   pageSize = 15;
   totalCount = 0;
   currentPage = 1;
@@ -100,7 +100,7 @@ export class A1HistoryGridComponent {
     this.apollo
       .watchQuery<any>({
         query: gql`
-          ${A1Z_FORMS}
+          ${A1_FORMS}
         `,
         variables: {
           pagesize: this.pageSize,

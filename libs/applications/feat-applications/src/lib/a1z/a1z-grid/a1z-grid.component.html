@@ -186,10 +186,9 @@
   [header]="headerText"
   [draggable]="false"
   [resizable]="false"
-  class="p-fluid"
-  (onHide)="onHistoryModalClose()">
+  class="p-fluid">
   <ng-template pTemplate="content">
-    <msh-a1-history-grid [recordId]="studentId" [recordData]="selectedRecord">
-    </msh-a1-history-grid>
+    <msh-a1z-history-grid [recordId]="studentId" [recordData]="selectedRecord">
+    </msh-a1z-history-grid>
   </ng-template>
 </p-dialog>

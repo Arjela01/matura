@@ -24,8 +24,8 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { RouterLink } from '@angular/router';
-import { A1HistoryGridComponent } from '../../a1/a1-history/a1-history-grid.component';
 import { DialogModule } from 'primeng/dialog';
+import {A1zHistoryGridComponent} from "../a1z-history/a1z-history-grid.component";
 
 @Component({
   selector: 'msh-a1z-grid',
@@ -40,7 +40,7 @@ import { DialogModule } from 'primeng/dialog';
     RippleModule,
     ColumnFilterDirective,
     RouterLink,
-    A1HistoryGridComponent,
+    A1zHistoryGridComponent,
     DialogModule,
   ],
   templateUrl: './a1z-grid.component.html',
@@ -54,7 +54,6 @@ export class A1zGridComponent {
   @Input() headerText = '';
   @Input() displayHistoryForm = true;
   @Input() selectedRecord: any;
-  @Input() onHistoryModalClose: any;
   selectedA1Z: A1ZTableRecord[] = [];
 
   @Output() gridEvent = new EventEmitter<
@@ -77,7 +76,6 @@ export class A1zGridComponent {
     } as GridEvent<A1ZTableRecord>);
   }
   onHistoryClick(A1Z: A1ZTableRecord) {
-    console.log(123, this.selectedRecord);
     this.displayHistoryForm = true;
     this.gridEvent.emit({
       action: GRID_ACTIONS.HISTORY,

@@ -31,7 +31,7 @@ import { FailingStudent } from '@msh/applications/domain-application';
 import {A1Z_FORMS} from "../query-a1z";
 
 @Component({
-  selector: 'msh-a1-history-grid',
+  selector: 'msh-a1z-history-grid',
   standalone: true,
   imports: [
     CommonModule,
@@ -66,7 +66,6 @@ export class A1zHistoryGridComponent {
     GridEvent<FailingStudent | FailingStudent[]>
   >();
 
-  queryName = 'a1Forms';
   pageSize = 15;
   totalCount = 0;
   currentPage = 1;
@@ -111,7 +110,7 @@ export class A1zHistoryGridComponent {
       })
       .valueChanges.subscribe(
         (response: any) => {
-          const items = response?.data[this.queryName].items || [];
+          const items = response?.data['a1ZForms'].items || [];
           this.recordData =
             items.filter((item: any) => item.student.id === this.recordId) ||
             [];
