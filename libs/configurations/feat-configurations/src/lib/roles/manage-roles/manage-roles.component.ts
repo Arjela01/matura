@@ -9,7 +9,7 @@ import {
   GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -18,6 +18,7 @@ import { BehaviorSubject } from 'rxjs';
 import { RolesFormComponent } from '../roles-form/roles-form.component';
 import { RolesGridComponent } from '../roles-grid/roles-grid.component';
 import { RippleModule } from 'primeng/ripple';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @Component({
   selector: 'msh-manage-roles',
@@ -41,7 +42,7 @@ import { RippleModule } from 'primeng/ripple';
 export class ManageRolesComponent {
   private roles$$ = new BehaviorSubject<Role[]>([]);
   roles$ = this.roles$$.asObservable();
-  filters: LazyLoadEvent = {} as LazyLoadEvent;
+  filters: TableLazyLoadEvent = {} as TableLazyLoadEvent;
 
   totalRecords = 0;
   selectedRole: Role | null = null;
@@ -105,7 +106,7 @@ export class ManageRolesComponent {
     }
   }
 
-  getRoles($event: LazyLoadEvent) {
+  getRoles($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
     this.rolesService
       .loadRoles($event)

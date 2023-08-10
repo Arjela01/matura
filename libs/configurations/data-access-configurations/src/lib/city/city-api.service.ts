@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { Observable } from 'rxjs';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { City, CityTableView } from '@msh/shared/domain-models';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class CityApiService {
       `/City/DropdownList`
     );
   }
-  loadCities(event: LazyLoadEvent): Observable<CityTableView> {
+  loadCities(event: TableLazyLoadEvent): Observable<CityTableView> {
     return this.apiService.post(`/City/TableData`, event);
   }
 

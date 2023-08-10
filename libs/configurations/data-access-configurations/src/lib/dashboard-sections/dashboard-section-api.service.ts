@@ -5,7 +5,7 @@ import {
 } from '@msh/shared/domain-models';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -21,7 +21,7 @@ export class DashboardSectionApiService {
   }
 
   loadDashboardSection(
-    event: LazyLoadEvent
+    event: TableLazyLoadEvent
   ): Observable<DashboardSectionTableView> {
     return this.apiService.post(`/DashboardSection/TableData`, event);
   }

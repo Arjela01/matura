@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -23,6 +23,7 @@ import { AcademicYearFormComponent } from '../academic-year-form/academic-year-f
 import { AcademicYearGridComponent } from '../academic-year-grid/academic-year-grid.component';
 import { RippleModule } from 'primeng/ripple';
 import { AuthFacade } from '@msh/auth/data-access-auth';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -46,7 +47,7 @@ import { AuthFacade } from '@msh/auth/data-access-auth';
 export class ManageAcademicYearComponent {
   private academicYears$$ = new BehaviorSubject<AcademicYear[]>([]);
   academicYears$ = this.academicYears$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedAcademicYear: AcademicYear | null = null;
@@ -130,7 +131,7 @@ export class ManageAcademicYearComponent {
     }
   }
 
-  getAcademicYears($event: LazyLoadEvent) {
+  getAcademicYears($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.academicYearService
@@ -150,7 +151,7 @@ export class ManageAcademicYearComponent {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Viti u shtua me sukses!');
           this.displayModal = false;
-          this.getAcademicYears(this.filters as LazyLoadEvent);
+          this.getAcademicYears(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -168,7 +169,7 @@ export class ManageAcademicYearComponent {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Viti u ndryshua me sukses!');
           this.displayModal = false;
-          this.getAcademicYears(this.filters as LazyLoadEvent);
+          this.getAcademicYears(this.filters as TableLazyLoadEvent);
           if (response.data.isActive) {
             this.authFacade.changeAcademicYear(response.data);
           }
@@ -188,7 +189,7 @@ export class ManageAcademicYearComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Viti u fshi me sukses!');
-          this.getAcademicYears(this.filters as LazyLoadEvent);
+          this.getAcademicYears(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)

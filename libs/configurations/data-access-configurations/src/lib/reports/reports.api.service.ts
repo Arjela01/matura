@@ -6,7 +6,7 @@ import {
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { A1ZCategory } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
 })
 export class ReportsApiService {
   constructor(private apiService: APIService) {}
-  loadReports(event: LazyLoadEvent): Observable<ReportsTable> {
+  loadReports(event: TableLazyLoadEvent): Observable<ReportsTable> {
     return this.apiService.post(`/AppReport/TableData`, event);
   }
 
@@ -36,7 +36,7 @@ export class ReportsApiService {
       `/AppReport/${report}`
     );
   }
-  loadRoleReports(event: LazyLoadEvent): Observable<ReportsTable> {
+  loadRoleReports(event: TableLazyLoadEvent): Observable<ReportsTable> {
     return this.apiService.post(`/RoleAppReport/TableData`, event);
   }
 }

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -26,6 +26,7 @@ import { UniversityFormComponent } from '../university-form/university-form.comp
 import { UniversityGridComponent } from '../university-grid/university-grid.component';
 import { RippleModule } from 'primeng/ripple';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -49,7 +50,7 @@ import { DropdownModel } from '@msh/shared/data-access-shared';
 export class ManageUniversitiesComponent implements OnInit {
   private universities$$ = new BehaviorSubject<University[]>([]);
   universities$ = this.universities$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedRegion: University | null = null;
@@ -121,7 +122,7 @@ export class ManageUniversitiesComponent implements OnInit {
     }
   }
 
-  getUniversities($event: LazyLoadEvent) {
+  getUniversities($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.universityService
@@ -141,7 +142,7 @@ export class ManageUniversitiesComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Universiteti u shtua me sukses!');
           this.displayModal = false;
-          this.getUniversities(this.filters as LazyLoadEvent);
+          this.getUniversities(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -159,7 +160,7 @@ export class ManageUniversitiesComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Universiteti u ndryshua me sukses!');
           this.displayModal = false;
-          this.getUniversities(this.filters as LazyLoadEvent);
+          this.getUniversities(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -176,7 +177,7 @@ export class ManageUniversitiesComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Universiteti u fshi me sukses!');
-          this.getUniversities(this.filters as LazyLoadEvent);
+          this.getUniversities(this.filters as TableLazyLoadEvent);
         }
 
         if (response.isBadRequest)

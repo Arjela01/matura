@@ -26,7 +26,7 @@ export class AuthFacade {
     this.store.dispatch(AuthActions.changeAcademicYear({ academicYear }));
   }
   resetToken() {
-    this.store.dispatch(AuthActions.resettoken());
+    this.store.dispatch(AuthActions.resetToken());
   }
 
   logout() {

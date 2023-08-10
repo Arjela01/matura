@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import {
@@ -16,7 +16,7 @@ import {
 export class ExamCopyApiService {
   constructor(private apiService: APIService) {}
 
-  loadExamCopies(event: LazyLoadEvent): Observable<ExamCopyTableView> {
+  loadExamCopies(event: TableLazyLoadEvent): Observable<ExamCopyTableView> {
     return this.apiService.post(`/ExamCopyRequest/TableData`, event);
   }
 

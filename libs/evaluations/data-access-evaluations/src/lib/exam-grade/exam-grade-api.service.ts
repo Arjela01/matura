@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { APIService } from '@msh/shared/util-shared';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { ExamGradeTableView } from '@msh/shared/domain-models';
@@ -15,7 +15,7 @@ export class ExamGradeApiService {
     return this.apiService.get<ApiResult<any>>(`/ExamGrade/${id}`);
   }
 
-  loadExamGrades(event: LazyLoadEvent): Observable<ExamGradeTableView> {
+  loadExamGrades(event: TableLazyLoadEvent): Observable<ExamGradeTableView> {
     return this.apiService.post(`/ExamGrade/TableData`, event).pipe(
       map((data: any) => data),
       catchError(error => throwError(error))

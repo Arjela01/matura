@@ -17,6 +17,7 @@ import {
   ExamSecret,
   ExamSecretTabularDataEntryItem,
 } from '@msh/shared/domain-models';
+import { TooltipModule } from 'primeng/tooltip';
 
 @UntilDestroy()
 @Component({
@@ -29,6 +30,7 @@ import {
     PaginatorModule,
     InputTextModule,
     ButtonModule,
+    TooltipModule,
   ],
   templateUrl: './exam-secrets-tabular-data-entry-list.component.html',
   styleUrls: ['./exam-secrets-tabular-data-entry-list.component.scss'],

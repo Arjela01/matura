@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -27,6 +27,7 @@ import { BehaviorSubject } from 'rxjs';
 import { HighSchoolFormComponent } from '../high-school-form/high-school-form.component';
 import { HighSchoolGridComponent } from '../high-school-grid/high-school-grid.component';
 import { RippleModule } from 'primeng/ripple';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -50,7 +51,7 @@ import { RippleModule } from 'primeng/ripple';
 export class ManageHighSchoolsComponent implements OnInit {
   private highSchools$$ = new BehaviorSubject<HighSchool[]>([]);
   highSchools$ = this.highSchools$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedHighSchool: HighSchool | null = null;
@@ -141,7 +142,7 @@ export class ManageHighSchoolsComponent implements OnInit {
     }
   }
 
-  getHighSchools($event: LazyLoadEvent) {
+  getHighSchools($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.highSchoolService
@@ -161,7 +162,7 @@ export class ManageHighSchoolsComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Shkolla e mesme u shtua me sukses!');
           this.displayModal = false;
-          this.getHighSchools(this.filters as LazyLoadEvent);
+          this.getHighSchools(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -181,7 +182,7 @@ export class ManageHighSchoolsComponent implements OnInit {
             'Shkolla e mesme u ndryshua me sukses!'
           );
           this.displayModal = false;
-          this.getHighSchools(this.filters as LazyLoadEvent);
+          this.getHighSchools(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -198,7 +199,7 @@ export class ManageHighSchoolsComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Shkolla e mesme u fshi me sukses!');
-          this.getHighSchools(this.filters as LazyLoadEvent);
+          this.getHighSchools(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)

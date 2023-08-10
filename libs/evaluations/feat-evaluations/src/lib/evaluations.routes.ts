@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { ExamSecretFolderMismatchComponent } from './exam-secrets/exam-secret-folder-mismatch/exam-secret-folder-mismatch.component';
 
 export const EVALUATION_ROUTES: Route[] = [
   {
@@ -163,5 +164,26 @@ export const EVALUATION_ROUTES: Route[] = [
       import(
         './exam-score-tabular-data-entry/manage-exam-score-tabular-data-entry/manage-exam-score-tabular-data-entry.component'
       ).then(m => m.ManageExamScoreTabularDataEntryComponent),
+  },
+  {
+    path: 'exam-scores-folder-mismatch',
+    loadComponent: () =>
+      import(
+        './exam-scores/exam-score-folder-mismatch/exam-score-folder-mismatch.component'
+      ).then(m => m.ExamScoreFolderMismatchComponent),
+  },
+  {
+    path: 'exam-secrets-folder-mismatch',
+    loadComponent: () =>
+      import(
+        './exam-secrets/exam-secret-folder-mismatch/exam-secret-folder-mismatch.component'
+      ).then(m => m.ExamSecretFolderMismatchComponent),
+  },
+  {
+    path: 'barcode-without-score',
+    loadComponent: () =>
+      import(
+        './barcode-without-score/barcode-without-score-grid/barcode-without-score-grid.component'
+      ).then(m => m.BarcodeWithoutScoreGridComponent),
   },
 ];

@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -32,6 +32,7 @@ import { RippleModule } from 'primeng/ripple';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ExamSiteFormComponent } from '../exam-site-form/exam-site-form.component';
 import { ExamSiteGridComponent } from '../exam-site-grid/exam-site-grid.component';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -55,7 +56,7 @@ import { ExamSiteGridComponent } from '../exam-site-grid/exam-site-grid.componen
 export class ManageExamSiteComponent implements OnInit {
   private examSites$$ = new BehaviorSubject<ExamSite[]>([]);
   examSites$ = this.examSites$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedExamSite: ExamSite | null = null;
@@ -155,7 +156,7 @@ export class ManageExamSiteComponent implements OnInit {
     }
   }
 
-  getExamSites($event: LazyLoadEvent) {
+  getExamSites($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.examSiteService
@@ -186,7 +187,7 @@ export class ManageExamSiteComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Qendra e provimit u shtua me sukses!');
           this.displayModal = false;
-          this.getExamSites(this.filters as LazyLoadEvent);
+          this.getExamSites(this.filters as TableLazyLoadEvent);
         } else {
           this.toastService.showError(response.errorMessage);
         }
@@ -209,7 +210,7 @@ export class ManageExamSiteComponent implements OnInit {
             'Qendra e provimit u ndryshua me sukses!'
           );
           this.displayModal = false;
-          this.getExamSites(this.filters as LazyLoadEvent);
+          this.getExamSites(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -226,7 +227,7 @@ export class ManageExamSiteComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Qendra e provimit u fshi me sukses!');
-          this.getExamSites(this.filters as LazyLoadEvent);
+          this.getExamSites(this.filters as TableLazyLoadEvent);
         }
 
         if (response.isBadRequest)

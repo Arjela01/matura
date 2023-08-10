@@ -41,7 +41,7 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -55,7 +55,7 @@ import { PasswordModule } from 'primeng/password';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { SelectButtonModule } from 'primeng/selectbutton';
-import { TableModule } from 'primeng/table';
+import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject } from 'rxjs';
 import { CarriedGradesFormComponent } from '../../carried-grade/carried-grade-form/carried-grade-form.component';
@@ -120,7 +120,7 @@ export class A1zFormComponent implements OnInit {
   d3ExamSubjects: DropdownModel<string>[] = [];
   z1ExamSubjects: DropdownModel<string>[] = [];
 
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
@@ -433,7 +433,7 @@ export class A1zFormComponent implements OnInit {
     }
   }
 
-  getStudents($event: LazyLoadEvent): void {
+  getStudents($event: TableLazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
 
     this.studentService

@@ -11,7 +11,7 @@ import {
   GRID_ACTIONS,
   ColumnFilterDirective,
 } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -46,7 +46,7 @@ export class EmptySiteGridComponent {
 
   @Output() gridEvent = new EventEmitter<GridEvent<EmptySite | EmptySite[]>>();
 
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
   onEmptySite(emptySite: EmptySite) {
     this.gridEvent.emit({
@@ -55,7 +55,7 @@ export class EmptySiteGridComponent {
     } as GridEvent<EmptySite>);
   }
 
-  loadRows($event: LazyLoadEvent) {
+  loadRows($event: TableLazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
 }

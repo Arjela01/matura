@@ -12,7 +12,11 @@ import {
   GRID_ACTIONS,
   ColumnFilterDirective,
 } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import {
+  TableLazyLoadEvent,
+  TableRowSelectEvent,
+  TableRowUnSelectEvent,
+} from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -46,7 +50,7 @@ export class RolesGridComponent {
 
   @Output() gridEvent = new EventEmitter<GridEvent<Role | Role[]>>();
 
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
   onEditClick(role: Role) {
     this.gridEvent.emit({
@@ -75,21 +79,21 @@ export class RolesGridComponent {
     }
   }
 
-  onRowSelect({ data }: { data: Role }) {
+  onRowSelect($event: TableRowSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
-      data: data,
+      data: $event.data,
     } as GridEvent<Role>);
   }
 
-  onRowUnselect({ data }: { data: Role }) {
+  onRowUnselect($event: TableRowUnSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
-      data: data,
+      data: $event.data,
     } as GridEvent<Role>);
   }
 
-  loadRows($event: LazyLoadEvent) {
+  loadRows($event: TableLazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
 }

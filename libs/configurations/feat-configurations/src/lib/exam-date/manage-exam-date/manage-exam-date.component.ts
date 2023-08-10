@@ -10,7 +10,7 @@ import {
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { AcademicYear, ExamDate } from '@msh/shared/domain-models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -26,6 +26,7 @@ import { RippleModule } from 'primeng/ripple';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ExamDateFormComponent } from '../exam-date-form/exam-date-form.component';
 import { ExamDateGridComponent } from '../exam-date-grid/exam-date-grid.component';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -49,7 +50,7 @@ import { ExamDateGridComponent } from '../exam-date-grid/exam-date-grid.componen
 export class ManageExamDateComponent implements OnInit {
   private examDates$$ = new BehaviorSubject<ExamDate[]>([]);
   examDates$ = this.examDates$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedExamDate: ExamDate | null = null;
@@ -61,7 +62,7 @@ export class ManageExamDateComponent implements OnInit {
     map(([data]) => {
       this.currentAcademicYear = data;
       if (this.filters) {
-        this.getExamDates(this.filters as LazyLoadEvent);
+        this.getExamDates(this.filters as TableLazyLoadEvent);
       }
     }),
     tap()
@@ -140,7 +141,7 @@ export class ManageExamDateComponent implements OnInit {
     }
   }
 
-  getExamDates($event: LazyLoadEvent) {
+  getExamDates($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.examDateService
@@ -160,7 +161,7 @@ export class ManageExamDateComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Data e provimit u shtua me sukses!');
           this.displayModal = false;
-          this.getExamDates(this.filters as LazyLoadEvent);
+          this.getExamDates(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -180,7 +181,7 @@ export class ManageExamDateComponent implements OnInit {
             'Data e provimit u ndryshua me sukses!'
           );
           this.displayModal = false;
-          this.getExamDates(this.filters as LazyLoadEvent);
+          this.getExamDates(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -197,7 +198,7 @@ export class ManageExamDateComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Data e provimit u fshi me sukses!');
-          this.getExamDates(this.filters as LazyLoadEvent);
+          this.getExamDates(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)

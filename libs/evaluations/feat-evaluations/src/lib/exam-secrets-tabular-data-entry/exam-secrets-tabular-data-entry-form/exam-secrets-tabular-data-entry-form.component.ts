@@ -13,7 +13,7 @@ import { DropdownModel } from '@msh/shared/data-access-shared';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { GlobalToastService } from '@msh/shared/util-shared';
 import { ExamSecretSearchModel } from '@msh/shared/domain-models';
 
@@ -45,7 +45,7 @@ export class ExamSecretsTabularDataEntryFormComponent {
 
   submitted = false;
   @Input() totalRecords = 0;
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   examTypeId: any;
   examSubjectId: any;

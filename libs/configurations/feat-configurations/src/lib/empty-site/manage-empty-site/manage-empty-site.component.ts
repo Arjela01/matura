@@ -7,7 +7,7 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -20,6 +20,7 @@ import {
 } from '@msh/configurations/data-access-configurations';
 import { EmptySiteGridComponent } from '../empty-site-grid/empty-site-grid.component';
 import { EmptySite } from '@msh/shared/domain-models';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @Component({
   selector: 'msh-manage-empty-site',
@@ -43,7 +44,7 @@ import { EmptySite } from '@msh/shared/domain-models';
 export class ManageEmptySiteComponent {
   private emptySiteList$$ = new BehaviorSubject<EmptySite[]>([]);
   emptySiteList$ = this.emptySiteList$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
   totalRecords = 0;
   examDateId = 0;
 
@@ -77,7 +78,7 @@ export class ManageEmptySiteComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.getEmptySites(this.filters as LazyLoadEvent);
+          this.getEmptySites(this.filters as TableLazyLoadEvent);
           this.toastService.showSuccess('Qendra u zbraz me sukses!');
         } else this.toastService.showError(response.errorMessage);
         if (!response.isSuccessful) {
@@ -88,7 +89,7 @@ export class ManageEmptySiteComponent {
       });
   }
 
-  getEmptySites($event: LazyLoadEvent): void {
+  getEmptySites($event: TableLazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
     this.emptySiteService
       .loadEmptySite($event)

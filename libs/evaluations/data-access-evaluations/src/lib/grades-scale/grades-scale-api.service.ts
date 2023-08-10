@@ -2,7 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
 import { GradesScale, GradesScaleTableView } from '@msh/shared/domain-models';
 
@@ -12,7 +12,7 @@ import { GradesScale, GradesScaleTableView } from '@msh/shared/domain-models';
 export class GradesScaleService {
   constructor(private apiService: APIService) {}
 
-  loadGradesScale(event: LazyLoadEvent): Observable<GradesScaleTableView> {
+  loadGradesScale(event: TableLazyLoadEvent): Observable<GradesScaleTableView> {
     return this.apiService.post(`/GradeScale/TableData`, event);
   }
 

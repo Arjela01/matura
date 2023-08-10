@@ -12,7 +12,7 @@ import {
   GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -20,6 +20,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { RippleModule } from 'primeng/ripple';
 import { ActivateOverseerDarZaGridComponent } from '../activate-overseer-dar-za-grid/activate-overseer-dar-za-grid.component';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -44,7 +45,7 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
     []
   );
   administrativeOffices$ = this.administrativeOffices$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedAdministrativeOffice: AdministrationOffice | null = null;
@@ -145,7 +146,7 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
               : 'Përdoruesi u aktivizua me sukses!'
           );
           this.displayModal = false;
-          this.getAdministrationOffices(this.filters as LazyLoadEvent);
+          this.getAdministrationOffices(this.filters as TableLazyLoadEvent);
         }
 
         if (response.isBadRequest)
@@ -169,7 +170,7 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
     }
   }
 
-  getAdministrationOffices($event: LazyLoadEvent) {
+  getAdministrationOffices($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.adminOfficeApiService
@@ -189,7 +190,7 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('DAR/ZA u shtua me sukses!');
           this.displayModal = false;
-          this.getAdministrationOffices(this.filters as LazyLoadEvent);
+          this.getAdministrationOffices(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -207,7 +208,7 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('DAR/ZA u ndryshua me sukses!');
           this.displayModal = false;
-          this.getAdministrationOffices(this.filters as LazyLoadEvent);
+          this.getAdministrationOffices(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -224,7 +225,7 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('DAR/ZA u fshi me sukses!');
-          this.getAdministrationOffices(this.filters as LazyLoadEvent);
+          this.getAdministrationOffices(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)

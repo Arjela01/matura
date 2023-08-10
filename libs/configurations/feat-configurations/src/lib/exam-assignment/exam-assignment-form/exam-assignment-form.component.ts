@@ -29,7 +29,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { BehaviorSubject } from 'rxjs';
 import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
 
@@ -76,7 +76,7 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
   @Output() loadExamDates = new EventEmitter<ExamAssignment>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
   submitted = false;
   displayModal = false;
   selectedStudent: any = null;
@@ -205,7 +205,7 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
     );
   }
 
-  getStudents($event: LazyLoadEvent): void {
+  getStudents($event: TableLazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
     const params = {
       isFall: !!this.hasAdditionalValue?.additionalValue.includes('True'),

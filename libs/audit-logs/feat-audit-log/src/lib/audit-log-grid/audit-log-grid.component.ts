@@ -1,16 +1,16 @@
-import { TableModule } from 'primeng/table';
+import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { Apollo, gql } from 'apollo-angular';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from 'primeng/button';
 import { queriesMap } from './queries';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { LazyLoadEvent, SelectItem } from 'primeng/api';
-import { WhereBuilder } from './query-builder';
+import { SelectItem } from 'primeng/api';
 import { TranslationPipe } from './translate-pipe';
 import { TranslationService } from '@msh/audit-logs/data-access-audit-log';
+import {ColumnFilterDirective, WhereBuilder} from '@msh/shared/util-shared';
 
 const SORT_ASC = 'ASC';
 const SORT_DESC = 'DESC';
@@ -24,6 +24,7 @@ const SORT_DESC = 'DESC';
     ButtonModule,
     FormsModule,
     TranslationPipe,
+    ColumnFilterDirective,
   ],
   templateUrl: './audit-log-grid.component.html',
   styleUrls: ['./audit-log-grid.component.scss'],
@@ -48,11 +49,15 @@ export class AuditLogGridComponent implements OnInit {
   orderBy: any = null;
   filterValues: { [key: string]: any } = {};
   defaultDataCol: any[] = [];
-  @Output() lazyLoadData = new EventEmitter<LazyLoadEvent>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
   userData: { [userId: string]: string } = {};
 
-  constructor(private apollo: Apollo, private route: ActivatedRoute) {}
+  constructor(
+    private apollo: Apollo,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   goNext() {
     this.currentPage++;
@@ -61,6 +66,9 @@ export class AuditLogGridComponent implements OnInit {
   goBack() {
     this.currentPage--;
     this.fetchData();
+  }
+  goToGeneralTable() {
+    this.router.navigate(['/audit-log/general-table']);
   }
 
   goToPage(page: number) {
@@ -192,7 +200,7 @@ export class AuditLogGridComponent implements OnInit {
     return maxFieldIndex;
   }
 
-  loadRows($event: LazyLoadEvent) {
+  loadRows($event: TableLazyLoadEvent) {
     this.where = new WhereBuilder($event.filters).transformWhere();
     const flattenSort = $event.sortField
       ? {

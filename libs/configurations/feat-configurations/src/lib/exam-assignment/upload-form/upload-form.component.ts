@@ -27,7 +27,7 @@ import {
 
 import { DialogModule } from 'primeng/dialog';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { LazyLoadEvent } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ExamAssignmentImportCommand } from '@msh/configurations/domain-configurations';
 
@@ -67,7 +67,7 @@ export class UploadFormComponent implements OnInit {
   @Output() loadExamSites = new EventEmitter<ExamAssignment>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
   submitted = false;
   displayUploadModal = false;
   fileContent: string | ArrayBuffer | null | undefined;

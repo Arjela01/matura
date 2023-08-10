@@ -18,6 +18,8 @@ export interface FailingStudent {
   personalIdentifier?: number;
 
   schoolName?: string;
+
+  subjectName?: string;
 }
 
 export interface FailingStudentTableView {

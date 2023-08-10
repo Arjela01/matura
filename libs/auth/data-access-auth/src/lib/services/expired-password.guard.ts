@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
+
 import { StorageService } from '@msh/shared/data-access-shared';
 import jwt_decode from 'jwt-decode';
 
 @Injectable({ providedIn: 'root' })
-export class ExpiredPasswordGuard implements CanActivate {
+export class ExpiredPasswordGuard {
   constructor(private storageService: StorageService) {}
   token: any = '';
   canActivate(): boolean {

@@ -33,11 +33,11 @@ export const authFeature = createFeature({
     initialAuthState,
     on(AuthActions.initAuth, state => ({
       ...state,
-      status: 'pending',
+      status: 'pending' as GenericStoreStatus,
     })),
     on(AuthActions.loadAuthSuccess, (state, { token, user, academicYear }) => ({
       ...state,
-      status: 'pending',
+      status: 'pending' as GenericStoreStatus,
       isAuthenticated: true,
       token: token,
       user: user,
@@ -46,12 +46,12 @@ export const authFeature = createFeature({
 
     on(AuthActions.login, state => ({
       ...state,
-      status: 'loading',
+      status: 'loading' as GenericStoreStatus,
       error: '',
     })),
     on(AuthActions.loginSuccess, (state, { loginResponse }) => ({
       ...state,
-      status: 'loading',
+      status: 'loading' as GenericStoreStatus,
       error: null,
       isAuthenticated: true,
       user: {
@@ -62,26 +62,26 @@ export const authFeature = createFeature({
     })),
     on(AuthActions.initAcademicYear, (state, { academicYear }) => ({
       ...state,
-      status: 'success',
+      status: 'success' as GenericStoreStatus,
       error: null,
       isAuthenticated: true,
       academicYear: academicYear,
     })),
     on(AuthActions.changeAcademicYear, (state, { academicYear }) => ({
       ...state,
-      status: 'success',
+      status: 'success' as GenericStoreStatus,
       error: null,
       isAuthenticated: true,
       academicYear: academicYear,
     })),
     on(AuthActions.loginFailure, (state, { error }) => ({
       ...state,
-      status: 'error',
+      status: 'error' as GenericStoreStatus,
       error: error.message,
     })),
     on(AuthActions.logout, state => ({
       ...state,
-      status: 'success',
+      status: 'success' as GenericStoreStatus,
       error: null,
       isAuthenticated: false,
       user: {
@@ -90,15 +90,15 @@ export const authFeature = createFeature({
       },
       token: '',
     })),
-    on(AuthActions.passwordchange, state => ({
+    on(AuthActions.passwordChange, state => ({
       ...state,
-      status: 'success',
+      status: 'success' as GenericStoreStatus,
       error: null,
       isAuthenticated: false,
     })),
-    on(AuthActions.resettoken, state => ({
+    on(AuthActions.resetToken, state => ({
       ...state,
-      status: 'success',
+      status: 'success' as GenericStoreStatus,
       error: null,
       isAuthenticated: false,
       token: '',

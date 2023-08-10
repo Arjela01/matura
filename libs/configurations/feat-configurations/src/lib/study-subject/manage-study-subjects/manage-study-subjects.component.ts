@@ -8,7 +8,7 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -17,6 +17,7 @@ import { BehaviorSubject } from 'rxjs';
 import { StudySubjectFormComponent } from '../study-subject-form/study-subject-form.component';
 import { StudySubjectGridComponent } from '../study-subject-grid/study-subject-grid.component';
 import { RippleModule } from 'primeng/ripple';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -40,7 +41,7 @@ import { RippleModule } from 'primeng/ripple';
 export class ManageStudySubjectsComponent {
   private studySubjects$$ = new BehaviorSubject<StudySubject[]>([]);
   studySubjects$ = this.studySubjects$$.asObservable();
-  filters: LazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedStudySubject: StudySubject | null = null;
@@ -111,7 +112,7 @@ export class ManageStudySubjectsComponent {
     }
   }
 
-  getStudySubjects($event: LazyLoadEvent) {
+  getStudySubjects($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
     this.studySubjectService
@@ -131,7 +132,7 @@ export class ManageStudySubjectsComponent {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Lënda e studimit u shtua me sukses!');
           this.displayModal = false;
-          this.getStudySubjects(this.filters as LazyLoadEvent);
+          this.getStudySubjects(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -151,7 +152,7 @@ export class ManageStudySubjectsComponent {
             'Lenda e studimit u ndryshua me sukses!'
           );
           this.displayModal = false;
-          this.getStudySubjects(this.filters as LazyLoadEvent);
+          this.getStudySubjects(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -168,7 +169,7 @@ export class ManageStudySubjectsComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Lënda e studimit u fshi me sukses!');
-          this.getStudySubjects(this.filters as LazyLoadEvent);
+          this.getStudySubjects(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
