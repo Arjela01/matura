@@ -28,7 +28,7 @@ import {
   WhereBuilder,
 } from '@msh/shared/util-shared';
 import { FailingStudent } from '@msh/applications/domain-application';
-import {A1Z_FORMS} from "../../a1z/query-a1z";
+import {A1Z_FORMS} from "../query-a1z";
 
 @Component({
   selector: 'msh-a1-history-grid',
@@ -51,12 +51,12 @@ import {A1Z_FORMS} from "../../a1z/query-a1z";
     RouterLink,
     ColumnFilterDirective,
   ],
-  templateUrl: './a1-history-grid.component.html',
-  styleUrls: ['./a1-history-grid.component.scss'],
+  templateUrl: './a1z-history-grid.component.html',
+  styleUrls: ['./a1z-history-grid.component.scss'],
   providers: [Apollo],
 })
 @UntilDestroy()
-export class A1HistoryGridComponent {
+export class A1zHistoryGridComponent {
   SORT_ASC = 'ASC';
   SORT_DESC = 'DESC';
 
@@ -66,7 +66,7 @@ export class A1HistoryGridComponent {
     GridEvent<FailingStudent | FailingStudent[]>
   >();
 
-  queryName = 'a1ZForms';
+  queryName = 'a1Forms';
   pageSize = 15;
   totalCount = 0;
   currentPage = 1;
@@ -91,7 +91,6 @@ export class A1HistoryGridComponent {
       this.orderBy = flattenSort;
     }
     this.fetchRecordData();
-    this.cd.markForCheck();
   }
 
   fetchRecordData() {

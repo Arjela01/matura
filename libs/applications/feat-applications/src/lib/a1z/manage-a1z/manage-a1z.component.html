@@ -19,6 +19,10 @@
         [a1z]="(a1zList$ | async) || []"
         (gridEvent)="onGridEvent($event)"
         [totalRecords]="totalRecords"
+        [selectedRecord]="selectedRecord"
+        [studentId]="studentId"
+        [headerText]="headerText"
+        [displayHistoryForm]="displayHistoryForm"
         (lazyLoadData)="getA1Z($event)">
       </msh-a1z-grid>
     </div>

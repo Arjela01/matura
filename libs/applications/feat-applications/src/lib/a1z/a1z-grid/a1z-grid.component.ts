@@ -7,7 +7,6 @@ import {
   Output,
 } from '@angular/core';
 import { A1ZTableRecord } from '@msh/applications/domain-application';
-import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
   ColumnFilterDirective,
   GRID_ACTIONS,
@@ -25,6 +24,8 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { RouterLink } from '@angular/router';
+import { A1HistoryGridComponent } from '../../a1/a1-history/a1-history-grid.component';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'msh-a1z-grid',
@@ -39,6 +40,8 @@ import { RouterLink } from '@angular/router';
     RippleModule,
     ColumnFilterDirective,
     RouterLink,
+    A1HistoryGridComponent,
+    DialogModule,
   ],
   templateUrl: './a1z-grid.component.html',
   styleUrls: ['./a1z-grid.component.scss'],
@@ -47,7 +50,11 @@ import { RouterLink } from '@angular/router';
 export class A1zGridComponent {
   @Input() a1z: A1ZTableRecord[] = [];
   @Input() totalRecords = 0;
-  constructor(private authFacade: AuthFacade) {}
+  @Input() studentId: any;
+  @Input() headerText = '';
+  @Input() displayHistoryForm = true;
+  @Input() selectedRecord: any;
+  @Input() onHistoryModalClose: any;
   selectedA1Z: A1ZTableRecord[] = [];
 
   @Output() gridEvent = new EventEmitter<
@@ -66,6 +73,14 @@ export class A1zGridComponent {
   onDeleteClick(A1Z: A1ZTableRecord) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,
+      data: A1Z,
+    } as GridEvent<A1ZTableRecord>);
+  }
+  onHistoryClick(A1Z: A1ZTableRecord) {
+    console.log(123, this.selectedRecord);
+    this.displayHistoryForm = true;
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.HISTORY,
       data: A1Z,
     } as GridEvent<A1ZTableRecord>);
   }

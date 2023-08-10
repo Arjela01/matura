@@ -47,6 +47,10 @@ export class ManageA1zComponent {
   totalRecords = 0;
   selectedA1Z: A1ZTableRecord | null = null;
   selectedA1ZList: A1ZTableRecord[] = [];
+  studentId: number | undefined;
+  selectedRecord: any;
+  headerText: any;
+  displayHistoryForm = false;
 
   constructor(
     private readonly a1zservice: A1ZApiService,
@@ -67,9 +71,14 @@ export class ManageA1zComponent {
   onNewClick() {
     this.router.navigate(['/applications/a1z/add']);
   }
-
-  onGridEvent(event: GridEvent<A1ZTableRecord | A1ZTableRecord[]>) {
+  onGridEvent(event: GridEvent<any | A1ZTableRecord[]>) {
     switch (event.action) {
+      case GRID_ACTIONS.HISTORY:
+        this.displayHistoryForm = true;
+        this.selectedRecord = Object.assign({}, event.data);
+        this.studentId = event.data.studentId;
+        this.headerText = `Historiku për Formularin A1Z {${event.data.id}}`;
+        break;
       case GRID_ACTIONS.SELECT_ROW:
         this.selectedA1ZList = [
           ...this.selectedA1ZList,
