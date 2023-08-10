@@ -1,5 +1,5 @@
 import {
-  ChangeDetectionStrategy,
+  ChangeDetectionStrategy, ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -20,7 +20,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { A1_FORMS } from '../query-a1';
 import { Apollo, gql } from 'apollo-angular';
 import { UntilDestroy } from '@ngneat/until-destroy';
@@ -54,7 +54,6 @@ import { FailingStudent } from '@msh/applications/domain-application';
   ],
   templateUrl: './a1-history-grid.component.html',
   styleUrls: ['./a1-history-grid.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [Apollo],
 })
 @UntilDestroy()
@@ -75,7 +74,7 @@ export class A1HistoryGridComponent {
   where: any = null;
   orderBy: any = null;
 
-  constructor( private apollo: Apollo) {}
+  constructor( private apollo: Apollo , private cd: ChangeDetectorRef) {}
 
   loadRows($event: TableLazyLoadEvent) {
     this.where = new WhereBuilder($event.filters).transformWhere();
@@ -93,6 +92,7 @@ export class A1HistoryGridComponent {
       this.orderBy = flattenSort;
     }
     this.fetchRecordData();
+    this.cd.markForCheck();
   }
 
   fetchRecordData() {
@@ -118,6 +118,7 @@ export class A1HistoryGridComponent {
             items.filter((item: any) => item.student.id === this.recordId) ||
             [];
           this.totalCount = this.recordData.length;
+          this.cd.markForCheck();
         },
         error => {
           console.error('GraphQL Query Error:', error);
