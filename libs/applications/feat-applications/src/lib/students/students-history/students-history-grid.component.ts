@@ -28,7 +28,7 @@ import {
   WhereBuilder,
 } from '@msh/shared/util-shared';
 import { FailingStudent } from '@msh/applications/domain-application';
-import {STUDENTS} from "../students-query";
+import { STUDENTS } from '../students-query';
 
 @Component({
   selector: 'msh-students-history-grid',
@@ -60,7 +60,7 @@ export class StudentsHistoryGridComponent {
   SORT_ASC = 'ASC';
   SORT_DESC = 'DESC';
 
-  @Input() recordId:any;
+  @Input() recordId: any;
   @Input() recordData: any;
   @Output() gridEvent = new EventEmitter<
     GridEvent<FailingStudent | FailingStudent[]>
@@ -73,15 +73,15 @@ export class StudentsHistoryGridComponent {
   where: any = null;
   orderBy: any = null;
 
-  constructor( private apollo: Apollo , private cd: ChangeDetectorRef) {}
+  constructor(private apollo: Apollo, private cd: ChangeDetectorRef) {}
 
   loadRows($event: TableLazyLoadEvent) {
     this.where = new WhereBuilder($event.filters).transformWhere();
     const flattenSort = $event.sortField
       ? {
-        [`${$event.sortField}`]:
-          $event.sortOrder === 1 ? this.SORT_ASC : this.SORT_DESC,
-      }
+          [`${$event.sortField}`]:
+            $event.sortOrder === 1 ? this.SORT_ASC : this.SORT_DESC,
+        }
       : {};
     const sortField = flattenSort;
 
@@ -100,10 +100,10 @@ export class StudentsHistoryGridComponent {
     this.apollo
       .watchQuery<any>({
         query: gql`
-        ${STUDENTS}
-      `,
+          ${STUDENTS}
+        `,
         variables: {
-          pagesize: this.pageSize,
+          parentRecordId: this.recordId,
           skip: skip,
           where: this.where,
           order: this.orderBy,
@@ -111,18 +111,16 @@ export class StudentsHistoryGridComponent {
         fetchPolicy: 'cache-and-network',
       })
       .valueChanges.subscribe(
-      (response: any) => {
-        const items = response?.data[this.queryName].items || [];
-        this.recordData =
-          items.filter((item: any) => item.studentId === this.recordId) ||
-          [];
-        this.totalCount = this.recordData.length;
-        this.cd.markForCheck();
-      },
-      error => {
-        console.error('GraphQL Query Error:', error);
-      }
-    );
+        (response: any) => {
+          const items = response?.data[this.queryName].items || [];
+          this.recordData = items;
+          this.totalCount = this.recordData.length;
+          this.cd.markForCheck();
+          console.log(123, items);
+        },
+        error => {
+          console.error('GraphQL Query Error:', error);
+        }
+      );
   }
-
 }

@@ -60,7 +60,7 @@ export class ManageStudentsComponent {
   selectedStudentList: Student[] = [];
   academicYear?: Partial<AcademicYear> = undefined;
 
-  studentId: number | undefined;
+  studentId: string | undefined;
   selectedRecord: any;
   headerText: any;
   displayHistoryForm = false;
@@ -93,7 +93,8 @@ export class ManageStudentsComponent {
     switch (event.action) {
       case GRID_ACTIONS.HISTORY:
         this.selectedRecord = Object.assign({}, event.data);
-        this.studentId = event.data.studentId;
+        this.studentId = event.data.id;
+        console.log(123 , event.data.id)
         this.headerText = `Historiku për Studentin {${event.data.studentId}}`;
         this.displayHistoryForm = true;
         console.log(123 , event)
