@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -9,20 +10,19 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { ButtonModule } from 'primeng/button';
-import { DropdownModel } from '@msh/shared/data-access-shared';
-import { DropdownModule } from 'primeng/dropdown';
-import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
-import { TooltipModule } from 'primeng/tooltip';
-import { GlobalToastService } from '@msh/shared/util-shared';
+import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ExamScore } from '@msh/shared/domain-models';
+import { GlobalToastService } from '@msh/shared/util-shared';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'msh-exam-score-form',
@@ -75,8 +75,9 @@ export class ExamScoresFormComponent implements OnChanges {
   currentYear = new Date().getFullYear();
 
   @Input() set examScoreDetails(details: ExamScore | null) {
-    if (details) {
-      this.examScore = Object.assign({}, details);
+    this.examScore = Object.assign({}, details);
+    if (details && details.barcode) {
+      this.onGetIndexClick(details.barcode);
     }
   }
 

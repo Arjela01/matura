@@ -736,10 +736,13 @@ export class A1zFormComponent implements OnInit {
   }
   getAcademicYearsDropdown(): void {
     this.academicYearApiService
-      .loadDropdownList()
+      .getAcademicYearsFiltered()
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.academicYearsDropdown = response.data;
+        const currentYear = new Date().getFullYear();
+        this.academicYearsDropdown = response.data.filter(
+          (yearObj: { value: number }) => yearObj.value <= currentYear
+        );
       });
   }
   getExamTypeDropdown() {
