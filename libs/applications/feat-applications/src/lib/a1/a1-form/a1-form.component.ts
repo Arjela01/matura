@@ -35,7 +35,6 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { TableLazyLoadEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
@@ -46,7 +45,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
-import { TableModule } from 'primeng/table';
+import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import {
   BehaviorSubject,
   Observable,
@@ -443,7 +442,7 @@ export class A1FormComponent {
             return;
           }
         }
-        this.router.navigate([`/reports/view/${this.a1Report}`], query).then();
+        this.router.navigate([`/reports/a1-view/${a1.id}`], query).then();
       });
   }
 

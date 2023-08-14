@@ -1,0 +1,101 @@
+<div class="grid">
+  <div class="col-8 mx-auto">
+    <div class="card">
+      <p-menubar [model]="items"></p-menubar>
+    </div>
+    <div class="card-form px-6 py-4 mb-header mt-3">
+      <h2 class="px-3 mb-0" style="font-weight: bold">Formular A1</h2>
+      <h4 class="px-3 my-3" style="font-weight: bold">
+        Për regjistrimin e maturantëve në regjistrimin e maturës shtetërore
+      </h4>
+      <table
+        style="border-spacing: 15px 20px"
+        *ngIf="a1 && studentInfo && highSchoolInfo">
+        <tr class="w-full">
+          <td>1. Dar ose Za</td>
+          <td>{{ highSchoolInfo.administrationOfficeName }}</td>
+        </tr>
+        <tr class="w-full mt-4">
+          <td>2. Qyteti/Fshati</td>
+          <td>{{ highSchoolInfo.cityName }}</td>
+        </tr>
+        <tr class="w-full mt-4">
+          <td>3. Shkolla</td>
+          <td>{{ studentInfo.highSchoolName }}</td>
+        </tr>
+        <tr class="w-full mt-4">
+          <td>4. Profili</td>
+          <td>{{ studentInfo.profileName }}</td>
+        </tr>
+        <tr class="w-full mt-4">
+          <td>5. Emri</td>
+          <td>{{ a1.studentFirstName }}</td>
+        </tr>
+        <tr class="w-full mt-4">
+          <td>6. Atësia</td>
+          <td>{{ a1.studentMiddleName }}</td>
+        </tr>
+        <tr class="w-full mt-4">
+          <td>7. Mbiemri</td>
+          <td>{{ a1.studentLastName }}</td>
+        </tr>
+        <tr class="w-full mt-4">
+          <td>8. NID</td>
+          <td>{{ a1.studentNid }}</td>
+        </tr>
+        <tr class="w-full mt-4">
+          <td>9. ID e maturantit</td>
+          <td>{{ a1.studentStudentId }}</td>
+        </tr>
+        <tr class="w-full mt-4">
+          <td>10. ID e vjetër e maturës</td>
+          <td>{{ a1.studentOldIdentifier }}</td>
+        </tr>
+        <tr class="w-full mt-4">
+          <td>11. Datëlindja</td>
+          <td>{{ a1.studentBirthDate }}</td>
+        </tr>
+        <tr class="w-full mt-4">
+          <td>12. Vendlindja</td>
+          <td>{{ a1.studentBirthPlace }}</td>
+        </tr>
+        <tr class="w-full mt-4">
+          <td>13. Gjinia</td>
+          <td>{{ studentInfo.genderName }}</td>
+        </tr>
+        <tr class="w-full mt-4">
+          <td>14. Telefoni</td>
+          <td>{{ studentInfo.mobilePhone }}</td>
+        </tr>
+        <tr class="w-full mt-4">
+          <td>15. Email</td>
+          <td>{{ studentInfo.email }}</td>
+        </tr>
+        <tr class="w-full mt-4">
+          <td>16. Aplikoni jasht shtetit?</td>
+          <td>{{ a1.isApplyingToForeignCountries ? 'Po' : 'Jo' }}</td>
+        </tr>
+        <!-- <tr class="w-full mt-4">
+          <td>17. Viti i përfundimit të shkollës</td>
+          <td>{{ studentInfo.schoolFinished }}</td>
+        </tr> -->
+      </table>
+      <table style="border-spacing: 15px 0" class="px-0 mx-0 w-10 text-left">
+        <tr class="w-full">
+          <th style="font-size: 14px; border: 1px solid" class="p-2">
+            Lëndët e provimit
+          </th>
+        </tr>
+
+        <tr class="w-full">
+          <td style="font-size: 14px; border: 1px solid">
+            <ul class="px-4 font-semibold">
+              <li *ngFor="let subject of subjects">{{ subject }}</li>
+            </ul>
+          </td>
+        </tr>
+      </table>
+      <tr></tr>
+    </div>
+  </div>
+</div>

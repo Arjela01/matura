@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
+import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import {
   AdministrationOffice,
   AdministrationOfficeTableView,
   ChangeAdministrationOfficeStatusDto,
 } from '@msh/shared/domain-models';
-import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
@@ -39,6 +39,10 @@ export class AdministrationOfficeApiService {
     event: TableLazyLoadEvent
   ): Observable<AdministrationOfficeTableView> {
     return this.apiService.post(`/AdministrationOffice/TableData`, event);
+  }
+
+  getAll(): Observable<any> {
+    return this.apiService.get(`/AdministrationOffice`);
   }
 
   save(
