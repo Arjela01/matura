@@ -67,7 +67,7 @@ export class StudentsHistoryGridComponent {
   >();
 
   queryName = 'students';
-  pageSize = 20;
+  pageSize = 50;
   totalCount = 0;
   currentPage = 1;
   where: any = null;
@@ -103,7 +103,7 @@ export class StudentsHistoryGridComponent {
           ${STUDENTS}
         `,
         variables: {
-          parentRecordId: this.recordId,
+          pagesize: this.pageSize,
           skip: skip,
           where: this.where,
           order: this.orderBy,
@@ -113,10 +113,11 @@ export class StudentsHistoryGridComponent {
       .valueChanges.subscribe(
         (response: any) => {
           const items = response?.data[this.queryName].items || [];
-          this.recordData = items;
+          this.recordData =
+            items.filter((item: any) => item.studentId === this.recordId) ||
+            [];
           this.totalCount = this.recordData.length;
           this.cd.markForCheck();
-          console.log(123, items);
         },
         error => {
           console.error('GraphQL Query Error:', error);

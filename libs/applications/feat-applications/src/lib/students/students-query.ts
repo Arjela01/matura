@@ -1,7 +1,7 @@
 export const STUDENTS = `
-  query Students($skip: Int,$where: StudentAuditFilterInput,
+  query Students($pagesize: Int,$skip: Int,$where: StudentAuditFilterInput,
   $order:[StudentAuditSortInput!]) {
-    students(skip: $skip,where: $where,order: $order
+    students(take: $pagesize,skip: $skip,where: $where,order: $order
 ) {
     totalCount
       pageInfo {
@@ -9,9 +9,6 @@ export const STUDENTS = `
         hasPreviousPage
        }
         items {
-            parentRecord(id: $parentRecordId){
-              id
-            }
             studentId
             firstName
             middleName

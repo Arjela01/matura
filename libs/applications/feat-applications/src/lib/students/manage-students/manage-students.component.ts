@@ -93,11 +93,9 @@ export class ManageStudentsComponent {
     switch (event.action) {
       case GRID_ACTIONS.HISTORY:
         this.selectedRecord = Object.assign({}, event.data);
-        this.studentId = event.data.id;
-        console.log(123 , event.data.id)
+        this.studentId = event.data.studentId;
         this.headerText = `Historiku për Studentin {${event.data.studentId}}`;
         this.displayHistoryForm = true;
-        console.log(123 , event)
         break;
       case GRID_ACTIONS.SELECT_ROW:
         this.selectedStudentList = [
