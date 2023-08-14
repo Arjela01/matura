@@ -36,6 +36,9 @@ import { ArchiveFolderGridComponent } from '../archive-folder-grid/archive-folde
 import { ArchiveOpenFolderFormComponent } from '../archive-open-folder-form/archive-open-folder-form.component';
 import { AcademicYear, ArchiveFolder } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
+import {
+  StudentsGridComponent
+} from "../../../../../../applications/feat-applications/src/lib/students/students-grid/students-grid.component";
 
 @UntilDestroy()
 @Component({
@@ -51,6 +54,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
     ToolbarModule,
     RouterLink,
     RippleModule,
+    StudentsGridComponent,
   ],
   templateUrl: './manage-archive-folders.component.html',
   styleUrls: ['./manage-archive-folders.component.scss'],
@@ -74,19 +78,20 @@ export class ManageArchiveFoldersComponent implements OnInit {
   displayModal = false;
   currentAcademicYear?: Partial<AcademicYear>;
 
+  folderNr: string | undefined;
+  selectedRecord: any;
+  headerText: any;
+  displayHistoryForm = false;
+
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examTypeApiService: ExamTypeApiService,
-    private readonly addBarcodeService: ArchiveExamApiService,
     private archiveFolderService: ArchiveFolderApiService,
     private readonly examSubjectApiService: ExamSubjectApiService,
     private router: Router,
-    private http: HttpClient,
-    private messageService: MessageService,
     private route: ActivatedRoute,
     private authFacade: AuthFacade,
-    private cd: ChangeDetectorRef
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
@@ -119,8 +124,14 @@ export class ManageArchiveFoldersComponent implements OnInit {
     });
   }
 
-  onGridEvent(event: GridEvent<ArchiveFolder | ArchiveFolder[]>) {
+  onGridEvent(event: GridEvent<any | ArchiveFolder[]>) {
     switch (event.action) {
+      case GRID_ACTIONS.HISTORY:
+        this.selectedRecord = Object.assign({}, event.data);
+        this.folderNr = event.data.nr;
+        this.headerText = `Historiku për Dosjen {${event.data.nr}}`;
+        this.displayHistoryForm = true;
+        break;
       case GRID_ACTIONS.SELECT_ROW:
         this.selectedArchiveFolders = [
           ...this.selectedArchiveFolders,
