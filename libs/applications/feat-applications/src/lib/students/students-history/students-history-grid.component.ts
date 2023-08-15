@@ -22,12 +22,16 @@ import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { RouterLink } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { ColumnFilterDirective, GridEvent } from '@msh/shared/util-shared';
+import {
+  ColumnFilterDirective,
+  GridEvent,
+  WhereBuilder,
+} from '@msh/shared/util-shared';
 import { FailingStudent } from '@msh/applications/domain-application';
-import { A1_FORMS } from '../query-a1';
+import { STUDENTS } from '../students-query';
 
 @Component({
-  selector: 'msh-a1-history-grid',
+  selector: 'msh-students-history-grid',
   standalone: true,
   imports: [
     CommonModule,
@@ -47,12 +51,12 @@ import { A1_FORMS } from '../query-a1';
     RouterLink,
     ColumnFilterDirective,
   ],
-  templateUrl: './a1-history-grid.component.html',
-  styleUrls: ['./a1-history-grid.component.scss'],
+  templateUrl: './students-history-grid.component.html',
+  styleUrls: ['./students-history-grid.component.scss'],
   providers: [Apollo],
 })
 @UntilDestroy()
-export class A1HistoryGridComponent {
+export class StudentsHistoryGridComponent {
   SORT_ASC = 'ASC';
   SORT_DESC = 'DESC';
 
@@ -62,7 +66,7 @@ export class A1HistoryGridComponent {
     GridEvent<FailingStudent | FailingStudent[]>
   >();
 
-  queryName = 'a1Forms';
+  queryName = 'students';
   pageSize = 50;
   totalCount = 0;
   currentPage = 1;
@@ -95,14 +99,14 @@ export class A1HistoryGridComponent {
     this.apollo
       .watchQuery<any>({
         query: gql`
-          ${A1_FORMS}
+          ${STUDENTS}
         `,
         variables: {
           pagesize: this.pageSize,
           skip: skip,
           where: {
             ...this.where,
-            student: { studentId: { contains: this.recordId } },
+            studentId: { contains: this.recordId },
           },
           order: this.orderBy,
         },

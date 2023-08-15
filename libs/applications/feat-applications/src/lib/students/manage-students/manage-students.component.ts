@@ -25,6 +25,7 @@ import { StudentsFormComponent } from '../students-form/students-form.component'
 import { StudentsGridComponent } from '../students-grid/students-grid.component';
 import { StudentViewComponent } from '../students-view/student-view.component';
 import { TableLazyLoadEvent } from 'primeng/table';
+import {A1zGridComponent} from "../../a1z/a1z-grid/a1z-grid.component";
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-students',
@@ -41,6 +42,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
     StudentsEditComponent,
     RippleModule,
     RouterLink,
+    A1zGridComponent,
   ],
   templateUrl: './manage-students.component.html',
   styleUrls: ['./manage-students.component.scss'],
@@ -57,6 +59,11 @@ export class ManageStudentsComponent {
   selectedStudent: Student | null = null;
   selectedStudentList: Student[] = [];
   academicYear?: Partial<AcademicYear> = undefined;
+
+  studentId: string | undefined;
+  selectedRecord: any;
+  headerText: any;
+  displayHistoryForm = false;
 
   constructor(
     private readonly studentService: StudentsApiService,
@@ -82,10 +89,15 @@ export class ManageStudentsComponent {
     } as Student;
   }
 
-  onGridEvent(event: GridEvent<Student | Student[]>) {
+  onGridEvent(event: GridEvent<any | Student[]>) {
     switch (event.action) {
+      case GRID_ACTIONS.HISTORY:
+        this.selectedRecord = Object.assign({}, event.data);
+        this.studentId = event.data.studentId;
+        this.headerText = `Historiku për Studentin {${event.data.studentId}}`;
+        this.displayHistoryForm = true;
+        break;
       case GRID_ACTIONS.SELECT_ROW:
-        // eslint-disable-next-line max-len
         this.selectedStudentList = [
           ...this.selectedStudentList,
           event.data as Student,
@@ -93,7 +105,7 @@ export class ManageStudentsComponent {
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
         this.selectedStudentList = this.selectedStudentList.filter(u => {
-          u.studentId !== (event.data as Student).studentId;
+         return  u.studentId !== (event.data as Student).studentId;
         });
         break;
       case GRID_ACTIONS.SELECT_MANY:

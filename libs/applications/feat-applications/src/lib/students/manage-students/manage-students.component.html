@@ -20,7 +20,11 @@
         [students]="(studentList$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getStudent($event)">
+        (lazyLoadData)="getStudent($event)"
+        [selectedRecord]="selectedRecord"
+        [studentId]="studentId"
+        [headerText]="headerText"
+        [displayHistoryForm]="displayHistoryForm">
       </msh-students-grid>
     </div>
   </div>

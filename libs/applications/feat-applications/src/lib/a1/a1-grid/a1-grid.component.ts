@@ -123,7 +123,7 @@ export class A1GridComponent {
     switch (action) {
       case GRID_ACTIONS.HISTORY:
         this.selectedRecord = Object.assign({}, event.data);
-        this.studentId = event.studentId;
+        this.studentId = event.studentStudentId;
         this.headerText = `Historiku për Formularin A1 {${event.id}}`;
         this.displayHistoryForm = true;
         break;

@@ -11,14 +11,10 @@
         [lazy]="true">
         <ng-template pTemplate="header">
           <tr>
-            <th>ID Maturanti</th>
-            <th>NID</th>
-            <th>Emri i Studentit</th>
-            <th>Atësia</th>
-            <th>Mbiemri</th>
-            <th>Datëlindja</th>
-            <th>Vendlindja</th>
-            <th>Viti</th>
+            <th>Dosja</th>
+            <th>Totali</th>
+            <th>Statusi</th>
+            <th>Ndryshuar nga</th>
             <th>Veprimi i Kryer</th>
             <th>Emri i Hostit</th>
             <th>Id e përdoruesit</th>
@@ -31,28 +27,25 @@
         <ng-template pTemplate="body" let-record>
           <tr>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.student?.studentId }}
+              {{ record?.nr }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.student?.idCard }}
+              {{ record?.totalArchiveExams }}
+            </td>
+            <td style="width: 5%; min-width: 10rem">
+              <div class="flex">
+                <span
+                  [ngClass]="
+                    record?.isClosed === true
+                      ? ['text-red-700', 'px-1', 'py-1', 'fb']
+                      : ['text-green-500', 'px-1', 'py-1', 'fb']
+                  ">
+                  {{ record?.isClosed === true ? 'Mbyllur' : 'Hapur' }}
+                </span>
+              </div>
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.student?.firstName }}
-            </td>
-            <td style="width: 10%; min-width: 10rem">
-              {{ record.student?.middleName }}
-            </td>
-            <td style="width: 10%; min-width: 10rem">
-              {{ record.student?.lastName }}
-            </td>
-            <td style="width: 10%; min-width: 10rem">
-              {{ record.student?.birthDate | date }}
-            </td>
-            <td style="width: 10%; min-width: 10rem">
-              {{ record.student?.birthPlace }}
-            </td>
-            <td style="width: 10%; min-width: 10rem">
-              {{ record.academicYear?.year }}
+              {{ record?.modified?.displayName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ record?.auditOperation }}
