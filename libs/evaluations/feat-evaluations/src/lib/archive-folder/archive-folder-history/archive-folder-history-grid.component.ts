@@ -1,10 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
@@ -22,12 +16,11 @@ import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { RouterLink } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { ColumnFilterDirective, GridEvent } from '@msh/shared/util-shared';
-import { FailingStudent } from '@msh/applications/domain-application';
-import { A1_FORMS } from '../query-a1';
+import { ColumnFilterDirective } from '@msh/shared/util-shared';
+import { ARCHIVE_FOLDER } from '../archive-folder-query';
 
 @Component({
-  selector: 'msh-a1-history-grid',
+  selector: 'msh-archive-folder-history-grid',
   standalone: true,
   imports: [
     CommonModule,
@@ -47,22 +40,19 @@ import { A1_FORMS } from '../query-a1';
     RouterLink,
     ColumnFilterDirective,
   ],
-  templateUrl: './a1-history-grid.component.html',
-  styleUrls: ['./a1-history-grid.component.scss'],
+  templateUrl: './archive-folder-history-grid.component.html',
+  styleUrls: ['./archive-folder-history-grid.component.scss'],
   providers: [Apollo],
 })
 @UntilDestroy()
-export class A1HistoryGridComponent {
+export class ArchiveFolderHistoryGridComponent {
   SORT_ASC = 'ASC';
   SORT_DESC = 'DESC';
 
   @Input() recordId: any;
   @Input() recordData: any;
-  @Output() gridEvent = new EventEmitter<
-    GridEvent<FailingStudent | FailingStudent[]>
-  >();
 
-  queryName = 'a1Forms';
+  queryName = 'archiveFolder';
   pageSize = 50;
   totalCount = 0;
   currentPage = 1;
@@ -95,14 +85,14 @@ export class A1HistoryGridComponent {
     this.apollo
       .watchQuery<any>({
         query: gql`
-          ${A1_FORMS}
+          ${ARCHIVE_FOLDER}
         `,
         variables: {
           pagesize: this.pageSize,
           skip: skip,
           where: {
             ...this.where,
-            student: { studentId: { contains: this.recordId } },
+            nr:  { eq: this.recordId },
           },
           order: this.orderBy,
         },
@@ -111,7 +101,8 @@ export class A1HistoryGridComponent {
       .valueChanges.subscribe(
         (response: any) => {
           const items = response?.data[this.queryName].items || [];
-          this.recordData = items;
+          this.recordData =
+            items.filter((item: any) => item.nr === this.recordId) || [];
           this.totalCount = this.recordData.length;
           this.cd.markForCheck();
         },

@@ -18,8 +18,8 @@
             <th>Mbiemri</th>
             <th>Datëlindja</th>
             <th>Vendlindja</th>
-            <th>Viti</th>
             <th>Veprimi i Kryer</th>
+            <th>Ndryshuar nga</th>
             <th>Emri i Hostit</th>
             <th>Id e përdoruesit</th>
             <th>Koha e ndryshimit</th>
@@ -31,31 +31,31 @@
         <ng-template pTemplate="body" let-record>
           <tr>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.student?.studentId }}
+              {{ record.studentId }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.student?.idCard }}
+              {{ record.idCard }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.student?.firstName }}
+              {{ record.firstName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.student?.middleName }}
+              {{ record.middleName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.student?.lastName }}
+              {{ record.lastName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.student?.birthDate | date }}
+              {{ record.birthDate | date }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.student?.birthPlace }}
-            </td>
-            <td style="width: 10%; min-width: 10rem">
-              {{ record.academicYear?.year }}
+              {{ record.birthPlace }}
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ record?.auditOperation }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.modified?.displayName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ record?.auditHostname }}

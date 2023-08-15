@@ -24,6 +24,8 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { Student } from '@msh/shared/domain-models';
 import { RouterLink } from '@angular/router';
+import {DialogModule} from "primeng/dialog";
+import {StudentsHistoryGridComponent} from "../students-history/students-history-grid.component";
 
 @Component({
   selector: 'msh-students-grid',
@@ -38,6 +40,8 @@ import { RouterLink } from '@angular/router';
     RippleModule,
     RouterLink,
     ColumnFilterDirective,
+    StudentsHistoryGridComponent,
+    DialogModule,
   ],
   templateUrl: './students-grid.component.html',
   styleUrls: ['./students-grid.component.scss'],
@@ -45,7 +49,10 @@ import { RouterLink } from '@angular/router';
 })
 export class StudentsGridComponent {
   @Input() students: Student[] = [];
-
+  @Input() studentId: any;
+  @Input() headerText = '';
+  @Input() displayHistoryForm = true;
+  @Input() selectedRecord: any;
   @Input() totalRecords = 0;
   @Input() loading = false;
 
@@ -57,12 +64,13 @@ export class StudentsGridComponent {
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
   student: Student[] = [];
-  // onEditClick(student: Student) {
-  //   this.gridEvent.emit({
-  //     action: GRID_ACTIONS.EDIT,
-  //     data: student,
-  //   } as GridEvent<Student>);
-  // }
+  onHistoryClick(student: Student) {
+    this.displayHistoryForm = true;
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.HISTORY,
+      data: student,
+    } as GridEvent<Student>);
+  }
 
   onDeleteClick(student: Student) {
     this.gridEvent.emit({
