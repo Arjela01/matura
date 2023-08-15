@@ -13,7 +13,6 @@ import {
   GRID_ACTIONS,
   ColumnFilterDirective,
 } from '@msh/shared/util-shared';
-import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -25,19 +24,14 @@ import {
   TableRowUnSelectEvent,
 } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { HttpClient } from '@angular/common/http';
-import { AcademicYearApiService } from '@msh/configurations/data-access-configurations';
 import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
-import {ArchiveFolder, Student} from '@msh/shared/domain-models';
-import {DialogModule} from "primeng/dialog";
-import {
-  StudentsHistoryGridComponent
-} from "../../../../../../applications/feat-applications/src/lib/students/students-history/students-history-grid.component";
-import {ArchiveFolderHistoryGridComponent} from "../archive-folder-history/archive-folder-history-grid.component";
+import { ArchiveFolder, Student } from '@msh/shared/domain-models';
+import { DialogModule } from 'primeng/dialog';
+import { ArchiveFolderHistoryGridComponent } from '../archive-folder-history/archive-folder-history-grid.component';
 
 @Component({
   selector: 'msh-archive-folder-grid',

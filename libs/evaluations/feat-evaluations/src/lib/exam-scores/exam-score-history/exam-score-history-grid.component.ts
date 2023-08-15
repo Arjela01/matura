@@ -97,7 +97,7 @@ export class ExamScoreHistoryGridComponent {
           skip: skip,
           where: {
             ...this.where,
-            examSecret: { barcode: { eq: this.recordId } },
+            parentRecord: { id: { eq: this.recordId } },
           },
           order: this.orderBy,
         },

@@ -9,6 +9,9 @@ export const EXAM_SCORE = `
         hasPreviousPage
        }
         items {
+            parentRecord{
+                id
+            }
             id
             auditHostname
             auditSIDUsername

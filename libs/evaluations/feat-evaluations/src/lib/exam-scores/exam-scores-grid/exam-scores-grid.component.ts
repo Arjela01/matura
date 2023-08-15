@@ -49,7 +49,7 @@ export class ExamScoresGridComponent {
   @Input() examScores: ExamScore[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
-  @Input() barcode: any;
+  @Input() examScoreId: any;
   @Input() headerText = '';
   @Input() displayHistoryForm = true;
   @Input() selectedRecord: any;
