@@ -37,6 +37,10 @@
       <msh-exam-score-grid
         [examScores]="(examScores$ | async) || []"
         [totalRecords]="totalRecords"
+        [selectedRecord]="selectedRecord"
+        [barcode]="barcode"
+        [headerText]="headerText"
+        [displayHistoryForm]="displayHistoryForm"
         (gridEvent)="onGridEvent($event)"
         (lazyLoadData)="getExamScores($event)">
       </msh-exam-score-grid>

@@ -32,6 +32,7 @@ import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
 import * as FileSaver from 'file-saver';
 import { AcademicYear, ExamScore } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { A1zGridComponent } from '../../../../../../applications/feat-applications/src/lib/a1z/a1z-grid/a1z-grid.component';
 
 @UntilDestroy()
 @Component({
@@ -47,6 +48,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
     ToolbarModule,
     RippleModule,
     FileUploadModule,
+    A1zGridComponent,
   ],
   templateUrl: './manage-exam-scores.component.html',
   styleUrls: ['./manage-exam-scores.component.scss'],
@@ -67,6 +69,11 @@ export class ManageExamScoresComponent implements OnInit {
   examSubjects: DropdownModel<string>[] = [];
   base64: string | ArrayBuffer | null | undefined;
   currentAcademicYear?: Partial<AcademicYear>;
+
+  barcode: string | undefined;
+  selectedRecord: any;
+  headerText: any;
+  displayHistoryForm = false;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -103,8 +110,14 @@ export class ManageExamScoresComponent implements OnInit {
     } as ExamScore;
   }
 
-  onGridEvent(event: GridEvent<ExamScore | ExamScore[]>) {
+  onGridEvent(event: GridEvent<any | ExamScore[]>) {
     switch (event.action) {
+      case GRID_ACTIONS.HISTORY:
+        this.displayHistoryForm = true;
+        this.selectedRecord = Object.assign({}, event.data);
+        this.barcode = event.data.barcode;
+        this.headerText = `Historiku për Pikët e Provimit {${event.data.barcode}}`;
+        break;
       case GRID_ACTIONS.SELECT_ROW:
         this.selectedExamScores = [
           ...this.selectedExamScores,

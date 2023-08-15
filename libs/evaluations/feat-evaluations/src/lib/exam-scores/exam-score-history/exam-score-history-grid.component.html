@@ -1,0 +1,57 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <p-table
+        #dt
+        dataKey="id"
+        responsiveLayout="scroll"
+        [value]="recordData || []"
+        [paginator]="false"
+        (onLazyLoad)="loadRows($event)"
+        [lazy]="true">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Lënda e Provimit</th>
+            <th>Barkodi</th>
+            <th>Ndryshuar nga</th>
+            <th>Veprimi i Kryer</th>
+            <th>Emri i Hostit</th>
+            <th>Id e përdoruesit</th>
+            <th>Koha e ndryshimit</th>
+            <th>Përdoruesi</th>
+            <th></th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-record>
+          <tr>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record.examSubject?.name }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record.examSecret?.barcode }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.created?.displayName }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.auditOperation }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.auditHostname }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.auditSIDUsername }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.auditTimestamp | date }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.auditUsername }}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
