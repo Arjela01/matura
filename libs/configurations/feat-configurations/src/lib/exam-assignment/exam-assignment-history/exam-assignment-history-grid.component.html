@@ -11,12 +11,11 @@
         [lazy]="true">
         <ng-template pTemplate="header">
           <tr>
-            <th> Qendra e Provimit</th>
-            <th>Tipi i Provimit</th>
             <th>Data e Provimit</th>
-            <th>Vjeshtë</th>
-            <th>Matura ID</th>
+            <th>NID</th>
             <th>Emri i Studentit</th>
+            <th>Mbiemri</th>
+            <th>Veprimi i kryer</th>
             <th>Emri i Hostit</th>
             <th>Id e përdoruesit</th>
             <th>Koha e ndryshimit</th>
@@ -28,22 +27,16 @@
         <ng-template pTemplate="body" let-record>
           <tr>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.examSiteName}}
+              {{ record.examDate?.date | date : 'dd/MM/yyyy' }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.examTypeName }}
+              {{ record.student?.studentId}}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.date | date : 'dd/MM/yyyy' }}
+              {{ record.student?.firstName}}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.isFall }}
-            </td>
-            <td style="width: 10%; min-width: 10rem">
-              {{ record.studentId}}
-            </td>
-            <td style="width: 10%; min-width: 10rem">
-              {{ record.studentName}}
+              {{ record.student?.lastName}}
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ record?.auditOperation }}

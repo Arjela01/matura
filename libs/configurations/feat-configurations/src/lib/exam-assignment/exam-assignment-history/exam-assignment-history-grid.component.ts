@@ -96,20 +96,21 @@ export class ExamAssignmentHistoryGridComponent {
         variables: {
           pagesize: this.pageSize,
           skip: skip,
-          where: this.where,
+          where: {
+            ...this.where,
+            student: { studentId: { eq: this.recordId } },
+          },
           order: this.orderBy,
         },
         fetchPolicy: 'cache-and-network',
       })
       .valueChanges.subscribe(
-        (response: any) => {
-          const items = response?.data['examAssignment'].items || [];
-          this.recordData =
-            items.filter((item: any) => item.student.id === this.recordId) ||
-            [];
-          this.totalCount = this.recordData.length;
-          this.cd.markForCheck();
-        },
+      (response: any) => {
+        const items = response?.data['examAssignment']?.items || [];
+        this.recordData  = items;
+        this.totalCount = this.recordData.length;
+        this.cd.markForCheck();
+      },
         error => {
           console.error('GraphQL Query Error:', error);
         }
