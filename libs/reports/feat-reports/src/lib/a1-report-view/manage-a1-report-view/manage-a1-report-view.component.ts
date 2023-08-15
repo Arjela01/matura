@@ -1,13 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { A1ApiService } from '@msh/applications/data-access-applications';
+import {
+  A1ApiService,
+  A1ZApiService,
+} from '@msh/applications/data-access-applications';
 import { A1Z } from '@msh/applications/domain-application';
 import {
   HighSchoolApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
-import { HighSchool, Student } from '@msh/shared/domain-models';
+import { ApiResult } from '@msh/shared/data-access-shared';
+import {
+  HighSchool,
+  Report,
+  Student,
+  SubjectType,
+} from '@msh/shared/domain-models';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -16,7 +25,7 @@ import {
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { BehaviorSubject, concatMap, map, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, concatMap, map, switchMap } from 'rxjs';
 import { A1ReportViewComponent } from '../a1-report-view/a1-report-view.component';
 @UntilDestroy()
 @Component({
@@ -32,10 +41,12 @@ export class ManageA1ReportViewComponent {
   private a1Form$$ = new BehaviorSubject<A1Z>({});
   private studentInfo$$ = new BehaviorSubject<Student | null>(null);
   private subjects$$ = new BehaviorSubject<string[] | null>([]);
+  private carriedSubjects$$ = new BehaviorSubject<any | null>([]);
   private highSchoolInfo$$ = new BehaviorSubject<HighSchool | null>(null);
   a1$ = this.a1Form$$.asObservable();
   studentInfo$ = this.studentInfo$$.asObservable();
   subjects$ = this.subjects$$.asObservable();
+  carriedSubjects$ = this.carriedSubjects$$.asObservable();
   highSchoolInfo$ = this.highSchoolInfo$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
 
@@ -45,15 +56,18 @@ export class ManageA1ReportViewComponent {
   displayModal = false;
 
   id: string | null = null;
+  reportType: string | null = null;
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly a1apiService: A1ApiService,
     private readonly studentApiService: StudentsApiService,
     private readonly highSchoolApiService: HighSchoolApiService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private a1zApiService: A1ZApiService
   ) {
     this.id = this.route.snapshot.params['id'];
+    this.reportType = this.route.snapshot.params['reportType'];
     this.geta1Form();
   }
 
@@ -81,6 +95,85 @@ export class ManageA1ReportViewComponent {
     this.displayModal = false;
   }
 
+  getReportById(): Observable<ApiResult<A1Z>> {
+    return +this.reportType!! === Report.A1Form_Report
+      ? this.a1apiService.getById(this.id as string).pipe(
+          untilDestroyed(this),
+          map((element: any) => {
+            this.subjects$$.next(
+              [
+                element.data.subjectD1Name,
+                element.data.subjectD2Name,
+                element.data.subjectZ1Name,
+                element.data.subjectZ2Name,
+                element.data.subjectZ3Name,
+              ].filter(data => data) as string[]
+            );
+            return element;
+          })
+        )
+      : this.a1zApiService.getOne(this.id as string).pipe(
+          untilDestroyed(this),
+          map((element: ApiResult<A1Z>) => {
+            const subjects = [];
+            const carriedSubjects = [];
+            element.data.carryD1
+              ? carriedSubjects.push({
+                  name: element.data.subjectD1Name,
+                  label: 'D1',
+                  subjectType: SubjectType.Mandatory,
+                  score: element.data.scoreD1,
+                })
+              : subjects.push(element.data.subjectD1Name);
+            element.data.carryD2
+              ? carriedSubjects.push({
+                  name: element.data.subjectD2Name,
+                  label: 'D2',
+                  subjectType: SubjectType.Optional,
+                  score: element.data.scoreD2,
+                })
+              : subjects.push(element.data.subjectD2Name);
+            element.data.carryD3
+              ? carriedSubjects.push({
+                  name: element.data.subjectD3Name,
+                  label: 'D3',
+                  subjectType: SubjectType.Mandatory,
+                  score: element.data.scoreD3,
+                })
+              : subjects.push(element.data.subjectD3Name);
+            element.data.carryZ1
+              ? carriedSubjects.push({
+                  name: element.data.subjectZ1Name,
+                  label: 'Z1',
+                  subjectType: SubjectType.Optional,
+                  score: element.data.scoreZ1,
+                })
+              : subjects.push(element.data.subjectZ1Name);
+            element.data.carryZ2
+              ? carriedSubjects.push({
+                  name: element.data.subjectZ2Name,
+                  label: 'Z2',
+                  subjectType: SubjectType.Optional,
+                  score: element.data.scoreZ2,
+                })
+              : subjects.push(element.data.subjectZ2Name);
+
+            element.data.carryZ3
+              ? carriedSubjects.push({
+                  name: element.data.subjectZ3Name,
+                  label: 'Z3',
+                  subjectType: SubjectType.Optional,
+                  score: element.data.scoreZ3,
+                })
+              : subjects.push(element.data.subjectZ3Name);
+            this.carriedSubjects$$.next(
+              carriedSubjects.filter(data => data && data.name) as any
+            );
+            this.subjects$$.next(subjects.filter(data => data) as string[]);
+            return element;
+          })
+        );
+  }
   geta1Form() {
     this.filters = {
       first: 0,
@@ -90,22 +183,8 @@ export class ManageA1ReportViewComponent {
       globalFilter: null,
     };
     let highSchoolId = 0;
-    this.a1apiService
-      .getById(this.id as string)
+    this.getReportById()
       .pipe(
-        untilDestroyed(this),
-        map(element => {
-          this.subjects$$.next(
-            [
-              element.data.subjectD1Name,
-              element.data.subjectD2Name,
-              element.data.subjectZ1Name,
-              element.data.subjectZ2Name,
-              element.data.subjectZ3Name,
-            ].filter(data => data) as string[]
-          );
-          return element;
-        }),
         switchMap(response => {
           this.a1Form$$.next(response.data);
           return this.studentApiService.getById(response.data.studentId);
@@ -118,6 +197,7 @@ export class ManageA1ReportViewComponent {
           );
         })
       )
+
       .subscribe(response => {
         this.highSchoolInfo$$.next(
           response.data.find(el => el.id === highSchoolId) as HighSchool

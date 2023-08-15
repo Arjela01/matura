@@ -797,7 +797,12 @@ export class A1zFormComponent implements OnInit {
             return;
           }
         }
-        this.router.navigate([`/reports/view/${this.a1ZReport}`], query).then();
+        this.router
+          .navigate(
+            [`/reports/a1-view/${this.a1z.id}/${Report.A1ZForm_Report}`],
+            query
+          )
+          .then();
       });
   }
 

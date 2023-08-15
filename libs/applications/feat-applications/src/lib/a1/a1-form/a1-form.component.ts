@@ -442,7 +442,12 @@ export class A1FormComponent {
             return;
           }
         }
-        this.router.navigate([`/reports/a1-view/${a1.id}`], query).then();
+        this.router
+          .navigate(
+            [`/reports/a1-view/${a1.id}/${Report.A1Form_Report}`],
+            query
+          )
+          .then();
       });
   }
 

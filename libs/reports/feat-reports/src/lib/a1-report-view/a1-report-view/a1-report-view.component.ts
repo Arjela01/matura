@@ -1,7 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  ViewChild,
+} from '@angular/core';
+import { Router } from '@angular/router';
 import { A1Z } from '@msh/applications/domain-application';
 import { HighSchool, Student } from '@msh/shared/domain-models';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
 @Component({
@@ -17,80 +26,79 @@ export class A1ReportViewComponent {
   @Input() studentInfo: Student | null = null;
   @Input() highSchoolInfo: HighSchool | null = null;
   @Input() subjects: string[] | null = [];
+  @Input() carriedSubjects: any[] = [];
   items: MenuItem[] | undefined;
+  carriedSubjectIndex = 17;
+  @ViewChild('content', { static: false }) content: ElementRef | undefined;
+  // TODO: change when date time created of form is possible by backend
+  todayDate = new Date();
+
+  constructor(private router: Router) {}
+
+  generarPDF() {
+    const div = document.getElementById('content') as HTMLElement;
+    const options = {
+      background: 'white',
+      scale: 3,
+    };
+
+    html2canvas(div, options)
+      .then(canvas => {
+        var img = canvas.toDataURL('image/PNG');
+        var doc = new jsPDF('p', 'mm', 'a4');
+        // Add image Canvas to PDF
+        const bufferX = 5;
+        const bufferY = 10;
+        const imgProps = (<any>doc).getImageProperties(img);
+        const pdfWidth = 230;
+        const pdfHeight = 220;
+        doc.addImage(
+          img,
+          'PNG',
+          bufferX,
+          bufferY,
+          pdfWidth,
+          pdfHeight,
+          undefined,
+          'FAST'
+        );
+
+        return doc;
+      })
+      .then(doc => {
+        doc.save('a1.pdf');
+      });
+  }
+
+  print() {
+    const div = document.getElementById('content') as HTMLElement;
+    setTimeout(() => {
+      let a = window.open('', 'top=0,left=0,height=100%');
+      a?.document.write('');
+      a?.document.write(
+        `<body onload="window.print();setTimeout(window.close, 0);">${div.innerHTML}</body>`
+      );
+      a?.document.close();
+    });
+  }
   ngOnInit() {
+    const that = this;
     this.items = [
       {
-        label: 'Edit',
+        label: 'Modifiko Formularin',
         icon: 'pi pi-fw pi-pencil',
+
+        command(event) {
+          that.generarPDF();
+          that.router.navigate([`/applications/a1/edit/${that.a1?.id}`]);
+        },
       },
       {
-        label: 'Users',
-        icon: 'pi pi-fw pi-user',
-        items: [
-          {
-            label: 'New',
-            icon: 'pi pi-fw pi-user-plus',
-          },
-          {
-            label: 'Delete',
-            icon: 'pi pi-fw pi-user-minus',
-          },
-          {
-            label: 'Search',
-            icon: 'pi pi-fw pi-users',
-            items: [
-              {
-                label: 'Filter',
-                icon: 'pi pi-fw pi-filter',
-                items: [
-                  {
-                    label: 'Print',
-                    icon: 'pi pi-fw pi-print',
-                  },
-                ],
-              },
-              {
-                icon: 'pi pi-fw pi-bars',
-                label: 'List',
-              },
-            ],
-          },
-        ],
-      },
-      {
-        label: 'Events',
-        icon: 'pi pi-fw pi-calendar',
-        items: [
-          {
-            label: 'Edit',
-            icon: 'pi pi-fw pi-pencil',
-            items: [
-              {
-                label: 'Save',
-                icon: 'pi pi-fw pi-calendar-plus',
-              },
-              {
-                label: 'Delete',
-                icon: 'pi pi-fw pi-calendar-minus',
-              },
-            ],
-          },
-          {
-            label: 'Archieve',
-            icon: 'pi pi-fw pi-calendar-times',
-            items: [
-              {
-                label: 'Remove',
-                icon: 'pi pi-fw pi-calendar-minus',
-              },
-            ],
-          },
-        ],
-      },
-      {
-        label: 'Quit',
-        icon: 'pi pi-fw pi-power-off',
+        label: 'Shkarko Formularin',
+        icon: 'pi pi-file-pdf',
+        command(event) {
+          that.generarPDF();
+        },
       },
     ];
   }

@@ -23,7 +23,7 @@ export const REPORTS_ROUTES: Route[] = [
       ),
   },
   {
-    path: 'a1-view/:id',
+    path: 'a1-view/:id/:reportType',
     loadComponent: () =>
       import(
         './a1-report-view/manage-a1-report-view/manage-a1-report-view.component'
