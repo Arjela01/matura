@@ -32,7 +32,12 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { HttpClient } from '@angular/common/http';
 import { AcademicYearApiService } from '@msh/configurations/data-access-configurations';
 import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
-import { ArchiveFolder } from '@msh/shared/domain-models';
+import {ArchiveFolder, Student} from '@msh/shared/domain-models';
+import {DialogModule} from "primeng/dialog";
+import {
+  StudentsHistoryGridComponent
+} from "../../../../../../applications/feat-applications/src/lib/students/students-history/students-history-grid.component";
+import {ArchiveFolderHistoryGridComponent} from "../archive-folder-history/archive-folder-history-grid.component";
 
 @Component({
   selector: 'msh-archive-folder-grid',
@@ -50,6 +55,8 @@ import { ArchiveFolder } from '@msh/shared/domain-models';
     ToggleButtonModule,
     RadioButtonModule,
     ColumnFilterDirective,
+    DialogModule,
+    ArchiveFolderHistoryGridComponent,
   ],
   templateUrl: './archive-folder-grid.component.html',
   styleUrls: ['./archive-folder-grid.component.scss'],
@@ -82,18 +89,16 @@ export class ArchiveFolderGridComponent {
   }
 
   constructor(
-    private http: HttpClient,
-    private cd: ChangeDetectorRef,
-    private readonly academicYearService: AcademicYearApiService,
     private readonly archiveFolderService: ArchiveFolderApiService,
-    private router: Router,
-    private messageService: MessageService,
-    private activatedRoute: ActivatedRoute,
 
     private route: ActivatedRoute
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
+  @Input() folderNr: any;
+  @Input() headerText = '';
+  @Input() displayHistoryForm = true;
+  @Input() selectedRecord: any;
 
   archiveFolder: ArchiveFolder = {
     examTypeName: '',
@@ -122,6 +127,13 @@ export class ArchiveFolderGridComponent {
       action: GRID_ACTIONS.DELETE,
       data: archiveFolder,
     } as GridEvent<ArchiveFolder>);
+  }
+  onHistoryClick(archiveFolder: ArchiveFolder) {
+    this.displayHistoryForm = true;
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.HISTORY,
+      data: archiveFolder,
+    } as GridEvent<Student>);
   }
 
   onRowSelect($event: TableRowSelectEvent) {

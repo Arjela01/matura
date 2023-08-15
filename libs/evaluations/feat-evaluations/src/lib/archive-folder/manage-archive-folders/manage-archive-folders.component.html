@@ -19,7 +19,11 @@
         [archiveFolders]="(archiveFolders$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getArchiveFolders($event)">
+        (lazyLoadData)="getArchiveFolders($event)"
+        [selectedRecord]="selectedRecord"
+        [folderNr]="folderNr"
+        [headerText]="headerText"
+        [displayHistoryForm]="displayHistoryForm">
       </msh-archive-folder-grid>
     </div>
   </div>

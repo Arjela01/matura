@@ -2306,6 +2306,10 @@ export const STUDENTS = `
             middleName
             lastName
             auditOperation
+            auditHostname
+            auditSIDUsername
+            auditUsername
+            auditTimestamp
             idCard
             isEAlbaniaApplication
             isDiplomaRequirementException
