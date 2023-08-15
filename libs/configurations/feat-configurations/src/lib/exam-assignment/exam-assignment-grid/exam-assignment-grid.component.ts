@@ -26,7 +26,6 @@ import { TooltipModule } from 'primeng/tooltip';
 import { RouterLink } from '@angular/router';
 import {DialogModule} from "primeng/dialog";
 import {ExamAssignmentHistoryGridComponent} from "../exam-assignment-history/exam-assignment-history-grid.component";
-import {A1ZTableRecord} from "@msh/applications/domain-application";
 
 @Component({
   selector: 'msh-exam-assignment-grid',
@@ -61,9 +60,8 @@ export class ExamAssignmentGridComponent {
   @Output() gridEvent = new EventEmitter<
     GridEvent<ExamAssignment | ExamAssignment[]>
   >();
-
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
-  @Input() examAssignmentId: any;
+  @Input() studentId: any;
   @Input() selectedRecord: any;
 
   examAssignment: ExamAssignment = {

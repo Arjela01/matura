@@ -32,23 +32,27 @@ import { UploadFormComponent } from '../upload-form/upload-form.component';
 import * as FileSaver from 'file-saver';
 import { AssignAllFormComponent } from '../assign-all-form/assign-all-form.component';
 import { TableLazyLoadEvent } from 'primeng/table';
+import {
+  A1zGridComponent
+} from "../../../../../../applications/feat-applications/src/lib/a1z/a1z-grid/a1z-grid.component";
 
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-exam-assignment',
   standalone: true,
-    imports: [
-        ButtonModule,
-        CommonModule,
-        DialogModule,
-        ConfirmDialogModule,
-        ExamAssignmentGridComponent,
-        ExamAssignmentFormComponent,
-        ToolbarModule,
-        FileUploadModule,
-        UploadFormComponent,
-        AssignAllFormComponent,
-    ],
+  imports: [
+    ButtonModule,
+    CommonModule,
+    DialogModule,
+    ConfirmDialogModule,
+    ExamAssignmentGridComponent,
+    ExamAssignmentFormComponent,
+    ToolbarModule,
+    FileUploadModule,
+    UploadFormComponent,
+    AssignAllFormComponent,
+    A1zGridComponent,
+  ],
   templateUrl: './manage-exam-assignment.component.html',
   styleUrls: ['./manage-exam-assignment.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -78,7 +82,7 @@ export class ManageExamAssignmentComponent implements OnInit {
   selectedRecord: any;
 
   displayHistoryForm= false;
-   examAssignmentId: any;
+  examSiteId: any;
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
@@ -108,7 +112,7 @@ export class ManageExamAssignmentComponent implements OnInit {
       case GRID_ACTIONS.HISTORY:
         this.displayHistoryForm = true;
         this.selectedRecord = Object.assign({}, event.data);
-        this.examAssignmentId = event.data.examAssignmentId;
+        this.studentId = event.data.studentId;
         this.headerText = `Historiku për Caktim në Qendër Provimi {${event.data.id}}`;
         break;
       case GRID_ACTIONS.SELECT_MANY:

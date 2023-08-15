@@ -42,6 +42,10 @@
       <msh-exam-assignment-grid
         [examAssignments]="(examAssignments$ | async) || []"
         [totalRecords]="totalRecords"
+        [headerText]="headerText"
+        [studentId]="studentId"
+        [selectedRecord]="selectedRecord"
+        [displayHistoryForm]="displayHistoryForm"
         (gridEvent)="onGridEvent($event)"
         (lazyLoadData)="getExamAssignments($event)">
       </msh-exam-assignment-grid>
