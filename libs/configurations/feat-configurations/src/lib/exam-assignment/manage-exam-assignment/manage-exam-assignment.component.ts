@@ -32,9 +32,6 @@ import { UploadFormComponent } from '../upload-form/upload-form.component';
 import * as FileSaver from 'file-saver';
 import { AssignAllFormComponent } from '../assign-all-form/assign-all-form.component';
 import { TableLazyLoadEvent } from 'primeng/table';
-import {
-  A1zGridComponent
-} from "../../../../../../applications/feat-applications/src/lib/a1z/a1z-grid/a1z-grid.component";
 
 @UntilDestroy()
 @Component({
@@ -51,7 +48,6 @@ import {
     FileUploadModule,
     UploadFormComponent,
     AssignAllFormComponent,
-    A1zGridComponent,
   ],
   templateUrl: './manage-exam-assignment.component.html',
   styleUrls: ['./manage-exam-assignment.component.scss'],
