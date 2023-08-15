@@ -22,13 +22,8 @@ import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { RouterLink } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import {
-  ColumnFilterDirective,
-  GridEvent,
-  WhereBuilder,
-} from '@msh/shared/util-shared';
-import { FailingStudent } from '@msh/applications/domain-application';
-import {A1Z_FORMS} from "../query-a1z";
+import { ColumnFilterDirective } from '@msh/shared/util-shared';
+import { A1Z_FORMS } from '../query-a1z';
 
 @Component({
   selector: 'msh-a1z-history-grid',
@@ -60,22 +55,18 @@ export class A1zHistoryGridComponent {
   SORT_ASC = 'ASC';
   SORT_DESC = 'DESC';
 
-  @Input() recordId:any;
+  @Input() recordId: any;
   @Input() recordData: any;
-  @Output() gridEvent = new EventEmitter<
-    GridEvent<FailingStudent | FailingStudent[]>
-  >();
 
-  pageSize = 15;
+  pageSize = 50;
   totalCount = 0;
   currentPage = 1;
   where: any = null;
   orderBy: any = null;
 
-  constructor( private apollo: Apollo , private cd: ChangeDetectorRef) {}
+  constructor(private apollo: Apollo, private cd: ChangeDetectorRef) {}
 
   loadRows($event: TableLazyLoadEvent) {
-    this.where = new WhereBuilder($event.filters).transformWhere();
     const flattenSort = $event.sortField
       ? {
           [`${$event.sortField}`]:
@@ -103,7 +94,10 @@ export class A1zHistoryGridComponent {
         variables: {
           pagesize: this.pageSize,
           skip: skip,
-          where: this.where,
+          where: {
+            ...this.where,
+            student: { studentId: { eq: this.recordId } },
+          },
           order: this.orderBy,
         },
         fetchPolicy: 'cache-and-network',
@@ -111,9 +105,7 @@ export class A1zHistoryGridComponent {
       .valueChanges.subscribe(
         (response: any) => {
           const items = response?.data['a1ZForms'].items || [];
-          this.recordData =
-            items.filter((item: any) => item.student.id === this.recordId) ||
-            [];
+          this.recordData = items;
           this.totalCount = this.recordData.length;
           this.cd.markForCheck();
         },

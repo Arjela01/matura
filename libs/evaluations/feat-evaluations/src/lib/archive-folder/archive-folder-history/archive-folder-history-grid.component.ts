@@ -1,10 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
@@ -22,12 +16,8 @@ import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { RouterLink } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import {
-  ColumnFilterDirective,
-  WhereBuilder,
-} from '@msh/shared/util-shared';
-import {ARCHIVE_FOLDER} from "../archive-folder-query";
-
+import { ColumnFilterDirective } from '@msh/shared/util-shared';
+import { ARCHIVE_FOLDER } from '../archive-folder-query';
 
 @Component({
   selector: 'msh-archive-folder-history-grid',
@@ -59,7 +49,7 @@ export class ArchiveFolderHistoryGridComponent {
   SORT_ASC = 'ASC';
   SORT_DESC = 'DESC';
 
-  @Input() recordId:any;
+  @Input() recordId: any;
   @Input() recordData: any;
 
   queryName = 'archiveFolder';
@@ -69,10 +59,9 @@ export class ArchiveFolderHistoryGridComponent {
   where: any = null;
   orderBy: any = null;
 
-  constructor( private apollo: Apollo , private cd: ChangeDetectorRef) {}
+  constructor(private apollo: Apollo, private cd: ChangeDetectorRef) {}
 
   loadRows($event: TableLazyLoadEvent) {
-    this.where = new WhereBuilder($event.filters).transformWhere();
     const flattenSort = $event.sortField
       ? {
           [`${$event.sortField}`]:
@@ -101,7 +90,10 @@ export class ArchiveFolderHistoryGridComponent {
         variables: {
           pagesize: this.pageSize,
           skip: skip,
-          where: this.where,
+          where: {
+            ...this.where,
+            nr:  { eq: this.recordId },
+          },
           order: this.orderBy,
         },
         fetchPolicy: 'cache-and-network',
@@ -110,8 +102,7 @@ export class ArchiveFolderHistoryGridComponent {
         (response: any) => {
           const items = response?.data[this.queryName].items || [];
           this.recordData =
-            items.filter((item: any) => item.nr === this.recordId) ||
-            [];
+            items.filter((item: any) => item.nr === this.recordId) || [];
           this.totalCount = this.recordData.length;
           this.cd.markForCheck();
         },

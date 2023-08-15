@@ -76,7 +76,6 @@ export class StudentsHistoryGridComponent {
   constructor(private apollo: Apollo, private cd: ChangeDetectorRef) {}
 
   loadRows($event: TableLazyLoadEvent) {
-    this.where = new WhereBuilder($event.filters).transformWhere();
     const flattenSort = $event.sortField
       ? {
           [`${$event.sortField}`]:
@@ -105,7 +104,10 @@ export class StudentsHistoryGridComponent {
         variables: {
           pagesize: this.pageSize,
           skip: skip,
-          where: this.where,
+          where: {
+            ...this.where,
+            studentId: { contains: this.recordId },
+          },
           order: this.orderBy,
         },
         fetchPolicy: 'cache-and-network',
@@ -113,9 +115,7 @@ export class StudentsHistoryGridComponent {
       .valueChanges.subscribe(
         (response: any) => {
           const items = response?.data[this.queryName].items || [];
-          this.recordData =
-            items.filter((item: any) => item.studentId === this.recordId) ||
-            [];
+          this.recordData = items;
           this.totalCount = this.recordData.length;
           this.cd.markForCheck();
         },
