@@ -1,29 +1,23 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  Input,
-} from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { ButtonModule } from 'primeng/button';
-import { TooltipModule } from 'primeng/tooltip';
-import { CheckboxModule } from 'primeng/checkbox';
-import { DialogModule } from 'primeng/dialog';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ToolbarModule } from 'primeng/toolbar';
-import { RippleModule } from 'primeng/ripple';
-import { TableLazyLoadEvent, TableModule } from 'primeng/table';
-import { RouterLink } from '@angular/router';
-import { Apollo, gql } from 'apollo-angular';
-import { UntilDestroy } from '@ngneat/until-destroy';
-import {
-  ColumnFilterDirective, EXAM_ASSIGNMENT,
-  WhereBuilder,
-} from '@msh/shared/util-shared';
+import {ChangeDetectorRef, Component, Input,} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {InputTextModule} from 'primeng/inputtext';
+import {InputNumberModule} from 'primeng/inputnumber';
+import {RadioButtonModule} from 'primeng/radiobutton';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {ButtonModule} from 'primeng/button';
+import {TooltipModule} from 'primeng/tooltip';
+import {CheckboxModule} from 'primeng/checkbox';
+import {DialogModule} from 'primeng/dialog';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ToolbarModule} from 'primeng/toolbar';
+import {RippleModule} from 'primeng/ripple';
+import {TableLazyLoadEvent, TableModule} from 'primeng/table';
+import {RouterLink} from '@angular/router';
+import {Apollo, gql} from 'apollo-angular';
+import {UntilDestroy} from '@ngneat/until-destroy';
+import {ColumnFilterDirective, EXAM_ASSIGNMENT,} from '@msh/shared/util-shared';
+import {ExamAssignment} from "@msh/shared/domain-models";
 
 @Component({
   selector: 'msh-exam-assignment-history-grid',
@@ -55,20 +49,19 @@ export class ExamAssignmentHistoryGridComponent {
   SORT_ASC = 'ASC';
   SORT_DESC = 'DESC';
 
-  @Input() recordId:any;
-  @Input() recordData: any;
+  @Input() recordId!: number;
+  @Input() recordData!: ExamAssignment[];
   @Input() selectedRecord: any;
 
-  pageSize = 15;
+  pageSize = 50;
   totalCount = 0;
   currentPage = 1;
-  where: any = null;
-  orderBy: any = null;
+  where: any;
+  orderBy: any;
 
   constructor( private apollo: Apollo , private cd: ChangeDetectorRef) {}
 
   loadRows($event: TableLazyLoadEvent) {
-    this.where = new WhereBuilder($event.filters).transformWhere();
     const flattenSort = $event.sortField
       ? {
           [`${$event.sortField}`]:
@@ -100,14 +93,15 @@ export class ExamAssignmentHistoryGridComponent {
             ...this.where,
             student: { studentId: { eq: this.recordId } },
           },
+
           order: this.orderBy,
         },
         fetchPolicy: 'cache-and-network',
       })
       .valueChanges.subscribe(
       (response: any) => {
-        const items = response?.data['examAssignment']?.items || [];
-        this.recordData  = items;
+        this.recordData  = response?.data['examAssignment']?.items || [];
+
         this.totalCount = this.recordData.length;
         this.cd.markForCheck();
       },

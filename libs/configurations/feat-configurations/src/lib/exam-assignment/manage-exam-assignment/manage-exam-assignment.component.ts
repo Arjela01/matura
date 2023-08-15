@@ -76,13 +76,10 @@ export class ManageExamAssignmentComponent implements OnInit {
   examSites: DropdownModel<string>[] = [];
   examSiteForAdministrationOffice: DropdownModel<string>[] = [];
   administrationOffices: any;
-  time: any;
-  headerText: any;
+  headerText!: string;
   studentId: number | undefined;
-  selectedRecord: any;
-
+  selectedRecord: ExamAssignment |null = null;
   displayHistoryForm= false;
-  examSiteId: any;
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
