@@ -14,7 +14,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
-import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
@@ -22,7 +21,6 @@ import {
   ExamTypeApiService,
 } from '@msh/configurations/data-access-configurations';
 import {
-  ArchiveExamApiService,
   ArchiveFolderApiService,
 } from '@msh/evaluations/data-access-evaluations';
 import {
@@ -36,9 +34,7 @@ import { ArchiveFolderGridComponent } from '../archive-folder-grid/archive-folde
 import { ArchiveOpenFolderFormComponent } from '../archive-open-folder-form/archive-open-folder-form.component';
 import { AcademicYear, ArchiveFolder } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
-import {
-  StudentsGridComponent
-} from "../../../../../../applications/feat-applications/src/lib/students/students-grid/students-grid.component";
+
 
 @UntilDestroy()
 @Component({
@@ -54,7 +50,6 @@ import {
     ToolbarModule,
     RouterLink,
     RippleModule,
-    StudentsGridComponent,
   ],
   templateUrl: './manage-archive-folders.component.html',
   styleUrls: ['./manage-archive-folders.component.scss'],
