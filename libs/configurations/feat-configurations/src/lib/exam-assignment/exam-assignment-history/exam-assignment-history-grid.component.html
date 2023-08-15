@@ -1,0 +1,69 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <p-table
+        #dt
+        dataKey="id"
+        responsiveLayout="scroll"
+        [value]="recordData || []"
+        [paginator]="false"
+        (onLazyLoad)="loadRows($event)"
+        [lazy]="true">
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="examSiteName">ID Maturanti</th>
+            <th pSortableColumn="examTypeName">NID</th>
+            <th pSortableColumn="date">Emri i Studentit</th>
+            <th pSortableColumn="isFall">Atësia</th>
+            <th pSortableColumn="studentId">Mbiemri</th>
+            <th pSortableColumn="studentName">Datëlindja</th>
+            <th pSortableColumn="auditOperation">Veprimi i Kryer</th>
+            <th pSortableColumn="auditHostname">Emri i Hostit</th>
+            <th pSortableColumn="auditSIDUsername">Id e përdoruesit</th>
+            <th pSortableColumn="auditTimestamp">Koha e ndryshimit</th>
+            <th pSortableColumn="auditUsername">Përdoruesi</th>
+            <th></th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-record>
+          <tr>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record.examSiteName}}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record.examTypeName }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record.date | date : 'dd/MM/yyyy' }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record.isFall }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record.studentId}}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record.studentName}}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.auditOperation }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.auditHostname }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.auditSIDUsername }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.auditTimestamp | date }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.auditUsername }}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

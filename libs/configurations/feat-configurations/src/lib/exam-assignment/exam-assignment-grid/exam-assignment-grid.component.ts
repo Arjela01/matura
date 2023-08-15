@@ -24,6 +24,9 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { RouterLink } from '@angular/router';
+import {DialogModule} from "primeng/dialog";
+import {ExamAssignmentHistoryGridComponent} from "../exam-assignment-history/exam-assignment-history-grid.component";
+import {A1ZTableRecord} from "@msh/applications/domain-application";
 
 @Component({
   selector: 'msh-exam-assignment-grid',
@@ -38,6 +41,8 @@ import { RouterLink } from '@angular/router';
     RippleModule,
     RouterLink,
     ColumnFilterDirective,
+    DialogModule,
+    ExamAssignmentHistoryGridComponent,
   ],
   templateUrl: './exam-assignment-grid.component.html',
   styleUrls: ['./exam-assignment-grid.component.scss'],
@@ -47,6 +52,8 @@ export class ExamAssignmentGridComponent {
   @Input() examAssignments: ExamAssignment[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
+  @Input() headerText = '';
+  @Input() displayHistoryForm = true;
 
   //Keep it local state because of Table Header checkbox not syncing
   selectedExamAssignments: ExamAssignment[] = [];
@@ -56,6 +63,8 @@ export class ExamAssignmentGridComponent {
   >();
 
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
+  @Input() examAssignmentId: any;
+  @Input() selectedRecord: any;
 
   examAssignment: ExamAssignment = {
     id: '',
@@ -76,7 +85,13 @@ export class ExamAssignmentGridComponent {
       data: examAssignment,
     } as GridEvent<ExamAssignment>);
   }
-
+  onHistoryClick(examAssignment: ExamAssignment) {
+    this.displayHistoryForm = true;
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.HISTORY,
+      data: examAssignment,
+    } as GridEvent<ExamAssignment>);
+  }
   onRowSelect($event: TableRowSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,

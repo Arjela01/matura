@@ -37,18 +37,18 @@ import { TableLazyLoadEvent } from 'primeng/table';
 @Component({
   selector: 'msh-manage-exam-assignment',
   standalone: true,
-  imports: [
-    ButtonModule,
-    CommonModule,
-    DialogModule,
-    ConfirmDialogModule,
-    ExamAssignmentGridComponent,
-    ExamAssignmentFormComponent,
-    ToolbarModule,
-    FileUploadModule,
-    UploadFormComponent,
-    AssignAllFormComponent,
-  ],
+    imports: [
+        ButtonModule,
+        CommonModule,
+        DialogModule,
+        ConfirmDialogModule,
+        ExamAssignmentGridComponent,
+        ExamAssignmentFormComponent,
+        ToolbarModule,
+        FileUploadModule,
+        UploadFormComponent,
+        AssignAllFormComponent,
+    ],
   templateUrl: './manage-exam-assignment.component.html',
   styleUrls: ['./manage-exam-assignment.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -73,6 +73,12 @@ export class ManageExamAssignmentComponent implements OnInit {
   examSiteForAdministrationOffice: DropdownModel<string>[] = [];
   administrationOffices: any;
   time: any;
+  headerText: any;
+  studentId: number | undefined;
+  selectedRecord: any;
+
+  displayHistoryForm= false;
+   examAssignmentId: any;
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
@@ -83,7 +89,7 @@ export class ManageExamAssignmentComponent implements OnInit {
     private readonly administrationOfficeService: AdministrationOfficeApiService
   ) {}
 
-  onGridEvent(event: GridEvent<ExamAssignment | ExamAssignment[]>) {
+  onGridEvent(event: GridEvent<any | ExamAssignment[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
         this.selectedExamAssignments = [
@@ -99,7 +105,12 @@ export class ManageExamAssignmentComponent implements OnInit {
           }
         );
         break;
-
+      case GRID_ACTIONS.HISTORY:
+        this.displayHistoryForm = true;
+        this.selectedRecord = Object.assign({}, event.data);
+        this.examAssignmentId = event.data.examAssignmentId;
+        this.headerText = `Historiku për Caktim në Qendër Provimi {${event.data.id}}`;
+        break;
       case GRID_ACTIONS.SELECT_MANY:
         this.selectedExamAssignments = [
           ...this.selectedExamAssignments,
