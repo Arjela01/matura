@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import {
-  ColumnFilterDirective,
+  ColumnFilterDirective, DateFilterService,
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
@@ -49,6 +49,7 @@ export class ExamCopyGridComponent {
   @Output() gridEvent = new EventEmitter<GridEvent<ExamCopy | ExamCopy[]>>();
 
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
+  constructor(private dateFilterService: DateFilterService) {}
 
   onProceedClick(examCopy: ExamCopy) {
     this.gridEvent.emit({
@@ -58,6 +59,8 @@ export class ExamCopyGridComponent {
   }
 
   loadRows($event: TableLazyLoadEvent) {
+    const filters = $event.filters as any;
+    $event.filters = this.dateFilterService.applyDateManipulation(filters);
     this.lazyLoadData.emit($event);
   }
 }

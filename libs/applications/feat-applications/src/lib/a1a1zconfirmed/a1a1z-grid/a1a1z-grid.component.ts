@@ -10,7 +10,7 @@ import { Student } from '@msh/shared/domain-models';
 import {
   GridEvent,
   GRID_ACTIONS,
-  ColumnFilterDirective,
+  ColumnFilterDirective, DateFilterService,
 } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -50,6 +50,7 @@ export class A1a1zGridComponent {
   @Output() gridEvent = new EventEmitter<GridEvent<Student | Student[]>>();
 
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
+  constructor(private dateFilterService: DateFilterService) {}
 
   student: Student[] = [];
   // onEditClick(student: Student) {
@@ -73,6 +74,8 @@ export class A1a1zGridComponent {
   }
 
   loadRows($event: TableLazyLoadEvent) {
+    const filters = $event.filters as any;
+    $event.filters = this.dateFilterService.applyDateManipulation(filters);
     this.lazyLoadData.emit($event);
   }
 }

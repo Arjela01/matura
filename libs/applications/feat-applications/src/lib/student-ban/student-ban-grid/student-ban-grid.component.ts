@@ -10,7 +10,7 @@ import { StudentBan } from '@msh/shared/domain-models';
 import {
   GridEvent,
   GRID_ACTIONS,
-  ColumnFilterDirective,
+  ColumnFilterDirective, DateFilterService,
 } from '@msh/shared/util-shared';
 import {
   TableLazyLoadEvent,
@@ -54,6 +54,7 @@ export class StudentBanGridComponent {
   >();
 
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
+  constructor(private dateFilterService: DateFilterService) {}
 
   studentBan: StudentBan = {
     id: 0,
@@ -109,6 +110,8 @@ export class StudentBanGridComponent {
   }
 
   loadRows($event: TableLazyLoadEvent) {
+    const filters = $event.filters as any;
+    $event.filters = this.dateFilterService.applyDateManipulation(filters);
     this.lazyLoadData.emit($event);
   }
 }
