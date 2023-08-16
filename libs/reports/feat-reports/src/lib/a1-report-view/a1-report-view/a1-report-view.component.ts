@@ -28,7 +28,7 @@ export class A1ReportViewComponent {
   @Input() subjects: string[] | null = [];
   @Input() carriedSubjects: any[] = [];
   items: MenuItem[] | undefined;
-  carriedSubjectIndex = 17;
+  carriedSubjectIndex = 18;
   @ViewChild('content', { static: false }) content: ElementRef | undefined;
   // TODO: change when date time created of form is possible by backend
   todayDate = new Date();
