@@ -42,10 +42,11 @@ export class A1ReportViewComponent {
       scale: 3,
     };
 
+    //TODO : refactor to a service
     html2canvas(div, options)
       .then(canvas => {
-        var img = canvas.toDataURL('image/PNG');
-        var doc = new jsPDF('p', 'mm', 'a4');
+        const img = canvas.toDataURL('image/jpeg');
+        const doc = new jsPDF('p', 'mm', 'a4');
         // Add image Canvas to PDF
         const bufferX = 5;
         const bufferY = 10;
@@ -66,38 +67,36 @@ export class A1ReportViewComponent {
         return doc;
       })
       .then(doc => {
-        doc.save('a1.pdf');
+        this.a1?.isA1
+          ? doc.save(
+              `a1-${this.studentInfo?.firstName}-${this.studentInfo?.lastName}.pdf`
+            )
+          : doc.save(
+              `a1z-${this.studentInfo?.firstName}-${this.studentInfo?.lastName}.pdf`
+            );
       });
   }
 
-  print() {
-    const div = document.getElementById('content') as HTMLElement;
-    setTimeout(() => {
-      let a = window.open('', 'top=0,left=0,height=100%');
-      a?.document.write('');
-      a?.document.write(
-        `<body onload="window.print();setTimeout(window.close, 0);">${div.innerHTML}</body>`
-      );
-      a?.document.close();
-    });
-  }
   ngOnInit() {
-    const that = this;
     this.items = [
       {
         label: 'Modifiko Formularin',
         icon: 'pi pi-fw pi-pencil',
-
-        command(event) {
-          that.generarPDF();
-          that.router.navigate([`/applications/a1/edit/${that.a1?.id}`]);
+        iconStyle: { 'font-size': '1.3rem' },
+        style: { 'font-size': '1.1rem' },
+        command: event => {
+          this.a1?.isA1
+            ? this.router.navigate([`/applications/a1/edit/${this.a1?.id}`])
+            : this.router.navigate([`/applications/a1z/edit/${this.a1?.id}`]);
         },
       },
       {
         label: 'Shkarko Formularin',
-        icon: 'pi pi-file-pdf',
-        command(event) {
-          that.generarPDF();
+        icon: 'pi pi-print',
+        iconStyle: { 'font-size': '1.3rem' },
+        style: { 'font-size': '1.1rem', 'margin-left': 'auto' },
+        command: event => {
+          this.generarPDF();
         },
       },
     ];

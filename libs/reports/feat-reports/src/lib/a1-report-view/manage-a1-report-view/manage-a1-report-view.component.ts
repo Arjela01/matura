@@ -71,8 +71,6 @@ export class ManageA1ReportViewComponent {
     this.geta1Form();
   }
 
-  ngOnInit() {}
-
   onDeleteSelectedClick() {
     this.confirmationService.confirm({
       message: 'Jeni i sigurt që doni të fshini vitet akademike të zgjedhura?',
@@ -96,7 +94,7 @@ export class ManageA1ReportViewComponent {
   }
 
   getReportById(): Observable<ApiResult<A1Z>> {
-    return +this.reportType!! === Report.A1Form_Report
+    return +(this.reportType as string) === Report.A1Form_Report
       ? this.a1apiService.getById(this.id as string).pipe(
           untilDestroyed(this),
           map((element: any) => {

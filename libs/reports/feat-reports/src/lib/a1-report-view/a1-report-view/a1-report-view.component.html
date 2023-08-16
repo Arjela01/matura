@@ -1,12 +1,21 @@
 <div class="grid">
   <div class="col-8 mx-auto">
     <div
-      class="card-form px-6 py-4 mb-header mt-3"
+      class="card-form py-4 mb-header mt-3"
       *ngIf="a1 && studentInfo && highSchoolInfo">
-      <div class="card">
+      <div
+        class="card px-5"
+        style="box-shadow: 0; border: 0; text-align: right">
         <p-menubar [model]="items"></p-menubar>
+        <ng-template pTemplate="end">
+          <img
+            src="assets/svg/print.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
+            pTooltip="Printo Diploma"
+            tooltipPosition="bottom" />
+        </ng-template>
       </div>
-      <div #content id="content" style="width: 900px">
+      <div #content id="content" class="px-6" style="width: 900px">
         <h2 class="px-3 mb-0" style="font-weight: bold">
           {{ a1.isA1 ? 'Formular A1' : 'Formular A1Z' }}
         </h2>
