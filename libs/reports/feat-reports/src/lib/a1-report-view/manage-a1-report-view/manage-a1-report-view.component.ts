@@ -127,7 +127,7 @@ export class ManageA1ReportViewComponent {
               ? carriedSubjects.push({
                   name: element.data.subjectD2Name,
                   label: 'D2',
-                  subjectType: SubjectType.Optional,
+                  subjectType: SubjectType.Mandatory,
                   score: element.data.scoreD2,
                 })
               : subjects.push(element.data.subjectD2Name);
