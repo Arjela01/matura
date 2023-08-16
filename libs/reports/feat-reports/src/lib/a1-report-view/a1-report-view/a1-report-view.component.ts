@@ -39,7 +39,7 @@ export class A1ReportViewComponent {
     const div = document.getElementById('content') as HTMLElement;
     const options = {
       background: 'white',
-      scale: 3,
+      scale: 3.5,
     };
 
     //TODO : refactor to a service
@@ -52,7 +52,7 @@ export class A1ReportViewComponent {
         const bufferY = 10;
         const imgProps = (<any>doc).getImageProperties(img);
         const pdfWidth = 230;
-        const pdfHeight = 220;
+        const pdfHeight = 240;
         doc.addImage(
           img,
           'PNG',
