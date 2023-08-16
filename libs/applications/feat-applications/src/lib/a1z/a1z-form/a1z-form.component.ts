@@ -797,7 +797,7 @@ export class A1zFormComponent implements OnInit {
             return;
           }
         }
-        const id = this.a1z.id ?? a1z;
+        const id = this.a1z.id ?? a1z.id;
         this.router
           .navigate([`/reports/a1-view/${id}/${Report.A1ZForm_Report}`], query)
           .then();
