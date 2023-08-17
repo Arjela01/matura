@@ -16,17 +16,18 @@ import {
   ExamTypeApiService,
 } from '@msh/configurations/data-access-configurations';
 import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
+import { AcademicYear, ArchiveFolder } from '@msh/shared/domain-models';
 import {
   GRID_ACTIONS,
   GlobalToastService,
   GridEvent,
 } from '@msh/shared/util-shared';
 import { RippleModule } from 'primeng/ripple';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ArchiveFolderGridComponent } from '../archive-folder-grid/archive-folder-grid.component';
 import { ArchiveOpenFolderFormComponent } from '../archive-open-folder-form/archive-open-folder-form.component';
-import { AcademicYear, ArchiveFolder } from '@msh/shared/domain-models';
-import { TableLazyLoadEvent } from 'primeng/table';
+
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-archive-folders',

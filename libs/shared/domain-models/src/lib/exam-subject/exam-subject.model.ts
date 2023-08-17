@@ -15,3 +15,8 @@ export interface ExamSubjectTableView {
   data: ExamSubject[];
   total: number;
 }
+
+export enum SubjectType {
+  Mandatory,
+  Optional,
+}

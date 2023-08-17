@@ -22,4 +22,11 @@ export const REPORTS_ROUTES: Route[] = [
         m => m.ReportRendererComponent
       ),
   },
+  {
+    path: 'a1-view/:id/:reportType',
+    loadComponent: () =>
+      import(
+        './a1-report-view/manage-a1-report-view/manage-a1-report-view.component'
+      ).then(m => m.ManageA1ReportViewComponent),
+  },
 ];

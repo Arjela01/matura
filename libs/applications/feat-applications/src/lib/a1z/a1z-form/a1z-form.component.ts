@@ -572,7 +572,7 @@ export class A1zFormComponent implements OnInit {
         if (response.isSuccessful) {
           this.a1z.academicYearId = response.data.academicYearId;
           this.toastService.showSuccess('Formulari A1Z u shtua me sukses!');
-
+          console.log(response.data);
           this.printConfirmation(response.data);
         }
         if (!response.isSuccessful) {
@@ -753,12 +753,12 @@ export class A1zFormComponent implements OnInit {
         this.examTypeDropdown = response.data;
       });
   }
-  private printConfirmation(a1: A1Z) {
+  private printConfirmation(a1z: A1Z) {
     this.reportsApiService
       .loadRoleReports(this.event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        const a1ReportData = response.data.find(item => {
+        const a1zReportData = response.data.find(item => {
           return item.reportId === Report.A1ZForm_Report;
         });
 
@@ -772,7 +772,7 @@ export class A1zFormComponent implements OnInit {
           query.queryParams['returnUrl'] = '/applications/a1z';
         else query.queryParams['returnUrl'] = '/applications/students';
 
-        const parameters = JSON.parse(a1ReportData?.parameters as never);
+        const parameters = JSON.parse(a1zReportData?.parameters as never);
         if (parameters.length > 0) {
           const parameterUrl = parameters.find(
             (item: string) => 'studentid' === item.toLowerCase()
@@ -784,12 +784,12 @@ export class A1zFormComponent implements OnInit {
           if (
             parameterUrl &&
             parameterYear &&
-            a1.studentId &&
-            a1.academicYearId
+            a1z.studentId &&
+            a1z.academicYearId
           ) {
-            query.queryParams[`${parameterUrl}`] = a1.studentId;
+            query.queryParams[`${parameterUrl}`] = a1z.studentId;
             query.queryParams[`${parameterYear}`] =
-              a1.academicYearId.toString();
+              a1z.academicYearId.toString();
           } else {
             this.toastService.showError(
               'Mungojne parametrat e konfigurimit te raportit'
@@ -797,7 +797,10 @@ export class A1zFormComponent implements OnInit {
             return;
           }
         }
-        this.router.navigate([`/reports/view/${this.a1ZReport}`], query).then();
+        const id = this.a1z.id ?? a1z.id;
+        this.router
+          .navigate([`/reports/a1-view/${id}/${Report.A1ZForm_Report}`], query)
+          .then();
       });
   }
 
