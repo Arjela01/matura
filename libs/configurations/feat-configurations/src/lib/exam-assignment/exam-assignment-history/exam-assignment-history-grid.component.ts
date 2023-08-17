@@ -91,7 +91,7 @@ export class ExamAssignmentHistoryGridComponent {
           skip: skip,
           where: {
             ...this.where,
-            student: { studentId: { eq: this.recordId } },
+            parentRecord: { id: { eq: this.recordId } },
           },
 
           order: this.orderBy,

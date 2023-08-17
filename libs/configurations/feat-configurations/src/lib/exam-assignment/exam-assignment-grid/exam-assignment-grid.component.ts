@@ -61,7 +61,7 @@ export class ExamAssignmentGridComponent {
     GridEvent<ExamAssignment | ExamAssignment[]>
   >();
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
-  @Input() studentId: any;
+  @Input() examAssignmentId: any;
   @Input() selectedRecord: any;
 
   examAssignment: ExamAssignment = {

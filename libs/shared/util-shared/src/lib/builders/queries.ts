@@ -907,6 +907,9 @@ export const EXAM_ASSIGNMENT = `
         hasPreviousPage
        }
         items {
+           parentRecord{
+            id
+       }
             auditHostname
             auditSIDUsername
             auditUsername

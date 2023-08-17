@@ -76,6 +76,7 @@ export class ManageExamAssignmentComponent implements OnInit {
   studentId: number | undefined;
   selectedRecord: ExamAssignment |null = null;
   displayHistoryForm= false;
+  examAssignmentId!: string;
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
@@ -105,7 +106,7 @@ export class ManageExamAssignmentComponent implements OnInit {
       case GRID_ACTIONS.HISTORY:
         this.displayHistoryForm = true;
         this.selectedRecord = Object.assign({}, event.data);
-        this.studentId = event.data.studentId;
+        this.examAssignmentId = event.data.id;
         this.headerText = `Historiku për Caktim në Qendër Provimi {${event.data.id}}`;
         break;
       case GRID_ACTIONS.SELECT_MANY:
