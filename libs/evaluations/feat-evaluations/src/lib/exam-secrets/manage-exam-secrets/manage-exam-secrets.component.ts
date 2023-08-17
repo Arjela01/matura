@@ -32,6 +32,7 @@ import { ExamSecretsFormComponent } from '../exam-secrets-form/exam-secrets-form
 import { ExamSecretsGridComponent } from '../exam-secrets-grid/exam-secrets-grid.component';
 import { ExamSecret } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { ArchiveFolderGridComponent } from '../../archive-folder/archive-folder-grid/archive-folder-grid.component';
 
 @UntilDestroy()
 @Component({
@@ -47,6 +48,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
     ToolbarModule,
     RippleModule,
     FileUploadModule,
+    ArchiveFolderGridComponent,
   ],
   templateUrl: './manage-exam-secrets.component.html',
   styleUrls: ['./manage-exam-secrets.component.scss'],
@@ -64,6 +66,11 @@ export class ManageExamSecretsComponent implements OnInit {
   displayModal = false;
   examSubjects: DropdownModel<string>[] = [];
   examTypes: DropdownModel<number>[] = [];
+
+  examSecretId: string | undefined;
+  selectedRecord: any;
+  headerText: any;
+  displayHistoryForm = false;
 
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([_]) => {
@@ -94,8 +101,14 @@ export class ManageExamSecretsComponent implements OnInit {
     this.selectedExamSecret = {} as ExamSecret;
   }
 
-  onGridEvent(event: GridEvent<ExamSecret | ExamSecret[]>) {
+  onGridEvent(event: GridEvent<any | ExamSecret[]>) {
     switch (event.action) {
+      case GRID_ACTIONS.HISTORY:
+        this.selectedRecord = Object.assign({}, event.data);
+        this.examSecretId = event.data.id;
+        this.headerText = `Historiku për Pikët e Sekretimit {${event.data.id}}`;
+        this.displayHistoryForm = true;
+        break;
       case GRID_ACTIONS.SELECT_ROW:
         this.selectedExamSecrets = [
           ...this.selectedExamSecrets,

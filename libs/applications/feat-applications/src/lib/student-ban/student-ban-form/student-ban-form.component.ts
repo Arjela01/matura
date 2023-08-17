@@ -67,16 +67,10 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
   @Input() set bannedStudentsDetails(details: StudentBan | null) {
     if (details) {
       this.studentBan = Object.assign({}, details);
-      this.effectiveDate = formatDate(
-        new Date(this.studentBan.effectiveDate),
-        'dd/MM/yyyy',
-        'en'
-      );
-      this.banRemovalDate = formatDate(
-        new Date(this.studentBan.banRemovalDate),
-        'dd/MM/yyyy',
-        'en'
-      );
+      if (details.effectiveDate && details.banRemovalDate) {
+        this.effectiveDate = new Date(details.effectiveDate);
+        this.banRemovalDate = new Date(details.banRemovalDate);
+      }
     }
   }
 
@@ -170,9 +164,21 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
   }
 
   onSubmit() {
-    this.studentBan.effectiveDate = this.effectiveDate;
-    this.studentBan.banRemovalDate = this.banRemovalDate;
     if (this.form.valid) {
+      if (this.effectiveDate && this.banRemovalDate) {
+        const formattedEffectiveDate = formatDate(
+          this.effectiveDate,
+          'yyyy-MM-dd',
+          'en-US'
+        );
+        this.studentBan.effectiveDate = formattedEffectiveDate as any;
+        const formattedBanRemovalDate = formatDate(
+          this.banRemovalDate,
+          'yyyy-MM-dd',
+          'en-US'
+        );
+        this.studentBan.banRemovalDate = formattedBanRemovalDate as any;
+      }
       this.formSave.emit(this.studentBan);
     }
     this.cd.markForCheck();
