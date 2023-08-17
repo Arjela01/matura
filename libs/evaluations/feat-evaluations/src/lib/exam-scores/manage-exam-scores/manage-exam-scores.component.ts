@@ -10,8 +10,6 @@ import { ExamScoresGridComponent } from '../exam-scores-grid/exam-scores-grid.co
 import { ConfirmationService } from 'primeng/api';
 import {
   BehaviorSubject,
-  distinctUntilChanged,
-  map,
   of,
   switchMap,
 } from 'rxjs';
@@ -68,6 +66,11 @@ export class ManageExamScoresComponent implements OnInit {
   base64: string | ArrayBuffer | null | undefined;
   currentAcademicYear?: Partial<AcademicYear>;
 
+  examScoreId: string | undefined;
+  selectedRecord: any;
+  headerText: any;
+  displayHistoryForm = false;
+
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
@@ -103,8 +106,14 @@ export class ManageExamScoresComponent implements OnInit {
     } as ExamScore;
   }
 
-  onGridEvent(event: GridEvent<ExamScore | ExamScore[]>) {
+  onGridEvent(event: GridEvent<any | ExamScore[]>) {
     switch (event.action) {
+      case GRID_ACTIONS.HISTORY:
+        this.displayHistoryForm = true;
+        this.selectedRecord = Object.assign({}, event.data);
+        this.examScoreId = event.data.id;
+        this.headerText = `Historiku për Pikët e Provimit {${event.data.id}}`;
+        break;
       case GRID_ACTIONS.SELECT_ROW:
         this.selectedExamScores = [
           ...this.selectedExamScores,

@@ -25,7 +25,6 @@ import {
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
-import { StudentsGridComponent } from '../../../../../../applications/feat-applications/src/lib/students/students-grid/students-grid.component';
 import { ArchiveFolderGridComponent } from '../archive-folder-grid/archive-folder-grid.component';
 import { ArchiveOpenFolderFormComponent } from '../archive-open-folder-form/archive-open-folder-form.component';
 
@@ -43,7 +42,6 @@ import { ArchiveOpenFolderFormComponent } from '../archive-open-folder-form/arch
     ToolbarModule,
     RouterLink,
     RippleModule,
-    StudentsGridComponent,
   ],
   templateUrl: './manage-archive-folders.component.html',
   styleUrls: ['./manage-archive-folders.component.scss'],
@@ -117,7 +115,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
     switch (event.action) {
       case GRID_ACTIONS.HISTORY:
         this.selectedRecord = Object.assign({}, event.data);
-        this.folderNr = event.data.nr;
+        this.folderNr = event.data.id;
         this.headerText = `Historiku për Dosjen {${event.data.nr}}`;
         this.displayHistoryForm = true;
         break;

@@ -76,7 +76,7 @@ export class ManageA1zComponent {
       case GRID_ACTIONS.HISTORY:
         this.displayHistoryForm = true;
         this.selectedRecord = Object.assign({}, event.data);
-        this.studentId = event.data.studentStudentId;
+        this.studentId = event.data.id;
         this.headerText = `Historiku për Formularin A1Z {${event.data.id}}`;
         break;
       case GRID_ACTIONS.SELECT_ROW:

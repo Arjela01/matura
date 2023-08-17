@@ -92,7 +92,7 @@ export class ArchiveFolderHistoryGridComponent {
           skip: skip,
           where: {
             ...this.where,
-            nr:  { eq: this.recordId },
+            parentRecord: { id: { eq: this.recordId } },
           },
           order: this.orderBy,
         },
@@ -101,8 +101,7 @@ export class ArchiveFolderHistoryGridComponent {
       .valueChanges.subscribe(
         (response: any) => {
           const items = response?.data[this.queryName].items || [];
-          this.recordData =
-            items.filter((item: any) => item.nr === this.recordId) || [];
+          this.recordData = items;
           this.totalCount = this.recordData.length;
           this.cd.markForCheck();
         },

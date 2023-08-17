@@ -9,6 +9,9 @@ export const A1_FORMS = `
         hasPreviousPage
       }
         items {
+        parentRecord{
+            id
+       }
             auditHostname
             auditSIDUsername
             auditUsername

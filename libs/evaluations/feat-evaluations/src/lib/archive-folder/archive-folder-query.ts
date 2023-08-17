@@ -9,6 +9,9 @@ export const ARCHIVE_FOLDER = `
         hasPreviousPage
        }
         items {
+            parentRecord{
+                id
+            }
             auditHostname
             auditSIDUsername
             auditUsername

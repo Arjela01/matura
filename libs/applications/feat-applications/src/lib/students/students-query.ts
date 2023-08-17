@@ -9,6 +9,9 @@ export const STUDENTS = `
         hasPreviousPage
        }
         items {
+        parentRecord{
+            id
+       }
             studentId
             firstName
             middleName
