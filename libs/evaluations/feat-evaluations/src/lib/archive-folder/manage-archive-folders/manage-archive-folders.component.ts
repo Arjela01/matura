@@ -1,44 +1,33 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
-import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
   ExamSubjectApiService,
   ExamTypeApiService,
 } from '@msh/configurations/data-access-configurations';
-import {
-  ArchiveExamApiService,
-  ArchiveFolderApiService,
-} from '@msh/evaluations/data-access-evaluations';
+import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
+import { AcademicYear, ArchiveFolder } from '@msh/shared/domain-models';
 import {
   GRID_ACTIONS,
   GlobalToastService,
   GridEvent,
 } from '@msh/shared/util-shared';
 import { RippleModule } from 'primeng/ripple';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
+import { StudentsGridComponent } from '../../../../../../applications/feat-applications/src/lib/students/students-grid/students-grid.component';
 import { ArchiveFolderGridComponent } from '../archive-folder-grid/archive-folder-grid.component';
 import { ArchiveOpenFolderFormComponent } from '../archive-open-folder-form/archive-open-folder-form.component';
-import { AcademicYear, ArchiveFolder } from '@msh/shared/domain-models';
-import { TableLazyLoadEvent } from 'primeng/table';
-import {
-  StudentsGridComponent
-} from "../../../../../../applications/feat-applications/src/lib/students/students-grid/students-grid.component";
 
 @UntilDestroy()
 @Component({
@@ -91,7 +80,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
     private readonly examSubjectApiService: ExamSubjectApiService,
     private router: Router,
     private route: ActivatedRoute,
-    private authFacade: AuthFacade,
+    private authFacade: AuthFacade
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
