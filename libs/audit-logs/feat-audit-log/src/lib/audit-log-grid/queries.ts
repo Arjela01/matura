@@ -252,29 +252,6 @@ export const EXAM_SECRET = `
                     displayName
                 }
             }
-                examVersion {
-                id
-                code
-                name
-                numberOfQuestions
-                variant
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
-            }
             deleted {
                 displayName
             }

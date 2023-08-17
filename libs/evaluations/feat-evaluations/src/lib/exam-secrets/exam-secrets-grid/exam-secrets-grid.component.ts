@@ -18,7 +18,9 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { ExamSecret } from '@msh/shared/domain-models';
+import { ArchiveFolder, ExamSecret, Student } from '@msh/shared/domain-models';
+import { DialogModule } from 'primeng/dialog';
+import { ExamSecretHistoryGridComponent } from '../exam-secret-history/exam-secret-history-grid.component';
 
 @Component({
   selector: 'msh-exam-secret-grid',
@@ -32,6 +34,8 @@ import { ExamSecret } from '@msh/shared/domain-models';
     CheckboxModule,
     RippleModule,
     ColumnFilterDirective,
+    DialogModule,
+    ExamSecretHistoryGridComponent,
   ],
   templateUrl: './exam-secrets-grid.component.html',
   styleUrls: ['./exam-secrets-grid.component.scss'],
@@ -41,6 +45,11 @@ export class ExamSecretsGridComponent {
   @Input() examSecrets: ExamSecret[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
+
+  @Input() examSecretId: any;
+  @Input() headerText = '';
+  @Input() displayHistoryForm = true;
+  @Input() selectedRecord: any;
 
   //Keep it local state because of Table Header checkbox not syncing
   selectedExamSecrets: ExamSecret[] = [];
@@ -63,6 +72,13 @@ export class ExamSecretsGridComponent {
       action: GRID_ACTIONS.DELETE,
       data: examScore,
     } as GridEvent<ExamSecret>);
+  }
+  onHistoryClick(archiveFolder: ArchiveFolder) {
+    this.displayHistoryForm = true;
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.HISTORY,
+      data: archiveFolder,
+    } as GridEvent<Student>);
   }
 
   onSelectAllClick() {
