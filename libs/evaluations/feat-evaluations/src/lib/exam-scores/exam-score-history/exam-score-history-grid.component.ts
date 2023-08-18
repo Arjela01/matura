@@ -1,9 +1,7 @@
 import {
   ChangeDetectorRef,
   Component,
-  EventEmitter,
   Input,
-  Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -24,14 +22,11 @@ import { Apollo, gql } from 'apollo-angular';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import {
   ColumnFilterDirective,
-  GridEvent,
-  WhereBuilder,
 } from '@msh/shared/util-shared';
-import { FailingStudent } from '@msh/applications/domain-application';
-import { STUDENTS } from '../students-query';
+import {EXAM_SCORE} from "../exam-score-query";
 
 @Component({
-  selector: 'msh-students-history-grid',
+  selector: 'msh-exam-score-history-grid',
   standalone: true,
   imports: [
     CommonModule,
@@ -51,29 +46,26 @@ import { STUDENTS } from '../students-query';
     RouterLink,
     ColumnFilterDirective,
   ],
-  templateUrl: './students-history-grid.component.html',
-  styleUrls: ['./students-history-grid.component.scss'],
+  templateUrl: './exam-score-history-grid.component.html',
+  styleUrls: ['./exam-score-history-grid.component.scss'],
   providers: [Apollo],
 })
 @UntilDestroy()
-export class StudentsHistoryGridComponent {
+export class ExamScoreHistoryGridComponent {
   SORT_ASC = 'ASC';
   SORT_DESC = 'DESC';
 
   @Input() recordId: any;
   @Input() recordData: any;
-  @Output() gridEvent = new EventEmitter<
-    GridEvent<FailingStudent | FailingStudent[]>
-  >();
 
-  queryName = 'students';
+
   pageSize = 50;
   totalCount = 0;
   currentPage = 1;
   where: any = null;
   orderBy: any = null;
 
-  constructor(private apollo: Apollo, private cd: ChangeDetectorRef) {}
+  constructor( private apollo: Apollo , private cd: ChangeDetectorRef) {}
 
   loadRows($event: TableLazyLoadEvent) {
     const flattenSort = $event.sortField
@@ -90,7 +82,6 @@ export class StudentsHistoryGridComponent {
       this.orderBy = flattenSort;
     }
     this.fetchRecordData();
-    this.cd.markForCheck();
   }
 
   fetchRecordData() {
@@ -99,7 +90,7 @@ export class StudentsHistoryGridComponent {
     this.apollo
       .watchQuery<any>({
         query: gql`
-          ${STUDENTS}
+          ${EXAM_SCORE}
         `,
         variables: {
           pagesize: this.pageSize,
@@ -114,7 +105,7 @@ export class StudentsHistoryGridComponent {
       })
       .valueChanges.subscribe(
         (response: any) => {
-          const items = response?.data[this.queryName].items || [];
+          const items = response?.data['examScore'].items || [];
           this.recordData = items;
           this.totalCount = this.recordData.length;
           this.cd.markForCheck();

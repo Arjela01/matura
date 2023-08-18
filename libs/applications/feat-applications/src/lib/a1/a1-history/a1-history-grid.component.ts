@@ -102,7 +102,7 @@ export class A1HistoryGridComponent {
           skip: skip,
           where: {
             ...this.where,
-            student: { studentId: { contains: this.recordId } },
+            parentRecord: { id: { eq: this.recordId } },
           },
           order: this.orderBy,
         },

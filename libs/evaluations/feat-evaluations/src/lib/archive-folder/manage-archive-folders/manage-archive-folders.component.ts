@@ -115,7 +115,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
     switch (event.action) {
       case GRID_ACTIONS.HISTORY:
         this.selectedRecord = Object.assign({}, event.data);
-        this.folderNr = event.data.nr;
+        this.folderNr = event.data.id;
         this.headerText = `Historiku për Dosjen {${event.data.nr}}`;
         this.displayHistoryForm = true;
         break;

@@ -13,7 +13,6 @@ import {
   GRID_ACTIONS,
   ColumnFilterDirective,
 } from '@msh/shared/util-shared';
-import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -30,9 +29,9 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
-import {ArchiveFolder, Student} from '@msh/shared/domain-models';
-import {DialogModule} from "primeng/dialog";
-import {ArchiveFolderHistoryGridComponent} from "../archive-folder-history/archive-folder-history-grid.component";
+import { ArchiveFolder, Student } from '@msh/shared/domain-models';
+import { DialogModule } from 'primeng/dialog';
+import { ArchiveFolderHistoryGridComponent } from '../archive-folder-history/archive-folder-history-grid.component';
 
 @Component({
   selector: 'msh-archive-folder-grid',
