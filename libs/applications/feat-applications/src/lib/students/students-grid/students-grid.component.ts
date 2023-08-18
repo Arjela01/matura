@@ -9,7 +9,7 @@ import {
 import {
   GridEvent,
   GRID_ACTIONS,
-  ColumnFilterDirective,
+  ColumnFilterDirective, DateFilterService,
 } from '@msh/shared/util-shared';
 import {
   TableLazyLoadEvent,
@@ -64,6 +64,8 @@ export class StudentsGridComponent {
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
   student: Student[] = [];
+  constructor(private dateFilterService: DateFilterService) {}
+
   onHistoryClick(student: Student) {
     this.displayHistoryForm = true;
     this.gridEvent.emit({
@@ -107,6 +109,8 @@ export class StudentsGridComponent {
   }
 
   loadRows($event: TableLazyLoadEvent) {
+    const filters = $event.filters as any;
+    $event.filters = this.dateFilterService.applyDateManipulation(filters);
     this.lazyLoadData.emit($event);
   }
 }

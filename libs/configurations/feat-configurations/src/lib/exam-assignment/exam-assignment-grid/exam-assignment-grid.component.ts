@@ -10,7 +10,7 @@ import { ExamAssignment } from '@msh/shared/domain-models';
 import {
   GridEvent,
   GRID_ACTIONS,
-  ColumnFilterDirective,
+  ColumnFilterDirective, DateFilterService,
 } from '@msh/shared/util-shared';
 import {
   TableLazyLoadEvent,
@@ -56,6 +56,7 @@ export class ExamAssignmentGridComponent {
   >();
 
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
+  constructor(private dateFilterService: DateFilterService) {}
 
   examAssignment: ExamAssignment = {
     id: '',
@@ -99,6 +100,8 @@ export class ExamAssignmentGridComponent {
   }
 
   loadRows($event: TableLazyLoadEvent) {
+    const filters = $event.filters as any;
+    $event.filters = this.dateFilterService.applyDateManipulation(filters);
     this.lazyLoadData.emit($event);
   }
 }

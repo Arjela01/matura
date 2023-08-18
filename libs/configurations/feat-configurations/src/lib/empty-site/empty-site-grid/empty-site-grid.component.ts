@@ -9,7 +9,7 @@ import {
 import {
   GridEvent,
   GRID_ACTIONS,
-  ColumnFilterDirective,
+  ColumnFilterDirective, DateFilterService,
 } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -47,6 +47,7 @@ export class EmptySiteGridComponent {
   @Output() gridEvent = new EventEmitter<GridEvent<EmptySite | EmptySite[]>>();
 
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
+  constructor(private dateFilterService: DateFilterService) {}
 
   onEmptySite(emptySite: EmptySite) {
     this.gridEvent.emit({
@@ -56,6 +57,8 @@ export class EmptySiteGridComponent {
   }
 
   loadRows($event: TableLazyLoadEvent) {
+    const filters = $event.filters as any;
+    $event.filters = this.dateFilterService.applyDateManipulation(filters);
     this.lazyLoadData.emit($event);
   }
 }

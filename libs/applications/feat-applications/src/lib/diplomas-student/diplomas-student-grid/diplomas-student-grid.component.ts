@@ -9,7 +9,7 @@ import {
 import { RouterLink } from '@angular/router';
 import { Student } from '@msh/shared/domain-models';
 import {
-  ColumnFilterDirective,
+  ColumnFilterDirective, DateFilterService,
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
@@ -55,6 +55,7 @@ export class DiplomasStudentGridComponent {
   @Output() gridEvent = new EventEmitter<GridEvent<Student>>();
 
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
+  constructor(private dateFilterService: DateFilterService) {}
 
   student: Student[] = [];
   // onEditClick(student: Student) {
@@ -93,6 +94,8 @@ export class DiplomasStudentGridComponent {
   }
 
   loadRows($event: TableLazyLoadEvent) {
+    const filters = $event.filters as any;
+    $event.filters = this.dateFilterService.applyDateManipulation(filters);
     this.lazyLoadData.emit($event);
   }
 }
