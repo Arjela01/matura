@@ -72,7 +72,11 @@ export class ManageExamAssignmentComponent implements OnInit {
   examSites: DropdownModel<string>[] = [];
   examSiteForAdministrationOffice: DropdownModel<string>[] = [];
   administrationOffices: any;
-  time: any;
+  headerText!: string;
+  studentId: number | undefined;
+  selectedRecord: ExamAssignment |null = null;
+  displayHistoryForm= false;
+  examAssignmentId!: string;
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
@@ -83,7 +87,7 @@ export class ManageExamAssignmentComponent implements OnInit {
     private readonly administrationOfficeService: AdministrationOfficeApiService
   ) {}
 
-  onGridEvent(event: GridEvent<ExamAssignment | ExamAssignment[]>) {
+  onGridEvent(event: GridEvent<any | ExamAssignment[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
         this.selectedExamAssignments = [
@@ -99,7 +103,12 @@ export class ManageExamAssignmentComponent implements OnInit {
           }
         );
         break;
-
+      case GRID_ACTIONS.HISTORY:
+        this.displayHistoryForm = true;
+        this.selectedRecord = Object.assign({}, event.data);
+        this.examAssignmentId = event.data.id;
+        this.headerText = `Historiku për Caktim në Qendër Provimi {${event.data.id}}`;
+        break;
       case GRID_ACTIONS.SELECT_MANY:
         this.selectedExamAssignments = [
           ...this.selectedExamAssignments,
