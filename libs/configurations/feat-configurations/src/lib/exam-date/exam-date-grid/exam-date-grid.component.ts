@@ -1,28 +1,15 @@
-import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
-import { ExamDate } from '@msh/shared/domain-models';
-import {
-  GridEvent,
-  GRID_ACTIONS,
-  ColumnFilterDirective,
-} from '@msh/shared/util-shared';
-import {
-  TableLazyLoadEvent,
-  TableRowSelectEvent,
-  TableRowUnSelectEvent,
-} from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
-import { CheckboxModule } from 'primeng/checkbox';
-import { InputTextModule } from 'primeng/inputtext';
-import { RippleModule } from 'primeng/ripple';
-import { TableModule } from 'primeng/table';
-import { TooltipModule } from 'primeng/tooltip';
+import {CommonModule} from '@angular/common';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output,} from '@angular/core';
+import {ExamDate} from '@msh/shared/domain-models';
+import {ColumnFilterDirective, DateFilterService, GRID_ACTIONS, GridEvent,} from '@msh/shared/util-shared';
+import {TableLazyLoadEvent, TableModule, TableRowSelectEvent, TableRowUnSelectEvent,} from 'primeng/table';
+import {ButtonModule} from 'primeng/button';
+import {CheckboxModule} from 'primeng/checkbox';
+import {InputTextModule} from 'primeng/inputtext';
+import {RippleModule} from 'primeng/ripple';
+import {TooltipModule} from 'primeng/tooltip';
+import {CalendarModule} from "primeng/calendar";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'msh-exam-date-grid',
@@ -45,13 +32,13 @@ export class ExamDateGridComponent {
   @Input() examDates: ExamDate[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
-
   //Keep it local state because of Table Header checkbox not syncing
   selectedExamDates: ExamDate[] = [];
-
   @Output() gridEvent = new EventEmitter<GridEvent<ExamDate | ExamDate[]>>();
 
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
+
+  constructor(private dateFilterService: DateFilterService) {}
 
   onEditClick(examDate: ExamDate) {
     this.gridEvent.emit({
@@ -94,7 +81,11 @@ export class ExamDateGridComponent {
     } as GridEvent<ExamDate>);
   }
 
+
   loadRows($event: TableLazyLoadEvent) {
+    const filters = $event.filters as any;
+    $event.filters = this.dateFilterService.applyDateManipulation(filters);
     this.lazyLoadData.emit($event);
   }
+
 }
