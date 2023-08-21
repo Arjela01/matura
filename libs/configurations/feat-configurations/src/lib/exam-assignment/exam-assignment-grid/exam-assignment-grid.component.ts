@@ -24,8 +24,8 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { RouterLink } from '@angular/router';
-import {DialogModule} from "primeng/dialog";
-import {ExamAssignmentHistoryGridComponent} from "../exam-assignment-history/exam-assignment-history-grid.component";
+import { DialogModule } from "primeng/dialog";
+import { ExamAssignmentHistoryGridComponent } from "../exam-assignment-history/exam-assignment-history-grid.component";
 
 @Component({
   selector: 'msh-exam-assignment-grid',
