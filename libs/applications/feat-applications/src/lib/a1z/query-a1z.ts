@@ -30,6 +30,9 @@ export const A1Z_FORMS = `
             deletedOn
             modifiedIP
             modifiedOn
+            createdBy
+            deletedBy
+            modifiedBy
                carriedGradeD1 {
                 id
                 grade

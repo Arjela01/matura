@@ -14,12 +14,10 @@
             <th>Dosja</th>
             <th>Totali</th>
             <th>Statusi</th>
-            <th>Ndryshuar nga</th>
             <th>Veprimi i Kryer</th>
-            <th>Emri i Hostit</th>
-            <th>Id e përdoruesit</th>
-            <th>Koha e ndryshimit</th>
             <th>Përdoruesi</th>
+            <th>Emri i Hostit</th>
+            <th>Koha e ndryshimit</th>
             <th></th>
           </tr>
         </ng-template>
@@ -45,22 +43,20 @@
               </div>
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record?.modified?.displayName }}
+              {{ record?.auditOperation }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record?.auditOperation }}
+              {{
+                record?.auditOperation === 'UPDATE'
+                  ? record?.modified?.displayName
+                  : record?.created?.displayName
+              }}
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ record?.auditHostname }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record?.auditSIDUsername }}
-            </td>
-            <td style="width: 10%; min-width: 10rem">
               {{ record?.auditTimestamp | date }}
-            </td>
-            <td style="width: 10%; min-width: 10rem">
-              {{ record?.auditUsername }}
             </td>
           </tr>
         </ng-template>
