@@ -31,6 +31,9 @@ export const A1_FORMS = `
             deletedOn
             modifiedIP
             modifiedOn
+            createdBy
+            deletedBy
+            modifiedBy
             carriedGradeD1 {
                 id
                 grade
@@ -251,15 +254,15 @@ export const A1_FORMS = `
                     displayName
                 }
             }
-            deleted {
-                displayName
-            }
-            modified {
-                displayName
-            }
             created {
-                displayName
-            }
+                 displayName
+                }
+                modified {
+                    displayName
+                }
+                deleted {
+                    displayName
+                }
         }
 
       }
