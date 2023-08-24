@@ -126,7 +126,6 @@ export class ExamScoresFormComponent implements OnChanges {
         this.barcodeExists = false;
         this.toastService.showError(res.errorMessage);
       }
-      this.form.controls['barcode'].updateValueAndValidity();
       this.cd.markForCheck();
     });
   }
