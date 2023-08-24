@@ -25,7 +25,7 @@
         onfocus="this.value=''"
         tooltipPosition="top"
         required
-        (change)="saveArchiveExam(archiveExam)" />
+        (keydown.enter)="handleEnterKey($event)"/>
       <button
         pButton
         pRipple

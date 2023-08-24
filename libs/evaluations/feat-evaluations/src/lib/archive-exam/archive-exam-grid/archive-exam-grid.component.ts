@@ -123,7 +123,13 @@ export class ArchiveExamGridComponent implements OnInit {
       characterRegex.test(input)
     );
   }
-
+  handleEnterKey(event: any) {
+    const keyboardEvent = event as KeyboardEvent;
+    if (this.lettersNumbersCheck(this.archiveExam.barcode)) {
+      this.saveArchiveExam(this.archiveExam);
+    }
+    keyboardEvent.preventDefault();
+  }
   saveArchiveExam(archiveExam: ArchiveExam): void {
     this.gridEvent.emit({
       action: GRID_ACTIONS.CUSTOM_ACTION1,
