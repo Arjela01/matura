@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./global-search.component.scss'],
   imports: [CommonModule, FormsModule, SharedModule],
 })
-export class GlobalSearchComponent implements OnInit {
+export class GlobalSearchComponent {
   @Input() searchBoxVisible = false;
   searchQuery: any;
   searchResults: string[] = [];
@@ -35,10 +35,6 @@ export class GlobalSearchComponent implements OnInit {
 
   shiftPressedCount = 0;
   lastShiftPressTime = 0;
-
-  ngOnInit() {
-    this.fetchMenuItems();
-  }
 
   fetchMenuItems() {
     this.menuService
@@ -65,6 +61,10 @@ export class GlobalSearchComponent implements OnInit {
 
         if (this.shiftPressedCount === 2) {
           this.searchBoxVisible = !this.searchBoxVisible;
+
+          if (this.searchBoxVisible) {
+            this.fetchMenuItems();
+          }
         }
       } else {
         this.shiftPressedCount = 1;
@@ -90,8 +90,6 @@ export class GlobalSearchComponent implements OnInit {
       this.searchBoxVisible = false;
       this.searchResults = [];
       this.searchQuery = '';
-    } else {
-      console.log('Selected item does not have a valid URL:', selectedItem);
     }
     this.searchBoxVisible = false;
   }
