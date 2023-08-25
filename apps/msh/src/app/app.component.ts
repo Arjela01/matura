@@ -9,13 +9,17 @@ import { RouterOutlet } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
 import { PrimeNGConfig } from 'primeng/api';
 import { HttpClientModule } from '@angular/common/http';
-import {GlobalSpinnerComponent, LoaderService} from '@msh/shared/util-shared';
+import { GlobalSpinnerComponent, LoaderService } from '@msh/shared/util-shared';
+import { GlobalSearchComponent } from '@msh/layout/feat-layout';
+import { SearchBoxService } from '@msh/layout/data-access-layout';
 
 @Component({
   selector: 'msh-root',
   template: `
     <router-outlet></router-outlet>
     <p-toast></p-toast>
+    <msh-global-search
+      [searchBoxVisible]="searchBoxVisible"></msh-global-search>
   `,
   styles: [],
   standalone: true,
@@ -25,16 +29,17 @@ import {GlobalSpinnerComponent, LoaderService} from '@msh/shared/util-shared';
     NgIf,
     ToastModule,
     HttpClientModule,
+    GlobalSearchComponent,
   ],
 })
 export class AppComponent implements OnInit, AfterViewChecked {
-  //Todo: Loading spinner global
+  searchBoxVisible = false;
   constructor(
     private primengConfig: PrimeNGConfig,
     public loader: LoaderService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private searchBoxService: SearchBoxService
   ) {}
-
   ngOnInit() {
     this.primengConfig.setTranslation({
       startsWith: 'Fillon me',
@@ -79,6 +84,9 @@ export class AppComponent implements OnInit, AfterViewChecked {
       gte: 'Më i madh ose i barabartë',
       lt: 'Më i vogël se',
       lte: 'Më i vogël ose i barabartë',
+    });
+    this.searchBoxService.searchBoxVisible$.subscribe(isVisible => {
+      this.searchBoxVisible = isVisible;
     });
   }
   ngAfterViewChecked() {
