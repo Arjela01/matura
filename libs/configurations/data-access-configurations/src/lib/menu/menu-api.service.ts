@@ -12,7 +12,7 @@ import { HttpParams } from '@angular/common/http';
 export class MenuApiService {
   constructor(private apiService: APIService) {}
 
-  loadMenus(event: TableLazyLoadEvent): Observable<MenuTableView> {
+  loadMenus(event: TableLazyLoadEvent): Observable<any> {
     return this.apiService.post(`/Menu/TableData`, event);
   }
 
