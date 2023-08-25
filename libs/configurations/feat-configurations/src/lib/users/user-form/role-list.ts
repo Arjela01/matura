@@ -10,7 +10,7 @@ export const roleList = [
   },
 
   {
-    roleName: 'DAR/ZA',
+    roleName: 'ZVAP',
     showUniversity: false,
     showUniversityDepartment: false,
     showAdministrationOffice: true,
