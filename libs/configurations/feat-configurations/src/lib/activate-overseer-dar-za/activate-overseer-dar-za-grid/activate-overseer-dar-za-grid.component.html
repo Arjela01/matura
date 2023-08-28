@@ -49,11 +49,11 @@
         <span
           [ngClass]="
             activateOverseer.isAllowedToLogin === true
-              ? ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
-              : ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
+              ? ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
+              : ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
           ">
           {{
-            activateOverseer.isAllowedToLogin === true ? 'Jo Aktiv' : 'Aktiv'
+            activateOverseer.isAllowedToLogin === true ? 'Aktiv' : ' Jo Aktiv'
           }}
         </span>
       </td>
@@ -66,13 +66,13 @@
             (click)="changeStatus(activateOverseer)"
             [ngClass]="
               activateOverseer.isAllowedToLogin === true
-                ? ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
-                : ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
+                ?['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
+                :['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
             ">
             {{
               activateOverseer.isAllowedToLogin === true
-                ? 'Aktivizo'
-                : 'Çaktivizo'
+                ? 'Çaktivizo'
+                : 'Aktivizo'
             }}
           </button>
         </div>
