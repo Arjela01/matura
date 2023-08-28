@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import {CommonModule, formatDate} from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -200,6 +200,10 @@ export class StudentsEditComponent implements OnInit {
   update(): void {
     if (this.finishedAtSameSchool) {
       this.student.schoolFinished = '';
+    }
+    if (this.student.birthDate) {
+      const formattedDate = formatDate(this.student.birthDate, 'yyyy-MM-dd', 'en-US');
+      this.student.birthDate = formattedDate as any;
     }
     this.disabled = true;
     this.saving = true;
