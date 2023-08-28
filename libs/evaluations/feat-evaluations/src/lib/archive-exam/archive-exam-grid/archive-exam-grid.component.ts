@@ -125,12 +125,13 @@ export class ArchiveExamGridComponent implements OnInit {
   }
 
   saveArchiveExam(archiveExam: ArchiveExam): void {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.CUSTOM_ACTION1,
-      data: archiveExam,
-    } as GridEvent<ArchiveExam>);
+    if (this.lettersNumbersCheck(this.archiveExam?.barcode)) {
+      this.gridEvent.emit({
+        action: GRID_ACTIONS.CUSTOM_ACTION1,
+        data: archiveExam,
+      } as GridEvent<ArchiveExam>);
+    }
   }
-
   onRowUnselect($event: TableRowUnSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,

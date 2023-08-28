@@ -73,6 +73,7 @@ export class ExamScoresFormComponent implements OnChanges {
   examTypeId: any;
   examSubjectId: any;
   currentYear = new Date().getFullYear();
+   barcodeExists= false;
 
   @Input() set examScoreDetails(details: ExamScore | null) {
     this.examScore = Object.assign({}, details);
@@ -99,7 +100,7 @@ export class ExamScoresFormComponent implements OnChanges {
 
   onSubmit(): void {
     this.submitted = true;
-    if (this.form.valid) {
+    if (this.form.valid && this.barcodeExists) {
       this.formSave.emit(this.examScore);
     }
   }
@@ -117,14 +118,16 @@ export class ExamScoresFormComponent implements OnChanges {
 
   onGetIndexClick(barcode: any) {
     this.examScores.getIndex(barcode).subscribe(res => {
-      this.examScore.archiveFolderIndex = res.data?.index;
-      this.examScore.archiveFolderNr = res.data?.archiveFolderNr;
-
-      if (res.isBadRequest) this.toastService.showError('Ndodhi një problem!');
-      if (!res.isSuccessful) {
+      if (res.isSuccessful) {
+        this.examScore.archiveFolderIndex = res.data?.index;
+        this.examScore.archiveFolderNr = res.data?.archiveFolderNr;
+        this.barcodeExists = true;
+      } else {
+        this.barcodeExists = false;
         this.toastService.showError(res.errorMessage);
       }
       this.cd.markForCheck();
     });
   }
+
 }

@@ -62,7 +62,7 @@
         autofocus
         (change)="onGetIndexClick(examScore.barcode)"
         [ngClass]="{
-          'ng-invalid ng-dirty': submitted && !examScore.barcode
+            'ng-invalid ng-dirty': submitted && (!examScore.barcode || !barcodeExists)
         }" />
     </div>
     <small class="p-error block" *ngIf="submitted && !examScore.barcode">
@@ -161,7 +161,7 @@
       class="p-button-text w-auto mr-2"
       (click)="onCancelClick()"></button>
     <button
-      [disabled]="form.invalid"
+      [disabled]="form.invalid || !barcodeExists"
       type="submit"
       pButton
       label="Ruaj"
