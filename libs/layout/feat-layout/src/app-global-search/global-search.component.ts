@@ -60,10 +60,20 @@ export class GlobalSearchComponent {
         this.shiftPressedCount++;
 
         if (this.shiftPressedCount === 2) {
-          this.searchBoxVisible = !this.searchBoxVisible;
-
-          if (this.searchBoxVisible) {
+          if (!this.searchBoxVisible) {
+            this.searchBoxVisible = true;
             this.fetchMenuItems();
+
+            setTimeout(() => {
+              const searchInput = document.getElementById(
+                'searchInput'
+              ) as HTMLInputElement;
+              if (searchInput) {
+                searchInput.focus();
+              }
+            }, 0);
+          } else {
+            this.shiftPressedCount = 1;
           }
         }
       } else {
