@@ -187,7 +187,23 @@
               Viti i përfundimit të shkollës së mesme është fushë e kërkuar.
             </small>
           </div>
-
+          <div class="field" [style]="{ width: '500px' }">
+            <label for="countryId">Nënshtetësia *</label>
+            <p-dropdown
+              id="countryId"
+              [options]="countriesList"
+              name="countryId"
+              optionValue="key"
+              optionLabel="value"
+              [required]="true"
+              [(ngModel)]="student.countryId"
+              [autoDisplayFirst]="false"
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  submitted && (!student.countryId || student.countryId === 0)
+              }">
+            </p-dropdown>
+          </div>
           <div class="field">
             <label for="IdCard">Karta e Identitetit *</label>
             <input

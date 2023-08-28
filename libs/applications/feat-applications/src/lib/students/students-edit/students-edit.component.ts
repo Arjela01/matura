@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { A1ZTableRecord, FormType } from '@msh/applications/domain-application';
 import {
   AcademicYearApiService,
+  CountriesApiService,
   GendersApiService,
   HighSchoolApiService,
   ProfileApiService,
@@ -102,13 +103,14 @@ export class StudentsEditComponent implements OnInit {
     studyClass: '',
     profileName: '',
     firstName: '',
+    countryId: 0,
     registrationYearId: undefined,
     graduationYear: new Date().getFullYear(),
   };
   forms: A1ZTableRecord[] = [];
   finishedAtSameSchool = true;
   disabled = false;
-
+  countriesList: DropdownModel<number>[] = [];
   constructor(
     private cd: ChangeDetectorRef,
     private readonly academicYearService: AcademicYearApiService,
@@ -120,7 +122,8 @@ export class StudentsEditComponent implements OnInit {
     private messageService: MessageService,
     private route: ActivatedRoute,
     private readonly confirmationService: ConfirmationService,
-    private toasterService: GlobalToastService
+    private toasterService: GlobalToastService,
+    private countriesService: CountriesApiService
   ) {
     this.id = this.route.snapshot.paramMap.get('id') as string;
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 10);
@@ -178,6 +181,14 @@ export class StudentsEditComponent implements OnInit {
           this.student?.schoolFinished == null;
         this.cd.detectChanges();
       });
+
+    this.countriesService.loadDropdownList().subscribe(response => {
+      this.countriesList = response.data;
+      // this.student.stateId = this.countriesList.find(
+      //   data => data.additionalValue === 'AL'
+      // )?.key as number;
+      this.cd.detectChanges();
+    });
 
     this.studentService
       .getA1A1ZByStudentId(this.id as string)

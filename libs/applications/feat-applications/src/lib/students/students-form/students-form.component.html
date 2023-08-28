@@ -98,7 +98,23 @@
             </div>
           </div>
         </div>
-
+        <div class="field" [style]="{ width: '500px' }">
+          <label for="countryId">Nënshtetësia *</label>
+          <p-dropdown
+            id="stateId"
+            [options]="countriesList"
+            name="countryId"
+            optionValue="key"
+            optionLabel="value"
+            [required]="true"
+            [(ngModel)]="student.countryId"
+            [autoDisplayFirst]="false"
+            [ngClass]="{
+              'ng-invalid ng-dirty':
+                submitted && (!student.countryId || student.countryId === 0)
+            }">
+          </p-dropdown>
+        </div>
         <div class="field" [style]="{ width: '500px' }">
           <label for="SchoolFinished">Shkolla që ke përfunduar *</label>
           <div class="formgrid grid">
@@ -181,21 +197,22 @@
             [ngClass]="{
               'ng-invalid ng-dirty': submitted && !student.idCard
             }" />
-          <small class="p-error block" *ngIf="submitted && !student.idCard">
-            NID është fushë e kërkuar.
-          </small>
+
           <small
             class="p-error block"
             *ngIf="
-              (nidModel.touched || nidModel.dirty) &&
+              (nidModel.touched || nidModel.dirty || nidModel.pristine) && student.idCard!=='' &&
               (nidModel.errors?.['required'] ||
-                nidModel.errors?.['albanianNidValidator'])
+                nidModel.errors?.['albanianNidValidator']) 
             ">
             NID nuk i përshtatet formatit shqiptar. Duhet të përmbajë 10
             karaktere, të fillojë dhe të mbarojë me gërma të mëdha.
           </small>
         </div>
 
+        <small class="p-error block" *ngIf="submitted && !student.idCard">
+          NID është fushë e kërkuar.
+        </small>
         <div class="field" [style]="{ width: '500px' }">
           <label for="OldID">ID e vjetër e maturës</label>
           <input

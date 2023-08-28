@@ -4,9 +4,11 @@ export * from './lib/activate-overseer-DarZa/activate-overseer-DarZa-api.service
 export * from './lib/administration-office/administration-office-api.service';
 export * from './lib/carried-grade/carried-grade-api.service';
 export * from './lib/city/city-api.service';
+export * from './lib/countries/countries.api.service';
 export * from './lib/dashboard-items/dashboard-items-api.service';
 export * from './lib/dashboard-metricies/dashboard-metricies-api.service';
 export * from './lib/dashboard-sections/dashboard-section-api.service';
+export * from './lib/data-export/data-export-api.service';
 export * from './lib/diplomas-student/diplomas-student.api.service';
 export * from './lib/empty-site/empty-site-api.service';
 export * from './lib/exam-assignment/exam-assignment-api.service';
@@ -32,4 +34,3 @@ export * from './lib/study-subject/study-subject-api.service';
 export * from './lib/universities/university-api.service';
 export * from './lib/university-departments/university-department-api.service';
 export * from './lib/user/user-api.service';
-export * from './lib/data-export/data-export-api.service';
