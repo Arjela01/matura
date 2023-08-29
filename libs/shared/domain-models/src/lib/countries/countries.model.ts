@@ -3,3 +3,6 @@ export interface Country {
   code: string;
   id: string;
 }
+export enum CountryName {
+  Albania = 3,
+}

@@ -13,6 +13,7 @@ import {
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
+  CountryName,
   Student,
   StudentClassModel,
   StudentSectionModel,
@@ -103,7 +104,7 @@ export class StudentsEditComponent implements OnInit {
     studyClass: '',
     profileName: '',
     firstName: '',
-    countryId: 0,
+    countryId: CountryName.Albania,
     registrationYearId: undefined,
     graduationYear: new Date().getFullYear(),
   };
@@ -111,6 +112,7 @@ export class StudentsEditComponent implements OnInit {
   finishedAtSameSchool = true;
   disabled = false;
   countriesList: DropdownModel<number>[] = [];
+  isAlbanian = true;
   constructor(
     private cd: ChangeDetectorRef,
     private readonly academicYearService: AcademicYearApiService,
@@ -198,6 +200,10 @@ export class StudentsEditComponent implements OnInit {
       });
   }
 
+  changeCountry(country: CountryName) {
+    this.isAlbanian = country === CountryName.Albania;
+    this.cd.detectChanges();
+  }
   navigateToGrid() {
     this.router.navigate(['/applications/students']);
   }

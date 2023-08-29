@@ -26,6 +26,7 @@ import {
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   AcademicYear,
+  CountryName,
   Student,
   StudentClassModel,
   StudentSectionModel,
@@ -122,7 +123,7 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     firstName: '',
     schoolFinishedName: '',
     registrationYearId: 0,
-    countryId: 0,
+    countryId: CountryName.Albania,
     graduationYear: undefined,
     isConfirmedBySupervisor: false,
     schoolProfile: '',

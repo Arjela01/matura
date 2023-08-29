@@ -196,6 +196,8 @@
               optionValue="key"
               optionLabel="value"
               [required]="true"
+              (onChange)="changeCountry($event.value)"
+              [filter]="true"
               [(ngModel)]="student.countryId"
               [autoDisplayFirst]="false"
               [ngClass]="{
@@ -204,12 +206,17 @@
               }">
             </p-dropdown>
           </div>
+
           <div class="field">
             <label for="IdCard">Karta e Identitetit *</label>
+
             <input
               type="text"
+              value="bbbb"
+              #nidModel="ngModel"
+              mshAlbanianNidValidator="isAlbanian"
               pInputText
-              id="IdCard"
+              id="IdCardAlb"
               name="IdCard"
               [(ngModel)]="student.idCard"
               required
@@ -217,8 +224,16 @@
               [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !student.idCard
               }" />
-            <small class="p-error block" *ngIf="submitted && !student.idCard">
-              Numri Personal është fushë e kërkuar.
+
+            <small
+              class="p-error block"
+              *ngIf="
+                (nidModel.touched || nidModel.dirty ) && student.idCard!=='' &&
+                (nidModel.errors?.['required'] ||
+                  nidModel.errors?.['albanianNidValidator']) 
+              ">
+              NID nuk i përshtatet formatit shqiptar. Duhet të përmbajë 10
+              karaktere, të fillojë dhe të mbarojë me gërma të mëdha.
             </small>
           </div>
 
