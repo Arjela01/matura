@@ -53,5 +53,7 @@ export class AlbanianNidValidatorDirective implements Validator {
   }
 
   @HostListener('input', ['$event.target.value'])
-  onInput(value: string): void {}
+  onInput(value: string): void {
+    this.elementRef.nativeElement.value = value.toUpperCase();
+  }
 }
