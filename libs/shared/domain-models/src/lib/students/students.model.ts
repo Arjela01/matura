@@ -38,6 +38,7 @@ export interface Student extends SharedStudent {
   modifiedByName?: string;
   nid?: string;
   isDiplomaRequirementException?: boolean;
+  countryId?: number;
 }
 
 export interface StudentTableView {

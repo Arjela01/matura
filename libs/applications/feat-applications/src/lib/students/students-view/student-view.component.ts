@@ -12,14 +12,16 @@ import {
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { A1ZTableRecord } from '@msh/applications/domain-application';
 import {
   GendersApiService,
   HighSchoolApiService,
   ProfileApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
-import { Student } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import { Student } from '@msh/shared/domain-models';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
@@ -30,8 +32,6 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { A1ZTableRecord } from '@msh/applications/domain-application';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({
@@ -94,6 +94,7 @@ export class StudentViewComponent implements OnChanges, OnInit {
     profileId: 0,
     schoolFinished: '',
     schoolProfile: '',
+    countryId: 0,
     highSchoolName: '',
     schoolName: '',
     highSchoolId: 0,

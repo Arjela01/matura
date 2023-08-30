@@ -6,7 +6,7 @@ import {
   AcademicYearApiService,
 } from '@msh/configurations/data-access-configurations';
 import { StorageService } from '@msh/shared/data-access-shared';
-import { AcademicYear } from '@msh/shared/domain-models';
+import { AcademicYear, roleKey } from '@msh/shared/domain-models';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import jwt_decode from 'jwt-decode';
 import { catchError, exhaustMap, map, of, switchMap, tap } from 'rxjs';
@@ -28,6 +28,7 @@ export class AuthEffects {
         ) as AcademicYear;
         if (token && user && user?.username && user?.displayName) {
           const tokenStore: any = jwt_decode(token as string);
+          console.log(tokenStore);
           if (!tokenStore.NeedResetPassword) {
             this.heartBeatService.startTime();
           }
@@ -105,6 +106,13 @@ export class AuthEffects {
           switchMap(activeYear => {
             if (!token.NeedResetPassword) {
               this.heartBeatService.startTime();
+            }
+            if (token[roleKey] !== 'Admin') {
+              return of(
+                AuthActions.initAcademicYear({
+                  academicYear: { id: 0, year: '' },
+                })
+              );
             }
             return of(
               AuthActions.initAcademicYear({
