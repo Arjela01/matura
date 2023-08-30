@@ -18,7 +18,10 @@ import {
   StudentClassModel,
   StudentSectionModel,
 } from '@msh/shared/domain-models';
-import { GlobalToastService } from '@msh/shared/util-shared';
+import {
+  AlbanianNidValidatorDirective,
+  GlobalToastService,
+} from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -53,6 +56,7 @@ import { A1a1zConfirmationDialogComponent } from '../manage-students/a1a1z-confi
     CalendarModule,
     InputMaskModule,
     A1a1zConfirmationDialogComponent,
+    AlbanianNidValidatorDirective,
     DialogModule,
     RippleModule,
     RouterLink,
@@ -202,6 +206,7 @@ export class StudentsEditComponent implements OnInit {
 
   changeCountry(country: CountryName) {
     this.isAlbanian = country === CountryName.Albania;
+    this.student.idCard = '';
     this.cd.detectChanges();
   }
   navigateToGrid() {

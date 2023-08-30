@@ -88,6 +88,7 @@ export class StudentsFormComponent implements OnInit, OnChanges {
   displayModal = false;
   studentId: any;
   disabled = false;
+  isAlbanian = true;
   @Input() set studentDetails(details: Student | null) {
     if (details) {
       this.student = Object.assign({}, details);
@@ -226,7 +227,11 @@ export class StudentsFormComponent implements OnInit, OnChanges {
       this.navigateToGrid();
     }
   }
-
+  changeCountry(country: CountryName) {
+    this.isAlbanian = country === CountryName.Albania;
+    this.student.idCard = '';
+    this.cd.detectChanges();
+  }
   onFormSave(formType: FormType) {
     switch (formType) {
       case FormType.A1:
