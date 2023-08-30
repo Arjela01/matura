@@ -102,6 +102,7 @@ export class ManageA1ReportViewComponent {
               [
                 element.data.subjectD1Name,
                 element.data.subjectD2Name,
+                element.data.subjectD3Name,
                 element.data.subjectZ1Name,
                 element.data.subjectZ2Name,
                 element.data.subjectZ3Name,

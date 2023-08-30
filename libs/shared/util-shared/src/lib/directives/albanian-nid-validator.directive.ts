@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 import {
   AbstractControl,
   NG_VALIDATORS,
@@ -8,8 +8,11 @@ import {
 } from '@angular/forms';
 import { ALBANIAN_NID_REGEXP } from '../constants/validation-regexes';
 
-export function albanianNidValidator(): ValidatorFn {
+export function albanianNidValidator(isAlbanian = true): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
+    if (!isAlbanian) {
+      return null;
+    }
     if (control.value === '' || control.value === null) {
       return null;
     }
@@ -39,10 +42,11 @@ export function albanianNidValidator(): ValidatorFn {
   standalone: true,
 })
 export class AlbanianNidValidatorDirective implements Validator {
+  @Input() isAlbanian = true;
   constructor(private elementRef: ElementRef<HTMLInputElement>) {}
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return albanianNidValidator()(control);
+    return albanianNidValidator(this.isAlbanian)(control);
   }
 
   @HostListener('input', ['$event.target.value'])

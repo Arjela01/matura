@@ -17,6 +17,7 @@ import { FormType } from '@msh/applications/domain-application';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
   AcademicYearApiService,
+  CountriesApiService,
   GendersApiService,
   HighSchoolApiService,
   ProfileApiService,
@@ -25,6 +26,7 @@ import {
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   AcademicYear,
+  CountryName,
   Student,
   StudentClassModel,
   StudentSectionModel,
@@ -80,6 +82,7 @@ export class StudentsFormComponent implements OnInit, OnChanges {
   studentClass = StudentClassModel.All;
   studentSection = StudentSectionModel.All;
   schoolProfile: DropdownModel<number>[] = [];
+  countriesList: DropdownModel<number>[] = [];
   saving = false;
   academicYears: DropdownModel<number>[] = [];
   displayModal = false;
@@ -120,13 +123,14 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     firstName: '',
     schoolFinishedName: '',
     registrationYearId: 0,
+    countryId: CountryName.Albania,
     graduationYear: undefined,
     isConfirmedBySupervisor: false,
     schoolProfile: '',
   };
   finishedAtSameSchool = true;
   currentAcademicYear?: Partial<AcademicYear>;
-
+  selectedCountry: any | null = null;
   constructor(
     private cd: ChangeDetectorRef,
     private readonly studentService: StudentsApiService,
@@ -136,7 +140,8 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     private academicYearService: AcademicYearApiService,
     private router: Router,
     private authFacade: AuthFacade,
-    private readonly toastService: GlobalToastService
+    private readonly toastService: GlobalToastService,
+    private countriesService: CountriesApiService
   ) {
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 10);
   }
@@ -155,9 +160,17 @@ export class StudentsFormComponent implements OnInit, OnChanges {
       const activeYear: any = response.data.find(
         (data: any) => data.value === new Date().getFullYear().toString()
       );
+
       if (activeYear) {
         this.student.registrationYearId = activeYear.key;
       }
+    });
+    this.countriesService.loadDropdownList().subscribe(response => {
+      this.countriesList = response.data;
+      this.student.countryId = this.countriesList.find(
+        data => data.additionalValue === 'AL'
+      )?.key as number;
+      this.cd.detectChanges();
     });
     this.authFacade.academicYear$.subscribe(data => {
       this.currentAcademicYear = data;
