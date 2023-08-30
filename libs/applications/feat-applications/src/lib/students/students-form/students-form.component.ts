@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import {CommonModule, formatDate} from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -174,6 +174,10 @@ export class StudentsFormComponent implements OnInit, OnChanges {
   onSubmit(): void {
     if (this.finishedAtSameSchool) {
       this.student.schoolFinished = '';
+    }
+    if (this.student.birthDate) {
+      const formattedDate = formatDate(this.student.birthDate, 'yyyy-MM-dd', 'en-US');
+      this.student.birthDate = formattedDate as any;
     }
     const data = { ...this.student };
     this.disabled = true;
