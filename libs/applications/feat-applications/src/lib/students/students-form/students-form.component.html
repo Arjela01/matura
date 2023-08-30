@@ -203,9 +203,9 @@
           <small
             class="p-error block"
             *ngIf="
-              (nidModel.touched || nidModel.dirty || nidModel.pristine) && student.idCard!=='' &&
+              (nidModel.touched ||  nidModel.dirty ) && student.idCard!=='' &&
               (nidModel.errors?.['required'] ||
-                nidModel.errors?.['albanianNidValidator']) 
+                nidModel.errors?.['albanianNidValidator'] && student.countryId===3) 
             ">
             NID nuk i përshtatet formatit shqiptar. Duhet të përmbajë 10
             karaktere, të fillojë dhe të mbarojë me gërma të mëdha.

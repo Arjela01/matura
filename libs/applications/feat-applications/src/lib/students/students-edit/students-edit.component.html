@@ -207,17 +207,14 @@
             </p-dropdown>
           </div>
 
-          <div class="field">
-            <label for="IdCard">Karta e Identitetit *</label>
-
+          <div class="field" [style]="{ width: '500px' }">
+            <label for="IdCard">Karta Identitetit *</label>
             <input
               type="text"
-              value="bbbb"
               #nidModel="ngModel"
-              mshA
               [mshAlbanianNidValidator]="isAlbanian"
               pInputText
-              id="IdCardAlb"
+              id="IdCard"
               name="IdCard"
               [(ngModel)]="student.idCard"
               required
@@ -229,9 +226,9 @@
             <small
               class="p-error block"
               *ngIf="
-                (nidModel.touched || nidModel.dirty ) && student.idCard!=='' &&
+                (nidModel.touched ||  nidModel.dirty || nidModel.pristine ) && student.idCard!=='' &&
                 (nidModel.errors?.['required'] ||
-                  nidModel.errors?.['albanianNidValidator']) 
+                  nidModel.errors?.['albanianNidValidator'] && student.countryId===3) 
               ">
               NID nuk i përshtatet formatit shqiptar. Duhet të përmbajë 10
               karaktere, të fillojë dhe të mbarojë me gërma të mëdha.

@@ -1,4 +1,4 @@
-import {CommonModule, formatDate} from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -185,7 +185,6 @@ export class StudentsEditComponent implements OnInit {
         this.finishedAtSameSchool =
           this.student?.schoolFinished == '' ||
           this.student?.schoolFinished == null;
-        this.cd.detectChanges();
       });
 
     this.countriesService.loadDropdownList().subscribe(response => {
@@ -208,6 +207,10 @@ export class StudentsEditComponent implements OnInit {
     this.isAlbanian = country === CountryName.Albania;
     this.student.idCard = '';
     this.cd.detectChanges();
+    const id = this.student.idCard;
+    this.student.idCard = '';
+    this.cd.detectChanges();
+    this.student.idCard = id;
   }
   navigateToGrid() {
     this.router.navigate(['/applications/students']);
@@ -224,7 +227,11 @@ export class StudentsEditComponent implements OnInit {
       this.student.schoolFinished = '';
     }
     if (this.student.birthDate) {
-      const formattedDate = formatDate(this.student.birthDate, 'yyyy-MM-dd', 'en-US');
+      const formattedDate = formatDate(
+        this.student.birthDate,
+        'yyyy-MM-dd',
+        'en-US'
+      );
       this.student.birthDate = formattedDate as any;
     }
     this.disabled = true;

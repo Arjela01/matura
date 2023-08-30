@@ -1,4 +1,4 @@
-import {CommonModule, formatDate} from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -190,7 +190,11 @@ export class StudentsFormComponent implements OnInit, OnChanges {
       this.student.schoolFinished = '';
     }
     if (this.student.birthDate) {
-      const formattedDate = formatDate(this.student.birthDate, 'yyyy-MM-dd', 'en-US');
+      const formattedDate = formatDate(
+        this.student.birthDate,
+        'yyyy-MM-dd',
+        'en-US'
+      );
       this.student.birthDate = formattedDate as any;
     }
     const data = { ...this.student };
@@ -229,8 +233,10 @@ export class StudentsFormComponent implements OnInit, OnChanges {
   }
   changeCountry(country: CountryName) {
     this.isAlbanian = country === CountryName.Albania;
+    const id = this.student.idCard;
     this.student.idCard = '';
     this.cd.detectChanges();
+    this.student.idCard = id;
   }
   onFormSave(formType: FormType) {
     switch (formType) {
