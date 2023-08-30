@@ -205,8 +205,6 @@ export class StudentsEditComponent implements OnInit {
 
   changeCountry(country: CountryName) {
     this.isAlbanian = country === CountryName.Albania;
-    this.student.idCard = '';
-    this.cd.detectChanges();
     const id = this.student.idCard;
     this.student.idCard = '';
     this.cd.detectChanges();
