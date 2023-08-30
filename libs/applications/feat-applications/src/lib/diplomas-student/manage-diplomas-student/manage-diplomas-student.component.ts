@@ -135,6 +135,9 @@ export class ManageDiplomasStudentComponent implements OnInit {
       case GRID_ACTIONS.PRINT:
         this.printDiploma(event);
         break;
+      case GRID_ACTIONS.SEAL:
+        this.sealDiploma(event)
+        break;
     }
   }
 
@@ -157,6 +160,27 @@ export class ManageDiplomasStudentComponent implements OnInit {
           this.toastService.showError(err.error);
         }
       );
+  }
+
+  sealDiploma(event: GridEvent<Student>) {
+    const academicYear = JSON.parse(
+      localStorage.getItem('academicYear') as string
+    );
+    this.diplomasService
+      .printElectronicSeal(event.data?.studentId as string, academicYear.id, true)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+          if (response.isSuccessful) {
+            this.toastService.showSuccess('!');
+        }
+        if (!response.isSuccessful) {
+          this.toastService.showError(
+            response.errorMessage
+              ? response.errorMessage
+              : 'Ndodhi një problem !'
+          );
+        }
+      });
   }
 
   onFormSave(data: string) {

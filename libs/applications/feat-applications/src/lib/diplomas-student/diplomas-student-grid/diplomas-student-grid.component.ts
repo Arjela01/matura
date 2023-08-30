@@ -85,6 +85,12 @@ export class DiplomasStudentGridComponent {
       data: data,
     } as GridEvent<Student>);
   }
+  onSeal(data: Student) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.SEAL,
+      data: data,
+    } as GridEvent<Student>);
+  }
 
   onRowUnselect($event: TableRowUnSelectEvent) {
     this.gridEvent.emit({
