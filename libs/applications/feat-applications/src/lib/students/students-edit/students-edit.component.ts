@@ -168,6 +168,7 @@ export class StudentsEditComponent implements OnInit {
           ...result.data,
           birthDate: new Date(result.data.birthDate),
         };
+        this.isAlbanian = this.student.countryId === 3;
         if (!result.data.registrationYearId) {
           this.academicYearService
             .loadDropdownList()
@@ -177,6 +178,8 @@ export class StudentsEditComponent implements OnInit {
                 (data: any) =>
                   data.value === new Date().getFullYear().toString()
               );
+              console.log(this.student);
+
               if (activeYear) {
                 this.student.registrationYearId = activeYear.key;
               }
