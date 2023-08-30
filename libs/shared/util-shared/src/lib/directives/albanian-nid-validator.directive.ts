@@ -16,7 +16,7 @@ export function albanianNidValidator(
       return null;
     }
 
-    if (control.value === '' || control.value === null) {
+    if (control.value === '' || !control.value) {
       return null;
     }
     const value = control.value.toUpperCase(); // Convert to uppercase
