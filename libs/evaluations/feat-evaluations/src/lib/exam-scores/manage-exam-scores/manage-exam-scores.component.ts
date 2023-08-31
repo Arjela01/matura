@@ -32,6 +32,7 @@ import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
 import * as FileSaver from 'file-saver';
 import { AcademicYear, ExamScore } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @UntilDestroy()
 @Component({
@@ -47,6 +48,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
     ToolbarModule,
     RippleModule,
     FileUploadModule,
+    FormsModule,
   ],
   templateUrl: './manage-exam-scores.component.html',
   styleUrls: ['./manage-exam-scores.component.scss'],
@@ -160,13 +162,16 @@ export class ManageExamScoresComponent implements OnInit {
   }
 
   onFormSave(examScore: ExamScore) {
+    console.log(123, this.selectedExamScore);
     if (examScore.id) {
+      this.selectedExamScore = examScore;
       this.updateExamScore(examScore);
     }
     if (!examScore.id) {
-      this.selectedExamScore = null;
       this.addExamScore(examScore);
+      this.selectedExamScore = examScore;
     }
+    console.log(123, this.selectedExamScore);
   }
 
   getExamScores($event: TableLazyLoadEvent) {
@@ -191,7 +196,6 @@ export class ManageExamScoresComponent implements OnInit {
       this.selectedExamScore.examSubjectId = examSubjectId;
   }
   addExamScore(examScore: ExamScore) {
-    this.selectedExamScore = null;
     this.examScoreService
       .save(examScore)
       .pipe(untilDestroyed(this))
@@ -199,7 +203,7 @@ export class ManageExamScoresComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
             'Rezultati i provimit u shtua me sukses!'
-          )
+          );
           this.selectedExamScore = null;
           this.getExamScores(this.filters as TableLazyLoadEvent);
           this.cd.markForCheck();

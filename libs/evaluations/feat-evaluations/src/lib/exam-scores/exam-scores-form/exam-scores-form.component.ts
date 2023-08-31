@@ -47,7 +47,6 @@ export class ExamScoresFormComponent implements OnChanges {
   @Input() examTypes: DropdownModel<number>[] = [];
   @Input() examSubjects: DropdownModel<string>[] = [];
 
-  @Input() selectedExamScore : any;
   @Output() formSave = new EventEmitter<ExamScore>();
   @Output() formClose = new EventEmitter<undefined>();
   @Output() examTypeChanged = new EventEmitter<string>();
@@ -74,7 +73,7 @@ export class ExamScoresFormComponent implements OnChanges {
   examTypeId: any;
   examSubjectId: any;
   currentYear = new Date().getFullYear();
-   barcodeExists= false;
+  barcodeExists = false;
 
   @Input() set examScoreDetails(details: ExamScore | null) {
     this.examScore = Object.assign({}, details);
@@ -100,8 +99,7 @@ export class ExamScoresFormComponent implements OnChanges {
   }
 
   onSubmit(): void {
-    this.selectedExamScore = null;
-    if ( this.barcodeExists) {
+    if (this.barcodeExists) {
       this.formSave.emit(this.examScore);
     }
   }
@@ -130,5 +128,4 @@ export class ExamScoresFormComponent implements OnChanges {
       this.cd.markForCheck();
     });
   }
-
 }
