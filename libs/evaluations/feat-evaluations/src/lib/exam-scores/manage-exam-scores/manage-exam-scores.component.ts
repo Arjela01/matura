@@ -1,5 +1,11 @@
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -8,11 +14,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { ExamScoresFormComponent } from '../exam-scores-form/exam-scores-form.component';
 import { ExamScoresGridComponent } from '../exam-scores-grid/exam-scores-grid.component';
 import { ConfirmationService } from 'primeng/api';
-import {
-  BehaviorSubject,
-  of,
-  switchMap,
-} from 'rxjs';
+import { BehaviorSubject, of, switchMap } from 'rxjs';
 import {
   GlobalToastService,
   GRID_ACTIONS,
@@ -30,6 +32,7 @@ import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
 import * as FileSaver from 'file-saver';
 import { AcademicYear, ExamScore } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @UntilDestroy()
 @Component({
@@ -45,6 +48,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
     ToolbarModule,
     RippleModule,
     FileUploadModule,
+    FormsModule,
   ],
   templateUrl: './manage-exam-scores.component.html',
   styleUrls: ['./manage-exam-scores.component.scss'],
@@ -54,6 +58,7 @@ export class ManageExamScoresComponent implements OnInit {
   private examScores$$ = new BehaviorSubject<ExamScore[]>([]);
   examScores$ = this.examScores$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
+  @ViewChild('examScoreForm') examScoreForm: ElementRef | undefined;
 
   totalRecords = 0;
   selectedExamScore: ExamScore | null = null;
@@ -158,10 +163,12 @@ export class ManageExamScoresComponent implements OnInit {
 
   onFormSave(examScore: ExamScore) {
     if (examScore.id) {
+      this.selectedExamScore = examScore;
       this.updateExamScore(examScore);
     }
     if (!examScore.id) {
       this.addExamScore(examScore);
+      this.selectedExamScore = examScore;
     }
   }
 
@@ -195,15 +202,17 @@ export class ManageExamScoresComponent implements OnInit {
           this.toastService.showSuccess(
             'Rezultati i provimit u shtua me sukses!'
           );
-          this.displayModal = false;
+          this.selectedExamScore = null;
           this.getExamScores(this.filters as TableLazyLoadEvent);
+          this.cd.markForCheck();
         } else {
           this.toastService.showError(response.errorMessage);
         }
-        if (response.isBadRequest)
+        if (response.isBadRequest) {
           this.toastService.showError(
-            'Ndodhi një problem gjatë shtimit së reszultatit të provimit!'
+            'Ndodhi një problem gjatë shtimit së rezultatit të provimit!'
           );
+        }
       });
   }
   updateExamScore(examScore: ExamScore) {

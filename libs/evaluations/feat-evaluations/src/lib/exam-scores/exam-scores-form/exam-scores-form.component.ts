@@ -56,7 +56,7 @@ export class ExamScoresFormComponent implements OnChanges {
   submitted = false;
 
   examScore: ExamScore = {
-    archiveFolderIndex: 0,
+    archiveExamIndex: 0,
     archiveFolderNr: 0,
     barcode: '',
     documentName: '',
@@ -73,7 +73,7 @@ export class ExamScoresFormComponent implements OnChanges {
   examTypeId: any;
   examSubjectId: any;
   currentYear = new Date().getFullYear();
-   barcodeExists= false;
+  barcodeExists = false;
 
   @Input() set examScoreDetails(details: ExamScore | null) {
     this.examScore = Object.assign({}, details);
@@ -99,8 +99,7 @@ export class ExamScoresFormComponent implements OnChanges {
   }
 
   onSubmit(): void {
-    this.submitted = true;
-    if (this.form.valid && this.barcodeExists) {
+    if (this.barcodeExists) {
       this.formSave.emit(this.examScore);
     }
   }
@@ -119,7 +118,7 @@ export class ExamScoresFormComponent implements OnChanges {
   onGetIndexClick(barcode: any) {
     this.examScores.getIndex(barcode).subscribe(res => {
       if (res.isSuccessful) {
-        this.examScore.archiveFolderIndex = res.data?.index;
+        this.examScore.archiveExamIndex = res.data?.index;
         this.examScore.archiveFolderNr = res.data?.archiveFolderNr;
         this.barcodeExists = true;
       } else {
@@ -129,5 +128,4 @@ export class ExamScoresFormComponent implements OnChanges {
       this.cd.markForCheck();
     });
   }
-
 }
