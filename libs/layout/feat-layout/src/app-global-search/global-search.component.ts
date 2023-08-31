@@ -53,7 +53,9 @@ export class GlobalSearchComponent {
 
   @HostListener('document:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
-    if (event.key === 'Shift') {
+    const isLoginPage = window.location.pathname === '/login';
+
+    if (event.key === 'Shift' && !isLoginPage) {
       const currentTime = new Date().getTime();
 
       if (currentTime - this.lastShiftPressTime < 1000) {
