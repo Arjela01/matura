@@ -1,5 +1,5 @@
 <form #form="ngForm" (ngSubmit)="onOpen()">
-  <div class="field">
+  <div class="field" *ngIf="!archiveFolder.id">
     <label for="ExamType">Tipi i Provimit *</label>
     <p-dropdown
       id="ExamType"
