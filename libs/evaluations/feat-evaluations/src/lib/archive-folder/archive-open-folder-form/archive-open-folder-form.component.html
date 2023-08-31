@@ -49,7 +49,7 @@
     </small>
   </div>
 
-  <div class="field">
+  <div class="field" *ngIf="!archiveFolder.id">
     <label class="mb-3">Është Vjeshtë? *</label>
     <div class="form grid grid">
       <div class="field-radiobutton col-6">
@@ -82,7 +82,7 @@
       [disabled]="form.invalid"
       type="submit"
       pButton
-      label="Hap Dosjen"
+      [label]="!archiveFolder.id ? 'Hap Dosjen' : 'Ndrysho Dosjen'"
       class="p-button w-auto"></button>
   </div>
 </form>
