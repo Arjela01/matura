@@ -73,6 +73,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
   selectedRecord: any;
   headerText: any;
   displayHistoryForm = false;
+  examTypeId = 0;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -145,6 +146,8 @@ export class ManageArchiveFoldersComponent implements OnInit {
         this.selectedArchiveFolders = [];
         break;
       case GRID_ACTIONS.EDIT:
+        this.examTypeId = event.data.examTypeId;
+        this.getExamSubjects(this.examTypeId);
         this.selectedArchiveFolder = Object.assign(
           {},
           event.data as ArchiveFolder
@@ -221,7 +224,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
     const archiveFolderUpdateData = {
       id: archiveFolder.id,
       examSubjectId: archiveFolder.examSubjectId,
-      examTypeId: archiveFolder.examTypeId,
+      examTypeId: this.examTypeId,
     };
     this.archiveFolderService
       .update(archiveFolderUpdateData)
