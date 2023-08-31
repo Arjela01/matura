@@ -16,7 +16,11 @@ import {
   ExamTypeApiService,
 } from '@msh/configurations/data-access-configurations';
 import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
-import { AcademicYear, ArchiveFolder } from '@msh/shared/domain-models';
+import {
+  AcademicYear,
+  ArchiveFolder,
+  ExamSecret,
+} from '@msh/shared/domain-models';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -214,8 +218,13 @@ export class ManageArchiveFoldersComponent implements OnInit {
   }
 
   updateArchiveFolder(archiveFolder: ArchiveFolder) {
+    const archiveFolderUpdateData = {
+      id: archiveFolder.id,
+      examSubjectId: archiveFolder.examSubjectId,
+      examTypeId: archiveFolder.examTypeId,
+    };
     this.archiveFolderService
-      .update(archiveFolder)
+      .update(archiveFolderUpdateData)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {

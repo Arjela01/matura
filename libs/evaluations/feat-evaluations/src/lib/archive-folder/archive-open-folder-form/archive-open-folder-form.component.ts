@@ -73,15 +73,7 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
   examTypeId: any;
   examSubjectId: any;
 
-  constructor(
-    private cd: ChangeDetectorRef,
-    private router: Router,
-    private http: HttpClient,
-    private messageService: MessageService,
-    private archiveFolderService: ArchiveFolderApiService,
-
-    private route: ActivatedRoute
-  ) {
+  constructor(private cd: ChangeDetectorRef, private route: ActivatedRoute) {
     this.archiveFolder.id = this.route.snapshot.paramMap.get('id');
   }
 
