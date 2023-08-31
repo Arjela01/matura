@@ -162,7 +162,6 @@ export class ManageExamScoresComponent implements OnInit {
   }
 
   onFormSave(examScore: ExamScore) {
-    console.log(123, this.selectedExamScore);
     if (examScore.id) {
       this.selectedExamScore = examScore;
       this.updateExamScore(examScore);
@@ -171,7 +170,6 @@ export class ManageExamScoresComponent implements OnInit {
       this.addExamScore(examScore);
       this.selectedExamScore = examScore;
     }
-    console.log(123, this.selectedExamScore);
   }
 
   getExamScores($event: TableLazyLoadEvent) {
