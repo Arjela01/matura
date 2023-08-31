@@ -19,6 +19,7 @@ import {
   StudentSectionModel,
 } from '@msh/shared/domain-models';
 import {
+  ALBANIAN_NID_REGEXP,
   AlbanianNidValidatorDirective,
   GlobalToastService,
 } from '@msh/shared/util-shared';
@@ -116,7 +117,8 @@ export class StudentsEditComponent implements OnInit {
   finishedAtSameSchool = true;
   disabled = false;
   countriesList: DropdownModel<number>[] = [];
-  isAlbanian = true;
+
+  validNid = true;
   constructor(
     private cd: ChangeDetectorRef,
     private readonly academicYearService: AcademicYearApiService,
@@ -168,7 +170,7 @@ export class StudentsEditComponent implements OnInit {
           ...result.data,
           birthDate: new Date(result.data.birthDate),
         };
-        this.isAlbanian = this.student.countryId === CountryName.Albania;
+        this.validateNID();
         if (!result.data.registrationYearId) {
           this.academicYearService
             .loadDropdownList()
@@ -204,12 +206,14 @@ export class StudentsEditComponent implements OnInit {
       });
   }
 
-  changeCountry(country: CountryName) {
-    this.isAlbanian = country === CountryName.Albania;
-    const id = this.student.idCard;
-    this.student.idCard = '';
+  validateNID() {
+    if (this.student.countryId === CountryName.Albania) {
+      const value = this.student.idCard;
+      this.validNid = new RegExp(ALBANIAN_NID_REGEXP).test(value as string);
+    } else {
+      this.validNid = true;
+    }
     this.cd.detectChanges();
-    this.student.idCard = id;
   }
   navigateToGrid() {
     this.router.navigate(['/applications/students']);
