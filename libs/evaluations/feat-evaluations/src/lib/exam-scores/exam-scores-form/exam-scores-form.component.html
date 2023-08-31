@@ -83,7 +83,7 @@
         autofocus />
     </div>
   </div>
-  <div class="field" *ngIf="examScore.archiveFolderIndex">
+  <div class="field" *ngIf="examScore.archiveExamIndex">
     <div class="archiveExamIndex">
       <label for="archiveExamIndex">Index</label>
       <input
@@ -92,7 +92,7 @@
         id="archiveExamIndex"
         name="archiveExamIndex"
         disabled
-        [(ngModel)]="examScore.archiveFolderIndex"
+        [(ngModel)]="examScore.archiveExamIndex"
         readonly
         autofocus />
     </div>
@@ -101,7 +101,7 @@
   <div class="field">
     <label for="WritingScore">Pikët Totale *</label>
     <input
-      type="number"
+      type="text"
       pInputText
       id="WritingScore"
       name="WritingScore"
@@ -119,7 +119,7 @@
   <div class="field" [hidden]="true">
     <label for="MultipleChoiceScore">Pikët me alternativa *</label>
     <input
-      type="number"
+      type="text"
       pInputText
       id="MultipleChoiceScore"
       name="MultipleChoiceScore"
@@ -161,7 +161,6 @@
       class="p-button-text w-auto mr-2"
       (click)="onCancelClick()"></button>
     <button
-      [disabled]="form.invalid || !barcodeExists"
       type="submit"
       pButton
       label="Ruaj"

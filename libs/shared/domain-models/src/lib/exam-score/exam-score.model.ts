@@ -20,7 +20,7 @@ export interface ExamScore {
   maximumValueMultipleScore?: number;
   maximumValueWritingScore?: number;
   archiveFolderNr?: number;
-  archiveFolderIndex?: number;
+  archiveExamIndex?: number;
   isFall?: boolean;
   hasWritingScore?: boolean;
 }

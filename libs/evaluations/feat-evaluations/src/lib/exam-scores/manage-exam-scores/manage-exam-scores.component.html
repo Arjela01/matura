@@ -60,6 +60,7 @@
   <ng-template pTemplate="content">
     <msh-exam-score-form
       [examScoreDetails]="selectedExamScore"
+      [selectedExamScore]="selectedExamScore"
       [examTypes]="examTypes"
       [examSubjects]="examSubjects"
       (examTypeChanged)="onExamTypeChanged($event)"

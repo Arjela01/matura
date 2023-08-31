@@ -47,6 +47,7 @@ export class ExamScoresFormComponent implements OnChanges {
   @Input() examTypes: DropdownModel<number>[] = [];
   @Input() examSubjects: DropdownModel<string>[] = [];
 
+  @Input() selectedExamScore : any;
   @Output() formSave = new EventEmitter<ExamScore>();
   @Output() formClose = new EventEmitter<undefined>();
   @Output() examTypeChanged = new EventEmitter<string>();
@@ -56,7 +57,7 @@ export class ExamScoresFormComponent implements OnChanges {
   submitted = false;
 
   examScore: ExamScore = {
-    archiveFolderIndex: 0,
+    archiveExamIndex: 0,
     archiveFolderNr: 0,
     barcode: '',
     documentName: '',
@@ -99,8 +100,8 @@ export class ExamScoresFormComponent implements OnChanges {
   }
 
   onSubmit(): void {
-    this.submitted = true;
-    if (this.form.valid && this.barcodeExists) {
+    this.selectedExamScore = null;
+    if ( this.barcodeExists) {
       this.formSave.emit(this.examScore);
     }
   }
@@ -119,7 +120,7 @@ export class ExamScoresFormComponent implements OnChanges {
   onGetIndexClick(barcode: any) {
     this.examScores.getIndex(barcode).subscribe(res => {
       if (res.isSuccessful) {
-        this.examScore.archiveFolderIndex = res.data?.index;
+        this.examScore.archiveExamIndex = res.data?.index;
         this.examScore.archiveFolderNr = res.data?.archiveFolderNr;
         this.barcodeExists = true;
       } else {

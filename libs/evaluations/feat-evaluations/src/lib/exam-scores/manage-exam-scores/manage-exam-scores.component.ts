@@ -1,5 +1,11 @@
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -8,11 +14,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { ExamScoresFormComponent } from '../exam-scores-form/exam-scores-form.component';
 import { ExamScoresGridComponent } from '../exam-scores-grid/exam-scores-grid.component';
 import { ConfirmationService } from 'primeng/api';
-import {
-  BehaviorSubject,
-  of,
-  switchMap,
-} from 'rxjs';
+import { BehaviorSubject, of, switchMap } from 'rxjs';
 import {
   GlobalToastService,
   GRID_ACTIONS,
@@ -54,6 +56,7 @@ export class ManageExamScoresComponent implements OnInit {
   private examScores$$ = new BehaviorSubject<ExamScore[]>([]);
   examScores$ = this.examScores$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
+  @ViewChild('examScoreForm') examScoreForm: ElementRef | undefined;
 
   totalRecords = 0;
   selectedExamScore: ExamScore | null = null;
@@ -161,6 +164,7 @@ export class ManageExamScoresComponent implements OnInit {
       this.updateExamScore(examScore);
     }
     if (!examScore.id) {
+      this.selectedExamScore = null;
       this.addExamScore(examScore);
     }
   }
@@ -187,6 +191,7 @@ export class ManageExamScoresComponent implements OnInit {
       this.selectedExamScore.examSubjectId = examSubjectId;
   }
   addExamScore(examScore: ExamScore) {
+    this.selectedExamScore = null;
     this.examScoreService
       .save(examScore)
       .pipe(untilDestroyed(this))
@@ -194,16 +199,18 @@ export class ManageExamScoresComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
             'Rezultati i provimit u shtua me sukses!'
-          );
-          this.displayModal = false;
+          )
+          this.selectedExamScore = null;
           this.getExamScores(this.filters as TableLazyLoadEvent);
+          this.cd.markForCheck();
         } else {
           this.toastService.showError(response.errorMessage);
         }
-        if (response.isBadRequest)
+        if (response.isBadRequest) {
           this.toastService.showError(
-            'Ndodhi një problem gjatë shtimit së reszultatit të provimit!'
+            'Ndodhi një problem gjatë shtimit së rezultatit të provimit!'
           );
+        }
       });
   }
   updateExamScore(examScore: ExamScore) {
