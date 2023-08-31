@@ -99,7 +99,7 @@ export class ExamScoresFormComponent implements OnChanges {
   }
 
   onSubmit(): void {
-    if (this.barcodeExists) {
+    if (this.form.valid && this.barcodeExists) {
       this.formSave.emit(this.examScore);
     }
   }

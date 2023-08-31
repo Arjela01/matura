@@ -61,7 +61,7 @@ export class ManageExamScoresComponent implements OnInit {
   @ViewChild('examScoreForm') examScoreForm: ElementRef | undefined;
 
   totalRecords = 0;
-  selectedExamScore: ExamScore | null = null;
+  selectedExamScore: any;
   selectedExamScores: ExamScore[] = [];
   displayModal = false;
 
@@ -161,15 +161,24 @@ export class ManageExamScoresComponent implements OnInit {
     this.displayModal = false;
   }
 
-  onFormSave(examScore: ExamScore) {
+  onFormSave(examScore: any) {
+    const updatedExamScore = {
+      ...this.selectedExamScore,
+      barcode: examScore.barcode,
+      writingScore: examScore.writingScore,
+    };
+
     if (examScore.id) {
-      this.selectedExamScore = examScore;
-      this.updateExamScore(examScore);
+      this.selectedExamScores = examScore;
+      this.updateExamScore(updatedExamScore);
     }
+
     if (!examScore.id) {
-      this.addExamScore(examScore);
-      this.selectedExamScore = examScore;
+      this.addExamScore(updatedExamScore);
     }
+
+    examScore.barcode = '';
+    examScore.writingScore = '';
   }
 
   getExamScores($event: TableLazyLoadEvent) {
@@ -202,9 +211,7 @@ export class ManageExamScoresComponent implements OnInit {
           this.toastService.showSuccess(
             'Rezultati i provimit u shtua me sukses!'
           );
-          this.selectedExamScore = null;
           this.getExamScores(this.filters as TableLazyLoadEvent);
-          this.cd.markForCheck();
         } else {
           this.toastService.showError(response.errorMessage);
         }
