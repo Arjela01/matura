@@ -1,29 +1,29 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DialogModule } from 'primeng/dialog';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ArchiveFolderCoverGridComponent } from '../archive-folder-cover-grid/archive-folder-cover-grid.component';
-import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject } from 'rxjs';
-import { ConfirmationService, MenuItem } from 'primeng/api';
-import { DropdownModel } from '@msh/shared/data-access-shared';
-import {
-  GlobalToastService,
-  GRID_ACTIONS,
-  GridEvent,
-} from '@msh/shared/util-shared';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { untilDestroyed } from '@ngneat/until-destroy';
-import { StepsModule } from 'primeng/steps';
-import { ToastModule } from 'primeng/toast';
-import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
 import {
   ExamTypeApiService,
   ExamVersionApiService,
 } from '@msh/configurations/data-access-configurations';
-import { RippleModule } from 'primeng/ripple';
+import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
+import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ArchiveFolder } from '@msh/shared/domain-models';
+import {
+  GRID_ACTIONS,
+  GlobalToastService,
+  GridEvent,
+} from '@msh/shared/util-shared';
+import { untilDestroyed } from '@ngneat/until-destroy';
+import { ConfirmationService, MenuItem } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
+import { RippleModule } from 'primeng/ripple';
+import { StepsModule } from 'primeng/steps';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
+import { ToolbarModule } from 'primeng/toolbar';
+import { BehaviorSubject } from 'rxjs';
+import { ArchiveFolderCoverGridComponent } from '../archive-folder-cover-grid/archive-folder-cover-grid.component';
 
 @Component({
   selector: 'msh-manage-archive-folder-cover',
@@ -76,9 +76,6 @@ export class ManageArchiveFolderCoverComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
-  }
-  onPrint() {
-    console.log();
   }
 
   onGridEvent(event: GridEvent<ArchiveFolder | ArchiveFolder[]>) {

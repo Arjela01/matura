@@ -18,10 +18,10 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { PassInFallGridComponent } from '../pass-in-fall-grid/pass-in-fall-grid.component';
-import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -59,7 +59,6 @@ export class ManagePassInFallComponent {
   onGridEvent(event: GridEvent<FailingStudent | FailingStudent[]>) {
     switch (event.action) {
       case GRID_ACTIONS.EDIT:
-        console.log(event.data);
         this.confirmationService.confirm({
           message: 'A jeni i sigurt që ka kaluar në vjeshtë maturanti?',
           accept: () => {

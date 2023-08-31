@@ -19,11 +19,11 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { StudyProgramFormComponent } from '../study-program-form/study-program-form.component';
 import { StudyProgramGridComponent } from '../study-program-grid/study-program-grid.component';
-import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -128,7 +128,6 @@ export class ManageStudyProgramsComponent implements OnInit {
   }
 
   onFormSave(studyProgram: StudyProgram) {
-    console.log(studyProgram.id);
     if (studyProgram.id) {
       this.updateStudyProgram(studyProgram);
     }

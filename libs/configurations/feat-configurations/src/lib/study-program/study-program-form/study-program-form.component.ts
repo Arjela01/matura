@@ -10,8 +10,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { StudyProgram } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import { StudyProgram } from '@msh/shared/domain-models';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
@@ -82,7 +82,6 @@ export class StudyProgramFormComponent implements OnChanges {
 
   ngOnChanges(): void {
     this.onUniversityChange({ value: this.studyProgram.universityId });
-    console.log(this.studyProgram.universityId);
   }
 
   onCancelClick() {

@@ -572,7 +572,6 @@ export class A1zFormComponent implements OnInit {
         if (response.isSuccessful) {
           this.a1z.academicYearId = response.data.academicYearId;
           this.toastService.showSuccess('Formulari A1Z u shtua me sukses!');
-          console.log(response.data);
           this.printConfirmation(response.data);
         }
         if (!response.isSuccessful) {

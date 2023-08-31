@@ -11,27 +11,27 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { ExamAssignment, Student } from '@msh/shared/domain-models';
-import { DropdownModel } from '@msh/shared/data-access-shared';
-import { ButtonModule } from 'primeng/button';
-import { CheckboxModule } from 'primeng/checkbox';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
+import { ActivatedRoute } from '@angular/router';
 import {
   ExamDateApiService,
   ExamSiteApiService,
   StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
-import { ActivatedRoute } from '@angular/router';
-import { DialogModule } from 'primeng/dialog';
+import { DropdownModel } from '@msh/shared/data-access-shared';
+import { ExamAssignment, Student } from '@msh/shared/domain-models';
+import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
+import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { BehaviorSubject } from 'rxjs';
-import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
 
 @UntilDestroy()
 @Component({
@@ -151,7 +151,6 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
 
   getExamDate(examSiteId: string): void {
     this.examDateService.forExamSiteId(examSiteId).subscribe(response => {
-      console.log(response);
       this.examDates = [...response.data];
       this.cd.markForCheck();
     });
