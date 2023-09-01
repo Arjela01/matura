@@ -16,6 +16,11 @@ import {
 import { DropdownModel } from '@msh/shared/data-access-shared';
 
 import { ActivatedRoute } from '@angular/router';
+import { Student } from '@msh/shared/domain-models';
+import {
+  SharedStudent,
+  SharedStudentLookupModule,
+} from '@msh/shared/student-lookup';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -27,16 +32,11 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject } from 'rxjs';
 import { CarriedGradesFormComponent } from '../carried-grade-form/carried-grade-form.component';
 import { CarriedGradesGridComponent } from '../carried-grade-grid/carried-grades-grid.component';
-import {
-  SharedStudent,
-  SharedStudentLookupModule,
-} from '@msh/shared/student-lookup';
-import { Student } from '@msh/shared/domain-models';
-import { TableLazyLoadEvent } from 'primeng/table';
 
 @Component({
   selector: 'msh-manage-carried-grades',
@@ -144,7 +144,6 @@ export class ManageCarriedGradesComponent implements OnInit {
           examTypeId: this.selectedCarriedGrade.examTypeId,
           academicYearId: this.selectedCarriedGrade.academicYearId,
         });
-        console.log(this.selectedCarriedGrade);
         break;
       case GRID_ACTIONS.CUSTOM_ACTION2:
         this.downloadDocument(event.data as CarriedGrade);

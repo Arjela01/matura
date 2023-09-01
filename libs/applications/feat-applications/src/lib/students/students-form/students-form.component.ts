@@ -1,4 +1,4 @@
-import {CommonModule, formatDate} from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -32,6 +32,7 @@ import {
   StudentSectionModel,
 } from '@msh/shared/domain-models';
 import {
+  ALBANIAN_NID_REGEXP,
   AlbanianNidValidatorDirective,
   GlobalToastService,
 } from '@msh/shared/util-shared';
@@ -88,6 +89,7 @@ export class StudentsFormComponent implements OnInit, OnChanges {
   displayModal = false;
   studentId: any;
   disabled = false;
+  isAlbanian = true;
   @Input() set studentDetails(details: Student | null) {
     if (details) {
       this.student = Object.assign({}, details);
@@ -131,6 +133,7 @@ export class StudentsFormComponent implements OnInit, OnChanges {
   finishedAtSameSchool = true;
   currentAcademicYear?: Partial<AcademicYear>;
   selectedCountry: any | null = null;
+  validNid = true;
   constructor(
     private cd: ChangeDetectorRef,
     private readonly studentService: StudentsApiService,
@@ -189,7 +192,11 @@ export class StudentsFormComponent implements OnInit, OnChanges {
       this.student.schoolFinished = '';
     }
     if (this.student.birthDate) {
-      const formattedDate = formatDate(this.student.birthDate, 'yyyy-MM-dd', 'en-US');
+      const formattedDate = formatDate(
+        this.student.birthDate,
+        'yyyy-MM-dd',
+        'en-US'
+      );
       this.student.birthDate = formattedDate as any;
     }
     const data = { ...this.student };
@@ -226,7 +233,14 @@ export class StudentsFormComponent implements OnInit, OnChanges {
       this.navigateToGrid();
     }
   }
-
+  validateNID() {
+    if (this.student.countryId === CountryName.Albania) {
+      const value = this.student.idCard;
+      this.validNid = new RegExp(ALBANIAN_NID_REGEXP).test(value as string);
+    } else {
+      this.validNid = true;
+    }
+  }
   onFormSave(formType: FormType) {
     switch (formType) {
       case FormType.A1:

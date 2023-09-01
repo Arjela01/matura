@@ -62,9 +62,7 @@ export class ReportsFormComponent {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private cd: ChangeDetectorRef) {
-    console.log(this.rolesDropdown);
-  }
+  constructor(private cd: ChangeDetectorRef) {}
 
   onCancelClick() {
     this.formClose.emit();

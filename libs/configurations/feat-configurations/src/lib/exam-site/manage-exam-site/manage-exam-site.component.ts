@@ -29,10 +29,10 @@ import {
 
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { RippleModule } from 'primeng/ripple';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ExamSiteFormComponent } from '../exam-site-form/exam-site-form.component';
 import { ExamSiteGridComponent } from '../exam-site-grid/exam-site-grid.component';
-import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -137,7 +137,6 @@ export class ManageExamSiteComponent implements OnInit {
   }
 
   onFormSave(examSite: ExamSite) {
-    console.log(examSite);
     if (examSite.id) {
       this.updateExamSite(examSite);
     }

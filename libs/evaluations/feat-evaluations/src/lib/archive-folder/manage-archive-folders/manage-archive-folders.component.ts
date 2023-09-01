@@ -56,9 +56,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
   examTypes: DropdownModel<number>[] = [];
   examSubjects: DropdownModel<string>[] = [];
 
-  archiveFolders$ = this.archiveFolders$$
-    .asObservable()
-    .pipe(tap(data => console.log('Updated Archive Folders:', data)));
+  archiveFolders$ = this.archiveFolders$$.asObservable().pipe();
   filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;

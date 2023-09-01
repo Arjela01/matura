@@ -175,6 +175,7 @@
             optionLabel="value"
             [required]="true"
             [filter]="true"
+            (onChange)="validateNID()"
             [(ngModel)]="student.countryId"
             [autoDisplayFirst]="false"
             [ngClass]="{
@@ -188,24 +189,18 @@
           <input
             type="text"
             #nidModel="ngModel"
-            mshAlbanianNidValidator
             pInputText
             id="IdCard"
             name="IdCard"
             [(ngModel)]="student.idCard"
             required
+            (change)="validateNID()"
             autofocus
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !student.idCard
+              'ng-invalid ng-dirty': !student.idCard || !validNid
             }" />
 
-          <small
-            class="p-error block"
-            *ngIf="
-              (nidModel.touched || nidModel.dirty || nidModel.pristine) && student.idCard!=='' &&
-              (nidModel.errors?.['required'] ||
-                nidModel.errors?.['albanianNidValidator']) 
-            ">
+          <small class="p-error block" *ngIf="!validNid">
             NID nuk i përshtatet formatit shqiptar. Duhet të përmbajë 10
             karaktere, të fillojë dhe të mbarojë me gërma të mëdha.
           </small>
@@ -417,7 +412,7 @@
         <div class="flex justify-content-start pt-3">
           <button
             type="submit"
-            [disabled]="form.invalid || disabled"
+            [disabled]="form.invalid || disabled || !validNid"
             pButton
             label="Ruaj"
             class="p-button w-auto"></button>
