@@ -28,7 +28,6 @@ export class AuthEffects {
         ) as AcademicYear;
         if (token && user && user?.username && user?.displayName) {
           const tokenStore: any = jwt_decode(token as string);
-          console.log(tokenStore);
           if (!tokenStore.NeedResetPassword) {
             this.heartBeatService.startTime();
           }

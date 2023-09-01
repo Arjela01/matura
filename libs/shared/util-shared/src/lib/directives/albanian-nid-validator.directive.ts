@@ -8,12 +8,15 @@ import {
 } from '@angular/forms';
 import { ALBANIAN_NID_REGEXP } from '../constants/validation-regexes';
 
-export function albanianNidValidator(isAlbanian = true): ValidatorFn {
+export function albanianNidValidator(
+  isAlbanian: string | boolean
+): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     if (!isAlbanian) {
       return null;
     }
-    if (control.value === '' || control.value === null) {
+
+    if (control.value === '' || !control.value) {
       return null;
     }
     const value = control.value.toUpperCase(); // Convert to uppercase
@@ -42,11 +45,11 @@ export function albanianNidValidator(isAlbanian = true): ValidatorFn {
   standalone: true,
 })
 export class AlbanianNidValidatorDirective implements Validator {
-  @Input() isAlbanian = true;
+  @Input() mshAlbanianNidValidator: string | boolean = true;
   constructor(private elementRef: ElementRef<HTMLInputElement>) {}
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return albanianNidValidator(this.isAlbanian)(control);
+    return albanianNidValidator(this.mshAlbanianNidValidator)(control);
   }
 
   @HostListener('input', ['$event.target.value'])

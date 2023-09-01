@@ -7,6 +7,7 @@ import { AcademicYearApiService } from '@msh/configurations/data-access-configur
 import { MenuStore } from '@msh/layout/data-access-layout';
 import { MenuNode } from '@msh/layout/domain-layout';
 import { AcademicYear, UserProfile } from '@msh/shared/domain-models';
+import { GlobalSpinnerComponent, LoaderService } from '@msh/shared/util-shared';
 import { UserProfileApiService } from '@msh/user-section/data-access-user-section';
 import { MenuItem } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
@@ -24,7 +25,6 @@ import {
   switchMap,
 } from 'rxjs';
 import { AppMenuitemComponent } from '../app-menuitem/app-menuitem.component';
-import { GlobalSpinnerComponent, LoaderService } from '@msh/shared/util-shared';
 
 @Component({
   selector: 'msh-app-sidebar',
@@ -184,7 +184,6 @@ export class AppSidebarComponent implements OnInit {
       year => year.key === this.academicYearForm.id
     );
     const { key: id, value: year, additionalValue: json } = yearToFind;
-    console.log({ id, year });
     this.authFacade.changeAcademicYear(JSON.parse(json));
     this.displayModal = false;
   }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService } from 'primeng/api';
@@ -19,13 +19,13 @@ import { AuthFacade } from '@msh/auth/data-access-auth';
 import { StudentsApiService } from '@msh/configurations/data-access-configurations';
 import { AcademicYear, Student } from '@msh/shared/domain-models';
 import { RippleModule } from 'primeng/ripple';
-import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
+import { TableLazyLoadEvent } from 'primeng/table';
+import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
+import { A1zGridComponent } from '../../a1z/a1z-grid/a1z-grid.component';
 import { StudentsEditComponent } from '../students-edit/students-edit.component';
 import { StudentsFormComponent } from '../students-form/students-form.component';
 import { StudentsGridComponent } from '../students-grid/students-grid.component';
 import { StudentViewComponent } from '../students-view/student-view.component';
-import { TableLazyLoadEvent } from 'primeng/table';
-import {A1zGridComponent} from "../../a1z/a1z-grid/a1z-grid.component";
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-students',
@@ -73,6 +73,7 @@ export class ManageStudentsComponent {
   ) {}
 
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
     map(([academicYear]) => {
       if (this.filters) {
         this.getStudent(this.filters as TableLazyLoadEvent);
@@ -105,7 +106,7 @@ export class ManageStudentsComponent {
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
         this.selectedStudentList = this.selectedStudentList.filter(u => {
-         return  u.studentId !== (event.data as Student).studentId;
+          return u.studentId !== (event.data as Student).studentId;
         });
         break;
       case GRID_ACTIONS.SELECT_MANY:

@@ -23,10 +23,10 @@ import { DashboardItemsApiService } from '@msh/configurations/data-access-config
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { DashboardItem } from '@msh/shared/domain-models';
 import { RippleModule } from 'primeng/ripple';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { BehaviorSubject } from 'rxjs';
 import { DashboardItemsFormComponent } from '../dashboard-items-form/dashboard-items-form.component';
 import { DashboardItemsGridComponent } from '../dashboard-items-grid/dashboard-items-grid.component';
-import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -133,7 +133,6 @@ export class ManageDashboardItemsComponent {
       .loadDashboardItems($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        console.log(response);
         this.dashboardItems$$.next(response.data);
         this.totalRecords = response.total;
       });

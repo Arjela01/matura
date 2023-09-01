@@ -6,7 +6,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -39,7 +38,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
   styleUrls: ['./failing-students-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FailingStudentsFormComponent implements OnInit {
+export class FailingStudentsFormComponent {
   constructor(
     private cd: ChangeDetectorRef,
     private readonly failingStudentService: FailingStudentApiService,
@@ -55,11 +54,6 @@ export class FailingStudentsFormComponent implements OnInit {
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
-
-  ngOnInit(): void {
-    console.log('Form init');
-    //this.getFailingStudentById(this.failingStudent.id!);
-  }
 
   submitted = false;
 

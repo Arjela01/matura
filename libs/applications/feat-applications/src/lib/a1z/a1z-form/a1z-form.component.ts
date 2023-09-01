@@ -138,7 +138,10 @@ export class A1zFormComponent implements OnInit {
   showStudentSearchButton = true;
   displayModal = false;
 
-  a1z: A1Z = {};
+  a1z: A1Z = {
+    isApplyingToForeignCountries: false,
+    alreadyHaveDiploma: true,
+  };
 
   booly: DropdownModel<boolean>[] = [
     { value: 'Po', key: true },
@@ -572,7 +575,6 @@ export class A1zFormComponent implements OnInit {
         if (response.isSuccessful) {
           this.a1z.academicYearId = response.data.academicYearId;
           this.toastService.showSuccess('Formulari A1Z u shtua me sukses!');
-          console.log(response.data);
           this.printConfirmation(response.data);
         }
         if (!response.isSuccessful) {
