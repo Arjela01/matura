@@ -138,7 +138,10 @@ export class A1zFormComponent implements OnInit {
   showStudentSearchButton = true;
   displayModal = false;
 
-  a1z: A1Z = {};
+  a1z: A1Z = {
+    isApplyingToForeignCountries: false,
+    alreadyHaveDiploma: true,
+  };
 
   booly: DropdownModel<boolean>[] = [
     { value: 'Po', key: true },
