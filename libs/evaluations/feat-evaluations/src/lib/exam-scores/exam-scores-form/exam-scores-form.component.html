@@ -59,10 +59,11 @@
         minlength="7"
         [(ngModel)]="examScore.barcode"
         required
-        autofocus
+        #barcodeInputField
         (change)="onGetIndexClick(examScore.barcode)"
         [ngClass]="{
-            'ng-invalid ng-dirty': submitted && (!examScore.barcode || !barcodeExists)
+          'ng-invalid ng-dirty':
+            submitted && (!examScore.barcode || !barcodeExists)
         }" />
     </div>
     <small class="p-error block" *ngIf="submitted && !examScore.barcode">
@@ -73,6 +74,7 @@
     <div class="archiveFolderNr">
       <label for="archiveFolderNr">Dosja</label>
       <input
+        #barcodeInputField
         type="text"
         pInputText
         id="archiveFolderNr"
@@ -108,6 +110,7 @@
       [(ngModel)]="examScore.writingScore"
       required
       autofocus
+      #writingScoreInput
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examScore.writingScore
       }" />
@@ -160,10 +163,6 @@
       label="Anullo"
       class="p-button-text w-auto mr-2"
       (click)="onCancelClick()"></button>
-    <button
-      type="submit"
-      pButton
-      label="Ruaj"
-      class="p-button w-auto"></button>
+    <button type="submit" pButton label="Ruaj" class="p-button w-auto"></button>
   </div>
 </form>

@@ -1,11 +1,14 @@
 import { CommonModule } from '@angular/common';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   Output,
   SimpleChanges,
   ViewChild,
@@ -43,7 +46,9 @@ import { TooltipModule } from 'primeng/tooltip';
   styleUrls: ['./exam-scores-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamScoresFormComponent implements OnChanges {
+export class ExamScoresFormComponent
+  implements OnChanges, AfterViewInit, OnDestroy
+{
   @Input() examTypes: DropdownModel<number>[] = [];
   @Input() examSubjects: DropdownModel<string>[] = [];
 
@@ -53,7 +58,12 @@ export class ExamScoresFormComponent implements OnChanges {
   @Output() examSubjectChanged = new EventEmitter<string>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
+  @ViewChild('barcodeInputField', { static: false }) barcodeInputField:
+    | ElementRef<HTMLInputElement>
+    | undefined;
   submitted = false;
+  @ViewChild('writingScoreInput', { static: false })
+  writingScoreInput: ElementRef | undefined;
 
   examScore: ExamScore = {
     archiveExamIndex: 0,
@@ -72,8 +82,8 @@ export class ExamScoresFormComponent implements OnChanges {
   };
   examTypeId: any;
   examSubjectId: any;
-  currentYear = new Date().getFullYear();
   barcodeExists = false;
+  private focusInterval: any;
 
   @Input() set examScoreDetails(details: ExamScore | null) {
     this.examScore = Object.assign({}, details);
@@ -93,6 +103,27 @@ export class ExamScoresFormComponent implements OnChanges {
     this.examSubjectId = this.examScore.examSubjectId;
     this.cd.markForCheck();
   }
+  ngAfterViewInit() {
+    this.focusInterval = setInterval(() => {
+      const barcodeInput = document.getElementById(
+        'barcode'
+      ) as HTMLInputElement;
+
+      if (barcodeInput && barcodeInput.value.length === 7) {
+        if (
+          this.writingScoreInput &&
+          this.writingScoreInput.nativeElement &&
+          !this.examScore.id
+        ) {
+          this.writingScoreInput.nativeElement.focus();
+        }
+      }
+    }, 100);
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.focusInterval);
+  }
 
   onCancelClick(): void {
     this.formClose.emit();
@@ -102,7 +133,11 @@ export class ExamScoresFormComponent implements OnChanges {
     if (this.form.valid && this.barcodeExists) {
       this.formSave.emit(this.examScore);
     }
+    if (this.barcodeInputField && this.barcodeInputField.nativeElement) {
+      this.barcodeInputField.nativeElement.focus();
+    }
   }
+
   onExamTypeChanged($event: any): void {
     this.examTypeId = $event.value;
     this.examTypeChanged.emit(this.examTypeId);
