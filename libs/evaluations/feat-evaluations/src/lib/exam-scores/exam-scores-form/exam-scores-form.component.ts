@@ -8,6 +8,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   Output,
   SimpleChanges,
   ViewChild,
@@ -45,7 +46,9 @@ import { TooltipModule } from 'primeng/tooltip';
   styleUrls: ['./exam-scores-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamScoresFormComponent implements OnChanges, AfterViewInit {
+export class ExamScoresFormComponent
+  implements OnChanges, AfterViewInit, OnDestroy
+{
   @Input() examTypes: DropdownModel<number>[] = [];
   @Input() examSubjects: DropdownModel<string>[] = [];
 
@@ -80,6 +83,7 @@ export class ExamScoresFormComponent implements OnChanges, AfterViewInit {
   examTypeId: any;
   examSubjectId: any;
   barcodeExists = false;
+  private focusInterval: any;
 
   @Input() set examScoreDetails(details: ExamScore | null) {
     this.examScore = Object.assign({}, details);
@@ -100,16 +104,25 @@ export class ExamScoresFormComponent implements OnChanges, AfterViewInit {
     this.cd.markForCheck();
   }
   ngAfterViewInit() {
-    setInterval(() => {
+    this.focusInterval = setInterval(() => {
       const barcodeInput = document.getElementById(
         'barcode'
       ) as HTMLInputElement;
+
       if (barcodeInput && barcodeInput.value.length === 7) {
-        if (this.writingScoreInput && this.writingScoreInput.nativeElement) {
+        if (
+          this.writingScoreInput &&
+          this.writingScoreInput.nativeElement &&
+          !this.examScore.id
+        ) {
           this.writingScoreInput.nativeElement.focus();
         }
       }
     }, 100);
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.focusInterval);
   }
 
   onCancelClick(): void {
@@ -138,10 +151,6 @@ export class ExamScoresFormComponent implements OnChanges, AfterViewInit {
   }
 
   onGetIndexClick(barcode: any) {
-    if (this.writingScoreInput && this.writingScoreInput.nativeElement) {
-      this.writingScoreInput.nativeElement.focus();
-    }
-
     this.examScores.getIndex(barcode).subscribe(res => {
       if (res.isSuccessful) {
         this.examScore.archiveExamIndex = res.data?.index;
