@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
@@ -43,7 +45,7 @@ import { TooltipModule } from 'primeng/tooltip';
   styleUrls: ['./exam-scores-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamScoresFormComponent implements OnChanges {
+export class ExamScoresFormComponent implements OnChanges, AfterViewInit {
   @Input() examTypes: DropdownModel<number>[] = [];
   @Input() examSubjects: DropdownModel<string>[] = [];
 
@@ -53,7 +55,12 @@ export class ExamScoresFormComponent implements OnChanges {
   @Output() examSubjectChanged = new EventEmitter<string>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
+  @ViewChild('barcodeInputField', { static: false }) barcodeInputField:
+    | ElementRef<HTMLInputElement>
+    | undefined;
   submitted = false;
+  @ViewChild('writingScoreInput', { static: false })
+  writingScoreInput: ElementRef | undefined;
 
   examScore: ExamScore = {
     archiveExamIndex: 0,
@@ -72,7 +79,6 @@ export class ExamScoresFormComponent implements OnChanges {
   };
   examTypeId: any;
   examSubjectId: any;
-  currentYear = new Date().getFullYear();
   barcodeExists = false;
 
   @Input() set examScoreDetails(details: ExamScore | null) {
@@ -93,6 +99,18 @@ export class ExamScoresFormComponent implements OnChanges {
     this.examSubjectId = this.examScore.examSubjectId;
     this.cd.markForCheck();
   }
+  ngAfterViewInit() {
+    setInterval(() => {
+      const barcodeInput = document.getElementById(
+        'barcode'
+      ) as HTMLInputElement;
+      if (barcodeInput && barcodeInput.value.length === 7) {
+        if (this.writingScoreInput && this.writingScoreInput.nativeElement) {
+          this.writingScoreInput.nativeElement.focus();
+        }
+      }
+    }, 100);
+  }
 
   onCancelClick(): void {
     this.formClose.emit();
@@ -102,7 +120,11 @@ export class ExamScoresFormComponent implements OnChanges {
     if (this.form.valid && this.barcodeExists) {
       this.formSave.emit(this.examScore);
     }
+    if (this.barcodeInputField && this.barcodeInputField.nativeElement) {
+      this.barcodeInputField.nativeElement.focus();
+    }
   }
+
   onExamTypeChanged($event: any): void {
     this.examTypeId = $event.value;
     this.examTypeChanged.emit(this.examTypeId);
@@ -116,6 +138,10 @@ export class ExamScoresFormComponent implements OnChanges {
   }
 
   onGetIndexClick(barcode: any) {
+    if (this.writingScoreInput && this.writingScoreInput.nativeElement) {
+      this.writingScoreInput.nativeElement.focus();
+    }
+
     this.examScores.getIndex(barcode).subscribe(res => {
       if (res.isSuccessful) {
         this.examScore.archiveExamIndex = res.data?.index;
