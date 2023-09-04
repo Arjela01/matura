@@ -25,7 +25,6 @@ export class A1ZFormEditComponent {
   constructor(private route: ActivatedRoute) {
     this.id = this.route.snapshot.paramMap.get('id') ?? '';
     this.studentId = this.route.snapshot.paramMap.get('studentId') ?? '';
-    console.log(444,this.id)
   }
 
   protected readonly A1ZFormModeEnum = A1ZFormModeEnum;
