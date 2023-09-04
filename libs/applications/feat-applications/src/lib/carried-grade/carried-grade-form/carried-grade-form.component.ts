@@ -178,7 +178,6 @@ export class CarriedGradesFormComponent implements OnChanges {
     this.grade.examTypeId = this.a1ZSelectedExamType?.key;
     this.grade.examTypeName = this.a1ZSelectedExamType?.value;
     this.cd.markForCheck();
-    console.log(6666,this.a1zformId)
     return (
 
       currentUrl === `/applications/a1z/for-student/${this.selectedStudent?.id}/add` ||
