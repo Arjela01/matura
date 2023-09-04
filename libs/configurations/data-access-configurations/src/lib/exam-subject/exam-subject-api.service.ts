@@ -91,7 +91,14 @@ export class ExamSubjectApiService {
       }
     );
   }
-
+ forExamSubjAcademicYear( academicYearId:number): Observable<ApiResult<DropdownModel<string>[]>>{
+   return this.apiService.post<ApiResult<DropdownModel<string>[]>, any>(
+     `/ExamSubject/ForExamSubjectAcademicYear`,
+     {
+       academicYearId: academicYearId
+     }
+   );
+ }
   exportTemplate(): Observable<ApiResult<unknown>> {
     return this.apiService.get<any>(
       `/ExamSubject/Export`,

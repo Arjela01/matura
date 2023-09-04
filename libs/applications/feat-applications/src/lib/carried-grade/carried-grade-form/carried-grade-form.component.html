@@ -34,13 +34,13 @@
       optionValue="key"
       optionLabel="value"
       appendTo="body"
-      defaultLabel="Zgjidh Vitin"
       name="ExamTypeID"
       [options]="academicYearDropdown"
       [ngModelOptions]="{ standalone: true }"
       [required]="true"
       [autoDisplayFirst]="false"
       [style]="{ width: '100%' }"
+      (onChange)="examTypeChangedLocally()"
       [(ngModel)]="grade.academicYearId"
       [ngClass]="{
         'ng-invalid ng-dirty':
@@ -52,15 +52,13 @@
       Viti është fushë e kërkuar.
     </small>
   </div>
-
-  <div class="field">
+  <div class="field" *ngIf="!isDropdownDisabled()">
     <label for="ExamTypeID">Tipi I Provimit *</label>
     <p-dropdown
       id="ExamTypeID"
       optionValue="key"
       optionLabel="value"
       appendTo="body"
-      defaultLabel="Zgjidh Tipin"
       name="ExamTypeID"
       [options]="examTypeDropdown"
       [ngModelOptions]="{ standalone: true }"
@@ -69,11 +67,34 @@
       [style]="{ width: '100%' }"
       [(ngModel)]="grade.examTypeId"
       (onChange)="examTypeChangedLocally()"
+      [disabled]="isDropdownDisabled()"
       [ngClass]="{
         'ng-invalid ng-dirty':
           submitted && (!grade.examTypeId || grade.examTypeId === 0)
-      }">
+      }"
+    >
     </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && (!grade.examTypeId || grade.examTypeId === 0)">
+      Tipi i provimit është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field" *ngIf="isDropdownDisabled()">
+    <label for="ExamType">Tipi I Provimit *</label>
+    <input
+      id="ExamType"
+      name="ExamTypeId"
+      pInputText
+      [ngModelOptions]="{ standalone: true }"
+      [required]="true"
+      [style]="{ width: '100%' }"
+      [(ngModel)]="grade.examTypeName"
+      [ngClass]="{
+        'ng-invalid ng-dirty':
+          submitted && (!grade.examTypeId || grade.examTypeId === 0)
+      }"
+      [disabled]="isDropdownDisabled()">
     <small
       class="p-error block"
       *ngIf="submitted && (!grade.examTypeId || grade.examTypeId === 0)">
