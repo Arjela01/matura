@@ -3,7 +3,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
+  EventEmitter, HostListener,
   Input,
   OnChanges,
   OnInit,
@@ -77,7 +77,14 @@ export class StudentsFormComponent implements OnInit, OnChanges {
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
-
+  @HostListener('input', ['$event']) onInput(event: InputEvent) {
+    const input = event.target as HTMLInputElement;
+    const sanitizedValue = input.value.replace(/[^A-Za-z]/g, '');
+    if (sanitizedValue !== input.value) {
+      input.value = sanitizedValue;
+      input.dispatchEvent(new Event('input'));
+    }
+  }
   highSchool: DropdownModel<number>[] = [];
   genders: DropdownModel<number>[] = [];
   studentClass = StudentClassModel.All;

@@ -120,6 +120,12 @@ export class A1zFormComponent implements OnInit {
   d3ExamSubjects: DropdownModel<string>[] = [];
   z1ExamSubjects: DropdownModel<string>[] = [];
 
+  examTypeD1: any;
+  examTypeD2: any;
+  examTypeD3: any;
+  examTypeZ1: any;
+  a1ZSelectedExamType: string | undefined;
+
   filters: TableLazyLoadEvent | null = null;
 
   private studentList$$ = new BehaviorSubject<Student[]>([]);
@@ -206,7 +212,6 @@ export class A1zFormComponent implements OnInit {
             return item.isActive;
           })
           .at(0)?.year;
-
         this.cd.detectChanges();
       });
 
@@ -278,16 +283,13 @@ export class A1zFormComponent implements OnInit {
 
   getSubjectsDropdown($event: any) {
     const data = $event as {
-      examTypeId: number;
       academicYearId: number;
     };
     this.examSubjectApiService
-      .forExamType(
-        data.examTypeId,
+      .forExamSubjAcademicYear(
+
         data.academicYearId,
-        undefined,
-        undefined,
-        true
+
       )
       .pipe(untilDestroyed(this))
       .subscribe(response => {
@@ -487,6 +489,7 @@ export class A1zFormComponent implements OnInit {
       .loadDropdownList()
       .pipe(untilDestroyed(this))
       .subscribe(x => {
+
         const d1ExamType = x.data.find(d1 => d1.value === EXAM_TYPES.D1);
         const d2ExamType = x.data.find(d2 => d2.value === EXAM_TYPES.D2);
         const d3ExamType = x.data.find(d3 => d3.value === EXAM_TYPES.D3);
@@ -554,7 +557,13 @@ export class A1zFormComponent implements OnInit {
               this.cd.detectChanges();
             });
         }
+        this.examTypeD1 = d1ExamType
+        this.examTypeD2 = d2ExamType
+        this.examTypeD3 = d3ExamType
+        this.examTypeZ1 = z1ExamType
+
       });
+
   }
 
   onStudentHide() {
@@ -741,20 +750,34 @@ export class A1zFormComponent implements OnInit {
       .getAcademicYearsFiltered()
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        const currentYear = new Date().getFullYear();
-        this.academicYearsDropdown = response.data.filter(
-          (yearObj: { value: number }) => yearObj.value <= currentYear
-        );
+        // const currentYear = new Date().getFullYear();
+        // this.academicYearsDropdown = response.data.filter(
+        //   (yearObj: { value: number }) => yearObj.value <= currentYear
+        // );
+        this.academicYearsDropdown = response.data
       });
   }
   getExamTypeDropdown() {
-    this.examTypeApiService
-      .loadDropdownList()
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.examTypeDropdown = response.data;
-      });
+      switch (this.carriedModalType) {
+        case EXAM_TYPES.D1:
+          this.a1ZSelectedExamType = this.examTypeD1
+          this.cd.detectChanges();
+          break;
+        case EXAM_TYPES.D2:
+          this.a1ZSelectedExamType = this.examTypeD2
+          this.cd.detectChanges();
+          break;
+        case EXAM_TYPES.D3:
+          this.a1ZSelectedExamType = this.examTypeD3
+          this.cd.detectChanges();
+          break;
+        case EXAM_TYPES.Z1:
+          this.a1ZSelectedExamType = this.examTypeZ1
+          this.cd.detectChanges();
+          break;
+      }
   }
+
   private printConfirmation(a1z: A1Z) {
     this.reportsApiService
       .loadRoleReports(this.event)

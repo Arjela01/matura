@@ -11,7 +11,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { CarriedGrade } from '@msh/applications/domain-application';
+import {A1Z, A1ZTableRecord, CarriedGrade} from '@msh/applications/domain-application';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   SharedStudent,
@@ -26,6 +26,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'msh-carried-grade-form',
@@ -52,11 +53,12 @@ export class CarriedGradesFormComponent implements OnChanges {
   @Input() gradeDetails?: CarriedGrade;
   @Input() academicYearDropdown: DropdownModel<number>[] = [];
   @Input() examTypeDropdown: DropdownModel<number>[] = [];
+  @Input() a1ZSelectedExamType: any;
+  @Input() a1zformId: any
   @Input() examSubjectDropdown: DropdownModel<string>[] = [];
   @Input() selectedStudent?: SharedStudent;
 
   @Output() examTypeChanged = new EventEmitter<{
-    examTypeId?: number;
     academicYearId?: number;
   }>();
 
@@ -83,8 +85,15 @@ export class CarriedGradesFormComponent implements OnChanges {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   showStudentSearchButton = true;
   studentInputData = '';
+   a1z: A1Z={
+     subjectD1Name: '',
+     scoreD1 : 0,
+   };
+  examTypeId: any;
+  forms: A1ZTableRecord[] = [];
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(private cd: ChangeDetectorRef,private route: ActivatedRoute) {
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!this.isObjectEmpty(this.gradeDetails)) {
@@ -148,7 +157,6 @@ export class CarriedGradesFormComponent implements OnChanges {
 
   examTypeChangedLocally() {
     this.examTypeChanged.emit({
-      examTypeId: this.grade.examTypeId,
       academicYearId: this.grade.academicYearId,
     });
   }
@@ -163,4 +171,19 @@ export class CarriedGradesFormComponent implements OnChanges {
     }
     return true;
   }
+
+
+  isDropdownDisabled(): boolean {
+    const currentUrl = window.location.pathname;
+    this.grade.examTypeId = this.a1ZSelectedExamType?.key;
+    this.grade.examTypeName = this.a1ZSelectedExamType?.value;
+    this.cd.markForCheck();
+    return (
+
+      currentUrl === `/applications/a1z/for-student/${this.selectedStudent?.id}/add` ||
+      currentUrl === `/applications/a1z/edit/${this.a1zformId}`
+    );
+
+  }
+
 }
