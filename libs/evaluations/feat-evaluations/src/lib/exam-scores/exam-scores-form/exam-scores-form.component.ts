@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -47,7 +46,7 @@ import { TooltipModule } from 'primeng/tooltip';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamScoresFormComponent
-  implements OnChanges, AfterViewInit, OnDestroy
+  implements OnChanges, OnDestroy
 {
   @Input() examTypes: DropdownModel<number>[] = [];
   @Input() examSubjects: DropdownModel<string>[] = [];
@@ -102,8 +101,6 @@ export class ExamScoresFormComponent
     this.examTypeId = this.examScore.examTypeId;
     this.examSubjectId = this.examScore.examSubjectId;
     this.cd.markForCheck();
-  }
-  ngAfterViewInit() {
   }
 
   ngOnDestroy() {
