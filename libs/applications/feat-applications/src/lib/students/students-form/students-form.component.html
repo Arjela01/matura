@@ -233,7 +233,6 @@
             [(ngModel)]="student.firstName"
             required
             autofocus
-            appCharOnly
             [ngClass]="{
               'ng-invalid ng-dirty': submitted && !student.firstName
             }" />
@@ -251,7 +250,6 @@
             name="middleName"
             [(ngModel)]="student.middleName"
             autofocus
-            appCharOnly
             [ngClass]="{
               'ng-invalid ng-dirty': submitted && !student.middleName
             }" />
@@ -267,7 +265,6 @@
             [(ngModel)]="student.lastName"
             required
             autofocus
-            appCharOnly
             [ngClass]="{
               'ng-invalid ng-dirty': submitted && !student.lastName
             }" />
