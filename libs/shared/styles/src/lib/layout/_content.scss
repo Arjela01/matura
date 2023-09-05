@@ -16,3 +16,7 @@
   font-weight: 600;
   text-transform: uppercase;
 }
+
+.p-input-icon-right>.p-icon-wrapper {
+  left: calc(100% - 2em);
+}
