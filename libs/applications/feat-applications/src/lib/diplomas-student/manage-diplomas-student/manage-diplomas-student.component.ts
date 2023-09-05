@@ -243,10 +243,13 @@ export class ManageDiplomasStudentComponent implements OnInit {
       .subscribe(response => {
         const students = [...response.data];
         for (const student of students) {
-          if (student.printedDate === '0001-01-01T00:00:00') {
+          if (student.printedDate && student.ealbaniaDocsDiplomaPrintedDate === '0001-01-01T00:00:00') {
             student.printedDate = null;
+            student.ealbaniaDocsDiplomaPrintedDate = null;
           } else {
             student.printedDate = new Date(student.printedDate);
+            student.ealbaniaDocsDiplomaPrintedDate = new Date(student.ealbaniaDocsDiplomaPrintedDate);
+
           }
         }
         this.studentList$$.next(students);
