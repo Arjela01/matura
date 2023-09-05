@@ -39,8 +39,8 @@ import { CalendarModule } from 'primeng/calendar';
 import { MultiSelectModule } from 'primeng/multiselect';
 import {
   BehaviorSubject,
-  combineLatest,
   Observable,
+  combineLatest,
   of,
   switchMap,
 } from 'rxjs';
@@ -142,7 +142,6 @@ export class DashboardItemsFormComponent implements OnInit {
         .getById(id)
         .pipe(
           switchMap((item: any) => {
-            // console.log(this.dashboardItem);
             return combineLatest([
               this.getRoles(),
               this.getDashboardSections(),
@@ -308,9 +307,7 @@ export class DashboardItemsFormComponent implements OnInit {
               return of(response);
             })
           )
-          .subscribe(error => {
-            console.log(error);
-          });
+          .subscribe();
       }
     }
   }

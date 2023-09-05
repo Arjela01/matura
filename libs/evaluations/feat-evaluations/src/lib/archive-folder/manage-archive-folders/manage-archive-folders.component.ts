@@ -16,7 +16,11 @@ import {
   ExamTypeApiService,
 } from '@msh/configurations/data-access-configurations';
 import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
-import { AcademicYear, ArchiveFolder } from '@msh/shared/domain-models';
+import {
+  AcademicYear,
+  ArchiveFolder,
+  ExamSecret,
+} from '@msh/shared/domain-models';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -52,9 +56,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
   examTypes: DropdownModel<number>[] = [];
   examSubjects: DropdownModel<string>[] = [];
 
-  archiveFolders$ = this.archiveFolders$$
-    .asObservable()
-    .pipe(tap(data => console.log('Updated Archive Folders:', data)));
+  archiveFolders$ = this.archiveFolders$$.asObservable().pipe();
   filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
@@ -69,6 +71,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
   selectedRecord: any;
   headerText: any;
   displayHistoryForm = false;
+  examTypeId = 0;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -141,6 +144,8 @@ export class ManageArchiveFoldersComponent implements OnInit {
         this.selectedArchiveFolders = [];
         break;
       case GRID_ACTIONS.EDIT:
+        this.examTypeId = event.data.examTypeId;
+        this.getExamSubjects(this.examTypeId);
         this.selectedArchiveFolder = Object.assign(
           {},
           event.data as ArchiveFolder
@@ -214,8 +219,13 @@ export class ManageArchiveFoldersComponent implements OnInit {
   }
 
   updateArchiveFolder(archiveFolder: ArchiveFolder) {
+    const archiveFolderUpdateData = {
+      id: archiveFolder.id,
+      examSubjectId: archiveFolder.examSubjectId,
+      examTypeId: this.examTypeId,
+    };
     this.archiveFolderService
-      .update(archiveFolder)
+      .update(archiveFolderUpdateData)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {

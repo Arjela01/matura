@@ -43,7 +43,6 @@ export class AdministrationOfficeFormComponent {
   @Input() dars: DropdownModel<number>[] = [];
   @Input() set administrativeOffices(details: AdministrationOffice | null) {
     if (details) {
-      console.log(details);
       this.administrationOffice = Object.assign({}, details);
     }
   }

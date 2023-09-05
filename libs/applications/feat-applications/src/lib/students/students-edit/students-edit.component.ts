@@ -1,4 +1,4 @@
-import {CommonModule, formatDate} from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -18,7 +18,11 @@ import {
   StudentClassModel,
   StudentSectionModel,
 } from '@msh/shared/domain-models';
-import { GlobalToastService } from '@msh/shared/util-shared';
+import {
+  ALBANIAN_NID_REGEXP,
+  AlbanianNidValidatorDirective,
+  GlobalToastService,
+} from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -53,6 +57,7 @@ import { A1a1zConfirmationDialogComponent } from '../manage-students/a1a1z-confi
     CalendarModule,
     InputMaskModule,
     A1a1zConfirmationDialogComponent,
+    AlbanianNidValidatorDirective,
     DialogModule,
     RippleModule,
     RouterLink,
@@ -112,7 +117,8 @@ export class StudentsEditComponent implements OnInit {
   finishedAtSameSchool = true;
   disabled = false;
   countriesList: DropdownModel<number>[] = [];
-  isAlbanian = true;
+
+  validNid = true;
   constructor(
     private cd: ChangeDetectorRef,
     private readonly academicYearService: AcademicYearApiService,
@@ -164,6 +170,7 @@ export class StudentsEditComponent implements OnInit {
           ...result.data,
           birthDate: new Date(result.data.birthDate),
         };
+        this.validateNID();
         if (!result.data.registrationYearId) {
           this.academicYearService
             .loadDropdownList()
@@ -181,7 +188,6 @@ export class StudentsEditComponent implements OnInit {
         this.finishedAtSameSchool =
           this.student?.schoolFinished == '' ||
           this.student?.schoolFinished == null;
-        this.cd.detectChanges();
       });
 
     this.countriesService.loadDropdownList().subscribe(response => {
@@ -200,8 +206,13 @@ export class StudentsEditComponent implements OnInit {
       });
   }
 
-  changeCountry(country: CountryName) {
-    this.isAlbanian = country === CountryName.Albania;
+  validateNID() {
+    if (this.student.countryId === CountryName.Albania) {
+      const value = this.student.idCard;
+      this.validNid = new RegExp(ALBANIAN_NID_REGEXP).test(value as string);
+    } else {
+      this.validNid = true;
+    }
     this.cd.detectChanges();
   }
   navigateToGrid() {
@@ -219,7 +230,11 @@ export class StudentsEditComponent implements OnInit {
       this.student.schoolFinished = '';
     }
     if (this.student.birthDate) {
-      const formattedDate = formatDate(this.student.birthDate, 'yyyy-MM-dd', 'en-US');
+      const formattedDate = formatDate(
+        this.student.birthDate,
+        'yyyy-MM-dd',
+        'en-US'
+      );
       this.student.birthDate = formattedDate as any;
     }
     this.disabled = true;

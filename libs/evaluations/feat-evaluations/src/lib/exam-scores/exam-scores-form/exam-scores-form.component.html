@@ -59,10 +59,11 @@
         minlength="7"
         [(ngModel)]="examScore.barcode"
         required
-        autofocus
+        #barcodeInputField
         (change)="onGetIndexClick(examScore.barcode)"
         [ngClass]="{
-            'ng-invalid ng-dirty': submitted && (!examScore.barcode || !barcodeExists)
+          'ng-invalid ng-dirty':
+            submitted && (!examScore.barcode || !barcodeExists)
         }" />
     </div>
     <small class="p-error block" *ngIf="submitted && !examScore.barcode">
@@ -73,6 +74,7 @@
     <div class="archiveFolderNr">
       <label for="archiveFolderNr">Dosja</label>
       <input
+        #barcodeInputField
         type="text"
         pInputText
         id="archiveFolderNr"
@@ -83,7 +85,7 @@
         autofocus />
     </div>
   </div>
-  <div class="field" *ngIf="examScore.archiveFolderIndex">
+  <div class="field" *ngIf="examScore.archiveExamIndex">
     <div class="archiveExamIndex">
       <label for="archiveExamIndex">Index</label>
       <input
@@ -92,7 +94,7 @@
         id="archiveExamIndex"
         name="archiveExamIndex"
         disabled
-        [(ngModel)]="examScore.archiveFolderIndex"
+        [(ngModel)]="examScore.archiveExamIndex"
         readonly
         autofocus />
     </div>
@@ -101,13 +103,14 @@
   <div class="field">
     <label for="WritingScore">Pikët Totale *</label>
     <input
-      type="number"
+      type="text"
       pInputText
       id="WritingScore"
       name="WritingScore"
       [(ngModel)]="examScore.writingScore"
       required
       autofocus
+      #writingScoreInput
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examScore.writingScore
       }" />
@@ -119,7 +122,7 @@
   <div class="field" [hidden]="true">
     <label for="MultipleChoiceScore">Pikët me alternativa *</label>
     <input
-      type="number"
+      type="text"
       pInputText
       id="MultipleChoiceScore"
       name="MultipleChoiceScore"
@@ -160,11 +163,6 @@
       label="Anullo"
       class="p-button-text w-auto mr-2"
       (click)="onCancelClick()"></button>
-    <button
-      [disabled]="form.invalid || !barcodeExists"
-      type="submit"
-      pButton
-      label="Ruaj"
-      class="p-button w-auto"></button>
+    <button type="submit" pButton label="Ruaj" class="p-button w-auto"></button>
   </div>
 </form>

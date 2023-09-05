@@ -34,8 +34,7 @@
         [disabled]="!lettersNumbersCheck(archiveExam.barcode)"
         label="Ruaj"
         class="p-button-success mr-2"
-        style="border-radius: 0"
-        (click)="saveArchiveExam(archiveExam)"></button>
+        style="border-radius: 0"></button>
     </div>
   </div>
 </form>
@@ -46,11 +45,7 @@
   responsiveLayout="scroll"
   [value]="archiveExams"
   [totalRecords]="totalRecords"
-  [rows]="10"
-  [paginator]="true"
-  [rowsPerPageOptions]="[10, 20, 30]"
-  [showCurrentPageReport]="true"
-  currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
+  [rows]="1000"
   [rowHover]="true"
   [(selection)]="selectedArchiveExams"
   selectionMode="multiple"

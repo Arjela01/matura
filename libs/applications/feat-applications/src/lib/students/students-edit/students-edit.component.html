@@ -196,8 +196,8 @@
               optionValue="key"
               optionLabel="value"
               [required]="true"
-              (onChange)="changeCountry($event.value)"
               [filter]="true"
+              (onChange)="validateNID()"
               [(ngModel)]="student.countryId"
               [autoDisplayFirst]="false"
               [ngClass]="{
@@ -206,32 +206,23 @@
               }">
             </p-dropdown>
           </div>
-
-          <div class="field">
-            <label for="IdCard">Karta e Identitetit *</label>
-
+          <div class="field" [style]="{ width: '500px' }">
+            <label for="IdCard">Karta Identitetit *</label>
             <input
               type="text"
-              value="bbbb"
               #nidModel="ngModel"
-              mshAlbanianNidValidator="isAlbanian"
               pInputText
-              id="IdCardAlb"
+              id="IdCard"
               name="IdCard"
               [(ngModel)]="student.idCard"
               required
+              (change)="validateNID()"
               autofocus
               [ngClass]="{
-                'ng-invalid ng-dirty': submitted && !student.idCard
+                'ng-invalid ng-dirty': !student.idCard || !validNid
               }" />
 
-            <small
-              class="p-error block"
-              *ngIf="
-                (nidModel.touched || nidModel.dirty ) && student.idCard!=='' &&
-                (nidModel.errors?.['required'] ||
-                  nidModel.errors?.['albanianNidValidator']) 
-              ">
+            <small class="p-error block" *ngIf="!validNid">
               NID nuk i përshtatet formatit shqiptar. Duhet të përmbajë 10
               karaktere, të fillojë dhe të mbarojë me gërma të mëdha.
             </small>
@@ -445,7 +436,7 @@
           <button
             type="submit"
             pButton
-            [disabled]="form.invalid || disabled"
+            [disabled]="form.invalid || disabled || !validNid"
             label="Ruaj"
             class="p-button w-auto"></button>
           <button

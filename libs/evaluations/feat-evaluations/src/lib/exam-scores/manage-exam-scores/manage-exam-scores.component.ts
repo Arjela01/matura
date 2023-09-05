@@ -8,11 +8,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { ExamScoresFormComponent } from '../exam-scores-form/exam-scores-form.component';
 import { ExamScoresGridComponent } from '../exam-scores-grid/exam-scores-grid.component';
 import { ConfirmationService } from 'primeng/api';
-import {
-  BehaviorSubject,
-  of,
-  switchMap,
-} from 'rxjs';
+import { BehaviorSubject, of, switchMap } from 'rxjs';
 import {
   GlobalToastService,
   GRID_ACTIONS,
@@ -30,6 +26,7 @@ import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
 import * as FileSaver from 'file-saver';
 import { AcademicYear, ExamScore } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { FormsModule } from '@angular/forms';
 
 @UntilDestroy()
 @Component({
@@ -45,6 +42,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
     ToolbarModule,
     RippleModule,
     FileUploadModule,
+    FormsModule,
   ],
   templateUrl: './manage-exam-scores.component.html',
   styleUrls: ['./manage-exam-scores.component.scss'],
@@ -56,7 +54,7 @@ export class ManageExamScoresComponent implements OnInit {
   filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
-  selectedExamScore: ExamScore | null = null;
+  selectedExamScore: any;
   selectedExamScores: ExamScore[] = [];
   displayModal = false;
 
@@ -156,13 +154,24 @@ export class ManageExamScoresComponent implements OnInit {
     this.displayModal = false;
   }
 
-  onFormSave(examScore: ExamScore) {
+  onFormSave(examScore: any) {
+    const updatedExamScore = {
+      ...this.selectedExamScore,
+      barcode: examScore.barcode,
+      writingScore: examScore.writingScore,
+    };
+
     if (examScore.id) {
-      this.updateExamScore(examScore);
+      this.selectedExamScores = examScore;
+      this.updateExamScore(updatedExamScore);
     }
+
     if (!examScore.id) {
-      this.addExamScore(examScore);
+      this.addExamScore(updatedExamScore);
     }
+
+    examScore.barcode = '';
+    examScore.writingScore = '';
   }
 
   getExamScores($event: TableLazyLoadEvent) {
@@ -195,15 +204,15 @@ export class ManageExamScoresComponent implements OnInit {
           this.toastService.showSuccess(
             'Rezultati i provimit u shtua me sukses!'
           );
-          this.displayModal = false;
           this.getExamScores(this.filters as TableLazyLoadEvent);
         } else {
           this.toastService.showError(response.errorMessage);
         }
-        if (response.isBadRequest)
+        if (response.isBadRequest) {
           this.toastService.showError(
-            'Ndodhi një problem gjatë shtimit së reszultatit të provimit!'
+            'Ndodhi një problem gjatë shtimit së rezultatit të provimit!'
           );
+        }
       });
   }
   updateExamScore(examScore: ExamScore) {

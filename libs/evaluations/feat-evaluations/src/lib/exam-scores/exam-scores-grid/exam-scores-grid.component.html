@@ -51,6 +51,17 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="folderNr">
+        Numri i dosjes
+        <div>
+          <p-sortIcon field="folderNr"></p-sortIcon>
+          <p-columnFilter
+            type="numeric"
+            field="folderNr"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
       <th pSortableColumn="writingScore">
         Pikët me shtjellim
         <div>
@@ -74,7 +85,7 @@
         </div>
       </th>
       <th pSortableColumn="multipleChoiceScore">
-        Vjeshtë?
+        Vjeshtë
         <div>
           <p-sortIcon field="multipleChoiceScore"></p-sortIcon>
           <p-columnFilter
@@ -97,6 +108,9 @@
       </td>
       <td style="width: 20%; min-width: 10rem">
         {{ examScore.barcode }}
+      </td>
+      <td style="width: 20%; min-width: 10rem">
+        {{ examScore.folderNr }}
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ examScore.writingScore }}

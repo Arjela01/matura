@@ -7,17 +7,17 @@ import {
   Output,
 } from '@angular/core';
 import { Student } from '@msh/shared/domain-models';
-import { GridEvent, GRID_ACTIONS } from '@msh/shared/util-shared';
-import {
-  TableLazyLoadEvent,
-  TableRowSelectEvent,
-  TableRowUnSelectEvent,
-} from 'primeng/table';
+import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
-import { TableModule } from 'primeng/table';
+import {
+  TableLazyLoadEvent,
+  TableModule,
+  TableRowSelectEvent,
+  TableRowUnSelectEvent,
+} from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
@@ -64,7 +64,6 @@ export class A1zStudentSearchComponent {
   }
 
   onStudentSelect(student: Student) {
-    console.log(student);
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
       data: student,

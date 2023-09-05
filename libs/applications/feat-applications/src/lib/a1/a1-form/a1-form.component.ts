@@ -110,7 +110,9 @@ export class A1FormComponent {
 
   ref?: DynamicDialogRef;
   submitted = false;
-  a1: A1Z = {};
+  a1: A1Z = {
+    isApplyingToForeignCountries: false,
+  };
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
   a1Report: Report = Report.A1Form_Report;

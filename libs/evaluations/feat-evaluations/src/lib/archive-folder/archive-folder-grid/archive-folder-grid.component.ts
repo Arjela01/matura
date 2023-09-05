@@ -122,6 +122,12 @@ export class ArchiveFolderGridComponent {
       data: archiveFolder,
     } as GridEvent<ArchiveFolder>);
   }
+  onEditClick(archiveFolder: ArchiveFolder) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.EDIT,
+      data: archiveFolder,
+    } as GridEvent<ArchiveFolder>);
+  }
   onHistoryClick(archiveFolder: ArchiveFolder) {
     this.displayHistoryForm = true;
     this.gridEvent.emit({
