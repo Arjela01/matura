@@ -101,6 +101,8 @@ export class ManageExamScoresComponent implements OnInit {
       writingScore: 0,
       multipleChoiceScore: 0,
       isFall: this.currentAcademicYear?.isFall ?? false,
+      archiveFolderNr: 0,
+      archiveExamIndex:0,
     } as ExamScore;
   }
 
@@ -159,6 +161,8 @@ export class ManageExamScoresComponent implements OnInit {
       ...this.selectedExamScore,
       barcode: examScore.barcode,
       writingScore: examScore.writingScore,
+      archiveFolderNr: examScore.archiveFolderNr,
+      archiveExamIndex: examScore.archiveExamIndex,
     };
 
     if (examScore.id) {
