@@ -203,7 +203,14 @@ export class ManageDiplomasStudentComponent implements OnInit {
     );
   }
   private sealAllDiplomas(data: string) {
-//
+    this.diplomasService.printAllElectronicSeal(data)
+    .subscribe(response => {
+    if (response === 'Dokumenti u regjistrua me sukses!' as any) {
+      this.toastService.showSuccess('Dokumenti u regjistrua me sukses!');
+      } else {
+    this.toastService.showError('Ndodhi një gabim!');
+  }
+    });
   }
   getHighSchoolsByOffice(administrationOfficeId: string): void {
     this.highschoolApiService

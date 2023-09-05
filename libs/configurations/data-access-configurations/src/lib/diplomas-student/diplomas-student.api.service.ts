@@ -33,6 +33,14 @@ export class DiplomasStudentApiService {
         {}
       );
   }
+
+  printAllElectronicSeal(data: string): Observable<any> {
+    return this.apiService.get<any>(
+      `/PrintedDiplomas/GenerateElectronicSealDiplomasPdf${data}`,
+      new HttpParams(),
+    );
+  }
+
   exportAllDiplomas(data: string): Observable<BlobPart> {
     return this.apiService.get<any>(
       `/PrintedDiplomas/GenerateDiplomasPdf${data}`,
