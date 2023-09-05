@@ -51,7 +51,6 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-
       <th pSortableColumn="printedDate">
         Data e printimit
         <div>
@@ -59,6 +58,29 @@
           <p-columnFilter
             type="date"
             field="printedDate"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="ealbaniaDocsDiplomaPrintedDate">
+        Data e printimit të dokumentave të printuar
+        <div>
+          <p-sortIcon field="ealbaniaDocsDiplomaPrintedDate"></p-sortIcon>
+          <p-columnFilter
+            type="date"
+            field="ealbaniaDocsDiplomaPrintedDate"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="isDiplomaSealSentToEalbaniaDocs">
+        Është dërguar vula te dokumentat ealbania
+        <div>
+          <p-sortIcon field="isDiplomaSealSentToEalbaniaDocs"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            matchMode="equals"
+            field="isDiplomaSealSentToEalbaniaDocs"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
@@ -94,6 +116,12 @@
         {{ student.printedDate | date : 'dd/MM/yyyy' }}
       </td>
       <td style="width: 14%; min-width: 10rem">
+        {{ student.ealbaniaDocsDiplomaPrintedDate | date : 'dd/MM/yyyy' }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ student.isDiplomaSealSentToEalbaniaDocs ? 'Po' : 'Jo' }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
         {{ student.idCard }}
       </td>
 
@@ -106,6 +134,14 @@
               pTooltip="Printo Diploma"
               tooltipPosition="bottom"
               (click)="onPrint(student)" />
+          </div>
+          <div>
+            <img
+              src="assets/svg/electronic-seal.svg"
+              class="p-button-rounded p-button-danger p-button-text ml-m pointer ml-3"
+              pTooltip="Vulos Diploma"
+              tooltipPosition="bottom"
+              (click)="onSeal(student)" />
           </div>
         </div>
       </td>

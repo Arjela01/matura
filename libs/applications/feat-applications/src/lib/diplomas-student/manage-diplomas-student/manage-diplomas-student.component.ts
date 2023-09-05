@@ -64,6 +64,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
   totalRecords = 0;
   selectedStudent: Student | null = null;
   selectedStudentList: Student[] = [];
+  selectedAction!: string;
 
   studentTypes: DropdownModel<number>[] = [
     {
@@ -106,7 +107,8 @@ export class ManageDiplomasStudentComponent implements OnInit {
     this.getAdministrationOfficeDropdown();
   }
 
-  onNewClick() {
+  onNewClick(action: string) {
+    this.selectedAction = action;
     this.displayModal = true;
   }
   onModalClose() {
@@ -135,6 +137,9 @@ export class ManageDiplomasStudentComponent implements OnInit {
       case GRID_ACTIONS.PRINT:
         this.printDiploma(event);
         break;
+      case GRID_ACTIONS.SEAL:
+        this.sealDiploma(event)
+        break;
     }
   }
 
@@ -159,10 +164,29 @@ export class ManageDiplomasStudentComponent implements OnInit {
       );
   }
 
-  onFormSave(data: string) {
-    this.printAllDiplomas(data);
+  sealDiploma(event: GridEvent<Student>) {
+    const academicYear = JSON.parse(
+      localStorage.getItem('academicYear') as string
+    );
+    this.diplomasService
+      .printElectronicSeal(event.data?.studentId as string, academicYear.id, !this.printed)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response === 'Dokumenti u regjistrua me sukses!' as any) {
+          this.toastService.showSuccess('Dokumenti u regjistrua me sukses!');
+        } else {
+          this.toastService.showError('Ndodhi një gabim!');
+        }
+      });
   }
 
+  onFormSave(data: string) {
+    if (this.selectedAction === 'print') {
+      this.printAllDiplomas(data);
+    } else if (this.selectedAction === 'seal') {
+      this.sealAllDiplomas(data);
+    }
+  }
   printAllDiplomas(data: string) {
     this.diplomasService.exportAllDiplomas(data).subscribe(
       response => {
@@ -178,7 +202,16 @@ export class ManageDiplomasStudentComponent implements OnInit {
       }
     );
   }
-
+  private sealAllDiplomas(data: string) {
+    this.diplomasService.printAllElectronicSeal(data)
+    .subscribe(response => {
+    if (response === 'Dokumenti u regjistrua me sukses!' as any) {
+      this.toastService.showSuccess('Dokumenti u regjistrua me sukses!');
+      } else {
+    this.toastService.showError('Ndodhi një gabim!');
+  }
+    });
+  }
   getHighSchoolsByOffice(administrationOfficeId: string): void {
     this.highschoolApiService
       .forAdministrationOffice(administrationOfficeId)
@@ -220,4 +253,6 @@ export class ManageDiplomasStudentComponent implements OnInit {
         this.totalRecords = response.total;
       });
   }
+
+
 }
