@@ -104,21 +104,6 @@ export class ExamScoresFormComponent
     this.cd.markForCheck();
   }
   ngAfterViewInit() {
-    this.focusInterval = setInterval(() => {
-      const barcodeInput = document.getElementById(
-        'barcode'
-      ) as HTMLInputElement;
-
-      if (barcodeInput && barcodeInput.value.length === 7) {
-        if (
-          this.writingScoreInput &&
-          this.writingScoreInput.nativeElement &&
-          !this.examScore.id
-        ) {
-          this.writingScoreInput.nativeElement.focus();
-        }
-      }
-    }, 100);
   }
 
   ngOnDestroy() {
