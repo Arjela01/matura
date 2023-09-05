@@ -282,14 +282,14 @@ export class A1zFormComponent implements OnInit {
   }
 
   getSubjectsDropdown($event: any) {
-    const data = $event as {
-      academicYearId: number;
-    };
     this.examSubjectApiService
-      .forExamSubjAcademicYear(
-
-        data.academicYearId,
-
+      .forExamType(
+        $event.examTypeId,
+        $event.academicYearId,
+        undefined,
+        undefined,
+        true,
+        undefined
       )
       .pipe(untilDestroyed(this))
       .subscribe(response => {
@@ -757,25 +757,32 @@ export class A1zFormComponent implements OnInit {
         this.academicYearsDropdown = response.data
       });
   }
+
   getExamTypeDropdown() {
-      switch (this.carriedModalType) {
-        case EXAM_TYPES.D1:
-          this.a1ZSelectedExamType = this.examTypeD1
-          this.cd.detectChanges();
-          break;
-        case EXAM_TYPES.D2:
-          this.a1ZSelectedExamType = this.examTypeD2
-          this.cd.detectChanges();
-          break;
-        case EXAM_TYPES.D3:
-          this.a1ZSelectedExamType = this.examTypeD3
-          this.cd.detectChanges();
-          break;
-        case EXAM_TYPES.Z1:
-          this.a1ZSelectedExamType = this.examTypeZ1
-          this.cd.detectChanges();
-          break;
-      }
+    this.examTypeApiService.loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(data => {
+        this.examTypeDropdown = data.data;
+
+        switch (this.carriedModalType) {
+          case EXAM_TYPES.D1:
+            this.a1ZSelectedExamType = this.examTypeD1
+            this.cd.detectChanges();
+            break;
+          case EXAM_TYPES.D2:
+            this.a1ZSelectedExamType = this.examTypeD2
+            this.cd.detectChanges();
+            break;
+          case EXAM_TYPES.D3:
+            this.a1ZSelectedExamType = this.examTypeD3
+            this.cd.detectChanges();
+            break;
+          case EXAM_TYPES.Z1:
+            this.a1ZSelectedExamType = this.examTypeZ1
+            this.cd.detectChanges();
+            break;
+        }
+      });
   }
 
   private printConfirmation(a1z: A1Z) {

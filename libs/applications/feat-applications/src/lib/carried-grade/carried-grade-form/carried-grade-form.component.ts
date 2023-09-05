@@ -59,6 +59,7 @@ export class CarriedGradesFormComponent implements OnChanges {
   @Input() selectedStudent?: SharedStudent;
 
   @Output() examTypeChanged = new EventEmitter<{
+    examTypeId?: number;
     academicYearId?: number;
   }>();
 
@@ -157,6 +158,7 @@ export class CarriedGradesFormComponent implements OnChanges {
 
   examTypeChangedLocally() {
     this.examTypeChanged.emit({
+      examTypeId: this.grade.examTypeId,
       academicYearId: this.grade.academicYearId,
     });
   }
