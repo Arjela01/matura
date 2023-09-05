@@ -169,18 +169,13 @@ export class ManageDiplomasStudentComponent implements OnInit {
       localStorage.getItem('academicYear') as string
     );
     this.diplomasService
-      .printElectronicSeal(event.data?.studentId as string, academicYear.id, true)
+      .printElectronicSeal(event.data?.studentId as string, academicYear.id, !this.printed)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-          if (response.isSuccessful) {
-            this.toastService.showSuccess('!');
-        }
-        if (!response.isSuccessful) {
-          this.toastService.showError(
-            response.errorMessage
-              ? response.errorMessage
-              : 'Ndodhi një problem !'
-          );
+        if (response === 'Dokumenti u regjistrua me sukses!' as any) {
+          this.toastService.showSuccess('Dokumenti u regjistrua me sukses!');
+        } else {
+          this.toastService.showError('Ndodhi një gabim!');
         }
       });
   }

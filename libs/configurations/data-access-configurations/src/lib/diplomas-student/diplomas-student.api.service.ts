@@ -25,11 +25,11 @@ export class DiplomasStudentApiService {
   printElectronicSeal(
     studentId: string,
     academicYearId: number,
-    isReportAll: boolean
+    allReports: boolean
   ): Observable<ApiResult<any>> {
     return this.apiService
       .put<ApiResult<any>,any>(
-        `/PrintedDiplomas/ElectronicSeal/${studentId}?academicYearId=${academicYearId}&isReportAll=${isReportAll}`,
+        `/PrintedDiplomas/ElectronicSeal/${studentId}?academicYearId=${academicYearId}&isReportAll=${allReports}`,
         {}
       );
   }

@@ -39,6 +39,8 @@ export interface Student extends SharedStudent {
   nid?: string;
   isDiplomaRequirementException?: boolean;
   countryId?: number;
+  ealbaniaDocsDiplomaPrintedDate?: Date;
+  isDiplomaSealSentToEalbaniaDocs?:boolean;
 }
 
 export interface StudentTableView {
