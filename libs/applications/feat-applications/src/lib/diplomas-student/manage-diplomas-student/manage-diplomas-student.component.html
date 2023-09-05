@@ -7,7 +7,15 @@
         pRipple
         label="Printo diploma"
         icon="pi pi-print"
-        (click)="onNewClick()"
+        (click)="onNewClick('print')"
+        class="p-button-success mr-2"></button>
+    </div>
+    <div class="my-2">
+      <button
+        pButton
+        pRipple
+        label="Vulos diploma"
+        (click)="onNewClick('seal')"
         class="p-button-success mr-2"></button>
     </div>
   </div>

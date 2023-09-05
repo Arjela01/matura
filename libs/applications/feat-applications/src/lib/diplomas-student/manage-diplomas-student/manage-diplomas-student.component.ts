@@ -64,6 +64,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
   totalRecords = 0;
   selectedStudent: Student | null = null;
   selectedStudentList: Student[] = [];
+  selectedAction!: string;
 
   studentTypes: DropdownModel<number>[] = [
     {
@@ -106,7 +107,8 @@ export class ManageDiplomasStudentComponent implements OnInit {
     this.getAdministrationOfficeDropdown();
   }
 
-  onNewClick() {
+  onNewClick(action: string) {
+    this.selectedAction = action;
     this.displayModal = true;
   }
   onModalClose() {
@@ -184,9 +186,12 @@ export class ManageDiplomasStudentComponent implements OnInit {
   }
 
   onFormSave(data: string) {
-    this.printAllDiplomas(data);
+    if (this.selectedAction === 'print') {
+      this.printAllDiplomas(data);
+    } else if (this.selectedAction === 'seal') {
+      this.sealAllDiplomas(data);
+    }
   }
-
   printAllDiplomas(data: string) {
     this.diplomasService.exportAllDiplomas(data).subscribe(
       response => {
@@ -202,7 +207,9 @@ export class ManageDiplomasStudentComponent implements OnInit {
       }
     );
   }
-
+  private sealAllDiplomas(data: string) {
+//
+  }
   getHighSchoolsByOffice(administrationOfficeId: string): void {
     this.highschoolApiService
       .forAdministrationOffice(administrationOfficeId)
@@ -244,4 +251,6 @@ export class ManageDiplomasStudentComponent implements OnInit {
         this.totalRecords = response.total;
       });
   }
+
+
 }
