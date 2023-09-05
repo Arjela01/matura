@@ -54,7 +54,7 @@ export class GlobalSearchComponent {
   @HostListener('document:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
     const isLoginPage = window.location.pathname === '/login';
-
+/*
     if (event.key === 'Shift' && !isLoginPage) {
       const currentTime = new Date().getTime();
 
@@ -90,6 +90,7 @@ export class GlobalSearchComponent {
         this.searchResults = [];
       }
     }
+ */
   }
 
   onItemClick(itemText: string) {
