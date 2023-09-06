@@ -51,6 +51,7 @@ export class DiplomasStudentGridComponent {
 
   //Keep it local state because of Table Header checkbox not syncing
   selectedStudents: Student[] = [];
+  @Input() responseLoaded: any
 
   @Output() gridEvent = new EventEmitter<GridEvent<Student>>();
 

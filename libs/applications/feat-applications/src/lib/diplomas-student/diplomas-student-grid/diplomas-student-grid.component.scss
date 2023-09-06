@@ -1,3 +1,7 @@
 :host {
   display: block;
 }
+.seal-button:disabled {
+  cursor: not-allowed;
+  pointer-events: auto;
+}

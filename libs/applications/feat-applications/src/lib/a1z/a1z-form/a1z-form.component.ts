@@ -146,7 +146,7 @@ export class A1zFormComponent implements OnInit {
 
   a1z: A1Z = {
     isApplyingToForeignCountries: false,
-    alreadyHaveDiploma: true,
+    alreadyHaveDiploma: false,
   };
 
   booly: DropdownModel<boolean>[] = [
