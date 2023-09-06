@@ -419,7 +419,7 @@ export class A1FormComponent {
           query.queryParams['returnUrl'] = '/applications/a1';
         else query.queryParams['returnUrl'] = '/applications/students';
 
-        const parameters = JSON.parse(a1ReportData?.parameters as never);
+        const parameters = a1ReportData ? JSON.parse(a1ReportData?.parameters as never) : [];
         if (parameters.length > 0) {
           const parameterUrl = parameters.find(
             (item: string) => 'studentid' === item.toLowerCase()
