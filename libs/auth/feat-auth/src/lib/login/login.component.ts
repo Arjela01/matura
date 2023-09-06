@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectionStrategy, Component, SecurityContext, ViewChild} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  SecurityContext,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AuthFacade, LoginRequest } from '@msh/auth/data-access-auth';
@@ -9,8 +14,8 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { PasswordModule } from 'primeng/password';
-import {environment} from "@msh/shared/environments";
-import {DomSanitizer} from "@angular/platform-browser";
+import { environment } from '@msh/shared/environments';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'msh-login',
@@ -42,9 +47,14 @@ export class LoginComponent {
 
   ealbania_sso_url;
 
-  constructor(readonly authFacade: AuthFacade,
-              private readonly domSanitizer: DomSanitizer) {
-    this.ealbania_sso_url = this.domSanitizer.sanitize(SecurityContext.URL, environment.ealbania_sso_url);
+  constructor(
+    readonly authFacade: AuthFacade,
+    private readonly domSanitizer: DomSanitizer
+  ) {
+    this.ealbania_sso_url = this.domSanitizer.sanitize(
+      SecurityContext.URL,
+      environment.ealbania_sso_url
+    );
   }
 
   onLoginSubmit(): void {

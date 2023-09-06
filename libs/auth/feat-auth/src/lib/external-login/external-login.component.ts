@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
@@ -10,24 +15,9 @@ import { AvatarModule } from 'primeng/avatar';
 import { MessageModule } from 'primeng/message';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@msh/shared/environments';
-import {
-  User,
-  USER_STORAGE_KEY,
-} from '../../../../data-access-auth/src/lib/models/user.model';
-import {
-  AuthActions,
-  AuthFacade,
-  HeartbeatService,
-  TOKEN_STORAGE_KEY,
-} from '@msh/auth/data-access-auth';
-import jwt_decode from 'jwt-decode';
-import { map, of, switchMap } from 'rxjs';
-import { roleKey } from '@msh/shared/domain-models';
-import { StorageService } from '@msh/shared/data-access-shared';
-import { AcademicYearApiService } from '@msh/configurations/data-access-configurations';
-import { untilDestroyed } from '@ngneat/until-destroy';
-import {ProgressSpinnerModule} from "primeng/progressspinner";
-import {ProgressBarModule} from "primeng/progressbar";
+import { AuthFacade } from '@msh/auth/data-access-auth';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 @Component({
   selector: 'msh-external-login',
@@ -50,7 +40,7 @@ import {ProgressBarModule} from "primeng/progressbar";
 })
 export class ExternalLoginComponent implements OnInit {
   showError = false;
-  errorMessage = "Ndodhi një gabim gjatë identifikimit";
+  errorMessage = 'Ndodhi një gabim gjatë identifikimit';
   showSpinner = true;
   constructor(
     private http: HttpClient,

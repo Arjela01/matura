@@ -34,7 +34,8 @@
                   "type:ui",
                   "type:data-access",
                   "type:util",
-                  "type:domain"
+                  "type:domain",
+                  "type:environments"
                 ]
               },
               {
