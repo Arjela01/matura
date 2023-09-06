@@ -1,12 +1,12 @@
-<form #form="ngForm" (ngSubmit)="onSubmit()">
+<form #carriedGradeForm="ngForm" (ngSubmit)="onSubmit()">
   <div class="field w-full">
-    <label for="studentInputData">Maturant *</label>
+    <label for="studentInputData-carried-grade-form">Maturant *</label>
     <div class="p-inputgroup">
       <input
         type="text"
         [disabled]="!showStudentSearchButton"
         pInputText
-        id="studentInputData"
+        id="studentInputData-carried-grade-form"
         name="studentInputData"
         [(ngModel)]="studentInputData"
         autofocus

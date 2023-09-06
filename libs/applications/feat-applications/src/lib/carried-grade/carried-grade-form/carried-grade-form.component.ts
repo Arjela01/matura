@@ -68,7 +68,7 @@ export class CarriedGradesFormComponent implements OnChanges {
   @Output() formSave = new EventEmitter<CarriedGrade>();
   @Output() formClose = new EventEmitter<undefined>();
 
-  @ViewChild('form', { static: true }) form!: NgForm;
+  @ViewChild('carriedGradeForm', { static: true }) form!: NgForm;
 
   submitted = false;
 

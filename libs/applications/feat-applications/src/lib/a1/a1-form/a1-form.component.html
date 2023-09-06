@@ -31,13 +31,13 @@
       <form #form="ngForm" (ngSubmit)="onSubmit()">
         <div [style]="{ maxWidth: '500px' }">
           <div>
-            <label for="studentInputData">Maturant *</label>
+            <label for="studentInputData-a1-form">Maturant *</label>
             <div class="p-inputgroup">
               <input
                 type="text"
                 [disabled]="!showStudentSearchButton"
                 pInputText
-                id="studentInputData"
+                id="studentInputData-a1-form"
                 name="studentInputData"
                 [(ngModel)]="studentInputData"
                 autofocus

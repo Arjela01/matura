@@ -14,7 +14,7 @@ import { ProcessesApiService } from '@msh/evaluations/data-access-evaluations';
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-calculate-grades',
+  selector: 'msh-connect-exam-grades',
   standalone: true,
   imports: [
     CommonModule,
