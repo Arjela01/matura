@@ -9,9 +9,15 @@ export const APP_ROUTES: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'login',
+    path:   'login',
     loadComponent: () =>
       import('@msh/auth/feat-auth').then(m => m.LoginComponent),
+    canActivate: [NoAuthGuard],
+  },
+  {
+    path:   'Account/redirectlogin',
+    loadComponent: () =>
+      import('@msh/auth/feat-auth').then(m => m.ExternalLoginComponent),
     canActivate: [NoAuthGuard],
   },
   {

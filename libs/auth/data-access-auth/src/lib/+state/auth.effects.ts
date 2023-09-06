@@ -37,7 +37,7 @@ export class AuthEffects {
             academicYear,
           });
         }
-        return AuthActions.logout();
+        return AuthActions.nothing();
       }),
       catchError(() => of(AuthActions.logout()))
     )
@@ -83,46 +83,59 @@ export class AuthEffects {
     )
   );
 
+  externalLogin$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.externalLogin),
+      exhaustMap(action => {
+        return this.commonLoginSuccess(action);
+      }))
+  );
+
   loginSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.loginSuccess),
       exhaustMap(action => {
-        const user = {
-          displayName: action.loginResponse.displayName,
-          username: action.loginResponse.username,
-        } as User;
-        this.storageService.setItem(USER_STORAGE_KEY, user);
-        this.storageService.setItem(
-          TOKEN_STORAGE_KEY,
-          action.loginResponse.token
-        );
-        const token: any = jwt_decode(action.loginResponse.token as string);
-        if (token.NeedResetPassword) {
-          return of(AuthActions.passwordChange());
-        }
-        return this.academicYearService.getAcademicYears().pipe(
-          map((years: any) => years.data.find((year: any) => year.isActive)),
-          switchMap(activeYear => {
-            if (!token.NeedResetPassword) {
-              this.heartBeatService.startTime();
-            }
-            if (token[roleKey] !== 'Admin') {
-              return of(
-                AuthActions.initAcademicYear({
-                  academicYear: { id: 0, year: '' },
-                })
-              );
-            }
-            return of(
-              AuthActions.initAcademicYear({
-                academicYear: activeYear,
-              })
-            );
-          })
-        );
+        return this.commonLoginSuccess(action);
       })
     )
   );
+
+   commonLoginSuccess= (action: any) => {
+    const user = {
+      displayName: action.loginResponse.displayName,
+      username: action.loginResponse.username,
+    } as User;
+    this.storageService.setItem(USER_STORAGE_KEY, user);
+    this.storageService.setItem(
+      TOKEN_STORAGE_KEY,
+      action.loginResponse.token
+    );
+    const token: any = jwt_decode(action.loginResponse.token as string);
+    if (token.NeedResetPassword) {
+      return of(AuthActions.passwordChange());
+    }
+
+    return this.academicYearService.getAcademicYears().pipe(
+      map((years: any) => years.data.find((year: any) => year.isActive)),
+      switchMap(activeYear => {
+        if (!token.NeedResetPassword) {
+          this.heartBeatService.startTime();
+        }
+        if (token[roleKey] !== 'Admin') {
+          return of(
+            AuthActions.initAcademicYear({
+              academicYear: { id: 0, year: '' },
+            })
+          );
+        }
+        return of(
+          AuthActions.initAcademicYear({
+            academicYear: activeYear,
+          })
+        );
+      })
+    );
+  }
 
   initialiseAcademicYear$ = createEffect(
     () =>

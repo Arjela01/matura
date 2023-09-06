@@ -12,7 +12,7 @@ export const ACADEMIC_YEAR_KEY = 'academicYear';
 export class AcademicYearApiService {
   constructor(private apiService: APIService) {}
 
-  getAcademicYears(): Observable<AcademicYear> {
+  getAcademicYears(): Observable<any> {
     return this.apiService.get(`/AcademicYear`);
   }
   getAcademicYearsFiltered(): Observable<any> {

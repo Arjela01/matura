@@ -8,5 +8,5 @@ export const environment = {
 
   //api_url: 'http://ematura.qsha.gov.al/api',
   //reports_app_url: 'http://ematura.qsha.gov.al/ssrs',
-
+  ealbania_sso_url: 'https://e-albania.gov.al/FPSTS/oauth2/authorize?response_type=code&scope=openid&client_id=http://localhost/Account/login/&redirect_url=Account/redirectlogin'
 };

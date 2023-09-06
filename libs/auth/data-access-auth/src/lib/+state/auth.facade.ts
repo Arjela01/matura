@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { LoginRequest } from '../models/login-request.model';
 import { AuthActions } from './auth.actions';
 import { authQuery } from './auth.selectors';
+import {LoginResponse} from "../models/login-response.model";
 @Injectable({ providedIn: 'root' })
 export class AuthFacade {
   private readonly store = inject(Store);
@@ -22,6 +23,11 @@ export class AuthFacade {
   login(loginRequest: LoginRequest) {
     this.store.dispatch(AuthActions.login({ loginRequest }));
   }
+
+  externalLogin(loginResponse: LoginResponse) {
+    this.store.dispatch(AuthActions.externalLogin({ loginResponse }));
+  }
+
   changeAcademicYear(academicYear: Partial<AcademicYear>) {
     this.store.dispatch(AuthActions.changeAcademicYear({ academicYear }));
   }

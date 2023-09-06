@@ -60,6 +60,17 @@ export const authFeature = createFeature({
       },
       token: loginResponse.token,
     })),
+    on(AuthActions.externalLogin, (state, { loginResponse }) => ({
+      ...state,
+      status: 'loading' as GenericStoreStatus,
+      error: null,
+      isAuthenticated: true,
+      user: {
+        displayName: loginResponse.displayName,
+        username: loginResponse.username,
+      },
+      token: loginResponse.token,
+    })),
     on(AuthActions.initAcademicYear, (state, { academicYear }) => ({
       ...state,
       status: 'success' as GenericStoreStatus,

@@ -1,0 +1,16 @@
+<div class="m-auto w-3 text-center mt-5">
+  <ng-container *ngIf="showSpinner">
+    <h4 style="width: 15rem">Ju lutem prisni</h4>
+    <p-progressBar
+      mode="indeterminate"
+      [style]="{ height: '6px', width: '15rem' }"
+      styleClass="mt-5"></p-progressBar>
+  </ng-container>
+  <ng-container *ngIf="showError">
+    <div class="flex justify-content-center gap-2">
+      <p-message severity="error" text="{{ errorMessage }}"></p-message>
+    </div>
+
+    <div class="mt-4"><a routerLink="/login">Ktheu te faqja e parë</a></div>
+  </ng-container>
+</div>
