@@ -165,7 +165,13 @@ export class ManageDiplomasStudentComponent implements OnInit {
         }
       );
   }
-
+  onFormSave(data: string) {
+    if (this.selectedAction === 'print') {
+      this.printAllDiplomas(data);
+    } else if (this.selectedAction === 'seal') {
+      this.sealAllDiplomas(data);
+    }
+  }
   sealDiploma(event: GridEvent<Student>) {
     const academicYear = JSON.parse(
       localStorage.getItem('academicYear') as string
@@ -182,14 +188,21 @@ export class ManageDiplomasStudentComponent implements OnInit {
         }
       }).add(() => this.responseLoaded.next(false));
   }
-
-  onFormSave(data: string) {
-    if (this.selectedAction === 'print') {
-      this.printAllDiplomas(data);
-    } else if (this.selectedAction === 'seal') {
-      this.sealAllDiplomas(data);
-    }
+  sealAllDiplomas(data: string) {
+    this.responseLoaded.next(true);
+    this.diplomasService.printAllElectronicSeal(data)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response) {
+          this.toastService.showInfo(response as any);
+        }else{
+          this.toastService.showError('Ndodhi një gabim!');
+        }
+      }, error => {
+        console.log(error)
+      }).add(() => this.responseLoaded.next(false));
   }
+
   printAllDiplomas(data: string) {
     this.diplomasService.exportAllDiplomas(data).subscribe(
       response => {
@@ -205,14 +218,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
       }
     );
   }
-   sealAllDiplomas(data: string) {
-    this.diplomasService.printAllElectronicSeal(data)
-    .subscribe(response => {
-      if (response) {
-        this.toastService.showInfo(response as any);
-    }
-    });
-  }
+
   getHighSchoolsByOffice(administrationOfficeId: string): void {
     this.highschoolApiService
       .forAdministrationOffice(administrationOfficeId)
