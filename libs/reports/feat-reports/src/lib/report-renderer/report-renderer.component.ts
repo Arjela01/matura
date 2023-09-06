@@ -46,6 +46,12 @@ export class ReportRendererComponent implements OnInit {
   yearObj: { value: string | number; key: string } | null = this.findYearID(
     this.route.snapshot.queryParams
   );
+  isFallObj: { value: string | number; key: string } | null = this.findIsFallID(
+    this.route.snapshot.queryParams
+  );
+  examTypeObj: { value: string | number; key: string } | null = this.findExamTypeID(
+    this.route.snapshot.queryParams
+  );
   filters: { value: boolean; key: string } = this.initFilters();
   returnUrl?: string | null = null;
   displayModal = false;
@@ -102,6 +108,24 @@ export class ReportRendererComponent implements OnInit {
     }
     return null;
   }
+  findIsFallID(obj: { [x: string]: string | number }) {
+    const key = Object.keys(obj).find(
+      k => k.toLowerCase() === 'isfall'
+    );
+    if (key) {
+      return { key: key, value: obj[key] };
+    }
+    return null;
+  }
+  findExamTypeID(obj: { [x: string]: string | number }) {
+    const key = Object.keys(obj).find(
+      k => k.toLowerCase() === 'examtypeid'
+    );
+    if (key) {
+      return { key: key, value: obj[key] };
+    }
+    return null;
+  }
   initFilters(): { key: string; value: boolean } {
     const key = 'showFilters';
     return { key: key, value: true };
@@ -136,8 +160,8 @@ export class ReportRendererComponent implements OnInit {
     }
     if (this.id && this.studentObj && this.yearObj) {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}&${this.yearObj.key}=${this.yearObj.value}`;
-    } else if (this.id && this.folderObj && this.yearObj) {
-      this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.folderObj.key}=${this.folderObj.value}&${this.yearObj.key}=${this.yearObj.value}`;
+    } else if (this.id && this.folderObj && this.yearObj&& this.isFallObj&& this.examTypeObj) {
+      this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.folderObj.key}=${this.folderObj.value}&${this.yearObj.key}=${this.yearObj.value}&${this.isFallObj.key}=${this.isFallObj.value}&${this.examTypeObj.key}=${this.examTypeObj.value}`;
     } else {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&academicyearid=${this.academicYear}`;
     }

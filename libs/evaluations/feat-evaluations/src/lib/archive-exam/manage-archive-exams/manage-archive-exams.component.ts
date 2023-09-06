@@ -89,6 +89,8 @@ export class ManageArchiveExamsComponent implements OnInit {
   isBarcodeInputDisabled = false;
   parameterUrl!: any;
   parameterYear!: any;
+  parameterExamType!:any;
+  parameterIsFall!:any;
   archiveFolderReport: Report = Report.ArchiveFolder_Report;
 
   event = {
@@ -148,8 +150,15 @@ export class ManageArchiveExamsComponent implements OnInit {
           this.parameterUrl = parametersArray.find((item: string) => {
             return ['foldernr'].includes(item.toLowerCase());
           });
+
         this.parameterYear = parametersArray.find((item: string) => {
           return ['academicyearid'].includes(item.toLowerCase());
+        });
+        this.parameterExamType= parametersArray.find((item: any) => {
+          return ['examtypeid'].includes(item.toLowerCase());
+        });
+        this.parameterIsFall = parametersArray.find((item: any) => {
+          return ['isfall'].includes(item.toLowerCase());
         });
       });
   }
@@ -307,12 +316,17 @@ export class ManageArchiveExamsComponent implements OnInit {
           if (
             this.parameterUrl &&
             this.parameterYear &&
+            this.parameterExamType &&
+            this.parameterIsFall &&
             this.archiveFolder.nr &&
             this.archiveFolder.academicYearId
-          ) {
+          )
+          {
             query.queryParams[`${this.parameterUrl}`] = this.archiveFolder.nr;
-            query.queryParams[`${this.parameterYear}`] =
-              this.archiveFolder.academicYearId.toString();
+            query.queryParams[`${this.parameterYear}`] = this.archiveFolder.academicYearId.toString();
+            query.queryParams[`${this.parameterExamType}`] = this.archiveFolder.examTypeId as any;
+            query.queryParams[`${this.parameterIsFall}`] = this.archiveFolder.isFall as any;
+
           }
           this.router
             .navigate([`/reports/view/${this.archiveFolderReport}`], query)
