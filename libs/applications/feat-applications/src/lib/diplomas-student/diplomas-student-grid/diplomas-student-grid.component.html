@@ -128,20 +128,26 @@
       <td style="width: 14%; min-width: 10rem">
         <div class="flex">
           <div>
-            <img
-              src="assets/svg/print.svg"
-              class="p-button-rounded p-button-danger p-button-text ml-m pointer"
+            <button
+              class="p-button-rounded p-button-danger p-button-text ml-m pointer ml-3"
+              style="background: transparent; border: white; margin-top: 10px"
               pTooltip="Printo Diploma"
               tooltipPosition="bottom"
-              (click)="onPrint(student)" />
+              (click)="onPrint(student)" >
+              <img src="assets/svg/print.svg"/>
+
+            </button>
           </div>
           <div>
-            <img
-              src="assets/svg/electronic-seal.svg"
-              class="p-button-rounded p-button-danger p-button-text ml-m pointer ml-3"
+            <button
+              class="p-button p-button-rounded p-button p-button-text ml-m pointer ml-3 seal-button"
               pTooltip="Vulos Diploma"
               tooltipPosition="bottom"
-              (click)="onSeal(student)" />
+              [disabled]="responseLoaded"
+              (click)="onSeal(student)"
+            >
+              <img src="assets/svg/electronic-seal.svg" alt="Seal" />
+            </button>
           </div>
         </div>
       </td>

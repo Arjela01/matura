@@ -27,6 +27,7 @@
         [students]="(studentList$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
+        [responseLoaded]="(responseLoaded$ | async)"
         (lazyLoadData)="getStudentDiplomas($event)">
       </msh-diplomas-student-grid>
     </div>

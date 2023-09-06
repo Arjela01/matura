@@ -65,6 +65,8 @@ export class ManageDiplomasStudentComponent implements OnInit {
   selectedStudent: Student | null = null;
   selectedStudentList: Student[] = [];
   selectedAction!: string;
+   responseLoaded = new BehaviorSubject<boolean>(false);
+   responseLoaded$ = this.responseLoaded.asObservable();
 
   studentTypes: DropdownModel<number>[] = [
     {
@@ -168,16 +170,17 @@ export class ManageDiplomasStudentComponent implements OnInit {
     const academicYear = JSON.parse(
       localStorage.getItem('academicYear') as string
     );
+    this.responseLoaded.next(true);
     this.diplomasService
       .printElectronicSeal(event.data?.studentId as string, academicYear.id, !this.printed)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        if (response === 'Dokumenti u regjistrua me sukses!' as any) {
-          this.toastService.showSuccess('Dokumenti u regjistrua me sukses!');
-        } else {
+        if (response) {
+          this.toastService.showInfo(response as any);
+        }else{
           this.toastService.showError('Ndodhi një gabim!');
         }
-      });
+      }).add(() => this.responseLoaded.next(false));
   }
 
   onFormSave(data: string) {
@@ -202,14 +205,12 @@ export class ManageDiplomasStudentComponent implements OnInit {
       }
     );
   }
-  private sealAllDiplomas(data: string) {
+   sealAllDiplomas(data: string) {
     this.diplomasService.printAllElectronicSeal(data)
     .subscribe(response => {
-    if (response === 'Dokumenti u regjistrua me sukses!' as any) {
-      this.toastService.showSuccess('Dokumenti u regjistrua me sukses!');
-      } else {
-    this.toastService.showError('Ndodhi një gabim!');
-  }
+      if (response) {
+        this.toastService.showInfo(response as any);
+    }
     });
   }
   getHighSchoolsByOffice(administrationOfficeId: string): void {
