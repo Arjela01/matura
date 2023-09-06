@@ -855,46 +855,44 @@ export class A1zFormComponent implements OnInit {
       .ensureExamGradeIsCarried($event)
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.onCarriedHide();
+          const carriedGrade = response.data;
 
-          switch ($event.examTypeName) {
+          switch (carriedGrade.examTypeName) {
             case EXAM_TYPES.D1:
-              this.a1z.academicYearD1Name = $event.academicYearName;
-              this.a1z.academicYearD1Id = $event.academicYearId;
-              this.a1z.carriedGradeD1Id = $event.id;
-              this.a1z.scoreD1 = $event.grade;
-              this.a1z.subjectD1Name = $event.examSubjectName;
-              this.a1z.reasonD1 = '';
-              this.cd.detectChanges();
+              this.a1z.academicYearD1Name = carriedGrade.academicYearName;
+              this.a1z.academicYearD1Id = carriedGrade.academicYearId;
+              this.a1z.carriedGradeD1Id = carriedGrade.id;
+              this.a1z.scoreD1 = carriedGrade.grade;
+              this.a1z.subjectD1Name = carriedGrade.examSubjectName;
+              this.a1z.reasonD1 = carriedGrade.reason;
               break;
             case EXAM_TYPES.D2:
-              this.a1z.academicYearD2Name = $event.academicYearName;
-              this.a1z.academicYearD2Id = $event.academicYearId;
-              this.a1z.carriedGradeD2Id = $event.id;
-              this.a1z.scoreD2 = $event.grade;
-              this.a1z.reasonD2 = '';
-              this.a1z.subjectD2Name = $event.examSubjectName;
-              this.cd.detectChanges();
+              this.a1z.academicYearD2Name = carriedGrade.academicYearName;
+              this.a1z.academicYearD2Id = carriedGrade.academicYearId;
+              this.a1z.carriedGradeD2Id = carriedGrade.id;
+              this.a1z.scoreD2 = carriedGrade.grade;
+              this.a1z.subjectD2Name = carriedGrade.examSubjectName;
+              this.a1z.reasonD2 = carriedGrade.reason;
               break;
             case EXAM_TYPES.D3:
-              this.a1z.academicYearD3Name = $event.academicYearName;
-              this.a1z.academicYearD3Id = $event.academicYearId;
-              this.a1z.carriedGradeD3Id = $event.id;
-              this.a1z.scoreD3 = $event.grade;
-              this.a1z.subjectD3Name = $event.examSubjectName;
-              this.a1z.reasonD3 = '';
-              this.cd.detectChanges();
+              this.a1z.academicYearD3Name = carriedGrade.academicYearName;
+              this.a1z.academicYearD3Id = carriedGrade.academicYearId;
+              this.a1z.carriedGradeD3Id = carriedGrade.id;
+              this.a1z.scoreD3 = carriedGrade.grade;
+              this.a1z.subjectD3Name = carriedGrade.examSubjectName;
+              this.a1z.reasonD3 = carriedGrade.reason;
               break;
             case EXAM_TYPES.Z1:
-              this.a1z.academicYearZ1Name = $event.academicYearName;
-              this.a1z.academicYearZ1Id = $event.academicYearId;
-              this.a1z.carriedGradeZ1Id = $event.id;
-              this.a1z.scoreZ1 = $event.grade;
-              this.a1z.reasonZ1 = '';
-              this.a1z.subjectZ1Name = $event.examSubjectName;
-              this.cd.detectChanges();
+              this.a1z.academicYearZ1Name = carriedGrade.academicYearName;
+              this.a1z.academicYearZ1Id = carriedGrade.academicYearId;
+              this.a1z.carriedGradeZ1Id = carriedGrade.id;
+              this.a1z.scoreZ1 = carriedGrade.grade;
+              this.a1z.subjectZ1Name = carriedGrade.examSubjectName;
+              this.a1z.reasonZ1 = carriedGrade.reason;
               break;
           }
+          this.onCarriedHide();
+          this.cd.detectChanges();
         } else {
           this.toastService.showError(response.errorMessage);
         }
