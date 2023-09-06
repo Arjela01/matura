@@ -55,7 +55,7 @@ let INITIAL_FILTER = {};
 @UntilDestroy()
 export class ManageDiplomasStudentComponent implements OnInit {
   @Input() printed = false;
-  @Input() title = 'Diplomat';
+  @Input() title = 'Diploma të Printuara';
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
