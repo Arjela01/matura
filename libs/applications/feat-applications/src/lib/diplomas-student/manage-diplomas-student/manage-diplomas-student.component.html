@@ -47,6 +47,7 @@
       [administrationOffices]="administrationOffices"
       [isPrinted]="!printed"
       [highSchools]="(highSchools$ | async)!!"
+      [responseLoaded]="(responseLoaded$ | async)"
       [studentTypes]="studentTypes"
       (admOfficeChanged)="getHighSchoolsByOffice($event)"
       (formClose)="onModalClose()"

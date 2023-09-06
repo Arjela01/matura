@@ -1,4 +1,5 @@
-<form #form="ngForm" (ngSubmit)="onSubmit()">
+<form #form="ngForm" (ngSubmit)="onSubmit()"
+>
   <div class="field">
     <label for="studentType">Tipi i studentit *</label>
     <p-dropdown
@@ -116,7 +117,7 @@
       class="p-button-text w-auto mr-2"
       (click)="onCancelClick()"></button>
     <button
-      [disabled]="form.invalid"
+      [disabled]="form.invalid || responseLoaded"
       type="submit"
       pButton
       label="Ruaj"

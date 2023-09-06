@@ -47,6 +47,8 @@ export class DiplomasStudentFormComponent {
   @Input() administrationOffices: DropdownModel<number>[] = [];
   @Input() isPrinted = false;
   @Input() highSchools: DropdownModel<number>[] = [];
+  @Input() responseLoaded: any
+
   @ViewChild('form', { static: true }) form!: NgForm;
 
   submitted = false;
