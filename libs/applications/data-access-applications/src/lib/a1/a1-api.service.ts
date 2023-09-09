@@ -38,7 +38,7 @@ export class A1ApiService {
     );
   }
   update(a1: A1Z): Observable<ApiResult<A1Z>> {
-    return this.apiService.put<ApiResult<A1Z>, A1Z>(`/A1`, a1).pipe(
+    return this.apiService.post<ApiResult<A1Z>, A1Z>(`/A1/Update`, a1).pipe(
       map(data => data),
       catchError(error => throwError(error))
     );

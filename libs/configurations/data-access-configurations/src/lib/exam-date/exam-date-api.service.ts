@@ -23,8 +23,8 @@ export class ExamDateApiService {
   }
 
   update(examDate: ExamDate): Observable<ApiResult<ExamDate>> {
-    return this.apiService.put<ApiResult<ExamDate>, ExamDate>(
-      `/ExamDate`,
+    return this.apiService.post<ApiResult<ExamDate>, ExamDate>(
+      `/ExamDate/Update`,
       examDate
     );
   }

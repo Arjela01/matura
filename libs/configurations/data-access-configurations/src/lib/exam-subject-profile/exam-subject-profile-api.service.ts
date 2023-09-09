@@ -40,8 +40,8 @@ export class ExamSubjectProfileApiService {
     examSubjectProfile: ExamSubjectProfile
   ): Observable<ApiResult<ExamSubjectProfile>> {
     return this.apiService
-      .put<ApiResult<ExamSubjectProfile>, ExamSubjectProfile>(
-        `/ExamSubjectProfile`,
+      .post<ApiResult<ExamSubjectProfile>, ExamSubjectProfile>(
+        `/ExamSubjectProfile/Update`,
         examSubjectProfile
       )
       .pipe(

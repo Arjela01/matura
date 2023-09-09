@@ -29,8 +29,8 @@ export class A1ZCategoryApiService {
     );
   }
   update(a1zCategory: A1ZCategory): Observable<ApiResult<A1ZCategory>> {
-    return this.apiService.put<ApiResult<A1ZCategory>, A1ZCategory>(
-      `/A1ZCategory`,
+    return this.apiService.post<ApiResult<A1ZCategory>, A1ZCategory>(
+      `/A1ZCategory/Update`,
       a1zCategory
     );
   }

@@ -43,7 +43,7 @@ export class ArchiveFolderApiService {
     id: number,
     isClosed?: boolean
   ): Observable<ApiResult<ArchiveFolder>> {
-    return this.apiService.put<ApiResult<ArchiveFolder>, any>(
+    return this.apiService.post<ApiResult<ArchiveFolder>, any>(
       `/ArchiveFolder/UpdateStatus`,
       {
         id: id,
@@ -78,8 +78,8 @@ export class ArchiveFolderApiService {
   }
 
   update(archiveFolder: ArchiveFolder): Observable<ApiResult<ArchiveFolder>> {
-    return this.apiService.put<ApiResult<ArchiveFolder>, ArchiveFolder>(
-      `/ArchiveFolder`,
+    return this.apiService.post<ApiResult<ArchiveFolder>, ArchiveFolder>(
+      `/ArchiveFolder/Update`,
       archiveFolder
     );
   }

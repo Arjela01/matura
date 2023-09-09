@@ -38,8 +38,8 @@ export class DashboardSectionApiService {
   update(
     dashboardSection: DashboardSection
   ): Observable<ApiResult<DashboardSection>> {
-    return this.apiService.put<ApiResult<DashboardSection>, DashboardSection>(
-      `/DashboardSection`,
+    return this.apiService.post<ApiResult<DashboardSection>, DashboardSection>(
+      `/DashboardSection/Update`,
       dashboardSection
     );
   }

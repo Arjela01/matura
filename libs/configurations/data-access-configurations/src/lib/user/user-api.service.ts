@@ -40,7 +40,7 @@ export class UserApiService {
   }
 
   update(user: User): Observable<ApiResult<User>> {
-    return this.apiService.put<ApiResult<User>, User>('/User', user);
+    return this.apiService.post<ApiResult<User>, User>('/User/Update', user);
   }
 
   delete(userId: string): Observable<ApiResult<unknown>> {

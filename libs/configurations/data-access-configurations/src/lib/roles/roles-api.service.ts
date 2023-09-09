@@ -20,7 +20,7 @@ export class RolesApiService {
   }
 
   update(role: Role): Observable<ApiResult<Role>> {
-    return this.apiService.put<ApiResult<Role>, Role>(`/Role`, role);
+    return this.apiService.post<ApiResult<Role>, Role>(`/Role/Update`, role);
   }
 
   delete(roleId: string): Observable<ApiResult<unknown>> {

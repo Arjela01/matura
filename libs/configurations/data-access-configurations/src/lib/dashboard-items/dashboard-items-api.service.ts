@@ -48,8 +48,8 @@ export class DashboardItemsApiService {
     );
   }
   update(dashboardItems: DashboardItem): Observable<ApiResult<DashboardItem>> {
-    return this.apiService.put<ApiResult<DashboardItem>, DashboardItem>(
-      `/DashboardItems`,
+    return this.apiService.post<ApiResult<DashboardItem>, DashboardItem>(
+      `/DashboardItems/Update`,
       dashboardItems
     );
   }

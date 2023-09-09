@@ -25,7 +25,7 @@ export class A1ZApiService {
   }
 
   update(a1z: A1Z): Observable<ApiResult<A1Z>> {
-    return this.apiService.put<ApiResult<A1Z>, A1Z>('/A1Z', a1z);
+    return this.apiService.post<ApiResult<A1Z>, A1Z>('/A1Z/Update', a1z);
   }
 
   delete(a1zId: string): Observable<ApiResult<unknown>> {

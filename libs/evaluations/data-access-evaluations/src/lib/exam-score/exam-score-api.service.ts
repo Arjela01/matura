@@ -33,8 +33,8 @@ export class ExamScoreApiService {
   }
 
   update(examScore: ExamScore): Observable<ApiResult<ExamScore>> {
-    return this.apiService.put<ApiResult<ExamScore>, ExamScore>(
-      `/ExamScores`,
+    return this.apiService.post<ApiResult<ExamScore>, ExamScore>(
+      `/ExamScores/Update`,
       examScore
     );
   }

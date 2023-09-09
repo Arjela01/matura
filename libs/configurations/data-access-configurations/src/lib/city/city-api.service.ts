@@ -24,7 +24,7 @@ export class CityApiService {
     return this.apiService.post<ApiResult<City>, City>(`/City`, city);
   }
   update(city: City): Observable<ApiResult<City>> {
-    return this.apiService.put<ApiResult<City>, City>(`/City`, city);
+    return this.apiService.post<ApiResult<City>, City>(`/City/Update`, city);
   }
 
   delete(cityId: number): Observable<ApiResult<unknown>> {

@@ -33,8 +33,8 @@ export class DataExportApiService {
   }
 
   update(dataExport: DataExport): Observable<ApiResult<DataExport>> {
-    return this.apiService.put<ApiResult<DataExport>, DataExport>(
-      `/DataExport`,
+    return this.apiService.post<ApiResult<DataExport>, DataExport>(
+      `/DataExport/Update`,
       dataExport
     );
   }

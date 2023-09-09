@@ -31,8 +31,8 @@ export class ProfileGroupApiService {
   }
 
   update(profileGroup: ProfileGroup): Observable<ApiResult<ProfileGroup>> {
-    return this.apiService.put<ApiResult<ProfileGroup>, ProfileGroup>(
-      `/ProfileGroup`,
+    return this.apiService.post<ApiResult<ProfileGroup>, ProfileGroup>(
+      `/ProfileGroup/Update`,
       profileGroup
     );
   }

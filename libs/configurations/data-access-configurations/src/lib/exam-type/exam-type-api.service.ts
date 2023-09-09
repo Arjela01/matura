@@ -23,8 +23,8 @@ export class ExamTypeApiService {
   }
 
   update(examType: ExamType): Observable<ApiResult<ExamType>> {
-    return this.apiService.put<ApiResult<ExamType>, ExamType>(
-      `/ExamType`,
+    return this.apiService.post<ApiResult<ExamType>, ExamType>(
+      `/ExamType/Update`,
       examType
     );
   }

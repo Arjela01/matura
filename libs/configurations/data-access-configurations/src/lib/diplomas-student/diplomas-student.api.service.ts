@@ -16,10 +16,9 @@ export class DiplomasStudentApiService {
     const academicYear = JSON.parse(
       localStorage.getItem('academicYear') as string
     ) as AcademicYear;
-    return this.apiService.put<BlobPart, any>(
+    return this.apiService.post<BlobPart, any>(
       `/PrintedDiplomas/${id}?academicYearId=${academicYear.id}&isReportAll=${allReports}`,
-      {},
-      'blob'
+      {}
     );
   }
   printElectronicSeal(
@@ -28,7 +27,7 @@ export class DiplomasStudentApiService {
     allReports: boolean
   ): Observable<ApiResult<any>> {
     return this.apiService
-      .put<ApiResult<any>,any>(
+      .post<ApiResult<any>,any>(
         `/PrintedDiplomas/ElectronicSeal/${studentId}?academicYearId=${academicYearId}&isReportAll=${allReports}`,
         {}
       );
