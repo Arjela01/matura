@@ -44,8 +44,8 @@ export class FailingStudentApiService {
   update(
     failingStudent: FailingStudent
   ): Observable<ApiResult<FailingStudent>> {
-    return this.apiservice.put<ApiResult<FailingStudent>, FailingStudent>(
-      `/FailingStudents`,
+    return this.apiservice.post<ApiResult<FailingStudent>, FailingStudent>(
+      `/FailingStudents/Update`,
       failingStudent
     );
   }

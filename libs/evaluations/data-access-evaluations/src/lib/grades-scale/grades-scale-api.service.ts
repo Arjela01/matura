@@ -24,8 +24,8 @@ export class GradesScaleService {
   }
 
   update(gradeScale: GradesScale): Observable<ApiResult<GradesScale>> {
-    return this.apiService.put<ApiResult<GradesScale>, GradesScale>(
-      `/GradeScale`,
+    return this.apiService.post<ApiResult<GradesScale>, GradesScale>(
+      `/GradeScale/Update`,
       gradeScale
     );
   }

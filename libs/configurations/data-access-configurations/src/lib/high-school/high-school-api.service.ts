@@ -37,8 +37,8 @@ export class HighSchoolApiService {
   }
 
   update(highSchool: HighSchool): Observable<ApiResult<HighSchool>> {
-    return this.apiService.put<ApiResult<HighSchool>, HighSchool>(
-      `/HighSchool`,
+    return this.apiService.post<ApiResult<HighSchool>, HighSchool>(
+      `/HighSchool/Update`,
       highSchool
     );
   }

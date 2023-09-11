@@ -49,8 +49,8 @@ export class ExamAssignmentApiService {
   update(
     examAssignment: ExamAssignment
   ): Observable<ApiResult<ExamAssignment>> {
-    return this.apiService.put<ApiResult<ExamAssignment>, ExamAssignment>(
-      `/ExamAssignment`,
+    return this.apiService.post<ApiResult<ExamAssignment>, ExamAssignment>(
+      `/ExamAssignment/Update`,
       examAssignment
     );
   }

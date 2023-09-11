@@ -32,10 +32,10 @@ export class UniversityDepartmentApiService {
   update(
     universityDepartment: UniversityDepartment
   ): Observable<ApiResult<UniversityDepartment>> {
-    return this.apiService.put<
+    return this.apiService.post<
       ApiResult<UniversityDepartment>,
       UniversityDepartment
-    >(`/UniversityDepartment`, universityDepartment);
+    >(`/UniversityDepartment/Update`, universityDepartment);
   }
 
   delete(universityDepartmentId: string): Observable<ApiResult<unknown>> {

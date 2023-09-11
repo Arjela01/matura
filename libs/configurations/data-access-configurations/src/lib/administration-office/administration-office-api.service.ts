@@ -57,10 +57,10 @@ export class AdministrationOfficeApiService {
   update(
     administrationOffice: AdministrationOffice
   ): Observable<ApiResult<AdministrationOffice>> {
-    return this.apiService.put<
+    return this.apiService.post<
       ApiResult<AdministrationOffice>,
       AdministrationOffice
-    >(`/AdministrationOffice`, administrationOffice);
+    >(`/AdministrationOffice/Update`, administrationOffice);
   }
   delete(administrationOfficeId: number): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<AdministrationOffice>>(

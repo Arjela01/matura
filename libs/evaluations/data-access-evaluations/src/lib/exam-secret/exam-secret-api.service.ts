@@ -34,8 +34,8 @@ export class ExamSecretApiService {
   }
 
   update(examSecret: ExamSecret): Observable<ApiResult<ExamSecret>> {
-    return this.apiService.put<ApiResult<ExamSecret>, ExamSecret>(
-      `/ExamSecrets`,
+    return this.apiService.post<ApiResult<ExamSecret>, ExamSecret>(
+      `/ExamSecrets/Update`,
       examSecret
     );
   }

@@ -29,7 +29,7 @@ export class ExamVersionApiService {
 
   update(examVersion: ExamVersion): Observable<ApiResult<ExamVersion>> {
     return this.apiService
-      .put<ApiResult<ExamVersion>, ExamVersion>(`/ExamVersion`, examVersion)
+      .post<ApiResult<ExamVersion>, ExamVersion>(`/ExamVersion/Update`, examVersion)
       .pipe(
         map(data => data),
         catchError(error => throwError(error)),

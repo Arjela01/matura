@@ -40,8 +40,8 @@ export class ArchiveExamApiService {
   }
 
   update(archiveExam: ArchiveExam): Observable<ApiResult<ArchiveExam>> {
-    return this.apiService.put<ApiResult<ArchiveExam>, ArchiveExam>(
-      `/ArchiveExam`,
+    return this.apiService.post<ApiResult<ArchiveExam>, ArchiveExam>(
+      `/ArchiveExam/Update`,
       archiveExam
     );
   }

@@ -23,8 +23,8 @@ export class UniversityApiService {
   }
 
   update(university: University): Observable<ApiResult<University>> {
-    return this.apiService.put<ApiResult<University>, University>(
-      `/University`,
+    return this.apiService.post<ApiResult<University>, University>(
+      `/University/Update`,
       university
     );
   }

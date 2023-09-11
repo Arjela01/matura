@@ -20,7 +20,7 @@ export class ActivateOverseerDarZaApiService {
     );
   }
   changeDarZaStatus(id: number): Observable<ApiResult<ActivateOverseerDarZa>> {
-    return this.apiService.put<ApiResult<ActivateOverseerDarZa>, any>(
+    return this.apiService.post<ApiResult<ActivateOverseerDarZa>, any>(
       `/ActivateOverseerDarZa/UpdateStatus`,
       {
         id: id,

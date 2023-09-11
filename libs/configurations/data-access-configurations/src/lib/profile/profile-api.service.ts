@@ -28,8 +28,8 @@ export class ProfileApiService {
   }
 
   update(profile: Profile): Observable<ApiResult<Profile>> {
-    return this.apiService.put<ApiResult<Profile>, Profile>(
-      `/Profile`,
+    return this.apiService.post<ApiResult<Profile>, Profile>(
+      `/Profile/Update`,
       profile
     );
   }

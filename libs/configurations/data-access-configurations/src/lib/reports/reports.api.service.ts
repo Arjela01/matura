@@ -25,8 +25,8 @@ export class ReportsApiService {
     );
   }
   update(report: Reports): Observable<ApiResult<Reports>> {
-    return this.apiService.put<ApiResult<Reports>, Reports>(
-      `/AppReport`,
+    return this.apiService.post<ApiResult<Reports>, Reports>(
+      `/AppReport/Update`,
       report
     );
   }

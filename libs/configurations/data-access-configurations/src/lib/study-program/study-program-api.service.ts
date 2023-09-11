@@ -34,8 +34,8 @@ export class StudyProgramApiService {
   }
 
   update(studyProgram: StudyProgram): Observable<ApiResult<StudyProgram>> {
-    return this.apiService.put<ApiResult<StudyProgram>, StudyProgram>(
-      `/StudyProgram`,
+    return this.apiService.post<ApiResult<StudyProgram>, StudyProgram>(
+      `/StudyProgram/Update`,
       studyProgram
     );
   }

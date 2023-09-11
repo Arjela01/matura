@@ -36,8 +36,8 @@ export class AcademicYearApiService {
     );
   }
   update(academicYear: AcademicYear): Observable<ApiResult<AcademicYear>> {
-    return this.apiService.put<ApiResult<AcademicYear>, AcademicYear>(
-      `/AcademicYear`,
+    return this.apiService.post<ApiResult<AcademicYear>, AcademicYear>(
+      `/AcademicYear/Update`,
       academicYear
     );
   }

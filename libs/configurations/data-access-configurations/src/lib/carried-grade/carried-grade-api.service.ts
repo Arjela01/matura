@@ -33,8 +33,8 @@ export class CarriedGradeApiService {
   }
 
   update(carriedGrade: CarriedGrade): Observable<ApiResult<CarriedGrade>> {
-    return this.apiService.put<ApiResult<CarriedGrade>, CarriedGrade>(
-      `/CarriedGrade`,
+    return this.apiService.post<ApiResult<CarriedGrade>, CarriedGrade>(
+      `/CarriedGrade/Update`,
       carriedGrade
     );
   }
