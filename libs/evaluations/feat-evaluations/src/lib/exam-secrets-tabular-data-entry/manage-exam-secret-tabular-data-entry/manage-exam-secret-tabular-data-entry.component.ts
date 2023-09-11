@@ -79,6 +79,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
   examSubjectId: any;
   subjectName!: any;
   data: any;
+  examSecretNotes: DropdownModel<string>[] = [];
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -104,6 +105,14 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
         });
         break;
     }
+  }
+  getExamSecretNotes() {
+    this.examTypeService
+      .loadDropdownExamNotesList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.examSecretNotes = response.data;
+      });
   }
   onApplySearch($event: ExamSecretSearchModel, examSecret?: ExamSecret) {
     this.filters = Object.assign({}, $event);
@@ -204,6 +213,8 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAdministrationOffices();
+    this.getExamSecretNotes();
+
   }
 
   loadExamDates($event: ExamSecretSearchModel) {
@@ -220,7 +231,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Barkodi u shtua me sukses!');
+          this.toastService.showSuccess('Ndryshimet u ruajtën  me sukses!');
           this.onApplySearch(
             this.filters as ExamSecretSearchModel,
             response.data
@@ -230,7 +241,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
         }
         if (response.isBadRequest) {
           this.toastService.showError(
-            'Ndodhi një problem gjatë shtimit të barkodit!'
+            'Ndodhi një problem!'
           );
         }
       });
@@ -241,7 +252,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Barkodi u ndryshua me sukses!');
+          this.toastService.showSuccess('Ndryshimet u ruajtën  me sukses!');
           this.onApplySearch(
             this.filters as ExamSecretSearchModel,
             response.data
@@ -251,7 +262,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
         }
         if (response.isBadRequest) {
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit të barkodit!'
+            'Ndodhi një problem!'
           );
         }
       });
@@ -283,6 +294,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
       examTypeId: filterResults.examAssignment.examTypeId,
       examSubjectId: this.examSubjectId,
       isFall: filterResults.examAssignment.isFall,
+      examSecretNoteId: filterResults.examSecret.examSecretNoteId
     };
     if (!filterResults.examSecret.hasBarcode) {
       this.save(examSecret);

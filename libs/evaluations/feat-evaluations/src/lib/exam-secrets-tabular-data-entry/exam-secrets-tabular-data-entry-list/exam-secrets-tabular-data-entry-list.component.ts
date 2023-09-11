@@ -18,6 +18,7 @@ import {
   ExamSecretTabularDataEntryItem,
 } from '@msh/shared/domain-models';
 import { TooltipModule } from 'primeng/tooltip';
+import {DropdownModel} from "@msh/shared/data-access-shared";
 
 @UntilDestroy()
 @Component({
@@ -41,6 +42,7 @@ export class ExamSecretsTabularDataEntryListComponent {
   @Input() totalRecords = 0;
   @Input() loading = false;
   @Input() subjectName!: string;
+  @Input() examSecretNotes: DropdownModel<string>[] = [];
 
   @Input() examSecretSubject: any;
   @Output() barcodeChange = new EventEmitter<any>();
@@ -54,7 +56,7 @@ export class ExamSecretsTabularDataEntryListComponent {
       data: examSecret,
     } as GridEvent<ExamSecret>);
   }
-  onExamSecretAddOrUpdate(examScores: any) {
-    this.barcodeChange.emit(examScores);
+  onExamSecretAddOrUpdate(examSecret: any) {
+    this.barcodeChange.emit(examSecret);
   }
 }

@@ -40,6 +40,11 @@ export class ExamTypeApiService {
       `/ExamType/DropdownList`
     );
   }
+  loadDropdownExamNotesList(): Observable<ApiResult<DropdownModel<string>[]>> {
+    return this.apiService.get<ApiResult<DropdownModel<string>[]>>(
+      `/ExamSecretNote/DropdownList`
+    );
+  }
 
   getExamTypesForSiteId(
     examSiteId: string
