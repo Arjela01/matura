@@ -78,8 +78,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
   examDates: DropdownModel<number>[] = [];
   examSubjectId: any;
   subjectName!: any;
-   subjectId: any;
-   data: any;
+  data: any;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
