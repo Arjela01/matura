@@ -77,7 +77,9 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
   examSubjects: DropdownModel<string>[] = [];
   examDates: DropdownModel<number>[] = [];
   examSubjectId: any;
-  subjectName: any;
+  subjectName!: any;
+   subjectId: any;
+   data: any;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -104,33 +106,48 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
         break;
     }
   }
-
   onApplySearch($event: ExamSecretSearchModel, examSecret?: ExamSecret) {
     this.filters = Object.assign({}, $event);
+
     forkJoin([
       this.examAssignmentApiService.forExamDateId($event.examDateId),
-      this.examSecretService.forExamSubjectId($event.examSubjectId),
+      this.examSecretService.forExamSubjectId( $event.examTypeId, $event.examSubjectId),
     ])
       .pipe(untilDestroyed(this))
       .subscribe(([examAssignmentsResponse, examSecretsResponse]) => {
-        examSecretsResponse.data.map(
-          (item: any) => (
-            (item.hasBarcode = true),
-            (this.examSubjectId = item.examSubjectId),
-            (this.subjectName = item.examSubjectName)
-          )
-        );
-        const result = examAssignmentsResponse.data.map(x => {
-          return {
+        if ($event.examSubjectId) {
+          examSecretsResponse.data
+            .filter(item => item.examSubjectId === $event.examSubjectId )
+            .map(item => {
+              item.hasBarcode = true;
+              this.examSubjectId = item.examSubjectId;
+              this.subjectName = item.examSubjectName;
+            });
+        } else {
+          examSecretsResponse.data.map(item => {
+            item.hasBarcode = true;
+            this.examSubjectId = item.examSubjectId;
+          });
+        }
+        const result: any = [];
+        examAssignmentsResponse.data.forEach(x => {
+          const examSecret = examSecretsResponse.data.find(
+            i => i.examTypeId === x.examTypeId && i.studentId === x.studentId
+          );
+          result.push({
             examAssignment: x,
-            examSecret:
-              examSecretsResponse.data.find(
-                i => i.examTypeId == x.examTypeId && i.studentId == x.studentId
-              ) ?? ({} as ExamSecret),
-          } as ExamSecretTabularDataEntryItem;
+            examSecret: examSecret || ({} as ExamSecret),
+          });
         });
-        this.dataEntryItemList$$.next(result);
-        if (examSecret != undefined) {
+
+        const resultAsExamSecretTabularDataEntryItem = result.map((entry: any) => ({
+          ...entry,
+          examSecret: entry.examSecret as ExamSecretTabularDataEntryItem,
+        }));
+        this.dataEntryItemList$$.next(resultAsExamSecretTabularDataEntryItem);
+        this.cd.detectChanges();
+
+        if (examSecret !== undefined) {
           setTimeout(() => {
             document
               .querySelector<HTMLInputElement>(

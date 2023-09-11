@@ -40,7 +40,8 @@ export class ExamSecretsTabularDataEntryListComponent {
   @Input() dataEntryItemList: ExamSecretTabularDataEntryItem[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
-  @Input() subjectName: any;
+  @Input() subjectName!: string;
+
   @Input() examSecretSubject: any;
   @Output() barcodeChange = new EventEmitter<any>();
   @Output() gridEvent = new EventEmitter<

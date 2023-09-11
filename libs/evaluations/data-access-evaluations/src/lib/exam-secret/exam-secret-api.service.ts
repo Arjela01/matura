@@ -80,9 +80,11 @@ export class ExamSecretApiService {
     );
   }
 
-  forExamSubjectId(examSubjectId: string): Observable<ApiResult<ExamSecret[]>> {
-    return this.apiService.get(
-      `/ExamSecrets/ForExamSubjectId/${examSubjectId}`
-    );
+
+  forExamSubjectId( examTypeId: any, id?: any ): Observable<ApiResult<ExamSecret[]>> {
+    let query={}
+    if(id)
+      query= {id}
+    return this.apiService.getData(`/ExamSecrets/ForExamSubject?examTypeId=${examTypeId}`, query);
   }
 }
