@@ -81,7 +81,7 @@ export class ExamSecretApiService {
   }
 
 
-  forExamSubjectId( examTypeId: any, id?: any ): Observable<ApiResult<ExamSecret[]>> {
+  forExamSubject( examTypeId: any, id?: any ): Observable<ApiResult<ExamSecret[]>> {
     let query={}
     if(id)
       query= {id}

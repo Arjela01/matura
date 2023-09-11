@@ -110,7 +110,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
 
     forkJoin([
       this.examAssignmentApiService.forExamDateId($event.examDateId),
-      this.examSecretService.forExamSubjectId( $event.examTypeId, $event.examSubjectId),
+      this.examSecretService.forExamSubject( $event.examTypeId, $event.examSubjectId),
     ])
       .pipe(untilDestroyed(this))
       .subscribe(([examAssignmentsResponse, examSecretsResponse]) => {
