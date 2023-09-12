@@ -152,7 +152,7 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
     } else {
       this.examSecret.studentId = student.studentId;
       this.studentInputData =
-        student?.studentIdentifier + '-' + student?.studentName;
+        student?.studentStudentId + '-' + student?.studentFirstName + '-' + student.studentLastName;
     }
   }
 
