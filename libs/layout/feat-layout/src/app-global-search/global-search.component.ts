@@ -55,7 +55,7 @@ export class GlobalSearchComponent {
   handleKeyDown(event: KeyboardEvent) {
     const isLoginPage = window.location.pathname === '/login';
 
-    if (event.ctrlKey && event.key === 'a' && !isLoginPage) {
+    if (event.ctrlKey && event.shiftKey && event.key === 'F' && !isLoginPage) {
       if (!this.searchBoxVisible) {
         this.searchBoxVisible = true;
         this.fetchMenuItems();
