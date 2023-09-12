@@ -99,7 +99,6 @@ export class ExamSecretsTabularDataEntryFormComponent {
     return (
       searchModal.administrationOfficeId &&
       searchModal.examSiteId &&
-      searchModal.examSubjectId &&
       searchModal.examDateId &&
       searchModal.examTypeId
     );

@@ -28,11 +28,24 @@ export class APIService {
     });
   }
 
+  getData<T>(
+    url: string,
+    params: any,
+    responseType = 'json'
+  ): Observable<T> {
+    return this.http.get<T>(`${this.api_url}${url}`, {
+      headers: this.headers,
+      params,
+      responseType: responseType !== 'json' ? (responseType as 'json') : 'json',
+    });
+  }
+
   post<T, D>(url: string, data?: D): Observable<T> {
     return this.http.post<T>(`${this.api_url}${url}`, data, {
       headers: this.headers,
     });
   }
+
   postWithParams<T, D>(url: string, data?: D, params?: any): Observable<T> {
     return this.http.post<T>(`${this.api_url}${url}`, data, {
       params,
