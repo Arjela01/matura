@@ -151,7 +151,26 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
 
   getExamDate(examSiteId: string): void {
     this.examDateService.forExamSiteId(examSiteId).subscribe(response => {
-      this.examDates = [...response.data];
+      const currentDate = new Date();
+
+      const futureExamDates = response.data.filter((item: any) => {
+        const dateStr = item.value;
+        const regex = /(\d{2}\.\d{2}.\d{4}) @ (\d{2}:\d{2})/;
+        const match = dateStr.match(regex);
+
+        if (match) {
+          const datePart = match[1];
+          const timePart = match[2];
+          const [day, month, year] = datePart.split('.').map(Number);
+          const [hours, minutes] = timePart.split(':').map(Number);
+          const examDate = new Date(year, month - 1, day, hours, minutes);
+
+          return examDate >= currentDate;
+        }
+
+        return false;
+      });
+      this.examDates = [...futureExamDates];
       this.cd.markForCheck();
     });
   }
