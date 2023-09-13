@@ -70,6 +70,8 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
   @Output() formClose = new EventEmitter<undefined>();
   @ViewChild('form', { static: true }) form!: NgForm;
   @Input() examSubjects: DropdownModel<string>[] = [];
+  @Input() examSecretNotes: DropdownModel<string>[] = [];
+
   @Input() examTypes: DropdownModel<number>[] = [];
   @Output() examTypeChanged = new EventEmitter<string>();
 
@@ -150,7 +152,7 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
     } else {
       this.examSecret.studentId = student.studentId;
       this.studentInputData =
-        student?.studentIdentifier + '-' + student?.studentName;
+        student?.studentStudentId + '-' + student?.studentFirstName + '-' + student.studentLastName;
     }
   }
 

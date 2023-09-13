@@ -14,6 +14,8 @@ export interface ExamSecret {
   academicYearId?: number;
   studentIdentifier?: string;
   hasBarcode?: boolean;
+  examSecretNoteId?: number;
+  examSecretNoteName?: string;
 }
 
 export interface ExamSecretTableView {

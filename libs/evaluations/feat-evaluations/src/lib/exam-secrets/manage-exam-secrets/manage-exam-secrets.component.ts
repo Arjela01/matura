@@ -66,6 +66,7 @@ export class ManageExamSecretsComponent implements OnInit {
   displayModal = false;
   examSubjects: DropdownModel<string>[] = [];
   examTypes: DropdownModel<number>[] = [];
+  examSecretNotes: DropdownModel<string>[] = [];
 
   examSecretId: string | undefined;
   selectedRecord: any;
@@ -94,6 +95,7 @@ export class ManageExamSecretsComponent implements OnInit {
   ngOnInit(): void {
     this.getExamTypes();
     this.getExamSubjects();
+    this.getExamSecretNotes();
   }
 
   onNewClick() {
@@ -148,7 +150,14 @@ export class ManageExamSecretsComponent implements OnInit {
         this.examTypes = response.data;
       });
   }
-
+  getExamSecretNotes() {
+    this.examTypeService
+      .loadDropdownExamNotesList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.examSecretNotes = response.data;
+      });
+  }
   getExamSecrets($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 

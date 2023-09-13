@@ -77,7 +77,9 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
   examSubjects: DropdownModel<string>[] = [];
   examDates: DropdownModel<number>[] = [];
   examSubjectId: any;
-  subjectName: any;
+  subjectName!: any;
+  data: any;
+  examSecretNotes: DropdownModel<string>[] = [];
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -104,33 +106,56 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
         break;
     }
   }
-
+  getExamSecretNotes() {
+    this.examTypeService
+      .loadDropdownExamNotesList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.examSecretNotes = response.data;
+      });
+  }
   onApplySearch($event: ExamSecretSearchModel, examSecret?: ExamSecret) {
     this.filters = Object.assign({}, $event);
+
     forkJoin([
       this.examAssignmentApiService.forExamDateId($event.examDateId),
-      this.examSecretService.forExamSubjectId($event.examSubjectId),
+      this.examSecretService.forExamSubject( $event.examTypeId, $event.examSubjectId),
     ])
       .pipe(untilDestroyed(this))
       .subscribe(([examAssignmentsResponse, examSecretsResponse]) => {
-        examSecretsResponse.data.map(
-          (item: any) => (
-            (item.hasBarcode = true),
-            (this.examSubjectId = item.examSubjectId),
-            (this.subjectName = item.examSubjectName)
-          )
-        );
-        const result = examAssignmentsResponse.data.map(x => {
-          return {
+        if ($event.examSubjectId) {
+          examSecretsResponse.data
+            .filter(item => item.examSubjectId === $event.examSubjectId )
+            .map(item => {
+              item.hasBarcode = true;
+              this.examSubjectId = item.examSubjectId;
+              this.subjectName = item.examSubjectName;
+            });
+        } else {
+          examSecretsResponse.data.map(item => {
+            item.hasBarcode = true;
+            this.examSubjectId = item.examSubjectId;
+          });
+        }
+        const result: any = [];
+        examAssignmentsResponse.data.forEach(x => {
+          const examSecret = examSecretsResponse.data.find(
+            i => i.examTypeId === x.examTypeId && i.studentId === x.studentId
+          );
+          result.push({
             examAssignment: x,
-            examSecret:
-              examSecretsResponse.data.find(
-                i => i.examTypeId == x.examTypeId && i.studentId == x.studentId
-              ) ?? ({} as ExamSecret),
-          } as ExamSecretTabularDataEntryItem;
+            examSecret: examSecret || ({} as ExamSecret),
+          });
         });
-        this.dataEntryItemList$$.next(result);
-        if (examSecret != undefined) {
+
+        const resultAsExamSecretTabularDataEntryItem = result.map((entry: any) => ({
+          ...entry,
+          examSecret: entry.examSecret as ExamSecretTabularDataEntryItem,
+        }));
+        this.dataEntryItemList$$.next(resultAsExamSecretTabularDataEntryItem);
+        this.cd.detectChanges();
+
+        if (examSecret !== undefined) {
           setTimeout(() => {
             document
               .querySelector<HTMLInputElement>(
@@ -188,6 +213,8 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAdministrationOffices();
+    this.getExamSecretNotes();
+
   }
 
   loadExamDates($event: ExamSecretSearchModel) {
@@ -204,7 +231,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Barkodi u shtua me sukses!');
+          this.toastService.showSuccess('Ndryshimet u ruajtën  me sukses!');
           this.onApplySearch(
             this.filters as ExamSecretSearchModel,
             response.data
@@ -214,7 +241,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
         }
         if (response.isBadRequest) {
           this.toastService.showError(
-            'Ndodhi një problem gjatë shtimit të barkodit!'
+            'Ndodhi një problem!'
           );
         }
       });
@@ -225,7 +252,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Barkodi u ndryshua me sukses!');
+          this.toastService.showSuccess('Ndryshimet u ruajtën  me sukses!');
           this.onApplySearch(
             this.filters as ExamSecretSearchModel,
             response.data
@@ -235,7 +262,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
         }
         if (response.isBadRequest) {
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit të barkodit!'
+            'Ndodhi një problem!'
           );
         }
       });
@@ -267,6 +294,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
       examTypeId: filterResults.examAssignment.examTypeId,
       examSubjectId: this.examSubjectId,
       isFall: filterResults.examAssignment.isFall,
+      examSecretNoteId: filterResults.examSecret.examSecretNoteId
     };
     if (!filterResults.examSecret.hasBarcode) {
       this.save(examSecret);

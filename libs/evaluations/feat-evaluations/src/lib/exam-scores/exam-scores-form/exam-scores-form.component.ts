@@ -8,7 +8,7 @@ import {
   Input,
   OnChanges,
   OnDestroy,
-  Output,
+  Output, Renderer2,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
@@ -94,7 +94,8 @@ export class ExamScoresFormComponent
   constructor(
     private cd: ChangeDetectorRef,
     private examScores: ExamScoreApiService,
-    private readonly toastService: GlobalToastService
+    private readonly toastService: GlobalToastService,
+    private renderer: Renderer2
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -138,6 +139,10 @@ export class ExamScoresFormComponent
         this.examScore.archiveExamIndex = res.data?.index;
         this.examScore.archiveFolderNr = res.data?.archiveFolderNr;
         this.barcodeExists = true;
+
+        if (this.writingScoreInput && this.writingScoreInput.nativeElement) {
+          this.renderer.selectRootElement(this.writingScoreInput.nativeElement).focus();
+        }
       } else {
         this.barcodeExists = false;
         this.toastService.showError(res.errorMessage);
@@ -145,4 +150,5 @@ export class ExamScoresFormComponent
       this.cd.markForCheck();
     });
   }
+
 }
