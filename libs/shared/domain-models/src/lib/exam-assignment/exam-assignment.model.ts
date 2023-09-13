@@ -15,6 +15,7 @@ export interface ExamAssignment {
   administrationOfficeId?: number;
   administrationOfficeName?: string;
   time: string;
+  studentHighSchoolName?: string;
 }
 
 export interface ExamAssignmentTableView {
