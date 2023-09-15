@@ -153,16 +153,13 @@ export class ManageDiplomasStudentComponent implements OnInit {
     this.diplomasService
       .exportDiplomasStudent(event.data?.studentId as string, !this.printed)
       .subscribe(
-        response => {
+        (response: any) => {
           const blob = new Blob([response], {
             type: 'application/pdf',
           });
           FileSaver.saveAs(blob, `Diploma_${event.data?.fullName}`);
           this.getStudentDiplomas(this.filters as TableLazyLoadEvent);
         },
-        err => {
-          this.toastService.showError(err.error);
-        }
       );
   }
   onFormSave(data: string) {
@@ -176,17 +173,34 @@ export class ManageDiplomasStudentComponent implements OnInit {
     const academicYear = JSON.parse(
       localStorage.getItem('academicYear') as string
     );
-    this.responseLoaded.next(true);
-    this.diplomasService
-      .printElectronicSeal(event.data?.studentId as string, academicYear.id, !this.printed)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response) {
-          this.toastService.showInfo(response as any);
-        }else{
-          this.toastService.showError('Ndodhi një gabim!');
-        }
-      }).add(() => this.responseLoaded.next(false));
+    if (event.data?.countryId === 3) {
+      this.responseLoaded.next(true);
+      this.diplomasService
+        .printElectronicSeal(event.data?.studentId as string, academicYear.id, !this.printed)
+        .pipe(untilDestroyed(this))
+        .subscribe(response => {
+          if (response) {
+            this.toastService.showInfo(response as any);
+          }else{
+            this.toastService.showError('Ndodhi një gabim!');
+          }
+        }).add(() => this.responseLoaded.next(false));
+    }
+    else {
+      this.responseLoaded.next(true);
+      this.diplomasService
+        .printElectronicSealForForeignStudent(event.data?.studentId as string, !this.printed)
+        .subscribe(
+          (response : any) => {
+            const blob = new Blob([response], {
+              type: 'application/pdf',
+            });
+            FileSaver.saveAs(blob, `Diploma_${event.data?.fullName}`);
+            this.getStudentDiplomas(this.filters as TableLazyLoadEvent);
+          },
+     )
+        .add(() => this.responseLoaded.next(false));
+    }
   }
   sealAllDiplomas(data: string) {
     this.responseLoaded.next(true);
@@ -250,19 +264,18 @@ export class ManageDiplomasStudentComponent implements OnInit {
       .subscribe(response => {
         const students = [...response.data];
         for (const student of students) {
-          if (student.printedDate && student.ealbaniaDocsDiplomaPrintedDate === '0001-01-01T00:00:00') {
+          if (student.printedDate === '0001-01-01T00:00:00') {
             student.printedDate = null;
-            student.ealbaniaDocsDiplomaPrintedDate = null;
           } else {
             student.printedDate = new Date(student.printedDate);
+          } if(student.ealbaniaDocsDiplomaPrintedDate ===  null ){
+            student.ealbaniaDocsDiplomaPrintedDate = null;
+          } else{
             student.ealbaniaDocsDiplomaPrintedDate = new Date(student.ealbaniaDocsDiplomaPrintedDate);
-
           }
         }
         this.studentList$$.next(students);
         this.totalRecords = response.total;
       });
   }
-
-
 }
