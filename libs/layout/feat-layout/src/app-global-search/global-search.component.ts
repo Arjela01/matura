@@ -54,43 +54,26 @@ export class GlobalSearchComponent {
   @HostListener('document:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
     const isLoginPage = window.location.pathname === '/login';
-/*
-    if (event.key === 'Shift' && !isLoginPage) {
-      const currentTime = new Date().getTime();
 
-      if (currentTime - this.lastShiftPressTime < 1000) {
-        this.shiftPressedCount++;
+    if (event.ctrlKey && event.shiftKey && event.key === 'F' && !isLoginPage) {
+      if (!this.searchBoxVisible) {
+        this.searchBoxVisible = true;
+        this.fetchMenuItems();
 
-        if (this.shiftPressedCount === 2) {
-          if (!this.searchBoxVisible) {
-            this.searchBoxVisible = true;
-            this.fetchMenuItems();
-
-            setTimeout(() => {
-              const searchInput = document.getElementById(
-                'searchInput'
-              ) as HTMLInputElement;
-              if (searchInput) {
-                searchInput.focus();
-              }
-            }, 0);
-          } else {
-            this.shiftPressedCount = 1;
+        setTimeout(() => {
+          const searchInput = document.getElementById(
+            'searchInput'
+          ) as HTMLInputElement;
+          if (searchInput) {
+            searchInput.focus();
           }
-        }
+        }, 0);
       } else {
-        this.shiftPressedCount = 1;
-      }
-
-      this.lastShiftPressTime = currentTime;
-
-      if (this.searchBoxVisible && this.shiftPressedCount === 1) {
         this.searchBoxVisible = false;
         this.searchQuery = '';
         this.searchResults = [];
       }
     }
- */
   }
 
   onItemClick(itemText: string) {

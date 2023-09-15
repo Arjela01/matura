@@ -27,6 +27,15 @@
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
+      <th pSortableColumn="studentHighSchoolName">
+        Gjimnazi
+        <p-sortIcon field="studentHighSchoolName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="studentHighSchoolName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
       <th pSortableColumn="examTypeName">
         Tipi i Provimit
         <p-sortIcon field="examTypeName"></p-sortIcon>
@@ -81,6 +90,9 @@
         {{ examAssignment.examSiteName }}
       </td>
       <td style="width: 10%; min-width: 10rem">
+        {{ examAssignment.studentHighSchoolName }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
         {{ examAssignment.examTypeName }}
       </td>
       <td style="width: 10%; min-width: 10rem">
@@ -131,7 +143,9 @@
   [resizable]="false"
   class="p-fluid">
   <ng-template pTemplate="content">
-    <msh-exam-assignment-history-grid [recordId]="examAssignmentId" [recordData]="selectedRecord" >
+    <msh-exam-assignment-history-grid
+      [recordId]="examAssignmentId"
+      [recordData]="selectedRecord">
     </msh-exam-assignment-history-grid>
   </ng-template>
 </p-dialog>
