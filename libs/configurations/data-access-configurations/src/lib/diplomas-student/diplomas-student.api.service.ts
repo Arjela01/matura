@@ -12,15 +12,29 @@ import {ApiResult} from "@msh/shared/data-access-shared";
 export class DiplomasStudentApiService {
   constructor(private apiService: APIService) {}
 
-  exportDiplomasStudent(id: string, allReports: boolean): Observable<BlobPart> {
+  exportDiplomasStudent(id: string, allReports: boolean) {
     const academicYear = JSON.parse(
       localStorage.getItem('academicYear') as string
     ) as AcademicYear;
-    return this.apiService.post<BlobPart, any>(
+    return this.apiService.get<any>(
       `/PrintedDiplomas/${id}?academicYearId=${academicYear.id}&isReportAll=${allReports}`,
-      {}
+      new HttpParams(),
+      'blob'
     );
   }
+
+
+  printElectronicSealForForeignStudent(id: string, allReports: boolean) {
+    const academicYear = JSON.parse(
+      localStorage.getItem('academicYear') as string
+    ) as AcademicYear;
+      return  this.apiService.get<any>(
+        `/PrintedDiplomas/ElectronicSealForeigner/${id}?academicYearId=${academicYear.id}&isReportAll=${allReports}`,
+        new HttpParams(),
+        'blob'
+      );
+  }
+
   printElectronicSeal(
     studentId: string,
     academicYearId: number,
