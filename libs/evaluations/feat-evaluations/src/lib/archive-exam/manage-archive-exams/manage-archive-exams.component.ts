@@ -310,20 +310,25 @@ export class ManageArchiveExamsComponent implements OnInit {
           );
 
           this.displayModal = false;
-
           const isFallValue = this.archiveFolder.isFall ? '1' : '0';
-
           const query: { queryParams: { [x: string]: string } } = {
-            queryParams: {
-              [`${this.parameterUrl}`]: this.archiveFolder.nr,
-              [`${this.parameterYear}`]:
-                this.archiveFolder.academicYearId?.toString(),
-              [`${this.parameterExamType}`]: this.archiveFolder
-                .examTypeId as any,
-              [`${this.parameterIsFall}`]: isFallValue,
-            },
+            queryParams: {},
           };
-
+          if (
+            this.parameterUrl &&
+            this.parameterYear &&
+            this.parameterExamType &&
+            this.parameterIsFall &&
+            this.archiveFolder.nr &&
+            this.archiveFolder.academicYearId
+          ) {
+            query.queryParams[`${this.parameterUrl}`] = this.archiveFolder.nr;
+            query.queryParams[`${this.parameterYear}`] =
+              this.archiveFolder.academicYearId.toString();
+            query.queryParams[`${this.parameterExamType}`] = this.archiveFolder
+              .examTypeId as any;
+            query.queryParams[`${this.parameterIsFall}`] = isFallValue;
+          }
           this.router
             .navigate([`/reports/view/${this.archiveFolderReport}`], query)
             .then();
