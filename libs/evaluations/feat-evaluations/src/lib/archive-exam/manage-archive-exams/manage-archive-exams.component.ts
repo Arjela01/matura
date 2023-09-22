@@ -89,8 +89,8 @@ export class ManageArchiveExamsComponent implements OnInit {
   isBarcodeInputDisabled = false;
   parameterUrl!: any;
   parameterYear!: any;
-  parameterExamType!:any;
-  parameterIsFall!:any;
+  parameterExamType!: any;
+  parameterIsFall!: any;
   archiveFolderReport: Report = Report.ArchiveFolder_Report;
 
   event = {
@@ -154,7 +154,7 @@ export class ManageArchiveExamsComponent implements OnInit {
         this.parameterYear = parametersArray.find((item: string) => {
           return ['academicyearid'].includes(item.toLowerCase());
         });
-        this.parameterExamType= parametersArray.find((item: any) => {
+        this.parameterExamType = parametersArray.find((item: any) => {
           return ['examtypeid'].includes(item.toLowerCase());
         });
         this.parameterIsFall = parametersArray.find((item: any) => {
@@ -310,6 +310,7 @@ export class ManageArchiveExamsComponent implements OnInit {
           );
 
           this.displayModal = false;
+          const isFallValue = this.archiveFolder.isFall ? '1' : '0';
           const query: { queryParams: { [x: string]: string } } = {
             queryParams: {},
           };
@@ -320,13 +321,13 @@ export class ManageArchiveExamsComponent implements OnInit {
             this.parameterIsFall &&
             this.archiveFolder.nr &&
             this.archiveFolder.academicYearId
-          )
-          {
+          ) {
             query.queryParams[`${this.parameterUrl}`] = this.archiveFolder.nr;
-            query.queryParams[`${this.parameterYear}`] = this.archiveFolder.academicYearId.toString();
-            query.queryParams[`${this.parameterExamType}`] = this.archiveFolder.examTypeId as any;
-            query.queryParams[`${this.parameterIsFall}`] = this.archiveFolder.isFall as any;
-
+            query.queryParams[`${this.parameterYear}`] =
+              this.archiveFolder.academicYearId.toString();
+            query.queryParams[`${this.parameterExamType}`] = this.archiveFolder
+              .examTypeId as any;
+            query.queryParams[`${this.parameterIsFall}`] = isFallValue;
           }
           this.router
             .navigate([`/reports/view/${this.archiveFolderReport}`], query)
