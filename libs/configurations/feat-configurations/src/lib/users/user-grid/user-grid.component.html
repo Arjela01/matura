@@ -154,7 +154,8 @@
             class="p-button-rounded p-button-warning p-button-text ml-m pointer"
             tooltipPosition="bottom"
             (click)="onEditClick(user)"
-            pTooltip="Ndrysho" />
+            pTooltip="Ndrysho"
+            *ngIf="user.roleName !== 'QSHA'"/>
 
           <img
             src="assets/svg/delete-form.svg"

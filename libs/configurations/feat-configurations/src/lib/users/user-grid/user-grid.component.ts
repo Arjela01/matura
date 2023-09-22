@@ -72,13 +72,6 @@ export class UserGridComponent {
   }
 
   constructor(
-    private http: HttpClient,
-    private cd: ChangeDetectorRef,
-    private readonly userService: UserApiService,
-    private router: Router,
-    private messageService: MessageService,
-    private activatedRoute: ActivatedRoute,
-
     private route: ActivatedRoute
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
