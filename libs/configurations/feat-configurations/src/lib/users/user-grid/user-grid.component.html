@@ -149,14 +149,14 @@
             tooltipPosition="bottom"
             (click)="onChangePassClick(user)"
             pTooltip="Ndrysho Fjalëkalimin"
-            *ngIf="user.roleName !== 'QSHA'"/>
+            *ngIf="user.roleName !== RoleName.QSHA" />
           <img
             src="assets/svg/edit-form.svg"
             class="p-button-rounded p-button-warning p-button-text ml-m pointer"
             tooltipPosition="bottom"
             (click)="onEditClick(user)"
             pTooltip="Ndrysho"
-            *ngIf="user.roleName !== 'QSHA'"/>
+            *ngIf="user.roleName !== RoleName.QSHA" />
 
           <img
             src="assets/svg/delete-form.svg"
