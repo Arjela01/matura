@@ -148,7 +148,8 @@
             class="p-button-rounded p-button-danger p-button-text ml-m pointer"
             tooltipPosition="bottom"
             (click)="onChangePassClick(user)"
-            pTooltip="Ndrysho Fjalëkalimin" />
+            pTooltip="Ndrysho Fjalëkalimin"
+            *ngIf="user.roleName !== 'QSHA'"/>
           <img
             src="assets/svg/edit-form.svg"
             class="p-button-rounded p-button-warning p-button-text ml-m pointer"
