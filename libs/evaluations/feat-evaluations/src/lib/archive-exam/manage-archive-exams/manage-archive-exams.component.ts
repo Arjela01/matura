@@ -257,7 +257,6 @@ export class ManageArchiveExamsComponent implements OnInit {
         this.isBarcodeInputDisabled = false;
 
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Barkodi u ruajt me sukses!');
           this.displayModal = false;
           this.getArchiveExams(this.filters as TableLazyLoadEvent);
           this.barcodeService.emptyBarcodeField();

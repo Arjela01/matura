@@ -30,6 +30,7 @@ import {
   TableRowUnSelectEvent,
 } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import { RoleName } from '../user-form/role-list';
 
 @Component({
   selector: 'msh-user-grid',
@@ -71,16 +72,7 @@ export class UserGridComponent {
     }
   }
 
-  constructor(
-    private http: HttpClient,
-    private cd: ChangeDetectorRef,
-    private readonly userService: UserApiService,
-    private router: Router,
-    private messageService: MessageService,
-    private activatedRoute: ActivatedRoute,
-
-    private route: ActivatedRoute
-  ) {
+  constructor(private route: ActivatedRoute) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
 
@@ -145,4 +137,6 @@ export class UserGridComponent {
   loadRows($event: TableLazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
+
+  protected readonly RoleName = RoleName;
 }
