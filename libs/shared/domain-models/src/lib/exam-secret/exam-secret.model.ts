@@ -14,7 +14,7 @@ export interface ExamSecret {
   academicYearId?: number;
   studentIdentifier?: string;
   hasBarcode?: boolean;
-  examSecretNoteId?: number;
+  examSecretNoteId?: any;
   examSecretNoteName?: string;
 }
 
