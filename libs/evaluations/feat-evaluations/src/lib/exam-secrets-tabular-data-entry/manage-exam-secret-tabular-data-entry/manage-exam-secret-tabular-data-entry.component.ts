@@ -158,20 +158,34 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
             ...entry,
             examSecret: entry.examSecret as ExamSecretTabularDataEntryItem,
           })
-
         );
-        console.log(123 , examSecret)
         this.dataEntryItemList$$.next(resultAsExamSecretTabularDataEntryItem);
         this.cd.detectChanges();
 
         if (examSecret !== undefined) {
-          setTimeout(() => {
-            document
-              .querySelector<HTMLInputElement>(
-                `[examAssignmentId='${examSecret.id}']`
-              )
-              ?.focus();
-          }, 100);
+          const currentBarcodeInput = document.querySelector<HTMLInputElement>(
+            `[examAssignmentId='${examSecret.id}']`
+          );
+
+          if (currentBarcodeInput) {
+            const currentRow = currentBarcodeInput.closest('tr');
+
+            if (currentRow) {
+              const nextRow =
+                currentRow.nextElementSibling as HTMLTableRowElement;
+
+              if (nextRow) {
+                const nextRowBarcodeInput =
+                  nextRow.querySelector<HTMLInputElement>(
+                    'input[name="barcode"]'
+                  );
+
+                if (nextRowBarcodeInput) {
+                  nextRowBarcodeInput.focus();
+                }
+              }
+            }
+          }
         }
       });
   }
