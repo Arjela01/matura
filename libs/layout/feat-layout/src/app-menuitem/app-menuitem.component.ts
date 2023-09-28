@@ -64,7 +64,7 @@ import { filter } from 'rxjs';
         routerLinkActive="active-route"
         [routerLinkActiveOptions]="
           item.routerLinkActiveOptions || {
-            paths: 'exact',
+            paths:  item.routerLink.toString().substring(1,8)==='reports'?'exact':'subset',
             queryParams: 'ignored',
             matrixParams: 'ignored',
             fragment: 'ignored'
