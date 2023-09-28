@@ -18,6 +18,7 @@ import { TableModule } from 'primeng/table';
 import { BehaviorSubject, Observable, combineLatest, map, tap } from 'rxjs';
 import { GradeModalFormComponent } from '../grade-form/grade-form.component';
 import { GradesScale } from '@msh/shared/domain-models';
+import {TooltipModule} from "primeng/tooltip";
 
 @Component({
   selector: 'msh-grade-scale-action',
@@ -29,6 +30,7 @@ import { GradesScale } from '@msh/shared/domain-models';
     InputTextModule,
     InputNumberModule,
     RadioButtonModule,
+    TooltipModule,
     InputTextareaModule,
     ButtonModule,
     ButtonModule,
