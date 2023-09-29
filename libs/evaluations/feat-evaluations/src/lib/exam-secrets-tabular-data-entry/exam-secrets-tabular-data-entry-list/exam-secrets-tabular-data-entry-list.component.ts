@@ -18,7 +18,7 @@ import {
   ExamSecretTabularDataEntryItem,
 } from '@msh/shared/domain-models';
 import { TooltipModule } from 'primeng/tooltip';
-import {DropdownModel} from "@msh/shared/data-access-shared";
+import { DropdownModel } from '@msh/shared/data-access-shared';
 
 @UntilDestroy()
 @Component({
