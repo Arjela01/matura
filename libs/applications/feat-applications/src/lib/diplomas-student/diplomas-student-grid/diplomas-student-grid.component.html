@@ -18,6 +18,17 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
+      <th pSortableColumn="darZaName">
+        ZVAP
+        <div>
+          <p-sortIcon field="darZaName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="darZaName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
       <th pSortableColumn="schoolName">
         Shkolla
         <div>
@@ -102,6 +113,9 @@
 
   <ng-template pTemplate="body" let-student>
     <tr>
+      <td style="width: 14%; min-width: 10rem">
+        {{ student.darZaName }}
+      </td>
       <td style="width: 14%; min-width: 10rem">
         {{ student.schoolName }}
       </td>
