@@ -232,7 +232,7 @@ export class StudentsEditComponent implements OnInit {
     if (this.student.birthDate) {
       const formattedDate = formatDate(
         this.student.birthDate,
-        'yyyy-MM-dd',
+        'dd/MM/yyyy',
         'en-US'
       );
       this.student.birthDate = formattedDate as any;
