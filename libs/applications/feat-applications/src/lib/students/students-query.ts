@@ -15,6 +15,10 @@ export const STUDENTS = `
             studentId
             firstName
             middleName
+            ealbaniaDocsDiplomaPrintedDate
+            isDiplomaSealSentToEalbaniaDocs
+            diplomaPrintedDate
+            isPrinted
             lastName
             birthDate
             birthPlace
