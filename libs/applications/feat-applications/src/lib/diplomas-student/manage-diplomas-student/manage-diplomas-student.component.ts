@@ -32,6 +32,7 @@ import { BehaviorSubject, Observable, combineLatest, map, tap } from 'rxjs';
 import { DiplomasStudentFormComponent } from '../diplomas-student-form/diplomas-student-form.component';
 import { DiplomasStudentGridComponent } from '../diplomas-student-grid/diplomas-student-grid.component';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { PrintedDiplomasForeignStudentsComponent } from '../printed-diplomas-foreign-students/printed-diplomas-foreign-students.component';
 let INITIAL_FILTER = {};
 @Component({
   selector: 'msh-manage-diplomas-student',
@@ -44,6 +45,7 @@ let INITIAL_FILTER = {};
     ToolbarModule,
     DiplomasStudentFormComponent,
     DiplomasStudentGridComponent,
+    PrintedDiplomasForeignStudentsComponent,
     RippleModule,
     RouterLink,
   ],
@@ -56,17 +58,19 @@ let INITIAL_FILTER = {};
 export class ManageDiplomasStudentComponent implements OnInit {
   @Input() printed = false;
   @Input() title = 'Diploma të Printuara';
+  @Input() foreignStudent = false;
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
+  albanianStudents: any;
+  foreignStudents: any;
+  isForeignStudent = false;
   displayModal = false;
-  hideStudentForm = true;
   totalRecords = 0;
   selectedStudent: Student | null = null;
-  selectedStudentList: Student[] = [];
   selectedAction!: string;
-   responseLoaded = new BehaviorSubject<boolean>(false);
-   responseLoaded$ = this.responseLoaded.asObservable();
+  responseLoaded = new BehaviorSubject<boolean>(false);
+  responseLoaded$ = this.responseLoaded.asObservable();
 
   studentTypes: DropdownModel<number>[] = [
     {
@@ -140,7 +144,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
         this.printDiploma(event);
         break;
       case GRID_ACTIONS.SEAL:
-        this.sealDiploma(event)
+        this.sealDiploma(event);
         break;
     }
   }
@@ -152,15 +156,13 @@ export class ManageDiplomasStudentComponent implements OnInit {
   printDiploma(event: GridEvent<Student>) {
     this.diplomasService
       .exportDiplomasStudent(event.data?.studentId as string, !this.printed)
-      .subscribe(
-        (response: any) => {
-          const blob = new Blob([response], {
-            type: 'application/pdf',
-          });
-          FileSaver.saveAs(blob, `Diploma_${event.data?.fullName}`);
-          this.getStudentDiplomas(this.filters as TableLazyLoadEvent);
-        },
-      );
+      .subscribe((response: any) => {
+        const blob = new Blob([response], {
+          type: 'application/pdf',
+        });
+        FileSaver.saveAs(blob, `Diploma_${event.data?.fullName}`);
+        this.getStudentDiplomas(this.filters as TableLazyLoadEvent);
+      });
   }
   onFormSave(data: string) {
     if (this.selectedAction === 'print') {
@@ -176,45 +178,55 @@ export class ManageDiplomasStudentComponent implements OnInit {
     if (event.data?.countryId === 3) {
       this.responseLoaded.next(true);
       this.diplomasService
-        .printElectronicSeal(event.data?.studentId as string, academicYear.id, !this.printed)
+        .printElectronicSeal(
+          event.data?.studentId as string,
+          academicYear.id,
+          !this.printed
+        )
         .pipe(untilDestroyed(this))
         .subscribe(response => {
           if (response) {
             this.toastService.showInfo(response as any);
-          }else{
+          } else {
             this.toastService.showError('Ndodhi një gabim!');
           }
-        }).add(() => this.responseLoaded.next(false));
-    }
-    else {
+        })
+        .add(() => this.responseLoaded.next(false));
+    } else {
       this.responseLoaded.next(true);
       this.diplomasService
-        .printElectronicSealForForeignStudent(event.data?.studentId as string, !this.printed)
-        .subscribe(
-          (response : any) => {
-            const blob = new Blob([response], {
-              type: 'application/pdf',
-            });
-            FileSaver.saveAs(blob, `Diploma_${event.data?.fullName}`);
-            this.getStudentDiplomas(this.filters as TableLazyLoadEvent);
-          },
-     )
+        .printElectronicSealForForeignStudent(
+          event.data?.studentId as string,
+          !this.printed
+        )
+        .subscribe((response: any) => {
+          const blob = new Blob([response], {
+            type: 'application/pdf',
+          });
+          FileSaver.saveAs(blob, `Diploma_${event.data?.fullName}`);
+          this.getStudentDiplomas(this.filters as TableLazyLoadEvent);
+        })
         .add(() => this.responseLoaded.next(false));
     }
   }
   sealAllDiplomas(data: string) {
     this.responseLoaded.next(true);
-    this.diplomasService.printAllElectronicSeal(data)
+    this.diplomasService
+      .printAllElectronicSeal(data)
       .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response) {
-          this.toastService.showInfo(response as any);
-        }else{
-          this.toastService.showError('Ndodhi një gabim!');
+      .subscribe(
+        response => {
+          if (response) {
+            this.toastService.showInfo(response as any);
+          } else {
+            this.toastService.showError('Ndodhi një gabim!');
+          }
+        },
+        error => {
+          console.log(error);
         }
-      }, error => {
-        console.log(error)
-      }).add(() => this.responseLoaded.next(false));
+      )
+      .add(() => this.responseLoaded.next(false));
   }
 
   printAllDiplomas(data: string) {
@@ -242,7 +254,13 @@ export class ManageDiplomasStudentComponent implements OnInit {
   }
 
   getStudentDiplomas($event: TableLazyLoadEvent): void {
-    INITIAL_FILTER = {
+    $event = {
+      ...$event,
+      first: 0,
+      rows: 10000,
+    };
+    debugger;
+    const INITIAL_FILTER = {
       isPrinted: [
         {
           value: Status.NOTPRINTED,
@@ -251,31 +269,55 @@ export class ManageDiplomasStudentComponent implements OnInit {
         },
       ],
     };
+
     if (this.printed) {
-      $event.filters = {
-        ...$event.filters,
-        ...INITIAL_FILTER,
-      };
+        ($event.filters = {
+          ...$event.filters,
+          ...INITIAL_FILTER,
+        });
     }
+    console.log(123, $event);
+
     this.filters = $event;
+
     this.diplomasService
       .loadStudentDiplomas($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         const students = [...response.data];
+        const albanianStudents = [];
+        const foreignStudents = [];
+
         for (const student of students) {
+          if (student.countryId === 3) {
+            albanianStudents.push(student);
+          } else {
+            foreignStudents.push(student);
+          }
+
           if (student.printedDate === '0001-01-01T00:00:00') {
             student.printedDate = null;
           } else {
             student.printedDate = new Date(student.printedDate);
-          } if(student.ealbaniaDocsDiplomaPrintedDate ===  null ){
+          }
+
+          if (student.ealbaniaDocsDiplomaPrintedDate === null) {
             student.ealbaniaDocsDiplomaPrintedDate = null;
-          } else{
-            student.ealbaniaDocsDiplomaPrintedDate = new Date(student.ealbaniaDocsDiplomaPrintedDate);
+          } else {
+            student.ealbaniaDocsDiplomaPrintedDate = new Date(
+              student.ealbaniaDocsDiplomaPrintedDate
+            );
           }
         }
-        this.studentList$$.next(students);
-        this.totalRecords = response.total;
+
+        this.albanianStudents = albanianStudents;
+        this.foreignStudents = foreignStudents;
+        const studentsToDisplay = this.foreignStudent
+          ? foreignStudents
+          : albanianStudents;
+
+        this.studentList$$.next(studentsToDisplay);
+        this.totalRecords = studentsToDisplay.length;
       });
   }
 }

@@ -154,4 +154,11 @@ export const APPLICATION_ROUTES: Route[] = [
         './diplomas-student/printed-diplomas/printed-diplomas.component'
       ).then(m => m.PrintedDiplomasComponent),
   },
+  {
+    path: 'printed-diplomas-foreign-students',
+    loadComponent: () =>
+      import(
+        './diplomas-student/printed-diplomas-foreign-students/printed-diplomas-foreign-students.component'
+        ).then(m => m.PrintedDiplomasForeignStudentsComponent),
+  },
 ];
