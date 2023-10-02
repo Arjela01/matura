@@ -33,7 +33,16 @@ import { DiplomasStudentFormComponent } from '../diplomas-student-form/diplomas-
 import { DiplomasStudentGridComponent } from '../diplomas-student-grid/diplomas-student-grid.component';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { PrintedDiplomasForeignStudentsComponent } from '../printed-diplomas-foreign-students/printed-diplomas-foreign-students.component';
-let INITIAL_FILTER = {};
+interface Filter {
+  value: any;
+  matchMode: string;
+  operator: string;
+}
+
+interface InitialFilter {
+  isPrinted?: Filter[];
+  countryId?: Filter[];
+}
 @Component({
   selector: 'msh-manage-diplomas-student',
   standalone: true,
@@ -62,9 +71,6 @@ export class ManageDiplomasStudentComponent implements OnInit {
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
-  albanianStudents: any;
-  foreignStudents: any;
-  isForeignStudent = false;
   displayModal = false;
   totalRecords = 0;
   selectedStudent: Student | null = null;
@@ -147,10 +153,6 @@ export class ManageDiplomasStudentComponent implements OnInit {
         this.sealDiploma(event);
         break;
     }
-  }
-
-  onAdmOfficeChange(id: string) {
-    this.getHighSchoolsByOffice(id);
   }
 
   printDiploma(event: GridEvent<Student>) {
@@ -254,13 +256,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
   }
 
   getStudentDiplomas($event: TableLazyLoadEvent): void {
-    $event = {
-      ...$event,
-      first: 0,
-      rows: 10000,
-    };
-    debugger;
-    const INITIAL_FILTER = {
+    const PRINTED_FILTER: InitialFilter = {
       isPrinted: [
         {
           value: Status.NOTPRINTED,
@@ -269,14 +265,45 @@ export class ManageDiplomasStudentComponent implements OnInit {
         },
       ],
     };
+    const ALBANIAN_STUDENTS_FILTER: InitialFilter = {
+      countryId: [
+        {
+          value: 3,
+          matchMode: 'equals',
+          operator: 'and',
+        },
+      ],
+    };
+    const FOREIGN_STUDENTS_FILTER: InitialFilter = {
+      countryId: [
+        {
+          value: 3,
+          matchMode: 'notEquals',
+          operator: 'not',
+        },
+      ],
+    };
+
+    if (this.foreignStudent) {
+      $event.filters = {
+        ...$event.filters,
+        ...FOREIGN_STUDENTS_FILTER,
+      };
+    }
+    if (!this.foreignStudent) {
+      $event.filters = {
+        ...$event.filters,
+        ...ALBANIAN_STUDENTS_FILTER,
+      };
+    }
 
     if (this.printed) {
-        ($event.filters = {
-          ...$event.filters,
-          ...INITIAL_FILTER,
-        });
+      $event.filters = {
+        ...$event.filters,
+        ...ALBANIAN_STUDENTS_FILTER,
+        ...PRINTED_FILTER,
+      };
     }
-    console.log(123, $event);
 
     this.filters = $event;
 
@@ -285,16 +312,8 @@ export class ManageDiplomasStudentComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         const students = [...response.data];
-        const albanianStudents = [];
-        const foreignStudents = [];
 
         for (const student of students) {
-          if (student.countryId === 3) {
-            albanianStudents.push(student);
-          } else {
-            foreignStudents.push(student);
-          }
-
           if (student.printedDate === '0001-01-01T00:00:00') {
             student.printedDate = null;
           } else {
@@ -310,14 +329,8 @@ export class ManageDiplomasStudentComponent implements OnInit {
           }
         }
 
-        this.albanianStudents = albanianStudents;
-        this.foreignStudents = foreignStudents;
-        const studentsToDisplay = this.foreignStudent
-          ? foreignStudents
-          : albanianStudents;
-
-        this.studentList$$.next(studentsToDisplay);
-        this.totalRecords = studentsToDisplay.length;
+        this.studentList$$.next(students);
+        this.totalRecords = response.total;
       });
   }
 }

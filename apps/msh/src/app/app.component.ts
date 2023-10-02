@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
-import { PrimeNGConfig } from 'primeng/api';
+import { FilterMatchMode, PrimeNGConfig } from 'primeng/api';
 import { HttpClientModule } from '@angular/common/http';
 import { GlobalSpinnerComponent, LoaderService } from '@msh/shared/util-shared';
 import { GlobalSearchComponent } from '@msh/layout/feat-layout';
@@ -88,6 +88,31 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.searchBoxService.searchBoxVisible$.subscribe(isVisible => {
       this.searchBoxVisible = isVisible;
     });
+
+    this.primengConfig.filterMatchModeOptions = {
+      text: [
+        FilterMatchMode.STARTS_WITH,
+        FilterMatchMode.CONTAINS,
+        FilterMatchMode.NOT_CONTAINS,
+        FilterMatchMode.ENDS_WITH,
+        FilterMatchMode.EQUALS,
+        FilterMatchMode.NOT_EQUALS,
+      ],
+      numeric: [
+        FilterMatchMode.EQUALS,
+        FilterMatchMode.NOT_EQUALS,
+        FilterMatchMode.LESS_THAN,
+        FilterMatchMode.LESS_THAN_OR_EQUAL_TO,
+        FilterMatchMode.GREATER_THAN,
+        FilterMatchMode.GREATER_THAN_OR_EQUAL_TO,
+      ],
+      date: [
+        FilterMatchMode.DATE_IS,
+        FilterMatchMode.DATE_IS_NOT,
+        FilterMatchMode.DATE_BEFORE,
+        FilterMatchMode.DATE_AFTER,
+      ],
+    };
   }
   ngAfterViewChecked() {
     this.cd.detectChanges();
