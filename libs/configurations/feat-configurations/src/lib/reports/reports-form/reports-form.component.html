@@ -15,15 +15,19 @@
     </small>
   </div>
   <div class="field">
-    <label for="Path">Rolet *</label>
+    <label for="Roles">Rolet</label>
     <p-multiSelect
+      id="Roles"
+      name="roles"
       [options]="rolesDropdown"
-      [(ngModel)]="rolesArray"
-      [ngModelOptions]="{ standalone: true }"
-      defaultLabel="Zgjidh rolet"
+      optionValue="key"
       optionLabel="value"
-      display="chip"
-      appendTo="body"></p-multiSelect>
+      [(ngModel)]="reports.roles"
+      [required]="true"
+      appendTo="body"
+      [showClear]="true"
+      defaultLabel="Selekto Rolet"
+      display="chip"></p-multiSelect>
   </div>
   <div class="field">
     <label for="Path">Linku *</label>
