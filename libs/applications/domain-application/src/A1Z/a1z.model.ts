@@ -20,6 +20,7 @@ export interface A1Z {
   academicYearD1Name?: string;
   carryD1?: boolean;
   carriedGradeD1Id?: number;
+  carriedSubjectD1Id?: string;
 
   subjectD2Id?: string;
   subjectD2Name?: string;
@@ -29,6 +30,7 @@ export interface A1Z {
   academicYearD2Name?: string;
   carryD2?: boolean;
   carriedGradeD2Id?: number;
+  carriedSubjectD2Id?: string;
 
   subjectD3Id?: string;
   subjectD3Name?: string;
@@ -38,6 +40,7 @@ export interface A1Z {
   academicYearD3Name?: string;
   carryD3?: boolean;
   carriedGradeD3Id?: number;
+  carriedSubjectD3Id?: string;
 
   subjectZ1Id?: string;
   subjectZ1Name?: string;
@@ -47,6 +50,7 @@ export interface A1Z {
   academicYearZ1Name?: string;
   carryZ1?: boolean;
   carriedGradeZ1Id?: number;
+  carriedSubjectZ1Id?: string;
 
   subjectZ2Id?: string;
   subjectZ2Name?: string;
