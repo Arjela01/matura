@@ -126,9 +126,12 @@ export class ManageReportsComponent {
   }
 
   getRolesDropdown() {
-    this.rolesService.loadDropdownList().subscribe(response => {
-      this.rolesDropdown = response.data;
-    });
+    this.rolesService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.rolesDropdown = response.data;
+      });
   }
   addReports(reports: Reports) {
     this.reportsApiService
