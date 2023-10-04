@@ -6,6 +6,14 @@
   #dt
   dataKey="id"
   responsiveLayout="scroll"
+  [totalRecords]="totalRecords"
+  [rows]="10"
+  [paginator]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
+  [rowHover]="true"
+  (onLazyLoad)="getBarcodeWithoutScoresList($event)"
   [value]="(barcodeWithoutScoresList$ | async) || []"
   selectionMode="multiple"
   [lazy]="true">
@@ -85,8 +93,7 @@
             type="boolean"
             field="isFolderClosed"
             matchMode="equals"
-            display="menu"
-            ></p-columnFilter>
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th></th>
@@ -128,7 +135,11 @@
               ? ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
               : ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
           ">
-          {{ barcodeWithoutScoresList.isFolderClosed === true ? 'Mbyllur' : 'Hapur' }}
+          {{
+            barcodeWithoutScoresList.isFolderClosed === true
+              ? 'Mbyllur'
+              : 'Hapur'
+          }}
         </span>
       </td>
     </tr>

@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ApiResult } from '@msh/shared/data-access-shared';
-import { ArchiveExam, ArchiveExamView } from '@msh/shared/domain-models';
+import {
+  ArchiveExam,
+  ArchiveExamView,
+  ExamAssignmentTableView,
+} from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
@@ -56,9 +60,12 @@ export class ArchiveExamApiService {
       `/ArchiveExam/GetById/${archiveFolderId}`
     );
   }
-  getBarcodeWithoutScore(): Observable<ApiResult<any>> {
-    return this.apiService.get<ApiResult<ArchiveExam>>(
-      '/ArchiveExam/GetArchiveExamsWithoutScores'
+  getBarcodeWithoutScore(
+    event: TableLazyLoadEvent
+  ): Observable<ArchiveExamView> {
+    return this.apiService.post(
+      '/ArchiveExam/GetArchiveExamsWithoutScores',
+      event
     );
   }
 }
