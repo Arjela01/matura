@@ -40,16 +40,12 @@ export class ReportsFormComponent {
   @Input() set reportsDetails(details: Reports | null) {
     if (details) {
       this.reports = Object.assign({}, details);
-      Object.entries(this.reports.roles).forEach(([key, value]) =>
-        this.rolesArray.push({ key, value, parentKey: null })
-      );
     }
   }
   @Input() rolesDropdown: any[] = [];
 
   @Output() formSave = new EventEmitter<Reports>();
   @Output() formClose = new EventEmitter<undefined>();
-  rolesArray: any[] = [];
   @ViewChild('form', { static: true }) form!: NgForm;
 
   submitted = false;
@@ -61,9 +57,6 @@ export class ReportsFormComponent {
     roles: {},
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private cd: ChangeDetectorRef) {}
-
   onCancelClick() {
     this.formClose.emit();
   }
@@ -71,14 +64,6 @@ export class ReportsFormComponent {
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
-      const convMap: any = {};
-      this.reports.roles = new Map(
-        this.rolesArray.map(obj => [obj.key, obj.value])
-      );
-      this.reports.roles.forEach((val: string, key: string) => {
-        convMap[key] = val;
-      });
-      this.reports.roles = convMap;
       this.formSave.emit(this.reports);
     }
   }

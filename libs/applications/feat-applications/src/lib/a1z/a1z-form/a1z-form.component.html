@@ -133,6 +133,7 @@
             <th>Lënda</th>
             <th>Mbart</th>
             <th>Nota e Mbartur</th>
+            <th>Lënda e Mbartur</th>
             <th [width]="100">Viti</th>
             <th>Arsyeja</th>
           </tr>
@@ -197,6 +198,16 @@
                 id="scoreD1"
                 name="scoreD1"
                 [(ngModel)]="a1z.scoreD1"
+                autofocus />
+            </td>
+            <td>
+              <input
+                type="text"
+                pInputText
+                [disabled]="true"
+                id="carriedGradeD1SubjectName"
+                name="carriedGradeD1SubjectName"
+                [(ngModel)]="a1z.carriedGradeD1SubjectName"
                 autofocus />
             </td>
             <td>
@@ -286,6 +297,16 @@
                 type="text"
                 pInputText
                 [disabled]="true"
+                id="carriedGradeD2SubjectName"
+                name="carriedGradeD2SubjectName"
+                [(ngModel)]="a1z.carriedGradeD2SubjectName"
+                autofocus />
+            </td>
+            <td>
+              <input
+                type="text"
+                pInputText
+                [disabled]="true"
                 id="yearD2"
                 name="yearD2"
                 [(ngModel)]="a1z.academicYearD2Name"
@@ -357,6 +378,16 @@
                 type="text"
                 pInputText
                 [disabled]="true"
+                id="carriedGradeD3SubjectName"
+                name="carriedGradeD3SubjectName"
+                [(ngModel)]="a1z.carriedGradeD3SubjectName"
+                autofocus />
+            </td>
+            <td>
+              <input
+                type="text"
+                pInputText
+                [disabled]="true"
                 id="yearD3"
                 name="yearD3"
                 [(ngModel)]="a1z.academicYearD3Name"
@@ -383,6 +414,7 @@
             <th>Lënda</th>
             <th>Mbart</th>
             <th>Nota e Mbartur</th>
+            <th>Lënda e Mbartur</th>
             <th [width]="100">Viti</th>
             <th>Arsyeja</th>
           </tr>
@@ -434,6 +466,16 @@
                 id="scoreZ1"
                 name="scoreZ1"
                 [(ngModel)]="a1z.scoreZ1"
+                autofocus />
+            </td>
+            <td>
+              <input
+                type="text"
+                pInputText
+                [disabled]="!a1z.carryZ1"
+                id="carriedGradeZ1SubjectName"
+                name="carriedGradeZ1SubjectName"
+                [(ngModel)]="a1z.carriedGradeZ1SubjectName"
                 autofocus />
             </td>
             <td>
