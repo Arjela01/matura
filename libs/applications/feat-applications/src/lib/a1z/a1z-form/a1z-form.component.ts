@@ -708,6 +708,7 @@ export class A1zFormComponent implements OnInit {
         this.a1z.scoreD1 = $event.grade;
         this.a1z.subjectD1Name = $event.examSubjectName;
         this.a1z.reasonD1 = $event.reason;
+        this.a1z.carriedGradeD1SubjectName = $event.examSubjectName;
         this.cd.detectChanges();
         break;
       case EXAM_TYPES.D2:
@@ -717,6 +718,7 @@ export class A1zFormComponent implements OnInit {
         this.a1z.scoreD2 = $event.grade;
         this.a1z.reasonD2 = $event.reason;
         this.a1z.subjectD2Name = $event.examSubjectName;
+        this.a1z.carriedGradeD2SubjectName = $event.examSubjectName;
         this.cd.detectChanges();
         break;
       case EXAM_TYPES.D3:
@@ -726,6 +728,7 @@ export class A1zFormComponent implements OnInit {
         this.a1z.scoreD3 = $event.grade;
         this.a1z.subjectD3Name = $event.examSubjectName;
         this.a1z.reasonD3 = $event.reason;
+        this.a1z.carriedGradeD3SubjectName = $event.examSubjectName;
         this.cd.detectChanges();
         break;
       case EXAM_TYPES.Z1:
@@ -735,6 +738,7 @@ export class A1zFormComponent implements OnInit {
         this.a1z.scoreZ1 = $event.grade;
         this.a1z.reasonZ1 = $event.reason;
         this.a1z.subjectZ1Name = $event.examSubjectName;
+        this.a1z.carriedGradeZ1SubjectName = $event.examSubjectName;
         this.cd.detectChanges();
         break;
     }
@@ -865,6 +869,7 @@ export class A1zFormComponent implements OnInit {
               this.a1z.scoreD1 = carriedGrade.grade;
               this.a1z.subjectD1Name = carriedGrade.examSubjectName;
               this.a1z.reasonD1 = carriedGrade.reason;
+              this.a1z.carriedGradeD1SubjectName = carriedGrade.examSubjectName;
               break;
             case EXAM_TYPES.D2:
               this.a1z.academicYearD2Name = carriedGrade.academicYearName;
@@ -873,6 +878,7 @@ export class A1zFormComponent implements OnInit {
               this.a1z.scoreD2 = carriedGrade.grade;
               this.a1z.subjectD2Name = carriedGrade.examSubjectName;
               this.a1z.reasonD2 = carriedGrade.reason;
+              this.a1z.carriedGradeD2SubjectName = carriedGrade.examSubjectName;
               break;
             case EXAM_TYPES.D3:
               this.a1z.academicYearD3Name = carriedGrade.academicYearName;
@@ -881,6 +887,7 @@ export class A1zFormComponent implements OnInit {
               this.a1z.scoreD3 = carriedGrade.grade;
               this.a1z.subjectD3Name = carriedGrade.examSubjectName;
               this.a1z.reasonD3 = carriedGrade.reason;
+              this.a1z.carriedGradeD3SubjectName = carriedGrade.examSubjectName;
               break;
             case EXAM_TYPES.Z1:
               this.a1z.academicYearZ1Name = carriedGrade.academicYearName;
@@ -889,6 +896,7 @@ export class A1zFormComponent implements OnInit {
               this.a1z.scoreZ1 = carriedGrade.grade;
               this.a1z.subjectZ1Name = carriedGrade.examSubjectName;
               this.a1z.reasonZ1 = carriedGrade.reason;
+              this.a1z.carriedGradeZ1SubjectName = carriedGrade.examSubjectName;
               break;
           }
           this.onCarriedHide();
