@@ -5,8 +5,8 @@ import { ExamGrade } from '@msh/shared/domain-models';
 import { LazyLoadEvent } from 'primeng/api';
 import { ArchiveExamApiService } from '@msh/evaluations/data-access-evaluations';
 
-import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
-import { TableModule } from 'primeng/table';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
@@ -34,21 +34,22 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./barcode-without-score-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BarcodeWithoutScoreGridComponent implements OnInit {
+export class BarcodeWithoutScoreGridComponent {
   private barcodeWithoutScoresList$$ = new BehaviorSubject<ExamGrade[]>([]);
   barcodeWithoutScoresList$ = this.barcodeWithoutScoresList$$.asObservable();
-
+  totalRecords = 0;
+  filters: TableLazyLoadEvent | null = null;
   constructor(private readonly archiveExamService: ArchiveExamApiService) {}
-  ngOnInit() {
-    this.getBarcodeWithoutScoresList();
-  }
 
-  getBarcodeWithoutScoresList() {
+  getBarcodeWithoutScoresList($event: TableLazyLoadEvent) {
+    this.filters = Object.assign({}, $event);
+
     this.archiveExamService
-      .getBarcodeWithoutScore()
+      .getBarcodeWithoutScore($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.barcodeWithoutScoresList$$.next(response.data);
+        this.totalRecords = response.total;
       });
   }
 }
