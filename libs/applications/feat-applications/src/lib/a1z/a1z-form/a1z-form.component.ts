@@ -361,6 +361,8 @@ export class A1zFormComponent implements OnInit {
       this.a1z.academicYearD1Name = undefined;
       this.a1z.academicYearD1Id = undefined;
       this.a1z.carriedGradeD1Id = undefined;
+      this.a1z.carriedGradeD1SubjectName = undefined;
+      this.a1z.reasonD1 = undefined;
     }
     if (this.a1z.carryD1) {
       this.carriedGrades$$.next([]);
@@ -376,6 +378,8 @@ export class A1zFormComponent implements OnInit {
       this.a1z.academicYearD2Name = undefined;
       this.a1z.academicYearD2Id = undefined;
       this.a1z.carriedGradeD2Id = undefined;
+      this.a1z.carriedGradeD2SubjectName = undefined;
+      this.a1z.reasonD2 = undefined;
     }
     if (this.a1z.carryD2) {
       this.carriedGrades$$.next([]);
@@ -391,6 +395,8 @@ export class A1zFormComponent implements OnInit {
       this.a1z.academicYearD3Name = undefined;
       this.a1z.academicYearD3Id = undefined;
       this.a1z.carriedGradeD3Id = undefined;
+      this.a1z.carriedGradeD3SubjectName = undefined;
+      this.a1z.reasonD3 = undefined;
     }
     if (this.a1z.carryD3) {
       this.carriedGrades$$.next([]);
@@ -406,6 +412,8 @@ export class A1zFormComponent implements OnInit {
       this.a1z.academicYearZ1Name = undefined;
       this.a1z.academicYearZ1Id = undefined;
       this.a1z.carriedGradeZ1Id = undefined;
+      this.a1z.carriedGradeZ1SubjectName = undefined;
+      this.a1z.reasonZ1 = undefined;
     }
     if (this.a1z.carryZ1) {
       this.carriedGrades$$.next([]);
