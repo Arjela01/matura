@@ -361,6 +361,8 @@ export class A1zFormComponent implements OnInit {
       this.a1z.academicYearD1Name = undefined;
       this.a1z.academicYearD1Id = undefined;
       this.a1z.carriedGradeD1Id = undefined;
+      this.a1z.carriedGradeD1SubjectName = undefined;
+      this.a1z.reasonD1 = undefined;
     }
     if (this.a1z.carryD1) {
       this.carriedGrades$$.next([]);
@@ -376,6 +378,8 @@ export class A1zFormComponent implements OnInit {
       this.a1z.academicYearD2Name = undefined;
       this.a1z.academicYearD2Id = undefined;
       this.a1z.carriedGradeD2Id = undefined;
+      this.a1z.carriedGradeD2SubjectName = undefined;
+      this.a1z.reasonD2 = undefined;
     }
     if (this.a1z.carryD2) {
       this.carriedGrades$$.next([]);
@@ -391,6 +395,8 @@ export class A1zFormComponent implements OnInit {
       this.a1z.academicYearD3Name = undefined;
       this.a1z.academicYearD3Id = undefined;
       this.a1z.carriedGradeD3Id = undefined;
+      this.a1z.carriedGradeD3SubjectName = undefined;
+      this.a1z.reasonD3 = undefined;
     }
     if (this.a1z.carryD3) {
       this.carriedGrades$$.next([]);
@@ -406,6 +412,8 @@ export class A1zFormComponent implements OnInit {
       this.a1z.academicYearZ1Name = undefined;
       this.a1z.academicYearZ1Id = undefined;
       this.a1z.carriedGradeZ1Id = undefined;
+      this.a1z.carriedGradeZ1SubjectName = undefined;
+      this.a1z.reasonZ1 = undefined;
     }
     if (this.a1z.carryZ1) {
       this.carriedGrades$$.next([]);
@@ -489,7 +497,6 @@ export class A1zFormComponent implements OnInit {
       .loadDropdownList()
       .pipe(untilDestroyed(this))
       .subscribe(x => {
-
         const d1ExamType = x.data.find(d1 => d1.value === EXAM_TYPES.D1);
         const d2ExamType = x.data.find(d2 => d2.value === EXAM_TYPES.D2);
         const d3ExamType = x.data.find(d3 => d3.value === EXAM_TYPES.D3);
@@ -557,13 +564,11 @@ export class A1zFormComponent implements OnInit {
               this.cd.detectChanges();
             });
         }
-        this.examTypeD1 = d1ExamType
-        this.examTypeD2 = d2ExamType
-        this.examTypeD3 = d3ExamType
-        this.examTypeZ1 = z1ExamType
-
+        this.examTypeD1 = d1ExamType;
+        this.examTypeD2 = d2ExamType;
+        this.examTypeD3 = d3ExamType;
+        this.examTypeZ1 = z1ExamType;
       });
-
   }
 
   onStudentHide() {
@@ -758,31 +763,32 @@ export class A1zFormComponent implements OnInit {
         // this.academicYearsDropdown = response.data.filter(
         //   (yearObj: { value: number }) => yearObj.value <= currentYear
         // );
-        this.academicYearsDropdown = response.data
+        this.academicYearsDropdown = response.data;
       });
   }
 
   getExamTypeDropdown() {
-    this.examTypeApiService.loadDropdownList()
+    this.examTypeApiService
+      .loadDropdownList()
       .pipe(untilDestroyed(this))
       .subscribe(data => {
         this.examTypeDropdown = data.data;
 
         switch (this.carriedModalType) {
           case EXAM_TYPES.D1:
-            this.a1ZSelectedExamType = this.examTypeD1
+            this.a1ZSelectedExamType = this.examTypeD1;
             this.cd.detectChanges();
             break;
           case EXAM_TYPES.D2:
-            this.a1ZSelectedExamType = this.examTypeD2
+            this.a1ZSelectedExamType = this.examTypeD2;
             this.cd.detectChanges();
             break;
           case EXAM_TYPES.D3:
-            this.a1ZSelectedExamType = this.examTypeD3
+            this.a1ZSelectedExamType = this.examTypeD3;
             this.cd.detectChanges();
             break;
           case EXAM_TYPES.Z1:
-            this.a1ZSelectedExamType = this.examTypeZ1
+            this.a1ZSelectedExamType = this.examTypeZ1;
             this.cd.detectChanges();
             break;
         }
