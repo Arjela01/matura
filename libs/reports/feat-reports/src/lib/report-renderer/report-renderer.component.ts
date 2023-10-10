@@ -188,21 +188,21 @@ export class ReportRendererComponent implements OnInit {
     let destinationPath = '';
     if (this.id === this.a1Report.toString()) {
       destinationPath =
-        currentUrl === `/${this.reportsPath}/${this.a1Report}`
+        currentUrl === `/${this.reportsPath}/view/${this.a1Report}`
           ? this.reportsPath
           : this.returnUrl
           ? this.returnUrl
           : this.a1Path;
     } else if (this.id === this.a1ZReport.toString()) {
       destinationPath =
-        currentUrl === `/${this.reportsPath}/${this.a1ZReport}`
+        currentUrl === `/${this.reportsPath}/view/${this.a1ZReport}`
           ? this.reportsPath
           : this.returnUrl
           ? this.returnUrl
           : this.a1ZPath;
     } else if (this.id === this.archiveFolderReport.toString()) {
       destinationPath =
-        currentUrl === `/${this.reportsPath}/${this.archiveFolderReport}`
+        currentUrl === `/${this.reportsPath}/view/${this.archiveFolderReport}`
           ? this.reportsPath
           : this.archiveFolderPath;
     } else {
