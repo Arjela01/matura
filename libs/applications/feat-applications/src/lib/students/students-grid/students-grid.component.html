@@ -106,6 +106,18 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="isEAlbaniaApplication">
+        Krijuar nga e-Albania?
+        <div>
+          <p-sortIcon field="isEAlbaniaApplication"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            matchMode="equals"
+            field="isEAlbaniaApplication"
+            display="menu"
+          ></p-columnFilter>
+        </div>
+      </th>
       <th pSortableColumn="isAN">
         AN?
         <div>
@@ -162,6 +174,9 @@
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ student.profileName }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ student.isEAlbaniaApplication ? 'Po' : 'Jo' }}
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ student.isAN ? 'Po' : 'Jo' }}

@@ -188,6 +188,7 @@ export class StudentsFormComponent implements OnInit, OnChanges {
   }
 
   onSubmit(): void {
+    this.student.isEAlbaniaApplication = false;
     if (this.finishedAtSameSchool) {
       this.student.schoolFinished = '';
     }
