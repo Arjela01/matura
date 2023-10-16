@@ -5,8 +5,10 @@ import { ApiResult } from '@msh/shared/data-access-shared';
 import { HttpParams } from '@angular/common/http';
 import {
   ApplicationProcessTableView,
+  ExamGradeTableView,
   Process,
 } from '@msh/shared/domain-models';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @Injectable({
   providedIn: 'root',
@@ -39,6 +41,12 @@ export class CalculationProcessesApiService {
       `/GenerateTableT/ExportTemplate`,
       new HttpParams(),
       'blob'
+    );
+  }
+  generateTableT(event: TableLazyLoadEvent): Observable<any> {
+    return this.apiService.post(`/GenerateTableT/TableData`, event).pipe(
+      map((data: any) => data),
+      catchError(error => throwError(error))
     );
   }
 }

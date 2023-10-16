@@ -64,16 +64,7 @@ export class ActivateOverseerDarZaGridComponent {
     }
   }
 
-  constructor(
-    private http: HttpClient,
-    private cd: ChangeDetectorRef,
-    private readonly AdministrationOfficeService: AdministrationOfficeApiService,
-    private router: Router,
-    private messageService: MessageService,
-    private activatedRoute: ActivatedRoute,
-
-    private route: ActivatedRoute
-  ) {
+  constructor(private route: ActivatedRoute) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
   selectedAdministrationOffices: AdministrationOffice[] = [];
