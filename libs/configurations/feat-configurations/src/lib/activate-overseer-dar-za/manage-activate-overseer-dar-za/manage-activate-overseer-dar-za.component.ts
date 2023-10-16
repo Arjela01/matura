@@ -141,7 +141,7 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
-            response.data.isAllowedToLogin
+            administrationOffice?.isAllowedToLogin
               ? 'Përdoruesi u çaktivizua me sukses!'
               : 'Përdoruesi u aktivizua me sukses!'
           );
