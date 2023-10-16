@@ -1,8 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -11,14 +9,12 @@ import {
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserApiService } from '@msh/configurations/data-access-configurations';
 import { User } from '@msh/shared/domain-models';
 import {
   GridEvent,
   GRID_ACTIONS,
   ColumnFilterDirective,
 } from '@msh/shared/util-shared';
-import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
