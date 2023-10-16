@@ -1,0 +1,23 @@
+:host {
+  display: block;
+}
+p-table {
+  width: 100%; /* Ensure the table takes up the full width */
+  table-layout: fixed; /* Prevent text wrapping */
+  white-space: nowrap;
+}
+p-table th {
+  color: black;
+  background-color: #f6f5f5;
+  border: 0.5px solid #ddd;
+  padding: 0.2em 0.2em;
+}
+
+p-table td {
+  padding: 0.2em 0.2em;
+  border: 0.5px solid #ddd;
+}
+
+tr:nth-child(even) {
+  background-color: #f6f5f5; /* Grey background for even rows */
+}

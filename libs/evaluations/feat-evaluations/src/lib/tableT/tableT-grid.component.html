@@ -1,0 +1,207 @@
+<div class="flex ml-2 mb-2 page-header mb-header">
+  <h2 class="flex-1">Tabela T</h2>
+</div>
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <p-table
+        #dt
+        dataKey="id"
+        [value]="(tableTData$ | async) || []"
+        [paginator]="false"
+        [rowHover]="true"
+        selectionMode="multiple"
+        (onLazyLoad)="getTableTData()"
+        class="smaller-table">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Numri</th>
+            <th>ID e studentit</th>
+            <th>ID e vjetër</th>
+            <th>Emri</th>
+            <th>Atësia</th>
+            <th>Mbiemri</th>
+            <th>Lënda D1</th>
+            <th>Nota D1 e Gjetur</th>
+            <th>Nota D1</th>
+            <th>Lënda D2</th>
+            <th>Nota D2 e Gjetur</th>
+            <th>Nota D2</th>
+            <th>Lënda D3</th>
+            <th>Nota D3 e Gjetur</th>
+            <th>Nota D3</th>
+            <th>Lënda Z1</th>
+            <th>Nota Z1 e Gjetur</th>
+            <th>Nota Z1</th>
+            <th>ZVAP</th>
+            <th>Shkolla</th>
+            <th>Kodi i Shkollës</th>
+            <th>Index Profili</th>
+            <th>Formulari</th>
+            <th>Krijuar më</th>
+            <th>Gjinia</th>
+            <th>Publik/Privat</th>
+            <th>Q/F</th>
+            <th>Emër Q/F</th>
+            <th>Kategoria</th>
+            <th>Datëlindja</th>
+            <th>Vendlindja</th>
+            <th>Aplikim për jashtë?</th>
+            <th>Vjeshtë?</th>
+            <th>Email</th>
+            <th>Numër Telefoni</th>
+            <th>Karta ID</th>
+            <th>Shkolla tjetër</th>
+            <th>Mjedisi D1</th>
+            <th>Mjedisi D2</th>
+            <th>Mjedisi D3</th>
+            <th>Mjedisi Z1</th>
+            <th>Mjedisi Z2</th>
+            <th>Nota Mesatare</th>
+            <th>Dëftesë Pjekurie?</th>
+            <th>Aftësi Ndryshe?</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-tabularData>
+          <tr>
+            <td>
+              {{ tabularData.nr }}
+            </td>
+            <td>
+              {{ tabularData.idNumber }}
+            </td>
+            <td>
+              {{ tabularData.oldId }}
+            </td>
+            <td>
+              {{ tabularData.name }}
+            </td>
+            <td>
+              {{ tabularData.middleName }}
+            </td>
+            <td>
+              {{ tabularData.lastName }}
+            </td>
+            <td>
+              {{ tabularData.subjectD1 }}
+            </td>
+            <td>
+              {{ tabularData.gradeD1Found }}
+            </td>
+            <td>
+              {{ tabularData.gradeD1 }}
+            </td>
+            <td>
+              {{ tabularData.subjectD2 }}
+            </td>
+            <td>
+              {{ tabularData.gradeD2Found }}
+            </td>
+            <td>
+              {{ tabularData.gradeD2 }}
+            </td>
+            <td>
+              {{ tabularData.subjectD3 }}
+            </td>
+            <td>
+              {{ tabularData.gradeD3Found }}
+            </td>
+            <td>
+              {{ tabularData.gradeD3 }}
+            </td>
+            <td>
+              {{ tabularData.subjectZ1 }}
+            </td>
+            <td>
+              {{ tabularData.gradeZ1Found }}
+            </td>
+            <td>
+              {{ tabularData.gradeZ1 }}
+            </td>
+            <td>
+              {{ tabularData.darZaType }}
+            </td>
+            <td>
+              {{ tabularData.highSchoolName }}
+            </td>
+            <td>
+              {{ tabularData.highSchoolCode }}
+            </td>
+            <td>
+              {{ tabularData.profileIndex }}
+            </td>
+            <td>
+              {{ tabularData.formularType }}
+            </td>
+            <td>
+              {{ tabularData.createdDate }}
+            </td>
+            <td>
+              {{ tabularData.genderType }}
+            </td>
+            <td>
+              {{ tabularData.highSchoolType }}
+            </td>
+            <td>
+              {{ tabularData.qf }}
+            </td>
+            <td>
+              {{ tabularData.nameQF }}
+            </td>
+            <td>
+              {{ tabularData.categoryType }}
+            </td>
+            <td>
+              {{ tabularData.birthDate }}
+            </td>
+            <td>
+              {{ tabularData.birthPlace }}
+            </td>
+            <td>
+              {{ tabularData.applyToForeignCountries }}
+            </td>
+            <td>
+              {{ tabularData.fromAutumn }}
+            </td>
+            <td>
+              {{ tabularData.email }}
+            </td>
+            <td>
+              {{ tabularData.mobilePhone }}
+            </td>
+            <td>
+              {{ tabularData.idCard }}
+            </td>
+            <td>
+              {{ tabularData.nextSchool }}
+            </td>
+            <td>
+              {{ tabularData.environmentD1 }}
+            </td>
+            <td>
+              {{ tabularData.environmentD2 }}
+            </td>
+            <td>
+              {{ tabularData.environmentD3 }}
+            </td>
+            <td>
+              {{ tabularData.environmentZ1 }}
+            </td>
+            <td>
+              {{ tabularData.averageGrade }}
+            </td>
+            <td>
+              {{ tabularData.highSchoolId }}
+            </td>
+            <td>
+              {{ tabularData.hasDiploma }}
+            </td>
+            <td>
+              {{ tabularData.hasDifferentAbilities }}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
