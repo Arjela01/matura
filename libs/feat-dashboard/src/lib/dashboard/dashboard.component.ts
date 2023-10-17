@@ -59,7 +59,6 @@ export class DashboardComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private readonly dashboardItemsApiService: DashboardItemsApiService,
     private readonly dashboardMetriciesService: DashboardMetriciesApiService,
-    private router: Router,
     private route: ActivatedRoute,
     private userService: UserProfileApiService
   ) {}

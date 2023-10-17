@@ -54,8 +54,4 @@ export class ManageRolePermissionsComponent {
   onNewClick() {
     this.displayModal = true;
   }
-
-  onFormSave(role: Role) {
-
-  }
 }

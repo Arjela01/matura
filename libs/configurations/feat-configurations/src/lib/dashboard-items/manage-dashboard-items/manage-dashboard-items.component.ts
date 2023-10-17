@@ -63,7 +63,6 @@ export class ManageDashboardItemsComponent {
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly dashboardItemsService: DashboardItemsApiService,
-    private cd: ChangeDetectorRef,
     private router: Router
   ) {}
 
@@ -153,26 +152,6 @@ export class ManageDashboardItemsComponent {
     link.href = url;
     link.download = dashboardItem.documentName;
     link.click();
-  }
-
-  addDashboardItems(dashboardItems: DashboardItem) {
-    this.dashboardItemsService
-      .save(dashboardItems)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            'Konfigurimi i dashboard-it u shtua me sukses!'
-          );
-          this.displayModal = false;
-          this.getDashboardItems(this.filters as TableLazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage);
-
-        if (response.isBadRequest)
-          this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit konfigurimit të dashboard-it!'
-          );
-      });
   }
 
   deleteDashboardItems(dashboardItems: DashboardItem) {

@@ -9,7 +9,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { backgroundColor } from 'html2canvas/dist/types/css/property-descriptors/background-color';
 @UntilDestroy()
 @Component({
-  selector: 'msh-tableT',
+  selector: 'msh-table-t',
   standalone: true,
   imports: [CommonModule, ColumnFilterDirective, SharedModule, TableModule],
   templateUrl: './tableT-grid.component.html',
