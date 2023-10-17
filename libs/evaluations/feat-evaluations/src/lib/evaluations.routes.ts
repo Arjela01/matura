@@ -124,7 +124,7 @@ export const EVALUATION_ROUTES: Route[] = [
       ),
   },
   {
-    path: 'tableT',
+    path: 'table-t',
     loadComponent: () =>
       import(
         './tableT/tableT-grid.component'
