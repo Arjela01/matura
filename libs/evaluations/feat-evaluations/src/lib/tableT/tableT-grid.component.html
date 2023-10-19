@@ -15,51 +15,366 @@
         class="smaller-table">
         <ng-template pTemplate="header">
           <tr>
-            <th>Numri</th>
-            <th>ID e studentit</th>
-            <th>ID e vjetër</th>
-            <th>Emri</th>
-            <th>Atësia</th>
-            <th>Mbiemri</th>
-            <th>Lënda D1</th>
-            <th>Nota D1 e Gjetur</th>
-            <th>Nota D1</th>
-            <th>Lënda D2</th>
-            <th>Nota D2 e Gjetur</th>
-            <th>Nota D2</th>
-            <th>Lënda D3</th>
-            <th>Nota D3 e Gjetur</th>
-            <th>Nota D3</th>
-            <th>Lënda Z1</th>
-            <th>Nota Z1 e Gjetur</th>
-            <th>Nota Z1</th>
-            <th>ZVAP</th>
-            <th>Shkolla</th>
-            <th>Kodi i Shkollës</th>
-            <th>Index Profili</th>
-            <th>Formulari</th>
-            <th>Krijuar më</th>
-            <th>Gjinia</th>
-            <th>Publik/Privat</th>
-            <th>Q/F</th>
-            <th>Emër Q/F</th>
-            <th>Kategoria</th>
-            <th>Datëlindja</th>
-            <th>Vendlindja</th>
-            <th>Aplikim për jashtë?</th>
-            <th>Vjeshtë?</th>
-            <th>Email</th>
-            <th>Numër Telefoni</th>
-            <th>Karta ID</th>
-            <th>Shkolla tjetër</th>
-            <th>Mjedisi D1</th>
-            <th>Mjedisi D2</th>
-            <th>Mjedisi D3</th>
-            <th>Mjedisi Z1</th>
-            <th>Mjedisi Z2</th>
-            <th>Nota Mesatare</th>
-            <th>Dëftesë Pjekurie?</th>
-            <th>Aftësi Ndryshe?</th>
+            <th>
+              Numri
+              <p-columnFilter
+                type="text"
+                field="nr"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              ID e studentit
+              <p-columnFilter
+                type="text"
+                field="idNumber"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              ID e vjetër
+              <p-columnFilter
+                type="text"
+                field="oldIdNumber"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Emri
+              <p-columnFilter
+                type="text"
+                field="name"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Atësia
+              <p-columnFilter
+                type="text"
+                field="middleName"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Mbiemri
+              <p-columnFilter
+                type="text"
+                field="lastName"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Lënda D1
+              <p-columnFilter
+                type="text"
+                field="subjectD1"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Nota D1 e Gjetur
+              <p-columnFilter
+                type="text"
+                field="gradeD1Found"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Nota D1
+              <p-columnFilter
+                type="text"
+                field="gradeD1"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Lënda D2
+              <p-columnFilter
+                type="text"
+                field="subjectD2"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Nota D2 e Gjetur
+              <p-columnFilter
+                type="text"
+                field="gradeD2Found"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Nota D2
+              <p-columnFilter
+                type="text"
+                field="gradeD2"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Lënda D3
+              <p-columnFilter
+                type="text"
+                field="subjectD3"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Nota D3 e Gjetur
+              <p-columnFilter
+                type="text"
+                field="gradeD3Found"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Nota D3
+              <p-columnFilter
+                type="text"
+                field="gradeD3"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Lënda Z1
+              <p-columnFilter
+                type="text"
+                field="subjectZ1"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Nota Z1 e Gjetur
+              <p-columnFilter
+                type="text"
+                field="gradeZ1Found"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Nota Z1
+              <p-columnFilter
+                type="text"
+                field="gradeZ1"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              ZVAP
+              <p-columnFilter
+                type="text"
+                field="darZaType"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Shkolla
+              <p-columnFilter
+                type="text"
+                field="highSchoolName"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Kodi i Shkollës
+              <p-columnFilter
+                type="text"
+                field="highSchoolCode"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Index Profili
+              <p-columnFilter
+                type="text"
+                field="profileIndex"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Formulari
+              <p-columnFilter
+                type="text"
+                field="formularType"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Krijuar më
+              <p-columnFilter
+                type="text"
+                field="createdDate"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Gjinia
+              <p-columnFilter
+                type="text"
+                field="genderType"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Publik/Privat
+              <p-columnFilter
+                type="text"
+                field="highSchoolType"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Q/F
+              <p-columnFilter
+                type="text"
+                field="qf"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Emër Q/F
+              <p-columnFilter
+                type="text"
+                field="nameQF"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Kategoria
+              <p-columnFilter
+                type="text"
+                field="categoryType"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Datëlindja
+              <p-columnFilter
+                type="text"
+                field="birthDate"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Vendlindja
+              <p-columnFilter
+                type="text"
+                field="birthPlace"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Aplikim për jashtë?
+              <p-columnFilter
+                type="boolean"
+                field="applyToForeignCountries"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Vjeshtë?
+              <p-columnFilter
+                type="bool"
+                field="fromAutumn"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Email
+              <p-columnFilter
+                type="text"
+                field="email"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Numër Telefoni
+              <p-columnFilter
+                type="text"
+                field="mobilePhone"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Karta ID
+              <p-columnFilter
+                type="text"
+                field="idCard"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Shkolla tjetër
+              <p-columnFilter
+                type="text"
+                field="nextSchool"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Mjedisi D1
+              <p-columnFilter
+                type="text"
+                field="environmentD1"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Mjedisi D2
+              <p-columnFilter
+                type="text"
+                field="environmentD2"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Mjedisi D3
+              <p-columnFilter
+                type="text"
+                field="environmentD3"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Mjedisi Z1
+              <p-columnFilter
+                type="text"
+                field="environmentZ1"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Mjedisi Z2
+              <p-columnFilter
+                type="text"
+                field="environmentZ2"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Nota Mesatare
+              <p-columnFilter
+                type="text"
+                field="averageGrade"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Dëftesë Pjekurie?
+              <p-columnFilter
+                type="boolean"
+                field="hasDiploma"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
+            <th>
+              Aftësi Ndryshe?
+              <p-columnFilter
+                type="boolean"
+                field="hasDifferentAbilities"
+                display="menu"
+                mshColumnFilterDirective></p-columnFilter>
+            </th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-tabularData>

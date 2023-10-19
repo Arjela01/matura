@@ -6,7 +6,7 @@ import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { BehaviorSubject } from 'rxjs';
 import { CalculationProcessesApiService } from '@msh/evaluations/data-access-evaluations';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { backgroundColor } from 'html2canvas/dist/types/css/property-descriptors/background-color';
+
 @UntilDestroy()
 @Component({
   selector: 'msh-table-t',
