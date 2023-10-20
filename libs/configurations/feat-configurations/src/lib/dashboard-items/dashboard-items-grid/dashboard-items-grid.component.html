@@ -96,10 +96,10 @@
         </div>
       </td>
       <td style="width: 14%; min-width: 10rem">
-        <a *ngIf="dashboardItem.hasLinkUrl" href="{{ dashboardItem.linkUrl }}">
-          Visit Link
+        <a *ngIf="dashboardItem.linkUrl" href="{{ dashboardItem.linkUrl }}">
+          Vizito Linkun
         </a>
-        {{ dashboardItem.hasLinkUrl ? '' : 'Jo' }}
+        <p *ngIf="!dashboardItem.linkUrl">Nuk ka link</p>
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ dashboardItem.startDate | date : 'dd/MM/yyyy' }}
