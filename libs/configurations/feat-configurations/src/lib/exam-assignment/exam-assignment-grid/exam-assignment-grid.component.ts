@@ -6,25 +6,25 @@ import {
   Input,
   Output,
 } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { ExamAssignment } from '@msh/shared/domain-models';
 import {
-  GridEvent,
-  GRID_ACTIONS,
   ColumnFilterDirective, DateFilterService,
+  GRID_ACTIONS,
+  GridEvent,
 } from '@msh/shared/util-shared';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DialogModule } from "primeng/dialog";
+import { InputTextModule } from 'primeng/inputtext';
+import { RippleModule } from 'primeng/ripple';
 import {
   TableLazyLoadEvent,
+  TableModule,
   TableRowSelectEvent,
   TableRowUnSelectEvent,
 } from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
-import { CheckboxModule } from 'primeng/checkbox';
-import { InputTextModule } from 'primeng/inputtext';
-import { RippleModule } from 'primeng/ripple';
-import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import { RouterLink } from '@angular/router';
-import { DialogModule } from "primeng/dialog";
 import { ExamAssignmentHistoryGridComponent } from "../exam-assignment-history/exam-assignment-history-grid.component";
 
 @Component({
@@ -63,7 +63,7 @@ export class ExamAssignmentGridComponent {
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
   @Input() examAssignmentId: any;
   @Input() selectedRecord: any;
-  constructor(private dateFilterService: DateFilterService) {}
+  constructor(private dateFilterService: DateFilterService) { }
 
   examAssignment: ExamAssignment = {
     id: '',

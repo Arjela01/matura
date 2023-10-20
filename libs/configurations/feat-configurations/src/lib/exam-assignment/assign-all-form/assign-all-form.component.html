@@ -86,7 +86,48 @@
             Data e Provimit është fushë e kërkuar.
           </small>
         </div>
-
+        <div class="field">
+          <label for="SchoolProfile"> Profili i Shkollës</label>
+          <p-dropdown
+            class="mt-4 mb-4"
+            id="SchoolProfile"
+            [options]="schoolProfile"
+            optionValue="key"
+            optionLabel="value"
+            (onChange)="onAdministrationOfficeChanged($event)"
+            (onClear)="onAdministrationOfficeChanged($event)"
+            [virtualScroll]="true"
+            [autoDisplayFirst]="false"
+            [virtualScrollItemSize]="43"
+            name="SchoolProfile"
+            appendTo="body"
+            [(ngModel)]="examAssignment.schoolProfileId"
+            [showClear]="true"
+            >
+          </p-dropdown>
+        </div>
+        <div class="field">
+          <label for="NumberOfStudents">Numri i nxënësve</label>
+          <input
+            type="number"
+            pInputText
+            [(ngModel)]="examAssignment.maxStudentsToAssign"
+            id="NumberOfStudents"
+            name="NumberOfStudents"
+            autofocus
+            />
+        </div>
+        <div class="field">
+          <label for="Name">Emri</label>
+          <input
+            type="text"
+            pInputText
+            [(ngModel)]="examAssignment.studentName"
+            id="Name"
+            name="Name"
+            autofocus
+            />
+        </div>
         <div class="flex justify-content-end mt-4">
           <button
             type="button"
