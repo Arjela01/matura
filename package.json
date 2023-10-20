@@ -7,7 +7,8 @@
     "postinstall": "node ./decorate-angular-cli.js",
     "lint": "nx run-many --target lint",
     "build": "nx build msh",
-    "build:stats": "nx build msh --statsJson"
+    "build:stats": "nx build msh --statsJson",
+    "reset": "nx reset"
   },
   "private": true,
   "dependencies": {
