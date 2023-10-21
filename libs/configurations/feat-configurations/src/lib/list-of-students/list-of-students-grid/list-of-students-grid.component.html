@@ -1,0 +1,26 @@
+<table>
+  <thead>
+    <tr>
+      <th>Indeksi</th>
+      <th>Matura ID</th>
+      <th>Emër</th>
+      <th>Atësi</th>
+      <th>Mbiemër</th>
+      <th>Shkolla</th>
+      <th>Qendra e Provimit</th>
+      <th>Data e Provimit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let rowData of studentsList">
+      <td>{{rowData.index}}</td>
+      <td>{{ rowData.studentId }}</td>
+      <td>{{ firstName }}</td>
+      <td>{{ middleName }}</td>
+      <td>{{ lastName }}</td>
+      <td>{{ rowData.studentHighSchoolName }}</td>
+      <td>{{ rowData.examSiteName }}</td>
+      <td>{{ rowData.examTypeDateTime }}</td>
+    </tr>
+  </tbody>
+</table>

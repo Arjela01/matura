@@ -151,9 +151,9 @@ export const CONFIGURATION_ROUTES: Route[] = [
   {
     path: 'roles/:id',
     loadComponent: () =>
-        import('./roles/manage-role-permissions/manage-role-permissions.component').then(
-            m => m.ManageRolePermissionsComponent
-        ),
+      import(
+        './roles/manage-role-permissions/manage-role-permissions.component'
+      ).then(m => m.ManageRolePermissionsComponent),
   },
   {
     path: 'study-program',
@@ -239,5 +239,12 @@ export const CONFIGURATION_ROUTES: Route[] = [
       import(
         './dashboard-sections/manage-dashboard-sections/manage-dashboard-sections.component'
       ).then(m => m.ManageDashboardSectionsComponent),
+  },
+  {
+    path: 'list-of-students',
+    loadComponent: () =>
+      import(
+        './list-of-students/manage-list-of-students/manage-list-of-students.component'
+      ).then(m => m.ManageListOfStudentsComponent),
   },
 ];

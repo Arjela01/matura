@@ -1,0 +1,18 @@
+<div>
+  <h2 class="flex-1 mb-0">Lista Emërore</h2>
+  <div class="mt-4">
+    <msh-list-of-students-filters
+      (formSave)="getExamAssignments($event)"
+      [examDates]="examDates"
+      [examSites]="examSites"
+      (examDateChanged)="getExamDateDropdown($event)">
+    </msh-list-of-students-filters>
+  </div>
+  <div class="mt-4">
+    <msh-list-of-students-grid
+      [totalRecords]="totalRecords"
+      [studentsList]="
+        (studentsList$ | async) || []
+      "></msh-list-of-students-grid>
+  </div>
+</div>
