@@ -90,12 +90,16 @@
             <td>16. Aplikoni jasht shtetit?</td>
             <td>{{ a1.isApplyingToForeignCountries ? 'Po' : 'Jo' }}</td>
           </tr>
+          <tr class="w-full mt-4">
+            <td>17. Keni marrë diplomë pjekurie?</td>
+            <td>{{ a1.alreadyHaveDiploma ? 'Po' : 'Jo' }}</td>
+          </tr>
           <tr class="w-full mt-4" *ngIf="a1.isA1">
-            <td>17. Klasa</td>
+            <td>18. Klasa</td>
             <td>{{ studentInfo.studyClass }}</td>
           </tr>
           <tr class="w-full mt-4" *ngIf="!a1.isA1">
-            <td>17. Viti i përfundimit të shkollës</td>
+            <td>19. Viti i përfundimit të shkollës</td>
             <td>{{ a1.yearOfSchoolA1Z }}</td>
           </tr>
           <ng-container *ngIf="carriedSubjects && carriedSubjects.length > 0">
