@@ -81,13 +81,9 @@ export class ExamAssignmentApiService {
   }
 
   examAssign(
-    examSiteIds: string[],
-    examDateIds: string[]
+    examAssignment:unknown
   ): Observable<ApiResult<ExamAssignment>> {
-    return this.apiService.post(`/ExamAssignment/ExamAssign`, {
-      examSiteIds: examSiteIds,
-      examDateIds: examDateIds,
-    });
+    return this.apiService.post(`/ExamAssignment/ExamAssign`, examAssignment);
   }
 
   forExamDateId(examDateId: number): Observable<ApiResult<ExamAssignment[]>> {
