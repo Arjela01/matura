@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Role, RoleTableView } from '@msh/shared/domain-models';
+import {Permission, PermissionCategory, Role, RoleTableView} from '@msh/shared/domain-models';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { map, Observable } from 'rxjs';
+import {Observable, of} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +13,10 @@ export class RolesApiService {
   constructor(private http: HttpClient, private apiService: APIService) {}
   loadRoles(event: TableLazyLoadEvent): Observable<RoleTableView> {
     return this.apiService.post(`/Role/TableData`, event);
+  }
+
+  loadRole(roleId: string): Observable<ApiResult<Role>> {
+    return this.apiService.get<ApiResult<Role>>(`/Role/${roleId}`)
   }
 
   save(role: Role): Observable<ApiResult<Role>> {
