@@ -201,7 +201,6 @@ export class StudentsFormComponent implements OnInit, OnChanges {
       this.student.birthDate = formattedDate as any;
     }
     const data = { ...this.student };
-    this.disabled = true;
     this.studentService.save(data).subscribe({
       next: response => {
         if (response.isSuccessful) {
@@ -265,6 +264,6 @@ export class StudentsFormComponent implements OnInit, OnChanges {
   }
   private enableSaveButton() {
     this.disabled = false;
-    this.cd.detectChanges();
+    this.cd.markForCheck();
   }
 }

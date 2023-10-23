@@ -8,8 +8,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { ExamAssignment, Student } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import { ExamAssignment, Student } from '@msh/shared/domain-models';
+import { GridEvent } from '@msh/shared/util-shared';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
@@ -17,13 +18,12 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { GridEvent } from '@msh/shared/util-shared';
 
-import { DialogModule } from 'primeng/dialog';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { TableLazyLoadEvent } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -52,6 +52,7 @@ export class AssignAllFormComponent {
   @Input() examDates: DropdownModel<number>[] = [];
   @Input() examSites: DropdownModel<any>[] = [];
   @Input() administrationOffices: any;
+  @Input() schoolProfile: DropdownModel<any>[] = [];
   @Input() set examAssignmentsDetails(details: ExamAssignment | null) {
     if (details) {
       this.examAssignment = Object.assign({}, details);
@@ -65,6 +66,7 @@ export class AssignAllFormComponent {
   @Output() administrationOfficeChanged = new EventEmitter<number>();
   @Output() examSiteChanged = new EventEmitter<string[]>();
   @Output() examDateChanged = new EventEmitter<any>();
+  @Output() schoolProfileChanged = new EventEmitter<any>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
   filters: TableLazyLoadEvent | null = null;
@@ -72,6 +74,7 @@ export class AssignAllFormComponent {
   displayAssignAllModal = false;
   fileContent: string | ArrayBuffer | null | undefined;
   administrationOfficeId = 0;
+  schoolProfileId = 0;
   examSiteId = [''];
   examDateId = 0;
 
@@ -85,11 +88,13 @@ export class AssignAllFormComponent {
     studentInputData: '',
     studentName: '',
     time: '',
+    schoolProfileId: 0,
+    maxStudentsToAssign: 0
   };
   assigned = false;
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor() {}
+  constructor() { }
 
   onCancelClick() {
     this.formClose.emit();
@@ -114,6 +119,13 @@ export class AssignAllFormComponent {
       this.examDateId = $event.value;
       this.examDateChanged.emit(this.examDateId);
       this.examAssignment.examDateId = this.examDateId;
+    }
+  }
+  onSchoolProfileChanged($event: any): void {
+    if ($event && $event.value) {
+      this.schoolProfileId = $event.value;
+      this.schoolProfileChanged.emit(this.schoolProfileId);
+      this.examAssignment.schoolProfileId = this.schoolProfileId;
     }
   }
 

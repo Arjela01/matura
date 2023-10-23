@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService } from 'primeng/api';
@@ -23,11 +28,20 @@ import {
   GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 
-import { BehaviorSubject } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  distinctUntilChanged,
+  map,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { HighSchoolFormComponent } from '../high-school-form/high-school-form.component';
 import { HighSchoolGridComponent } from '../high-school-grid/high-school-grid.component';
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
@@ -67,13 +81,38 @@ export class ManageHighSchoolsComponent implements OnInit {
     private readonly highSchoolService: HighSchoolApiService,
     private readonly cityApiService: CityApiService,
     private readonly administrationOfficeApiService: AdministrationOfficeApiService,
-    private readonly regionApiService: RegionApiService
+    private readonly regionApiService: RegionApiService,
+    private readonly authFacade: AuthFacade,
+    private readonly cd: ChangeDetectorRef
   ) {}
+
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    map(([_]) => {
+      if (this.filters) {
+        this.getHighSchools(this.filters as TableLazyLoadEvent);
+      }
+    }),
+    tap()
+  );
 
   ngOnInit(): void {
     this.getAdministrationOfficeDropdown();
     this.getCitiesDropdown();
     this.getRegionDropdown();
+
+    this.authFacade.academicYear$
+      .pipe(
+        map((data: any) => data.id),
+        distinctUntilChanged(),
+        switchMap(data => {
+          if (this.filters) {
+            window.location.reload();
+          }
+
+          return of([]);
+        })
+      )
+      .subscribe();
   }
 
   onNewClick() {
@@ -151,6 +190,7 @@ export class ManageHighSchoolsComponent implements OnInit {
       .subscribe(response => {
         this.highSchools$$.next(response.data);
         this.totalRecords = response.total;
+        this.cd.detectChanges();
       });
   }
 

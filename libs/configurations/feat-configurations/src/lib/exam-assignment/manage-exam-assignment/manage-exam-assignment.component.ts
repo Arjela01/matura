@@ -5,33 +5,34 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { DialogModule } from 'primeng/dialog';
-import { ToolbarModule } from 'primeng/toolbar';
 import {
   AdministrationOfficeApiService,
   ExamAssignmentApiService,
   ExamDateApiService,
   ExamSiteApiService,
+  ProfileApiService,
 } from '@msh/configurations/data-access-configurations';
-import { ExamAssignment } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import { ExamAssignment } from '@msh/shared/domain-models';
 import {
+  GRID_ACTIONS,
   GlobalToastService,
   GridEvent,
-  GRID_ACTIONS,
 } from '@msh/shared/util-shared';
-import { BehaviorSubject } from 'rxjs';
-import { ExamAssignmentGridComponent } from '../exam-assignment-grid/exam-assignment-grid.component';
-import { FileUploadModule } from 'primeng/fileupload';
-import { ExamAssignmentFormComponent } from '../exam-assignment-form/exam-assignment-form.component';
-import { UploadFormComponent } from '../upload-form/upload-form.component';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import * as FileSaver from 'file-saver';
-import { AssignAllFormComponent } from '../assign-all-form/assign-all-form.component';
+import { ConfirmationService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
+import { FileUploadModule } from 'primeng/fileupload';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { ToolbarModule } from 'primeng/toolbar';
+import { BehaviorSubject } from 'rxjs';
+import { AssignAllFormComponent } from '../assign-all-form/assign-all-form.component';
+import { ExamAssignmentFormComponent } from '../exam-assignment-form/exam-assignment-form.component';
+import { ExamAssignmentGridComponent } from '../exam-assignment-grid/exam-assignment-grid.component';
+import { UploadFormComponent } from '../upload-form/upload-form.component';
 
 @UntilDestroy()
 @Component({
@@ -66,7 +67,7 @@ export class ManageExamAssignmentComponent implements OnInit {
   displayModal = false;
   displayUploadModal = false;
   displayAssignAllModal = false;
-
+  schoolProfileId: DropdownModel<any>[] = [];
   examDatesForAssignAll: DropdownModel<number>[] = [];
   examDates: DropdownModel<number>[] = [];
   examSites: DropdownModel<string>[] = [];
@@ -74,8 +75,8 @@ export class ManageExamAssignmentComponent implements OnInit {
   administrationOffices: any;
   headerText!: string;
   studentId: number | undefined;
-  selectedRecord: ExamAssignment |null = null;
-  displayHistoryForm= false;
+  selectedRecord: ExamAssignment | null = null;
+  displayHistoryForm = false;
   examAssignmentId!: string;
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -84,8 +85,9 @@ export class ManageExamAssignmentComponent implements OnInit {
     private readonly examDateService: ExamDateApiService,
     private readonly examSiteService: ExamSiteApiService,
     private readonly cd: ChangeDetectorRef,
-    private readonly administrationOfficeService: AdministrationOfficeApiService
-  ) {}
+    private readonly administrationOfficeService: AdministrationOfficeApiService,
+    private readonly profileService: ProfileApiService
+  ) { }
 
   onGridEvent(event: GridEvent<any | ExamAssignment[]>) {
     switch (event.action) {
@@ -141,6 +143,7 @@ export class ManageExamAssignmentComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getAdministrationOfficeDropdown();
+    this.getSchoolProfiles();
   }
 
   onUploadClose() {
@@ -177,6 +180,7 @@ export class ManageExamAssignmentComponent implements OnInit {
   onAdministrationOfficeChanged(administrationOfficeId: number) {
     this.getExamSite(administrationOfficeId);
   }
+
   onExamSiteChanged(examSiteId: string[]) {
     this.getExamDatesForAssignAll(examSiteId);
   }
@@ -212,6 +216,7 @@ export class ManageExamAssignmentComponent implements OnInit {
         this.totalRecords = response.total;
       });
   }
+
 
   addExamAssignment(examAssignment: ExamAssignment) {
     this.examAssignmentService
@@ -308,19 +313,34 @@ export class ManageExamAssignmentComponent implements OnInit {
         this.cd.markForCheck();
       });
   }
-  onAssignAllFormSave(examAssignment: any) {
-    this.assignAll(examAssignment.examSiteId, examAssignment.examDateId);
+  getSchoolProfiles() {
+    this.profileService.loadDropdownList()
+    .pipe(untilDestroyed(this))
+    .subscribe(response => {
+      this.schoolProfileId = response.data;
+    });
   }
-  assignAll(examSiteIds: string[], examDateIds: string[]) {
+  onAssignAllFormSave(examAssignment: any) {
+    console.log(examAssignment);
+    Object.keys(examAssignment).forEach((key) => {
+      if (examAssignment[key] === null
+        || examAssignment[key] === 0
+        || examAssignment[key] === '')delete examAssignment[key];
+    })
+    examAssignment.examSiteIds = examAssignment.examSiteId;
+    delete examAssignment.examSiteId;
+    examAssignment.examDateIds = examAssignment.examDateId;
+    delete examAssignment.examDateId;
+    this.assignAll(examAssignment)
+  }
+  assignAll(examAssignment:any) {
     this.examAssignmentService
-      .examAssign(examSiteIds, examDateIds)
+      .examAssign(examAssignment)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examAssignment = response.data;
         if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            'Studentët u caktuan me sukses në qendrat e zgjedhura.'
-          );
+          this.toastService.showSuccess(response.data.toString())
           this.displayAssignAllModal = false;
           this.getExamAssignments(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
