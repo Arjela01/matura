@@ -69,7 +69,6 @@ export class ManageExamAssignmentComponent implements OnInit {
   displayAssignAllModal = false;
   schoolProfileId: DropdownModel<any>[] = [];
   examDatesForAssignAll: DropdownModel<number>[] = [];
-
   examDates: DropdownModel<number>[] = [];
   examSites: DropdownModel<string>[] = [];
   examSiteForAdministrationOffice: DropdownModel<string>[] = [];
@@ -190,11 +189,7 @@ export class ManageExamAssignmentComponent implements OnInit {
       this.examAssignment.examDateId = examDateId;
     }
   }
-  onSchoolProfileChanged(schoolProfileId: any) {
-    if (this.schoolProfileId != null) {
-      this.schoolProfileId = schoolProfileId;
-    }
-  }
+
   getExamSite(administrationOfficeId: any) {
     this.examSiteService
       .forAdministrationOffice(administrationOfficeId)
@@ -221,11 +216,7 @@ export class ManageExamAssignmentComponent implements OnInit {
         this.totalRecords = response.total;
       });
   }
-  getSchoolProfiles() {
-    this.profileService.loadDropdownList().subscribe(response => {
-      this.schoolProfileId = response.data;
-    });
-  }
+
 
   addExamAssignment(examAssignment: ExamAssignment) {
     this.examAssignmentService
@@ -321,6 +312,14 @@ export class ManageExamAssignmentComponent implements OnInit {
         this.administrationOffices = response.data;
         this.cd.markForCheck();
       });
+  }
+  getSchoolProfiles() {
+    this.profileService.loadDropdownList()
+    .pipe(untilDestroyed(this))
+    .subscribe(response => {
+      this.schoolProfileId = response.data;
+      this.cd.markForCheck();
+    });
   }
   onAssignAllFormSave(examAssignment: any) {
     console.log(examAssignment);
