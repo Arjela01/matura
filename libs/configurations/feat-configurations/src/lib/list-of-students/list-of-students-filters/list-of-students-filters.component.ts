@@ -34,6 +34,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class ListOfStudentsFiltersComponent {
   private jwtHelper: JwtHelperService = new JwtHelperService();
+  @Input() totalRecords: number | undefined;
   @Input() examDates: DropdownModel<string>[] = [];
   @Input() examSites: DropdownModel<number>[] = [];
   @Input() showSortButton: boolean | undefined;

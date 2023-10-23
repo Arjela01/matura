@@ -52,8 +52,12 @@
   </div>
   <div
     class="text-center"
-    *ngIf="userRole === RoleName.Admin && showSortButton">
-    <button pButton class="btn btn-primary mt-2" (click)="sortAssignments()" type="button">
+    *ngIf="userRole === RoleName.Admin && showSortButton && totalRecords !== 0">
+    <button
+      pButton
+      class="btn btn-primary mt-2"
+      (click)="sortAssignments()"
+      type="button">
       Rendit
     </button>
   </div>
