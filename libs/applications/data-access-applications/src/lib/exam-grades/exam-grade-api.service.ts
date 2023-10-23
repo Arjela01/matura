@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { APIService } from '@msh/shared/util-shared';
 import { ApiResult } from '@msh/shared/data-access-shared';
-import { ExamGradeDiscoveryResult } from '../../../../domain-application/src/CarriedGrade/examGradeDiscoveryResult';
+import { ExamGradeDiscoveryResult } from '@msh/shared/domain-models';
 
 @Injectable({
   providedIn: 'root',

@@ -10,7 +10,6 @@ import { Observable, map } from 'rxjs';
 
 import { ExamGrade } from '@msh/shared/domain-models';
 import * as FileSaver from 'file-saver';
-import { ExamGradeDiscoveryResult } from '../../../../../applications/domain-application/src/CarriedGrade/examGradeDiscoveryResult';
 
 @Injectable({
   providedIn: 'root',
