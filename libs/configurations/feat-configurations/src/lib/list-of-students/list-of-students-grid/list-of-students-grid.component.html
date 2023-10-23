@@ -13,14 +13,14 @@
   </thead>
   <tbody>
     <tr *ngFor="let rowData of studentsList">
-      <td>{{rowData.index}}</td>
+      <td>{{ rowData.index }}</td>
       <td>{{ rowData.studentId }}</td>
-      <td>{{ firstName }}</td>
-      <td>{{ middleName }}</td>
-      <td>{{ lastName }}</td>
+      <td>{{ formatStudentData(rowData).firstName }}</td>
+      <td>{{ formatStudentData(rowData).middleName }}</td>
+      <td>{{ formatStudentData(rowData).lastName }}</td>
       <td>{{ rowData.studentHighSchoolName }}</td>
       <td>{{ rowData.examSiteName }}</td>
-      <td>{{ rowData.examTypeDateTime }}</td>
+      <td>{{ formatStudentData(rowData).formattedExamTypeDateTime }}</td>
     </tr>
   </tbody>
 </table>

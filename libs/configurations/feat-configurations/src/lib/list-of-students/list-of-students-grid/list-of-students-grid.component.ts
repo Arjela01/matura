@@ -18,19 +18,28 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrls: ['./list-of-students-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ListOfStudentsGridComponent implements OnChanges {
+export class ListOfStudentsGridComponent {
   @Input() studentsList: ExamAssignment[] = [];
   @Input() totalRecords = 0;
-  firstName = '';
-  middleName = '';
-  lastName = '';
 
-  ngOnChanges() {
-    this.studentsList.forEach(student => {
-      const names = student.studentName.split(' ');
-      this.firstName = names[0];
-      this.middleName = names[1];
-      this.lastName = names.slice(2).join(' ');
-    });
+  formatStudentData(student: ExamAssignment): {
+    firstName: string;
+    middleName: string;
+    lastName: string;
+    formattedExamTypeDateTime: string;
+  } {
+    const names = student.studentName.split(' ');
+    const firstName = names[0];
+    const middleName = names[1];
+    const lastName = names.slice(2).join(' ');
+    const formattedExamTypeDateTime = this.formatExamTypeDateTime(
+      student.examTypeDateTime as any
+    );
+    return { firstName, middleName, lastName, formattedExamTypeDateTime };
+  }
+
+  formatExamTypeDateTime(dateTime: string): string {
+    const [typePart, datePart, timePart] = dateTime.split(' ');
+    return `${typePart} - ${datePart} @ ${timePart}`;
   }
 }

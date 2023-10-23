@@ -2,7 +2,9 @@
   <h2 class="flex-1 mb-0">Lista Emërore</h2>
   <div class="mt-4">
     <msh-list-of-students-filters
+      [showSortButton]="showSortButton"
       (formSave)="getExamAssignments($event)"
+      (sort)="sortExamAssignments($event)"
       [examDates]="examDates"
       [examSites]="examSites"
       (examDateChanged)="getExamDateDropdown($event)">
