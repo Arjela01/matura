@@ -318,7 +318,6 @@ export class ManageExamAssignmentComponent implements OnInit {
     .pipe(untilDestroyed(this))
     .subscribe(response => {
       this.schoolProfileId = response.data;
-      this.cd.markForCheck();
     });
   }
   onAssignAllFormSave(examAssignment: any) {
