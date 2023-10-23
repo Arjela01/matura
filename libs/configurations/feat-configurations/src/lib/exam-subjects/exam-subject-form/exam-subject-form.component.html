@@ -30,6 +30,17 @@
     </small>
   </div>
   <div class="field">
+    <label for="Name">Emri i Jashtëm *</label>
+    <input
+      type="text"
+      pInputText
+      id="ExternalName"
+      name="ExternalName"
+      [(ngModel)]="examSubject.externalName"
+      required
+      autofocus />
+  </div>
+  <div class="field">
     <label for="ExamType">Tipi i provimit *</label>
     <p-dropdown
       id="ExamType"

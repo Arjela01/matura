@@ -29,6 +29,11 @@ export class ExamAssignmentApiService {
   ): Observable<ExamAssignmentTableView> {
     return this.apiService.post(`/ExamAssignment/TableData`, event);
   }
+  getAssignments(
+    event: TableLazyLoadEvent
+  ): Observable<ExamAssignmentTableView> {
+    return this.apiService.post(`/ExamAssignment/AssigmentsTableData`, event);
+  }
 
   save(examAssignment: ExamAssignment): Observable<ApiResult<ExamAssignment>> {
     return this.apiService.post<ApiResult<ExamAssignment>, ExamAssignment>(
@@ -76,13 +81,9 @@ export class ExamAssignmentApiService {
   }
 
   examAssign(
-    examSiteIds: string[],
-    examDateIds: string[]
+    examAssignment:unknown
   ): Observable<ApiResult<ExamAssignment>> {
-    return this.apiService.post(`/ExamAssignment/ExamAssign`, {
-      examSiteIds: examSiteIds,
-      examDateIds: examDateIds,
-    });
+    return this.apiService.post(`/ExamAssignment/ExamAssign`, examAssignment);
   }
 
   forExamDateId(examDateId: number): Observable<ApiResult<ExamAssignment[]>> {

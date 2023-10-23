@@ -1,4 +1,5 @@
 export interface ExamAssignment {
+  index?: number;
   id: string;
   studentId: string;
   studentIdentifier: string;
@@ -16,6 +17,8 @@ export interface ExamAssignment {
   administrationOfficeName?: string;
   time: string;
   studentHighSchoolName?: string;
+  schoolProfileId?:number;
+  maxStudentsToAssign?:number;
 }
 
 export interface ExamAssignmentTableView {

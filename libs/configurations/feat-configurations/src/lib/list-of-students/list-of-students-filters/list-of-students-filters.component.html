@@ -1,0 +1,52 @@
+<form #form="ngForm" class="dropdown-row" (ngSubmit)="onSubmit()">
+  <div class="field column">
+    <label for="examType">Qendra e Provimit *</label>
+    <p-dropdown
+      id="examType"
+      [options]="examSites"
+      optionValue="key"
+      optionLabel="value"
+      name="examType"
+      appendTo="body"
+      [filter]="true"
+      [required]="true"
+      [autoDisplayFirst]="false"
+      (onChange)="onExamSiteChanged()"
+      (onClear)="onExamSiteChanged()"
+      [(ngModel)]="studentList.examSiteId"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !studentList.examSiteId
+      }">
+    </p-dropdown>
+    <small class="p-error block" *ngIf="submitted && !studentList.examSiteId">
+      Qendra e Provimit është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field column">
+    <label for="archiveFolder">Data e Provimit *</label>
+    <p-dropdown
+      id="archiveFolder"
+      [options]="examDates"
+      optionValue="key"
+      optionLabel="value"
+      name="archiveFolderId"
+      appendTo="body"
+      (onChange)="onSubmit()"
+      [filter]="true"
+      [required]="true"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="studentList.examDateId"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !studentList.examDateId
+      }">
+    </p-dropdown>
+    <small class="p-error block" *ngIf="submitted && !studentList.examDateId">
+      Data është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="text-center">
+    <button pButton class="btn btn-primary mt-2" type="submit">Kërko</button>
+  </div>
+</form>

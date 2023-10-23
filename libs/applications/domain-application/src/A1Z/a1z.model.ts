@@ -15,6 +15,7 @@ export interface A1Z {
   subjectD1Id?: string;
   subjectD1Name?: string;
   scoreD1?: number;
+  discoveredScoreD1?: number;
   reasonD1?: string;
   academicYearD1Id?: number;
   academicYearD1Name?: string;
@@ -26,6 +27,7 @@ export interface A1Z {
   subjectD2Id?: string;
   subjectD2Name?: string;
   scoreD2?: number;
+  discoveredScoreD2?: number;
   reasonD2?: string;
   academicYearD2Id?: number;
   academicYearD2Name?: string;
@@ -38,6 +40,7 @@ export interface A1Z {
   subjectD3Id?: string;
   subjectD3Name?: string;
   scoreD3?: number;
+  discoveredScoreD3?: number;
   reasonD3?: string;
   academicYearD3Id?: number;
   academicYearD3Name?: string;
@@ -49,6 +52,7 @@ export interface A1Z {
   subjectZ1Id?: string;
   subjectZ1Name?: string;
   scoreZ1?: number;
+  discoveredScoreZ1?: number;
   reasonZ1?: string;
   academicYearZ1Id?: number;
   academicYearZ1Name?: string;

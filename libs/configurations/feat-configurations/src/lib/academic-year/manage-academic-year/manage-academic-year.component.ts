@@ -115,6 +115,24 @@ export class ManageAcademicYearComponent {
           },
         });
         break;
+      case GRID_ACTIONS.CUSTOM_ACTION1:
+        this.confirmationService.confirm({
+          message:
+            'Jeni i sigurt që doni të importoni të dhënat nga viti i kaluar?',
+          accept: () => {
+            const academicYear = event.data as AcademicYear;
+            this.academicYearService
+              .importFromPreviousYear(academicYear.id)
+              .subscribe(response => {
+                if (response.isSuccessful) {
+                  this.toastService.showSuccess(
+                    'Të dhënat u importuan me sukses'
+                  );
+                }
+              });
+          },
+        });
+        break;
     }
   }
 

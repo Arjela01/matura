@@ -1,0 +1,33 @@
+:host {
+  display: block;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+}
+
+th {
+  padding: 11px;
+  text-align: left;
+  background-color: #efeded;
+  border: 1px solid #ddd;
+}
+
+td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+tr {
+  background-color: white;
+}
+tr:nth-child(even) {
+  background-color: #f6f5f5; /* Grey background for even rows */
+}
+
+th,
+td {
+  margin: 5px;
+}

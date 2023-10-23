@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
+import {
+  ApiResult,
+  BaseApiResult,
+  DropdownModel,
+} from '@msh/shared/data-access-shared';
 import { AcademicYear, AcademicYearTableView } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
@@ -45,6 +49,15 @@ export class AcademicYearApiService {
   delete(academicYearId: number): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<AcademicYear>>(
       `/AcademicYear/${academicYearId}`
+    );
+  }
+
+  importFromPreviousYear(academicYearId: number): Observable<BaseApiResult> {
+    return this.apiService.post<BaseApiResult, any>(
+      `/AcademicYear/ImportFromPreviousYear`,
+      {
+        academicYearId: academicYearId,
+      }
     );
   }
 }
