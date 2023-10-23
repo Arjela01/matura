@@ -293,13 +293,17 @@ export class A1zFormComponent implements OnInit {
 
   onCarryZ1Change($event: ChangeEvent<boolean>) {
     this.a1z.carryZ1 = $event.value;
+    this.a1z.scoreZ1 = undefined;
+    this.a1z.academicYearZ1Name = undefined;
+    this.a1z.academicYearZ1Id = undefined;
+    this.a1z.carriedGradeZ1Id = undefined;
+    this.a1z.carriedGradeZ1SubjectName = undefined;
+    this.a1z.reasonZ1 = undefined;
+    this.a1z.subjectZ1Id = undefined;
+    this.a1z.subjectZ1Name = undefined;
+
     if (!$event.value) {
-      this.a1z.scoreZ1 = undefined;
-      this.a1z.academicYearZ1Name = undefined;
-      this.a1z.academicYearZ1Id = undefined;
-      this.a1z.carriedGradeZ1Id = undefined;
-      this.a1z.carriedGradeZ1SubjectName = undefined;
-      this.a1z.reasonZ1 = undefined;
+
 
       const examType = this.examTypes.find(x => x.value === EXAM_TYPES.Z1);
 
@@ -319,16 +323,17 @@ export class A1zFormComponent implements OnInit {
         });
     }
     if (this.a1z.carryZ1) {
-      this.discoverGrade(EXAM_TYPES.Z1);
+      this.discoverGrade(EXAM_TYPES.Z1, this.a1z.subjectZ1Id);
     }
+    this.cd.detectChanges();
   }
 
-  discoverGrade(examType: string) {
+  discoverGrade(examType: string, examSubjectId?: string) {
     const examTypeRecord = this.examTypes.find(x => x.value === examType);
 
     if (examTypeRecord) {
       this.examGradeApiService
-        .discoverGrade(examTypeRecord.key ?? 0, this.a1z.studentNid)
+        .discoverGrade(examTypeRecord.key ?? 0, this.a1z.studentNid, examSubjectId)
         .subscribe(response => {
           if (response.isSuccessful) {
             switch (examType) {
@@ -421,9 +426,9 @@ export class A1zFormComponent implements OnInit {
         const d3ExamType = x.data.find(d3 => d3.value === EXAM_TYPES.D3);
         const z1ExamType = x.data.find(z1 => z1.value === EXAM_TYPES.Z1);
 
-        this.discoverGrade(EXAM_TYPES.D1);
-        this.discoverGrade(EXAM_TYPES.D2);
-        this.discoverGrade(EXAM_TYPES.D3);
+        this.discoverGrade(EXAM_TYPES.D1, this.a1z.subjectD1Id);
+        this.discoverGrade(EXAM_TYPES.D2, this.a1z.subjectD2Id);
+        this.discoverGrade(EXAM_TYPES.D3, this.a1z.subjectD3Id);
 
         if (d1ExamType && d1ExamType.key) {
           this.examSubjectService

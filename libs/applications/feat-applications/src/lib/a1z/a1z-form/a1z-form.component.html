@@ -28,7 +28,7 @@
 <div class="grid">
   <div class="col-12 p-fluid">
     <div class="card px-6 py-4 mt-3">
-      <form (ngSubmit)="onSubmit()">
+      <form (ngSubmit)="onSubmit()" autocomplete="off">
         <table class="w-full vertical-table">
           <tr>
             <th style="width: 20rem">
@@ -205,6 +205,7 @@
                 pInputText
                 id="reasonD1"
                 name="reasonD1"
+                class="w-30rem"
                 [(ngModel)]="a1z.reasonD1"
                 autofocus />
             </td>
@@ -265,6 +266,7 @@
                 pInputText
                 id="reasonD2"
                 name="reasonD2"
+                class="w-30rem"
                 [(ngModel)]="a1z.reasonD2"
                 autofocus />
             </td>
@@ -315,6 +317,7 @@
                 pInputText
                 id="reasonD3"
                 name="reasonD3"
+                class="w-30rem"
                 [(ngModel)]="a1z.reasonD3"
                 autofocus />
             </td>
@@ -326,11 +329,11 @@
         <table class="vertical-table">
           <tr>
             <th></th>
-            <th>Mbart?</th>
+            <th>Mbart Notë</th>
             <th *ngIf="a1z.carryZ1 == true">Viti</th>
             <th>Lënda</th>
-            <th *ngIf="a1z.carryZ1 == true">Nota e gjetur</th>
-            <th *ngIf="a1z.carryZ1 == true">Nota</th>
+            <th *ngIf="a1z.carryZ1 == true">Nota e Gjetur</th>
+            <th *ngIf="a1z.carryZ1 == true">Nota e Mbartur</th>
             <th *ngIf="a1z.carryZ1 == true">Arsyetimi</th>
           </tr>
           <tr>
@@ -404,25 +407,26 @@
             </td>
             <td *ngIf="a1z.carryZ1 == true">
               <input
-                type="number"
+                type="text"
                 pInputText
-                max="10"
-                min="4"
+                class="w-30rem"
                 id="reasonZ1"
                 name="reasonZ1"
+                autocomplete="reasonz1"
                 [(ngModel)]="a1z.reasonZ1"
                 autofocus />
             </td>
           </tr>
         </table>
+      </form>
 
         <hr />
-
         <div class="field">
           <label for="overseerCode">Kodi i Mbikëqyrësit</label>
           <input
             type="password"
             pPassword
+            autocomplete="overseer-pin"
             [feedback]="false"
             required
             id="overseerCode"
@@ -438,6 +442,7 @@
         <div class="flex justify-content-start pt-3">
           <button
             type="submit"
+            (click)="onSubmit()"
             pButton
             label="Ruaj"
             class="p-button w-auto"></button>
@@ -448,7 +453,6 @@
             class="p-button-text w-auto mr-2"
             (click)="onExitForm()"></button>
         </div>
-      </form>
     </div>
   </div>
 </div>

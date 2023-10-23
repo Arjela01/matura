@@ -58,6 +58,13 @@ export class AcademicYearGridComponent {
     } as GridEvent<AcademicYear>);
   }
 
+  onImportClick(academicYear: AcademicYear) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.CUSTOM_ACTION1,
+      data: academicYear,
+    } as GridEvent<AcademicYear>);
+  }
+
   onDeleteClick(academicYear: AcademicYear) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,

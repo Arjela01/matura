@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { APIService } from '@msh/shared/util-shared';
 import { ApiResult } from '@msh/shared/data-access-shared';
-import {ExamGradeDiscoveryResult} from "../../../../domain-application/src/CarriedGrade/examGradeDiscoveryResult";
+import { ExamGradeDiscoveryResult } from '../../../../domain-application/src/CarriedGrade/examGradeDiscoveryResult';
 
 @Injectable({
   providedIn: 'root',
@@ -23,11 +23,13 @@ export class ExamGradeApiService {
 
   discoverGrade(
     examTypeId: number,
-    studentNid: string | undefined
+    studentNid: string | undefined,
+    examSubjectId: string | undefined
   ): Observable<ApiResult<ExamGradeDiscoveryResult>> {
     const body = {
       examTypeId: examTypeId,
       studentNid: studentNid,
+      examSubjectId: examSubjectId,
     };
     return this.apiService.post(`/ExamGrade/DiscoverGrade`, body);
   }
