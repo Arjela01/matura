@@ -26,6 +26,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { RouterLink } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import {A1zHistoryGridComponent} from "../a1z-history/a1z-history-grid.component";
+import {PermissionEnum} from "@msh/auth/data-access-auth";
 
 @Component({
   selector: 'msh-a1z-grid',
@@ -54,6 +55,7 @@ export class A1zGridComponent {
   @Input() headerText = '';
   @Input() displayHistoryForm = true;
   @Input() selectedRecord: any;
+  @Input() permissions: string[] = [];
   selectedA1Z: A1ZTableRecord[] = [];
 
   @Output() gridEvent = new EventEmitter<
@@ -116,4 +118,6 @@ export class A1zGridComponent {
     $event.filters = this.dateFilterService.applyDateManipulation(filters);
     this.lazyLoadData.emit($event);
   }
+
+  protected readonly PermissionEnum = PermissionEnum;
 }

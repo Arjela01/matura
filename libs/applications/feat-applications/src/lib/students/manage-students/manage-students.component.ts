@@ -26,6 +26,8 @@ import { StudentsEditComponent } from '../students-edit/students-edit.component'
 import { StudentsFormComponent } from '../students-form/students-form.component';
 import { StudentsGridComponent } from '../students-grid/students-grid.component';
 import { StudentViewComponent } from '../students-view/student-view.component';
+import { PermissionEnum } from '@msh/auth/data-access-auth';
+
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-students',
@@ -64,13 +66,18 @@ export class ManageStudentsComponent {
   selectedRecord: any;
   headerText: any;
   displayHistoryForm = false;
+  permissions: string[] = [];
 
   constructor(
     private readonly studentService: StudentsApiService,
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private authFacade: AuthFacade
-  ) {}
+  ) {
+    this.authFacade.user$.pipe(untilDestroyed(this)).subscribe(user => {
+      this.permissions = user.permissions;
+    });
+  }
 
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     skip(1),
@@ -183,4 +190,6 @@ export class ManageStudentsComponent {
           );
       });
   }
+
+  protected readonly PermissionEnum = PermissionEnum;
 }
