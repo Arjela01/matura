@@ -117,20 +117,14 @@
               <td>
                 {{ carriedSubject.name }}
               </td>
-              <td>(Mbartur)</td>
-              <td>Nota {{ carriedSubject.score }}</td>
-              <td *ngIf="carriedSubject.label === 'D3'">
-                {{ a1.carriedGradeD3SubjectName }}
-              </td>
-              <td *ngIf="carriedSubject.label === 'Z1'">
-                {{ a1.carriedGradeZ1SubjectName }}
-              </td>
-
-              <td *ngIf="carriedSubject.label === 'D3'">
-                Viti {{ a1.academicYearD3Name }}
-              </td>
-              <td *ngIf="carriedSubject.label === 'Z1'">
-                Viti {{ a1.academicYearZ1Name }}
+              <td>
+                Mbartur nota {{ carriedSubject.score }} e vitit
+                <span *ngIf="carriedSubject.label === 'D3'">
+                  {{ a1.academicYearD3Name }}
+                </span>
+                <span *ngIf="carriedSubject.label === 'Z1'">
+                  {{ a1.academicYearZ1Name }}
+                </span>
               </td>
             </tr>
           </ng-container>

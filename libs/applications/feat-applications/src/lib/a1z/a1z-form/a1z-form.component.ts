@@ -46,7 +46,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
-import { DropdownModule } from 'primeng/dropdown';
+import {DropdownChangeEvent, DropdownModule} from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
@@ -340,20 +340,29 @@ export class A1zFormComponent implements OnInit {
               case EXAM_TYPES.D1:
                 if (response.data.grade ?? 0 >= 4.5)
                   this.a1z.discoveredScoreD1 = response.data.grade;
+                else
+                  this.a1z.discoveredScoreD1 = undefined;
                 break;
               case EXAM_TYPES.D2:
                 if (response.data.grade ?? 0 >= 4.5)
                   this.a1z.discoveredScoreD2 = response.data.grade;
+                else
+                  this.a1z.discoveredScoreD2 = undefined;
                 break;
               case EXAM_TYPES.D3:
                 if (response.data.grade ?? 0 >= 4.5)
                   this.a1z.discoveredScoreD3 = response.data.grade;
+                else
+                  this.a1z.discoveredScoreD3 = undefined;
                 break;
               case EXAM_TYPES.Z1:
                 if (response.data.grade ?? 0 >= 4.5)
                   this.a1z.discoveredScoreZ1 = response.data.grade;
+                else
+                  this.a1z.discoveredScoreZ1 = undefined;
                 break;
             }
+            this.cd.detectChanges();
           }
         });
     }
@@ -429,6 +438,7 @@ export class A1zFormComponent implements OnInit {
         this.discoverGrade(EXAM_TYPES.D1, this.a1z.subjectD1Id);
         this.discoverGrade(EXAM_TYPES.D2, this.a1z.subjectD2Id);
         this.discoverGrade(EXAM_TYPES.D3, this.a1z.subjectD3Id);
+        this.discoverGrade(EXAM_TYPES.Z1, this.a1z.subjectZ1Id);
 
         if (d1ExamType && d1ExamType.key) {
           this.examSubjectService
@@ -620,4 +630,8 @@ export class A1zFormComponent implements OnInit {
   }
 
   protected readonly A1ZFormModeEnum = A1ZFormModeEnum;
+
+  onZ1SubjectChange($event: DropdownChangeEvent) {
+    this.discoverGrade(EXAM_TYPES.Z1, this.a1z.subjectZ1Id);
+  }
 }

@@ -309,6 +309,7 @@ export class ManageCarriedGradesComponent implements OnInit {
       .loadDropdownList()
       .pipe(untilDestroyed(this))
       .subscribe(response => {
+        console.log(response.data)
         this.academicYearsDropdown = response.data;
       });
   }

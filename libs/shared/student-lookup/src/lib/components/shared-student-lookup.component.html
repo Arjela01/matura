@@ -20,55 +20,63 @@
       <th style="width: 3rem" class="row"></th>
       <th pSortableColumn="studentId" class="row">
         Matura ID
-        <p-sortIcon field="studentId"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="studentId"
-          display="menu"></p-columnFilter>
+        <div class="flex">
+          <p-sortIcon field="studentId"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="studentId"
+            display="menu"></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="firstName" class="row">
         Emri
-        <p-sortIcon field="firstName"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="firstName"
-          display="menu"></p-columnFilter>
+        <div class="flex">
+          <p-sortIcon field="firstName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="firstName"
+            display="menu"></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="middleName" class="row">
         Atësia
-        <p-sortIcon field="middleName"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="middleName"
-          display="menu"></p-columnFilter>
+        <div class="flex">
+          <p-sortIcon field="middleName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="middleName"
+            display="menu"></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="lastName" class="row">
         Mbiemri
-        <p-sortIcon field="lastName"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="lastName"
-          display="menu"></p-columnFilter>
+        <div class="flex">
+          <p-sortIcon field="lastName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="lastName"
+            display="menu"></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="idCard" class="row">
         NID
-        <p-sortIcon field="idCard"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="idCard"
-          display="menu"></p-columnFilter>
+        <div class="flex">
+          <p-sortIcon field="idCard"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="idCard"
+            display="menu"></p-columnFilter>
+        </div>
       </th>
-
       <th pSortableColumn="isFall">
         Vjeshtë
-        <div>
+        <div class="flex">
           <p-sortIcon field="isFall"></p-sortIcon>
           <p-columnFilter
             type="boolean"
             field="isFall"
             matchMode="equals"
-            display="menu"
-            ></p-columnFilter>
+            display="menu"></p-columnFilter>
         </div>
       </th>
     </tr>
