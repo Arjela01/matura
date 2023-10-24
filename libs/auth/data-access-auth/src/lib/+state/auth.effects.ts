@@ -88,7 +88,8 @@ export class AuthEffects {
       ofType(AuthActions.externalLogin),
       exhaustMap(action => {
         return this.commonLoginSuccess(action);
-      }))
+      })
+    )
   );
 
   loginSuccess$ = createEffect(() =>
@@ -100,17 +101,23 @@ export class AuthEffects {
     )
   );
 
-   commonLoginSuccess= (action: any) => {
+  safelyParseJson(value: string, defaultValue: any) {
+    try {
+      return JSON.parse(value)
+    } catch {
+      return defaultValue;
+    }
+  }
+
+  commonLoginSuccess = (action: any) => {
+    const token: any = jwt_decode(action.loginResponse.token as string);
     const user = {
       displayName: action.loginResponse.displayName,
       username: action.loginResponse.username,
+      permissions: this.safelyParseJson(token.Permissions, []),
     } as User;
     this.storageService.setItem(USER_STORAGE_KEY, user);
-    this.storageService.setItem(
-      TOKEN_STORAGE_KEY,
-      action.loginResponse.token
-    );
-    const token: any = jwt_decode(action.loginResponse.token as string);
+    this.storageService.setItem(TOKEN_STORAGE_KEY, action.loginResponse.token);
     if (token.NeedResetPassword) {
       return of(AuthActions.passwordChange());
     }
@@ -135,7 +142,7 @@ export class AuthEffects {
         );
       })
     );
-  }
+  };
 
   initialiseAcademicYear$ = createEffect(
     () =>

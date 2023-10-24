@@ -27,6 +27,7 @@ export * from './lib/profile/profile-api.service';
 export * from './lib/region/region-api.service';
 export * from './lib/reports/reports.api.service';
 export * from './lib/roles/roles-api.service';
+export * from './lib/permission/permissions-api.service';
 export * from './lib/student-ban/student-ban.service';
 export * from './lib/students/students-api.service';
 export * from './lib/study-program/study-program-api.service';

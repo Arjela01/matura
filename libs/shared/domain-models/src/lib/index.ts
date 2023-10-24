@@ -43,6 +43,7 @@ export * from './profile/profile.model';
 export * from './region/region.model';
 export * from './reports/reports-enum';
 export * from './roles/role.model';
+export * from './permissions/permission.model';
 export * from './student-ban/student-ban.model';
 export * from './students/student-class.model';
 export * from './students/student-section.model';
