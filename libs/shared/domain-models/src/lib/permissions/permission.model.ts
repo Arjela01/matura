@@ -1,10 +1,11 @@
 export interface Permission{
   name: string;
   permissionCategoryId: string;
-  permissionCategory: PermissionCategory;
+  permissionCategoryName: string;
   isTicked?: boolean;
 }
 
-export interface PermissionCategory{
+export interface PermissionCategory {
   name: string;
+  permissions: Permission[]
 }
