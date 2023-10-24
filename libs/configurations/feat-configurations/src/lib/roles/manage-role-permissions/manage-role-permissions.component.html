@@ -1,20 +1,25 @@
 <div class="flex center mb-2 page-header mb-header">
   <h2 class="flex-1 mb-0">Të Drejtat e Rolit</h2>
 </div>
-<div class="grid" style="margin-top: 1%; margin-bottom: 5%">
+<div class="grid">
   <div class="col-12">
-    <div class="card">
-      <div *ngFor="let elem of permissionCategoryWithPermissions" style="float: left; margin-right: 5%;">
-        <h3 style="margin-left: 50%">{{elem.PermissionCategory.name}}</h3>
-        <ul *ngFor="let p of elem.Permissions" style="list-style: none;">
-          <li style="display: flex;">
-            <input type="checkbox" style="margin-left: 0" [(ngModel)]="p.isTicked"/><p style="font-size: large">{{p.name}}</p>
+    <div class="card p-4">
+      <div *ngFor="let category of permissionCategories" class="permissionCategory">
+        <h5>{{category.name}}</h5>
+        <ul *ngFor="let p of category.permissions" class="categoryPermissions">
+          <li>
+            <label>
+              <input type="checkbox" style="margin-left: 0" [(ngModel)]="p.isTicked"/> {{p.name}}
+            </label>
           </li>
         </ul>
+
+
+        <div class="mt-5">
+          <button pButton pRipple label="Ruaj" class="p-button-success" (click)="onFormSave()"></button>
+        </div>
+
       </div>
     </div>
-  </div>
-  <div class="col-12">
-    <button pButton pRipple label="Ruaj" class="p-button-success" style="margin-left: 2%" (click)="onFormSave()"></button>
   </div>
 </div>
