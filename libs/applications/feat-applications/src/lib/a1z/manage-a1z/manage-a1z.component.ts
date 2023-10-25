@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { A1ZApiService } from '@msh/applications/data-access-applications';
 import { A1ZTableRecord } from '@msh/applications/domain-application';
 
-import { AuthFacade } from '@msh/auth/data-access-auth';
+import {AuthFacade, PermissionEnum} from '@msh/auth/data-access-auth';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -51,6 +51,7 @@ export class ManageA1zComponent {
   selectedRecord: any;
   headerText: any;
   displayHistoryForm = false;
+  permissions: string[] = [];
 
   constructor(
     private readonly a1zservice: A1ZApiService,
@@ -58,7 +59,11 @@ export class ManageA1zComponent {
     private readonly toastService: GlobalToastService,
     private readonly router: Router,
     private authFacade: AuthFacade
-  ) {}
+  ) {
+    this.authFacade.user$.pipe(untilDestroyed(this)).subscribe(user => {
+      this.permissions = user.permissions;
+    });
+  }
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([_]) => {
       if (this.filters) {
@@ -147,4 +152,6 @@ export class ManageA1zComponent {
         this.totalRecords = response.total;
       });
   }
+
+  protected readonly PermissionEnum = PermissionEnum;
 }

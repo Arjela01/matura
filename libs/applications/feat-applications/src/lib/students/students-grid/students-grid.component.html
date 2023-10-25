@@ -114,8 +114,7 @@
             type="boolean"
             matchMode="equals"
             field="isEAlbaniaApplication"
-            display="menu"
-          ></p-columnFilter>
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="isAN">
@@ -126,8 +125,7 @@
             type="boolean"
             matchMode="equals"
             field="isAN"
-            display="menu"
-            ></p-columnFilter>
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="isFall">
@@ -138,8 +136,7 @@
             type="boolean"
             matchMode="equals"
             field="isFall"
-            display="menu"
-            ></p-columnFilter>
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th></th>
@@ -193,12 +190,20 @@
             tooltipPosition="bottom"
             pTooltip="Shiko me shume" />
           <img
+            *ngIf="
+              permissions &&
+              permissions.includes(PermissionEnum.EditApplications)
+            "
             [routerLink]="['/applications', 'students', 'edit', student.id]"
             src="assets/svg/edit-form.svg"
             class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"
             pTooltip="Ndrysho" />
           <img
+            *ngIf="
+              permissions &&
+              permissions.includes(PermissionEnum.EditApplications)
+            "
             src="assets/svg/history.svg"
             class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"
@@ -206,6 +211,10 @@
             pTooltip="Historia" />
           <div>
             <img
+              *ngIf="
+                permissions &&
+                permissions.includes(PermissionEnum.EditApplications)
+              "
               src="assets/svg/delete-form.svg"
               class="p-button-rounded p-button-danger p-button-text ml-m pointer"
               pTooltip="Fshi"
@@ -226,7 +235,9 @@
   [resizable]="false"
   class="p-fluid">
   <ng-template pTemplate="content">
-    <msh-students-history-grid [recordId]="studentId" [recordData]="selectedRecord">
+    <msh-students-history-grid
+      [recordId]="studentId"
+      [recordData]="selectedRecord">
     </msh-students-history-grid>
   </ng-template>
 </p-dialog>

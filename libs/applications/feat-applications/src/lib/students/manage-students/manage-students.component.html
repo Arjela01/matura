@@ -1,12 +1,16 @@
 <div class="flex center mb-2 page-header mb-header">
   <h2 class="flex-1 mb-0">Maturantë</h2>
   <div class="flex align-items-right justify-content-right">
-    <div class="my-2">
+    <div
+      class="my-2"
+      *ngIf="
+        permissions && permissions.includes(PermissionEnum.EditApplications)
+      ">
       <a [routerLink]="['/applications', 'students', 'add']">
         <button
           pButton
           pRipple
-          [label]="hideStudentForm === false ? 'Anullo' : 'Shto'"
+          [label]="!hideStudentForm ? 'Anullo' : 'Shto'"
           icon="pi pi-plus"
           class="p-button-success mr-2"></button>
       </a>
@@ -17,6 +21,7 @@
   <div class="col-12">
     <div class="card">
       <msh-students-grid
+        [permissions]="permissions"
         [students]="(studentList$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"

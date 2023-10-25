@@ -9,7 +9,8 @@ import {
 import {
   GridEvent,
   GRID_ACTIONS,
-  ColumnFilterDirective, DateFilterService,
+  ColumnFilterDirective,
+  DateFilterService,
 } from '@msh/shared/util-shared';
 import {
   TableLazyLoadEvent,
@@ -24,8 +25,9 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { Student } from '@msh/shared/domain-models';
 import { RouterLink } from '@angular/router';
-import {DialogModule} from "primeng/dialog";
-import {StudentsHistoryGridComponent} from "../students-history/students-history-grid.component";
+import { DialogModule } from 'primeng/dialog';
+import { StudentsHistoryGridComponent } from '../students-history/students-history-grid.component';
+import { PermissionEnum } from '@msh/auth/data-access-auth';
 
 @Component({
   selector: 'msh-students-grid',
@@ -55,6 +57,7 @@ export class StudentsGridComponent {
   @Input() selectedRecord: any;
   @Input() totalRecords = 0;
   @Input() loading = false;
+  @Input() permissions: string[] = [];
 
   //Keep it local state because of Table Header checkbox not syncing
   selectedStudents: Student[] = [];
@@ -113,4 +116,5 @@ export class StudentsGridComponent {
     $event.filters = this.dateFilterService.applyDateManipulation(filters);
     this.lazyLoadData.emit($event);
   }
+  protected readonly PermissionEnum = PermissionEnum;
 }

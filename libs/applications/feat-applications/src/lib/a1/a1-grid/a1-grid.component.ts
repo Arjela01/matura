@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { A1ApiService } from '@msh/applications/data-access-applications';
 import { A1Z } from '@msh/applications/domain-application';
-import { AuthFacade } from '@msh/auth/data-access-auth';
+import {AuthFacade, PermissionEnum} from '@msh/auth/data-access-auth';
 import { AcademicYear, Student } from '@msh/shared/domain-models';
 import {
   ColumnFilterDirective,
@@ -71,6 +71,7 @@ export class A1GridComponent {
 
   studentId: number | undefined;
   selectedRecord: any;
+  permissions: string[] = [];
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -78,7 +79,11 @@ export class A1GridComponent {
     private readonly a1ApiService: A1ApiService,
     private router: Router,
     private authFacade: AuthFacade
-  ) {}
+  ) {
+    this.authFacade.user$.pipe(untilDestroyed(this)).subscribe(user => {
+      this.permissions = user.permissions;
+    });
+  }
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([_]) => {
       if (this.filters) {
@@ -171,4 +176,6 @@ export class A1GridComponent {
         this.displayForm = false;
       });
   }
+
+  protected readonly PermissionEnum = PermissionEnum;
 }

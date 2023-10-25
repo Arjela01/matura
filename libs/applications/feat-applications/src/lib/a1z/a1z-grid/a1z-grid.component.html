@@ -154,7 +154,11 @@
         {{ a1z.academicYearName }}
       </td>
       <td>
-        <div class="flex">
+        <div
+          class="flex"
+          *ngIf="
+            permissions && permissions.includes(PermissionEnum.EditApplications)
+          ">
           <img
             src="assets/svg/edit-form.svg"
             class="p-button-rounded p-button-warning p-button-text mr-2 pointer"

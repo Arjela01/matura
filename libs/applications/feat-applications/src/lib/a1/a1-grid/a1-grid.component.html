@@ -8,7 +8,10 @@
         label="Shto"
         icon="pi pi-plus"
         class="p-button-success mr-2"
-        (click)="onNewClick()"></button>
+        (click)="onNewClick()"
+        *ngIf="
+          permissions && permissions.includes(PermissionEnum.EditApplications)
+        "></button>
     </div>
   </div>
 </div>
@@ -171,7 +174,12 @@
               {{ a1.academicYearName }}
             </td>
             <td>
-              <div class="flex">
+              <div
+                class="flex"
+                *ngIf="
+                  permissions &&
+                  permissions.includes(PermissionEnum.EditApplications)
+                ">
                 <img
                   src="assets/svg/edit-form.svg"
                   class="p-button-rounded p-button-warning p-button-text mr-2 pointer"

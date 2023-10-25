@@ -22,6 +22,7 @@ export const initialAuthState: AuthState = {
   user: {
     displayName: '',
     username: '',
+    permissions: [],
   },
   token: '',
   academicYear: { id: 0, year: '' },
@@ -57,6 +58,7 @@ export const authFeature = createFeature({
       user: {
         displayName: loginResponse.displayName,
         username: loginResponse.username,
+        permissions: loginResponse.permissions,
       },
       token: loginResponse.token,
     })),
@@ -68,6 +70,7 @@ export const authFeature = createFeature({
       user: {
         displayName: loginResponse.displayName,
         username: loginResponse.username,
+        permissions: loginResponse.permissions,
       },
       token: loginResponse.token,
     })),
@@ -98,6 +101,7 @@ export const authFeature = createFeature({
       user: {
         displayName: '',
         username: '',
+        permissions: [''],
       },
       token: '',
     })),

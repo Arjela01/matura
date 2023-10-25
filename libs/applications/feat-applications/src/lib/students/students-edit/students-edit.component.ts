@@ -1,5 +1,11 @@
 import { CommonModule, formatDate } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { A1ZTableRecord, FormType } from '@msh/applications/domain-application';
@@ -38,6 +44,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { A1a1zConfirmationDialogComponent } from '../manage-students/a1a1z-confirmation-dialog/a1a1z-confirmation-dialog.component';
+import { AuthFacade, PermissionEnum } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
@@ -67,6 +74,7 @@ import { A1a1zConfirmationDialogComponent } from '../manage-students/a1a1z-confi
   providers: [ConfirmationService],
 })
 export class StudentsEditComponent implements OnInit {
+  permissions: string[] = [];
   @ViewChild('form', { static: true }) form!: NgForm;
 
   highSchool: DropdownModel<number>[] = [];
@@ -131,10 +139,15 @@ export class StudentsEditComponent implements OnInit {
     private route: ActivatedRoute,
     private readonly confirmationService: ConfirmationService,
     private toasterService: GlobalToastService,
-    private countriesService: CountriesApiService
+    private countriesService: CountriesApiService,
+    private authFacade: AuthFacade
   ) {
     this.id = this.route.snapshot.paramMap.get('id') as string;
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 10);
+
+    this.authFacade.user$.pipe(untilDestroyed(this)).subscribe(user => {
+      this.permissions = user.permissions;
+    });
   }
 
   ngOnInit(): void {
@@ -312,4 +325,6 @@ export class StudentsEditComponent implements OnInit {
     this.disabled = false;
     this.cd.detectChanges();
   }
+
+  protected readonly PermissionEnum = PermissionEnum;
 }
