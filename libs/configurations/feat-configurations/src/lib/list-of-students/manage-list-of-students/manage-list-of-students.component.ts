@@ -15,6 +15,8 @@ import { ListOfStudentsGridComponent } from '../list-of-students-grid/list-of-st
 import { BehaviorSubject } from 'rxjs';
 import { ExamAssignment } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { UserProfileApiService } from '@msh/user-section/data-access-user-section';
+import { RoleName } from '../../users/user-form/role-list';
 
 @UntilDestroy()
 @Component({
@@ -39,11 +41,11 @@ export class ManageListOfStudentsComponent implements OnInit {
   examSites: DropdownModel<any>[] = [];
   totalRecords = 0;
   filters: TableLazyLoadEvent | null = null;
+  showSortButton = false;
 
   event = {
     first: 0,
     rows: 10000,
-    sortOrder: 1,
     filters: {},
     globalFilter: null,
   };
@@ -59,22 +61,22 @@ export class ManageListOfStudentsComponent implements OnInit {
   }
 
   getExamAssignments($event: any) {
-    this.event.filters = {
-      examDateId: [
-        {
-          value: $event.examDateId,
-          matchMode: 'equals',
-          operator: 'and',
-        },
-      ],
-    };
-
+    this.filters = Object.assign({}, $event);
     this.examAssignmentService
-      .getAssignments(this.event)
+      .getAssignments(this.event, $event.examDateId)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.studentsList$$.next(response.data);
         this.totalRecords = response.total;
+        this.showSortButton = true;
+      });
+  }
+  sortExamAssignments($event: any) {
+    this.examAssignmentService
+      .sortAssignments(this.event, $event.examDateId)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.studentsList$$.next(response.data);
       });
   }
   getExamDateDropdown($event: ExamAssignment) {

@@ -1,8 +1,9 @@
 import {
-  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -12,7 +13,11 @@ import { GlobalToastService } from '@msh/shared/util-shared';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { RoleName } from '../../users/user-form/role-list';
+import { AuthFacade } from '@msh/auth/data-access-auth';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
 @UntilDestroy()
 @Component({
   selector: 'msh-list-of-students-filters',
@@ -26,18 +31,37 @@ import { UntilDestroy } from '@ngneat/until-destroy';
   ],
   templateUrl: './list-of-students-filters.component.html',
   styleUrls: ['./list-of-students-filters.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListOfStudentsFiltersComponent {
+  private jwtHelper: JwtHelperService = new JwtHelperService();
+  @Input() totalRecords: number | undefined;
   @Input() examDates: DropdownModel<string>[] = [];
   @Input() examSites: DropdownModel<number>[] = [];
+  @Input() showSortButton: boolean | undefined;
   @Output() formSave = new EventEmitter<ExamAssignment>();
   @Output() examDateChanged = new EventEmitter<ExamAssignment>();
+  @Output() sort = new EventEmitter<ExamAssignment>();
 
   studentList: ExamAssignment = {} as ExamAssignment;
   submitted = false;
+  userRole = '';
 
-  constructor(private readonly toastService: GlobalToastService) {}
+  constructor(
+    private readonly toastService: GlobalToastService,
+    private readonly authFacade: AuthFacade
+  ) {
+    {
+      this.authFacade.token$.pipe(untilDestroyed(this)).subscribe(token => {
+        if (token) {
+          const decodedToken = this.jwtHelper.decodeToken(token);
+          this.userRole =
+            decodedToken[
+              'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
+            ];
+        }
+      });
+    }
+  }
 
   onExamSiteChanged(): void {
     if (this.studentList.examSiteId) {
@@ -57,4 +81,8 @@ export class ListOfStudentsFiltersComponent {
   isSearchValid(searchModal: any) {
     return searchModal.examDateId && searchModal.examSiteId;
   }
+  sortAssignments() {
+    this.sort.emit(this.studentList);
+  }
+  protected readonly RoleName = RoleName;
 }

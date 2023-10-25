@@ -46,7 +46,19 @@
       Data është fushë e kërkuar.
     </small>
   </div>
+  <div></div>
   <div class="text-center">
     <button pButton class="btn btn-primary mt-2" type="submit">Kërko</button>
+  </div>
+  <div
+    class="text-center"
+    *ngIf="userRole === RoleName.Admin && showSortButton && totalRecords !== 0">
+    <button
+      pButton
+      class="btn btn-primary mt-2"
+      (click)="sortAssignments()"
+      type="button">
+      Rendit
+    </button>
   </div>
 </form>

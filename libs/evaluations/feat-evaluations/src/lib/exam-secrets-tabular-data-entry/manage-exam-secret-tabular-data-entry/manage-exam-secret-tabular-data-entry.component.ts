@@ -254,7 +254,6 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.responseSuccessful = true;
-          this.toastService.showSuccess('Ndryshimet u ruajtën  me sukses!');
           this.onApplySearch(
             this.filters as ExamSecretSearchModel,
             response.data
@@ -274,7 +273,6 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.responseSuccessful = true;
-          this.toastService.showSuccess('Ndryshimet u ruajtën  me sukses!');
           this.onApplySearch(
             this.filters as ExamSecretSearchModel,
             response.data
