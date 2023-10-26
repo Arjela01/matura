@@ -101,7 +101,7 @@ export const authFeature = createFeature({
       user: {
         displayName: '',
         username: '',
-        permissions: [''],
+        permissions: [],
       },
       token: '',
     })),
