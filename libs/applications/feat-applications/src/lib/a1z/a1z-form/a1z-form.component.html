@@ -421,39 +421,22 @@
         </table>
       </form>
 
-        <hr />
-        <div class="field">
-          <label for="overseerCode">Kodi i Mbikëqyrësit</label>
-          <input
-            type="password"
-            pPassword
-            autocomplete="overseer-pin"
-            [feedback]="false"
-            required
-            id="overseerCode"
-            name="overseerCode"
-            [(ngModel)]="a1z.overSeerCode"
-            class="w-2 block"
-            autofocus />
-          <small class="p-error block" *ngIf="submitted && !a1z.overSeerCode">
-            Kodi i mbikqyrësit është fushë e kërkuar.
-          </small>
-        </div>
+      <hr />
 
-        <div class="flex justify-content-start pt-3">
-          <button
-            type="submit"
-            (click)="onSubmit()"
-            pButton
-            label="Ruaj"
-            class="p-button w-auto"></button>
-          <button
-            type="button"
-            pButton
-            label="Anullo"
-            class="p-button-text w-auto mr-2"
-            (click)="onExitForm()"></button>
-        </div>
+      <div class="flex justify-content-start pt-3">
+        <button
+          type="submit"
+          (click)="onSubmit()"
+          pButton
+          label="Ruaj"
+          class="p-button w-auto"></button>
+        <button
+          type="button"
+          pButton
+          label="Anullo"
+          class="p-button-text w-auto mr-2"
+          (click)="onExitForm()"></button>
+      </div>
     </div>
   </div>
 </div>

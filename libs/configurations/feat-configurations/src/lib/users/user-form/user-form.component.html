@@ -170,18 +170,6 @@
     </p-dropdown>
   </div>
 
-  <div class="field" [hidden]="!showOverseerCode">
-    <label for="overseerCode">Kodi i Mbikqyrësit *</label>
-    <input
-      type="text"
-      pInputText
-      id="overseerCode"
-      [required]="showOverseerCode"
-      name="overseerCode"
-      [(ngModel)]="user.overseerCode"
-      autofocus />
-  </div>
-
   <div class="field" [hidden]="user.id">
     <label for="password">Fjalëkalimi *</label>
     <div class="p-inputgroup">
