@@ -16,7 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { RoleName } from '../../users/user-form/role-list';
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import jwt_decode from 'jwt-decode';
 
 @UntilDestroy()
 @Component({
@@ -33,7 +33,6 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   styleUrls: ['./list-of-students-filters.component.scss'],
 })
 export class ListOfStudentsFiltersComponent {
-  private jwtHelper: JwtHelperService = new JwtHelperService();
   @Input() totalRecords: number | undefined;
   @Input() examDates: DropdownModel<string>[] = [];
   @Input() examSites: DropdownModel<number>[] = [];
@@ -53,11 +52,8 @@ export class ListOfStudentsFiltersComponent {
     {
       this.authFacade.token$.pipe(untilDestroyed(this)).subscribe(token => {
         if (token) {
-          const decodedToken = this.jwtHelper.decodeToken(token);
-          this.userRole =
-            decodedToken[
-              'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
-            ];
+          const decodedToken: any = jwt_decode(token);
+          this.userRole = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
         }
       });
     }
