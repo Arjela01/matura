@@ -321,7 +321,6 @@ export class ManageExamAssignmentComponent implements OnInit {
     });
   }
   onAssignAllFormSave(examAssignment: any) {
-    console.log(examAssignment);
     Object.keys(examAssignment).forEach((key) => {
       if (examAssignment[key] === null
         || examAssignment[key] === 0
@@ -341,6 +340,7 @@ export class ManageExamAssignmentComponent implements OnInit {
         this.examAssignment = response.data;
         if (response.isSuccessful) {
           this.toastService.showSuccess(response.data.toString())
+          console.log(response.data)
           this.displayAssignAllModal = false;
           this.getExamAssignments(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);

@@ -52,7 +52,7 @@
       Viti është fushë e kërkuar.
     </small>
   </div>
-  <div class="field" *ngIf="!isDropdownDisabled()">
+  <div class="field">
     <label for="ExamTypeID">Tipi I Provimit *</label>
     <p-dropdown
       id="ExamTypeID"
@@ -67,30 +67,11 @@
       [style]="{ width: '100%' }"
       [(ngModel)]="grade.examTypeId"
       (onChange)="examTypeChangedLocally()"
-      [disabled]="isDropdownDisabled()"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !this.examTypeId
       }">
     </p-dropdown>
     <small class="p-error block" *ngIf="submitted && !this.examTypeId">
-      Tipi i provimit është fushë e kërkuar.
-    </small>
-  </div>
-  <div class="field" *ngIf="isDropdownDisabled()">
-    <label for="ExamType">Tipi I Provimit *</label>
-    <input
-      id="ExamType"
-      name="ExamTypeId"
-      pInputText
-      [ngModelOptions]="{ standalone: true }"
-      [required]="true"
-      [style]="{ width: '100%' }"
-      [(ngModel)]="grade.examTypeName"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !grade.examTypeId
-      }"
-      [disabled]="isDropdownDisabled()" />
-    <small class="p-error block" *ngIf="submitted && !grade.examTypeId">
       Tipi i provimit është fushë e kërkuar.
     </small>
   </div>
