@@ -26,7 +26,13 @@ export class AuthEffects {
         const academicYear = this.storageService.getItem(
           ACADEMIC_YEAR_KEY
         ) as AcademicYear;
-        if (token && user && user?.username && user?.displayName) {
+        if (
+          token &&
+          user &&
+          user?.username &&
+          user?.displayName &&
+          user?.permissions
+        ) {
           const tokenStore: any = jwt_decode(token as string);
           if (!tokenStore.NeedResetPassword) {
             this.heartBeatService.startTime();
@@ -103,7 +109,7 @@ export class AuthEffects {
 
   safelyParseJson(value: string, defaultValue: any) {
     try {
-      return JSON.parse(value)
+      return JSON.parse(value);
     } catch {
       return defaultValue;
     }

@@ -3,9 +3,9 @@ export interface User {
   displayName?: string;
   administrationOfficeId?: number;
   universityDepartmentId?: number;
-  fileName: string;
+  fileName?: string;
   highSchool?: string;
-  lastName: string;
+  lastName?: string;
   lastPasswordChange?: Date;
   overseerCode: string;
   roleId: string;

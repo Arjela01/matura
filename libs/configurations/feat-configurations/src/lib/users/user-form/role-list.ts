@@ -54,6 +54,15 @@ export const roleList = [
     showHighSchools: false,
     showOverseerCode: false,
   },
+  {
+    roleName: 'HighSchool',
+    showUniversity: false,
+    showUniversityDepartment: false,
+    showAdministrationOffice: false,
+    showStudyProgram: false,
+    showHighSchools: true,
+    showOverseerCode: false,
+  },
 ];
 
 export enum RoleName {
@@ -63,4 +72,5 @@ export enum RoleName {
   DV = 'DV (Drejtoria e Vlerësimit)',
   MbikqyresFormularesh = 'Mbikqyres Formularesh',
   Operator = 'Operator',
+  HighSchool = 'HighSchool'
 }
