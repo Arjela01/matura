@@ -156,8 +156,11 @@ export class ManageDiplomasStudentComponent implements OnInit {
   }
 
   printDiploma(event: GridEvent<Student>) {
+    if (event.data?.countryId === 3) {
+      this.printed = !this.printed;
+    }
     this.diplomasService
-      .exportDiplomasStudent(event.data?.studentId as string, !this.printed)
+      .exportDiplomasStudent(event.data?.studentId as string, this.printed)
       .subscribe((response: any) => {
         const blob = new Blob([response], {
           type: 'application/pdf',
@@ -174,6 +177,9 @@ export class ManageDiplomasStudentComponent implements OnInit {
     }
   }
   sealDiploma(event: GridEvent<Student>) {
+    if (event.data?.countryId === 3) {
+      this.printed = !this.printed;
+    }
     const academicYear = JSON.parse(
       localStorage.getItem('academicYear') as string
     );
@@ -183,7 +189,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
         .printElectronicSeal(
           event.data?.studentId as string,
           academicYear.id,
-          !this.printed
+          this.printed
         )
         .pipe(untilDestroyed(this))
         .subscribe(response => {
@@ -199,7 +205,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
       this.diplomasService
         .printElectronicSealForForeignStudent(
           event.data?.studentId as string,
-          !this.printed
+          this.printed
         )
         .subscribe((response: any) => {
           const blob = new Blob([response], {

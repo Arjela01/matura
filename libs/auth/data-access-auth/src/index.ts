@@ -10,3 +10,4 @@ export * from './lib/services/load-auth.provider';
 export * from './lib/services/no-auth.guard';
 export * from './lib/services/token.interceptor';
 export * from './lib/models/permission-enum';
+export * from './lib/services/permission-check.service';

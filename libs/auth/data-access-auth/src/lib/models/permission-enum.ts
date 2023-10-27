@@ -1,3 +1,3 @@
 export const PermissionEnum = {
-    EditApplications: 'EditApplications'
+    EditApplications: 'EditApplications',
 };
