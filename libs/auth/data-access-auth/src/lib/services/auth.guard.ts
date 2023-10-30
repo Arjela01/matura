@@ -18,7 +18,7 @@ export class AuthGuard {
       take(1),
       map(isAuthenticated => {
         if (!isAuthenticated) {
-          this.router.navigate(['/login']);
+          this.router.navigate(['/identity']);
           return false;
         } else {
           if (this.expiredPasswordGuard.canActivate()) {
