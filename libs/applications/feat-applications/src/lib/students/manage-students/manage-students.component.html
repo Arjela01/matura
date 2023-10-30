@@ -18,6 +18,7 @@
     <div class="card">
       <msh-students-grid
         [showEditButton]="showEditButton"
+        [showDeleteButton]="showDeleteButton"
         [students]="(studentList$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"

@@ -58,6 +58,7 @@ export class StudentsGridComponent {
   @Input() totalRecords = 0;
   @Input() loading = false;
   @Input() showEditButton = false;
+  @Input() showDeleteButton = false;
 
   //Keep it local state because of Table Header checkbox not syncing
   selectedStudents: Student[] = [];
