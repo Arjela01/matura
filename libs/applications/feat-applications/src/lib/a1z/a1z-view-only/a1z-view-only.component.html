@@ -1,0 +1,380 @@
+<div class="flex center mb-2 page-header mb-header">
+  <h2 class="flex-1 m-0">Detajet e Formularit A1Z</h2>
+  <div class="flex align-items-right justify-content-right">
+    <div class="my-2">
+      <p-button
+        type="button"
+        icon="pi pi-arrow-left"
+        styleClass="p-button-link"
+        (click)="onBackButtonClick()"
+        [label]="'Kthehu'"></p-button>
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="col-12 p-fluid">
+    <div class="card px-6 py-4 mt-3">
+      <form>
+        <table class="w-full vertical-table">
+          <tr>
+            <th style="width: 20rem">
+              <label> Maturant * </label>
+            </th>
+            <td>
+              <div>
+                {{ studentData }}
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>Aplikon jashtë vendit? *</th>
+            <td>
+              <label for="isApplyingToForeignCountriesTrue" class="mr-3">
+                <p-radioButton
+                  id="isApplyingToForeignCountriesTrue"
+                  name="isApplyingToForeignCountries"
+                  [value]="true"
+                  [disabled]="true"
+                  [(ngModel)]="
+                    a1z.isApplyingToForeignCountries
+                  "></p-radioButton>
+                Po</label
+              >
+              <label for="isApplyingToForeignCountriesFalse">
+                <p-radioButton
+                  id="isApplyingToForeignCountriesFalse"
+                  name="isApplyingToForeignCountries"
+                  [value]="false"
+                  [disabled]="true"
+                  [(ngModel)]="
+                    a1z.isApplyingToForeignCountries
+                  "></p-radioButton>
+                Jo</label
+              >
+            </td>
+          </tr>
+          <tr>
+            <th>Keni marre diplomë/dëftesë pjekurie? *</th>
+            <td>
+              <label for="alreadyHaveDiplomaTrue" class="mr-3">
+                <p-radioButton
+                  id="alreadyHaveDiplomaTrue"
+                  name="alreadyHaveDiploma"
+                  [value]="true"
+                  [disabled]="true"
+                  [(ngModel)]="a1z.alreadyHaveDiploma"></p-radioButton>
+                Po</label
+              >
+              <label for="alreadyHaveDiplomaFalse">
+                <p-radioButton
+                  id="alreadyHaveDiplomaFalse"
+                  name="alreadyHaveDiploma"
+                  [value]="false"
+                  [disabled]="true"
+                  [(ngModel)]="a1z.alreadyHaveDiploma"></p-radioButton>
+                Jo</label
+              >
+            </td>
+          </tr>
+
+          <tr>
+            <th>Viti i përfundimit të shkollës së mesme</th>
+            <td>
+              <input
+                type="number"
+                pInputText
+                id="yearOfSchoolA1Z"
+                name="yearOfSchoolA1Z"
+                class="w-2"
+                [disabled]="true"
+                [(ngModel)]="a1z.yearOfSchoolA1Z"
+                autofocus />
+            </td>
+          </tr>
+        </table>
+
+        <div class="text-3xl font-semibold mb-3 mt-5">Lëndët e Detyruara</div>
+
+        <table class="table w-100">
+          <tr>
+            <th></th>
+            <th>Lënda</th>
+            <th>Nota e Gjetur</th>
+            <th>Nota e Mbartur</th>
+            <th>Arsyetimi</th>
+          </tr>
+          <tr>
+            <td>D1</td>
+            <td>
+              <p-dropdown
+                *ngIf="!a1z.subjectD1Name"
+                [style]="{ minWidth: '250px' }"
+                id="subjectD1Id"
+                optionValue="key"
+                optionLabel="value"
+                name="carriedSubjectD1"
+                [filter]="true"
+                [disabled]="true"
+                [autoDisplayFirst]="false"
+                [(ngModel)]="a1z.subjectD1Id"
+                [showClear]="true">
+              </p-dropdown>
+              <input
+                *ngIf="a1z.subjectD1Name"
+                type="text"
+                pInputText
+                [disabled]="true"
+                id="subjectNameD1"
+                name="subjectNameD1"
+                [(ngModel)]="a1z.subjectD1Name"
+                autofocus />
+            </td>
+            <td>
+              <input
+                type="number"
+                pInputText
+                max="10"
+                [disabled]="true"
+                min="4"
+                id="discoveredScoreD1"
+                name="discoveredScoreD1"
+                [(ngModel)]="a1z.discoveredScoreD1"
+                autofocus />
+            </td>
+            <td>
+              <input
+                type="number"
+                pInputText
+                max="10"
+                [disabled]="true"
+                min="4"
+                id="scoreD1"
+                name="scoreD1"
+                [(ngModel)]="a1z.scoreD1"
+                autofocus />
+            </td>
+            <td>
+              <input
+                type="text"
+                pInputText
+                id="reasonD1"
+                name="reasonD1"
+                [disabled]="true"
+                class="w-30rem"
+                [(ngModel)]="a1z.reasonD1"
+                autofocus />
+            </td>
+          </tr>
+          <tr>
+            <td>D2</td>
+            <td>
+              <p-dropdown
+                *ngIf="!a1z.subjectD2Name"
+                [style]="{ minWidth: '250px' }"
+                id="subjectD2Id"
+                optionValue="key"
+                optionLabel="value"
+                name="carriedSubjectD2"
+                [filter]="true"
+                [disabled]="true"
+                [autoDisplayFirst]="false"
+                [(ngModel)]="a1z.subjectD2Id"
+                [showClear]="true">
+              </p-dropdown>
+              <input
+                *ngIf="a1z.subjectD2Name"
+                type="text"
+                pInputText
+                [disabled]="true"
+                id="subjectNameD2"
+                name="subjectNameD2"
+                [(ngModel)]="a1z.subjectD2Name"
+                autofocus />
+            </td>
+            <td>
+              <input
+                type="number"
+                pInputText
+                max="10"
+                [disabled]="true"
+                min="4"
+                id="discoveredScoreD2"
+                name="discoveredScoreD2"
+                [(ngModel)]="a1z.discoveredScoreD2"
+                autofocus />
+            </td>
+            <td>
+              <input
+                type="number"
+                pInputText
+                max="10"
+                min="4"
+                id="scoreD2"
+                [disabled]="true"
+                name="scoreD2"
+                [(ngModel)]="a1z.scoreD2"
+                autofocus />
+            </td>
+            <td>
+              <input
+                type="text"
+                pInputText
+                id="reasonD2"
+                name="reasonD2"
+                [disabled]="true"
+                class="w-30rem"
+                [(ngModel)]="a1z.reasonD2"
+                autofocus />
+            </td>
+          </tr>
+          <tr>
+            <td>D3</td>
+            <td>
+              <p-dropdown
+                *ngIf="!a1z.subjectD3Name"
+                [style]="{ minWidth: '250px' }"
+                id="subjectD3Id"
+                optionValue="key"
+                optionLabel="value"
+                name="carriedSubjectD2"
+                [filter]="true"
+                [disabled]="true"
+                [autoDisplayFirst]="false"
+                [(ngModel)]="a1z.subjectD3Id"
+                [showClear]="true">
+              </p-dropdown>
+              <input
+                *ngIf="a1z.subjectD3Name"
+                type="text"
+                pInputText
+                [disabled]="true"
+                id="subjectNameD3"
+                name="subjectNameD3"
+                [(ngModel)]="a1z.subjectD3Name"
+                autofocus />
+            </td>
+            <td>
+              <input
+                type="number"
+                pInputText
+                max="10"
+                [disabled]="true"
+                min="4"
+                id="discoveredScoreD3"
+                name="discoveredScoreD3"
+                [(ngModel)]="a1z.discoveredScoreD3"
+                autofocus />
+            </td>
+            <td>
+              <input
+                type="number"
+                pInputText
+                max="10"
+                min="4"
+                id="scoreD3"
+                [disabled]="true"
+                name="scoreD3"
+                [(ngModel)]="a1z.scoreD3"
+                autofocus />
+            </td>
+            <td>
+              <input
+                type="text"
+                pInputText
+                id="reasonD3"
+                name="reasonD3"
+                [disabled]="true"
+                class="w-30rem"
+                [(ngModel)]="a1z.reasonD3"
+                autofocus />
+            </td>
+          </tr>
+        </table>
+
+        <div class="text-3xl font-semibold mb-3 mt-5">Lëndët me Zgjedhje</div>
+
+        <table class="vertical-table">
+          <tr>
+            <th></th>
+            <th>Mbart Notë</th>
+            <th *ngIf="a1z.carryZ1 === true">Viti</th>
+            <th>Lënda</th>
+            <th *ngIf="a1z.carryZ1 == true">Nota e Gjetur</th>
+            <th *ngIf="a1z.carryZ1 == true">Nota e Mbartur</th>
+            <th *ngIf="a1z.carryZ1 == true">Arsyetimi</th>
+          </tr>
+          <tr>
+            <td>Z1</td>
+            <td>
+              <input
+                type="text"
+                pInputText
+                [disabled]="true"
+                id="enableZ1Subject"
+                name="enableZ1Subject"
+                [ngModel]="a1z.carryZ1 ? 'Po' : 'Jo'"
+                autofocus
+              />
+            </td>
+            <td *ngIf="a1z.carryZ1 == true">
+              <input
+                id="academicYearId"
+                name="academicYearId"
+                type="text"
+                pInputText
+                [disabled]="true"
+                [required]="true"
+                [(ngModel)]="a1z.academicYearZ1Name" />
+            </td>
+            <td>
+              <input
+                type="text"
+                pInputText
+                [disabled]="true"
+                id="subjectZ1Id"
+                name="carriedSubjectZ1"
+                [(ngModel)]="a1z.subjectZ1Name" />
+            </td>
+            <td *ngIf="a1z.carryZ1 == true">
+              <input
+                type="number"
+                pInputText
+                max="10"
+                [disabled]="true"
+                min="4"
+                id="discoveredScoreZ1"
+                name="discoveredScoreZ1"
+                [(ngModel)]="a1z.discoveredScoreZ1"
+                autofocus />
+            </td>
+            <td *ngIf="a1z.carryZ1 == true">
+              <input
+                type="number"
+                pInputText
+                max="10"
+                min="4"
+                id="scoreZ1"
+                name="scoreZ1"
+                [disabled]="true"
+                [(ngModel)]="a1z.scoreZ1"
+                autofocus />
+            </td>
+            <td *ngIf="a1z.carryZ1 == true">
+              <input
+                type="text"
+                pInputText
+                class="w-30rem"
+                id="reasonZ1"
+                name="reasonZ1"
+                [disabled]="true"
+                autocomplete="reasonZ1"
+                [(ngModel)]="a1z.reasonZ1"
+                autofocus />
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </div>
+</div>

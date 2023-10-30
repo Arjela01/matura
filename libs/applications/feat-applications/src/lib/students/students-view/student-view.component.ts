@@ -13,16 +13,11 @@ import {
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { A1ZTableRecord } from '@msh/applications/domain-application';
-import {
-  GendersApiService,
-  HighSchoolApiService,
-  ProfileApiService,
-  StudentsApiService,
-} from '@msh/configurations/data-access-configurations';
+import { StudentsApiService } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { Student } from '@msh/shared/domain-models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { MessageService } from 'primeng/api';
+
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -32,6 +27,10 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import {
+  PermissionCheckService,
+  PermissionEnum,
+} from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
@@ -62,6 +61,7 @@ export class StudentViewComponent implements OnChanges, OnInit {
   @ViewChild('form', { static: true }) form!: NgForm;
 
   genders: DropdownModel<number>[] = [];
+
   @Input() set studentDetails(details: Student | null) {
     if (details) {
       this.student = Object.assign({}, details);
@@ -107,19 +107,15 @@ export class StudentViewComponent implements OnChanges, OnInit {
   };
   forms: A1ZTableRecord[] = [];
   finishedAtSameSchool = true;
-
+  showEditButton = false;
   id: string | null;
 
   constructor(
     private cd: ChangeDetectorRef,
     private readonly studentService: StudentsApiService,
-    private readonly highSchoolService: HighSchoolApiService,
-    private readonly profileService: ProfileApiService,
-    private readonly genderService: GendersApiService,
     private router: Router,
-    private messageService: MessageService,
-
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private readonly permissionCheckService: PermissionCheckService
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
@@ -143,6 +139,10 @@ export class StudentViewComponent implements OnChanges, OnInit {
         this.forms = response.data ?? [];
         this.cd.detectChanges();
       });
+
+    this.showEditButton = this.permissionCheckService.hasPermission(
+      PermissionEnum.EditApplications as any
+    );
   }
 
   ngOnChanges(): void {
@@ -150,14 +150,22 @@ export class StudentViewComponent implements OnChanges, OnInit {
   }
 
   navigateToForm(a1: A1ZTableRecord) {
-    if (a1.isA1) {
-      this.router.navigate([
-        `/applications/a1/for-student/${this.student?.id}/edit/${a1.id}`,
-      ]);
+    let routePath: string;
+
+    if (this.showEditButton) {
+      if (a1.isA1) {
+        routePath = `/applications/a1/for-student/${this.student?.id}/edit/${a1.id}`;
+      } else {
+        routePath = `/applications/a1z/for-student/${this.student?.id}/edit/${a1.id}`;
+      }
     } else {
-      this.router.navigate([
-        `/applications/a1z/for-student/${this.student?.id}/edit/${a1.id}`,
-      ]);
+      if (a1.isA1) {
+        routePath = `/applications/a1/view/${a1.id}`;
+      } else {
+        routePath = `/applications/a1z/view/${a1.id}`;
+      }
     }
+
+    this.router.navigate([routePath]);
   }
 }

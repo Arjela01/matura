@@ -4,7 +4,11 @@ import { Router } from '@angular/router';
 import { A1ZApiService } from '@msh/applications/data-access-applications';
 import { A1ZTableRecord } from '@msh/applications/domain-application';
 
-import {AuthFacade, PermissionEnum} from '@msh/auth/data-access-auth';
+import {
+  AuthFacade,
+  PermissionCheckService,
+  PermissionEnum,
+} from '@msh/auth/data-access-auth';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -51,19 +55,16 @@ export class ManageA1zComponent {
   selectedRecord: any;
   headerText: any;
   displayHistoryForm = false;
-  permissions: string[] = [];
+  showEditButton = false;
 
   constructor(
     private readonly a1zservice: A1ZApiService,
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly router: Router,
-    private authFacade: AuthFacade
-  ) {
-    this.authFacade.user$.pipe(untilDestroyed(this)).subscribe(user => {
-      this.permissions = user.permissions;
-    });
-  }
+    private authFacade: AuthFacade,
+    private readonly permissionCheckService: PermissionCheckService
+  ) {}
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([_]) => {
       if (this.filters) {
@@ -72,6 +73,11 @@ export class ManageA1zComponent {
     }),
     tap()
   );
+  ngOnInit() {
+    this.showEditButton = this.permissionCheckService.hasPermission(
+      PermissionEnum.EditApplications as any
+    );
+  }
 
   onNewClick() {
     this.router.navigate(['/applications/a1z/add']);
