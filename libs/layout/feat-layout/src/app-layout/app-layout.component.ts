@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { LayoutService } from '@msh/layout/util-layout';
 import { AppSidebarComponent } from '../app-sidebar/app-sidebar.component';
 import { AppTopbarComponent } from '../app-topbar/app-topbar.component';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'msh-app-layout',
@@ -13,12 +14,18 @@ import { AppTopbarComponent } from '../app-topbar/app-topbar.component';
     RouterOutlet,
     AppTopbarComponent,
     AppSidebarComponent,
+    ButtonModule,
   ],
   templateUrl: './app-layout.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppLayoutComponent {
   constructor(public layoutService: LayoutService) {}
+  menuVisible = false;
+
+  toggleMenu() {
+    this.menuVisible = !this.menuVisible;
+  }
 
   get containerClass() {
     return {

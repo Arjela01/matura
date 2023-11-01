@@ -12,11 +12,7 @@ import {
   GRID_ACTIONS,
   ColumnFilterDirective,
 } from '@msh/shared/util-shared';
-import {
-  TableLazyLoadEvent,
-  TableRowSelectEvent,
-  TableRowUnSelectEvent,
-} from 'primeng/table';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -64,33 +60,6 @@ export class MenuGridComponent {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,
       data: menu,
-    } as GridEvent<Menu>);
-  }
-
-  onSelectAllClick() {
-    if (this.selectedMenus.length === 0) {
-      this.gridEvent.emit({
-        action: GRID_ACTIONS.UNSELECT_ALL,
-      } as GridEvent<Menu>);
-    } else {
-      this.gridEvent.emit({
-        action: GRID_ACTIONS.SELECT_MANY,
-        data: this.selectedMenus,
-      } as GridEvent<Menu[]>);
-    }
-  }
-
-  onRowSelect($event: TableRowSelectEvent) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.SELECT_ROW,
-      data: $event.data,
-    } as GridEvent<Menu>);
-  }
-
-  onRowUnselect($event: TableRowUnSelectEvent) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.UNSELECT_ROW,
-      data: $event.data,
     } as GridEvent<Menu>);
   }
 
