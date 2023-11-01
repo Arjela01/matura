@@ -62,7 +62,7 @@
       "DisplayOrder": 4,
       "Parent": 6,
       "Text": "Login",
-      "Url": "/login"
+      "Url": "/identity"
     },
     {
       "ID": 8,

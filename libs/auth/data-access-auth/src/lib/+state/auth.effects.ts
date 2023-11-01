@@ -175,7 +175,7 @@ export class AuthEffects {
           this.storageService.removeItem(USER_STORAGE_KEY);
           this.storageService.removeItem(ACADEMIC_YEAR_KEY);
           this.heartBeatService.stopTimer();
-          this.router.navigate(['/login']);
+          this.router.navigate(['/identity']);
         })
       ),
     { dispatch: false }
