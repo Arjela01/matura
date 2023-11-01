@@ -27,6 +27,7 @@ export const STUDENTS = `
             auditUsername
             auditOperation
             auditTimestamp
+            legacySchoolId
             idCard
             isEAlbaniaApplication
             isDiplomaRequirementException

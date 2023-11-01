@@ -1,10 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostListener,
+  OnInit,
+} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LayoutService } from '@msh/layout/util-layout';
 import { AppSidebarComponent } from '../app-sidebar/app-sidebar.component';
 import { AppTopbarComponent } from '../app-topbar/app-topbar.component';
 import { ButtonModule } from 'primeng/button';
+import { MenuItemClickService } from '@msh/shared/util-shared';
 
 @Component({
   selector: 'msh-app-layout',
@@ -20,11 +26,28 @@ import { ButtonModule } from 'primeng/button';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppLayoutComponent {
-  constructor(public layoutService: LayoutService) {}
-  menuVisible = false;
+  menuVisible = true;
+  constructor(
+    public layoutService: LayoutService,
+    private menuItemClickService: MenuItemClickService
+  ) {
+    this.menuItemClickService.menuItemClicked$.subscribe(
+      (menuItemClicked: boolean) => {
+        if (menuItemClicked && this.menuVisible) {
+          this.menuVisible = false;
+        }
+      }
+    );
+  }
 
   toggleMenu() {
     this.menuVisible = !this.menuVisible;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    const screenWidth = (event.target as Window).innerWidth;
+    this.menuVisible = screenWidth >= 600;
   }
 
   get containerClass() {

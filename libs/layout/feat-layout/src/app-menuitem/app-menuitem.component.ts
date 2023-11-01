@@ -23,6 +23,7 @@ import {
 } from '@angular/router';
 import { RippleModule } from 'primeng/ripple';
 import { filter } from 'rxjs';
+import { MenuItemClickService } from '@msh/shared/util-shared';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -64,7 +65,10 @@ import { filter } from 'rxjs';
         routerLinkActive="active-route"
         [routerLinkActiveOptions]="
           item.routerLinkActiveOptions || {
-            paths:  item.routerLink.toString().substring(1,8)==='reports'?'exact':'subset',
+            paths:
+              item.routerLink.toString().substring(1, 8) === 'reports'
+                ? 'exact'
+                : 'subset',
             queryParams: 'ignored',
             matrixParams: 'ignored',
             fragment: 'ignored'
@@ -133,7 +137,10 @@ export class AppMenuitemComponent implements OnChanges, OnInit {
 
   key = '';
 
-  constructor(public router: Router) {
+  constructor(
+    public router: Router,
+    private menuItemClickService: MenuItemClickService
+  ) {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(params => {
@@ -151,6 +158,7 @@ export class AppMenuitemComponent implements OnChanges, OnInit {
     if (this.item.routerLink) {
       this.updateActiveStateFromRoute();
     }
+    this.menuItemClickService.setMenuItemClicked(false);
   }
 
   ngOnChanges() {
@@ -181,6 +189,8 @@ export class AppMenuitemComponent implements OnChanges, OnInit {
     // toggle active state
     if (this.item.items) {
       this.active = !this.active;
+    } else {
+      this.menuItemClickService.setMenuItemClicked(true);
     }
   }
 

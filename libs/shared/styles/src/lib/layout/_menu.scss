@@ -217,7 +217,7 @@
 .p-button {
   border: 0;
 }
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .layout-sidebar {
     display: none;
   }
@@ -226,14 +226,11 @@
   background: none;
   border: none;
   padding-top: 15px;
-  padding-bottom: 0px;
+  padding-bottom: 0;
   cursor: pointer;
   color: #000;
 }
 
 .icon-button:hover {
   background: white;
-}
-.menu-visible {
-  transform: translateX(0);
 }
