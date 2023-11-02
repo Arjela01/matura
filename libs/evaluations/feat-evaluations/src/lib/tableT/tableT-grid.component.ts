@@ -22,7 +22,7 @@ export class TableTGridComponent implements OnInit {
   filters: TableLazyLoadEvent | null = null;
   event = {
     first: 0,
-    rows: 10,
+    rows: 100000000,
     sortOrder: 1,
     filters: {},
     globalFilter: null,
