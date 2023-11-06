@@ -1,7 +1,14 @@
 <div class="layout-wrapper" [ngClass]="containerClass">
-  <div class="layout-sidebar">
+  <div class="menu-toggle">
+    <button type="link" (click)="toggleMenu()" class="icon-button">
+      <i class="pi pi-bars"></i>
+    </button>
+  </div>
+
+  <div class="layout-sidebar" [ngClass]="{ 'menu-visible': menuVisible }">
     <msh-app-sidebar></msh-app-sidebar>
   </div>
+
   <div class="layout-main-container pt-5">
     <div class="layout-main">
       <router-outlet></router-outlet>

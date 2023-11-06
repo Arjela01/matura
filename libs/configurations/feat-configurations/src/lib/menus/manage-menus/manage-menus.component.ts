@@ -1,5 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService } from 'primeng/api';
@@ -43,7 +47,6 @@ import { TableLazyLoadEvent } from 'primeng/table';
   ],
   templateUrl: './manage-menus.component.html',
   styleUrls: ['./manage-menus.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
 export class ManageMenusComponent implements OnInit {
@@ -63,7 +66,8 @@ export class ManageMenusComponent implements OnInit {
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly menuService: MenuApiService,
-    private readonly rolesService: RolesApiService
+    private readonly rolesService: RolesApiService,
+    private readonly cd: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -131,6 +135,7 @@ export class ManageMenusComponent implements OnInit {
       .subscribe(response => {
         this.menus$$.next(response.data);
         this.totalRecords = response.total;
+        this.cd.detectChanges();
       });
   }
 
