@@ -1,5 +1,6 @@
 export interface ApplicationProcess {
   id: number;
+  examTypeId: number;
   appProcessType: string;
   processStatus: string;
   startTime: Date;

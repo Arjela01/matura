@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -8,9 +8,13 @@ import { RippleModule } from 'primeng/ripple';
 import { GridComponent } from '../grid/grid.component';
 import { ProcessesApiService } from '@msh/evaluations/data-access-evaluations';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { tap } from 'rxjs';
 import { Application_Process } from '../grid/grid-type.enum';
+import { ExamTypeApiService } from '@msh/configurations/data-access-configurations';
+import { DropdownModel } from '@msh/shared/data-access-shared';
+import { DropdownModule } from 'primeng/dropdown';
+import { GlobalToastService } from '@msh/shared/util-shared';
 
 @UntilDestroy()
 @Component({
@@ -24,16 +28,19 @@ import { Application_Process } from '../grid/grid-type.enum';
     TooltipModule,
     RippleModule,
     GridComponent,
+    DropdownModule,
   ],
   templateUrl: './calculate-grades.component.html',
   styleUrls: ['./calculate-grades.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CalculateGradesComponent {
+export class CalculateGradesComponent implements OnInit {
   filters: TableLazyLoadEvent | null = null;
   processType: Application_Process = Application_Process.CalculateGrades;
   appProcessType!: string;
   executionLog!: string;
+  examTypes: DropdownModel<number>[] = [];
+  selectedExamType: number | null = null;
 
   columns = [
     { field: 'processStatus', header: 'Statusi' },
@@ -46,18 +53,41 @@ export class CalculateGradesComponent {
     tap(res => {
       this.appProcessType = res[0]?.appProcessType;
       this.executionLog = res[0]?.processStatus;
+      this.selectedExamType = res[0]?.examTypeId;
       return res;
     })
   );
 
-  constructor(private readonly process: ProcessesApiService) {}
+  constructor(
+    private readonly process: ProcessesApiService,
+    private readonly examTypeService: ExamTypeApiService,
+    private readonly toastService: GlobalToastService
+  ) {}
+
+  ngOnInit() {
+    this.getExamTypes();
+  }
 
   getProcessData($event: TableLazyLoadEvent, processType: number) {
     this.filters = { ...$event };
     this.process.getData($event, processType);
   }
+  onExamTypeSelect(event: any) {
+    this.selectedExamType = event.value;
+  }
 
   postProcess() {
-    this.process.post(this.processType);
+    if (this.selectedExamType !== null) {
+      this.process.post(this.processType, this.selectedExamType);
+    } else {
+      this.toastService.showError('Ju lutem zgjidhni tipin e provimit');
+    }
+  }
+
+  getExamTypes() {
+    this.examTypeService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(res => (this.examTypes = res.data));
   }
 }
