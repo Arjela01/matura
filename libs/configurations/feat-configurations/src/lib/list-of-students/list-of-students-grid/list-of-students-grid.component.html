@@ -9,6 +9,7 @@
       <th>Shkolla</th>
       <th>Qendra e Provimit</th>
       <th>Data e Provimit</th>
+      <th>Aftësi Ndryshe?</th>
     </tr>
   </thead>
   <tbody>
@@ -21,6 +22,7 @@
       <td>{{ rowData.studentHighSchoolName }}</td>
       <td>{{ rowData.examSiteName }}</td>
       <td>{{ formatStudentData(rowData).formattedExamTypeDateTime }}</td>
+      <td>{{ rowData.isAn ? 'Po' : 'Jo' }}</td>
     </tr>
   </tbody>
 </table>

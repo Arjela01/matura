@@ -8,7 +8,8 @@ import {
 } from '@angular/core';
 import { A1ZTableRecord } from '@msh/applications/domain-application';
 import {
-  ColumnFilterDirective, DateFilterService,
+  ColumnFilterDirective,
+  DateFilterService,
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
@@ -23,10 +24,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
-import {A1zHistoryGridComponent} from "../a1z-history/a1z-history-grid.component";
-import {PermissionEnum} from "@msh/auth/data-access-auth";
+import { A1zHistoryGridComponent } from '../a1z-history/a1z-history-grid.component';
 
 @Component({
   selector: 'msh-a1z-grid',
@@ -55,7 +55,7 @@ export class A1zGridComponent {
   @Input() headerText = '';
   @Input() displayHistoryForm = true;
   @Input() selectedRecord: any;
-  @Input() permissions: string[] = [];
+  @Input() showEditButton = false;
   selectedA1Z: A1ZTableRecord[] = [];
 
   @Output() gridEvent = new EventEmitter<
@@ -63,7 +63,10 @@ export class A1zGridComponent {
   >();
 
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
-  constructor(private dateFilterService: DateFilterService) {}
+  constructor(
+    private dateFilterService: DateFilterService,
+    private router: Router,
+  ) {}
 
   onEditClick(A1Z: A1ZTableRecord) {
     this.gridEvent.emit({
@@ -118,6 +121,9 @@ export class A1zGridComponent {
     $event.filters = this.dateFilterService.applyDateManipulation(filters);
     this.lazyLoadData.emit($event);
   }
-
-  protected readonly PermissionEnum = PermissionEnum;
+  onViewClick( a1z: A1ZTableRecord){
+    this.router.navigate([
+      `/applications/a1z/view/${a1z.id}`,
+    ])
+  }
 }

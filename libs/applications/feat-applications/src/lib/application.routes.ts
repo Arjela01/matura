@@ -159,7 +159,21 @@ export const APPLICATION_ROUTES: Route[] = [
     loadComponent: () =>
       import(
         './diplomas-student/printed-diplomas-foreign-students/printed-diplomas-foreign-students.component'
-        ).then(m => m.PrintedDiplomasForeignStudentsComponent),
+      ).then(m => m.PrintedDiplomasForeignStudentsComponent),
+  },
+  {
+    path: 'a1z/view/:id',
+    loadComponent: () =>
+      import('./a1z/a1z-view-only/a1z-view-only.component').then(
+        m => m.A1zViewOnlyComponent
+      ),
+  },
+  {
+    path: 'a1/view/:id',
+    loadComponent: () =>
+      import('./a1/a1-view-only/a1-view-only.component').then(
+        m => m.A1ViewOnlyComponent
+      ),
   },
   {
     path: 'exam-grade-request',

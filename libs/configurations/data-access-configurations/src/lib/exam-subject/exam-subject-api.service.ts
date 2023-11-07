@@ -80,7 +80,7 @@ export class ExamSubjectApiService {
     applicationFormType?: string
   ): Observable<ApiResult<DropdownModel<string>[]>> {
     return this.apiService.post<ApiResult<DropdownModel<string>[]>, any>(
-      `/ExamSubject/ForExamType`,
+      `/ExamSubject/ForExamType/`,
       {
         examTypeId: examTypeId,
         academicYearId: academicYearId,

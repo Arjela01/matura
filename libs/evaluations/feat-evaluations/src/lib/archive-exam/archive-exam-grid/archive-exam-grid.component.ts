@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnInit,
@@ -31,6 +32,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ArchiveExamApiService } from '@msh/evaluations/data-access-evaluations';
 import { BarcodeService } from '../services/barcode-service';
 import { ArchiveExam } from '@msh/shared/domain-models';
+import { Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'msh-archive-exam-grid',
@@ -52,6 +54,9 @@ import { ArchiveExam } from '@msh/shared/domain-models';
 })
 export class ArchiveExamGridComponent implements OnInit {
   @ViewChild('form', { static: true }) form!: NgForm;
+  @ViewChild('barcodeField', { static: true }) barcodeField:
+    | ElementRef
+    | undefined;
 
   @Input() set ArchiveExamsDetails(details: ArchiveExam | null) {
     if (details) {
@@ -61,6 +66,7 @@ export class ArchiveExamGridComponent implements OnInit {
   @Input() archiveExams: ArchiveExam[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
+  @Input() isBarcodeInputDisabled = false;
 
   selectedArchiveExams: ArchiveExam[] = [];
 
@@ -76,9 +82,6 @@ export class ArchiveExamGridComponent implements OnInit {
   submitted = false;
   id = 0;
 
-  @Input()
-  isBarcodeInputDisabled = false;
-
   archiveExam: ArchiveExam = {
     archiveFolderNr: 0,
     id: undefined,
@@ -87,12 +90,8 @@ export class ArchiveExamGridComponent implements OnInit {
   };
 
   constructor(
-    private cd: ChangeDetectorRef,
-    private readonly archiveExamApiService: ArchiveExamApiService,
-    private router: Router,
-    private messageService: MessageService,
     private route: ActivatedRoute,
-    private barcodeService: BarcodeService
+    private barcodeService: BarcodeService,
   ) {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -130,6 +129,7 @@ export class ArchiveExamGridComponent implements OnInit {
         action: GRID_ACTIONS.CUSTOM_ACTION1,
         data: archiveExam,
       } as GridEvent<ArchiveExam>);
+      this.barcodeField?.nativeElement.focus();
     }
   }
   onRowUnselect($event: TableRowUnSelectEvent) {

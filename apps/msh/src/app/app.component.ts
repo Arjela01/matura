@@ -12,8 +12,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { GlobalSpinnerComponent, LoaderService } from '@msh/shared/util-shared';
 import { GlobalSearchComponent } from '@msh/layout/feat-layout';
 import { SearchBoxService } from '@msh/layout/data-access-layout';
-import { FilterService } from 'primeng/api';
-import { CustomFilterService } from '@msh/shared/util-shared';
 
 @Component({
   selector: 'msh-root',
@@ -24,12 +22,6 @@ import { CustomFilterService } from '@msh/shared/util-shared';
       [searchBoxVisible]="searchBoxVisible"></msh-global-search>
   `,
   styles: [],
-  providers: [
-    {
-      provide: FilterService,
-      useClass: CustomFilterService,
-    },
-  ],
   standalone: true,
   imports: [
     RouterOutlet,

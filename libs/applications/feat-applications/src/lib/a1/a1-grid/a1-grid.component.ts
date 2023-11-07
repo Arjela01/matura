@@ -1,10 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { A1ApiService } from '@msh/applications/data-access-applications';
-import { A1Z } from '@msh/applications/domain-application';
-import {AuthFacade, PermissionEnum} from '@msh/auth/data-access-auth';
+import {A1Z, A1ZTableRecord} from '@msh/applications/domain-application';
+import {
+  AuthFacade,
+  PermissionCheckService,
+  PermissionEnum,
+} from '@msh/auth/data-access-auth';
 import { AcademicYear, Student } from '@msh/shared/domain-models';
 import {
   ColumnFilterDirective,
@@ -56,7 +60,7 @@ import { A1HistoryGridComponent } from '../a1-history/a1-history-grid.component'
   providers: [ConfirmationService, DialogService],
 })
 @UntilDestroy()
-export class A1GridComponent {
+export class A1GridComponent implements OnInit {
   private a1$$ = new BehaviorSubject<A1Z[]>([]);
   a1$ = this.a1$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
@@ -71,18 +75,21 @@ export class A1GridComponent {
 
   studentId: number | undefined;
   selectedRecord: any;
-  permissions: string[] = [];
+  showEditButton = false;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly a1ApiService: A1ApiService,
     private router: Router,
-    private authFacade: AuthFacade
-  ) {
-    this.authFacade.user$.pipe(untilDestroyed(this)).subscribe(user => {
-      this.permissions = user.permissions;
-    });
+    private authFacade: AuthFacade,
+    private readonly permissionCheckService: PermissionCheckService
+  ) {}
+
+  ngOnInit() {
+    this.showEditButton = this.permissionCheckService.hasPermission(
+      PermissionEnum.EditApplications as any
+    );
   }
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([_]) => {
@@ -175,6 +182,11 @@ export class A1GridComponent {
         this.totalRecords = response.total;
         this.displayForm = false;
       });
+  }
+  onViewClick( a1: A1ZTableRecord){
+    this.router.navigate([
+      `/applications/a1/view/${a1.id}`,
+    ])
   }
 
   protected readonly PermissionEnum = PermissionEnum;

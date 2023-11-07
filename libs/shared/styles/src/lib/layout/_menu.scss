@@ -16,6 +16,9 @@
   box-shadow: 0px 3px 5px rgb(0 0 0 / 2%), 0px 0px 2px rgb(0 0 0 / 5%),
     0px 1px 4px rgb(0 0 0 / 8%);
 }
+.layout-sidebar.menu-visible {
+  display: block;
+}
 
 .layout-menu {
   margin: 0;
@@ -213,4 +216,21 @@
 
 .p-button {
   border: 0;
+}
+@media (max-width: 600px) {
+  .layout-sidebar {
+    display: none;
+  }
+}
+.icon-button {
+  background: none;
+  border: none;
+  padding-top: 15px;
+  padding-bottom: 0;
+  cursor: pointer;
+  color: #000;
+}
+
+.icon-button:hover {
+  background: white;
 }

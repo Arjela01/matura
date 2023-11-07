@@ -53,7 +53,7 @@ export class GlobalSearchComponent {
 
   @HostListener('document:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
-    const isLoginPage = window.location.pathname === '/login';
+    const isLoginPage = window.location.pathname === '/identity';
 
     if (event.ctrlKey && event.shiftKey && event.key === 'F' && !isLoginPage) {
       if (!this.searchBoxVisible) {

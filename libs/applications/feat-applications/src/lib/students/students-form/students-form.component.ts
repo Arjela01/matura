@@ -196,7 +196,7 @@ export class StudentsFormComponent implements OnInit, OnChanges {
       const formattedDate = formatDate(
         this.student.birthDate,
         'dd/MM/yyyy',
-        'en-US'
+        'en_US'
       );
       this.student.birthDate = formattedDate as any;
     }

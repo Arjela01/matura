@@ -1,3 +1,4 @@
+/* Full-width container when menu is hidden */
 @media screen and (min-width: 1960px) {
   .layout-main,
   .landing-wrapper {
@@ -5,13 +6,19 @@
     margin-left: auto !important;
     margin-right: auto !important;
   }
+  .layout-main-container {
+    padding: 0 32px 32px 32px;
+  }
 }
-.layout-main-container {
-  padding: 0 32px 32px 32px;
-}
-@media (min-width: 392px) {
+
+/* Styling for larger screens (greater than or equal to 392px) */
+@media (min-width: 600px) {
+  .menu-toggle {
+    display: none;
+  }
   .layout-wrapper {
     background-color: var(--surface-g);
+
     &.layout-overlay {
       .layout-main-container {
         margin-left: 0;
@@ -36,7 +43,7 @@
 
     &.layout-static {
       .layout-main-container {
-        margin-left: 280px;
+        margin-left: 250px;
       }
 
       &.layout-static-inactive {
@@ -54,6 +61,7 @@
   }
 }
 
+/* Styling for screens with a maximum width of 991px (mobile view) */
 @media (max-width: 991px) {
   .blocked-scroll {
     overflow: hidden;
