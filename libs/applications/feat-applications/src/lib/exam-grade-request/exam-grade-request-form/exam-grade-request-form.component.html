@@ -1,0 +1,116 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="firstName">Emri *</label>
+    <input
+      type="text"
+      pInputText
+      id="firstName"
+      name="firstName"
+      [(ngModel)]="examGradeRequest.firstName"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examGradeRequest.firstName
+      }" />
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examGradeRequest.firstName">
+      Emri është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="middleName">Atësia *</label>
+    <input
+      type="text"
+      pInputText
+      id="middleName"
+      name="middleName"
+      [(ngModel)]="examGradeRequest.middleName"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examGradeRequest.middleName
+      }" />
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examGradeRequest.middleName">
+      Atësia është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="lastName">Mbiemri *</label>
+    <input
+      type="text"
+      pInputText
+      id="lastName"
+      name="lastName"
+      [(ngModel)]="examGradeRequest.lastName"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examGradeRequest.lastName
+      }" />
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examGradeRequest.lastName">
+      Mbiemri është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="date">Ditëlindja *</label>
+    <p-calendar
+      [(ngModel)]="date"
+      dateFormat="dd/mm/yy"
+      inputId="date"
+      id="date"
+      appendTo="body"
+      name="date"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !date
+      }"></p-calendar>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !date">
+      Ditëlindja është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="academicYear">Viti Akademik *</label>
+    <p-dropdown
+      id="academicYear"
+      [options]="academicYears"
+      optionValue="key"
+      optionLabel="value"
+      name="academicYear"
+      appendTo="body"
+      [filter]="true"
+      [required]="true"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="examGradeRequest.academicYearId"
+      [showClear]="true">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examGradeRequest.academicYearId">
+      Viti është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      [disabled]="form.invalid"
+      type="submit"
+      pButton
+      label="Ruaj"
+      class="p-button w-auto"></button>
+  </div>
+</form>

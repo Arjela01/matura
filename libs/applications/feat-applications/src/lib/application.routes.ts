@@ -161,4 +161,11 @@ export const APPLICATION_ROUTES: Route[] = [
         './diplomas-student/printed-diplomas-foreign-students/printed-diplomas-foreign-students.component'
         ).then(m => m.PrintedDiplomasForeignStudentsComponent),
   },
+  {
+    path: 'exam-grade-request',
+    loadComponent: () =>
+      import(
+        './exam-grade-request/manage-exam-grade-request/manage-exam-grade-request.component'
+        ).then(m => m.ManageExamGradeRequestComponent),
+  },
 ];
