@@ -19,4 +19,4 @@ export * from './lib/components/global-spinner/global-spinner.component';
 export * from './lib/builders/query-bulder';
 export * from './lib/builders/queries';
 export * from './lib/services/date-filters.service';
-export * from './lib/services/custom-filter-service';
+export * from './lib/services/menu.service';

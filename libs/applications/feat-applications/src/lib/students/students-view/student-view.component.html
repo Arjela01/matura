@@ -22,14 +22,18 @@
           icon="pi pi-pencil  "
           styleClass="p-button-secondary"
           (click)="navigateToForm(a1)"
-          [label]="'Ndrysho Formularin A1'"
+          [label]="
+            showEditButton ? 'Ndrysho Formularin A1' : 'Shiko Formularin A1'
+          "
           *ngIf="a1.isA1"></p-button>
         <p-button
           type="button"
           icon="pi pi-pencil  "
           styleClass="p-button-secondary"
           (click)="navigateToForm(a1)"
-          [label]="'Ndrysho Formularin A1Z'"
+          [label]="
+            showEditButton ? 'Ndrysho Formularin A1Z' : 'Shiko Formularin A1Z'
+          "
           *ngIf="!a1.isA1"></p-button>
       </ng-container>
     </div>

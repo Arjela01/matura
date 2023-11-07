@@ -31,6 +31,7 @@
         pRipple
         icon="pi pi-save"
         type="button"
+        (click)="saveArchiveExam(archiveExam)"
         [disabled]="!lettersNumbersCheck(archiveExam.barcode)"
         label="Ruaj"
         class="p-button-success mr-2"

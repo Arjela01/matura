@@ -9,9 +9,7 @@
         icon="pi pi-plus"
         class="p-button-success mr-2"
         (click)="onNewClick()"
-        *ngIf="
-          permissions && permissions.includes(PermissionEnum.EditApplications)
-        "></button>
+        *ngIf="showEditButton"></button>
     </div>
   </div>
 </div>
@@ -174,12 +172,13 @@
               {{ a1.academicYearName }}
             </td>
             <td>
-              <div
-                class="flex"
-                *ngIf="
-                  permissions &&
-                  permissions.includes(PermissionEnum.EditApplications)
-                ">
+              <div class="flex" *ngIf="showEditButton">
+                <img
+                  (click)="onViewClick(a1)"
+                  src="assets/svg/view-form.svg"
+                  class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
+                  tooltipPosition="bottom"
+                  pTooltip="Shiko Formularin A1" />
                 <img
                   src="assets/svg/edit-form.svg"
                   class="p-button-rounded p-button-warning p-button-text mr-2 pointer"

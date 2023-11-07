@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService } from 'primeng/api';
@@ -15,7 +15,7 @@ import {
 } from '@msh/shared/util-shared';
 
 import { RouterLink } from '@angular/router';
-import { AuthFacade } from '@msh/auth/data-access-auth';
+import { AuthFacade, PermissionCheckService } from '@msh/auth/data-access-auth';
 import { StudentsApiService } from '@msh/configurations/data-access-configurations';
 import { AcademicYear, Student } from '@msh/shared/domain-models';
 import { RippleModule } from 'primeng/ripple';
@@ -51,7 +51,7 @@ import { PermissionEnum } from '@msh/auth/data-access-auth';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageStudentsComponent {
+export class ManageStudentsComponent implements OnInit {
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
@@ -66,17 +66,23 @@ export class ManageStudentsComponent {
   selectedRecord: any;
   headerText: any;
   displayHistoryForm = false;
-  permissions: string[] = [];
+  showEditButton = false;
+  showDeleteButton = false;
 
   constructor(
     private readonly studentService: StudentsApiService,
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private authFacade: AuthFacade
-  ) {
-    this.authFacade.user$.pipe(untilDestroyed(this)).subscribe(user => {
-      this.permissions = user.permissions;
-    });
+    private authFacade: AuthFacade,
+    private readonly permissionCheckService: PermissionCheckService
+  ) {}
+  ngOnInit() {
+    this.showEditButton = this.permissionCheckService.hasPermission(
+      PermissionEnum.EditApplications as any
+    );
+    this.showDeleteButton = this.permissionCheckService.hasPermission(
+      PermissionEnum.DeleteApplications as any
+    );
   }
 
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(

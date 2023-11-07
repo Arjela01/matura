@@ -1,0 +1,88 @@
+<div class="flex ml-2 mb-2 page-header mb-header">
+  <h2 class="flex-1 mb-0">Detajet e Formularit A1</h2>
+  <div class="flex align-items-right justify-content-right">
+    <div class="my-2">
+      <p-button
+        type="button"
+        icon="pi pi-arrow-left"
+        styleClass="p-button-link"
+        (click)="onBackButtonClick()"
+        [label]="'Kthehu'"></p-button>
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="col-12">
+    <div class="card-form px-6 py-4 mb-header mt-3">
+      <form>
+        <div [style]="{ maxWidth: '500px' }">
+          <div>
+            <label for="studentInputData-a1-form">Maturant *</label>
+            <div class="p-inputgroup mt-3">
+              <input
+                type="text"
+                [disabled]="true"
+                pInputText
+                id="studentInputData-a1-form"
+                name="studentInputData"
+                [(ngModel)]="studentData" />
+            </div>
+          </div>
+          <div class="pt-3">
+            <label class="block pb-3">Aplikon jashtë vendit *</label>
+            <div class="formgrid grid w-full">
+              <div class="field-radiobutton col-6">
+                <p-radioButton
+                  id="isApplyingToForeignCountriesTrue"
+                  name="isApplyingToForeignCountries"
+                  [value]="true"
+                  [disabled]="true"
+                  [(ngModel)]="a1.isApplyingToForeignCountries"></p-radioButton>
+                <label for="isApplyingToForeignCountriesTrue">Po</label>
+              </div>
+              <div class="field-radiobutton col-6">
+                <p-radioButton
+                  id="isApplyingToForeignCountriesFalse"
+                  name="isApplyingToForeignCountries"
+                  [value]="false"
+                  [disabled]="true"
+                  [(ngModel)]="a1.isApplyingToForeignCountries"></p-radioButton>
+                <label for="isApplyingToForeignCountriesFalse">Jo</label>
+              </div>
+            </div>
+          </div>
+          <h5 class="mt-5">Lëndë me Detyrim</h5>
+          <div class="field w-full">
+            <div class="flex align-items-center w-full">
+              <div class="pr-2">D3:</div>
+              <div class="w-full">
+                <input
+                  [style]="{ width: '100%', minWidth: '250px' }"
+                  pInputText
+                  id="subjectD3Id"
+                  name="subjectD3Id"
+                  [(ngModel)]="a1.subjectD3Name" />
+              </div>
+            </div>
+          </div>
+
+          <h5 class="mt-5">Lëndë me Zgjedhje</h5>
+          <div class="field w-full">
+            <div class="flex align-items-center w-full">
+              <div class="pr-2">Z1:</div>
+              <div class="w-full">
+                <input
+                  [style]="{ width: '100%' }"
+                  id="subjectZ1Id"
+                  pInputText
+                  name="subjectZ1Id"
+                  [(ngModel)]="a1.subjectZ1Name" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

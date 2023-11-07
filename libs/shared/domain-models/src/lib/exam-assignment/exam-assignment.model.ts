@@ -19,6 +19,7 @@ export interface ExamAssignment {
   studentHighSchoolName?: string;
   schoolProfileId?:number;
   maxStudentsToAssign?:number;
+  isAn?:boolean
 }
 
 export interface ExamAssignmentTableView {
