@@ -1,0 +1,134 @@
+<div class="outer-wrapper">
+  <div class="login-container">
+    <div class="split left">
+      <div class="centered">
+        <div class="institution flex">
+          <img src="assets/images/institution-logo.png" class="w-full" />
+        </div>
+        <div></div>
+      </div>
+    </div>
+    <div class="split right">
+      <div class="p-5 mt-3" style="border-radius: 2rem">
+        <div class="flex align-items-center justify-content-start pb-4">
+          <button
+            type="button"
+            pButton
+            icon="pi pi-arrow-left"
+            label="Kthehu"
+            class="w-auto mr-2 smaller-button"
+            style="background: #f7f7fa; color: #155eef"
+            [routerLink]="'/login'"></button>
+        </div>
+        <div class="text-center mb-5">
+          <p-avatar
+            icon="pi pi-user"
+            size="xlarge"
+            [style]="{
+              'background-color': 'var(--primary-color)',
+              color: '#ffffff'
+            }"
+            shape="circle"></p-avatar>
+          <div class="text-900 text-3xl font-medium ml-2 mt-2">
+            Identifikohu
+          </div>
+        </div>
+
+        <form #f="ngForm" (ngSubmit)="onLoginSubmit()">
+          <div class="field mb-5">
+            <label
+              for="username"
+              class="block text-900 text-xl font-medium mb-2">
+              Përdoruesi
+            </label>
+            <input
+              pInputText
+              id="username"
+              name="username"
+              type="text"
+              placeholder="Përdoruesi"
+              class="w-full md:w-30rem"
+              style="padding: 1rem"
+              [ngClass]="{
+                'ng-dirty ng-invalid': f.submitted && username.errors
+              }"
+              required="true"
+              [(ngModel)]="loginFormModel.username"
+              #username="ngModel" />
+            <small
+              *ngIf="
+                f.submitted && username.errors && username.errors['required']
+              "
+              class="p-error block">
+              Përdoruesi është fushë e kërkuar!
+            </small>
+          </div>
+
+          <div class="field mb-3">
+            <label
+              for="password"
+              class="block text-900 font-medium text-xl mb-2">
+              Fjalëkalimi
+            </label>
+            <p-password
+              id="password"
+              inputId="password"
+              name="password"
+              placeholder="Fjalëkalimi"
+              inputStyleClass="w-full p-3 md:w-30rem"
+              [toggleMask]="true"
+              [feedback]="false"
+              [ngClass]="{
+                'ng-dirty ng-invalid': f.submitted && password.errors
+              }"
+              required="true"
+              minlength="8"
+              [(ngModel)]="loginFormModel.password"
+              #password="ngModel">
+            </p-password>
+            <small
+              *ngIf="
+                f.submitted && password.errors && password.errors['required']
+              "
+              class="p-error block">
+              Fjalëkalimi është fushë e kërkuar!
+            </small>
+            <small
+              *ngIf="
+                f.submitted && password.errors && password.errors['minlength']
+              "
+              class="p-error block">
+              Fjalëkalimi kërkon të paktën
+              {{ password.errors['minlength'].requiredLength }} karaktere!
+            </small>
+          </div>
+
+          <div class="mb-5" *ngIf="error$ | async as error">
+            <p-message
+              severity="error"
+              [text]="error"
+              class="w-100"></p-message>
+          </div>
+
+          <div
+            class="flex align-items-center justify-content-between mb-5 gap-5"></div>
+          <button
+            type="submit"
+            pButton
+            pRipple
+            class="w-full p-3 text-xl justify-content-center mb-3"
+            [disabled]="authFacade.isLoading$ | async">
+            <ng-container *ngIf="authFacade.isLoading$ | async; else labelTmpl">
+              <i
+                *ngIf="authFacade.isLoading$ | async"
+                class="pi pi-spin pi-spinner"
+                style="font-size: 1.5rem; color: 'var(--surface-0)'">
+              </i>
+            </ng-container>
+            <ng-template #labelTmpl><span>Hyr</span></ng-template>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
