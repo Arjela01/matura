@@ -154,11 +154,13 @@
         {{ a1z.academicYearName }}
       </td>
       <td>
-        <div
-          class="flex"
-          *ngIf="
-            permissions && permissions.includes(PermissionEnum.EditApplications)
-          ">
+        <div class="flex" *ngIf="showEditButton">
+          <img
+            (click)="onViewClick(a1z)"
+            src="assets/svg/view-form.svg"
+            class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
+            tooltipPosition="bottom"
+            pTooltip="Shiko Formularin A1Z" />
           <img
             src="assets/svg/edit-form.svg"
             class="p-button-rounded p-button-warning p-button-text mr-2 pointer"

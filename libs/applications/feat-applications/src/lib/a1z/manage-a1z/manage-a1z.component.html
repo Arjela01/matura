@@ -4,9 +4,7 @@
   <div class="flex align-items-right justify-content-right">
     <div class="my-2 hidden">
       <button
-        *ngIf="
-          permissions && permissions.includes(PermissionEnum.EditApplications)
-        "
+        *ngIf="showEditButton"
         pButton
         pRipple
         (click)="onNewClick()"
@@ -19,7 +17,7 @@
   <div class="col-12">
     <div class="card">
       <msh-a1z-grid
-        [permissions]="permissions"
+        [showEditButton]="showEditButton"
         [a1z]="(a1zList$ | async) || []"
         (gridEvent)="onGridEvent($event)"
         [totalRecords]="totalRecords"

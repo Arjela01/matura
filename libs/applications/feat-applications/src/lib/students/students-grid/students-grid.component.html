@@ -190,20 +190,14 @@
             tooltipPosition="bottom"
             pTooltip="Shiko me shume" />
           <img
-            *ngIf="
-              permissions &&
-              permissions.includes(PermissionEnum.EditApplications)
-            "
+            *ngIf="showEditButton"
             [routerLink]="['/applications', 'students', 'edit', student.id]"
             src="assets/svg/edit-form.svg"
             class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"
             pTooltip="Ndrysho" />
           <img
-            *ngIf="
-              permissions &&
-              permissions.includes(PermissionEnum.EditApplications)
-            "
+            *ngIf="showEditButton"
             src="assets/svg/history.svg"
             class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"
@@ -211,10 +205,7 @@
             pTooltip="Historia" />
           <div>
             <img
-              *ngIf="
-                permissions &&
-                permissions.includes(PermissionEnum.EditApplications)
-              "
+              *ngIf="showDeleteButton"
               src="assets/svg/delete-form.svg"
               class="p-button-rounded p-button-danger p-button-text ml-m pointer"
               pTooltip="Fshi"

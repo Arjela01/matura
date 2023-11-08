@@ -28,39 +28,27 @@
     </small>
   </div>
   <div class="field">
-    <label for="name">Emri *</label>
+    <label for="name">Emri</label>
     <input
       type="text"
       pInputText
       id="name"
       name="name"
       [(ngModel)]="user.name"
-      required
       autofocus
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.name
-      }" />
-    <small class="p-error block" *ngIf="submitted && !user.name">
-      Emri është fushë e kërkuar.
-    </small>
+      />
   </div>
 
   <div class="field">
-    <label for="lastName">Mbiemri *</label>
+    <label for="lastName">Mbiemri </label>
     <input
       type="text"
       pInputText
       id="lastName"
       name="lastName"
       [(ngModel)]="user.lastName"
-      required
       autofocus
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.lastName
-      }" />
-    <small class="p-error block" *ngIf="submitted && !user.lastName">
-      Mbiemri është fushë e kërkuar.
-    </small>
+      />
   </div>
 
   <div class="field">
@@ -105,14 +93,14 @@
     </small>
   </div>
 
-  <div class="field" [hidden]="showAdministrationOffice === false">
+  <div class="field" [hidden]="!showAdministrationOffice">
     <label for="administrationOfficeId">ZVAP *</label>
     <p-dropdown
       id="administrationOfficeId"
       optionValue="key"
       optionLabel="value"
       [options]="administrationOffices"
-      [disabled]="showAdministrationOffice === false"
+      [disabled]="!showAdministrationOffice"
       name="administrationOfficeId"
       [autoDisplayFirst]="false"
       appendTo="body"
@@ -121,14 +109,14 @@
     </p-dropdown>
   </div>
 
-  <div class="field" [hidden]="showUniversity === false">
+  <div class="field" [hidden]="!showUniversity">
     <label for="universityId">Universiteti *</label>
     <p-dropdown
       id="universityId"
       optionValue="key"
       optionLabel="value"
       [options]="universities"
-      [disabled]="showUniversity === false"
+      [disabled]="!showUniversity"
       name="universityId"
       [autoDisplayFirst]="false"
       appendTo="body"
@@ -136,28 +124,28 @@
       [showClear]="true">
     </p-dropdown>
   </div>
-  <div class="field" [hidden]="showHighSchools === false">
+  <div class="field" [hidden]="!showHighSchools">
     <label for="universityId">Shkolla *</label>
     <p-dropdown
       id="highSchool"
       optionValue="key"
       optionLabel="value"
       [options]="highSchools"
-      [disabled]="showHighSchools === false"
+      [disabled]="!showHighSchools"
       name="universityId"
       [autoDisplayFirst]="false"
       appendTo="body"
       [(ngModel)]="user.highSchoolId">
     </p-dropdown>
   </div>
-  <div class="field" [hidden]="showUniversityDepartment === false">
+  <div class="field" [hidden]="!showUniversityDepartment">
     <label for="universityDepartmentId">Fakulteti *</label>
     <p-dropdown
       id="universityDepartmentId"
       optionValue="key"
       optionLabel="value"
       [options]="universityDepartments"
-      [disabled]="showUniversityDepartment === false"
+      [disabled]="!showUniversityDepartment"
       name="universityDepartmentId"
       [autoDisplayFirst]="false"
       appendTo="body"
@@ -166,32 +154,20 @@
     </p-dropdown>
   </div>
 
-  <div class="field" [hidden]="showStudyProgram === false">
+  <div class="field" [hidden]="!showStudyProgram">
     <label for="studyProgramId">Programi i Studimit *</label>
     <p-dropdown
       id="studyProgramId"
       optionValue="key"
       optionLabel="value"
       [options]="studyPrograms"
-      [disabled]="showStudyProgram === false"
+      [disabled]="!showStudyProgram"
       name="studyProgramId"
       appendTo="body"
       [autoDisplayFirst]="false"
       [(ngModel)]="user.studyProgramId"
       [showClear]="true">
     </p-dropdown>
-  </div>
-
-  <div class="field" [hidden]="!showOverseerCode">
-    <label for="overseerCode">Kodi i Mbikqyrësit *</label>
-    <input
-      type="text"
-      pInputText
-      id="overseerCode"
-      [required]="showOverseerCode"
-      name="overseerCode"
-      [(ngModel)]="user.overseerCode"
-      autofocus />
   </div>
 
   <div class="field" [hidden]="user.id">
