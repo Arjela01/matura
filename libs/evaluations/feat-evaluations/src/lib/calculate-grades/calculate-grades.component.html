@@ -28,11 +28,17 @@
           [required]="true"
           [autoDisplayFirst]="false"
           [showClear]="true"
-          (onChange)="onExamTypeSelect($event)">
+          (onChange)="onExamTypeSelect($event)"
+          (onClear)="onExamTypeSelect($event)">
         </p-dropdown>
       </div>
       <div class="actions">
-        <button class="mt-2" pButton type="button" (click)="postProcess()">
+        <button
+          class="mt-2"
+          pButton
+          type="button"
+          (click)="postProcess()"
+          [disabled]="!selectedExamType">
           Fillo procesin
         </button>
       </div>

@@ -64,6 +64,7 @@ export class ConnectExamSecretsComponent implements OnInit {
     private readonly toastService: GlobalToastService
   ) {}
   ngOnInit() {
+    this.selectedExamType = null;
     this.getExamTypes();
   }
 

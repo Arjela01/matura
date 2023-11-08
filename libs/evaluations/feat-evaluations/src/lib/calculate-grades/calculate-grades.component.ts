@@ -65,6 +65,7 @@ export class CalculateGradesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.selectedExamType = null
     this.getExamTypes();
   }
 
