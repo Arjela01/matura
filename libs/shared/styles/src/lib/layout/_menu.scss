@@ -230,7 +230,11 @@
   cursor: pointer;
   color: #000;
 }
-
-.icon-button:hover {
-  background: white;
+.icon {
+  background: none;
+  border: none;
+  padding-top: 15px;
+  padding-bottom: 0;
+  cursor: pointer;
+  color: white;
 }

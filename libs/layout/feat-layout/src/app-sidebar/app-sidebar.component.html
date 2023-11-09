@@ -1,5 +1,10 @@
 <div class="sidebar">
   <msh-global-spinner *ngIf="loading$ | async"></msh-global-spinner>
+  <div class="menu-toggle">
+    <button type="link" (click)="toggleMenu()" class="icon">
+      <i class="pi pi-bars"></i>
+    </button>
+  </div>
   <div
     class="flex mt-3 mb-4 align-items-center cursor-pointer"
     (click)="onLogoClick()">

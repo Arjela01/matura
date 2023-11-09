@@ -1,9 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService } from 'primeng/api';
@@ -30,6 +26,7 @@ import { MenuFormComponent } from '../menu-form/menu-form.component';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { TreeModule } from 'primeng/tree';
 
 @UntilDestroy()
 @Component({
@@ -44,6 +41,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
     MenuFormComponent,
     ToolbarModule,
     RippleModule,
+    TreeModule,
   ],
   templateUrl: './manage-menus.component.html',
   styleUrls: ['./manage-menus.component.scss'],
@@ -58,19 +56,28 @@ export class ManageMenusComponent implements OnInit {
   selectedMenu: Menu | null = null;
   selectedMenus: Menu[] = [];
   displayModal = false;
+  menus: Menu[] = [];
 
   parentMenus: DropdownModel<number>[] = [];
   roles: DropdownModel<number>[] = [];
+  event = {
+    first: 0,
+    rows: 10,
+    sortOrder: 1,
+    filters: {},
+    globalFilter: null,
+  };
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly menuService: MenuApiService,
     private readonly rolesService: RolesApiService,
-    private readonly cd: ChangeDetectorRef,
+    private readonly cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
+    this.getMenus(this.event);
     this.getParentMenusDropdown();
     this.getRolesDropdown();
   }
@@ -126,14 +133,15 @@ export class ManageMenusComponent implements OnInit {
     }
   }
 
-  getMenus($event: TableLazyLoadEvent) {
+  getMenus($event: any) {
+    debugger;
     this.filters = Object.assign({}, $event);
 
     this.menuService
       .loadMenus($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.menus$$.next(response.data);
+        this.menus = this.transformToTree(response.data);
         this.totalRecords = response.total;
         this.cd.detectChanges();
       });
@@ -208,5 +216,55 @@ export class ManageMenusComponent implements OnInit {
       .subscribe(response => {
         this.roles = response.data;
       });
+  }
+  transformToTree(flatMenus: any[]): any[] {
+    debugger
+    const treeMenus: any[] = [];
+
+    interface MenuMap {
+      [key: string]: any;
+    }
+
+
+    const menuMap: MenuMap = {};
+
+    flatMenus.forEach(menu => {
+      console.log('Processing Menu Item:', menu);
+      const menuItem = {
+        label: menu.text,
+        data: menu,
+      };
+
+      menuMap[menu.id] = menuItem;
+
+      if (menu.parentId === 0) {
+        treeMenus.push(menuItem);
+      } else if (menuMap[menu.parentId]) {
+        menuMap[menu.parentId].items.push(menuItem);
+        console.log('Transformed Menu Item:', menuItem);
+      }
+    });
+    console.log('Final Tree Menus:', treeMenus);
+    return treeMenus;
+
+  }
+
+  getChildrenMenus(parentId: number, flatMenus: Menu[]): Menu[] {
+    const childMenus: any[] = [];
+
+    flatMenus.forEach(menu => {
+      if (menu.parentId === parentId) {
+        childMenus.push({
+          label: menu.text,
+          items: this.getChildrenMenus(menu.id, flatMenus),
+        });
+      }
+    });
+
+    return childMenus;
+  }
+  onMenuSelect(event: any) {
+    const selectedMenu = event.node.data;
+    console.log('Selected Menu:', selectedMenu);
   }
 }
