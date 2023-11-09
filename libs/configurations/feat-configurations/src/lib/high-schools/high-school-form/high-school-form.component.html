@@ -32,6 +32,22 @@
   </div>
 
   <div class="field">
+    <label for="Name">Emri Zyrtar *</label>
+    <input
+      type="text"
+      pInputText
+      id="officialName"
+      name="officialName"
+      [(ngModel)]="highSchool.officialName"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !highSchool.officialName }" />
+    <small class="p-error block" *ngIf="submitted && !highSchool.officialName">
+      Emri Zyrtar është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
     <label class="mb-3">Është Publik? *</label>
     <div class="formgrid grid">
       <div class="field-radiobutton col-6">

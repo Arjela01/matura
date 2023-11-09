@@ -46,7 +46,6 @@ export class ResetPasswordComponent {
   errorMessage = '';
   passwordNotMatch = false;
   passwordResetModel: UserResetPasswordModel = {
-    password: '',
     newPassword: '',
     confirmPassword: '',
   };
