@@ -326,11 +326,15 @@ export class ManageExamAssignmentComponent implements OnInit {
         || examAssignment[key] === 0
         || examAssignment[key] === '')delete examAssignment[key];
     })
-    examAssignment.examSiteIds = examAssignment.examSiteId;
-    delete examAssignment.examSiteId;
-    examAssignment.examDateIds = examAssignment.examDateId;
-    delete examAssignment.examDateId;
-    this.assignAll(examAssignment)
+
+    const filteredAssignment = { ...examAssignment };
+
+    filteredAssignment.examSiteIds = examAssignment.examSiteId;
+    filteredAssignment.examDateIds = examAssignment.examDateId;
+    delete filteredAssignment.examSiteId;
+    delete filteredAssignment.examDateId;
+    
+    this.assignAll(filteredAssignment)
   }
   assignAll(examAssignment:any) {
     this.examAssignmentService

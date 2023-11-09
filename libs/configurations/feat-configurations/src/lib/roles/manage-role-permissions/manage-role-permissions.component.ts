@@ -5,7 +5,9 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { RolesApiService } from '@msh/configurations/data-access-configurations';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { PermissionsApiService, RolesApiService } from '@msh/configurations/data-access-configurations';
 import {
   Permission,
   PermissionCategory,
@@ -17,14 +19,11 @@ import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
+import { RippleModule } from 'primeng/ripple';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { RolesFormComponent } from '../roles-form/roles-form.component';
 import { RolesGridComponent } from '../roles-grid/roles-grid.component';
-import { RippleModule } from 'primeng/ripple';
-import { TableLazyLoadEvent } from 'primeng/table';
-import { PermissionsApiService } from '@msh/configurations/data-access-configurations';
-import { ActivatedRoute } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'msh-manage-role-permissions',
@@ -39,6 +38,7 @@ import { FormsModule } from '@angular/forms';
     ToolbarModule,
     RippleModule,
     FormsModule,
+    RouterLink
   ],
   templateUrl: './manage-role-permissions.component.html',
   styleUrls: ['./manage-role-permissions.component.scss'],

@@ -2,6 +2,7 @@ export interface HighSchool {
   id: number;
   code: string;
   name: string;
+  officialName?: string;
   isPublic: boolean;
   administrationOfficeId?: number;
   administrationOfficeName?: string;
