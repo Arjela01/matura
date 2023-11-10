@@ -69,7 +69,7 @@
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
-      <th>Shto Lëndën</th>
+      <th *ngIf="showEditButton">Shto Lëndën</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-failingStudent>
@@ -95,6 +95,7 @@
       <td>
         <div class="flex">
           <img
+            *ngIf="showEditButton"
             src="assets/svg/edit-form.svg"
             class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"

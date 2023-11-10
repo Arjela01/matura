@@ -4,6 +4,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
 } from '@angular/core';
 import { FailingStudent } from '@msh/applications/domain-application';
@@ -19,6 +20,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import {
+  PermissionCheckService,
+  PermissionEnum,
+} from '@msh/auth/data-access-auth';
 
 @Component({
   selector: 'msh-pass-in-fall-grid',
@@ -37,18 +42,27 @@ import { TooltipModule } from 'primeng/tooltip';
   styleUrls: ['./pass-in-fall-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PassInFallGridComponent {
+export class PassInFallGridComponent implements OnInit {
   @Input() failingStudents: FailingStudent[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
+  showEditButton = false;
 
-  // selectedFailingStudent: Failin
+  constructor(
+    private readonly permissionCheckService: PermissionCheckService
+  ) {}
 
   @Output() gridEvent = new EventEmitter<
     GridEvent<FailingStudent | FailingStudent[]>
   >();
 
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
+
+  ngOnInit() {
+    this.showEditButton = this.permissionCheckService.hasPermission(
+      PermissionEnum.EditFailingStudents as any
+    );
+  }
 
   onEditClick(failingStudent: FailingStudent) {
     this.gridEvent.emit({

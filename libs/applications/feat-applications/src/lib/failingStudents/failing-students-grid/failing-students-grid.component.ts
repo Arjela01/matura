@@ -4,6 +4,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
 } from '@angular/core';
 import { FailingStudent } from '@msh/applications/domain-application';
@@ -21,6 +22,10 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { ChipModule } from 'primeng/chip';
+import {
+  PermissionCheckService,
+  PermissionEnum,
+} from '@msh/auth/data-access-auth';
 
 @Component({
   selector: 'msh-failing-students-grid',
@@ -40,13 +45,16 @@ import { ChipModule } from 'primeng/chip';
   styleUrls: ['./failing-students-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FailingStudentsGridComponent {
+export class FailingStudentsGridComponent implements OnInit {
   @Input() failingStudents: FailingStudent[] = [];
   @Input() students: Student[] = [];
   @Input() totalRecords = 0;
+  showEditButton = false;
   @Input() loading = false;
 
-  // selectedFailingStudent: Failin
+  constructor(
+    private readonly permissionCheckService: PermissionCheckService
+  ) {}
 
   @Output() gridEvent = new EventEmitter<
     GridEvent<FailingStudent | FailingStudent[]>
@@ -54,6 +62,11 @@ export class FailingStudentsGridComponent {
 
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
+  ngOnInit() {
+    this.showEditButton = this.permissionCheckService.hasPermission(
+      PermissionEnum.EditFailingStudents as any
+    );
+  }
   onEditClick(failingStudent: FailingStudent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,

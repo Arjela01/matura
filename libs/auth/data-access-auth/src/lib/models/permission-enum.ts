@@ -1,4 +1,5 @@
 export const PermissionEnum = {
-    EditApplications: 'EditApplications',
-    DeleteApplications: 'DeleteApplications',
+  EditApplications: 'EditApplications',
+  DeleteApplications: 'DeleteApplications',
+  EditFailingStudents: 'EditFailingStudents',
 };

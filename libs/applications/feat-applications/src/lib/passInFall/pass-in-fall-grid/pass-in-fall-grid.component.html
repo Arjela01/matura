@@ -69,7 +69,7 @@
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
-      <th>Kalon Në Vjeshtë</th>
+      <th *ngIf="showEditButton">Kalon Në Vjeshtë</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-failingStudent>
@@ -95,6 +95,7 @@
       <td>
         <div class="flex">
           <button
+            *ngIf="showEditButton"
             pButton
             pRipple
             icon="pi pi-check"
