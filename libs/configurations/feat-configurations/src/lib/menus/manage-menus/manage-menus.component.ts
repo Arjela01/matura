@@ -177,16 +177,14 @@ export class ManageMenusComponent implements OnInit {
   onFormSave(menuNode: any) {
     const jsonData: Menu[] = this.convertTreeToMenu([menuNode]);
 
-    if (jsonData.length > 0) {
-      const menu = jsonData[0];
+    const menu = jsonData[0];
 
-      if (menu.id) {
-        this.updateMenu(menu);
-      }
+    if (menuNode.id) {
+      this.updateMenu(menuNode);
+    }
 
-      if (!menu.id) {
-        this.addMenu(menuNode);
-      }
+    if (!menuNode.id) {
+      this.addMenu(menuNode);
     }
   }
 
