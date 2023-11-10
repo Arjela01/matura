@@ -46,7 +46,7 @@ export class MenuFormComponent implements OnChanges {
 
   @Input() set menuDetails(details: Menu | null) {
     if (details) {
-      this.menu = Object.assign({}, details);
+      this.menu = { ...details };
     }
   }
 
@@ -67,7 +67,6 @@ export class MenuFormComponent implements OnChanges {
     roles: [],
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor(private cd: ChangeDetectorRef) {}
 
   onCancelClick() {

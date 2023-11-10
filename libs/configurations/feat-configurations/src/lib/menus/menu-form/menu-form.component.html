@@ -8,7 +8,6 @@
       name="Text"
       [(ngModel)]="menu.text"
       required
-      autofocus
       [ngClass]="{ 'ng-invalid ng-dirty': submitted && !menu.text }" />
     <small class="p-error block" *ngIf="submitted && !menu.text">
       Emërtimi është fushë e kërkuar.
@@ -24,7 +23,6 @@
       name="Url"
       [(ngModel)]="menu.url"
       required
-      autofocus
       [ngClass]="{ 'ng-invalid ng-dirty': submitted && !menu.url }" />
     <small class="p-error block" *ngIf="submitted && !menu.url">
       Url është fushë e kërkuar.
@@ -70,7 +68,6 @@
       name="displayOrder"
       [(ngModel)]="menu.displayOrder"
       required
-      autofocus
       [ngClass]="{
         'ng-invalid ng-dirty':
           submitted && !menu.displayOrder && menu.displayOrder !== 0

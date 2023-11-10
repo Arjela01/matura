@@ -66,6 +66,9 @@
   .blocked-scroll {
     overflow: hidden;
   }
+  .sidebar.hide-menu {
+    display: none;
+  }
 
   .layout-wrapper {
     .layout-main-container {

@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterLinkWithHref } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
@@ -7,7 +13,11 @@ import { AcademicYearApiService } from '@msh/configurations/data-access-configur
 import { MenuStore } from '@msh/layout/data-access-layout';
 import { MenuNode } from '@msh/layout/domain-layout';
 import { AcademicYear, UserProfile } from '@msh/shared/domain-models';
-import { GlobalSpinnerComponent, LoaderService } from '@msh/shared/util-shared';
+import {
+  GlobalSpinnerComponent,
+  LoaderService,
+  MenuItemClickService,
+} from '@msh/shared/util-shared';
 import { UserProfileApiService } from '@msh/user-section/data-access-user-section';
 import { MenuItem } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
@@ -54,6 +64,7 @@ export class AppSidebarComponent implements OnInit {
   avatarLabel!: string;
   displayModal = false;
   academicYears: any[] = [];
+  @Output() menuVisibleToggle = new EventEmitter<undefined>();
   academicYearForm: Partial<AcademicYear> = {
     id: 0,
     year: '',
@@ -81,6 +92,10 @@ export class AppSidebarComponent implements OnInit {
     public loader: LoaderService,
     private academicApiService: AcademicYearApiService
   ) {}
+
+  toggleMenu() {
+    this.menuVisibleToggle.emit();
+  }
 
   ngOnInit() {
     this.menuStore.loadMenus();
