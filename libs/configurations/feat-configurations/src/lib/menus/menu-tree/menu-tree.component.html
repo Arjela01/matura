@@ -1,0 +1,28 @@
+<div class="tree">
+  <p-tree
+    [value]="treeData | treeJsonConversion"
+    class="w-full md:w-30rem"
+    [filter]="true"
+    filterMode="strict"
+    filterPlaceholder="Kërko në menu"
+    [draggableNodes]="true"
+    droppableScope="self">
+    <ng-template let-node pTemplate="default">
+      <div class="tree-node">
+        <img
+          src="assets/svg/edit-form.svg"
+          class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
+          tooltipPosition="bottom"
+          (click)="onEditClick(node)"
+          pTooltip="Ndrysho" />
+        <img
+          src="assets/svg/delete-form.svg"
+          class="p-button-rounded p-button-danger p-button-text ml-m pointer"
+          pTooltip="Fshi"
+          tooltipPosition="bottom"
+          (click)="onDeleteClick(node)" />
+        {{ node.label }}
+      </div>
+    </ng-template>
+  </p-tree>
+</div>

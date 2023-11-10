@@ -19,9 +19,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import { TreeJsonConversionPipe } from '../manage-menus/tree-json-conversion.pipe';
+import { TreeModule } from 'primeng/tree';
+import { TreeNode } from 'primeng/api';
 
 @Component({
-  selector: 'msh-menu-grid',
+  selector: 'msh-menu-tree',
   standalone: true,
   imports: [
     CommonModule,
@@ -32,22 +35,22 @@ import { TooltipModule } from 'primeng/tooltip';
     CheckboxModule,
     RippleModule,
     ColumnFilterDirective,
+    TreeJsonConversionPipe,
+    TreeModule,
   ],
-  templateUrl: './menu-grid.component.html',
-  styleUrls: ['./menu-grid.component.scss'],
+  templateUrl: './menu-tree.component.html',
+  styleUrls: ['./menu-tree.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MenuGridComponent {
-  @Input() menus: Menu[] = [];
-  @Input() totalRecords = 0;
-  @Input() loading = false;
+export class MenuTreeComponent {
+  @Input() treeData: TreeNode[] = [];
 
   //Keep it local state because of Table Header checkbox not syncing
   selectedMenus: Menu[] = [];
 
   @Output() gridEvent = new EventEmitter<GridEvent<Menu | Menu[]>>();
 
-  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
+  @Output() getTreeData = new EventEmitter<any>();
 
   onEditClick(menu: Menu) {
     this.gridEvent.emit({
@@ -61,9 +64,5 @@ export class MenuGridComponent {
       action: GRID_ACTIONS.DELETE,
       data: menu,
     } as GridEvent<Menu>);
-  }
-
-  loadRows($event: TableLazyLoadEvent) {
-    this.lazyLoadData.emit($event);
   }
 }

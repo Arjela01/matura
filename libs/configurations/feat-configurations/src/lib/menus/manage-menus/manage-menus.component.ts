@@ -2,13 +2,13 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, TreeNode } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
-import { Menu } from '@msh/shared/domain-models';
+import { DataNode, Menu } from '@msh/shared/domain-models';
 
 import {
   GlobalToastService,
@@ -21,12 +21,15 @@ import {
   MenuApiService,
   RolesApiService,
 } from '@msh/configurations/data-access-configurations';
-import { MenuGridComponent } from '../menu-grid/menu-grid.component';
+import { MenuTreeComponent } from '../menu-tree/menu-tree.component';
 import { MenuFormComponent } from '../menu-form/menu-form.component';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { TreeModule } from 'primeng/tree';
+import { TreeJsonConversionPipe } from './tree-json-conversion.pipe';
+import { TooltipModule } from 'primeng/tooltip';
+import { HighSchoolGridComponent } from '../../high-schools/high-school-grid/high-school-grid.component';
 
 @UntilDestroy()
 @Component({
@@ -37,32 +40,33 @@ import { TreeModule } from 'primeng/tree';
     CommonModule,
     DialogModule,
     ConfirmDialogModule,
-    MenuGridComponent,
+    MenuTreeComponent,
     MenuFormComponent,
     ToolbarModule,
     RippleModule,
     TreeModule,
+    TreeJsonConversionPipe,
+    TooltipModule,
+    HighSchoolGridComponent,
   ],
   templateUrl: './manage-menus.component.html',
   styleUrls: ['./manage-menus.component.scss'],
   providers: [ConfirmationService],
 })
 export class ManageMenusComponent implements OnInit {
-  private menus$$ = new BehaviorSubject<Menu[]>([]);
-  menus$ = this.menus$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
   selectedMenu: Menu | null = null;
   selectedMenus: Menu[] = [];
   displayModal = false;
-  menus: Menu[] = [];
+  treeData: TreeNode<DataNode>[] = [];
 
   parentMenus: DropdownModel<number>[] = [];
   roles: DropdownModel<number>[] = [];
   event = {
     first: 0,
-    rows: 10,
+    rows: 100000000,
     sortOrder: 1,
     filters: {},
     globalFilter: null,
@@ -93,8 +97,8 @@ export class ManageMenusComponent implements OnInit {
         this.selectedMenus = [...this.selectedMenus, event.data as Menu];
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
-        this.selectedMenus = this.selectedMenus.filter(hs => {
-          hs.id !== (event.data as Menu).id;
+        this.selectedMenus = this.selectedMenus.filter(m => {
+          return m.id !== (event.data as Menu).id;
         });
         break;
       case GRID_ACTIONS.SELECT_MANY:
@@ -103,11 +107,22 @@ export class ManageMenusComponent implements OnInit {
       case GRID_ACTIONS.UNSELECT_ALL:
         this.selectedMenus = [];
         break;
-      case GRID_ACTIONS.EDIT:
-        this.getParentMenusDropdown((event.data as Menu).id);
-        this.selectedMenu = Object.assign({}, event.data as Menu);
+      case GRID_ACTIONS.EDIT: {
+        const editedMenu: any = {
+          id: (event.data as any).data.id,
+          displayOrder: (event.data as any).displayOrder,
+          isVisible: (event.data as any).isVisible,
+          url: (event.data as any).data.url,
+          text: (event.data as any).label,
+          parentId: (event.data as any).parentId,
+          roles: (event.data as any).data.roles,
+        };
+
+        this.getParentMenusDropdown(editedMenu.parentId);
+        this.selectedMenu = editedMenu;
         this.displayModal = true;
         break;
+      }
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
           message: 'Jeni i sigurt që doni të fshini menu-në e zgjedhur?',
@@ -124,24 +139,65 @@ export class ManageMenusComponent implements OnInit {
     this.getParentMenusDropdown();
   }
 
-  onFormSave(menu: Menu) {
-    if (menu.id) {
-      this.updateMenu(menu);
+  convertTreeToMenu(treeData: TreeNode<DataNode>[]): Menu[] {
+    const menuList: Menu[] = [];
+
+    function traverse(node: any) {
+      if (!node) {
+        return;
+      }
+
+      if (node.data) {
+        const menu: Menu = {
+          id: node.data.id,
+          displayOrder: node.displayOrder,
+          isVisible: node.isVisible,
+          url: node.url,
+          text: node.text,
+          parentId: node.parentId,
+          roles: node.roles,
+        };
+        menuList.push(menu);
+      }
+
+      if (node.children) {
+        for (const child of node.children) {
+          traverse(child);
+        }
+      }
     }
-    if (!menu.id) {
-      this.addMenu(menu);
+
+    for (const rootNode of treeData) {
+      traverse(rootNode);
+    }
+
+    return menuList;
+  }
+
+  onFormSave(menuNode: any) {
+    const jsonData: Menu[] = this.convertTreeToMenu([menuNode]);
+
+    if (jsonData.length > 0) {
+      const menu = jsonData[0];
+
+      if (menu.id) {
+        this.updateMenu(menu);
+      }
+
+      if (!menu.id) {
+        this.addMenu(menuNode);
+      }
     }
   }
 
   getMenus($event: any) {
-    debugger;
     this.filters = Object.assign({}, $event);
 
     this.menuService
       .loadMenus($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.menus = this.transformToTree(response.data);
+        this.treeData = response.data;
         this.totalRecords = response.total;
         this.cd.detectChanges();
       });
@@ -165,7 +221,7 @@ export class ManageMenusComponent implements OnInit {
       });
   }
 
-  updateMenu(menu: Menu) {
+  updateMenu(menu: any) {
     this.menuService
       .update(menu)
       .pipe(untilDestroyed(this))
@@ -183,9 +239,9 @@ export class ManageMenusComponent implements OnInit {
       });
   }
 
-  deleteMenu(menu: Menu) {
+  deleteMenu(menu: any) {
     this.menuService
-      .delete(menu.id)
+      .delete(menu.data.id)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
@@ -216,55 +272,5 @@ export class ManageMenusComponent implements OnInit {
       .subscribe(response => {
         this.roles = response.data;
       });
-  }
-  transformToTree(flatMenus: any[]): any[] {
-    debugger
-    const treeMenus: any[] = [];
-
-    interface MenuMap {
-      [key: string]: any;
-    }
-
-
-    const menuMap: MenuMap = {};
-
-    flatMenus.forEach(menu => {
-      console.log('Processing Menu Item:', menu);
-      const menuItem = {
-        label: menu.text,
-        data: menu,
-      };
-
-      menuMap[menu.id] = menuItem;
-
-      if (menu.parentId === 0) {
-        treeMenus.push(menuItem);
-      } else if (menuMap[menu.parentId]) {
-        menuMap[menu.parentId].items.push(menuItem);
-        console.log('Transformed Menu Item:', menuItem);
-      }
-    });
-    console.log('Final Tree Menus:', treeMenus);
-    return treeMenus;
-
-  }
-
-  getChildrenMenus(parentId: number, flatMenus: Menu[]): Menu[] {
-    const childMenus: any[] = [];
-
-    flatMenus.forEach(menu => {
-      if (menu.parentId === parentId) {
-        childMenus.push({
-          label: menu.text,
-          items: this.getChildrenMenus(menu.id, flatMenus),
-        });
-      }
-    });
-
-    return childMenus;
-  }
-  onMenuSelect(event: any) {
-    const selectedMenu = event.node.data;
-    console.log('Selected Menu:', selectedMenu);
   }
 }

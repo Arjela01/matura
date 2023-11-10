@@ -29,7 +29,7 @@ export class MenuApiService {
     return this.apiService.post<ApiResult<Menu>, Menu>(`/Menu`, menu);
   }
 
-  update(menu: Menu): Observable<ApiResult<Menu>> {
+  update(menu: any): Observable<ApiResult<Menu>> {
     return this.apiService.post<ApiResult<Menu>, Menu>(`/Menu/Update`, menu);
   }
 
