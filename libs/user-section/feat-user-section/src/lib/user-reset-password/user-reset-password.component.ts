@@ -43,7 +43,6 @@ export class UserResetPasswordComponent {
     children: [],
     confirmPassword: '',
     newPassword: '',
-    password: '',
   };
   constructor(
     private userResetPasswordService: UserResetPasswordApiService,

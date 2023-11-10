@@ -36,6 +36,15 @@
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
+      <th pSortableColumn="externalName">
+        Emri i Jashtëm
+        <p-sortIcon field="externalName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="externalName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
       <th pSortableColumn="examTypeName">
         Tipi i provimit
         <p-sortIcon field="examTypeName"></p-sortIcon>
@@ -85,6 +94,9 @@
       </td>
       <td style="width: 18%; min-width: 10rem">
         {{ examSubject.name }}
+      </td>
+      <td style="width: 18%; min-width: 10rem">
+        {{ examSubject.externalName }}
       </td>
       <td style="width: 18%; min-width: 10rem">
         {{ examSubject.examTypeName }}
