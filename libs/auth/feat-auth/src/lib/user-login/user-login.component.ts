@@ -3,10 +3,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   SecurityContext,
+  ViewChild,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { AuthFacade } from '@msh/auth/data-access-auth';
+import { AuthFacade, LoginRequest } from '@msh/auth/data-access-auth';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -29,13 +30,21 @@ import { DomSanitizer } from '@angular/platform-browser';
     CheckboxModule,
     AvatarModule,
     MessageModule,
-    RouterLink,
   ],
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  templateUrl: './user-login.component.html',
+  styleUrls: ['./user-login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent {
+export class UserLoginComponent {
+  @ViewChild('f') loginForm!: NgForm;
+
+  error$ = this.authFacade.error$;
+
+  loginFormModel: LoginRequest = {
+    username: '',
+    password: '',
+  };
+
   ealbania_sso_url;
 
   constructor(
@@ -46,6 +55,14 @@ export class LoginComponent {
       SecurityContext.URL,
       environment.ealbania_sso_url
     );
+  }
+
+  onLoginSubmit(): void {
+    if (!this.loginForm.valid) {
+      return;
+    }
+
+    this.authFacade.login(Object.assign({}, this.loginFormModel));
   }
 
   protected readonly environment = environment;
