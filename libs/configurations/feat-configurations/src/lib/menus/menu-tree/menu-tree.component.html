@@ -9,7 +9,7 @@
     [droppableNodes]="true"
     draggableScope="self"
     droppableScope="self"
-   >
+    (onNodeDrop)="onNodeDrop($event)">
     <ng-template let-node pTemplate="default">
       <div class="tree-node">
         <img

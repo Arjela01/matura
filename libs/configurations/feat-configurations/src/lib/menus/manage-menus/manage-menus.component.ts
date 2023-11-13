@@ -12,11 +12,9 @@ import { DataNode, Menu } from '@msh/shared/domain-models';
 
 import {
   GlobalToastService,
-  GridEvent,
   GRID_ACTIONS,
+  GridEvent,
 } from '@msh/shared/util-shared';
-
-import { BehaviorSubject } from 'rxjs';
 import {
   MenuApiService,
   RolesApiService,
@@ -108,18 +106,15 @@ export class ManageMenusComponent implements OnInit {
         this.selectedMenus = [];
         break;
       case GRID_ACTIONS.EDIT: {
-        const editedMenu: any = {
+        this.selectedMenu = {
           id: (event.data as any).data.id,
-          displayOrder: (event.data as any).displayOrder,
-          isVisible: (event.data as any).isVisible,
+          displayOrder: (event.data as any).data.displayOrder,
+          isVisible: (event.data as any).data.isVisible,
           url: (event.data as any).data.url,
           text: (event.data as any).label,
-          parentId: (event.data as any).parentId,
+          parentId: (event.data as any).data.parentId,
           roles: (event.data as any).data.roles,
         };
-
-        this.getParentMenusDropdown(editedMenu.parentId);
-        this.selectedMenu = editedMenu;
         this.displayModal = true;
         break;
       }
@@ -139,50 +134,10 @@ export class ManageMenusComponent implements OnInit {
     this.getParentMenusDropdown();
   }
 
-  convertTreeToMenu(treeData: TreeNode<DataNode>[]): Menu[] {
-    const menuList: Menu[] = [];
-
-    function traverse(node: any) {
-      if (!node) {
-        return;
-      }
-
-      if (node.data) {
-        const menu: Menu = {
-          id: node.data.id,
-          displayOrder: node.displayOrder,
-          isVisible: node.isVisible,
-          url: node.url,
-          text: node.text,
-          parentId: node.parentId,
-          roles: node.roles,
-        };
-        menuList.push(menu);
-      }
-
-      if (node.children) {
-        for (const child of node.children) {
-          traverse(child);
-        }
-      }
-    }
-
-    for (const rootNode of treeData) {
-      traverse(rootNode);
-    }
-
-    return menuList;
-  }
-
   onFormSave(menuNode: any) {
-    const jsonData: Menu[] = this.convertTreeToMenu([menuNode]);
-
-    const menu = jsonData[0];
-
     if (menuNode.id) {
       this.updateMenu(menuNode);
     }
-
     if (!menuNode.id) {
       this.addMenu(menuNode);
     }

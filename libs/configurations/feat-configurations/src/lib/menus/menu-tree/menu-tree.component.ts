@@ -46,7 +46,7 @@ import { TreeDragDropService, TreeNode } from 'primeng/api';
 export class MenuTreeComponent {
   @Input() treeData: TreeNode[] = [];
   @Output() gridEvent = new EventEmitter<GridEvent<Menu | Menu[]>>();
-  @Output() getTreeData = new EventEmitter<any>();
+  @Output() saveTreeData = new EventEmitter<any>();
 
   onEditClick(menu: Menu) {
     this.gridEvent.emit({
@@ -60,5 +60,13 @@ export class MenuTreeComponent {
       action: GRID_ACTIONS.DELETE,
       data: menu,
     } as GridEvent<Menu>);
+  }
+  onNodeDrop(event: any) {
+    const draggedNode = event.dragNode.data;
+    const dropNode = event.dropNode.data;
+
+    draggedNode.parentId = dropNode.id;
+
+    this.saveTreeData.emit(draggedNode);
   }
 }

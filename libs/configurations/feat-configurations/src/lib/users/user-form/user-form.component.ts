@@ -122,7 +122,6 @@ export class UserFormComponent implements OnChanges, OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.onRoleRemoved();
-    this.getUserPasswordCreate();
     this.getUser();
   }
 
