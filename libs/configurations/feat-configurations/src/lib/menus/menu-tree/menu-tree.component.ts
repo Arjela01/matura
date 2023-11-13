@@ -21,7 +21,7 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { TreeJsonConversionPipe } from '../manage-menus/tree-json-conversion.pipe';
 import { TreeModule } from 'primeng/tree';
-import { TreeNode } from 'primeng/api';
+import { TreeDragDropService, TreeNode } from 'primeng/api';
 
 @Component({
   selector: 'msh-menu-tree',
@@ -40,16 +40,12 @@ import { TreeNode } from 'primeng/api';
   ],
   templateUrl: './menu-tree.component.html',
   styleUrls: ['./menu-tree.component.scss'],
+  providers: [TreeDragDropService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuTreeComponent {
   @Input() treeData: TreeNode[] = [];
-
-  //Keep it local state because of Table Header checkbox not syncing
-  selectedMenus: Menu[] = [];
-
   @Output() gridEvent = new EventEmitter<GridEvent<Menu | Menu[]>>();
-
   @Output() getTreeData = new EventEmitter<any>();
 
   onEditClick(menu: Menu) {

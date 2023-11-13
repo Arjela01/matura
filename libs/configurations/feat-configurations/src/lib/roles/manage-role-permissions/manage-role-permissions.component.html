@@ -1,34 +1,40 @@
 <div class="flex center mb-2 page-header mb-header">
   <h2 class="flex-1 mb-0">Të Drejtat e Rolit</h2>
   <div class="my-2">
-  <a routerLink="/configurations/roles">
     <button
-      type="button"
       pButton
-      icon="pi pi-arrow-left"
-      label="Kthehu"
-      class="w-auto mr-2 mb-3 back-button"></button>
-  </a>
-</div>
+      pRipple
+      label="Ruaj"
+      class="p-button-success mr-2 mb-3 w-auto"
+      (click)="onFormSave()"></button>
+    <a routerLink="/configurations/roles">
+      <button
+        type="button"
+        pButton
+        icon="pi pi-arrow-left"
+        label="Kthehu"
+        class="w-auto mr-2 mb-3 back-button"></button>
+    </a>
+  </div>
 </div>
 <div class="grid">
   <div class="col-12">
-    <div class="card p-4">
-      <div *ngFor="let category of permissionCategories" class="permissionCategory">
-        <h5>{{category.name}}</h5>
+    <div class="card p-4 flex">
+      <div
+        *ngFor="let category of permissionCategories"
+        class="permissionCategory">
+        <h5>{{ category.name }}</h5>
         <ul *ngFor="let p of category.permissions" class="categoryPermissions">
           <li>
             <label>
-              <input type="checkbox" style="margin-left: 0" [(ngModel)]="p.isTicked"/> {{p.name}}
+              <input
+                type="checkbox"
+                style="margin-left: 0"
+                [(ngModel)]="p.isTicked" />
+              {{ p.name }}
             </label>
           </li>
         </ul>
-
-
-        <div class="mt-5">
-          <button pButton pRipple label="Ruaj" class="p-button-success" (click)="onFormSave()"></button>
-        </div>
-
       </div>
     </div>
   </div>

@@ -16,7 +16,10 @@
 <div class="grid">
   <div class="col-9 m-auto">
     <div class="card">
-      <msh-menu-tree [treeData]="treeData" (gridEvent)="onGridEvent($event)">
+      {{treeData}}
+      <msh-menu-tree
+        [treeData]="treeData"
+        (gridEvent)="onGridEvent($event)">
       </msh-menu-tree>
     </div>
   </div>
