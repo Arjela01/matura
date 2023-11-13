@@ -35,9 +35,9 @@ export class ProcessesApiService {
       });
   }
 
-  post(processType: number) {
+  post(processType: number, examTypeId?: any) {
     this.calculateGradesService
-      .loadProcess(processType)
+      .loadProcess(processType, examTypeId)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {

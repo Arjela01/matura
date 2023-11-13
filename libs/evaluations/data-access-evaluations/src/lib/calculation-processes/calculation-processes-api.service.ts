@@ -25,11 +25,15 @@ export class CalculationProcessesApiService {
     );
   }
 
-  loadProcess(appProcessType: any): Observable<ApiResult<Process>> {
+  loadProcess(
+    appProcessType: any,
+    examTypeId: number
+  ): Observable<ApiResult<Process>> {
     return this.apiService
       .post(`/Process`, {
         appProcessType: appProcessType,
         force: true,
+        examTypeId: examTypeId,
       })
       .pipe(
         map((data: any) => data),
