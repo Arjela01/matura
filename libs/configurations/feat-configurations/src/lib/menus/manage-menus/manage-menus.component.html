@@ -18,7 +18,8 @@
     <div class="card">
       <msh-menu-tree
         [treeData]="treeData"
-        (gridEvent)="onGridEvent($event)">
+        (gridEvent)="onGridEvent($event)"
+        (saveTreeData)="onFormSave($event)">
       </msh-menu-tree>
     </div>
   </div>
