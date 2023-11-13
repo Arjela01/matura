@@ -175,4 +175,11 @@ export const APPLICATION_ROUTES: Route[] = [
         m => m.A1ViewOnlyComponent
       ),
   },
+  {
+    path: 'exam-grade-request',
+    loadComponent: () =>
+      import(
+        './exam-grade-request/manage-exam-grade-request/manage-exam-grade-request.component'
+        ).then(m => m.ManageExamGradeRequestComponent),
+  },
 ];
