@@ -209,7 +209,7 @@ export class ManageMenusComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Menuja u shtua me sukses!');
           this.displayModal = false;
-          this.getMenus(this.filters as TableLazyLoadEvent);
+          this.getMenus(this.event);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -227,7 +227,7 @@ export class ManageMenusComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Menuja u ndryshua me sukses!');
           this.displayModal = false;
-          this.getMenus(this.filters as TableLazyLoadEvent);
+          this.getMenus(this.event);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
