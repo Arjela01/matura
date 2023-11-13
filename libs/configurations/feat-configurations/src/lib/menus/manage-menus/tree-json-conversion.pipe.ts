@@ -13,7 +13,6 @@ export class TreeJsonConversionPipe implements PipeTransform {
 
     const treeNodes: TreeNode[] = [];
     this.convertToTree(data, treeNodes);
-
     return treeNodes;
   }
 
