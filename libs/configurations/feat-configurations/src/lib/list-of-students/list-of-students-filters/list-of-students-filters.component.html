@@ -24,8 +24,9 @@
     </small>
   </div>
   <div class="field column">
-    <label for="archiveFolder">Data e Provimit *</label>
+    <label for="archiveFolder">Tipi dhe Data e Provimit *</label>
     <p-dropdown
+      [style]="{ width: '100%', minWidth: '150px' }"
       id="archiveFolder"
       [options]="examDates"
       optionValue="key"
@@ -43,7 +44,7 @@
       }">
     </p-dropdown>
     <small class="p-error block" *ngIf="submitted && !studentList.examDateId">
-      Data është fushë e kërkuar.
+      Tipi dhe Data e Provimit është fushë e kërkuar.
     </small>
   </div>
   <div></div>
