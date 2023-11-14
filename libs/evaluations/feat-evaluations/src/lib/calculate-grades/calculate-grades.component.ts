@@ -65,7 +65,7 @@ export class CalculateGradesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.selectedExamType = null
+    this.selectedExamType = null;
     this.getExamTypes();
   }
 
@@ -80,8 +80,6 @@ export class CalculateGradesComponent implements OnInit {
   postProcess() {
     if (this.selectedExamType !== null) {
       this.process.post(this.processType, this.selectedExamType);
-    } else {
-      this.toastService.showError('Ju lutem zgjidhni tipin e provimit');
     }
   }
 
