@@ -15,7 +15,7 @@
   <div class="flex justify-content-end">
     <div class="my-2 flex align-items-center">
       <div class="field flex-column mr-7 mb-(-4)">
-        <label class="block" for="examType">Tipi i Provimit *</label>
+        <label class="block" for="examType">Tipi i Provimit </label>
         <p-dropdown
           styleClass="w-10rem"
           id="examType"
@@ -24,8 +24,6 @@
           optionLabel="value"
           name="examType"
           appendTo="body"
-          [filter]="true"
-          [required]="true"
           [autoDisplayFirst]="false"
           [showClear]="true"
           (onChange)="onExamTypeSelect($event)"
@@ -38,7 +36,7 @@
           pButton
           type="button"
           (click)="postProcess()"
-          [disabled]="!selectedExamType">
+          >
           Fillo procesin
         </button>
       </div>

@@ -1,14 +1,27 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="field">
     <label for="nid">NID *</label>
-    <input type="text" pInputText mshAlbanianNidValidator="true" id="nid" name="nid" [(ngModel)]="user.nid"
-      #nidModel="ngModel" required autofocus [ngClass]="{
+    <input
+      type="text"
+      pInputText
+      mshAlbanianNidValidator="true"
+      id="nid"
+      name="nid"
+      [(ngModel)]="user.nid"
+      #nidModel="ngModel"
+      required
+      autofocus
+      [ngClass]="{
         'ng-invalid ng-dirty': submitted && !user.nid
       }" />
-    <small class="p-error block" *ngIf="submitted && (user.nid === '' || user.nid === null)">
+    <small
+      class="p-error block"
+      *ngIf="submitted && (user.nid === '' || user.nid === null)">
       NID është fushë e kërkuar.
     </small>
-    <small class="p-error block" *ngIf="
+    <small
+      class="p-error block"
+      *ngIf="
         submitted && nidModel.errors && nidModel.errors?.['albanianNidValidator']
       ">
       NID nuk i përshtatet formatit shqiptar.
@@ -16,18 +29,38 @@
   </div>
   <div class="field">
     <label for="name">Emri</label>
-    <input type="text" pInputText id="name" name="name" [(ngModel)]="user.name" autofocus />
+    <input
+      type="text"
+      pInputText
+      id="name"
+      name="name"
+      [(ngModel)]="user.name"
+      autofocus />
   </div>
 
   <div class="field">
     <label for="lastName">Mbiemri </label>
-    <input type="text" pInputText id="lastName" name="lastName" [(ngModel)]="user.lastName" autofocus />
+    <input
+      type="text"
+      pInputText
+      id="lastName"
+      name="lastName"
+      [(ngModel)]="user.lastName"
+      autofocus />
   </div>
 
   <div class="field">
     <label for="userName">Përdoruesi *</label>
-    <input [disabled]="!!user.id" type="text" pInputText id="userName" name="userName" [(ngModel)]="user.username"
-      required autofocus [ngClass]="{
+    <input
+      [disabled]="!!user.id"
+      type="text"
+      pInputText
+      id="userName"
+      name="userName"
+      [(ngModel)]="user.username"
+      required
+      autofocus
+      [ngClass]="{
         'ng-invalid ng-dirty': submitted && !user.username
       }" />
     <small class="p-error block" *ngIf="submitted && !user.username">
@@ -37,9 +70,20 @@
 
   <div class="field">
     <label for="role">Roli *</label>
-    <p-dropdown id="role" name="role" [options]="roles" optionValue="key" optionLabel="value" [required]="true"
-      (onChange)="onRoleChange($event)" [(ngModel)]="user.roleId" [autoDisplayFirst]="false" [showClear]="true"
-      appendTo="body" [ngClass]="{
+    <p-dropdown
+      id="role"
+      name="role"
+      [options]="roles"
+      optionValue="key"
+      optionLabel="value"
+      [required]="true"
+      [filter]="true"
+      (onChange)="onRoleChange($event)"
+      [(ngModel)]="user.roleId"
+      [autoDisplayFirst]="false"
+      [showClear]="true"
+      appendTo="body"
+      [ngClass]="{
         'ng-invalid ng-dirty': submitted && !user.roleId
       }">
     </p-dropdown>
@@ -50,58 +94,135 @@
 
   <div class="field" [hidden]="!showAdministrationOffice">
     <label for="administrationOfficeId">ZVAP *</label>
-    <p-dropdown id="administrationOfficeId" optionValue="key" optionLabel="value" [options]="administrationOffices"
-      [disabled]="!showAdministrationOffice" name="administrationOfficeId" [autoDisplayFirst]="false" appendTo="body"
-      [(ngModel)]="user.administrationOfficeId" [showClear]="true">
+    <p-dropdown
+      id="administrationOfficeId"
+      optionValue="key"
+      optionLabel="value"
+      [options]="administrationOffices"
+      [disabled]="!showAdministrationOffice"
+      name="administrationOfficeId"
+      [autoDisplayFirst]="false"
+      appendTo="body"
+      [filter]="true"
+      [(ngModel)]="user.administrationOfficeId"
+      [showClear]="true">
     </p-dropdown>
   </div>
 
   <div class="field" [hidden]="!showUniversity">
     <label for="universityId">Universiteti *</label>
-    <p-dropdown id="universityId" optionValue="key" optionLabel="value" [options]="universities"
-      [disabled]="!showUniversity" name="universityId" [autoDisplayFirst]="false" appendTo="body"
-      [(ngModel)]="user.universityId" [showClear]="true">
+    <p-dropdown
+      id="universityId"
+      optionValue="key"
+      optionLabel="value"
+      [options]="universities"
+      [disabled]="!showUniversity"
+      name="universityId"
+      [filter]="true"
+      [autoDisplayFirst]="false"
+      appendTo="body"
+      [(ngModel)]="user.universityId"
+      [showClear]="true">
     </p-dropdown>
   </div>
   <div class="field" [hidden]="!showHighSchools">
     <label for="universityId">Shkolla *</label>
-    <p-dropdown id="highSchool" optionValue="key" optionLabel="value" [filter]="true" [options]="highSchools"
-      [disabled]="!showHighSchools" name="universityId" [autoDisplayFirst]="false" appendTo="body"
+    <p-dropdown
+      id="highSchool"
+      optionValue="key"
+      optionLabel="value"
+      [filter]="true"
+      [options]="highSchools"
+      [disabled]="!showHighSchools"
+      name="universityId"
+      [autoDisplayFirst]="false"
+      appendTo="body"
       [(ngModel)]="user.highSchoolId">
     </p-dropdown>
   </div>
   <div class="field" [hidden]="!showUniversityDepartment">
     <label for="universityDepartmentId">Fakulteti *</label>
-    <p-dropdown id="universityDepartmentId" optionValue="key" optionLabel="value" [options]="universityDepartments"
-      [disabled]="!showUniversityDepartment" name="universityDepartmentId" [autoDisplayFirst]="false" appendTo="body"
-      [(ngModel)]="user.universityDepartmentId" [showClear]="true">
+    <p-dropdown
+      id="universityDepartmentId"
+      optionValue="key"
+      optionLabel="value"
+      [options]="universityDepartments"
+      [disabled]="!showUniversityDepartment"
+      name="universityDepartmentId"
+      [filter]="true"
+      [autoDisplayFirst]="false"
+      appendTo="body"
+      [(ngModel)]="user.universityDepartmentId"
+      [showClear]="true">
     </p-dropdown>
   </div>
 
   <div class="field" [hidden]="!showStudyProgram">
     <label for="studyProgramId">Programi i Studimit *</label>
-    <p-dropdown id="studyProgramId" optionValue="key" optionLabel="value" [options]="studyPrograms"
-      [disabled]="!showStudyProgram" name="studyProgramId" appendTo="body" [autoDisplayFirst]="false"
-      [(ngModel)]="user.studyProgramId" [showClear]="true">
+    <p-dropdown
+      id="studyProgramId"
+      optionValue="key"
+      optionLabel="value"
+      [options]="studyPrograms"
+      [disabled]="!showStudyProgram"
+      name="studyProgramId"
+      appendTo="body"
+      [filter]="true"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="user.studyProgramId"
+      [showClear]="true">
     </p-dropdown>
   </div>
 
   <div class="field" [hidden]="user.id">
     <label for="password">Fjalëkalimi *</label>
     <div class="p-inputgroup">
-      <button [disabled]="!!user.id" onclick="this.disabled = true" style="min-width: 8% !important" value="Save"
-        type="button" pButton pRipple icon="pi pi-key" (click)="onPasswordCreate()" pTooltip="Gjenero Fjalëkalimin"
+      <button
+        [disabled]="!!user.id"
+        onclick="this.disabled = true"
+        style="min-width: 8% !important"
+        value="Save"
+        type="button"
+        pButton
+        pRipple
+        icon="pi pi-key"
+        (click)="onPasswordCreate()"
+        pTooltip="Gjenero Fjalëkalimin"
         tooltipPosition="bottom"></button>
-      <input type="text" id="password" name="password" disabled pInputText placeholder="{{ user.password }}"
+      <input
+        type="text"
+        id="password"
+        name="password"
+        disabled
+        pInputText
+        placeholder="{{ user.password }}"
         [(ngModel)]="user.password" />
-      <button class="password-button" style="min-width: 8% !important" onclick="this.disabled = true"
-        [cdkCopyToClipboard]="user.password" type="button" pButton pRipple icon="pi pi-copy"
-        pTooltip="Kopjo Fjalëkalimin" tooltipPosition="bottom"></button>
+      <button
+        class="password-button"
+        style="min-width: 8% !important"
+        onclick="this.disabled = true"
+        [cdkCopyToClipboard]="user.password"
+        type="button"
+        pButton
+        pRipple
+        icon="pi pi-copy"
+        pTooltip="Kopjo Fjalëkalimin"
+        tooltipPosition="bottom"></button>
     </div>
   </div>
 
   <div class="flex justify-content-end">
-    <button type="button" pButton label="Anullo" class="p-button-text w-auto mr-2" (click)="onCancelClick()"></button>
-    <button [disabled]="form.invalid" type="submit" pButton label="Ruaj" class="p-button w-auto"></button>
+    <button
+      type="button"
+      pButton
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      [disabled]="form.invalid"
+      type="submit"
+      pButton
+      label="Ruaj"
+      class="p-button w-auto"></button>
   </div>
 </form>

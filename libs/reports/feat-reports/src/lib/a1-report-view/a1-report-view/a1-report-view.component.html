@@ -119,6 +119,12 @@
               </td>
               <td>
                 Mbartur nota {{ carriedSubject.score }} e vitit
+                <span *ngIf="carriedSubject.label === 'D1'">
+                  {{ a1.academicYearD1Name }}
+                </span>
+                <span *ngIf="carriedSubject.label === 'D2'">
+                  {{ a1.academicYearD2Name }}
+                </span>
                 <span *ngIf="carriedSubject.label === 'D3'">
                   {{ a1.academicYearD3Name }}
                 </span>

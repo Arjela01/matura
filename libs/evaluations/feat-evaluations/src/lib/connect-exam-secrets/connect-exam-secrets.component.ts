@@ -79,8 +79,6 @@ export class ConnectExamSecretsComponent implements OnInit {
   postProcess() {
     if (this.selectedExamType !== null) {
       this.process.post(this.processType, this.selectedExamType);
-    } else {
-      this.toastService.showError('Ju lutem zgjidhni tipin e provimit');
     }
   }
 
