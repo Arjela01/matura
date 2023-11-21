@@ -12,6 +12,11 @@
     (onNodeDrop)="onNodeDrop($event)">
     <ng-template let-node pTemplate="default">
       <div class="tree-node">
+        <i
+          class="pi pi-plus-circle mr-2 pointer"
+          tooltipPosition="bottom"
+          (click)="onAddClick(node)"
+          pTooltip="Shto"></i>
         <img
           src="assets/svg/edit-form.svg"
           class="p-button-rounded p-button-warning p-button-text mr-2 pointer"

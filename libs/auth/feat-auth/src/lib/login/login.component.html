@@ -13,10 +13,12 @@
     <div class="split right">
       <div class="p-5 mb-5" style="border-radius: 2rem">
         <div class="eAlbania-logo">
-          <img
-            src="assets/images/eAlbaniaLogo.png"
-            class="h-6rem ml-6 mb-2"
-            alt="E-Albania" />
+          <a href="{{ ealbania_sso_url }}">
+            <img
+              src="assets/images/eAlbaniaLogo.png"
+              class="h-6rem ml-7 mb-2"
+              alt="E-Albania" />
+          </a>
         </div>
         <div>
           <a
@@ -25,9 +27,11 @@
             Identifikohu me e-Albania
           </a>
         </div>
-        <div class="bottom-left mb-8">
-          <i class="pi pi-chevron-right ml-7"></i>
-          <a class="text-m font-bold cursor-pointer" [routerLink]="'/user-login'"
+        <div class="bottom-right mb-8 mr-0">
+          <i class="pi pi-chevron-right ml-8"></i>
+          <a
+            class="userLogin text-m font-bold cursor-pointer"
+            [routerLink]="'/user-login'"
             >Identifikohu me përdorues</a
           >
         </div>

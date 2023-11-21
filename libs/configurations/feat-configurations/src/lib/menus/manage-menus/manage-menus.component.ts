@@ -59,6 +59,7 @@ export class ManageMenusComponent implements OnInit {
   selectedMenus: Menu[] = [];
   displayModal = false;
   treeData: TreeNode<DataNode>[] = [];
+  parentId = 0;
 
   parentMenus: DropdownModel<number>[] = [];
   roles: DropdownModel<number>[] = [];
@@ -118,6 +119,14 @@ export class ManageMenusComponent implements OnInit {
         this.displayModal = true;
         break;
       }
+      case GRID_ACTIONS.ADD: {
+        this.parentId = (event.data as any).data.id;
+        this.selectedMenu = {
+          parentId: (event.data as any).data.id,
+        };
+        this.displayModal = true;
+        break;
+      }
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
           message: 'Jeni i sigurt që doni të fshini menu-në e zgjedhur?',
@@ -157,8 +166,12 @@ export class ManageMenusComponent implements OnInit {
   }
 
   addMenu(menu: Menu) {
+    const valuesToSend = {
+      ...menu,
+      parentId: this.parentId,
+    };
     this.menuService
-      .save(menu)
+      .save(valuesToSend)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
