@@ -1,5 +1,5 @@
 export interface Menu {
-  id: number;
+  id?: number;
   isVisible?: boolean;
   displayOrder?: number;
   parentId?: number | null;

@@ -54,6 +54,12 @@ export class MenuTreeComponent {
       data: menu,
     } as GridEvent<Menu>);
   }
+  onAddClick(menu: Menu) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.ADD,
+      data: menu,
+    } as GridEvent<Menu>);
+  }
 
   onDeleteClick(menu: Menu) {
     this.gridEvent.emit({

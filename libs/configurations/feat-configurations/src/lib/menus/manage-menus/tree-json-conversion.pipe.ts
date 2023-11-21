@@ -54,7 +54,7 @@ export class TreeJsonConversionPipe implements PipeTransform {
         parentId: dataNode.parentId,
         displayOrder: dataNode.displayOrder,
       },
-      expanded: false,
+      expanded: true,
       children: [],
     };
   }
