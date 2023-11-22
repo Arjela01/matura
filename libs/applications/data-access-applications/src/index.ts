@@ -4,3 +4,4 @@ export * from './lib/confirmeda1a1z/confirmed-a1-a1z-api-service';
 export * from './lib/failingStudent/failingStudent-api.service';
 export * from './lib/exam-grades/exam-grade-api.service';
 export * from './lib/exam-grade-request/exam-grade-request.service';
+export * from './lib/manual-exam-grade/manual-exam-grade.service';

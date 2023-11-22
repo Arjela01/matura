@@ -57,3 +57,4 @@ export * from './user-reset-password/user-reset-password.model';
 export * from './user/user.model';
 export * from './exam-grade/exam-grade-discovery-result';
 export * from './exam-grade-request/exam-grade-request.model';
+export * from './manual-exam-grade/manual-exam-grade.model';
