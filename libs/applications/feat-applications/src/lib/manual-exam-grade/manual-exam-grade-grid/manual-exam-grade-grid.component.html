@@ -1,0 +1,80 @@
+<p-table
+  #dt
+  dataKey="id"
+  responsiveLayout="scroll"
+  [value]="manualExamGrade"
+  [totalRecords]="totalRecords"
+  [rows]="100"
+  [paginator]="true"
+  [rowsPerPageOptions]="[100, 200, 300]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
+  [rowHover]="true"
+  selectionMode="multiple"
+  (onLazyLoad)="loadRows($event)"
+  [lazy]="true">
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="examType">
+        Tipi i Provimit
+        <p-sortIcon field="examType"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="examType"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="examSubject">
+        Lënda e Provimit
+        <p-sortIcon field="examSubject"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="examSubject"
+          matchMode="equals"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="grade">
+        Nota
+        <p-sortIcon field="grade"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="grade"
+          matchMode="equals"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-manualExamGrade>
+    <tr>
+      <td style="width: 20%; min-width: 10rem">
+        {{ manualExamGrade.examTypeName }}
+      </td>
+      <td style="width: 20%; min-width: 10rem">
+        {{ manualExamGrade.examSubjectName }}
+      </td>
+      <td style="width: 20%; min-width: 10rem">
+        {{ manualExamGrade.grade }}
+      </td>
+      <td>
+        <div class="flex">
+          <img
+            src="assets/svg/edit-form.svg"
+            class="p-button-rounded p-button-warning p-button-text ml-7 pointer"
+            tooltipPosition="bottom"
+            (click)="onEditClick(manualExamGrade)"
+            pTooltip="Ndrysho" />
+
+          <img
+            src="assets/svg/delete-form.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-2 pointer"
+            pTooltip="Fshi"
+            tooltipPosition="bottom"
+            (click)="onDeleteClick(manualExamGrade)" />
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
