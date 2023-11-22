@@ -68,7 +68,7 @@
   border-radius: 4px;
   text-decoration: none;
 }
-.userLogin{
+.userLogin {
   transition: background-color 0.3s ease;
   padding: 8px 16px;
   border-radius: 4px;
@@ -116,7 +116,7 @@
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   box-shadow: 10px 14px 10px rgba(0, 0, 0, 0.1),
-  0px 8px 10px rgba(0, 0, 0, 0.06);
+    0px 8px 10px rgba(0, 0, 0, 0.06);
 }
 @media screen and (max-width: 768px) {
   .login-container {
@@ -138,6 +138,8 @@
   }
 }
 .bottom-right {
+  white-space: nowrap;
+  margin-left: 80px;
   position: absolute;
   bottom: 0;
   display: flex;
@@ -152,9 +154,8 @@
   position: relative;
   background: #e0e3ee;
 }
-@media screen and (min-width: 1440px) {
+@media screen and (min-width: 1400px) {
   .bottom-right {
-    margin-left: 170px;
-    white-space: nowrap;
+    margin-left: 250px;
   }
 }

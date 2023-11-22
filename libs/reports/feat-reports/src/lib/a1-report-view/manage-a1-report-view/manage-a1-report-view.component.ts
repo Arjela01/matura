@@ -176,7 +176,7 @@ export class ManageA1ReportViewComponent {
   geta1Form() {
     this.filters = {
       first: 0,
-      rows: 10,
+      rows: 10000000,
       sortOrder: 1,
       filters: {},
       globalFilter: null,
