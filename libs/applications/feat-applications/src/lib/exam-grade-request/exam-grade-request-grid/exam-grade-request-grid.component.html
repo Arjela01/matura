@@ -15,6 +15,15 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
+      <th pSortableColumn="studentId">
+        Matura ID
+        <p-sortIcon field="studentId"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="studentId"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
       <th pSortableColumn="firstName">
         Emri
         <p-sortIcon field="firstName"></p-sortIcon>
@@ -62,25 +71,61 @@
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
+      <th pSortableColumn="status">
+        Statusi
+        <p-sortIcon field="status"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="status"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
       <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-examGradeRequest>
     <tr>
-      <td style="width: 20%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
+        {{ examGradeRequest.idCard }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
         {{ examGradeRequest.firstName }}
       </td>
-      <td style="width: 20%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ examGradeRequest.middleName }}
       </td>
-      <td style="width: 20%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ examGradeRequest.lastName }}
       </td>
-      <td style="width: 20%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ examGradeRequest.dateOfBirth | date : 'dd/MM/yyyy' }}
       </td>
-      <td style="width: 25%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ examGradeRequest.academicYearId }}
+      </td>
+      <td style="width: 20%; min-width: 10rem">
+        <div class="flex">
+          <span
+            [ngClass]="
+              examGradeRequest.examGradesRequestStatusName ===
+              ExamGradeRequestStatus.Refused
+                ? ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
+                : examGradeRequest.examGradesRequestStatusName ===
+                  ExamGradeRequestStatus.Approved
+                ? ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
+                : ['surface-300', 'gray-text', 'px-3', 'py-1', 'fb']
+            ">
+            {{
+              examGradeRequest.examGradesRequestStatusName ==
+              ExamGradeRequestStatus.Refused
+                ? 'Refuzuar'
+                : examGradeRequest.examGradesRequestStatusName ==
+                  ExamGradeRequestStatus.Approved
+                ? 'Aprovuar'
+                : 'Kërkesë e re'
+            }}
+          </span>
+        </div>
       </td>
       <td>
         <div class="flex">

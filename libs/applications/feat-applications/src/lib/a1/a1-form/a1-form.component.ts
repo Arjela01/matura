@@ -401,56 +401,29 @@ export class A1FormComponent {
   }
 
   private printConfirmation(a1: A1Z) {
-    this.reportsApiService
-      .loadRoleReports(this.event)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        const a1ReportData = response.data.find(item => {
-          return item.reportId === Report.A1Form_Report;
-        });
+    const query: { queryParams: { [x: string]: string } } = {
+      queryParams: {},
+    };
+    if (this.mode === A1FormModeEnum.Add || this.mode === A1FormModeEnum.Edit)
+      query.queryParams['returnUrl'] = '/applications/a1';
+    else query.queryParams['returnUrl'] = '/applications/students';
+    const parameterUrl = 'studentid';
 
-        const query: { queryParams: { [x: string]: string } } = {
-          queryParams: {},
-        };
-        if (
-          this.mode === A1FormModeEnum.Add ||
-          this.mode === A1FormModeEnum.Edit
-        )
-          query.queryParams['returnUrl'] = '/applications/a1';
-        else query.queryParams['returnUrl'] = '/applications/students';
+    const parameterYear = 'academicyearid';
 
-        const parameters = a1ReportData ? JSON.parse(a1ReportData?.parameters as never) : [];
-        if (parameters.length > 0) {
-          const parameterUrl = parameters.find(
-            (item: string) => 'studentid' === item.toLowerCase()
-          );
-          const parameterYear = parameters.find(
-            (item: string) => 'academicyearid' === item.toLowerCase()
-          );
+    if (parameterUrl && parameterYear && a1.studentId && a1.academicYearId) {
+      query.queryParams[`${parameterUrl}`] = a1.studentId;
+      query.queryParams[`${parameterYear}`] = a1.academicYearId.toString();
+    } else {
+      this.toastService.showError(
+        'Mungojne parametrat e konfigurimit te raportit'
+      );
+      return;
+    }
 
-          if (
-            parameterUrl &&
-            parameterYear &&
-            a1.studentId &&
-            a1.academicYearId
-          ) {
-            query.queryParams[`${parameterUrl}`] = a1.studentId;
-            query.queryParams[`${parameterYear}`] =
-              a1.academicYearId.toString();
-          } else {
-            this.toastService.showError(
-              'Mungojne parametrat e konfigurimit te raportit'
-            );
-            return;
-          }
-        }
-        this.router
-          .navigate(
-            [`/reports/a1-view/${a1.id}/${Report.A1Form_Report}`],
-            query
-          )
-          .then();
-      });
+    this.router
+      .navigate([`/reports/a1-view/${a1.id}/${Report.A1Form_Report}`], query)
+      .then();
   }
 
   editStudent(): void {

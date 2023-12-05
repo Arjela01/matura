@@ -46,7 +46,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
-import {DropdownChangeEvent, DropdownModule} from 'primeng/dropdown';
+import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
@@ -303,8 +303,6 @@ export class A1zFormComponent implements OnInit {
     this.a1z.subjectZ1Name = undefined;
 
     if (!$event.value) {
-
-
       const examType = this.examTypes.find(x => x.value === EXAM_TYPES.Z1);
 
       this.examSubjectApiService
@@ -333,33 +331,33 @@ export class A1zFormComponent implements OnInit {
 
     if (examTypeRecord) {
       this.examGradeApiService
-        .discoverGrade(examTypeRecord.key ?? 0, this.a1z.studentNid, examSubjectId)
+        .discoverGrade(
+          examTypeRecord.key ?? 0,
+          this.a1z.studentNid,
+          examSubjectId
+        )
         .subscribe(response => {
           if (response.isSuccessful) {
             switch (examType) {
               case EXAM_TYPES.D1:
                 if (response.data.grade ?? 0 >= 4.5)
                   this.a1z.discoveredScoreD1 = response.data.grade;
-                else
-                  this.a1z.discoveredScoreD1 = undefined;
+                else this.a1z.discoveredScoreD1 = undefined;
                 break;
               case EXAM_TYPES.D2:
                 if (response.data.grade ?? 0 >= 4.5)
                   this.a1z.discoveredScoreD2 = response.data.grade;
-                else
-                  this.a1z.discoveredScoreD2 = undefined;
+                else this.a1z.discoveredScoreD2 = undefined;
                 break;
               case EXAM_TYPES.D3:
                 if (response.data.grade ?? 0 >= 4.5)
                   this.a1z.discoveredScoreD3 = response.data.grade;
-                else
-                  this.a1z.discoveredScoreD3 = undefined;
+                else this.a1z.discoveredScoreD3 = undefined;
                 break;
               case EXAM_TYPES.Z1:
                 if (response.data.grade ?? 0 >= 4.5)
                   this.a1z.discoveredScoreZ1 = response.data.grade;
-                else
-                  this.a1z.discoveredScoreZ1 = undefined;
+                else this.a1z.discoveredScoreZ1 = undefined;
                 break;
             }
             this.cd.detectChanges();
@@ -572,54 +570,31 @@ export class A1zFormComponent implements OnInit {
   }
 
   private printConfirmation(a1z: A1Z) {
-    this.reportsApiService
-      .loadRoleReports(this.event)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        const a1zReportData = response.data.find(item => {
-          return item.reportId === Report.A1ZForm_Report;
-        });
+    const query: { queryParams: { [x: string]: string } } = {
+      queryParams: {},
+    };
+    if (this.mode === A1ZFormModeEnum.Add || this.mode === A1ZFormModeEnum.Edit)
+      query.queryParams['returnUrl'] = '/applications/a1z';
+    else query.queryParams['returnUrl'] = '/applications/students';
 
-        const query: { queryParams: { [x: string]: string } } = {
-          queryParams: {},
-        };
-        if (
-          this.mode === A1ZFormModeEnum.Add ||
-          this.mode === A1ZFormModeEnum.Edit
-        )
-          query.queryParams['returnUrl'] = '/applications/a1z';
-        else query.queryParams['returnUrl'] = '/applications/students';
+    const parameterUrl = 'studentid';
 
-        const parameters = JSON.parse(a1zReportData?.parameters as never);
-        if (parameters.length > 0) {
-          const parameterUrl = parameters.find(
-            (item: string) => 'studentid' === item.toLowerCase()
-          );
-          const parameterYear = parameters.find(
-            (item: string) => 'academicyearid' === item.toLowerCase()
-          );
+    const parameterYear = 'academicyearid';
 
-          if (
-            parameterUrl &&
-            parameterYear &&
-            a1z.studentId &&
-            a1z.academicYearId
-          ) {
-            query.queryParams[`${parameterUrl}`] = a1z.studentId;
-            query.queryParams[`${parameterYear}`] =
-              a1z.academicYearId.toString();
-          } else {
-            this.toastService.showError(
-              'Mungojne parametrat e konfigurimit te raportit'
-            );
-            return;
-          }
-        }
-        const id = this.a1z.id ?? a1z.id;
-        this.router
-          .navigate([`/reports/a1-view/${id}/${Report.A1ZForm_Report}`], query)
-          .then();
-      });
+    if (parameterUrl && parameterYear && a1z.studentId && a1z.academicYearId) {
+      query.queryParams[`${parameterUrl}`] = a1z.studentId;
+      query.queryParams[`${parameterYear}`] = a1z.academicYearId.toString();
+    } else {
+      this.toastService.showError(
+        'Mungojne parametrat e konfigurimit te raportit'
+      );
+      return;
+    }
+
+    const id = this.a1z.id ?? a1z.id;
+    this.router
+      .navigate([`/reports/a1-view/${id}/${Report.A1ZForm_Report}`], query)
+      .then();
   }
 
   editStudent() {

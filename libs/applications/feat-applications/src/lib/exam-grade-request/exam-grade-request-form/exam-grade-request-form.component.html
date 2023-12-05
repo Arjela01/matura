@@ -1,5 +1,24 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="field">
+    <label for="studentId">Matura ID *</label>
+    <input
+      type="text"
+      pInputText
+      id="studentId"
+      name="studentId"
+      [(ngModel)]="examGradeRequest.idCard"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examGradeRequest.idCard
+      }" />
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examGradeRequest.idCard">
+      Emri është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
     <label for="firstName">Emri *</label>
     <input
       type="text"

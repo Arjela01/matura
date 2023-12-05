@@ -59,6 +59,9 @@ export class ExamGradeRequestFormComponent {
   submitted = false;
 
   examGradeRequest: ExamGradeRequestModel = {
+    examGradesRequestStatus: 0,
+    examGradesRequestStatusName: '',
+    idCard: '',
     dateOfBirth: '',
     firstName: '',
     id: '',
@@ -76,8 +79,11 @@ export class ExamGradeRequestFormComponent {
 
     if (this.form.valid) {
       if (this.date) {
-        const formattedDate = formatDate(this.date, 'yyyy-MM-dd', 'en-US');
-        this.examGradeRequest.dateOfBirth = formattedDate;
+        this.examGradeRequest.dateOfBirth = formatDate(
+          this.date,
+          'yyyy-MM-dd',
+          'en-US'
+        );
       }
       this.formSave.emit(this.examGradeRequest);
     }

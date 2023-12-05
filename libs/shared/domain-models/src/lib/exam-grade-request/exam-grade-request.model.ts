@@ -1,13 +1,21 @@
-export interface ExamGradeRequestModel  {
+export interface ExamGradeRequestModel {
   id: string;
-  firstName : string;
+  idCard: string;
+  examGradesRequestStatus: number;
+  examGradesRequestStatusName: string;
+  firstName: string;
   middleName: string;
-  lastName : string;
-  dateOfBirth : string;
-  academicYearId : number;
+  lastName: string;
+  dateOfBirth: string;
+  academicYearId: number;
 }
 
-export interface  ExamGradeRequestView {
-  data : ExamGradeRequestModel[];
-  total : number;
+export interface ExamGradeRequestView {
+  data: ExamGradeRequestModel[];
+  total: number;
+}
+export enum ExamGradeRequestStatus {
+  New = 1,
+  Refused,
+  Approved,
 }
