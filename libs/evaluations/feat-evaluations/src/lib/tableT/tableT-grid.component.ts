@@ -41,7 +41,20 @@ export class TableTGridComponent implements OnInit {
       .generateTableT(this.event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.tableTData$$.next(response.data);
+        const modifiedData = response.data.map(
+          (item: { birthDate: string }) => {
+            if (item.birthDate) {
+              const dateParts = item.birthDate.split(' ')[0].split('.');
+              const formattedDate = `${('0' + dateParts[0]).slice(-2)}/${(
+                '0' + dateParts[1]
+              ).slice(-2)}/${dateParts[2]}`;
+              item.birthDate = formattedDate;
+            }
+            return item;
+          }
+        );
+
+        this.tableTData$$.next(modifiedData);
       });
   }
 }
