@@ -34,7 +34,7 @@ export class ExamAssignmentApiService {
     examDateId: number
   ): Observable<ExamAssignmentTableView> {
     return this.apiService.post(
-      `/ExamAssignment/AssigmentsTableData?examDateId=${examDateId}`,
+      `/ExamAssignment/AssignmentsTableData?examDateId=${examDateId}`,
       event
     );
   }
@@ -43,7 +43,7 @@ export class ExamAssignmentApiService {
     examDateId: number
   ): Observable<ExamAssignmentTableView> {
     return this.apiService.post(
-      `/ExamAssignment/SortAssigmentsTableData?examDateId=${examDateId}`,
+      `/ExamAssignment/SortAssignmentsTableData?examDateId=${examDateId}`,
       event
     );
   }
