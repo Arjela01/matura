@@ -68,6 +68,7 @@ export class ExamGradeRequestFormComponent {
     lastName: '',
     academicYearId: 0,
     middleName: '',
+    description: '',
   };
 
   onCancelClick() {

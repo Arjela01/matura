@@ -1,6 +1,6 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="field">
-    <label for="studentId">Matura ID *</label>
+    <label for="studentId">NID *</label>
     <input
       type="text"
       pInputText
@@ -12,9 +12,7 @@
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examGradeRequest.idCard
       }" />
-    <small
-      class="p-error block"
-      *ngIf="submitted && !examGradeRequest.idCard">
+    <small class="p-error block" *ngIf="submitted && !examGradeRequest.idCard">
       Emri është fushë e kërkuar.
     </small>
   </div>
@@ -89,9 +87,7 @@
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !date
       }"></p-calendar>
-    <small
-      class="p-error block"
-      *ngIf="submitted && !date">
+    <small class="p-error block" *ngIf="submitted && !date">
       Ditëlindja është fushë e kërkuar.
     </small>
   </div>
@@ -115,6 +111,26 @@
       class="p-error block"
       *ngIf="submitted && !examGradeRequest.academicYearId">
       Viti është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="description">Përshkrimi *</label>
+    <textarea
+      name="description"
+      id="description"
+      rows="5"
+      cols="30"
+      pInputTextarea
+      required
+      [(ngModel)]="examGradeRequest.description"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examGradeRequest.description
+      }"></textarea>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examGradeRequest.description">
+      Përshkrimi është fushë e kërkuar.
     </small>
   </div>
 

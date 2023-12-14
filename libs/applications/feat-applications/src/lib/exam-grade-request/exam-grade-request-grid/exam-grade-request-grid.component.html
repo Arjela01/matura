@@ -15,12 +15,12 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="studentId">
-        Matura ID
-        <p-sortIcon field="studentId"></p-sortIcon>
+      <th pSortableColumn="idCard">
+        NID
+        <p-sortIcon field="idCard"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="studentId"
+          field="idCard"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
@@ -71,6 +71,15 @@
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
+      <th pSortableColumn="description">
+        Përshkrimi
+        <p-sortIcon field="description"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="description"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
       <th pSortableColumn="status">
         Statusi
         <p-sortIcon field="status"></p-sortIcon>
@@ -103,16 +112,22 @@
       <td style="width: 15%; min-width: 10rem">
         {{ examGradeRequest.academicYearId }}
       </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ examGradeRequest.description }}
+      </td>
       <td style="width: 20%; min-width: 10rem">
         <div class="flex">
           <span
             [ngClass]="
-              examGradeRequest.examGradesRequestStatusName ===
+              examGradeRequest.examGradesRequestStatusName ==
               ExamGradeRequestStatus.Refused
                 ? ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
-                : examGradeRequest.examGradesRequestStatusName ===
+                : examGradeRequest.examGradesRequestStatusName ==
                   ExamGradeRequestStatus.Approved
                 ? ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
+                : examGradeRequest.examGradesRequestStatusName ==
+                  ExamGradeRequestStatus.Pending
+                ? ['bg-yellow-300', 'green-text', 'px-3', 'py-1', 'fb']
                 : ['surface-300', 'gray-text', 'px-3', 'py-1', 'fb']
             ">
             {{
@@ -122,7 +137,10 @@
                 : examGradeRequest.examGradesRequestStatusName ==
                   ExamGradeRequestStatus.Approved
                 ? 'Aprovuar'
-                : 'Kërkesë e re'
+                : examGradeRequest.examGradesRequestStatusName ==
+                  ExamGradeRequestStatus.Pending
+                ? 'Në Pritje'
+                : 'E Re'
             }}
           </span>
         </div>

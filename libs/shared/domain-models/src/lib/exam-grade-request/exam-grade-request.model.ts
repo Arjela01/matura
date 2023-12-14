@@ -8,6 +8,7 @@ export interface ExamGradeRequestModel {
   lastName: string;
   dateOfBirth: string;
   academicYearId: number;
+  description: string;
 }
 
 export interface ExamGradeRequestView {
@@ -18,4 +19,5 @@ export enum ExamGradeRequestStatus {
   New = 1,
   Refused,
   Approved,
+  Pending,
 }
