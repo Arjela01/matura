@@ -171,7 +171,6 @@ export class ManageManualExamGradeComponent implements OnInit {
   }
 
   getExamSubject() {
-    debugger;
     this.examSubjectService
       .loadDropdownList()
       .pipe(untilDestroyed(this))
