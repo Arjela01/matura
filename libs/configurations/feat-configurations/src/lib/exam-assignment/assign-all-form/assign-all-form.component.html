@@ -118,15 +118,23 @@
             />
         </div>
         <div class="field">
-          <label for="Name">Emri</label>
+          <label for="Name">Gërma e parë e emrit</label>
           <input
+            pattern="[A-Z](,[A-Z])*$"
             type="text"
             pInputText
-            [(ngModel)]="examAssignment.studentName"
+            placeholder="p.sh A,B"
+            oninput="this.value = this.value.toUpperCase()"
+            [(ngModel)]="examAssignment.studentNameFilter"
             id="Name"
             name="Name"
             autofocus
             />
+            <small
+            class="p-text-secondary block"
+            >
+            *Ju lutem vendosni vetëm gërmat e para të emrave të ndara me presje.
+          </small>
         </div>
         <div class="flex justify-content-end mt-4">
           <button

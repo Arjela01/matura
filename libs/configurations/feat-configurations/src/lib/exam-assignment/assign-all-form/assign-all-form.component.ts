@@ -86,7 +86,8 @@ export class AssignAllFormComponent {
     studentId: '',
     studentIdentifier: '',
     studentInputData: '',
-    studentName: '',
+    studentName:'',
+    studentNameFilter: '',
     time: '',
     schoolProfileId: 0,
     maxStudentsToAssign: 0
