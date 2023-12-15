@@ -59,7 +59,7 @@ export class ExamGradeRequestFormComponent {
   submitted = false;
 
   examGradeRequest: ExamGradeRequestModel = {
-    examGradesRequestStatus: 0,
+    examGradesRequestStatusId: 0,
     examGradesRequestStatusName: '',
     idCard: '',
     dateOfBirth: '',
@@ -69,6 +69,7 @@ export class ExamGradeRequestFormComponent {
     academicYearId: 0,
     middleName: '',
     description: '',
+    maturaId: '',
   };
 
   onCancelClick() {

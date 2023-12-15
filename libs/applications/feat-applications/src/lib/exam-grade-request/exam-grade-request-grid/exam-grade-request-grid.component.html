@@ -24,6 +24,15 @@
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
+      <th pSortableColumn="maturaId">
+        Matura ID
+        <p-sortIcon field="maturaId"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="maturaId"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
       <th pSortableColumn="firstName">
         Emri
         <p-sortIcon field="firstName"></p-sortIcon>
@@ -97,6 +106,9 @@
       <td style="width: 15%; min-width: 10rem">
         {{ examGradeRequest.idCard }}
       </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ examGradeRequest.maturaId }}
+      </td>
       <td style="width: 10%; min-width: 10rem">
         {{ examGradeRequest.firstName }}
       </td>
@@ -119,28 +131,18 @@
         <div class="flex">
           <span
             [ngClass]="
-              examGradeRequest.examGradesRequestStatusName ==
-              ExamGradeRequestStatus.Refused
+              examGradeRequest.examGradesRequestStatusId == 3
                 ? ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
-                : examGradeRequest.examGradesRequestStatusName ==
-                  ExamGradeRequestStatus.Approved
+                : examGradeRequest.examGradesRequestStatusId == 2
                 ? ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
-                : examGradeRequest.examGradesRequestStatusName ==
-                  ExamGradeRequestStatus.Pending
-                ? ['bg-yellow-300', 'green-text', 'px-3', 'py-1', 'fb']
                 : ['surface-300', 'gray-text', 'px-3', 'py-1', 'fb']
             ">
             {{
-              examGradeRequest.examGradesRequestStatusName ==
-              ExamGradeRequestStatus.Refused
+              examGradeRequest.examGradesRequestStatusId == 3
                 ? 'Refuzuar'
-                : examGradeRequest.examGradesRequestStatusName ==
-                  ExamGradeRequestStatus.Approved
+                : examGradeRequest.examGradesRequestStatusId == 2
                 ? 'Aprovuar'
-                : examGradeRequest.examGradesRequestStatusName ==
-                  ExamGradeRequestStatus.Pending
-                ? 'Në Pritje'
-                : 'E Re'
+                : 'Kërkesë e re'
             }}
           </span>
         </div>

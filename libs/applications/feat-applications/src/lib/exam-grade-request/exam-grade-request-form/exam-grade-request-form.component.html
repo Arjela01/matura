@@ -1,11 +1,11 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="field">
-    <label for="studentId">NID *</label>
+    <label for="idCard">NID *</label>
     <input
       type="text"
       pInputText
-      id="studentId"
-      name="studentId"
+      id="idCard"
+      name="idCard"
       [(ngModel)]="examGradeRequest.idCard"
       required
       autofocus
@@ -13,7 +13,24 @@
         'ng-invalid ng-dirty': submitted && !examGradeRequest.idCard
       }" />
     <small class="p-error block" *ngIf="submitted && !examGradeRequest.idCard">
-      Emri është fushë e kërkuar.
+      NID është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="studentId">Matura ID *</label>
+    <input
+      type="text"
+      pInputText
+      id="studentId"
+      name="studentId"
+      [(ngModel)]="examGradeRequest.maturaId"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examGradeRequest.maturaId
+      }" />
+    <small class="p-error block" *ngIf="submitted && !examGradeRequest.maturaId">
+      Matura ID është fushë e kërkuar.
     </small>
   </div>
   <div class="field">

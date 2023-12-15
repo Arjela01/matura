@@ -6,10 +6,7 @@ import {
   Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  ExamGradeRequestModel,
-  ExamGradeRequestStatus,
-} from '@msh/shared/domain-models';
+import { ExamGradeRequestModel } from '@msh/shared/domain-models';
 import {
   ColumnFilterDirective,
   GRID_ACTIONS,
@@ -61,6 +58,4 @@ export class ExamGradeRequestGridComponent {
   loadRows($event: TableLazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
-
-  protected readonly ExamGradeRequestStatus = ExamGradeRequestStatus;
 }

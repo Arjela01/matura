@@ -1,7 +1,8 @@
 export interface ExamGradeRequestModel {
   id: string;
   idCard: string;
-  examGradesRequestStatus: number;
+  maturaId: string;
+  examGradesRequestStatusId: number;
   examGradesRequestStatusName: string;
   firstName: string;
   middleName: string;
@@ -14,10 +15,4 @@ export interface ExamGradeRequestModel {
 export interface ExamGradeRequestView {
   data: ExamGradeRequestModel[];
   total: number;
-}
-export enum ExamGradeRequestStatus {
-  New = 1,
-  Refused,
-  Approved,
-  Pending,
 }
