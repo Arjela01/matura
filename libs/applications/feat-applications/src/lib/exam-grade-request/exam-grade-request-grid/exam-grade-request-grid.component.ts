@@ -16,6 +16,7 @@ import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { SharedModule } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
 import { UntilDestroy } from '@ngneat/until-destroy';
+import { RouterLink } from '@angular/router';
 
 @UntilDestroy()
 @Component({
@@ -27,6 +28,7 @@ import { UntilDestroy } from '@ngneat/until-destroy';
     SharedModule,
     TableModule,
     TooltipModule,
+    RouterLink,
   ],
   templateUrl: './exam-grade-request-grid.component.html',
   styleUrls: ['./exam-grade-request-grid.component.scss'],

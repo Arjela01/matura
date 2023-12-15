@@ -14,22 +14,22 @@ export class ManualExamGradeService {
   constructor(private apiService: APIService) {}
 
   load(event: TableLazyLoadEvent): Observable<ManualExamGradeView> {
-    return this.apiService.post('/ManualExamGrade/TableData', event);
+    return this.apiService.post('/ManualExamGrades/TableData', event);
   }
   save(
     manualExamGrade: ManualExamGradeModel
   ): Observable<ApiResult<ExamGradeRequestModel>> {
-    return this.apiService.post('/ManualExamGrade', manualExamGrade);
+    return this.apiService.post('/ManualExamGrades', manualExamGrade);
   }
   update(
     manualExamGrade: ManualExamGradeModel
   ): Observable<ApiResult<ManualExamGradeModel>> {
-    return this.apiService.post('/ManualExamGrade/Update', manualExamGrade);
+    return this.apiService.post('/ManualExamGrades/Update', manualExamGrade);
   }
 
   delete(manualExamGradeId: string) {
     return this.apiService.delete<ApiResult<ManualExamGradeModel>>(
-      `/ManualExamGrade/${manualExamGradeId}`
+      `/ManualExamGrades/${manualExamGradeId}`
     );
   }
 }

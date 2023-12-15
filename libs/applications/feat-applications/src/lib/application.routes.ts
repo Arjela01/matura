@@ -183,7 +183,7 @@ export const APPLICATION_ROUTES: Route[] = [
       ).then(m => m.ManageExamGradeRequestComponent),
   },
   {
-    path: 'manual-exam-grade',
+    path: 'manual-exam-grade/:id',
     loadComponent: () =>
       import(
         './manual-exam-grade/manage-manual-exam-grade/manage-manual-exam-grade.component'
