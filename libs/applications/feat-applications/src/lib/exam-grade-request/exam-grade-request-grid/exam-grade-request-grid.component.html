@@ -15,12 +15,21 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="studentId">
-        Matura ID
-        <p-sortIcon field="studentId"></p-sortIcon>
+      <th pSortableColumn="idCard">
+        NID
+        <p-sortIcon field="idCard"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="studentId"
+          field="idCard"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="maturaId">
+        Matura ID
+        <p-sortIcon field="maturaId"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="maturaId"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
@@ -71,6 +80,15 @@
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
+      <th pSortableColumn="description">
+        Përshkrimi
+        <p-sortIcon field="description"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="description"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
       <th pSortableColumn="status">
         Statusi
         <p-sortIcon field="status"></p-sortIcon>
@@ -88,6 +106,9 @@
       <td style="width: 15%; min-width: 10rem">
         {{ examGradeRequest.idCard }}
       </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ examGradeRequest.maturaId }}
+      </td>
       <td style="width: 10%; min-width: 10rem">
         {{ examGradeRequest.firstName }}
       </td>
@@ -103,24 +124,23 @@
       <td style="width: 15%; min-width: 10rem">
         {{ examGradeRequest.academicYearId }}
       </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ examGradeRequest.description }}
+      </td>
       <td style="width: 20%; min-width: 10rem">
         <div class="flex">
           <span
             [ngClass]="
-              examGradeRequest.examGradesRequestStatusName ===
-              ExamGradeRequestStatus.Refused
+              examGradeRequest.examGradesRequestStatusId == 3
                 ? ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
-                : examGradeRequest.examGradesRequestStatusName ===
-                  ExamGradeRequestStatus.Approved
+                : examGradeRequest.examGradesRequestStatusId == 2
                 ? ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
                 : ['surface-300', 'gray-text', 'px-3', 'py-1', 'fb']
             ">
             {{
-              examGradeRequest.examGradesRequestStatusName ==
-              ExamGradeRequestStatus.Refused
+              examGradeRequest.examGradesRequestStatusId == 3
                 ? 'Refuzuar'
-                : examGradeRequest.examGradesRequestStatusName ==
-                  ExamGradeRequestStatus.Approved
+                : examGradeRequest.examGradesRequestStatusId == 2
                 ? 'Aprovuar'
                 : 'Kërkesë e re'
             }}

@@ -71,6 +71,7 @@ export class ManageExamGradeRequestComponent implements OnInit {
   onModalClose() {
     this.displayModal = false;
   }
+
   ngOnInit() {
     this.getAcademicYears();
   }
@@ -118,6 +119,7 @@ export class ManageExamGradeRequestComponent implements OnInit {
         break;
     }
   }
+
   onFormSave(examGradeRequest: ExamGradeRequestModel) {
     if (examGradeRequest.id) {
       this.updateExamGradeRequest(examGradeRequest);
