@@ -188,8 +188,12 @@ export class ManageMenusComponent implements OnInit {
   }
 
   updateMenu(menu: any) {
+    const valuesToSend = {
+      ...menu,
+      parentId: this.parentId || '',
+    };
     this.menuService
-      .update(menu)
+      .update(valuesToSend)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
