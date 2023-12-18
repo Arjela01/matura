@@ -95,8 +95,7 @@ export class ManageManualExamGradeComponent implements OnInit {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message:
-            'Jeni i sigurt që doni të fshini studentin e skualifikuar të zgjedhur?',
+          message: 'Jeni i sigurt që doni të fshini notën e zgjedhur?',
           accept: () => {
             this.deleteGrade(event.data as ManualExamGradeModel);
           },

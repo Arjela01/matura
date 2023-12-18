@@ -110,8 +110,7 @@ export class ManageExamGradeRequestComponent implements OnInit {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message:
-            'Jeni i sigurt që doni të fshini studentin e skualifikuar të zgjedhur?',
+          message: 'Jeni i sigurt që doni të fshini kërkesën e zgjedhur?',
           accept: () => {
             this.deleteExamGradeRequest(event.data as ExamGradeRequestModel);
           },
@@ -147,16 +146,14 @@ export class ManageExamGradeRequestComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            'Kërkesa e provimit u shtua me sukses!'
-          );
+          this.toastService.showSuccess('Kërkesa për notat u shtua me sukses!');
           this.displayModal = false;
           this.getExamGradeRequest(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit të kërkesës së provimimt!'
+            'Ndodhi një problem gjatë ndryshimit të kërkesës!'
           );
         this.cd.markForCheck();
       });
@@ -169,13 +166,13 @@ export class ManageExamGradeRequestComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
-            'Kërkesa e provimit u ndryshua me sukses!'
+            'Kërkesa për notat u ndryshua me sukses!'
           );
           this.getExamGradeRequest(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit të kërkesës së provimimt!'
+            'Ndodhi një problem gjatë ndryshimit të kërkesës!'
           );
         this.displayModal = false;
       });
@@ -187,13 +184,13 @@ export class ManageExamGradeRequestComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showInfo('Kërkesa e provimit u fshi me sukses!');
+          this.toastService.showInfo('Kërkesa për notat u fshi me sukses!');
           this.getExamGradeRequest(this.filters as TableLazyLoadEvent);
         }
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë fshirjes të kërkesës së provimimt!'
+            'Ndodhi një problem gjatë fshirjes të kërkesës!'
           );
       });
   }
