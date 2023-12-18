@@ -28,18 +28,20 @@
       pInputText
       id="grade"
       name="grade"
-      [(ngModel)]="manualExamGrade.manualExamGrade"
+      [(ngModel)]="manualExamGrade.grade"
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !manualExamGrade.manualExamGrade
+        'ng-invalid ng-dirty': submitted && !manualExamGrade.grade
       }" />
     <small
       class="p-error block"
-      *ngIf="submitted && !manualExamGrade.manualExamGrade">
+      *ngIf="submitted && !manualExamGrade.grade">
       Nota është fushë e kërkuar.
     </small>
   </div>
+
+
   <div class="flex justify-content-end">
     <button
       type="button"

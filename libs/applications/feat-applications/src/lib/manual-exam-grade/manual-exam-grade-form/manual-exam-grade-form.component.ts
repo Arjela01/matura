@@ -15,6 +15,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { UntilDestroy } from '@ngneat/until-destroy';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @UntilDestroy()
 @Component({
@@ -27,6 +28,7 @@ import { UntilDestroy } from '@ngneat/until-destroy';
     InputTextareaModule,
     ButtonModule,
     DropdownModule,
+    RadioButtonModule,
   ],
   templateUrl: './manual-exam-grade-form.component.html',
   styleUrls: ['./manual-exam-grade-form.component.scss'],
@@ -50,7 +52,8 @@ export class ManualExamGradeFormComponent {
     examSubjectId: '',
     examSubjectName: '',
     id: '',
-    manualExamGrade: 0,
+    grade: 0,
+    isManualEntry: false,
   };
 
   onCancelClick() {

@@ -2,7 +2,8 @@ export interface ManualExamGradeModel {
   id: string;
   examSubjectId: string;
   examSubjectName: string;
-  manualExamGrade: number;
+  grade: number;
+  isManualEntry: boolean;
 }
 
 export interface ManualExamGradeView {

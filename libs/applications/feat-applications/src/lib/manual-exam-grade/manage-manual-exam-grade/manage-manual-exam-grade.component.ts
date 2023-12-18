@@ -26,6 +26,7 @@ import { ExamGradeRequestFormComponent } from '../../exam-grade-request/exam-gra
 import { ExamGradeRequestGridComponent } from '../../exam-grade-request/exam-grade-request-grid/exam-grade-request-grid.component';
 import { ManualExamGradeGridComponent } from '../manual-exam-grade-grid/manual-exam-grade-grid.component';
 import { ManualExamGradeFormComponent } from '../manual-exam-grade-form/manual-exam-grade-form.component';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 @UntilDestroy()
 @Component({
@@ -42,6 +43,7 @@ import { ManualExamGradeFormComponent } from '../manual-exam-grade-form/manual-e
     ExamGradeRequestGridComponent,
     ManualExamGradeGridComponent,
     ManualExamGradeFormComponent,
+    RouterLink,
   ],
   templateUrl: './manage-manual-exam-grade.component.html',
   styleUrls: ['./manage-manual-exam-grade.component.scss'],
@@ -57,14 +59,18 @@ export class ManageManualExamGradeComponent implements OnInit {
   selectedManualExamGrade: ManualExamGradeModel | null = null;
   displayModal = false;
   examSubjects: DropdownModel<string>[] = [];
+  idCard: any;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly manualExamGradeService: ManualExamGradeService,
     private readonly examSubjectService: ExamSubjectApiService,
-    private cd: ChangeDetectorRef
-  ) {}
+    private cd: ChangeDetectorRef,
+    private route: ActivatedRoute
+  ) {
+    this.idCard = this.route.snapshot.paramMap.get('id');
+  }
 
   onNewClick() {
     this.displayModal = true;
@@ -107,10 +113,8 @@ export class ManageManualExamGradeComponent implements OnInit {
     }
   }
 
-  getGrades($event: TableLazyLoadEvent) {
-    this.filters = Object.assign({}, $event);
-
-    this.manualExamGradeService.load($event).subscribe(response => {
+  getGrades(idCard: string) {
+    this.manualExamGradeService.getByIdCard(idCard).subscribe(response => {
       this.manualExamGrade$$.next(response.data);
       this.totalRecords = response.total;
       this.cd.markForCheck();
@@ -118,14 +122,19 @@ export class ManageManualExamGradeComponent implements OnInit {
   }
 
   addGrade(manualExamGrade: ManualExamGradeModel) {
+    let idCard = this.idCard;
+    const valuesToSend = {
+      ...manualExamGrade,
+      idCard,
+    };
     this.manualExamGradeService
-      .save(manualExamGrade)
+      .save(valuesToSend)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Nota u shtua me sukses!');
           this.displayModal = false;
-          this.getGrades(this.filters as TableLazyLoadEvent);
+          this.getGrades(this.idCard);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -137,13 +146,18 @@ export class ManageManualExamGradeComponent implements OnInit {
   }
 
   updateGrade(manualExamGrade: ManualExamGradeModel) {
+    let idCard = this.idCard;
+    const valuesToSend = {
+      ...manualExamGrade,
+      idCard,
+    };
     this.manualExamGradeService
-      .update(manualExamGrade)
+      .update(valuesToSend)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Nota u ndryshua me sukses!');
-          this.getGrades(this.filters as TableLazyLoadEvent);
+          this.getGrades(this.idCard);
         } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest)
           this.toastService.showError(
@@ -160,7 +174,7 @@ export class ManageManualExamGradeComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Nota u fshi me sukses!');
-          this.getGrades(this.filters as TableLazyLoadEvent);
+          this.getGrades(this.idCard);
         }
 
         if (response.isBadRequest)

@@ -1,7 +1,15 @@
 <div class="flex center mb-2 page-header mb-header">
-  <h2 class="flex-1 mb-0">Notat</h2>
+  <h2 class="flex-1 mb-0">Hidh Notat për studentin ({{ idCard }})</h2>
   <div class="flex align-items-right justify-content-right">
     <div class="my-2">
+      <button
+        type="button"
+        pButton
+        icon="pi pi-arrow-left"
+        label="Kthehu"
+        class="w-auto mr-2"
+        style="background: #f7f7fa; color: #155eef"
+        [routerLink]="'/applications/exam-grade-request'"></button>
       <button
         pButton
         pRipple
@@ -19,7 +27,7 @@
         [manualExamGrade]="(manualExamGrade$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getGrades($event)">
+        (lazyLoadData)="getGrades(idCard)">
       </msh-manual-exam-grade-grid>
     </div>
   </div>

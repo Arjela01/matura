@@ -16,6 +16,9 @@ export class ManualExamGradeService {
   load(event: TableLazyLoadEvent): Observable<ManualExamGradeView> {
     return this.apiService.post('/ManualExamGrades/TableData', event);
   }
+  getByIdCard(idCard: string): Observable<ManualExamGradeView> {
+    return this.apiService.get(`/ManualExamGrades/GetByIdCard/${idCard}`);
+  }
   save(
     manualExamGrade: ManualExamGradeModel
   ): Observable<ApiResult<ExamGradeRequestModel>> {
