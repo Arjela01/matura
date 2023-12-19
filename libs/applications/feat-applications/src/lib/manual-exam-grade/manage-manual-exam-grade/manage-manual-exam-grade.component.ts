@@ -121,7 +121,7 @@ export class ManageManualExamGradeComponent implements OnInit {
   }
 
   addGrade(manualExamGrade: ManualExamGradeModel) {
-    let idCard = this.idCard;
+    const idCard = this.idCard;
     const valuesToSend = {
       ...manualExamGrade,
       idCard,
@@ -145,7 +145,7 @@ export class ManageManualExamGradeComponent implements OnInit {
   }
 
   updateGrade(manualExamGrade: ManualExamGradeModel) {
-    let idCard = this.idCard;
+    const idCard = this.idCard;
     const valuesToSend = {
       ...manualExamGrade,
       idCard,
