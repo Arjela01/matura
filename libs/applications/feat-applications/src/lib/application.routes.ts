@@ -180,6 +180,13 @@ export const APPLICATION_ROUTES: Route[] = [
     loadComponent: () =>
       import(
         './exam-grade-request/manage-exam-grade-request/manage-exam-grade-request.component'
-        ).then(m => m.ManageExamGradeRequestComponent),
+      ).then(m => m.ManageExamGradeRequestComponent),
+  },
+  {
+    path: 'manual-exam-grade/:id',
+    loadComponent: () =>
+      import(
+        './manual-exam-grade/manage-manual-exam-grade/manage-manual-exam-grade.component'
+      ).then(m => m.ManageManualExamGradeComponent),
   },
 ];

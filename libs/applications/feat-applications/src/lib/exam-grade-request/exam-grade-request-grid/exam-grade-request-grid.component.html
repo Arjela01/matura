@@ -157,8 +157,15 @@
             pTooltip="Ndrysho" />
 
           <img
+            src="assets/svg/import.svg"
+            class="p-button-rounded p-button-warning p-button-text ml-3 pointer"
+            tooltipPosition="bottom"
+            [routerLink]="['/applications/manual-exam-grade', examGradeRequest.idCard]"
+            pTooltip="Hidh Notat" />
+
+          <img
             src="assets/svg/delete-form.svg"
-            class="p-button-rounded p-button-danger p-button-text ml-2 pointer"
+            class="p-button-rounded p-button-danger p-button-text ml-3 pointer"
             pTooltip="Fshi"
             tooltipPosition="bottom"
             (click)="onDeleteClick(examGradeRequest)" />

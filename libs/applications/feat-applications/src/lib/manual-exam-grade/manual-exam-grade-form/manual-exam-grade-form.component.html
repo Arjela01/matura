@@ -1,0 +1,59 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="academicYear">Lënda e Provimit *</label>
+    <p-dropdown
+      id="academicYear"
+      [options]="examSubjects"
+      optionValue="key"
+      optionLabel="value"
+      name="academicYear"
+      appendTo="body"
+      [filter]="true"
+      [required]="true"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="manualExamGrade.examSubjectId"
+      [showClear]="true">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !manualExamGrade.examSubjectId">
+      Lënda është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="grade">Nota *</label>
+    <input
+      type="number"
+      pInputText
+      id="grade"
+      name="grade"
+      [(ngModel)]="manualExamGrade.grade"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !manualExamGrade.grade
+      }" />
+    <small
+      class="p-error block"
+      *ngIf="submitted && !manualExamGrade.grade">
+      Nota është fushë e kërkuar.
+    </small>
+  </div>
+
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      [disabled]="form.invalid"
+      type="submit"
+      pButton
+      label="Ruaj"
+      class="p-button w-auto"></button>
+  </div>
+</form>
