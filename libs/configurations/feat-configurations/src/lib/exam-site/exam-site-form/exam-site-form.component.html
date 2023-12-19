@@ -35,10 +35,7 @@
       name="quotes"
       [(ngModel)]="examSite.quota"
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examSite.quota }" />
-    <small class="p-error block" *ngIf="submitted && !examSite.quota">
-      Kuota është fushë e kërkuar.
-    </small>
+       />
   </div>
 
   <div class="field">
