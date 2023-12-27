@@ -116,7 +116,7 @@ export class ManageMenusComponent implements OnInit {
           parentId: (event.data as any).data.parentId,
           roles: (event.data as any).data.roles,
         };
-        console.log(123, event.data), (this.displayModal = true);
+        this.displayModal = true;
         break;
       }
       case GRID_ACTIONS.ADD: {
