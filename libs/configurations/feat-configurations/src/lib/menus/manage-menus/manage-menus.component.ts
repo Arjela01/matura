@@ -116,7 +116,7 @@ export class ManageMenusComponent implements OnInit {
           parentId: (event.data as any).data.parentId,
           roles: (event.data as any).data.roles,
         };
-        this.displayModal = true;
+        console.log(123, event.data), (this.displayModal = true);
         break;
       }
       case GRID_ACTIONS.ADD: {
@@ -166,12 +166,8 @@ export class ManageMenusComponent implements OnInit {
   }
 
   addMenu(menu: Menu) {
-    const valuesToSend = {
-      ...menu,
-      parentId: this.parentId,
-    };
     this.menuService
-      .save(valuesToSend)
+      .save(menu)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
@@ -188,12 +184,8 @@ export class ManageMenusComponent implements OnInit {
   }
 
   updateMenu(menu: any) {
-    const valuesToSend = {
-      ...menu,
-      parentId: this.parentId || '',
-    };
     this.menuService
-      .update(valuesToSend)
+      .update(menu)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
