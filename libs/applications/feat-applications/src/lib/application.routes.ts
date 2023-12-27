@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { ManageGradeRequestDetailsComponent } from './exam-grade-request/manage-grade-request-details/manage-grade-request-details.component';
 
 export const APPLICATION_ROUTES: Route[] = [
   {
@@ -188,5 +189,12 @@ export const APPLICATION_ROUTES: Route[] = [
       import(
         './manual-exam-grade/manage-manual-exam-grade/manage-manual-exam-grade.component'
       ).then(m => m.ManageManualExamGradeComponent),
+  },
+  {
+    path: 'manage-grade-request-details/:id/:idCard',
+    loadComponent: () =>
+      import(
+        './exam-grade-request/manage-grade-request-details/manage-grade-request-details.component'
+      ).then(m => m.ManageGradeRequestDetailsComponent),
   },
 ];

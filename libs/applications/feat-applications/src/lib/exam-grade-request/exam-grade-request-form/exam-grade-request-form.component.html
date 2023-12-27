@@ -29,7 +29,9 @@
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examGradeRequest.maturaId
       }" />
-    <small class="p-error block" *ngIf="submitted && !examGradeRequest.maturaId">
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examGradeRequest.maturaId">
       Matura ID është fushë e kërkuar.
     </small>
   </div>

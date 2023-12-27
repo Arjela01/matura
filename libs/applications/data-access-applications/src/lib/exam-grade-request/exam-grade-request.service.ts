@@ -4,9 +4,10 @@ import { TableLazyLoadEvent } from 'primeng/table';
 import {
   ExamGradeRequestModel,
   ExamGradeRequestView,
+  ExamGradesRequestStatus,
 } from '@msh/shared/domain-models';
 import { Observable } from 'rxjs';
-import { ApiResult } from '@msh/shared/data-access-shared';
+import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 
 @Injectable({ providedIn: 'root' })
 export class ExamGradeRequestService {
@@ -32,5 +33,14 @@ export class ExamGradeRequestService {
     return this.apiService.delete<ApiResult<ExamGradeRequestModel>>(
       `/ExamGradesRequest/${examGradeRequestId}`
     );
+  }
+
+  getStatus(): Observable<ApiResult<DropdownModel<string>[]>> {
+    return this.apiService.get<ApiResult<DropdownModel<string>[]>>(
+      '/ExamGradesRequestStatus'
+    );
+  }
+  getExamGradeRequestById(id: string): Observable<ApiResult<any>> {
+    return this.apiService.get<ApiResult<any>>(`/ExamGradesRequest/${id}`);
   }
 }
