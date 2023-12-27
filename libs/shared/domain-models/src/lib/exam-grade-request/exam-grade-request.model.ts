@@ -16,3 +16,9 @@ export interface ExamGradeRequestView {
   data: ExamGradeRequestModel[];
   total: number;
 }
+
+export interface ExamGradesRequestStatus {
+  id: number;
+  name: string;
+  description: string;
+}

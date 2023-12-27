@@ -6,7 +6,10 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
-import { ExamGradeRequestModel } from '@msh/shared/domain-models';
+import {
+  ExamGradeRequestModel,
+  ExamGradesRequestStatus,
+} from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ConfirmationService, SharedModule } from 'primeng/api';
 import {
@@ -24,6 +27,8 @@ import { ExamGradeRequestGridComponent } from '../exam-grade-request-grid/exam-g
 import { ExamGradeRequestFormComponent } from '../exam-grade-request-form/exam-grade-request-form.component';
 import { AcademicYearApiService } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import { ManualExamGradeFormComponent } from '../../manual-exam-grade/manual-exam-grade-form/manual-exam-grade-form.component';
+import { StudentsGridComponent } from '../../students/students-grid/students-grid.component';
 
 @UntilDestroy()
 @Component({
@@ -38,6 +43,8 @@ import { DropdownModel } from '@msh/shared/data-access-shared';
     SharedModule,
     ExamGradeRequestGridComponent,
     ExamGradeRequestFormComponent,
+    ManualExamGradeFormComponent,
+    StudentsGridComponent,
   ],
   templateUrl: './manage-exam-grade-request.component.html',
   styleUrls: ['./manage-exam-grade-request.component.scss'],
@@ -54,6 +61,11 @@ export class ManageExamGradeRequestComponent implements OnInit {
   selectedExamGrades: ExamGradeRequestModel[] = [];
   displayModal = false;
   academicYears: DropdownModel<number>[] = [];
+
+  studentId: string | undefined;
+  selectedRecord: any;
+  headerText: any;
+  displayHistoryForm = false;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -76,37 +88,13 @@ export class ManageExamGradeRequestComponent implements OnInit {
     this.getAcademicYears();
   }
 
-  onGridEvent(
-    event: GridEvent<ExamGradeRequestModel | ExamGradeRequestModel[]>
-  ) {
+  onGridEvent(event: GridEvent<any | any[]>) {
     switch (event.action) {
-      case GRID_ACTIONS.SELECT_ROW:
-        this.selectedExamGrades = [
-          ...this.selectedExamGrades,
-          event.data as ExamGradeRequestModel,
-        ];
-        break;
-      case GRID_ACTIONS.UNSELECT_ROW:
-        this.selectedExamGrades = this.selectedExamGrades.filter(item => {
-          return item.id !== (event.data as ExamGradeRequestModel).id;
-        });
-        break;
-
-      case GRID_ACTIONS.SELECT_MANY:
-        this.selectedExamGrades = [
-          ...this.selectedExamGrades,
-          ...(event.data as ExamGradeRequestModel[]),
-        ];
-        break;
-      case GRID_ACTIONS.UNSELECT_ALL:
-        this.selectedExamGrades = [];
-        break;
-      case GRID_ACTIONS.EDIT:
-        this.selectedExamGrade = Object.assign(
-          {},
-          event.data as ExamGradeRequestModel
-        );
-        this.displayModal = true;
+      case GRID_ACTIONS.HISTORY:
+        this.selectedRecord = Object.assign({}, event.data);
+        this.studentId = event.data.id;
+        this.headerText = `Historiku për Kërkesën {${event.data.id}}`;
+        this.displayHistoryForm = true;
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
@@ -120,12 +108,7 @@ export class ManageExamGradeRequestComponent implements OnInit {
   }
 
   onFormSave(examGradeRequest: ExamGradeRequestModel) {
-    if (examGradeRequest.id) {
-      this.updateExamGradeRequest(examGradeRequest);
-    }
-    if (!examGradeRequest.id) {
-      this.addExamGradeRequest(examGradeRequest);
-    }
+    this.addExamGradeRequest(examGradeRequest);
   }
 
   getExamGradeRequest($event: TableLazyLoadEvent) {
@@ -159,25 +142,6 @@ export class ManageExamGradeRequestComponent implements OnInit {
       });
   }
 
-  updateExamGradeRequest(examGradeRequest: ExamGradeRequestModel) {
-    this.examGradeRequestService
-      .updateExamGradeRequest(examGradeRequest)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            'Kërkesa për notat u ndryshua me sukses!'
-          );
-          this.getExamGradeRequest(this.filters as TableLazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage);
-        if (response.isBadRequest)
-          this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit të kërkesës!'
-          );
-        this.displayModal = false;
-      });
-  }
-
   deleteExamGradeRequest(examGradeRequest: ExamGradeRequestModel) {
     this.examGradeRequestService
       .deleteExamGradeRequest(examGradeRequest.id)
@@ -199,6 +163,8 @@ export class ManageExamGradeRequestComponent implements OnInit {
     this.academicYearService
       .loadDropdownList()
       .pipe(untilDestroyed(this))
-      .subscribe(res => (this.academicYears = res.data));
+      .subscribe(res => {
+        this.academicYears = res.data;
+      });
   }
 }
