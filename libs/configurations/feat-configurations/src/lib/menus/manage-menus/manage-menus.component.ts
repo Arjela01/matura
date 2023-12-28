@@ -113,7 +113,7 @@ export class ManageMenusComponent implements OnInit {
           isVisible: (event.data as any).data.isVisible,
           url: (event.data as any).data.url,
           text: (event.data as any).label,
-          parentId: (event.data as any).data.parentId,
+          parentId: (event.data as any).data.parentId || '',
           roles: (event.data as any).data.roles,
         };
         this.displayModal = true;
