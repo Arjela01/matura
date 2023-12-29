@@ -116,7 +116,7 @@
               </td>
               <td>
                 {{ carriedSubject.name
-                }}<span *ngIf="studentInfo.isAN">(AK)</span>
+                }} <span *ngIf="studentInfo.isAN"> (AK)</span>
               </td>
               <td>
                 Mbartur nota {{ carriedSubject.score }} e vitit
@@ -158,7 +158,7 @@
             <td style="font-size: 14px; border: 1px solid">
               <ul class="px-4 font-semibold">
                 <li *ngFor="let subject of subjects">
-                  {{ subject }}<span *ngIf="studentInfo.isAN">(AK)</span>
+                  {{ subject }} <span *ngIf="studentInfo.isAN"> (AK)</span>
                 </li>
               </ul>
             </td>
