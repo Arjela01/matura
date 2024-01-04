@@ -23,8 +23,8 @@ import { RouterLink } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { ColumnFilterDirective, GridEvent } from '@msh/shared/util-shared';
-import { EXAM_GRADE_REQUEST_QUERY } from '../../../../../../audit-logs/feat-audit-log/src/lib/audit-log-grid/queries';
 import { ExamGradeRequestModel } from '@msh/shared/domain-models';
+import { EXAM_GRADE_REQUEST_QUERY } from '../exam-grade-request.query';
 
 @Component({
   selector: 'msh-exam-grade-request-history-grid',
