@@ -5,10 +5,7 @@
   [value]="manualExamGrade"
   [totalRecords]="totalRecords"
   [rows]="100"
-  [paginator]="true"
-  [rowsPerPageOptions]="[100, 200, 300]"
-  [showCurrentPageReport]="true"
-  currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
+  [paginator]="false"
   [rowHover]="true"
   selectionMode="multiple"
   (onLazyLoad)="loadRows($event)"
@@ -44,7 +41,7 @@
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
-      <th></th>
+      <th>Veprimi</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-manualExamGrade>
@@ -58,16 +55,18 @@
       <td style="width: 25%; min-width: 10rem">
         {{ manualExamGrade.grade }}
       </td>
-      <td>
+      <td style="width: 25%; min-width: 10rem">
         <div class="flex">
           <img
+            *ngIf="manualExamGrade.isManualEntry === true"
             src="assets/svg/edit-form.svg"
-            class="p-button-rounded p-button-warning p-button-text ml-7 pointer"
+            class="p-button-rounded p-button-warning p-button-text pointer"
             tooltipPosition="bottom"
             (click)="onEditClick(manualExamGrade)"
             pTooltip="Ndrysho" />
 
           <img
+            *ngIf="manualExamGrade.isManualEntry === true"
             src="assets/svg/delete-form.svg"
             class="p-button-rounded p-button-danger p-button-text ml-2 pointer"
             pTooltip="Fshi"

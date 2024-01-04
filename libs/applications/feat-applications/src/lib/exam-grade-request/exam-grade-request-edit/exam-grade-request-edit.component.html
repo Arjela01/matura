@@ -1,0 +1,213 @@
+<div class="grid">
+  <div class="col-12 p-fluid">
+    <div class="card-form px-6 py-6">
+      <form #form="ngForm" (ngSubmit)="onSubmit()">
+        <div [style]="{ maxWidth: '500px' }">
+          <div class="field">
+            <label for="idCard">NID *</label>
+            <input
+              type="text"
+              pInputText
+              id="idCard"
+              name="idCard"
+              [(ngModel)]="examGradeRequest.idCard"
+              required
+              autofocus
+              [ngClass]="{
+                'ng-invalid ng-dirty': submitted && !examGradeRequest.idCard
+              }" />
+            <small
+              class="p-error block"
+              *ngIf="submitted && !examGradeRequest.idCard">
+              NID është fushë e kërkuar.
+            </small>
+          </div>
+          <div class="field">
+            <label for="studentId">Matura ID *</label>
+            <input
+              type="text"
+              pInputText
+              id="studentId"
+              name="studentId"
+              [(ngModel)]="examGradeRequest.maturaId"
+              required
+              autofocus
+              [ngClass]="{
+                'ng-invalid ng-dirty': submitted && !examGradeRequest.maturaId
+              }" />
+            <small
+              class="p-error block"
+              *ngIf="submitted && !examGradeRequest.maturaId">
+              Matura ID është fushë e kërkuar.
+            </small>
+          </div>
+          <div class="field">
+            <label for="firstName">Emri *</label>
+            <input
+              type="text"
+              pInputText
+              id="firstName"
+              name="firstName"
+              [(ngModel)]="examGradeRequest.firstName"
+              required
+              autofocus
+              [ngClass]="{
+                'ng-invalid ng-dirty': submitted && !examGradeRequest.firstName
+              }" />
+            <small
+              class="p-error block"
+              *ngIf="submitted && !examGradeRequest.firstName">
+              Emri është fushë e kërkuar.
+            </small>
+          </div>
+
+          <div class="field">
+            <label for="middleName">Atësia *</label>
+            <input
+              type="text"
+              pInputText
+              id="middleName"
+              name="middleName"
+              [(ngModel)]="examGradeRequest.middleName"
+              required
+              autofocus
+              [ngClass]="{
+                'ng-invalid ng-dirty': submitted && !examGradeRequest.middleName
+              }" />
+            <small
+              class="p-error block"
+              *ngIf="submitted && !examGradeRequest.middleName">
+              Atësia është fushë e kërkuar.
+            </small>
+          </div>
+          <div class="field">
+            <label for="lastName">Mbiemri *</label>
+            <input
+              type="text"
+              pInputText
+              id="lastName"
+              name="lastName"
+              [(ngModel)]="examGradeRequest.lastName"
+              required
+              autofocus
+              [ngClass]="{
+                'ng-invalid ng-dirty': submitted && !examGradeRequest.lastName
+              }" />
+            <small
+              class="p-error block"
+              *ngIf="submitted && !examGradeRequest.lastName">
+              Mbiemri është fushë e kërkuar.
+            </small>
+          </div>
+
+          <div class="field">
+            <label for="date">Datëlindja *</label>
+            <p-calendar
+              [(ngModel)]="examGradeRequest.dateOfBirth"
+              inputId="date"
+              id="date"
+              appendTo="body"
+              name="date"
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  submitted && !examGradeRequest.dateOfBirth
+              }"></p-calendar>
+            <small
+              class="p-error block"
+              *ngIf="submitted && !examGradeRequest.dateOfBirth">
+              Datëlindja është fushë e kërkuar.
+            </small>
+          </div>
+
+          <div class="field">
+            <label for="status">Statusi *</label>
+            <p-dropdown
+              id="status"
+              [options]="examGradeRequestStatus"
+              optionValue="key"
+              optionLabel="value"
+              name="status"
+              appendTo="body"
+              [filter]="true"
+              [required]="true"
+              [autoDisplayFirst]="false"
+              [(ngModel)]="examGradeRequest.examGradesRequestStatusId"
+              [showClear]="true"
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  submitted && !examGradeRequest.examGradesRequestStatusId
+              }">
+            </p-dropdown>
+            <small
+              class="p-error block"
+              *ngIf="submitted && !examGradeRequest.examGradesRequestStatusId">
+              Viti është fushë e kërkuar.
+            </small>
+          </div>
+
+          <div class="field">
+            <label for="academicYear">Viti Akademik *</label>
+            <p-dropdown
+              id="academicYear"
+              [options]="academicYears"
+              optionValue="key"
+              optionLabel="value"
+              name="academicYear"
+              appendTo="body"
+              [filter]="true"
+              [required]="true"
+              [autoDisplayFirst]="false"
+              [(ngModel)]="examGradeRequest.academicYearId"
+              [showClear]="true"
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  submitted && !examGradeRequest.academicYearId
+              }">
+            </p-dropdown>
+            <small
+              class="p-error block"
+              *ngIf="submitted && !examGradeRequest.academicYearId">
+              Viti është fushë e kërkuar.
+            </small>
+          </div>
+
+          <div class="field">
+            <label for="description">Përshkrimi *</label>
+            <textarea
+              name="description"
+              id="description"
+              rows="5"
+              cols="30"
+              pInputTextarea
+              required
+              [(ngModel)]="examGradeRequest.description"
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  submitted && !examGradeRequest.description
+              }"></textarea>
+            <small
+              class="p-error block"
+              *ngIf="submitted && !examGradeRequest.description">
+              Përshkrimi është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <div class="flex justify-content-end">
+          <button
+            type="button"
+            pButton
+            label="Anullo"
+            class="p-button-text w-auto mr-2"
+            [routerLink]="'/applications/exam-grade-request'"></button>
+          <button
+            [disabled]="form.invalid"
+            type="submit"
+            pButton
+            label="Ruaj"
+            class="p-button w-auto"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

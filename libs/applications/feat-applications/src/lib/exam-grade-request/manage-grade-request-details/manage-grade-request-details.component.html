@@ -1,0 +1,27 @@
+<div class="flex center mb-2 page-header mb-header">
+  <h2 class="flex-1 mb-0">Kërkesa për notat e provimeve të MSH</h2>
+  <div class="flex align-items-right justify-content-right">
+    <div class="my-2">
+      <button
+        type="button"
+        pButton
+        icon="pi pi-arrow-left"
+        label="Kthehu"
+        class="w-auto mr-2"
+        style="background: #f7f7fa; color: #155eef"
+        [routerLink]="'/applications/exam-grade-request'"></button>
+    </div>
+  </div>
+</div>
+<p-tabView>
+  <p-tabPanel header="Detajet e Kërkesës">
+    <msh-exam-grade-request-edit
+      [examGradeRequest]="examGradeRequest"
+      [academicYears]="academicYears"
+      [examGradeRequestStatus]="examGradeRequestStatus"
+      (formSave)="updateExamGradeRequest($event)"></msh-exam-grade-request-edit>
+  </p-tabPanel>
+  <p-tabPanel header="Notat">
+    <msh-manage-manual-exam-grade></msh-manage-manual-exam-grade>
+  </p-tabPanel>
+</p-tabView>

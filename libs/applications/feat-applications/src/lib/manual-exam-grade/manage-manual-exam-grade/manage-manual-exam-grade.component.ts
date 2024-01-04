@@ -2,11 +2,16 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   OnInit,
+  Output,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
-import { ManualExamGradeModel } from '@msh/shared/domain-models';
+import {
+  ExamGradeRequestModel,
+  ManualExamGradeModel,
+} from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ConfirmationService, SharedModule } from 'primeng/api';
@@ -27,6 +32,15 @@ import { ExamGradeRequestGridComponent } from '../../exam-grade-request/exam-gra
 import { ManualExamGradeGridComponent } from '../manual-exam-grade-grid/manual-exam-grade-grid.component';
 import { ManualExamGradeFormComponent } from '../manual-exam-grade-form/manual-exam-grade-form.component';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { TabViewModule } from 'primeng/tabview';
+import { A1a1zConfirmationDialogComponent } from '../../students/manage-students/a1a1z-confirmation-dialog/a1a1z-confirmation-dialog.component';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { FormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { PaginatorModule } from 'primeng/paginator';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @UntilDestroy()
 @Component({
@@ -44,6 +58,15 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
     ManualExamGradeGridComponent,
     ManualExamGradeFormComponent,
     RouterLink,
+    TabViewModule,
+    A1a1zConfirmationDialogComponent,
+    CalendarModule,
+    DropdownModule,
+    FormsModule,
+    InputTextModule,
+    PaginatorModule,
+    RadioButtonModule,
+    InputTextareaModule,
   ],
   templateUrl: './manage-manual-exam-grade.component.html',
   styleUrls: ['./manage-manual-exam-grade.component.scss'],
@@ -61,6 +84,10 @@ export class ManageManualExamGradeComponent implements OnInit {
   examSubjects: DropdownModel<string>[] = [];
   idCard: any;
 
+  formSave = new EventEmitter<ExamGradeRequestModel>();
+  formClose = new EventEmitter<undefined>();
+  submitted = false;
+
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
@@ -69,12 +96,33 @@ export class ManageManualExamGradeComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute
   ) {
-    this.idCard = this.route.snapshot.paramMap.get('id');
+    this.idCard = this.route.snapshot.paramMap.get('idCard');
   }
 
   onNewClick() {
     this.displayModal = true;
     this.selectedManualExamGrade = {} as ManualExamGradeModel;
+  }
+  examGradeRequest: ExamGradeRequestModel = {
+    examGradesRequestStatusId: 0,
+    examGradesRequestStatusName: '',
+    idCard: '',
+    dateOfBirth: '',
+    firstName: '',
+    id: '',
+    lastName: '',
+    academicYearId: 0,
+    middleName: '',
+    description: '',
+    maturaId: '',
+  };
+
+  onCancelClick() {
+    this.formClose.emit();
+  }
+
+  onSubmit() {
+    this.formSave.emit(this.examGradeRequest);
   }
 
   onModalClose() {
