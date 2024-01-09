@@ -84,6 +84,7 @@
       optionValue="key"
       optionLabel="value"
       appendTo="body"
+      [filter]="true"
       [(ngModel)]="profile.profileGroupID"
       [autoDisplayFirst]="false"
       (onChange)="onProfileGroupChange($event)"

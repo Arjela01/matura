@@ -320,6 +320,7 @@
             optionValue="key"
             optionLabel="value"
             [required]="true"
+            [filter]="true"
             [(ngModel)]="student.genderId"
             [autoDisplayFirst]="false"
             [ngClass]="{
@@ -340,6 +341,7 @@
             name="studyClass"
             [(ngModel)]="student.studyClass"
             [autoDisplayFirst]="false"
+            [filter]="true"
             [required]="true"
             [ngClass]="{
               'ng-invalid ng-dirty': submitted && !student.studyClass
@@ -358,6 +360,7 @@
             name="session"
             [(ngModel)]="student.session"
             [autoDisplayFirst]="false"
+            [filter]="true"
             [required]="true"
             [ngClass]="{
               'ng-invalid ng-dirty': submitted && !student.session

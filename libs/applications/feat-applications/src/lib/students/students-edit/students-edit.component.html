@@ -45,6 +45,7 @@
               name="highSchool"
               optionValue="key"
               optionLabel="value"
+              [filter]="true"
               [required]="true"
               [(ngModel)]="student.highSchoolId"
               [autoDisplayFirst]="false"
@@ -68,6 +69,7 @@
               name="schoolProfile"
               optionValue="key"
               optionLabel="value"
+              [filter]="true"
               [required]="true"
               [(ngModel)]="student.profileId"
               [autoDisplayFirst]="false"
@@ -345,6 +347,7 @@
               name="genders"
               optionValue="key"
               optionLabel="value"
+              [filter]="true"
               [(ngModel)]="student.genderId"
               [autoDisplayFirst]="false"
               [ngClass]="{
@@ -365,6 +368,7 @@
               [(ngModel)]="student.studyClass"
               [autoDisplayFirst]="false"
               [required]="true"
+              [filter]="true"
               [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !student.studyClass
               }">
@@ -385,6 +389,7 @@
               name="session"
               [(ngModel)]="student.session"
               [autoDisplayFirst]="false"
+              [filter]="true"
               [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !student.session
               }">

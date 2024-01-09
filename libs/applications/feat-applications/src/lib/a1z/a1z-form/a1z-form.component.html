@@ -346,7 +346,7 @@
                 optionValue="key"
                 optionLabel="value"
                 name="enableZ1Subject"
-                [filter]="false"
+                [filter]="true"
                 [disabled]="false"
                 [autoDisplayFirst]="false"
                 [(ngModel)]="a1z.carryZ1">
@@ -359,6 +359,7 @@
                 optionLabel="year"
                 appendTo="body"
                 name="academicYearId"
+                [filter]="true"
                 (onChange)="onAcademicYearZ1Change($event)"
                 [options]="academicYearsDropdown"
                 [ngModelOptions]="{ standalone: true }"

@@ -46,6 +46,7 @@
       optionValue="key"
       optionLabel="value"
       appendTo="body"
+      [filter]="true"
       [(ngModel)]="city.regionId"
       [autoDisplayFirst]="false"
       (onChange)="onRegionChange($event)"

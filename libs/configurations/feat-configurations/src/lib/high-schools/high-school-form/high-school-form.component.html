@@ -76,6 +76,7 @@
       [options]="administrationOffices"
       optionValue="key"
       optionLabel="value"
+      [filter]="true"
       name="administrationOfficeId"
       [autoDisplayFirst]="false"
       [(ngModel)]="highSchool.administrationOfficeId"
@@ -105,6 +106,7 @@
       (onChange)="onRegionChange($event)"
       [showClear]="true"
       [required]="true"
+      [filter]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !highSchool.regionId
       }">
@@ -123,6 +125,7 @@
       optionLabel="value"
       name="cityId"
       appendTo="body"
+      [filter]="true"
       [(ngModel)]="highSchool.cityId"
       [autoDisplayFirst]="false"
       [showClear]="true"

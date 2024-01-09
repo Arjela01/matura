@@ -8,6 +8,7 @@
       optionLabel="value"
       name="examTypeId"
       appendTo="body"
+      [filter]="true"
       [autoDisplayFirst]="false"
       [(ngModel)]="examDate.examTypeId"
       [showClear]="true"
@@ -30,6 +31,7 @@
       optionLabel="value"
       name="examSiteId"
       appendTo="body"
+      [filter]="true"
       [autoDisplayFirst]="false"
       [(ngModel)]="examDate.examSiteId"
       [showClear]="true"
@@ -56,6 +58,7 @@
       [(ngModel)]="examDate.examSiteIds"
       [showClear]="true"
       [required]="true"
+      [filter]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examDate.examSiteIds
       }">
