@@ -14,6 +14,7 @@
       [(ngModel)]="examScore.examTypeId"
       [showClear]="true"
       [required]="true"
+      [filter]="true"
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examTypeId
       }">
@@ -36,6 +37,7 @@
       (onClear)="onExamSubjectChanged($event)"
       [autoDisplayFirst]="false"
       [required]="true"
+      [filter]="true"
       [(ngModel)]="examScore.examSubjectId"
       [showClear]="true"
       [ngClass]="{

@@ -49,6 +49,7 @@
       optionLabel="value"
       name="examTypeId"
       appendTo="body"
+      [filter]="true"
       [autoDisplayFirst]="false"
       [(ngModel)]="examSubject.examTypeId"
       (onChange)="findExamTypeValue()"
