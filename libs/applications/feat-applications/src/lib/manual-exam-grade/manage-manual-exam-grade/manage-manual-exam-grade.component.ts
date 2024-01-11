@@ -184,17 +184,24 @@ export class ManageManualExamGradeComponent implements OnInit {
           this.displayModal = false;
           this.getGrades(this.idCard);
         } else {
-          this.toastService.showError(response.errorMessage);
           if (response.errorMessage === 'Studenti nuk u gjet.') {
-            this.router.navigate([`/applications/students/add`]);
+            this.toastService.showInfo(
+              `Studenti nuk u gjet. Ju lutem krijoni studentin ne faqen që do ju hapet në vijim `
+            );
+            setTimeout(() => {
+              this.router.navigate(['/applications/students/add']);
+            }, 5000);
+          } else {
+            this.toastService.showError(response.errorMessage);
           }
-        }
 
-        if (response.isBadRequest)
-          this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit të notës!'
-          );
-        this.cd.markForCheck();
+          if (response.isBadRequest) {
+            this.toastService.showError(
+              'Ndodhi një problem gjatë ndryshimit të notës!'
+            );
+          }
+          this.cd.markForCheck();
+        }
       });
   }
 
