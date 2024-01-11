@@ -6,6 +6,7 @@
           <div class="field">
             <label for="idCard">NID *</label>
             <input
+              [disabled]="!!examGradeRequest.id"
               type="text"
               pInputText
               id="idCard"
