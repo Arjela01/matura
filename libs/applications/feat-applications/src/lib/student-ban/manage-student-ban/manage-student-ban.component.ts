@@ -100,7 +100,7 @@ export class ManageStudentBanComponent {
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
           message:
-            'Jeni i sigurt që doni të fshini studentin e skualifikuar të zgjedhur?',
+            'Jeni i sigurt që doni të fshini maturantin e skualifikuar të zgjedhur?',
           accept: () => {
             this.deleteBannedStudent(event.data as StudentBan);
           },
@@ -136,14 +136,14 @@ export class ManageStudentBanComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Studenti u shtua me sukses!');
+          this.toastService.showSuccess('Maturanti u shtua me sukses!');
           this.displayModal = false;
           this.getBannedStudents(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit të studentit!'
+            'Ndodhi një problem gjatë ndryshimit të maturantit!'
           );
         this.cd.markForCheck();
       });
@@ -155,12 +155,12 @@ export class ManageStudentBanComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Studenti u ndryshua me sukses!');
+          this.toastService.showSuccess('Maturanti u ndryshua me sukses!');
           this.getBannedStudents(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit të studentit!'
+            'Ndodhi një problem gjatë ndryshimit të maturantit!'
           );
         this.displayModal = false;
       });
@@ -172,13 +172,13 @@ export class ManageStudentBanComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showInfo('Studenti u fshi me sukses!');
+          this.toastService.showInfo('Maturant u fshi me sukses!');
           this.getBannedStudents(this.filters as TableLazyLoadEvent);
         }
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë fshirjes të studentit!'
+            'Ndodhi një problem gjatë fshirjes të maturantit!'
           );
       });
   }

@@ -1,7 +1,7 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()"
 >
   <div class="field">
-    <label for="studentType">Tipi i studentit *</label>
+    <label for="studentType">Tipi i maturantit *</label>
     <p-dropdown
       id="studentVersion"
       [options]="studentTypes"
@@ -24,7 +24,7 @@
       *ngIf="
         submitted && !diplomaFile.studentType && diplomaFile.studentType !== 0
       ">
-      Tipi i studentit është fushë e kërkuar.
+      Tipi i maturantit është fushë e kërkuar.
     </small>
   </div>
   <div class="field">

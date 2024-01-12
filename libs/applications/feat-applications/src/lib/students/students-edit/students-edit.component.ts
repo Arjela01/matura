@@ -283,7 +283,7 @@ export class StudentsEditComponent implements OnInit {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: `Studenti nuk mund te ruhet: ${error}`,
+            detail: `Maturanti nuk mund te ruhet: ${error}`,
           });
         },
       });

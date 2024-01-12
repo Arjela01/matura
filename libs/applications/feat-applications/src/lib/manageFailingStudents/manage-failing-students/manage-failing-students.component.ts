@@ -82,7 +82,7 @@ export class ManageFailingStudentsComponent {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt qe doni të fshini studentin mbetës?',
+          message: 'Jeni i sigurt qe doni të fshini maturantin mbetës?',
           accept: () => {
             this.deleteFailingStudent(event.data as FailingStudent);
           },
@@ -122,12 +122,12 @@ export class ManageFailingStudentsComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Studenti u fshi me sukses!');
+          this.toastService.showSuccess('Maturanti u fshi me sukses!');
           this.getFailingStudents(this.filters as TableLazyLoadEvent);
         }
         if (!response.isSuccessful)
           this.toastService.showError(
-            'Ndodhi një problem gjatë fshirjes së studentit mbetës!'
+            'Ndodhi një problem gjatë fshirjes së maturantit mbetës!'
           );
       });
   }
@@ -139,7 +139,7 @@ export class ManageFailingStudentsComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Studenti u ndryshua me sukses!');
+          this.toastService.showSuccess('Maturanti u ndryshua me sukses!');
           this.displayModal = false;
           this.getFailingStudents(this.filters as TableLazyLoadEvent);
           this.isLoading = false;
@@ -147,7 +147,7 @@ export class ManageFailingStudentsComponent {
 
         if (!response.isSuccessful)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit të studentit mbetës!'
+            'Ndodhi një problem gjatë ndryshimit të maturantit mbetës!'
           );
         this.isLoading = false;
       });

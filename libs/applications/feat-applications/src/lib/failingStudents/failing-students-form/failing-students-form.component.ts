@@ -39,11 +39,6 @@ import { RadioButtonModule } from 'primeng/radiobutton';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FailingStudentsFormComponent {
-  constructor(
-    private cd: ChangeDetectorRef,
-    private readonly failingStudentService: FailingStudentApiService,
-    private readonly toastService: GlobalToastService
-  ) {}
   @Input() set failingStudentDetails(details: FailingStudent | null) {
     if (details) {
       this.failingStudent = Object.assign({}, details);
