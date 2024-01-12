@@ -33,9 +33,6 @@ export class GlobalSearchComponent {
     this.itemsToSearch = [];
   }
 
-  shiftPressedCount = 0;
-  lastShiftPressTime = 0;
-
   fetchMenuItems() {
     this.menuService
       .loadMenus(this.event)
@@ -53,7 +50,9 @@ export class GlobalSearchComponent {
 
   @HostListener('document:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
-    const isLoginPage = window.location.pathname === '/identity';
+    const isLoginPage =
+      window.location.pathname === '/identity' ||
+      window.location.pathname === '/user-login';
 
     if (event.ctrlKey && event.shiftKey && event.key === 'F' && !isLoginPage) {
       if (!this.searchBoxVisible) {
