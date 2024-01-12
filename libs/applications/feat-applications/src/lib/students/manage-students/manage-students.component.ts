@@ -138,7 +138,7 @@ export class ManageStudentsComponent implements OnInit {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'A jeni i sigurt që doni të fshini këtë student?',
+          message: 'A jeni i sigurt që doni të fshini këtë maturant?',
           accept: () => {
             this.deleteStudent(event.data as Student);
           },
@@ -153,12 +153,12 @@ export class ManageStudentsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Studenti u fshi me sukses!');
+          this.toastService.showSuccess('Maturanti u fshi me sukses!');
           this.getStudent(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
         if (!response.isSuccessful) {
           this.toastService.showError(
-            'Ndodhi një problem gjatë fshirjes së studentit!'
+            'Ndodhi një problem gjatë fshirjes së maturantit!'
           );
         }
       });
@@ -187,12 +187,12 @@ export class ManageStudentsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Studenti u ndryshua me sukses!');
+          this.toastService.showSuccess('Maturanti u ndryshua me sukses!');
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së studentit!'
+            'Ndodhi një problem gjatë ndryshimit së maturantit!'
           );
       });
   }

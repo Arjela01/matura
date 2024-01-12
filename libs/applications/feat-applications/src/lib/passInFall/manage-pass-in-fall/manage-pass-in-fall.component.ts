@@ -102,13 +102,15 @@ export class ManagePassInFallComponent {
             .pipe(untilDestroyed(this))
             .subscribe(response => {
               if (response.isSuccessful === true) {
-                this.toastService.showSuccess('Studenti u ndryshua me sukses!');
+                this.toastService.showSuccess(
+                  'Maturanti u ndryshua me sukses!'
+                );
                 this.getFailingStudents(this.filters as TableLazyLoadEvent);
               }
 
               if (response.isSuccessful === false)
                 this.toastService.showError(
-                  'Ndodhi një problem gjatë ndryshimit të studentit mbetës!'
+                  'Ndodhi një problem gjatë ndryshimit të maturantit mbetës!'
                 );
             });
           this.cd.detectChanges();
@@ -116,7 +118,7 @@ export class ManagePassInFallComponent {
 
         if (response.isSuccessful === false) {
           this.toastService.showError(
-            'Ndodhi një problem gjatë kerkimit të studentit mbetës!'
+            'Ndodhi një problem gjatë kerkimit të maturantit mbetës!'
           );
         }
       });
