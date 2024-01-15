@@ -6,7 +6,10 @@
   <div class="col-12 p-fluid">
     <div class="card-form px-4 py-4">
       <form #form="ngForm" (ngSubmit)="onSubmit()">
-        <div class="field" [style]="{ width: '500px' }">
+        <div
+          class="field"
+          [style]="{ width: '500px' }"
+          *ngIf="!this.userHighSchoolId; else disabledInput">
           <label for="highSchool">Shkolla *</label>
           <p-dropdown
             id="highSchool"
@@ -31,6 +34,20 @@
             Shkolla është fushë e kërkuar.
           </small>
         </div>
+
+        <ng-template #disabledInput>
+          <div class="field" [style]="{ width: '500px' }">
+            <label for="userHighSchool">Shkolla *</label>
+            <input
+              type="text"
+              pInputText
+              disabled
+              id="userHighSchool"
+              name="userHighSchool"
+              [required]="true"
+              [(ngModel)]="this.userHighSchoolName" />
+          </div>
+        </ng-template>
 
         <div class="field" [style]="{ width: '500px' }">
           <label for="schoolProfile">Profili i Shkollës *</label>

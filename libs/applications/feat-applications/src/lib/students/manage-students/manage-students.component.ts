@@ -68,6 +68,7 @@ export class ManageStudentsComponent implements OnInit {
   displayHistoryForm = false;
   showEditButton = false;
   showDeleteButton = false;
+  showAddButton = false;
 
   constructor(
     private readonly studentService: StudentsApiService,
@@ -82,6 +83,9 @@ export class ManageStudentsComponent implements OnInit {
     );
     this.showDeleteButton = this.permissionCheckService.hasPermission(
       PermissionEnum.DeleteApplications as any
+    );
+    this.showAddButton = this.permissionCheckService.hasPermission(
+      PermissionEnum.AddApplications as any
     );
   }
 
