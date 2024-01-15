@@ -31,7 +31,7 @@ import { ExamGradeRequestFormComponent } from '../../exam-grade-request/exam-gra
 import { ExamGradeRequestGridComponent } from '../../exam-grade-request/exam-grade-request-grid/exam-grade-request-grid.component';
 import { ManualExamGradeGridComponent } from '../manual-exam-grade-grid/manual-exam-grade-grid.component';
 import { ManualExamGradeFormComponent } from '../manual-exam-grade-form/manual-exam-grade-form.component';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TabViewModule } from 'primeng/tabview';
 import { A1a1zConfirmationDialogComponent } from '../../students/manage-students/a1a1z-confirmation-dialog/a1a1z-confirmation-dialog.component';
 import { CalendarModule } from 'primeng/calendar';
@@ -94,7 +94,8 @@ export class ManageManualExamGradeComponent implements OnInit {
     private readonly manualExamGradeService: ManualExamGradeService,
     private readonly examSubjectService: ExamSubjectApiService,
     private cd: ChangeDetectorRef,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.idCard = this.route.snapshot.paramMap.get('idCard');
   }
@@ -182,13 +183,26 @@ export class ManageManualExamGradeComponent implements OnInit {
           this.toastService.showSuccess('Nota u shtua me sukses!');
           this.displayModal = false;
           this.getGrades(this.idCard);
-        } else this.toastService.showError(response.errorMessage);
+        } else {
+          if (response.errorMessage === 'Studenti nuk u gjet.') {
+            this.toastService.showInfo(
+              `Studenti nuk u gjet.
+               Ju lutem krijoni studentin ne faqen që do ju hapet në vijim! `
+            );
+            setTimeout(() => {
+              this.router.navigate(['/applications/students/add']);
+            }, 5000);
+          } else {
+            this.toastService.showError(response.errorMessage);
+          }
 
-        if (response.isBadRequest)
-          this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit të notës!'
-          );
-        this.cd.markForCheck();
+          if (response.isBadRequest) {
+            this.toastService.showError(
+              'Ndodhi një problem gjatë ndryshimit të notës!'
+            );
+          }
+          this.cd.markForCheck();
+        }
       });
   }
 
