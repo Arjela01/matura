@@ -121,7 +121,7 @@ export class ManageFailingStudentsFormComponent implements OnInit {
 
         if (!response.isSuccessful) {
           this.toastService.showError(
-            'Ndodhi një problem gjatë kërkimit të studentit mbetës!'
+            'Ndodhi një problem gjatë kërkimit të maturantit mbetës!'
           );
         }
       });

@@ -3,7 +3,7 @@
     <div class="card" style="border: 0">
       <form #form="ngForm">
         <div class="field mt-4 mb-4">
-          <label for="studentInputData">Maturant *</label>
+          <label for="studentInputData">Maturantë *</label>
           <div class="p-inputgroup">
             <input
               [value]="studentInputData"
@@ -25,7 +25,7 @@
               [style]="{ height: '100%' }"></p-button>
           </div>
           <small class="p-error block" *ngIf="submitted && !studentInputData">
-            Studenti është fushë e kërkuar.
+            Maturant është fushë e kërkuar.
           </small>
         </div>
 

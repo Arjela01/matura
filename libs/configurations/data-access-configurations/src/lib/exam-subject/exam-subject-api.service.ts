@@ -48,7 +48,10 @@ export class ExamSubjectApiService {
 
   update(examSubject: ExamSubject): Observable<ApiResult<ExamSubject>> {
     return this.apiService
-      .post<ApiResult<ExamSubject>, ExamSubject>(`/ExamSubject/Update`, examSubject)
+      .post<ApiResult<ExamSubject>, ExamSubject>(
+        `/ExamSubject/Update`,
+        examSubject
+      )
       .pipe(
         map(data => data),
         catchError(error => throwError(error)),
@@ -80,7 +83,7 @@ export class ExamSubjectApiService {
     applicationFormType?: string
   ): Observable<ApiResult<DropdownModel<string>[]>> {
     return this.apiService.post<ApiResult<DropdownModel<string>[]>, any>(
-      `/ExamSubject/ForExamType/`,
+      `/ExamSubject/ForExamType`,
       {
         examTypeId: examTypeId,
         academicYearId: academicYearId,
@@ -91,14 +94,16 @@ export class ExamSubjectApiService {
       }
     );
   }
- forExamSubjAcademicYear( academicYearId:number): Observable<ApiResult<DropdownModel<string>[]>>{
-   return this.apiService.post<ApiResult<DropdownModel<string>[]>, any>(
-     `/ExamSubject/ForExamSubjectAcademicYear`,
-     {
-       academicYearId: academicYearId
-     }
-   );
- }
+  forExamSubjAcademicYear(
+    academicYearId: number
+  ): Observable<ApiResult<DropdownModel<string>[]>> {
+    return this.apiService.post<ApiResult<DropdownModel<string>[]>, any>(
+      `/ExamSubject/ForExamSubjectAcademicYear`,
+      {
+        academicYearId: academicYearId,
+      }
+    );
+  }
   exportTemplate(): Observable<ApiResult<unknown>> {
     return this.apiService.get<any>(
       `/ExamSubject/Export`,

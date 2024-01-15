@@ -3,7 +3,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  EventEmitter, HostListener,
+  EventEmitter,
+  HostListener,
   Input,
   OnChanges,
   OnInit,
@@ -214,7 +215,7 @@ export class StudentsFormComponent implements OnInit, OnChanges {
         if (response.isBadRequest) {
           this.enableSaveButton();
           this.toastService.showError(
-            'Ndodhi një problem gjatë krijimit të studentit'
+            'Ndodhi një problem gjatë krijimit të maturantit'
           );
         }
         this.saving = false;

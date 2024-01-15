@@ -31,7 +31,7 @@
       <form #form="ngForm" (ngSubmit)="onSubmit()">
         <div [style]="{ maxWidth: '500px' }">
           <div>
-            <label for="studentInputData-a1-form">Maturant *</label>
+            <label for="studentInputData-a1-form">Maturantë *</label>
             <div class="p-inputgroup">
               <input
                 type="text"
@@ -54,7 +54,7 @@
                 [style]="{ height: '100%' }"></p-button>
             </div>
             <small class="p-error block" *ngIf="submitted && !studentInputData">
-              Studenti është fushë e kërkuar.
+              Maturanti është fushë e kërkuar.
             </small>
           </div>
           <div class="pt-3">

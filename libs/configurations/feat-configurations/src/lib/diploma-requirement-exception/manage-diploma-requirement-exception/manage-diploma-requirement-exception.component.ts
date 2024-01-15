@@ -98,7 +98,7 @@ export class ManageDiplomaRequirementExceptionComponent {
       case GRID_ACTIONS.CUSTOM_ACTION2:
         this.confirmationService.confirm({
           message:
-            'Jeni i sigurt që doni të ndryshoni statusin e diplomës së studentit?',
+            'Jeni i sigurt që doni të ndryshoni statusin e diplomës së maturantit?',
           accept: () => {
             this.changeStatus(event.data as Student);
           },

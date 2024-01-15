@@ -117,14 +117,14 @@ export class ManageFailingStudentsComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Studenti u ndryshua me sukses!');
+          this.toastService.showSuccess('Maturanti u ndryshua me sukses!');
           this.displayModal = false;
           this.getStudents(this.filters as LazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (!response.isSuccessful)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit të studentit mbetës!'
+            'Ndodhi një problem gjatë ndryshimit të maturantit mbetës!'
           );
       });
   }
