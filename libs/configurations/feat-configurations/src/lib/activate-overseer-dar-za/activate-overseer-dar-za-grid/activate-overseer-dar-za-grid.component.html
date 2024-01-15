@@ -18,12 +18,12 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="name">
+      <th pSortableColumn="cityName">
         ZVAP
-        <p-sortIcon field="name"></p-sortIcon>
+        <p-sortIcon field="cityName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="name"
+          field="cityName"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
@@ -42,7 +42,7 @@
   <ng-template pTemplate="body" let-activateOverseer>
     <tr>
       <td style="width: 40%">
-        {{ activateOverseer.cityName }}
+        {{ activateOverseer.name }}
       </td>
 
       <td style="width: 14%; min-width: 10rem">

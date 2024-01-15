@@ -185,18 +185,13 @@ export class A1zFormComponent implements OnInit {
         this.a1Categories = response.data;
       });
 
-    // this.academicYearService
-    //   .getAcademicYears()
-    //   .pipe(untilDestroyed(this))
-    //   .subscribe(response => {
-    //     this.academicYearsDropdown = response.data;
-    //     this.a1z.yearOfSchoolA1Z = (response as any).data
-    //       .filter((item: AcademicYear) => {
-    //         return item.isActive;
-    //       })
-    //       .at(0)?.year;
-    //     this.cd.detectChanges();
-    //   });
+    this.academicYearService
+      .getAcademicYears()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.academicYearsDropdown = response.data;
+        this.cd.detectChanges();
+      });
 
     if (
       A1ZFormModeEnum.Edit === this.mode ||
