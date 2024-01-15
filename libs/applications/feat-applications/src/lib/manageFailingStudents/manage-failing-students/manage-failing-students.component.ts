@@ -3,7 +3,11 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FailingStudentApiService } from '@msh/applications/data-access-applications';
 import { FailingStudent } from '@msh/applications/domain-application';
-import { AuthFacade } from '@msh/auth/data-access-auth';
+import {
+  AuthFacade,
+  PermissionCheckService,
+  PermissionEnum,
+} from '@msh/auth/data-access-auth';
 import { Student } from '@msh/shared/domain-models';
 import {
   GRID_ACTIONS,
@@ -51,6 +55,8 @@ export class ManageFailingStudentsComponent {
   student: Student | null = null;
   displayModal = false;
   isLoading = false;
+  showEditButton = false;
+  showDeleteButton = false;
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([_]) => {
       if (this.filters) {
@@ -63,8 +69,18 @@ export class ManageFailingStudentsComponent {
     private readonly failingStudentService: FailingStudentApiService,
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private authFacade: AuthFacade
+    private authFacade: AuthFacade,
+    private readonly permissionCheckService: PermissionCheckService
   ) {}
+
+  ngOnInit() {
+    this.showEditButton = this.permissionCheckService.hasPermission(
+      PermissionEnum.EditFailingStudents as any
+    );
+    this.showDeleteButton = this.permissionCheckService.hasPermission(
+      PermissionEnum.DeleteFailingStudents as any
+    );
+  }
 
   onNewClick() {
     this.displayModal = true;

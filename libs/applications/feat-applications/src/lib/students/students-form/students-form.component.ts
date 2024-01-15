@@ -48,6 +48,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { A1a1zConfirmationDialogComponent } from '../manage-students/a1a1z-confirmation-dialog/a1a1z-confirmation-dialog.component';
+import { UserProfileApiService } from '@msh/user-section/data-access-user-section';
 
 @Component({
   selector: 'msh-students-form',
@@ -133,7 +134,8 @@ export class StudentsFormComponent implements OnInit, OnChanges {
   };
   finishedAtSameSchool = true;
   currentAcademicYear?: Partial<AcademicYear>;
-  selectedCountry: any | null = null;
+  userHighSchoolId = 0;
+  userHighSchoolName = '';
   validNid = true;
   constructor(
     private cd: ChangeDetectorRef,
@@ -145,9 +147,15 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     private router: Router,
     private authFacade: AuthFacade,
     private readonly toastService: GlobalToastService,
-    private countriesService: CountriesApiService
+    private countriesService: CountriesApiService,
+    private readonly userService: UserProfileApiService
   ) {
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 10);
+    this.userService.getLoggedInUserData().subscribe(res => {
+      this.userHighSchoolName = res.data.highSchoolName;
+      this.userHighSchoolId = res.data.highSchoolId;
+      this.cd.detectChanges();
+    });
   }
   ngOnInit(): void {
     // todo ! maybe  switch to pipes
@@ -189,6 +197,9 @@ export class StudentsFormComponent implements OnInit, OnChanges {
   }
 
   onSubmit(): void {
+    if (this.userHighSchoolId) {
+      this.student.highSchoolId = this.userHighSchoolId;
+    }
     this.student.isEAlbaniaApplication = false;
     if (this.finishedAtSameSchool) {
       this.student.schoolFinished = '';

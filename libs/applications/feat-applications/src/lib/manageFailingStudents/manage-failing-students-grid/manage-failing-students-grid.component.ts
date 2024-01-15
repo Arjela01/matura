@@ -41,6 +41,8 @@ export class ManageFailingStudentsGridComponent {
   @Input() failingStudents: FailingStudent[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
+  @Input() showDeleteButton = false;
+  @Input() showEditButton = false;
 
   @Output() gridEvent = new EventEmitter<
     GridEvent<FailingStudent | FailingStudent[]>

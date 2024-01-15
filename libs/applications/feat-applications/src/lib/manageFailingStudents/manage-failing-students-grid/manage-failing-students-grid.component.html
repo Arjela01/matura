@@ -95,12 +95,14 @@
       <td>
         <div class="flex">
           <img
+            *ngIf="showEditButton"
             src="assets/svg/edit-form.svg"
             class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"
             (click)="onEditClick(failingStudent)"
             pTooltip="Ndrysho" />
           <img
+            *ngIf="showDeleteButton"
             src="assets/svg/delete-form.svg"
             class="p-button-rounded p-button-danger p-button-text ml-m pointer"
             pTooltip="Fshi"

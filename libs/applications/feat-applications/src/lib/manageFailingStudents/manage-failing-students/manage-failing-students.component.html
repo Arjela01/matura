@@ -6,6 +6,8 @@
   <div class="col-12">
     <div class="card">
       <msh-manage-failing-students-grid
+        [showDeleteButton]="showDeleteButton"
+        [showEditButton]="showEditButton"
         [failingStudents]="(failingStudents$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
