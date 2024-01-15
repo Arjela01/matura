@@ -132,12 +132,12 @@ export class ManageA1zComponent {
 
   deleteA1Z(a1z: A1ZTableRecord) {
     this.a1zservice
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       .delete(a1z.id!.toString())
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Formulari A1Z u fshi me sukses!');
+          this.getA1Z(this.filters as TableLazyLoadEvent);
         }
         if (!response.isSuccessful) {
           this.toastService.showError(

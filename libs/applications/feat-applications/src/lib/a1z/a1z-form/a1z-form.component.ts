@@ -185,18 +185,18 @@ export class A1zFormComponent implements OnInit {
         this.a1Categories = response.data;
       });
 
-    this.academicYearService
-      .getAcademicYears()
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.academicYearsDropdown = response.data;
-        this.a1z.yearOfSchoolA1Z = (response as any).data
-          .filter((item: AcademicYear) => {
-            return item.isActive;
-          })
-          .at(0)?.year;
-        this.cd.detectChanges();
-      });
+    // this.academicYearService
+    //   .getAcademicYears()
+    //   .pipe(untilDestroyed(this))
+    //   .subscribe(response => {
+    //     this.academicYearsDropdown = response.data;
+    //     this.a1z.yearOfSchoolA1Z = (response as any).data
+    //       .filter((item: AcademicYear) => {
+    //         return item.isActive;
+    //       })
+    //       .at(0)?.year;
+    //     this.cd.detectChanges();
+    //   });
 
     if (
       A1ZFormModeEnum.Edit === this.mode ||
@@ -251,17 +251,21 @@ export class A1zFormComponent implements OnInit {
     this.submitted = true;
 
     if (
-      A1ZFormModeEnum.Add === this.mode ||
-      A1ZFormModeEnum.AddWithStudent == this.mode
+      (A1ZFormModeEnum.Add === this.mode ||
+        A1ZFormModeEnum.AddWithStudent == this.mode) &&
+      this.isGraduationYearValid()
     ) {
       this.onNewA1ZFormSubmit();
     } else if (
-      A1ZFormModeEnum.Edit === this.mode ||
-      A1ZFormModeEnum.EditWithStudent == this.mode
+      (A1ZFormModeEnum.Edit === this.mode ||
+        A1ZFormModeEnum.EditWithStudent == this.mode) &&
+      this.isGraduationYearValid()
     ) {
       this.onEditA1ZFormSubmit();
     } else {
-      this.toastService.showError('Nuk dallohet qëllimi i kësaj forme.');
+      this.toastService.showError(
+        'Nuk dallohet qëllimi i kësaj forme ose viti i diplomimit është i pavlefshëm.'
+      );
     }
   }
 
