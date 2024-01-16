@@ -184,7 +184,7 @@ export class ManageManualExamGradeComponent implements OnInit {
           this.displayModal = false;
           this.getGrades(this.idCard);
         } else {
-          if (response.errorMessage === 'Maturanti nuk u gjet.') {
+          if (response.errorMessage.includes('nuk u gjet')) {
             this.toastService.showInfo(
               `Maturanti nuk u gjet.
                Ju lutem krijoni maturantin ne faqen që do ju hapet në vijim! `
