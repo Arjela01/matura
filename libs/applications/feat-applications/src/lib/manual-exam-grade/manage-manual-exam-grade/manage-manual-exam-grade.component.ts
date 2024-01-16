@@ -184,10 +184,10 @@ export class ManageManualExamGradeComponent implements OnInit {
           this.displayModal = false;
           this.getGrades(this.idCard);
         } else {
-          if (response.errorMessage === 'Studenti nuk u gjet.') {
+          if (response.errorMessage.includes('nuk u gjet')) {
             this.toastService.showInfo(
-              `Studenti nuk u gjet.
-               Ju lutem krijoni studentin ne faqen që do ju hapet në vijim! `
+              `Maturanti nuk u gjet.
+               Ju lutem krijoni maturantin ne faqen që do ju hapet në vijim! `
             );
             setTimeout(() => {
               this.router.navigate(['/applications/students/add']);
