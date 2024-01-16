@@ -1,6 +1,6 @@
 export interface UserProfile {
   id: string;
-  administrationOfficeId: string;
+  administrationOfficeId: number;
   administrationOfficeName: string;
   dateDisabled: Date;
   lastPasswordChange: Date;
