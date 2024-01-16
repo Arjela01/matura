@@ -28,6 +28,14 @@ export class ExamSiteApiService {
     );
   }
 
+  forHighSchool(
+    highSchoolId?: number
+  ): Observable<ApiResult<DropdownModel<string>[]>> {
+    return this.apiService.get<ApiResult<DropdownModel<string>[]>>(
+      `/ExamSite/ForHighSchool/${highSchoolId}`
+    );
+  }
+
   save(examSite?: ExamSite): Observable<ApiResult<ExamSite>> {
     return this.apiService.post<ApiResult<ExamSite>, ExamSite>(
       `/ExamSite`,

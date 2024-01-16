@@ -42,6 +42,9 @@ export class ManageListOfStudentsComponent implements OnInit {
   totalRecords = 0;
   filters: TableLazyLoadEvent | null = null;
   showSortButton = false;
+  highSchoolId = 0;
+  administrationOfficeId = 0;
+  userRole = '';
 
   event = {
     first: 0,
@@ -53,11 +56,20 @@ export class ManageListOfStudentsComponent implements OnInit {
   constructor(
     private readonly examDateService: ExamDateApiService,
     private readonly examSiteService: ExamSiteApiService,
-    private readonly examAssignmentService: ExamAssignmentApiService
+    private readonly examAssignmentService: ExamAssignmentApiService,
+    private readonly userService: UserProfileApiService
   ) {}
 
   ngOnInit() {
-    this.getExamSiteDropdown();
+    this.userService
+      .getLoggedInUserData()
+      .pipe(untilDestroyed(this))
+      .subscribe(res => {
+        this.administrationOfficeId = res.data.administrationOfficeId;
+        this.userRole = res.data.roleName;
+        this.highSchoolId = res.data.highSchoolId;
+        this.examSiteData();
+      });
   }
 
   getExamAssignments($event: any) {
@@ -94,5 +106,27 @@ export class ManageListOfStudentsComponent implements OnInit {
       .subscribe(response => {
         this.examSites = response.data;
       });
+  }
+  getExamSitesForZvap() {
+    this.examSiteService
+      .forAdministrationOffice(this.administrationOfficeId)
+      .pipe(untilDestroyed(this))
+      .subscribe(res => (this.examSites = res.data));
+  }
+
+  getExamSitesForOverseer() {
+    this.examSiteService
+      .forHighSchool(this.highSchoolId)
+      .pipe(untilDestroyed(this))
+      .subscribe(res => (this.examSites = res.data));
+  }
+  examSiteData() {
+    if (this.userRole === RoleName.ZVAP) {
+      this.getExamSitesForZvap();
+    } else {
+      if (this.userRole === RoleName.MbikqyresFormularesh) {
+        this.getExamSitesForOverseer();
+      } else this.getExamSiteDropdown();
+    }
   }
 }
