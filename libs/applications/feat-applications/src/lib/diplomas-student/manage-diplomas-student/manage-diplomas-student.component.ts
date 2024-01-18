@@ -66,7 +66,7 @@ interface InitialFilter {
 @UntilDestroy()
 export class ManageDiplomasStudentComponent implements OnInit {
   @Input() printed = false;
-  @Input() title = 'Diploma të Printuara';
+  @Input() title = 'Diploma';
   @Input() foreignStudent = false;
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
