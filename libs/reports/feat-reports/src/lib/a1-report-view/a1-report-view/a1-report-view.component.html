@@ -1,11 +1,7 @@
 <div class="grid">
   <div class="col-8 mx-auto">
-    <div
-      class="card-form py-4 mb-header mt-3"
-      *ngIf="a1 && studentInfo && highSchoolInfo">
-      <div
-        class="card px-5"
-        style="box-shadow: 0; border: 0; text-align: right">
+    <div class="card-form py-4 mb-header mt-3" *ngIf="a1 && studentInfo && highSchoolInfo">
+      <div class="card px-5" style="box-shadow: 0; border: 0; text-align: right">
         <p-menubar [model]="items"></p-menubar>
         <ng-template pTemplate="end">
           <img
@@ -15,7 +11,7 @@
             tooltipPosition="bottom" />
         </ng-template>
       </div>
-      <div #content id="content" class="px-6" style="width: 900px">
+      <div #content id="content" class="px-6">
         <h2 class="px-3 mb-0" style="font-weight: bold">
           {{ a1.isA1 ? 'Formular A1' : 'Formular A1Z' }}
         </h2>
@@ -151,11 +147,11 @@
           </tr>
         </table>
         <table
-          style="border-spacing: 15px 20px"
+          style="border-spacing: 15px 20px; white-space: nowrap"
           class="px-0 mx-0 w-8 text-left">
           <tr class="w-full">
-            <td style="width: 35%">
-              <span class="px-3">Printuar më </span>
+            <td style="width: 40%">
+              <span class="px-4">Printuar më </span>
             </td>
             <td>
               {{ todayDate | date : 'dd/MM/yyyy HH:mm' }}
@@ -164,7 +160,7 @@
           </tr>
           <tr class="w-full">
             <td>
-              <span class="px-3">Firmat e maturantit</span>
+              <span class="px-4">Firmat e maturantit</span>
             </td>
             <td style="font-size: 14px">
               <span>Mësuesi kujdestar</span>

@@ -9,4 +9,9 @@
   border-radius:0 !important ;
   display: flex !important;
   justify-content: flex-end !important;
-} 
+}
+@media screen and (max-width: 768px) {
+  .card-form {
+    padding: 2rem;
+  }
+}
