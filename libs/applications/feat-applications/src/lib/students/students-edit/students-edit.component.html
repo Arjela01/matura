@@ -37,7 +37,7 @@
     <div class="card-form px-6 py-6">
       <form #form="ngForm" (ngSubmit)="update()" *ngIf="student.id">
         <div [style]="{ maxWidth: '500px' }">
-          <div class="field">
+          <div class="field" *ngIf="!this.userHighSchoolId; else disabledInput">
             <label for="highSchool">Shkolla *</label>
             <p-dropdown
               id="highSchool"
@@ -60,6 +60,20 @@
               Shkolla është fushë e kërkuar.
             </small>
           </div>
+
+          <ng-template #disabledInput>
+            <div class="field" [style]="{ width: '500px' }">
+              <label for="userHighSchool">Shkolla *</label>
+              <input
+                type="text"
+                pInputText
+                disabled
+                id="userHighSchool"
+                name="userHighSchool"
+                [required]="true"
+                [(ngModel)]="this.userHighSchoolName" />
+            </div>
+          </ng-template>
 
           <div class="field">
             <label for="schoolProfile">Profili Shkollës *</label>

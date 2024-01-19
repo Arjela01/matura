@@ -45,6 +45,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { A1a1zConfirmationDialogComponent } from '../manage-students/a1a1z-confirmation-dialog/a1a1z-confirmation-dialog.component';
 import { AuthFacade, PermissionEnum } from '@msh/auth/data-access-auth';
+import { UserProfileApiService } from '@msh/user-section/data-access-user-section';
 
 @UntilDestroy()
 @Component({
@@ -85,6 +86,8 @@ export class StudentsEditComponent implements OnInit {
   academicYears: DropdownModel<number>[] = [];
   saving = false;
   id?: string;
+  userHighSchoolId = 0;
+  userHighSchoolName = '';
   maxDate = new Date();
   submitted = true;
   displayModal = false;
@@ -140,13 +143,20 @@ export class StudentsEditComponent implements OnInit {
     private readonly confirmationService: ConfirmationService,
     private toasterService: GlobalToastService,
     private countriesService: CountriesApiService,
-    private authFacade: AuthFacade
+    private authFacade: AuthFacade,
+    private readonly userService: UserProfileApiService
   ) {
     this.id = this.route.snapshot.paramMap.get('id') as string;
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 10);
 
     this.authFacade.user$.pipe(untilDestroyed(this)).subscribe(user => {
       this.permissions = user.permissions;
+    });
+
+    this.userService.getLoggedInUserData().subscribe(res => {
+      this.userHighSchoolName = res.data.highSchoolName;
+      this.userHighSchoolId = res.data.highSchoolId;
+      this.cd.detectChanges();
     });
   }
 
@@ -239,6 +249,9 @@ export class StudentsEditComponent implements OnInit {
   }
 
   update(): void {
+    if (this.userHighSchoolId) {
+      this.student.highSchoolId = this.userHighSchoolId;
+    }
     if (this.finishedAtSameSchool) {
       this.student.schoolFinished = '';
     }

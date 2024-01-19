@@ -112,7 +112,7 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
         break;
       case GRID_ACTIONS.CUSTOM_ACTION2:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të ndryshoni statusin e përdoruesit?',
+          message: 'Jeni i sigurt që doni të ndryshoni statusin e përdoruesve?',
           accept: () => {
             this.changeStatus(event.data as AdministrationOffice);
           },
@@ -120,7 +120,7 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të fshini DAR/ZA?',
+          message: 'Jeni i sigurt që doni të fshini ZVAP?',
           accept: () => {
             this.deleteAdministrationOffices(
               event.data as AdministrationOffice
@@ -142,8 +142,8 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
             administrationOffice?.isAllowedToLogin
-              ? 'Përdoruesi u çaktivizua me sukses!'
-              : 'Përdoruesi u aktivizua me sukses!'
+              ? 'Çaktivizimi i përdoruesve u krye me sukses për këtë ZVAP!'
+              : 'Aktivizimi i përdoruesve u krye me sukses për këtë ZVAP!'
           );
           this.displayModal = false;
           this.getAdministrationOffices(this.filters as TableLazyLoadEvent);
