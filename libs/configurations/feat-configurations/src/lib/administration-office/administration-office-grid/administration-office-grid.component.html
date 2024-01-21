@@ -18,7 +18,16 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="name">
+      <th pSortableColumn="code">
+        Kodi
+        <p-sortIcon field="code"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="code"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+    <th pSortableColumn="name">
         Emri
         <p-sortIcon field="name"></p-sortIcon>
         <p-columnFilter
@@ -69,6 +78,9 @@
   </ng-template>
   <ng-template pTemplate="body" let-administrationOffice>
     <tr>
+      <td style="width: 10%; min-width: 10rem">
+        {{ administrationOffice.code }}
+      </td>
       <td style="width: 20%; min-width: 10rem">
         {{ administrationOffice.name }}
       </td>
@@ -84,7 +96,6 @@
       <td style="width: 20%; min-width: 10rem">
         {{ administrationOffice.parentOfficeName }}
       </td>
-
       <td>
         <div class="flex">
           <img

@@ -56,6 +56,7 @@ export class AdministrationOfficeFormComponent {
   administrationOffice: AdministrationOffice = {
     isAllowedToLogin: false,
     id: 0,
+    code: '',
     name: '',
     isRegionalOffice: false,
     directorName: '',

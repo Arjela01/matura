@@ -74,6 +74,7 @@ export class ActivateOverseerDarZaGridComponent {
     isAllowedToLogin: false,
     isRegionalOffice: false,
     name: '',
+    code: '',
   };
 
   submitted = false;

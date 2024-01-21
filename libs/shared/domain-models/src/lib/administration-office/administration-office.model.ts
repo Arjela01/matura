@@ -1,5 +1,6 @@
 export interface AdministrationOffice {
   id?: any;
+  code: string;
   name: string;
   directorName: string;
   isRegionalOffice: boolean;
