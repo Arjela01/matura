@@ -1,5 +1,25 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
-  <div class="field">
+    <div class="field">
+        <label for="Code">Kodi *</label>
+        <input
+                type="text"
+                pInputText
+                id="Code"
+                name="Code"
+                [(ngModel)]="administrationOffice.code"
+                required
+                autofocus
+                [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !administrationOffice.code
+      }" />
+        <small
+                class="p-error block"
+                *ngIf="submitted && !administrationOffice.code">
+            Kodi është fushë e kërkuar.
+        </small>
+    </div>
+
+    <div class="field">
     <label for="Name">Emri *</label>
     <input
       type="text"
