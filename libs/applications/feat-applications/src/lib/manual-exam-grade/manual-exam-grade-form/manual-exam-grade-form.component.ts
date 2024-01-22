@@ -40,7 +40,6 @@ export class ManualExamGradeFormComponent {
       this.manualExamGrade = Object.assign({}, details);
     }
   }
-  @Input() examSubjects: DropdownModel<string>[] = [];
   @Output() formSave = new EventEmitter<ManualExamGradeModel>();
   @Output() formClose = new EventEmitter<undefined>();
 
