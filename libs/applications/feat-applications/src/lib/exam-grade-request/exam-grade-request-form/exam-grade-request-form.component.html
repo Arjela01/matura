@@ -17,23 +17,14 @@
     </small>
   </div>
   <div class="field">
-    <label for="studentId">Matura ID *</label>
+    <label for="studentId">Matura ID</label>
     <input
       type="text"
       pInputText
       id="studentId"
       name="studentId"
       [(ngModel)]="examGradeRequest.maturaId"
-      required
-      autofocus
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examGradeRequest.maturaId
-      }" />
-    <small
-      class="p-error block"
-      *ngIf="submitted && !examGradeRequest.maturaId">
-      Matura ID është fushë e kërkuar.
-    </small>
+      autofocus />
   </div>
   <div class="field">
     <label for="firstName">Emri *</label>
@@ -134,23 +125,14 @@
   </div>
 
   <div class="field">
-    <label for="description">Përshkrimi *</label>
+    <label for="description">Përshkrimi</label>
     <textarea
       name="description"
       id="description"
       rows="5"
       cols="30"
       pInputTextarea
-      required
-      [(ngModel)]="examGradeRequest.description"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examGradeRequest.description
-      }"></textarea>
-    <small
-      class="p-error block"
-      *ngIf="submitted && !examGradeRequest.description">
-      Përshkrimi është fushë e kërkuar.
-    </small>
+      [(ngModel)]="examGradeRequest.description"></textarea>
   </div>
 
   <div class="flex justify-content-end">
