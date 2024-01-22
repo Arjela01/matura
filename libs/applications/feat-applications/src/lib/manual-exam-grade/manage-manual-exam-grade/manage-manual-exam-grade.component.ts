@@ -73,7 +73,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
   providers: [ConfirmationService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ManageManualExamGradeComponent implements OnInit {
+export class ManageManualExamGradeComponent {
   private manualExamGrade$$ = new BehaviorSubject<ManualExamGradeModel[]>([]);
   manualExamGrade$ = this.manualExamGrade$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
@@ -81,7 +81,6 @@ export class ManageManualExamGradeComponent implements OnInit {
 
   selectedManualExamGrade: ManualExamGradeModel | null = null;
   displayModal = false;
-  examSubjects: DropdownModel<string>[] = [];
   idCard: any;
 
   formSave = new EventEmitter<ExamGradeRequestModel>();
@@ -92,7 +91,6 @@ export class ManageManualExamGradeComponent implements OnInit {
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly manualExamGradeService: ManualExamGradeService,
-    private readonly examSubjectService: ExamSubjectApiService,
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router
@@ -128,9 +126,6 @@ export class ManageManualExamGradeComponent implements OnInit {
 
   onModalClose() {
     this.displayModal = false;
-  }
-  ngOnInit() {
-    this.getExamSubject();
   }
 
   onGridEvent(event: GridEvent<ManualExamGradeModel | ManualExamGradeModel[]>) {
@@ -243,12 +238,5 @@ export class ManageManualExamGradeComponent implements OnInit {
             'Ndodhi një problem gjatë fshirjes të notës!'
           );
       });
-  }
-
-  getExamSubject() {
-    this.examSubjectService
-      .loadDropdownList()
-      .pipe(untilDestroyed(this))
-      .subscribe(res => (this.examSubjects = res.data));
   }
 }

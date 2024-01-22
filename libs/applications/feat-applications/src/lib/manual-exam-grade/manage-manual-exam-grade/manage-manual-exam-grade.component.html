@@ -36,7 +36,6 @@
     (onHide)="onModalClose()">
     <ng-template pTemplate="content">
       <msh-manual-exam-grade-form
-        [examSubjects]="examSubjects"
         [examGradeDetails]="selectedManualExamGrade"
         (formClose)="onModalClose()"
         (formSave)="onFormSave($event)">
