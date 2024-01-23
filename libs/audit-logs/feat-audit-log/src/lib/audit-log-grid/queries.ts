@@ -2389,5 +2389,5 @@ export const queriesMap: Map<string, string> = new Map([
   ['examSubjectProfile', EXAM_SUBJECT_PROFILE],
   ['examSite', EXAM_SITE],
   ['users', USERS],
-  ['examGradeRequest', EXAM_GRADE_REQUEST_QUERY],
+  ['examGradesRequest', EXAM_GRADE_REQUEST_QUERY],
 ]);
