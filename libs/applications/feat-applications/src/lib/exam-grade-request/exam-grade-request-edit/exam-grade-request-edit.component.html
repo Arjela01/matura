@@ -24,23 +24,15 @@
             </small>
           </div>
           <div class="field">
-            <label for="studentId">Matura ID *</label>
+            <label for="studentId">Matura ID</label>
             <input
               type="text"
               pInputText
               id="studentId"
               name="studentId"
               [(ngModel)]="examGradeRequest.maturaId"
-              required
               autofocus
-              [ngClass]="{
-                'ng-invalid ng-dirty': submitted && !examGradeRequest.maturaId
-              }" />
-            <small
-              class="p-error block"
-              *ngIf="submitted && !examGradeRequest.maturaId">
-              Matura ID është fushë e kërkuar.
-            </small>
+              />
           </div>
           <div class="field">
             <label for="firstName">Emri *</label>
