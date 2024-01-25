@@ -10,7 +10,10 @@ import { RouterLink } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { StorageService } from '@msh/shared/data-access-shared';
 import { UserResetPasswordModel } from '@msh/shared/domain-models';
-import { MatchPasswordDirective } from '@msh/shared/util-shared';
+import {
+  MatchPasswordDirective,
+  StrongPasswordDirective,
+} from '@msh/shared/util-shared';
 import { UserResetPasswordApiService } from '@msh/user-section/data-access-user-section';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
@@ -33,6 +36,7 @@ import { PasswordModule } from 'primeng/password';
     AvatarModule,
     MessageModule,
     MatchPasswordDirective,
+    StrongPasswordDirective,
   ],
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss'],
