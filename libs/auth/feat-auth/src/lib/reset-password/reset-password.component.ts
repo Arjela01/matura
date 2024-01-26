@@ -10,7 +10,10 @@ import { RouterLink } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { StorageService } from '@msh/shared/data-access-shared';
 import { UserResetPasswordModel } from '@msh/shared/domain-models';
-import { MatchPasswordDirective } from '@msh/shared/util-shared';
+import {
+  MatchPasswordDirective,
+  StrongPasswordDirective,
+} from '@msh/shared/util-shared';
 import { UserResetPasswordApiService } from '@msh/user-section/data-access-user-section';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
@@ -18,6 +21,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { PasswordModule } from 'primeng/password';
+import { DividerModule } from 'primeng/divider';
 
 @Component({
   selector: 'msh-reset-password',
@@ -33,6 +37,8 @@ import { PasswordModule } from 'primeng/password';
     AvatarModule,
     MessageModule,
     MatchPasswordDirective,
+    StrongPasswordDirective,
+    DividerModule,
   ],
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss'],
@@ -44,7 +50,6 @@ export class ResetPasswordComponent {
   error$ = this.authFacade.error$;
   user$ = this.authFacade.user$;
   errorMessage = '';
-  passwordNotMatch = false;
   passwordResetModel: UserResetPasswordModel = {
     newPassword: '',
     confirmPassword: '',
