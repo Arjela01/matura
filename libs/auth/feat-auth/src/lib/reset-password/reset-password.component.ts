@@ -21,6 +21,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { PasswordModule } from 'primeng/password';
+import { DividerModule } from 'primeng/divider';
 
 @Component({
   selector: 'msh-reset-password',
@@ -37,6 +38,7 @@ import { PasswordModule } from 'primeng/password';
     MessageModule,
     MatchPasswordDirective,
     StrongPasswordDirective,
+    DividerModule,
   ],
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss'],
@@ -48,7 +50,6 @@ export class ResetPasswordComponent {
   error$ = this.authFacade.error$;
   user$ = this.authFacade.user$;
   errorMessage = '';
-  passwordNotMatch = false;
   passwordResetModel: UserResetPasswordModel = {
     newPassword: '',
     confirmPassword: '',

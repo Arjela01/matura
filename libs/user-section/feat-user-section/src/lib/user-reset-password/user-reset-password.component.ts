@@ -16,6 +16,7 @@ import {
   GlobalToastService,
   StrongPasswordDirective,
 } from '@msh/shared/util-shared';
+import { DividerModule } from 'primeng/divider';
 
 @Component({
   selector: 'msh-user-reset-password',
@@ -26,6 +27,7 @@ import {
     FormsModule,
     ButtonModule,
     StrongPasswordDirective,
+    DividerModule,
   ],
   templateUrl: './user-reset-password.component.html',
   styleUrls: ['./user-reset-password.component.scss'],
