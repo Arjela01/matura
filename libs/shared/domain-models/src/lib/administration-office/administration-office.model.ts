@@ -4,12 +4,11 @@ export interface AdministrationOffice {
   name: string;
   directorName: string;
   isRegionalOffice: boolean;
-  parentOfficeNameId?: number;
+  parentOfficeId?: number;
   parentOfficeName?: string;
   cityId?: number;
   cityName?: string;
   isAllowedToLogin: boolean;
-  parentOfficeId?: number;
   signature?: string;
 }
 

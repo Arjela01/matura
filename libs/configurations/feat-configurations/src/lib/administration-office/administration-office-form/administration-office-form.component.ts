@@ -62,7 +62,6 @@ export class AdministrationOfficeFormComponent {
     directorName: '',
     signature: '',
     cityId: 0,
-    parentOfficeNameId: 0,
     parentOfficeId: 0,
   };
 
@@ -88,8 +87,6 @@ export class AdministrationOfficeFormComponent {
 
   onSubmit() {
     this.submitted = true;
-    this.administrationOffice.parentOfficeId =
-      this.administrationOffice.parentOfficeNameId;
     if (this.form.valid && this.administrationOffice.signature) {
       if (this.administrationOffice.id === 0) {
         delete this.administrationOffice.id;
