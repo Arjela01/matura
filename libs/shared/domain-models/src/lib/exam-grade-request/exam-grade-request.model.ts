@@ -10,6 +10,8 @@ export interface ExamGradeRequestModel {
   dateOfBirth: string;
   academicYearId: number;
   description: string;
+  email: string;
+  highSchoolId: string;
 }
 
 export interface ExamGradeRequestView {
