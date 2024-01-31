@@ -14,10 +14,12 @@ import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ExamGradeRequestFormComponent } from '../exam-grade-request-form/exam-grade-request-form.component';
-import { ConfirmationService } from 'primeng/api';
 import { GlobalToastService } from '@msh/shared/util-shared';
 import { ExamGradeRequestService } from '@msh/applications/data-access-applications';
-import { AcademicYearApiService } from '@msh/configurations/data-access-configurations';
+import {
+  AcademicYearApiService,
+  HighSchoolApiService,
+} from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ExamGradeRequestModel } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
@@ -46,6 +48,7 @@ export class ManageGradeRequestDetailsComponent implements OnInit {
   totalRecords = 0;
   academicYears: DropdownModel<number>[] = [];
   examGradeRequestStatus: DropdownModel<string>[] = [];
+  highSchools: DropdownModel<number>[] = [];
   examGradeRequest: any;
   id: any;
   constructor(
@@ -53,6 +56,7 @@ export class ManageGradeRequestDetailsComponent implements OnInit {
     private readonly academicYearService: AcademicYearApiService,
     private readonly route: ActivatedRoute,
     private readonly toastService: GlobalToastService,
+    private readonly highSchoolService: HighSchoolApiService,
     private readonly router: Router
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -69,6 +73,7 @@ export class ManageGradeRequestDetailsComponent implements OnInit {
     this.getAcademicYears();
     this.getExamRequestStatus();
     this.getExamRequestById();
+    this.getHighSchools();
   }
   getExamRequestById() {
     this.examGradeRequestService
@@ -129,5 +134,12 @@ export class ManageGradeRequestDetailsComponent implements OnInit {
         this.examGradeRequest$$.next(response.data);
         this.totalRecords = response.total;
       });
+  }
+
+  getHighSchools() {
+    this.highSchoolService
+      .loadDropDownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(res => (this.highSchools = res.data));
   }
 }
