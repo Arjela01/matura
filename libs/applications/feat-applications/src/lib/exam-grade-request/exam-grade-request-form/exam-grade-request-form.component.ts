@@ -51,6 +51,7 @@ export class ExamGradeRequestFormComponent {
     }
   }
   @Input() academicYears: DropdownModel<number>[] = [];
+  @Input() highSchools: DropdownModel<number>[] = [];
   @Output() formSave = new EventEmitter<ExamGradeRequestModel>();
   @Output() formClose = new EventEmitter<undefined>();
 
@@ -70,6 +71,8 @@ export class ExamGradeRequestFormComponent {
     middleName: '',
     description: '',
     maturaId: '',
+    email: '',
+    highSchoolId: '',
   };
 
   onCancelClick() {
