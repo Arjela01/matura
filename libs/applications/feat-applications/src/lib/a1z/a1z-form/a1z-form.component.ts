@@ -169,11 +169,7 @@ export class A1zFormComponent implements OnInit {
     private readonly examGradeApiService: ExamGradeApiService,
     private readonly router: Router,
     private readonly examSubjectService: ExamSubjectApiService,
-    private reportsApiService: ReportsApiService,
-    private academicYearApiService: AcademicYearApiService,
-    private examTypeApiService: ExamTypeApiService,
-    private examSubjectApiService: ExamSubjectApiService,
-    private carriedGradeApiService: CarriedGradeApiService
+    private examSubjectApiService: ExamSubjectApiService
   ) {}
 
   ngOnInit(): void {
@@ -377,7 +373,7 @@ export class A1zFormComponent implements OnInit {
         this.a1z.academicYearZ1Id,
         undefined,
         this.selectedStudent.profileId,
-        false,
+          !(examType?.dependsOnSchoolProfile ?? true),
         undefined
       )
       .pipe(untilDestroyed(this))
@@ -444,7 +440,7 @@ export class A1zFormComponent implements OnInit {
             .forExamType(
               d1ExamType.id,
               this.a1z.academicYearId,
-              this.a1z.subjectD1Id,
+              undefined,
               this.selectedStudent?.profileId,
               !(d1ExamType?.dependsOnSchoolProfile ?? true)
             )
@@ -462,7 +458,7 @@ export class A1zFormComponent implements OnInit {
             .forExamType(
               d2ExamType.id,
               this.a1z.academicYearId,
-              this.a1z.subjectD2Id,
+              undefined,
               this.selectedStudent?.profileId,
               !(d2ExamType?.dependsOnSchoolProfile ?? true)
             )
