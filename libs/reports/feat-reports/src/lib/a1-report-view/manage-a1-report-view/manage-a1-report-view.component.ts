@@ -13,20 +13,20 @@ import {
 import { ApiResult } from '@msh/shared/data-access-shared';
 import {
   HighSchool,
-  Report,
   Student,
   SubjectType,
 } from '@msh/shared/domain-models';
 import {
-  GRID_ACTIONS,
   GlobalToastService,
+  GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { BehaviorSubject, Observable, concatMap, map, switchMap } from 'rxjs';
+import { BehaviorSubject, concatMap, map, Observable, switchMap } from 'rxjs';
 import { A1ReportViewComponent } from '../a1-report-view/a1-report-view.component';
+
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-a1-report-view',
@@ -40,12 +40,10 @@ import { A1ReportViewComponent } from '../a1-report-view/a1-report-view.componen
 export class ManageA1ReportViewComponent {
   private a1Form$$ = new BehaviorSubject<A1Z>({});
   private studentInfo$$ = new BehaviorSubject<Student | null>(null);
-  private subjects$$ = new BehaviorSubject<string[] | null>([]);
   private carriedSubjects$$ = new BehaviorSubject<any | null>([]);
   private highSchoolInfo$$ = new BehaviorSubject<HighSchool | null>(null);
   a1$ = this.a1Form$$.asObservable();
   studentInfo$ = this.studentInfo$$.asObservable();
-  subjects$ = this.subjects$$.asObservable();
   carriedSubjects$ = this.carriedSubjects$$.asObservable();
   highSchoolInfo$ = this.highSchoolInfo$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
@@ -57,6 +55,7 @@ export class ManageA1ReportViewComponent {
 
   id: string | null = null;
   reportType: string | null = null;
+
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
@@ -94,85 +93,55 @@ export class ManageA1ReportViewComponent {
   }
 
   getReportById(): Observable<ApiResult<A1Z>> {
-    return +(this.reportType as string) === Report.A1Form_Report
-      ? this.a1apiService.getById(this.id as string).pipe(
-          untilDestroyed(this),
-          map((element: any) => {
-            this.subjects$$.next(
-              [
-                element.data.subjectD1Name,
-                element.data.subjectD2Name,
-                element.data.subjectD3Name,
-                element.data.subjectZ1Name,
-                element.data.subjectZ2Name,
-                element.data.subjectZ3Name,
-              ].filter(data => data) as string[]
-            );
-            return element;
-          })
-        )
-      : this.a1zApiService.getOne(this.id as string).pipe(
-          untilDestroyed(this),
-          map((element: ApiResult<A1Z>) => {
-            const subjects = [];
-            const carriedSubjects = [];
-            element.data.carryD1
-              ? carriedSubjects.push({
-                  name: element.data.subjectD1Name,
-                  label: 'D1',
-                  subjectType: SubjectType.Mandatory,
-                  score: element.data.scoreD1,
-                })
-              : subjects.push(element.data.subjectD1Name);
-            element.data.carryD2
-              ? carriedSubjects.push({
-                  name: element.data.subjectD2Name,
-                  label: 'D2',
-                  subjectType: SubjectType.Mandatory,
-                  score: element.data.scoreD2,
-                })
-              : subjects.push(element.data.subjectD2Name);
-            element.data.carryD3
-              ? carriedSubjects.push({
-                  name: element.data.subjectD3Name,
-                  label: 'D3',
-                  subjectType: SubjectType.Mandatory,
-                  score: element.data.scoreD3,
-                })
-              : subjects.push(element.data.subjectD3Name);
-            element.data.carryZ1
-              ? carriedSubjects.push({
-                  name: element.data.subjectZ1Name,
-                  label: 'Z1',
-                  subjectType: SubjectType.Optional,
-                  score: element.data.scoreZ1,
-                })
-              : subjects.push(element.data.subjectZ1Name);
-            element.data.carryZ2
-              ? carriedSubjects.push({
-                  name: element.data.subjectZ2Name,
-                  label: 'Z2',
-                  subjectType: SubjectType.Optional,
-                  score: element.data.scoreZ2,
-                })
-              : subjects.push(element.data.subjectZ2Name);
+    return this.a1zApiService.getOne(this.id as string).pipe(
+      untilDestroyed(this),
+      map((element: ApiResult<A1Z>) => {
+        const carriedSubjects = [];
+        carriedSubjects.push({
+          name: element.data.subjectD1Name,
+          label: 'D1',
+          subjectType: SubjectType.Mandatory,
+          score: element.data.scoreD1,
+        });
+        carriedSubjects.push({
+          name: element.data.subjectD2Name,
+          label: 'D2',
+          subjectType: SubjectType.Mandatory,
+          score: element.data.scoreD2,
+        });
+        carriedSubjects.push({
+          name: element.data.subjectD3Name,
+          label: 'D3',
+          subjectType: SubjectType.Mandatory,
+          score: element.data.scoreD3,
+        });
+        carriedSubjects.push({
+          name: element.data.subjectZ1Name,
+          label: 'Z1',
+          subjectType: SubjectType.Optional,
+          score: element.data.scoreZ1,
+        });
+        carriedSubjects.push({
+          name: element.data.subjectZ2Name,
+          label: 'Z2',
+          subjectType: SubjectType.Optional,
+          score: element.data.scoreZ2,
+        });
 
-            element.data.carryZ3
-              ? carriedSubjects.push({
-                  name: element.data.subjectZ3Name,
-                  label: 'Z3',
-                  subjectType: SubjectType.Optional,
-                  score: element.data.scoreZ3,
-                })
-              : subjects.push(element.data.subjectZ3Name);
-            this.carriedSubjects$$.next(
-              carriedSubjects.filter(data => data && data.name) as any
-            );
-            this.subjects$$.next(subjects.filter(data => data) as string[]);
-            return element;
-          })
+        carriedSubjects.push({
+          name: element.data.subjectZ3Name,
+          label: 'Z3',
+          subjectType: SubjectType.Optional,
+          score: element.data.scoreZ3,
+        });
+        this.carriedSubjects$$.next(
+          carriedSubjects.filter(data => data && data.name) as any
         );
+        return element;
+      })
+    );
   }
+
   geta1Form() {
     this.filters = {
       first: 0,

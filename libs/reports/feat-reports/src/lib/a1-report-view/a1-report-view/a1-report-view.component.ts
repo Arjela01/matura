@@ -25,7 +25,6 @@ export class A1ReportViewComponent {
   @Input() a1: A1Z | null = null;
   @Input() studentInfo: Student | null = null;
   @Input() highSchoolInfo: HighSchool | null = null;
-  @Input() subjects: string[] | null = [];
   @Input() carriedSubjects: any[] = [];
   items: MenuItem[] | undefined;
   carriedSubjectIndex = 18;

@@ -1,7 +1,11 @@
 <div class="grid">
   <div class="col-8 mx-auto">
-    <div class="card-form py-4 mb-header mt-3" *ngIf="a1 && studentInfo && highSchoolInfo">
-      <div class="card px-5" style="box-shadow: 0; border: 0; text-align: right">
+    <div
+      class="card-form py-4 mb-header mt-3"
+      *ngIf="a1 && studentInfo && highSchoolInfo">
+      <div
+        class="card px-5"
+        style="box-shadow: 0; border: 0; text-align: right">
         <p-menubar [model]="items"></p-menubar>
         <ng-template pTemplate="end">
           <img
@@ -98,30 +102,10 @@
             <td>19. Viti i përfundimit të shkollës</td>
             <td>{{ a1.yearOfSchoolA1Z }}</td>
           </tr>
-          <ng-container *ngIf="carriedSubjects && carriedSubjects.length > 0">
-            <tr
-              class="w-full mt-4"
-              *ngFor="let carriedSubject of carriedSubjects; let i = index">
-              <td>
-                {{ i + carriedSubjectIndex }}.
-                {{
-                  carriedSubject.subjectType === 0
-                    ? 'Lënda e detyruar ' + carriedSubject.label
-                    : 'Lënda me zgjedhje ' + carriedSubject.label
-                }}
-              </td>
-              <td>
-                {{ carriedSubject.name }}
-                <span *ngIf="studentInfo.isAN"> (AK)</span>
-              </td>
-              <td>Mbartur nota {{ carriedSubject.score }}</td>
-            </tr>
-          </ng-container>
         </table>
         <table
           style="border-spacing: 15px 0"
-          class="px-0 mx-0 w-8 text-left"
-          *ngIf="carriedSubjects.length !== 4">
+          class="px-0 mx-0 w-8 text-left">
           <tr class="w-full">
             <th
               style="font-size: 14px; border: 1px solid; border-bottom: 0"
@@ -130,17 +114,14 @@
             </th>
           </tr>
           <tr class="w-full">
-            <th
-              style="font-size: 14px; border: 1px solid; border-bottom: 0"
-              class="p-2">
-              Emri i lëndës
-            </th>
-          </tr>
-          <tr class="w-full">
             <td style="font-size: 14px; border: 1px solid">
               <ul class="px-4 font-semibold">
-                <li *ngFor="let subject of subjects">
-                  {{ subject }} <span *ngIf="studentInfo.isAN"> (AK)</span>
+                <li *ngFor="let carriedSubject of carriedSubjects">
+                  {{ carriedSubject.name }}
+                  <span *ngIf="studentInfo.isAN"> (AK)</span>
+                  <span *ngIf="carriedSubject.score">
+                    mbartur nota {{ carriedSubject.score }}
+                  </span>
                 </li>
               </ul>
             </td>
