@@ -311,7 +311,7 @@ export class A1zFormComponent implements OnInit {
           this.a1z.academicYearId,
           this.a1z.subjectZ1Id,
           this.selectedStudent.profileId,
-          !(examType?.dependsOnSchoolProfile ?? true),
+          false,
           undefined
         )
         .pipe(untilDestroyed(this))
@@ -377,7 +377,7 @@ export class A1zFormComponent implements OnInit {
         this.a1z.academicYearZ1Id,
         undefined,
         this.selectedStudent.profileId,
-        !(examType?.dependsOnSchoolProfile ?? true),
+        false,
         undefined
       )
       .pipe(untilDestroyed(this))
