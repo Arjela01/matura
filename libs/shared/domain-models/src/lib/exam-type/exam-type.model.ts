@@ -1,5 +1,5 @@
 export interface ExamType {
-  id: string;
+  id: number;
   name: string;
   maximumValueWritingScore: number;
   maximumValueMultipleScore: number;

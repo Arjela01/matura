@@ -27,6 +27,7 @@ import {
   AcademicYear,
   EXAM_TYPES,
   ExamGrade,
+  ExamType,
   Report,
   Student,
 } from '@msh/shared/domain-models';
@@ -131,7 +132,7 @@ export class A1zFormComponent implements OnInit {
 
   showStudentModal = false;
   academicYearsDropdown: DropdownModel<number>[] = [];
-  examTypes: DropdownModel<number>[] = [];
+  examTypes: ExamType[] = [];
 
   submitted = false;
   showStudentSearchButton = true;
@@ -302,15 +303,15 @@ export class A1zFormComponent implements OnInit {
     this.a1z.subjectZ1Name = undefined;
 
     if (!$event.value) {
-      const examType = this.examTypes.find(x => x.value === EXAM_TYPES.Z1);
+      const examType = this.examTypes.find(x => x.name === EXAM_TYPES.Z1);
 
       this.examSubjectApiService
         .forExamType(
-          examType?.key ?? 0,
+          examType?.id ?? 0,
           this.a1z.academicYearId,
-          undefined,
-          undefined,
-          true,
+          this.a1z.subjectZ1Id,
+          this.selectedStudent.profileId,
+          !(examType?.dependsOnSchoolProfile ?? true),
           undefined
         )
         .pipe(untilDestroyed(this))
@@ -326,12 +327,12 @@ export class A1zFormComponent implements OnInit {
   }
 
   discoverGrade(examType: string, examSubjectId?: string) {
-    const examTypeRecord = this.examTypes.find(x => x.value === examType);
+    const examTypeRecord = this.examTypes.find(x => x.name === examType);
 
     if (examTypeRecord) {
       this.examGradeApiService
         .discoverGrade(
-          examTypeRecord.key ?? 0,
+          examTypeRecord.id ?? 0,
           this.a1z.studentNid,
           examSubjectId
         )
@@ -367,15 +368,16 @@ export class A1zFormComponent implements OnInit {
 
   onAcademicYearZ1Change($event: any) {
     this.a1z.academicYearZ1Id = $event.value;
-    const examType = this.examTypes.find(x => x.value === EXAM_TYPES.Z1);
+
+    const examType = this.examTypes.find(x => x.name === EXAM_TYPES.Z1);
 
     this.examSubjectApiService
       .forExamType(
-        examType?.key ?? 0,
+        examType?.id ?? 0,
         this.a1z.academicYearZ1Id,
         undefined,
-        undefined,
-        true,
+        this.selectedStudent.profileId,
+        !(examType?.dependsOnSchoolProfile ?? true),
         undefined
       )
       .pipe(untilDestroyed(this))
@@ -423,27 +425,28 @@ export class A1zFormComponent implements OnInit {
 
   loadSubjectDropdowns() {
     this.examTypeService
-      .loadDropdownList()
+      .getAll()
       .pipe(untilDestroyed(this))
       .subscribe(x => {
         this.examTypes = x.data;
-        const d1ExamType = x.data.find(d1 => d1.value === EXAM_TYPES.D1);
-        const d2ExamType = x.data.find(d2 => d2.value === EXAM_TYPES.D2);
-        const d3ExamType = x.data.find(d3 => d3.value === EXAM_TYPES.D3);
-        const z1ExamType = x.data.find(z1 => z1.value === EXAM_TYPES.Z1);
+        const d1ExamType = x.data.find(d1 => d1.name === EXAM_TYPES.D1);
+        const d2ExamType = x.data.find(d2 => d2.name === EXAM_TYPES.D2);
+        const d3ExamType = x.data.find(d3 => d3.name === EXAM_TYPES.D3);
+        const z1ExamType = x.data.find(z1 => z1.name === EXAM_TYPES.Z1);
 
         this.discoverGrade(EXAM_TYPES.D1, this.a1z.subjectD1Id);
         this.discoverGrade(EXAM_TYPES.D2, this.a1z.subjectD2Id);
         this.discoverGrade(EXAM_TYPES.D3, this.a1z.subjectD3Id);
         this.discoverGrade(EXAM_TYPES.Z1, this.a1z.subjectZ1Id);
 
-        if (d1ExamType && d1ExamType.key) {
+        if (d1ExamType && d1ExamType.name) {
           this.examSubjectService
             .forExamType(
-              d1ExamType.key,
+              d1ExamType.id,
               this.a1z.academicYearId,
               this.a1z.subjectD1Id,
-              this.selectedStudent?.profileId
+              this.selectedStudent?.profileId,
+              !(d1ExamType?.dependsOnSchoolProfile ?? true)
             )
             .pipe(untilDestroyed(this))
             .subscribe(y => {
@@ -454,13 +457,14 @@ export class A1zFormComponent implements OnInit {
               this.cd.detectChanges();
             });
         }
-        if (d2ExamType && d2ExamType.key) {
+        if (d2ExamType && d2ExamType.id) {
           this.examSubjectService
             .forExamType(
-              d2ExamType.key,
+              d2ExamType.id,
               this.a1z.academicYearId,
               this.a1z.subjectD2Id,
-              this.selectedStudent?.profileId
+              this.selectedStudent?.profileId,
+              !(d2ExamType?.dependsOnSchoolProfile ?? true)
             )
             .pipe(untilDestroyed(this))
             .subscribe(y => {
@@ -471,13 +475,14 @@ export class A1zFormComponent implements OnInit {
               this.cd.detectChanges();
             });
         }
-        if (d3ExamType && d3ExamType.key) {
+        if (d3ExamType && d3ExamType.id) {
           this.examSubjectService
             .forExamType(
-              d3ExamType.key,
+              d3ExamType.id,
               this.a1z.academicYearId,
               this.a1z.subjectD3Id,
-              this.selectedStudent?.profileId
+              this.selectedStudent?.profileId,
+              !(d3ExamType?.dependsOnSchoolProfile ?? true)
             )
             .pipe(untilDestroyed(this))
             .subscribe(y => {
@@ -485,13 +490,14 @@ export class A1zFormComponent implements OnInit {
               this.cd.detectChanges();
             });
         }
-        if (z1ExamType && z1ExamType.key) {
+        if (z1ExamType && z1ExamType.id) {
           this.examSubjectService
             .forExamType(
-              z1ExamType.key,
+              z1ExamType.id,
               this.a1z.academicYearId,
               this.a1z.subjectZ1Id,
-              this.selectedStudent?.profileId
+              this.selectedStudent?.profileId,
+              !(z1ExamType?.dependsOnSchoolProfile ?? true)
             )
             .pipe(untilDestroyed(this))
             .subscribe(y => {

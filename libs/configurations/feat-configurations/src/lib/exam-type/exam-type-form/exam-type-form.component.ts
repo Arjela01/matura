@@ -48,7 +48,7 @@ export class ExamTypeFormComponent {
   submitted = false;
 
   examType: ExamType = {
-    id: '',
+    id: 0,
     name: '',
     maximumValueWritingScore: 0,
     maximumValueMultipleScore: 0,

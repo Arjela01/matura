@@ -15,6 +15,12 @@ export class ExamTypeApiService {
     return this.apiService.post(`/ExamType/TableData`, event);
   }
 
+
+  getAll(): Observable<ApiResult<ExamType[]>> {
+    return this.apiService.get(`/ExamType`);
+  }
+
+
   save(examType: ExamType): Observable<ApiResult<ExamType>> {
     return this.apiService.post<ApiResult<ExamType>, ExamType>(
       `/ExamType`,
@@ -29,7 +35,7 @@ export class ExamTypeApiService {
     );
   }
 
-  delete(examTypeId: string): Observable<ApiResult<unknown>> {
+  delete(examTypeId: number): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<ExamType>>(
       `/ExamType/${examTypeId}`
     );
