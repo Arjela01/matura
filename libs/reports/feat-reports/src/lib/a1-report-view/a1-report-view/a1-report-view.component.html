@@ -103,30 +103,47 @@
             <td>{{ a1.yearOfSchoolA1Z }}</td>
           </tr>
         </table>
-        <table
-          style="border-spacing: 15px 0"
-          class="px-0 mx-0 w-8 text-left">
-          <tr class="w-full">
-            <th
-              style="font-size: 14px; border: 1px solid; border-bottom: 0"
-              class="p-2">
-              Lëndët e provimeve
-            </th>
-          </tr>
-          <tr class="w-full">
-            <td style="font-size: 14px; border: 1px solid">
-              <ul class="px-4 font-semibold">
-                <li *ngFor="let carriedSubject of carriedSubjects">
-                  {{ carriedSubject.name }}
-                  <span *ngIf="studentInfo.isAN"> (AK)</span>
-                  <span *ngIf="carriedSubject.score">
-                    mbartur nota {{ carriedSubject.score }}
-                  </span>
-                </li>
-              </ul>
-            </td>
-          </tr>
-        </table>
+
+        <div
+          style="border: 1px solid #000"
+          class="px-0 py-2 mx-0 w-8 text-left mt-2"
+          *ngIf="nonExamSubjects.length > 0">
+          <table style="border-spacing: 15px 0" class="px-0 mx-0 w-8 text-left">
+            <tr>
+              <th class="py-2 w-7">Lëndë të mbartura</th>
+              <th>Nota</th>
+            </tr>
+            <tr *ngFor="let carriedSubject of nonExamSubjects">
+              <td>
+                {{ carriedSubject.label }}:
+                {{ carriedSubject.name }}
+                <span *ngIf="studentInfo.isAN"> (AK)</span>
+              </td>
+              <td>
+                <span *ngIf="carriedSubject.score">
+                  {{ carriedSubject.score }}
+                </span>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div
+          style="border: 1px solid #000"
+          class="px-0 py-2 mx-0 w-8 text-left mt-2">
+          <table style="border-spacing: 15px 0" class="px-0 mx-0 w-8 text-left">
+            <tr>
+              <th class="py-2 w-7">Lëndët e provimeve</th>
+            </tr>
+            <tr *ngFor="let carriedSubject of examSubjects">
+              <td>
+                {{ carriedSubject.label }}:
+                {{ carriedSubject.name }}
+                <span *ngIf="studentInfo.isAN"> (AK)</span>
+              </td>
+            </tr>
+          </table>
+        </div>
         <table
           style="border-spacing: 15px 20px; white-space: nowrap"
           class="px-0 mx-0 w-8 text-left">

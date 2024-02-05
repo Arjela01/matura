@@ -12,6 +12,7 @@ import {
 } from '@msh/configurations/data-access-configurations';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import {
+  EXAM_TYPES,
   HighSchool,
   Student,
   SubjectType,
@@ -63,7 +64,7 @@ export class ManageA1ReportViewComponent {
     private readonly studentApiService: StudentsApiService,
     private readonly highSchoolApiService: HighSchoolApiService,
     private route: ActivatedRoute,
-    private a1zApiService: A1ZApiService
+    private a1zApiService: A1ZApiService,
   ) {
     this.id = this.route.snapshot.params['id'];
     this.reportType = this.route.snapshot.params['reportType'];
@@ -99,38 +100,43 @@ export class ManageA1ReportViewComponent {
         const carriedSubjects = [];
         carriedSubjects.push({
           name: element.data.subjectD1Name,
-          label: 'D1',
+          isNotGraded: element.data.subjectD1IsNotGraded,
+          label: EXAM_TYPES.D1,
           subjectType: SubjectType.Mandatory,
           score: element.data.scoreD1,
         });
         carriedSubjects.push({
           name: element.data.subjectD2Name,
-          label: 'D2',
+          isNotGraded: element.data.subjectD2IsNotGraded,
+          label: EXAM_TYPES.D2,
           subjectType: SubjectType.Mandatory,
           score: element.data.scoreD2,
         });
         carriedSubjects.push({
           name: element.data.subjectD3Name,
-          label: 'D3',
+          isNotGraded: element.data.subjectD3IsNotGraded,
+          label: EXAM_TYPES.D3,
           subjectType: SubjectType.Mandatory,
           score: element.data.scoreD3,
         });
         carriedSubjects.push({
           name: element.data.subjectZ1Name,
-          label: 'Z1',
+          isNotGraded: element.data.subjectZ1IsNotGraded,
+          label: EXAM_TYPES.Z1,
           subjectType: SubjectType.Optional,
           score: element.data.scoreZ1,
         });
         carriedSubjects.push({
           name: element.data.subjectZ2Name,
-          label: 'Z2',
+          isNotGraded: element.data.subjectZ2IsNotGraded,
+          label: EXAM_TYPES.Z2,
           subjectType: SubjectType.Optional,
           score: element.data.scoreZ2,
         });
-
         carriedSubjects.push({
           name: element.data.subjectZ3Name,
-          label: 'Z3',
+          isNotGraded: element.data.subjectZ3IsNotGraded,
+          label: EXAM_TYPES.Z3,
           subjectType: SubjectType.Optional,
           score: element.data.scoreZ3,
         });

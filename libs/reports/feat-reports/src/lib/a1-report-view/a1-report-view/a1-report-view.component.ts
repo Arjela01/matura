@@ -25,7 +25,18 @@ export class A1ReportViewComponent {
   @Input() a1: A1Z | null = null;
   @Input() studentInfo: Student | null = null;
   @Input() highSchoolInfo: HighSchool | null = null;
-  @Input() carriedSubjects: any[] = [];
+  @Input() set carriedSubjects(value: any) {
+    this.examSubjects = value.filter((v: any) => {
+      return !v.isNotGraded && !v.score;
+    });
+    this.nonExamSubjects = value.filter((v: any) => {
+      return !(!v.isNotGraded && !v.score);
+    });
+  }
+
+  examSubjects: any = [];
+  nonExamSubjects: any = [];
+
   items: MenuItem[] | undefined;
   carriedSubjectIndex = 18;
   @ViewChild('content', { static: false }) content: ElementRef | undefined;

@@ -5,7 +5,7 @@ export interface A1Z {
   studentFirstName?: string;
   studentMiddleName?: string;
   studentLastName?: string;
-  studentBirthDate?: string;
+  studentBirthDate?: any;
   studentBirthPlace?: string;
   studentIdentifier?: string;
   studentOldIdentifier?: string;
@@ -14,6 +14,7 @@ export interface A1Z {
 
   subjectD1Id?: string;
   subjectD1Name?: string;
+  subjectD1IsNotGraded?: boolean;
   scoreD1?: number;
   discoveredScoreD1?: number;
   reasonD1?: string;
@@ -26,6 +27,7 @@ export interface A1Z {
 
   subjectD2Id?: string;
   subjectD2Name?: string;
+  subjectD2IsNotGraded?: boolean;
   scoreD2?: number;
   discoveredScoreD2?: number;
   reasonD2?: string;
@@ -39,6 +41,7 @@ export interface A1Z {
 
   subjectD3Id?: string;
   subjectD3Name?: string;
+  subjectD3IsNotGraded?: boolean;
   scoreD3?: number;
   discoveredScoreD3?: number;
   reasonD3?: string;
@@ -51,6 +54,7 @@ export interface A1Z {
 
   subjectZ1Id?: string;
   subjectZ1Name?: string;
+  subjectZ1IsNotGraded?: boolean;
   scoreZ1?: number;
   discoveredScoreZ1?: number;
   reasonZ1?: string;
@@ -63,6 +67,7 @@ export interface A1Z {
 
   subjectZ2Id?: string;
   subjectZ2Name?: string;
+  subjectZ2IsNotGraded?: boolean;
   scoreZ2?: number;
   reasonZ2?: string;
   academicYearZ2Id?: number;
@@ -73,6 +78,7 @@ export interface A1Z {
 
   subjectZ3Id?: string;
   subjectZ3Name?: string;
+  subjectZ3IsNotGraded?: boolean;
   scoreZ3?: number;
   reasonZ3?: string;
   academicYearZ3Id?: number;
