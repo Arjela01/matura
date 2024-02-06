@@ -329,31 +329,36 @@ export class A1zFormComponent implements OnInit {
       this.examGradeApiService
         .discoverGrade(
           examTypeRecord.id ?? 0,
-          this.a1z.studentNid,
+          this.selectedStudent.idCard,
           examSubjectId
         )
         .subscribe(response => {
           if (response.isSuccessful) {
             switch (examType) {
               case EXAM_TYPES.D1:
-                if (response.data.grade ?? 0 >= 4.5)
+                if (response.data.grade ?? 0 >= 4.5) {
                   this.a1z.discoveredScoreD1 = response.data.grade;
-                else this.a1z.discoveredScoreD1 = undefined;
+                  if (!this.a1z.scoreD1) this.a1z.scoreD1 = response.data.grade;
+                } else this.a1z.discoveredScoreD1 = undefined;
+
                 break;
               case EXAM_TYPES.D2:
-                if (response.data.grade ?? 0 >= 4.5)
+                if (response.data.grade ?? 0 >= 4.5) {
                   this.a1z.discoveredScoreD2 = response.data.grade;
-                else this.a1z.discoveredScoreD2 = undefined;
+                  if (!this.a1z.scoreD2) this.a1z.scoreD2 = response.data.grade;
+                } else this.a1z.discoveredScoreD2 = undefined;
                 break;
               case EXAM_TYPES.D3:
-                if (response.data.grade ?? 0 >= 4.5)
+                if (response.data.grade ?? 0 >= 4.5) {
                   this.a1z.discoveredScoreD3 = response.data.grade;
-                else this.a1z.discoveredScoreD3 = undefined;
+                  if (!this.a1z.scoreD3) this.a1z.scoreD3 = response.data.grade;
+                } else this.a1z.discoveredScoreD3 = undefined;
                 break;
               case EXAM_TYPES.Z1:
-                if (response.data.grade ?? 0 >= 4.5)
+                if (response.data.grade ?? 0 >= 4.5) {
                   this.a1z.discoveredScoreZ1 = response.data.grade;
-                else this.a1z.discoveredScoreZ1 = undefined;
+                  if (!this.a1z.scoreZ1) this.a1z.scoreZ1 = response.data.grade;
+                } else this.a1z.discoveredScoreZ1 = undefined;
                 break;
             }
             this.cd.detectChanges();
@@ -373,7 +378,7 @@ export class A1zFormComponent implements OnInit {
         this.a1z.academicYearZ1Id,
         undefined,
         this.selectedStudent.profileId,
-          !(examType?.dependsOnSchoolProfile ?? true),
+        !(examType?.dependsOnSchoolProfile ?? true),
         undefined
       )
       .pipe(untilDestroyed(this))
