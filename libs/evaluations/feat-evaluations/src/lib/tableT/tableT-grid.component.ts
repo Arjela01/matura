@@ -20,6 +20,7 @@ export class TableTGridComponent implements OnInit {
   private tableTData$$ = new BehaviorSubject<any[]>([]);
   tableTData$ = this.tableTData$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
+  totalRecords!: number;
   event = {
     first: 0,
     rows: 100000000,
@@ -42,6 +43,7 @@ export class TableTGridComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.tableTData$$.next(response.data);
+        this.totalRecords = response.total;
       });
   }
 }

@@ -7,8 +7,14 @@
       <p-table
         #dt
         dataKey="id"
+        responsiveLayout="scroll"
+        [rows]="1000"
+        [totalRecords]="totalRecords"
+        [paginator]="true"
+        [rowsPerPageOptions]="[1000, 2000, 3000]"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
         [value]="(tableTData$ | async) || []"
-        [paginator]="false"
         [rowHover]="true"
         selectionMode="multiple"
         (onLazyLoad)="getTableTData()"
