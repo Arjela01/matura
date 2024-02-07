@@ -20,6 +20,8 @@
       <p-table
         #dt
         dataKey="id"
+        stateStorage="local"
+        stateKey="datatable-local"
         responsiveLayout="scroll"
         [value]="(a1$ | async) || []"
         [totalRecords]="totalRecords"

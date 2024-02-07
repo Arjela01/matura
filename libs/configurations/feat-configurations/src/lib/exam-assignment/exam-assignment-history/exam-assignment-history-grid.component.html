@@ -3,6 +3,8 @@
     <div class="card">
       <p-table
         #dt
+        stateStorage="local"
+        stateKey="ea-history-local"
         dataKey="id"
         responsiveLayout="scroll"
         [value]="recordData || []"

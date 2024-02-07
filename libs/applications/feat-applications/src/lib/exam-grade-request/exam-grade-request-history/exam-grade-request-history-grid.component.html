@@ -7,6 +7,8 @@
         responsiveLayout="scroll"
         [value]="recordData || []"
         [paginator]="false"
+        stateStorage="local"
+        stateKey="req-history-local"
         (onLazyLoad)="loadRows($event)"
         [lazy]="true">
         <ng-template pTemplate="header">

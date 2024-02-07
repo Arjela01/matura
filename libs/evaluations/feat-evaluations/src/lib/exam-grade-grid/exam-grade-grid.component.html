@@ -8,6 +8,8 @@
         #dt
         dataKey="id"
         responsiveLayout="scroll"
+        stateStorage="local"
+        stateKey="eg-local"
         [value]="(examGrade$ | async) || []"
         [totalRecords]="totalRecords"
         [rows]="100"
