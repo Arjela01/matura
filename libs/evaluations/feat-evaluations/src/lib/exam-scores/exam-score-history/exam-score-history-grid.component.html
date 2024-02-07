@@ -5,6 +5,8 @@
         #dt
         dataKey="id"
         responsiveLayout="scroll"
+        stateStorage="local"
+        stateKey="es-history-local"
         [value]="recordData || []"
         [paginator]="false"
         (onLazyLoad)="loadRows($event)"

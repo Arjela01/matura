@@ -1,10 +1,12 @@
 <p-table
   #dt
-  dataKey="id"
+  dataKey="Id"
   responsiveLayout="scroll"
   [value]="students"
   [totalRecords]="totalRecords"
   [rows]="100"
+  stateStorage="local"
+  stateKey="students-local"
   [paginator]="true"
   [rowsPerPageOptions]="[100, 200, 300]"
   [showCurrentPageReport]="true"
