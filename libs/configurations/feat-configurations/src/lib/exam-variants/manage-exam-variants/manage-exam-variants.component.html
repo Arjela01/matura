@@ -15,12 +15,12 @@
 <div class="grid">
   <div class="col-12">
     <div class="card">
-      <msh-exam-version-grid
-        [examVersions]="(examVersions$ | async) || []"
+      <msh-exam-variant-grid
+        [examVariants]="(examVariants$ | async) || []"
         (gridEvent)="onGridEvent($event)"
         [totalRecords]="totalRecords"
-        (lazyLoadData)="getExamVersions($event)">
-      </msh-exam-version-grid>
+        (lazyLoadData)="getExamVariants($event)">
+      </msh-exam-variant-grid>
     </div>
   </div>
 </div>
@@ -35,13 +35,13 @@
   class="p-fluid"
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
-    <msh-exam-version-form
-      [examVersionDetails]="selectedExamVersion"
+    <msh-exam-variant-form
+      [examVariantDetails]="selectedExamVariant"
       [profileGroups]="profileGroups"
       [examTypes]="examTypes"
       [examSubjects]="examSubjects"
       (formClose)="onModalClose()"
-      (formSave)="onFormSave($event)"></msh-exam-version-form>
+      (formSave)="onFormSave($event)"></msh-exam-variant-form>
   </ng-template>
 </p-dialog>
 

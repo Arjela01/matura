@@ -65,11 +65,11 @@ export const CONFIGURATION_ROUTES: Route[] = [
       ),
   },
   {
-    path: 'exam-version',
+    path: 'exam-variant',
     loadComponent: () =>
       import(
-        './exam-versions/manage-exam-versions/manage-exam-versions.component'
-      ).then(m => m.ManageExamVersionsComponent),
+        './exam-variants/manage-exam-variants/manage-exam-variants.component'
+      ).then(m => m.ManageExamVariantsComponent),
   },
   {
     path: 'exam-type',

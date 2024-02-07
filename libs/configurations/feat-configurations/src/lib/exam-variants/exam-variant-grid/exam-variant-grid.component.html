@@ -2,7 +2,7 @@
   #dt
   dataKey="id"
   responsiveLayout="scroll"
-  [value]="examVersions"
+  [value]="examVariants"
   [totalRecords]="totalRecords"
   [rows]="10"
   [paginator]="true"
@@ -10,7 +10,7 @@
   [showCurrentPageReport]="true"
   currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
   [rowHover]="true"
-  [(selection)]="selectedExamVersions"
+  [(selection)]="selectedExamVariants"
   selectionMode="multiple"
   (onRowSelect)="onRowSelect($event)"
   (onRowUnselect)="onRowUnselect($event)"
@@ -84,28 +84,28 @@
       <th></th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-examVersion>
+  <ng-template pTemplate="body" let-examVariant>
     <tr>
       <td style="width: 18%; min-width: 10rem">
-        {{ examVersion.name }}
+        {{ examVariant.name }}
       </td>
       <td style="width: 18%; min-width: 10rem">
-        {{ examVersion.numberOfQuestions }}
+        {{ examVariant.numberOfQuestions }}
       </td>
       <td style="width: 18%; min-width: 10rem">
-        {{ examVersion.profileGroupName }}
+        {{ examVariant.profileGroupName }}
       </td>
       <td style="width: 18%; min-width: 10rem">
-        {{ examVersion.variant }}
+        {{ examVariant.variant }}
       </td>
       <td style="width: 18%; min-width: 10rem">
-        {{ examVersion.examTypeName }}
+        {{ examVariant.examTypeName }}
       </td>
       <td style="width: 18%; min-width: 10rem">
-        {{ examVersion.examSubjectName }}
+        {{ examVariant.examSubjectName }}
       </td>
       <td style="width: 18%; min-width: 10rem">
-        {{ examVersion.code }}
+        {{ examVariant.code }}
       </td>
       <td>
         <div class="flex">
@@ -113,7 +113,7 @@
             src="assets/svg/edit-form.svg"
             class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"
-            (click)="onEditClick(examVersion)"
+            (click)="onEditClick(examVariant)"
             pTooltip="Ndrysho" />
 
           <img
@@ -121,7 +121,7 @@
             class="p-button-rounded p-button-danger p-button-text ml-m pointer"
             pTooltip="Fshi"
             tooltipPosition="bottom"
-            (click)="onDeleteClick(examVersion)" />
+            (click)="onDeleteClick(examVariant)" />
         </div>
       </td>
     </tr>

@@ -1,4 +1,4 @@
-export interface ExamVersion {
+export interface ExamVariant {
   id: string;
   name: string;
   numberOfQuestions: number;
@@ -11,7 +11,7 @@ export interface ExamVersion {
   examSubjectName?: string;
   code: string;
 }
-export interface ExamVersionTableView {
-  data: ExamVersion[];
+export interface ExamVariantTableView {
+  data: ExamVariant[];
   total: number;
 }

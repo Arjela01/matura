@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,27 +6,26 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ExamVersion } from '@msh/shared/domain-models';
+import { ExamVariant } from '@msh/shared/domain-models';
 import {
   ColumnFilterDirective,
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { InputTextModule } from 'primeng/inputtext';
+import { RippleModule } from 'primeng/ripple';
 import {
   TableLazyLoadEvent,
+  TableModule,
   TableRowSelectEvent,
   TableRowUnSelectEvent,
 } from 'primeng/table';
-import { TableModule } from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
-import { CheckboxModule } from 'primeng/checkbox';
-import { RippleModule } from 'primeng/ripple';
 
 @Component({
-  selector: 'msh-exam-version-grid',
+  selector: 'msh-exam-variant-grid',
   standalone: true,
   imports: [
     CommonModule,
@@ -37,47 +37,47 @@ import { RippleModule } from 'primeng/ripple';
     RippleModule,
     ColumnFilterDirective,
   ],
-  templateUrl: './exam-version-grid.component.html',
-  styleUrls: ['./exam-version-grid.component.scss'],
+  templateUrl: './exam-variant-grid.component.html',
+  styleUrls: ['./exam-variant-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamVersionGridComponent {
-  @Input() examVersions: ExamVersion[] = [];
+export class ExamVariantGridComponent {
+  @Input() examVariants: ExamVariant[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
 
-  selectedExamVersions: ExamVersion[] = [];
+  selectedExamVariants: ExamVariant[] = [];
 
   @Output() gridEvent = new EventEmitter<
-    GridEvent<ExamVersion | ExamVersion[]>
+    GridEvent<ExamVariant | ExamVariant[]>
   >();
 
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
-  onEditClick(examVersion: ExamVersion) {
+  onEditClick(examVariant: ExamVariant) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
-      data: examVersion,
-    } as GridEvent<ExamVersion>);
+      data: examVariant,
+    } as GridEvent<ExamVariant>);
   }
 
-  onDeleteClick(examVersion: ExamVersion) {
+  onDeleteClick(examVariant: ExamVariant) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,
-      data: examVersion,
-    } as GridEvent<ExamVersion>);
+      data: examVariant,
+    } as GridEvent<ExamVariant>);
   }
 
   onSelectAllClick() {
-    if (this.selectedExamVersions.length === 0) {
+    if (this.selectedExamVariants.length === 0) {
       this.gridEvent.emit({
         action: GRID_ACTIONS.UNSELECT_ALL,
-      } as GridEvent<ExamVersion>);
+      } as GridEvent<ExamVariant>);
     } else {
       this.gridEvent.emit({
         action: GRID_ACTIONS.SELECT_MANY,
-        data: this.selectedExamVersions,
-      } as GridEvent<ExamVersion[]>);
+        data: this.selectedExamVariants,
+      } as GridEvent<ExamVariant[]>);
     }
   }
 
@@ -85,14 +85,14 @@ export class ExamVersionGridComponent {
     this.gridEvent.emit({
       action: GRID_ACTIONS.SELECT_ROW,
       data: $event.data,
-    } as GridEvent<ExamVersion>);
+    } as GridEvent<ExamVariant>);
   }
 
   onRowUnselect($event: TableRowUnSelectEvent) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.UNSELECT_ROW,
       data: $event.data,
-    } as GridEvent<ExamVersion>);
+    } as GridEvent<ExamVariant>);
   }
 
   loadRows($event: TableLazyLoadEvent) {

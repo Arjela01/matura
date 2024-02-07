@@ -1940,11 +1940,11 @@ export const FAILING_STUDENT = `
        }
        }
        `;
-export const EXAM_VERSION = `
-  query ExamVersion
-  ($pagesize: Int, $skip: Int,$where: ExamVersionAuditFilterInput,
-   $order:[ExamVersionAuditSortInput!]) {
-    examVersion (take: $pagesize, skip: $skip,where: $where,order: $order) {
+export const EXAM_VARIANT = `
+  query ExamVariant
+  ($pagesize: Int, $skip: Int,$where: ExamVariantAuditFilterInput,
+   $order:[ExamVariantAuditSortInput!]) {
+    examVariant (take: $pagesize, skip: $skip,where: $where,order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -2384,7 +2384,7 @@ export const queriesMap: Map<string, string> = new Map([
   ['highSchool', HIGH_SCHOOL],
   ['gradeScale', GRADE_SCALE],
   ['failingStudent', FAILING_STUDENT],
-  ['examVersion', EXAM_VERSION],
+  ['examVariant', EXAM_VARIANT],
   ['examSubject', EXAM_SUBJECT],
   ['examSubjectProfile', EXAM_SUBJECT_PROFILE],
   ['examSite', EXAM_SITE],

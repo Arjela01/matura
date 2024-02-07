@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   ExamTypeApiService,
-  ExamVersionApiService,
+  ExamVariantApiService,
 } from '@msh/configurations/data-access-configurations';
 import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
@@ -53,15 +53,15 @@ export class ManageArchiveFolderCoverComponent implements OnInit {
   selectedArchiveFolders: ArchiveFolder[] = [];
   displayModal = false;
   examType: DropdownModel<number>[] = [];
-  examVersion: DropdownModel<number>[] = [];
+  examVariant: DropdownModel<number>[] = [];
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly archiveFolderService: ArchiveFolderApiService,
     private readonly examTypeApiService: ExamTypeApiService,
-    private readonly examVersionApiService: ExamVersionApiService,
+    private readonly examVariantApiService: ExamVariantApiService,
     private router: Router
-  ) {}
+  ) { }
   items: MenuItem[] | any;
 
   ngOnInit() {

@@ -1,58 +1,58 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ToolbarModule } from 'primeng/toolbar';
-import { ConfirmationService } from 'primeng/api';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ExamVariant } from '@msh/shared/domain-models';
 import {
-  GlobalToastService,
   GRID_ACTIONS,
+  GlobalToastService,
   GridEvent,
 } from '@msh/shared/util-shared';
-import { ExamSubject, ExamVersion } from '@msh/shared/domain-models';
+import { ConfirmationService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
+import { ToolbarModule } from 'primeng/toolbar';
 
-import { BehaviorSubject } from 'rxjs';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   ExamSubjectApiService,
   ExamTypeApiService,
-  ExamVersionApiService,
+  ExamVariantApiService,
   ProfileGroupApiService,
 } from '@msh/configurations/data-access-configurations';
-import { ExamVersionFormComponent } from '../exam-version-form/exam-version-form.component';
-import { ExamVersionGridComponent } from '../exam-version-grid/exam-version-grid.component';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { BehaviorSubject } from 'rxjs';
+import { ExamVariantFormComponent } from '../exam-variant-form/exam-variant-form.component';
+import { ExamVariantGridComponent } from '../exam-variant-grid/exam-variant-grid.component';
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-manage-exam-versions',
+  selector: 'msh-manage-exam-variants',
   standalone: true,
   imports: [
     ButtonModule,
     CommonModule,
     DialogModule,
     ConfirmDialogModule,
-    ExamVersionFormComponent,
-    ExamVersionGridComponent,
+    ExamVariantFormComponent,
+    ExamVariantGridComponent,
     ToolbarModule,
     RippleModule,
   ],
-  templateUrl: './manage-exam-versions.component.html',
-  styleUrls: ['./manage-exam-versions.component.scss'],
+  templateUrl: './manage-exam-variants.component.html',
+  styleUrls: ['./manage-exam-variants.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageExamVersionsComponent implements OnInit {
-  examVersions$$ = new BehaviorSubject<ExamVersion[]>([]);
-  examVersions$ = this.examVersions$$.asObservable();
+export class ManageExamVariantsComponent implements OnInit {
+  examVariants$$ = new BehaviorSubject<ExamVariant[]>([]);
+  examVariants$ = this.examVariants$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
-  selectedExamVersion: ExamVersion | null = null;
-  selectedExamVersions: ExamVersion[] = [];
+  selectedExamVariant: ExamVariant | null = null;
+  selectedExamVariants: ExamVariant[] = [];
   displayModal = false;
   profileGroups: DropdownModel<number>[] = [];
   examTypes: DropdownModel<number>[] = [];
@@ -60,11 +60,11 @@ export class ManageExamVersionsComponent implements OnInit {
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly examVersionService: ExamVersionApiService,
+    private readonly examVariantService: ExamVariantApiService,
     private readonly profileGroupApiService: ProfileGroupApiService,
     private readonly examTypesApiService: ExamTypeApiService,
     private readonly examSubjectsApiService: ExamSubjectApiService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getProfileGroupsDropdown();
@@ -74,40 +74,40 @@ export class ManageExamVersionsComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
-    this.selectedExamVersion = {} as ExamVersion;
+    this.selectedExamVariant = {} as ExamVariant;
   }
 
-  onGridEvent(event: GridEvent<ExamVersion | ExamVersion[]>) {
+  onGridEvent(event: GridEvent<ExamVariant | ExamVariant[]>) {
     switch (event.action) {
       case GRID_ACTIONS.SELECT_ROW:
-        this.selectedExamVersions = [
-          ...this.selectedExamVersions,
-          event.data as ExamVersion,
+        this.selectedExamVariants = [
+          ...this.selectedExamVariants,
+          event.data as ExamVariant,
         ];
         break;
       case GRID_ACTIONS.UNSELECT_ROW:
-        this.selectedExamVersions = this.selectedExamVersions.filter(hs => {
-          hs.id !== (event.data as ExamVersion).id;
+        this.selectedExamVariants = this.selectedExamVariants.filter(hs => {
+          hs.id !== (event.data as ExamVariant).id;
         });
         break;
       case GRID_ACTIONS.SELECT_MANY:
-        this.selectedExamVersions = [
-          ...this.selectedExamVersions,
-          ...(event.data as ExamVersion[]),
+        this.selectedExamVariants = [
+          ...this.selectedExamVariants,
+          ...(event.data as ExamVariant[]),
         ];
         break;
       case GRID_ACTIONS.UNSELECT_ALL:
-        this.selectedExamVersions = [];
+        this.selectedExamVariants = [];
         break;
       case GRID_ACTIONS.EDIT:
-        this.selectedExamVersion = Object.assign({}, event.data as ExamVersion);
+        this.selectedExamVariant = Object.assign({}, event.data as ExamVariant);
         this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
           message: 'Jeni i sigurt që doni të fshini tezën zgjedhur?',
           accept: () => {
-            this.deleteExamVersion(event.data as ExamVersion);
+            this.deleteExamVariant(event.data as ExamVariant);
           },
         });
         break;
@@ -118,37 +118,37 @@ export class ManageExamVersionsComponent implements OnInit {
     this.displayModal = false;
   }
 
-  onFormSave(examVersion: ExamVersion) {
-    if (examVersion.id) {
-      this.updateExamVersion(examVersion);
+  onFormSave(examVariant: ExamVariant) {
+    if (examVariant.id) {
+      this.updateExamVariant(examVariant);
     }
-    if (!examVersion.id) {
-      this.addExamVersion(examVersion);
+    if (!examVariant.id) {
+      this.addExamVariant(examVariant);
     }
     this.displayModal = false;
   }
 
-  getExamVersions($event: TableLazyLoadEvent) {
+  getExamVariants($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    this.examVersionService
-      .loadExamVersions($event)
+    this.examVariantService
+      .loadExamVariants($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.examVersions$$.next(response.data);
+        this.examVariants$$.next(response.data);
         this.totalRecords = response.total;
       });
   }
 
-  addExamVersion(examVersion: ExamVersion) {
-    this.examVersionService
-      .save(examVersion)
+  addExamVariant(examVariant: ExamVariant) {
+    this.examVariantService
+      .save(examVariant)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Teza u shtua me sukses!');
           this.displayModal = false;
-          this.getExamVersions(this.filters as TableLazyLoadEvent);
+          this.getExamVariants(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -158,15 +158,15 @@ export class ManageExamVersionsComponent implements OnInit {
       });
   }
 
-  updateExamVersion(examVersion: ExamVersion) {
-    this.examVersionService
-      .update(examVersion)
+  updateExamVariant(examVariant: ExamVariant) {
+    this.examVariantService
+      .update(examVariant)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Teza u ndryshua me sukses!');
           this.displayModal = false;
-          this.getExamVersions(this.filters as TableLazyLoadEvent);
+          this.getExamVariants(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -176,14 +176,14 @@ export class ManageExamVersionsComponent implements OnInit {
       });
   }
 
-  deleteExamVersion(examVersion: ExamVersion) {
-    this.examVersionService
-      .delete(examVersion.id)
+  deleteExamVariant(examVariant: ExamVariant) {
+    this.examVariantService
+      .delete(examVariant.id)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Teza u fshi me sukses!');
-          this.getExamVersions(this.filters as TableLazyLoadEvent);
+          this.getExamVariants(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)

@@ -1,25 +1,25 @@
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
-import { TableLazyLoadEvent } from 'primeng/table';
-import { ExamVersion, ExamVersionTableView } from '@msh/shared/domain-models';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
+import { ExamVariant, ExamVariantTableView } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
+import { TableLazyLoadEvent } from 'primeng/table';
+import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ExamVersionApiService {
-  constructor(private apiService: APIService) {}
+export class ExamVariantApiService {
+  constructor(private apiService: APIService) { }
 
-  loadExamVersions(
+  loadExamVariants(
     event: TableLazyLoadEvent
-  ): Observable<ExamVersionTableView> {
-    return this.apiService.post(`/ExamVersion/TableData`, event);
+  ): Observable<ExamVariantTableView> {
+    return this.apiService.post(`/ExamVariant/TableData`, event);
   }
 
-  save(examVersion: ExamVersion): Observable<ApiResult<ExamVersion>> {
+  save(examVariant: ExamVariant): Observable<ApiResult<ExamVariant>> {
     return this.apiService
-      .post<ApiResult<ExamVersion>, ExamVersion>(`/ExamVersion`, examVersion)
+      .post<ApiResult<ExamVariant>, ExamVariant>(`/ExamVariant`, examVariant)
       .pipe(
         map(data => data),
         catchError(error => throwError(error)),
@@ -27,9 +27,9 @@ export class ExamVersionApiService {
       );
   }
 
-  update(examVersion: ExamVersion): Observable<ApiResult<ExamVersion>> {
+  update(examVariant: ExamVariant): Observable<ApiResult<ExamVariant>> {
     return this.apiService
-      .post<ApiResult<ExamVersion>, ExamVersion>(`/ExamVersion/Update`, examVersion)
+      .post<ApiResult<ExamVariant>, ExamVariant>(`/ExamVariant/Update`, examVariant)
       .pipe(
         map(data => data),
         catchError(error => throwError(error)),
@@ -37,9 +37,9 @@ export class ExamVersionApiService {
       );
   }
 
-  delete(examVersionId: string): Observable<ApiResult<unknown>> {
+  delete(examVariantId: string): Observable<ApiResult<unknown>> {
     return this.apiService
-      .delete<ApiResult<ExamVersion>>(`/ExamVersion/${examVersionId}`)
+      .delete<ApiResult<ExamVariant>>(`/ExamVariant/${examVariantId}`)
       .pipe(
         map(data => data),
         catchError(error => throwError(error)),
@@ -51,13 +51,13 @@ export class ExamVersionApiService {
     examSubjectId: string
   ): Observable<ApiResult<DropdownModel<string>[]>> {
     return this.apiService.post<ApiResult<DropdownModel<string>[]>, any>(
-      `/ExamVersion/ForExamSubject`,
+      `/ExamVariant/ForExamSubject`,
       { examSubjectId: examSubjectId }
     );
   }
   loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
-      `/ExamVersion/DropdownList`
+      `/ExamVariant/DropdownList`
     );
   }
 }

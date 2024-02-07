@@ -252,7 +252,7 @@ export const EXAM_SECRET = `
                     displayName
                 }
             }
-                examVersion {
+                examVariant {
                 id
                 code
                 name
@@ -1923,11 +1923,11 @@ export const FAILING_STUDENT = `
        }
        }
        `;
-export const EXAM_VERSION = `
-  query ExamVersion
-  ($pagesize: Int, $skip: Int,$where: ExamVersionAuditFilterInput,
-   $order:[ExamVersionAuditSortInput!]) {
-    examVersion (take: $pagesize, skip: $skip,where: $where,order: $order) {
+export const EXAM_VARIANT = `
+  query ExamVariant
+  ($pagesize: Int, $skip: Int,$where: ExamVariantAuditFilterInput,
+   $order:[ExamVariantAuditSortInput!]) {
+    examVariant (take: $pagesize, skip: $skip,where: $where,order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -2341,31 +2341,31 @@ export const STUDENTS = `
 `;
 
 export const queriesMap: Map<string, string> = new Map([
-  ['a1Forms', A1_FORMS],
-  ['students', STUDENTS],
-  ['administrationOffice', ADMINISTRATION_OFFICE_QUERY],
-  ['examType', EXAM_TYPE_QUERY],
-  ['carriedGrade', CARRIED_GRADE],
-  ['examSecret', EXAM_SECRET],
-  ['examScore', EXAM_SCORE],
-  ['examDate', EXAM_DATE],
-  ['examCopyRequest', EXAM_COPY_REQUEST],
-  ['examAssignment', EXAM_ASSIGNMENT],
-  ['a1ZForms', A1Z_FORMS],
-  ['archiveExam', ARCHIVE_EXAM],
-  ['archiveFolder', ARCHIVE_FOLDER],
-  ['averageGrade', AVERAGE_GRADE],
-  ['profileGroup', PROFILE_GROUP],
-  ['profile', PROFILE],
-  ['studentBan', STUDENT_BAN],
-  ['studyProgram', STUDY_PROGRAM],
-  ['studySubject', STUDY_SUBJECT],
-  ['highSchool', HIGH_SCHOOL],
-  ['gradeScale', GRADE_SCALE],
-  ['failingStudent', FAILING_STUDENT],
-  ['examVersion', EXAM_VERSION],
-  ['examSubject', EXAM_SUBJECT],
-  ['examSubjectProfile', EXAM_SUBJECT_PROFILE],
-  ['examSite', EXAM_SITE],
-  ['users', USERS],
+    ['a1Forms', A1_FORMS],
+    ['students', STUDENTS],
+    ['administrationOffice', ADMINISTRATION_OFFICE_QUERY],
+    ['examType', EXAM_TYPE_QUERY],
+    ['carriedGrade', CARRIED_GRADE],
+    ['examSecret', EXAM_SECRET],
+    ['examScore', EXAM_SCORE],
+    ['examDate', EXAM_DATE],
+    ['examCopyRequest', EXAM_COPY_REQUEST],
+    ['examAssignment', EXAM_ASSIGNMENT],
+    ['a1ZForms', A1Z_FORMS],
+    ['archiveExam', ARCHIVE_EXAM],
+    ['archiveFolder', ARCHIVE_FOLDER],
+    ['averageGrade', AVERAGE_GRADE],
+    ['profileGroup', PROFILE_GROUP],
+    ['profile', PROFILE],
+    ['studentBan', STUDENT_BAN],
+    ['studyProgram', STUDY_PROGRAM],
+    ['studySubject', STUDY_SUBJECT],
+    ['highSchool', HIGH_SCHOOL],
+    ['gradeScale', GRADE_SCALE],
+    ['failingStudent', FAILING_STUDENT],
+    ['examVariant', EXAM_VARIANT],
+    ['examSubject', EXAM_SUBJECT],
+    ['examSubjectProfile', EXAM_SUBJECT_PROFILE],
+    ['examSite', EXAM_SITE],
+    ['users', USERS],
 ]);

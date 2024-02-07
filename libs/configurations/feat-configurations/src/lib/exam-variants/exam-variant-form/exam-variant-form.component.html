@@ -6,11 +6,11 @@
       pInputText
       id="Name"
       name="Name"
-      [(ngModel)]="examVersion.name"
+      [(ngModel)]="examVariant.name"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examVersion.name }" />
-    <small class="p-error block" *ngIf="submitted && !examVersion.name">
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examVariant.name }" />
+    <small class="p-error block" *ngIf="submitted && !examVariant.name">
       Emri është fushë e kërkuar.
     </small>
   </div>
@@ -21,15 +21,15 @@
       pInputText
       id="NumberOfQuestions"
       name="NumberOfQuestions"
-      [(ngModel)]="examVersion.numberOfQuestions"
+      [(ngModel)]="examVariant.numberOfQuestions"
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examVersion.numberOfQuestions
+        'ng-invalid ng-dirty': submitted && !examVariant.numberOfQuestions
       }" />
     <small
       class="p-error block"
-      *ngIf="submitted && !examVersion.numberOfQuestions">
+      *ngIf="submitted && !examVariant.numberOfQuestions">
       Numri i pyetjeve është fushë e kërkuar.
     </small>
   </div>
@@ -43,16 +43,16 @@
       name="profileGroupId"
       [filter]="true"
       [autoDisplayFirst]="false"
-      [(ngModel)]="examVersion.profileGroupId"
+      [(ngModel)]="examVariant.profileGroupId"
       [showClear]="true"
       [required]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examVersion.profileGroupId
+        'ng-invalid ng-dirty': submitted && !examVariant.profileGroupId
       }">
     </p-dropdown>
     <small
       class="p-error block"
-      *ngIf="submitted && !examVersion.profileGroupId">
+      *ngIf="submitted && !examVariant.profileGroupId">
       Grupi i Profileve është fushë e kërkuar.
     </small>
   </div>
@@ -63,13 +63,13 @@
       pInputText
       id="Variant"
       name="Variant"
-      [(ngModel)]="examVersion.variant"
+      [(ngModel)]="examVariant.variant"
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examVersion.variant
+        'ng-invalid ng-dirty': submitted && !examVariant.variant
       }" />
-    <small class="p-error block" *ngIf="submitted && !examVersion.variant">
+    <small class="p-error block" *ngIf="submitted && !examVariant.variant">
       Varianti është fushë e kërkuar.
     </small>
   </div>
@@ -84,14 +84,14 @@
       appendTo="body"
       [filter]="true"
       [autoDisplayFirst]="false"
-      [(ngModel)]="examVersion.examTypeId"
+      [(ngModel)]="examVariant.examTypeId"
       [showClear]="true"
       [required]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examVersion.examTypeId
+        'ng-invalid ng-dirty': submitted && !examVariant.examTypeId
       }">
     </p-dropdown>
-    <small class="p-error block" *ngIf="submitted && !examVersion.examTypeId">
+    <small class="p-error block" *ngIf="submitted && !examVariant.examTypeId">
       Tipi i Provimit është fushë e kërkuar.
     </small>
   </div>
@@ -106,16 +106,16 @@
       [filter]="true"
       appendTo="body"
       [autoDisplayFirst]="false"
-      [(ngModel)]="examVersion.examSubjectId"
+      [(ngModel)]="examVariant.examSubjectId"
       [showClear]="true"
       [required]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examVersion.examSubjectId
+        'ng-invalid ng-dirty': submitted && !examVariant.examSubjectId
       }">
     </p-dropdown>
     <small
       class="p-error block"
-      *ngIf="submitted && !examVersion.examSubjectId">
+      *ngIf="submitted && !examVariant.examSubjectId">
       Lënda e Provimit është fushë e kërkuar.
     </small>
   </div>
@@ -126,11 +126,11 @@
       pInputText
       id="Code"
       name="Code"
-      [(ngModel)]="examVersion.code"
+      [(ngModel)]="examVariant.code"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examVersion.code }" />
-    <small class="p-error block" *ngIf="submitted && !examVersion.code">
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examVariant.code }" />
+    <small class="p-error block" *ngIf="submitted && !examVariant.code">
       Kodi është fushë e kërkuar.
     </small>
   </div>
