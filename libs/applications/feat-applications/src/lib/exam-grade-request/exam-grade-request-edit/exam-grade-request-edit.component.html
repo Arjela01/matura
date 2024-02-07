@@ -31,8 +31,7 @@
               id="studentId"
               name="studentId"
               [(ngModel)]="examGradeRequest.maturaId"
-              autofocus
-              />
+              autofocus />
           </div>
           <div class="field">
             <label for="firstName">Emri *</label>
@@ -90,6 +89,54 @@
               class="p-error block"
               *ngIf="submitted && !examGradeRequest.lastName">
               Mbiemri është fushë e kërkuar.
+            </small>
+          </div>
+
+          <div class="field">
+            <label for="email">Email *</label>
+            <input
+              type="text"
+              pInputText
+              id="email"
+              name="email"
+              [(ngModel)]="examGradeRequest.email"
+              required
+              autofocus
+              [ngClass]="{
+                'ng-invalid ng-dirty': submitted && !examGradeRequest.email
+              }" />
+            <small
+              class="p-error block"
+              *ngIf="submitted && !examGradeRequest.email">
+              Email është fushë e kërkuar.
+            </small>
+          </div>
+
+          <div class="field">
+            <label for="highSchool"
+              >Shkolla ku keni përfunduar arsimin e mesëm. *</label
+            >
+            <p-dropdown
+              id="highSchool"
+              [options]="highSchool"
+              optionValue="key"
+              optionLabel="value"
+              name="highSchool"
+              appendTo="body"
+              [filter]="true"
+              [required]="true"
+              [autoDisplayFirst]="false"
+              [(ngModel)]="examGradeRequest.highSchoolId"
+              [showClear]="true"
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  submitted && !examGradeRequest.highSchoolId
+              }">
+            </p-dropdown>
+            <small
+              class="p-error block"
+              *ngIf="submitted && !examGradeRequest.highSchoolId">
+              Shkolla është fushë e kërkuar.
             </small>
           </div>
 
@@ -165,7 +212,7 @@
           </div>
 
           <div class="field">
-            <label for="description">Përshkrimi *</label>
+            <label for="description">Përshkrimi</label>
             <textarea
               name="description"
               id="description"
@@ -173,16 +220,7 @@
               cols="30"
               pInputTextarea
               required
-              [(ngModel)]="examGradeRequest.description"
-              [ngClass]="{
-                'ng-invalid ng-dirty':
-                  submitted && !examGradeRequest.description
-              }"></textarea>
-            <small
-              class="p-error block"
-              *ngIf="submitted && !examGradeRequest.description">
-              Përshkrimi është fushë e kërkuar.
-            </small>
+              [(ngModel)]="examGradeRequest.description"></textarea>
           </div>
         </div>
 

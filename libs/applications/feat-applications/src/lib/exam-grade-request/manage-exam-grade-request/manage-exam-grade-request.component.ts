@@ -25,7 +25,10 @@ import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ExamGradeRequestGridComponent } from '../exam-grade-request-grid/exam-grade-request-grid.component';
 import { ExamGradeRequestFormComponent } from '../exam-grade-request-form/exam-grade-request-form.component';
-import { AcademicYearApiService } from '@msh/configurations/data-access-configurations';
+import {
+  AcademicYearApiService,
+  HighSchoolApiService,
+} from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ManualExamGradeFormComponent } from '../../manual-exam-grade/manual-exam-grade-form/manual-exam-grade-form.component';
 import { StudentsGridComponent } from '../../students/students-grid/students-grid.component';
@@ -61,6 +64,7 @@ export class ManageExamGradeRequestComponent implements OnInit {
   selectedExamGrades: ExamGradeRequestModel[] = [];
   displayModal = false;
   academicYears: DropdownModel<number>[] = [];
+  highSchools: DropdownModel<number>[] = [];
 
   studentId: string | undefined;
   selectedRecord: any;
@@ -72,6 +76,7 @@ export class ManageExamGradeRequestComponent implements OnInit {
     private readonly toastService: GlobalToastService,
     private readonly examGradeRequestService: ExamGradeRequestService,
     private readonly academicYearService: AcademicYearApiService,
+    private readonly highSchoolService: HighSchoolApiService,
     private cd: ChangeDetectorRef
   ) {}
 
@@ -86,6 +91,7 @@ export class ManageExamGradeRequestComponent implements OnInit {
 
   ngOnInit() {
     this.getAcademicYears();
+    this.getHighSchools();
   }
 
   onGridEvent(event: GridEvent<any | any[]>) {
@@ -166,5 +172,12 @@ export class ManageExamGradeRequestComponent implements OnInit {
       .subscribe(res => {
         this.academicYears = res.data;
       });
+  }
+
+  getHighSchools() {
+    this.highSchoolService
+      .loadDropDownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(res => (this.highSchools = res.data));
   }
 }

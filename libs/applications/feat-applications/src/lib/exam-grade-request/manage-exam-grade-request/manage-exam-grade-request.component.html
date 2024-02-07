@@ -31,7 +31,7 @@
 
 <p-dialog
   [(visible)]="displayModal"
-  [style]="{ width: '500px' }"
+  [style]="{ width: '600px' }"
   header="Detajet e Kërkesës"
   [modal]="true"
   [draggable]="false"
@@ -40,6 +40,7 @@
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
     <msh-exam-grade-request-form
+      [highSchools]="highSchools"
       [academicYears]="academicYears"
       [examGradeRequestDetails]="selectedExamGrade"
       (formClose)="onModalClose()"

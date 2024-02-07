@@ -86,6 +86,54 @@
   </div>
 
   <div class="field">
+    <label for="email">Email *</label>
+    <input
+      type="text"
+      pInputText
+      id="email"
+      name="email"
+      [(ngModel)]="examGradeRequest.email"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examGradeRequest.email
+      }" />
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examGradeRequest.email">
+      Email është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="highSchool"
+    >Shkolla ku keni përfunduar arsimin e mesëm. *</label
+    >
+    <p-dropdown
+      id="highSchool"
+      [options]="highSchools"
+      optionValue="key"
+      optionLabel="value"
+      name="highSchool"
+      appendTo="body"
+      [filter]="true"
+      [required]="true"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="examGradeRequest.highSchoolId"
+      [showClear]="true"
+      [ngClass]="{
+                'ng-invalid ng-dirty':
+                  submitted && !examGradeRequest.highSchoolId
+              }">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examGradeRequest.highSchoolId">
+      Shkolla është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
     <label for="date">Ditëlindja *</label>
     <p-calendar
       [(ngModel)]="date"
