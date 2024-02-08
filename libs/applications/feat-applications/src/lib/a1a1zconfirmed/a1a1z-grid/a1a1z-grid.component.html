@@ -112,8 +112,7 @@
             type="boolean"
             matchMode="equals"
             field="isAN"
-            display="menu"
-            ></p-columnFilter>
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="isFall">
@@ -124,8 +123,18 @@
             type="boolean"
             matchMode="equals"
             field="isFall"
+            display="menu"></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="isA1">
+        Tipi i Formularit
+        <div>
+          <p-sortIcon field="isA1"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            field="isA1"
             display="menu"
-            ></p-columnFilter>
+            matchMode="equals"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="isConfirmedBySupervisor">
@@ -177,6 +186,9 @@
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ student.isFall ? 'Po' : 'Jo' }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ student.isA1 ? 'A1' : 'A1Z' }}
       </td>
       <td style="width: 14%; min-width: 10rem">
         <div class="flex">

@@ -1,20 +1,22 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="field">
-    <label for="examSubject">Lënda e Provimit *</label>
-    <input
-      type="text"
-      pInputText
-      id="examSubject"
-      name="examSubject"
-      [(ngModel)]="manualExamGrade.examSubjectName"
-      required
-      autofocus
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !manualExamGrade.examSubjectName
-      }" />
+    <label for="academicYear">Lënda e Provimit *</label>
+    <p-dropdown
+      id="academicYear"
+      [options]="examSubjects"
+      optionValue="key"
+      optionLabel="value"
+      name="academicYear"
+      appendTo="body"
+      [filter]="true"
+      [required]="true"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="manualExamGrade.examSubjectId"
+      [showClear]="true">
+    </p-dropdown>
     <small
       class="p-error block"
-      *ngIf="submitted && !manualExamGrade.examSubjectName">
+      *ngIf="submitted && !manualExamGrade.examSubjectId">
       Lënda është fushë e kërkuar.
     </small>
   </div>

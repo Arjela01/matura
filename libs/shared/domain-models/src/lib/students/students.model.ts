@@ -37,10 +37,11 @@ export interface Student extends SharedStudent {
   modifiedOn?: Date;
   modifiedByName?: string;
   nid?: string;
+  isA1?: boolean;
   isDiplomaRequirementException?: boolean;
   countryId?: number;
   ealbaniaDocsDiplomaPrintedDate?: Date;
-  isDiplomaSealSentToEalbaniaDocs?:boolean;
+  isDiplomaSealSentToEalbaniaDocs?: boolean;
 }
 
 export interface StudentTableView {

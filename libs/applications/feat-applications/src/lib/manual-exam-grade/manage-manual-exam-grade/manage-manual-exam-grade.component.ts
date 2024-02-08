@@ -73,7 +73,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
   providers: [ConfirmationService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ManageManualExamGradeComponent {
+export class ManageManualExamGradeComponent implements OnInit {
   private manualExamGrade$$ = new BehaviorSubject<ManualExamGradeModel[]>([]);
   manualExamGrade$ = this.manualExamGrade$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
@@ -82,6 +82,7 @@ export class ManageManualExamGradeComponent {
   selectedManualExamGrade: ManualExamGradeModel | null = null;
   displayModal = false;
   idCard: any;
+  examSubjects: DropdownModel<string>[] = [];
 
   formSave = new EventEmitter<ExamGradeRequestModel>();
   formClose = new EventEmitter<undefined>();
@@ -91,6 +92,7 @@ export class ManageManualExamGradeComponent {
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly manualExamGradeService: ManualExamGradeService,
+    private readonly examSubjectService: ExamSubjectApiService,
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router
@@ -114,7 +116,13 @@ export class ManageManualExamGradeComponent {
     middleName: '',
     description: '',
     maturaId: '',
+    email: '',
+    highSchoolId: '',
   };
+
+  ngOnInit() {
+    this.getExamSubject();
+  }
 
   onCancelClick() {
     this.formClose.emit();
@@ -179,25 +187,14 @@ export class ManageManualExamGradeComponent {
           this.displayModal = false;
           this.getGrades(this.idCard);
         } else {
-          if (response.errorMessage.includes('nuk u gjet')) {
-            this.toastService.showInfo(
-              `Maturanti nuk u gjet.
-               Ju lutem krijoni maturantin ne faqen që do ju hapet në vijim! `
-            );
-            setTimeout(() => {
-              this.router.navigate(['/applications/students/add']);
-            }, 5000);
-          } else {
-            this.toastService.showError(response.errorMessage);
-          }
-
-          if (response.isBadRequest) {
-            this.toastService.showError(
-              'Ndodhi një problem gjatë ndryshimit të notës!'
-            );
-          }
-          this.cd.markForCheck();
+          this.toastService.showError(response.errorMessage);
         }
+        if (response.isBadRequest) {
+          this.toastService.showError(
+            'Ndodhi një problem gjatë ndryshimit të notës!'
+          );
+        }
+        this.cd.markForCheck();
       });
   }
 
@@ -238,5 +235,12 @@ export class ManageManualExamGradeComponent {
             'Ndodhi një problem gjatë fshirjes të notës!'
           );
       });
+  }
+
+  getExamSubject() {
+    this.examSubjectService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(res => (this.examSubjects = res.data));
   }
 }

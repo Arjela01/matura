@@ -58,8 +58,11 @@ export class ExamGradeRequestEditComponent {
     lastName: '',
     maturaId: '',
     middleName: '',
+    highSchoolId: '',
+    email: '',
   };
   @Input() academicYears: DropdownModel<number>[] = [];
+  @Input() highSchool: DropdownModel<number>[] = [];
   @Input() examGradeRequestStatus: DropdownModel<string>[] = [];
   @Output() formSave = new EventEmitter<ExamGradeRequestModel>();
   @Output() formClose = new EventEmitter<undefined>();
