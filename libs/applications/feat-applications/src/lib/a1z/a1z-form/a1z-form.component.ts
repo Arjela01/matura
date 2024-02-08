@@ -318,6 +318,8 @@ export class A1zFormComponent implements OnInit {
     }
     if (this.a1z.carryZ1) {
       this.discoverGrade(EXAM_TYPES.Z1, this.a1z.subjectZ1Id);
+    } else {
+      this.a1z.scoreZ1 = undefined;
     }
     this.cd.detectChanges();
   }
@@ -635,6 +637,8 @@ export class A1zFormComponent implements OnInit {
   protected readonly A1ZFormModeEnum = A1ZFormModeEnum;
 
   onZ1SubjectChange($event: DropdownChangeEvent) {
-    this.discoverGrade(EXAM_TYPES.Z1, this.a1z.subjectZ1Id);
+    if (this.a1z.carryZ1) {
+      this.discoverGrade(EXAM_TYPES.Z1, this.a1z.subjectZ1Id);
+    } else this.a1z.scoreZ1 = undefined;
   }
 }

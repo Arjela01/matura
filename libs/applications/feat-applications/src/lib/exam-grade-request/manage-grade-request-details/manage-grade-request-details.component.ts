@@ -86,7 +86,6 @@ export class ManageGradeRequestDetailsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(res => {
         this.academicYears = res.data;
-        console.log(123, this.academicYears);
       });
   }
 

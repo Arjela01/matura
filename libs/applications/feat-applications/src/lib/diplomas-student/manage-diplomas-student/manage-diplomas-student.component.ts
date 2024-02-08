@@ -229,9 +229,6 @@ export class ManageDiplomasStudentComponent implements OnInit {
           } else {
             this.toastService.showError('Ndodhi një gabim!');
           }
-        },
-        error => {
-          console.log(error);
         }
       )
       .add(() => this.responseLoaded.next(false));
