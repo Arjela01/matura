@@ -341,24 +341,39 @@ export class A1zFormComponent implements OnInit {
                   if (!this.a1z.scoreD1) this.a1z.scoreD1 = response.data.grade;
                 } else this.a1z.discoveredScoreD1 = undefined;
 
+                if (!this.a1z.carryD1) {
+                  this.a1z.scoreD1 = undefined;
+                }
                 break;
               case EXAM_TYPES.D2:
                 if (response.data.grade ?? 0 >= 4.5) {
                   this.a1z.discoveredScoreD2 = response.data.grade;
                   if (!this.a1z.scoreD2) this.a1z.scoreD2 = response.data.grade;
                 } else this.a1z.discoveredScoreD2 = undefined;
+
+                if (!this.a1z.carryD2) {
+                  this.a1z.scoreD2 = undefined;
+                }
                 break;
               case EXAM_TYPES.D3:
                 if (response.data.grade ?? 0 >= 4.5) {
                   this.a1z.discoveredScoreD3 = response.data.grade;
                   if (!this.a1z.scoreD3) this.a1z.scoreD3 = response.data.grade;
                 } else this.a1z.discoveredScoreD3 = undefined;
+
+                if (!this.a1z.carryD3) {
+                  this.a1z.scoreD3 = undefined;
+                }
                 break;
               case EXAM_TYPES.Z1:
                 if (response.data.grade ?? 0 >= 4.5) {
                   this.a1z.discoveredScoreZ1 = response.data.grade;
                   if (!this.a1z.scoreZ1) this.a1z.scoreZ1 = response.data.grade;
                 } else this.a1z.discoveredScoreZ1 = undefined;
+
+                if (!this.a1z.carryZ1) {
+                  this.a1z.scoreZ1 = undefined;
+                }
                 break;
             }
             this.cd.detectChanges();
