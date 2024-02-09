@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -10,7 +9,7 @@ import {
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import { ExamVariant } from '@msh/shared/domain-models';
+import { AcademicYear, ExamVariant } from '@msh/shared/domain-models';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
@@ -37,11 +36,13 @@ import { RadioButtonModule } from 'primeng/radiobutton';
   styleUrls: ['./exam-variant-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamVariantFormComponent {
+export class ExamVariantFormComponent{
   @Input() examTypes: DropdownModel<number>[] = [];
   @Input() examSubjects: DropdownModel<string>[] = [];
   @Input() profileGroups: DropdownModel<number>[] = [];
-
+  @Input() profiles: DropdownModel<number>[] = [];
+  @Input() academicYears: DropdownModel<any>[] = []
+  @Input() academicYear: Partial<AcademicYear> | null = null;
   @Input() set examVariantDetails(details: ExamVariant | null) {
     if (details) {
       this.examVariant = Object.assign({}, details);
@@ -50,27 +51,27 @@ export class ExamVariantFormComponent {
 
   @Output() formSave = new EventEmitter<ExamVariant>();
   @Output() formClose = new EventEmitter<undefined>();
-
+  @Output() loadExamSubjects = new EventEmitter<ExamVariant>();
   @ViewChild('form', { static: true }) form!: NgForm;
-
   examTypesFiltered: DropdownModel<number>[] = [];
-
+  examType:any = null;
   submitted = false;
 
   examVariant: ExamVariant = {
-    id: '',
     name: '',
     numberOfQuestions: 0,
-    variant: '',
-    code: '',
+    profileGroupId:null,
+    profileId:0,
+    maximumScore:0,
+    examVariantAcademicYearId:0,
+    examSubjectId:'',
+    examTypeId:0,
+
   };
-
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private cd: ChangeDetectorRef) { }
-
   ngOnChanges(): void {
     if (this.profileGroups && this.examVariant.examTypeId) {
-      this.onExamTypeChange({ value: this.examVariant.examTypeId });
+      this.onExamTypeChange({ value: this.examType });
     }
   }
 
@@ -81,6 +82,7 @@ export class ExamVariantFormComponent {
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
+      this.examVariant.examVariantAcademicYearId = this.academicYear?.id;
       this.formSave.emit(this.examVariant);
     }
   }
@@ -89,5 +91,9 @@ export class ExamVariantFormComponent {
     this.examTypesFiltered = this.examTypes.filter(
       e => e.parentKey == $event.value
     );
+  }
+
+  refreshExamSubjects() {
+    this.loadExamSubjects.emit(Object.assign({}, this.examVariant));
   }
 }

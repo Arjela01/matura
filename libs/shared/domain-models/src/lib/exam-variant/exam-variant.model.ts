@@ -1,16 +1,20 @@
 export interface ExamVariant {
-  id: string;
-  name: string;
-  numberOfQuestions: number;
-  profileGroupId?: string;
-  profileGroupName?: string;
-  variant: string;
-  examTypeId?: string;
-  examTypeName?: string;
-  examSubjectId?: string;
-  examSubjectName?: string;
-  code: string;
+  name: string
+  numberOfQuestions: number
+  maximumScore: number
+  examSubjectId: string
+  examSubjectName?: string
+  examVariantAcademicYearId:any
+  examTypeId: number
+  examTypeName?: string
+  profileGroupId: number|null
+  profileGroupName?: string
+  profileId: any
+  profileName?: any
+  academicYearName?: string
+  id?: any
 }
+
 export interface ExamVariantTableView {
   data: ExamVariant[];
   total: number;

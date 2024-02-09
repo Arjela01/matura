@@ -1,5 +1,5 @@
 <div class="flex center mb-2 page-header mb-header">
-  <h2 class="flex-1 mb-0">Teza Provimi</h2>
+  <h2 class="flex-1 mb-0">Variante Provimi</h2>
   <div class="flex align-items-right justify-content-right">
     <div class="my-2">
       <button
@@ -28,7 +28,7 @@
 <p-dialog
   [(visible)]="displayModal"
   [style]="{ width: '500px' }"
-  header="Detajet e Tezave të Provimeve"
+  header="Detajet e Varianteve të Provimeve"
   [modal]="true"
   [draggable]="false"
   [resizable]="false"
@@ -36,10 +36,14 @@
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
     <msh-exam-variant-form
+      (loadExamSubjects)="loadExamSubjects($event)"
       [examVariantDetails]="selectedExamVariant"
       [profileGroups]="profileGroups"
+      [profiles]="profiles"
       [examTypes]="examTypes"
       [examSubjects]="examSubjects"
+      [academicYears]="academicYears"
+      [academicYear]="academicYear"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)"></msh-exam-variant-form>
   </ng-template>
