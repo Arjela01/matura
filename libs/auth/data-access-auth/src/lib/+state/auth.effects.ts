@@ -137,7 +137,7 @@ export class AuthEffects {
         if (token[roleKey] !== 'Admin') {
           return of(
             AuthActions.initAcademicYear({
-              academicYear: { id: 0, year: '' },
+                academicYear: activeYear,
             })
           );
         }
