@@ -5,8 +5,7 @@
 <div class="grid">
   <div class="col-12">
     <div class="card">
-      <p-table [value]="auditTablesList" stateStorage="local"
-               stateKey="gt-local" [paginator]="true" [rows]="10">
+      <p-table [value]="auditTablesList" [paginator]="true" [rows]="10">
         <ng-template pTemplate="header">
           <tr>
             <th pSortableColumn="tableName">
