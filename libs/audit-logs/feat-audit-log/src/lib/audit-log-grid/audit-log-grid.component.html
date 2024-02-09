@@ -13,8 +13,6 @@
       <div class="card scroll">
         <p-table
           [value]="data"
-          stateStorage="local"
-          stateKey="al-local"
           [paginator]="false"
           (onLazyLoad)="loadRows($event)"
           [lazy]="true">
