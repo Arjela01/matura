@@ -2,7 +2,7 @@
   #dt
   dataKey="id"
   responsiveLayout="scroll"
-  [value]="examVersions"
+  [value]="examVariants"
   [totalRecords]="totalRecords"
   [rows]="10"
   [paginator]="true"
@@ -10,7 +10,7 @@
   [showCurrentPageReport]="true"
   currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
   [rowHover]="true"
-  [(selection)]="selectedExamVersions"
+  [(selection)]="selectedExamVariants"
   selectionMode="multiple"
   (onRowSelect)="onRowSelect($event)"
   (onRowUnselect)="onRowUnselect($event)"
@@ -27,15 +27,6 @@
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
-      <th pSortableColumn="numberOfQuestions">
-        Numri i pyetjeve
-        <p-sortIcon field="numberOfQuestions"></p-sortIcon>
-        <p-columnFilter
-          type="numeric"
-          field="numberOfQuestions"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
-      </th>
       <th pSortableColumn="profileGroupName">
         Grupi i Profileve
         <p-sortIcon field="profileGroupName"></p-sortIcon>
@@ -45,12 +36,12 @@
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
-      <th pSortableColumn="variant">
-        Varianti
-        <p-sortIcon field="variant"></p-sortIcon>
+      <th pSortableColumn="profileName">
+        Profili
+        <p-sortIcon field="profileName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="variant"
+          field="profileName"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
@@ -72,40 +63,49 @@
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
-      <th pSortableColumn="code">
-        Kodi
-        <p-sortIcon field="code"></p-sortIcon>
+      <th pSortableColumn="numberOfQuestions">
+        Numri i pyetjeve
+        <p-sortIcon field="numberOfQuestions"></p-sortIcon>
         <p-columnFilter
-          type="text"
-          field="code"
+          type="numeric"
+          field="numberOfQuestions"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
-      <th></th>
+      <th pSortableColumn="maximumScore">
+        Pikët maksimale
+        <p-sortIcon field="maximumScore"></p-sortIcon>
+        <p-columnFilter
+          type="numeric"
+          field="maximumScore"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-examVersion>
+  <ng-template pTemplate="body" let-examVariant>
     <tr>
       <td style="width: 18%; min-width: 10rem">
-        {{ examVersion.name }}
+        {{ examVariant.name }}
+      </td>
+
+      <td style="width: 18%; min-width: 10rem">
+        {{ examVariant.profileGroupName }}
       </td>
       <td style="width: 18%; min-width: 10rem">
-        {{ examVersion.numberOfQuestions }}
+        {{ examVariant.profileName }}
       </td>
       <td style="width: 18%; min-width: 10rem">
-        {{ examVersion.profileGroupName }}
+        {{ examVariant.examTypeName }}
       </td>
       <td style="width: 18%; min-width: 10rem">
-        {{ examVersion.variant }}
+        {{ examVariant.examSubjectName }}
       </td>
       <td style="width: 18%; min-width: 10rem">
-        {{ examVersion.examTypeName }}
+        {{ examVariant.numberOfQuestions }}
       </td>
       <td style="width: 18%; min-width: 10rem">
-        {{ examVersion.examSubjectName }}
-      </td>
-      <td style="width: 18%; min-width: 10rem">
-        {{ examVersion.code }}
+        {{ examVariant.maximumScore }}
       </td>
       <td>
         <div class="flex">
@@ -113,15 +113,14 @@
             src="assets/svg/edit-form.svg"
             class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"
-            (click)="onEditClick(examVersion)"
+            (click)="onEditClick(examVariant)"
             pTooltip="Ndrysho" />
-
           <img
             src="assets/svg/delete-form.svg"
             class="p-button-rounded p-button-danger p-button-text ml-m pointer"
             pTooltip="Fshi"
             tooltipPosition="bottom"
-            (click)="onDeleteClick(examVersion)" />
+            (click)="onDeleteClick(examVariant)"/>
         </div>
       </td>
     </tr>

@@ -18,7 +18,7 @@ export * from './lib/exam-site/exam-site.service';
 export * from './lib/exam-subject-profile/exam-subject-profile-api.service';
 export * from './lib/exam-subject/exam-subject-api.service';
 export * from './lib/exam-type/exam-type-api.service';
-export * from './lib/exam-version/exam-version-api.service';
+export * from './lib/exam-variant/exam-variant-api.service';
 export * from './lib/genders/genders-api.service';
 export * from './lib/high-school/high-school-api.service';
 export * from './lib/menu/menu-api.service';
