@@ -189,8 +189,10 @@ export class ManageExamScoreTabularDataEntryComponent implements OnInit {
   }
 
   saveWritingScoreChanges(rowData: ExamScoreDataEntry) {
+    debugger;
     const examScore: any = {
       id: rowData.examScore.id,
+      archiveExamIndex: rowData.archiveExam.index,
       archiveFolderId: rowData.archiveExam.archiveFolderId,
       archiveFolderNr: rowData.archiveExam.archiveFolderNr,
       examSubjectId: this.examSubjectId,
