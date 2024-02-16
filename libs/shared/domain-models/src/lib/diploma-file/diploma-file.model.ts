@@ -17,3 +17,13 @@ export enum Status {
   NOTPRINTED,
   PRINTED,
 }
+export enum DiplomaStatus {
+  Completed,
+  Failed,
+  InProgress,
+  New,
+  Started,
+}
+export interface DiplomaStatusData {
+  data: DiplomaStatus;
+}
