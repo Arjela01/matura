@@ -21,7 +21,29 @@ import { SearchBoxService } from '@msh/layout/data-access-layout';
     <msh-global-search
       [searchBoxVisible]="searchBoxVisible"></msh-global-search>
   `,
-  styles: [],
+  styles: [
+    `
+      :host ::ng-deep .p-datatable > .p-datatable-wrapper {
+        overflow-x: visible;
+        overflow-y: visible;
+      }
+
+      :host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+      }
+      :host ::ng-deep .p-paginator-bottom {
+        width: 100%;
+      }
+
+      @media screen and (max-width: 64em) {
+        :host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+          top: 0;
+        }
+      }
+    `,
+  ],
   standalone: true,
   imports: [
     RouterOutlet,
