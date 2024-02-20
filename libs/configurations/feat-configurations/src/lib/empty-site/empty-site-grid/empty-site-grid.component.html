@@ -2,6 +2,8 @@
   #dt
   dataKey="id"
   responsiveLayout="scroll"
+  [scrollable]="true"
+  scrollHeight="820px"
   [value]="emptySites"
   [totalRecords]="totalRecords"
   [rows]="100"
@@ -76,19 +78,19 @@
   </ng-template>
   <ng-template pTemplate="body" let-emptySite>
     <tr>
-      <td style="width: 30%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ emptySite.examSiteName }}
       </td>
-      <td style="width: 25%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ emptySite.date | date : 'dd.MM.yyyy' }}
       </td>
-      <td style="width: 25%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ emptySite.date | date : 'hh:mm' }}
       </td>
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ emptySite.examTypeName }}
       </td>
-      <td style="width: 25%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ emptySite.takenSeats }}
       </td>
       <td style="width: 5%; min-width: 10rem">

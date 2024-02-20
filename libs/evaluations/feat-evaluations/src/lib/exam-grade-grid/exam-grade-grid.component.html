@@ -8,6 +8,8 @@
         #dt
         dataKey="id"
         responsiveLayout="scroll"
+        [scrollable]="true"
+        scrollHeight="820px"
         [value]="(examGrade$ | async) || []"
         [totalRecords]="totalRecords"
         [rows]="100"
@@ -141,13 +143,13 @@
             <td style="width: 10%">
               {{ examGrade.studentLastName }}
             </td>
-            <td style="width: 5%">
+            <td style="width: 10%">
               {{ examGrade.examTypeName }}
             </td>
-            <td style="width: 35%">
+            <td style="width: 20%">
               {{ examGrade.examSubjectName }}
             </td>
-            <td style="width: 5%">
+            <td style="width: 10%">
               {{ examGrade.grade }}
             </td>
             <td style="width: 5%">
