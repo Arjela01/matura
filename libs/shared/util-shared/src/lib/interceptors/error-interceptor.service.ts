@@ -71,22 +71,22 @@ export class ErrorInterceptorService implements HttpInterceptor {
       return of(error).pipe(delay(delayMs));
     }
 
-    if (error.url.toString().includes('PrintedDiplomas')) {
-      if (error.error instanceof Blob) {
-        return from(
-          Promise.resolve(error).then(async x => {
-            throw new HttpErrorResponse({
-              error: JSON.parse(await x.error.text()),
-              headers: x.headers,
-              status: x.status,
-              statusText: x.statusText,
-              url: x.url ?? undefined,
-            });
-          })
-        );
-      }
-      throw error;
-    }
+    // if (error.url.toString().includes('PrintedDiplomas')) {
+    //   if (error.error instanceof Blob) {
+    //     return from(
+    //       Promise.resolve(error).then(async x => {
+    //         throw new HttpErrorResponse({
+    //           error: JSON.parse(await x.error.text()),
+    //           headers: x.headers,
+    //           status: x.status,
+    //           statusText: x.statusText,
+    //           url: x.url ?? undefined,
+    //         });
+    //       })
+    //     );
+    //   }
+    //   throw error;
+    // }
     if (error.status === 401) {
       localStorage.clear();
       window.location.reload();
