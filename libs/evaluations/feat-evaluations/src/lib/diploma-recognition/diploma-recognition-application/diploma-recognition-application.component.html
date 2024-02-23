@@ -1,0 +1,651 @@
+<div class="flex ml-2 mb-3 page-header mb-header">
+  <h2 class="flex-1 m-0">Shto Formularin Njehsim Diplome</h2>
+</div>
+
+<div class="grid">
+  <div class="col-12 p-fluid">
+    <div class="card-form px-6 py-4 mb-header mt-2">
+      <form #form="ngForm" class="m-4 w-5" (ngSubmit)="onSubmit()">
+        <h5 class="mb-3">Seksioni A: Informacion Mbi Aplikantin</h5>
+        <div class="field">
+          <label for="firstName">Emri *</label>
+          <div class="inputgroup">
+            <input
+              [(ngModel)]="diplomaRecognition.firstName"
+              type="text"
+              pInputText
+              required
+              id="firstName"
+              name="firstName"
+              autofocus
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  submitted && !diplomaRecognition.firstName
+              }" />
+            <small
+              class="p-error block"
+              *ngIf="submitted && !diplomaRecognition.firstName">
+              Emri është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="middleName">Atësia *</label>
+          <div class="inputgroup">
+            <input
+              type="text"
+              pInputText
+              [(ngModel)]="diplomaRecognition.fatherName"
+              id="middleName"
+              name="middleName"
+              autofocus
+              required
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  submitted && !diplomaRecognition.fatherName
+              }" />
+            <small
+              class="p-error block"
+              *ngIf="submitted && !diplomaRecognition.fatherName">
+              Atësia është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="lastName">Mbiemri *</label>
+          <div class="inputgroup">
+            <input
+              type="text"
+              pInputText
+              [(ngModel)]="diplomaRecognition.lastName"
+              id="lastName"
+              required
+              name="lastName"
+              autofocus
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  submitted && !diplomaRecognition.fatherName
+              }" />
+            <small
+              class="p-error block"
+              *ngIf="submitted && !diplomaRecognition.fatherName">
+              Mbiemri është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="idCard">Nid *</label>
+          <div class="inputgroup">
+            <input
+              type="text"
+              [(ngModel)]="diplomaRecognition.idCard"
+              pInputText
+              required
+              id="idCard"
+              name="idCard"
+              autofocus
+              [ngClass]="{
+                'ng-invalid ng-dirty': submitted && !diplomaRecognition.idCard
+              }" />
+            <small
+              class="p-error block"
+              *ngIf="submitted && !diplomaRecognition.idCard">
+              Nid është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="gender">Gjinia *</label>
+          <div>
+            <p-dropdown
+              id="gender"
+              [options]="genders"
+              name="genders"
+              optionValue="key"
+              optionLabel="value"
+              [required]="true"
+              [filter]="true"
+              [(ngModel)]="diplomaRecognition.genderID"
+              [autoDisplayFirst]="false"
+              [ngClass]="{
+                'ng-invalid ng-dirty': submitted && !diplomaRecognition.genderID
+              }">
+            </p-dropdown>
+            <small
+              class="p-error block"
+              *ngIf="submitted && !diplomaRecognition.genderID">
+              Gjinia është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="dateOfBirth">Datëlindja *</label>
+          <div>
+            <p-calendar
+              [(ngModel)]="diplomaRecognition.dateOfBirth"
+              dateFormat="dd/mm/yy"
+              inputId="dateOfBirth"
+              id="dateOfBirth"
+              appendTo="body"
+              [required]="true"
+              [style]="{ width: '100%' }"
+              [inputStyle]="{ width: '100%' }"
+              name="dateOfBirth"
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  submitted && !diplomaRecognition.dateOfBirth
+              }"></p-calendar>
+            <small
+              class="p-error block"
+              *ngIf="submitted && !diplomaRecognition.dateOfBirth">
+              Datëlindja është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="state">Adresa *</label>
+          <div class="inputgroup">
+            <input
+              type="text"
+              pInputText
+              [(ngModel)]="diplomaRecognition.address"
+              id="state"
+              name="state"
+              required
+              autofocus
+              [ngClass]="{
+                'ng-invalid ng-dirty': submitted && !diplomaRecognition.address
+              }" />
+            <small
+              class="p-error block"
+              *ngIf="submitted && !diplomaRecognition.address">
+              Adresa është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="nationality">Nënshtetësia *</label>
+          <div class="inputgroup">
+            <p-dropdown
+              id="nationality"
+              [options]="countriesList"
+              name="nationality"
+              optionValue="key"
+              optionLabel="value"
+              (search)="(true)"
+              [required]="true"
+              [filter]="true"
+              [(ngModel)]="diplomaRecognition.nationalityID"
+              [autoDisplayFirst]="false"
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  submitted && !diplomaRecognition.nationalityID
+              }">
+            </p-dropdown>
+            <small
+              class="p-error block"
+              *ngIf="submitted && !diplomaRecognition.nationalityID">
+              Nënshtetësia është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="city">Qyteti *</label>
+          <div class="inputgroup">
+            <input
+              type="text"
+              pInputText
+              [(ngModel)]="diplomaRecognition.city"
+              id="city"
+              name="city"
+              required
+              autofocus
+              [ngClass]="{
+                'ng-invalid ng-dirty': submitted && !diplomaRecognition.city
+              }" />
+            <small
+              class="p-error block"
+              *ngIf="submitted && !diplomaRecognition.city">
+              Qyteti është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="municipality">Bashkia *</label>
+          <div class="inputgroup">
+            <input
+              type="text"
+              pInputText
+              required
+              id="municipality"
+              [(ngModel)]="diplomaRecognition.municipality"
+              name="municipality"
+              autofocus
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  submitted && !diplomaRecognition.municipality
+              }" />
+            <small
+              class="p-error block"
+              *ngIf="submitted && !diplomaRecognition.municipality">
+              Bashkia është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="postalCode">Kodi Postar *</label>
+          <div class="inputgroup">
+            <input
+              type="text"
+              pInputText
+              required
+              id="postalCode"
+              [(ngModel)]="diplomaRecognition.postalCode"
+              name="postalCode"
+              autofocus
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  submitted && !diplomaRecognition.postalCode
+              }" />
+            <small
+              class="p-error block"
+              *ngIf="submitted && !diplomaRecognition.postalCode">
+              Kodi Postar është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="email">Email *</label>
+          <input
+            type="email"
+            pInputText
+            id="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            name="Email"
+            [(ngModel)]="diplomaRecognition.email"
+            required
+            autofocus
+            [ngClass]="{
+              'ng-invalid ng-dirty':
+                submitted && (!emailInput.valid || !diplomaRecognition.email)
+            }"
+            #emailInput="ngModel" />
+          <small
+            class="p-error block"
+            *ngIf="
+              submitted && (!emailInput.valid || !diplomaRecognition.email)
+            ">
+            Email-i është fushë e kërkuar dhe duhet të jetë në formatin e duhur.
+          </small>
+        </div>
+
+        <div class="field">
+          <label for="email">Nr. Tel. Celular *</label>
+          <div class="inputgroup">
+            <input
+              type="text"
+              pInputText
+              [(ngModel)]="diplomaRecognition.cel"
+              id="number1"
+              name="email"
+              autofocus
+              [ngClass]="{
+                'ng-invalid ng-dirty': submitted && !diplomaRecognition.cel
+              }" />
+            <small
+              class="p-error block"
+              *ngIf="submitted && !diplomaRecognition.cel">
+              Nr. Tel. Celular është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="telFix">Nr. Tel. Fix *</label>
+          <div class="inputgroup">
+            <input
+              type="text"
+              pInputText
+              [(ngModel)]="diplomaRecognition.telFix"
+              id="telFix"
+              name="telFix"
+              autofocus
+              [ngClass]="{
+                'ng-invalid ng-dirty': submitted && !diplomaRecognition.telFix
+              }" />
+            <small
+              class="p-error block"
+              *ngIf="submitted && !diplomaRecognition.telFix">
+              Nr. Tel. Fix është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <h5>Seksioni B: Informacion Specifik Mbi Aplikimin</h5>
+        <div class="field">
+          <label for="rec">Njohje Diplome? *</label>
+          <div class="inputgroup mt-3 mb-4">
+            <p-checkbox
+              [required]="true"
+              [binary]="true"
+              label="Njohje dhe njehsim diplome e përfundimit të arsimit parauniversitar"
+              name="rec"
+              id="rec"
+              [(ngModel)]="diplomaRecognition.isRecognitionAndEquivalency"
+              (onChange)="updateRecognitionAndEquivalency($event)"></p-checkbox>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="schoolName"
+            >Emri i Institucionit te Arsimit Parauniversitar *</label
+          >
+          <div class="inputgroup">
+            <input
+              type="text"
+              pInputText
+              required
+              id="schoolName"
+              [(ngModel)]="diplomaRecognition.schoolName"
+              name="schoolName"
+              autofocus
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  submitted && !diplomaRecognition.schoolName
+              }" />
+            <small
+              class="p-error block"
+              *ngIf="submitted && !diplomaRecognition.schoolName">
+              Emri është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="acceptedDate">Pranuar më * </label>
+          <div class="inputgroup">
+            <p-calendar
+              [required]="true"
+              [style]="{ width: '100%' }"
+              [inputStyle]="{ width: '100%' }"
+              dateFormat="dd/mm/yy"
+              inputId="date"
+              [(ngModel)]="diplomaRecognition.schoolStartDate"
+              id="acceptedDate"
+              name="acceptedDate"
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  submitted && !diplomaRecognition.schoolStartDate
+              }"></p-calendar>
+            <small
+              class="p-error block"
+              *ngIf="submitted && !diplomaRecognition.schoolStartDate">
+              Kjo është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="schoolGraduationDate">Diplomuar më * </label>
+          <div class="inputgroup">
+            <p-calendar
+              [required]="true"
+              [style]="{ width: '100%' }"
+              [inputStyle]="{ width: '100%' }"
+              dateFormat="dd/mm/yy"
+              inputId="date"
+              [(ngModel)]="diplomaRecognition.schoolGraduationDate"
+              id="schoolGraduationDate"
+              name="schoolGraduationDate"
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  submitted && !diplomaRecognition.schoolGraduationDate
+              }"></p-calendar>
+            <small
+              class="p-error block"
+              *ngIf="submitted && !diplomaRecognition.schoolGraduationDate">
+              Kjo është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="year">Kohëzgjatja zyrtare * </label>
+          <div class="inputgroup">
+            <input
+              type="text"
+              pInputText
+              [(ngModel)]="diplomaRecognition.yearsOfStudy"
+              id="year"
+              name="year"
+              required
+              autofocus
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  submitted && !diplomaRecognition.yearsOfStudy
+              }" />
+            <small
+              class="p-error block"
+              *ngIf="submitted && !diplomaRecognition.yearsOfStudy">
+              Kohëzgjatja zyrtare është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <h5>Kontaktet zyrtare të IAP-së ku jeni diplomuar</h5>
+        <div class="field">
+          <label for="schoolCity">Qyteti *</label>
+          <div class="inputgroup">
+            <input
+              type="text"
+              [(ngModel)]="diplomaRecognition.schoolCity"
+              pInputText
+              id="schoolCity"
+              name="schoolCity"
+              required
+              autofocus
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  submitted && !diplomaRecognition.schoolCity
+              }" />
+            <small
+              class="p-error block"
+              *ngIf="submitted && !diplomaRecognition.schoolCity">
+              Qyteti është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="schoolPostalCode">Kodi Postar *</label>
+          <div class="inputgroup">
+            <input
+              type="text"
+              pInputText
+              [(ngModel)]="diplomaRecognition.schoolPostalCode"
+              id="schoolPostalCode"
+              name="schoolPostalCode"
+              required
+              autofocus
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  submitted && !diplomaRecognition.schoolPostalCode
+              }" />
+            <small
+              class="p-error block"
+              *ngIf="submitted && !diplomaRecognition.schoolPostalCode">
+              Kodi Postar është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="schoolWebsite">Adresa Web *</label>
+          <div class="inputgroup">
+            <input
+              type="text"
+              pInputText
+              [(ngModel)]="diplomaRecognition.schoolWebSite"
+              id="schoolWebsite"
+              name="schoolWebsite"
+              autofocus
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  submitted && !diplomaRecognition.schoolWebSite
+              }" />
+            <small
+              class="p-error block"
+              *ngIf="submitted && !diplomaRecognition.schoolWebSite">
+              Adresa Web është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="schoolCountry">Shteti *</label>
+          <div class="inputgroup">
+            <p-dropdown
+              id="schoolCountry"
+              [options]="countriesList"
+              name="schoolCountry"
+              optionValue="key"
+              optionLabel="value"
+              (search)="(true)"
+              [required]="true"
+              [filter]="true"
+              [(ngModel)]="diplomaRecognition.countryOfBirthID"
+              [autoDisplayFirst]="false"
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  submitted && !diplomaRecognition.countryOfBirthID
+              }">
+            </p-dropdown>
+            <small
+              class="p-error block"
+              *ngIf="submitted && !diplomaRecognition.countryOfBirthID">
+              Shteti është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="schoolAddress">Adresa *</label>
+          <div class="inputgroup">
+            <input
+              type="text"
+              pInputText
+              required
+              id="schoolAddress"
+              [(ngModel)]="diplomaRecognition.schoolAddress"
+              name="schoolAddress"
+              autofocus
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  submitted && !diplomaRecognition.schoolAddress
+              }" />
+            <small
+              class="p-error block"
+              *ngIf="submitted && !diplomaRecognition.schoolAddress">
+              Adresa është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="schoolEmail">Email *</label>
+          <input
+            type="email"
+            pInputText
+            id="schoolEmail"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            name="Email"
+            [(ngModel)]="diplomaRecognition.schoolEmail"
+            required
+            autofocus
+            [ngClass]="{
+              'ng-invalid ng-dirty':
+                submitted &&
+                (!emailInput.valid || !diplomaRecognition.schoolEmail)
+            }"
+            #emailInput="ngModel" />
+          <small
+            class="p-error block"
+            *ngIf="
+              submitted &&
+              (!emailInput.valid || !diplomaRecognition.schoolEmail)
+            ">
+            Email-i është fushë e kërkuar dhe duhet të jetë në formatin e duhur.
+          </small>
+        </div>
+
+        <div class="field">
+          <label for="schoolTelFix">Nr. Tel. Fix *</label>
+          <div class="inputgroup">
+            <input
+              type="text"
+              pInputText
+              [(ngModel)]="diplomaRecognition.schoolTelFix"
+              id="schoolTelFix"
+              name="schoolTelFix"
+              autofocus
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  submitted && !diplomaRecognition.schoolTelFix
+              }" />
+            <small
+              class="p-error block"
+              *ngIf="submitted && !diplomaRecognition.schoolTelFix">
+              Nr. Tel. Fix është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <h5>Dokumentet e Aplikimit</h5>
+        <div class="field mt-4 mb-4">
+          <label for="files">Importo Dokument *</label>
+          <p-fileUpload
+            id="files"
+            name="files"
+            url="https://www.primefaces.org/cdn/api/upload.php"
+            (uploadHandler)="onUpload($event)"
+            [multiple]="true"
+            [auto]="true"
+            [customUpload]="true"
+            [(ngModel)]="diplomaRecognition.files"
+            accept=".xlsm,.xlsx,application/msexcel,.doc,.docx,.csv,.epub,.html,.odt,.pdf"
+            chooseLabel="Zgjidh">
+          </p-fileUpload>
+          <small
+            class="p-error block"
+            *ngIf="submitted && !diplomaRecognition.files">
+            Ju lutem zgjidhni një dokument.
+          </small>
+        </div>
+        <div class="flex justify-content-end mt-4 mb-4">
+          <button
+            type="button"
+            pButton
+            label="Anullo"
+            class="p-button-text w-auto mr-2"
+            (click)="onCancelClick()"></button>
+          <button
+            type="submit"
+            pButton
+            label="Ruaj"
+            class="p-button w-auto"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

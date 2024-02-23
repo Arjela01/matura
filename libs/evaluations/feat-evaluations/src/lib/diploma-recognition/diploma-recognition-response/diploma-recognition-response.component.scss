@@ -1,0 +1,15 @@
+:host {
+  display: block;
+}
+delete-button {
+  background: transparent;
+  color: red;
+}
+download-button {
+  background: transparent;
+  color: green;
+}
+::ng-deep .p-button.p-button-icon-only{
+  background: transparent;
+  color: red;
+}

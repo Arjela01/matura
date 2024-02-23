@@ -58,4 +58,4 @@ export * from './university-departments/university-department.model';
 export * from './user-profile/user-profile.model';
 export * from './user-reset-password/user-reset-password.model';
 export * from './user/user.model';
-
+export * from './diploma-recognition/diploma-recognition';

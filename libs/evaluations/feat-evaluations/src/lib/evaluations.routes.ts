@@ -126,9 +126,7 @@ export const EVALUATION_ROUTES: Route[] = [
   {
     path: 'table-t',
     loadComponent: () =>
-      import(
-        './tableT/tableT-grid.component'
-      ).then(m => m.TableTGridComponent),
+      import('./tableT/tableT-grid.component').then(m => m.TableTGridComponent),
   },
 
   {
@@ -193,5 +191,26 @@ export const EVALUATION_ROUTES: Route[] = [
       import(
         './barcode-without-score/barcode-without-score-grid/barcode-without-score-grid.component'
       ).then(m => m.BarcodeWithoutScoreGridComponent),
+  },
+  {
+    path: 'diploma-recognition',
+    loadComponent: () =>
+      import(
+        './diploma-recognition/manage-diploma-recognition/manage-diploma-recognition.component'
+      ).then(m => m.ManageDiplomaRecognitionComponent),
+  },
+  {
+    path: 'diploma-recognition/add',
+    loadComponent: () =>
+      import(
+        './diploma-recognition/diploma-recognition-application/diploma-recognition-application.component'
+      ).then(m => m.DiplomaRecognitionRequestComponent),
+  },
+  {
+    path: 'diploma-recognition/edit/:id',
+    loadComponent: () =>
+      import(
+        './diploma-recognition/diploma-recognition-response/diploma-recognition-response.component'
+      ).then(m => m.DiplomaRecognitionResponseComponent),
   },
 ];

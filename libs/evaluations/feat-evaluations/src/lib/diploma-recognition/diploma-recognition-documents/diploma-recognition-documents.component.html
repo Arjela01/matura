@@ -1,0 +1,42 @@
+<div class="grid">
+  <div class="col-12 p-fluid">
+    <div class="card">
+      <form #form="ngForm" (ngSubmit)="onSubmit()">
+        <div class="field mt-4 mb-4">
+          <label>Importo Dokument *</label>
+          <p-fileUpload
+            id="attachedFile"
+            name="attachedFile"
+            url="https://www.primefaces.org/cdn/api/upload.php"
+            (uploadHandler)="onUpload($event)"
+            [multiple]="true"
+            [auto]="true"
+            [customUpload]="true"
+            [(ngModel)]="diplomaRecognitionDocuments.files"
+            accept=".xlsm,.xlsx,application/msexcel,.doc,.docx,.csv,.epub,.html,.odt,.pdf"
+            chooseLabel="Zgjidh">
+          </p-fileUpload>
+          <small
+            class="p-error block"
+            *ngIf="submitted && !diplomaRecognitionDocuments.files">
+            Ju lutem zgjidhni një dokument.
+          </small>
+        </div>
+
+        <div class="flex justify-content-end">
+          <button
+            type="button"
+            pButton
+            label="Anullo"
+            class="p-button-text w-auto mr-2"
+            (click)="onCancelClick()"></button>
+          <button
+            [disabled]="form.invalid"
+            pButton
+            label="Ngarko"
+            class="p-button w-auto"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
