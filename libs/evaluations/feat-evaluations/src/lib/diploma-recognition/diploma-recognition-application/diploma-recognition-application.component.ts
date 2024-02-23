@@ -58,8 +58,8 @@ import { DiplomaRecognitionDocumentsComponent } from '../diploma-recognition-doc
     FileUploadModule,
     DiplomaRecognitionDocumentsComponent,
   ],
-  templateUrl: './diploma-recognition-request.component.html',
-  styleUrls: ['./diploma-recognition-request.component.scss'],
+  templateUrl: './diploma-recognition-application.component.html',
+  styleUrls: ['./diploma-recognition-application.component.scss'],
 })
 export class DiplomaRecognitionRequestComponent implements OnInit {
   @ViewChild('form', { static: true }) form!: NgForm;
@@ -69,7 +69,6 @@ export class DiplomaRecognitionRequestComponent implements OnInit {
   submitted = false;
   base64!: string;
   countriesList: DropdownModel<number>[] = [];
-  isRequestModal = false;
   displayRequestModal = false;
 
   diplomaRecognition: DiplomaRecognition = {
