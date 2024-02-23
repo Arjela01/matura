@@ -107,17 +107,17 @@
         <div class="flex">
           <span
             [ngClass]="
-              diplomaRecognitionRecords.diplomaRecognitionsRequestStatusID == 2
+              diplomaRecognitionRecords.diplomaRecognitionsRequestStatusID === 2
                 ? ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
-                : diplomaRecognitionRecords.diplomaRecognitionsRequestStatusID ==
+                : diplomaRecognitionRecords.diplomaRecognitionsRequestStatusID ===
                   3
                 ? ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
                 : ['surface-300', 'gray-text', 'px-3', 'py-1', 'fb']
             ">
             {{
-              diplomaRecognitionRecords.diplomaRecognitionsRequestStatusID == 2
+              diplomaRecognitionRecords.diplomaRecognitionsRequestStatusID === 2
                 ? 'Refuzuar'
-                : diplomaRecognitionRecords.diplomaRecognitionsRequestStatusID ==
+                : diplomaRecognitionRecords.diplomaRecognitionsRequestStatusID ===
                   3
                 ? 'Miratuar'
                 : 'E Re'

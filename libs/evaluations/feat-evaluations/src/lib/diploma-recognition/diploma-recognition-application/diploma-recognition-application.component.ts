@@ -164,7 +164,6 @@ export class DiplomaRecognitionRequestComponent implements OnInit {
   }
 
   onUpload(event: any) {
-    debugger;
     for (const file of event.files) {
       const fileReader = new FileReader();
       fileReader.onload = () => {
