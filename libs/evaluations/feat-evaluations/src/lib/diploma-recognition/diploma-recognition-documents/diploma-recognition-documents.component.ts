@@ -89,23 +89,34 @@ export class DiplomaRecognitionDocumentsComponent {
 
   onUpload(event: any) {
     for (const file of event.files) {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        if (fileReader.result) {
-          const parts = fileReader.result.toString().split(';base64,');
-          const parsedBase64 = parts[1];
-          if (!this.diplomaRecognitionDocuments.files) {
-            this.diplomaRecognitionDocuments.files = [];
+      if (!this.isFileUploaded(file)) {
+        const fileReader = new FileReader();
+        fileReader.onload = () => {
+          const result = fileReader.result;
+          if (result) {
+            const parts = result.toString().split(';base64,');
+            const parsedBase64 = parts[1];
+            if (!this.diplomaRecognitionDocuments.files) {
+              this.diplomaRecognitionDocuments.files = [];
+            }
+            this.diplomaRecognitionDocuments.files.push({
+              data: parsedBase64,
+              fileName: file.name,
+              mimeType: file.type,
+            });
+            this.uploaded = true;
           }
-          this.diplomaRecognitionDocuments.files.push({
-            data: parsedBase64,
-            fileName: file.name,
-            mimeType: file.type,
-          });
-          this.uploaded = true;
-        }
-      };
+        };
+
+        fileReader.readAsDataURL(file);
+      }
     }
+  }
+
+  isFileUploaded(file: File) {
+    return (
+      this.diplomaRecognitionDocuments.files &&
+      this.diplomaRecognitionDocuments.files.some(f => f.fileName === file.name)
+    );
   }
 }
