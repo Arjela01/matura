@@ -280,7 +280,12 @@ export class DiplomaRecognitionResponseComponent implements OnInit {
       .getOneRecord(this.diplomaRecognitionId)
       .pipe(untilDestroyed(this))
       .subscribe(res => {
-        this.diplomaRecognition = res.data;
+        this.diplomaRecognition = {
+          ...res.data,
+          dateOfBirth: new Date(res.data.dateOfBirth),
+          schoolGraduationDate: new Date(res.data.schoolGraduationDate),
+          schoolStartDate: new Date(res.data.schoolStartDate),
+        };
         this.cd.detectChanges();
       });
   }

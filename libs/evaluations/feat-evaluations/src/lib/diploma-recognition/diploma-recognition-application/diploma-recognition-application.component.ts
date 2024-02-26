@@ -165,26 +165,35 @@ export class DiplomaRecognitionRequestComponent implements OnInit {
 
   onUpload(event: any) {
     for (const file of event.files) {
-      const fileReader = new FileReader();
-      fileReader.onload = () => {
-        const result = fileReader.result;
-        if (result) {
-          const parts = result.toString().split(';base64,');
-          const parsedBase64 = parts[1];
-          if (!this.diplomaRecognition.files) {
-            this.diplomaRecognition.files = [];
+      if (!this.isFileUploaded(file)) {
+        const fileReader = new FileReader();
+        fileReader.onload = () => {
+          const result = fileReader.result;
+          if (result) {
+            const parts = result.toString().split(';base64,');
+            const parsedBase64 = parts[1];
+            if (!this.diplomaRecognition.files) {
+              this.diplomaRecognition.files = [];
+            }
+            this.diplomaRecognition.files.push({
+              data: parsedBase64,
+              fileName: file.name,
+              mimeType: file.type,
+            });
+            this.uploaded = true;
           }
-          this.diplomaRecognition.files.push({
-            data: parsedBase64,
-            fileName: file.name,
-            mimeType: file.type,
-          });
-          this.uploaded = true;
-        }
-      };
+        };
 
-      fileReader.readAsDataURL(file);
+        fileReader.readAsDataURL(file);
+      }
     }
+  }
+
+  isFileUploaded(file: File) {
+    return (
+      this.diplomaRecognition.files &&
+      this.diplomaRecognition.files.some(f => f.fileName === file.name)
+    );
   }
 
   onSubmit() {
