@@ -5,9 +5,17 @@
       <button
         pButton
         label="Kërkesë e Re"
-        class="p-button-grey p-button-outlined mr-2"
+        class="p-button-plain p-button-outlined mr-2"
         *ngIf="
           diplomaRecognition.diplomaRecognitionsRequestStatusID === 1
+        "></button>
+
+      <button
+        pButton
+        label="Kërkesë në Pritje"
+        class="p-button-warning p-button-outlined mr-2"
+        *ngIf="
+          diplomaRecognition.diplomaRecognitionsRequestStatusID === 4
         "></button>
 
       <button
