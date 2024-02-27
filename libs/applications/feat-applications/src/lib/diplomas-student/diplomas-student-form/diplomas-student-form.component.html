@@ -1,5 +1,4 @@
-<form #form="ngForm" (ngSubmit)="onSubmit()"
->
+<form #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="field">
     <label for="studentType">Tipi i maturantit *</label>
     <p-dropdown
@@ -110,6 +109,32 @@
         <label for="isForeign">Të gjithë</label>
       </div>
     </div>
+  </div>
+
+  <div class="field" *ngIf="selectedAction === 'seal'" style="margin-top: 30px">
+    <span>
+      Statusi i Diplomave:
+      <span
+        [ngStyle]="getStatusStyle('InProgress')"
+        pTooltip="Në Progres"
+        tooltipPosition="top">
+        {{ diplomaStatus.InProgress }}
+      </span>
+      /
+      <span
+        [ngStyle]="getStatusStyle('Failed')"
+        pTooltip="Të Dështuara"
+        tooltipPosition="top">
+        {{ diplomaStatus.Failed }}
+      </span>
+      /
+      <span
+        [ngStyle]="getStatusStyle('New')"
+        pTooltip="Në Pritje"
+        tooltipPosition="top">
+        {{ diplomaStatus.New }}
+      </span>
+    </span>
   </div>
 
   <div class="flex justify-content-end">

@@ -1,6 +1,8 @@
 <div class="flex center mb-2 page-header mb-header">
   <h2 class="flex-1 mb-0">{{ title }}</h2>
-  <div class="flex align-items-right justify-content-right" *ngIf="!foreignStudent">
+  <div
+    class="flex align-items-right justify-content-right"
+    *ngIf="!foreignStudent">
     <div class="my-2">
       <button
         pButton
@@ -27,7 +29,7 @@
         [students]="(studentList$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
-        [responseLoaded]="(responseLoaded$ | async)"
+        [responseLoaded]="responseLoaded$ | async"
         (lazyLoadData)="getStudentDiplomas($event)">
       </msh-diplomas-student-grid>
     </div>
@@ -44,10 +46,12 @@
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
     <msh-diplomas-student-form
+      [diplomaStatus]="diplomaStatus"
+      [selectedAction]="selectedAction"
       [administrationOffices]="administrationOffices"
       [isPrinted]="!printed"
       [highSchools]="(highSchools$ | async)!!"
-      [responseLoaded]="(responseLoaded$ | async)"
+      [responseLoaded]="responseLoaded$ | async"
       [studentTypes]="studentTypes"
       (admOfficeChanged)="getHighSchoolsByOffice($event)"
       (formClose)="onModalClose()"

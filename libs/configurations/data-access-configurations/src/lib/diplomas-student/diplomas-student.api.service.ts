@@ -1,10 +1,10 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AcademicYear } from '@msh/shared/domain-models';
+import { AcademicYear, DiplomaStatusData } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable, catchError, map, throwError } from 'rxjs';
-import {ApiResult} from "@msh/shared/data-access-shared";
+import { ApiResult } from '@msh/shared/data-access-shared';
 
 @Injectable({
   providedIn: 'root',
@@ -23,16 +23,15 @@ export class DiplomasStudentApiService {
     );
   }
 
-
   printElectronicSealForForeignStudent(id: string, allReports: boolean) {
     const academicYear = JSON.parse(
       localStorage.getItem('academicYear') as string
     ) as AcademicYear;
-      return  this.apiService.get<any>(
-        `/PrintedDiplomas/ElectronicSealForeigner/${id}?academicYearId=${academicYear.id}&isReportAll=${allReports}`,
-        new HttpParams(),
-        'blob'
-      );
+    return this.apiService.get<any>(
+      `/PrintedDiplomas/ElectronicSealForeigner/${id}?academicYearId=${academicYear.id}&isReportAll=${allReports}`,
+      new HttpParams(),
+      'blob'
+    );
   }
 
   printElectronicSeal(
@@ -40,17 +39,16 @@ export class DiplomasStudentApiService {
     academicYearId: number,
     allReports: boolean
   ): Observable<ApiResult<any>> {
-    return this.apiService
-      .post<ApiResult<any>,any>(
-        `/PrintedDiplomas/ElectronicSeal/${studentId}?academicYearId=${academicYearId}&isReportAll=${allReports}`,
-        {}
-      );
+    return this.apiService.post<ApiResult<any>, any>(
+      `/PrintedDiplomas/ElectronicSeal/${studentId}?academicYearId=${academicYearId}&isReportAll=${allReports}`,
+      {}
+    );
   }
 
   printAllElectronicSeal(data: string): Observable<any> {
     return this.apiService.get<any>(
       `/PrintedDiplomas/GenerateElectronicSealDiplomasPdf${data}`,
-      new HttpParams(),
+      new HttpParams()
     );
   }
 
@@ -67,5 +65,9 @@ export class DiplomasStudentApiService {
       map((data: any) => data),
       catchError(error => throwError(error))
     );
+  }
+
+  getStudentSealSummary(): Observable<DiplomaStatusData> {
+    return this.apiService.get<any>(`/PrintedDiplomas/GetStudentSealSummary`);
   }
 }

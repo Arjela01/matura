@@ -19,6 +19,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'msh-diplomas-student-form',
@@ -34,6 +35,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     CheckboxModule,
     DropdownModule,
     MultiSelectModule,
+    TooltipModule,
   ],
   templateUrl: './diplomas-student-form.component.html',
   styleUrls: ['./diplomas-student-form.component.scss'],
@@ -47,10 +49,11 @@ export class DiplomasStudentFormComponent {
   @Input() administrationOffices: DropdownModel<number>[] = [];
   @Input() isPrinted = false;
   @Input() highSchools: DropdownModel<number>[] = [];
-  @Input() responseLoaded: any
+  @Input() responseLoaded: any;
+  @Input() selectedAction!: string;
+  @Input() diplomaStatus!: any;
 
   @ViewChild('form', { static: true }) form!: NgForm;
-
   submitted = false;
 
   diplomaFile: IDiplomaFile = {
@@ -73,6 +76,20 @@ export class DiplomasStudentFormComponent {
 
   onCancelClick() {
     this.formClose.emit();
+  }
+
+  getStatusStyle(status: string): { [key: string]: string } {
+    console.log('Status:', this.diplomaStatus);
+    switch (status.toLowerCase()) {
+      case 'inprogress':
+        return { color: 'orange', 'font-weight': 'bold' };
+      case 'failed':
+        return { color: 'red', 'font-weight': 'bold' };
+      case 'new':
+        return { color: 'grey', 'font-weight': 'bold' };
+      default:
+        return {};
+    }
   }
 
   onSubmit() {

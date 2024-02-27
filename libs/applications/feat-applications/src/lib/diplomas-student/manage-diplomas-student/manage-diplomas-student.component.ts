@@ -72,6 +72,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
   studentList$ = this.studentList$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
   displayModal = false;
+  diplomaStatus!: any;
   totalRecords = 0;
   selectedStudent: Student | null = null;
   selectedAction!: string;
@@ -117,6 +118,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAdministrationOfficeDropdown();
+    this.getStudentSealSummary();
   }
 
   onNewClick(action: string) {
@@ -222,15 +224,13 @@ export class ManageDiplomasStudentComponent implements OnInit {
     this.diplomasService
       .printAllElectronicSeal(data)
       .pipe(untilDestroyed(this))
-      .subscribe(
-        response => {
-          if (response) {
-            this.toastService.showInfo(response as any);
-          } else {
-            this.toastService.showError('Ndodhi një gabim!');
-          }
+      .subscribe(response => {
+        if (response) {
+          this.toastService.showInfo(response as any);
+        } else {
+          this.toastService.showError('Ndodhi një gabim!');
         }
-      )
+      })
       .add(() => this.responseLoaded.next(false));
   }
 
@@ -334,6 +334,15 @@ export class ManageDiplomasStudentComponent implements OnInit {
 
         this.studentList$$.next(students);
         this.totalRecords = response.total;
+      });
+  }
+
+  getStudentSealSummary() {
+    this.diplomasService
+      .getStudentSealSummary()
+      .pipe(untilDestroyed(this))
+      .subscribe(res => {
+        this.diplomaStatus = res.data;
       });
   }
 }
