@@ -88,7 +88,9 @@ export class ManageListOfStudentsComponent implements OnInit {
       .sortAssignments(this.event, $event.examDateId)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.studentsList$$.next(response.data);
+        if (response) {
+          this.getExamAssignments($event);
+        }
       });
   }
   getExamDateDropdown($event: ExamAssignment) {
