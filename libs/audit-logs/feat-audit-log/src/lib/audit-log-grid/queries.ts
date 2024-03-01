@@ -459,19 +459,10 @@ export const A1_FORMS = `
             idCard
         }
         isDeleted
-        created {
-            displayName
-        }
         createdIP
         createdOn
-        modified {
-            displayName
-        }
         modifiedIP
         modifiedOn
-        deleted {
-            displayName
-        }
         deletedIP
         deletedOn
         auditHostname
@@ -533,182 +524,30 @@ export const A1Z_FORMS = `
                  reason
             }
             subjectD1 {
-                code
                 name
-                credits
-                isOptional
-                id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             subjectD2 {
-                code
                 name
-                credits
-                isOptional
-                id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             subjectD3 {
-                code
                 name
-                credits
-                isOptional
-                id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             subjectZ1 {
-                code
                 name
-                credits
-                isOptional
-                id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             subjectZ2 {
-                code
                 name
-                credits
-                isOptional
-                id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             subjectZ3 {
-                code
                 name
-                credits
-                isOptional
-                id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             a1ZCategory {
                 name
-                id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             academicYear {
                 isActive
                 year
                 id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             student {
                 birthDate
@@ -741,25 +580,7 @@ export const A1Z_FORMS = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
 }
 }
@@ -805,16 +626,6 @@ export const EXAM_DATE = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
-
             }
             academicYear {
                 isActive
@@ -827,25 +638,7 @@ export const EXAM_DATE = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-             created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
 }
 }
@@ -903,15 +696,6 @@ export const EXAM_COPY_REQUEST = `
             deletedOn
             modifiedIP
             modifiedOn
-            created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
 }
 }
@@ -971,15 +755,6 @@ export const EXAM_ASSIGNMENT = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             examDate {
                 date
@@ -992,27 +767,9 @@ export const EXAM_ASSIGNMENT = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-            created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
-        }
-       }
+          }
+         }
        }
        `;
 export const ARCHIVE_EXAM = `
@@ -1219,15 +976,6 @@ export const ARCHIVE_FOLDER = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             examType {
                 name
@@ -1241,15 +989,6 @@ export const ARCHIVE_FOLDER = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             profileGroup {
                 name
@@ -1262,25 +1001,7 @@ export const ARCHIVE_FOLDER = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-             created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
 
 }
@@ -1343,15 +1064,6 @@ export const AVERAGE_GRADE = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             academicYear {
                 isActive
@@ -1364,29 +1076,9 @@ export const AVERAGE_GRADE = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-             created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
+         }
         }
-
-
-       }
        }
        `;
 export const PROFILE_GROUP = `
@@ -1415,18 +1107,9 @@ export const PROFILE_GROUP = `
             deletedOn
             modifiedIP
             modifiedOn
-            created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
        }
-       }
+     }
        `;
 export const PROFILE = `
   query Profile
@@ -1469,15 +1152,6 @@ export const PROFILE = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             profileGroup {
                 name
@@ -1490,28 +1164,10 @@ export const PROFILE = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-             created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
-       }
-       }
+      }
+    }
        `;
 export const STUDENT_BAN = `
   query StudentBan
@@ -1572,15 +1228,6 @@ export const STUDENT_BAN = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
         }
        }
@@ -1636,51 +1283,15 @@ export const STUDY_PROGRAM = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             university {
                 name
                 id
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             universityDepartment {
                 name
                 id
-              created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-             created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
 
 }
@@ -1712,15 +1323,6 @@ export const STUDY_SUBJECT = `
             deletedOn
             modifiedIP
             modifiedOn
-            created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
     }
        }`;
@@ -1762,38 +1364,13 @@ export const HIGH_SCHOOL = `
                 isAllowedToLogin
                 id
                 isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
-             created {
-                    displayName
                 }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
-            }
             city {
                 name
-
-            }
+                }
             region {
                 name
             }
-             created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
        }
        }
@@ -1837,25 +1414,7 @@ export const GRADE_SCALE = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-            created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
        }
        }
@@ -1917,25 +1476,7 @@ export const FAILING_STUDENT = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-              created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
        }
        }
@@ -1980,15 +1521,6 @@ export const EXAM_VARIANT = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             examSubject {
                 code
@@ -2003,15 +1535,6 @@ export const EXAM_VARIANT = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             profileGroup {
                 name
@@ -2024,25 +1547,7 @@ export const EXAM_VARIANT = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-            created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
 
        }
@@ -2088,15 +1593,6 @@ export const EXAM_SUBJECT = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                  created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             academicYear {
                 isActive
@@ -2109,25 +1605,7 @@ export const EXAM_SUBJECT = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-             created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
        }
        }
@@ -2170,15 +1648,6 @@ export const EXAM_SUBJECT_PROFILE = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             profile {
                 code
@@ -2195,25 +1664,7 @@ export const EXAM_SUBJECT_PROFILE = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-            created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
 }
 }`;
@@ -2256,15 +1707,6 @@ export const EXAM_SITE = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             administrationOffice {
                 name
@@ -2280,25 +1722,7 @@ export const EXAM_SITE = `
                 deletedOn
                 modifiedIP
                 modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-            created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
        }
        }`;
@@ -2344,15 +1768,6 @@ export const STUDENTS = `
             deletedOn
             modifiedIP
             modifiedOn
-            created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
 
       }
