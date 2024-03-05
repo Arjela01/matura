@@ -226,8 +226,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response === true) {
-          this.toastService.showInfo('Diplomat u vulosën me sukses!');
-          this.displayModal = false;
+          this.toastService.showInfo('Filloi procesi i vulosjes së diplomave!');
         } else {
           this.toastService.showError('Ndodhi një gabim!');
         }
