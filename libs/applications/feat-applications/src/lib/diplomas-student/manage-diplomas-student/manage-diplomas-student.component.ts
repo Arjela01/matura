@@ -225,8 +225,8 @@ export class ManageDiplomasStudentComponent implements OnInit {
       .printAllElectronicSeal(data)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        if (response) {
-          this.toastService.showInfo(response as any);
+        if (response === true) {
+          this.toastService.showInfo('Filloi procesi i vulosjes së diplomave!');
         } else {
           this.toastService.showError('Ndodhi një gabim!');
         }
