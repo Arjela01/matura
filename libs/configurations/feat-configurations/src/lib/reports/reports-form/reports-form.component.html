@@ -44,6 +44,17 @@
       Linku është fushë e kërkuar.
     </small>
   </div>
+  <div class="field" *ngIf="reports.id">
+    <label for="params">Parametrat </label>
+    <input
+      type="text"
+      pInputText
+      id="params"
+      name="params"
+      [(ngModel)]="reports.parameters"
+      autofocus
+      />
+  </div>
   <div class="flex justify-content-end">
     <button
       type="button"

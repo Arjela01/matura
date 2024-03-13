@@ -55,6 +55,7 @@ export class ReportsFormComponent {
     name: '',
     path: '',
     roles: {},
+    parameters: [],
   };
 
   onCancelClick() {
