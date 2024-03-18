@@ -20,6 +20,7 @@ import {
   ArchiveExamApiService,
   ArchiveFolderApiService,
 } from '@msh/evaluations/data-access-evaluations';
+import { ArchiveExam, ArchiveFolder, Report } from '@msh/shared/domain-models';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -30,13 +31,12 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ArchiveFormComponent } from '../archive-exam-form/archive-form.component';
 import { ArchiveExamGridComponent } from '../archive-exam-grid/archive-exam-grid.component';
 import { BarcodeService } from '../services/barcode-service';
-import { ArchiveExam, ArchiveFolder, Report } from '@msh/shared/domain-models';
-import { TableLazyLoadEvent } from 'primeng/table';
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-archive-exams',
@@ -329,7 +329,7 @@ export class ManageArchiveExamsComponent implements OnInit {
             query.queryParams[`${this.parameterIsFall}`] = isFallValue;
           }
           this.router
-            .navigate([`/reports/view/${this.archiveFolderReport}`], query)
+            .navigate([`/evaluations/archive-exams/report/${this.id}`])
             .then();
         }
 

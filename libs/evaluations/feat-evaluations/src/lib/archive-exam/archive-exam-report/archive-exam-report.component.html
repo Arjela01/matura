@@ -1,0 +1,76 @@
+<div class="flex mb-2 page-header center mb-header">
+  <h2 class="flex-1 mb-0">
+    <ng-container *ngIf="archiveFolder$ | async as archiveFolder; else loading">
+      <span>
+        Dosja: {{ archiveFolder.nr }} | {{ archiveFolder.examTypeName }} :
+        {{ archiveFolder.examSubjectName }}
+        {{ archiveFolder.isFall ? '| Vjeshtë' : '' }}
+      </span>
+    </ng-container>
+    <ng-template #loading>
+      <span class="flex-1 mb-0 skeleton">Loading... </span>
+    </ng-template>
+  </h2>
+
+  <div class="flex align-items-right justify-content-right">
+    <div class="my-2">
+      <a [routerLink]="['/evaluations', 'archive-folder']">
+        <button
+          pButton
+          label="Kthehu"
+          icon="pi pi-arrow-left"
+          class="mr-2 back-button"></button>
+      </a>
+      <button
+        pButton
+        pRipple
+        label="Printo"
+        icon="pi pi-print"
+        class="p-button-success mr-2"></button>
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="col-12 p-fluid">
+    <div class="card-form px-4 py-4">
+      <ng-container *ngIf="archiveFolder$ | async as archiveFolder">
+        <div class="flex flex-row">
+          <span class="font-semibold col-2">Dosja</span>
+          <span class="col-6">{{ archiveFolder.nr }}</span>
+
+          <span class="font-semibold col-2">Data e Printimit</span>
+          <span class="col-2">{{ today | date : 'dd/MM/yyyy' }}</span>
+        </div>
+
+        <div class="flex flex-row">
+          <span class="font-semibold col-2">Emri i Lëndës</span>
+          <span class="col-10">{{ archiveFolder.examSubjectName }}</span>
+        </div>
+        <div class="flex flex-row">
+          <span class="font-semibold col-2">Tipi i Lëndës</span>
+          <span class="col-10">{{ archiveFolder.examTypeName }}</span>
+        </div>
+        <div class="flex flex-row">
+          <span class="font-semibold col-12">Inventari i Dosjes</span>
+        </div>
+        <div class="flex flex-row">
+          <table>
+            <thead>
+              <tr>
+                <th>Nr dosje</th>
+                <th>Barkodi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let archiveItem of archiveExams$ | async">
+                <td>{{ archiveItem.index }}</td>
+                <td>{{ archiveItem.barcode }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

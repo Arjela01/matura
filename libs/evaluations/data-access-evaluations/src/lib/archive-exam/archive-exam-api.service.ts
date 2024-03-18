@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiResult } from '@msh/shared/data-access-shared';
-import {
-  ArchiveExam,
-  ArchiveExamView,
-  ExamAssignmentTableView,
-} from '@msh/shared/domain-models';
+import { ArchiveExam, ArchiveExamView } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
@@ -56,7 +52,7 @@ export class ArchiveExamApiService {
     );
   }
   getExamsByFolderId(archiveFolderId?: number): Observable<ApiResult<any>> {
-    return this.apiService.get<ApiResult<ArchiveExam>>(
+    return this.apiService.get<ApiResult<Array<ArchiveExam>>>(
       `/ArchiveExam/GetById/${archiveFolderId}`
     );
   }

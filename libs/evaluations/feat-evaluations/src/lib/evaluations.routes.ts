@@ -1,5 +1,4 @@
 import { Route } from '@angular/router';
-import { ExamSecretFolderMismatchComponent } from './exam-secrets/exam-secret-folder-mismatch/exam-secret-folder-mismatch.component';
 
 export const EVALUATION_ROUTES: Route[] = [
   {
@@ -51,6 +50,13 @@ export const EVALUATION_ROUTES: Route[] = [
       import(
         './archive-exam/manage-archive-exams/manage-archive-exams.component'
       ).then(m => m.ManageArchiveExamsComponent),
+  },
+  {
+    path: 'archive-exams/report/:id',
+    loadComponent: () =>
+      import(
+        './archive-exam/archive-exam-report/archive-exam-report.component'
+      ).then(m => m.ArchiveExamReportComponent),
   },
   {
     path: 'archive-folder-cover/:id',
