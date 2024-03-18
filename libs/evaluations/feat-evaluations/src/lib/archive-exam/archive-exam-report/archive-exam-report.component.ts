@@ -15,6 +15,11 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { Observable, of, switchMap } from 'rxjs';
 import { ArchiveFormComponent } from '../archive-exam-form/archive-form.component';
 import { ArchiveExamGridComponent } from '../archive-exam-grid/archive-exam-grid.component';
+
+import { GlobalToastService } from '@msh/shared/util-shared';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-archive-exams',
@@ -80,6 +85,40 @@ export class ArchiveExamReportComponent {
   constructor(
     private readonly archiveFolderService: ArchiveFolderApiService,
     private readonly archiveExamApiService: ArchiveExamApiService,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private readonly toastService: GlobalToastService
   ) {}
+
+  printReport() {
+    const div = document.getElementById('content') as HTMLElement;
+    const options = {
+      scale: 2,
+      useCORS: true,
+      logging: true,
+    };
+
+    html2canvas(div, options)
+      .then(canvas => {
+        const img = canvas.toDataURL('image/jpeg');
+        const doc = new jsPDF('p', 'mm', 'a4');
+
+        const imgWidth = 190;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        const xPos = (doc.internal.pageSize.width - imgWidth) / 2;
+        const yPos = 20;
+
+        doc.addImage(img, 'JPEG', xPos, yPos, imgWidth, imgHeight);
+
+        return doc;
+      })
+      .then(doc => {
+        this.archiveFolder$.subscribe(folder => {
+          if (folder) {
+            doc.save(`dosje-${folder.nr}-${folder.examSubjectName}.pdf`);
+          } else {
+            this.toastService.showError('Ndodhi një problem!');
+          }
+        });
+      });
+  }
 }

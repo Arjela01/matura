@@ -24,16 +24,17 @@
       <button
         pButton
         pRipple
-        label="Printo"
+        label="Shkarko"
         icon="pi pi-print"
-        class="p-button-success mr-2"></button>
+        class="p-button-success mr-2"
+        (click)="printReport()"></button>
     </div>
   </div>
 </div>
 
 <div class="grid">
   <div class="col-12 p-fluid">
-    <div class="card-form px-4 py-4">
+    <div id="content" class="card-form px-4 py-4">
       <ng-container *ngIf="archiveFolder$ | async as archiveFolder">
         <div class="flex flex-row">
           <span class="font-semibold col-2">Dosja</span>
