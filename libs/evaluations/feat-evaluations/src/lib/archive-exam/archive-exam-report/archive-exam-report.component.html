@@ -40,7 +40,7 @@
           <span class="font-semibold col-2">Dosja</span>
           <span class="col-6">{{ archiveFolder.nr }}</span>
 
-          <span class="font-semibold col-2">Data e Printimit</span>
+          <span class="font-semibold col-2">Data</span>
           <span class="col-2">{{ today | date : 'dd/MM/yyyy' }}</span>
         </div>
 
@@ -56,20 +56,44 @@
           <span class="font-semibold col-12">Inventari i Dosjes</span>
         </div>
         <div class="flex flex-row">
-          <table>
-            <thead>
-              <tr>
-                <th>Nr dosje</th>
-                <th>Barkodi</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let archiveItem of archiveExams$ | async">
-                <td>{{ archiveItem.index }}</td>
-                <td>{{ archiveItem.barcode }}</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="col-6">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nr dosje</th>
+                  <th>Barkodi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let archiveItem of archiveExams$ | async | slice : 0 : 25
+                  ">
+                  <td>{{ archiveItem.index }}</td>
+                  <td>{{ archiveItem.barcode }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-6">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nr dosje</th>
+                  <th>Barkodi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let archiveItem of archiveExams$ | async | slice : 25
+                  ">
+                  <td>{{ archiveItem.index }}</td>
+                  <td>{{ archiveItem.barcode }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </ng-container>
     </div>

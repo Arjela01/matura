@@ -91,6 +91,7 @@ export class ArchiveExamReportComponent {
 
   printReport() {
     const div = document.getElementById('content') as HTMLElement;
+
     const options = {
       scale: 2,
       useCORS: true,
@@ -100,14 +101,21 @@ export class ArchiveExamReportComponent {
     html2canvas(div, options)
       .then(canvas => {
         const img = canvas.toDataURL('image/jpeg');
-        const doc = new jsPDF('p', 'mm', 'a4');
 
         const imgWidth = 190;
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        const xPos = (doc.internal.pageSize.width - imgWidth) / 2;
-        const yPos = 20;
 
-        doc.addImage(img, 'JPEG', xPos, yPos, imgWidth, imgHeight);
+        const pageSize = {
+          width: imgWidth + 30,
+          height: imgHeight + 30,
+        };
+
+        const doc = new jsPDF({
+          unit: 'pt',
+          format: [pageSize.width, pageSize.height],
+        });
+
+        doc.addImage(img, 'JPEG', 0, 0, imgWidth, imgHeight);
 
         return doc;
       })
