@@ -220,11 +220,4 @@ export const EVALUATION_ROUTES: Route[] = [
         './exam-questions/manage-exam-questions/manage-exam-questions.component'
       ).then(m => m.ManageExamQuestionsComponent),
   },
-  {
-    path: 'exam-question-score',
-    loadComponent: () =>
-      import(
-        './exam-questions-score/manage-exam-questions-score/manage-exam-questions-score.component'
-      ).then(m => m.ManageExamQuestionsScoreComponent),
-  },
 ];

@@ -10,7 +10,7 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ExamQuestionsService } from '../../../../../data-access-evaluations/src/lib/exam-questions/exam-questions.service';
+import { ExamQuestionsService } from '@msh/evaluations/data-access-evaluations';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';

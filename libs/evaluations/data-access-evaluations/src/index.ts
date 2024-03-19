@@ -11,4 +11,4 @@ export * from './lib/grades-scale/grades-scale-api.service';
 export * from './lib/processes/processes-api.service';
 export * from './lib/diploma-recognition/diploma-recognition.service';
 export * from './lib/diploma-recognition/documents.service';
-export * from './lib/exam-question-score/exam-question-score.service';
+export * from './lib/exam-questions/exam-questions.service';
