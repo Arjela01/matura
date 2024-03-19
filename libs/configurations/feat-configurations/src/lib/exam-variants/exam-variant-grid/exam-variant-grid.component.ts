@@ -61,6 +61,13 @@ export class ExamVariantGridComponent {
     } as GridEvent<ExamVariant>);
   }
 
+  onAddQuestionClick(examVariant: ExamVariant) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.ADD,
+      data: examVariant,
+    } as GridEvent<ExamVariant>);
+  }
+
   onDeleteClick(examVariant: ExamVariant) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,

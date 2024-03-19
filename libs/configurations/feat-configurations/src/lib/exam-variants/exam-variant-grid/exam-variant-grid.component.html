@@ -112,6 +112,12 @@
       <td>
         <div class="flex">
           <img
+            src="assets/svg/plus-sign.svg"
+            class="p-button-rounded p-button-warning p-button-text mr-2 mt-1 pointer"
+            tooltipPosition="bottom"
+            (click)="onAddQuestionClick(examVariant)"
+            pTooltip="Hidh Pyetjet" />
+          <img
             src="assets/svg/edit-form.svg"
             class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"
@@ -122,7 +128,7 @@
             class="p-button-rounded p-button-danger p-button-text ml-m pointer"
             pTooltip="Fshi"
             tooltipPosition="bottom"
-            (click)="onDeleteClick(examVariant)"/>
+            (click)="onDeleteClick(examVariant)" />
         </div>
       </td>
     </tr>

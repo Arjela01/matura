@@ -1,6 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { AcademicYear, ExamSubjectProfile, ExamVariant } from '@msh/shared/domain-models';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
+import {
+  AcademicYear,
+  ExamSubjectProfile,
+  ExamVariant,
+} from '@msh/shared/domain-models';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -28,6 +37,7 @@ import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { ExamVariantFormComponent } from '../exam-variant-form/exam-variant-form.component';
 import { ExamVariantGridComponent } from '../exam-variant-grid/exam-variant-grid.component';
 import { AuthFacade } from '@msh/auth/data-access-auth';
+import { Router } from '@angular/router';
 
 @UntilDestroy()
 @Component({
@@ -73,12 +83,13 @@ export class ManageExamVariantsComponent implements OnInit {
     private readonly profileGroupApiService: ProfileGroupApiService,
     private readonly examTypesApiService: ExamTypeApiService,
     private readonly examSubjectsApiService: ExamSubjectApiService,
-    private readonly profileApiService:ProfileApiService,
-    private readonly cd:ChangeDetectorRef,
-    private readonly examSubjectService:ExamSubjectApiService,
-    private academicApiService:AcademicYearApiService,
+    private readonly profileApiService: ProfileApiService,
+    private readonly cd: ChangeDetectorRef,
+    private readonly examSubjectService: ExamSubjectApiService,
+    private academicApiService: AcademicYearApiService,
     protected authFacade: AuthFacade,
-  ) { }
+    private readonly router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getProfileGroupsDropdown();
@@ -104,7 +115,7 @@ export class ManageExamVariantsComponent implements OnInit {
           })
         )
 
-        .subscribe((academicYear) => {
+        .subscribe(academicYear => {
           this.academicYears = academicYear.data;
         });
     }
@@ -152,8 +163,12 @@ export class ManageExamVariantsComponent implements OnInit {
         break;
       case GRID_ACTIONS.EDIT:
         this.selectedExamVariant = Object.assign({}, event.data as ExamVariant);
-
         this.displayModal = true;
+        break;
+      case GRID_ACTIONS.ADD:
+        this.router.navigate([
+          `/evaluations/exam-question/${(event.data as ExamVariant).id}`,
+        ]);
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
