@@ -219,4 +219,11 @@ export const EVALUATION_ROUTES: Route[] = [
         './diploma-recognition/diploma-recognition-response/diploma-recognition-response.component'
       ).then(m => m.DiplomaRecognitionResponseComponent),
   },
+  {
+    path: 'exam-question/:id',
+    loadComponent: () =>
+      import(
+        './exam-questions/manage-exam-questions/manage-exam-questions.component'
+      ).then(m => m.ManageExamQuestionsComponent),
+  },
 ];
