@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import {
   ArchiveExamApiService,
@@ -12,7 +12,7 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
-import { Observable, of, switchMap } from 'rxjs';
+import { BehaviorSubject, filter, map, of, switchMap } from 'rxjs';
 import { ArchiveFormComponent } from '../archive-exam-form/archive-form.component';
 import { ArchiveExamGridComponent } from '../archive-exam-grid/archive-exam-grid.component';
 
@@ -39,48 +39,25 @@ import jsPDF from 'jspdf';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ArchiveExamReportComponent {
-  archiveFolder$: Observable<ArchiveFolder | null> = this.route.paramMap.pipe(
-    switchMap(paramMap => {
-      const id = paramMap.get('id');
-      if (id) {
-        return this.archiveFolderService.getById(id).pipe(
-          switchMap(archiveFolder => {
-            if (archiveFolder.isSuccessful) {
-              return of(archiveFolder.data);
-            } else {
-              return of(null);
-            }
-          })
-        );
-      } else {
-        return of(null);
-      }
-    })
+export class ArchiveExamReportComponent implements OnInit {
+  private archiveFolderSubject = new BehaviorSubject<ArchiveFolder | null>(
+    null
   );
+  archiveFolder$ = this.archiveFolderSubject.asObservable();
 
   archiveExams$ = this.archiveFolder$.pipe(
-    switchMap(archiveFolder => {
-      if (archiveFolder) {
-        return this.archiveExamApiService
-          .getExamsByFolderId(archiveFolder.id)
-          .pipe(
-            switchMap(archiveExam => {
-              if (archiveExam.isSuccessful) {
-                console.log(archiveExam.data);
-                return of(archiveExam.data as Array<ArchiveExam>);
-              } else {
-                return of(null);
-              }
-            })
-          );
-      } else {
-        return of(null);
-      }
-    })
+    filter(archiveFolder => !!archiveFolder),
+    switchMap(archiveFolder =>
+      archiveFolder
+        ? this.archiveExamApiService.getExamsByFolderId(archiveFolder.id)
+        : of(null)
+    ),
+    map(archiveExam =>
+      archiveExam?.isSuccessful
+        ? (archiveExam.data as Array<ArchiveExam>)
+        : null
+    )
   );
-
-  today = new Date();
 
   constructor(
     private readonly archiveFolderService: ArchiveFolderApiService,
@@ -88,6 +65,22 @@ export class ArchiveExamReportComponent {
     private readonly route: ActivatedRoute,
     private readonly toastService: GlobalToastService
   ) {}
+
+  ngOnInit() {
+    this.route.paramMap
+      .pipe(
+        filter(paramMap => !!paramMap.get('id')),
+        switchMap(paramMap =>
+          this.archiveFolderService.getById(paramMap.get('id'))
+        ),
+        map(response => (response.isSuccessful ? response.data : null))
+      )
+      .subscribe(response => {
+        this.archiveFolderSubject.next(response);
+      });
+  }
+
+  today = new Date();
 
   printReport() {
     const div = document.getElementById('content') as HTMLElement;
@@ -120,7 +113,7 @@ export class ArchiveExamReportComponent {
         return doc;
       })
       .then(doc => {
-        this.archiveFolder$.subscribe(folder => {
+        this.archiveFolderSubject.subscribe(folder => {
           if (folder) {
             doc.save(`dosje-${folder.nr}-${folder.examSubjectName}.pdf`);
           } else {
