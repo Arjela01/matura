@@ -12,3 +12,5 @@ export * from './lib/processes/processes-api.service';
 export * from './lib/diploma-recognition/diploma-recognition.service';
 export * from './lib/diploma-recognition/documents.service';
 export * from './lib/exam-questions/exam-questions.service';
+export * from './lib/analytic-scores-without-total/analytic-scores-without-total.service';
+export * from './lib/total-scores-without-analytic/total-scores-without-analytic.service';

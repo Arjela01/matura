@@ -226,4 +226,18 @@ export const EVALUATION_ROUTES: Route[] = [
         './exam-questions/manage-exam-questions/manage-exam-questions.component'
       ).then(m => m.ManageExamQuestionsComponent),
   },
+  {
+    path: 'analytic-scores-without-total',
+    loadComponent: () =>
+      import(
+        './analytic-scores-without-total/analytic-scores-without-total-grid/analytic-scores-without-total-grid.component'
+      ).then(m => m.AnalyticScoresWithoutTotalGridComponent),
+  },
+  {
+    path: 'total-scores-without-analytic',
+    loadComponent: () =>
+      import(
+        './total-scores-without-analytic/total-scores-without-analytic-grid/total-scores-without-analytic-grid.component'
+      ).then(m => m.TotalScoresWithoutAnalyticGridComponent),
+  },
 ];
