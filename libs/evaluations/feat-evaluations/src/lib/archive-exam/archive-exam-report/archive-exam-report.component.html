@@ -38,19 +38,25 @@
       <ng-container *ngIf="archiveFolder$ | async as archiveFolder">
         <div class="flex flex-row">
           <span class="font-semibold col-2">Dosja</span>
-          <span class="col-6">{{ archiveFolder.nr }}</span>
+          <span class="font-semibold col-6">{{ archiveFolder.nr }}</span>
 
           <span class="font-semibold col-2">Data</span>
-          <span class="col-2">{{ today | date : 'dd/MM/yyyy' }}</span>
+          <span class="font-semibold col-2">{{
+            today | date : 'dd/MM/yyyy'
+          }}</span>
         </div>
 
         <div class="flex flex-row">
           <span class="font-semibold col-2">Emri i Lëndës</span>
-          <span class="col-10">{{ archiveFolder.examSubjectName }}</span>
+          <span class="font-semibold col-10">{{
+            archiveFolder.examSubjectName
+          }}</span>
         </div>
         <div class="flex flex-row">
           <span class="font-semibold col-2">Tipi i Lëndës</span>
-          <span class="col-10">{{ archiveFolder.examTypeName }}</span>
+          <span class="font-semibold col-10">{{
+            archiveFolder.examTypeName
+          }}</span>
         </div>
         <div class="flex flex-row">
           <span class="font-semibold col-12">Inventari i Dosjes</span>
@@ -69,31 +75,33 @@
                   *ngFor="
                     let archiveItem of archiveExams$ | async | slice : 0 : 25
                   ">
-                  <td>{{ archiveItem.index }}</td>
-                  <td>{{ archiveItem.barcode }}</td>
+                  <td class="font-semibold">{{ archiveItem.index }}</td>
+                  <td class="font-semibold">{{ archiveItem.barcode }}</td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div class="col-6">
-            <table>
-              <thead>
-                <tr>
-                  <th>Nr dosje</th>
-                  <th>Barkodi</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  *ngFor="
-                    let archiveItem of archiveExams$ | async | slice : 25
-                  ">
-                  <td>{{ archiveItem.index }}</td>
-                  <td>{{ archiveItem.barcode }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <ng-container *ngIf="((archiveExams$ | async) ?? []).length > 25">
+            <div class="col-6">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nr dosje</th>
+                    <th>Barkodi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let archiveItem of archiveExams$ | async | slice : 25
+                    ">
+                    <td class="font-semibold">{{ archiveItem.index }}</td>
+                    <td class="font-semibold">{{ archiveItem.barcode }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ng-container>
         </div>
       </ng-container>
     </div>
