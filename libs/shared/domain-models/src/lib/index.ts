@@ -62,3 +62,4 @@ export * from './diploma-recognition/diploma-recognition';
 export * from './exam-question/exam-question.model';
 export * from './analytic-scores-without-total/analytic-scores-without-total.model';
 export * from './total-scores-without-analytic/total-scores-without-analytic.model';
+export * from './exam-question-score/exam-question-score.model';

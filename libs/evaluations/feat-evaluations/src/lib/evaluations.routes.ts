@@ -240,4 +240,11 @@ export const EVALUATION_ROUTES: Route[] = [
         './total-scores-without-analytic/total-scores-without-analytic-grid/total-scores-without-analytic-grid.component'
       ).then(m => m.TotalScoresWithoutAnalyticGridComponent),
   },
+  {
+    path: 'exam-question-score',
+    loadComponent: () =>
+      import(
+        './exam-questions-scores/manage-exam-question-score/manage-exam-question-score.component'
+      ).then(m => m.ManageExamQuestionsScoreComponent),
+  },
 ];
