@@ -54,6 +54,15 @@
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
+      <th pSortableColumn="questionSection">
+        Nënseksioni
+        <p-sortIcon field="questionSection"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="questionSection"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
       <th></th>
     </tr>
   </ng-template>
@@ -70,6 +79,9 @@
       </td>
       <td style="width: 20%">
         {{ examQuestion.examVariantMaximumScore }}
+      </td>
+      <td style="width: 20%">
+        {{ examQuestion.section }}
       </td>
       <td>
         <div class="flex">
