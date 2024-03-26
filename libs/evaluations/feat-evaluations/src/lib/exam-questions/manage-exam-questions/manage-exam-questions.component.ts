@@ -17,7 +17,7 @@ import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ExamQuestionsGridComponent } from '../exam-questions-grid/exam-questions-grid.component';
 import { ExamQuestionsFormComponent } from '../exam-questions-form/exam-questions-form.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @UntilDestroy()
 @Component({
@@ -53,7 +53,8 @@ export class ManageExamQuestionsComponent {
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examQuestionService: ExamQuestionsService,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private readonly router: Router
   ) {
     this.examVariantId = this.route.snapshot.paramMap.get('id');
   }
@@ -69,6 +70,10 @@ export class ManageExamQuestionsComponent {
   onNewClick() {
     this.displayModal = true;
     this.selectedExamQuestion = {} as ExamQuestionModel;
+  }
+
+  onBackButtonClick() {
+    this.router.navigate(['configurations/exam-variant']);
   }
 
   onGridEvent(event: GridEvent<ExamQuestionModel | ExamQuestionModel[]>) {

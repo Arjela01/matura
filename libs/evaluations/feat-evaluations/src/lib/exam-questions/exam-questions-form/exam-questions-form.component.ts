@@ -52,6 +52,7 @@ export class ExamQuestionsFormComponent {
     id: 0,
     index: 0,
     questionMaximumScore: 0,
+    section: '',
   };
 
   onCancelClick() {
