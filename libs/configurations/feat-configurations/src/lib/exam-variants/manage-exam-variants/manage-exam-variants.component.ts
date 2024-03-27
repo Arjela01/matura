@@ -172,7 +172,7 @@ export class ManageExamVariantsComponent implements OnInit {
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message: 'Jeni i sigurt që doni të fshini variantin zgjedhur?',
+          message: 'Jeni i sigurt që doni të fshini variantin e zgjedhur?',
           accept: () => {
             this.deleteExamVariant(event.data as ExamVariant);
           },

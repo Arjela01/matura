@@ -1,0 +1,42 @@
+<div>
+  <h2 class="flex-1 mb-0">Pikët e Pyetjeve të Provimit</h2>
+  <div class="mt-4">
+    <msh-exam-question-score-filters
+      (formSave)="getExamQuestionScoresList($event)"
+      (examSubjectChanged)="getExamSubjectDropdown($event)"
+      (examVariantChanged)="getExamVariantDropdown($event)"
+      [examVariant]="examVariant"
+      [examSubject]="examSubject"
+      [examType]="examType"></msh-exam-question-score-filters>
+  </div>
+  <div class="mt-4">
+    <msh-exam-question-score-grid
+      [examQuestionScoreList]="(examQuestionScoreList$ | async) || []"
+      [totalRecords]="totalRecords"
+      (gridEvent)="onGridEvent($event)"
+      (writingScoreChange)="saveExamQuestionScoreChanges($event)">
+    </msh-exam-question-score-grid>
+  </div>
+</div>
+<p-confirmDialog
+  #cd
+  header="Konfirmo"
+  icon="pi pi-exclamation-triangle"
+  [style]="{ width: '450px' }">
+  <ng-template pTemplate="footer">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Jo"
+      class="p-button-text"
+      (click)="cd.reject()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Po"
+      class="p-button border"
+      (click)="cd.accept()"></button>
+  </ng-template>
+</p-confirmDialog>
