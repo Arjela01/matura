@@ -179,8 +179,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
           });
           return {
             examScores: examScores.data.find(
-              (examScore: ExamScore) =>
-                examScore.examSubjectId === $event.examSubjectId
+              (examScore: ExamScore) => examScore.barcode === $event.barcode
             ),
             examQuestion: examQuestion,
             examQuestionScores: matchingScore,
@@ -245,7 +244,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
         examQuestionID: rowData.examQuestion.id,
         score: rowData.examQuestionScores[0].examQuestionScore,
         examScoreID:
-          rowData.examQuestionScores[0].examScoreID || rowData?.examScores?.id,
+          rowData.examQuestionScores[0].examScoreID || rowData.examScores.id,
       };
       if (!rowData.examQuestionScores[0].hasScore) {
         this.saveExamScore(examQuestionScore);
