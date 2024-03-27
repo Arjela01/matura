@@ -21,10 +21,11 @@ export class ExamSiteApiService {
   }
 
   forAdministrationOffice(
-    administrationOfficeId?: number
+    administrationOfficeId?: number,
+    academicYearId?: number
   ): Observable<ApiResult<DropdownModel<string>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<string>[]>>(
-      `/ExamSite/ForAdministrationOffice/${administrationOfficeId}`
+      `/ExamSite/ForAdministrationOffice/${administrationOfficeId}/${academicYearId}`
     );
   }
 
