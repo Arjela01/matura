@@ -94,21 +94,15 @@ export class ArchiveExamReportComponent implements OnInit {
     html2canvas(div, options)
       .then(canvas => {
         const img = canvas.toDataURL('image/jpeg');
+        const doc = new jsPDF('p', 'mm', 'a4');
+        const bufferX = 5;
+        const bufferY = 25;
+        const imgProps = (<any>doc).getImageProperties(img);
+        const aspectRatio = imgProps.width / imgProps.height;
+        const pdfWidth = 200;
+        const pdfHeight = pdfWidth / aspectRatio;
 
-        const imgWidth = 190;
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-        const pageSize = {
-          width: imgWidth + 30,
-          height: imgHeight + 30,
-        };
-
-        const doc = new jsPDF({
-          unit: 'pt',
-          format: [pageSize.width, pageSize.height],
-        });
-
-        doc.addImage(img, 'JPEG', 0, 0, imgWidth, imgHeight);
+        doc.addImage(img, 'JPEG', bufferX, bufferY, pdfWidth, pdfHeight);
 
         return doc;
       })
