@@ -201,15 +201,20 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
   }
 
   loadExamSites($event: ExamSecretSearchModel) {
-    this.examSiteService
-      .forAdministrationOffice($event.administrationOfficeId)
-      .subscribe(response => {
-        this.examSites = response.data;
-        this.examSubjects = [];
-        this.examTypes = [];
-        this.examDates = [];
-        this.cd.markForCheck();
-      });
+    const academicYearString = localStorage.getItem('academicYear');
+    if (academicYearString) {
+      const academicYear = JSON.parse(academicYearString);
+      const academicYearId = academicYear.id;
+      this.examSiteService
+        .forAdministrationOffice($event.administrationOfficeId, academicYearId)
+        .subscribe(response => {
+          this.examSites = response.data;
+          this.examSubjects = [];
+          this.examTypes = [];
+          this.examDates = [];
+          this.cd.markForCheck();
+        });
+    }
   }
 
   loadExamTypes($event: ExamSecretSearchModel) {

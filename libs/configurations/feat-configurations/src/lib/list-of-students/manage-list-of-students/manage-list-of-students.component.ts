@@ -110,10 +110,15 @@ export class ManageListOfStudentsComponent implements OnInit {
       });
   }
   getExamSitesForZvap() {
-    this.examSiteService
-      .forAdministrationOffice(this.administrationOfficeId)
-      .pipe(untilDestroyed(this))
-      .subscribe(res => (this.examSites = res.data));
+    const academicYearString = localStorage.getItem('academicYear');
+    if (academicYearString) {
+      const academicYear = JSON.parse(academicYearString);
+      const academicYearId = academicYear.id;
+      this.examSiteService
+        .forAdministrationOffice(this.administrationOfficeId, academicYearId)
+        .pipe(untilDestroyed(this))
+        .subscribe(res => (this.examSites = res.data));
+    }
   }
 
   getExamSitesForOverseer() {
