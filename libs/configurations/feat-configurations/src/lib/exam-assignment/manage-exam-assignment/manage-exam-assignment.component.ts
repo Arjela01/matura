@@ -87,7 +87,7 @@ export class ManageExamAssignmentComponent implements OnInit {
     private readonly cd: ChangeDetectorRef,
     private readonly administrationOfficeService: AdministrationOfficeApiService,
     private readonly profileService: ProfileApiService
-  ) { }
+  ) {}
 
   onGridEvent(event: GridEvent<any | ExamAssignment[]>) {
     switch (event.action) {
@@ -191,11 +191,16 @@ export class ManageExamAssignmentComponent implements OnInit {
   }
 
   getExamSite(administrationOfficeId: any) {
-    this.examSiteService
-      .forAdministrationOffice(administrationOfficeId)
-      .pipe(untilDestroyed(this))
-      .subscribe(res => (this.examSiteForAdministrationOffice = res.data));
-    this.cd.detectChanges();
+    const academicYearString = localStorage.getItem('academicYear');
+    if (academicYearString) {
+      const academicYear = JSON.parse(academicYearString);
+      const academicYearId = academicYear.id;
+      this.examSiteService
+        .forAdministrationOffice(administrationOfficeId, academicYearId)
+        .pipe(untilDestroyed(this))
+        .subscribe(res => (this.examSiteForAdministrationOffice = res.data));
+      this.cd.detectChanges();
+    }
   }
 
   getExamAssignments($event: TableLazyLoadEvent) {
@@ -216,7 +221,6 @@ export class ManageExamAssignmentComponent implements OnInit {
         this.totalRecords = response.total;
       });
   }
-
 
   addExamAssignment(examAssignment: ExamAssignment) {
     this.examAssignmentService
@@ -314,18 +318,22 @@ export class ManageExamAssignmentComponent implements OnInit {
       });
   }
   getSchoolProfiles() {
-    this.profileService.loadDropdownList()
-    .pipe(untilDestroyed(this))
-    .subscribe(response => {
-      this.schoolProfileId = response.data;
-    });
+    this.profileService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.schoolProfileId = response.data;
+      });
   }
   onAssignAllFormSave(examAssignment: any) {
-    Object.keys(examAssignment).forEach((key) => {
-      if (examAssignment[key] === null
-        || examAssignment[key] === 0
-        || examAssignment[key] === '')delete examAssignment[key];
-    })
+    Object.keys(examAssignment).forEach(key => {
+      if (
+        examAssignment[key] === null ||
+        examAssignment[key] === 0 ||
+        examAssignment[key] === ''
+      )
+        delete examAssignment[key];
+    });
 
     const filteredAssignment = { ...examAssignment };
 
@@ -333,17 +341,17 @@ export class ManageExamAssignmentComponent implements OnInit {
     filteredAssignment.examDateIds = examAssignment.examDateId;
     delete filteredAssignment.examSiteId;
     delete filteredAssignment.examDateId;
-    
-    this.assignAll(filteredAssignment)
+
+    this.assignAll(filteredAssignment);
   }
-  assignAll(examAssignment:any) {
+  assignAll(examAssignment: any) {
     this.examAssignmentService
       .examAssign(examAssignment)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examAssignment = response.data;
         if (response.isSuccessful) {
-          this.toastService.showSuccess(response.data.toString())
+          this.toastService.showSuccess(response.data.toString());
           this.displayAssignAllModal = false;
           this.getExamAssignments(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
