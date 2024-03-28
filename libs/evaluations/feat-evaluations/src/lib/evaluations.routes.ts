@@ -247,4 +247,18 @@ export const EVALUATION_ROUTES: Route[] = [
         './exam-questions-scores/manage-exam-question-score/manage-exam-question-score.component'
       ).then(m => m.ManageExamQuestionsScoreComponent),
   },
+  {
+    path: 'exam-question-score',
+    loadComponent: () =>
+      import(
+        './exam-questions-scores/manage-exam-question-score/manage-exam-question-score.component'
+      ).then(m => m.ManageExamQuestionsScoreComponent),
+  },
+  {
+    path: 'total-analytic-scores-mismatch',
+    loadComponent: () =>
+      import(
+        './total-analytic-score-mismatch/total-analytic-score-mismatch.component'
+      ).then(m => m.TotalAnalyticScoreMismatchComponent),
+  },
 ];
