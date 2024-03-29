@@ -1,0 +1,40 @@
+<table>
+  <thead>
+    <tr>
+      <th>Pyetja</th>
+      <th>Pikêt e Marra për Pyetje</th>
+      <th>Pikët Maksimale të Pyetjes</th>
+      <th>Pikët Totale</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let rowData of examQuestionScoreList">
+      <td>{{ rowData.examQuestion.index }}</td>
+      <td>
+        <ng-container>
+          <input
+            type="number"
+            pInputText
+            name="writingScore"
+            tabindex="1"
+            [attr.examQuestionId]="rowData.examQuestionScores[0].id"
+            [(ngModel)]="rowData.examQuestionScores[0].examQuestionScore"
+            (change)="onExamScoreAddOrUpdate(rowData)" />
+        </ng-container>
+      </td>
+      <td>{{ rowData.examQuestion.questionMaximumScore }}</td>
+      <td>{{ rowData.examQuestion.examVariantMaximumScore }}</td>
+      <td>
+        <button
+          pButton
+          icon="pi pi-trash"
+          class="p-button-danger p-button-text justify-content-center ml-4"
+          *ngIf="rowData.examQuestionScores[0].hasScore"
+          (click)="
+            onDeleteClick(rowData.examQuestionScores[0].examQuestionScoreID)
+          "></button>
+      </td>
+    </tr>
+  </tbody>
+</table>

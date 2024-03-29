@@ -1,0 +1,86 @@
+<div class="flex ml-2 mb-2 page-header mb-header">
+  <h2 class="flex-1">Pikë Totale pa Pikë Analitike</h2>
+</div>
+
+<p-table
+  #dt
+  dataKey="id"
+  responsiveLayout="scroll"
+  [totalRecords]="totalRecords"
+  [scrollable]="true"
+  scrollHeight="820px"
+  [rows]="100"
+  [paginator]="true"
+  [rowsPerPageOptions]="[100, 200, 300]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
+  [rowHover]="true"
+  (onLazyLoad)="getTotalScoresWithoutAnalyticList($event)"
+  [value]="(totalScoresWithoutAnalyticList$ | async) || []"
+  selectionMode="multiple"
+  [lazy]="true">
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="examTypeName">
+        Tipi i Provimit
+        <div>
+          <p-sortIcon field="examTypeName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="examTypeName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="examSubjectName">
+        Lënda e Provimit
+        <div>
+          <p-sortIcon field="examSubjectName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="examSubjectName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="barcode">
+        Barkodi
+        <div>
+          <p-sortIcon field="barcode"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="barcode"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="totalScore">
+        Pikët
+        <div>
+          <p-sortIcon field="totalScore"></p-sortIcon>
+          <p-columnFilter
+            type="number"
+            field="totalScore"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-totalScoresWithoutAnalytic>
+    <tr>
+      <td style="width: 25%; min-width: 10rem">
+        {{ totalScoresWithoutAnalytic.examTypeName }}
+      </td>
+      <td style="width: 25%; min-width: 10rem">
+        {{ totalScoresWithoutAnalytic.examSubjectName }}
+      </td>
+      <td style="width: 25%; min-width: 10rem">
+        {{ totalScoresWithoutAnalytic.barcode }}
+      </td>
+      <td style="width: 25%; min-width: 10rem">
+        {{ totalScoresWithoutAnalytic.totalScore }}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

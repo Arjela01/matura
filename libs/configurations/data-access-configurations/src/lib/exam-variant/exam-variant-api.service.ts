@@ -9,7 +9,7 @@ import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
   providedIn: 'root',
 })
 export class ExamVariantApiService {
-  constructor(private apiService: APIService) { }
+  constructor(private apiService: APIService) {}
 
   loadExamVariants(
     event: TableLazyLoadEvent
@@ -29,7 +29,10 @@ export class ExamVariantApiService {
 
   update(examVariant: ExamVariant): Observable<ApiResult<ExamVariant>> {
     return this.apiService
-      .post<ApiResult<ExamVariant>, ExamVariant>(`/ExamVariant/Update`, examVariant)
+      .post<ApiResult<ExamVariant>, ExamVariant>(
+        `/ExamVariant/Update`,
+        examVariant
+      )
       .pipe(
         map(data => data),
         catchError(error => throwError(error)),
@@ -48,11 +51,16 @@ export class ExamVariantApiService {
   }
 
   forExamSubject(
-    examSubjectId: string
+    examSubjectId: string,
+    academicYearId: string
   ): Observable<ApiResult<DropdownModel<string>[]>> {
+    const params = {
+      examSubjectId: examSubjectId,
+      academicYearId: academicYearId,
+    };
     return this.apiService.post<ApiResult<DropdownModel<string>[]>, any>(
       `/ExamVariant/ForExamSubject`,
-      { examSubjectId: examSubjectId }
+      params
     );
   }
   loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {

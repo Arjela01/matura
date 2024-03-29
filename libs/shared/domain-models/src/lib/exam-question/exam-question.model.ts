@@ -9,6 +9,7 @@ export interface ExamQuestionModel {
   examVariantProfileGroupName: string;
   examVariantProfileName: string;
   examVariantMaximumScore: number;
+  section: string;
 }
 
 export interface ExamQuestionTableView {
