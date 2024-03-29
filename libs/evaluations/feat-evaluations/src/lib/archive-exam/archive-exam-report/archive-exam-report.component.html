@@ -63,7 +63,7 @@
         </div>
         <div class="flex flex-row">
           <div class="col-6">
-            <table>
+            <table id="my-table">
               <thead>
                 <tr>
                   <th>Nr dosje</th>
@@ -83,7 +83,7 @@
           </div>
           <ng-container *ngIf="((archiveExams$ | async) ?? []).length > 25">
             <div class="col-6">
-              <table>
+              <table id="my-table-2">
                 <thead>
                   <tr>
                     <th>Nr dosje</th>
