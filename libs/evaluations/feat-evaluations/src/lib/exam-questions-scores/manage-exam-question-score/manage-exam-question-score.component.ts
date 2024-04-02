@@ -186,6 +186,11 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
           } as unknown as ExamQuestionsScoreDataEntry;
         }
       );
+      result.sort(
+        (a: ExamQuestionsScoreDataEntry, b: ExamQuestionsScoreDataEntry) => {
+          return a.examQuestion.index - b.examQuestion.index;
+        }
+      );
       this.examQuestionScoreList$$.next(result);
       if (examQuestionScores != undefined) {
         setTimeout(() => {

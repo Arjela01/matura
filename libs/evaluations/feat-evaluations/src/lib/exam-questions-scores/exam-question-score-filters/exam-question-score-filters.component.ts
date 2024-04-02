@@ -71,7 +71,7 @@ export class ExamQuestionScoreFiltersComponent {
     if (this.isSearchValid(this.examQuestionScoreList)) {
       this.formSave.emit(this.examQuestionScoreList);
     } else {
-      this.toastService.showError(
+      this.toastService.showInfo(
         'Ju lutem plotësoni të gjitha fushat e kërkuara.'
       );
     }

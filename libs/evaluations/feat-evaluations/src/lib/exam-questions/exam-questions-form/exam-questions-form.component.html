@@ -2,7 +2,7 @@
   <div class="field">
     <label for="Name">Pyetja *</label>
     <input
-      type="text"
+      type="number"
       pInputText
       id="Name"
       name="Name"
@@ -39,23 +39,17 @@
     </small>
   </div>
   <div class="field">
-    <label for="questionSection">Nënseksioni *</label>
+    <label for="questionSection">Nënseksioni</label>
     <input
       type="text"
       pInputText
       id="questionSection"
       name="questionSection"
       [(ngModel)]="examQuestion.section"
-      required
       autofocus
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examQuestion.section
       }" />
-    <small
-      class="p-error block"
-      *ngIf="submitted && !examQuestion.section">
-      Nënseksioni është fushë e kërkuar.
-    </small>
   </div>
   <div class="flex justify-content-end">
     <button

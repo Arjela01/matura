@@ -10,7 +10,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let rowData of examQuestionScoreList">
-      <td>{{ rowData.examQuestion.index }}</td>
+      <td>{{ rowData.examQuestion.index }}{{rowData.examQuestion.section}}</td>
       <td>
         <ng-container>
           <input
