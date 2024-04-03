@@ -1,4 +1,5 @@
-<div class="flex center mb-2 page-header mb-header">
+<div>
+<div class="flex center mb-1 page-header mb-header">
   <h2 class="flex-1 mb-0">Pyetje Provimi</h2>
   <div class="flex align-items-right justify-content-right">
     <div class="my-2">
@@ -18,6 +19,11 @@
     </div>
   </div>
 </div>
+  <div class="mb-5">
+    <h6>Varianti i Provimit: <span class="text-blue-500 font-bold">{{this.examVariantName}}</span></h6>
+    <h6 class="mt-0">Pikët Maksimale: <span class="text-blue-500 font-bold">{{this.examVariantMaximumScore}}</span></h6>
+  </div>
+</div>
 <div class="grid">
   <div class="col-12">
     <div class="card">
@@ -34,7 +40,7 @@
 <p-dialog
   [(visible)]="displayModal"
   [style]="{ width: '500px' }"
-  header="Detajet e pyetjeve të provimeve"
+  header="Detajet e pyetjes së provimit"
   [modal]="true"
   [draggable]="false"
   [resizable]="false"

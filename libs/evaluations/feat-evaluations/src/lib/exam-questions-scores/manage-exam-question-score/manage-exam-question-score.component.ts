@@ -1,31 +1,29 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { BehaviorSubject, forkJoin, map } from 'rxjs';
 import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { BehaviorSubject, forkJoin } from 'rxjs';
+import {
+  CreateOrUpdateMultiple,
   ExamQuestionModel,
   ExamQuestionScoreModel,
   ExamQuestionsScoreDataEntry,
-  ExamScore,
-  ExamScores,
 } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService } from 'primeng/api';
-import {
-  GlobalToastService,
-  GRID_ACTIONS,
-  GridEvent,
-} from '@msh/shared/util-shared';
+import { GlobalToastService } from '@msh/shared/util-shared';
 import {
   ExamSubjectApiService,
   ExamTypeApiService,
   ExamVariantApiService,
 } from '@msh/configurations/data-access-configurations';
-import {
-  ExamQuestionScoreService,
-  ExamScoreApiService,
-} from '@msh/evaluations/data-access-evaluations';
+import { ExamQuestionScoreService } from '@msh/evaluations/data-access-evaluations';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ExamScoreTabularDataEntryFiltersComponent } from '../../exam-score-tabular-data-entry/exam-score-tabular-data-entry-filters/exam-score-tabular-data-entry-filters.component';
@@ -58,12 +56,16 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
   >([]);
   examQuestionScoreList$ = this.examQuestionScoreList$$.asObservable();
   totalRecords = 0;
+
   filters: TableLazyLoadEvent | null = null;
   examSubject: DropdownModel<string>[] = [];
   examType: DropdownModel<number>[] = [];
   examVariant: DropdownModel<string>[] = [];
   examVariantId: any;
   examSubjectId: any;
+  totalScore = 0;
+  examVariantTotalScore = 0;
+  barcode: any;
 
   event = {
     first: 0,
@@ -77,29 +79,13 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
     private readonly examSubjectService: ExamSubjectApiService,
     private readonly examVariantService: ExamVariantApiService,
     private readonly examQuestionScoreService: ExamQuestionScoreService,
-    private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examQuestionService: ExamQuestionsService,
-    private readonly examTypeService: ExamTypeApiService,
-    private readonly examScoreService: ExamScoreApiService
+    private readonly examTypeService: ExamTypeApiService
   ) {}
 
   ngOnInit() {
     this.getExamTypeDropdown();
-  }
-
-  onGridEvent(event: GridEvent<ExamScores | ExamScores[]>) {
-    switch (event.action) {
-      case GRID_ACTIONS.DELETE:
-        this.confirmationService.confirm({
-          message:
-            'Jeni i sigurt që doni të fshini pikët e pyetjes së provimit?',
-          accept: () => {
-            this.deleteExamScore(event.data as ExamScores);
-          },
-        });
-        break;
-    }
   }
 
   getExamTypeDropdown() {
@@ -132,9 +118,18 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
     }
   }
 
+  calculateTotalScore() {
+    this.totalScore = this.examQuestionScoreList$$
+      .getValue()
+      .reduce((acc, rowData: any) => {
+        return acc + rowData.examQuestionScores[0].examQuestionScore;
+      }, 0) as any;
+  }
+
   getExamQuestionScoresList($event: any) {
     this.filters = Object.assign({}, $event);
     this.examVariantId = $event.examVariantId;
+    this.barcode = $event.barcode;
     this.event.filters = {
       examSubjectID: [
         {
@@ -157,30 +152,28 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
           operator: 'and',
         },
       ],
+      barcode: [
+        {
+          value: $event.barcode.toUpperCase(),
+          matchMode: 'equals',
+          operator: 'and',
+        },
+      ],
     };
     forkJoin([
-      this.examScoreService.loadExamScores(this.event),
       this.examQuestionScoreService.loadExamQuestionScores(this.event),
       this.examQuestionService.getExamQuestionsByExamVariantId(
         $event.examVariantId || $event
       ),
-    ]).subscribe(([examScores, examQuestionScores, examQuestions]) => {
+    ]).subscribe(([examQuestionScores, examQuestions]) => {
       const result = examQuestions.data.map(
         (examQuestion: ExamQuestionModel) => {
+          this.examVariantTotalScore = examQuestion.examVariantMaximumScore;
           const matchingScore = examQuestionScores.data.filter(
             (examQuestionScore: ExamQuestionScoreModel) =>
               examQuestionScore.examQuestionID == examQuestion.id
           );
-
-          examQuestionScores.data.map((item: any) => {
-            if (item.examQuestionScore) {
-              item.hasScore = true;
-            }
-          });
           return {
-            examScores: examScores.data.find(
-              (examScore: ExamScore) => examScore.barcode === $event.barcode
-            ),
             examQuestion: examQuestion,
             examQuestionScores: matchingScore,
           } as unknown as ExamQuestionsScoreDataEntry;
@@ -192,85 +185,59 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
         }
       );
       this.examQuestionScoreList$$.next(result);
-      if (examQuestionScores != undefined) {
-        setTimeout(() => {
-          document
-            .querySelector<HTMLInputElement>(
-              `[examQuestionId='${examQuestionScores.id}']`
-            )
-            ?.focus();
-        }, 100);
-      }
+      this.calculateTotalScore();
     });
   }
 
-  saveExamScore(examQuestionScore: ExamQuestionScoreModel) {
+  saveExamScore(examQuestionScore: CreateOrUpdateMultiple) {
+    const academicYearString = localStorage.getItem('academicYear');
+    if (academicYearString) {
+      const academicYear = JSON.parse(academicYearString);
+      const academicYearId = academicYear.id;
+      const valuesToSend = {
+        academicYearId: academicYearId,
+        examQuestionScoreCreateUpdateModels: examQuestionScore,
+        barcode: this.barcode,
+      } as unknown as CreateOrUpdateMultiple;
+      this.examQuestionScoreService
+        .createOrUpdateMultiple(valuesToSend)
+        .subscribe(response => {
+          if (response.isSuccessful) {
+            this.toastService.showSuccess(
+              'Piket e pyetjeve të provimit u shtuan me sukses!'
+            );
+            this.getExamQuestionScoresList(this.filters as TableLazyLoadEvent);
+          } else {
+            this.toastService.showError(response.errorMessage);
+          }
+          if (response.isBadRequest) {
+            this.toastService.showError(
+              'Ndodhi një problem gjatë shtimit të pikeve!'
+            );
+          }
+        });
+    }
+  }
+
+  deleteExamScore(examQuestionScore: CreateOrUpdateMultiple) {
+    const valuesToSend = {
+      examQuestionIds: examQuestionScore,
+      barcode: this.barcode,
+    } as unknown as CreateOrUpdateMultiple;
     this.examQuestionScoreService
-      .save(examQuestionScore)
+      .deleteMultiple(valuesToSend)
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            'Piket e pyetjes së provimit u shtuan me sukses!'
-          );
+          this.toastService.showInfo('Rezultati i provimit u fshi me sukses!');
           this.getExamQuestionScoresList(this.filters as TableLazyLoadEvent);
         } else {
           this.toastService.showError(response.errorMessage);
         }
         if (response.isBadRequest) {
           this.toastService.showError(
-            'Ndodhi një problem gjatë shtimit të pikeve!'
-          );
-        }
-      });
-  }
-  updateExamScore(examQuestionScore: ExamQuestionScoreModel) {
-    this.examQuestionScoreService
-      .update(examQuestionScore)
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showSuccess(
-            'Piket e pyetjes së provimit u ndryshua me sukses!'
-          );
-          this.getExamQuestionScoresList(this.filters as TableLazyLoadEvent);
-        } else {
-          this.toastService.showError(response.errorMessage);
-        }
-        if (response.isBadRequest)
-          this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së rezultatit të provimit!'
-          );
-      });
-  }
-
-  saveExamQuestionScoreChanges(rowData: any) {
-    if (rowData.examQuestionScores && rowData.examQuestionScores.length > 0) {
-      const examQuestionScore: ExamQuestionScoreModel = {
-        id: rowData.examQuestionScores[0].examQuestionScoreID,
-        examQuestionID: rowData.examQuestion.id,
-        score: rowData.examQuestionScores[0].examQuestionScore,
-        examScoreID:
-          rowData.examQuestionScores[0].examScoreID || rowData.examScores.id,
-      };
-      if (!rowData.examQuestionScores[0].hasScore) {
-        this.saveExamScore(examQuestionScore);
-      } else {
-        this.updateExamScore(examQuestionScore);
-      }
-    }
-  }
-
-  deleteExamScore(examQuestionScore: ExamQuestionScoreModel) {
-    this.examQuestionScoreService
-      .delete(examQuestionScore)
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showInfo('Rezultati i provimit u fshi me sukses!');
-          this.getExamQuestionScoresList(this.filters as TableLazyLoadEvent);
-        }
-        if (response.isBadRequest)
-          this.toastService.showError(
             'Ndodhi një problem gjatë fshirjes së rezultatit të provimit!'
           );
+        }
       });
   }
 }

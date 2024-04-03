@@ -17,40 +17,12 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="examVariantName">
-        Varianti i Provimit
-        <p-sortIcon field="examVariantName"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="examVariantName"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
-      </th>
       <th pSortableColumn="questionIndex">
         Pyetja e Provimit
         <p-sortIcon field="questionIndex"></p-sortIcon>
         <p-columnFilter
           type="text"
           field="questionIndex"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
-      </th>
-
-      <th pSortableColumn="questionIndex">
-        Piket
-        <p-sortIcon field="questionIndex"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="questionIndex"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
-      </th>
-      <th pSortableColumn="questionMaximumScore">
-        Pikët maksimale
-        <p-sortIcon field="questionMaximumScore"></p-sortIcon>
-        <p-columnFilter
-          type="numeric"
-          field="questionMaximumScore"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
@@ -63,27 +35,30 @@
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
+      <th pSortableColumn="questionIndex">
+        Piket
+        <p-sortIcon field="questionIndex"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="questionIndex"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
       <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-examQuestion>
     <tr>
-      <td style="width: 20%">
-        {{ examQuestion.examVariantName }}
-      </td>
-      <td style="width: 20%">
+      <td style="width: 25%">
         {{ examQuestion.index }}
       </td>
-      <td style="width: 20%">
-        {{ examQuestion.questionMaximumScore }}
-      </td>
-      <td style="width: 20%">
-        {{ examQuestion.examVariantMaximumScore }}
-      </td>
-      <td style="width: 20%">
+      <td style="width: 25%">
         {{ examQuestion.section }}
       </td>
-      <td>
+      <td style="width: 25%">
+        {{ examQuestion.questionMaximumScore }}
+      </td>
+      <td style="width: 25%">
         <div class="flex">
           <img
             src="assets/svg/edit-form.svg"

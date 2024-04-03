@@ -68,4 +68,7 @@ export class ExamVariantApiService {
       `/ExamVariant/DropdownList`
     );
   }
+  getVariants(): Observable<ApiResult<ExamVariant[]>> {
+    return this.apiService.get<ApiResult<ExamVariant[]>>(`/ExamVariant`);
+  }
 }

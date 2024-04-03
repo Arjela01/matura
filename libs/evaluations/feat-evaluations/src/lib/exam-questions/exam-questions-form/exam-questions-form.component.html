@@ -12,11 +12,22 @@
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examQuestion.index
       }" />
-    <small
-      class="p-error block"
-      *ngIf="submitted && !examQuestion.index">
+    <small class="p-error block" *ngIf="submitted && !examQuestion.index">
       Emri është fushë e kërkuar.
     </small>
+  </div>
+  <div class="field">
+    <label for="questionSection">Nënseksioni</label>
+    <input
+      type="text"
+      pInputText
+      id="questionSection"
+      name="questionSection"
+      [(ngModel)]="examQuestion.section"
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examQuestion.section
+      }" />
   </div>
 
   <div class="field">
@@ -37,19 +48,6 @@
       *ngIf="submitted && !examQuestion.questionMaximumScore">
       Pikët maksimale është fushë e kërkuar.
     </small>
-  </div>
-  <div class="field">
-    <label for="questionSection">Nënseksioni</label>
-    <input
-      type="text"
-      pInputText
-      id="questionSection"
-      name="questionSection"
-      [(ngModel)]="examQuestion.section"
-      autofocus
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examQuestion.section
-      }" />
   </div>
   <div class="flex justify-content-end">
     <button

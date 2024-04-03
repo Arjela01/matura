@@ -1,24 +1,22 @@
 <div>
-  <h2 class="flex-1 mb-0">Hidh Pikët Analitike</h2>
+  <h2 class="flex-1 mb-0">Ndrysho Pikët Analitike</h2>
   <div class="mt-4">
-    <msh-exam-question-score-filters
-      (formSave)="getExamQuestionScoresList($event)"
-      (examSubjectChanged)="getExamSubjectDropdown($event)"
-      (examVariantChanged)="getExamVariantDropdown($event)"
-      [examVariant]="examVariant"
-      [examSubject]="examSubject"
-      [examType]="examType"></msh-exam-question-score-filters>
+    <msh-analytic-score-filters
+      [examQuestionScoreList]="analyticScoreFilters"
+      [examSubjectId]="examSubjectId"
+      [examTypeId]="examTypeId"
+      [examVariantId]="examVariantId">
+    </msh-analytic-score-filters>
   </div>
   <div class="mt-4">
-    <msh-exam-question-score-grid
+    <msh-analytic-score-list
       [examVariantMaximumScore]="examVariantTotalScore"
       [totalScore]="totalScore"
       [examQuestionScoreList]="(examQuestionScoreList$ | async) || []"
       [totalRecords]="totalRecords"
-      (writingScoreChange)="saveExamScore($event)"
-      (deleteMultiple)="deleteExamScore($event)"
-      (calculate)="calculateTotalScore()">
-    </msh-exam-question-score-grid>
+      (gridEvent)="onGridEvent($event)"
+      (writingScoreChange)="saveExamQuestionScoreChanges($event)">
+    </msh-analytic-score-list>
   </div>
 </div>
 <p-confirmDialog

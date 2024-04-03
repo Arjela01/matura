@@ -1,0 +1,56 @@
+<table>
+  <thead>
+  <tr>
+    <th>Numri</th>
+    <th>Pikêt </th>
+    <th>Pikët Maksimale </th>
+    <th>Fshi</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let rowData of examQuestionScoreList">
+    <td>{{ rowData.examQuestion.index }}</td>
+    <td>
+      <ng-container>
+        <input
+          type="number"
+          pInputText
+          name="writingScore"
+          tabindex="1"
+          [attr.examQuestionId]="rowData.examQuestionScores[0].id"
+          [(ngModel)]="rowData.examQuestionScores[0].examQuestionScore"
+          (change)="onExamScoreAddOrUpdate(rowData)" />
+      </ng-container>
+    </td>
+    <td>{{ rowData.examQuestion.questionMaximumScore }}</td>
+    <td>
+      <button
+        pButton
+        icon="pi pi-trash"
+        class="p-button-danger p-button-text justify-content-center ml-4"
+        *ngIf="rowData.examQuestionScores[0].hasScore"
+        (click)="
+            onDeleteClick(rowData.examQuestionScores[0].examQuestionScoreID)
+          "></button>
+    </td>
+  </tr>
+  </tbody>
+  <tfoot *ngIf="examQuestionScoreList.length">
+  <tr class="font-semibold">
+    <td colspan="1">Totali</td>
+    <td>
+      {{ totalScore }}
+      /
+      <strong
+              style="color: blue"
+              pTooltip="Pikët Maksimale të Variantit"
+              tooltipPosition="top"
+              placeholder="Top"
+      >{{ examVariantMaximumScore }}</strong
+      >
+    </td>
+    <td></td>
+    <td></td>
+  </tr>
+  </tfoot>
+</table>

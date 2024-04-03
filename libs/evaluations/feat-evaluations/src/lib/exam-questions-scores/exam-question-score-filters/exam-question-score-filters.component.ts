@@ -48,6 +48,7 @@ export class ExamQuestionScoreFiltersComponent {
   @Output() examSubjectChanged = new EventEmitter<SearchOptions>();
   @Output() examTypeChanged = new EventEmitter<SearchOptions>();
   @Output() examVariantChanged = new EventEmitter<SearchOptions>();
+  @Output() cleanUpBarcode = new EventEmitter<SearchOptions>();
 
   constructor(private readonly toastService: GlobalToastService) {}
 

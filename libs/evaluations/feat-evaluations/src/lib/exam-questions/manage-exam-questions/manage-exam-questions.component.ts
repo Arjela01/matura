@@ -1,7 +1,18 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
-import { ExamQuestionModel, ExamType } from '@msh/shared/domain-models';
+import {
+  ArchiveExam,
+  ExamQuestionModel,
+  ExamQuestionsScoreDataEntry,
+  ExamType,
+  ExamVariant,
+} from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ConfirmationService, SharedModule } from 'primeng/api';
 import {
@@ -18,10 +29,11 @@ import { RippleModule } from 'primeng/ripple';
 import { ExamQuestionsGridComponent } from '../exam-questions-grid/exam-questions-grid.component';
 import { ExamQuestionsFormComponent } from '../exam-questions-form/exam-questions-form.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ExamVariantApiService } from '@msh/configurations/data-access-configurations';
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-manage-exam-question-score',
+  selector: 'msh-manage-analytic-score-edit',
   standalone: true,
   imports: [
     CommonModule,
@@ -38,7 +50,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageExamQuestionsComponent {
+export class ManageExamQuestionsComponent implements OnInit {
   private examQuestions$$ = new BehaviorSubject<ExamQuestionModel[]>([]);
   examQuestions$ = this.examQuestions$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
@@ -46,11 +58,14 @@ export class ManageExamQuestionsComponent {
   totalRecords = 0;
   examVariantId: any;
   selectedExamQuestion: ExamQuestionModel | null = null;
+  examVariantName!: string;
+  examVariantMaximumScore!: number;
 
   displayModal = false;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
+    private readonly examVariantService: ExamVariantApiService,
     private readonly toastService: GlobalToastService,
     private readonly examQuestionService: ExamQuestionsService,
     private readonly route: ActivatedRoute,
@@ -66,6 +81,10 @@ export class ManageExamQuestionsComponent {
     filters: {},
     globalFilter: null,
   };
+
+  ngOnInit() {
+    this.getVariantData();
+  }
 
   onNewClick() {
     this.displayModal = true;
@@ -125,8 +144,26 @@ export class ManageExamQuestionsComponent {
       .loadData(this.event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
+        response.data.sort((a: ExamQuestionModel, b: ExamQuestionModel) => {
+          return a.index - b.index;
+        });
         this.examQuestions$$.next(response.data);
         this.totalRecords = response.total;
+      });
+  }
+
+  getVariantData() {
+    this.examVariantService
+      .getVariants()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        const variant = response.data.find(
+          (item: ExamVariant) => item.id == this.examVariantId
+        );
+        if (variant) {
+          this.examVariantName = variant.name;
+          this.examVariantMaximumScore = variant.maximumScore;
+        }
       });
   }
 

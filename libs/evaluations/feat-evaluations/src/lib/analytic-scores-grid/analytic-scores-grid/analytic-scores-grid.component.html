@@ -1,0 +1,110 @@
+<div class="flex ml-2 mb-2 page-header mb-header">
+  <h2 class="flex-1">Pikë analitike</h2>
+</div>
+
+<p-table
+  #dt
+  dataKey="id"
+  responsiveLayout="scroll"
+  [totalRecords]="totalRecords"
+  [scrollable]="true"
+  scrollHeight="820px"
+  [rows]="100"
+  [paginator]="true"
+  [rowsPerPageOptions]="[100, 200, 300]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
+  [rowHover]="true"
+  (onLazyLoad)="getAnalyticScoresList($event)"
+  [value]="(analyticScoresList$ | async) || []"
+  selectionMode="multiple"
+  [lazy]="true">
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="examTypeName">
+        Tipi i Provimit
+        <div>
+          <p-sortIcon field="examTypeName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="examTypeName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="examSubjectName">
+        Lënda e Provimit
+        <div>
+          <p-sortIcon field="examSubjectName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="examSubjectName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="examVariantName">
+        Varianti i Provimit
+        <div>
+          <p-sortIcon field="examVariantName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="examVariantName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="barcode">
+        Barkodi
+        <div>
+          <p-sortIcon field="barcode"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="barcode"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="analyticScore">
+        Totali
+        <div>
+          <p-sortIcon field="analyticScore"></p-sortIcon>
+          <p-columnFilter
+            type="number"
+            field="analyticScore"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-analyticScores>
+    <tr>
+      <td style="width: 20%; min-width: 10rem">
+        {{ analyticScores.examTypeName }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ analyticScores.examSubjectName }}
+      </td>
+      <td style="width: 20%; min-width: 10rem">
+        {{ analyticScores.examVariantName }}
+      </td>
+      <td style="width: 20%; min-width: 10rem">
+        {{ analyticScores.barcode }}
+      </td>
+      <td style="width: 20%; min-width: 10rem">
+        {{ analyticScores.analyticScore }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        <div class="flex">
+          <img
+            src="assets/svg/edit-form.svg"
+            class="p-button-rounded p-button-warning p-button-text ml-m pointer"
+            tooltipPosition="bottom"
+            (click)="onEditClick(analyticScores)"
+            pTooltip="Ndrysho" />
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
