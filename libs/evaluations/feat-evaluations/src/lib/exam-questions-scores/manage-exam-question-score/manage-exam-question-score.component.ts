@@ -121,7 +121,6 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
   }
 
   getExamQuestionScoresList($event: any) {
-    debugger;
     this.filters = Object.assign({}, $event);
     this.examVariantId = $event.examVariantId;
     this.barcode = $event.barcode;

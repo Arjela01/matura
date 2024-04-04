@@ -98,7 +98,6 @@ export class ManageAnalyticScoreComponent implements OnInit {
   }
 
   getExamQuestionScoresList($event: any) {
-    debugger;
     this.filters = Object.assign({}, $event);
     this.event.filters = {
       examSubjectID: [
