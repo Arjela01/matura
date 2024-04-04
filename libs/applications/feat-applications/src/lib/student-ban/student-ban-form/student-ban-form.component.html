@@ -68,22 +68,6 @@
           </small>
         </div>
 
-        <div class="field">
-          <label for="banRemovalDate">Data e heqjes së Skualifikimit *</label>
-          <p-calendar
-            [(ngModel)]="banRemovalDate"
-            dateFormat="dd/mm/yy"
-            inputId="banRemovalDate"
-            id="banRemovalDate"
-            name="banRemovalDate"
-            appendTo="body"
-            [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !banRemovalDate
-            }"></p-calendar>
-          <small class="p-error block" *ngIf="submitted && !banRemovalDate">
-            Data është fushë e kërkuar.
-          </small>
-        </div>
 
         <div class="field">
           <label for="description"> Përshkrimi *</label>

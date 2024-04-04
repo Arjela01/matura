@@ -69,7 +69,6 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
       this.studentBan = Object.assign({}, details);
       if (details.effectiveDate && details.banRemovalDate) {
         this.effectiveDate = new Date(details.effectiveDate);
-        this.banRemovalDate = new Date(details.banRemovalDate);
       }
     }
   }
@@ -172,12 +171,6 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
           'en-US'
         );
         this.studentBan.effectiveDate = formattedEffectiveDate as any;
-        const formattedBanRemovalDate = formatDate(
-          this.banRemovalDate,
-          'yyyy-MM-dd',
-          'en-US'
-        );
-        this.studentBan.banRemovalDate = formattedBanRemovalDate as any;
       }
       this.formSave.emit(this.studentBan);
     }
