@@ -3,9 +3,10 @@
     <table>
       <thead>
         <tr>
-          <th>Numri</th>
-          <th style="width: 40%">Pikêt</th>
-          <th style="width: 40%">Pikët Maksimale</th>
+          <th style="width: 15%">Numri</th>
+          <th style="width: 30%">Pikët</th>
+          <th style="width: 30%">Pikët Maksimale</th>
+          <th style="width: 5%" *ngIf="examVariantId">Fshi</th>
         </tr>
       </thead>
       <tbody>
@@ -21,14 +22,14 @@
                 name="score"
                 tabindex="1"
                 [min]="0"
-                style="width: 70%"
+                style="width: 50%"
                 [max]="rowData.examQuestion.questionMaximumScore"
-                [(ngModel)]="rowData.examQuestionScores[0].examQuestionScore"
+                [(ngModel)]="rowData.examQuestionScores[0] && rowData.examQuestionScores[0].examQuestionScore"
                 (ngModelChange)="onRowChange($event)" />
               <small
                 class="p-error block mt-3"
                 *ngIf="
-                  rowData.examQuestionScores[0].examQuestionScore >
+                  rowData.examQuestionScores[0]?.examQuestionScore >
                   rowData.examQuestion.questionMaximumScore
                 ">
                 Pikët e marra nuk mund të kalojně pikët maksimale.
@@ -36,6 +37,18 @@
             </ng-container>
           </td>
           <td>{{ rowData.examQuestion.questionMaximumScore }}</td>
+          <td *ngIf="examVariantId">
+            <button
+              pButton
+              icon="pi pi-trash"
+              class="p-button-danger p-button-text justify-content-center"
+              *ngIf="rowData.examQuestionScores[0]?.hasScore"
+              (click)="
+                onDeleteClick(
+                  rowData.examQuestionScores[0]?.examQuestionScoreID
+                )
+              "></button>
+          </td>
         </tr>
       </tbody>
       <tfoot *ngIf="examQuestionScoreList.length">
@@ -53,6 +66,7 @@
             >
           </td>
           <td></td>
+          <td *ngIf="examVariantId"></td>
         </tr>
       </tfoot>
     </table>

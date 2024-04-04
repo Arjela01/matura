@@ -3,6 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -12,6 +13,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { TooltipModule } from 'primeng/tooltip';
+import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
 
 enum ScoreActions {
   SAVE,
@@ -38,10 +40,21 @@ export class ExamQuestionScoreGridComponent {
   @Input() totalRecords = 0;
   @Input() totalScore = 0;
   @Input() examVariantMaximumScore = 0;
+  @Input() examVariantId = '';
   @Input() loading = false;
   @Output() writingScoreChange = new EventEmitter<any>();
   @Output() deleteMultiple = new EventEmitter<any>();
   @Output() calculate = new EventEmitter<any>();
+  @Output() gridEvent = new EventEmitter<
+    GridEvent<ExamQuestionScoreModel | ExamQuestionScoreModel[]>
+  >();
+
+  onDeleteClick(examQuestionScore: any) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.DELETE,
+      data: examQuestionScore,
+    } as GridEvent<ExamQuestionScoreModel>);
+  }
 
   onExamScoreAddOrUpdate(action: ScoreActions): void {
     const deletedIDs: number[] = [];

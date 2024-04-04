@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, forkJoin } from 'rxjs';
 import {
@@ -127,6 +121,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
   }
 
   getExamQuestionScoresList($event: any) {
+    debugger;
     this.filters = Object.assign({}, $event);
     this.examVariantId = $event.examVariantId;
     this.barcode = $event.barcode;
@@ -154,7 +149,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       ],
       barcode: [
         {
-          value: $event.barcode.toUpperCase(),
+          value: $event.barcode,
           matchMode: 'equals',
           operator: 'and',
         },
@@ -197,7 +192,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       const valuesToSend = {
         academicYearId: academicYearId,
         examQuestionScoreCreateUpdateModels: examQuestionScore,
-        barcode: this.barcode,
+        barcode: this.barcode.toUpperCase(),
       } as unknown as CreateOrUpdateMultiple;
       this.examQuestionScoreService
         .createOrUpdateMultiple(valuesToSend)
@@ -222,7 +217,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
   deleteExamScore(examQuestionScore: CreateOrUpdateMultiple) {
     const valuesToSend = {
       examQuestionIds: examQuestionScore,
-      barcode: this.barcode,
+      barcode: this.barcode.toUpperCase(),
     } as unknown as CreateOrUpdateMultiple;
     this.examQuestionScoreService
       .deleteMultiple(valuesToSend)

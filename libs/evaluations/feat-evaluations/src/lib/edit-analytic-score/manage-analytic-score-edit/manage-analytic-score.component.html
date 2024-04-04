@@ -9,14 +9,17 @@
     </msh-analytic-score-filters>
   </div>
   <div class="mt-4">
-    <msh-analytic-score-list
+    <msh-exam-question-score-grid
+      [examVariantId]="examVariantId"
       [examVariantMaximumScore]="examVariantTotalScore"
       [totalScore]="totalScore"
       [examQuestionScoreList]="(examQuestionScoreList$ | async) || []"
       [totalRecords]="totalRecords"
-      (gridEvent)="onGridEvent($event)"
-      (writingScoreChange)="saveExamQuestionScoreChanges($event)">
-    </msh-analytic-score-list>
+      (writingScoreChange)="saveExamScore($event)"
+      (deleteMultiple)="deleteMultipleExamScore($event)"
+      (calculate)="calculateTotalScore()"
+      (gridEvent)="onGridEvent($event)">
+    </msh-exam-question-score-grid>
   </div>
 </div>
 <p-confirmDialog
