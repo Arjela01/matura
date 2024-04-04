@@ -92,5 +92,12 @@ export class ExamQuestionScoreGridComponent {
     this.calculate.emit(examQuestionScore);
   }
 
+  limitToTwoDigits(event: any) {
+    const input = event.target as HTMLInputElement;
+    if (input.value && input.value.length > 2) {
+      input.value = input.value.slice(0, 2);
+    }
+  }
+
   protected readonly ScoreActions = ScoreActions;
 }
