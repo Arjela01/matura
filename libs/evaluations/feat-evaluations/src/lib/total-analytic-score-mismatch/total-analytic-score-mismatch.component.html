@@ -35,35 +35,35 @@
             </th>
           </tr>
           <tr>
-            <th pSortableColumn="totalPointsExamTypeName">
+            <th pSortableColumn="totalScoresExamTypeName">
               Tip Provimi
               <div>
-                <p-sortIcon field="totalPointsExamTypeName"></p-sortIcon>
+                <p-sortIcon field="totalScoresExamTypeName"></p-sortIcon>
                 <p-columnFilter
                   type="text"
-                  field="totalPointsExamTypeName"
+                  field="totalScoresExamTypeName"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="totalPointsExamSubjectName">
-              Lënd Provimi
+            <th pSortableColumn="totalScoresExamSubjectName">
+              Lëndë Provimi
               <div>
-                <p-sortIcon field="totalPointsExamSubjectName"></p-sortIcon>
+                <p-sortIcon field="totalScoresExamSubjectName"></p-sortIcon>
                 <p-columnFilter
                   type="text"
-                  field="totalPointsExamSubjectName"
+                  field="totalScoresExamSubjectName"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="totalPointsBarcode">
+            <th pSortableColumn="totalScoresBarcode">
               Barkodi
               <div>
-                <p-sortIcon field="totalPointsBarcode"></p-sortIcon>
+                <p-sortIcon field="totalScoresBarcode"></p-sortIcon>
                 <p-columnFilter
                   type="text"
-                  field="totalPointsBarcode"
+                  field="totalScoresBarcode"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
@@ -81,35 +81,35 @@
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="analyticPointsExamTypeName">
+            <th pSortableColumn="analyticScoresExamTypeName">
               Tip Provimi
               <div>
-                <p-sortIcon field="analyticPointsExamTypeName"></p-sortIcon>
+                <p-sortIcon field="analyticScoresExamTypeName"></p-sortIcon>
                 <p-columnFilter
                   type="text"
-                  field="analyticPointsExamTypeName"
+                  field="analyticScoresExamTypeName"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="analyticPointsExamSubjectName">
-              Lënd Provimi
+            <th pSortableColumn="analyticScoresExamSubjectName">
+              Lëndë Provimi
               <div>
-                <p-sortIcon field="analyticPointsExamSubjectName"></p-sortIcon>
+                <p-sortIcon field="analyticScoresExamSubjectName"></p-sortIcon>
                 <p-columnFilter
                   type="text"
-                  field="analyticPointsExamSubjectName"
+                  field="analyticScoresExamSubjectName"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="analyticPointsBarcode">
+            <th pSortableColumn="analyticScoresBarcode">
               Barkodi
               <div>
-                <p-sortIcon field="analyticPointsBarcode"></p-sortIcon>
+                <p-sortIcon field="analyticScoresBarcode"></p-sortIcon>
                 <p-columnFilter
                   type="text"
-                  field="analyticPointsBarcode"
+                  field="analyticScoresBarcode"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
@@ -130,13 +130,13 @@
         <ng-template pTemplate="body" let-score>
           <tr>
             <td style="width: 25%; min-width: 10rem">
-              {{ score.totalPointsExamTypeName }}
+              {{ score.totalScoresExamTypeName }}
             </td>
             <td style="width: 25%; min-width: 10rem">
-              {{ score.totalPointsExamSubjectName }}
+              {{ score.totalScoresExamSubjectName }}
             </td>
             <td style="width: 25%; min-width: 10rem">
-              {{ score.totalPointsBarcode }}
+              {{ score.totalScoresBarcode }}
             </td>
             <td
               style="
@@ -147,13 +147,13 @@
               {{ score.totalScore }}
             </td>
             <td style="width: 25%; min-width: 10rem">
-              {{ score.analyticPointsExamTypeName }}
+              {{ score.analyticScoresExamTypeName }}
             </td>
             <td style="width: 25%; min-width: 10rem">
-              {{ score.analyticPointsExamSubjectName }}
+              {{ score.analyticScoresExamSubjectName }}
             </td>
             <td style="width: 25%; min-width: 10rem">
-              {{ score.analyticPointsBarcode }}
+              {{ score.analyticScoresBarcode }}
             </td>
             <td style="width: 20%; min-width: 10rem">
               {{ score.analyticScore }}

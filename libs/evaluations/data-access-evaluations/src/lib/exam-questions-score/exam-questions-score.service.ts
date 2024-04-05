@@ -3,7 +3,10 @@ import { Observable } from 'rxjs';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 
-import { ExamQuestionScoreModel } from '@msh/shared/domain-models';
+import {
+  CreateOrUpdateMultiple,
+  ExamQuestionScoreModel,
+} from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
 
 @Injectable({
@@ -27,6 +30,24 @@ export class ExamQuestionScoreService {
       ApiResult<ExamQuestionScoreModel>,
       ExamQuestionScoreModel
     >(`/ExamQuestionScores`, examScore);
+  }
+
+  createOrUpdateMultiple(
+    examScore: CreateOrUpdateMultiple
+  ): Observable<ApiResult<CreateOrUpdateMultiple>> {
+    return this.apiService.post<
+      ApiResult<CreateOrUpdateMultiple>,
+      CreateOrUpdateMultiple
+    >(`/ExamQuestionScores/CreateOrUpdateMultiple`, examScore);
+  }
+
+  deleteMultiple(
+    examScore: CreateOrUpdateMultiple
+  ): Observable<ApiResult<CreateOrUpdateMultiple>> {
+    return this.apiService.post<
+      ApiResult<CreateOrUpdateMultiple>,
+      CreateOrUpdateMultiple
+    >(`/ExamQuestionScores/DeleteMultiple`, examScore);
   }
 
   update(

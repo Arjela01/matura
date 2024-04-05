@@ -1,16 +1,16 @@
 export interface TotalAnalyticScoresMismatchModel {
   id: number;
-  analyticPointsBarcode: string;
-  analyticPointsExamTypeId: number;
-  analyticPointsExamTypeName: string;
-  analyticPointsExamSubjectId: number;
-  analyticPointsExamSubjectName: string;
+  analyticScoresBarcode: string;
+  analyticScoresExamTypeId: number;
+  analyticScoresExamTypeName: string;
+  analyticScoresExamSubjectId: number;
+  analyticScoresExamSubjectName: string;
   analyticScore: number;
-  totalPointsBarcode: string;
-  totalPointsExamTypeId: number;
-  totalPointsExamTypeName: string;
-  totalPointsExamSubjectId: number;
-  totalPointsExamSubjectName: string;
+  totalScoresBarcode: string;
+  totalScoresExamTypeId: number;
+  totalScoresExamTypeName: string;
+  totalScoresExamSubjectId: number;
+  totalScoresExamSubjectName: string;
   totalScore: number;
   academicYearId: number;
   academicYearIsActive: boolean;

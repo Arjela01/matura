@@ -261,4 +261,18 @@ export const EVALUATION_ROUTES: Route[] = [
         './total-analytic-score-mismatch/total-analytic-score-mismatch.component'
       ).then(m => m.TotalAnalyticScoreMismatchComponent),
   },
+  {
+    path: 'analytic-score-edit/:examTypeId/:examSubjectId/:examVariantId/:barcode',
+    loadComponent: () =>
+      import(
+        './edit-analytic-score/manage-analytic-score-edit/manage-analytic-score.component'
+      ).then(m => m.ManageAnalyticScoreComponent),
+  },
+  {
+    path: 'analytic-scores-grid',
+    loadComponent: () =>
+      import(
+        './analytic-scores-grid/analytic-scores-grid/analytic-scores-grid.component'
+      ).then(m => m.AnalyticScoresGridComponent),
+  },
 ];

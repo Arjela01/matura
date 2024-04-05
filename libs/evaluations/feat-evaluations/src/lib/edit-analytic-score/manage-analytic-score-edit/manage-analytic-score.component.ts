@@ -8,58 +8,50 @@ import {
   ExamQuestionsScoreDataEntry,
 } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { DropdownModel } from '@msh/shared/data-access-shared';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { ConfirmationService } from 'primeng/api';
-import { GlobalToastService } from '@msh/shared/util-shared';
 import {
-  ExamSubjectApiService,
-  ExamTypeApiService,
-  ExamVariantApiService,
-} from '@msh/configurations/data-access-configurations';
+  GlobalToastService,
+  GRID_ACTIONS,
+  GridEvent,
+} from '@msh/shared/util-shared';
 import { ExamQuestionScoreService } from '@msh/evaluations/data-access-evaluations';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ExamScoreTabularDataEntryFiltersComponent } from '../../exam-score-tabular-data-entry/exam-score-tabular-data-entry-filters/exam-score-tabular-data-entry-filters.component';
-import { ExamScoreTabularDataEntryListComponent } from '../../exam-score-tabular-data-entry/exam-score-tabular-data-entry-list/exam-score-tabular-data-entry-list.component';
-import { ExamQuestionScoreFiltersComponent } from '../exam-question-score-filters/exam-question-score-filters.component';
-import { ExamQuestionScoreGridComponent } from '../exam-question-score-grid/exam-question-score-grid.component';
 import { ExamQuestionsService } from '@msh/evaluations/data-access-evaluations';
+import { AnalyticScoreFiltersComponent } from '../analytic-score-filters/analytic-score-filters.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ExamQuestionScoreGridComponent } from '../../exam-questions-scores/exam-question-score-grid/exam-question-score-grid.component';
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-manage-exam-question-score',
+  selector: 'msh-manage-analytic-score-edit',
   standalone: true,
   imports: [
     CommonModule,
     ButtonModule,
     ConfirmDialogModule,
-    ExamScoreTabularDataEntryFiltersComponent,
-    ExamScoreTabularDataEntryListComponent,
-    ExamQuestionScoreFiltersComponent,
+    AnalyticScoreFiltersComponent,
     ExamQuestionScoreGridComponent,
   ],
-  templateUrl: './manage-exam-question-score.component.html',
-  styleUrls: ['./manage-exam-question-score.component.scss'],
+  templateUrl: './manage-analytic-score.component.html',
+  styleUrls: ['./manage-analytic-score.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageExamQuestionsScoreComponent implements OnInit {
+export class ManageAnalyticScoreComponent implements OnInit {
   private examQuestionScoreList$$ = new BehaviorSubject<
     ExamQuestionsScoreDataEntry[]
   >([]);
   examQuestionScoreList$ = this.examQuestionScoreList$$.asObservable();
   totalRecords = 0;
-
   filters: TableLazyLoadEvent | null = null;
-  examSubject: DropdownModel<string>[] = [];
-  examType: DropdownModel<number>[] = [];
-  examVariant: DropdownModel<string>[] = [];
-  examVariantId: any;
-  examSubjectId: any;
+
+  examTypeId = '';
+  examVariantId = '';
+  examSubjectId = '';
   totalScore = 0;
   examVariantTotalScore = 0;
-  barcode: any;
 
   event = {
     first: 0,
@@ -68,104 +60,98 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
     filters: {},
     globalFilter: null,
   };
-
+  analyticScoreFilters: any = {};
   constructor(
-    private readonly examSubjectService: ExamSubjectApiService,
-    private readonly examVariantService: ExamVariantApiService,
-    private readonly examQuestionScoreService: ExamQuestionScoreService,
+    private readonly examQuestionScoreApiService: ExamQuestionScoreService,
+    private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examQuestionService: ExamQuestionsService,
-    private readonly examTypeService: ExamTypeApiService
-  ) {}
-
+    private readonly route: ActivatedRoute,
+    private readonly router: Router
+  ) {
+    this.analyticScoreFilters.examTypeId =
+      this.route.snapshot.paramMap.get('examTypeId') ?? '';
+    this.analyticScoreFilters.examSubjectId =
+      this.route.snapshot.paramMap.get('examSubjectId') ?? '';
+    this.analyticScoreFilters.examVariantId =
+      this.route.snapshot.paramMap.get('examVariantId') ?? '';
+    this.analyticScoreFilters.barcode =
+      this.route.snapshot.paramMap.get('barcode') ?? '';
+  }
   ngOnInit() {
-    this.getExamTypeDropdown();
+    this.getExamQuestionScoresList(this.filters as TableLazyLoadEvent);
   }
-
-  getExamTypeDropdown() {
-    this.examTypeService
-      .loadDropdownList()
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.examType = response.data;
-      });
-  }
-  getExamSubjectDropdown($event: any) {
-    this.examSubjectService
-      .forExamType($event.examTypeId)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.examSubject = response.data;
-      });
-  }
-  getExamVariantDropdown($event: any) {
-    const academicYearString = localStorage.getItem('academicYear');
-    if (academicYearString) {
-      const academicYear = JSON.parse(academicYearString);
-      const academicYearId = academicYear.id;
-      this.examVariantService
-        .forExamSubject($event.examSubjectId, academicYearId)
-        .pipe(untilDestroyed(this))
-        .subscribe(response => {
-          this.examVariant = response.data;
+  onGridEvent(
+    event: GridEvent<ExamQuestionScoreModel | ExamQuestionScoreModel[]>
+  ) {
+    switch (event.action) {
+      case GRID_ACTIONS.DELETE:
+        this.confirmationService.confirm({
+          message:
+            'Jeni i sigurt që doni të fshini pikët e pyetjes së provimit?',
+          accept: () => {
+            this.deleteExamScore(event.data as ExamQuestionScoreModel);
+          },
         });
+        break;
     }
-  }
-
-  calculateTotalScore() {
-    this.totalScore = this.examQuestionScoreList$$
-      .getValue()
-      .reduce((acc, rowData: any) => {
-        return acc + rowData.examQuestionScores[0].examQuestionScore;
-      }, 0) as any;
   }
 
   getExamQuestionScoresList($event: any) {
     this.filters = Object.assign({}, $event);
-    this.examVariantId = $event.examVariantId;
-    this.barcode = $event.barcode;
     this.event.filters = {
       examSubjectID: [
         {
-          value: $event.examSubjectId,
+          value: this.analyticScoreFilters.examSubjectId,
           matchMode: 'equals',
           operator: 'and',
         },
       ],
       examTypeID: [
         {
-          value: $event.examTypeId,
+          value: this.analyticScoreFilters.examTypeId,
           matchMode: 'equals',
           operator: 'and',
         },
       ],
       examVariantID: [
         {
-          value: $event.examVariantId,
+          value: this.analyticScoreFilters.examVariantId,
           matchMode: 'equals',
           operator: 'and',
         },
       ],
       barcode: [
         {
-          value: $event.barcode,
+          value: this.analyticScoreFilters.barcode.toUpperCase(),
           matchMode: 'equals',
           operator: 'and',
         },
       ],
     };
+
     forkJoin([
-      this.examQuestionScoreService.loadExamQuestionScores(this.event),
+      this.examQuestionScoreApiService.loadExamQuestionScores(this.event),
       this.examQuestionService.getExamQuestionsByExamVariantId(
-        $event.examVariantId || $event
+        this.analyticScoreFilters.examVariantId
       ),
     ]).subscribe(([examQuestionScores, examQuestions]) => {
+      let totalScore = 0;
+
+      examQuestionScores.data.forEach((item: any) => {
+        totalScore += item.examQuestionScore;
+        item.hasScore = true;
+        this.examTypeId = item.examTypeName;
+        this.examVariantId = item.examVariantName;
+        this.examSubjectId = item.examSubjectName;
+      });
+
       const result = examQuestions.data.map(
         (examQuestion: ExamQuestionModel) => {
           this.examVariantTotalScore = examQuestion.examVariantMaximumScore;
           const matchingScore = examQuestionScores.data.filter(
             (examQuestionScore: ExamQuestionScoreModel) =>
-              examQuestionScore.examQuestionID == examQuestion.id
+              examQuestionScore.examQuestionID === examQuestion.id
           );
           return {
             examQuestion: examQuestion,
@@ -173,13 +159,14 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
           } as unknown as ExamQuestionsScoreDataEntry;
         }
       );
+
       result.sort(
         (a: ExamQuestionsScoreDataEntry, b: ExamQuestionsScoreDataEntry) => {
           return a.examQuestion.index - b.examQuestion.index;
         }
       );
+      this.totalScore = totalScore;
       this.examQuestionScoreList$$.next(result);
-      this.calculateTotalScore();
     });
   }
 
@@ -191,9 +178,9 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       const valuesToSend = {
         academicYearId: academicYearId,
         examQuestionScoreCreateUpdateModels: examQuestionScore,
-        barcode: this.barcode.toUpperCase(),
+        barcode: this.analyticScoreFilters.barcode,
       } as unknown as CreateOrUpdateMultiple;
-      this.examQuestionScoreService
+      this.examQuestionScoreApiService
         .createOrUpdateMultiple(valuesToSend)
         .subscribe(response => {
           if (response.isSuccessful) {
@@ -213,17 +200,17 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
     }
   }
 
-  deleteExamScore(examQuestionScore: CreateOrUpdateMultiple) {
+  deleteMultipleExamScore(examQuestionScore: CreateOrUpdateMultiple) {
     const valuesToSend = {
       examQuestionIds: examQuestionScore,
-      barcode: this.barcode.toUpperCase(),
+      barcode: this.analyticScoreFilters.barcode,
     } as unknown as CreateOrUpdateMultiple;
-    this.examQuestionScoreService
+    this.examQuestionScoreApiService
       .deleteMultiple(valuesToSend)
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Rezultati i provimit u fshi me sukses!');
-          this.getExamQuestionScoresList(this.filters as TableLazyLoadEvent);
+          this.router.navigate(['/evaluations/analytic-scores-grid']);
         } else {
           this.toastService.showError(response.errorMessage);
         }
@@ -233,5 +220,27 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
           );
         }
       });
+  }
+  deleteExamScore(examQuestionScore: ExamQuestionScoreModel) {
+    this.examQuestionScoreApiService
+      .delete(examQuestionScore)
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showInfo('Rezultati i provimit u fshi me sukses!');
+          this.getExamQuestionScoresList(this.filters as TableLazyLoadEvent);
+        }
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi një problem gjatë fshirjes së rezultatit të provimit!'
+          );
+      });
+  }
+
+  calculateTotalScore() {
+    this.totalScore = this.examQuestionScoreList$$
+      .getValue()
+      .reduce((acc, rowData: any) => {
+        return acc + rowData.examQuestionScores[0].examQuestionScore;
+      }, 0) as any;
   }
 }

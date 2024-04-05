@@ -8,6 +8,7 @@ export interface ExamQuestionScoreModel {
   index?: number;
   score?: number;
   barcode?: string;
+  maximumScore?: number;
   hasScore?: boolean;
 }
 
@@ -23,5 +24,11 @@ export interface SearchOptions {
   examSubjectName: string;
   examVariantId: string;
   examVariantName: string;
+  barcode: string;
+}
+
+export interface CreateOrUpdateMultiple {
+  academicYearId: number;
+  examQuestionScoreCreateUpdateModels: ExamQuestionScoreModel[];
   barcode: string;
 }
