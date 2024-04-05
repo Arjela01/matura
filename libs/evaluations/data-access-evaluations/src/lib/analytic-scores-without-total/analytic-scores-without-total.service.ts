@@ -18,7 +18,7 @@ export class AnalyticScoresWithoutTotalService {
     event: TableLazyLoadEvent
   ): Observable<AnalyticScoresWithoutTotalModelView> {
     return this.apiService
-      .post(`/ExamQuestionScores/AnalyticPointsWithoutTotal`, event)
+      .post(`/ExamQuestionScores/AnalyticScoresWithoutTotal`, event)
       .pipe(
         map((data: any) => data),
         catchError(error => throwError(error))
@@ -28,7 +28,7 @@ export class AnalyticScoresWithoutTotalService {
     event: TableLazyLoadEvent
   ): Observable<TotalAnalyticScoresMismatchModelView> {
     return this.apiService
-      .post(`/ExamQuestionScores/TotalAnalyticPointsMismatch`, event)
+      .post(`/ExamQuestionScores/TotalAnalyticScoresMismatch`, event)
       .pipe(
         map((data: any) => data),
         catchError(error => throwError(error))
@@ -38,7 +38,7 @@ export class AnalyticScoresWithoutTotalService {
     event: TableLazyLoadEvent
   ): Observable<AnalyticScoresWithoutTotalModelView> {
     return this.apiService
-      .post(`/ExamQuestionScores/AnalyticPoints`, event)
+      .post(`/ExamQuestionScores/AnalyticScores`, event)
       .pipe(
         map((data: any) => data),
         catchError(error => throwError(error))

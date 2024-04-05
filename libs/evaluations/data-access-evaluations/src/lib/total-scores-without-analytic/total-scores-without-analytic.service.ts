@@ -14,7 +14,7 @@ export class TotalScoresWithoutAnalyticService {
     event: TableLazyLoadEvent
   ): Observable<TotalScoresWithoutAnalyticModelView> {
     return this.apiService
-      .post(`/ExamQuestionScores/TotalPointsWithoutAnalytic`, event)
+      .post(`/ExamQuestionScores/TotalScoresWithoutAnalytic`, event)
       .pipe(
         map((data: any) => data),
         catchError(error => throwError(error))
