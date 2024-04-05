@@ -28,6 +28,8 @@ import { StudentsApiService } from '@msh/configurations/data-access-configuratio
 import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
 import { DialogModule } from 'primeng/dialog';
 import { CalendarModule } from 'primeng/calendar';
+import { DropdownModel } from '@msh/shared/data-access-shared';
+import { TooltipModule } from 'primeng/tooltip';
 
 @UntilDestroy()
 @Component({
@@ -46,6 +48,7 @@ import { CalendarModule } from 'primeng/calendar';
     DialogModule,
     SharedStudentLookupModule,
     CalendarModule,
+    TooltipModule,
   ],
   templateUrl: './student-ban-form.component.html',
   styleUrls: ['./student-ban-form.component.scss'],
@@ -72,6 +75,7 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
       }
     }
   }
+  @Input() examTypes: DropdownModel<number>[] = [];
 
   @Output() formSave = new EventEmitter<StudentBan>();
   @Output() formClose = new EventEmitter<undefined>();
@@ -89,6 +93,9 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
     isBanned: 0,
     effectiveDate: new Date(),
     banRemovalDate: new Date(),
+    barcode: '',
+    examTypeId: 0,
+    examTypeName: '',
   };
 
   constructor(
