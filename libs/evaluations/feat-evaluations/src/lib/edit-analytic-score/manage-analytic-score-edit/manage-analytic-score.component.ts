@@ -151,7 +151,7 @@ export class ManageAnalyticScoreComponent implements OnInit {
           this.examVariantTotalScore = examQuestion.examVariantMaximumScore;
           const matchingScore = examQuestionScores.data.filter(
             (examQuestionScore: ExamQuestionScoreModel) =>
-              examQuestionScore.examQuestionID === examQuestion.id
+              examQuestionScore.examQuestionID == examQuestion.id
           );
           return {
             examQuestion: examQuestion,
@@ -185,7 +185,7 @@ export class ManageAnalyticScoreComponent implements OnInit {
         .subscribe(response => {
           if (response.isSuccessful) {
             this.toastService.showSuccess(
-              'Piket e pyetjeve të provimit u shtuan me sukses!'
+              'Piket e pyetjeve të provimit u ndryshuan me sukses!'
             );
             this.getExamQuestionScoresList(this.filters as TableLazyLoadEvent);
           } else {
@@ -193,7 +193,7 @@ export class ManageAnalyticScoreComponent implements OnInit {
           }
           if (response.isBadRequest) {
             this.toastService.showError(
-              'Ndodhi një problem gjatë shtimit të pikeve!'
+              'Ndodhi një problem gjatë ndryshimit të pikeve!'
             );
           }
         });
@@ -203,7 +203,7 @@ export class ManageAnalyticScoreComponent implements OnInit {
   deleteMultipleExamScore(examQuestionScore: CreateOrUpdateMultiple) {
     const valuesToSend = {
       examQuestionIds: examQuestionScore,
-      barcode: this.analyticScoreFilters.barcode,
+      barcode: this.analyticScoreFilters.barcode.toUpperCase(),
     } as unknown as CreateOrUpdateMultiple;
     this.examQuestionScoreApiService
       .deleteMultiple(valuesToSend)
