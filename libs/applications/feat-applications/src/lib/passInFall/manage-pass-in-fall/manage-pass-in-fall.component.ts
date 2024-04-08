@@ -91,7 +91,7 @@ export class ManagePassInFallComponent {
       .getOne(failingStudent.id!)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        if (response.isSuccessful === true) {
+        if (response.isSuccessful) {
           this.failingStudentService
             .update({
               studentId: failingStudent.studentId,
@@ -101,7 +101,7 @@ export class ManagePassInFallComponent {
             })
             .pipe(untilDestroyed(this))
             .subscribe(response => {
-              if (response.isSuccessful === true) {
+              if (response.isSuccessful) {
                 this.toastService.showSuccess(
                   'Maturanti u ndryshua me sukses!'
                 );

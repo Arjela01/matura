@@ -60,6 +60,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
   totalScore = 0;
   examVariantTotalScore = 0;
   barcode: any;
+  academicYearId = 0;
 
   event = {
     first: 0,
@@ -76,7 +77,13 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
     private readonly toastService: GlobalToastService,
     private readonly examQuestionService: ExamQuestionsService,
     private readonly examTypeService: ExamTypeApiService
-  ) {}
+  ) {
+    const academicYearString = localStorage.getItem('academicYear');
+    if (academicYearString) {
+      const academicYear = JSON.parse(academicYearString);
+      this.academicYearId = academicYear.id;
+    }
+  }
 
   ngOnInit() {
     this.getExamTypeDropdown();
@@ -92,24 +99,24 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
   }
   getExamSubjectDropdown($event: any) {
     this.examSubjectService
-      .forExamType($event.examTypeId)
+      .loadDropDownListNotMappedToProfiles(
+        this.academicYearId,
+        undefined,
+        $event.examTypeId,
+        undefined
+      )
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examSubject = response.data;
       });
   }
   getExamVariantDropdown($event: any) {
-    const academicYearString = localStorage.getItem('academicYear');
-    if (academicYearString) {
-      const academicYear = JSON.parse(academicYearString);
-      const academicYearId = academicYear.id;
-      this.examVariantService
-        .forExamSubject($event.examSubjectId, academicYearId)
-        .pipe(untilDestroyed(this))
-        .subscribe(response => {
-          this.examVariant = response.data;
-        });
-    }
+    this.examVariantService
+      .forExamSubject($event.examSubjectId, this.academicYearId)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.examVariant = response.data;
+      });
   }
 
   calculateTotalScore() {
