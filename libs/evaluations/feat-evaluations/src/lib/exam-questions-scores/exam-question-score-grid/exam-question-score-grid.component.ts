@@ -62,7 +62,6 @@ export class ExamQuestionScoreGridComponent {
   }
 
   onExamScoreAddOrUpdate(action: ScoreActions): void {
-    debugger;
     const deletedIDs: number[] = [];
 
     if (action === ScoreActions.CLEAN) {
