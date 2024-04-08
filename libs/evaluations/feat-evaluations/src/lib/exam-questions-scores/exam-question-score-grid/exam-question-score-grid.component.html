@@ -24,9 +24,15 @@
                 [min]="0"
                 style="width: 50%"
                 [max]="rowData.examQuestion.questionMaximumScore"
-                [(ngModel)]="rowData.examQuestionScores[0] && rowData.examQuestionScores[0].examQuestionScore"
-                (ngModelChange)="onRowChange($event)"
-                (input)="limitToTwoDigits($event)"/>
+                [(ngModel)]="
+                  rowData.examQuestionScores[0] &&
+                  rowData.examQuestionScores[0].examQuestionScore
+                "
+                (ngModelChange)="
+                  onRowChange($event);
+                  updateInputScore(rowData.examQuestion.id, $event)
+                "
+                (input)="limitToTwoDigits($event)" />
               <small
                 class="p-error block mt-3"
                 *ngIf="

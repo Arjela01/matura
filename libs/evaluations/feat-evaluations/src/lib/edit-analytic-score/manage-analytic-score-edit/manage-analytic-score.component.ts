@@ -151,7 +151,7 @@ export class ManageAnalyticScoreComponent implements OnInit {
           this.examVariantTotalScore = examQuestion.examVariantMaximumScore;
           const matchingScore = examQuestionScores.data.filter(
             (examQuestionScore: ExamQuestionScoreModel) =>
-              examQuestionScore.examQuestionID === examQuestion.id
+              examQuestionScore.examQuestionID == examQuestion.id
           );
           return {
             examQuestion: examQuestion,
@@ -203,7 +203,7 @@ export class ManageAnalyticScoreComponent implements OnInit {
   deleteMultipleExamScore(examQuestionScore: CreateOrUpdateMultiple) {
     const valuesToSend = {
       examQuestionIds: examQuestionScore,
-      barcode: this.analyticScoreFilters.barcode,
+      barcode: this.analyticScoreFilters.barcode.toUpperCase(),
     } as unknown as CreateOrUpdateMultiple;
     this.examQuestionScoreApiService
       .deleteMultiple(valuesToSend)

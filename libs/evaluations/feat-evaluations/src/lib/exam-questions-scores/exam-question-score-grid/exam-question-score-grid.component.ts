@@ -48,6 +48,7 @@ export class ExamQuestionScoreGridComponent {
   @Output() gridEvent = new EventEmitter<
     GridEvent<ExamQuestionScoreModel | ExamQuestionScoreModel[]>
   >();
+  inputScores: { [questionId: number]: number } = {};
 
   onDeleteClick(examQuestionScore: any) {
     this.gridEvent.emit({
@@ -56,7 +57,12 @@ export class ExamQuestionScoreGridComponent {
     } as GridEvent<ExamQuestionScoreModel>);
   }
 
+  updateInputScore(questionId: number, score: number) {
+    this.inputScores[questionId] = score;
+  }
+
   onExamScoreAddOrUpdate(action: ScoreActions): void {
+    debugger;
     const deletedIDs: number[] = [];
 
     if (action === ScoreActions.CLEAN) {
@@ -70,13 +76,14 @@ export class ExamQuestionScoreGridComponent {
     if (action === ScoreActions.SAVE) {
       const updatedScores: ExamQuestionScoreModel[] = [];
       this.examQuestionScoreList.forEach(rowData => {
-        if (rowData.examQuestionScores.length > 0) {
+        if (rowData) {
           const examQuestionScore: ExamQuestionScoreModel = {
             examQuestionID: rowData.examQuestion.id,
-            maximumScore:
-              rowData.examQuestionScores[0].examQuestionMaximumScore,
-            score: rowData.examQuestionScores[0].examQuestionScore,
-            examScoreID: rowData.examQuestionScores[0].examScoreID,
+            maximumScore: rowData.examQuestion.questionMaximumScore,
+            score:
+              rowData.examQuestionScores[0]?.examQuestionScore ||
+              this.inputScores[rowData.examQuestion.id],
+            examScoreID: rowData.examQuestionScores[0]?.examScoreID,
           };
           updatedScores.push(examQuestionScore);
         }
