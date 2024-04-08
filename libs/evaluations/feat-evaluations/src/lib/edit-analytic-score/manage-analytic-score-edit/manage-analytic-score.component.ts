@@ -185,7 +185,7 @@ export class ManageAnalyticScoreComponent implements OnInit {
         .subscribe(response => {
           if (response.isSuccessful) {
             this.toastService.showSuccess(
-              'Piket e pyetjeve të provimit u ndryshuan me sukses!'
+              'Piket analitike u ndryshuan me sukses!'
             );
             this.getExamQuestionScoresList(this.filters as TableLazyLoadEvent);
           } else {
