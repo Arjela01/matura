@@ -52,7 +52,7 @@ export class ExamVariantApiService {
 
   forExamSubject(
     examSubjectId: string,
-    academicYearId: string
+    academicYearId: number
   ): Observable<ApiResult<DropdownModel<string>[]>> {
     const params = {
       examSubjectId: examSubjectId,
