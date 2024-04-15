@@ -1,10 +1,11 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
-  OnInit,
   Output,
+  ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExamQuestionScoreModel } from '@msh/shared/domain-models';
@@ -36,6 +37,7 @@ enum ScoreActions {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamQuestionScoreGridComponent {
+  @ViewChild('scoreInput') scoreInputs!: ElementRef<HTMLInputElement>[];
   @Input() examQuestionScoreList: any[] = [];
   @Input() totalRecords = 0;
   @Input() totalScore = 0;
@@ -102,6 +104,16 @@ export class ExamQuestionScoreGridComponent {
     const input = event.target as HTMLInputElement;
     if (input.value && input.value.length > 2) {
       input.value = input.value.slice(0, 2);
+    }
+  }
+
+  focusNextRow(rowIndex: number) {
+    const nextRowIndex = rowIndex + 1;
+    const nextInput = document.querySelector(
+      `tr:nth-child(${nextRowIndex}) input`
+    );
+    if (nextInput) {
+      (nextInput as HTMLInputElement).focus();
     }
   }
 
