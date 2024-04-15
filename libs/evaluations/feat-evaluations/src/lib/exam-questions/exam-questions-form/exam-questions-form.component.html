@@ -8,6 +8,7 @@
       name="Name"
       [(ngModel)]="examQuestion.index"
       required
+      #indexInputField
       autofocus
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examQuestion.index
@@ -33,7 +34,7 @@
   <div class="field">
     <label for="MaximumValueWritingScore">Pikët *</label>
     <input
-      type="text"
+      type="number"
       pInputText
       id="maximumValueWritingScore"
       name="maximumValueWritingScore"

@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   Output,
@@ -38,6 +39,9 @@ export class ExamQuestionsFormComponent {
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
+  @ViewChild('indexInputField', { static: false }) indexInputField:
+    | ElementRef<HTMLInputElement>
+    | undefined;
 
   submitted = false;
 
@@ -60,9 +64,11 @@ export class ExamQuestionsFormComponent {
   }
 
   onSubmit() {
-    this.submitted = true;
     if (this.form.valid) {
       this.formSave.emit(this.examQuestion);
+    }
+    if (this.indexInputField && this.indexInputField.nativeElement) {
+      this.indexInputField.nativeElement.focus();
     }
   }
 }
