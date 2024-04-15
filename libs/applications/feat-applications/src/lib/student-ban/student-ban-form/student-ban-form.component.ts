@@ -171,10 +171,10 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
 
   onSubmit() {
     if (this.form.valid) {
-      if (this.effectiveDate && this.banRemovalDate) {
+      if (this.effectiveDate) {
         const formattedEffectiveDate = formatDate(
           this.effectiveDate,
-          'yyyy-MM-dd',
+          'dd/MM/yyyy',
           'en-US'
         );
         this.studentBan.effectiveDate = formattedEffectiveDate as any;
