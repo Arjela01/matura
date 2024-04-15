@@ -188,12 +188,11 @@ export class ManageExamQuestionsComponent implements OnInit {
     const proposedTotalScore =
       currentTotalScore + examQuestion.questionMaximumScore;
 
-    // Check if the proposed total score exceeds the variant maximum score
     if (proposedTotalScore > this.examVariantMaximumScore) {
       this.toastService.showError(
         'Totali i pikëve tejkalon rezultatin maksimal të variantit'
       );
-      return; // Do not proceed with adding the question
+      return;
     }
     const valuesToSend: ExamQuestionModel = {
       ...examQuestion,
@@ -220,16 +219,14 @@ export class ManageExamQuestionsComponent implements OnInit {
         return total + question.questionMaximumScore;
       }, 0);
 
-    // Calculate the total score if the updated question is considered
     const proposedTotalScore =
       currentTotalScore + examQuestion.questionMaximumScore;
 
-    // Check if the proposed total score exceeds the variant maximum score
     if (proposedTotalScore > this.examVariantMaximumScore) {
       this.toastService.showError(
         'Totali i pikëve tejkalon rezultatin maksimal të variantit'
       );
-      return; // Do not proceed with updating the question
+      return;
     }
     this.examQuestionService
       .update(examQuestion)
