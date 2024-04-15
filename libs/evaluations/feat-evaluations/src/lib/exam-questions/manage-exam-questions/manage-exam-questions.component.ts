@@ -179,7 +179,6 @@ export class ManageExamQuestionsComponent implements OnInit {
   }
 
   addExamQuestion(examQuestion: ExamQuestionModel) {
-    debugger;
     const currentTotalScore = this.examQuestions$$.value.reduce(
       (total, question) => {
         return total + question.questionMaximumScore;
