@@ -30,26 +30,51 @@
         </div>
 
         <div class="field">
-          <label class="mb-3">Është Skualifikuar? *</label>
-          <div class="formgrid grid">
-            <div class="field-radiobutton col-6">
-              <p-radioButton
-                id="IsBannedTrue"
-                name="isBanned"
-                [value]="true"
-                [(ngModel)]="studentBan.isBanned"></p-radioButton>
-              <label for="IsBannedTrue">Po</label>
-            </div>
-            <div class="field-radiobutton col-6">
-              <p-radioButton
-                id="IsBannedFalse"
-                name="isBanned"
-                [value]="false"
-                [(ngModel)]="studentBan.isBanned"></p-radioButton>
-              <label for="IsBannedFalse">Jo</label>
-            </div>
-          </div>
+          <label for="barcode">Barkodi *</label>
+          <input
+            type="text"
+            maxlength="7"
+            minlength="7"
+            pInputText
+            placeholder="Barkodi"
+            id="barcode"
+            name="barcode"
+            [(ngModel)]="studentBan.barcode"
+            pTooltip="Barkodi duhet te permbaje 7 shifra"
+            tooltipPosition="top"
+            required
+            [ngClass]="{
+              'ng-invalid ng-dirty': submitted && !studentBan.barcode
+            }" />
+          <small class="p-error block" *ngIf="submitted && !studentBan.barcode">
+            Barkodi është fushë e kërkuar.
+          </small>
         </div>
+
+        <div class="field">
+          <label for="ExamType">Tipi i Provimit *</label>
+          <p-dropdown
+            id="ExamType"
+            [options]="examTypes"
+            optionValue="key"
+            optionLabel="value"
+            name="ExamTypeId"
+            [filter]="true"
+            [autoDisplayFirst]="false"
+            [required]="true"
+            [(ngModel)]="studentBan.examTypeId"
+            [showClear]="true"
+            [ngClass]="{
+              'ng-invalid ng-dirty': submitted && !studentBan.examTypeId
+            }">
+          </p-dropdown>
+          <small
+            class="p-error block"
+            *ngIf="submitted && !studentBan.examTypeId">
+            Tipi i provimit është fushë e kërkuar.
+          </small>
+        </div>
+
 
         <div class="field">
           <label for="effectiveDate">Data Efektive *</label>
@@ -64,23 +89,6 @@
               'ng-invalid ng-dirty': submitted && !effectiveDate
             }"></p-calendar>
           <small class="p-error block" *ngIf="submitted && !effectiveDate">
-            Data është fushë e kërkuar.
-          </small>
-        </div>
-
-        <div class="field">
-          <label for="banRemovalDate">Data e heqjes së Skualifikimit *</label>
-          <p-calendar
-            [(ngModel)]="banRemovalDate"
-            dateFormat="dd/mm/yy"
-            inputId="banRemovalDate"
-            id="banRemovalDate"
-            name="banRemovalDate"
-            appendTo="body"
-            [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !banRemovalDate
-            }"></p-calendar>
-          <small class="p-error block" *ngIf="submitted && !banRemovalDate">
             Data është fushë e kërkuar.
           </small>
         </div>
@@ -104,6 +112,28 @@
             *ngIf="submitted && !studentBan.description">
             Përshkrimi është fushë e kërkuar.
           </small>
+        </div>
+
+        <div class="field">
+          <label class="mb-3">Është Skualifikuar? *</label>
+          <div class="formgrid grid">
+            <div class="field-radiobutton col-6">
+              <p-radioButton
+                      id="IsBannedTrue"
+                      name="isBanned"
+                      [value]="true"
+                      [(ngModel)]="studentBan.isBanned"></p-radioButton>
+              <label for="IsBannedTrue">Po</label>
+            </div>
+            <div class="field-radiobutton col-6">
+              <p-radioButton
+                      id="IsBannedFalse"
+                      name="isBanned"
+                      [value]="false"
+                      [(ngModel)]="studentBan.isBanned"></p-radioButton>
+              <label for="IsBannedFalse">Jo</label>
+            </div>
+          </div>
         </div>
 
         <div class="flex justify-content-end">

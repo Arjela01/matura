@@ -22,11 +22,29 @@
     <tr>
       <th pSortableColumn="id">ID e Maturës</th>
       <th pSortableColumn="studentName">
-        Emri i Maturantit
+        Maturanti
         <p-sortIcon field="studentName"></p-sortIcon>
         <p-columnFilter
           type="text"
           field="studentName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="barcode">
+        Barkodi
+        <p-sortIcon field="barcode"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="barcode"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="examTypeId">
+        Tipi i Provimit
+        <p-sortIcon field="examTypeId"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="examTypeId"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
@@ -49,15 +67,6 @@
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
-      <th pSortableColumn="banRemovalDate">
-        Data e heqjes së Skualifikimit
-        <p-sortIcon field="banRemovalDate"></p-sortIcon>
-        <p-columnFilter
-          type="date"
-          field="banRemovalDate"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
-      </th>
       <th pSortableColumn="description">
         Përshkrimi
         <p-sortIcon field="description"></p-sortIcon>
@@ -72,22 +81,25 @@
   </ng-template>
   <ng-template pTemplate="body" let-bannedStudent>
     <tr>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 10%; min-width: 10rem">
         {{ bannedStudent.studentIdentifier }}
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ bannedStudent.studentName }}
       </td>
       <td style="width: 14%; min-width: 10rem">
+        {{ bannedStudent.barcode }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ bannedStudent.examTypeName }}
+      </td>
+      <td style="width: 20%; min-width: 10rem">
         {{ bannedStudent.isBanned ? 'Po' : 'Jo' }}
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ bannedStudent.effectiveDate | date : 'dd/MM/yyyy' }}
       </td>
       <td style="width: 20%; min-width: 10rem">
-        {{ bannedStudent.banRemovalDate | date : 'dd/MM/yyyy' }}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
         {{ bannedStudent.description }}
       </td>
       <td>

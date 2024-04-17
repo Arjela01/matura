@@ -10,7 +10,8 @@ import { StudentBan } from '@msh/shared/domain-models';
 import {
   GridEvent,
   GRID_ACTIONS,
-  ColumnFilterDirective, DateFilterService,
+  ColumnFilterDirective,
+  DateFilterService,
 } from '@msh/shared/util-shared';
 import {
   TableLazyLoadEvent,
@@ -55,18 +56,6 @@ export class StudentBanGridComponent {
 
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
   constructor(private dateFilterService: DateFilterService) {}
-
-  studentBan: StudentBan = {
-    id: 0,
-    studentId: '',
-    studentIdentifier: '',
-    studentInputData: '',
-    studentName: '',
-    description: '',
-    isBanned: 0,
-    effectiveDate: new Date(),
-    banRemovalDate: new Date(),
-  };
 
   onEditClick(studentBan: StudentBan) {
     this.gridEvent.emit({

@@ -8,6 +8,9 @@ export interface StudentBan {
   isBanned: number;
   effectiveDate: Date;
   banRemovalDate: Date;
+  barcode: string;
+  examTypeId: number;
+  examTypeName: string;
 }
 
 export interface StudentBanTableView {

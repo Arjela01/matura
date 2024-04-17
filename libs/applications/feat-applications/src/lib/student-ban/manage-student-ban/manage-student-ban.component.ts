@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService } from 'primeng/api';
@@ -8,7 +8,10 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
-import { StudentBanApiService } from '@msh/configurations/data-access-configurations';
+import {
+  ExamTypeApiService,
+  StudentBanApiService,
+} from '@msh/configurations/data-access-configurations';
 import { StudentBan } from '@msh/shared/domain-models';
 
 import {
@@ -22,6 +25,7 @@ import { StudentBanFormComponent } from '../student-ban-form/student-ban-form.co
 import { StudentBanGridComponent } from '../student-ban-grid/student-ban-grid.component';
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { DropdownModel } from '@msh/shared/data-access-shared';
 
 @UntilDestroy()
 @Component({
@@ -41,7 +45,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
   styleUrls: ['./manage-student-ban.component.scss'],
   providers: [ConfirmationService],
 })
-export class ManageStudentBanComponent {
+export class ManageStudentBanComponent implements OnInit {
   private bannedStudents$$ = new BehaviorSubject<StudentBan[]>([]);
   bannedStudents$ = this.bannedStudents$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
@@ -49,14 +53,20 @@ export class ManageStudentBanComponent {
   totalRecords = 0;
   selectedBannedStudent: StudentBan | null = null;
   selectedBannedStudents: StudentBan[] = [];
+  examTypes: DropdownModel<number>[] = [];
   displayModal = false;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly studentBannedService: StudentBanApiService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private readonly examTypeService: ExamTypeApiService
   ) {}
+
+  ngOnInit() {
+    this.getExamTypes();
+  }
 
   onNewClick() {
     this.displayModal = true;
@@ -181,5 +191,11 @@ export class ManageStudentBanComponent {
             'Ndodhi një problem gjatë fshirjes të maturantit!'
           );
       });
+  }
+  getExamTypes() {
+    this.examTypeService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(res => (this.examTypes = res.data));
   }
 }

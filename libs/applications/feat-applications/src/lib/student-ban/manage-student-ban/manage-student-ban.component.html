@@ -36,6 +36,7 @@
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
     <msh-student-ban-form
+      [examTypes]="examTypes"
       [bannedStudentsDetails]="selectedBannedStudent"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
