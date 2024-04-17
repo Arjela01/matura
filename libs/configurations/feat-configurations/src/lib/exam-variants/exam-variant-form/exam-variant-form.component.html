@@ -26,9 +26,7 @@
       [autoDisplayFirst]="false"
       [(ngModel)]="examVariant.profileGroupId"
       [showClear]="true"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examVariant.profileGroupId
-      }">
+      >
     </p-dropdown>
   </div>
   <div class="field">
@@ -43,16 +41,8 @@
       [autoDisplayFirst]="false"
       [(ngModel)]="examVariant.profileId"
       [showClear]="true"
-      [required]="true"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examVariant.profileGroupId
-      }">
+     >
     </p-dropdown>
-    <small
-      class="p-error block"
-      *ngIf="submitted && !examVariant.profileGroupId">
-       Profili është fushë e kërkuar.
-    </small>
   </div>
   <div class="field">
     <label for="ProfileGroups">Tipi i Provimit</label>

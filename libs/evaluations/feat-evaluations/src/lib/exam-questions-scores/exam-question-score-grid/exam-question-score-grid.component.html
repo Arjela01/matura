@@ -10,14 +10,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let rowData of examQuestionScoreList">
+        <tr *ngFor="let rowData of examQuestionScoreList; let i = index">
           <td>
             {{ rowData.examQuestion.index }}{{ rowData.examQuestion.section }}
           </td>
           <td>
             <ng-container>
               <input
+                #scoreInput
                 type="number"
+                (keydown.enter)="focusNextRow(i + 1)"
                 pInputText
                 name="score"
                 tabindex="1"

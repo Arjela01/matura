@@ -120,12 +120,23 @@ export class ManageExamQuestionsComponent implements OnInit {
   }
 
   onFormSave(examQuestion: ExamQuestionModel) {
+    const updatedExamQuestions = {
+      ...this.selectedExamQuestion,
+      index: examQuestion.index,
+      questionMaximumScore: examQuestion.questionMaximumScore,
+      section: examQuestion.section,
+    };
     if (examQuestion.id) {
-      this.updateExamQuestion(examQuestion);
+      this.selectedExamQuestion = examQuestion;
+      this.updateExamQuestion(updatedExamQuestions as ExamQuestionModel);
     }
     if (!examQuestion.id) {
-      this.addExamQuestion(examQuestion);
+      this.addExamQuestion(updatedExamQuestions as ExamQuestionModel);
     }
+
+    examQuestion.index = '' as any;
+    examQuestion.questionMaximumScore = '' as any;
+    examQuestion.section = '';
   }
 
   getExamQuestions($event: TableLazyLoadEvent) {
@@ -168,6 +179,21 @@ export class ManageExamQuestionsComponent implements OnInit {
   }
 
   addExamQuestion(examQuestion: ExamQuestionModel) {
+    const currentTotalScore = this.examQuestions$$.value.reduce(
+      (total, question) => {
+        return total + question.questionMaximumScore;
+      },
+      0
+    );
+    const proposedTotalScore =
+      currentTotalScore + examQuestion.questionMaximumScore;
+
+    if (proposedTotalScore > this.examVariantMaximumScore) {
+      this.toastService.showError(
+        'Totali i pikëve tejkalon rezultatin maksimal të variantit'
+      );
+      return;
+    }
     const valuesToSend: ExamQuestionModel = {
       ...examQuestion,
       examVariantID: this.examVariantId,
@@ -177,8 +203,6 @@ export class ManageExamQuestionsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Pyetja e provimit u shtua me sukses!');
-          this.displayModal = false;
           this.getExamQuestions(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest)
@@ -189,6 +213,21 @@ export class ManageExamQuestionsComponent implements OnInit {
   }
 
   updateExamQuestion(examQuestion: ExamQuestionModel) {
+    const currentTotalScore = this.examQuestions$$.value
+      .filter(question => question.id !== examQuestion.id)
+      .reduce((total, question) => {
+        return total + question.questionMaximumScore;
+      }, 0);
+
+    const proposedTotalScore =
+      currentTotalScore + examQuestion.questionMaximumScore;
+
+    if (proposedTotalScore > this.examVariantMaximumScore) {
+      this.toastService.showError(
+        'Totali i pikëve tejkalon rezultatin maksimal të variantit'
+      );
+      return;
+    }
     this.examQuestionService
       .update(examQuestion)
       .pipe(untilDestroyed(this))
