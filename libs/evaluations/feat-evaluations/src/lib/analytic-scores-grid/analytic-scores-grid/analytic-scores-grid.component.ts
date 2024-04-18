@@ -52,7 +52,7 @@ export class AnalyticScoresGridComponent {
 
   onEditClick(analyticScore: AnalyticScoresWithoutTotalModel) {
     this.router.navigate([
-      `/evaluations/analytic-score-edit/${analyticScore.examTypeId}/${analyticScore.examSubjectId}/${analyticScore.examVariantId}/${analyticScore.barcode}`,
+      `/evaluations/analytic-score-edit/${analyticScore.examTypeId}/${analyticScore.examSubjectId}/${analyticScore.examVariantId}/${analyticScore.testNumber}/${analyticScore.barcode}`,
     ]);
   }
 }

@@ -82,7 +82,8 @@ export class ExamQuestionScoreFiltersComponent {
       searchModal.examVariantId &&
       searchModal.examTypeId &&
       searchModal.examSubjectId &&
-      searchModal.barcode
+      searchModal.barcode &&
+      searchModal.testNumber
     );
   }
 }

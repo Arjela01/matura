@@ -75,6 +75,8 @@ export class ManageAnalyticScoreComponent implements OnInit {
       this.route.snapshot.paramMap.get('examSubjectId') ?? '';
     this.analyticScoreFilters.examVariantId =
       this.route.snapshot.paramMap.get('examVariantId') ?? '';
+    this.analyticScoreFilters.testNumber =
+      this.route.snapshot.paramMap.get('testNumber') ?? '';
     this.analyticScoreFilters.barcode =
       this.route.snapshot.paramMap.get('barcode') ?? '';
   }
@@ -117,6 +119,13 @@ export class ManageAnalyticScoreComponent implements OnInit {
       examVariantID: [
         {
           value: this.analyticScoreFilters.examVariantId,
+          matchMode: 'equals',
+          operator: 'and',
+        },
+      ],
+      testNumber: [
+        {
+          value: this.analyticScoreFilters.testNumber,
           matchMode: 'equals',
           operator: 'and',
         },
@@ -179,6 +188,7 @@ export class ManageAnalyticScoreComponent implements OnInit {
         academicYearId: academicYearId,
         examQuestionScoreCreateUpdateModels: examQuestionScore,
         barcode: this.analyticScoreFilters.barcode,
+        testNumber: this.analyticScoreFilters.testNumber,
       } as unknown as CreateOrUpdateMultiple;
       this.examQuestionScoreApiService
         .createOrUpdateMultiple(valuesToSend)

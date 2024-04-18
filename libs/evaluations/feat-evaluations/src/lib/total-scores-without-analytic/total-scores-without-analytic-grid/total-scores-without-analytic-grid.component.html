@@ -43,6 +43,17 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="folder">
+        Dosja
+        <div>
+          <p-sortIcon field="folder"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="folder"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
       <th pSortableColumn="barcode">
         Barkodi
         <div>
@@ -50,6 +61,17 @@
           <p-columnFilter
             type="text"
             field="barcode"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="index">
+        Indeksi
+        <div>
+          <p-sortIcon field="index"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="index"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
@@ -69,16 +91,22 @@
   </ng-template>
   <ng-template pTemplate="body" let-totalScoresWithoutAnalytic>
     <tr>
-      <td style="width: 25%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ totalScoresWithoutAnalytic.examTypeName }}
       </td>
-      <td style="width: 25%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ totalScoresWithoutAnalytic.examSubjectName }}
       </td>
-      <td style="width: 25%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
+        {{ totalScoresWithoutAnalytic.folderNr }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
         {{ totalScoresWithoutAnalytic.barcode }}
       </td>
-      <td style="width: 25%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
+        {{ totalScoresWithoutAnalytic.index }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
         {{ totalScoresWithoutAnalytic.totalScore }}
       </td>
     </tr>

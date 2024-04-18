@@ -61,6 +61,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
   examVariantTotalScore = 0;
   barcode: any;
   academicYearId = 0;
+  testNumber = 0;
 
   event = {
     first: 0,
@@ -131,6 +132,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
     this.filters = Object.assign({}, $event);
     this.examVariantId = $event.examVariantId;
     this.barcode = $event.barcode;
+    this.testNumber = $event.testNumber;
     this.event.filters = {
       examSubjectID: [
         {
@@ -156,6 +158,13 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       barcode: [
         {
           value: $event.barcode,
+          matchMode: 'equals',
+          operator: 'and',
+        },
+      ],
+      testNumber: [
+        {
+          value: $event.testNumber,
           matchMode: 'equals',
           operator: 'and',
         },
@@ -198,6 +207,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       const valuesToSend = {
         academicYearId: academicYearId,
         examQuestionScoreCreateUpdateModels: examQuestionScore,
+        testNumber: this.testNumber,
         barcode: this.barcode.toUpperCase(),
       } as unknown as CreateOrUpdateMultiple;
       this.examQuestionScoreService

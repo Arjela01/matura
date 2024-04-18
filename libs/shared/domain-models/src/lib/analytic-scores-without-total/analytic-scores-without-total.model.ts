@@ -10,6 +10,7 @@ export interface AnalyticScoresWithoutTotalModel {
   academicYearId: number;
   academicYearIsActive: true;
   analyticScore: number;
+  testNumber: number;
 }
 
 export interface AnalyticScoresWithoutTotalModelView {
