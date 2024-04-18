@@ -57,15 +57,15 @@
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="folder">
+            <th pSortableColumn="folderNumber">
               Dosja
               <div>
-                <p-sortIcon field="folder"></p-sortIcon>
+                <p-sortIcon field="folderNumber"></p-sortIcon>
                 <p-columnFilter
-                        type="text"
-                        field="folder"
-                        display="menu"
-                        mshColumnFilterDirective></p-columnFilter>
+                  type="text"
+                  field="folderNumber"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
             <th pSortableColumn="barcode">
@@ -73,21 +73,21 @@
               <div>
                 <p-sortIcon field="barcode"></p-sortIcon>
                 <p-columnFilter
-                        type="text"
-                        field="barcode"
-                        display="menu"
-                        mshColumnFilterDirective></p-columnFilter>
+                  type="text"
+                  field="barcode"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="index">
+            <th pSortableColumn="indexNumber">
               Indeksi
               <div>
-                <p-sortIcon field="index"></p-sortIcon>
+                <p-sortIcon field="indexNumber"></p-sortIcon>
                 <p-columnFilter
-                        type="text"
-                        field="index"
-                        display="menu"
-                        mshColumnFilterDirective></p-columnFilter>
+                  type="text"
+                  field="indexNumber"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
             <th
@@ -125,15 +125,15 @@
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="analyticScoresTestNumber">
+            <th pSortableColumn="testNumber">
               Nr. Testi
               <div>
-                <p-sortIcon field="analyticScoresTestNumber"></p-sortIcon>
+                <p-sortIcon field="testNumber"></p-sortIcon>
                 <p-columnFilter
-                        type="text"
-                        field="analyticScoresTestNumber"
-                        display="menu"
-                        mshColumnFilterDirective></p-columnFilter>
+                  type="text"
+                  field="testNumber"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
             <th pSortableColumn="analyticScoresBarcode">
@@ -169,13 +169,13 @@
               {{ score.totalScoresExamSubjectName }}
             </td>
             <td style="width: 25%; min-width: 10rem">
-              {{ score.totalScoresFolder }}
+              {{ score.folderNumber }}
             </td>
             <td style="width: 25%; min-width: 10rem">
               {{ score.totalScoresBarcode }}
             </td>
             <td style="width: 25%; min-width: 10rem">
-              {{ score.totalScoresIndex }}
+              {{ score.indexNumber }}
             </td>
             <td
               style="
@@ -192,7 +192,7 @@
               {{ score.analyticScoresExamSubjectName }}
             </td>
             <td style="width: 25%; min-width: 10rem">
-              {{ score.analyticScoresTestNumber }}
+              {{ score.testNumber }}
             </td>
             <td style="width: 25%; min-width: 10rem">
               {{ score.analyticScoresBarcode }}
