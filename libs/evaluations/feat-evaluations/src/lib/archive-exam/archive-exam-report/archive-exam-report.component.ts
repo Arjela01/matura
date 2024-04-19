@@ -173,4 +173,15 @@ export class ArchiveExamReportComponent implements OnInit {
       }
     });
   }
+
+  printContent(content: string) {
+    const printContent = document.getElementById(content);
+    if (printContent) {
+      const printContents = printContent.innerHTML;
+      const originalContents = document.body.innerHTML;
+      document.body.innerHTML = printContents;
+      window.print();
+      document.body.innerHTML = originalContents;
+    }
+  }
 }
