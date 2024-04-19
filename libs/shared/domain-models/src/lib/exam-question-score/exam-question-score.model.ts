@@ -10,6 +10,7 @@ export interface ExamQuestionScoreModel {
   barcode?: string;
   maximumScore?: number;
   hasScore?: boolean;
+  testNumber?: number;
 }
 
 export interface ExamQuestionsScoreDataEntry {
@@ -25,6 +26,7 @@ export interface SearchOptions {
   examVariantId: string;
   examVariantName: string;
   barcode: string;
+  testNumber: string;
 }
 
 export interface CreateOrUpdateMultiple {

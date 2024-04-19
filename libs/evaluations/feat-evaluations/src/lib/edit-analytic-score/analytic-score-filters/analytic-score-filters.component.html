@@ -35,6 +35,17 @@
       </div>
 
       <div class="field colmn w-8">
+        <label for="testNumber">Nr. Testi *</label>
+        <input
+          type="text"
+          pInputText
+          placeholder="Nr. Testi"
+          [disabled]="true"
+          id="testNumber"
+          name="testNumber"
+          [(ngModel)]="examQuestionScoreList.testNumber" />
+      </div>
+      <div class="field colmn w-8">
         <label for="barcode">Barkodi *</label>
         <input
           type="text"

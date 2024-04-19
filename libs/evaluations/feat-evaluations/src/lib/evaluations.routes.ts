@@ -262,7 +262,7 @@ export const EVALUATION_ROUTES: Route[] = [
       ).then(m => m.TotalAnalyticScoreMismatchComponent),
   },
   {
-    path: 'analytic-score-edit/:examTypeId/:examSubjectId/:examVariantId/:barcode',
+    path: 'analytic-score-edit/:examTypeId/:examSubjectId/:examVariantId/:testNumber/:barcode',
     loadComponent: () =>
       import(
         './edit-analytic-score/manage-analytic-score-edit/manage-analytic-score.component'
