@@ -97,7 +97,7 @@ export class ExamSecretApiService {
     event: TableLazyLoadEvent
   ): Observable<ExamSecretTableView> {
     return this.apiService
-      .post(`/ExamSecrets/ExamSecretWithoutScore`, event)
+      .post(`/ExamSecrets/SecretListWithoutScore`, event)
       .pipe(
         map((data: any) => data),
         catchError(error => throwError(error))
