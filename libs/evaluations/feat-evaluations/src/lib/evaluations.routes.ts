@@ -275,4 +275,11 @@ export const EVALUATION_ROUTES: Route[] = [
         './analytic-scores-grid/analytic-scores-grid/analytic-scores-grid.component'
       ).then(m => m.AnalyticScoresGridComponent),
   },
+  {
+    path: 'exam-secret-without-score',
+    loadComponent: () =>
+      import(
+        './exam-secret-without-score/exam-secret-without-score/exam-secret-without-score.component'
+      ).then(m => m.ExamSecretWithoutScoreComponent),
+  },
 ];

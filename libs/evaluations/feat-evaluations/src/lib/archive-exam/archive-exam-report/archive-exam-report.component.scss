@@ -39,3 +39,8 @@ th,
 td {
   margin: 5px;
 }
+@media print {
+  header, footer {
+    display: none !important;
+  }
+}

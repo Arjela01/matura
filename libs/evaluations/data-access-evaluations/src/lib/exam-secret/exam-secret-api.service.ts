@@ -5,6 +5,7 @@ import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import { HttpParams } from '@angular/common/http';
 import {
+  ExamScoreTableView,
   ExamSecret,
   ExamSecretTableView,
   FileImport,
@@ -80,11 +81,26 @@ export class ExamSecretApiService {
     );
   }
 
+  forExamSubject(
+    examTypeId: any,
+    id?: any
+  ): Observable<ApiResult<ExamSecret[]>> {
+    let query = {};
+    if (id) query = { id };
+    return this.apiService.getData(
+      `/ExamSecrets/ForExamSubject?examTypeId=${examTypeId}`,
+      query
+    );
+  }
 
-  forExamSubject( examTypeId: any, id?: any ): Observable<ApiResult<ExamSecret[]>> {
-    let query={}
-    if(id)
-      query= {id}
-    return this.apiService.getData(`/ExamSecrets/ForExamSubject?examTypeId=${examTypeId}`, query);
+  loadExamSecretWithoutScoreData(
+    event: TableLazyLoadEvent
+  ): Observable<ExamSecretTableView> {
+    return this.apiService
+      .post(`/ExamSecrets/SecretListWithoutScore`, event)
+      .pipe(
+        map((data: any) => data),
+        catchError(error => throwError(error))
+      );
   }
 }
