@@ -30,13 +30,13 @@
     </p-dropdown>
   </div>
   <div class="field">
-    <label for="ProfileGroups">Profili *</label>
+    <label for="profile">Profili</label>
     <p-dropdown
-      id="profileGroups"
+      id="profile"
       [options]="profiles"
       optionValue="key"
       optionLabel="value"
-      name="profileGroupId"
+      name="profile"
       [filter]="true"
       [autoDisplayFirst]="false"
       [(ngModel)]="examVariant.profileId"
@@ -45,7 +45,7 @@
     </p-dropdown>
   </div>
   <div class="field">
-    <label for="ProfileGroups">Tipi i Provimit</label>
+    <label for="ProfileGroups">Tipi i Provimit *</label>
     <p-dropdown
       id="examTypes"
       [options]="examTypes"
@@ -68,7 +68,7 @@
     </small>
   </div>
   <div class="field">
-    <label for="ProfileGroups">Lënda e Provimit</label>
+    <label for="ProfileGroups">Lënda e Provimit *</label>
     <p-dropdown
       id="examSubjects"
       [options]="examSubjects"
@@ -92,7 +92,7 @@
     </small>
   </div>
   <div class="field">
-    <label for="academicYearSelect">Viti Shkollor</label>
+    <label for="academicYearSelect">Viti Shkollor *</label>
     <p-dropdown
       [style]="{ minWidth: '250px' }"
       id="academicYearSelect"
