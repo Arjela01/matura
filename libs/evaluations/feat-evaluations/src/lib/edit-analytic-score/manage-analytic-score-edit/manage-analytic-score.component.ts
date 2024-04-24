@@ -83,6 +83,10 @@ export class ManageAnalyticScoreComponent implements OnInit {
   ngOnInit() {
     this.getExamQuestionScoresList(this.filters as TableLazyLoadEvent);
   }
+
+  onBackButtonClick() {
+    this.router.navigate(['evaluations/analytic-scores-grid']);
+  }
   onGridEvent(
     event: GridEvent<ExamQuestionScoreModel | ExamQuestionScoreModel[]>
   ) {
