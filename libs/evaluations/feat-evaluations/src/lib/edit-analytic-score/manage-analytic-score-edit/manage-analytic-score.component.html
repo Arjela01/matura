@@ -1,5 +1,17 @@
 <div>
+  <div class="flex center mb-2 page-header mb-header">
   <h2 class="flex-1 mb-0">Ndrysho Pikët Analitike</h2>
+  <div class="flex align-items-right justify-content-right">
+    <div class="my-2 mx-5">
+      <p-button
+        type="button"
+        icon="pi pi-arrow-left"
+        styleClass="p-button-link"
+        (click)="onBackButtonClick()"
+        [label]="'Kthehu'"></p-button>
+    </div>
+  </div>
+    </div>
   <div class="mt-4">
     <msh-analytic-score-filters
       [examQuestionScoreList]="analyticScoreFilters"
