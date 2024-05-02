@@ -227,9 +227,10 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
     this.filters = Object.assign({}, $event);
     const params = {
       isFall: !!this.hasAdditionalValue?.additionalValue?.includes('True'),
+      examSiteId: this.examAssignment.examSiteId,
     };
     this.studentService
-      .loadStudents($event, params)
+      .loadStudentsForAssignments($event, params)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.studentList$$.next(response.data);
