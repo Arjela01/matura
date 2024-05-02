@@ -29,9 +29,10 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
-import { ArchiveFolder, Student } from '@msh/shared/domain-models';
+import { ArchiveFolder, statuses, Student } from '@msh/shared/domain-models';
 import { DialogModule } from 'primeng/dialog';
 import { ArchiveFolderHistoryGridComponent } from '../archive-folder-history/archive-folder-history-grid.component';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'msh-archive-folder-grid',
@@ -51,6 +52,7 @@ import { ArchiveFolderHistoryGridComponent } from '../archive-folder-history/arc
     ColumnFilterDirective,
     DialogModule,
     ArchiveFolderHistoryGridComponent,
+    DropdownModule,
   ],
   templateUrl: './archive-folder-grid.component.html',
   styleUrls: ['./archive-folder-grid.component.scss'],
@@ -58,6 +60,7 @@ import { ArchiveFolderHistoryGridComponent } from '../archive-folder-history/arc
 })
 export class ArchiveFolderGridComponent {
   @Input() archiveFolders: ArchiveFolder[] = [];
+  statuses = statuses;
 
   @Input() totalRecords = 0;
   @Input() loading = false;
@@ -74,7 +77,6 @@ export class ArchiveFolderGridComponent {
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
-  saving = false;
 
   @Input() set archiveFolderDetails(details: ArchiveFolder | null) {
     if (details) {

@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
-import { ExamGrade } from '@msh/shared/domain-models';
-import { LazyLoadEvent } from 'primeng/api';
+import { ExamGrade, statuses } from '@msh/shared/domain-models';
 import { ArchiveExamApiService } from '@msh/evaluations/data-access-evaluations';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -14,6 +13,8 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { RippleModule } from 'primeng/ripple';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { RouterLink } from '@angular/router';
+import { DropdownModule } from 'primeng/dropdown';
+import { FormsModule } from '@angular/forms';
 
 @UntilDestroy()
 @Component({
@@ -29,6 +30,8 @@ import { RouterLink } from '@angular/router';
     RippleModule,
     ColumnFilterDirective,
     RouterLink,
+    DropdownModule,
+    FormsModule,
   ],
   templateUrl: './barcode-without-score-grid.component.html',
   styleUrls: ['./barcode-without-score-grid.component.scss'],
@@ -52,4 +55,6 @@ export class BarcodeWithoutScoreGridComponent {
         this.totalRecords = response.total;
       });
   }
+
+  protected readonly statuses = statuses;
 }
