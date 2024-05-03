@@ -13,7 +13,6 @@ import {
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
-import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -27,10 +26,9 @@ import {
 import { TooltipModule } from 'primeng/tooltip';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
-import { HttpClient } from '@angular/common/http';
-import { AcademicYearApiService } from '@msh/configurations/data-access-configurations';
 import { BarcodeCorrection } from '@msh/shared/domain-models';
+import { DropdownModule } from 'primeng/dropdown';
+import { statuses } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-barcode-correction-grid',
@@ -46,6 +44,7 @@ import { BarcodeCorrection } from '@msh/shared/domain-models';
     FormsModule,
     RouterLink,
     ColumnFilterDirective,
+    DropdownModule,
   ],
   templateUrl: './barcode-correction-grid.component.html',
   styleUrls: ['./barcode-correction-grid.component.scss'],
@@ -53,6 +52,7 @@ import { BarcodeCorrection } from '@msh/shared/domain-models';
 })
 export class BarcodeCorrectionGridComponent {
   @Input() archiveFolders: BarcodeCorrection[] = [];
+  statuses = statuses;
 
   @Input() totalRecords = 0;
   @Input() loading = false;
@@ -77,17 +77,7 @@ export class BarcodeCorrectionGridComponent {
     }
   }
 
-  constructor(
-    private http: HttpClient,
-    private cd: ChangeDetectorRef,
-    private readonly academicYearService: AcademicYearApiService,
-    private readonly archiveFolderService: ArchiveFolderApiService,
-    private router: Router,
-    private messageService: MessageService,
-    private activatedRoute: ActivatedRoute,
-
-    private route: ActivatedRoute
-  ) {
+  constructor(private route: ActivatedRoute) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
 

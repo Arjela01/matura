@@ -11,3 +11,8 @@ export interface ArchiveExamView {
   data: ArchiveExam[];
   total: number;
 }
+
+export const statuses = [
+  { label: 'Hapur', value: false },
+  { label: 'Mbyllur', value: true },
+];
