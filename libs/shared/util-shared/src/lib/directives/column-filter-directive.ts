@@ -34,6 +34,8 @@ export class ColumnFilterDirective {
       originalApplyFilter.call(filter);
     };
 
-    filter.matchMode = 'contains';
+    if (filter.type !== 'boolean') {
+      filter.matchMode = 'contains';
+    }
   }
 }
