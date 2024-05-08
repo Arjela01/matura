@@ -1,4 +1,11 @@
-<div class="flex center mb-2 page-header mb-header">
+<div
+  [ngClass]="{
+    flex: true,
+    'ml-2': true,
+    'mb-5': foreignStudent,
+    'mb-2': !foreignStudent
+  }"
+  class="page-header mb-header">
   <h2 class="flex-1 mb-0">{{ title }}</h2>
   <div
     class="flex align-items-right justify-content-right"

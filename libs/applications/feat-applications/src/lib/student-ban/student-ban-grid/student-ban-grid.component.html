@@ -23,33 +23,40 @@
       <th pSortableColumn="id">ID e Maturës</th>
       <th pSortableColumn="studentName">
         Maturanti
+        <div>
         <p-sortIcon field="studentName"></p-sortIcon>
         <p-columnFilter
           type="text"
           field="studentName"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="barcode">
         Barkodi
+        <div>
         <p-sortIcon field="barcode"></p-sortIcon>
         <p-columnFilter
           type="text"
           field="barcode"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="examTypeId">
         Tipi i Provimit
+        <div>
         <p-sortIcon field="examTypeId"></p-sortIcon>
         <p-columnFilter
           type="text"
           field="examTypeId"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="isBanned">
         Është Skualifikuar?
+        <div>
         <p-sortIcon field="isBanned"></p-sortIcon>
         <p-columnFilter
           type="boolean"
@@ -57,24 +64,29 @@
           matchMode="equals"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="effectiveDate">
         Data efektive
+        <div>
         <p-sortIcon field="effectiveDate"></p-sortIcon>
         <p-columnFilter
           type="date"
           field="effectiveDate"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="description">
         Përshkrimi
+        <div>
         <p-sortIcon field="description"></p-sortIcon>
         <p-columnFilter
           type="text"
           field="description"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th></th>
     </tr>

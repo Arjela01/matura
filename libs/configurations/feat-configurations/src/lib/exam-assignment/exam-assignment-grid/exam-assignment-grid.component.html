@@ -22,91 +22,105 @@
     <tr>
       <th pSortableColumn="examSiteName">
         Qendra e Provimit
+        <div>
         <p-sortIcon field="examSiteName"></p-sortIcon>
         <p-columnFilter
           type="text"
           field="examSiteName"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="studentHighSchoolName">
         Gjimnazi
+        <div>
         <p-sortIcon field="studentHighSchoolName"></p-sortIcon>
         <p-columnFilter
           type="text"
           field="studentHighSchoolName"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="examTypeName">
         Tipi i Provimit
+        <div>
         <p-sortIcon field="examTypeName"></p-sortIcon>
         <p-columnFilter
           type="text"
           field="examTypeName"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="date">
         Data e Provimit
+        <div>
         <p-sortIcon field="date"></p-sortIcon>
         <p-columnFilter
           type="date"
           field="date"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="isFall">
         Vjeshtë
+        <div>
         <p-sortIcon field="isFall"></p-sortIcon>
         <p-columnFilter
           type="boolean"
           field="isFall"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="studentId">
         Matura ID
+        <div>
         <p-sortIcon field="studentId"></p-sortIcon>
         <p-columnFilter
           type="text"
           field="studentId"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="studentName">
         Emri i Maturantit
+        <div>
         <p-sortIcon field="studentName"></p-sortIcon>
         <p-columnFilter
           type="text"
           field="studentName"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-examAssignment>
     <tr>
-      <td style="width: 23%; min-width: 10rem">
+      <td style="width: 18%; min-width: 10rem">
         {{ examAssignment.examSiteName }}
       </td>
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ examAssignment.studentHighSchoolName }}
       </td>
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ examAssignment.examTypeName }}
       </td>
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ examAssignment.date | date : 'dd/MM/yyyy' }}
       </td>
       <td style="width: 10%; min-width: 10rem">
         {{ examAssignment.isFall ? 'Po' : 'Jo' }}
       </td>
-      <td style="width: 20%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ examAssignment.studentId }}
       </td>
-      <td style="width: 20%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ examAssignment.studentName }}
       </td>
 
