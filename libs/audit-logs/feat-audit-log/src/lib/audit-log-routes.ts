@@ -15,4 +15,18 @@ export const AUDIT_LOG_ROUTES: Route[] = [
         m => m.AuditLogGridComponent
       ),
   },
+  {
+    path: 'student-audit',
+    loadComponent: () =>
+      import(
+        './student-audit/student-audit-grid/student-audit-grid.component'
+      ).then(m => m.StudentAuditGridComponent),
+  },
+  {
+    path: 'student-audit/student-details/:nid',
+    loadComponent: () =>
+      import(
+        './student-audit/manage-student-audit/manage-student-audit.component'
+      ).then(m => m.ManageStudentAuditComponent),
+  },
 ];
