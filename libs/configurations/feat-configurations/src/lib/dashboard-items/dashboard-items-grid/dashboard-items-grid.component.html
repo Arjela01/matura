@@ -22,56 +22,70 @@
     <tr>
       <th pSortableColumn="dashboardSectionName">
         Seksioni
-        <p-sortIcon field="dashboardSectionName"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="dashboardSectionName"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+        <div>
+          <p-sortIcon field="dashboardSectionName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="dashboardSectionName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="title">
         Titulli
-        <p-sortIcon field="title"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="title"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+        <div>
+          <p-sortIcon field="title"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="title"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="description">
         Përshkrimi
-        <p-sortIcon field="description"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="description"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+        <div>
+          <p-sortIcon field="description"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="description"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="hasDocument">
         Dokument?
-        <p-sortIcon field="hasDocument"></p-sortIcon>
+        <div>
+          <p-sortIcon field="hasDocument"></p-sortIcon>
+        </div>
       </th>
       <th pSortableColumn="hasLinkUrl">
         Link?
-        <p-sortIcon field="hasLinkUrl"></p-sortIcon>
+        <div>
+          <p-sortIcon field="hasLinkUrl"></p-sortIcon>
+        </div>
       </th>
       <th pSortableColumn="startDate">
         E Vlefshme Nga
-        <p-sortIcon field="startDate"></p-sortIcon>
-        <p-columnFilter
-          type="date"
-          field="startDate"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+        <div>
+          <p-sortIcon field="startDate"></p-sortIcon>
+          <p-columnFilter
+            type="date"
+            field="startDate"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="endDate">
         E Vlefshme Deri
-        <p-sortIcon field="endDate"></p-sortIcon>
-        <p-columnFilter
-          type="date"
-          field="endDate"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+        <div>
+          <p-sortIcon field="endDate"></p-sortIcon>
+          <p-columnFilter
+            type="date"
+            field="endDate"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="user">Veprime</th>
     </tr>
@@ -98,7 +112,10 @@
         </div>
       </td>
       <td style="width: 14%; min-width: 10rem">
-        <a *ngIf="dashboardItem.linkUrl" href="{{ dashboardItem.linkUrl }}" target="_blank">
+        <a
+          *ngIf="dashboardItem.linkUrl"
+          href="{{ dashboardItem.linkUrl }}"
+          target="_blank">
           Vizito Linkun
         </a>
         <p *ngIf="!dashboardItem.linkUrl">Nuk ka link</p>

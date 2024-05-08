@@ -22,20 +22,26 @@
     <tr>
       <th pSortableColumn="year">
         Kodi
-        <p-sortIcon field="year"></p-sortIcon>
-        <p-columnFilter
-          type="numeric"
-          field="year"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+        <div>
+          <p-sortIcon field="year"></p-sortIcon>
+          <p-columnFilter
+            type="numeric"
+            field="year"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
       </th>
       <th pSortableColumn="isActive">
         Është Aktiv?
-        <p-sortIcon field="isActive"></p-sortIcon>
+        <div>
+          <p-sortIcon field="isActive"></p-sortIcon>
+        </div>
       </th>
       <th pSortableColumn="isFall">
-        Vjeshtë
-        <p-sortIcon field="isFall"></p-sortIcon>
+        Vjeshtë?
+        <div>
+          <p-sortIcon field="isFall"></p-sortIcon>
+        </div>
       </th>
       <th></th>
     </tr>
@@ -67,12 +73,12 @@
             pTooltip="Fshi"
             tooltipPosition="bottom"
             (click)="onDeleteClick(academicYear)" />
-        <img
-          src="assets/svg/import.svg"
-          class="p-button-rounded p-button-danger p-button-text ml-m pointer"
-          pTooltip="Importo"
-          tooltipPosition="bottom"
-          (click)="onImportClick(academicYear)" />
+          <img
+            src="assets/svg/import.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
+            pTooltip="Importo"
+            tooltipPosition="bottom"
+            (click)="onImportClick(academicYear)" />
         </div>
       </td>
     </tr>
