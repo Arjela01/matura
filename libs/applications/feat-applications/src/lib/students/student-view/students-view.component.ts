@@ -18,13 +18,13 @@ import {
 } from '@msh/auth/data-access-auth';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { A1ZTableRecord } from '@msh/applications/domain-application';
-import { StudentViewComponent } from '../students-view/student-view.component';
+import { StudentDataComponent } from '../students-data/student-data.component';
 import { StudentAuditGradesComponent } from '../student-grades/students-grades.component';
 import { StudentsAssignmentsComponent } from '../student-assignments/students-assignments.component';
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-student-details',
+  selector: 'msh-student-view',
   standalone: true,
   imports: [
     CommonModule,
@@ -34,14 +34,14 @@ import { StudentsAssignmentsComponent } from '../student-assignments/students-as
     RadioButtonModule,
     TabViewModule,
     RouterLink,
-    StudentViewComponent,
+    StudentDataComponent,
     StudentAuditGradesComponent,
     StudentsAssignmentsComponent,
   ],
-  templateUrl: './students-details.component.html',
-  styleUrls: ['./students-details.component.scss'],
+  templateUrl: './students-view.component.html',
+  styleUrls: ['./students-view.component.scss'],
 })
-export class StudentsDetailsComponent implements OnInit {
+export class StudentsViewComponent implements OnInit {
   private assignments$$ = new BehaviorSubject<ExamAssignment[]>([]);
   assignments$ = this.assignments$$.asObservable();
   private grades$$ = new BehaviorSubject<ExamGrade[]>([]);

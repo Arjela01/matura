@@ -25,7 +25,7 @@ import { A1zGridComponent } from '../../a1z/a1z-grid/a1z-grid.component';
 import { StudentsEditComponent } from '../students-edit/students-edit.component';
 import { StudentsFormComponent } from '../students-form/students-form.component';
 import { StudentsGridComponent } from '../students-grid/students-grid.component';
-import { StudentViewComponent } from '../students-view/student-view.component';
+import { StudentDataComponent } from '../students-data/student-data.component';
 import { PermissionEnum } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
@@ -40,7 +40,7 @@ import { PermissionEnum } from '@msh/auth/data-access-auth';
     StudentsFormComponent,
     StudentsGridComponent,
     ToolbarModule,
-    StudentViewComponent,
+    StudentDataComponent,
     StudentsEditComponent,
     RippleModule,
     RouterLink,
