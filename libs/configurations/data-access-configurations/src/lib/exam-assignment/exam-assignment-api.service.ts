@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
-import {
-  ExamAssignmentImportCommand,
-  FileImport,
-} from '@msh/configurations/domain-configurations';
+import { Observable } from 'rxjs';
+import { ExamAssignmentImportCommand } from '@msh/configurations/domain-configurations';
 import {
   ExamAssignment,
   ExamAssignmentTableView,
@@ -93,13 +90,19 @@ export class ExamAssignmentApiService {
     });
   }
 
-  examAssign(
-    examAssignment:unknown
-  ): Observable<ApiResult<ExamAssignment>> {
+  examAssign(examAssignment: unknown): Observable<ApiResult<ExamAssignment>> {
     return this.apiService.post(`/ExamAssignment/ExamAssign`, examAssignment);
   }
 
   forExamDateId(examDateId: number): Observable<ApiResult<ExamAssignment[]>> {
     return this.apiService.get(`/ExamAssignment/forExamDateId/${examDateId}`);
+  }
+
+  getAssignmentsForStudentsByNid(
+    id: string,
+    academicYearId: number
+  ): Observable<ApiResult<ExamAssignment[]>> {
+    const url = `/ExamAssignment/ExamAssignmentById?id=${id}&academicYearId=${academicYearId}`;
+    return this.apiService.get<ApiResult<ExamAssignment[]>>(url);
   }
 }

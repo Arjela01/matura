@@ -1,26 +1,20 @@
-<div class="flex ml-2 mb-2 page-header mb-header">
-  <h2 class="flex-1 mb-0">Detajet e Maturantit</h2>
+<div class="flex ml-2 mb-2 mt-0 page-header mb-header">
+  <h6 class="flex-1 mb-0"></h6>
   <div class="flex align-items-right justify-content-right">
     <div class="my-2">
-      <p-button
-        type="button"
-        icon="pi pi-arrow-left"
-        styleClass="p-button-link"
-        [routerLink]="['/applications', 'students']"
-        [label]="'Kthehu'"></p-button>
-
       <button
         pButton
         label="Konfirmuar"
         icon="pi pi-check"
-        class="p-button-success p-button-outlined mr-2"
+        class=" p-button-link mr-2"
+        [style]="{ 'color': 'green' }"
         *ngIf="student?.isConfirmedBySupervisor"></button>
 
       <ng-container *ngFor="let a1 of forms">
         <p-button
           type="button"
           icon="pi pi-pencil  "
-          styleClass="p-button-secondary"
+          styleClass="p-button-secondary p-button-link"
           (click)="navigateToForm(a1)"
           [label]="
             showEditButton ? 'Ndrysho Formularin A1' : 'Shiko Formularin A1'
@@ -29,7 +23,7 @@
         <p-button
           type="button"
           icon="pi pi-pencil  "
-          styleClass="p-button-secondary"
+          styleClass="p-button-secondary p-button-link"
           (click)="navigateToForm(a1)"
           [label]="
             showEditButton ? 'Ndrysho Formularin A1Z' : 'Shiko Formularin A1Z'
@@ -151,15 +145,7 @@
                 id="SchoolFinished"
                 name="SchoolFinished"
                 [(ngModel)]="student.schoolFinished"
-                autofocus
-                [ngClass]="{
-                  'ng-invalid ng-dirty': submitted && !student.schoolFinished
-                }" />
-              <small
-                class="p-error block"
-                *ngIf="submitted && !student.schoolFinished">
-                Shkolla që ke përfunduar është fushë e kërkuar.
-              </small>
+                autofocus />
             </div>
           </div>
 
