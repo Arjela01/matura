@@ -13,14 +13,15 @@ export interface ExamAssignment {
   takenSeats?: number;
   examTypeId?: number;
   examTypeName?: string;
+  examSubjectName?: string;
   administrationOfficeId?: number;
   administrationOfficeName?: string;
   time: string;
   studentHighSchoolName?: string;
-  schoolProfileId?:number;
-  maxStudentsToAssign?:number;
-  isAn?:boolean;
-  studentNameFilter?:string;
+  schoolProfileId?: number;
+  maxStudentsToAssign?: number;
+  isAn?: boolean;
+  studentNameFilter?: string;
 }
 
 export interface ExamAssignmentTableView {
