@@ -100,6 +100,17 @@
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
+            <th pSortableColumn="barcode">
+              Barkodi
+              <div>
+                <p-sortIcon field="barcode"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="barcode"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
             <th pSortableColumn="grade">
               Nota
               <div>
@@ -108,8 +119,7 @@
                   type="numeric"
                   field="grade"
                   display="menu"
-                  matchMode="equals"
-                  ></p-columnFilter>
+                  matchMode="equals"></p-columnFilter>
               </div>
             </th>
             <th pSortableColumn="isFall">
@@ -120,8 +130,7 @@
                   type="boolean"
                   field="isFall"
                   display="menu"
-                  matchMode="equals"
-                  ></p-columnFilter>
+                  matchMode="equals"></p-columnFilter>
               </div>
             </th>
           </tr>
@@ -148,6 +157,9 @@
             </td>
             <td style="width: 20%">
               {{ examGrade.examSubjectName }}
+            </td>
+            <td style="width: 20%">
+              {{ examGrade.barcode }}
             </td>
             <td style="width: 10%">
               {{ examGrade.grade }}

@@ -1,0 +1,32 @@
+<div class="grid mt-7">
+  <div class="col-12 p-fluid">
+    <div class="card-form px-6 py-6">
+      <ng-container
+        *ngIf="assignments && assignments.length > 0; else noAssignment">
+        <div class="col-6">
+          <table id="my-table-2">
+            <thead>
+              <tr>
+                <th>Tipi i Provimit</th>
+                <th>Qendra e Provimit</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let assignment of assignments">
+                <td class="font-semibold">{{ assignment.examTypeName }}</td>
+                <td class="font-semibold">{{ assignment.examSiteName }}</td>
+                <td class="font-semibold">{{ assignment.examTypeDateTime }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+      <ng-template #noAssignment>
+        <div class="col-12">
+          <p>Maturanti nuk është caktuar në asnji qendër!</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

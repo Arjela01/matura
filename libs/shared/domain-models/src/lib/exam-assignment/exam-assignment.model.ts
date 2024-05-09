@@ -13,6 +13,7 @@ export interface ExamAssignment {
   takenSeats?: number;
   examTypeId?: number;
   examTypeName?: string;
+  examSubjectName?: string;
   administrationOfficeId?: number;
   administrationOfficeName?: string;
   time: string;
@@ -22,7 +23,6 @@ export interface ExamAssignment {
   profileName?: string;
   maxStudentsToAssign?:number;
   isAn?:boolean;
-  studentNameFilter?:string;
 }
 
 export interface ExamAssignmentTableView {
