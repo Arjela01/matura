@@ -9,6 +9,7 @@
               <tr>
                 <th>Tipi i Provimit</th>
                 <th>Qendra e Provimit</th>
+                <th>Lënda e Provimit</th>
                 <th>Data</th>
               </tr>
             </thead>
@@ -16,6 +17,7 @@
               <tr *ngFor="let assignment of assignments">
                 <td class="font-semibold">{{ assignment.examTypeName }}</td>
                 <td class="font-semibold">{{ assignment.examSiteName }}</td>
+                <td class="font-semibold">{{ assignment.examSubjectName }}</td>
                 <td class="font-semibold">{{ assignment.examTypeDateTime }}</td>
               </tr>
             </tbody>
