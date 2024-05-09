@@ -18,6 +18,8 @@ export interface ExamAssignment {
   time: string;
   studentHighSchoolName?: string;
   schoolProfileId?:number;
+  profileCode?: string;
+  profileName?: string;
   maxStudentsToAssign?:number;
   isAn?:boolean;
   studentNameFilter?:string;

@@ -1,28 +1,30 @@
 <table>
-  <thead>
+    <thead>
     <tr>
-      <th>Indeksi</th>
-      <th>Matura ID</th>
-      <th>Emër</th>
-      <th>Atësi</th>
-      <th>Mbiemër</th>
-      <th>Shkolla</th>
-      <th>Qendra e Provimit</th>
-      <th>Tipi dhe Data e Provimit</th>
-      <th>Test i veçantë AK?</th>
+        <th>Indeksi</th>
+        <th>Matura ID</th>
+        <th>Emër</th>
+        <th>Atësi</th>
+        <th>Mbiemër</th>
+        <th>Profili</th>
+        <th>Shkolla</th>
+        <th>Qendra e Provimit</th>
+        <th>Tipi dhe Data e Provimit</th>
+        <th>Test i veçantë AK?</th>
     </tr>
-  </thead>
-  <tbody>
+    </thead>
+    <tbody>
     <tr *ngFor="let rowData of studentsList">
-      <td>{{ rowData.index }}</td>
-      <td>{{ rowData.studentId }}</td>
-      <td>{{ formatStudentData(rowData).firstName }}</td>
-      <td>{{ formatStudentData(rowData).middleName }}</td>
-      <td>{{ formatStudentData(rowData).lastName }}</td>
-      <td>{{ rowData.studentHighSchoolName }}</td>
-      <td>{{ rowData.examSiteName }}</td>
-      <td>{{ formatStudentData(rowData).formattedExamTypeDateTime }}</td>
-      <td>{{ rowData.isAn ? 'Po' : 'Jo' }}</td>
+        <td>{{ rowData.index }}</td>
+        <td>{{ rowData.studentId }}</td>
+        <td>{{ formatStudentData(rowData).firstName }}</td>
+        <td>{{ formatStudentData(rowData).middleName }}</td>
+        <td>{{ formatStudentData(rowData).lastName }}</td>
+        <td>{{ rowData.profileCode }} - {{ rowData.profileName }}</td>
+        <td>{{ rowData.studentHighSchoolName }}</td>
+        <td>{{ rowData.examSiteName }}</td>
+        <td>{{ formatStudentData(rowData).formattedExamTypeDateTime }}</td>
+        <td>{{ rowData.isAn ? 'Po' : 'Jo' }}</td>
     </tr>
-  </tbody>
+    </tbody>
 </table>
