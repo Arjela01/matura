@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 import { ManageGradeRequestDetailsComponent } from './exam-grade-request/manage-grade-request-details/manage-grade-request-details.component';
-import { StudentsDetailsComponent } from './students/student-details/students-details.component';
+import { StudentsViewComponent } from './students/student-view/students-view.component';
 
 export const APPLICATION_ROUTES: Route[] = [
   {
@@ -114,10 +114,10 @@ export const APPLICATION_ROUTES: Route[] = [
       ),
   },
   {
-    path: 'students-details/:id',
+    path: 'students/view/:id',
     loadComponent: () =>
-      import('./students/student-details/students-details.component').then(
-        m => m.StudentsDetailsComponent
+      import('./students/student-view/students-view.component').then(
+        m => m.StudentsViewComponent
       ),
   },
   {

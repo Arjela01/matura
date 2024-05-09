@@ -18,7 +18,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-students-view',
+  selector: 'msh-students-data',
   standalone: true,
   imports: [
     CommonModule,
@@ -34,11 +34,11 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     InputMaskModule,
     RouterLink,
   ],
-  templateUrl: './student-view.component.html',
-  styleUrls: ['./student-view.component.scss'],
+  templateUrl: './student-data.component.html',
+  styleUrls: ['./student-data.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StudentViewComponent {
+export class StudentDataComponent {
   @Input() showStudent = false;
   @Input() student!: Student;
   @Input() forms: A1ZTableRecord[] = [];
