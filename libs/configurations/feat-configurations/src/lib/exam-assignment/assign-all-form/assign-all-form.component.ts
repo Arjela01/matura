@@ -90,7 +90,7 @@ export class AssignAllFormComponent {
     studentNameFilter: '',
     time: '',
     schoolProfileId: 0,
-    maxStudentsToAssign: 0
+    maxStudentsToAssign: undefined
   };
   assigned = false;
 

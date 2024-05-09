@@ -51,8 +51,9 @@ export class ExamDateApiService {
   forExamSiteIds(
     examSiteIds?: string[]
   ): Observable<ApiResult<DropdownModel<number>[]>> {
-    return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
-      `/ExamDate/ForExamSites/${examSiteIds}`
+    return this.apiService.post<ApiResult<DropdownModel<number>[]>, any>(
+      `/ExamDate/ForExamSites`,
+        {ids: examSiteIds}
     );
   }
 
