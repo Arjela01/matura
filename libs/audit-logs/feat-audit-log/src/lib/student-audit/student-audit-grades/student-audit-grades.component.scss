@@ -1,0 +1,35 @@
+:host {
+  display: block;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+}
+
+th {
+  padding: 10px;
+  text-align: left;
+  background-color: #efeded;
+  border: 1px solid #ddd;
+}
+
+td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+tr {
+  background-color: white;
+}
+
+th,
+td {
+  margin: 5px;
+}
+p{
+  color:black;
+  font-weight: bold;
+  font-size: 15px;
+}
