@@ -98,11 +98,10 @@ export class ExamAssignmentApiService {
     return this.apiService.get(`/ExamAssignment/forExamDateId/${examDateId}`);
   }
 
-  getAssignmentsForStudentsByNid(
-    id: string,
-    academicYearId: number
+  getAssignmentsByStudentId(
+    id: string
   ): Observable<ApiResult<ExamAssignment[]>> {
-    const url = `/ExamAssignment/ExamAssignmentById?id=${id}&academicYearId=${academicYearId}`;
+    const url = `/ExamAssignment/GetAssignmentsByStudentId/${id}`;
     return this.apiService.get<ApiResult<ExamAssignment[]>>(url);
   }
 }

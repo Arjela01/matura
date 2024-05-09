@@ -93,15 +93,8 @@ export class StudentsApiService {
         shareReplay()
       );
   }
+
   getA1A1ZByStudentId(id: string): Observable<ApiResult<any>> {
     return this.apiService.get(`/Student/GetA1A1ZByStudentId/${id}`);
-  }
-
-  getGradesForStudentsById(
-    id: string,
-    academicYearId: number
-  ): Observable<ApiResult<ExamGrade[]>> {
-    const url = `/Student/GradeDetail?id=${id}&academicYearId=${academicYearId}`;
-    return this.apiService.get<ApiResult<ExamGrade[]>>(url);
   }
 }

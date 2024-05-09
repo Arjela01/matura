@@ -84,13 +84,6 @@ export class CarriedGradeApiService {
     FileSaver.saveAs(blob, `document.${extension}`);
   }
 
-  getByStudentId(
-    id: string,
-    type: string
-  ): Observable<ApiResult<CarriedGrade[]>> {
-    return this.apiService.get(`/CarriedGrade/ForStudentId/${id}/${type}`);
-  }
-
   ensureExamGradeIsCarried(
     examGrade: ExamGrade
   ): Observable<ApiResult<CarriedGrade>> {

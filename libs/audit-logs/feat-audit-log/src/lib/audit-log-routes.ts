@@ -23,7 +23,7 @@ export const AUDIT_LOG_ROUTES: Route[] = [
       ).then(m => m.StudentAuditGridComponent),
   },
   {
-    path: 'student-audit/student-view/:nid',
+    path: 'student-audit/student-view/:id',
     loadComponent: () =>
       import(
         './student-audit/manage-student-audit/manage-student-audit.component'

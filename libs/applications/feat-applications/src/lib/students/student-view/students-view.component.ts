@@ -21,6 +21,7 @@ import { A1ZTableRecord } from '@msh/applications/domain-application';
 import { StudentDataComponent } from '../students-data/student-data.component';
 import { StudentAuditGradesComponent } from '../student-grades/students-grades.component';
 import { StudentsAssignmentsComponent } from '../student-assignments/students-assignments.component';
+import {ExamGradeApiService} from "@msh/applications/data-access-applications";
 
 @UntilDestroy()
 @Component({
@@ -58,6 +59,7 @@ export class StudentsViewComponent implements OnInit {
   constructor(
     private cd: ChangeDetectorRef,
     private readonly studentService: StudentsApiService,
+    private readonly examGradeService: ExamGradeApiService,
     private route: ActivatedRoute,
     private readonly permissionCheckService: PermissionCheckService,
     private readonly examAssignmentService: ExamAssignmentApiService
@@ -109,7 +111,7 @@ export class StudentsViewComponent implements OnInit {
 
   getAssignmentsForStudentsByNid() {
     this.examAssignmentService
-      .getAssignmentsForStudentsByNid(this.id, this.academicYearId)
+      .getAssignmentsByStudentId(this.id)
       .subscribe(res => {
         this.assignments$$.next(res.data);
         this.cd.detectChanges();
@@ -117,8 +119,8 @@ export class StudentsViewComponent implements OnInit {
   }
 
   getGradesForStudentsById() {
-    this.studentService
-      .getGradesForStudentsById(this.id, this.academicYearId)
+    this.examGradeService
+      .getGradesForStudentsById(this.id)
       .subscribe(res => {
         this.grades$$.next(res.data);
         this.cd.detectChanges();

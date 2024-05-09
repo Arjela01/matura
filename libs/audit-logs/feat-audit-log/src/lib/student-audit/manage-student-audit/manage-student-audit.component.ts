@@ -33,7 +33,7 @@ export class ManageStudentAuditComponent implements OnInit {
   private grades$$ = new BehaviorSubject<ExamGrade[]>([]);
   grades$ = this.grades$$.asObservable();
 
-  nid = '';
+  id = '';
   finishedAtSameSchool = true;
   student!: Student;
 
@@ -42,7 +42,7 @@ export class ManageStudentAuditComponent implements OnInit {
     private readonly studentAuditService: StudentsAuditService,
     private readonly cd: ChangeDetectorRef
   ) {
-    this.nid = this.route.snapshot.paramMap.get('nid') ?? '';
+    this.id = this.route.snapshot.paramMap.get('id') ?? '';
   }
 
   ngOnInit() {
@@ -51,7 +51,7 @@ export class ManageStudentAuditComponent implements OnInit {
   }
 
   getStudentDataByNid() {
-    this.studentAuditService.getStudentsById(this.nid).subscribe(res => {
+    this.studentAuditService.getStudentsById(this.id).subscribe(res => {
       this.student = res.data;
       this.finishedAtSameSchool =
         this.student?.schoolFinished == '' ||
@@ -61,7 +61,7 @@ export class ManageStudentAuditComponent implements OnInit {
   }
 
   getStudentGradesByNid() {
-    this.studentAuditService.getStudentsGradesByNid(this.nid).subscribe(res => {
+    this.studentAuditService.getStudentsGradesByNid(this.id).subscribe(res => {
       this.grades$$.next(res.data);
       this.cd.detectChanges();
     });
