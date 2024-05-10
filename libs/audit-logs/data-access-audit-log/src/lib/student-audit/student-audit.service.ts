@@ -19,11 +19,12 @@ export class StudentsAuditService {
     return this.apiService.post(`/StudentHistory/TableDataHistory`, event);
   }
   getStudentsById(nid: string): Observable<ApiResult<Student>> {
-    const url = `/StudentHistory/StudentDetail/${nid}`;
+    const url = `/StudentHistory/GetByStudentId/${nid}`;
     return this.apiService.get<ApiResult<Student>>(url);
   }
-  getStudentsGradesByNid(nid: any): Observable<ApiResult<ExamGrade[]>> {
-    const url = `/StudentHistory/GradeDetail/${nid}`;
+
+  getStudentsGradesById(id: any): Observable<ApiResult<ExamGrade[]>> {
+    const url = `/ExamGrade/GetExamGradesByStudentId/${id}`;
     return this.apiService.get<ApiResult<ExamGrade[]>>(url);
   }
 }

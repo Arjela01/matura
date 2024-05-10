@@ -6,16 +6,20 @@
           <table id="my-table-2">
             <thead>
             <tr>
+              <th>Viti</th>
               <th>Tipi i Provimit</th>
               <th>Lënda e Provimit</th>
               <th>Nota</th>
+              <th>ID</th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let grade of grades">
+              <td class="font-semibold">{{ grade.academicYearName }}</td>
               <td class="font-semibold">{{ grade.examTypeName }}</td>
               <td class="font-semibold">{{ grade.examSubjectName }}</td>
               <td class="font-semibold">{{ grade.grade }}</td>
+              <td class="font-semibold">{{ grade.studentStudentId }}</td>
             </tr>
             </tbody>
           </table>

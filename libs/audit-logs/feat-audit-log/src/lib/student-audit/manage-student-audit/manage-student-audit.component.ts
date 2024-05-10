@@ -61,7 +61,7 @@ export class ManageStudentAuditComponent implements OnInit {
   }
 
   getStudentGradesByNid() {
-    this.studentAuditService.getStudentsGradesByNid(this.id).subscribe(res => {
+    this.studentAuditService.getStudentsGradesById(this.id).subscribe(res => {
       this.grades$$.next(res.data);
       this.cd.detectChanges();
     });

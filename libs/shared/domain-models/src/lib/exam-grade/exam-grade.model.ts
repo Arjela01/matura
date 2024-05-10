@@ -1,6 +1,7 @@
 export interface ExamGrade {
   id?: number;
   studentId?: string;
+  studentStudentId?: string;
   studentName?: string;
   examSubjectId?: string;
   examSubjectName?: string;
@@ -8,9 +9,11 @@ export interface ExamGrade {
   examTypeName?: string;
   academicYearId?: number;
   academicYearName?: string;
+  academicYearIsActive?: string;
   isCarriedOver?: boolean;
   grade?: number;
   isFall?: boolean;
+  isCarriedGrade?: boolean;
 }
 
 export interface ExamGradeTableView {
