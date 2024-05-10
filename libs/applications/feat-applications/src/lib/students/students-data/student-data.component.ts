@@ -43,27 +43,4 @@ export class StudentDataComponent {
   @Input() student!: Student;
   @Input() forms: A1ZTableRecord[] = [];
   @Input() finishedAtSameSchool = true;
-  showEditButton = false;
-
-  constructor(private router: Router) {}
-
-  navigateToForm(a1: A1ZTableRecord) {
-    let routePath: string;
-
-    if (this.showEditButton) {
-      if (a1.isA1) {
-        routePath = `/applications/a1/for-student/${this.student?.id}/edit/${a1.id}`;
-      } else {
-        routePath = `/applications/a1z/for-student/${this.student?.id}/edit/${a1.id}`;
-      }
-    } else {
-      if (a1.isA1) {
-        routePath = `/applications/a1/view/${a1.id}`;
-      } else {
-        routePath = `/applications/a1z/view/${a1.id}`;
-      }
-    }
-
-    this.router.navigate([routePath]);
-  }
 }

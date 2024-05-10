@@ -1,39 +1,3 @@
-<div class="flex ml-2 mb-2 mt-0 page-header mb-header">
-  <h6 class="flex-1 mb-0"></h6>
-  <div class="flex align-items-right justify-content-right">
-    <div class="my-2">
-      <button
-        pButton
-        label="Konfirmuar"
-        icon="pi pi-check"
-        class=" p-button-link mr-2"
-        [style]="{ 'color': 'green' }"
-        *ngIf="student?.isConfirmedBySupervisor"></button>
-
-      <ng-container *ngFor="let a1 of forms">
-        <p-button
-          type="button"
-          icon="pi pi-pencil  "
-          styleClass="p-button-secondary p-button-link"
-          (click)="navigateToForm(a1)"
-          [label]="
-            showEditButton ? 'Ndrysho Formularin A1' : 'Shiko Formularin A1'
-          "
-          *ngIf="a1.isA1"></p-button>
-        <p-button
-          type="button"
-          icon="pi pi-pencil  "
-          styleClass="p-button-secondary p-button-link"
-          (click)="navigateToForm(a1)"
-          [label]="
-            showEditButton ? 'Ndrysho Formularin A1Z' : 'Shiko Formularin A1Z'
-          "
-          *ngIf="!a1.isA1"></p-button>
-      </ng-container>
-    </div>
-  </div>
-</div>
-
 <div class="grid">
   <div class="col-12 p-fluid">
     <div class="card-form px-6 py-6">

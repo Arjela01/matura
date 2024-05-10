@@ -10,6 +10,33 @@
         class="w-auto mr-2"
         style="background: #f7f7fa; color: #155eef"
         [routerLink]="'/applications/students'"></button>
+      <button
+        pButton
+        label="Konfirmuar"
+        icon="pi pi-check"
+        class="p-button-success p-button-outlined mr-2"
+        *ngIf="student?.isConfirmedBySupervisor"></button>
+
+      <ng-container *ngFor="let a1 of forms">
+        <p-button
+          type="button"
+          icon="pi pi-pencil  "
+          styleClass="p-button-secondary"
+          (click)="navigateToForm(a1)"
+          [label]="
+            showEditButton ? 'Ndrysho Formularin A1' : 'Shiko Formularin A1'
+          "
+          *ngIf="a1.isA1"></p-button>
+        <p-button
+          type="button"
+          icon="pi pi-pencil  "
+          styleClass="p-button-secondary"
+          (click)="navigateToForm(a1)"
+          [label]="
+            showEditButton ? 'Ndrysho Formularin A1Z' : 'Shiko Formularin A1Z'
+          "
+          *ngIf="!a1.isA1"></p-button>
+      </ng-container>
     </div>
   </div>
 </div>
@@ -27,6 +54,7 @@
   ></p-tabPanel>
   <p-tabPanel header="Notat">
     <msh-students-grades
-      [grades]="(grades$ | async) || []"></msh-students-grades
+      [gradesDifferentYear]="gradesDifferentYear"
+      [gradesMatchingYear]="gradesMatchingYear"></msh-students-grades
   ></p-tabPanel>
 </p-tabView>
