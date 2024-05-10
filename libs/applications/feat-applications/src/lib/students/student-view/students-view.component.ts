@@ -4,7 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TabViewModule } from 'primeng/tabview';
 import { ExamAssignment, ExamGrade, Student } from '@msh/shared/domain-models';
 import { BehaviorSubject } from 'rxjs';
@@ -21,7 +21,7 @@ import { A1ZTableRecord } from '@msh/applications/domain-application';
 import { StudentDataComponent } from '../students-data/student-data.component';
 import { StudentAuditGradesComponent } from '../student-grades/students-grades.component';
 import { StudentsAssignmentsComponent } from '../student-assignments/students-assignments.component';
-import {ExamGradeApiService} from "@msh/applications/data-access-applications";
+import { ExamGradeApiService } from '@msh/applications/data-access-applications';
 
 @UntilDestroy()
 @Component({
@@ -45,16 +45,17 @@ import {ExamGradeApiService} from "@msh/applications/data-access-applications";
 export class StudentsViewComponent implements OnInit {
   private assignments$$ = new BehaviorSubject<ExamAssignment[]>([]);
   assignments$ = this.assignments$$.asObservable();
-  private grades$$ = new BehaviorSubject<ExamGrade[]>([]);
-  grades$ = this.grades$$.asObservable();
 
   forms: A1ZTableRecord[] = [];
   finishedAtSameSchool = true;
   showEditButton = false;
   id = '';
-  academicYearId = 0;
   student!: Student;
   showStudent = false;
+
+  academicYearId = 0;
+  gradesMatchingYear: ExamGrade[] = [];
+  gradesDifferentYear: ExamGrade[] = [];
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -62,7 +63,8 @@ export class StudentsViewComponent implements OnInit {
     private readonly examGradeService: ExamGradeApiService,
     private route: ActivatedRoute,
     private readonly permissionCheckService: PermissionCheckService,
-    private readonly examAssignmentService: ExamAssignmentApiService
+    private readonly examAssignmentService: ExamAssignmentApiService,
+    private router: Router
   ) {
     this.id = this.route.snapshot.paramMap.get('id') ?? '';
     const academicYearString = localStorage.getItem('academicYear');
@@ -75,7 +77,7 @@ export class StudentsViewComponent implements OnInit {
   ngOnInit(): void {
     this.getFormType();
     this.getStudentsOverallData();
-    this.getAssignmentsForStudentsByNid();
+    this.getAssignmentsForStudentsById();
     this.getGradesForStudentsById();
     this.showEditButton = this.permissionCheckService.hasPermission(
       PermissionEnum.EditApplications as any
@@ -84,6 +86,26 @@ export class StudentsViewComponent implements OnInit {
 
   ngOnChanges(): void {
     this.showStudent = this.student.highSchoolId != null;
+  }
+
+  navigateToForm(a1: A1ZTableRecord) {
+    let routePath: string;
+
+    if (this.showEditButton) {
+      if (a1.isA1) {
+        routePath = `/applications/a1/for-student/${this.student?.id}/edit/${a1.id}`;
+      } else {
+        routePath = `/applications/a1z/for-student/${this.student?.id}/edit/${a1.id}`;
+      }
+    } else {
+      if (a1.isA1) {
+        routePath = `/applications/a1/view/${a1.id}`;
+      } else {
+        routePath = `/applications/a1z/view/${a1.id}`;
+      }
+    }
+
+    this.router.navigate([routePath]);
   }
 
   getStudentsOverallData() {
@@ -109,7 +131,7 @@ export class StudentsViewComponent implements OnInit {
       });
   }
 
-  getAssignmentsForStudentsByNid() {
+  getAssignmentsForStudentsById() {
     this.examAssignmentService
       .getAssignmentsByStudentId(this.id)
       .subscribe(res => {
@@ -119,11 +141,21 @@ export class StudentsViewComponent implements OnInit {
   }
 
   getGradesForStudentsById() {
-    this.examGradeService
-      .getGradesForStudentsById(this.id)
-      .subscribe(res => {
-        this.grades$$.next(res.data);
-        this.cd.detectChanges();
-      });
+    this.examGradeService.getGradesForStudentsById(this.id).subscribe(res => {
+      this.splitGradesByYear(res.data);
+      this.cd.detectChanges();
+    });
+  }
+
+  splitGradesByYear(grades: ExamGrade[]) {
+    this.gradesMatchingYear = [];
+    this.gradesDifferentYear = [];
+    grades.forEach(grade => {
+      if (grade.academicYearId === this.academicYearId) {
+        this.gradesMatchingYear.push(grade);
+      } else {
+        this.gradesDifferentYear.push(grade);
+      }
+    });
   }
 }

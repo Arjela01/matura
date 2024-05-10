@@ -25,5 +25,6 @@ import { ColumnFilterDirective } from '@msh/shared/util-shared';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StudentAuditGradesComponent {
-  @Input() grades!: ExamGrade[];
+  @Input() gradesMatchingYear: ExamGrade[] = [];
+  @Input() gradesDifferentYear: ExamGrade[] = [];
 }
