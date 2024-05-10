@@ -67,11 +67,6 @@ export class StudentsViewComponent implements OnInit {
     private router: Router
   ) {
     this.id = this.route.snapshot.paramMap.get('id') ?? '';
-    const academicYearString = localStorage.getItem('academicYear');
-    if (academicYearString) {
-      const academicYear = JSON.parse(academicYearString);
-      this.academicYearId = academicYear.id;
-    }
   }
 
   ngOnInit(): void {
@@ -151,7 +146,7 @@ export class StudentsViewComponent implements OnInit {
     this.gradesMatchingYear = [];
     this.gradesDifferentYear = [];
     grades.forEach(grade => {
-      if (grade.academicYearId === this.academicYearId) {
+      if (grade.academicYearIsActive) {
         this.gradesMatchingYear.push(grade);
       } else {
         this.gradesDifferentYear.push(grade);
