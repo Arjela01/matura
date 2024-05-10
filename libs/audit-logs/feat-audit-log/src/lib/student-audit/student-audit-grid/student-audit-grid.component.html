@@ -22,7 +22,7 @@
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="studentId">
-        Matura ID
+        NID
         <div>
           <p-sortIcon field="studentId"></p-sortIcon>
           <p-columnFilter
@@ -33,7 +33,7 @@
         </div>
       </th>
       <th pSortableColumn="idCard">
-        NID
+        Matura ID
         <div>
           <p-sortIcon field="idCard"></p-sortIcon>
           <p-columnFilter
@@ -158,11 +158,20 @@
   <ng-template pTemplate="body" let-student>
     <tr>
       <td style="width: 14%; min-width: 10rem">
-        <a
-          [routerLink]="['/audit-log/student-audit/student-view', student.id]"
-          class="p-button-link"
-          >{{ student.idCard }}</a
-        >
+        <ng-container *ngIf="student.idCard">
+          <a
+            [routerLink]="['/audit-log/student-audit/student-view', student.id]"
+            class="p-button-link"
+            >{{ student.idCard }}</a
+          >
+        </ng-container>
+        <ng-container *ngIf="!student.idCard"
+          ><a
+            [routerLink]="['/audit-log/student-audit/student-view', student.id]"
+            class="p-button-link"
+            >Nuk ka</a
+          >
+        </ng-container>
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ student.studentId }}
