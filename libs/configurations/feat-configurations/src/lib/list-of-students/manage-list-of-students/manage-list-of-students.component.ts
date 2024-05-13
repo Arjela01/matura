@@ -107,6 +107,9 @@ export class ManageListOfStudentsComponent implements OnInit {
 
   getExamAssignments($event: any) {
     this.filters = Object.assign({}, $event);
+    if(this.filters == null) this.filters = {};
+    this.filters.sortOrder = 1;
+    this.filters.sortField = 'index';
     this.examAssignmentService
       .getAssignments(this.event, $event.examDateId)
       .pipe(untilDestroyed(this))
