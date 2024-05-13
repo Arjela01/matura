@@ -1,7 +1,9 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   EventEmitter,
+  HostListener,
   Input,
   Output,
   ViewChild,
@@ -37,8 +39,6 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 })
 export class ExamQuestionScoreFiltersComponent {
   @ViewChild('form', { static: true }) form!: NgForm;
-  examQuestionScoreList: SearchOptions = {} as SearchOptions;
-  submitted = false;
 
   @Input() examType: DropdownModel<number>[] = [];
   @Input() examSubject: DropdownModel<string>[] = [];
@@ -48,9 +48,14 @@ export class ExamQuestionScoreFiltersComponent {
   @Output() examSubjectChanged = new EventEmitter<SearchOptions>();
   @Output() examTypeChanged = new EventEmitter<SearchOptions>();
   @Output() examVariantChanged = new EventEmitter<SearchOptions>();
-  @Output() cleanUpBarcode = new EventEmitter<SearchOptions>();
 
-  constructor(private readonly toastService: GlobalToastService) {}
+  examQuestionScoreList: SearchOptions = {} as SearchOptions;
+  submitted = false;
+
+  constructor(
+    private readonly toastService: GlobalToastService,
+    private elementRef: ElementRef
+  ) {}
 
   onExamTypeChanged(): void {
     if (this.examQuestionScoreList.examTypeId) {
@@ -77,6 +82,7 @@ export class ExamQuestionScoreFiltersComponent {
       );
     }
   }
+
   isSearchValid(searchModal: SearchOptions) {
     return (
       searchModal.examVariantId &&
@@ -85,5 +91,29 @@ export class ExamQuestionScoreFiltersComponent {
       searchModal.barcode &&
       searchModal.testNumber
     );
+  }
+
+  clearFields() {
+    this.form.controls['testNumber'].setValue('');
+    this.form.controls['barcode'].setValue('');
+
+    setTimeout(() => {
+      const testNumberField =
+        this.elementRef.nativeElement.querySelector('#testNumber');
+      if (testNumberField) {
+        testNumberField.focus();
+      }
+    });
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  onKeyPress(event: KeyboardEvent) {
+    if (event.key === 'ArrowDown') {
+      const barcodeField =
+        this.elementRef.nativeElement.querySelector('#barcode');
+      if (barcodeField) {
+        barcodeField.focus();
+      }
+    }
   }
 }

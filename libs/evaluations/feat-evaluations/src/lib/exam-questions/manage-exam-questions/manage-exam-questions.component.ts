@@ -1,18 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
-import {
-  ArchiveExam,
-  ExamQuestionModel,
-  ExamQuestionsScoreDataEntry,
-  ExamType,
-  ExamVariant,
-} from '@msh/shared/domain-models';
+import { ExamQuestionModel, ExamVariant } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ConfirmationService, SharedModule } from 'primeng/api';
 import {
@@ -60,6 +49,7 @@ export class ManageExamQuestionsComponent implements OnInit {
   selectedExamQuestion: ExamQuestionModel | null = null;
   examVariantName!: string;
   examVariantMaximumScore!: number;
+  examVariantRecordedScore!: number;
 
   displayModal = false;
 
@@ -119,6 +109,15 @@ export class ManageExamQuestionsComponent implements OnInit {
     this.displayModal = false;
   }
 
+  calculateRecordedScore() {
+    this.examVariantRecordedScore = this.examQuestions$$.value.reduce(
+      (total, question) => {
+        return total + question.questionMaximumScore;
+      },
+      0
+    );
+  }
+
   onFormSave(examQuestion: ExamQuestionModel) {
     const updatedExamQuestions = {
       ...this.selectedExamQuestion,
@@ -159,6 +158,7 @@ export class ManageExamQuestionsComponent implements OnInit {
           return a.index - b.index;
         });
         this.examQuestions$$.next(response.data);
+        this.calculateRecordedScore();
         this.totalRecords = response.total;
       });
   }
@@ -179,14 +179,8 @@ export class ManageExamQuestionsComponent implements OnInit {
   }
 
   addExamQuestion(examQuestion: ExamQuestionModel) {
-    const currentTotalScore = this.examQuestions$$.value.reduce(
-      (total, question) => {
-        return total + question.questionMaximumScore;
-      },
-      0
-    );
     const proposedTotalScore =
-      currentTotalScore + examQuestion.questionMaximumScore;
+      this.examVariantRecordedScore + examQuestion.questionMaximumScore;
 
     if (proposedTotalScore > this.examVariantMaximumScore) {
       this.toastService.showError(

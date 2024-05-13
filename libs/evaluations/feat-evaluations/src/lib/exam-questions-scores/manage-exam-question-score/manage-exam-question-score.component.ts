@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, forkJoin } from 'rxjs';
 import {
@@ -45,12 +51,15 @@ import { ExamQuestionsService } from '@msh/evaluations/data-access-evaluations';
   providers: [ConfirmationService],
 })
 export class ManageExamQuestionsScoreComponent implements OnInit {
+  @ViewChild(ExamQuestionScoreFiltersComponent)
+  scoreFilterComponent!: ExamQuestionScoreFiltersComponent;
+
   private examQuestionScoreList$$ = new BehaviorSubject<
     ExamQuestionsScoreDataEntry[]
   >([]);
   examQuestionScoreList$ = this.examQuestionScoreList$$.asObservable();
-  totalRecords = 0;
 
+  totalRecords = 0;
   filters: TableLazyLoadEvent | null = null;
   examSubject: DropdownModel<string>[] = [];
   examType: DropdownModel<number>[] = [];
@@ -77,7 +86,8 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
     private readonly examQuestionScoreService: ExamQuestionScoreService,
     private readonly toastService: GlobalToastService,
     private readonly examQuestionService: ExamQuestionsService,
-    private readonly examTypeService: ExamTypeApiService
+    private readonly examTypeService: ExamTypeApiService,
+    private elementRef: ElementRef
   ) {
     const academicYearString = localStorage.getItem('academicYear');
     if (academicYearString) {
@@ -217,6 +227,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
             this.toastService.showSuccess(
               'Piket analitike u shtuan me sukses!'
             );
+            this.scoreFilterComponent.clearFields();
             this.getExamQuestionScoresList(this.filters as TableLazyLoadEvent);
           } else {
             this.toastService.showError(response.errorMessage);
