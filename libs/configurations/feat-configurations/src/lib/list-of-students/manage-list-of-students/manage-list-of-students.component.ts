@@ -111,7 +111,7 @@ export class ManageListOfStudentsComponent implements OnInit {
     this.filters.sortOrder = 1;
     this.filters.sortField = 'index';
     this.examAssignmentService
-      .getAssignments(this.event, $event.examDateId)
+      .getAssignments(this.filters, $event.examDateId)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.studentsList$$.next(response.data);
