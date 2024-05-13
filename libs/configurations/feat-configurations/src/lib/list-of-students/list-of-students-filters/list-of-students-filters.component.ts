@@ -1,11 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ExamAssignment } from '@msh/shared/domain-models';
@@ -34,11 +27,13 @@ import jwt_decode from 'jwt-decode';
 })
 export class ListOfStudentsFiltersComponent {
   @Input() totalRecords: number | undefined;
+  @Input() administrationOffices: DropdownModel<string>[] = [];
   @Input() examDates: DropdownModel<string>[] = [];
   @Input() examSites: DropdownModel<number>[] = [];
   @Input() showSortButton: boolean | undefined;
   @Output() formSave = new EventEmitter<ExamAssignment>();
   @Output() examDateChanged = new EventEmitter<ExamAssignment>();
+  @Output() administrationOfficeChanged = new EventEmitter<ExamAssignment>();
   @Output() sort = new EventEmitter<ExamAssignment>();
 
   studentList: ExamAssignment = {} as ExamAssignment;
@@ -53,7 +48,10 @@ export class ListOfStudentsFiltersComponent {
       this.authFacade.token$.pipe(untilDestroyed(this)).subscribe(token => {
         if (token) {
           const decodedToken: any = jwt_decode(token);
-          this.userRole = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+          this.userRole =
+            decodedToken[
+              'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
+            ];
         }
       });
     }
@@ -65,6 +63,10 @@ export class ListOfStudentsFiltersComponent {
     }
   }
 
+  onAdministrationOfficeChanged(): void {
+    this.administrationOfficeChanged.emit(Object.assign({}, this.studentList));
+  }
+
   onSubmit() {
     if (this.isSearchValid(this.studentList)) {
       this.formSave.emit(this.studentList);
@@ -74,11 +76,14 @@ export class ListOfStudentsFiltersComponent {
       );
     }
   }
+
   isSearchValid(searchModal: any) {
     return searchModal.examDateId && searchModal.examSiteId;
   }
+
   sortAssignments() {
     this.sort.emit(this.studentList);
   }
+
   protected readonly RoleName = RoleName;
 }

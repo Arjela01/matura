@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SharedModule } from 'primeng/api';
 import {
+  AdministrationOfficeApiService,
   ExamAssignmentApiService,
   ExamDateApiService,
   ExamSiteApiService,
@@ -12,11 +13,12 @@ import { DropdownModel } from '@msh/shared/data-access-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ListOfStudentsFiltersComponent } from '../list-of-students-filters/list-of-students-filters.component';
 import { ListOfStudentsGridComponent } from '../list-of-students-grid/list-of-students-grid.component';
-import { BehaviorSubject } from 'rxjs';
-import { ExamAssignment } from '@msh/shared/domain-models';
+import { BehaviorSubject, combineLatest, map, switchMap, tap } from 'rxjs';
+import { AcademicYear, ExamAssignment } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { UserProfileApiService } from '@msh/user-section/data-access-user-section';
 import { RoleName } from '../../users/user-form/role-list';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
@@ -39,12 +41,14 @@ export class ManageListOfStudentsComponent implements OnInit {
   studentsList$ = this.studentsList$$.asObservable();
   examDates: DropdownModel<any>[] = [];
   examSites: DropdownModel<any>[] = [];
+  administrationOffices: DropdownModel<any>[] = [];
   totalRecords = 0;
   filters: TableLazyLoadEvent | null = null;
   showSortButton = false;
   highSchoolId = 0;
   administrationOfficeId = 0;
   userRole = '';
+  academicYear: any;
 
   event = {
     first: 0,
@@ -57,18 +61,43 @@ export class ManageListOfStudentsComponent implements OnInit {
     private readonly examDateService: ExamDateApiService,
     private readonly examSiteService: ExamSiteApiService,
     private readonly examAssignmentService: ExamAssignmentApiService,
-    private readonly userService: UserProfileApiService
+    private readonly administrationOfficeApiService: AdministrationOfficeApiService,
+    private readonly userService: UserProfileApiService,
+    private authFacade: AuthFacade,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    this.userService
-      .getLoggedInUserData()
-      .pipe(untilDestroyed(this))
-      .subscribe(res => {
-        this.administrationOfficeId = res.data.administrationOfficeId;
-        this.userRole = res.data.roleName;
-        this.highSchoolId = res.data.highSchoolId;
+    this.authFacade.academicYear$
+      .pipe(
+        switchMap((data: any) => {
+          if (!data) {
+            try {
+              data = JSON.parse(localStorage.getItem('academicYear') as string);
+            } catch (err) {
+              data = null;
+            }
+          }
+          this.academicYear = { ...data };
+          return combineLatest([
+            this.userService.getLoggedInUserData().pipe(untilDestroyed(this)),
+          ]);
+        })
+      )
+      .subscribe(([user]) => {
+        this.administrationOfficeId = user.data.administrationOfficeId;
+        this.userRole = user.data.roleName;
+        this.highSchoolId = user.data.highSchoolId;
         this.examSiteData();
+      });
+  }
+
+  getAdministrationOfficesDropdown() {
+    this.administrationOfficeApiService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.administrationOffices = response.data;
       });
   }
 
@@ -83,6 +112,7 @@ export class ManageListOfStudentsComponent implements OnInit {
         this.showSortButton = true;
       });
   }
+
   sortExamAssignments($event: any) {
     this.examAssignmentService
       .sortAssignments(this.event, $event.examDateId)
@@ -93,22 +123,37 @@ export class ManageListOfStudentsComponent implements OnInit {
         }
       });
   }
-  getExamDateDropdown($event: ExamAssignment) {
+
+  getExamDateDropdown() {
     this.examDateService
-      .forExamSiteId($event.examSiteId)
+      .loadDropdownList()
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examDates = response.data;
       });
   }
-  getExamSiteDropdown() {
-    this.examSiteService
-      .loadDropdownList()
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.examSites = response.data;
-      });
+
+  getExamSiteDropdown($event?: ExamAssignment) {
+    if (!$event || !$event.administrationOfficeId) {
+      this.examSiteService
+        .loadDropdownList()
+        .pipe(untilDestroyed(this))
+        .subscribe(response => {
+          console.log($event);
+          console.log(response.data);
+          this.examSites = response.data;
+        });
+
+    } else {
+      this.examSiteService
+        .forAdministrationOffice($event.administrationOfficeId, this.academicYear.id)
+        .pipe(untilDestroyed(this))
+        .subscribe(response => {
+          this.examSites = response.data;
+        });
+    }
   }
+
   getExamSitesForZvap() {
     const academicYearString = localStorage.getItem('academicYear');
     if (academicYearString) {
@@ -127,13 +172,17 @@ export class ManageListOfStudentsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(res => (this.examSites = res.data));
   }
+
   examSiteData() {
     if (this.userRole === RoleName.ZVAP) {
       this.getExamSitesForZvap();
     } else {
       if (this.userRole === RoleName.MbikqyresFormularesh) {
         this.getExamSitesForOverseer();
-      } else this.getExamSiteDropdown();
+      } else {
+        this.getAdministrationOfficesDropdown();
+        this.getExamSiteDropdown();
+      }
     }
   }
 }

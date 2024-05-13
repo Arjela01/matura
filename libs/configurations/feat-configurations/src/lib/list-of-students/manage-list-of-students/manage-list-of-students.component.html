@@ -8,7 +8,9 @@
       (sort)="sortExamAssignments($event)"
       [examDates]="examDates"
       [examSites]="examSites"
-      (examDateChanged)="getExamDateDropdown($event)">
+      [administrationOffices]="administrationOffices"
+      (administrationOfficeChanged)="getExamSiteDropdown($event)"
+      (examDateChanged)="getExamDateDropdown()">
     </msh-list-of-students-filters>
   </div>
   <div class="mt-4">
