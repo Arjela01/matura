@@ -80,7 +80,7 @@ export class ManageListOfStudentsComponent implements OnInit {
           }
           this.academicYear = { ...data };
           return combineLatest([
-            this.userService.getLoggedInUserData().pipe(untilDestroyed(this)),
+            this.userService.getLoggedInUserData()
           ]);
         })
       )
@@ -124,9 +124,9 @@ export class ManageListOfStudentsComponent implements OnInit {
       });
   }
 
-  getExamDateDropdown() {
+  getExamDateDropdown($event: ExamAssignment) {
     this.examDateService
-      .loadDropdownList()
+      .forExamSiteId($event.examSiteId)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examDates = response.data;
@@ -139,8 +139,6 @@ export class ManageListOfStudentsComponent implements OnInit {
         .loadDropdownList()
         .pipe(untilDestroyed(this))
         .subscribe(response => {
-          console.log($event);
-          console.log(response.data);
           this.examSites = response.data;
         });
 
