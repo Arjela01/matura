@@ -9,6 +9,7 @@ export interface Profile {
   academicYear?: string;
   profileGroupID?: string;
   profileGroupName?: string;
+  assignmentPriority?: number;
 }
 
 export interface ProfileTableView {

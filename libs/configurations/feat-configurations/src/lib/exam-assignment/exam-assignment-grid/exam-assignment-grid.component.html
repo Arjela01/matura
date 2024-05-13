@@ -21,6 +21,17 @@
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="examSiteName">
+        ZVAP
+        <div>
+        <p-sortIcon field="administrationOfficeName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="administrationOfficeName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="examSiteName">
         Qendra e Provimit
         <div>
         <p-sortIcon field="examSiteName"></p-sortIcon>
@@ -43,12 +54,23 @@
         </div>
       </th>
       <th pSortableColumn="examTypeName">
-        Tipi i Provimit
+        Tipi
         <div>
         <p-sortIcon field="examTypeName"></p-sortIcon>
         <p-columnFilter
           type="text"
           field="examTypeName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="examTypeName">
+        Lënda
+        <div>
+        <p-sortIcon field="examSubjectName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="examSubjectName"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
         </div>
@@ -103,6 +125,9 @@
   <ng-template pTemplate="body" let-examAssignment>
     <tr>
       <td style="width: 18%; min-width: 10rem">
+        {{ examAssignment.administrationOfficeName }}
+      </td>
+      <td style="width: 18%; min-width: 10rem">
         {{ examAssignment.examSiteName }}
       </td>
       <td style="width: 15%; min-width: 10rem">
@@ -112,13 +137,20 @@
         {{ examAssignment.examTypeName }}
       </td>
       <td style="width: 15%; min-width: 10rem">
+        {{ examAssignment.examSubjectName }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
         {{ examAssignment.date | date : 'dd/MM/yyyy' }}
       </td>
       <td style="width: 10%; min-width: 10rem">
         {{ examAssignment.isFall ? 'Po' : 'Jo' }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ examAssignment.studentId }}
+          <a
+                  [routerLink]="['/applications/students/view/', examAssignment.studentGuid]"
+                  class="p-button-link"
+          >{{ examAssignment.studentId }}</a
+          >
       </td>
       <td style="width: 15%; min-width: 10rem">
         {{ examAssignment.studentName }}

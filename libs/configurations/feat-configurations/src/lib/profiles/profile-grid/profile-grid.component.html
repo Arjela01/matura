@@ -42,6 +42,17 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="assignmentPriority">
+        Prioriteti në Caktim në Qendra Provimi
+        <div>
+          <p-sortIcon field="assignmentPriority"></p-sortIcon>
+          <p-columnFilter
+            type="number"
+            field="assignmentPriority"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
       <th pSortableColumn="isTechnical">
         Është Teknike?
         <div>
@@ -103,11 +114,14 @@
   </ng-template>
   <ng-template pTemplate="body" let-profile>
     <tr>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 12%; min-width: 10rem">
         {{ profile.code }}
       </td>
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 12%; min-width: 10rem">
         {{ profile.name }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ profile.assignmentPriority }}
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ profile.isTechnical ? 'Po' : 'Jo' }}
