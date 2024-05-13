@@ -325,13 +325,13 @@ export class DiplomaRecognitionResponseComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
-            'Formulari për njehsimin e diplomës u ndryshua me sukses!'
+            'Formulari për njësimin e diplomës u ndryshua me sukses!'
           );
           this.router.navigate(['/evaluations/diploma-recognition']);
         } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit të formularit për njehsimin e diplomës!'
+            'Ndodhi një problem gjatë ndryshimit të formularit për njësimin e diplomës!'
           );
         this.cd.detectChanges();
       });

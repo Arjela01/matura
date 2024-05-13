@@ -72,7 +72,7 @@ export class ManageDiplomaRecognitionComponent {
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
           message:
-            'Jeni i sigurt që doni të fshini kerkesën për njehsimin e diplomes?',
+            'Jeni i sigurtë që doni të fshini kërkesën për njësimin e diplomës?',
           accept: () => {
             this.deleteExamType(event.data as DiplomaRecognition);
           },
@@ -100,14 +100,14 @@ export class ManageDiplomaRecognitionComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo(
-            'Formulari për njehsimin e diplomës u fshi me sukses!'
+            'Formulari për njësimin e diplomës u fshi me sukses!'
           );
           this.getDiplomaRecognitionRecords(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë fshirjes së formularit për njehsimin e diplomës!'
+            'Ndodhi një problem gjatë fshirjes së formularit për njësimin e diplomës!'
           );
       });
   }
