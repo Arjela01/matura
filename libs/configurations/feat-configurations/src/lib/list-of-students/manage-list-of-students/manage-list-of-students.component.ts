@@ -60,6 +60,8 @@ export class ManageListOfStudentsComponent implements OnInit {
     rows: 10000,
     filters: {},
     globalFilter: null,
+    sortField: "Index",
+    sortOrder: 1
   };
 
   constructor(
@@ -106,12 +108,8 @@ export class ManageListOfStudentsComponent implements OnInit {
   }
 
   getExamAssignments($event: any) {
-    this.filters = Object.assign({}, $event);
-    if(this.filters == null) this.filters = {};
-    this.filters.sortOrder = 1;
-    this.filters.sortField = 'index';
     this.examAssignmentService
-      .getAssignments(this.filters, $event.examDateId)
+      .getAssignments(this.event, $event.examDateId)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.studentsList$$.next(response.data);
