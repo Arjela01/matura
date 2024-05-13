@@ -171,16 +171,12 @@ export class ManageListOfStudentsComponent implements OnInit {
   }
 
   examSiteData() {
-    if (this.userRole === RoleName.ZVAP) {
+    if (this.userRole === RoleName.ZVAP || this.userRole === RoleName.MbikqyresFormularesh) {
       this.getExamSitesForZvap();
       this.getAdministrationOfficesDropdown();
     } else {
-      if (this.userRole === RoleName.MbikqyresFormularesh) {
-        this.getExamSitesForOverseer();
-      } else {
-        this.getAdministrationOfficesDropdown();
-        this.getExamSiteDropdown();
-      }
+      this.getAdministrationOfficesDropdown();
+      this.getExamSiteDropdown();
     }
   }
 }
