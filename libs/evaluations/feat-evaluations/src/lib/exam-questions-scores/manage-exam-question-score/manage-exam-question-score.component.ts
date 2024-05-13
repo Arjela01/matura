@@ -228,10 +228,6 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
               'Piket analitike u shtuan me sukses!'
             );
             this.scoreFilterComponent.clearFields();
-            console.log(
-              123,
-              this.scoreFilterComponent.examQuestionScoreList.testNumber
-            );
             this.getExamQuestionScoresList(this.filters as TableLazyLoadEvent);
           } else {
             this.toastService.showError(response.errorMessage);
