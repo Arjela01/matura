@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ExamAssignment } from '@msh/shared/domain-models';
@@ -25,7 +33,7 @@ import jwt_decode from 'jwt-decode';
   templateUrl: './list-of-students-filters.component.html',
   styleUrls: ['./list-of-students-filters.component.scss'],
 })
-export class ListOfStudentsFiltersComponent {
+export class ListOfStudentsFiltersComponent implements OnChanges {
   @Input() totalRecords: number | undefined;
   @Input() administrationOffices: DropdownModel<string>[] = [];
   @Input() examDates: DropdownModel<string>[] = [];
@@ -54,6 +62,12 @@ export class ListOfStudentsFiltersComponent {
             ];
         }
       });
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['administrationOffices'] && changes['administrationOffices'].currentValue !== null && changes['administrationOffices'].currentValue.length === 1) {
+      this.studentList.administrationOfficeId = changes['administrationOffices'].currentValue[0].key;
     }
   }
 

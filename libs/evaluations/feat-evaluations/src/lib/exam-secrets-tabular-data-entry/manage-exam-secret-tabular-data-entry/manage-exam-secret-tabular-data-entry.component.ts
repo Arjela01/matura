@@ -108,6 +108,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
         break;
     }
   }
+
   getExamSecretNotes() {
     this.examTypeService
       .loadDropdownExamNotesList()
@@ -116,6 +117,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
         this.examSecretNotes = response.data;
       });
   }
+
   onApplySearch($event: ExamSecretSearchModel, examSecret?: ExamSecret) {
     this.filters = Object.assign({}, $event);
 
@@ -201,20 +203,15 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
   }
 
   loadExamSites($event: ExamSecretSearchModel) {
-    const academicYearString = localStorage.getItem('academicYear');
-    if (academicYearString) {
-      const academicYear = JSON.parse(academicYearString);
-      const academicYearId = academicYear.id;
-      this.examSiteService
-        .forAdministrationOffice($event.administrationOfficeId, academicYearId)
-        .subscribe(response => {
-          this.examSites = response.data;
-          this.examSubjects = [];
-          this.examTypes = [];
-          this.examDates = [];
-          this.cd.markForCheck();
-        });
-    }
+    this.examSiteService
+      .forAdministrationOffice($event.administrationOfficeId)
+      .subscribe(response => {
+        this.examSites = response.data;
+        this.examSubjects = [];
+        this.examTypes = [];
+        this.examDates = [];
+        this.cd.markForCheck();
+      });
   }
 
   loadExamTypes($event: ExamSecretSearchModel) {
@@ -252,6 +249,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
         this.cd.markForCheck();
       });
   }
+
   save(examSecret: ExamSecret) {
     this.examSecretService
       .save(examSecret)
@@ -271,6 +269,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
         }
       });
   }
+
   update(examSecret: ExamSecret) {
     this.examSecretService
       .update(examSecret)
@@ -290,6 +289,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
         }
       });
   }
+
   deleteExamSecret(examSecret: ExamSecret) {
     this.examSecretService
       .delete(examSecret.id)

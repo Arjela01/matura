@@ -1,4 +1,9 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -13,8 +18,8 @@ import { DropdownModel } from '@msh/shared/data-access-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ListOfStudentsFiltersComponent } from '../list-of-students-filters/list-of-students-filters.component';
 import { ListOfStudentsGridComponent } from '../list-of-students-grid/list-of-students-grid.component';
-import { BehaviorSubject, combineLatest, map, switchMap, tap } from 'rxjs';
-import { AcademicYear, ExamAssignment } from '@msh/shared/domain-models';
+import { BehaviorSubject, combineLatest, switchMap } from 'rxjs';
+import { ExamAssignment } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { UserProfileApiService } from '@msh/user-section/data-access-user-section';
 import { RoleName } from '../../users/user-form/role-list';
@@ -79,9 +84,7 @@ export class ManageListOfStudentsComponent implements OnInit {
             }
           }
           this.academicYear = { ...data };
-          return combineLatest([
-            this.userService.getLoggedInUserData()
-          ]);
+          return combineLatest([this.userService.getLoggedInUserData()]);
         })
       )
       .subscribe(([user]) => {
@@ -98,6 +101,7 @@ export class ManageListOfStudentsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.administrationOffices = response.data;
+        this.cd.detectChanges();
       });
   }
 
@@ -141,10 +145,9 @@ export class ManageListOfStudentsComponent implements OnInit {
         .subscribe(response => {
           this.examSites = response.data;
         });
-
     } else {
       this.examSiteService
-        .forAdministrationOffice($event.administrationOfficeId, this.academicYear.id)
+        .forAdministrationOffice($event.administrationOfficeId)
         .pipe(untilDestroyed(this))
         .subscribe(response => {
           this.examSites = response.data;
@@ -153,15 +156,10 @@ export class ManageListOfStudentsComponent implements OnInit {
   }
 
   getExamSitesForZvap() {
-    const academicYearString = localStorage.getItem('academicYear');
-    if (academicYearString) {
-      const academicYear = JSON.parse(academicYearString);
-      const academicYearId = academicYear.id;
-      this.examSiteService
-        .forAdministrationOffice(this.administrationOfficeId, academicYearId)
-        .pipe(untilDestroyed(this))
-        .subscribe(res => (this.examSites = res.data));
-    }
+    this.examSiteService
+      .forAdministrationOffice(this.administrationOfficeId)
+      .pipe(untilDestroyed(this))
+      .subscribe(res => (this.examSites = res.data));
   }
 
   getExamSitesForOverseer() {
@@ -174,6 +172,7 @@ export class ManageListOfStudentsComponent implements OnInit {
   examSiteData() {
     if (this.userRole === RoleName.ZVAP) {
       this.getExamSitesForZvap();
+      this.getAdministrationOfficesDropdown();
     } else {
       if (this.userRole === RoleName.MbikqyresFormularesh) {
         this.getExamSitesForOverseer();

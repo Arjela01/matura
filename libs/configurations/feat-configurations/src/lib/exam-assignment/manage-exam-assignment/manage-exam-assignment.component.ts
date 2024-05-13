@@ -15,8 +15,8 @@ import {
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ExamAssignment } from '@msh/shared/domain-models';
 import {
-  GRID_ACTIONS,
   GlobalToastService,
+  GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -78,6 +78,7 @@ export class ManageExamAssignmentComponent implements OnInit {
   selectedRecord: ExamAssignment | null = null;
   displayHistoryForm = false;
   examAssignmentId!: string;
+
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
@@ -138,9 +139,11 @@ export class ManageExamAssignmentComponent implements OnInit {
         break;
     }
   }
+
   onUploadClick() {
     this.displayUploadModal = true;
   }
+
   ngOnInit(): void {
     this.getAdministrationOfficeDropdown();
     this.getSchoolProfiles();
@@ -159,9 +162,11 @@ export class ManageExamAssignmentComponent implements OnInit {
   onModalClose() {
     this.displayModal = false;
   }
+
   onAssignAllModalClose() {
     this.displayAssignAllModal = false;
   }
+
   onAssignAllClick() {
     this.displayAssignAllModal = true;
   }
@@ -174,9 +179,11 @@ export class ManageExamAssignmentComponent implements OnInit {
       this.addExamAssignment(examAssignment);
     }
   }
+
   onUploadFormSave() {
     this.getExamAssignments(this.filters as TableLazyLoadEvent);
   }
+
   onAdministrationOfficeChanged(administrationOfficeId: number) {
     this.getExamSite(administrationOfficeId);
   }
@@ -184,6 +191,7 @@ export class ManageExamAssignmentComponent implements OnInit {
   onExamSiteChanged(examSiteId: string[]) {
     this.getExamDatesForAssignAll(examSiteId);
   }
+
   onExamDateChanged(examDateId: any) {
     if (this.examAssignment != null) {
       this.examAssignment.examDateId = examDateId;
@@ -191,16 +199,11 @@ export class ManageExamAssignmentComponent implements OnInit {
   }
 
   getExamSite(administrationOfficeId: any) {
-    const academicYearString = localStorage.getItem('academicYear');
-    if (academicYearString) {
-      const academicYear = JSON.parse(academicYearString);
-      const academicYearId = academicYear.id;
-      this.examSiteService
-        .forAdministrationOffice(administrationOfficeId, academicYearId)
-        .pipe(untilDestroyed(this))
-        .subscribe(res => (this.examSiteForAdministrationOffice = res.data));
-      this.cd.detectChanges();
-    }
+    this.examSiteService
+      .forAdministrationOffice(administrationOfficeId)
+      .pipe(untilDestroyed(this))
+      .subscribe(res => (this.examSiteForAdministrationOffice = res.data));
+    this.cd.detectChanges();
   }
 
   getExamAssignments($event: TableLazyLoadEvent) {
@@ -282,6 +285,7 @@ export class ManageExamAssignmentComponent implements OnInit {
           );
       });
   }
+
   downloadFile() {
     this.examAssignmentService
       .export()
@@ -293,21 +297,25 @@ export class ManageExamAssignmentComponent implements OnInit {
         FileSaver.saveAs(blob, 'Lista_Emërore ');
       });
   }
+
   getExamDateDropdown() {
     this.examDateService.loadDropdownList().subscribe(response => {
       this.examDates = response.data;
     });
   }
+
   getExamDatesForAssignAll(examSiteId: string[]) {
     this.examDateService.forExamSiteIds(examSiteId).subscribe(response => {
       this.examDatesForAssignAll = response.data;
     });
   }
+
   getExamSiteDropdown() {
     this.examSiteService.loadDropdownList().subscribe(response => {
       this.examSites = response.data;
     });
   }
+
   getAdministrationOfficeDropdown() {
     this.administrationOfficeService
       .loadDropdownList()
@@ -317,6 +325,7 @@ export class ManageExamAssignmentComponent implements OnInit {
         this.cd.markForCheck();
       });
   }
+
   getSchoolProfiles() {
     this.profileService
       .loadDropdownList()
@@ -325,6 +334,7 @@ export class ManageExamAssignmentComponent implements OnInit {
         this.schoolProfileId = response.data;
       });
   }
+
   onAssignAllFormSave(examAssignment: any) {
     Object.keys(examAssignment).forEach(key => {
       if (
@@ -344,6 +354,7 @@ export class ManageExamAssignmentComponent implements OnInit {
 
     this.assignAll(filteredAssignment);
   }
+
   assignAll(examAssignment: any) {
     this.examAssignmentService
       .examAssign(examAssignment)
