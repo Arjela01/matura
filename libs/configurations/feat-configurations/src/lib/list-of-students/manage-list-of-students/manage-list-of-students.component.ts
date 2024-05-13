@@ -156,27 +156,8 @@ export class ManageListOfStudentsComponent implements OnInit {
     }
   }
 
-  getExamSitesForZvap() {
-    this.examSiteService
-      .forAdministrationOffice(this.administrationOfficeId)
-      .pipe(untilDestroyed(this))
-      .subscribe(res => (this.examSites = res.data));
-  }
-
-  getExamSitesForOverseer() {
-    this.examSiteService
-      .forHighSchool(this.highSchoolId)
-      .pipe(untilDestroyed(this))
-      .subscribe(res => (this.examSites = res.data));
-  }
-
   examSiteData() {
-    if (this.userRole === RoleName.ZVAP || this.userRole === RoleName.MbikqyresFormularesh) {
-      this.getExamSitesForZvap();
-      this.getAdministrationOfficesDropdown();
-    } else {
       this.getAdministrationOfficesDropdown();
       this.getExamSiteDropdown();
-    }
   }
 }
