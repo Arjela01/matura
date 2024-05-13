@@ -1,27 +1,43 @@
 <div>
-<div class="flex center mb-1 page-header mb-header">
-  <h2 class="flex-1 mb-0">Pyetje Provimi</h2>
-  <div class="flex align-items-right justify-content-right">
-    <div class="my-2">
-      <p-button
-        type="button"
-        icon="pi pi-arrow-left"
-        styleClass="p-button-link"
-        (click)="onBackButtonClick()"
-        [label]="'Kthehu'"></p-button>
-      <button
-        pButton
-        pRipple
-        label="Shto"
-        icon="pi pi-plus"
-        class="p-button-success ml-3"
-        (click)="onNewClick()"></button>
+  <div class="flex center mb-1 page-header mb-header">
+    <h2 class="flex-1 mb-0">Pyetje Provimi</h2>
+    <div class="flex align-items-right justify-content-right">
+      <div class="my-2">
+        <p-button
+          type="button"
+          icon="pi pi-arrow-left"
+          styleClass="p-button-link"
+          (click)="onBackButtonClick()"
+          [label]="'Kthehu'"></p-button>
+        <button
+          pButton
+          pRipple
+          label="Shto"
+          icon="pi pi-plus"
+          class="p-button-success ml-3"
+          (click)="onNewClick()"></button>
+      </div>
     </div>
   </div>
-</div>
   <div class="mb-5">
-    <h6>Varianti i Provimit: <span class="text-blue-500 font-bold">{{this.examVariantName}}</span></h6>
-    <h6 class="mt-0">Pikët Maksimale: <span class="text-blue-500 font-bold">{{this.examVariantMaximumScore}}</span></h6>
+    <h6>
+      Varianti i Provimit:
+      <span class="text-blue-500 font-bold">{{ this.examVariantName }}</span>
+    </h6>
+    <div class="flex">
+      <h6 class="mt-0">
+        Pikët Maksimale:
+        <span class="text-blue-500 font-bold">{{
+          this.examVariantMaximumScore
+        }}</span>
+      </h6>
+      <h6 class="mt-0 ml-5">
+        Pikët e hedhura:
+        <span class="text-blue-500 font-bold">{{
+          this.examVariantRecordedScore
+        }}</span>
+      </h6>
+    </div>
   </div>
 </div>
 <div class="grid">

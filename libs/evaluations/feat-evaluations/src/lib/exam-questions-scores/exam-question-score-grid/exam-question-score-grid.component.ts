@@ -108,12 +108,17 @@ export class ExamQuestionScoreGridComponent {
   }
 
   focusNextRow(rowIndex: number) {
-    const nextRowIndex = rowIndex + 1;
-    const nextInput = document.querySelector(
-      `tr:nth-child(${nextRowIndex}) input`
-    );
-    if (nextInput) {
-      (nextInput as HTMLInputElement).focus();
+    const totalRows = this.examQuestionScoreList.length;
+    if (rowIndex === totalRows) {
+      this.onExamScoreAddOrUpdate(ScoreActions.SAVE);
+    } else {
+      const nextRowIndex = rowIndex + 1;
+      const nextInput = document.querySelector(
+        `tr:nth-child(${nextRowIndex}) input`
+      );
+      if (nextInput) {
+        (nextInput as HTMLInputElement).focus();
+      }
     }
   }
 
