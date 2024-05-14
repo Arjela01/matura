@@ -86,16 +86,16 @@
     <div>
       <button
         pButton
-        type="button"
+        type="submit"
         label="Ruaj"
-        (click)="onExamScoreAddOrUpdate(ScoreActions.SAVE)"
-        class="p-button w-auto"></button>
+        (keydown.enter)="onExamScoreAddOrUpdate(ScoreActions.SAVE)"
+        class="p-button p-button-link w-auto"></button>
       <button
         pButton
         type="button"
         label="Pastro"
         (click)="onExamScoreAddOrUpdate(ScoreActions.CLEAN)"
-        class="p-button-text w-auto mr-4"></button>
+        class="p-button-danger p-button-text w-auto mr-4"></button>
     </div>
   </div>
 </div>
