@@ -69,6 +69,10 @@ export class ListOfStudentsFiltersComponent implements OnChanges {
     if(changes['administrationOffices'] && changes['administrationOffices'].currentValue !== null && changes['administrationOffices'].currentValue.length === 1) {
       this.studentList.administrationOfficeId = changes['administrationOffices'].currentValue[0].key;
     }
+
+    if(changes['examSites'] && changes['examSites'].currentValue !== null && changes['examSites'].currentValue.length === 1) {
+      this.studentList.examSiteId = changes['examSites'].currentValue[0].key;
+    }
   }
 
   onExamSiteChanged(): void {
