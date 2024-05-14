@@ -17,9 +17,9 @@
     <tr *ngFor="let rowData of studentsList">
       <td>{{ rowData.index }}</td>
       <td>{{ rowData.studentId }}</td>
-      <td>{{ formatStudentData(rowData).firstName }}</td>
-      <td>{{ formatStudentData(rowData).middleName }}</td>
-      <td>{{ formatStudentData(rowData).lastName }}</td>
+      <td>{{ rowData.firstName }}</td>
+      <td>{{ rowData.middleName }}</td>
+      <td>{{ rowData.lastName }}</td>
       <td>{{ rowData.profileCode }} - {{ rowData.profileName }}</td>
       <td>{{ rowData.studentHighSchoolName }}</td>
       <td>{{ rowData.examSiteName }}</td>
