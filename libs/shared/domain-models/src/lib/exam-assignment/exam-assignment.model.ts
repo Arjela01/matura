@@ -4,9 +4,9 @@ export interface ExamAssignment {
   studentId: string;
   studentIdentifier: string;
   studentName: string;
-  firstName: string;
-  middleName: string;
-  lastName: string;
+  firstName?: string;
+  middleName?: string;
+  lastName?: string;
   examDateId: number;
   date: Date;
   studentInputData: string;
