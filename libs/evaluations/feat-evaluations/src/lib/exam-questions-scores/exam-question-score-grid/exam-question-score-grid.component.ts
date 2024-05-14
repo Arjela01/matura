@@ -52,8 +52,6 @@ export class ExamQuestionScoreGridComponent {
   >();
   inputScores: { [questionId: number]: number } = {};
 
-  constructor(private elementRef: ElementRef) {}
-
   onDeleteClick(examQuestionScore: any) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,
