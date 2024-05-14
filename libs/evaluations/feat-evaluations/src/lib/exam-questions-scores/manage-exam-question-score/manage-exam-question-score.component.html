@@ -11,7 +11,6 @@
   </div>
   <div class="mt-4">
     <msh-exam-question-score-grid
-      #scoreGrid
       [examVariantMaximumScore]="examVariantTotalScore"
       [totalScore]="totalScore"
       [examQuestionScoreList]="(examQuestionScoreList$ | async) || []"

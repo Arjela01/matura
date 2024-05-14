@@ -52,6 +52,8 @@ export class ExamQuestionScoreGridComponent {
   >();
   inputScores: { [questionId: number]: number } = {};
 
+  constructor(private elementRef: ElementRef) {}
+
   onDeleteClick(examQuestionScore: any) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,
@@ -110,7 +112,13 @@ export class ExamQuestionScoreGridComponent {
   focusNextRow(rowIndex: number) {
     const totalRows = this.examQuestionScoreList.length;
     if (rowIndex === totalRows) {
-      this.onExamScoreAddOrUpdate(ScoreActions.SAVE);
+      const firstButton = document.querySelector(
+        'button[type="submit"]'
+      ) as HTMLButtonElement | null;
+
+      if (firstButton) {
+        firstButton.focus();
+      }
     } else {
       const nextRowIndex = rowIndex + 1;
       const nextInput = document.querySelector(
