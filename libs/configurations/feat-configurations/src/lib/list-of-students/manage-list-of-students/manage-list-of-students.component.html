@@ -15,7 +15,7 @@
   </div>
   <div class="mt-4">
     <msh-list-of-students-grid
-      [totalRecords]="totalRecords"
+      (lazyLoadData)="getExamAssignments($event)"
       [studentsList]="
         (studentsList$ | async) || []
       "></msh-list-of-students-grid>

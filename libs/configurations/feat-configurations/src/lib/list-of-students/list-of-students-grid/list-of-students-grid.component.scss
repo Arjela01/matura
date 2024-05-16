@@ -1,33 +1,23 @@
 :host {
   display: block;
 }
-
-table {
+p-table {
   width: 100%;
-  border-collapse: collapse;
-  border: 1px solid #ddd;
+  table-layout: fixed;
+  white-space: nowrap;
 }
-
-th {
-  padding: 11px;
-  text-align: left;
+p-table th {
+  color: black;
   background-color: #efeded;
-  border: 1px solid #ddd;
+  border: 0.5px solid #ddd;
+  padding: 0.5em 0.5em;
 }
 
-td {
+p-table td {
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 0.5px solid #ddd;
 }
 
-tr {
-  background-color: white;
-}
 tr:nth-child(even) {
-  background-color: #f6f5f5; /* Grey background for even rows */
-}
-
-th,
-td {
-  margin: 5px;
+  background-color: #f6f5f5;
 }
