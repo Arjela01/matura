@@ -1,27 +1,29 @@
 <form #form="ngForm" class="dropdown-row" (ngSubmit)="onSubmit()">
-    <div class="field column">
-        <label for="examType">ZVAP</label>
-        <p-dropdown
-                id="administrationOffice"
-                [options]="administrationOffices"
-                optionValue="key"
-                optionLabel="value"
-                name="examType"
-                appendTo="body"
-                [filter]="true"
-                [autoDisplayFirst]="false"
-                (onChange)="onAdministrationOfficeChanged()"
-                (onClear)="onAdministrationOfficeChanged()"
-                [(ngModel)]="studentList.administrationOfficeId"
-                [showClear]="true"
-                [ngClass]="{
+  <div class="field column">
+    <label for="examType">ZVAP</label>
+    <p-dropdown
+      id="administrationOffice"
+      [options]="administrationOffices"
+      optionValue="key"
+      optionLabel="value"
+      name="examType"
+      appendTo="body"
+      [filter]="true"
+      [autoDisplayFirst]="false"
+      (onChange)="onAdministrationOfficeChanged()"
+      (onClear)="onAdministrationOfficeChanged()"
+      [(ngModel)]="studentList.administrationOfficeId"
+      [showClear]="true"
+      [ngClass]="{
         'ng-invalid ng-dirty': submitted && !studentList.administrationOfficeId
       }">
-        </p-dropdown>
-        <small class="p-error block" *ngIf="submitted && !studentList.administrationOfficeId">
-            Qendra e Provimit është fushë e kërkuar.
-        </small>
-    </div>
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !studentList.administrationOfficeId">
+      Qendra e Provimit është fushë e kërkuar.
+    </small>
+  </div>
   <div class="field column">
     <label for="examType">Qendra e Provimit *</label>
     <p-dropdown

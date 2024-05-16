@@ -1,5 +1,4 @@
 import {
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -66,11 +65,21 @@ export class ListOfStudentsFiltersComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes['administrationOffices'] && changes['administrationOffices'].currentValue !== null && changes['administrationOffices'].currentValue.length === 1) {
-      this.studentList.administrationOfficeId = changes['administrationOffices'].currentValue[0].key;
+    if (
+      changes['administrationOffices'] &&
+      changes['administrationOffices'].currentValue !== null &&
+      changes['administrationOffices'].currentValue.length === 1
+    ) {
+      this.studentList.administrationOfficeId =
+        changes['administrationOffices'].currentValue[0].key;
     }
 
-    if(changes['examSites'] && changes['examSites'].currentValue !== null && changes['examSites'].currentValue.length === 1) {
+    if (
+      changes['examSites'] &&
+      changes['examSites'].currentValue !== null &&
+      changes['examSites'].currentValue.length === 1 &&
+      changes['administrationOffices']?.currentValue?.length === 1
+    ) {
       this.studentList.examSiteId = changes['examSites'].currentValue[0].key;
     }
   }
@@ -80,7 +89,6 @@ export class ListOfStudentsFiltersComponent implements OnChanges {
       this.examDateChanged.emit(Object.assign({}, this.studentList));
     }
   }
-
   onAdministrationOfficeChanged(): void {
     this.administrationOfficeChanged.emit(Object.assign({}, this.studentList));
   }
