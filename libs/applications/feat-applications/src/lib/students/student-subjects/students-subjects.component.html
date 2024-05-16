@@ -9,12 +9,14 @@
                         <tr>
                             <th>Tipi i Provimit</th>
                             <th>Lënda e Provimit</th>
+                            <th>Vlerëshet</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr *ngFor="let assignment of subjects">
-                            <td class="font-semibold">{{ assignment.examTypeName }}</td>
-                            <td class="font-semibold">{{ assignment.name }}</td>
+                        <tr *ngFor="let subject of subjects">
+                            <td class="font-semibold">{{ subject.examTypeName }}</td>
+                            <td class="font-semibold">{{ subject.name }}</td>
+                            <td class="font-semibold">{{ subject.isNotGraded ? 'Jo' : 'Po' }}</td>
                         </tr>
                         </tbody>
                     </table>
