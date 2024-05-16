@@ -65,7 +65,6 @@ export class ListOfStudentsFiltersComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(123, changes);
     if (
       changes['administrationOffices'] &&
       changes['administrationOffices'].currentValue !== null &&
