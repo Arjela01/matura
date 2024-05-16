@@ -33,7 +33,7 @@ import jwt_decode from 'jwt-decode';
   templateUrl: './list-of-students-filters.component.html',
   styleUrls: ['./list-of-students-filters.component.scss'],
 })
-export class ListOfStudentsFiltersComponent implements OnChanges {
+export class ListOfStudentsFiltersComponent {
   @Input() totalRecords: number | undefined;
   @Input() administrationOffices: DropdownModel<string>[] = [];
   @Input() examDates: DropdownModel<string>[] = [];
@@ -65,16 +65,6 @@ export class ListOfStudentsFiltersComponent implements OnChanges {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if(changes['administrationOffices'] && changes['administrationOffices'].currentValue !== null && changes['administrationOffices'].currentValue.length === 1) {
-      this.studentList.administrationOfficeId = changes['administrationOffices'].currentValue[0].key;
-    }
-
-    if(changes['examSites'] && changes['examSites'].currentValue !== null && changes['examSites'].currentValue.length === 1) {
-      this.studentList.examSiteId = changes['examSites'].currentValue[0].key;
-    }
-  }
-
   onExamSiteChanged(): void {
     if (this.studentList.examSiteId) {
       this.examDateChanged.emit(Object.assign({}, this.studentList));
@@ -82,7 +72,11 @@ export class ListOfStudentsFiltersComponent implements OnChanges {
   }
 
   onAdministrationOfficeChanged(): void {
-    this.administrationOfficeChanged.emit(Object.assign({}, this.studentList));
+    if (this.studentList.administrationOfficeId) {
+      this.administrationOfficeChanged.emit(
+        Object.assign({}, this.studentList)
+      );
+    }
   }
 
   onSubmit() {
