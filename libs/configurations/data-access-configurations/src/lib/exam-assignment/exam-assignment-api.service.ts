@@ -39,9 +39,8 @@ export class ExamAssignmentApiService {
     event: TableLazyLoadEvent,
     examDateId: number
   ): Observable<ExamAssignmentTableView> {
-    return this.apiService.post(
-      `/ExamAssignment/SortAssignmentsTableData?examDateId=${examDateId}`,
-      event
+    return this.apiService.get(
+      `/ExamAssignment/SortAssignmentsTableData/${examDateId}`
     );
   }
 
