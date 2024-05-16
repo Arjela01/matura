@@ -1,20 +1,96 @@
-<table>
-  <thead>
+<p-table
+  [paginator]="false"
+  [value]="studentsList"
+  [rowHover]="true"
+  (onLazyLoad)="loadRows($event)"
+  selectionMode="multiple"
+  class="smaller-table">
+  <ng-template pTemplate="header">
     <tr>
-      <th>Indeksi</th>
-      <th>Matura ID</th>
-      <th>Emër</th>
-      <th>Atësi</th>
-      <th>Mbiemër</th>
-      <th>Profili</th>
-      <th>Shkolla</th>
-      <th>Qendra e Provimit</th>
-      <th>Lënda e Provimit</th>
-      <th>Tipi dhe Data e Provimit</th>
+      <th>
+        Indeksi
+        <p-columnFilter
+          type="text"
+          field="index"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th>
+        Matura ID
+        <p-columnFilter
+          type="text"
+          field="studentId"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th>
+        Emër
+        <p-columnFilter
+          type="text"
+          field="firstName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th>
+        Atësi
+        <p-columnFilter
+          type="text"
+          field="middleName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th>
+        Mbiemër
+        <p-columnFilter
+          type="text"
+          field="lastName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th>
+        Profili
+        <p-columnFilter
+          type="text"
+          field="profileName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th>
+        Shkolla
+        <p-columnFilter
+          type="text"
+          field="studentHighSchoolName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th>
+        Qendra e Provimit
+        <p-columnFilter
+          type="text"
+          field="examTypeName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th>
+        Lënda e Provimit
+        <p-columnFilter
+          type="text"
+          field="examSubjectName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th>
+        Tipi dhe Data e Provimit
+        <p-columnFilter
+          type="text"
+          field="examTypeDateTime"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
     </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let rowData of studentsList">
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData>
+    <tr>
       <td>{{ rowData.index }}</td>
       <td>{{ rowData.studentId }}</td>
       <td>{{ rowData.firstName }}</td>
@@ -26,5 +102,5 @@
       <td>{{ rowData.examSubjectName }}</td>
       <td>{{ formatStudentData(rowData).formattedExamTypeDateTime }}</td>
     </tr>
-  </tbody>
-</table>
+  </ng-template>
+</p-table>

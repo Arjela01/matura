@@ -24,6 +24,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
 import { UserProfileApiService } from '@msh/user-section/data-access-user-section';
 import { RoleName } from '../../users/user-form/role-list';
 import { AuthFacade } from '@msh/auth/data-access-auth';
+import { ExamDateGridComponent } from '../../exam-date/exam-date-grid/exam-date-grid.component';
 
 @UntilDestroy()
 @Component({
@@ -36,6 +37,7 @@ import { AuthFacade } from '@msh/auth/data-access-auth';
     SharedModule,
     ListOfStudentsFiltersComponent,
     ListOfStudentsGridComponent,
+    ExamDateGridComponent,
   ],
   templateUrl: './manage-list-of-students.component.html',
   styleUrls: ['./manage-list-of-students.component.scss'],
@@ -60,8 +62,8 @@ export class ManageListOfStudentsComponent implements OnInit {
     rows: 10000,
     filters: {},
     globalFilter: null,
-    sortField: "Index",
-    sortOrder: 1
+    sortField: 'Index',
+    sortOrder: 1,
   };
 
   constructor(
@@ -157,7 +159,7 @@ export class ManageListOfStudentsComponent implements OnInit {
   }
 
   examSiteData() {
-      this.getAdministrationOfficesDropdown();
-      this.getExamSiteDropdown();
+    this.getAdministrationOfficesDropdown();
+    this.getExamSiteDropdown();
   }
 }
