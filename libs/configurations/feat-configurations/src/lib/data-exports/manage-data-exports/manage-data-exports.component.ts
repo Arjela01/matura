@@ -49,7 +49,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
 export class ManageDataExportsComponent implements OnInit {
   private dataExports$$ = new BehaviorSubject<DataExport[]>([]);
   dataExports$ = this.dataExports$$.asObservable();
-  filters: TableLazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = {sortField: 'displayOrder', sortOrder: 1};
 
   totalRecords = 0;
   selectedDataExport: DataExport | null = null;
