@@ -52,6 +52,10 @@
     <msh-students-assignments
       [assignments]="(assignments$ | async) || []"></msh-students-assignments
   ></p-tabPanel>
+  <p-tabPanel header="Lëndët nga A1/A1Z">
+    <msh-students-subjects
+      [subjects]="(subjects$ | async) || []"></msh-students-subjects
+  ></p-tabPanel>
   <p-tabPanel header="Notat">
     <msh-students-grades
       [gradesDifferentYear]="gradesDifferentYear"

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import {
-  ConfirmDiplomaException,
-  ExamGrade,
+  ConfirmDiplomaException, ExamAssignment,
+  ExamGrade, ExamSubject,
   FileImport,
   Student,
   StudentTableView,
@@ -96,5 +96,12 @@ export class StudentsApiService {
 
   getA1A1ZByStudentId(id: string): Observable<ApiResult<any>> {
     return this.apiService.get(`/Student/GetA1A1ZByStudentId/${id}`);
+  }
+
+  getExamSubjectsForStudentId(
+      id: string
+  ): Observable<ApiResult<ExamSubject[]>> {
+    const url = `/Student/GetExamSubjectsForStudentId/${id}`;
+    return this.apiService.get<ApiResult<ExamSubject[]>>(url);
   }
 }

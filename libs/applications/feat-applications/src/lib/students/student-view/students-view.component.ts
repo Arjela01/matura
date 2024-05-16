@@ -6,7 +6,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TabViewModule } from 'primeng/tabview';
-import { ExamAssignment, ExamGrade, Student } from '@msh/shared/domain-models';
+import {ExamAssignment, ExamGrade, ExamSubject, Student} from '@msh/shared/domain-models';
 import { BehaviorSubject } from 'rxjs';
 import {
   ExamAssignmentApiService,
@@ -22,6 +22,7 @@ import { StudentDataComponent } from '../students-data/student-data.component';
 import { StudentAuditGradesComponent } from '../student-grades/students-grades.component';
 import { StudentsAssignmentsComponent } from '../student-assignments/students-assignments.component';
 import { ExamGradeApiService } from '@msh/applications/data-access-applications';
+import {StudentsSubjectsComponent} from "../student-subjects/students-subjects.component";
 
 @UntilDestroy()
 @Component({
@@ -38,6 +39,7 @@ import { ExamGradeApiService } from '@msh/applications/data-access-applications'
     StudentDataComponent,
     StudentAuditGradesComponent,
     StudentsAssignmentsComponent,
+    StudentsSubjectsComponent,
   ],
   templateUrl: './students-view.component.html',
   styleUrls: ['./students-view.component.scss'],
@@ -45,6 +47,9 @@ import { ExamGradeApiService } from '@msh/applications/data-access-applications'
 export class StudentsViewComponent implements OnInit {
   private assignments$$ = new BehaviorSubject<ExamAssignment[]>([]);
   assignments$ = this.assignments$$.asObservable();
+
+  private subjects$$ = new BehaviorSubject<ExamSubject[]>([]);
+  subjects$ = this.subjects$$.asObservable();
 
   forms: A1ZTableRecord[] = [];
   finishedAtSameSchool = true;
@@ -73,6 +78,7 @@ export class StudentsViewComponent implements OnInit {
     this.getFormType();
     this.getStudentsOverallData();
     this.getAssignmentsForStudentsById();
+    this.getExamSubjectsForStudentId();
     this.getGradesForStudentsById();
     this.showEditButton = this.permissionCheckService.hasPermission(
       PermissionEnum.EditApplications as any
@@ -133,6 +139,16 @@ export class StudentsViewComponent implements OnInit {
         this.assignments$$.next(res.data);
         this.cd.detectChanges();
       });
+  }
+
+
+  getExamSubjectsForStudentId() {
+    this.studentService
+        .getExamSubjectsForStudentId(this.id)
+        .subscribe(res => {
+          this.subjects$$.next(res.data);
+          this.cd.detectChanges();
+        });
   }
 
   getGradesForStudentsById() {
