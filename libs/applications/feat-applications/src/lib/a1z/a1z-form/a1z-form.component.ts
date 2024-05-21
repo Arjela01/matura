@@ -5,8 +5,9 @@ import {
   Component,
   Input,
   OnInit,
+  ViewChild,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   A1ZApiService,
@@ -100,6 +101,8 @@ interface ChangeEvent<T> {
   providers: [ConfirmationService],
 })
 export class A1zFormComponent implements OnInit {
+  @ViewChild('a1zForm', { static: true }) form!: NgForm;
+
   @Input()
   mode?: A1ZFormModeEnum;
 
@@ -242,22 +245,24 @@ export class A1zFormComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    if (
-      (A1ZFormModeEnum.Add === this.mode ||
-        A1ZFormModeEnum.AddWithStudent == this.mode) &&
-      this.isGraduationYearValid()
-    ) {
-      this.onNewA1ZFormSubmit();
-    } else if (
-      (A1ZFormModeEnum.Edit === this.mode ||
-        A1ZFormModeEnum.EditWithStudent == this.mode) &&
-      this.isGraduationYearValid()
-    ) {
-      this.onEditA1ZFormSubmit();
-    } else {
-      this.toastService.showError(
-        'Nuk dallohet qëllimi i kësaj forme ose viti i diplomimit është i pavlefshëm.'
-      );
+    if (this.form.valid) {
+      if (
+        (A1ZFormModeEnum.Add === this.mode ||
+          A1ZFormModeEnum.AddWithStudent == this.mode) &&
+        this.isGraduationYearValid()
+      ) {
+        this.onNewA1ZFormSubmit();
+      } else if (
+        (A1ZFormModeEnum.Edit === this.mode ||
+          A1ZFormModeEnum.EditWithStudent == this.mode) &&
+        this.isGraduationYearValid()
+      ) {
+        this.onEditA1ZFormSubmit();
+      } else {
+        this.toastService.showError(
+          'Nuk dallohet qëllimi i kësaj forme ose viti i diplomimit është i pavlefshëm.'
+        );
+      }
     }
   }
 
@@ -343,22 +348,19 @@ export class A1zFormComponent implements OnInit {
               case EXAM_TYPES.D1:
                 if (isPassingGrade) {
                   this.a1z.discoveredScoreD1 = grade;
-                  if (!this.a1z.scoreD1)
-                    this.a1z.scoreD1 = grade;
+                  if (!this.a1z.scoreD1) this.a1z.scoreD1 = grade;
                 } else this.a1z.discoveredScoreD1 = undefined;
                 break;
               case EXAM_TYPES.D2:
                 if (isPassingGrade) {
                   this.a1z.discoveredScoreD2 = response.data.grade;
-                  if (!this.a1z.scoreD2)
-                    this.a1z.scoreD2 = response.data.grade;
+                  if (!this.a1z.scoreD2) this.a1z.scoreD2 = response.data.grade;
                 } else this.a1z.discoveredScoreD2 = undefined;
                 break;
               case EXAM_TYPES.D3:
                 if (isPassingGrade) {
                   this.a1z.discoveredScoreD3 = response.data.grade;
-                  if (!this.a1z.scoreD3)
-                    this.a1z.scoreD3;
+                  if (!this.a1z.scoreD3) this.a1z.scoreD3;
                 } else this.a1z.discoveredScoreD3 = undefined;
                 break;
               case EXAM_TYPES.Z1:
