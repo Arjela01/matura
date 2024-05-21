@@ -211,17 +211,7 @@ export class ManageExamSecretsComponent implements OnInit {
         });
     };
   }
-  downloadFile() {
-    this.examSecretService
-      .export()
-      .pipe(untilDestroyed(this))
-      .subscribe((response: any) => {
-        const blob: any = new Blob([response], {
-          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        });
-        FileSaver.saveAs(blob, 'Nota_Pikë');
-      });
-  }
+
   downloadTemplateFile() {
     this.examSecretService
       .exportTemplate()
