@@ -19,7 +19,7 @@ export const roleList = [
     showHighSchools: false,
   },
   {
-    roleName: 'QSHA',
+    roleName: 'Secrets',
     showUniversity: false,
     showUniversityDepartment: false,
     showAdministrationOffice: false,
@@ -68,7 +68,7 @@ export const roleList = [
 export enum RoleName {
   Admin = 'Admin',
   ZVAP = 'ZVAP',
-  QSHA = 'QSHA',
+  Secrets = 'Secrets',
   DV = 'DV (Drejtoria e Vlerësimit)',
   MbikqyresFormularesh = 'Mbikqyres Formularesh',
   Operator = 'Operator',

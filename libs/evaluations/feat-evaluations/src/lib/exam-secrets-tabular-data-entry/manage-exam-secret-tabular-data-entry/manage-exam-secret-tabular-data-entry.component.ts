@@ -198,7 +198,6 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.administrationOffices = response.data;
-        console.log(response.data);
         this.cd.markForCheck();
       });
   }
