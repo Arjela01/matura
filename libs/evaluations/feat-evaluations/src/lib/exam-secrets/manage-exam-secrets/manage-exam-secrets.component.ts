@@ -8,6 +8,9 @@ import {
 import { Router } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
+  AdministrationOfficeApiService,
+  ExamDateApiService,
+  ExamSiteApiService,
   ExamSubjectApiService,
   ExamTypeApiService,
 } from '@msh/configurations/data-access-configurations';
@@ -30,7 +33,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ExamSecretsFormComponent } from '../exam-secrets-form/exam-secrets-form.component';
 import { ExamSecretsGridComponent } from '../exam-secrets-grid/exam-secrets-grid.component';
-import { ExamSecret } from '@msh/shared/domain-models';
+import { AdministrationOffice, ExamSecret } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ArchiveFolderGridComponent } from '../../archive-folder/archive-folder-grid/archive-folder-grid.component';
 
@@ -62,11 +65,14 @@ export class ManageExamSecretsComponent implements OnInit {
   base64: string | ArrayBuffer | null | undefined;
   totalRecords = 0;
   selectedExamSecret: ExamSecret | null = null;
-  selectedExamSecrets: ExamSecret[] = [];
   displayModal = false;
   examSubjects: DropdownModel<string>[] = [];
   examTypes: DropdownModel<number>[] = [];
+  administrationOffices: DropdownModel<number>[] = [];
+  examSites: DropdownModel<string>[] = [];
   examSecretNotes: DropdownModel<string>[] = [];
+  examDates: DropdownModel<number>[] = [];
+  examSiteId: any;
 
   examSecretId: string | undefined;
   selectedRecord: any;
@@ -88,13 +94,15 @@ export class ManageExamSecretsComponent implements OnInit {
     private readonly router: Router,
     private readonly examSubjectService: ExamSubjectApiService,
     private readonly examTypeService: ExamTypeApiService,
+    private readonly administrationOfficesService: AdministrationOfficeApiService,
+    private readonly examSiteService: ExamSiteApiService,
+    private readonly examDateService: ExamDateApiService,
     private authFacade: AuthFacade,
     private readonly cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    this.getExamTypes();
-    this.getExamSubjects();
+    this.getAdministrationOffices();
     this.getExamSecretNotes();
   }
 
@@ -110,12 +118,6 @@ export class ManageExamSecretsComponent implements OnInit {
         this.examSecretId = event.data.id;
         this.headerText = `Historiku për Pikët e Sekretimit {${event.data.id}}`;
         this.displayHistoryForm = true;
-        break;
-      case GRID_ACTIONS.SELECT_ROW:
-        this.selectedExamSecrets = [
-          ...this.selectedExamSecrets,
-          event.data as ExamSecret,
-        ];
         break;
       case GRID_ACTIONS.EDIT:
         this.selectedExamSecret = Object.assign({}, event.data as ExamSecret);
@@ -133,7 +135,12 @@ export class ManageExamSecretsComponent implements OnInit {
     this.cd.detectChanges();
   }
 
-  getExamSubjects(examTypeId?: number) {
+  getDataOnExamTypeChange($event: any) {
+    this.getExamDates($event.examSiteId, $event.examTypeId);
+    this.getExamSubjects($event.examTypeId);
+  }
+
+  getExamSubjects(examTypeId: number) {
     this.examSubjectService
       .forExamType(examTypeId, undefined, undefined, undefined, true)
       .pipe(untilDestroyed(this))
@@ -142,14 +149,43 @@ export class ManageExamSecretsComponent implements OnInit {
         this.cd.markForCheck();
       });
   }
-  getExamTypes() {
+
+  getExamTypes(examSiteId: any) {
     this.examTypeService
-      .loadDropdownList()
+      .getExamTypesForSiteId(examSiteId)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examTypes = response.data;
       });
   }
+
+  getAdministrationOffices() {
+    this.administrationOfficesService
+      .loadDropdownList()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.administrationOffices = response.data;
+      });
+  }
+
+  getEXamSites(administrationOfficeId: number) {
+    this.examSiteService
+      .forAdministrationOffice(administrationOfficeId)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.examSites = response.data;
+      });
+  }
+
+  getExamDates(examSiteId: string, examTypeId: number) {
+    this.examDateService
+      .forExamSiteAndExamType(examSiteId, examTypeId)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.examDates = response.data;
+      });
+  }
+
   getExamSecretNotes() {
     this.examTypeService
       .loadDropdownExamNotesList()
@@ -158,6 +194,7 @@ export class ManageExamSecretsComponent implements OnInit {
         this.examSecretNotes = response.data;
       });
   }
+
   getExamSecrets($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
@@ -229,11 +266,19 @@ export class ManageExamSecretsComponent implements OnInit {
   }
 
   onFormSave(examSecret: ExamSecret) {
+    const valuesToSend: ExamSecret = {
+      studentId: examSecret.studentId,
+      examTypeId: examSecret.examTypeId,
+      examSubjectId: examSecret.examSubjectId,
+      examSecretNoteId: examSecret.examSecretNoteId,
+      barcode: examSecret.barcode,
+      isFall: examSecret.isFall,
+    };
     if (examSecret.id) {
-      this.updateExamSecret(examSecret);
+      this.updateExamSecret(valuesToSend);
     }
     if (!examSecret.id) {
-      this.addExamSecret(examSecret);
+      this.addExamSecret(valuesToSend);
     }
   }
 
@@ -275,11 +320,5 @@ export class ManageExamSecretsComponent implements OnInit {
           );
         }
       });
-  }
-
-  onExamTypeChanged(examTypeId: any) {
-    if (this.selectedExamSecret != null)
-      this.selectedExamSecret.examTypeId = examTypeId;
-    this.getExamSubjects(examTypeId);
   }
 }

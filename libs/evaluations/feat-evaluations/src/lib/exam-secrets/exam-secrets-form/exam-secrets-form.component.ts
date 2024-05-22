@@ -40,6 +40,7 @@ import { Router } from '@angular/router';
 import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
 import { TooltipModule } from 'primeng/tooltip';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { validate } from 'graphql/validation';
 
 @UntilDestroy()
 @Component({
@@ -65,56 +66,44 @@ import { TableLazyLoadEvent } from 'primeng/table';
   styleUrls: ['./exam-secrets-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
-  @Output() formSave = new EventEmitter<ExamSecret>();
-  @Output() formClose = new EventEmitter<undefined>();
-  @ViewChild('form', { static: true }) form!: NgForm;
-  @Input() examSubjects: DropdownModel<string>[] = [];
-  @Input() examSecretNotes: DropdownModel<string>[] = [];
-
-  @Input() examTypes: DropdownModel<number>[] = [];
-  @Output() examTypeChanged = new EventEmitter<string>();
-
-  filters: TableLazyLoadEvent | null = null;
-
+export class ExamSecretsFormComponent implements OnInit, DoCheck {
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
-  totalRecords = 0;
 
+  @Input() set examSecretDetails(details: ExamSecret | null) {
+    if (details) {
+      this.examSecret = Object.assign({}, details);
+    }
+  }
+  @Input() examSubjects: DropdownModel<string>[] = [];
+  @Input() examSecretNotes: DropdownModel<string>[] = [];
+  @Input() examTypes: DropdownModel<number>[] = [];
+  @Input() administrationOffices: DropdownModel<number>[] = [];
+  @Input() examSites: DropdownModel<string>[] = [];
+  @Input() examDates: DropdownModel<number>[] = [];
+  @Input() examSiteId: any;
+
+  @Output() formSave = new EventEmitter<ExamSecret>();
+  @Output() formClose = new EventEmitter<undefined>();
+  @Output() examTypeChanged = new EventEmitter<any>();
+  @Output() examSiteChanged = new EventEmitter<any>();
+  @Output() administrationOfficeChanged = new EventEmitter<number>();
+
+  @ViewChild('form', { static: true }) form!: NgForm;
+
+  filters: TableLazyLoadEvent | null = null;
+  totalRecords = 0;
   submitted = false;
   studentInputData = '';
   showStudentModal = false;
   selectedStudent: any = null;
   examSubjectId: any;
   examTypeId: any;
-
-  examSecret: ExamSecret = {
-    id: '',
-    studentId: '',
-    studentName: '',
-    examSubjectName: '',
-    examTypeName: '',
-    barcode: '',
-    isFall: true,
-    academicYearId: 1,
-  };
-  @Input() set examSecretDetails(details: ExamSecret | null) {
-    if (details) {
-      this.examSecret = Object.assign({}, details);
-    }
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    this.examTypeId = this.examSecret.examTypeId;
-    this.examSubjectId = this.examSecret.examSubjectId;
-    this.cd.detectChanges();
-  }
+  examSecret: ExamSecret = {};
 
   constructor(
     private cd: ChangeDetectorRef,
     private readonly studentService: StudentsApiService,
-    private readonly router: Router,
-    private readonly toastService: GlobalToastService,
-    private readonly examSubjectService: ExamSubjectApiService,
     private readonly examTypeService: ExamTypeApiService
   ) {}
 
@@ -132,11 +121,27 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
       this.examTypes = response.data;
     });
   }
+
   onExamTypeChanged($event: any): void {
-    this.examTypeId = $event.value;
-    this.examTypeChanged.emit(this.examTypeId);
-    this.examSecret.examTypeId = this.examTypeId;
+    const ids = {
+      examTypeId: $event.value,
+      examSiteId: this.examSiteId,
+    };
+    this.examTypeChanged.emit(ids);
+    this.examSecret.examTypeId = $event.value;
   }
+
+  onAdmOfficeChanged($event: any): void {
+    this.administrationOfficeChanged.emit($event.value);
+    this.examSecret.administrationOfficeId = $event.value;
+  }
+
+  onExamSiteChanged($event: any): void {
+    this.examSiteId = $event.value;
+    this.examSiteChanged.emit($event.value);
+    this.examSecret.examSiteId = $event.value;
+  }
+
   onGridEvent(event: GridEvent<Student | Student[]>) {
     switch (event.action) {
       case GRID_ACTIONS.EDIT:
@@ -152,7 +157,11 @@ export class ExamSecretsFormComponent implements OnInit, OnChanges, DoCheck {
     } else {
       this.examSecret.studentId = student.studentId;
       this.studentInputData =
-        student?.studentStudentId + '-' + student?.studentFirstName + '-' + student.studentLastName;
+        student?.studentStudentId +
+        '-' +
+        student?.studentFirstName +
+        '-' +
+        student.studentLastName;
     }
   }
 
