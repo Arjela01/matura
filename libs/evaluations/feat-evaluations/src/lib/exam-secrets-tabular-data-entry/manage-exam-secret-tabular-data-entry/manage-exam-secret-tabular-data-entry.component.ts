@@ -147,7 +147,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
         const result: any = [];
         examAssignmentsResponse.data.forEach(x => {
           const examSecret = examSecretsResponse.data.find(
-            i => i.examTypeId === x.examTypeId && i.studentId === x.studentId
+            i => i.examTypeId === x.examTypeId && i.studentId === x.studentGuid
           );
           result.push({
             examAssignment: x,

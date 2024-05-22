@@ -84,7 +84,7 @@ export class AssignAllFormComponent {
     examSiteId: '',
     id: '',
     studentId: '',
-    studentIdentifier: '',
+    studentGuid: '',
     studentInputData: '',
     studentName:'',
     studentNameFilter: '',

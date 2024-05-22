@@ -67,7 +67,7 @@ export class ExamAssignmentGridComponent {
 
   examAssignment: ExamAssignment = {
     id: '',
-    studentIdentifier: '',
+    studentGuid: '',
     studentId: '',
     studentName: '',
     studentInputData: '',

@@ -86,7 +86,7 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
   examAssignment: ExamAssignment = {
     id: '',
     studentId: '',
-    studentIdentifier: '',
+    studentGuid: '',
     studentName: '',
     examDateId: 0,
     date: new Date(),
