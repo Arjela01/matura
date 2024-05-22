@@ -179,7 +179,6 @@ export class ExamSecretsFormComponent implements OnInit, DoCheck {
         '-' +
         student?.lastName;
     }
-    this.examSecret.isFall = student.isFall;
   }
 
   onStudentShow() {
