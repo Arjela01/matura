@@ -16,6 +16,10 @@ export interface ExamSecret {
   hasBarcode?: boolean;
   examSecretNoteId?: any;
   examSecretNoteName?: string;
+  administrationOfficeId?: string;
+  administrationOfficeName?: string;
+  examDateId?: string;
+  examDate?: string;
 }
 
 export interface ExamSecretTableView {
