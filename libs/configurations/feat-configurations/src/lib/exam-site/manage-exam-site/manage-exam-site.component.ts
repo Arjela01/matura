@@ -227,7 +227,7 @@ export class ManageExamSiteComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('Qendra e provimit u fshi me sukses!');
           this.getExamSites(this.filters as TableLazyLoadEvent);
-        }
+        } else this.toastService.showInfo(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(

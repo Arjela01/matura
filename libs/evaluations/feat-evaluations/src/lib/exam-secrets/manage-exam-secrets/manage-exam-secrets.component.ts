@@ -1,10 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
@@ -33,7 +28,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ExamSecretsFormComponent } from '../exam-secrets-form/exam-secrets-form.component';
 import { ExamSecretsGridComponent } from '../exam-secrets-grid/exam-secrets-grid.component';
-import { AdministrationOffice, ExamSecret } from '@msh/shared/domain-models';
+import { ExamSecret } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ArchiveFolderGridComponent } from '../../archive-folder/archive-folder-grid/archive-folder-grid.component';
 
@@ -55,7 +50,6 @@ import { ArchiveFolderGridComponent } from '../../archive-folder/archive-folder-
   ],
   templateUrl: './manage-exam-secrets.component.html',
   styleUrls: ['./manage-exam-secrets.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
 export class ManageExamSecretsComponent implements OnInit {
@@ -72,7 +66,6 @@ export class ManageExamSecretsComponent implements OnInit {
   examSites: DropdownModel<string>[] = [];
   examSecretNotes: DropdownModel<string>[] = [];
   examDates: DropdownModel<number>[] = [];
-  examSiteId: any;
 
   examSecretId: string | undefined;
   selectedRecord: any;
@@ -121,6 +114,15 @@ export class ManageExamSecretsComponent implements OnInit {
         break;
       case GRID_ACTIONS.EDIT:
         this.selectedExamSecret = Object.assign({}, event.data as ExamSecret);
+        this.getEXamSites(
+          this.selectedExamSecret.administrationOfficeId as number
+        );
+        this.getExamTypes(this.selectedExamSecret.examSiteId);
+        this.getExamSubjects(this.selectedExamSecret.examTypeId);
+        this.getExamDates(
+          this.selectedExamSecret.examSiteId as string,
+          this.selectedExamSecret.examTypeId as number
+        );
         this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
@@ -132,15 +134,32 @@ export class ManageExamSecretsComponent implements OnInit {
         });
         break;
     }
-    this.cd.detectChanges();
   }
 
-  getDataOnExamTypeChange($event: any) {
-    this.getExamDates($event.examSiteId, $event.examTypeId);
+  onExamSiteChanged(examSiteId: any) {
+    if (this.selectedExamSecret != null) {
+      this.selectedExamSecret.examSiteId = examSiteId;
+    }
+    this.getExamTypes(examSiteId);
+  }
+
+  onExamTypeChanged($event: any) {
+    if (this.selectedExamSecret != null) {
+      this.selectedExamSecret.examTypeId = $event.examTypeId;
+      this.selectedExamSecret.examSiteId = $event.examSiteId;
+    }
     this.getExamSubjects($event.examTypeId);
+    this.getExamDates($event.examSiteId, $event.examTypeId);
+    this.cd.markForCheck();
   }
 
-  getExamSubjects(examTypeId: number) {
+  onAdmOfficeChange(administrationOfficeId: any) {
+    if (this.selectedExamSecret != null)
+      this.selectedExamSecret.administrationOfficeId = administrationOfficeId;
+    this.getEXamSites(administrationOfficeId);
+  }
+
+  getExamSubjects(examTypeId: any) {
     this.examSubjectService
       .forExamType(examTypeId, undefined, undefined, undefined, true)
       .pipe(untilDestroyed(this))
@@ -156,6 +175,7 @@ export class ManageExamSecretsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examTypes = response.data;
+        this.cd.markForCheck();
       });
   }
 
@@ -165,6 +185,7 @@ export class ManageExamSecretsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.administrationOffices = response.data;
+        this.cd.markForCheck();
       });
   }
 
@@ -183,6 +204,7 @@ export class ManageExamSecretsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examDates = response.data;
+        this.cd.markForCheck();
       });
   }
 
@@ -267,6 +289,7 @@ export class ManageExamSecretsComponent implements OnInit {
 
   onFormSave(examSecret: ExamSecret) {
     const valuesToSend: ExamSecret = {
+      id: examSecret.id,
       studentId: examSecret.studentId,
       examTypeId: examSecret.examTypeId,
       examSubjectId: examSecret.examSubjectId,
