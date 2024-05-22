@@ -19,7 +19,7 @@ export interface ExamSecret {
   administrationOfficeId?: string;
   administrationOfficeName?: string;
   examDateId?: string;
-  examDateName?: string;
+  examDate?: string;
 }
 
 export interface ExamSecretTableView {
