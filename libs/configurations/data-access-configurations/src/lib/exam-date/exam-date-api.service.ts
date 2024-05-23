@@ -53,7 +53,7 @@ export class ExamDateApiService {
   ): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.post<ApiResult<DropdownModel<number>[]>, any>(
       `/ExamDate/ForExamSites`,
-        {ids: examSiteIds}
+      { ids: examSiteIds }
     );
   }
 

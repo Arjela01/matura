@@ -4,7 +4,7 @@ export interface ExamSecret {
   studentName?: string;
   examSubjectId?: string;
   examSubjectName?: string;
-  examTypeId?: string;
+  examTypeId?: number;
   examTypeName?: string;
   examSiteId?: string;
   examSiteName?: string;
@@ -16,7 +16,7 @@ export interface ExamSecret {
   hasBarcode?: boolean;
   examSecretNoteId?: any;
   examSecretNoteName?: string;
-  administrationOfficeId?: string;
+  administrationOfficeId?: number;
   administrationOfficeName?: string;
   examDateId?: string;
   examDate?: string;

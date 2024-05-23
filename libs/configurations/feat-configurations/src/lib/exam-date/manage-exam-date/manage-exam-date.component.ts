@@ -199,7 +199,7 @@ export class ManageExamDateComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('Data e provimit u fshi me sukses!');
           this.getExamDates(this.filters as TableLazyLoadEvent);
-        } else this.toastService.showError(response.errorMessage);
+        } else this.toastService.showInfo(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
