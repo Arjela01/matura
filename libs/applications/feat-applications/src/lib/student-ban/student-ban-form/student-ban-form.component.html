@@ -39,8 +39,10 @@
             placeholder="Barkodi"
             id="barcode"
             name="barcode"
+            [pattern]="barcodePattern"
             [(ngModel)]="studentBan.barcode"
-            pTooltip="Barkodi duhet te permbaje 7 shifra"
+            pTooltip=" Barkodi duhet të përmbajë 5 numra, ndjekur nga D ose Z, dhe përfunduar me
+             1, 2, 3 ose Z."
             tooltipPosition="top"
             required
             [ngClass]="{
@@ -74,7 +76,6 @@
             Tipi i provimit është fushë e kërkuar.
           </small>
         </div>
-
 
         <div class="field">
           <label for="effectiveDate">Data Efektive *</label>
@@ -119,18 +120,18 @@
           <div class="formgrid grid">
             <div class="field-radiobutton col-6">
               <p-radioButton
-                      id="IsBannedTrue"
-                      name="isBanned"
-                      [value]="true"
-                      [(ngModel)]="studentBan.isBanned"></p-radioButton>
+                id="IsBannedTrue"
+                name="isBanned"
+                [value]="true"
+                [(ngModel)]="studentBan.isBanned"></p-radioButton>
               <label for="IsBannedTrue">Po</label>
             </div>
             <div class="field-radiobutton col-6">
               <p-radioButton
-                      id="IsBannedFalse"
-                      name="isBanned"
-                      [value]="false"
-                      [(ngModel)]="studentBan.isBanned"></p-radioButton>
+                id="IsBannedFalse"
+                name="isBanned"
+                [value]="false"
+                [(ngModel)]="studentBan.isBanned"></p-radioButton>
               <label for="IsBannedFalse">Jo</label>
             </div>
           </div>

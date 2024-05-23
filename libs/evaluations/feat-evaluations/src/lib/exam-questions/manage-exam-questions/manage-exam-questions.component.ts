@@ -48,6 +48,7 @@ export class ManageExamQuestionsComponent implements OnInit {
   examVariantId: any;
   selectedExamQuestion: ExamQuestionModel | null = null;
   examVariantName!: string;
+  examTypeAndSubject!: string;
   examVariantMaximumScore!: number;
   examVariantRecordedScore!: number;
 
@@ -174,6 +175,7 @@ export class ManageExamQuestionsComponent implements OnInit {
         if (variant) {
           this.examVariantName = variant.name;
           this.examVariantMaximumScore = variant.maximumScore;
+          this.examTypeAndSubject = `${variant.examTypeName} - ${variant.examSubjectName}`;
         }
       });
   }

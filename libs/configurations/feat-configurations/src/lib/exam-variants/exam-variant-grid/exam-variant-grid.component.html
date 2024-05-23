@@ -73,23 +73,38 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="maximumScore">
+        Pikët e Hedhura
+        <div>
+          <p-sortIcon field="maximumScore"></p-sortIcon>
+          <p-columnFilter
+            type="numeric"
+            field="maximumScore"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-examVariant>
     <tr>
-      <td style="width: 18%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ examVariant.name }}
       </td>
-      <td style="width: 18%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ examVariant.examTypeName }}
       </td>
-      <td style="width: 18%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ examVariant.examSubjectName }}
       </td>
-      <td style="width: 18%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
         {{ examVariant.numberOfQuestions }}
       </td>
-      <td style="width: 18%; min-width: 10rem">
+      <td style="width: 15%; min-width: 10rem">
+        {{ examVariant.maximumScore }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
         {{ examVariant.maximumScore }}
       </td>
       <td>

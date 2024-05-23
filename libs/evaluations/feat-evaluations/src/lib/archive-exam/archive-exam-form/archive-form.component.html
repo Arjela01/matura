@@ -10,11 +10,14 @@
       id="barcode"
       name="barcode"
       [(ngModel)]="archiveExam.barcode"
-      pTooltip="Barkodi duhet te permbaje 7 shifra"
+      pTooltip=" Barkodi duhet të përmbajë 5 numra, ndjekur nga D ose Z, dhe përfunduar me
+      1, 2, 3 ose Z."
       tooltipPosition="top"
       required
+      [pattern]="barcodePattern"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !archiveExam.barcode
+        'ng-invalid ng-dirty':
+          submitted && !archiveExam.barcode
       }" />
     <small class="p-error block" *ngIf="submitted && !archiveExam.barcode">
       Barkodi është fushë e kërkuar.

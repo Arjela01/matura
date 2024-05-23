@@ -24,6 +24,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { BehaviorSubject } from 'rxjs';
 import { ExamSecret, Student } from '@msh/shared/domain-models';
 import {
+  BARCODE_REGEX,
   GlobalToastService,
   GRID_ACTIONS,
   GridEvent,
@@ -100,6 +101,7 @@ export class ExamSecretsFormComponent implements OnInit, DoCheck {
   examSubjectId: any;
   examTypeId: any;
   examSecret: ExamSecret = {};
+  barcodePattern = BARCODE_REGEX;
 
   constructor(
     private cd: ChangeDetectorRef,

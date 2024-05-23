@@ -8,7 +8,8 @@ import {
   Input,
   OnChanges,
   OnDestroy,
-  Output, Renderer2,
+  Output,
+  Renderer2,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
@@ -16,7 +17,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ExamScore } from '@msh/shared/domain-models';
-import { GlobalToastService } from '@msh/shared/util-shared';
+import { BARCODE_REGEX, GlobalToastService } from '@msh/shared/util-shared';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
@@ -45,9 +46,7 @@ import { TooltipModule } from 'primeng/tooltip';
   styleUrls: ['./exam-scores-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamScoresFormComponent
-  implements OnChanges, OnDestroy
-{
+export class ExamScoresFormComponent implements OnChanges, OnDestroy {
   @Input() examTypes: DropdownModel<number>[] = [];
   @Input() examSubjects: DropdownModel<string>[] = [];
 
@@ -60,10 +59,10 @@ export class ExamScoresFormComponent
   @ViewChild('barcodeInputField', { static: false }) barcodeInputField:
     | ElementRef<HTMLInputElement>
     | undefined;
-  submitted = false;
   @ViewChild('writingScoreInput', { static: false })
   writingScoreInput: ElementRef | undefined;
-
+  submitted = false;
+  barcodePattern = BARCODE_REGEX;
   examScore: ExamScore = {
     archiveExamIndex: 0,
     archiveFolderNr: 0,
@@ -141,7 +140,9 @@ export class ExamScoresFormComponent
         this.barcodeExists = true;
 
         if (this.writingScoreInput && this.writingScoreInput.nativeElement) {
-          this.renderer.selectRootElement(this.writingScoreInput.nativeElement).focus();
+          this.renderer
+            .selectRootElement(this.writingScoreInput.nativeElement)
+            .focus();
         }
       } else {
         this.barcodeExists = false;
@@ -150,5 +151,4 @@ export class ExamScoresFormComponent
       this.cd.markForCheck();
     });
   }
-
 }

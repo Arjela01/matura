@@ -15,7 +15,7 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { PaginatorModule } from 'primeng/paginator';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import { GlobalToastService } from '@msh/shared/util-shared';
+import { BARCODE_REGEX, GlobalToastService } from '@msh/shared/util-shared';
 import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { UntilDestroy } from '@ngneat/until-destroy';
@@ -51,6 +51,7 @@ export class ExamQuestionScoreFiltersComponent {
 
   examQuestionScoreList: SearchOptions = {} as SearchOptions;
   submitted = false;
+  barcodePattern = BARCODE_REGEX;
 
   constructor(
     private readonly toastService: GlobalToastService,
@@ -116,4 +117,6 @@ export class ExamQuestionScoreFiltersComponent {
       }
     }
   }
+
+  protected readonly BARCODE_REGEX = BARCODE_REGEX;
 }

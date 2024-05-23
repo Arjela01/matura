@@ -20,7 +20,11 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
+import {
+  BARCODE_REGEX,
+  GRID_ACTIONS,
+  GridEvent,
+} from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BehaviorSubject } from 'rxjs';
@@ -81,6 +85,7 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
   @Output() formClose = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
+  barcodePattern = BARCODE_REGEX;
 
   submitted = false;
   studentBan: StudentBan = {
@@ -183,4 +188,6 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
     }
     this.cd.markForCheck();
   }
+
+  protected readonly BARCODE_REGEX = BARCODE_REGEX;
 }
