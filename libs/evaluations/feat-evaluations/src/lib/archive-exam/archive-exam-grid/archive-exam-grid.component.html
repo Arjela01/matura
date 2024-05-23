@@ -18,12 +18,14 @@
         placeholder="Barkodi"
         id="barcode"
         autofocus
+        [pattern]="barcodePattern"
         #barcodeField
         name="barcode"
         [(ngModel)]="archiveExam.barcode"
-        pTooltip="Barkodi duhet të përmbaje 7 karaktere alfanumerike"
+        pTooltip=" Barkodi duhet të përmbajë 5 numra, ndjekur nga D ose Z, dhe përfunduar me
+      1, 2, 3 ose Z."
         onfocus="this.value=''"
-        tooltipPosition="top"
+        tooltipPosition="right"
         required
         (change)="saveArchiveExam(archiveExam)" />
     </div>
@@ -42,8 +44,6 @@
   [rowHover]="true"
   [(selection)]="selectedArchiveExams"
   selectionMode="multiple"
-  (onRowSelect)="onRowSelect($event)"
-  (onRowUnselect)="onRowUnselect($event)"
   (onLazyLoad)="loadRows($event)"
   [lazy]="true">
   <ng-template pTemplate="header">

@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -11,11 +10,11 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
+  BARCODE_REGEX,
   ColumnFilterDirective,
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
-import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -29,10 +28,8 @@ import {
 import { TooltipModule } from 'primeng/tooltip';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ArchiveExamApiService } from '@msh/evaluations/data-access-evaluations';
 import { BarcodeService } from '../services/barcode-service';
 import { ArchiveExam } from '@msh/shared/domain-models';
-import { Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'msh-archive-exam-grid',
@@ -81,6 +78,7 @@ export class ArchiveExamGridComponent implements OnInit {
 
   submitted = false;
   id = 0;
+  barcodePattern = BARCODE_REGEX;
 
   archiveExam: ArchiveExam = {
     archiveFolderNr: 0,
@@ -91,7 +89,7 @@ export class ArchiveExamGridComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private barcodeService: BarcodeService,
+    private barcodeService: BarcodeService
   ) {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -105,45 +103,25 @@ export class ArchiveExamGridComponent implements OnInit {
       archiveFolderId: this.id as number,
     };
     this.barcodeService.emptyBarcodeField$.subscribe(value => {
-      if (value == true) {
+      if (value) {
         this.archiveExam.barcode = '';
       }
     });
   }
 
-  lettersNumbersCheck(input: any) {
-    const numberRegex = /\d/;
-    const characterRegex = /[a-zA-Z]/;
-    const barcode = this.archiveExam?.barcode;
-    return (
-      barcode &&
-      barcode.length === 7 &&
-      numberRegex.test(input) &&
-      characterRegex.test(input)
-    );
+  barcodeCheck(input: any) {
+    const pattern = /^\d{5}[DZ][123Z]$/;
+    return pattern.test(input);
   }
 
   saveArchiveExam(archiveExam: ArchiveExam): void {
-    if (this.lettersNumbersCheck(this.archiveExam?.barcode)) {
+    if (this.barcodeCheck(this.archiveExam?.barcode)) {
       this.gridEvent.emit({
         action: GRID_ACTIONS.CUSTOM_ACTION1,
         data: archiveExam,
       } as GridEvent<ArchiveExam>);
       this.barcodeField?.nativeElement.focus();
     }
-  }
-  onRowUnselect($event: TableRowUnSelectEvent) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.UNSELECT_ROW,
-      data: $event.data,
-    } as GridEvent<ArchiveExam>);
-  }
-
-  onRowSelect($event: TableRowSelectEvent) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.SELECT_ROW,
-      data: $event.data,
-    } as GridEvent<ArchiveExam>);
   }
 
   onEditClick(archiveExam: ArchiveExam) {
@@ -162,4 +140,6 @@ export class ArchiveExamGridComponent implements OnInit {
   loadRows($event: TableLazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
+
+  protected readonly BARCODE_REGEX = BARCODE_REGEX;
 }

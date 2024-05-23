@@ -9,8 +9,10 @@
       placeholder="Barkodi"
       id="barcode"
       name="barcode"
+      [pattern]="barcodePattern"
       [(ngModel)]="archiveExam.barcode"
-      pTooltip="Barkodi duhet të përmbaje 7 karaktere alfanumerike"
+      pTooltip=" Barkodi duhet të përmbajë 5 numra, ndjekur nga D ose Z, dhe përfunduar me
+      1, 2, 3 ose Z."
       tooltipPosition="top"
       required
       [ngClass]="{

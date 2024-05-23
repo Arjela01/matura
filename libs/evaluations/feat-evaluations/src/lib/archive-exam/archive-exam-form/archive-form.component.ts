@@ -17,6 +17,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { ArchiveExam } from '@msh/shared/domain-models';
 import { TooltipModule } from 'primeng/tooltip';
+import { BARCODE_REGEX } from '@msh/shared/util-shared';
 
 @Component({
   selector: 'msh-archive-exam-form',
@@ -50,6 +51,7 @@ export class ArchiveFormComponent {
   @ViewChild('form', { static: true }) form!: NgForm;
 
   submitted = false;
+  barcodePattern = BARCODE_REGEX;
 
   archiveExam: ArchiveExam = {
     archiveFolderNr: 0,

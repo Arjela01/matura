@@ -7,7 +7,11 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
-import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
+import {
+  BARCODE_REGEX,
+  GRID_ACTIONS,
+  GridEvent,
+} from '@msh/shared/util-shared';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
@@ -49,6 +53,7 @@ export class ExamSecretsTabularDataEntryListComponent {
   @Output() gridEvent = new EventEmitter<
     GridEvent<ExamSecret | ExamSecret[]>
   >();
+  barcodePattern = BARCODE_REGEX;
 
   onDeleteClick(examSecret: ExamSecret) {
     this.gridEvent.emit({
@@ -59,4 +64,6 @@ export class ExamSecretsTabularDataEntryListComponent {
   onExamSecretAddOrUpdate(examSecret: any) {
     this.barcodeChange.emit(examSecret);
   }
+
+  protected readonly BARCODE_REGEX = BARCODE_REGEX;
 }

@@ -116,11 +116,13 @@
           placeholder="Barkodi"
           [disabled]="!examQuestionScoreList.examVariantId"
           id="barcode"
+          [pattern]="barcodePattern"
           name="barcode"
           (change)="onSubmit()"
           (keydown.enter)="onSubmit()"
           [(ngModel)]="examQuestionScoreList.barcode"
-          pTooltip="Barkodi duhet te permbaje 7 shifra"
+          pTooltip=" Barkodi duhet të përmbajë 5 numra, ndjekur nga D ose Z, dhe përfunduar me
+      1, 2, 3 ose Z."
           tooltipPosition="top"
           required
           [ngClass]="{

@@ -19,7 +19,12 @@ import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { BehaviorSubject } from 'rxjs';
 import { ExamSecret, Student } from '@msh/shared/domain-models';
-import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
+import {
+  BARCODE_REGEX,
+  GlobalToastService,
+  GRID_ACTIONS,
+  GridEvent,
+} from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
@@ -81,6 +86,7 @@ export class ExamSecretsFormComponent implements DoCheck {
   showStudentModal = false;
   selectedStudent: any = null;
   examSecret: ExamSecret = {};
+  barcodePattern = BARCODE_REGEX;
 
   constructor(
     private readonly studentService: StudentsApiService,

@@ -75,33 +75,6 @@ export class ExamVariantGridComponent {
     } as GridEvent<ExamVariant>);
   }
 
-  onSelectAllClick() {
-    if (this.selectedExamVariants.length === 0) {
-      this.gridEvent.emit({
-        action: GRID_ACTIONS.UNSELECT_ALL,
-      } as GridEvent<ExamVariant>);
-    } else {
-      this.gridEvent.emit({
-        action: GRID_ACTIONS.SELECT_MANY,
-        data: this.selectedExamVariants,
-      } as GridEvent<ExamVariant[]>);
-    }
-  }
-
-  onRowSelect($event: TableRowSelectEvent) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.SELECT_ROW,
-      data: $event.data,
-    } as GridEvent<ExamVariant>);
-  }
-
-  onRowUnselect($event: TableRowUnSelectEvent) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.UNSELECT_ROW,
-      data: $event.data,
-    } as GridEvent<ExamVariant>);
-  }
-
   loadRows($event: TableLazyLoadEvent) {
     this.lazyLoadData.emit($event);
   }
