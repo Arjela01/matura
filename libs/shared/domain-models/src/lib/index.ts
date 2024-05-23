@@ -64,3 +64,4 @@ export * from './analytic-scores-without-total/analytic-scores-without-total.mod
 export * from './total-scores-without-analytic/total-scores-without-analytic.model';
 export * from './exam-question-score/exam-question-score.model';
 export * from './total-analytic-scores-mismatch/total-analytic-scores-mismatch.model';
+export * from './exam-grade-change/exam-grade-change.model';

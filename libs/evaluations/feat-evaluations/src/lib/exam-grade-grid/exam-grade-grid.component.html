@@ -167,6 +167,13 @@
             <td style="width: 5%">
               {{ examGrade.isFall ? 'Po' : 'Jo' }}
             </td>
+            <td style="width: 5%"><img
+              src="assets/svg/edit-form.svg"
+              class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
+              tooltipPosition="bottom"
+              (click)="onEditClick(examGrade)"
+              pTooltip="Ndrysho" />
+            </td>
           </tr>
         </ng-template>
       </p-table>

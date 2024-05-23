@@ -61,4 +61,8 @@ export class ExamGradeGridComponent {
         this.totalRecords = response.total;
       });
   }
+
+  onEditClick(examGrade: any) {
+
+  }
 }
