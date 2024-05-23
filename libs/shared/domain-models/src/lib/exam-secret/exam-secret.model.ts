@@ -30,6 +30,7 @@ export interface ExamSecretTableView {
 export interface ExamSecretLock {
   id?: number;
   examTypeId?: number;
+  examTypeName?: string;
   isSecretDataEntryCompleted?: boolean;
   isFall?: boolean;
   academicYearId?: number;
