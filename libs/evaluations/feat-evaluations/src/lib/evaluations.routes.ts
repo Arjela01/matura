@@ -282,4 +282,11 @@ export const EVALUATION_ROUTES: Route[] = [
         './exam-secret-without-score/exam-secret-without-score/exam-secret-without-score.component'
       ).then(m => m.ExamSecretWithoutScoreComponent),
   },
+  {
+    path: 'exam-secret-lock',
+    loadComponent: () =>
+      import('./exam-secret-lock/exam-secret-lock.component').then(
+        m => m.ExamSecretLockComponent
+      ),
+  },
 ];

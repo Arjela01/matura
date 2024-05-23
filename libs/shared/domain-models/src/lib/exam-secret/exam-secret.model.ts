@@ -26,3 +26,14 @@ export interface ExamSecretTableView {
   data: ExamSecret[];
   total: number;
 }
+
+export interface ExamSecretLock {
+  id?: number;
+  examTypeId?: number;
+  isSecretDataEntryCompleted?: boolean;
+  isFall?: boolean;
+  academicYearId?: number;
+}
+export interface ExamSecretLockView {
+  data: ExamSecretLock[];
+}
