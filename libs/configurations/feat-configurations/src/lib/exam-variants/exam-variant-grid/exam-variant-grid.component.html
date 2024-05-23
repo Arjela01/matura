@@ -14,8 +14,6 @@
   [rowHover]="true"
   [(selection)]="selectedExamVariants"
   selectionMode="multiple"
-  (onRowSelect)="onRowSelect($event)"
-  (onRowUnselect)="onRowUnselect($event)"
   (onLazyLoad)="loadRows($event)"
   [lazy]="true">
   <ng-template pTemplate="header">
@@ -27,28 +25,6 @@
           <p-columnFilter
             type="text"
             field="name"
-            display="menu"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="profileGroupName">
-        Grupi i Profileve
-        <div>
-          <p-sortIcon field="profileGroupName"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="profileGroupName"
-            display="menu"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="profileName">
-        Profili
-        <div>
-          <p-sortIcon field="profileName"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="profileName"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
@@ -103,13 +79,6 @@
     <tr>
       <td style="width: 18%; min-width: 10rem">
         {{ examVariant.name }}
-      </td>
-
-      <td style="width: 18%; min-width: 10rem">
-        {{ examVariant.profileGroupName }}
-      </td>
-      <td style="width: 18%; min-width: 10rem">
-        {{ examVariant.profileName }}
       </td>
       <td style="width: 18%; min-width: 10rem">
         {{ examVariant.examTypeName }}

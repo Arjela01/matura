@@ -92,10 +92,8 @@ export class ManageExamVariantsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getProfileGroupsDropdown();
     this.getExamTypesDropdown();
     this.getExamSubjectsDropdown();
-    this.getProfilesDropdown();
     const token = localStorage.getItem('token');
     if (token) {
       this.authFacade.academicYear$
@@ -141,26 +139,6 @@ export class ManageExamVariantsComponent implements OnInit {
   }
   onGridEvent(event: GridEvent<ExamVariant | ExamVariant[]>) {
     switch (event.action) {
-      case GRID_ACTIONS.SELECT_ROW:
-        this.selectedExamVariants = [
-          ...this.selectedExamVariants,
-          event.data as ExamVariant,
-        ];
-        break;
-      case GRID_ACTIONS.UNSELECT_ROW:
-        this.selectedExamVariants = this.selectedExamVariants.filter(hs => {
-          hs.id !== (event.data as ExamVariant).id;
-        });
-        break;
-      case GRID_ACTIONS.SELECT_MANY:
-        this.selectedExamVariants = [
-          ...this.selectedExamVariants,
-          ...(event.data as ExamVariant[]),
-        ];
-        break;
-      case GRID_ACTIONS.UNSELECT_ALL:
-        this.selectedExamVariants = [];
-        break;
       case GRID_ACTIONS.EDIT:
         this.selectedExamVariant = Object.assign({}, event.data as ExamVariant);
         this.displayModal = true;
@@ -257,23 +235,6 @@ export class ManageExamVariantsComponent implements OnInit {
           this.toastService.showError(
             'Ndodhi një problem gjatë fshirjes së variantit!'
           );
-      });
-  }
-
-  getProfileGroupsDropdown() {
-    this.profileGroupApiService
-      .loadDropdownList()
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.profileGroups = response.data;
-      });
-  }
-  getProfilesDropdown() {
-    this.profileApiService
-      .loadDropdownList()
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.profiles = response.data;
       });
   }
   getExamTypesDropdown() {
