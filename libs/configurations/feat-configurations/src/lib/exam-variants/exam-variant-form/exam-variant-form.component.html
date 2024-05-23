@@ -15,43 +15,13 @@
     </small>
   </div>
   <div class="field">
-    <label for="ProfileGroups">Grupi i Profileve</label>
+    <label for="examType">Tipi i Provimit *</label>
     <p-dropdown
-      id="profileGroups"
-      [options]="profileGroups"
-      optionValue="key"
-      optionLabel="value"
-      name="profileGroupId"
-      [filter]="true"
-      [autoDisplayFirst]="false"
-      [(ngModel)]="examVariant.profileGroupId"
-      [showClear]="true"
-      >
-    </p-dropdown>
-  </div>
-  <div class="field">
-    <label for="profile">Profili</label>
-    <p-dropdown
-      id="profile"
-      [options]="profiles"
-      optionValue="key"
-      optionLabel="value"
-      name="profile"
-      [filter]="true"
-      [autoDisplayFirst]="false"
-      [(ngModel)]="examVariant.profileId"
-      [showClear]="true"
-     >
-    </p-dropdown>
-  </div>
-  <div class="field">
-    <label for="ProfileGroups">Tipi i Provimit *</label>
-    <p-dropdown
-      id="examTypes"
+      id="examType"
       [options]="examTypes"
       optionValue="key"
       optionLabel="value"
-      name="examTypeId"
+      name="examType"
       appendTo="body"
       (onChange)="refreshExamSubjects()"
       [filter]="true"
@@ -68,7 +38,7 @@
     </small>
   </div>
   <div class="field">
-    <label for="ProfileGroups">Lënda e Provimit *</label>
+    <label for="examSubjects">Lënda e Provimit *</label>
     <p-dropdown
       id="examSubjects"
       [options]="examSubjects"
