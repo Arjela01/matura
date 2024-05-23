@@ -25,7 +25,6 @@ import {
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
-import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
