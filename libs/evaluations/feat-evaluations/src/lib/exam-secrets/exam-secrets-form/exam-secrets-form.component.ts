@@ -1,14 +1,10 @@
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   DoCheck,
   EventEmitter,
   Input,
-  OnChanges,
-  OnInit,
   Output,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -29,19 +25,14 @@ import {
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
+import { GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
-import {
-  ExamSubjectApiService,
-  ExamTypeApiService,
-  StudentsApiService,
-} from '@msh/configurations/data-access-configurations';
-import { Router } from '@angular/router';
+import { StudentsApiService } from '@msh/configurations/data-access-configurations';
 import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
 import { TooltipModule } from 'primeng/tooltip';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { validate } from 'graphql/validation';
 
 @UntilDestroy()
 @Component({
@@ -62,12 +53,10 @@ import { validate } from 'graphql/validation';
     TooltipModule,
   ],
   providers: [ConfirmationService],
-
   templateUrl: './exam-secrets-form.component.html',
   styleUrls: ['./exam-secrets-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamSecretsFormComponent implements OnInit, DoCheck {
+export class ExamSecretsFormComponent implements DoCheck {
   private studentList$$ = new BehaviorSubject<Student[]>([]);
   studentList$ = this.studentList$$.asObservable();
 
@@ -82,7 +71,6 @@ export class ExamSecretsFormComponent implements OnInit, DoCheck {
   @Input() administrationOffices: DropdownModel<number>[] = [];
   @Input() examSites: DropdownModel<string>[] = [];
   @Input() examDates: DropdownModel<number>[] = [];
-  @Input() examSiteId: any;
 
   @Output() formSave = new EventEmitter<ExamSecret>();
   @Output() formClose = new EventEmitter<undefined>();
@@ -98,17 +86,13 @@ export class ExamSecretsFormComponent implements OnInit, DoCheck {
   studentInputData = '';
   showStudentModal = false;
   selectedStudent: any = null;
-  examSubjectId: any;
-  examTypeId: any;
   examSecret: ExamSecret = {};
   barcodePattern = BARCODE_REGEX;
 
   constructor(
-    private cd: ChangeDetectorRef,
     private readonly studentService: StudentsApiService,
-    private readonly examTypeService: ExamTypeApiService
+    private readonly cd: ChangeDetectorRef
   ) {}
-
   ngDoCheck(): void {
     if (this.examSecret.studentId !== undefined) {
       this.onStudentInit(this.examSecret);
@@ -118,30 +102,21 @@ export class ExamSecretsFormComponent implements OnInit, DoCheck {
     }
   }
 
-  ngOnInit(): void {
-    this.examTypeService.loadDropdownList().subscribe(response => {
-      this.examTypes = response.data;
-    });
-  }
-
   onExamTypeChanged($event: any): void {
     const ids = {
       examTypeId: $event.value,
-      examSiteId: this.examSiteId,
+      examSiteId: this.examSecret.examSiteId,
     };
     this.examTypeChanged.emit(ids);
-    this.examSecret.examTypeId = $event.value;
   }
 
   onAdmOfficeChanged($event: any): void {
     this.administrationOfficeChanged.emit($event.value);
-    this.examSecret.administrationOfficeId = $event.value;
   }
 
   onExamSiteChanged($event: any): void {
-    this.examSiteId = $event.value;
     this.examSiteChanged.emit($event.value);
-    this.examSecret.examSiteId = $event.value;
+    this.cd.markForCheck();
   }
 
   onGridEvent(event: GridEvent<Student | Student[]>) {
