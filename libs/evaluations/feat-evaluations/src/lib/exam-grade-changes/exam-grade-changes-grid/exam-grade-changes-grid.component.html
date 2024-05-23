@@ -1,0 +1,247 @@
+<p-table
+  #dt
+  dataKey="id"
+  responsiveLayout="scroll"
+  [scrollable]="true"
+  scrollHeight="820px"
+  [value]="examSecrets"
+  [totalRecords]="totalRecords"
+  [rows]="100"
+  [paginator]="true"
+  [rowsPerPageOptions]="[100, 200, 300]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
+  [rowHover]="true"
+  [(selection)]="selectedExamSecrets"
+  selectionMode="multiple"
+  (onLazyLoad)="loadRows($event)"
+  [lazy]="true">
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="studentStudentId">
+        Matura ID
+        <div>
+          <p-sortIcon field="studentStudentId"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="studentStudentId"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="studentNid">
+        NID
+        <div>
+          <p-sortIcon field="studentNid"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="studentNid"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="studentFirstName">
+        Emri
+        <div>
+          <p-sortIcon field="studentFirstName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="studentFirstName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="studentMiddleName">
+        Atësia
+        <div>
+          <p-sortIcon field="studentMiddleName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="studentMiddleName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="studentLastName">
+        Mbiemri
+        <div>
+          <p-sortIcon field="studentLastName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="studentLastName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="adnimistrationOfficeName">
+        ZVAP
+        <div>
+          <p-sortIcon field="adnimistrationOfficeName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="adnimistrationOfficeName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="examSiteName">
+        Qendra
+        <div>
+          <p-sortIcon field="examSiteName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="examSiteName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="examTypeName">
+        Tipi
+        <div>
+          <p-sortIcon field="examTypeName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="examTypeName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="examSubjectName">
+        Lënda
+        <div>
+          <p-sortIcon field="examSubjectName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="examSubjectName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="examDate">
+        Data
+        <div>
+          <p-sortIcon field="examDate"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="examDate"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="barcode">
+        Barkodi
+        <div>
+          <p-sortIcon field="barcode"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="barcode"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="examSecretNoteName">
+        Probleme
+        <div>
+          <p-sortIcon field="examSecretNoteName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="examSecretNoteName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="isFall">
+        Vjeshtë?
+        <div>
+          <p-sortIcon field="isFall"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            field="isFall"
+            matchMode="equals"
+            display="menu"></p-columnFilter>
+        </div>
+      </th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-examSecret>
+    <tr>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examSecret.studentStudentId }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examSecret.studentNid }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examSecret.studentFirstName }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examSecret.studentMiddleName }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examSecret.studentLastName }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examSecret.administrationOfficeName }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examSecret.examSiteName }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examSecret.examTypeName }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examSecret.examSubjectName }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examSecret.examDate | date : 'dd/MM/yyyy' }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ examSecret.barcode }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ examSecret.examSecretNoteName }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examSecret.isFall ? 'Po' : 'Jo' }}
+      </td>
+      <td>
+        <div class="flex">
+          <img
+            src="assets/svg/edit-form.svg"
+            class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
+            tooltipPosition="bottom"
+            (click)="onEditClick(examSecret)"
+            pTooltip="Ndrysho" />
+          <img
+            src="assets/svg/history.svg"
+            class="p-button-rounded p-button-warning p-button-text m-2 pointer"
+            tooltipPosition="bottom"
+            (click)="onHistoryClick(examSecret)"
+            pTooltip="Historia" />
+          <img
+            src="assets/svg/delete-form.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
+            pTooltip="Fshi"
+            tooltipPosition="bottom"
+            (click)="onDeleteClick(examSecret)" />
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+<p-dialog
+  [(visible)]="displayHistoryForm"
+  [style]="{ width: '80%' }"
+  [modal]="true"
+  [header]="headerText"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid">
+  <ng-template pTemplate="content">
+    <msh-exam-secret-history-grid
+      [recordId]="examSecretId"
+      [recordData]="selectedRecord">
+    </msh-exam-secret-history-grid>
+  </ng-template>
+</p-dialog>

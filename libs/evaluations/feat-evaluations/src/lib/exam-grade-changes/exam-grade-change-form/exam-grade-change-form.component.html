@@ -1,0 +1,112 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="ExamSubject">Lloji i ndryshimit *</label>
+    <p-dropdown
+      id="ExamGradeChangeType"
+      [options]="examGradeChangeTypes"
+      optionValue="key"
+      optionLabel="value"
+      name="examSubjectId"
+      [filter]="true"
+      [autoDisplayFirst]="false"
+      [required]="true"
+      [(ngModel)]="examSecret.examSubjectId"
+      [showClear]="true"
+      appendTo="body"
+    >
+    </p-dropdown>
+    <small class="p-error block" *ngIf="submitted && !examSecret.examSubjectId">
+      Lënda e provimit është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="ExamSubject">Lënda e Provimit *</label>
+    <p-dropdown
+      id="ExamSubject"
+      [options]="examSubjects"
+      optionValue="key"
+      optionLabel="value"
+      name="examSubjectId"
+      [filter]="true"
+      [autoDisplayFirst]="false"
+      [required]="true"
+      [(ngModel)]="examSecret.examSubjectId"
+      [showClear]="true"
+      appendTo="body"
+      >
+    </p-dropdown>
+    <small class="p-error block" *ngIf="submitted && !examSecret.examSubjectId">
+      Lënda e provimit është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="barcode">Barkodi *</label>
+    <input
+      type="text"
+      pInputText
+      id="barcode"
+      name="barcode"
+      pTooltip=" Barkodi duhet të përmbajë 5 numra, ndjekur nga D ose Z, dhe përfunduar me
+      1, 2, 3 ose Z."
+      maxlength="7"
+      [pattern]="barcodePattern"
+      minlength="7"
+      [(ngModel)]="examSecret.barcode"
+      required
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examSecret.barcode
+      }" />
+    <small class="p-error block" *ngIf="submitted && !examSecret.barcode">
+      Barkodi është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="ExamSecretNote">Probleme me barkodin </label>
+    <p-dropdown
+      id="ExamSecretNote"
+      [options]="examSecretNotes"
+      optionValue="key"
+      optionLabel="value"
+      name="examSecretNote"
+      [filter]="true"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="examSecret.examSecretNoteId"
+      [showClear]="true"
+      appendTo="body">
+    </p-dropdown>
+  </div>
+  <div class="field">
+    <label class="mb-3">Është Vjeshtë? *</label>
+    <div class="form grid grid">
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="IsFallTrue"
+          name="IsFall"
+          [value]="true"
+          [(ngModel)]="examSecret.isFall"></p-radioButton>
+        <label for="IsFallTrue">Po</label>
+      </div>
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="IsFallFalse"
+          name="IsFall"
+          [value]="false"
+          [(ngModel)]="examSecret.isFall"></p-radioButton>
+        <label for="IsFallFalse">Jo</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onExitForm()"></button>
+    <button type="submit" pButton label="Ruaj" class="p-button w-auto"></button>
+  </div>
+</form>
+
