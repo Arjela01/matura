@@ -150,7 +150,6 @@ export class ManageExamSecretsComponent implements OnInit {
     }
     this.getExamSubjects($event.examTypeId);
     this.getExamDates($event.examSiteId, $event.examTypeId);
-    this.cd.markForCheck();
   }
 
   onAdmOfficeChange(administrationOfficeId: any) {
@@ -165,7 +164,6 @@ export class ManageExamSecretsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examSubjects = response.data;
-        this.cd.markForCheck();
       });
   }
 
@@ -175,7 +173,6 @@ export class ManageExamSecretsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examTypes = response.data;
-        this.cd.markForCheck();
       });
   }
 
@@ -185,7 +182,6 @@ export class ManageExamSecretsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.administrationOffices = response.data;
-        this.cd.markForCheck();
       });
   }
 
@@ -204,7 +200,6 @@ export class ManageExamSecretsComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examDates = response.data;
-        this.cd.markForCheck();
       });
   }
 
@@ -226,6 +221,7 @@ export class ManageExamSecretsComponent implements OnInit {
       .subscribe(response => {
         this.examSecrets$$.next(response.data);
         this.totalRecords = response.total;
+        this.cd.detectChanges();
       });
   }
 

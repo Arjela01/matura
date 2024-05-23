@@ -1,12 +1,11 @@
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   DoCheck,
   EventEmitter,
   Input,
-  OnChanges,
   Output,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -49,7 +48,6 @@ import { TableLazyLoadEvent } from 'primeng/table';
     TooltipModule,
   ],
   providers: [ConfirmationService],
-
   templateUrl: './exam-secrets-form.component.html',
   styleUrls: ['./exam-secrets-form.component.scss'],
 })
@@ -89,7 +87,6 @@ export class ExamSecretsFormComponent implements DoCheck {
     private readonly studentService: StudentsApiService,
     private readonly cd: ChangeDetectorRef
   ) {}
-
   ngDoCheck(): void {
     if (this.examSecret.studentId !== undefined) {
       this.onStudentInit(this.examSecret);
@@ -105,18 +102,15 @@ export class ExamSecretsFormComponent implements DoCheck {
       examSiteId: this.examSecret.examSiteId,
     };
     this.examTypeChanged.emit(ids);
-    this.examSecret.examTypeId = $event.value;
   }
 
   onAdmOfficeChanged($event: any): void {
     this.administrationOfficeChanged.emit($event.value);
-    this.examSecret.administrationOfficeId = $event.value;
   }
 
   onExamSiteChanged($event: any): void {
     this.examSiteChanged.emit($event.value);
-    this.examSecret.examSiteId = $event.value;
-    this.cd.detectChanges();
+    this.cd.markForCheck();
   }
 
   onGridEvent(event: GridEvent<Student | Student[]>) {
