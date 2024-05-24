@@ -1,0 +1,132 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="examGradeChangeType">Lloji i ndryshimit *</label>
+    <p-dropdown
+      id="examGradeChangeType"
+      [options]="examGradeChangeTypes"
+      optionValue="key"
+      optionLabel="value"
+      name="examGradeChangeType"
+      [filter]="true"
+      [autoDisplayFirst]="false"
+      [required]="true"
+      [(ngModel)]="examGradeChange.examGradeTypeId"
+      [showClear]="true"
+      appendTo="body"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examGradeChange.examGradeTypeId
+      }">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examGradeChange.examGradeTypeId">
+      LLoji i ndryshimit është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label class="mb-3">Ndrysho pikët? *</label>
+    <div class="form grid grid">
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="isScoreChangedTrue"
+          name="isScoreChanged"
+          [value]="true"
+          [(ngModel)]="examGradeChange.isScoreChanged"></p-radioButton>
+        <label for="isScoreChangedTrue">Po</label>
+      </div>
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="isScoreChangedFalse"
+          name="isScoreChanged"
+          [value]="false"
+          [(ngModel)]="examGradeChange.isScoreChanged"></p-radioButton>
+        <label for="isScoreChangedFalse">Jo</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="field" *ngIf="examGradeChange.isScoreChanged">
+    <label for="newScore">Pikët e reja *</label>
+    <input
+      type="text"
+      pInputText
+      id="newScore"
+      name="newScore"
+      [(ngModel)]="examGradeChange.newScore"
+      required
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examGradeChange.newScore
+      }" />
+    <small class="p-error block" *ngIf="submitted && !examGradeChange.newScore">
+      Pikët e reja janë fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label class="mb-3">Ndrysho Lëndën? *</label>
+    <div class="form grid grid">
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="isExamSubjectChangedTrue"
+          name="isExamSubjectChanged"
+          [value]="true"
+          [(ngModel)]="examGradeChange.isExamSubjectChanged"></p-radioButton>
+        <label for="isExamSubjectChangedTrue">Po</label>
+      </div>
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="isExamSubjectChangedFalse"
+          name="isExamSubjectChanged"
+          [value]="false"
+          [(ngModel)]="examGradeChange.isExamSubjectChanged"></p-radioButton>
+        <label for="isExamSubjectChangedFalse">Jo</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="field" *ngIf="examGradeChange.isExamSubjectChanged">
+    <label for="newSubject">Lënda e re </label>
+    <p-dropdown
+      id="newSubject"
+      [options]="examSubjects"
+      optionValue="key"
+      optionLabel="value"
+      name="newSubject"
+      [filter]="true"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="examGradeChange.newExamSubjectId"
+      [showClear]="true"
+      appendTo="body"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examGradeChange.newExamSubjectId
+      }">
+    </p-dropdown>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examGradeChange.newExamSubjectId">
+      Lënda e re është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="comments">Komente</label>
+    <textarea
+      name="comments"
+      id="comments"
+      rows="5"
+      cols="30"
+      pInputTextarea
+      [(ngModel)]="examGradeChange.comments"></textarea>
+  </div>
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onExitForm()"></button>
+    <button type="submit" pButton label="Ruaj" class="p-button w-auto"></button>
+  </div>
+</form>

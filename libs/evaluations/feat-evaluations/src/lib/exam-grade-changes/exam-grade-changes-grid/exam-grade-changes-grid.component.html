@@ -4,7 +4,7 @@
   responsiveLayout="scroll"
   [scrollable]="true"
   scrollHeight="820px"
-  [value]="examSecrets"
+  [value]="examGradeChanges"
   [totalRecords]="totalRecords"
   [rows]="100"
   [paginator]="true"
@@ -12,7 +12,6 @@
   [showCurrentPageReport]="true"
   currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
   [rowHover]="true"
-  [(selection)]="selectedExamSecrets"
   selectionMode="multiple"
   (onLazyLoad)="loadRows($event)"
   [lazy]="true">
@@ -25,17 +24,6 @@
           <p-columnFilter
             type="text"
             field="studentStudentId"
-            display="menu"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="studentNid">
-        NID
-        <div>
-          <p-sortIcon field="studentNid"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="studentNid"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
@@ -73,137 +61,190 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="adnimistrationOfficeName">
-        ZVAP
+      <th pSortableColumn="examGradeTypeName">
+        LLoji i ndryshimit
         <div>
-          <p-sortIcon field="adnimistrationOfficeName"></p-sortIcon>
+          <p-sortIcon field="examGradeTypeName"></p-sortIcon>
           <p-columnFilter
-            type="text"
-            field="adnimistrationOfficeName"
+            type="numeric"
+            field="examGradeTypeName"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="examSiteName">
-        Qendra
+      <th pSortableColumn="isScoreChanged">
+        Pikët janë ndryshuar?
         <div>
-          <p-sortIcon field="examSiteName"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="examSiteName"
-            display="menu"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="examTypeName">
-        Tipi
-        <div>
-          <p-sortIcon field="examTypeName"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="examTypeName"
-            display="menu"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="examSubjectName">
-        Lënda
-        <div>
-          <p-sortIcon field="examSubjectName"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="examSubjectName"
-            display="menu"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="examDate">
-        Data
-        <div>
-          <p-sortIcon field="examDate"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="examDate"
-            display="menu"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="barcode">
-        Barkodi
-        <div>
-          <p-sortIcon field="barcode"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="barcode"
-            display="menu"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="examSecretNoteName">
-        Probleme
-        <div>
-          <p-sortIcon field="examSecretNoteName"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="examSecretNoteName"
-            display="menu"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="isFall">
-        Vjeshtë?
-        <div>
-          <p-sortIcon field="isFall"></p-sortIcon>
+          <p-sortIcon field="isScoreChanged"></p-sortIcon>
           <p-columnFilter
             type="boolean"
-            field="isFall"
-            matchMode="equals"
-            display="menu"></p-columnFilter>
+            field="isScoreChanged"
+            display="menu"
+            matchMode="equals"></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="previousScore">
+        Pikët e vjetra
+        <div>
+          <p-sortIcon field="previousScore"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="previousScore"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="newScore">
+        Pikët e reja
+        <div>
+          <p-sortIcon field="newScore"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="newScore"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="isGradeChanged">
+        Nota është ndryshuar?
+        <div>
+          <p-sortIcon field="isGradeChanged"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            field="isGradeChanged"
+            display="menu"
+            matchMode="equals"></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="previousGrade">
+        Nota e vjetër
+        <div>
+          <p-sortIcon field="previousGrade"></p-sortIcon>
+          <p-columnFilter
+            type="numeric"
+            field="previousGrade"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="newGrade">
+        Nota e re
+        <div>
+          <p-sortIcon field="newGrade"></p-sortIcon>
+          <p-columnFilter
+            type="numeric"
+            field="newGrade"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="isExamSubjectChanged">
+        Lënda është ndryshuar?
+        <div>
+          <p-sortIcon field="isExamSubjectChanged"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            field="isExamSubjectChanged"
+            display="menu"
+            matchMode="equals"></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="previousExamSubjectName">
+        Lënda e vjetër
+        <div>
+          <p-sortIcon field="previousExamSubjectName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="previousExamSubjectName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="previousExamSubjectName">
+        Lënda e re
+        <div>
+          <p-sortIcon field="newExamSubjectName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="newExamSubjectName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="academicYearName">
+        Viti
+        <div>
+          <p-sortIcon field="academicYearName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="academicYearName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="academicYearIsActive">
+        Është aktiv?
+        <div>
+          <p-sortIcon field="academicYearIsActive"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            field="academicYearIsActive"
+            display="menu"
+            matchMode="equals"></p-columnFilter>
         </div>
       </th>
       <th></th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-examSecret>
+  <ng-template pTemplate="body" let-examGrade>
     <tr>
       <td style="width: 5%; min-width: 10rem">
-        {{ examSecret.studentStudentId }}
+        {{ examGrade.studentStudentId }}
       </td>
       <td style="width: 5%; min-width: 10rem">
-        {{ examSecret.studentNid }}
-      </td>
-      <td style="width: 5%; min-width: 10rem">
-        {{ examSecret.studentFirstName }}
-      </td>
-      <td style="width: 5%; min-width: 10rem">
-        {{ examSecret.studentMiddleName }}
-      </td>
-      <td style="width: 5%; min-width: 10rem">
-        {{ examSecret.studentLastName }}
-      </td>
-      <td style="width: 5%; min-width: 10rem">
-        {{ examSecret.administrationOfficeName }}
-      </td>
-      <td style="width: 5%; min-width: 10rem">
-        {{ examSecret.examSiteName }}
-      </td>
-      <td style="width: 5%; min-width: 10rem">
-        {{ examSecret.examTypeName }}
-      </td>
-      <td style="width: 5%; min-width: 10rem">
-        {{ examSecret.examSubjectName }}
-      </td>
-      <td style="width: 5%; min-width: 10rem">
-        {{ examSecret.examDate | date : 'dd/MM/yyyy' }}
+        {{ examGrade.studentFirstName }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ examSecret.barcode }}
+        {{ examGrade.studentMiddleName }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ examSecret.examSecretNoteName }}
+        {{ examGrade.studentLastName }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ examGrade.examGradeTypeName }}
       </td>
       <td style="width: 5%; min-width: 10rem">
-        {{ examSecret.isFall ? 'Po' : 'Jo' }}
+        {{ examGrade.isScoreChanged ? 'Po' : 'Jo' }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examGrade.previousScore }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examGrade.newScore }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ examGrade.isGradeChanged ? 'Po' : 'Jo' }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examGrade.previousGrade }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examGrade.newGrade }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ examGrade.isExamSubjectChanged ? 'Po' : 'Jo' }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ examGrade.previousExamSubjectName }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ examGrade.newExamSubjectName }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examGrade.academicYearName }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examGrade.academicYearIsActive ? 'Po' : 'Jo' }}
       </td>
       <td>
         <div class="flex">
@@ -211,37 +252,10 @@
             src="assets/svg/edit-form.svg"
             class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"
-            (click)="onEditClick(examSecret)"
+            (click)="onEditClick(examGrade)"
             pTooltip="Ndrysho" />
-          <img
-            src="assets/svg/history.svg"
-            class="p-button-rounded p-button-warning p-button-text m-2 pointer"
-            tooltipPosition="bottom"
-            (click)="onHistoryClick(examSecret)"
-            pTooltip="Historia" />
-          <img
-            src="assets/svg/delete-form.svg"
-            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
-            pTooltip="Fshi"
-            tooltipPosition="bottom"
-            (click)="onDeleteClick(examSecret)" />
         </div>
       </td>
     </tr>
   </ng-template>
 </p-table>
-<p-dialog
-  [(visible)]="displayHistoryForm"
-  [style]="{ width: '80%' }"
-  [modal]="true"
-  [header]="headerText"
-  [draggable]="false"
-  [resizable]="false"
-  class="p-fluid">
-  <ng-template pTemplate="content">
-    <msh-exam-secret-history-grid
-      [recordId]="examSecretId"
-      [recordData]="selectedRecord">
-    </msh-exam-secret-history-grid>
-  </ng-template>
-</p-dialog>

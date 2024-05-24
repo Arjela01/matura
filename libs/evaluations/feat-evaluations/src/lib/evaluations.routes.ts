@@ -289,4 +289,11 @@ export const EVALUATION_ROUTES: Route[] = [
         m => m.ExamSecretLockComponent
       ),
   },
+  {
+    path: 'exam-grade-change',
+    loadComponent: () =>
+      import(
+        './exam-grade-changes/manage-exam-grade-changes/manage-exam-grade-changes.component'
+      ).then(m => m.ManageExamGradeChangesComponent),
+  },
 ];

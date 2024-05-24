@@ -26,7 +26,7 @@ import { ExamGradeChange } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-exam-grade-change-form',
+  selector: 'msh-exam-grade-changes-form',
   standalone: true,
   imports: [
     CommonModule,
@@ -43,10 +43,10 @@ import { ExamGradeChange } from '@msh/shared/domain-models';
     TooltipModule,
   ],
   providers: [ConfirmationService],
-  templateUrl: './exam-grade-change-form.component.html',
-  styleUrls: ['./exam-grade-change-form.component.scss'],
+  templateUrl: './exam-grade-changes-form.component.html',
+  styleUrls: ['./exam-grade-changes-form.component.scss'],
 })
-export class ExamGradeChangeFormComponent {
+export class ExamGradeChangesFormComponent {
   @Input() examGradeChangeTypes: DropdownModel<number>[] = [];
   @Input() examSubjects: DropdownModel<string>[] = [];
 
@@ -56,13 +56,10 @@ export class ExamGradeChangeFormComponent {
   @ViewChild('form', { static: true }) form!: NgForm;
 
   submitted = false;
-  examSecret: ExamGradeChange = {};
-
-  constructor(
-    private readonly studentService: StudentsApiService,
-    private readonly cd: ChangeDetectorRef
-  ) {}
-
+  examGradeChange: ExamGradeChange = {
+    isScoreChanged: false,
+    isExamSubjectChanged: false,
+  };
 
   onExitForm() {
     this.formClose.emit();
@@ -71,7 +68,7 @@ export class ExamGradeChangeFormComponent {
   onSubmit(): void {
     this.submitted = true;
     if (this.form.valid) {
-      this.formSave.emit(this.examSecret);
+      this.formSave.emit(this.examGradeChange);
     }
   }
 }
