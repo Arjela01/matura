@@ -13,6 +13,7 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ExamGrade } from '@msh/shared/domain-models';
+import { Router } from '@angular/router';
 
 @UntilDestroy()
 @Component({
@@ -47,7 +48,8 @@ export class ExamGradeGridComponent {
   );
   constructor(
     private readonly examGradeService: ExamGradeApiService,
-    private authFacade: AuthFacade
+    private authFacade: AuthFacade,
+    private readonly router: Router
   ) {}
 
   getExamGrades($event: TableLazyLoadEvent) {
@@ -62,7 +64,7 @@ export class ExamGradeGridComponent {
       });
   }
 
-  onEditClick(examGrade: any) {
-
+  onEditClick(examGrade: ExamGrade) {
+    this.router.navigate([`/evaluations/exam-grade-change/${examGrade.id}`]);
   }
 }

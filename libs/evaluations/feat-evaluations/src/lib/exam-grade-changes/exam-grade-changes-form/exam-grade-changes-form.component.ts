@@ -47,7 +47,7 @@ import { ExamGradeChange } from '@msh/shared/domain-models';
   styleUrls: ['./exam-grade-changes-form.component.scss'],
 })
 export class ExamGradeChangesFormComponent {
-  @Input() examGradeChangeTypes: DropdownModel<number>[] = [];
+  @Input() examGradeChangeTypes: DropdownModel<string>[] = [];
   @Input() examSubjects: DropdownModel<string>[] = [];
 
   @Output() formSave = new EventEmitter<ExamGradeChange>();

@@ -19,6 +19,7 @@ import { ExamGradeChangesGridComponent } from '../exam-grade-changes-grid/exam-g
 import { ExamGradeChangesFormComponent } from '../exam-grade-changes-form/exam-grade-changes-form.component';
 import { ExamSubjectApiService } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 @UntilDestroy()
 @Component({
@@ -33,6 +34,7 @@ import { DropdownModel } from '@msh/shared/data-access-shared';
     SharedModule,
     ExamGradeChangesGridComponent,
     ExamGradeChangesFormComponent,
+    RouterLink,
   ],
   templateUrl: './manage-exam-grade-changes.component.html',
   styleUrls: ['./manage-exam-grade-changes.component.scss'],
@@ -44,19 +46,33 @@ export class ManageExamGradeChangesComponent implements OnInit {
   examGradeChange$ = this.examGradeChange$$.asObservable();
 
   examSubjects: DropdownModel<string>[] = [];
+  examGradeChangeTypes: DropdownModel<string>[] = [];
   filters: TableLazyLoadEvent | null = null;
   totalRecords = 0;
   selectedExamQuestion: ExamGradeChange | null = null;
   displayModal = false;
+  academicYearId = 0;
+  examGradeId = '';
 
   constructor(
     private readonly toastService: GlobalToastService,
     private readonly examGradeChangeService: ExamGradeChangesApiService,
-    private readonly examSubjectService: ExamSubjectApiService
-  ) {}
+    private readonly examSubjectService: ExamSubjectApiService,
+    private readonly route: ActivatedRoute
+  ) {
+    const academicYear = JSON.parse(
+      localStorage.getItem('academicYear') as string
+    );
+    if (academicYear) {
+      this.academicYearId = academicYear.id;
+    }
+    this.examGradeId = this.route.snapshot.params['id'] ?? '';
+    console.log(this.examGradeId);
+  }
 
   ngOnInit() {
     this.getExamSubjects();
+    this.getExamGradeChangeTypes();
   }
 
   onNewClick() {
@@ -90,7 +106,7 @@ export class ManageExamGradeChangesComponent implements OnInit {
     this.filters = Object.assign({}, $event);
 
     this.examGradeChangeService
-      .loadData($event)
+      .loadData($event, this.examGradeId)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examGradeChange$$.next(response.data);
@@ -104,6 +120,15 @@ export class ManageExamGradeChangesComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examSubjects = response.data;
+      });
+  }
+
+  getExamGradeChangeTypes() {
+    this.examGradeChangeService
+      .getExamGradeChangeType(this.academicYearId, this.examGradeId)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.examGradeChangeTypes = response.data;
       });
   }
 

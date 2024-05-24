@@ -283,7 +283,7 @@ export const EVALUATION_ROUTES: Route[] = [
       ),
   },
   {
-    path: 'exam-grade-change',
+    path: 'exam-grade-change/:id',
     loadComponent: () =>
       import(
         './exam-grade-changes/manage-exam-grade-changes/manage-exam-grade-changes.component'

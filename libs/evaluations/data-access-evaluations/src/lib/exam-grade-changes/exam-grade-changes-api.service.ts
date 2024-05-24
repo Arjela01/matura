@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { ApiResult } from '@msh/shared/data-access-shared';
+import { ApiResult, DropdownModel } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 import {
   ExamGradeChange,
@@ -16,8 +16,14 @@ import {
 export class ExamGradeChangesApiService {
   constructor(private apiService: APIService) {}
 
-  loadData(event: TableLazyLoadEvent): Observable<ExamGradeChangeView> {
-    return this.apiService.post(`/ExamGradeChange/TableData`, event);
+  loadData(
+    event: TableLazyLoadEvent,
+    examGradeId: string
+  ): Observable<ExamGradeChangeView> {
+    return this.apiService.post(
+      `/ExamGradeChange/ForExamGradeId/${examGradeId}`,
+      event
+    );
   }
 
   save(
@@ -27,5 +33,16 @@ export class ExamGradeChangesApiService {
       `/ExamGradeChange`,
       examGradeChange
     );
+  }
+
+  getExamGradeChangeType(
+    academicYearId?: number,
+    id?: string
+  ): Observable<ApiResult<DropdownModel<string>[]>> {
+    const query = {
+      academicYearId,
+      id,
+    };
+    return this.apiService.post(`/ExamGradeChangeType/DropdownList`, query);
   }
 }
