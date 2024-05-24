@@ -19,6 +19,7 @@ import { BARCODE_REGEX, GlobalToastService } from '@msh/shared/util-shared';
 import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { UntilDestroy } from '@ngneat/until-destroy';
+import { exportComponentInEntryPoint } from '@nx/angular/src/generators/component/lib';
 
 @UntilDestroy()
 @Component({
@@ -107,15 +108,14 @@ export class ExamQuestionScoreFiltersComponent {
     });
   }
 
-  @HostListener('window:keydown', ['$event'])
-  onKeyPress(event: KeyboardEvent) {
-    if (event.key === 'ArrowDown') {
-      const barcodeField =
+  onKeyPress() {
+    setTimeout(() => {
+      const testNumberField =
         this.elementRef.nativeElement.querySelector('#barcode');
-      if (barcodeField) {
-        barcodeField.focus();
+      if (testNumberField) {
+        testNumberField.focus();
       }
-    }
+    });
   }
 
   protected readonly BARCODE_REGEX = BARCODE_REGEX;
