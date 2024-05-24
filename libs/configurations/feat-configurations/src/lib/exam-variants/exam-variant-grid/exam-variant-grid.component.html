@@ -73,13 +73,13 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="maximumScore">
+      <th pSortableColumn="totalPoints">
         Pikët e Hedhura
         <div>
-          <p-sortIcon field="maximumScore"></p-sortIcon>
+          <p-sortIcon field="totalPoints"></p-sortIcon>
           <p-columnFilter
             type="numeric"
-            field="maximumScore"
+            field="totalPoints"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
@@ -105,7 +105,7 @@
         {{ examVariant.maximumScore }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ examVariant.maximumScore }}
+        {{ examVariant.totalPoints }}
       </td>
       <td>
         <div class="flex">

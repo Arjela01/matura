@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 import { ExamQuestionModel, ExamVariant } from '@msh/shared/domain-models';
@@ -36,7 +36,6 @@ import { ExamVariantApiService } from '@msh/configurations/data-access-configura
   ],
   templateUrl: './manage-exam-questions.component.html',
   styleUrls: ['./manage-exam-questions.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
 export class ManageExamQuestionsComponent implements OnInit {
@@ -60,7 +59,8 @@ export class ManageExamQuestionsComponent implements OnInit {
     private readonly toastService: GlobalToastService,
     private readonly examQuestionService: ExamQuestionsService,
     private readonly route: ActivatedRoute,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly cd: ChangeDetectorRef
   ) {
     this.examVariantId = this.route.snapshot.paramMap.get('id');
   }
@@ -177,6 +177,7 @@ export class ManageExamQuestionsComponent implements OnInit {
           this.examVariantMaximumScore = variant.maximumScore;
           this.examTypeAndSubject = `${variant.examTypeName} - ${variant.examSubjectName}`;
         }
+        this.cd.detectChanges();
       });
   }
 
