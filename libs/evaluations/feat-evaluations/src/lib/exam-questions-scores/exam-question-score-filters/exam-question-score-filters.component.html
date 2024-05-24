@@ -89,6 +89,7 @@
           #testNumber
           type="text"
           pInputText
+          (keydown.enter)="onKeyPress()"
           placeholder="Nr. Testi"
           [disabled]="!examQuestionScoreList.examVariantId"
           id="testNumber"

@@ -138,6 +138,25 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       }, 0) as any;
   }
 
+  private focusFirstInput() {
+    setTimeout(() => {
+      const firstRowInput = this.elementRef.nativeElement.querySelector(
+        'tbody tr:first-child input'
+      );
+      if (firstRowInput) {
+        firstRowInput.focus();
+      }
+    }, 0);
+  }
+
+  private clearInputValues() {
+    const inputs =
+      this.elementRef.nativeElement.querySelectorAll('tbody input');
+    inputs.forEach((input: HTMLInputElement) => {
+      input.value = '';
+    });
+  }
+
   getExamQuestionScoresList($event: any) {
     this.filters = Object.assign({}, $event);
     this.examVariantId = $event.examVariantId;
@@ -206,6 +225,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       );
       this.examQuestionScoreList$$.next(result);
       this.calculateTotalScore();
+      this.focusFirstInput();
     });
   }
 
@@ -227,8 +247,8 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
             this.toastService.showSuccess(
               'Piket analitike u shtuan me sukses!'
             );
+            this.clearInputValues();
             this.scoreFilterComponent.clearFields();
-            this.getExamQuestionScoresList(this.filters as TableLazyLoadEvent);
           } else {
             this.toastService.showError(response.errorMessage);
           }
