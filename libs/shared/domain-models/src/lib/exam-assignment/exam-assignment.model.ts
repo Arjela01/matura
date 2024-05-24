@@ -19,6 +19,7 @@ export interface ExamAssignment {
   examSubjectName?: string;
   administrationOfficeId?: number;
   administrationOfficeName?: string;
+  examSubjectId?: string;
   time: string;
   studentHighSchoolName?: string;
   schoolProfileId?: number;
@@ -27,6 +28,7 @@ export interface ExamAssignment {
   maxStudentsToAssign?: number;
   isAn?: boolean;
   studentNameFilter?: string;
+  isFall?: boolean;
 }
 
 export interface ExamAssignmentTableView {

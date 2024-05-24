@@ -147,11 +147,22 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
         const result: any = [];
         examAssignmentsResponse.data.forEach(x => {
           const examSecret = examSecretsResponse.data.find(
-            i => i.examTypeId === x.examTypeId && i.studentId === x.studentGuid
+            i =>
+              i.examTypeId === x.examTypeId &&
+              i.studentId === x.studentGuid &&
+              i.isFall == x.isFall
           );
           result.push({
             examAssignment: x,
-            examSecret: examSecret || ({} as ExamSecret),
+            examSecret:
+              examSecret ||
+              ({
+                administrationOfficeId: x.administrationOfficeId,
+                examSiteId: x.examSiteId,
+                examTypeId: x.examTypeId,
+                examDateId: x.examDateId,
+                examSubjectId: x.examSubjectId,
+              } as ExamSecret),
           });
         });
 
@@ -161,6 +172,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
             examSecret: entry.examSecret as ExamSecretTabularDataEntryItem,
           })
         );
+        console.log(resultAsExamSecretTabularDataEntryItem);
         this.dataEntryItemList$$.next(resultAsExamSecretTabularDataEntryItem);
         this.cd.detectChanges();
 
@@ -309,20 +321,24 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
       });
   }
 
-  addOrUpdateExamSecret(filterResults: any) {
-    const examSecret: ExamSecret = {
-      id: filterResults.examAssignment.id,
-      studentId: filterResults.examAssignment.studentId,
-      barcode: filterResults.examSecret.barcode || null,
-      examTypeId: filterResults.examAssignment.examTypeId,
-      examSubjectId: this.examSubjectId,
-      isFall: filterResults.examAssignment.isFall,
-      examSecretNoteId: filterResults.examSecret.examSecretNoteId,
+  addOrUpdateExamSecret(rowItem: any) {
+    const saveTarget: ExamSecret = {
+      id: rowItem.examSecret.id,
+      examAssignmentId: rowItem.examAssignment.id,
+      studentId: rowItem.examAssignment.studentId,
+      administrationOfficeId: rowItem.examAssignment.administrationOfficeId,
+      examSiteId: rowItem.examAssignment.examSiteId,
+      examTypeId: rowItem.examAssignment.examTypeId,
+      examDateId: rowItem.examAssignment.examDateId,
+      examSubjectId: rowItem.examAssignment.examSubjectId,
+      barcode: rowItem.examSecret.barcode || null,
+      isFall: rowItem.examAssignment.isFall,
+      examSecretNoteId: rowItem.examSecret.examSecretNoteId,
     };
-    if (!filterResults.examSecret.hasBarcode) {
-      this.save(examSecret);
+    if (!saveTarget.id) {
+      this.save(saveTarget);
     } else {
-      this.update(filterResults.examSecret);
+      this.update(saveTarget);
     }
   }
 }

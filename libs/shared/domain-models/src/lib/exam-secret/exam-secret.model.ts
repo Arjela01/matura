@@ -2,12 +2,6 @@ export interface ExamSecret {
   id?: string;
   studentId?: string;
   studentName?: string;
-  examSubjectId?: string;
-  examSubjectName?: string;
-  examTypeId?: number;
-  examTypeName?: string;
-  examSiteId?: string;
-  examSiteName?: string;
   barcode?: string;
   isFall?: boolean;
   studentInputData?: string;
@@ -18,8 +12,15 @@ export interface ExamSecret {
   examSecretNoteName?: string;
   administrationOfficeId?: number;
   administrationOfficeName?: string;
-  examDateId?: string;
+  examSiteId?: string;
+  examSiteName?: string;
+  examTypeId?: number;
+  examTypeName?: string;
+  examDateId?: number;
   examDate?: string;
+  examSubjectId?: string;
+  examSubjectName?: string;
+  examAssignmentId?: string;
 }
 
 export interface ExamSecretTableView {
