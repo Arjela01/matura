@@ -22,10 +22,7 @@
         #barcodeField
         name="barcode"
         [(ngModel)]="archiveExam.barcode"
-        pTooltip=" Barkodi duhet të përmbajë 5 numra, ndjekur nga D ose Z, dhe përfunduar me
-      1, 2, 3 ose Z."
         onfocus="this.value=''"
-        tooltipPosition="right"
         required
         (change)="saveArchiveExam(archiveExam)" />
     </div>
