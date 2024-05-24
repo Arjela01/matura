@@ -18,12 +18,11 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { ArchiveFolder, ExamSecret, Student } from '@msh/shared/domain-models';
+import { ExamGradeChange } from '@msh/shared/domain-models';
 import { DialogModule } from 'primeng/dialog';
-import { ExamSecretHistoryGridComponent } from '../exam-secret-history/exam-secret-history-grid.component';
 
 @Component({
-  selector: 'msh-exam-secret-grid',
+  selector: 'msh-exam-grade-changes-grid',
   standalone: true,
   imports: [
     CommonModule,
@@ -35,63 +34,25 @@ import { ExamSecretHistoryGridComponent } from '../exam-secret-history/exam-secr
     RippleModule,
     ColumnFilterDirective,
     DialogModule,
-    ExamSecretHistoryGridComponent,
   ],
   templateUrl: './exam-grade-changes-grid.component.html',
   styleUrls: ['./exam-grade-changes-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamGradeChangesGridComponent {
-  @Input() examSecrets: ExamSecret[] = [];
+  @Input() examGradeChanges: ExamGradeChange[] = [];
   @Input() totalRecords = 0;
-  @Input() loading = false;
-
-  @Input() examSecretId: any;
-  @Input() headerText = '';
-  @Input() displayHistoryForm = true;
-  @Input() selectedRecord: any;
-
-  //Keep it local state because of Table Header checkbox not syncing
-  selectedExamSecrets: ExamSecret[] = [];
 
   @Output() gridEvent = new EventEmitter<
-    GridEvent<ExamSecret | ExamSecret[]>
+    GridEvent<ExamGradeChange | ExamGradeChange[]>
   >();
-
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
-  onEditClick(examScore: ExamSecret) {
+  onEditClick(examGradeChanges: ExamGradeChange) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
-      data: examScore,
-    } as GridEvent<ExamSecret>);
-  }
-
-  onDeleteClick(examScore: ExamSecret) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.DELETE,
-      data: examScore,
-    } as GridEvent<ExamSecret>);
-  }
-  onHistoryClick(archiveFolder: ArchiveFolder) {
-    this.displayHistoryForm = true;
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.HISTORY,
-      data: archiveFolder,
-    } as GridEvent<Student>);
-  }
-
-  onSelectAllClick() {
-    if (this.selectedExamSecrets.length === 0) {
-      this.gridEvent.emit({
-        action: GRID_ACTIONS.UNSELECT_ALL,
-      } as GridEvent<ExamSecret>);
-    } else {
-      this.gridEvent.emit({
-        action: GRID_ACTIONS.SELECT_MANY,
-        data: this.selectedExamSecrets,
-      } as GridEvent<ExamSecret[]>);
-    }
+      data: examGradeChanges,
+    } as GridEvent<ExamGradeChange>);
   }
 
   loadRows($event: TableLazyLoadEvent) {
