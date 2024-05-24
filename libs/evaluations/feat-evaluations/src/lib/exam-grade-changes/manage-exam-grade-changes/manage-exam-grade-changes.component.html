@@ -3,6 +3,14 @@
   <div class="flex align-items-right justify-content-right">
     <div class="my-2">
       <button
+        type="button"
+        pButton
+        icon="pi pi-arrow-left"
+        label="Kthehu"
+        class="w-auto mr-2"
+        style="background: #f7f7fa; color: #155eef"
+        [routerLink]="'/evaluations/exam-grades-grid'"></button>
+      <button
         pButton
         pRipple
         label="Shto"
@@ -36,6 +44,7 @@
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
     <msh-exam-grade-changes-form
+      [examGradeChangeTypes]="examGradeChangeTypes"
       [examSubjects]="examSubjects"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
