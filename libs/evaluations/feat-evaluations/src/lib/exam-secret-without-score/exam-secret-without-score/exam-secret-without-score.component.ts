@@ -29,7 +29,7 @@ export class ExamSecretWithoutScoreComponent {
     this.filters = Object.assign({}, $event);
 
     this.examSecretService
-      .loadExamSecretWithoutScoreData($event)
+      .loadExamSecretsWithoutExamScoresData($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examSecretWithoutScore$$.next(response.data);

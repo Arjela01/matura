@@ -93,11 +93,11 @@ export class ExamSecretApiService {
     );
   }
 
-  loadExamSecretWithoutScoreData(
+  loadExamSecretsWithoutExamScoresData(
     event: TableLazyLoadEvent
   ): Observable<ExamSecretTableView> {
     return this.apiService
-      .post(`/ExamSecrets/SecretListWithoutScore`, event)
+      .post(`/ExamSecrets/ExamSecretsWithoutExamScores`, event)
       .pipe(
         map((data: any) => data),
         catchError(error => throwError(error))
