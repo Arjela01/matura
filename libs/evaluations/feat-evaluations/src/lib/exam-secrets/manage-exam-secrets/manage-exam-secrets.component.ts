@@ -284,20 +284,10 @@ export class ManageExamSecretsComponent implements OnInit {
   }
 
   onFormSave(examSecret: ExamSecret) {
-    const valuesToSend: ExamSecret = {
-      id: examSecret.id,
-      studentId: examSecret.studentId,
-      examTypeId: examSecret.examTypeId,
-      examSubjectId: examSecret.examSubjectId,
-      examSecretNoteId: examSecret.examSecretNoteId,
-      barcode: examSecret.barcode,
-      isFall: examSecret.isFall,
-    };
     if (examSecret.id) {
-      this.updateExamSecret(valuesToSend);
-    }
-    if (!examSecret.id) {
-      this.addExamSecret(valuesToSend);
+      this.updateExamSecret(examSecret);
+    } else {
+      this.addExamSecret(examSecret);
     }
   }
 

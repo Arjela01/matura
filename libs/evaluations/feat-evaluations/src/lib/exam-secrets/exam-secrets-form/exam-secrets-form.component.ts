@@ -21,7 +21,6 @@ import { BehaviorSubject } from 'rxjs';
 import { ExamSecret, Student } from '@msh/shared/domain-models';
 import {
   BARCODE_REGEX,
-  GlobalToastService,
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
@@ -92,6 +91,7 @@ export class ExamSecretsFormComponent implements DoCheck {
     private readonly studentService: StudentsApiService,
     private readonly cd: ChangeDetectorRef
   ) {}
+
   ngDoCheck(): void {
     if (this.examSecret.studentId !== undefined) {
       this.onStudentInit(this.examSecret);
