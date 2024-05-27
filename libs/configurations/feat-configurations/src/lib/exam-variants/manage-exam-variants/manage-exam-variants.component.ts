@@ -33,7 +33,15 @@ import { DropdownModel } from '@msh/shared/data-access-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { BehaviorSubject, Observable, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  map,
+  Observable,
+  skip,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { ExamVariantFormComponent } from '../exam-variant-form/exam-variant-form.component';
 import { ExamVariantGridComponent } from '../exam-variant-grid/exam-variant-grid.component';
 import { AuthFacade } from '@msh/auth/data-access-auth';
@@ -90,6 +98,16 @@ export class ManageExamVariantsComponent implements OnInit {
     protected authFacade: AuthFacade,
     private readonly router: Router
   ) {}
+
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
+    map(([_]) => {
+      if (this.filters) {
+        this.getExamVariants(this.filters as TableLazyLoadEvent);
+      }
+    }),
+    tap()
+  );
 
   ngOnInit(): void {
     this.getExamTypesDropdown();

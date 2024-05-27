@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { A1ApiService } from '@msh/applications/data-access-applications';
-import {A1Z, A1ZTableRecord} from '@msh/applications/domain-application';
+import { A1Z, A1ZTableRecord } from '@msh/applications/domain-application';
 import {
   AuthFacade,
   PermissionCheckService,
@@ -30,7 +30,7 @@ import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
-import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { A1HistoryGridComponent } from '../a1-history/a1-history-grid.component';
 @Component({
   selector: 'a1-grid',
@@ -92,6 +92,7 @@ export class A1GridComponent implements OnInit {
     );
   }
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
     map(([_]) => {
       if (this.filters) {
         this.getA1(this.filters as TableLazyLoadEvent);
@@ -183,10 +184,8 @@ export class A1GridComponent implements OnInit {
         this.displayForm = false;
       });
   }
-  onViewClick( a1: A1ZTableRecord){
-    this.router.navigate([
-      `/applications/a1/view/${a1.id}`,
-    ])
+  onViewClick(a1: A1ZTableRecord) {
+    this.router.navigate([`/applications/a1/view/${a1.id}`]);
   }
 
   protected readonly PermissionEnum = PermissionEnum;

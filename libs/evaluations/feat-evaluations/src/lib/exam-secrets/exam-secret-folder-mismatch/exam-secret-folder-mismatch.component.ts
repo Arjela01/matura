@@ -21,6 +21,8 @@ import { TableLazyLoadEvent } from 'primeng/table';
 import { ExamSecret } from '@msh/shared/domain-models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExamSecretApiService } from '@msh/evaluations/data-access-evaluations';
+import { combineLatest, map, skip, tap } from 'rxjs';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
@@ -44,31 +46,27 @@ export class ExamSecretFolderMismatchComponent {
   examSecrets: ExamSecret[] = [];
   totalRecords = 0;
   loading = false;
+  filters: TableLazyLoadEvent | null = null;
 
   constructor(
     private examSecretApiService: ExamSecretApiService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private readonly authFacade: AuthFacade
   ) {}
 
-  @Output() gridEvent = new EventEmitter<
-    GridEvent<ExamSecret | ExamSecret[]>
-  >();
-
-  onEditClick(examSecret: ExamSecret) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.EDIT,
-      data: examSecret,
-    } as GridEvent<ExamSecret>);
-  }
-
-  onDeleteClick(examSecret: ExamSecret) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.DELETE,
-      data: examSecret,
-    } as GridEvent<ExamSecret>);
-  }
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
+    map(([_]) => {
+      if (this.filters) {
+        this.loadRows(this.filters as TableLazyLoadEvent);
+      }
+    }),
+    tap()
+  );
 
   loadRows($event: TableLazyLoadEvent) {
+    this.filters = Object.assign({}, $event);
+
     this.examSecretApiService
       .loadExamSecretFolderMismatch($event)
       .pipe(untilDestroyed(this))

@@ -16,9 +16,10 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { A1a1zGridComponent } from '../a1a1z-grid/a1a1z-grid.component';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @Component({
   selector: 'manage-a1a1z-confirmed',
@@ -49,9 +50,19 @@ export class ManageA1a1zConfirmedComponent {
     private readonly studentService: StudentsApiService,
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private a1a1zService: ConfirmedA1A1ZService
+    private a1a1zService: ConfirmedA1A1ZService,
+    private readonly authFacade: AuthFacade
   ) {}
 
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
+    map(([_]) => {
+      if (this.filters) {
+        this.getStudent(this.filters as TableLazyLoadEvent);
+      }
+    }),
+    tap()
+  );
   onGridEvent(event: GridEvent<Student | Student[]>) {
     switch (event.action) {
       case GRID_ACTIONS.REJECT:

@@ -21,7 +21,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { A1zFormComponent } from '../a1z-form/a1z-form.component';
 import { A1zGridComponent } from '../a1z-grid/a1z-grid.component';
 import { TableLazyLoadEvent } from 'primeng/table';
@@ -66,6 +66,7 @@ export class ManageA1zComponent {
     private readonly permissionCheckService: PermissionCheckService
   ) {}
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
     map(([_]) => {
       if (this.filters) {
         this.getA1Z(this.filters as TableLazyLoadEvent);

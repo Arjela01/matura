@@ -30,7 +30,7 @@ import {
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { ExamSiteFormComponent } from '../exam-site-form/exam-site-form.component';
 import { ExamSiteGridComponent } from '../exam-site-grid/exam-site-grid.component';
 
@@ -65,6 +65,7 @@ export class ManageExamSiteComponent implements OnInit {
   administrationOffices: DropdownModel<number>[] = [];
   highSchools: DropdownModel<string>[] = [];
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
     map(([_]) => {
       if (this.filters) {
         this.getExamSites(this.filters);
