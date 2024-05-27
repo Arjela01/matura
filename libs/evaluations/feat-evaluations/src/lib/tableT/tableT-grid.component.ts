@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { SharedModule } from 'primeng/api';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { CalculationProcessesApiService } from '@msh/evaluations/data-access-evaluations';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
@@ -30,9 +31,18 @@ export class TableTGridComponent implements OnInit {
   };
 
   constructor(
-    // eslint-disable-next-line max-len
-    private readonly calculationProcessesApiService: CalculationProcessesApiService
+    private readonly calculationProcessesApiService: CalculationProcessesApiService,
+    private readonly authFacade: AuthFacade
   ) {}
+
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
+    map(([_]) => {
+      this.getTableTData();
+    }),
+    tap()
+  );
+
   ngOnInit() {
     this.getTableTData();
   }

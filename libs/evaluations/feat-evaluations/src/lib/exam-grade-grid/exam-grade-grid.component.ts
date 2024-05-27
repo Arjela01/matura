@@ -11,7 +11,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { ExamGrade } from '@msh/shared/domain-models';
 
 @UntilDestroy()
@@ -38,6 +38,7 @@ export class ExamGradeGridComponent {
   totalRecords = 0;
   filters: TableLazyLoadEvent | null = null;
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
     map(([_]) => {
       if (this.filters) {
         this.getExamGrades(this.filters as TableLazyLoadEvent);

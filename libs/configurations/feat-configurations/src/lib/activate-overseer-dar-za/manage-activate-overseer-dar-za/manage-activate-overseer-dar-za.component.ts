@@ -17,10 +17,11 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { RippleModule } from 'primeng/ripple';
 import { ActivateOverseerDarZaGridComponent } from '../activate-overseer-dar-za-grid/activate-overseer-dar-za-grid.component';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
@@ -59,8 +60,19 @@ export class ManageActivateOverseerDarZaComponent implements OnInit {
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly cityApiService: CityApiService,
-    private readonly adminOfficeApiService: AdministrationOfficeApiService
+    private readonly adminOfficeApiService: AdministrationOfficeApiService,
+    private readonly authFacade: AuthFacade
   ) {}
+
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
+    map(([_]) => {
+      if (this.filters) {
+        this.getAdministrationOffices(this.filters as TableLazyLoadEvent);
+      }
+    }),
+    tap()
+  );
 
   ngOnInit(): void {
     this.getCitiesDropdown();

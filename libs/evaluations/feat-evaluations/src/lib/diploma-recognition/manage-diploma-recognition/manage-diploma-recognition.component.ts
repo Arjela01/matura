@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { DiplomaRecognition } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ConfirmationService, SharedModule } from 'primeng/api';
@@ -17,6 +17,7 @@ import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { Router } from '@angular/router';
 import { DiplomaRecognitionGridComponent } from '../diploma-recognition-grid/diploma-recognition-grid.component';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @Component({
   selector: 'msh-manage-diploma-recognition',
@@ -48,8 +49,19 @@ export class ManageDiplomaRecognitionComponent {
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly diplomaRecognitionService: DiplomaRecognitionService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly authFacade: AuthFacade
   ) {}
+
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
+    map(([_]) => {
+      if (this.filters) {
+        this.getDiplomaRecognitionRecords(this.filters as TableLazyLoadEvent);
+      }
+    }),
+    tap()
+  );
 
   onNewClick() {
     this.router.navigate(['/evaluations/diploma-recognition/add']);

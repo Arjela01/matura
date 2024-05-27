@@ -28,7 +28,7 @@ import {
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { ProfileFormComponent } from '../profile-form/profile-form.component';
 import { ProfileGridComponent } from '../profile-grid/profile-grid.component';
 import * as FileSaver from 'file-saver';
@@ -62,7 +62,9 @@ export class ManageProfilesComponent implements OnInit {
   selectedProfiles: Profile[] = [];
   displayModal = false;
   ProfileGroups: DropdownModel<number>[] = [];
+
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
     map(([_]) => {
       if (this.filters) {
         this.getProfiles(this.filters as TableLazyLoadEvent);

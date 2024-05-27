@@ -20,8 +20,9 @@ import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { PassInFallGridComponent } from '../pass-in-fall-grid/pass-in-fall-grid.component';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
@@ -53,8 +54,19 @@ export class ManagePassInFallComponent {
     private cd: ChangeDetectorRef,
     private readonly failingStudentService: FailingStudentApiService,
     private readonly confirmationService: ConfirmationService,
-    private readonly toastService: GlobalToastService
+    private readonly toastService: GlobalToastService,
+    private readonly authFacade: AuthFacade
   ) {}
+
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
+    map(([_]) => {
+      if (this.filters) {
+        this.getFailingStudents(this.filters as TableLazyLoadEvent);
+      }
+    }),
+    tap()
+  );
 
   onGridEvent(event: GridEvent<FailingStudent | FailingStudent[]>) {
     switch (event.action) {
@@ -108,7 +120,7 @@ export class ManagePassInFallComponent {
                 this.getFailingStudents(this.filters as TableLazyLoadEvent);
               }
 
-              if (response.isSuccessful === false)
+              if (!response.isSuccessful)
                 this.toastService.showError(
                   'Ndodhi një problem gjatë ndryshimit të maturantit mbetës!'
                 );
@@ -116,7 +128,7 @@ export class ManagePassInFallComponent {
           this.cd.detectChanges();
         }
 
-        if (response.isSuccessful === false) {
+        if (!response.isSuccessful) {
           this.toastService.showError(
             'Ndodhi një problem gjatë kerkimit të maturantit mbetës!'
           );
