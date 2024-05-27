@@ -1,9 +1,11 @@
 export interface StudentBan {
   id: number;
   studentId: string;
-  studentIdentifier: string;
   studentInputData: string;
-  studentName: string;
+  studentStudentId?: string;
+  studentFirstName?: string;
+  studentMiddleName?: string;
+  studentLastName?: string;
   description: string;
   isBanned: number;
   effectiveDate: Date;
