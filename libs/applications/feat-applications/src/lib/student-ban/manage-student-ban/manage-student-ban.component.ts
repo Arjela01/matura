@@ -20,12 +20,13 @@ import {
   GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { StudentBanFormComponent } from '../student-ban-form/student-ban-form.component';
 import { StudentBanGridComponent } from '../student-ban-grid/student-ban-grid.component';
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
@@ -61,8 +62,19 @@ export class ManageStudentBanComponent implements OnInit {
     private readonly toastService: GlobalToastService,
     private readonly studentBannedService: StudentBanApiService,
     private cd: ChangeDetectorRef,
-    private readonly examTypeService: ExamTypeApiService
+    private readonly examTypeService: ExamTypeApiService,
+    private readonly authFacade: AuthFacade
   ) {}
+
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
+    map(([_]) => {
+      if (this.filters) {
+        this.getBannedStudents(this.filters as TableLazyLoadEvent);
+      }
+    }),
+    tap()
+  );
 
   ngOnInit() {
     this.getExamTypes();

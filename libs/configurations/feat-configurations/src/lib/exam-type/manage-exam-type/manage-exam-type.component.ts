@@ -13,11 +13,12 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ExamTypeGridComponent } from '../exam-type-grid/exam-type-grid.component';
 import { ExamTypeFormComponent } from '../exam-type-form/exam-type-form.component';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExamTypeApiService } from '@msh/configurations/data-access-configurations';
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
@@ -53,8 +54,19 @@ export class ManageExamTypeComponent {
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly examTypeService: ExamTypeApiService
+    private readonly examTypeService: ExamTypeApiService,
+    private readonly authFacade: AuthFacade
   ) {}
+
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
+    map(([_]) => {
+      if (this.filters) {
+        this.getExamTypes(this.filters as TableLazyLoadEvent);
+      }
+    }),
+    tap()
+  );
 
   onNewClick() {
     this.displayModal = true;

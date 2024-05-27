@@ -28,7 +28,14 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject, Observable, combineLatest, map, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  combineLatest,
+  map,
+  tap,
+  skip,
+} from 'rxjs';
 import { DiplomasStudentFormComponent } from '../diplomas-student-form/diplomas-student-form.component';
 import { DiplomasStudentGridComponent } from '../diplomas-student-grid/diplomas-student-grid.component';
 import { TableLazyLoadEvent } from 'primeng/table';
@@ -100,6 +107,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
   >;
 
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
     map(([_]) => {
       if (this.filters) {
         this.getStudentDiplomas(this.filters as TableLazyLoadEvent);

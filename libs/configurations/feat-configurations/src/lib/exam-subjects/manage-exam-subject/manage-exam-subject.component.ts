@@ -80,21 +80,9 @@ export class ManageExamSubjectComponent implements OnInit {
     }),
     tap()
   );
+
   ngOnInit(): void {
     this.getExamTypesDropdown();
-    this.authFacade.academicYear$
-      .pipe(
-        map((data: any) => data.id),
-        distinctUntilChanged(),
-        switchMap(data => {
-          if (this.filters) {
-            window.location.reload();
-          }
-
-          return of([]);
-        })
-      )
-      .subscribe();
   }
 
   onNewClick() {
