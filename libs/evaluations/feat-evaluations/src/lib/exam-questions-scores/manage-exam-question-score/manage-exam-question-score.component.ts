@@ -26,8 +26,6 @@ import {
 import { ExamQuestionScoreService } from '@msh/evaluations/data-access-evaluations';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ExamScoreTabularDataEntryFiltersComponent } from '../../exam-score-tabular-data-entry/exam-score-tabular-data-entry-filters/exam-score-tabular-data-entry-filters.component';
-import { ExamScoreTabularDataEntryListComponent } from '../../exam-score-tabular-data-entry/exam-score-tabular-data-entry-list/exam-score-tabular-data-entry-list.component';
 import { ExamQuestionScoreFiltersComponent } from '../exam-question-score-filters/exam-question-score-filters.component';
 import { ExamQuestionScoreGridComponent } from '../exam-question-score-grid/exam-question-score-grid.component';
 import { ExamQuestionsService } from '@msh/evaluations/data-access-evaluations';
@@ -40,8 +38,6 @@ import { ExamQuestionsService } from '@msh/evaluations/data-access-evaluations';
     CommonModule,
     ButtonModule,
     ConfirmDialogModule,
-    ExamScoreTabularDataEntryFiltersComponent,
-    ExamScoreTabularDataEntryListComponent,
     ExamQuestionScoreFiltersComponent,
     ExamQuestionScoreGridComponent,
   ],
