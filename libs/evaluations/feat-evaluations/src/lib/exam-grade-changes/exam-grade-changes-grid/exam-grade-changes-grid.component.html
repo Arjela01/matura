@@ -1,0 +1,240 @@
+<p-table
+  #dt
+  dataKey="id"
+  responsiveLayout="scroll"
+  [scrollable]="true"
+  scrollHeight="820px"
+  [value]="examGradeChanges"
+  [totalRecords]="totalRecords"
+  [rows]="100"
+  [paginator]="true"
+  [rowsPerPageOptions]="[100, 200, 300]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
+  [rowHover]="true"
+  selectionMode="multiple"
+  (onLazyLoad)="loadRows($event)"
+  [lazy]="true">
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="studentStudentId">
+        Matura ID
+        <div>
+          <p-sortIcon field="studentStudentId"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="studentStudentId"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="studentFirstName">
+        Emri
+        <div>
+          <p-sortIcon field="studentFirstName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="studentFirstName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="studentMiddleName">
+        Atësia
+        <div>
+          <p-sortIcon field="studentMiddleName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="studentMiddleName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="studentLastName">
+        Mbiemri
+        <div>
+          <p-sortIcon field="studentLastName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="studentLastName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="examGradeTypeName">
+        Lloji
+        <div>
+          <p-sortIcon field="examGradeTypeName"></p-sortIcon>
+          <p-columnFilter
+            type="numeric"
+            field="examGradeTypeName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="isGradeChanged">
+        Ndryshim <br/>Note?
+        <div>
+          <p-sortIcon field="isGradeChanged"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            field="isGradeChanged"
+            display="menu"
+            matchMode="equals"></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="previousGrade">
+        Nota <br/>Ishte
+        <div>
+          <p-sortIcon field="previousGrade"></p-sortIcon>
+          <p-columnFilter
+            type="numeric"
+            field="previousGrade"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="newGrade">
+        Nota <br/>u Bë
+        <div>
+          <p-sortIcon field="newGrade"></p-sortIcon>
+          <p-columnFilter
+            type="numeric"
+            field="newGrade"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="isScoreChanged">
+        Ndryshim <br/>Pikësh?
+        <div>
+          <p-sortIcon field="isScoreChanged"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            field="isScoreChanged"
+            display="menu"
+            matchMode="equals"></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="previousScore">
+        Pikët <br/>Ishin
+        <div>
+          <p-sortIcon field="previousScore"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="previousScore"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="newScore">
+        Pikët <br/>u Bënë
+        <div>
+          <p-sortIcon field="newScore"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="newScore"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="isExamSubjectChanged">
+        Ndryshim <br/>Lënde?
+        <div>
+          <p-sortIcon field="isExamSubjectChanged"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            field="isExamSubjectChanged"
+            display="menu"
+            matchMode="equals"></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="previousExamSubjectName">
+        Lënda Ishte
+        <div>
+          <p-sortIcon field="previousExamSubjectName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="previousExamSubjectName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="previousExamSubjectName">
+        Lënda <br/>u Bë
+        <div>
+          <p-sortIcon field="newExamSubjectName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="newExamSubjectName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th>Komente</th>
+      <th pSortableColumn="createdOn">
+        Data
+        <div>
+          <p-sortIcon field="createdOn"></p-sortIcon>
+          <p-columnFilter
+            type="date"
+            field="createdOn"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-examGrade>
+    <tr>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examGrade.studentStudentId }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examGrade.studentFirstName }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ examGrade.studentMiddleName }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ examGrade.studentLastName }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ examGrade.examGradeChangeTypeName }}
+      </td>
+      <td style="width: 3%; min-width: 10rem">
+        {{ examGrade.isGradeChanged ? 'Po' : 'Jo' }}
+      </td>
+      <td style="width: 3%; min-width: 10rem">
+        {{ examGrade.previousGrade }}
+      </td>
+      <td style="width: 3%; min-width: 10rem">
+        {{ examGrade.newGrade }}
+      </td>
+      <td style="width: 3%; min-width: 10rem">
+        {{ examGrade.isScoreChanged ? 'Po' : 'Jo' }}
+      </td>
+      <td style="width: 3%; min-width: 10rem">
+        {{ examGrade.previousScore }}
+      </td>
+      <td style="width: 3%; min-width: 10rem">
+        {{ examGrade.newScore }}
+      </td>
+      <td style="width: 3%; min-width: 10rem">
+        {{ examGrade.isExamSubjectChanged ? 'Po' : 'Jo' }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ examGrade.previousExamSubjectName }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ examGrade.newExamSubjectName }}
+      </td>
+      <td style="width: 20%; min-width: 10rem">
+        {{ examGrade.comments }}
+      </td>
+      <td style="width: 20%; min-width: 10rem">
+        {{ examGrade.createdOn | date : 'dd/MM/yyyy HH:mm' }}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

@@ -73,11 +73,12 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
   @Input() set bannedStudentsDetails(details: StudentBan | null) {
     if (details) {
       this.studentBan = Object.assign({}, details);
-      if (details.effectiveDate && details.banRemovalDate) {
+      if (details.effectiveDate) {
         this.effectiveDate = new Date(details.effectiveDate);
       }
     }
   }
+
   @Input() examTypes: DropdownModel<number>[] = [];
 
   @Output() formSave = new EventEmitter<StudentBan>();
@@ -90,9 +91,7 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
   studentBan: StudentBan = {
     id: 0,
     studentId: '',
-    studentIdentifier: '',
     studentInputData: '',
-    studentName: '',
     description: '',
     isBanned: 0,
     effectiveDate: new Date(),
@@ -100,7 +99,7 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
     barcode: '',
     examTypeId: 0,
     examTypeName: '',
-    isFall: false
+    isFall: false,
   };
 
   constructor(
@@ -111,10 +110,12 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
   onCancelClick() {
     this.formClose.emit();
   }
+
   onNewClick() {
     this.displayStudentModal = true;
     this.cd.markForCheck();
   }
+
   onModalClose() {
     this.displayStudentModal = false;
   }
@@ -124,10 +125,10 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
       this.studentInputData = '';
     } else {
       this.studentBan.studentId = student.studentId;
-      this.studentBan.studentIdentifier = student.studentIdentifier;
-      this.studentInputData = `${student?.studentName}`;
+      this.studentInputData = `${this.studentBan?.studentStudentId}-${this.studentBan?.studentFirstName}-${student?.studentLastName}-${student?.studentLastName}`;
     }
   }
+
   onStudentChange(student: Student) {
     if (!student) {
       this.studentBan.studentInputData = ' ';
@@ -153,15 +154,16 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
         break;
     }
   }
+
   ngDoCheck(): void {
     if (this.studentBan.studentId !== undefined) {
-      this.studentBan.studentIdentifier = this.selectedStudent?.studentId;
       this.setStudent(this.studentBan);
     }
     if (this.selectedStudent !== null) {
       this.onStudentChange(this.selectedStudent);
     }
   }
+
   getStudents($event: TableLazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
     this.studentService

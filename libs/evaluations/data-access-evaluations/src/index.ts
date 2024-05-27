@@ -16,3 +16,4 @@ export * from './lib/analytic-scores-without-total/analytic-scores-without-total
 export * from './lib/total-scores-without-analytic/total-scores-without-analytic.service';
 export * from './lib/exam-questions-score/exam-questions-score.service';
 export * from './lib/exam-secret-lock/exam-secret-lock-api.service';
+export * from './lib/exam-grade-changes/exam-grade-changes-api.service';
