@@ -62,7 +62,7 @@
         </div>
       </th>
       <th pSortableColumn="examGradeTypeName">
-        LLoji i ndryshimit
+        Lloji
         <div>
           <p-sortIcon field="examGradeTypeName"></p-sortIcon>
           <p-columnFilter
@@ -72,41 +72,8 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="isScoreChanged">
-        Pikët janë ndryshuar?
-        <div>
-          <p-sortIcon field="isScoreChanged"></p-sortIcon>
-          <p-columnFilter
-            type="boolean"
-            field="isScoreChanged"
-            display="menu"
-            matchMode="equals"></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="previousScore">
-        Pikët e vjetra
-        <div>
-          <p-sortIcon field="previousScore"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="previousScore"
-            display="menu"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="newScore">
-        Pikët e reja
-        <div>
-          <p-sortIcon field="newScore"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="newScore"
-            display="menu"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
       <th pSortableColumn="isGradeChanged">
-        Nota është ndryshuar?
+        Ndryshim <br/>Note?
         <div>
           <p-sortIcon field="isGradeChanged"></p-sortIcon>
           <p-columnFilter
@@ -117,7 +84,7 @@
         </div>
       </th>
       <th pSortableColumn="previousGrade">
-        Nota e vjetër
+        Nota <br/>Ishte
         <div>
           <p-sortIcon field="previousGrade"></p-sortIcon>
           <p-columnFilter
@@ -128,7 +95,7 @@
         </div>
       </th>
       <th pSortableColumn="newGrade">
-        Nota e re
+        Nota <br/>u Bë
         <div>
           <p-sortIcon field="newGrade"></p-sortIcon>
           <p-columnFilter
@@ -138,8 +105,41 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="isScoreChanged">
+        Ndryshim <br/>Pikësh?
+        <div>
+          <p-sortIcon field="isScoreChanged"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            field="isScoreChanged"
+            display="menu"
+            matchMode="equals"></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="previousScore">
+        Pikët <br/>Ishin
+        <div>
+          <p-sortIcon field="previousScore"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="previousScore"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="newScore">
+        Pikët <br/>u Bënë
+        <div>
+          <p-sortIcon field="newScore"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="newScore"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
       <th pSortableColumn="isExamSubjectChanged">
-        Lënda është ndryshuar?
+        Ndryshim <br/>Lënde?
         <div>
           <p-sortIcon field="isExamSubjectChanged"></p-sortIcon>
           <p-columnFilter
@@ -150,7 +150,7 @@
         </div>
       </th>
       <th pSortableColumn="previousExamSubjectName">
-        Lënda e vjetër
+        Lënda Ishte
         <div>
           <p-sortIcon field="previousExamSubjectName"></p-sortIcon>
           <p-columnFilter
@@ -161,7 +161,7 @@
         </div>
       </th>
       <th pSortableColumn="previousExamSubjectName">
-        Lënda e re
+        Lënda <br/>u Bë
         <div>
           <p-sortIcon field="newExamSubjectName"></p-sortIcon>
           <p-columnFilter
@@ -171,29 +171,18 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="academicYearName">
-        Viti
+      <th>Komente</th>
+      <th pSortableColumn="createdOn">
+        Data
         <div>
-          <p-sortIcon field="academicYearName"></p-sortIcon>
+          <p-sortIcon field="createdOn"></p-sortIcon>
           <p-columnFilter
-            type="text"
-            field="academicYearName"
+            type="date"
+            field="createdOn"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="academicYearIsActive">
-        Është aktiv?
-        <div>
-          <p-sortIcon field="academicYearIsActive"></p-sortIcon>
-          <p-columnFilter
-            type="boolean"
-            field="academicYearIsActive"
-            display="menu"
-            matchMode="equals"></p-columnFilter>
-        </div>
-      </th>
-      <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-examGrade>
@@ -213,25 +202,25 @@
       <td style="width: 10%; min-width: 10rem">
         {{ examGrade.examGradeChangeTypeName }}
       </td>
-      <td style="width: 5%; min-width: 10rem">
-        {{ examGrade.isScoreChanged ? 'Po' : 'Jo' }}
-      </td>
-      <td style="width: 5%; min-width: 10rem">
-        {{ examGrade.previousScore }}
-      </td>
-      <td style="width: 5%; min-width: 10rem">
-        {{ examGrade.newScore }}
-      </td>
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 3%; min-width: 10rem">
         {{ examGrade.isGradeChanged ? 'Po' : 'Jo' }}
       </td>
-      <td style="width: 5%; min-width: 10rem">
+      <td style="width: 3%; min-width: 10rem">
         {{ examGrade.previousGrade }}
       </td>
-      <td style="width: 5%; min-width: 10rem">
+      <td style="width: 3%; min-width: 10rem">
         {{ examGrade.newGrade }}
       </td>
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 3%; min-width: 10rem">
+        {{ examGrade.isScoreChanged ? 'Po' : 'Jo' }}
+      </td>
+      <td style="width: 3%; min-width: 10rem">
+        {{ examGrade.previousScore }}
+      </td>
+      <td style="width: 3%; min-width: 10rem">
+        {{ examGrade.newScore }}
+      </td>
+      <td style="width: 3%; min-width: 10rem">
         {{ examGrade.isExamSubjectChanged ? 'Po' : 'Jo' }}
       </td>
       <td style="width: 10%; min-width: 10rem">
@@ -240,11 +229,11 @@
       <td style="width: 10%; min-width: 10rem">
         {{ examGrade.newExamSubjectName }}
       </td>
-      <td style="width: 5%; min-width: 10rem">
-        {{ examGrade.academicYearName }}
+      <td style="width: 20%; min-width: 10rem">
+        {{ examGrade.comments }}
       </td>
-      <td style="width: 5%; min-width: 10rem">
-        {{ examGrade.academicYearIsActive ? 'Po' : 'Jo' }}
+      <td style="width: 20%; min-width: 10rem">
+        {{ examGrade.createdOn | date : 'dd/MM/yyyy HH:mm' }}
       </td>
     </tr>
   </ng-template>

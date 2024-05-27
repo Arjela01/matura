@@ -14,8 +14,6 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { RippleModule } from 'primeng/ripple';
 import {
   ColumnFilterDirective,
-  GRID_ACTIONS,
-  GridEvent,
 } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ExamGradeChange } from '@msh/shared/domain-models';
