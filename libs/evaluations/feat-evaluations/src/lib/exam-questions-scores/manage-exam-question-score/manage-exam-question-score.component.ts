@@ -231,6 +231,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       const academicYear = JSON.parse(academicYearString);
       const academicYearId = academicYear.id;
       const valuesToSend = {
+        examVariantId: this.examVariantId,
         academicYearId: academicYearId,
         examQuestionScoreCreateUpdateModels: examQuestionScore,
         testNumber: this.testNumber,

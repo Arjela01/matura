@@ -33,4 +33,5 @@ export interface CreateOrUpdateMultiple {
   academicYearId: number;
   examQuestionScoreCreateUpdateModels: ExamQuestionScoreModel[];
   barcode: string;
+  examVariantId: string;
 }
