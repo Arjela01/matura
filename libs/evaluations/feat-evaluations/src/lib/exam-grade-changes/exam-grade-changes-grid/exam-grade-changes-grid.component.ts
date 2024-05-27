@@ -42,18 +42,7 @@ import { DialogModule } from 'primeng/dialog';
 export class ExamGradeChangesGridComponent {
   @Input() examGradeChanges: ExamGradeChange[] = [];
   @Input() totalRecords = 0;
-
-  @Output() gridEvent = new EventEmitter<
-    GridEvent<ExamGradeChange | ExamGradeChange[]>
-  >();
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
-
-  onEditClick(examGradeChanges: ExamGradeChange) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.EDIT,
-      data: examGradeChanges,
-    } as GridEvent<ExamGradeChange>);
-  }
 
   loadRows($event: TableLazyLoadEvent) {
     this.lazyLoadData.emit($event);

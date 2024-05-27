@@ -67,7 +67,6 @@ export class ManageExamGradeChangesComponent implements OnInit {
       this.academicYearId = academicYear.id;
     }
     this.examGradeId = this.route.snapshot.params['id'] ?? '';
-    console.log(this.examGradeId);
   }
 
   ngOnInit() {
@@ -97,8 +96,12 @@ export class ManageExamGradeChangesComponent implements OnInit {
   }
 
   onFormSave(examGradeChange: ExamGradeChange) {
+    const valuesToSend = {
+      ...examGradeChange,
+      examGradeId: this.examGradeId,
+    };
     if (!examGradeChange.id) {
-      this.addExamGradeChange(examGradeChange);
+      this.addExamGradeChange(valuesToSend);
     }
   }
 
@@ -125,7 +128,7 @@ export class ManageExamGradeChangesComponent implements OnInit {
 
   getExamGradeChangeTypes() {
     this.examGradeChangeService
-      .getExamGradeChangeType(this.academicYearId, this.examGradeId)
+      .getExamGradeChangeType(this.academicYearId)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examGradeChangeTypes = response.data;
@@ -139,6 +142,7 @@ export class ManageExamGradeChangesComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Rivlërsimi u krye me sukses');
+          this.displayModal = false;
           this.getExamGrades(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest)

@@ -10,16 +10,16 @@
       [filter]="true"
       [autoDisplayFirst]="false"
       [required]="true"
-      [(ngModel)]="examGradeChange.examGradeTypeId"
+      [(ngModel)]="examGradeChange.examGradeChangeTypeId"
       [showClear]="true"
       appendTo="body"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examGradeChange.examGradeTypeId
+        'ng-invalid ng-dirty': submitted && !examGradeChange.examGradeChangeTypeId
       }">
     </p-dropdown>
     <small
       class="p-error block"
-      *ngIf="submitted && !examGradeChange.examGradeTypeId">
+      *ngIf="submitted && !examGradeChange.examGradeChangeTypeId">
       LLoji i ndryshimit është fushë e kërkuar.
     </small>
   </div>

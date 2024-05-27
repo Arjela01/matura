@@ -1,6 +1,7 @@
 export interface ExamGradeChange {
   id?: number;
   examGradeTypeId?: number;
+  examGradeChangeTypeId?: number;
   examGradeTypeName?: string;
   studentId?: string;
   studentStudentId?: string;

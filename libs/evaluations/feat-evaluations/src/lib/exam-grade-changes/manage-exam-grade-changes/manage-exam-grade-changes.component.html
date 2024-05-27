@@ -26,7 +26,6 @@
       <msh-exam-grade-changes-grid
         [examGradeChanges]="(examGradeChange$ | async) || []"
         [totalRecords]="totalRecords"
-        (gridEvent)="onGridEvent($event)"
         (lazyLoadData)="getExamGrades($event)">
       </msh-exam-grade-changes-grid>
     </div>

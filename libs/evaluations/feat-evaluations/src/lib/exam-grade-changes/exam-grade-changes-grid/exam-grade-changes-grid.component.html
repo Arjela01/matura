@@ -211,7 +211,7 @@
         {{ examGrade.studentLastName }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ examGrade.examGradeTypeName }}
+        {{ examGrade.examGradeChangeTypeName }}
       </td>
       <td style="width: 5%; min-width: 10rem">
         {{ examGrade.isScoreChanged ? 'Po' : 'Jo' }}
@@ -245,16 +245,6 @@
       </td>
       <td style="width: 5%; min-width: 10rem">
         {{ examGrade.academicYearIsActive ? 'Po' : 'Jo' }}
-      </td>
-      <td>
-        <div class="flex">
-          <img
-            src="assets/svg/edit-form.svg"
-            class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
-            tooltipPosition="bottom"
-            (click)="onEditClick(examGrade)"
-            pTooltip="Ndrysho" />
-        </div>
       </td>
     </tr>
   </ng-template>
