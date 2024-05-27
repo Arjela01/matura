@@ -19,11 +19,12 @@ import {
   GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { CityFormComponent } from '../city-form/city-form.component';
 import { CityGridComponent } from '../city-grid/city-grid.component';
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
@@ -60,8 +61,19 @@ export class ManageCitiesComponent implements OnInit {
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly cityService: CityApiService,
-    private readonly regionApiService: RegionApiService
+    private readonly regionApiService: RegionApiService,
+    private readonly authFacade: AuthFacade
   ) {}
+
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
+    map(([_]) => {
+      if (this.filters) {
+        this.getCities(this.filters as TableLazyLoadEvent);
+      }
+    }),
+    tap()
+  );
 
   ngOnInit(): void {
     this.getRegionDropdown();

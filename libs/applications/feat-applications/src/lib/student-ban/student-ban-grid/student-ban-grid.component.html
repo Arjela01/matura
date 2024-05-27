@@ -1,136 +1,174 @@
 <p-table
-  #dt
-  dataKey="id"
-  responsiveLayout="scroll"
-  [scrollable]="true"
-  scrollHeight="820px"
-  [value]="bannedStudents"
-  [totalRecords]="totalRecords"
-  [rows]="100"
-  [paginator]="true"
-  [rowsPerPageOptions]="[100, 200, 300]"
-  [showCurrentPageReport]="true"
-  currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
-  [rowHover]="true"
-  [(selection)]="selectedBannedStudents"
-  selectionMode="multiple"
-  (onRowSelect)="onRowSelect($event)"
-  (onRowUnselect)="onRowUnselect($event)"
-  (onLazyLoad)="loadRows($event)"
-  [lazy]="true">
-  <ng-template pTemplate="header">
-    <tr>
-      <th pSortableColumn="id">ID e Maturës</th>
-      <th pSortableColumn="studentName">
-        Maturanti
-        <div>
-        <p-sortIcon field="studentName"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="studentName"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="barcode">
-        Barkodi
-        <div>
-        <p-sortIcon field="barcode"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="barcode"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="examTypeId">
-        Tipi i Provimit
-        <div>
-        <p-sortIcon field="examTypeId"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="examTypeId"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="isBanned">
-        Është Skualifikuar?
-        <div>
-        <p-sortIcon field="isBanned"></p-sortIcon>
-        <p-columnFilter
-          type="boolean"
-          field="isBanned"
-          matchMode="equals"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="effectiveDate">
-        Data efektive
-        <div>
-        <p-sortIcon field="effectiveDate"></p-sortIcon>
-        <p-columnFilter
-          type="date"
-          field="effectiveDate"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="description">
-        Përshkrimi
-        <div>
-        <p-sortIcon field="description"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="description"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
-      <th></th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-bannedStudent>
-    <tr>
-      <td style="width: 10%; min-width: 10rem">
-        {{ bannedStudent.studentIdentifier }}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ bannedStudent.studentName }}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ bannedStudent.barcode }}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ bannedStudent.examTypeName }}
-      </td>
-      <td style="width: 20%; min-width: 10rem">
-        {{ bannedStudent.isBanned ? 'Po' : 'Jo' }}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ bannedStudent.effectiveDate | date : 'dd/MM/yyyy' }}
-      </td>
-      <td style="width: 20%; min-width: 10rem">
-        {{ bannedStudent.description }}
-      </td>
-      <td>
-        <div class="flex">
-          <img
-            src="assets/svg/edit-form.svg"
-            class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
-            tooltipPosition="bottom"
-            (click)="onEditClick(bannedStudent)"
-            pTooltip="Ndrysho" />
+    #dt
+    dataKey="id"
+    responsiveLayout="scroll"
+    [scrollable]="true"
+    scrollHeight="820px"
+    [value]="bannedStudents"
+    [totalRecords]="totalRecords"
+    [rows]="100"
+    [paginator]="true"
+    [rowsPerPageOptions]="[100, 200, 300]"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
+    [rowHover]="true"
+    [(selection)]="selectedBannedStudents"
+    selectionMode="multiple"
+    (onRowSelect)="onRowSelect($event)"
+    (onRowUnselect)="onRowUnselect($event)"
+    (onLazyLoad)="loadRows($event)"
+    [lazy]="true">
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="studentStudentId">
+                ID e Maturës
+                <div>
+                    <p-sortIcon field="studentStudentId"></p-sortIcon>
+                    <p-columnFilter
+                            type="text"
+                            field="studentStudentId"
+                            display="menu"
+                            mshColumnFilterDirective></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="studentFirstName">
+                Emri
+                <div>
+                    <p-sortIcon field="studentFirstName"></p-sortIcon>
+                    <p-columnFilter
+                            type="text"
+                            field="studentFirstName"
+                            display="menu"
+                            mshColumnFilterDirective></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="studentMiddleName">
+                Atësia
+                <div>
+                    <p-sortIcon field="studentMiddleName"></p-sortIcon>
+                    <p-columnFilter
+                            type="text"
+                            field="studentMiddleName"
+                            display="menu"
+                            mshColumnFilterDirective></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="studentLastName">
+                Mbiemri
+                <div>
+                    <p-sortIcon field="studentLastName"></p-sortIcon>
+                    <p-columnFilter
+                            type="text"
+                            field="studentLastName"
+                            display="menu"
+                            mshColumnFilterDirective></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="barcode">
+                Barkodi
+                <div>
+                    <p-sortIcon field="barcode"></p-sortIcon>
+                    <p-columnFilter
+                            type="text"
+                            field="barcode"
+                            display="menu"
+                            mshColumnFilterDirective></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="examTypeId">
+                Tipi i Provimit
+                <div>
+                    <p-sortIcon field="examTypeId"></p-sortIcon>
+                    <p-columnFilter
+                            type="text"
+                            field="examTypeId"
+                            display="menu"
+                            mshColumnFilterDirective></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="isBanned">
+                Është Skualifikuar?
+                <div>
+                    <p-sortIcon field="isBanned"></p-sortIcon>
+                    <p-columnFilter
+                            type="boolean"
+                            field="isBanned"
+                            matchMode="equals"
+                            display="menu"
+                            mshColumnFilterDirective></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="effectiveDate">
+                Data efektive
+                <div>
+                    <p-sortIcon field="effectiveDate"></p-sortIcon>
+                    <p-columnFilter
+                            type="date"
+                            field="effectiveDate"
+                            display="menu"
+                            mshColumnFilterDirective></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="description">
+                Përshkrimi
+                <div>
+                    <p-sortIcon field="description"></p-sortIcon>
+                    <p-columnFilter
+                            type="text"
+                            field="description"
+                            display="menu"
+                            mshColumnFilterDirective></p-columnFilter>
+                </div>
+            </th>
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-bannedStudent>
+        <tr>
+            <td style="width: 10%; min-width: 10rem">
+                {{ bannedStudent.studentStudentId }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+                {{ bannedStudent.studentFirstName }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+                {{ bannedStudent.studentMiddleName }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+                {{ bannedStudent.studentLastName }}
+            </td>
+            <td style="width: 14%; min-width: 10rem">
+                {{ bannedStudent.barcode }}
+            </td>
+            <td style="width: 14%; min-width: 10rem">
+                {{ bannedStudent.examTypeName }}
+            </td>
+            <td style="width: 20%; min-width: 10rem">
+                {{ bannedStudent.isBanned ? 'Po' : 'Jo' }}
+            </td>
+            <td style="width: 14%; min-width: 10rem">
+                {{ bannedStudent.effectiveDate | date : 'dd/MM/yyyy' }}
+            </td>
+            <td style="width: 20%; min-width: 10rem">
+                {{ bannedStudent.description }}
+            </td>
+            <td>
+                <div class="flex">
+                    <img
+                            src="assets/svg/edit-form.svg"
+                            class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
+                            tooltipPosition="bottom"
+                            (click)="onEditClick(bannedStudent)"
+                            pTooltip="Ndrysho"/>
 
-          <img
-            src="assets/svg/delete-form.svg"
-            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
-            pTooltip="Fshi"
-            tooltipPosition="bottom"
-            (click)="onDeleteClick(bannedStudent)" />
-        </div>
-      </td>
-    </tr>
-  </ng-template>
+                    <img
+                            src="assets/svg/delete-form.svg"
+                            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
+                            pTooltip="Fshi"
+                            tooltipPosition="bottom"
+                            (click)="onDeleteClick(bannedStudent)"/>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
 </p-table>

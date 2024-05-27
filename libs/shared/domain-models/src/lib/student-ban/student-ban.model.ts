@@ -11,6 +11,7 @@ export interface StudentBan {
   barcode: string;
   examTypeId: number;
   examTypeName: string;
+  isFall: boolean;
 }
 
 export interface StudentBanTableView {

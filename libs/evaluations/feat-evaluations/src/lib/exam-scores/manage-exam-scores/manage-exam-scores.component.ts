@@ -8,7 +8,15 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { ExamScoresFormComponent } from '../exam-scores-form/exam-scores-form.component';
 import { ExamScoresGridComponent } from '../exam-scores-grid/exam-scores-grid.component';
 import { ConfirmationService } from 'primeng/api';
-import { BehaviorSubject, of, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  map,
+  of,
+  skip,
+  switchMap,
+  tap,
+} from 'rxjs';
 import {
   GlobalToastService,
   GRID_ACTIONS,
@@ -79,20 +87,18 @@ export class ManageExamScoresComponent implements OnInit {
     private authFacade: AuthFacade
   ) {}
 
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
+    map(([_]) => {
+      if (this.filters) {
+        this.getExamScores(this.filters as TableLazyLoadEvent);
+      }
+    }),
+    tap()
+  );
+
   ngOnInit(): void {
     this.getExamTypes();
-    this.authFacade.academicYear$
-      .pipe(
-        switchMap(data => {
-          this.currentAcademicYear = data;
-          if (this.filters) {
-            window.location.reload();
-          }
-
-          return of([]);
-        })
-      )
-      .subscribe();
   }
 
   onNewClick() {
@@ -102,7 +108,7 @@ export class ManageExamScoresComponent implements OnInit {
       multipleChoiceScore: 0,
       isFall: this.currentAcademicYear?.isFall ?? false,
       archiveFolderNr: 0,
-      archiveExamIndex:0,
+      archiveExamIndex: 0,
     } as ExamScore;
   }
 

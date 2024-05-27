@@ -68,7 +68,6 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
   studentInputData = '';
 
   effectiveDate: any;
-  banRemovalDate: any;
   filters: TableLazyLoadEvent | null = null;
 
   @Input() set bannedStudentsDetails(details: StudentBan | null) {
@@ -101,6 +100,7 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
     barcode: '',
     examTypeId: 0,
     examTypeName: '',
+    isFall: false
   };
 
   constructor(
@@ -180,7 +180,7 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
         const formattedEffectiveDate = formatDate(
           this.effectiveDate,
           'dd/MM/yyyy',
-          'en-US'
+          'en'
         );
         this.studentBan.effectiveDate = formattedEffectiveDate as any;
       }

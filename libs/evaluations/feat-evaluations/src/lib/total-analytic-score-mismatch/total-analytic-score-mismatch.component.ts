@@ -10,6 +10,8 @@ import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { SharedModule } from 'primeng/api';
+import { AuthFacade } from '@msh/auth/data-access-auth';
+import { combineLatest, map, skip, tap } from 'rxjs';
 @UntilDestroy()
 @Component({
   selector: 'msh-total-analytic-score-mismatch',
@@ -22,11 +24,27 @@ import { SharedModule } from 'primeng/api';
 export class TotalAnalyticScoreMismatchComponent {
   scores: TotalAnalyticScoresMismatchModel[] = [];
   totalRecords = 0;
+  filters: TableLazyLoadEvent | null = null;
+
   constructor(
     private scoreApiService: AnalyticScoresWithoutTotalService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private readonly authFacade: AuthFacade
   ) {}
+
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
+    map(([_]) => {
+      if (this.filters) {
+        this.loadRows(this.filters as TableLazyLoadEvent);
+      }
+    }),
+    tap()
+  );
+
   loadRows($event: TableLazyLoadEvent) {
+    this.filters = Object.assign({}, $event);
+
     this.scoreApiService
       .loadTotalAnalyticMismatchData($event)
       .pipe(untilDestroyed(this))

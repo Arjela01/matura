@@ -10,7 +10,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ConfirmationService } from 'primeng/api';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { ExamSubjectProfile } from '@msh/shared/domain-models';
 import {
   GlobalToastService,
@@ -31,6 +31,7 @@ import { ExamSubjectProfileFormComponent } from '../exam-subject-profile-form/ex
 import { ExamSubjectProfileGridComponent } from '../exam-subject-profile-grid/exam-subject-profile-grid.component';
 import * as FileSaver from 'file-saver';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
@@ -74,8 +75,19 @@ export class ManageExamSubjectProfileComponent implements OnInit {
     private readonly academicYearsApiService: AcademicYearApiService,
     private readonly examTypesApiService: ExamTypeApiService,
     private readonly profilesApiService: ProfileApiService,
-    private readonly cd: ChangeDetectorRef
+    private readonly cd: ChangeDetectorRef,
+    private readonly authFacade: AuthFacade
   ) {}
+
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
+    map(([_]) => {
+      if (this.filters) {
+        this.getExamSubjectProfiles(this.filters as TableLazyLoadEvent);
+      }
+    }),
+    tap()
+  );
 
   ngOnInit(): void {
     this.getAcademicYearsDropdown();

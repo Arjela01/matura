@@ -5,7 +5,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import {
   ExamGradeRequestModel,
   ExamGradesRequestStatus,
@@ -32,6 +32,7 @@ import {
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ManualExamGradeFormComponent } from '../../manual-exam-grade/manual-exam-grade-form/manual-exam-grade-form.component';
 import { StudentsGridComponent } from '../../students/students-grid/students-grid.component';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
@@ -77,8 +78,18 @@ export class ManageExamGradeRequestComponent implements OnInit {
     private readonly examGradeRequestService: ExamGradeRequestService,
     private readonly academicYearService: AcademicYearApiService,
     private readonly highSchoolService: HighSchoolApiService,
+    private readonly authFacade: AuthFacade,
     private cd: ChangeDetectorRef
   ) {}
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
+    map(([_]) => {
+      if (this.filters) {
+        this.getExamGradeRequest(this.filters as TableLazyLoadEvent);
+      }
+    }),
+    tap()
+  );
 
   onNewClick() {
     this.displayModal = true;

@@ -34,9 +34,10 @@ import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { CarriedGradesFormComponent } from '../carried-grade-form/carried-grade-form.component';
 import { CarriedGradesGridComponent } from '../carried-grade-grid/carried-grades-grid.component';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @Component({
   selector: 'msh-manage-carried-grades',
@@ -91,8 +92,19 @@ export class ManageCarriedGradesComponent implements OnInit {
     private studentsApiService: StudentsApiService,
     private examSubjectApiService: ExamSubjectApiService,
     private route: ActivatedRoute,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private readonly authFacade: AuthFacade
   ) {}
+
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
+    map(([_]) => {
+      if (this.filters) {
+        this.getCarriedGrades(this.filters as TableLazyLoadEvent);
+      }
+    }),
+    tap()
+  );
 
   ngOnInit(): void {
     this.getAcademicYearsDropdown();

@@ -1,174 +1,195 @@
 <div class="grid">
-  <div class="col-12 p-fluid">
-    <div class="card" style="border: 0">
-      <form #form="ngForm">
-        <div class="field mt-4 mb-4">
-          <label for="studentInputData">Maturantë *</label>
-          <div class="p-inputgroup">
-            <input
-              [value]="studentInputData"
-              [disabled]="!!studentBan.id"
-              type="text"
-              pInputText
-              id="studentInputData"
-              name="studentInputData"
-              [(ngModel)]="studentInputData"
-              [required]="true"
-              [ngClass]="{
+    <div class="col-12 p-fluid">
+        <div class="card" style="border: 0">
+            <form #form="ngForm">
+                <div class="field mt-4 mb-4">
+                    <label for="studentInputData">Maturantë *</label>
+                    <div class="p-inputgroup">
+                        <input
+                                [value]="studentInputData"
+                                [disabled]="!!studentBan.id"
+                                type="text"
+                                pInputText
+                                id="studentInputData"
+                                name="studentInputData"
+                                [(ngModel)]="studentInputData"
+                                [required]="true"
+                                [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !studentInputData
-              }" />
-            <p-button
-              *ngIf="!studentBan.id"
-              label="Kërko"
-              icon="pi pi-search"
-              (click)="!studentBan.id ? onNewClick() : ''"
-              [style]="{ height: '100%' }"></p-button>
-          </div>
-          <small class="p-error block" *ngIf="submitted && !studentInputData">
-            Maturant është fushë e kërkuar.
-          </small>
-        </div>
+              }"/>
+                        <p-button
+                                *ngIf="!studentBan.id"
+                                label="Kërko"
+                                icon="pi pi-search"
+                                (click)="!studentBan.id ? onNewClick() : ''"
+                                [style]="{ height: '100%' }"></p-button>
+                    </div>
+                    <small class="p-error block" *ngIf="submitted && !studentInputData">
+                        Maturant është fushë e kërkuar.
+                    </small>
+                </div>
 
-        <div class="field">
-          <label for="barcode">Barkodi *</label>
-          <input
-            type="text"
-            maxlength="7"
-            minlength="7"
-            pInputText
-            placeholder="Barkodi"
-            id="barcode"
-            name="barcode"
-            [pattern]="barcodePattern"
-            [(ngModel)]="studentBan.barcode"
-            required
-            [ngClass]="{
+                <div class="field">
+                    <label for="barcode">Barkodi *</label>
+                    <input
+                            type="text"
+                            maxlength="7"
+                            minlength="7"
+                            pInputText
+                            placeholder="Barkodi"
+                            id="barcode"
+                            name="barcode"
+                            [pattern]="barcodePattern"
+                            [(ngModel)]="studentBan.barcode"
+                            required
+                            [ngClass]="{
               'ng-invalid ng-dirty': submitted && !studentBan.barcode
-            }" />
-          <small class="p-error block" *ngIf="submitted && !studentBan.barcode">
-            Barkodi është fushë e kërkuar.
-          </small>
-        </div>
+            }"/>
+                    <small class="p-error block" *ngIf="submitted && !studentBan.barcode">
+                        Barkodi është fushë e kërkuar.
+                    </small>
+                </div>
 
-        <div class="field">
-          <label for="ExamType">Tipi i Provimit *</label>
-          <p-dropdown
-            id="ExamType"
-            [options]="examTypes"
-            optionValue="key"
-            optionLabel="value"
-            name="ExamTypeId"
-            [filter]="true"
-            [autoDisplayFirst]="false"
-            [required]="true"
-            [(ngModel)]="studentBan.examTypeId"
-            [showClear]="true"
-            [ngClass]="{
+                <div class="field">
+                    <label for="ExamType">Tipi i Provimit *</label>
+                    <p-dropdown
+                            id="ExamType"
+                            [options]="examTypes"
+                            optionValue="key"
+                            optionLabel="value"
+                            name="ExamTypeId"
+                            [filter]="true"
+                            [autoDisplayFirst]="false"
+                            [required]="true"
+                            [(ngModel)]="studentBan.examTypeId"
+                            [showClear]="true"
+                            [ngClass]="{
               'ng-invalid ng-dirty': submitted && !studentBan.examTypeId
             }">
-          </p-dropdown>
-          <small
-            class="p-error block"
-            *ngIf="submitted && !studentBan.examTypeId">
-            Tipi i provimit është fushë e kërkuar.
-          </small>
-        </div>
+                    </p-dropdown>
+                    <small
+                            class="p-error block"
+                            *ngIf="submitted && !studentBan.examTypeId">
+                        Tipi i provimit është fushë e kërkuar.
+                    </small>
+                </div>
 
-        <div class="field">
-          <label for="effectiveDate">Data Efektive *</label>
-          <p-calendar
-            [(ngModel)]="effectiveDate"
-            dateFormat="dd/mm/yy"
-            inputId="effectiveDate"
-            id="effectiveDate"
-            name="effectiveDate"
-            appendTo="body"
-            [ngClass]="{
+                <div class="field">
+                    <label for="effectiveDate">Data Efektive *</label>
+                    <p-calendar
+                            [(ngModel)]="effectiveDate"
+                            dateFormat="dd/mm/yy"
+                            inputId="effectiveDate"
+                            id="effectiveDate"
+                            name="effectiveDate"
+                            appendTo="body"
+                            [ngClass]="{
               'ng-invalid ng-dirty': submitted && !effectiveDate
             }"></p-calendar>
-          <small class="p-error block" *ngIf="submitted && !effectiveDate">
-            Data është fushë e kërkuar.
-          </small>
-        </div>
+                    <small class="p-error block" *ngIf="submitted && !effectiveDate">
+                        Data është fushë e kërkuar.
+                    </small>
+                </div>
 
-        <div class="field">
-          <label for="description"> Përshkrimi *</label>
-          <textarea
-            rows="4"
-            cols="35"
-            pInputTextarea
-            id="description"
-            name="description"
-            required
-            [(ngModel)]="studentBan.description"
-            [ngClass]="{
+                <div class="field">
+                    <label for="description"> Përshkrimi *</label>
+                    <textarea
+                            rows="4"
+                            cols="35"
+                            pInputTextarea
+                            id="description"
+                            name="description"
+                            required
+                            [(ngModel)]="studentBan.description"
+                            [ngClass]="{
               'ng-invalid ng-dirty': submitted && !studentBan.description
             }"></textarea>
 
-          <small
-            class="p-error block"
-            *ngIf="submitted && !studentBan.description">
-            Përshkrimi është fushë e kërkuar.
-          </small>
-        </div>
+                    <small
+                            class="p-error block"
+                            *ngIf="submitted && !studentBan.description">
+                        Përshkrimi është fushë e kërkuar.
+                    </small>
+                </div>
 
-        <div class="field">
-          <label class="mb-3">Është Skualifikuar? *</label>
-          <div class="formgrid grid">
-            <div class="field-radiobutton col-6">
-              <p-radioButton
-                id="IsBannedTrue"
-                name="isBanned"
-                [value]="true"
-                [(ngModel)]="studentBan.isBanned"></p-radioButton>
-              <label for="IsBannedTrue">Po</label>
-            </div>
-            <div class="field-radiobutton col-6">
-              <p-radioButton
-                id="IsBannedFalse"
-                name="isBanned"
-                [value]="false"
-                [(ngModel)]="studentBan.isBanned"></p-radioButton>
-              <label for="IsBannedFalse">Jo</label>
-            </div>
-          </div>
-        </div>
+                <div class="field">
+                    <label class="mb-3">Është Skualifikuar? *</label>
+                    <div class="formgrid grid">
+                        <div class="field-radiobutton col-6">
+                            <p-radioButton
+                                    id="IsBannedTrue"
+                                    name="isBanned"
+                                    [value]="true"
+                                    [(ngModel)]="studentBan.isBanned"></p-radioButton>
+                            <label for="IsBannedTrue">Po</label>
+                        </div>
+                        <div class="field-radiobutton col-6">
+                            <p-radioButton
+                                    id="IsBannedFalse"
+                                    name="isBanned"
+                                    [value]="false"
+                                    [(ngModel)]="studentBan.isBanned"></p-radioButton>
+                            <label for="IsBannedFalse">Jo</label>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="flex justify-content-end">
-          <button
-            type="button"
-            pButton
-            label="Anullo"
-            class="p-button-text w-auto mr-2"
-            (click)="onCancelClick()"></button>
-          <button
-            [disabled]="form.invalid"
-            type="submit"
-            pButton
-            label="Ruaj"
-            class="p-button w-auto"
-            (click)="onSubmit()"></button>
-        </div>
+                <div class="field" [style]="{ width: '500px' }">
+                    <label class="mb-3">Sesioni i Vjeshtës? *</label>
+                    <div class="formgrid grid">
+                        <div class="field-radiobutton col-6">
+                            <p-radioButton
+                                    id="IsFallTrue"
+                                    name="IsFall"
+                                    [value]="true"
+                                    [(ngModel)]="studentBan.isFall"></p-radioButton>
+                            <label for="IsFallTrue">Po</label>
+                        </div>
+                        <div class="field-radiobutton col-6">
+                            <p-radioButton
+                                    id="IsFallFalse"
+                                    name="IsFall"
+                                    [value]="false"
+                                    [(ngModel)]="studentBan.isFall"></p-radioButton>
+                            <label for="IsFallFalse">Jo</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-content-end">
+                    <button
+                            type="button"
+                            pButton
+                            label="Anullo"
+                            class="p-button-text w-auto mr-2"
+                            (click)="onCancelClick()"></button>
+                    <button
+                            [disabled]="form.invalid"
+                            type="submit"
+                            pButton
+                            label="Ruaj"
+                            class="p-button w-auto"
+                            (click)="onSubmit()"></button>
+                </div>
 
-        <p-dialog
-          [(visible)]="displayStudentModal"
-          [style]="{ width: '850px' }"
-          [modal]="true"
-          [draggable]="false"
-          header="Kërko Maturantin"
-          [resizable]="false"
-          class="p-fluid"
-          (onHide)="onModalClose()">
-          <ng-template pTemplate="content">
-            <msh-shared-student-lookup
-              [students]="(studentList$ | async) || []"
-              [totalRecords]="totalRecords"
-              (gridEvent)="onGridEvent($event)"
-              (lazyLoadData)="getStudents($event)">
-            </msh-shared-student-lookup>
-          </ng-template>
-        </p-dialog>
-      </form>
+                <p-dialog
+                        [(visible)]="displayStudentModal"
+                        [style]="{ width: '850px' }"
+                        [modal]="true"
+                        [draggable]="false"
+                        header="Kërko Maturantin"
+                        [resizable]="false"
+                        class="p-fluid"
+                        (onHide)="onModalClose()">
+                    <ng-template pTemplate="content">
+                        <msh-shared-student-lookup
+                                [students]="(studentList$ | async) || []"
+                                [totalRecords]="totalRecords"
+                                (gridEvent)="onGridEvent($event)"
+                                (lazyLoadData)="getStudents($event)">
+                        </msh-shared-student-lookup>
+                    </ng-template>
+                </p-dialog>
+            </form>
+        </div>
     </div>
-  </div>
 </div>

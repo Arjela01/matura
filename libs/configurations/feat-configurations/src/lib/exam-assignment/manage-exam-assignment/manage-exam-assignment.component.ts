@@ -28,11 +28,12 @@ import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { AssignAllFormComponent } from '../assign-all-form/assign-all-form.component';
 import { ExamAssignmentFormComponent } from '../exam-assignment-form/exam-assignment-form.component';
 import { ExamAssignmentGridComponent } from '../exam-assignment-grid/exam-assignment-grid.component';
 import { UploadFormComponent } from '../upload-form/upload-form.component';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
@@ -87,8 +88,19 @@ export class ManageExamAssignmentComponent implements OnInit {
     private readonly examSiteService: ExamSiteApiService,
     private readonly cd: ChangeDetectorRef,
     private readonly administrationOfficeService: AdministrationOfficeApiService,
-    private readonly profileService: ProfileApiService
+    private readonly profileService: ProfileApiService,
+    private readonly authFacade: AuthFacade
   ) {}
+
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
+    map(([_]) => {
+      if (this.filters) {
+        this.getExamAssignments(this.filters as TableLazyLoadEvent);
+      }
+    }),
+    tap()
+  );
 
   onGridEvent(event: GridEvent<any | ExamAssignment[]>) {
     switch (event.action) {

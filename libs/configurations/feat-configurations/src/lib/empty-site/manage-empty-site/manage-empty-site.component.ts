@@ -13,7 +13,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import {
   EmptySiteApiService,
   ExamAssignmentApiService,
@@ -21,6 +21,7 @@ import {
 import { EmptySiteGridComponent } from '../empty-site-grid/empty-site-grid.component';
 import { EmptySite } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @Component({
   selector: 'msh-manage-empty-site',
@@ -52,8 +53,19 @@ export class ManageEmptySiteComponent {
     private readonly emptySiteService: EmptySiteApiService,
     private readonly examAssignmentService: ExamAssignmentApiService,
     private readonly confirmationService: ConfirmationService,
-    private readonly toastService: GlobalToastService
+    private readonly toastService: GlobalToastService,
+    private readonly authFacade: AuthFacade
   ) {}
+
+  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
+    map(([_]) => {
+      if (this.filters) {
+        this.getEmptySites(this.filters as TableLazyLoadEvent);
+      }
+    }),
+    tap()
+  );
 
   onGridEvent(event: GridEvent<EmptySite | EmptySite[]>) {
     switch (event.action) {
