@@ -6,7 +6,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TabViewModule } from 'primeng/tabview';
-import {ExamAssignment, ExamGrade, ExamSubject, Student} from '@msh/shared/domain-models';
+import {
+  ExamAssignment,
+  ExamGrade,
+  ExamScore,
+  ExamSubject,
+  Student,
+} from '@msh/shared/domain-models';
 import { BehaviorSubject } from 'rxjs';
 import {
   ExamAssignmentApiService,
@@ -22,7 +28,9 @@ import { StudentDataComponent } from '../students-data/student-data.component';
 import { StudentAuditGradesComponent } from '../student-grades/students-grades.component';
 import { StudentsAssignmentsComponent } from '../student-assignments/students-assignments.component';
 import { ExamGradeApiService } from '@msh/applications/data-access-applications';
-import {StudentsSubjectsComponent} from "../student-subjects/students-subjects.component";
+import { StudentsSubjectsComponent } from '../student-subjects/students-subjects.component';
+import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
+import { StudentScoresComponent } from '../student-scores/students-scores.component';
 
 @UntilDestroy()
 @Component({
@@ -40,6 +48,7 @@ import {StudentsSubjectsComponent} from "../student-subjects/students-subjects.c
     StudentAuditGradesComponent,
     StudentsAssignmentsComponent,
     StudentsSubjectsComponent,
+    StudentScoresComponent,
   ],
   templateUrl: './students-view.component.html',
   styleUrls: ['./students-view.component.scss'],
@@ -50,6 +59,9 @@ export class StudentsViewComponent implements OnInit {
 
   private subjects$$ = new BehaviorSubject<ExamSubject[]>([]);
   subjects$ = this.subjects$$.asObservable();
+
+  private scores$$ = new BehaviorSubject<ExamScore[]>([]);
+  scores$ = this.scores$$.asObservable();
 
   forms: A1ZTableRecord[] = [];
   finishedAtSameSchool = true;
@@ -69,12 +81,14 @@ export class StudentsViewComponent implements OnInit {
     private route: ActivatedRoute,
     private readonly permissionCheckService: PermissionCheckService,
     private readonly examAssignmentService: ExamAssignmentApiService,
-    private router: Router
+    private router: Router,
+    private readonly examScoreService: ExamScoreApiService
   ) {
     this.id = this.route.snapshot.paramMap.get('id') ?? '';
   }
 
   ngOnInit(): void {
+    this.getScoresForStudentId();
     this.getFormType();
     this.getStudentsOverallData();
     this.getAssignmentsForStudentsById();
@@ -141,14 +155,18 @@ export class StudentsViewComponent implements OnInit {
       });
   }
 
-
   getExamSubjectsForStudentId() {
-    this.studentService
-        .getExamSubjectsForStudentId(this.id)
-        .subscribe(res => {
-          this.subjects$$.next(res.data);
-          this.cd.detectChanges();
-        });
+    this.studentService.getExamSubjectsForStudentId(this.id).subscribe(res => {
+      this.subjects$$.next(res.data);
+      this.cd.detectChanges();
+    });
+  }
+
+  getScoresForStudentId() {
+    this.examScoreService.getScoresForStudent(this.id).subscribe(res => {
+      this.scores$$.next(res.data);
+      this.cd.detectChanges();
+    });
   }
 
   getGradesForStudentsById() {

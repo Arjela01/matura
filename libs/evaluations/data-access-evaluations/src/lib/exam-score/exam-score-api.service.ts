@@ -99,4 +99,11 @@ export class ExamScoreApiService {
       catchError(error => throwError(error))
     );
   }
+
+  getScoresForStudent(id: string): Observable<any> {
+    return this.apiService.get(`/ExamScores/ForStudentId/${id}`).pipe(
+      map((data: any) => data),
+      catchError(error => throwError(error))
+    );
+  }
 }

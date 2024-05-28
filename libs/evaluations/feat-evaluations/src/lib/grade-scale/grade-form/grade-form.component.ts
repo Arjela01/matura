@@ -52,9 +52,6 @@ export class GradeModalFormComponent {
     examSubjectId: '',
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private cd: ChangeDetectorRef, private authFacade: AuthFacade) {}
-
   onCancelClick() {
     this.formClose.emit();
   }

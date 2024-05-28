@@ -15,10 +15,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { TableModule } from 'primeng/table';
-import { BehaviorSubject, Observable, combineLatest, map, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Observable, tap } from 'rxjs';
 import { GradeModalFormComponent } from '../grade-form/grade-form.component';
 import { GradesScale } from '@msh/shared/domain-models';
-import {TooltipModule} from "primeng/tooltip";
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'msh-grade-scale-action',
@@ -132,12 +132,11 @@ export class GradeScaleActionComponent {
       const insideRangeOfGrades =
         gradeScalesList[i - 1].grade < newGradeScale.grade &&
         newGradeScale.grade < gradeScalesList[i].grade;
-      // check if new grade choosen is in the middle of the current iteration grade and the previous one.If this condition doesnt fail check if scores are in the correct order to
       if (insideRangeOfGrades) {
-        const insideRangeOfScores =
+        return (
           gradeScalesList[i - 1].score < newGradeScale.score &&
-          newGradeScale.score < gradeScalesList[i].score;
-        return insideRangeOfScores;
+          newGradeScale.score < gradeScalesList[i].score
+        );
       }
     }
     return true;
@@ -197,7 +196,6 @@ export class GradeScaleActionComponent {
           if (response.isSuccessful) {
             this.toastService.showSuccess('Përshkallëzimi u shtua me sukses!');
             this.displayModal = false;
-            this.initializeTable();
           } else {
             response.errorMessage
               ? this.toastService.showError(response.errorMessage)
@@ -232,7 +230,6 @@ export class GradeScaleActionComponent {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Përshkallëzimi u ndryshua me sukses!');
           this.displayModal = false;
-          this.initializeTable();
         } else {
           this.toastService.showError(response.errorMessage);
         }

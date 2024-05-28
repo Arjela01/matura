@@ -1,0 +1,35 @@
+<div class="grid">
+  <div class="col-12 p-fluid">
+    <div class="card-form px-6 py-6">
+      <ng-container *ngIf="scores && scores.length > 0; else noScores">
+        <div class="col-6">
+          <table id="my-table-2">
+            <thead>
+              <tr>
+                <th>Viti</th>
+                <th>Barkodi</th>
+                <th>Tipi i Provimit</th>
+                <th>Lënda e Provimit</th>
+                <th>Pikët</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let score of scores">
+                <td class="font-semibold">{{ score.academicYear }}</td>
+                <td class="font-semibold">{{ score.barcode }}</td>
+                <td class="font-semibold">{{ score.examTypeName }}</td>
+                <td class="font-semibold">{{ score.examSubjectName }}</td>
+                <td class="font-semibold">{{ score.writingScore }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+      <ng-template #noScores>
+        <div class="col-12">
+          <p>Nuk ka pikë për këtë maturantë!</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

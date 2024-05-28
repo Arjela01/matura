@@ -61,4 +61,8 @@
       [gradesDifferentYear]="gradesDifferentYear"
       [gradesMatchingYear]="gradesMatchingYear"></msh-students-grades
   ></p-tabPanel>
+  <p-tabPanel header="Pikët e Provimeve">
+    <msh-students-scores
+      [scores]="(scores$ | async) || []"></msh-students-scores
+  ></p-tabPanel>
 </p-tabView>
