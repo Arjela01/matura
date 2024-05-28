@@ -19,7 +19,11 @@
                 <td class="font-semibold">{{ score.barcode }}</td>
                 <td class="font-semibold">{{ score.examTypeName }}</td>
                 <td class="font-semibold">{{ score.examSubjectName }}</td>
-                <td class="font-semibold">{{ score.writingScore }}</td>
+                <td class="font-semibold">
+                  {{
+                    (score.writingScore ?? 0) + (score.multipleChoiceScore ?? 0)
+                  }}
+                </td>
               </tr>
             </tbody>
           </table>
