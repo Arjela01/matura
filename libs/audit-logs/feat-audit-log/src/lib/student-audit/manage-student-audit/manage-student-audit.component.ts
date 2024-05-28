@@ -8,9 +8,11 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { StudentAuditDataComponent } from '../student-audit-data/student-audit-data.component';
 import { TabViewModule } from 'primeng/tabview';
 import { StudentsAuditService } from '@msh/audit-logs/data-access-audit-log';
-import { ExamGrade, Student } from '@msh/shared/domain-models';
+import { ExamGrade, ExamScore, Student } from '@msh/shared/domain-models';
 import { StudentAuditGradesComponent } from '../student-audit-grades/student-audit-grades.component';
 import { BehaviorSubject } from 'rxjs';
+import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
+import { StudentAuditScoresComponent } from '../student-audit-scores/students-audit-scores.component';
 
 @Component({
   selector: 'msh-manage-student-audit',
@@ -25,6 +27,7 @@ import { BehaviorSubject } from 'rxjs';
     RouterLink,
     StudentAuditDataComponent,
     StudentAuditGradesComponent,
+    StudentAuditScoresComponent,
   ],
   templateUrl: './manage-student-audit.component.html',
   styleUrls: ['./manage-student-audit.component.scss'],
@@ -33,6 +36,9 @@ export class ManageStudentAuditComponent implements OnInit {
   private grades$$ = new BehaviorSubject<ExamGrade[]>([]);
   grades$ = this.grades$$.asObservable();
 
+  private scores$$ = new BehaviorSubject<ExamScore[]>([]);
+  scores$ = this.scores$$.asObservable();
+
   id = '';
   finishedAtSameSchool = true;
   student!: Student;
@@ -40,17 +46,19 @@ export class ManageStudentAuditComponent implements OnInit {
   constructor(
     private readonly route: ActivatedRoute,
     private readonly studentAuditService: StudentsAuditService,
+    private readonly examScoreService: ExamScoreApiService,
     private readonly cd: ChangeDetectorRef
   ) {
     this.id = this.route.snapshot.paramMap.get('id') ?? '';
   }
 
   ngOnInit() {
-    this.getStudentDataByNid();
-    this.getStudentGradesByNid();
+    this.getScoresForStudentId();
+    this.getStudentDataByID();
+    this.getStudentGradesByID();
   }
 
-  getStudentDataByNid() {
+  getStudentDataByID() {
     this.studentAuditService.getStudentsById(this.id).subscribe(res => {
       this.student = res.data;
       this.finishedAtSameSchool =
@@ -60,7 +68,14 @@ export class ManageStudentAuditComponent implements OnInit {
     });
   }
 
-  getStudentGradesByNid() {
+  getScoresForStudentId() {
+    this.examScoreService.getScoresForStudent(this.id).subscribe(res => {
+      this.scores$$.next(res.data);
+      this.cd.detectChanges();
+    });
+  }
+
+  getStudentGradesByID() {
     this.studentAuditService.getStudentsGradesById(this.id).subscribe(res => {
       this.grades$$.next(res.data);
       this.cd.detectChanges();

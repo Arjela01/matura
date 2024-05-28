@@ -1,25 +1,27 @@
-<div class="flex center mb-2 page-header mb-header align-items-baseline">
+<div class="flex center mt-2 ml-2 page-header mb-header align-items-top">
   <h4 class="flex-1 mb-0">
     Shkallëzimet e notave per lëndën {{ examSubject | async }}
   </h4>
-</div>
 
-<div class="flex justify-content-between my-3">
-  <button
-    type="button"
-    pButton
-    icon="pi pi-arrow-left"
-    label="Kthehu"
-    class="w-auto mr-2"
-    style="background: #eff1f5; color: #155eef"
-    (click)="onExitForm()"></button>
-  <button
-    pButton
-    pRipple
-    label="Shto"
-    icon="pi pi-plus"
-    class="p-button-success"
-    (click)="onNewClick()"></button>
+  <div class="flex align-items-right justify-content-right">
+    <div class="my-2">
+      <button
+        type="button"
+        pButton
+        icon="pi pi-arrow-left"
+        label="Kthehu"
+        class="w-auto mr-2"
+        style="background: #f7f7fa; color: #155eef"
+        (click)="onExitForm()"></button>
+      <button
+        pButton
+        pRipple
+        label="Shto"
+        icon="pi pi-plus"
+        class="p-button-success"
+        (click)="onNewClick()"></button>
+    </div>
+  </div>
 </div>
 
 <div class="grid">
