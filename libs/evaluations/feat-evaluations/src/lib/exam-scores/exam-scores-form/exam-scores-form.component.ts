@@ -64,6 +64,7 @@ export class ExamScoresFormComponent implements OnChanges, OnDestroy {
   submitted = false;
   barcodePattern = BARCODE_REGEX;
   examScore: ExamScore = {
+    totalScore: 0,
     archiveExamIndex: 0,
     archiveFolderNr: 0,
     barcode: '',
@@ -71,9 +72,7 @@ export class ExamScoresFormComponent implements OnChanges, OnDestroy {
     examSecretId: '',
     id: 0,
     modificationReason: '',
-    multipleChoiceScore: 0,
     academicYearId: 1,
-    writingScore: 0,
     maximumValueMultipleScore: 0,
     maximumValueWritingScore: 0,
     isFall: false,

@@ -64,37 +64,26 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="writingScore">
-        Pikët me shtjellim
+      <th pSortableColumn="totalScore">
+        Pikët totale
         <div>
-          <p-sortIcon field="writingScore"></p-sortIcon>
+          <p-sortIcon field="totalScore"></p-sortIcon>
           <p-columnFilter
             type="numeric"
-            field="writingScore"
+            field="totalScore"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="multipleChoiceScore">
-        Pikët me aternativa
-        <div>
-          <p-sortIcon field="multipleChoiceScore"></p-sortIcon>
-          <p-columnFilter
-            type="numeric"
-            field="multipleChoiceScore"
-            display="menu"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="multipleChoiceScore">
+      <th pSortableColumn="isFall">
         Vjeshtë
         <div>
-          <p-sortIcon field="multipleChoiceScore"></p-sortIcon>
+          <p-sortIcon field="isFall"></p-sortIcon>
           <p-columnFilter
-            type="numeric"
+            type="boolean"
             field="isFall"
             display="menu"
-            mshColumnFilterDirective></p-columnFilter>
+            matchMode="equals"></p-columnFilter>
         </div>
       </th>
       <th></th>
@@ -115,10 +104,7 @@
         {{ examScore.folderNr }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ examScore.writingScore }}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ examScore.multipleChoiceScore }}
+        {{ examScore.totalScore }}
       </td>
       <td style="width: 10%; min-width: 10rem">
         {{ examScore.isFall ? 'Po' : 'Jo' }}
