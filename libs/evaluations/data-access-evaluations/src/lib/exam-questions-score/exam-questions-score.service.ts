@@ -16,15 +16,15 @@ export class ExamQuestionScoreService {
   constructor(private apiService: APIService) {}
 
   loadExamQuestionScores($event: TableLazyLoadEvent): Observable<any> {
-    return this.apiService.post(`/ExamQuestionScores/TableData`, $event);
+    return this.apiService.post(`/ExamQuestionScore/TableData`, $event);
   }
 
   loadExamQuestionScoresByBarcode(barcode: string): Observable<any> {
-    return this.apiService.get(`/ExamQuestionScores/ForBarcode/${barcode}`);
+    return this.apiService.get(`/ExamQuestionScore/ForBarcode/${barcode}`);
   }
 
   getExamQuestionScoreById(examQuestionId: number): Observable<any> {
-    return this.apiService.get(`/ExamQuestionScores/${examQuestionId}`);
+    return this.apiService.get(`/ExamQuestionScore/${examQuestionId}`);
   }
 
   save(
@@ -42,7 +42,7 @@ export class ExamQuestionScoreService {
     return this.apiService.post<
       ApiResult<CreateOrUpdateMultiple>,
       CreateOrUpdateMultiple
-    >(`/ExamQuestionScores/CreateOrUpdateMultiple`, examScore);
+    >(`/ExamQuestionScore/CreateOrUpdateMultiple`, examScore);
   }
 
   deleteMultiple(
@@ -51,7 +51,7 @@ export class ExamQuestionScoreService {
     return this.apiService.post<
       ApiResult<CreateOrUpdateMultiple>,
       CreateOrUpdateMultiple
-    >(`/ExamQuestionScores/DeleteMultiple`, examScore);
+    >(`/ExamQuestionScore/DeleteMultiple`, examScore);
   }
 
   update(
@@ -60,12 +60,12 @@ export class ExamQuestionScoreService {
     return this.apiService.post<
       ApiResult<ExamQuestionScoreModel>,
       ExamQuestionScoreModel
-    >(`/ExamQuestionScores/Update`, examScore);
+    >(`/ExamQuestionScore/Update`, examScore);
   }
 
   delete(examQuestionScoreId: any): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<ExamQuestionScoreModel>>(
-      `/ExamQuestionScores/${examQuestionScoreId}`
+      `/ExamQuestionScore/${examQuestionScoreId}`
     );
   }
 }

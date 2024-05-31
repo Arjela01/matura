@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { AnalyticScoresWithoutTotalModel } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
-import { AnalyticScoresWithoutTotalService } from '@msh/evaluations/data-access-evaluations';
+import { ExamQuestionScoreTotalsService } from '@msh/evaluations/data-access-evaluations';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ColumnFilterDirective } from '@msh/shared/util-shared';
-import { SharedModule } from 'primeng/api';
+import { ColumnFilterDirective, GRID_ACTIONS } from '@msh/shared/util-shared';
+import { ConfirmationService, SharedModule } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
 import { Router } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @UntilDestroy()
 @Component({
@@ -21,7 +22,9 @@ import { AuthFacade } from '@msh/auth/data-access-auth';
     SharedModule,
     TableModule,
     TooltipModule,
+    ConfirmDialogModule
   ],
+  providers: [ConfirmationService],
   templateUrl: './exam-question-score-total-grid.component.html',
   styleUrls: ['./exam-question-score-total-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,26 +38,27 @@ export class ExamQuestionScoreTotalGridComponent {
   filters: TableLazyLoadEvent | null = null;
 
   constructor(
-    private readonly analyticScoresWithoutTotalService: AnalyticScoresWithoutTotalService,
+    private readonly examQuestionScoreTotalsService: ExamQuestionScoreTotalsService,
     private readonly router: Router,
-    private readonly authFacade: AuthFacade
+    private readonly authFacade: AuthFacade,
+    private readonly confirmationService: ConfirmationService
   ) {}
 
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     skip(1),
     map(([_]) => {
       if (this.filters) {
-        this.getAnalyticScoresList(this.filters as TableLazyLoadEvent);
+        this.loadTableData(this.filters as TableLazyLoadEvent);
       }
     }),
     tap()
   );
 
-  getAnalyticScoresList($event: TableLazyLoadEvent) {
+  loadTableData($event: TableLazyLoadEvent | null) {
     this.filters = Object.assign({}, $event);
 
-    this.analyticScoresWithoutTotalService
-      .loadExamQuestionScoreTotals($event)
+    this.examQuestionScoreTotalsService
+      .loadTableData($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.analyticScoresList$$.next(response.data);
@@ -66,5 +70,17 @@ export class ExamQuestionScoreTotalGridComponent {
     this.router.navigate([
       `/evaluations/analytic-score-edit/${analyticScore.examTypeId}/${analyticScore.examSubjectId}/${analyticScore.examVariantId}/${analyticScore.testNumber}/${analyticScore.barcode}`,
     ]);
+  }
+
+  onDeleteClick(item: any) {
+    this.confirmationService.confirm({
+      message: 'Jeni i sigurtë që doni të fshini pikët analitike?',
+      accept: () => {
+        this.examQuestionScoreTotalsService.delete(item.id)
+          .subscribe(response => {
+            this.loadTableData(this.filters);
+          });
+      },
+    });
   }
 }

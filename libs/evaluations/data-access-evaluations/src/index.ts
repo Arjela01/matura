@@ -12,7 +12,7 @@ export * from './lib/processes/processes-api.service';
 export * from './lib/diploma-recognition/diploma-recognition.service';
 export * from './lib/diploma-recognition/documents.service';
 export * from './lib/exam-questions/exam-questions.service';
-export * from './lib/analytic-scores-without-total/analytic-scores-without-total.service';
+export * from './lib/exam-question-score-totals/exam-question-score-totals.service';
 export * from './lib/total-scores-without-analytic/total-scores-without-analytic.service';
 export * from './lib/exam-questions-score/exam-questions-score.service';
 export * from './lib/exam-secret-lock/exam-secret-lock-api.service';

@@ -5,7 +5,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TotalAnalyticScoresMismatchModel } from '@msh/shared/domain-models';
-import { AnalyticScoresWithoutTotalService } from '@msh/evaluations/data-access-evaluations';
+import { ExamQuestionScoreTotalsService } from '@msh/evaluations/data-access-evaluations';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -27,7 +27,7 @@ export class TotalAnalyticScoreMismatchComponent {
   filters: TableLazyLoadEvent | null = null;
 
   constructor(
-    private scoreApiService: AnalyticScoresWithoutTotalService,
+    private scoreApiService: ExamQuestionScoreTotalsService,
     private cd: ChangeDetectorRef,
     private readonly authFacade: AuthFacade
   ) {}

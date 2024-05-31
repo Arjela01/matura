@@ -123,7 +123,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
 
   getExamVariantDropdown($event: any) {
     this.examVariantService
-      .forExamSubject($event.examSubjectId, this.academicYearId)
+      .forExamSubject($event.examSubjectId)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examVariant = response.data;
@@ -134,7 +134,12 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
     this.totalScore = this.examQuestionScoreList$$
       .getValue()
       .reduce((acc, rowData: any) => {
-        return acc + rowData.examQuestionScores[0].examQuestionScore;
+        return (
+          acc +
+          (rowData.examQuestionScores.length > 0
+            ? rowData.examQuestionScores[0].examQuestionScore
+            : 0)
+        );
       }, 0) as any;
   }
 

@@ -51,23 +51,19 @@ export class ExamVariantApiService {
   }
 
   forExamSubject(
-    examSubjectId: string,
-    academicYearId: number
+    examSubjectId: string
   ): Observable<ApiResult<DropdownModel<string>[]>> {
-    const params = {
-      examSubjectId: examSubjectId,
-      academicYearId: academicYearId,
-    };
-    return this.apiService.post<ApiResult<DropdownModel<string>[]>, any>(
-      `/ExamVariant/ForExamSubject`,
-      params
+    return this.apiService.get<ApiResult<DropdownModel<string>[]>>(
+      `/ExamVariant/ForExamSubject/${examSubjectId}`
     );
   }
+
   loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
       `/ExamVariant/DropdownList`
     );
   }
+
   getVariants(): Observable<ApiResult<ExamVariant[]>> {
     return this.apiService.get<ApiResult<ExamVariant[]>>(`/ExamVariant`);
   }

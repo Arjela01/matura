@@ -10,8 +10,30 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-export class AnalyticScoresWithoutTotalService {
+export class ExamQuestionScoreTotalsService {
   constructor(private apiService: APIService) {}
+
+  loadTableData(
+    event: TableLazyLoadEvent | null
+  ): Observable<AnalyticScoresWithoutTotalModelView> {
+    return this.apiService
+      .post(`/ExamQuestionScoreTotal/TableData`, event)
+      .pipe(
+        map((data: any) => data),
+        catchError(error => throwError(error))
+      );
+  }
+
+  delete(
+    id: any
+  ): Observable<AnalyticScoresWithoutTotalModelView> {
+    return this.apiService
+      .delete(`/ExamQuestionScoreTotal/Delete/${id}`)
+      .pipe(
+        map((data: any) => data),
+        catchError(error => throwError(error))
+      );
+  }
 
   loadData(
     event: TableLazyLoadEvent
@@ -23,6 +45,7 @@ export class AnalyticScoresWithoutTotalService {
         catchError(error => throwError(error))
       );
   }
+
   loadTotalAnalyticMismatchData(
     event: TableLazyLoadEvent
   ): Observable<TotalAnalyticScoresMismatchModelView> {
@@ -34,14 +57,4 @@ export class AnalyticScoresWithoutTotalService {
       );
   }
 
-  loadExamQuestionScoreTotals(
-    event: TableLazyLoadEvent
-  ): Observable<AnalyticScoresWithoutTotalModelView> {
-    return this.apiService
-      .post(`/ExamQuestionScoreTotal/TableData`, event)
-      .pipe(
-        map((data: any) => data),
-        catchError(error => throwError(error))
-      );
-  }
 }

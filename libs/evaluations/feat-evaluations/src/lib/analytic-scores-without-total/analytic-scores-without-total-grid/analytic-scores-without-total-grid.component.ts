@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { AnalyticScoresWithoutTotalModel } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
-import { AnalyticScoresWithoutTotalService } from '@msh/evaluations/data-access-evaluations';
+import { ExamQuestionScoreTotalsService } from '@msh/evaluations/data-access-evaluations';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { SharedModule } from 'primeng/api';
@@ -35,7 +35,7 @@ export class AnalyticScoresWithoutTotalGridComponent {
   filters: TableLazyLoadEvent | null = null;
 
   constructor(
-    private readonly analyticScoresWithoutTotalService: AnalyticScoresWithoutTotalService,
+    private readonly analyticScoresWithoutTotalService: ExamQuestionScoreTotalsService,
     private readonly authFacade: AuthFacade
   ) {}
 
