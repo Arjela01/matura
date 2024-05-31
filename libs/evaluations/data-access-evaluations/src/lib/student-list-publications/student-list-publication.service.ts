@@ -38,4 +38,10 @@ export class StudentListPublicationService {
       event
     );
   }
+
+  generateNewPublication(): Observable<any> {
+    return this.apiService.post(
+      `/StudentListPublication/GenerateNewPublication`
+    );
+  }
 }

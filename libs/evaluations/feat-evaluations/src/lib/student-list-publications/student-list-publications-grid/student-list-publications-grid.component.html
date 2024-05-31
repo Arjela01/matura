@@ -1,5 +1,15 @@
 <div class="flex mb-2 page-header center justify-content-between mb-header">
   <h2 class="mb-0">Publikim i Listës së Maturantëve</h2>
+  <div class="flex align-items-right justify-content-right">
+    <div class="my-2">
+      <p-button
+        type="button"
+        icon="pi pi-sync"
+        styleClass="p-button-link"
+        (click)="generateNewPublication()"
+        [label]="'Gjenero një Publikim të Ri'"></p-button>
+    </div>
+  </div>
 </div>
 
 <p-table

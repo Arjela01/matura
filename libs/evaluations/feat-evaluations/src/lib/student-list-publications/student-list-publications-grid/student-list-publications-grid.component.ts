@@ -10,7 +10,11 @@ import {
   ExamQuestionModel,
   StudentListPublication,
 } from '@msh/shared/domain-models';
-import { ColumnFilterDirective, GridEvent } from '@msh/shared/util-shared';
+import {
+  ColumnFilterDirective,
+  GlobalToastService,
+  GridEvent,
+} from '@msh/shared/util-shared';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { SharedModule } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
@@ -41,11 +45,13 @@ export class StudentListPublicationsGridComponent {
   constructor(
     public studentListPublicationService: StudentListPublicationService,
     private cd: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private toastService: GlobalToastService
   ) {}
 
   records: StudentListPublication[] = [];
   totalRecords = 0;
+  event: any;
 
   @Output() gridEvent = new EventEmitter<
     GridEvent<ExamQuestionModel | ExamQuestionModel[]>
@@ -62,12 +68,26 @@ export class StudentListPublicationsGridComponent {
   }
 
   loadRows($event: TableLazyLoadEvent) {
+    this.event = $event;
     this.studentListPublicationService
       .loadDataStudentListPublications($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.records = response.data;
         this.cd.markForCheck();
+      });
+  }
+
+  generateNewPublication() {
+    this.studentListPublicationService
+      .generateNewPublication()
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Procesi mbaroi me sukses!');
+          this.loadRows(this.event);
+        } else {
+          this.toastService.showError('Ndodhi një gabim gjatë gjenerimit.');
+        }
       });
   }
 }

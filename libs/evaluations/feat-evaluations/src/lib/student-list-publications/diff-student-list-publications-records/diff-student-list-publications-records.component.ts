@@ -14,7 +14,8 @@ import { SharedModule } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { StudentListPublicationService } from '../../../../../data-access-evaluations/src/lib/student-list-publications/student-list-publication.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'msh-exam-question-grid',
@@ -25,6 +26,7 @@ import { ActivatedRoute } from '@angular/router';
     SharedModule,
     TableModule,
     TooltipModule,
+    ButtonModule,
   ],
   templateUrl: './diff-student-list-publications-records.component.html',
   styleUrls: ['./diff-student-list-publications-records.component.scss'],
@@ -37,7 +39,8 @@ export class DiffStudentListPublicationsRecordsComponent {
   constructor(
     public studentListPublicationService: StudentListPublicationService,
     private cd: ChangeDetectorRef,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
@@ -54,7 +57,12 @@ export class DiffStudentListPublicationsRecordsComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.records = response.data;
+        this.totalRecords = response.total;
         this.cd.markForCheck();
       });
+  }
+
+  onBackButtonClick() {
+    this.router.navigate(['/evaluations', 'student-list-publications']);
   }
 }
