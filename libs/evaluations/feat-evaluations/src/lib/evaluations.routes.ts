@@ -247,12 +247,13 @@ export const EVALUATION_ROUTES: Route[] = [
         './total-analytic-score-mismatch/total-analytic-score-mismatch.component'
       ).then(m => m.TotalAnalyticScoreMismatchComponent),
   },
+
   {
-    path: 'analytic-score-edit/:examTypeId/:examSubjectId/:examVariantId/:testNumber/:barcode',
+    path: 'exam-question-score/:id',
     loadComponent: () =>
       import(
-        './edit-analytic-score/manage-analytic-score-edit/manage-analytic-score.component'
-      ).then(m => m.ManageAnalyticScoreComponent),
+        './exam-questions-scores/manage-exam-question-score/manage-exam-question-score.component'
+        ).then(m => m.ManageExamQuestionsScoreComponent),
   },
   {
     path: 'exam-question-score-totals',

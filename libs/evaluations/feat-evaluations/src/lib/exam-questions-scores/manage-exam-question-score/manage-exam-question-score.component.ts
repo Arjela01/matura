@@ -14,7 +14,6 @@ import {
   ExamQuestionSearchOptions,
   ExamQuestionsScoreDataEntry,
 } from '@msh/shared/domain-models';
-import { TableLazyLoadEvent } from 'primeng/table';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService } from 'primeng/api';
@@ -25,13 +24,14 @@ import {
   ExamVariantApiService,
 } from '@msh/configurations/data-access-configurations';
 import {
-  ExamQuestionScoreService,
+  ExamQuestionScoreService, ExamQuestionScoreTotalsService,
   ExamQuestionsService,
 } from '@msh/evaluations/data-access-evaluations';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ExamQuestionScoreFiltersComponent } from '../exam-question-score-filters/exam-question-score-filters.component';
 import { ExamQuestionScoreGridComponent } from '../exam-question-score-grid/exam-question-score-grid.component';
+import { ActivatedRoute } from '@angular/router';
 
 @UntilDestroy()
 @Component({
@@ -78,16 +78,21 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
     filters: {},
     globalFilter: null,
   };
+  id: string | null = null;
 
   constructor(
     private readonly examSubjectService: ExamSubjectApiService,
     private readonly examVariantService: ExamVariantApiService,
     private readonly examQuestionScoreService: ExamQuestionScoreService,
+    private readonly examQuestionScoreTotalsService: ExamQuestionScoreTotalsService,
     private readonly toastService: GlobalToastService,
     private readonly examQuestionService: ExamQuestionsService,
     private readonly examTypeService: ExamTypeApiService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private readonly route: ActivatedRoute,
   ) {
+    this.id = route.snapshot.params['id'];
+
     const academicYearString = localStorage.getItem('academicYear');
     if (academicYearString) {
       const academicYear = JSON.parse(academicYearString);
@@ -96,6 +101,9 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this.id != null) {
+      this.examQuestionScoreTotalsService.getById(this.id)
+    }
     this.getExamTypeDropdown();
   }
 
