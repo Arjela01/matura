@@ -12,6 +12,7 @@
                 <th>Nota</th>
                 <th>ID</th>
                 <th>E Mbartur?</th>
+                <th *ngIf="avgGrade">Mesatarja</th>
               </tr>
             </thead>
             <tbody>
@@ -23,6 +24,12 @@
                 <td class="font-semibold">{{ grade.studentStudentId }}</td>
                 <td class="font-semibold">
                   {{ grade.isCarriedGrade === true ? 'Po' : 'Jo' }}
+                </td>
+                <td
+                        *ngIf="grade === grades[0] && avgGrade"
+                        [attr.rowspan]="grades.length"
+                        class="font-semibold text-center align-middle">
+                  {{ avgGrade }}
                 </td>
               </tr>
             </tbody>

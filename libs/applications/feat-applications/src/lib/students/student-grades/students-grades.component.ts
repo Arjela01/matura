@@ -5,7 +5,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ButtonModule } from 'primeng/button';
 import { RouterLink } from '@angular/router';
-import { ExamGrade } from '@msh/shared/domain-models';
+import { ExamGrade, Student } from '@msh/shared/domain-models';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
 
 @Component({
@@ -27,4 +27,5 @@ import { ColumnFilterDirective } from '@msh/shared/util-shared';
 export class StudentAuditGradesComponent {
   @Input() gradesMatchingYear: ExamGrade[] = [];
   @Input() gradesDifferentYear: ExamGrade[] = [];
+  @Input() avgGrade!: number;
 }

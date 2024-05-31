@@ -198,4 +198,11 @@ export const APPLICATION_ROUTES: Route[] = [
         './exam-grade-request/manage-grade-request-details/manage-grade-request-details.component'
       ).then(m => m.ManageGradeRequestDetailsComponent),
   },
+  {
+    path: 'average-garde',
+    loadComponent: () =>
+      import(
+        './students-average-grade/students-average-grade/students-average-grade-grid.component'
+      ).then(m => m.StudentsAverageGradeGridComponent),
+  },
 ];

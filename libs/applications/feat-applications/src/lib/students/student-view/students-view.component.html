@@ -48,7 +48,7 @@
       [showStudent]="showStudent"
       [finishedAtSameSchool]="finishedAtSameSchool"></msh-students-data>
   </p-tabPanel>
-  <p-tabPanel header="Caktimet për Provime">
+  <p-tabPanel header="Caktimet">
     <msh-students-assignments
       [assignments]="(assignments$ | async) || []"></msh-students-assignments
   ></p-tabPanel>
@@ -59,9 +59,10 @@
   <p-tabPanel header="Notat">
     <msh-students-grades
       [gradesDifferentYear]="gradesDifferentYear"
-      [gradesMatchingYear]="gradesMatchingYear"></msh-students-grades
+      [gradesMatchingYear]="gradesMatchingYear"
+      [avgGrade]="avgGrade"></msh-students-grades
   ></p-tabPanel>
-  <p-tabPanel header="Pikët e Provimeve">
+  <p-tabPanel header="Pikët">
     <msh-students-scores
       [scores]="(scores$ | async) || []"></msh-students-scores
   ></p-tabPanel>

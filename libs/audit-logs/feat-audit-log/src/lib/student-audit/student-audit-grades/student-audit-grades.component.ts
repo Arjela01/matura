@@ -42,4 +42,5 @@ import { ColumnFilterDirective } from '@msh/shared/util-shared';
 })
 export class StudentAuditGradesComponent {
   @Input() grades!: ExamGrade[];
+  @Input() avgGrade!: number;
 }

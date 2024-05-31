@@ -12,7 +12,7 @@ import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-total-scores-without-analytic-grid',
+  selector: 'msh-students-average-grade',
   standalone: true,
   imports: [
     CommonModule,
