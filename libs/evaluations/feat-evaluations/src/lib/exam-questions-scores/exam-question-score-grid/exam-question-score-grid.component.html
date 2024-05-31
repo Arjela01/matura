@@ -29,7 +29,7 @@
                 [max]="rowData.examQuestion.questionMaximumScore"
                 [(ngModel)]="
                   rowData.examQuestionScores[0] &&
-                  rowData.examQuestionScores[0].examQuestionScore
+                  rowData.examQuestionScores[0].score
                 "
                 (ngModelChange)="
                   onRowChange($event);
@@ -55,7 +55,7 @@
               *ngIf="rowData.examQuestionScores[0]?.hasScore"
               (click)="
                 onDeleteClick(
-                  rowData.examQuestionScores[0]?.examQuestionScoreID
+                  rowData.examQuestionScores[0]?.examQuestionScoreId
                 )
               "></button>
           </td>

@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { SearchOptions } from '@msh/shared/domain-models';
+import { ExamQuestionSearchOptions } from '@msh/shared/domain-models';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { PaginatorModule } from 'primeng/paginator';
@@ -37,7 +37,7 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 })
 export class AnalyticScoreFiltersComponent {
   @ViewChild('form', { static: true }) form!: NgForm;
-  @Input() examQuestionScoreList: SearchOptions = {} as SearchOptions;
+  @Input() examQuestionScoreList: ExamQuestionSearchOptions = {} as ExamQuestionSearchOptions;
   @Input() examTypeId = '';
   @Input() examVariantId = '';
   @Input() examSubjectId = '';

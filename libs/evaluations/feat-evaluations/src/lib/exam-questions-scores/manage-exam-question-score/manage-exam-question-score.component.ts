@@ -10,7 +10,8 @@ import { BehaviorSubject, forkJoin } from 'rxjs';
 import {
   CreateOrUpdateMultiple,
   ExamQuestionModel,
-  ExamQuestionScoreModel,
+  ExamQuestionScore,
+  ExamQuestionSearchOptions,
   ExamQuestionsScoreDataEntry,
 } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
@@ -58,7 +59,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
   examQuestionScoreList$ = this.examQuestionScoreList$$.asObservable();
 
   totalRecords = 0;
-  filters: TableLazyLoadEvent | null = null;
+  filters: ExamQuestionSearchOptions | null = null;
   examSubject: DropdownModel<string>[] = [];
   examType: DropdownModel<number>[] = [];
   examVariant: DropdownModel<string>[] = [];
@@ -68,7 +69,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
   examVariantTotalScore = 0;
   barcode: any;
   academicYearId = 0;
-  testNumber = 0;
+  testNumber: string | null = null;
 
   event = {
     first: 0,
@@ -137,7 +138,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
         return (
           acc +
           (rowData.examQuestionScores.length > 0
-            ? rowData.examQuestionScores[0].examQuestionScore
+            ? rowData.examQuestionScores[0].score
             : 0)
         );
       }, 0) as any;
@@ -162,8 +163,9 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
     });
   }
 
-  getExamQuestionScoresList($event: any) {
+  getExamQuestionScoresList($event: ExamQuestionSearchOptions) {
     this.filters = Object.assign({}, $event);
+    this.barcode = $event.barcode;
     this.examVariantId = $event.examVariantId;
     this.barcode = $event.barcode;
     this.testNumber = $event.testNumber;
@@ -172,15 +174,16 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
         this.barcode
       ),
       this.examQuestionService.getExamQuestionsByExamVariantId(
-        $event.examVariantId || $event
+        $event.examVariantId
       ),
     ]).subscribe(([examQuestionScores, examQuestions]) => {
+      console.log(examQuestionScores);
       const result = examQuestions.data.map(
         (examQuestion: ExamQuestionModel) => {
           this.examVariantTotalScore = examQuestion.examVariantMaximumScore;
           const matchingScore = examQuestionScores.data.filter(
-            (examQuestionScore: ExamQuestionScoreModel) =>
-              examQuestionScore.examQuestionID == examQuestion.id
+            (examQuestionScore: ExamQuestionScore) =>
+              examQuestionScore.examQuestionId == examQuestion.id
           );
           return {
             examQuestion: examQuestion,
@@ -253,7 +256,8 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Rezultati i provimit u fshi me sukses!');
-          this.getExamQuestionScoresList(this.filters as TableLazyLoadEvent);
+          if(this.filters)
+            this.getExamQuestionScoresList(this.filters);
         } else {
           this.toastService.showError(response.errorMessage);
         }

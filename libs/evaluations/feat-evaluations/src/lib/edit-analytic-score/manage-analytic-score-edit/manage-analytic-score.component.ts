@@ -4,7 +4,7 @@ import { BehaviorSubject, forkJoin } from 'rxjs';
 import {
   CreateOrUpdateMultiple,
   ExamQuestionModel,
-  ExamQuestionScoreModel,
+  ExamQuestionScore,
   ExamQuestionsScoreDataEntry,
 } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
@@ -88,7 +88,7 @@ export class ManageAnalyticScoreComponent implements OnInit {
     this.router.navigate(['evaluations/analytic-scores-grid']);
   }
   onGridEvent(
-    event: GridEvent<ExamQuestionScoreModel | ExamQuestionScoreModel[]>
+    event: GridEvent<ExamQuestionScore | ExamQuestionScore[]>
   ) {
     switch (event.action) {
       case GRID_ACTIONS.DELETE:
@@ -96,7 +96,7 @@ export class ManageAnalyticScoreComponent implements OnInit {
           message:
             'Jeni i sigurt që doni të fshini pikët e pyetjes së provimit?',
           accept: () => {
-            this.deleteExamScore(event.data as ExamQuestionScoreModel);
+            this.deleteExamScore(event.data as ExamQuestionScore);
           },
         });
         break;
@@ -163,8 +163,8 @@ export class ManageAnalyticScoreComponent implements OnInit {
         (examQuestion: ExamQuestionModel) => {
           this.examVariantTotalScore = examQuestion.examVariantMaximumScore;
           const matchingScore = examQuestionScores.data.filter(
-            (examQuestionScore: ExamQuestionScoreModel) =>
-              examQuestionScore.examQuestionID == examQuestion.id
+            (examQuestionScore: ExamQuestionScore) =>
+              examQuestionScore.examQuestionId == examQuestion.id
           );
           return {
             examQuestion: examQuestion,
@@ -236,7 +236,7 @@ export class ManageAnalyticScoreComponent implements OnInit {
         }
       });
   }
-  deleteExamScore(examQuestionScore: ExamQuestionScoreModel) {
+  deleteExamScore(examQuestionScore: ExamQuestionScore) {
     this.examQuestionScoreApiService
       .delete(examQuestionScore)
       .subscribe(response => {

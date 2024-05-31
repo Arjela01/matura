@@ -241,13 +241,6 @@ export const EVALUATION_ROUTES: Route[] = [
       ).then(m => m.ManageExamQuestionsScoreComponent),
   },
   {
-    path: 'exam-question-score',
-    loadComponent: () =>
-      import(
-        './exam-questions-scores/manage-exam-question-score/manage-exam-question-score.component'
-      ).then(m => m.ManageExamQuestionsScoreComponent),
-  },
-  {
     path: 'total-analytic-scores-mismatch',
     loadComponent: () =>
       import(

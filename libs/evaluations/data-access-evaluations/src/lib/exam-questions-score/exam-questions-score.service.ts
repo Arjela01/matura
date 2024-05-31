@@ -5,7 +5,7 @@ import { APIService } from '@msh/shared/util-shared';
 
 import {
   CreateOrUpdateMultiple,
-  ExamQuestionScoreModel,
+  ExamQuestionScore,
 } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
 
@@ -28,11 +28,11 @@ export class ExamQuestionScoreService {
   }
 
   save(
-    examScore: ExamQuestionScoreModel
-  ): Observable<ApiResult<ExamQuestionScoreModel>> {
+    examScore: ExamQuestionScore
+  ): Observable<ApiResult<ExamQuestionScore>> {
     return this.apiService.post<
-      ApiResult<ExamQuestionScoreModel>,
-      ExamQuestionScoreModel
+      ApiResult<ExamQuestionScore>,
+      ExamQuestionScore
     >(`/ExamQuestionScores`, examScore);
   }
 
@@ -55,16 +55,16 @@ export class ExamQuestionScoreService {
   }
 
   update(
-    examScore: ExamQuestionScoreModel
-  ): Observable<ApiResult<ExamQuestionScoreModel>> {
+    examScore: ExamQuestionScore
+  ): Observable<ApiResult<ExamQuestionScore>> {
     return this.apiService.post<
-      ApiResult<ExamQuestionScoreModel>,
-      ExamQuestionScoreModel
+      ApiResult<ExamQuestionScore>,
+      ExamQuestionScore
     >(`/ExamQuestionScore/Update`, examScore);
   }
 
   delete(examQuestionScoreId: any): Observable<ApiResult<unknown>> {
-    return this.apiService.delete<ApiResult<ExamQuestionScoreModel>>(
+    return this.apiService.delete<ApiResult<ExamQuestionScore>>(
       `/ExamQuestionScore/${examQuestionScoreId}`
     );
   }

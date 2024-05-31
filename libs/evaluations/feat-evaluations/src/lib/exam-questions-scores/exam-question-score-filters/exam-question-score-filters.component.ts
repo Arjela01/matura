@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { SearchOptions } from '@msh/shared/domain-models';
+import { ExamQuestionSearchOptions } from '@msh/shared/domain-models';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { PaginatorModule } from 'primeng/paginator';
@@ -50,12 +50,12 @@ export class ExamQuestionScoreFiltersComponent {
   @Input() examSubject: DropdownModel<string>[] = [];
   @Input() examVariant: DropdownModel<string>[] = [];
 
-  @Output() formSave = new EventEmitter<SearchOptions>();
-  @Output() examSubjectChanged = new EventEmitter<SearchOptions>();
-  @Output() examTypeChanged = new EventEmitter<SearchOptions>();
-  @Output() examVariantChanged = new EventEmitter<SearchOptions>();
+  @Output() formSave = new EventEmitter<ExamQuestionSearchOptions>();
+  @Output() examSubjectChanged = new EventEmitter<ExamQuestionSearchOptions>();
+  @Output() examTypeChanged = new EventEmitter<ExamQuestionSearchOptions>();
+  @Output() examVariantChanged = new EventEmitter<ExamQuestionSearchOptions>();
 
-  examQuestionScoreList: SearchOptions = {} as SearchOptions;
+  examQuestionScoreList: ExamQuestionSearchOptions = {} as ExamQuestionSearchOptions;
   submitted = false;
   barcodePattern = BARCODE_REGEX;
 
@@ -102,7 +102,7 @@ export class ExamQuestionScoreFiltersComponent {
     }
   }
 
-  isSearchValid(searchModal: SearchOptions) {
+  isSearchValid(searchModal: ExamQuestionSearchOptions) {
     return (
       searchModal.examVariantId &&
       searchModal.examTypeId &&

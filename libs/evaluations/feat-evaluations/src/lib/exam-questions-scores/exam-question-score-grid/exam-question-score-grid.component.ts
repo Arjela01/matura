@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ExamQuestionScoreModel } from '@msh/shared/domain-models';
+import { ExamQuestionScore } from '@msh/shared/domain-models';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
@@ -48,7 +48,7 @@ export class ExamQuestionScoreGridComponent {
   @Output() deleteMultiple = new EventEmitter<any>();
   @Output() calculate = new EventEmitter<any>();
   @Output() gridEvent = new EventEmitter<
-    GridEvent<ExamQuestionScoreModel | ExamQuestionScoreModel[]>
+    GridEvent<ExamQuestionScore | ExamQuestionScore[]>
   >();
   inputScores: { [questionId: number]: number } = {};
 
@@ -56,7 +56,7 @@ export class ExamQuestionScoreGridComponent {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,
       data: examQuestionScore,
-    } as GridEvent<ExamQuestionScoreModel>);
+    } as GridEvent<ExamQuestionScore>);
   }
 
   updateInputScore(questionId: number, score: number) {
@@ -75,16 +75,16 @@ export class ExamQuestionScoreGridComponent {
     }
 
     if (action === ScoreActions.SAVE) {
-      const updatedScores: ExamQuestionScoreModel[] = [];
+      const updatedScores: ExamQuestionScore[] = [];
       this.examQuestionScoreList.forEach(rowData => {
         if (rowData) {
-          const examQuestionScore: ExamQuestionScoreModel = {
-            examQuestionID: rowData.examQuestion.id,
-            maximumScore: rowData.examQuestion.questionMaximumScore,
+          const examQuestionScore: ExamQuestionScore = {
+            examQuestionId: rowData.examQuestion.id,
+            examQuestionMaximumScore: rowData.examQuestion.questionMaximumScore,
             score:
-              rowData.examQuestionScores[0]?.examQuestionScore ||
-              this.inputScores[rowData.examQuestion.id],
-            examScoreID: rowData.examQuestionScores[0]?.examScoreID,
+              rowData.examQuestionScores[0]?.score,
+            examQuestionScoreTotalId:
+              rowData.examQuestionScores[0]?.examQuestionScoreTotalId,
           };
           updatedScores.push(examQuestionScore);
         }
