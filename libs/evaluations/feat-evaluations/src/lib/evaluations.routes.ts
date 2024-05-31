@@ -262,11 +262,11 @@ export const EVALUATION_ROUTES: Route[] = [
       ).then(m => m.ManageAnalyticScoreComponent),
   },
   {
-    path: 'exam-question-score-total-grid',
+    path: 'exam-question-score-totals',
     loadComponent: () =>
       import(
-        './analytic-scores-grid/exam-question-score-total-grid/analytic-scores-grid.component'
-      ).then(m => m.AnalyticScoresGridComponent),
+        './exam-question-score-totals/exam-question-score-total-grid/exam-question-score-total-grid.component'
+      ).then(m => m.ExamQuestionScoreTotalGridComponent),
   },
   {
     path: 'exam-secret-without-score',

@@ -22,11 +22,11 @@ import { AuthFacade } from '@msh/auth/data-access-auth';
     TableModule,
     TooltipModule,
   ],
-  templateUrl: './analytic-scores-grid.component.html',
-  styleUrls: ['./analytic-scores-grid.component.scss'],
+  templateUrl: './exam-question-score-total-grid.component.html',
+  styleUrls: ['./exam-question-score-total-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnalyticScoresGridComponent {
+export class ExamQuestionScoreTotalGridComponent {
   private analyticScoresList$$ = new BehaviorSubject<
     AnalyticScoresWithoutTotalModel[]
   >([]);
