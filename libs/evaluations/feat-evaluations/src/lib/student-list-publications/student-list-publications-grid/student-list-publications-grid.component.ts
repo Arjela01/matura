@@ -1,22 +1,24 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input,
   Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ExamQuestionModel } from '@msh/shared/domain-models';
 import {
-  ColumnFilterDirective,
-  GRID_ACTIONS,
-  GridEvent,
-} from '@msh/shared/util-shared';
+  ExamQuestionModel,
+  StudentListPublication,
+} from '@msh/shared/domain-models';
+import { ColumnFilterDirective, GridEvent } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { SharedModule } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
+import { StudentListPublicationService } from '../../../../../data-access-evaluations/src/lib/student-list-publications/student-list-publication.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'msh-exam-question-grid',
@@ -34,31 +36,38 @@ import { RippleModule } from 'primeng/ripple';
   styleUrls: ['./student-list-publications-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+@UntilDestroy()
 export class StudentListPublicationsGridComponent {
-  @Input() examQuestions: ExamQuestionModel[] = [];
-  @Input() totalRecords = 0;
-  @Input() loading = false;
+  constructor(
+    public studentListPublicationService: StudentListPublicationService,
+    private cd: ChangeDetectorRef,
+    private router: Router
+  ) {}
+
+  records: StudentListPublication[] = [];
+  totalRecords = 0;
 
   @Output() gridEvent = new EventEmitter<
     GridEvent<ExamQuestionModel | ExamQuestionModel[]>
   >();
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
-  onEditClick(examQuestion: ExamQuestionModel) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.EDIT,
-      data: examQuestion,
-    } as GridEvent<ExamQuestionModel>);
-  }
-
-  onDeleteClick(examQuestion: ExamQuestionModel) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.DELETE,
-      data: examQuestion,
-    } as GridEvent<ExamQuestionModel>);
+  onRowClick(record: StudentListPublication) {
+    this.router.navigate([
+      '/evaluations',
+      'student-list-publications',
+      record.id,
+      'diff',
+    ]);
   }
 
   loadRows($event: TableLazyLoadEvent) {
-    this.lazyLoadData.emit($event);
+    this.studentListPublicationService
+      .loadDataStudentListPublications($event)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.records = response.data;
+        this.cd.markForCheck();
+      });
   }
 }

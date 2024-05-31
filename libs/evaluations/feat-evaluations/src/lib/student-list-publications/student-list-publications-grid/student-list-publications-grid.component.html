@@ -8,7 +8,7 @@
   responsiveLayout="scroll"
   [scrollable]="true"
   scrollHeight="820px"
-  [value]="examQuestions"
+  [value]="records"
   [totalRecords]="totalRecords"
   [rows]="100"
   [paginator]="true"
@@ -21,63 +21,51 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="questionIndex">
-        Pyetja e Provimit
-        <p-sortIcon field="questionIndex"></p-sortIcon>
+      <th pSortableColumn="publishDate">
+        Data e Krijimit
+        <p-sortIcon field="createdOn"></p-sortIcon>
         <p-columnFilter
-          type="text"
-          field="questionIndex"
+          type="date"
+          field="createdOn"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
-      <th pSortableColumn="questionSection">
-        Nënseksioni
-        <p-sortIcon field="questionSection"></p-sortIcon>
+      <th pSortableColumn="isPublished">
+        Publikuar?
+        <p-sortIcon field="isPublished"></p-sortIcon>
         <p-columnFilter
-          type="text"
-          field="questionSection"
+          type="boolean"
+          field="isPublished"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
-      <th pSortableColumn="questionIndex">
-        Pikët
-        <p-sortIcon field="questionIndex"></p-sortIcon>
+      <th pSortableColumn="publishDate">
+        Data e Publikimit
+        <p-sortIcon field="publishDate"></p-sortIcon>
         <p-columnFilter
-          type="text"
-          field="questionIndex"
+          type="date"
+          field="publishDate"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
       </th>
       <th></th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-examQuestion>
+  <ng-template pTemplate="body" let-record>
     <tr>
       <td style="width: 25%">
-        {{ examQuestion.index }}
+        <a (click)="onRowClick(record)" class="btn btn-link cursor-pointer">
+          {{ record.createdOn | date : 'dd/MM/yyyy' }}
+        </a>
       </td>
       <td style="width: 25%">
-        {{ examQuestion.section }}
+        {{ record.isPublished ? 'Po' : 'Jo' }}
       </td>
       <td style="width: 25%">
-        {{ examQuestion.questionMaximumScore }}
+        {{ record.publishDate | date : 'dd/MM/yyyy' }}
       </td>
       <td style="width: 25%">
-        <div class="flex">
-          <img
-            src="assets/svg/edit-form.svg"
-            class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
-            tooltipPosition="bottom"
-            (click)="onEditClick(examQuestion)"
-            pTooltip="Ndrysho" />
-
-          <img
-            src="assets/svg/delete-form.svg"
-            class="p-button-rounded p-button-danger p-button-text ml-m pointer"
-            pTooltip="Fshi"
-            tooltipPosition="bottom"
-            (click)="onDeleteClick(examQuestion)" />
-        </div>
+        {{ record.questionMaximumScore }}
       </td>
     </tr>
   </ng-template>
