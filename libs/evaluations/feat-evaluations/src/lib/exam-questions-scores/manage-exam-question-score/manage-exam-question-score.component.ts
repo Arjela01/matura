@@ -23,12 +23,14 @@ import {
   ExamTypeApiService,
   ExamVariantApiService,
 } from '@msh/configurations/data-access-configurations';
-import { ExamQuestionScoreService } from '@msh/evaluations/data-access-evaluations';
+import {
+  ExamQuestionScoreService,
+  ExamQuestionsService,
+} from '@msh/evaluations/data-access-evaluations';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ExamQuestionScoreFiltersComponent } from '../exam-question-score-filters/exam-question-score-filters.component';
 import { ExamQuestionScoreGridComponent } from '../exam-question-score-grid/exam-question-score-grid.component';
-import { ExamQuestionsService } from '@msh/evaluations/data-access-evaluations';
 
 @UntilDestroy()
 @Component({
@@ -104,6 +106,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
         this.examType = response.data;
       });
   }
+
   getExamSubjectDropdown($event: any) {
     this.examSubjectService
       .loadDropDownListNotMappedToProfiles(
@@ -117,6 +120,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
         this.examSubject = response.data;
       });
   }
+
   getExamVariantDropdown($event: any) {
     this.examVariantService
       .forExamSubject($event.examSubjectId, this.academicYearId)

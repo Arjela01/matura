@@ -89,6 +89,7 @@
           #testNumber
           type="text"
           pInputText
+          autocomplete="off"
           (keydown.enter)="onKeyPress()"
           placeholder="Nr. Testi"
           [disabled]="!examQuestionScoreList.examVariantId"
@@ -115,6 +116,7 @@
           minlength="7"
           pInputText
           placeholder="Barkodi"
+          autocomplete="off"
           [disabled]="!examQuestionScoreList.examVariantId"
           id="barcode"
           [pattern]="barcodePattern"
