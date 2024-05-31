@@ -4,6 +4,7 @@ export interface ExamQuestionScoreModel {
   id?: number;
   examQuestionID?: number;
   examScoreID?: string;
+  examQuestionScore?: number;
   examSubjectID?: string;
   index?: number;
   score?: number;
