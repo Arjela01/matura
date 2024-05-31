@@ -66,15 +66,13 @@ export class StudentsViewComponent implements OnInit {
   private scores$$ = new BehaviorSubject<ExamScore[]>([]);
   scores$ = this.scores$$.asObservable();
 
-  private avgGrade$$ = new BehaviorSubject<Student[]>([]);
-  avgGrade$ = this.avgGrade$$.asObservable();
-
   forms: A1ZTableRecord[] = [];
   finishedAtSameSchool = true;
   showEditButton = false;
   id = '';
   student!: Student;
   showStudent = false;
+  avgGrade!: number;
 
   academicYearId = 0;
   gradesMatchingYear: ExamGrade[] = [];
@@ -179,7 +177,7 @@ export class StudentsViewComponent implements OnInit {
 
   getAvgGradeForStudent() {
     this.avgGradeService.getById(this.id).subscribe(res => {
-      this.avgGrade$$.next(res.data);
+      this.avgGrade = res.data.averageGrade;
       this.cd.detectChanges();
     });
   }

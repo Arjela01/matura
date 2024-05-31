@@ -19,7 +19,8 @@
   </p-tabPanel>
   <p-tabPanel header="Notat">
     <msh-student-audit-grades
-      [grades]="(grades$ | async) || []"></msh-student-audit-grades
+      [grades]="(grades$ | async) || []"
+      [avgGrade]="avgGrade"></msh-student-audit-grades
   ></p-tabPanel>
   <p-tabPanel header="Pikët">
     <msh-students-audit--scores

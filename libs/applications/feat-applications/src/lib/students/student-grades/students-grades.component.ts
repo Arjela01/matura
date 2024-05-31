@@ -27,5 +27,5 @@ import { ColumnFilterDirective } from '@msh/shared/util-shared';
 export class StudentAuditGradesComponent {
   @Input() gradesMatchingYear: ExamGrade[] = [];
   @Input() gradesDifferentYear: ExamGrade[] = [];
-  @Input() avgGrade!: Student[];
+  @Input() avgGrade!: number;
 }

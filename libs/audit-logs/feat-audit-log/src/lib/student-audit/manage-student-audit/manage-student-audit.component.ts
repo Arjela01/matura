@@ -13,6 +13,7 @@ import { StudentAuditGradesComponent } from '../student-audit-grades/student-aud
 import { BehaviorSubject } from 'rxjs';
 import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
 import { StudentAuditScoresComponent } from '../student-audit-scores/students-audit-scores.component';
+import { AverageGradeService } from '@msh/applications/data-access-applications';
 
 @Component({
   selector: 'msh-manage-student-audit',
@@ -42,12 +43,14 @@ export class ManageStudentAuditComponent implements OnInit {
   id = '';
   finishedAtSameSchool = true;
   student!: Student;
+  avgGrade!: number;
 
   constructor(
     private readonly route: ActivatedRoute,
     private readonly studentAuditService: StudentsAuditService,
     private readonly examScoreService: ExamScoreApiService,
-    private readonly cd: ChangeDetectorRef
+    private readonly cd: ChangeDetectorRef,
+    private readonly avgGradeService: AverageGradeService
   ) {
     this.id = this.route.snapshot.paramMap.get('id') ?? '';
   }
@@ -78,6 +81,13 @@ export class ManageStudentAuditComponent implements OnInit {
   getStudentGradesByID() {
     this.studentAuditService.getStudentsGradesById(this.id).subscribe(res => {
       this.grades$$.next(res.data);
+      this.cd.detectChanges();
+    });
+  }
+
+  getAvgGradeForStudent() {
+    this.avgGradeService.getById(this.id).subscribe(res => {
+      this.avgGrade = res.data.averageGrade;
       this.cd.detectChanges();
     });
   }
