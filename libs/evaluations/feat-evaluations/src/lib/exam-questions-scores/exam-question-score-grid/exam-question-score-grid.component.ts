@@ -111,7 +111,7 @@ export class ExamQuestionScoreGridComponent {
     const totalRows = this.examQuestionScoreList.length;
     if (rowIndex === totalRows) {
       const firstButton = document.querySelector(
-        'button[type="submit"]'
+        '.analytical-score-save-btn'
       ) as HTMLButtonElement | null;
 
       if (firstButton) {
@@ -120,12 +120,13 @@ export class ExamQuestionScoreGridComponent {
     } else {
       const nextRowIndex = rowIndex + 1;
       const nextInput = document.querySelector(
-        `tr:nth-child(${nextRowIndex}) input`
+        `.analytical-score-grid tr:nth-child(${nextRowIndex}) input`
       );
       if (nextInput) {
         (nextInput as HTMLInputElement).focus();
       }
     }
+    return false;
   }
 
   protected readonly ScoreActions = ScoreActions;

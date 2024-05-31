@@ -1,6 +1,6 @@
 <div>
   <div>
-    <table>
+    <table class="analytical-score-grid">
       <thead>
         <tr>
           <th style="width: 15%">Numri</th>
@@ -18,6 +18,7 @@
             <ng-container>
               <input
                 #scoreInput
+                [tabIndex]="(i + 100)"
                 type="number"
                 (keydown.enter)="focusNextRow(i + 1)"
                 pInputText
@@ -86,14 +87,15 @@
     <div>
       <button
         pButton
-        type="submit"
+        type="button"
         label="Ruaj"
-        (keydown.enter)="onExamScoreAddOrUpdate(ScoreActions.SAVE)"
+        [tabindex]="1000"
         (click)="onExamScoreAddOrUpdate(ScoreActions.SAVE)"
-        class="p-button p-button-link w-auto"></button>
+        class="analytical-score-save-btn p-button p-button-link w-auto"></button>
       <button
         pButton
         type="button"
+        [tabindex]="1001"
         label="Pastro"
         (click)="onExamScoreAddOrUpdate(ScoreActions.CLEAN)"
         class="p-button-danger p-button-text w-auto mr-4"></button>

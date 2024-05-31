@@ -1,10 +1,11 @@
 <div class="grid">
   <div class="col-5 p-fluid">
-    <form #form="ngForm" (ngSubmit)="onSubmit()">
+    <form #form="ngForm" (ngSubmit)="defaultOnSubmit($event);">
       <div class="field colmn w-8" [style]="{ width: '500px' }">
         <label for="examType">Tipi i Provimit *</label>
         <p-dropdown
           id="examType"
+          [tabindex]="1"
           [options]="examType"
           optionValue="key"
           optionLabel="value"
@@ -32,6 +33,7 @@
         <label for="examSubject">Lënda e Provimit *</label>
         <p-dropdown
           id="examSubject"
+          [tabindex]="2"
           [options]="examSubject"
           optionValue="key"
           optionLabel="value"
@@ -60,6 +62,7 @@
         <label for="examVariant">Varianti i Provimit *</label>
         <p-dropdown
           id="examVariant"
+          [tabindex]="3"
           [options]="examVariant"
           optionValue="key"
           optionLabel="value"
@@ -89,6 +92,7 @@
           #testNumber
           type="text"
           pInputText
+          [tabindex]="4"
           autocomplete="off"
           (keydown.enter)="onKeyPress()"
           placeholder="Nr. Testi"
@@ -112,6 +116,7 @@
         <input
           #barcode
           type="text"
+          [tabindex]="5"
           maxlength="7"
           minlength="7"
           pInputText

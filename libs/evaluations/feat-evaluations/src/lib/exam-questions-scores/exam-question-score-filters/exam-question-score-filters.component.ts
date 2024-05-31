@@ -75,6 +75,11 @@ export class ExamQuestionScoreFiltersComponent {
     }
   }
 
+  defaultOnSubmit($event: any) {
+    $event.preventDefault();
+    return false;
+  }
+
   onSubmit() {
     if (this.isSearchValid(this.examQuestionScoreList)) {
       this.formSave.emit(this.examQuestionScoreList);
