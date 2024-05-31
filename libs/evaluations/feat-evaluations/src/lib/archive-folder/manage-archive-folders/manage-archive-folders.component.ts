@@ -10,7 +10,11 @@ import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { AuthFacade } from '@msh/auth/data-access-auth';
+import {
+  AuthFacade,
+  PermissionCheckService,
+  PermissionEnum,
+} from '@msh/auth/data-access-auth';
 import {
   ExamSubjectApiService,
   ExamTypeApiService,
@@ -72,6 +76,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
   headerText: any;
   displayHistoryForm = false;
   examTypeId = 0;
+  showEditButton = false;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -81,7 +86,8 @@ export class ManageArchiveFoldersComponent implements OnInit {
     private readonly examSubjectApiService: ExamSubjectApiService,
     private router: Router,
     private route: ActivatedRoute,
-    private authFacade: AuthFacade
+    private authFacade: AuthFacade,
+    private readonly permissionCheckService: PermissionCheckService
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
@@ -95,6 +101,9 @@ export class ManageArchiveFoldersComponent implements OnInit {
     tap()
   );
   ngOnInit() {
+    this.showEditButton = this.permissionCheckService.hasPermission(
+      PermissionEnum.EditApplications as any
+    );
     this.getExamTypes();
   }
 
