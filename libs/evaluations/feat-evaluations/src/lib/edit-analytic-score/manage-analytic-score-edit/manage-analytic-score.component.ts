@@ -189,6 +189,7 @@ export class ManageAnalyticScoreComponent implements OnInit {
       const academicYear = JSON.parse(academicYearString);
       const academicYearId = academicYear.id;
       const valuesToSend = {
+        examVariantId: this.analyticScoreFilters.examVariantId,
         academicYearId: academicYearId,
         examQuestionScoreCreateUpdateModels: examQuestionScore,
         barcode: this.analyticScoreFilters.barcode,
