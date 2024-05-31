@@ -30,7 +30,7 @@ export class StudentListPublicationService {
   }
 
   loadDataStudentListPublicationDiffRecords(
-    studentPublicationListId: number,
+    studentPublicationListId: string,
     event: TableLazyLoadEvent
   ): Observable<StudentListPublicationCurrentRecordView> {
     return this.apiService.post(
