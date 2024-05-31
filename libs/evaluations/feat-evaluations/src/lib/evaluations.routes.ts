@@ -262,10 +262,10 @@ export const EVALUATION_ROUTES: Route[] = [
       ).then(m => m.ManageAnalyticScoreComponent),
   },
   {
-    path: 'analytic-scores-grid',
+    path: 'exam-question-score-total-grid',
     loadComponent: () =>
       import(
-        './analytic-scores-grid/analytic-scores-grid/analytic-scores-grid.component'
+        './analytic-scores-grid/exam-question-score-total-grid/analytic-scores-grid.component'
       ).then(m => m.AnalyticScoresGridComponent),
   },
   {

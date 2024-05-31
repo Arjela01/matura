@@ -13,7 +13,7 @@ import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-analytic-scores-grid',
+  selector: 'msh-exam-question-score-total-grid',
   standalone: true,
   imports: [
     CommonModule,
