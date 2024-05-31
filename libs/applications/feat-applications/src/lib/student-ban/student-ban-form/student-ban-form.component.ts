@@ -24,6 +24,7 @@ import {
   BARCODE_REGEX,
   GRID_ACTIONS,
   GridEvent,
+  UpperCaseInputDirective,
 } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -53,6 +54,7 @@ import { TooltipModule } from 'primeng/tooltip';
     SharedStudentLookupModule,
     CalendarModule,
     TooltipModule,
+    UpperCaseInputDirective,
   ],
   templateUrl: './student-ban-form.component.html',
   styleUrls: ['./student-ban-form.component.scss'],

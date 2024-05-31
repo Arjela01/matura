@@ -15,7 +15,11 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { PaginatorModule } from 'primeng/paginator';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import { BARCODE_REGEX, GlobalToastService } from '@msh/shared/util-shared';
+import {
+  BARCODE_REGEX,
+  GlobalToastService,
+  UpperCaseInputDirective,
+} from '@msh/shared/util-shared';
 import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { UntilDestroy } from '@ngneat/until-destroy';
@@ -33,6 +37,7 @@ import { exportComponentInEntryPoint } from '@nx/angular/src/generators/componen
     PaginatorModule,
     InputTextModule,
     TooltipModule,
+    UpperCaseInputDirective,
   ],
   templateUrl: './exam-question-score-filters.component.html',
   styleUrls: ['./exam-question-score-filters.component.scss'],
