@@ -70,19 +70,19 @@
         <div>
           <p-sortIcon field="testNumber"></p-sortIcon>
           <p-columnFilter
-                  type="text"
-                  field="testNumber"
-                  display="menu"
-                  mshColumnFilterDirective></p-columnFilter>
+            type="text"
+            field="testNumber"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="analyticScore">
+      <th pSortableColumn="totalScore">
         Totali
         <div>
-          <p-sortIcon field="analyticScore"></p-sortIcon>
+          <p-sortIcon field="totalScore"></p-sortIcon>
           <p-columnFilter
             type="number"
-            field="analyticScore"
+            field="totalScore"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
@@ -107,7 +107,7 @@
         {{ analyticScores.testNumber }}
       </td>
       <td style="width: 20%; min-width: 10rem">
-        {{ analyticScores.analyticScore }}
+        {{ analyticScores.totalScore }}
       </td>
       <td style="width: 5%; min-width: 10rem">
         <div class="flex">

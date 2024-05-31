@@ -19,6 +19,10 @@ export class ExamQuestionScoreService {
     return this.apiService.post(`/ExamQuestionScores/TableData`, $event);
   }
 
+  loadExamQuestionScoresByBarcode(barcode: string): Observable<any> {
+    return this.apiService.get(`/ExamQuestionScores/ForBarcode/${barcode}`);
+  }
+
   getExamQuestionScoreById(examQuestionId: number): Observable<any> {
     return this.apiService.get(`/ExamQuestionScores/${examQuestionId}`);
   }

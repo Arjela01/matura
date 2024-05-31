@@ -3,7 +3,6 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { APIService } from '@msh/shared/util-shared';
 import {
-  AnalyticScoresWithoutTotalModel,
   AnalyticScoresWithoutTotalModelView,
   TotalAnalyticScoresMismatchModelView,
 } from '@msh/shared/domain-models';
@@ -34,11 +33,12 @@ export class AnalyticScoresWithoutTotalService {
         catchError(error => throwError(error))
       );
   }
-  loadAnalyticScoresData(
+
+  loadExamQuestionScoreTotals(
     event: TableLazyLoadEvent
   ): Observable<AnalyticScoresWithoutTotalModelView> {
     return this.apiService
-      .post(`/ExamQuestionScores/AnalyticScores`, event)
+      .post(`/ExamQuestionScoreTotal/TableData`, event)
       .pipe(
         map((data: any) => data),
         catchError(error => throwError(error))

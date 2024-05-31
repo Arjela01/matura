@@ -162,45 +162,10 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
     this.examVariantId = $event.examVariantId;
     this.barcode = $event.barcode;
     this.testNumber = $event.testNumber;
-    this.event.filters = {
-      examSubjectID: [
-        {
-          value: $event.examSubjectId,
-          matchMode: 'equals',
-          operator: 'and',
-        },
-      ],
-      examTypeID: [
-        {
-          value: $event.examTypeId,
-          matchMode: 'equals',
-          operator: 'and',
-        },
-      ],
-      examVariantID: [
-        {
-          value: $event.examVariantId,
-          matchMode: 'equals',
-          operator: 'and',
-        },
-      ],
-      barcode: [
-        {
-          value: $event.barcode,
-          matchMode: 'equals',
-          operator: 'and',
-        },
-      ],
-      testNumber: [
-        {
-          value: $event.testNumber,
-          matchMode: 'equals',
-          operator: 'and',
-        },
-      ],
-    };
     forkJoin([
-      this.examQuestionScoreService.loadExamQuestionScores(this.event),
+      this.examQuestionScoreService.loadExamQuestionScoresByBarcode(
+        this.barcode
+      ),
       this.examQuestionService.getExamQuestionsByExamVariantId(
         $event.examVariantId || $event
       ),

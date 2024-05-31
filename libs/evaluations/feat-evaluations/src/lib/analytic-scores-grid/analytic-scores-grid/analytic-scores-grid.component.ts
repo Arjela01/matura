@@ -54,7 +54,7 @@ export class AnalyticScoresGridComponent {
     this.filters = Object.assign({}, $event);
 
     this.analyticScoresWithoutTotalService
-      .loadAnalyticScoresData($event)
+      .loadExamQuestionScoreTotals($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.analyticScoresList$$.next(response.data);
