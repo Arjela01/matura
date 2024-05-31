@@ -56,6 +56,7 @@ export class ManageStudentAuditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getAvgGradeForStudent();
     this.getScoresForStudentId();
     this.getStudentDataByID();
     this.getStudentGradesByID();
