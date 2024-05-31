@@ -14,8 +14,6 @@
   [rowHover]="true"
   [(selection)]="selectedArchiveFolders"
   selectionMode="multiple"
-  (onRowSelect)="onRowSelect($event)"
-  (onRowUnselect)="onRowUnselect($event)"
   (onLazyLoad)="loadRows($event)"
   [lazy]="true">
   <ng-template pTemplate="header">
@@ -204,6 +202,7 @@
           tooltipPosition="bottom"
           (click)="onDeleteClick(archiveFolder)" />
         <img
+          *ngIf="showEditButton"
           src="assets/svg/edit-form.svg"
           class="p-button-rounded p-button-danger p-button-text ml-2 mb-1 pointer"
           pTooltip="Ndrysho"

@@ -16,6 +16,7 @@
   <div class="col-12">
     <div class="card">
       <msh-archive-folder-grid
+        [showEditButton]="showEditButton"
         [archiveFolders]="(archiveFolders$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
