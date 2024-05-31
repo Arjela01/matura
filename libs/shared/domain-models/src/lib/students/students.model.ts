@@ -43,6 +43,7 @@ export interface Student extends SharedStudent {
   ealbaniaDocsDiplomaPrintedDate?: Date;
   isDiplomaSealSentToEalbaniaDocs?: boolean;
   registrationYear?: string;
+  averageGrade?: string;
 }
 
 export interface StudentTableView {

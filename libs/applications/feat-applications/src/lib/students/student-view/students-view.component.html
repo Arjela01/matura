@@ -59,7 +59,8 @@
   <p-tabPanel header="Notat">
     <msh-students-grades
       [gradesDifferentYear]="gradesDifferentYear"
-      [gradesMatchingYear]="gradesMatchingYear"></msh-students-grades
+      [gradesMatchingYear]="gradesMatchingYear"
+      [avgGrade]="(avgGrade$ | async) || []"></msh-students-grades
   ></p-tabPanel>
   <p-tabPanel header="Pikët">
     <msh-students-scores

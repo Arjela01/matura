@@ -27,7 +27,10 @@ import { A1ZTableRecord } from '@msh/applications/domain-application';
 import { StudentDataComponent } from '../students-data/student-data.component';
 import { StudentAuditGradesComponent } from '../student-grades/students-grades.component';
 import { StudentsAssignmentsComponent } from '../student-assignments/students-assignments.component';
-import { ExamGradeApiService } from '@msh/applications/data-access-applications';
+import {
+  AverageGradeService,
+  ExamGradeApiService,
+} from '@msh/applications/data-access-applications';
 import { StudentsSubjectsComponent } from '../student-subjects/students-subjects.component';
 import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
 import { StudentScoresComponent } from '../student-scores/students-scores.component';
@@ -63,6 +66,9 @@ export class StudentsViewComponent implements OnInit {
   private scores$$ = new BehaviorSubject<ExamScore[]>([]);
   scores$ = this.scores$$.asObservable();
 
+  private avgGrade$$ = new BehaviorSubject<Student[]>([]);
+  avgGrade$ = this.avgGrade$$.asObservable();
+
   forms: A1ZTableRecord[] = [];
   finishedAtSameSchool = true;
   showEditButton = false;
@@ -79,6 +85,7 @@ export class StudentsViewComponent implements OnInit {
     private readonly studentService: StudentsApiService,
     private readonly examGradeService: ExamGradeApiService,
     private route: ActivatedRoute,
+    private readonly avgGradeService: AverageGradeService,
     private readonly permissionCheckService: PermissionCheckService,
     private readonly examAssignmentService: ExamAssignmentApiService,
     private router: Router,
@@ -88,6 +95,7 @@ export class StudentsViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getAvgGradeForStudent();
     this.getScoresForStudentId();
     this.getFormType();
     this.getStudentsOverallData();
@@ -165,6 +173,13 @@ export class StudentsViewComponent implements OnInit {
   getScoresForStudentId() {
     this.examScoreService.getScoresForStudent(this.id).subscribe(res => {
       this.scores$$.next(res.data);
+      this.cd.detectChanges();
+    });
+  }
+
+  getAvgGradeForStudent() {
+    this.avgGradeService.getById(this.id).subscribe(res => {
+      this.avgGrade$$.next(res.data);
       this.cd.detectChanges();
     });
   }
