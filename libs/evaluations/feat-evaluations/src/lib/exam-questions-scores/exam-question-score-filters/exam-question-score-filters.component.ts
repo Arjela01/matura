@@ -81,6 +81,13 @@ export class ExamQuestionScoreFiltersComponent {
   }
 
   onSubmit() {
+    if (
+      !(this.examQuestionScoreList.barcode ?? '').match(this.barcodePattern)
+    ) {
+      this.toastService.showError('Barkodi nuk është i formatit të duhur.');
+      return;
+    }
+
     if (this.isSearchValid(this.examQuestionScoreList)) {
       this.formSave.emit(this.examQuestionScoreList);
     } else {
