@@ -109,31 +109,16 @@
       pInputText
       id="WritingScore"
       name="WritingScore"
-      [(ngModel)]="examScore.writingScore"
+      [(ngModel)]="examScore.totalScore"
       required
       autofocus
       #writingScoreInput
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examScore.writingScore
+        'ng-invalid ng-dirty': submitted && !examScore.totalScore
       }" />
-    <small class="p-error block" *ngIf="submitted && !examScore.writingScore">
-      Pikët me shtjellim janë fushë e kërkuar.
+    <small class="p-error block" *ngIf="submitted && !examScore.totalScore">
+      Pikët Totale janë fushë e kërkuar.
     </small>
-  </div>
-
-  <div class="field" [hidden]="true">
-    <label for="MultipleChoiceScore">Pikët me alternativa *</label>
-    <input
-      type="text"
-      pInputText
-      id="MultipleChoiceScore"
-      name="MultipleChoiceScore"
-      [(ngModel)]="examScore.multipleChoiceScore"
-      required
-      autofocus
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examScore.multipleChoiceScore
-      }" />
   </div>
 
   <div class="field">
