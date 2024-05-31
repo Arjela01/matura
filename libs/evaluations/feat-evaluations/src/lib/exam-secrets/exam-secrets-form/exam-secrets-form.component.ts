@@ -23,6 +23,7 @@ import {
   BARCODE_REGEX,
   GRID_ACTIONS,
   GridEvent,
+  UpperCaseInputDirective,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService } from 'primeng/api';
@@ -49,6 +50,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
     DialogModule,
     SharedStudentLookupModule,
     TooltipModule,
+    UpperCaseInputDirective,
   ],
   providers: [ConfirmationService],
   templateUrl: './exam-secrets-form.component.html',

@@ -11,6 +11,7 @@ import {
   BARCODE_REGEX,
   GRID_ACTIONS,
   GridEvent,
+  UpperCaseInputDirective,
 } from '@msh/shared/util-shared';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
@@ -36,6 +37,7 @@ import { DropdownModel } from '@msh/shared/data-access-shared';
     InputTextModule,
     ButtonModule,
     TooltipModule,
+    UpperCaseInputDirective,
   ],
   templateUrl: './exam-secrets-tabular-data-entry-list.component.html',
   styleUrls: ['./exam-secrets-tabular-data-entry-list.component.scss'],

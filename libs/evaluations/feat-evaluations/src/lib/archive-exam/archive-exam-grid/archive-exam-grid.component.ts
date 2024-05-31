@@ -14,6 +14,7 @@ import {
   ColumnFilterDirective,
   GRID_ACTIONS,
   GridEvent,
+  UpperCaseInputDirective,
 } from '@msh/shared/util-shared';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -44,6 +45,7 @@ import { ArchiveExam } from '@msh/shared/domain-models';
     RippleModule,
     FormsModule,
     ColumnFilterDirective,
+    UpperCaseInputDirective,
   ],
   templateUrl: './archive-exam-grid.component.html',
   styleUrls: ['./archive-exam-grid.component.scss'],
@@ -110,7 +112,7 @@ export class ArchiveExamGridComponent implements OnInit {
   }
 
   barcodeCheck(input: any) {
-    const pattern = /^\d{5}[DZ][123Z]$/;
+    const pattern = /^\d{5}[DZ][123Z]$/i;
     return pattern.test(input);
   }
 
