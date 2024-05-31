@@ -224,42 +224,53 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
         }
       );
       this.examQuestionScoreList$$.next(result);
+      let scoreFound = false;
+      for (const item of result) {
+        for (const scoreObj of item.examQuestionScores) {
+          if (scoreObj.examQuestionScore) {
+            scoreFound = true;
+            break;
+          }
+        }
+        if (scoreFound) {
+          break;
+        }
+      }
+
+      if (scoreFound) {
+        this.toastService.showInfo(
+          'Për këtë barkod janë rregjistruar tashmë pikët'
+        );
+      }
       this.calculateTotalScore();
       this.focusFirstInput();
     });
   }
 
   saveExamScore(examQuestionScore: CreateOrUpdateMultiple) {
-    const academicYearString = localStorage.getItem('academicYear');
-    if (academicYearString) {
-      const academicYear = JSON.parse(academicYearString);
-      const academicYearId = academicYear.id;
-      const valuesToSend = {
-        examVariantId: this.examVariantId,
-        academicYearId: academicYearId,
-        examQuestionScoreCreateUpdateModels: examQuestionScore,
-        testNumber: this.testNumber,
-        barcode: this.barcode.toUpperCase(),
-      } as unknown as CreateOrUpdateMultiple;
-      this.examQuestionScoreService
-        .createOrUpdateMultiple(valuesToSend)
-        .subscribe(response => {
-          if (response.isSuccessful) {
-            this.toastService.showSuccess(
-              'Piket analitike u shtuan me sukses!'
-            );
-            this.clearInputValues();
-            this.scoreFilterComponent.clearFields();
-          } else {
-            this.toastService.showError(response.errorMessage);
-          }
-          if (response.isBadRequest) {
-            this.toastService.showError(
-              'Ndodhi një problem gjatë shtimit të pikeve!'
-            );
-          }
-        });
-    }
+    const valuesToSend = {
+      examVariantId: this.examVariantId,
+      academicYearId: this.academicYearId,
+      examQuestionScoreCreateUpdateModels: examQuestionScore,
+      testNumber: this.testNumber,
+      barcode: this.barcode.toUpperCase(),
+    } as unknown as CreateOrUpdateMultiple;
+    this.examQuestionScoreService
+      .createOrUpdateMultiple(valuesToSend)
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Piket analitike u shtuan me sukses!');
+          this.clearInputValues();
+          this.scoreFilterComponent.clearFields();
+        } else {
+          this.toastService.showError(response.errorMessage);
+        }
+        if (response.isBadRequest) {
+          this.toastService.showError(
+            'Ndodhi një problem gjatë shtimit të pikeve!'
+          );
+        }
+      });
   }
 
   deleteExamScore(examQuestionScore: CreateOrUpdateMultiple) {
