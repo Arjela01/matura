@@ -3,7 +3,7 @@ import { DefaultValueAccessor } from '@angular/forms';
 
 @Directive({
   standalone: true,
-  selector: 'input[toUppercase]',
+  selector: 'input[mshToUppercase]',
 })
 export class UpperCaseInputDirective extends DefaultValueAccessor {
   @HostListener('input', ['$event']) input($event: InputEvent) {
