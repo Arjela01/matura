@@ -65,3 +65,6 @@ export * from './total-scores-without-analytic/total-scores-without-analytic.mod
 export * from './exam-question-score/exam-question-score.model';
 export * from './total-analytic-scores-mismatch/total-analytic-scores-mismatch.model';
 export * from './exam-grade-change/exam-grade-change.model';
+export * from './student-list-publications/student-list-publication.model';
+export * from './student-list-publications/student-list-publication-diff-record.model';
+export * from './student-list-publications/student-list-publication-current-record.model';

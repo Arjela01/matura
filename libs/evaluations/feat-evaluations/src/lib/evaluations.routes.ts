@@ -1,4 +1,13 @@
 import { Route } from '@angular/router';
+import {
+  StudentListPublicationsGridComponent
+} from './student-list-publications/student-list-publications-grid/student-list-publications-grid.component';
+import {
+  CurrentStudentListPublicationsRecordsComponent
+} from './student-list-publications/current-student-list-publications-records/current-student-list-publications-records.component';
+import {
+  DiffStudentListPublicationsRecordsComponent
+} from './student-list-publications/diff-student-list-publications-records/diff-student-list-publications-records.component';
 
 export const EVALUATION_ROUTES: Route[] = [
   {
@@ -288,5 +297,28 @@ export const EVALUATION_ROUTES: Route[] = [
       import(
         './exam-grade-changes/manage-exam-grade-changes/manage-exam-grade-changes.component'
       ).then(m => m.ManageExamGradeChangesComponent),
+  },
+
+  {
+    path: 'student-list-publications',
+    loadComponent: () =>
+      import(
+        './student-list-publications/student-list-publications-grid/student-list-publications-grid.component'
+        ).then(m => m.StudentListPublicationsGridComponent),
+  },
+
+  {
+    path: 'student-list-publications/current',
+    loadComponent: () =>
+      import(
+        './student-list-publications/current-student-list-publications-records/current-student-list-publications-records.component'
+        ).then(m => m.CurrentStudentListPublicationsRecordsComponent),
+  },
+  {
+    path: 'student-list-publications/:id/diff',
+    loadComponent: () =>
+      import(
+        './student-list-publications/diff-student-list-publications-records/diff-student-list-publications-records.component'
+        ).then(m => m.DiffStudentListPublicationsRecordsComponent),
   },
 ];
