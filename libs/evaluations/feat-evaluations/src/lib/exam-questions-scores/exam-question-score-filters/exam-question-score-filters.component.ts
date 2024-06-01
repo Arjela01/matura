@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { ExamQuestionSearchOptions } from '@msh/shared/domain-models';
+import { ExamQuestionScoreTotal } from '@msh/shared/domain-models';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { PaginatorModule } from 'primeng/paginator';
@@ -23,7 +23,6 @@ import {
 import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { exportComponentInEntryPoint } from '@nx/angular/src/generators/component/lib';
 
 @UntilDestroy()
 @Component({
@@ -46,16 +45,16 @@ import { exportComponentInEntryPoint } from '@nx/angular/src/generators/componen
 export class ExamQuestionScoreFiltersComponent {
   @ViewChild('form', { static: true }) form!: NgForm;
 
-  @Input() examType: DropdownModel<number>[] = [];
-  @Input() examSubject: DropdownModel<string>[] = [];
-  @Input() examVariant: DropdownModel<string>[] = [];
+  @Input() examTypes: DropdownModel<number>[] = [];
+  @Input() examSubjects: DropdownModel<string>[] = [];
+  @Input() examVariants: DropdownModel<string>[] = [];
+  @Input() examQuestionScoreTotal: ExamQuestionScoreTotal = {};
 
-  @Output() formSave = new EventEmitter<ExamQuestionSearchOptions>();
-  @Output() examSubjectChanged = new EventEmitter<ExamQuestionSearchOptions>();
-  @Output() examTypeChanged = new EventEmitter<ExamQuestionSearchOptions>();
-  @Output() examVariantChanged = new EventEmitter<ExamQuestionSearchOptions>();
+  @Output() formSave = new EventEmitter<ExamQuestionScoreTotal>();
+  @Output() examSubjectChanged = new EventEmitter<ExamQuestionScoreTotal>();
+  @Output() examTypeChanged = new EventEmitter<ExamQuestionScoreTotal>();
+  @Output() examVariantChanged = new EventEmitter<ExamQuestionScoreTotal>();
 
-  examQuestionScoreList: ExamQuestionSearchOptions = {} as ExamQuestionSearchOptions;
   submitted = false;
   barcodePattern = BARCODE_REGEX;
 
@@ -65,17 +64,17 @@ export class ExamQuestionScoreFiltersComponent {
   ) {}
 
   onExamTypeChanged(): void {
-    if (this.examQuestionScoreList.examTypeId) {
+    if (this.examQuestionScoreTotal.examTypeId) {
       this.examSubjectChanged.emit(
-        Object.assign({}, this.examQuestionScoreList)
+        Object.assign({}, this.examQuestionScoreTotal)
       );
     }
   }
 
   onExamSubjectChanged(): void {
-    if (this.examQuestionScoreList.examSubjectId) {
+    if (this.examQuestionScoreTotal.examSubjectId) {
       this.examVariantChanged.emit(
-        Object.assign({}, this.examQuestionScoreList)
+        Object.assign({}, this.examQuestionScoreTotal)
       );
     }
   }
@@ -87,14 +86,14 @@ export class ExamQuestionScoreFiltersComponent {
 
   onSubmit() {
     if (
-      !(this.examQuestionScoreList.barcode ?? '').match(this.barcodePattern)
+      !(this.examQuestionScoreTotal.barcode ?? '').match(this.barcodePattern)
     ) {
       this.toastService.showError('Barkodi nuk është i formatit të duhur.');
       return;
     }
 
-    if (this.isSearchValid(this.examQuestionScoreList)) {
-      this.formSave.emit(this.examQuestionScoreList);
+    if (this.isSearchValid(this.examQuestionScoreTotal)) {
+      this.formSave.emit(this.examQuestionScoreTotal);
     } else {
       this.toastService.showInfo(
         'Ju lutem plotësoni të gjitha fushat e kërkuara.'
@@ -102,7 +101,7 @@ export class ExamQuestionScoreFiltersComponent {
     }
   }
 
-  isSearchValid(searchModal: ExamQuestionSearchOptions) {
+  isSearchValid(searchModal: ExamQuestionScoreTotal) {
     return (
       searchModal.examVariantId &&
       searchModal.examTypeId &&

@@ -1,13 +1,14 @@
 <div>
-  <h2 class="flex-1 mb-0">Hidh Pikët Analitike</h2>
+  <h2 class="flex-1 mb-0">{{ !this.isEditMode ? 'Hidh Pikët Analitike' : 'Ndrysho Pikët Analitike' }}</h2>
   <div class="mt-4">
     <msh-exam-question-score-filters
       (formSave)="getExamQuestionScoresList($event)"
       (examSubjectChanged)="getExamSubjectDropdown($event)"
       (examVariantChanged)="getExamVariantDropdown($event)"
-      [examVariant]="examVariant"
-      [examSubject]="examSubject"
-      [examType]="examType"></msh-exam-question-score-filters>
+      [examVariants]="examVariants"
+      [examSubjects]="examSubjects"
+      [examTypes]="examTypes"
+      [examQuestionScoreTotal]="examQuestionScoreTotal"></msh-exam-question-score-filters>
   </div>
   <div class="mt-4">
     <msh-exam-question-score-grid

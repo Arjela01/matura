@@ -3,9 +3,10 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { APIService } from '@msh/shared/util-shared';
 import {
-  AnalyticScoresWithoutTotalModelView, ExamQuestionScoreTotalView,
+  AnalyticScoresWithoutTotalModelView, ExamQuestionScoreTotal, ExamQuestionScoreTotalView,
   TotalAnalyticScoresMismatchModelView,
 } from '@msh/shared/domain-models';
+import { ApiResult } from '@msh/shared/data-access-shared';
 
 @Injectable({
   providedIn: 'root',
@@ -53,7 +54,8 @@ export class ExamQuestionScoreTotalsService {
       );
   }
 
-  getById(id: string) {
-
+  getById(id: string): Observable<ApiResult<ExamQuestionScoreTotal>> {
+    return this.apiService
+      .get(`/ExamQuestionScoreTotal/GetById/${id}`);
   }
 }

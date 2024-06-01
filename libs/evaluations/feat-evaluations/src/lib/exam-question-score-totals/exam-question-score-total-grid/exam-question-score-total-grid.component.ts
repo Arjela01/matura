@@ -74,7 +74,7 @@ export class ExamQuestionScoreTotalGridComponent {
 
   onEditClick(analyticScore: ExamQuestionScoreTotal) {
     this.router.navigate([
-      `/evaluations/analytic-score-edit/${analyticScore.id}`,
+      `/evaluations/exam-question-score/${analyticScore.id}`,
     ]);
   }
 

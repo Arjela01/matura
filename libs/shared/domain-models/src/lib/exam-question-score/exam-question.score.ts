@@ -27,17 +27,6 @@ export interface ExamQuestionsScoreDataEntry {
   examQuestionScore: ExamQuestionScore;
 }
 
-export interface ExamQuestionSearchOptions {
-  examTypeId: string;
-  examTypeName: string;
-  examSubjectId: string;
-  examSubjectName: string;
-  examVariantId: string;
-  examVariantName: string;
-  barcode: string;
-  testNumber: string;
-}
-
 export interface CreateOrUpdateMultiple {
   academicYearId: number;
   examQuestionScoreCreateUpdateModels: ExamQuestionScore[];

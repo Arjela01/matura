@@ -1,5 +1,5 @@
 import {
-  ChangeDetectionStrategy,
+  ChangeDetectionStrategy, ChangeDetectorRef,
   Component,
   ElementRef,
   OnInit,
@@ -11,7 +11,7 @@ import {
   CreateOrUpdateMultiple,
   ExamQuestionModel,
   ExamQuestionScore,
-  ExamQuestionSearchOptions,
+  ExamQuestionScoreTotal,
   ExamQuestionsScoreDataEntry,
 } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
@@ -24,7 +24,8 @@ import {
   ExamVariantApiService,
 } from '@msh/configurations/data-access-configurations';
 import {
-  ExamQuestionScoreService, ExamQuestionScoreTotalsService,
+  ExamQuestionScoreService,
+  ExamQuestionScoreTotalsService,
   ExamQuestionsService,
 } from '@msh/evaluations/data-access-evaluations';
 import { ButtonModule } from 'primeng/button';
@@ -58,27 +59,23 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
   >([]);
   examQuestionScoreList$ = this.examQuestionScoreList$$.asObservable();
 
+  examQuestionScoreTotal: ExamQuestionScoreTotal = {};
+
   totalRecords = 0;
-  filters: ExamQuestionSearchOptions | null = null;
-  examSubject: DropdownModel<string>[] = [];
-  examType: DropdownModel<number>[] = [];
-  examVariant: DropdownModel<string>[] = [];
+  filters: ExamQuestionScoreTotal = {};
+  examSubjects: DropdownModel<string>[] = [];
+  examTypes: DropdownModel<number>[] = [];
+  examVariants: DropdownModel<string>[] = [];
   examVariantId: any;
   examSubjectId: any;
   totalScore = 0;
   examVariantTotalScore = 0;
   barcode: any;
   academicYearId = 0;
-  testNumber: string | null = null;
+  testNumber: string | undefined;
 
-  event = {
-    first: 0,
-    rows: 10000,
-    sortOrder: 1,
-    filters: {},
-    globalFilter: null,
-  };
   id: string | null = null;
+  isEditMode = false;
 
   constructor(
     private readonly examSubjectService: ExamSubjectApiService,
@@ -90,6 +87,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
     private readonly examTypeService: ExamTypeApiService,
     private elementRef: ElementRef,
     private readonly route: ActivatedRoute,
+    private readonly cd: ChangeDetectorRef
   ) {
     this.id = route.snapshot.params['id'];
 
@@ -101,8 +99,12 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.id != null) {
+    if (this.id != null) {
       this.examQuestionScoreTotalsService.getById(this.id)
+        .subscribe(response => {
+          this.examQuestionScoreTotal = response.data;
+          this.cd.markForCheck();
+        })
     }
     this.getExamTypeDropdown();
   }
@@ -112,7 +114,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       .loadDropdownList()
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.examType = response.data;
+        this.examTypes = response.data;
       });
   }
 
@@ -126,7 +128,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       )
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.examSubject = response.data;
+        this.examSubjects = response.data;
       });
   }
 
@@ -135,7 +137,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       .forExamSubject($event.examSubjectId)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.examVariant = response.data;
+        this.examVariants = response.data;
       });
   }
 
@@ -171,7 +173,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
     });
   }
 
-  getExamQuestionScoresList($event: ExamQuestionSearchOptions) {
+  getExamQuestionScoresList($event: ExamQuestionScoreTotal) {
     this.filters = Object.assign({}, $event);
     this.barcode = $event.barcode;
     this.examVariantId = $event.examVariantId;
@@ -264,8 +266,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showInfo('Rezultati i provimit u fshi me sukses!');
-          if(this.filters)
-            this.getExamQuestionScoresList(this.filters);
+          if (this.filters) this.getExamQuestionScoresList(this.filters);
         } else {
           this.toastService.showError(response.errorMessage);
         }

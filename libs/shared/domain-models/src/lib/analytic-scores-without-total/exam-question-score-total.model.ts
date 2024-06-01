@@ -1,21 +1,18 @@
-import { AnalyticScoresWithoutTotalModel } from './analytic-scores-without-total.model';
-
 export interface ExamQuestionScoreTotal {
-  id: number;
-  testNumber: string;
-  barcode: string;
+  id?: number;
+  testNumber?: string;
+  barcode?: string;
   examTypeId?: number;
-  examTypeName: string;
-  examSubjectId: string;
-  examSubjectName: string;
+  examTypeName?: string;
+  examSubjectId?: string;
+  examSubjectName?: string;
   examVariantId?: number;
-  examVariantName: string;
-  academicYearIsActive: boolean;
-  academicYearName: string;
+  examVariantName?: string;
+  academicYearIsActive?: boolean;
+  academicYearName?: string;
   academicYearId?: number;
   totalScore?: number;
 }
-
 
 export interface ExamQuestionScoreTotalView {
   data: ExamQuestionScoreTotal[];

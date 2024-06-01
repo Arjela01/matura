@@ -39,7 +39,7 @@ export class ExamQuestionsService {
       `/ExamQuestion/${examQuestionId}`
     );
   }
-  getExamQuestionsByExamVariantId(examVariantId: string): Observable<any> {
+  getExamQuestionsByExamVariantId(examVariantId: any): Observable<any> {
     return this.apiService.get(`/ExamQuestion/ByExamVariant/${examVariantId}`);
   }
 }

@@ -6,7 +6,7 @@
         <p-dropdown
           id="examType"
           [tabindex]="1"
-          [options]="examType"
+          [options]="examTypes"
           optionValue="key"
           optionLabel="value"
           name="examType"
@@ -16,16 +16,16 @@
           [autoDisplayFirst]="false"
           (onChange)="onExamTypeChanged()"
           (onClear)="onExamTypeChanged()"
-          [(ngModel)]="examQuestionScoreList.examTypeId"
+          [(ngModel)]="examQuestionScoreTotal.examTypeId"
           [showClear]="true"
           [ngClass]="{
             'ng-invalid ng-dirty':
-              submitted && !examQuestionScoreList.examTypeId
+              submitted && !examQuestionScoreTotal.examTypeId
           }">
         </p-dropdown>
         <small
           class="p-error block"
-          *ngIf="submitted && !examQuestionScoreList.examTypeId">
+          *ngIf="submitted && !examQuestionScoreTotal.examTypeId">
           Tipi i Provimit është fushë e kërkuar.
         </small>
       </div>
@@ -34,7 +34,7 @@
         <p-dropdown
           id="examSubject"
           [tabindex]="2"
-          [options]="examSubject"
+          [options]="examSubjects"
           optionValue="key"
           optionLabel="value"
           name="examSubject"
@@ -44,16 +44,16 @@
           [filter]="true"
           [required]="true"
           [autoDisplayFirst]="false"
-          [(ngModel)]="examQuestionScoreList.examSubjectId"
+          [(ngModel)]="examQuestionScoreTotal.examSubjectId"
           [showClear]="true"
           [ngClass]="{
             'ng-invalid ng-dirty':
-              submitted && !examQuestionScoreList.examSubjectId
+              submitted && !examQuestionScoreTotal.examSubjectId
           }">
         </p-dropdown>
         <small
           class="p-error block"
-          *ngIf="submitted && !examQuestionScoreList.examSubjectId">
+          *ngIf="submitted && !examQuestionScoreTotal.examSubjectId">
           Lënda është fushë e kërkuar.
         </small>
       </div>
@@ -63,7 +63,7 @@
         <p-dropdown
           id="examVariant"
           [tabindex]="3"
-          [options]="examVariant"
+          [options]="examVariants"
           optionValue="key"
           optionLabel="value"
           name="examVariant"
@@ -71,17 +71,17 @@
           [filter]="true"
           [required]="true"
           [autoDisplayFirst]="false"
-          [(ngModel)]="examQuestionScoreList.examVariantId"
+          [(ngModel)]="examQuestionScoreTotal.examVariantId"
           [showClear]="true"
           [ngClass]="{
             'ng-invalid ng-dirty':
-              submitted && !examQuestionScoreList.examVariantId
+              submitted && !examQuestionScoreTotal.examVariantId
           }"
           >examQuestionScoreList
         </p-dropdown>
         <small
           class="p-error block"
-          *ngIf="submitted && !examQuestionScoreList.examVariantId">
+          *ngIf="submitted && !examQuestionScoreTotal.examVariantId">
           Varianti është fushë e kërkuar.
         </small>
       </div>
@@ -96,17 +96,17 @@
           autocomplete="off"
           (keydown.enter)="onKeyPress()"
           placeholder="Nr. Testi"
-          [disabled]="!examQuestionScoreList.examVariantId"
+          [disabled]="!examQuestionScoreTotal.examVariantId"
           id="testNumber"
           name="testNumber"
-          [(ngModel)]="examQuestionScoreList.testNumber"
+          [(ngModel)]="examQuestionScoreTotal.testNumber"
           required
           [ngClass]="{
-            'ng-invalid ng-dirty': submitted && !examQuestionScoreList.barcode
+            'ng-invalid ng-dirty': submitted && !examQuestionScoreTotal.barcode
           }" />
         <small
           class="p-error block"
-          *ngIf="submitted && !examQuestionScoreList.barcode">
+          *ngIf="submitted && !examQuestionScoreTotal.barcode">
           Nr. Testi është fushë e kërkuar.
         </small>
       </div>
@@ -123,20 +123,20 @@
           pInputText
           placeholder="Barkodi"
           autocomplete="off"
-          [disabled]="!examQuestionScoreList.examVariantId"
+          [disabled]="!examQuestionScoreTotal.examVariantId"
           id="barcode"
           [pattern]="barcodePattern"
           name="barcode"
           (change)="onSubmit()"
           (keydown.enter)="onSubmit()"
-          [(ngModel)]="examQuestionScoreList.barcode"
+          [(ngModel)]="examQuestionScoreTotal.barcode"
           required
           [ngClass]="{
-            'ng-invalid ng-dirty': submitted && !examQuestionScoreList.barcode
+            'ng-invalid ng-dirty': submitted && !examQuestionScoreTotal.barcode
           }" />
         <small
           class="p-error block"
-          *ngIf="submitted && !examQuestionScoreList.barcode">
+          *ngIf="submitted && !examQuestionScoreTotal.barcode">
           Barkodi është fushë e kërkuar.
         </small>
       </div>
