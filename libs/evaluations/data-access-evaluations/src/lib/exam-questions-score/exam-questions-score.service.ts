@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 
@@ -19,8 +19,11 @@ export class ExamQuestionScoreService {
     return this.apiService.post(`/ExamQuestionScore/TableData`, $event);
   }
 
-  loadExamQuestionScoresByBarcode(barcode: string): Observable<any> {
-    return this.apiService.get(`/ExamQuestionScore/ForBarcode/${barcode}`);
+  loadExamQuestionScoresByTotalId(id: any): Observable<any> {
+    if(!id) {
+      return of({data: []});
+    }
+    return this.apiService.get(`/ExamQuestionScore/ForTotalId/${id}`);
   }
 
   getExamQuestionScoreById(examQuestionId: number): Observable<any> {

@@ -65,13 +65,21 @@ export class ExamQuestionScoreFiltersComponent {
 
   onExamTypeChanged(): void {
     if (this.examQuestionScoreTotal.examTypeId) {
-      this.examSubjectChanged.emit(
+      this.examTypeChanged.emit(
         Object.assign({}, this.examQuestionScoreTotal)
       );
     }
   }
 
   onExamSubjectChanged(): void {
+    if (this.examQuestionScoreTotal.examSubjectId) {
+      this.examSubjectChanged.emit(
+        Object.assign({}, this.examQuestionScoreTotal)
+      );
+    }
+  }
+
+  onExamVariantChanged(): void {
     if (this.examQuestionScoreTotal.examSubjectId) {
       this.examVariantChanged.emit(
         Object.assign({}, this.examQuestionScoreTotal)

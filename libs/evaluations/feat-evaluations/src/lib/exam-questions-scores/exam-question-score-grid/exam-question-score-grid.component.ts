@@ -45,7 +45,6 @@ export class ExamQuestionScoreGridComponent {
   @Input() examVariantId = '';
   @Input() loading = false;
   @Output() writingScoreChange = new EventEmitter<any>();
-  @Output() deleteMultiple = new EventEmitter<any>();
   @Output() calculate = new EventEmitter<any>();
   @Output() gridEvent = new EventEmitter<
     GridEvent<ExamQuestionScore | ExamQuestionScore[]>
@@ -91,8 +90,6 @@ export class ExamQuestionScoreGridComponent {
       });
 
       this.writingScoreChange.emit(updatedScores);
-    } else if (action === ScoreActions.CLEAN) {
-      this.deleteMultiple.emit(deletedIDs);
     }
   }
 

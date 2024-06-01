@@ -33,6 +33,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ExamQuestionScoreFiltersComponent } from '../exam-question-score-filters/exam-question-score-filters.component';
 import { ExamQuestionScoreGridComponent } from '../exam-question-score-grid/exam-question-score-grid.component';
 import { ActivatedRoute } from '@angular/router';
+import { MessagesModule } from 'primeng/messages';
 
 @UntilDestroy()
 @Component({
@@ -44,6 +45,7 @@ import { ActivatedRoute } from '@angular/router';
     ConfirmDialogModule,
     ExamQuestionScoreFiltersComponent,
     ExamQuestionScoreGridComponent,
+    MessagesModule,
   ],
   templateUrl: './manage-exam-question-score.component.html',
   styleUrls: ['./manage-exam-question-score.component.scss'],
@@ -76,6 +78,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
 
   id: string | null = null;
   isEditMode = false;
+  showForm = true;
 
   constructor(
     private readonly examSubjectService: ExamSubjectApiService,
@@ -90,6 +93,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
     private readonly cd: ChangeDetectorRef
   ) {
     this.id = route.snapshot.params['id'];
+    this.isEditMode = !!this.id;
 
     const academicYearString = localStorage.getItem('academicYear');
     if (academicYearString) {
@@ -100,13 +104,19 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
 
   ngOnInit() {
     if (this.id != null) {
-      this.examQuestionScoreTotalsService.getById(this.id)
+      this.examQuestionScoreTotalsService
+        .getById(this.id)
         .subscribe(response => {
-          this.examQuestionScoreTotal = response.data;
-          this.getExamSubjectDropdown(this.examQuestionScoreTotal);
-          this.getExamVariantDropdown(this.examQuestionScoreTotal);
+          if (response.data != null) {
+            this.examQuestionScoreTotal = response.data;
+            this.getExamSubjectDropdown(this.examQuestionScoreTotal);
+            this.getExamVariantDropdown(this.examQuestionScoreTotal);
+            this.getExamQuestionScoresList(this.examQuestionScoreTotal);
+          } else {
+            this.showForm = false;
+          }
           this.cd.markForCheck();
-        })
+        });
     }
     this.getExamTypeDropdown();
   }
@@ -132,7 +142,6 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       .subscribe(response => {
         this.examSubjects = response.data;
         this.cd.markForCheck();
-
       });
   }
 
@@ -143,7 +152,6 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       .subscribe(response => {
         this.examVariants = response.data;
         this.cd.markForCheck();
-
       });
   }
 
@@ -160,7 +168,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       }, 0) as any;
   }
 
-  private focusFirstInput() {
+  focusFirstInput() {
     setTimeout(() => {
       const firstRowInput = this.elementRef.nativeElement.querySelector(
         'tbody tr:first-child input'
@@ -181,13 +189,9 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
 
   getExamQuestionScoresList($event: ExamQuestionScoreTotal) {
     this.filters = Object.assign({}, $event);
-    this.barcode = $event.barcode;
-    this.examVariantId = $event.examVariantId;
-    this.barcode = $event.barcode;
-    this.testNumber = $event.testNumber;
     forkJoin([
-      this.examQuestionScoreService.loadExamQuestionScoresByBarcode(
-        this.barcode
+      this.examQuestionScoreService.loadExamQuestionScoresByTotalId(
+        $event.id
       ),
       this.examQuestionService.getExamQuestionsByExamVariantId(
         $event.examVariantId
@@ -232,7 +236,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
         );
       }
       this.calculateTotalScore();
-      this.focusFirstInput();
+      // this.focusFirstInput();
     });
   }
 
@@ -248,9 +252,17 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       .createOrUpdateMultiple(valuesToSend)
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Piket analitike u shtuan me sukses!');
-          this.clearInputValues();
-          this.scoreFilterComponent.clearFields();
+          if (!this.isEditMode) {
+            this.toastService.showSuccess(
+              'Piket analitike u shtuan me sukses!'
+            );
+            this.clearInputValues();
+            this.scoreFilterComponent.clearFields();
+          } else {
+            this.toastService.showSuccess(
+              'Piket analitike u ruajtën me sukses!'
+            );
+          }
         } else {
           this.toastService.showError(response.errorMessage);
         }
@@ -262,23 +274,18 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       });
   }
 
-  deleteExamScore(examQuestionScore: CreateOrUpdateMultiple) {
-    const valuesToSend = {
-      examQuestionIds: examQuestionScore,
-      barcode: this.barcode.toUpperCase(),
-    } as unknown as CreateOrUpdateMultiple;
-    this.examQuestionScoreService
-      .deleteMultiple(valuesToSend)
+  deleteExamQuestionScoreTotal() {
+    this.examQuestionScoreTotalsService.delete(this.id)
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showInfo('Rezultati i provimit u fshi me sukses!');
+          this.toastService.showInfo('Pikët analitike u fshinë me sukses!');
           if (this.filters) this.getExamQuestionScoresList(this.filters);
         } else {
           this.toastService.showError(response.errorMessage);
         }
         if (response.isBadRequest) {
           this.toastService.showError(
-            'Ndodhi një problem gjatë fshirjes së rezultatit të provimit!'
+            'Ndodhi një problem gjatë fshirjes së pikëve analitikee!'
           );
         }
       });

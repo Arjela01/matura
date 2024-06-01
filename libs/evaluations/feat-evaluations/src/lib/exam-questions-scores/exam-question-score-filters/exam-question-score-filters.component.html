@@ -72,6 +72,8 @@
           [required]="true"
           [autoDisplayFirst]="false"
           [(ngModel)]="examQuestionScoreTotal.examVariantId"
+          (onChange)="onExamVariantChanged()"
+          (onClear)="onExamVariantChanged()"
           [showClear]="true"
           [ngClass]="{
             'ng-invalid ng-dirty':
