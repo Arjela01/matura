@@ -1,5 +1,6 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   OnInit,
@@ -8,9 +9,10 @@ import {
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, forkJoin } from 'rxjs';
 import {
-  CreateOrUpdateMultiple,
   ExamQuestionModel,
   ExamQuestionScore,
+  ExamQuestionScoreCreateUpdateModel,
+  ExamQuestionScoreCreateUpdateMultipleCommand,
   ExamQuestionScoreTotal,
   ExamQuestionsScoreDataEntry,
 } from '@msh/shared/domain-models';
@@ -68,17 +70,13 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
   examSubjects: DropdownModel<string>[] = [];
   examTypes: DropdownModel<number>[] = [];
   examVariants: DropdownModel<string>[] = [];
-  examVariantId: any;
-  examSubjectId: any;
-  totalScore = 0;
-  examVariantTotalScore = 0;
-  barcode: any;
   academicYearId = 0;
-  testNumber: string | undefined;
 
   id: string | null = null;
   isEditMode = false;
   showForm = true;
+  totalScore = 0;
+  examVariantTotalScore = 0;
 
   constructor(
     private readonly examSubjectService: ExamSubjectApiService,
@@ -190,9 +188,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
   getExamQuestionScoresList($event: ExamQuestionScoreTotal) {
     this.filters = Object.assign({}, $event);
     forkJoin([
-      this.examQuestionScoreService.loadExamQuestionScoresByTotalId(
-        $event.id
-      ),
+      this.examQuestionScoreService.loadExamQuestionScoresByTotalId($event.id),
       this.examQuestionService.getExamQuestionsByExamVariantId(
         $event.examVariantId
       ),
@@ -207,7 +203,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
           );
           return {
             examQuestion: examQuestion,
-            examQuestionScores: matchingScore,
+            examQuestionScore: matchingScore,
           } as unknown as ExamQuestionsScoreDataEntry;
         }
       );
@@ -236,18 +232,16 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
         );
       }
       this.calculateTotalScore();
-      // this.focusFirstInput();
     });
   }
 
-  saveExamScore(examQuestionScore: CreateOrUpdateMultiple) {
+  saveExamScores(examQuestionScores: ExamQuestionScoreCreateUpdateModel[]) {
     const valuesToSend = {
-      examVariantId: this.examVariantId,
-      academicYearId: this.academicYearId,
-      examQuestionScoreCreateUpdateModels: examQuestionScore,
-      testNumber: this.testNumber,
-      barcode: this.barcode.toUpperCase(),
-    } as unknown as CreateOrUpdateMultiple;
+      examVariantId: this.examQuestionScoreTotal.examVariantId,
+      examQuestionScoreCreateUpdateModels: examQuestionScores,
+      testNumber: this.examQuestionScoreTotal.testNumber,
+      barcode: this.examQuestionScoreTotal.barcode,
+    } as ExamQuestionScoreCreateUpdateMultipleCommand;
     this.examQuestionScoreService
       .createOrUpdateMultiple(valuesToSend)
       .subscribe(response => {
@@ -275,19 +269,18 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
   }
 
   deleteExamQuestionScoreTotal() {
-    this.examQuestionScoreTotalsService.delete(this.id)
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showInfo('Pikët analitike u fshinë me sukses!');
-          if (this.filters) this.getExamQuestionScoresList(this.filters);
-        } else {
-          this.toastService.showError(response.errorMessage);
-        }
-        if (response.isBadRequest) {
-          this.toastService.showError(
-            'Ndodhi një problem gjatë fshirjes së pikëve analitikee!'
-          );
-        }
-      });
+    this.examQuestionScoreTotalsService.delete(this.id).subscribe(response => {
+      if (response.isSuccessful) {
+        this.toastService.showInfo('Pikët analitike u fshinë me sukses!');
+        if (this.filters) this.getExamQuestionScoresList(this.filters);
+      } else {
+        this.toastService.showError(response.errorMessage);
+      }
+      if (response.isBadRequest) {
+        this.toastService.showError(
+          'Ndodhi një problem gjatë fshirjes së pikëve analitikee!'
+        );
+      }
+    });
   }
 }

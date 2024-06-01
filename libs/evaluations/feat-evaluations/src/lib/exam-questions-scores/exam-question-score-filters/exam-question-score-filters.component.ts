@@ -65,9 +65,7 @@ export class ExamQuestionScoreFiltersComponent {
 
   onExamTypeChanged(): void {
     if (this.examQuestionScoreTotal.examTypeId) {
-      this.examTypeChanged.emit(
-        Object.assign({}, this.examQuestionScoreTotal)
-      );
+      this.examTypeChanged.emit(Object.assign({}, this.examQuestionScoreTotal));
     }
   }
 
@@ -84,6 +82,7 @@ export class ExamQuestionScoreFiltersComponent {
       this.examVariantChanged.emit(
         Object.assign({}, this.examQuestionScoreTotal)
       );
+      this.focusOnTestNumber();
     }
   }
 
@@ -122,7 +121,10 @@ export class ExamQuestionScoreFiltersComponent {
   clearFields() {
     this.form.controls['testNumber'].setValue('');
     this.form.controls['barcode'].setValue('');
+    this.focusOnTestNumber();
+  }
 
+  focusOnTestNumber() {
     setTimeout(() => {
       const testNumberField =
         this.elementRef.nativeElement.querySelector('#testNumber');

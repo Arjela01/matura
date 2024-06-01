@@ -27,10 +27,7 @@
                 [min]="0"
                 style="width: 50%"
                 [max]="rowData.examQuestion.questionMaximumScore"
-                [(ngModel)]="
-                  rowData.examQuestionScores[0] &&
-                  rowData.examQuestionScores[0].score
-                "
+                [(ngModel)]="rowData.examQuestionScore.score"
                 (ngModelChange)="
                   onRowChange($event);
                   updateInputScore(rowData.examQuestion.id, $event)
@@ -39,7 +36,7 @@
               <small
                 class="p-error block mt-3"
                 *ngIf="
-                  rowData.examQuestionScores[0]?.examQuestionScore >
+                  rowData.examQuestionScore.score >
                   rowData.examQuestion.questionMaximumScore
                 ">
                 Pikët e marra nuk mund të kalojně pikët maksimale.
@@ -47,18 +44,6 @@
             </ng-container>
           </td>
           <td>{{ rowData.examQuestion.questionMaximumScore }}</td>
-          <td *ngIf="examVariantId">
-            <button
-              pButton
-              icon="pi pi-trash"
-              class="p-button-danger p-button-text justify-content-center"
-              *ngIf="rowData.examQuestionScores[0]?.hasScore"
-              (click)="
-                onDeleteClick(
-                  rowData.examQuestionScores[0]?.examQuestionScoreId
-                )
-              "></button>
-          </td>
         </tr>
       </tbody>
       <tfoot *ngIf="examQuestionScoreList.length">

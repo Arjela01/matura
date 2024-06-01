@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ExamQuestionScore } from '@msh/shared/domain-models';
+import { ExamQuestionScore, ExamQuestionScoreCreateUpdateModel } from '@msh/shared/domain-models';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
@@ -44,52 +44,27 @@ export class ExamQuestionScoreGridComponent {
   @Input() examVariantMaximumScore = 0;
   @Input() examVariantId = '';
   @Input() loading = false;
-  @Output() writingScoreChange = new EventEmitter<any>();
+  @Output() saveScores = new EventEmitter<ExamQuestionScoreCreateUpdateModel[]>();
   @Output() calculate = new EventEmitter<any>();
   @Output() gridEvent = new EventEmitter<
     GridEvent<ExamQuestionScore | ExamQuestionScore[]>
   >();
   inputScores: { [questionId: number]: number } = {};
 
-  onDeleteClick(examQuestionScore: any) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.DELETE,
-      data: examQuestionScore,
-    } as GridEvent<ExamQuestionScore>);
-  }
-
   updateInputScore(questionId: number, score: number) {
     this.inputScores[questionId] = score;
   }
 
   onExamScoreAddOrUpdate(action: ScoreActions): void {
-    const deletedIDs: number[] = [];
-
-    if (action === ScoreActions.CLEAN) {
-      this.examQuestionScoreList.forEach(rowData => {
-        if (rowData.examQuestionScores.length > 0) {
-          deletedIDs.push(rowData.examQuestion.id);
-        }
-      });
-    }
-
     if (action === ScoreActions.SAVE) {
-      const updatedScores: ExamQuestionScore[] = [];
-      this.examQuestionScoreList.forEach(rowData => {
-        if (rowData) {
-          const examQuestionScore: ExamQuestionScore = {
-            examQuestionId: rowData.examQuestion.id,
-            examQuestionMaximumScore: rowData.examQuestion.questionMaximumScore,
-            score:
-              rowData.examQuestionScores[0]?.score,
-            examQuestionScoreTotalId:
-              rowData.examQuestionScores[0]?.examQuestionScoreTotalId,
-          };
-          updatedScores.push(examQuestionScore);
-        }
+      const saveList = this.examQuestionScoreList.map(rowData => {
+        return {
+          examQuestionId: rowData.examQuestion.id,
+          score: rowData.examQuestionScore.score,
+        } as ExamQuestionScoreCreateUpdateModel;
       });
 
-      this.writingScoreChange.emit(updatedScores);
+      this.saveScores.emit(saveList);
     }
   }
 

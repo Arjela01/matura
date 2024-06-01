@@ -37,7 +37,7 @@
         [totalScore]="totalScore"
         [examQuestionScoreList]="(examQuestionScoreList$ | async) || []"
         [totalRecords]="totalRecords"
-        (writingScoreChange)="saveExamScore($event)"
+        (saveScores)="saveExamScores($event)"
         (calculate)="calculateTotalScore()">
       </msh-exam-question-score-grid>
     </div>

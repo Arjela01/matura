@@ -27,9 +27,15 @@ export interface ExamQuestionsScoreDataEntry {
   examQuestionScore: ExamQuestionScore;
 }
 
-export interface CreateOrUpdateMultiple {
-  academicYearId: number;
-  examQuestionScoreCreateUpdateModels: ExamQuestionScore[];
+export interface ExamQuestionScoreCreateUpdateMultipleCommand {
+  examQuestionScoreTotalId?: number;
+  examQuestionScoreCreateUpdateModels: ExamQuestionScoreCreateUpdateModel[];
   barcode: string;
-  examVariantId: string;
+  testNumber: string;
+  examVariantId?: number;
+}
+
+export interface ExamQuestionScoreCreateUpdateModel {
+  examQuestionId: number;
+  score?: number;
 }
