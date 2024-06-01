@@ -46,7 +46,7 @@ export class TotalAnalyticScoreMismatchComponent {
     this.filters = Object.assign({}, $event);
 
     this.scoreApiService
-      .loadTotalAnalyticMismatchData($event)
+      .getExamScoreExamQuestionTotalMismatches($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.scores = response.data;

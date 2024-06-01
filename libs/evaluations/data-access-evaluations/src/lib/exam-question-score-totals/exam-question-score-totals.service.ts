@@ -3,7 +3,9 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { APIService } from '@msh/shared/util-shared';
 import {
-  AnalyticScoresWithoutTotalModelView, ExamQuestionScoreTotal, ExamQuestionScoreTotalView,
+  ExamQuestionScoreTotal,
+  ExamQuestionScoreTotalView,
+  ExamScoresView,
   TotalAnalyticScoresMismatchModelView,
 } from '@msh/shared/domain-models';
 import { ApiResult } from '@msh/shared/data-access-shared';
@@ -25,29 +27,46 @@ export class ExamQuestionScoreTotalsService {
       );
   }
 
-  delete(
-    id: any
-  ): Observable<any> {
-    return this.apiService
-      .delete(`/ExamQuestionScoreTotal/Delete/${id}`);
+  delete(id: any): Observable<any> {
+    return this.apiService.delete(`/ExamQuestionScoreTotal/Delete/${id}`);
   }
 
-  loadData(
+  getExamQuestionTotalsWithoutExamScores(
     event: TableLazyLoadEvent
-  ): Observable<AnalyticScoresWithoutTotalModelView> {
+  ): Observable<ExamQuestionScoreTotalView> {
     return this.apiService
-      .post(`/ExamQuestionScore/AnalyticScoresWithoutTotal`, event)
+      .post(
+        `/ExamQuestionScoreTotal/GetExamQuestionTotalsWithoutExamScores`,
+        event
+      )
       .pipe(
         map((data: any) => data),
         catchError(error => throwError(error))
       );
   }
 
-  loadTotalAnalyticMismatchData(
+  getExamScoresWithoutExamQuestionTotals(
+    event: TableLazyLoadEvent
+  ): Observable<ExamScoresView> {
+    return this.apiService
+      .post(
+        `/ExamQuestionScoreTotal/GetExamScoresWithoutExamQuestionTotals`,
+        event
+      )
+      .pipe(
+        map((data: any) => data),
+        catchError(error => throwError(error))
+      );
+  }
+
+  getExamScoreExamQuestionTotalMismatches(
     event: TableLazyLoadEvent
   ): Observable<TotalAnalyticScoresMismatchModelView> {
     return this.apiService
-      .post(`/ExamQuestionScore/TotalAnalyticScoresMismatch`, event)
+      .post(
+        `/ExamQuestionScoreTotal/GetExamScoreExamQuestionTotalMismatches`,
+        event
+      )
       .pipe(
         map((data: any) => data),
         catchError(error => throwError(error))
@@ -55,7 +74,10 @@ export class ExamQuestionScoreTotalsService {
   }
 
   getById(id: string): Observable<ApiResult<ExamQuestionScoreTotal>> {
-    return this.apiService
-      .get(`/ExamQuestionScoreTotal/GetById/${id}`);
+    return this.apiService.get(`/ExamQuestionScoreTotal/GetById/${id}`);
+  }
+
+  isBarcodeFree(barcode: string | undefined): Observable<ApiResult<boolean>> {
+    return this.apiService.get(`/ExamQuestionScoreTotal/IsBarcodeFree/${barcode}`);
   }
 }

@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import {
-  AnalyticScoresWithoutTotalModel,
   ExamQuestionScoreTotal,
 } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
@@ -11,7 +10,6 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   ColumnFilterDirective,
   GlobalToastService,
-  GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 import { ConfirmationService, SharedModule } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';

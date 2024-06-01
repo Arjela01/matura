@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
-import { AnalyticScoresWithoutTotalModel } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { ExamQuestionScoreTotalsService } from '@msh/evaluations/data-access-evaluations';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -9,6 +8,7 @@ import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { SharedModule } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
 import { AuthFacade } from '@msh/auth/data-access-auth';
+import { ExamQuestionScoreTotal } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({
@@ -27,7 +27,7 @@ import { AuthFacade } from '@msh/auth/data-access-auth';
 })
 export class AnalyticScoresWithoutTotalGridComponent {
   private analyticScoresWithoutTotalList$$ = new BehaviorSubject<
-    AnalyticScoresWithoutTotalModel[]
+    ExamQuestionScoreTotal[]
   >([]);
   analyticScoresWithoutTotalList$ =
     this.analyticScoresWithoutTotalList$$.asObservable();
@@ -55,7 +55,7 @@ export class AnalyticScoresWithoutTotalGridComponent {
     this.filters = Object.assign({}, $event);
 
     this.analyticScoresWithoutTotalService
-      .loadData($event)
+      .getExamQuestionTotalsWithoutExamScores($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.analyticScoresWithoutTotalList$$.next(response.data);

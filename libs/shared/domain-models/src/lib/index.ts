@@ -60,8 +60,6 @@ export * from './user-reset-password/user-reset-password.model';
 export * from './user/user.model';
 export * from './diploma-recognition/diploma-recognition';
 export * from './exam-question/exam-question.model';
-export * from './analytic-scores-without-total/analytic-scores-without-total.model';
-export * from './total-scores-without-analytic/total-scores-without-analytic.model';
 export * from './exam-question-score/exam-question.score';
 export * from './total-analytic-scores-mismatch/total-analytic-scores-mismatch.model';
 export * from './exam-grade-change/exam-grade-change.model';

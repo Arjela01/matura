@@ -169,6 +169,18 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       );
   }
 
+  checkBarcode() {
+    this.examQuestionScoreTotalsService
+      .isBarcodeFree(this.examQuestionScoreTotal.barcode)
+      .subscribe(response => {
+        if (!response.data) {
+          this.focusFirstInput();
+        } else {
+          this.toastService.showError('Barkodi është hedhur tashmë!');
+        }
+      });
+  }
+
   focusFirstInput() {
     setTimeout(() => {
       const firstRowInput = this.elementRef.nativeElement.querySelector(
