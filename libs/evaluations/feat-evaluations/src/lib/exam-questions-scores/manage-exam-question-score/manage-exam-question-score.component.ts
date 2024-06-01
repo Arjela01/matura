@@ -103,6 +103,8 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       this.examQuestionScoreTotalsService.getById(this.id)
         .subscribe(response => {
           this.examQuestionScoreTotal = response.data;
+          this.getExamSubjectDropdown(this.examQuestionScoreTotal);
+          this.getExamVariantDropdown(this.examQuestionScoreTotal);
           this.cd.markForCheck();
         })
     }
@@ -129,6 +131,8 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examSubjects = response.data;
+        this.cd.markForCheck();
+
       });
   }
 
@@ -138,6 +142,8 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examVariants = response.data;
+        this.cd.markForCheck();
+
       });
   }
 
