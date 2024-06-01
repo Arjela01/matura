@@ -1,13 +1,4 @@
 import { Route } from '@angular/router';
-import {
-  StudentListPublicationsGridComponent
-} from './student-list-publications/student-list-publications-grid/student-list-publications-grid.component';
-import {
-  CurrentStudentListPublicationsRecordsComponent
-} from './student-list-publications/current-student-list-publications-records/current-student-list-publications-records.component';
-import {
-  DiffStudentListPublicationsRecordsComponent
-} from './student-list-publications/diff-student-list-publications-records/diff-student-list-publications-records.component';
 
 export const EVALUATION_ROUTES: Route[] = [
   {

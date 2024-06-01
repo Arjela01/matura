@@ -44,4 +44,12 @@ export class StudentListPublicationService {
       `/StudentListPublication/GenerateNewPublication`
     );
   }
+
+  publish(id: any) {
+    return this.apiService.post(`/StudentListPublication/Publish/${id}`);
+  }
+
+  delete(id: any) {
+    return this.apiService.post(`/StudentListPublication/Delete/${id}`);
+  }
 }

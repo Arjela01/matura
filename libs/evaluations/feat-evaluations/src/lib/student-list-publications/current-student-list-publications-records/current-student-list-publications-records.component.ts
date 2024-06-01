@@ -17,7 +17,7 @@ import { SharedModule } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
-  selector: 'msh-exam-question-grid',
+  selector: 'msh-current-student-list-publications-records',
   standalone: true,
   imports: [
     CommonModule,

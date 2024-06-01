@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  ExamQuestionModel,
+  ExamQuestionModel, ExamSecret,
   StudentListPublication,
 } from '@msh/shared/domain-models';
 import {
@@ -16,13 +16,14 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
-import { SharedModule } from 'primeng/api';
+import { ConfirmationService, SharedModule } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { StudentListPublicationService } from '../../../../../data-access-evaluations/src/lib/student-list-publications/student-list-publication.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Router } from '@angular/router';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'msh-exam-question-grid',
@@ -35,10 +36,12 @@ import { Router } from '@angular/router';
     TooltipModule,
     ButtonModule,
     RippleModule,
+    ConfirmDialogModule,
   ],
   templateUrl: './student-list-publications-grid.component.html',
   styleUrls: ['./student-list-publications-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ConfirmationService]
 })
 @UntilDestroy()
 export class StudentListPublicationsGridComponent {
@@ -46,7 +49,8 @@ export class StudentListPublicationsGridComponent {
     public studentListPublicationService: StudentListPublicationService,
     private cd: ChangeDetectorRef,
     private router: Router,
-    private toastService: GlobalToastService
+    private toastService: GlobalToastService,
+    private readonly confirmationService: ConfirmationService
   ) {}
 
   records: StudentListPublication[] = [];
@@ -89,5 +93,29 @@ export class StudentListPublicationsGridComponent {
           this.toastService.showError('Ndodhi një gabim gjatë gjenerimit.');
         }
       });
+  }
+
+  publishItem(record: any) {
+    this.confirmationService.confirm({
+      message: 'Jeni i sigurt që doni të publikoni këto të dhëna?',
+      accept: () => {
+        this.studentListPublicationService.publish(record.id)
+          .subscribe((response) => {
+            this.loadRows(this.event);
+          });
+      },
+    });
+  }
+
+  deleteItem(record: any) {
+    this.confirmationService.confirm({
+      message: 'Jeni i sigurt që doni të fshini këtë publikim?',
+      accept: () => {
+        this.studentListPublicationService.delete(record.id)
+          .subscribe((response) => {
+            this.loadRows(this.event);
+          });
+      },
+    });
   }
 }

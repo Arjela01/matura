@@ -75,8 +75,33 @@
         {{ record.publishDate | date : 'dd/MM/yyyy' }}
       </td>
       <td style="width: 25%">
-        {{ record.questionMaximumScore }}
+        <button pButton *ngIf="!record.isPublished" (click)="publishItem(record)" class="p-button-link mr-2">Publiko</button>
+        <button pButton *ngIf="!record.isPublished" (click)="deleteItem(record)" class="p-button-link">Fshi</button>
       </td>
     </tr>
   </ng-template>
 </p-table>
+
+
+<p-confirmDialog
+  #cd
+  header="Konfirmo"
+  icon="pi pi-exclamation-triangle"
+  [style]="{ width: '450px' }">
+  <ng-template pTemplate="footer">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Jo"
+      class="p-button-text"
+      (click)="cd.reject()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Po"
+      class="p-button border"
+      (click)="cd.accept()"></button>
+  </ng-template>
+</p-confirmDialog>
