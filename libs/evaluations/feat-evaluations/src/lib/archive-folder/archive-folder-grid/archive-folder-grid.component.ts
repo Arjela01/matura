@@ -59,30 +59,26 @@ import { DropdownModule } from 'primeng/dropdown';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArchiveFolderGridComponent {
-  @Input() archiveFolders: ArchiveFolder[] = [];
-  statuses = statuses;
-
-  @Input() totalRecords = 0;
-  @Input() loading = false;
-
-  //Keep it local state because of Table Header checkbox not syncing
-  selectedArchiveFolders: ArchiveFolder[] = [];
-
-  @Output() gridEvent = new EventEmitter<
-    GridEvent<ArchiveFolder | ArchiveFolder[]>
-  >();
-
-  @Output() formSave = new EventEmitter<ArchiveFolder>();
-
-  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
-
   @ViewChild('form', { static: true }) form!: NgForm;
-
   @Input() set archiveFolderDetails(details: ArchiveFolder | null) {
     if (details) {
       this.archiveFolder = Object.assign({}, details);
     }
   }
+  @Input() archiveFolders: ArchiveFolder[] = [];
+  @Input() showEditButton = false;
+  @Input() totalRecords = 0;
+  @Input() loading = false;
+
+  @Output() gridEvent = new EventEmitter<
+    GridEvent<ArchiveFolder | ArchiveFolder[]>
+  >();
+  @Output() formSave = new EventEmitter<ArchiveFolder>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
+
+  //Keep it local state because of Table Header checkbox not syncing
+  selectedArchiveFolders: ArchiveFolder[] = [];
+  statuses = statuses;
 
   constructor(
     private readonly archiveFolderService: ArchiveFolderApiService,
@@ -136,20 +132,6 @@ export class ArchiveFolderGridComponent {
       action: GRID_ACTIONS.HISTORY,
       data: archiveFolder,
     } as GridEvent<Student>);
-  }
-
-  onRowSelect($event: TableRowSelectEvent) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.SELECT_ROW,
-      data: $event.data,
-    } as GridEvent<ArchiveFolder>);
-  }
-
-  onRowUnselect($event: TableRowUnSelectEvent) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.UNSELECT_ROW,
-      data: $event.data,
-    } as GridEvent<ArchiveFolder>);
   }
 
   loadRows($event: TableLazyLoadEvent) {

@@ -104,8 +104,7 @@ export class ManageExamScoresComponent implements OnInit {
   onNewClick() {
     this.displayModal = true;
     this.selectedExamScore = {
-      writingScore: 0,
-      multipleChoiceScore: 0,
+      totalScore: 0,
       isFall: this.currentAcademicYear?.isFall ?? false,
       archiveFolderNr: 0,
       archiveExamIndex: 0,
@@ -166,7 +165,7 @@ export class ManageExamScoresComponent implements OnInit {
     const updatedExamScore = {
       ...this.selectedExamScore,
       barcode: examScore.barcode,
-      writingScore: examScore.writingScore,
+      totalScore: examScore.totalScore,
       archiveFolderNr: examScore.archiveFolderNr,
       archiveExamIndex: examScore.archiveExamIndex,
     };
@@ -181,7 +180,7 @@ export class ManageExamScoresComponent implements OnInit {
     }
 
     examScore.barcode = '';
-    examScore.writingScore = '';
+    examScore.totalScore = '';
   }
 
   getExamScores($event: TableLazyLoadEvent) {

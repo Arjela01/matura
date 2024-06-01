@@ -8,7 +8,10 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ExamQuestionScoreModel } from '@msh/shared/domain-models';
+import {
+  ExamQuestionScore,
+  ExamQuestionScoreCreateUpdateModel,
+} from '@msh/shared/domain-models';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
@@ -37,67 +40,35 @@ enum ScoreActions {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamQuestionScoreGridComponent {
-  @ViewChild('scoreInput') scoreInputs!: ElementRef<HTMLInputElement>[];
   @Input() examQuestionScoreList: any[] = [];
   @Input() totalRecords = 0;
   @Input() totalScore = 0;
   @Input() examVariantMaximumScore = 0;
   @Input() examVariantId = '';
   @Input() loading = false;
-  @Output() writingScoreChange = new EventEmitter<any>();
-  @Output() deleteMultiple = new EventEmitter<any>();
-  @Output() calculate = new EventEmitter<any>();
-  @Output() gridEvent = new EventEmitter<
-    GridEvent<ExamQuestionScoreModel | ExamQuestionScoreModel[]>
+  @Output() saveScores = new EventEmitter<
+    ExamQuestionScoreCreateUpdateModel[]
   >();
-  inputScores: { [questionId: number]: number } = {};
-
-  onDeleteClick(examQuestionScore: any) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.DELETE,
-      data: examQuestionScore,
-    } as GridEvent<ExamQuestionScoreModel>);
-  }
-
-  updateInputScore(questionId: number, score: number) {
-    this.inputScores[questionId] = score;
-  }
+  @Output() calculate = new EventEmitter();
+  @Output() gridEvent = new EventEmitter<
+    GridEvent<ExamQuestionScore | ExamQuestionScore[]>
+  >();
 
   onExamScoreAddOrUpdate(action: ScoreActions): void {
-    const deletedIDs: number[] = [];
-
-    if (action === ScoreActions.CLEAN) {
-      this.examQuestionScoreList.forEach(rowData => {
-        if (rowData.examQuestionScores.length > 0) {
-          deletedIDs.push(rowData.examQuestion.id);
-        }
-      });
-    }
-
     if (action === ScoreActions.SAVE) {
-      const updatedScores: ExamQuestionScoreModel[] = [];
-      this.examQuestionScoreList.forEach(rowData => {
-        if (rowData) {
-          const examQuestionScore: ExamQuestionScoreModel = {
-            examQuestionID: rowData.examQuestion.id,
-            maximumScore: rowData.examQuestion.questionMaximumScore,
-            score:
-              rowData.examQuestionScores[0]?.examQuestionScore ||
-              this.inputScores[rowData.examQuestion.id],
-            examScoreID: rowData.examQuestionScores[0]?.examScoreID,
-          };
-          updatedScores.push(examQuestionScore);
-        }
+      const saveList = this.examQuestionScoreList.map(rowData => {
+        return {
+          examQuestionId: rowData.examQuestion.id,
+          score: rowData.examQuestionScore.score,
+        } as ExamQuestionScoreCreateUpdateModel;
       });
 
-      this.writingScoreChange.emit(updatedScores);
-    } else if (action === ScoreActions.CLEAN) {
-      this.deleteMultiple.emit(deletedIDs);
+      this.saveScores.emit(saveList);
     }
   }
 
-  onRowChange(examQuestionScore: any) {
-    this.calculate.emit(examQuestionScore);
+  onRowChange() {
+    this.calculate.emit();
   }
 
   limitToTwoDigits(event: any) {
@@ -111,7 +82,7 @@ export class ExamQuestionScoreGridComponent {
     const totalRows = this.examQuestionScoreList.length;
     if (rowIndex === totalRows) {
       const firstButton = document.querySelector(
-        'button[type="submit"]'
+        '.analytical-score-save-btn'
       ) as HTMLButtonElement | null;
 
       if (firstButton) {
@@ -120,12 +91,13 @@ export class ExamQuestionScoreGridComponent {
     } else {
       const nextRowIndex = rowIndex + 1;
       const nextInput = document.querySelector(
-        `tr:nth-child(${nextRowIndex}) input`
+        `.analytical-score-grid tr:nth-child(${nextRowIndex}) input`
       );
       if (nextInput) {
         (nextInput as HTMLInputElement).focus();
       }
     }
+    return false;
   }
 
   protected readonly ScoreActions = ScoreActions;

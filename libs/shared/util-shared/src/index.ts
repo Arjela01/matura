@@ -20,3 +20,4 @@ export * from './lib/builders/query-bulder';
 export * from './lib/builders/queries';
 export * from './lib/services/date-filters.service';
 export * from './lib/services/menu.service';
+export * from './lib/directives/uppercase.directive';

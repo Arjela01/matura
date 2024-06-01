@@ -78,6 +78,28 @@
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
+            <th pSortableColumn="formularType">
+              Formulari
+              <div>
+                <p-sortIcon field="formularType"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="formularType"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="genderType">
+              Gjinia
+              <div>
+                <p-sortIcon field="genderType"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="genderType"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
             <th pSortableColumn="examTypeName">
               Tipi
               <div>
@@ -100,6 +122,51 @@
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
+
+            <th pSortableColumn="administrationOfficeName">
+              ZVAP
+              <div>
+                <p-sortIcon field="administrationOfficeName"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="administrationOfficeName"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="examSiteName">
+              Qendra
+              <div>
+                <p-sortIcon field="examSiteName"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="examSiteName"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="highSchoolName">
+              Shkolla
+              <div>
+                <p-sortIcon field="highSchoolName"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="highSchoolName"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="archiveFolderNr">
+              Nr. Dosje
+              <div>
+                <p-sortIcon field="archiveFolderNr"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="archiveFolderNr"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
             <th pSortableColumn="barcode">
               Barkodi
               <div>
@@ -111,6 +178,30 @@
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
+            <th pSortableColumn="totalScore">
+              Pikët
+              <div>
+                <p-sortIcon field="totalScore"></p-sortIcon>
+                <p-columnFilter
+                  type="numeric"
+                  field="totalScore"
+                  display="menu"
+                  matchMode="equals"></p-columnFilter>
+              </div>
+            </th>
+
+            <th pSortableColumn="totalScore">
+              Nota e shkallëzuar
+              <div>
+                <p-sortIcon field="totalScore"></p-sortIcon>
+                <p-columnFilter
+                  type="numeric"
+                  field="totalScore"
+                  display="menu"
+                  matchMode="equals"></p-columnFilter>
+              </div>
+            </th>
+
             <th pSortableColumn="grade">
               Nota
               <div>
@@ -138,34 +229,58 @@
         </ng-template>
         <ng-template pTemplate="body" let-examGrade>
           <tr>
-            <td style="width: 10%">
+            <td style="width: 10%; min-width: 10rem">
               {{ examGrade.studentStudentId }}
             </td>
-            <td style="width: 10%">
+            <td style="width: 10%; min-width: 10rem">
               {{ examGrade.studentNid }}
             </td>
-            <td style="width: 10%">
+            <td style="width: 10%; min-width: 10rem">
               {{ examGrade.studentFirstName }}
             </td>
-            <td style="width: 10%">
+            <td style="width: 10%; min-width: 10rem">
               {{ examGrade.studentMiddleName }}
             </td>
-            <td style="width: 10%">
+            <td style="width: 10%; min-width: 10rem">
               {{ examGrade.studentLastName }}
             </td>
-            <td style="width: 10%">
+            <td style="width: 5%; min-width: 10rem">
+              {{ examGrade.formularType }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ examGrade.genderType }}
+            </td>
+            <td style="width: 5%; min-width: 10rem">
               {{ examGrade.examTypeName }}
             </td>
-            <td style="width: 10%">
+            <td style="width: 10%; min-width: 10rem">
               {{ examGrade.examSubjectName }}
             </td>
-            <td style="width: 10%">
+            <td style="width: 10%; min-width: 10rem">
+              {{ examGrade.adminsitrationOfficeName }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ examGrade.examSiteName }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ examGrade.highSchoolName }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ examGrade.folderNr }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
               {{ examGrade.barcode }}
             </td>
-            <td style="width: 10%">
+            <td style="width: 5%; min-width: 10rem">
+              {{ examGrade.totalScore }}
+            </td>
+            <td style="width: 5%; min-width: 10rem">
               {{ examGrade.grade }}
             </td>
-            <td style="width: 5%">
+            <td style="width: 5%; min-width: 10rem">
+              {{ examGrade.roundedGrade }}
+            </td>
+            <td style="width: 5%; min-width: 10rem">
               {{ examGrade.isFall ? 'Po' : 'Jo' }}
             </td>
             <td>

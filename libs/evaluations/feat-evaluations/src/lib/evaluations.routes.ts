@@ -250,32 +250,26 @@ export const EVALUATION_ROUTES: Route[] = [
       ).then(m => m.ManageExamQuestionsScoreComponent),
   },
   {
-    path: 'exam-question-score',
-    loadComponent: () =>
-      import(
-        './exam-questions-scores/manage-exam-question-score/manage-exam-question-score.component'
-      ).then(m => m.ManageExamQuestionsScoreComponent),
-  },
-  {
     path: 'total-analytic-scores-mismatch',
     loadComponent: () =>
       import(
         './total-analytic-score-mismatch/total-analytic-score-mismatch.component'
       ).then(m => m.TotalAnalyticScoreMismatchComponent),
   },
+
   {
-    path: 'analytic-score-edit/:examTypeId/:examSubjectId/:examVariantId/:testNumber/:barcode',
+    path: 'exam-question-score/:id',
     loadComponent: () =>
       import(
-        './edit-analytic-score/manage-analytic-score-edit/manage-analytic-score.component'
-      ).then(m => m.ManageAnalyticScoreComponent),
+        './exam-questions-scores/manage-exam-question-score/manage-exam-question-score.component'
+        ).then(m => m.ManageExamQuestionsScoreComponent),
   },
   {
-    path: 'analytic-scores-grid',
+    path: 'exam-question-score-totals',
     loadComponent: () =>
       import(
-        './analytic-scores-grid/analytic-scores-grid/analytic-scores-grid.component'
-      ).then(m => m.AnalyticScoresGridComponent),
+        './exam-question-score-totals/exam-question-score-total-grid/exam-question-score-total-grid.component'
+      ).then(m => m.ExamQuestionScoreTotalGridComponent),
   },
   {
     path: 'exam-secret-without-score',

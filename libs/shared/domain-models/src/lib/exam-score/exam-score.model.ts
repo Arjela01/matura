@@ -1,6 +1,7 @@
 export interface ExamScore {
   id: number;
   examSecretId?: string;
+  totalScore?: number;
   studentId?: string;
   studentStudentId?: string;
   studentFirstName?: string;
@@ -14,8 +15,6 @@ export interface ExamScore {
   academicYearId?: number;
   academicYear?: string;
   barcode?: string;
-  writingScore?: number;
-  multipleChoiceScore?: number;
   modificationReason?: string;
   documentName?: string;
   maximumValueMultipleScore?: number;

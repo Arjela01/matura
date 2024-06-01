@@ -17,7 +17,11 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ExamScore } from '@msh/shared/domain-models';
-import { BARCODE_REGEX, GlobalToastService } from '@msh/shared/util-shared';
+import {
+  BARCODE_REGEX,
+  GlobalToastService,
+  UpperCaseInputDirective,
+} from '@msh/shared/util-shared';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
@@ -41,6 +45,7 @@ import { TooltipModule } from 'primeng/tooltip';
     DropdownModule,
     AutoCompleteModule,
     TooltipModule,
+    UpperCaseInputDirective,
   ],
   templateUrl: './exam-scores-form.component.html',
   styleUrls: ['./exam-scores-form.component.scss'],
@@ -64,6 +69,7 @@ export class ExamScoresFormComponent implements OnChanges, OnDestroy {
   submitted = false;
   barcodePattern = BARCODE_REGEX;
   examScore: ExamScore = {
+    totalScore: 0,
     archiveExamIndex: 0,
     archiveFolderNr: 0,
     barcode: '',
@@ -71,9 +77,7 @@ export class ExamScoresFormComponent implements OnChanges, OnDestroy {
     examSecretId: '',
     id: 0,
     modificationReason: '',
-    multipleChoiceScore: 0,
     academicYearId: 1,
-    writingScore: 0,
     maximumValueMultipleScore: 0,
     maximumValueWritingScore: 0,
     isFall: false,

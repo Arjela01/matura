@@ -10,16 +10,19 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { SearchOptions } from '@msh/shared/domain-models';
+import { ExamQuestionScoreTotal } from '@msh/shared/domain-models';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { PaginatorModule } from 'primeng/paginator';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import { BARCODE_REGEX, GlobalToastService } from '@msh/shared/util-shared';
+import {
+  BARCODE_REGEX,
+  GlobalToastService,
+  UpperCaseInputDirective,
+} from '@msh/shared/util-shared';
 import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { exportComponentInEntryPoint } from '@nx/angular/src/generators/component/lib';
 
 @UntilDestroy()
 @Component({
@@ -33,6 +36,7 @@ import { exportComponentInEntryPoint } from '@nx/angular/src/generators/componen
     PaginatorModule,
     InputTextModule,
     TooltipModule,
+    UpperCaseInputDirective,
   ],
   templateUrl: './exam-question-score-filters.component.html',
   styleUrls: ['./exam-question-score-filters.component.scss'],
@@ -41,16 +45,16 @@ import { exportComponentInEntryPoint } from '@nx/angular/src/generators/componen
 export class ExamQuestionScoreFiltersComponent {
   @ViewChild('form', { static: true }) form!: NgForm;
 
-  @Input() examType: DropdownModel<number>[] = [];
-  @Input() examSubject: DropdownModel<string>[] = [];
-  @Input() examVariant: DropdownModel<string>[] = [];
+  @Input() examTypes: DropdownModel<number>[] = [];
+  @Input() examSubjects: DropdownModel<string>[] = [];
+  @Input() examVariants: DropdownModel<string>[] = [];
+  @Input() examQuestionScoreTotal: ExamQuestionScoreTotal = {};
 
-  @Output() formSave = new EventEmitter<SearchOptions>();
-  @Output() examSubjectChanged = new EventEmitter<SearchOptions>();
-  @Output() examTypeChanged = new EventEmitter<SearchOptions>();
-  @Output() examVariantChanged = new EventEmitter<SearchOptions>();
+  @Output() formSave = new EventEmitter<ExamQuestionScoreTotal>();
+  @Output() examSubjectChanged = new EventEmitter<ExamQuestionScoreTotal>();
+  @Output() examTypeChanged = new EventEmitter<ExamQuestionScoreTotal>();
+  @Output() examVariantChanged = new EventEmitter<ExamQuestionScoreTotal>();
 
-  examQuestionScoreList: SearchOptions = {} as SearchOptions;
   submitted = false;
   barcodePattern = BARCODE_REGEX;
 
@@ -60,24 +64,43 @@ export class ExamQuestionScoreFiltersComponent {
   ) {}
 
   onExamTypeChanged(): void {
-    if (this.examQuestionScoreList.examTypeId) {
-      this.examSubjectChanged.emit(
-        Object.assign({}, this.examQuestionScoreList)
-      );
+    if (this.examQuestionScoreTotal.examTypeId) {
+      this.examTypeChanged.emit(Object.assign({}, this.examQuestionScoreTotal));
     }
   }
 
   onExamSubjectChanged(): void {
-    if (this.examQuestionScoreList.examSubjectId) {
-      this.examVariantChanged.emit(
-        Object.assign({}, this.examQuestionScoreList)
+    if (this.examQuestionScoreTotal.examSubjectId) {
+      this.examSubjectChanged.emit(
+        Object.assign({}, this.examQuestionScoreTotal)
       );
     }
   }
 
+  onExamVariantChanged(): void {
+    if (this.examQuestionScoreTotal.examSubjectId) {
+      this.examVariantChanged.emit(
+        Object.assign({}, this.examQuestionScoreTotal)
+      );
+      this.focusOnTestNumber();
+    }
+  }
+
+  defaultOnSubmit($event: any) {
+    $event.preventDefault();
+    return false;
+  }
+
   onSubmit() {
-    if (this.isSearchValid(this.examQuestionScoreList)) {
-      this.formSave.emit(this.examQuestionScoreList);
+    if (
+      !(this.examQuestionScoreTotal.barcode ?? '').match(this.barcodePattern)
+    ) {
+      this.toastService.showError('Barkodi nuk është i formatit të duhur.');
+      return;
+    }
+
+    if (this.isSearchValid(this.examQuestionScoreTotal)) {
+      this.formSave.emit(this.examQuestionScoreTotal);
     } else {
       this.toastService.showInfo(
         'Ju lutem plotësoni të gjitha fushat e kërkuara.'
@@ -85,7 +108,7 @@ export class ExamQuestionScoreFiltersComponent {
     }
   }
 
-  isSearchValid(searchModal: SearchOptions) {
+  isSearchValid(searchModal: ExamQuestionScoreTotal) {
     return (
       searchModal.examVariantId &&
       searchModal.examTypeId &&
@@ -98,7 +121,10 @@ export class ExamQuestionScoreFiltersComponent {
   clearFields() {
     this.form.controls['testNumber'].setValue('');
     this.form.controls['barcode'].setValue('');
+    this.focusOnTestNumber();
+  }
 
+  focusOnTestNumber() {
     setTimeout(() => {
       const testNumberField =
         this.elementRef.nativeElement.querySelector('#testNumber');

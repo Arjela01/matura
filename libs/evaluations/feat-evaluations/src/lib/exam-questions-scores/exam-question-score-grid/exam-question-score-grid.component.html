@@ -1,82 +1,64 @@
 <div>
   <div>
-    <table>
+    <table class="analytical-score-grid">
       <thead>
-        <tr>
-          <th style="width: 15%">Numri</th>
-          <th style="width: 30%">Pikët</th>
-          <th style="width: 30%">Pikët Maksimale</th>
-          <th style="width: 5%" *ngIf="examVariantId">Fshi</th>
-        </tr>
+      <tr>
+        <th style="width: 15%">Numri</th>
+        <th style="width: 30%">Pikët</th>
+        <th style="width: 30%">Pikët Maksimale</th>
+        <th style="width: 5%" *ngIf="examVariantId">Fshi</th>
+      </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let rowData of examQuestionScoreList; let i = index">
-          <td>
-            {{ rowData.examQuestion.index }}{{ rowData.examQuestion.section }}
-          </td>
-          <td>
-            <ng-container>
-              <input
-                #scoreInput
-                type="number"
-                (keydown.enter)="focusNextRow(i + 1)"
-                pInputText
-                name="score"
-                tabindex="1"
-                [min]="0"
-                style="width: 50%"
-                [max]="rowData.examQuestion.questionMaximumScore"
-                [(ngModel)]="
-                  rowData.examQuestionScores[0] &&
-                  rowData.examQuestionScores[0].examQuestionScore
-                "
-                (ngModelChange)="
-                  onRowChange($event);
-                  updateInputScore(rowData.examQuestion.id, $event)
-                "
-                (input)="limitToTwoDigits($event)" />
-              <small
-                class="p-error block mt-3"
-                *ngIf="
-                  rowData.examQuestionScores[0]?.examQuestionScore >
+      <tr *ngFor="let rowData of examQuestionScoreList; let i = index">
+        <td>
+          {{ rowData.examQuestion.index }}{{ rowData.examQuestion.section }}
+        </td>
+        <td>
+          <ng-container>
+            <input
+              [tabIndex]="(i + 100)"
+              type="number"
+              (keydown.enter)="focusNextRow(i + 1)"
+              pInputText
+              name="score"
+              tabindex="1"
+              [min]="0"
+              style="width: 50%"
+              [max]="rowData.examQuestion.questionMaximumScore"
+              [(ngModel)]="rowData.examQuestionScore.score"
+              (ngModelChange)="onRowChange();"
+              (input)="limitToTwoDigits($event)" />
+            <small
+              class="p-error block mt-3"
+              *ngIf="
+                  rowData.examQuestionScore.score >
                   rowData.examQuestion.questionMaximumScore
                 ">
-                Pikët e marra nuk mund të kalojně pikët maksimale.
-              </small>
-            </ng-container>
-          </td>
-          <td>{{ rowData.examQuestion.questionMaximumScore }}</td>
-          <td *ngIf="examVariantId">
-            <button
-              pButton
-              icon="pi pi-trash"
-              class="p-button-danger p-button-text justify-content-center"
-              *ngIf="rowData.examQuestionScores[0]?.hasScore"
-              (click)="
-                onDeleteClick(
-                  rowData.examQuestionScores[0]?.examQuestionScoreID
-                )
-              "></button>
-          </td>
-        </tr>
+              Pikët e marra nuk mund të kalojně pikët maksimale.
+            </small>
+          </ng-container>
+        </td>
+        <td>{{ rowData.examQuestion.questionMaximumScore }}</td>
+      </tr>
       </tbody>
       <tfoot *ngIf="examQuestionScoreList.length">
-        <tr class="font-semibold">
-          <td colspan="1">Totali</td>
-          <td>
-            {{ totalScore }}
-            /
-            <strong
-              style="color: blue"
-              pTooltip="Pikët Maksimale të Variantit"
-              tooltipPosition="top"
-              placeholder="Top"
-              >{{ examVariantMaximumScore }}</strong
-            >
-          </td>
-          <td></td>
-          <td *ngIf="examVariantId"></td>
-        </tr>
+      <tr class="font-semibold">
+        <td colspan="1">Totali</td>
+        <td>
+          {{ totalScore }}
+          /
+          <strong
+            style="color: blue"
+            pTooltip="Pikët Maksimale të Variantit"
+            tooltipPosition="top"
+            placeholder="Top"
+          >{{ examVariantMaximumScore }}</strong
+          >
+        </td>
+        <td></td>
+        <td *ngIf="examVariantId"></td>
+      </tr>
       </tfoot>
     </table>
   </div>
@@ -86,16 +68,11 @@
     <div>
       <button
         pButton
-        type="submit"
-        label="Ruaj"
-        (keydown.enter)="onExamScoreAddOrUpdate(ScoreActions.SAVE)"
-        class="p-button p-button-link w-auto"></button>
-      <button
-        pButton
         type="button"
-        label="Pastro"
-        (click)="onExamScoreAddOrUpdate(ScoreActions.CLEAN)"
-        class="p-button-danger p-button-text w-auto mr-4"></button>
+        label="Ruaj"
+        [tabindex]="1000"
+        (click)="onExamScoreAddOrUpdate(ScoreActions.SAVE)"
+        class="analytical-score-save-btn p-button p-button-link w-auto"></button>
     </div>
   </div>
 </div>

@@ -17,7 +17,10 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { TooltipModule } from 'primeng/tooltip';
 import { ArchiveExam } from '@msh/shared/domain-models';
-import { BARCODE_REGEX } from '@msh/shared/util-shared';
+import {
+  BARCODE_REGEX,
+  UpperCaseInputDirective,
+} from '@msh/shared/util-shared';
 
 @Component({
   selector: 'msh-barcode-correction-form',
@@ -33,6 +36,7 @@ import { BARCODE_REGEX } from '@msh/shared/util-shared';
     CheckboxModule,
     DropdownModule,
     TooltipModule,
+    UpperCaseInputDirective,
   ],
   templateUrl: './barcode-correction-form.component.html',
   styleUrls: ['./barcode-correction-form.component.scss'],

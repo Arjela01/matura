@@ -1,25 +1,63 @@
+<div class="flex ml-2 mb-5 page-header mb-header">
+  <h2 class="flex-1 mb-0">
+    {{ !isEditMode ? 'Hidh Pikët Analitike' : 'Ndrysho Pikët Analitike' }}
+  </h2>
+
+  <button
+    type="button"
+    pButton
+    icon="pi pi-arrow-left"
+    label="Kthehu"
+    class="w-auto mr-2"
+    style="background: #f7f7fa; color: #155eef"
+    [routerLink]="'/evaluations/exam-question-score-totals'"></button>
+  <div class="flex align-items-right justify-content-right">
+    <button
+      *ngIf="isEditMode"
+      pButton
+      pRipple
+      label="Fshi Pikët Analtike"
+      icon="pi pi-trash"
+      class="p-button-danger"
+      (click)="deleteExamQuestionScoreTotal()"></button>
+  </div>
+</div>
+
 <div>
-  <h2 class="flex-1 mb-0">Hidh Pikët Analitike</h2>
-  <div class="mt-4">
-    <msh-exam-question-score-filters
-      (formSave)="getExamQuestionScoresList($event)"
-      (examSubjectChanged)="getExamSubjectDropdown($event)"
-      (examVariantChanged)="getExamVariantDropdown($event)"
-      [examVariant]="examVariant"
-      [examSubject]="examSubject"
-      [examType]="examType"></msh-exam-question-score-filters>
+  <h2 class="flex-1 mb-0"></h2>
+  <div class="{{ this.showForm ? '' : 'hidden' }}">
+    <div class="mt-4">
+      <msh-exam-question-score-filters
+        (formSave)="checkBarcode()"
+        (examTypeChanged)="getExamSubjectDropdown($event)"
+        (examSubjectChanged)="getExamVariantDropdown($event)"
+        (examVariantChanged)="getExamQuestionScoresList($event)"
+        [examVariants]="examVariants"
+        [examSubjects]="examSubjects"
+        [examTypes]="examTypes"
+        [examQuestionScoreTotal]="
+          examQuestionScoreTotal
+        "></msh-exam-question-score-filters>
+    </div>
+    <div class="mt-4">
+      <msh-exam-question-score-grid
+        [examVariantMaximumScore]="examVariantTotalScore"
+        [totalScore]="totalScore"
+        [examQuestionScoreList]="(examQuestionScoreList$ | async) || []"
+        [totalRecords]="totalRecords"
+        (saveScores)="saveExamScores($event)"
+        (calculate)="calculateTotalScore()">
+      </msh-exam-question-score-grid>
+    </div>
   </div>
-  <div class="mt-4">
-    <msh-exam-question-score-grid
-      [examVariantMaximumScore]="examVariantTotalScore"
-      [totalScore]="totalScore"
-      [examQuestionScoreList]="(examQuestionScoreList$ | async) || []"
-      [totalRecords]="totalRecords"
-      (writingScoreChange)="saveExamScore($event)"
-      (deleteMultiple)="deleteExamScore($event)"
-      (calculate)="calculateTotalScore()">
-    </msh-exam-question-score-grid>
-  </div>
+</div>
+
+<div class="{{ this.showForm ? 'hidden' : '' }}">
+  <p-messages severity="error">
+    <ng-template pTemplate>
+      <div class="ml-2">Pikët analitike nuk u gjetën!</div>
+    </ng-template>
+  </p-messages>
 </div>
 <p-confirmDialog
   #cd

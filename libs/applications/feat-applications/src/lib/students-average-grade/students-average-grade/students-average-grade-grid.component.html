@@ -1,5 +1,5 @@
 <div class="flex ml-2 mb-5 page-header mb-header">
-  <h2 class="flex-1 mb-0">Pikë Totale pa Pikë Analitike</h2>
+  <h2 class="flex-1 mb-0">Notat Mesatare</h2>
 </div>
 
 <p-table
@@ -15,47 +15,47 @@
   [showCurrentPageReport]="true"
   currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
   [rowHover]="true"
-  (onLazyLoad)="getExamScoresWithoutAnalyticScoresList($event)"
-  [value]="(totalScoresWithoutAnalyticList$ | async) || []"
+  (onLazyLoad)="getAverageGrades($event)"
+  [value]="(avgGradeList$ | async) || []"
   selectionMode="multiple"
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="examTypeName">
-        Tipi i Provimit
+      <th pSortableColumn="studentStudentId">
+        Matura ID
         <div>
-          <p-sortIcon field="examTypeName"></p-sortIcon>
+          <p-sortIcon field="studentStudentId"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="examTypeName"
+            field="studentStudentId"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="examSubjectName">
-        Lënda e Provimit
+      <th pSortableColumn="studentFirstName">
+        Emri
         <div>
-          <p-sortIcon field="examSubjectName"></p-sortIcon>
+          <p-sortIcon field="studentFirstName"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="examSubjectName"
+            field="studentFirstName"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="folderNumber">
-        Dosja
+      <th pSortableColumn="studentMiddleName">
+        Atësia
         <div>
-          <p-sortIcon field="folderNumber"></p-sortIcon>
+          <p-sortIcon field="studentMiddleName"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="folderNumber"
+            field="studentMiddleName"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="barcode">
-        Barkodi
+        Mbiemri
         <div>
           <p-sortIcon field="barcode"></p-sortIcon>
           <p-columnFilter
@@ -65,49 +65,63 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="indexNumber">
-        Indeksi
+      <th pSortableColumn="studentNid">
+        Nid
         <div>
-          <p-sortIcon field="indexNumber"></p-sortIcon>
+          <p-sortIcon field="studentNid"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="indexNumber"
+            field="studentNid"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="totalScore">
-        Pikët
+      <th pSortableColumn="averageGrade">
+        Nota mesatare
         <div>
-          <p-sortIcon field="totalScore"></p-sortIcon>
+          <p-sortIcon field="averageGrade"></p-sortIcon>
           <p-columnFilter
-            type="number"
-            field="totalScore"
+            type="text"
+            field="averageGrade"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="academicYearName">
+        Viti
+        <div>
+          <p-sortIcon field="academicYearName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="academicYearName"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-totalScoresWithoutAnalytic>
+  <ng-template pTemplate="body" let-student>
     <tr>
       <td style="width: 15%; min-width: 10rem">
-        {{ totalScoresWithoutAnalytic.examTypeName }}
+        {{ student.studentStudentId }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ totalScoresWithoutAnalytic.examSubjectName }}
+        {{ student.studentFirstName }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ totalScoresWithoutAnalytic.folderNumber }}
+        {{ student.studentMiddleName }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ totalScoresWithoutAnalytic.barcode }}
+        {{ student.studentLastName }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ totalScoresWithoutAnalytic.indexNumber }}
+        {{ student.studentNid }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ totalScoresWithoutAnalytic.totalScore }}
+        {{ student.averageGrade }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ student.academicYearName }}
       </td>
     </tr>
   </ng-template>
