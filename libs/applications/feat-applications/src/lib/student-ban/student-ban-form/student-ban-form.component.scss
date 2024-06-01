@@ -1,3 +1,7 @@
 :host {
   display: block;
 }
+
+:host ::ng-deep .p-inputgroup button {
+  border-radius: 0 !important;
+}

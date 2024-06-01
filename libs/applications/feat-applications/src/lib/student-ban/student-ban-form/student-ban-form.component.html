@@ -3,25 +3,28 @@
     <div class="card" style="border: 0">
       <form #form="ngForm">
         <div class="field mt-4 mb-4">
-          <label for="studentInputData">Maturantë *</label>
+          <label for="studentInputData">Maturanti</label>
           <div class="p-inputgroup">
             <input
               [value]="studentInputData"
-              [disabled]="!!studentBan.id"
               type="text"
               pInputText
               id="studentInputData"
               name="studentInputData"
               [(ngModel)]="studentInputData"
-              [required]="true"
               [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !studentInputData
               }" />
+
             <p-button
-              *ngIf="!studentBan.id"
+              styleClass="p-button-secondary"
+              icon="pi pi-times"
+              (click)="clearStudent()"
+              [style]="{ height: '100%' }"></p-button>
+            <p-button
               label="Kërko"
               icon="pi pi-search"
-              (click)="!studentBan.id ? onNewClick() : ''"
+              (click)="onNewClick()"
               [style]="{ height: '100%' }"></p-button>
           </div>
           <small class="p-error block" *ngIf="submitted && !studentInputData">
@@ -30,7 +33,30 @@
         </div>
 
         <div class="field">
-          <label for="barcode">Barkodi *</label>
+          <label for="ExamType">Tipi i Provimit</label>
+          <p-dropdown
+            id="ExamType"
+            [options]="examTypes"
+            optionValue="key"
+            optionLabel="value"
+            name="ExamTypeId"
+            [filter]="true"
+            [autoDisplayFirst]="false"
+            [(ngModel)]="studentBan.examTypeId"
+            [showClear]="true"
+            [ngClass]="{
+              'ng-invalid ng-dirty': submitted && !studentBan.examTypeId
+            }">
+          </p-dropdown>
+          <small
+            class="p-error block"
+            *ngIf="submitted && !studentBan.examTypeId">
+            Tipi i provimit është fushë e kërkuar.
+          </small>
+        </div>
+
+        <div class="field">
+          <label for="barcode">Barkodi</label>
           <input
             mshToUppercase
             type="text"
@@ -42,36 +68,11 @@
             name="barcode"
             [pattern]="barcodePattern"
             [(ngModel)]="studentBan.barcode"
-            required
             [ngClass]="{
               'ng-invalid ng-dirty': submitted && !studentBan.barcode
             }" />
           <small class="p-error block" *ngIf="submitted && !studentBan.barcode">
             Barkodi është fushë e kërkuar.
-          </small>
-        </div>
-
-        <div class="field">
-          <label for="ExamType">Tipi i Provimit *</label>
-          <p-dropdown
-            id="ExamType"
-            [options]="examTypes"
-            optionValue="key"
-            optionLabel="value"
-            name="ExamTypeId"
-            [filter]="true"
-            [autoDisplayFirst]="false"
-            [required]="true"
-            [(ngModel)]="studentBan.examTypeId"
-            [showClear]="true"
-            [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !studentBan.examTypeId
-            }">
-          </p-dropdown>
-          <small
-            class="p-error block"
-            *ngIf="submitted && !studentBan.examTypeId">
-            Tipi i provimit është fushë e kërkuar.
           </small>
         </div>
 

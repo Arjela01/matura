@@ -53,7 +53,6 @@ export class ManageStudentBanComponent implements OnInit {
 
   totalRecords = 0;
   selectedBannedStudent: StudentBan | null = null;
-  selectedBannedStudents: StudentBan[] = [];
   examTypes: DropdownModel<number>[] = [];
   displayModal = false;
 
@@ -91,27 +90,6 @@ export class ManageStudentBanComponent implements OnInit {
 
   onGridEvent(event: GridEvent<StudentBan | StudentBan[]>) {
     switch (event.action) {
-      case GRID_ACTIONS.SELECT_ROW:
-        this.selectedBannedStudents = [
-          ...this.selectedBannedStudents,
-          event.data as StudentBan,
-        ];
-        break;
-      case GRID_ACTIONS.UNSELECT_ROW:
-        this.selectedBannedStudents = this.selectedBannedStudents.filter(sb => {
-          sb.id !== (event.data as StudentBan).id;
-        });
-        break;
-
-      case GRID_ACTIONS.SELECT_MANY:
-        this.selectedBannedStudents = [
-          ...this.selectedBannedStudents,
-          ...(event.data as StudentBan[]),
-        ];
-        break;
-      case GRID_ACTIONS.UNSELECT_ALL:
-        this.selectedBannedStudents = [];
-        break;
       case GRID_ACTIONS.EDIT:
         this.selectedBannedStudent = Object.assign(
           {},
@@ -130,6 +108,7 @@ export class ManageStudentBanComponent implements OnInit {
         break;
     }
   }
+
   onFormSave(studentBan: StudentBan) {
     if (studentBan.id) {
       this.updateBannedStudent(studentBan);
@@ -177,14 +156,14 @@ export class ManageStudentBanComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Maturanti u ndryshua me sukses!');
+          this.toastService.showSuccess('Skualifikimi u ruajt me sukses!');
+          this.displayModal = false;
           this.getBannedStudents(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit të maturantit!'
+            'Ndodhi një problem gjatë ruajtjes së skualifikimit!'
           );
-        this.displayModal = false;
       });
   }
 
@@ -204,10 +183,24 @@ export class ManageStudentBanComponent implements OnInit {
           );
       });
   }
+
   getExamTypes() {
     this.examTypeService
       .loadDropdownList()
       .pipe(untilDestroyed(this))
       .subscribe(res => (this.examTypes = res.data));
+  }
+
+  clearSelectedStudent() {
+    this.selectedBannedStudent = {
+      ...this.selectedBannedStudent,
+      studentInputData: '',
+      studentStudentId: '',
+      studentFirstName: '',
+      studentLastName: '',
+      studentMiddleName: '',
+      studentId: ''
+    } as StudentBan;
+    this.cd.detectChanges();
   }
 }

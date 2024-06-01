@@ -39,6 +39,7 @@
       [examTypes]="examTypes"
       [bannedStudentsDetails]="selectedBannedStudent"
       (formClose)="onModalClose()"
+      (clearSelectedStudent)="clearSelectedStudent()"
       (formSave)="onFormSave($event)">
     </msh-student-ban-form>
   </ng-template>

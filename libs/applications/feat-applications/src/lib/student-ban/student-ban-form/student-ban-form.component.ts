@@ -20,6 +20,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+
 import {
   BARCODE_REGEX,
   GRID_ACTIONS,
@@ -85,6 +86,7 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
 
   @Output() formSave = new EventEmitter<StudentBan>();
   @Output() formClose = new EventEmitter<undefined>();
+  @Output() clearSelectedStudent = new EventEmitter<undefined>();
 
   @ViewChild('form', { static: true }) form!: NgForm;
   barcodePattern = BARCODE_REGEX;
@@ -113,6 +115,12 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
     this.formClose.emit();
   }
 
+  clearStudent() {
+    this.selectedStudent = null;
+    this.clearSelectedStudent.emit();
+    this.cd.detectChanges();
+  }
+
   onNewClick() {
     this.displayStudentModal = true;
     this.cd.markForCheck();
@@ -125,9 +133,14 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
   setStudent(student: any) {
     if (!student) {
       this.studentInputData = '';
+      this.studentBan.studentId = '';
     } else {
       this.studentBan.studentId = student.studentId;
-      this.studentInputData = `${this.studentBan?.studentStudentId}-${this.studentBan?.studentFirstName}-${student?.studentLastName}-${student?.studentLastName}`;
+      if (this.studentBan?.studentStudentId) {
+        this.studentInputData = `${this.studentBan?.studentStudentId}-${this.studentBan?.studentFirstName}-${student?.studentLastName}-${student?.studentLastName}`;
+      } else {
+        this.studentInputData = '';
+      }
     }
   }
 
@@ -136,8 +149,11 @@ export class StudentBanFormComponent implements OnInit, DoCheck {
       this.studentBan.studentInputData = ' ';
     } else {
       this.studentBan.studentId = student.id;
-      // eslint-disable-next-line max-len
-      this.studentInputData = `${student?.studentId}-${student?.firstName}-${student?.middleName}-${student?.lastName}`;
+      if (student?.studentId) {
+        this.studentInputData = `${student?.studentId}-${student?.firstName}-${student?.middleName}-${student?.lastName}`;
+      } else {
+        this.studentBan.studentInputData = '';
+      }
     }
   }
 
