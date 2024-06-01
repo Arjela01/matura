@@ -1,16 +1,24 @@
-<div class="flex center mt-2 ml-2 page-header mb-header align-items-top">
-  <h4 class="flex-1 mb-0">
+<div class="flex ml-2 mb-5 page-header mb-header">
+  <h2 class="flex-1 mb-0">
     {{ !isEditMode ? 'Hidh Pikët Analitike' : 'Ndrysho Pikët Analitike' }}
-  </h4>
+  </h2>
 
+  <button
+    type="button"
+    pButton
+    icon="pi pi-arrow-left"
+    label="Kthehu"
+    class="w-auto mr-2"
+    style="background: #f7f7fa; color: #155eef"
+    [routerLink]="'/evaluations/exam-question-score-totals'"></button>
   <div class="flex align-items-right justify-content-right">
     <button
       *ngIf="isEditMode"
       pButton
       pRipple
-      label="Shto"
-      icon="pi pi-plus"
-      class="p-button-success"
+      label="Fshi Pikët Analtike"
+      icon="pi pi-trash"
+      class="p-button-danger"
       (click)="deleteExamQuestionScoreTotal()"></button>
   </div>
 </div>

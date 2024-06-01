@@ -15,6 +15,7 @@ import {
   ExamQuestionScoreCreateUpdateMultipleCommand,
   ExamQuestionScoreTotal,
   ExamQuestionsScoreDataEntry,
+  ExamSecret,
 } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -34,8 +35,9 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ExamQuestionScoreFiltersComponent } from '../exam-question-score-filters/exam-question-score-filters.component';
 import { ExamQuestionScoreGridComponent } from '../exam-question-score-grid/exam-question-score-grid.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MessagesModule } from 'primeng/messages';
+import { RippleModule } from 'primeng/ripple';
 
 @UntilDestroy()
 @Component({
@@ -48,6 +50,8 @@ import { MessagesModule } from 'primeng/messages';
     ExamQuestionScoreFiltersComponent,
     ExamQuestionScoreGridComponent,
     MessagesModule,
+    RippleModule,
+    RouterLink,
   ],
   templateUrl: './manage-exam-question-score.component.html',
   styleUrls: ['./manage-exam-question-score.component.scss'],
@@ -79,6 +83,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
   examVariantTotalScore = 0;
 
   constructor(
+    private readonly confirmationService: ConfirmationService,
     private readonly examSubjectService: ExamSubjectApiService,
     private readonly examVariantService: ExamVariantApiService,
     private readonly examQuestionScoreService: ExamQuestionScoreService,
@@ -156,14 +161,11 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
   calculateTotalScore() {
     this.totalScore = this.examQuestionScoreList$$
       .getValue()
-      .reduce((acc, rowData: any) => {
-        return (
-          acc +
-          (rowData.examQuestionScores.length > 0
-            ? rowData.examQuestionScores[0].score
-            : 0)
-        );
-      }, 0) as any;
+      .reduce(
+        (acc: number, rowData: ExamQuestionsScoreDataEntry) =>
+          acc + (rowData.examQuestionScore.score ?? 0),
+        0
+      );
   }
 
   focusFirstInput() {
@@ -193,14 +195,14 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
         $event.examVariantId
       ),
     ]).subscribe(([examQuestionScores, examQuestions]) => {
-      console.log(examQuestionScores);
       const result = examQuestions.data.map(
         (examQuestion: ExamQuestionModel) => {
           this.examVariantTotalScore = examQuestion.examVariantMaximumScore;
-          const matchingScore = examQuestionScores.data.filter(
-            (examQuestionScore: ExamQuestionScore) =>
-              examQuestionScore.examQuestionId == examQuestion.id
-          );
+          const matchingScore =
+            examQuestionScores.data.find(
+              (examQuestionScore: ExamQuestionScore) =>
+                examQuestionScore.examQuestionId == examQuestion.id
+            ) ?? ({} as ExamQuestionScore);
           return {
             examQuestion: examQuestion,
             examQuestionScore: matchingScore,
@@ -213,24 +215,6 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
         }
       );
       this.examQuestionScoreList$$.next(result);
-      let scoreFound = false;
-      for (const item of result) {
-        for (const scoreObj of item.examQuestionScores) {
-          if (scoreObj.examQuestionScore) {
-            scoreFound = true;
-            break;
-          }
-        }
-        if (scoreFound) {
-          break;
-        }
-      }
-
-      if (scoreFound) {
-        this.toastService.showInfo(
-          'Për këtë barkod janë rregjistruar tashmë pikët'
-        );
-      }
       this.calculateTotalScore();
     });
   }
@@ -241,6 +225,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       examQuestionScoreCreateUpdateModels: examQuestionScores,
       testNumber: this.examQuestionScoreTotal.testNumber,
       barcode: this.examQuestionScoreTotal.barcode,
+      examQuestionScoreTotalId: this.examQuestionScoreTotal.id,
     } as ExamQuestionScoreCreateUpdateMultipleCommand;
     this.examQuestionScoreService
       .createOrUpdateMultiple(valuesToSend)
@@ -269,18 +254,27 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
   }
 
   deleteExamQuestionScoreTotal() {
-    this.examQuestionScoreTotalsService.delete(this.id).subscribe(response => {
-      if (response.isSuccessful) {
-        this.toastService.showInfo('Pikët analitike u fshinë me sukses!');
-        if (this.filters) this.getExamQuestionScoresList(this.filters);
-      } else {
-        this.toastService.showError(response.errorMessage);
-      }
-      if (response.isBadRequest) {
-        this.toastService.showError(
-          'Ndodhi një problem gjatë fshirjes së pikëve analitikee!'
-        );
-      }
+    this.confirmationService.confirm({
+      message: 'Jeni i sigurt që doni të fshini pikët analitike?',
+      accept: () => {
+        this.examQuestionScoreTotalsService
+          .delete(this.id)
+          .subscribe(response => {
+            if (response.isSuccessful) {
+              this.toastService.showSuccess(
+                'Pikët analitike u fshinë me sukses!'
+              );
+              if (this.filters) this.getExamQuestionScoresList(this.filters);
+            } else {
+              this.toastService.showError(response.errorMessage);
+            }
+            if (response.isBadRequest) {
+              this.toastService.showError(
+                'Ndodhi një problem gjatë fshirjes së pikëve analitikee!'
+              );
+            }
+          });
+      },
     });
   }
 }

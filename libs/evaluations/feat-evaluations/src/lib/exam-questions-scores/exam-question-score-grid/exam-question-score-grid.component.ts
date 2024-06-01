@@ -8,7 +8,10 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ExamQuestionScore, ExamQuestionScoreCreateUpdateModel } from '@msh/shared/domain-models';
+import {
+  ExamQuestionScore,
+  ExamQuestionScoreCreateUpdateModel,
+} from '@msh/shared/domain-models';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
@@ -37,23 +40,19 @@ enum ScoreActions {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamQuestionScoreGridComponent {
-  @ViewChild('scoreInput') scoreInputs!: ElementRef<HTMLInputElement>[];
   @Input() examQuestionScoreList: any[] = [];
   @Input() totalRecords = 0;
   @Input() totalScore = 0;
   @Input() examVariantMaximumScore = 0;
   @Input() examVariantId = '';
   @Input() loading = false;
-  @Output() saveScores = new EventEmitter<ExamQuestionScoreCreateUpdateModel[]>();
-  @Output() calculate = new EventEmitter<any>();
+  @Output() saveScores = new EventEmitter<
+    ExamQuestionScoreCreateUpdateModel[]
+  >();
+  @Output() calculate = new EventEmitter();
   @Output() gridEvent = new EventEmitter<
     GridEvent<ExamQuestionScore | ExamQuestionScore[]>
   >();
-  inputScores: { [questionId: number]: number } = {};
-
-  updateInputScore(questionId: number, score: number) {
-    this.inputScores[questionId] = score;
-  }
 
   onExamScoreAddOrUpdate(action: ScoreActions): void {
     if (action === ScoreActions.SAVE) {
@@ -68,8 +67,8 @@ export class ExamQuestionScoreGridComponent {
     }
   }
 
-  onRowChange(examQuestionScore: any) {
-    this.calculate.emit(examQuestionScore);
+  onRowChange() {
+    this.calculate.emit();
   }
 
   limitToTwoDigits(event: any) {
