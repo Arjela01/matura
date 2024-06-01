@@ -81,6 +81,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
   showForm = true;
   totalScore = 0;
   examVariantTotalScore = 0;
+  isSaving: boolean = false;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -220,6 +221,9 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
   }
 
   saveExamScores(examQuestionScores: ExamQuestionScoreCreateUpdateModel[]) {
+    if (this.isSaving) return;
+    this.isSaving = true;
+
     const valuesToSend = {
       examVariantId: this.examQuestionScoreTotal.examVariantId,
       examQuestionScoreCreateUpdateModels: examQuestionScores,
@@ -230,6 +234,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
     this.examQuestionScoreService
       .createOrUpdateMultiple(valuesToSend)
       .subscribe(response => {
+        this.isSaving = false;
         if (response.isSuccessful) {
           if (!this.isEditMode) {
             this.toastService.showSuccess(
