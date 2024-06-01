@@ -81,7 +81,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
   showForm = true;
   totalScore = 0;
   examVariantTotalScore = 0;
-  isSaving: boolean = false;
+  isSaving = false;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
