@@ -27,6 +27,7 @@ import { GradeScaleGridComponent } from '../grade-scale-grid/grade-scale-grid.co
 import { UploadGradeScaleFormComponent } from '../upload-grade-scale-form/upload-grade-scale-form.component';
 import { GradesScale } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { ClearGradeScaleFormComponent } from '../clear-grade-scale/clear-grade-scale-form.component';
 @Component({
   selector: 'msh-manage-grades-scale',
   standalone: true,
@@ -40,6 +41,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
     ToolbarModule,
     RippleModule,
     UploadGradeScaleFormComponent,
+    ClearGradeScaleFormComponent,
   ],
   templateUrl: './manage-grades-scale.component.html',
   styleUrls: ['./manage-grades-scale.component.scss'],
@@ -55,6 +57,7 @@ export class ManageGradesScaleComponent implements OnInit {
   examTypeDropdown: DropdownModel<number>[] = [];
   displayModal = false;
   submitted = false;
+  displayClearModal = false;
 
   constructor(
     private readonly gradesScaleApiService: GradesScaleService,
@@ -131,5 +134,12 @@ export class ManageGradesScaleComponent implements OnInit {
 
   openDialog() {
     this.displayModal = true;
+  }
+  onClearModalClose() {
+    this.displayClearModal = false;
+  }
+
+  openClearDialog() {
+    this.displayClearModal = true;
   }
 }

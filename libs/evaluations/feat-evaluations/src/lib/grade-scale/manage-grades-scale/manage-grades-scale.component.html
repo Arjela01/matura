@@ -6,6 +6,13 @@
         pButton
         pRipple
         icon="pi pi-upload"
+        class="p-button-danger ml-2"
+        label="Zbraz"
+        (click)="openClearDialog()"></button>
+      <button
+        pButton
+        pRipple
+        icon="pi pi-upload"
         class="p-button-primary ml-2"
         label="Ngarko"
         (click)="openDialog()"></button>
@@ -48,6 +55,25 @@
       (formClose)="onModalClose()"
       (formSave)="onFormSave()">
     </msh-upload-grade-scale-form>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  [(visible)]="displayClearModal"
+  [style]="{ width: '450px', height: '250px' }"
+  header="Zbraz Përshkallëzim"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid"
+  (onHide)="onModalClose()">
+  <ng-template pTemplate="content" style="height: 100%">
+    <msh-clear-grade-scale-form
+      class="h-full"
+      [examTypesDropdown]="examTypeDropdown"
+      (formClose)="onClearModalClose()"
+      (formSave)="onFormSave()">
+    </msh-clear-grade-scale-form>
   </ng-template>
 </p-dialog>
 
