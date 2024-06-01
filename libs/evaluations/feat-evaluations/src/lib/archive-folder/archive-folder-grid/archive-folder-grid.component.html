@@ -73,17 +73,6 @@
             display="menu"></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="createdByName">
-        Operatori
-        <div>
-          <p-sortIcon field="createdByName"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="createdByName"
-            display="menu"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
       <th class="text-center">Barcode</th>
       <th pSortableColumn="isClosed">
         Statusi
@@ -153,9 +142,6 @@
       </td>
       <td style="width: 5%; min-width: 10rem">
         {{ archiveFolder.isFall ? 'Po' : 'Jo' }}
-      </td>
-      <td style="width: 10%; min-width: 10rem">
-        {{ archiveFolder.createdByName }}
       </td>
       <td class="text-center" style="width: 10%">
         <a
