@@ -8,7 +8,6 @@ import {
 import { CommonModule } from '@angular/common';
 import {
   ExamQuestionModel,
-  ExamSecret,
   StudentListPublication,
 } from '@msh/shared/domain-models';
 import {
@@ -21,10 +20,10 @@ import { ConfirmationService, SharedModule } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
-import { StudentListPublicationService } from '../../../../../data-access-evaluations/src/lib/student-list-publications/student-list-publication.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Router } from '@angular/router';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { StudentListPublicationService } from '@msh/evaluations/data-access-evaluations';
 
 @Component({
   selector: 'msh-exam-question-grid',
