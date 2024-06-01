@@ -1,0 +1,37 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()" class="flex flex-column h-full">
+  <div class="field">
+    <label for="examSubjects">Tipi i Provimit </label>
+    <p-dropdown
+      id="examSubjects"
+      [options]="examTypesDropdown"
+      appendTo="body"
+      optionValue="key"
+      [filter]="true"
+      optionLabel="value"
+      name="examSubjectId"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="gradeScale.examTypeId"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !gradeScale.examTypeId
+      }">
+    </p-dropdown>
+    <small class="p-error block" *ngIf="submitted && !gradeScale.examTypeId">
+      Tipi është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="flex justify-content-end mt-4">
+    <button
+      type="button"
+      pButton
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      [disabled]="form.invalid"
+      type="submit"
+      pButton
+      label="Konfirmo"
+      class="p-button w-auto"></button>
+  </div>
+</form>
