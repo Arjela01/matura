@@ -13,12 +13,12 @@ import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { SharedModule } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { StudentListPublicationService } from '../../../../../data-access-evaluations/src/lib/student-list-publications/student-list-publication.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
+import { StudentListPublicationService } from '@msh/evaluations/data-access-evaluations';
 
 @Component({
-  selector: 'msh-exam-question-grid',
+  selector: 'msh-diff-student-list-publications-records',
   standalone: true,
   imports: [
     CommonModule,

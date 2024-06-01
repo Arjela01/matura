@@ -7,7 +7,8 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  ExamQuestionModel, ExamSecret,
+  ExamQuestionModel,
+  ExamSecret,
   StudentListPublication,
 } from '@msh/shared/domain-models';
 import {
@@ -41,7 +42,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
   templateUrl: './student-list-publications-grid.component.html',
   styleUrls: ['./student-list-publications-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ConfirmationService]
+  providers: [ConfirmationService],
 })
 @UntilDestroy()
 export class StudentListPublicationsGridComponent {
@@ -83,24 +84,30 @@ export class StudentListPublicationsGridComponent {
   }
 
   generateNewPublication() {
-    this.studentListPublicationService
-      .generateNewPublication()
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showSuccess('Procesi mbaroi me sukses!');
-          this.loadRows(this.event);
-        } else {
-          this.toastService.showError('Ndodhi një gabim gjatë gjenerimit.');
-        }
-      });
+    this.confirmationService.confirm({
+      message: 'Jeni i sigurt që doni të krijoni një publikim të ri?',
+      accept: () => {
+        this.studentListPublicationService
+          .generateNewPublication()
+          .subscribe(response => {
+            if (response.isSuccessful) {
+              this.toastService.showSuccess('Procesi mbaroi me sukses!');
+              this.loadRows(this.event);
+            } else {
+              this.toastService.showError('Ndodhi një gabim gjatë gjenerimit.');
+            }
+          });
+      },
+    });
   }
 
   publishItem(record: any) {
     this.confirmationService.confirm({
       message: 'Jeni i sigurt që doni të publikoni këto të dhëna?',
       accept: () => {
-        this.studentListPublicationService.publish(record.id)
-          .subscribe((response) => {
+        this.studentListPublicationService
+          .publish(record.id)
+          .subscribe(response => {
             this.loadRows(this.event);
           });
       },
@@ -111,11 +118,16 @@ export class StudentListPublicationsGridComponent {
     this.confirmationService.confirm({
       message: 'Jeni i sigurt që doni të fshini këtë publikim?',
       accept: () => {
-        this.studentListPublicationService.delete(record.id)
-          .subscribe((response) => {
+        this.studentListPublicationService
+          .delete(record.id)
+          .subscribe(response => {
             this.loadRows(this.event);
           });
       },
     });
+  }
+
+  gotoCurrentList() {
+    this.router.navigate(['/evaluations', 'student-list-publications', 'current']);
   }
 }
