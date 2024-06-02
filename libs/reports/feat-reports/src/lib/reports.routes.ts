@@ -30,10 +30,10 @@ export const REPORTS_ROUTES: Route[] = [
       ).then(m => m.ManageA1ReportViewComponent),
   },
   {
-    path: 'smip-data-view',
+    path: 'current-year-student-grades-data-view',
     loadComponent: () =>
       import(
-        './smip-data-view/smip-data-view.component'
-      ).then(m => m.SmipDataViewComponent),
+        './current-year-grades-data-view/current-year-grades-data-view.component'
+      ).then(m => m.CurrentYearGradesDataViewComponent),
   },
 ];
