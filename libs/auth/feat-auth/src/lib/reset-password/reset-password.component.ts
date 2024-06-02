@@ -22,6 +22,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { PasswordModule } from 'primeng/password';
 import { DividerModule } from 'primeng/divider';
+import { MessagesModule } from 'primeng/messages';
 
 @Component({
   selector: 'msh-reset-password',
@@ -39,6 +40,7 @@ import { DividerModule } from 'primeng/divider';
     MatchPasswordDirective,
     StrongPasswordDirective,
     DividerModule,
+    MessagesModule,
   ],
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss'],

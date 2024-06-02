@@ -16,7 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { RoleName } from '../../users/user-form/role-list';
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 @UntilDestroy()
 @Component({
@@ -54,7 +54,7 @@ export class ListOfStudentsFiltersComponent implements OnChanges {
     {
       this.authFacade.token$.pipe(untilDestroyed(this)).subscribe(token => {
         if (token) {
-          const decodedToken: any = jwt_decode(token);
+          const decodedToken: any = jwtDecode(token);
           this.userRole =
             decodedToken[
               'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
@@ -89,6 +89,7 @@ export class ListOfStudentsFiltersComponent implements OnChanges {
       this.examDateChanged.emit(Object.assign({}, this.studentList));
     }
   }
+
   onAdministrationOfficeChanged(): void {
     this.administrationOfficeChanged.emit(Object.assign({}, this.studentList));
   }
