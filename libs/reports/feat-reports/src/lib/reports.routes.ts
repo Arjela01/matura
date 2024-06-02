@@ -29,4 +29,11 @@ export const REPORTS_ROUTES: Route[] = [
         './a1-report-view/manage-a1-report-view/manage-a1-report-view.component'
       ).then(m => m.ManageA1ReportViewComponent),
   },
+  {
+    path: 'smip-data-view',
+    loadComponent: () =>
+      import(
+        './smip-data-view/smip-data-view.component'
+      ).then(m => m.SmipDataViewComponent),
+  },
 ];
