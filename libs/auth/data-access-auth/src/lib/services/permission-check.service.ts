@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { AuthFacade } from '../+state';
 import { PermissionEnum } from '../models/permission-enum';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 
 @UntilDestroy()
 @Injectable({
@@ -17,7 +17,7 @@ export class PermissionCheckService {
 
   private setupPermissionsSubscription() {
     this.authFacade.token$.pipe(untilDestroyed(this)).subscribe(token => {
-      const decodedToken: any = jwt_decode(token as string);
+      const decodedToken: any = jwtDecode(token as string);
       const permissions = decodedToken.Permissions;
 
       if (permissions) {

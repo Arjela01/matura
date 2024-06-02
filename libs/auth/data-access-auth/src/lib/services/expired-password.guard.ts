@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { StorageService } from '@msh/shared/data-access-shared';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 
 @Injectable({ providedIn: 'root' })
 export class ExpiredPasswordGuard {
@@ -9,7 +9,7 @@ export class ExpiredPasswordGuard {
   token: any = '';
   canActivate(): boolean {
     try {
-      this.token = jwt_decode(this.storageService.getItem('token'));
+      this.token = jwtDecode(this.storageService.getItem('token'));
     } catch (ex) {
       return true;
     }

@@ -18,6 +18,7 @@ import { environment } from '@msh/shared/environments';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { MessagesModule } from 'primeng/messages';
 
 @Component({
   selector: 'msh-external-login',
@@ -34,6 +35,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
     MessageModule,
     ProgressSpinnerModule,
     ProgressBarModule,
+    MessagesModule,
   ],
   templateUrl: './external-login.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

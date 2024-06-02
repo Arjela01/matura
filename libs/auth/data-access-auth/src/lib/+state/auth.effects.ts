@@ -8,7 +8,7 @@ import {
 import { StorageService } from '@msh/shared/data-access-shared';
 import { AcademicYear, roleKey } from '@msh/shared/domain-models';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 import { catchError, exhaustMap, map, of, switchMap, tap } from 'rxjs';
 import { USER_STORAGE_KEY, User } from '../models/user.model';
 import { AuthService } from '../services/auth.service';
@@ -33,7 +33,7 @@ export class AuthEffects {
           user?.displayName &&
           user?.permissions
         ) {
-          const tokenStore: any = jwt_decode(token as string);
+          const tokenStore: any = jwtDecode(token as string);
           if (!tokenStore.NeedResetPassword) {
             this.heartBeatService.startTime();
           }
@@ -116,7 +116,7 @@ export class AuthEffects {
   }
 
   commonLoginSuccess = (action: any) => {
-    const token: any = jwt_decode(action.loginResponse.token as string);
+    const token: any = jwtDecode(action.loginResponse.token as string);
     const user = {
       displayName: action.loginResponse.displayName,
       username: action.loginResponse.username,

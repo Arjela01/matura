@@ -16,6 +16,7 @@ import { MessageModule } from 'primeng/message';
 import { PasswordModule } from 'primeng/password';
 import { environment } from '@msh/shared/environments';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MessagesModule } from 'primeng/messages';
 
 @Component({
   selector: 'msh-user-login',
@@ -30,6 +31,7 @@ import { DomSanitizer } from '@angular/platform-browser';
     CheckboxModule,
     AvatarModule,
     MessageModule,
+    MessagesModule,
   ],
   templateUrl: './user-login.component.html',
   styleUrls: ['./user-login.component.scss'],
