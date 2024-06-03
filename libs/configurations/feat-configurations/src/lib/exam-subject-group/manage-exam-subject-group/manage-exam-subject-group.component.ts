@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
+  ExamSubjectApiService,
   ExamSubjectGroupApiService,
   ExamTypeApiService,
 } from '@msh/configurations/data-access-configurations';
@@ -52,13 +53,13 @@ export class ManageExamSubjectGroupComponent implements OnInit {
   selectedExamSubjectGroup: ExamSubjectGroup | null = null;
   displayModal = false;
 
-  examTypes: DropdownModel<number>[] = [];
+  examSubjects: DropdownModel<string>[] = [];
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examSubjectGroupService: ExamSubjectGroupApiService,
-    private readonly examTypesApiService: ExamTypeApiService,
+    private readonly examSubjectsService: ExamSubjectApiService,
     private authFacade: AuthFacade
   ) {}
 
@@ -189,8 +190,8 @@ export class ManageExamSubjectGroupComponent implements OnInit {
       });
   }
   getExamTypesDropdown() {
-    this.examTypesApiService.loadDropdownList().subscribe(response => {
-      this.examTypes = response.data;
+    this.examSubjectsService.loadDropdownList().subscribe(response => {
+      this.examSubjects = response.data;
     });
   }
 }

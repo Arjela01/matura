@@ -12,7 +12,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { CheckboxModule } from 'primeng/checkbox';
 import { RippleModule } from 'primeng/ripple';
-import { ExamSubjectGroup } from '@msh/shared/domain-models';
+import { ExamSubject, ExamSubjectGroup } from '@msh/shared/domain-models';
 import {
   ColumnFilterDirective,
   GRID_ACTIONS,
@@ -46,6 +46,8 @@ export class ExamSubjectGroupGridComponent {
     GridEvent<ExamSubjectGroup | ExamSubjectGroup[]>
   >();
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
+
+  selectedExamSubjectGroup: ExamSubjectGroup[] = [];
 
   onEditClick(examSubjectGroup: ExamSubjectGroup) {
     this.gridEvent.emit({

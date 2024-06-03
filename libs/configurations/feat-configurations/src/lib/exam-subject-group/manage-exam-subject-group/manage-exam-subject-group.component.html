@@ -1,5 +1,5 @@
 <div class="flex center mb-2 page-header mb-header">
-  <h2 class="flex-1 mb-0">Lëndë Provimi</h2>
+  <h2 class="flex-1 mb-0">Grup Lëndë Provimi</h2>
   <div class="flex align-items-right justify-content-right">
     <div class="my-2">
       <button
@@ -11,24 +11,16 @@
         (click)="onNewClick()"></button>
     </div>
   </div>
-  <div class="my-2">
-    <button
-      pRipple
-      icon="pi pi-download"
-      pButton
-      label="Shkarko Template"
-      (click)="downloadTemplateFile()"></button>
-  </div>
 </div>
 <div class="grid">
   <div class="col-12">
     <div class="card">
-      <msh-exam-subject-grid
-        [examSubjects]="(examSubjects$ | async) || []"
+      <msh-exam-subject-group-grid
+        [examSubjectGroup]="(examSubjectGroup$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getExamSubjects($event)">
-      </msh-exam-subject-grid>
+        (lazyLoadData)="getExamSubjectGroups($event)">
+      </msh-exam-subject-group-grid>
     </div>
   </div>
 </div>
@@ -43,12 +35,12 @@
   class="p-fluid"
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
-    <msh-exam-subject-form
-      [examSubjectDetails]="selectedExamSubject"
-      [examTypes]="examTypes"
+    <msh-exam-subject-group-form
+      [examSubjectGroupDetails]="selectedExamSubjectGroup"
+      [examSubjects]="examSubjects"
       (formClose)="onModalClose()"
       (formSave)="onFormSave($event)">
-    </msh-exam-subject-form>
+    </msh-exam-subject-group-form>
   </ng-template>
 </p-dialog>
 

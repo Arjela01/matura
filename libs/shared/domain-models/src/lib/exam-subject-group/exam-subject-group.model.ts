@@ -4,6 +4,8 @@ export interface ExamSubjectGroup {
   externalName: string;
   code: string;
   examTypeId?: number;
+  examSubjectIds?: string[];
+  examSubjectNames?: string[];
   examTypeName?: string;
   academicYearId?: number;
   academicYear?: string;

@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { ExamSubject } from '@msh/shared/domain-models';
+import { ExamSubjectGroup } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -17,6 +17,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @Component({
   selector: 'msh-exam-subject-group-form',
@@ -31,6 +32,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     ButtonModule,
     CheckboxModule,
     DropdownModule,
+    MultiSelectModule,
   ],
   templateUrl: './exam-subject-group-form.component.html',
   styleUrls: ['./exam-subject-group-form.component.scss'],
@@ -38,18 +40,18 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 })
 export class ExamSubjectGroupFormComponent {
   @ViewChild('form', { static: true }) form!: NgForm;
-  @Input() examTypes: DropdownModel<number>[] = [];
-  @Input() set examSubjectDetails(details: ExamSubject | null) {
+  @Input() examSubjects: DropdownModel<string>[] = [];
+  @Input() set examSubjectGroupDetails(details: ExamSubjectGroup | null) {
     if (details) {
-      this.examSubject = Object.assign({}, details);
+      this.examSubjectGroup = Object.assign({}, details);
     }
   }
 
-  @Output() formSave = new EventEmitter<ExamSubject>();
+  @Output() formSave = new EventEmitter<ExamSubjectGroup>();
   @Output() formClose = new EventEmitter<undefined>();
 
   submitted = false;
-  examSubject: ExamSubject = <ExamSubject>{};
+  examSubjectGroup: ExamSubjectGroup = <ExamSubjectGroup>{};
 
   onCancelClick() {
     this.formClose.emit();
@@ -58,7 +60,7 @@ export class ExamSubjectGroupFormComponent {
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
-      this.formSave.emit(this.examSubject);
+      this.formSave.emit(this.examSubjectGroup);
     }
   }
 }

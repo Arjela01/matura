@@ -4,7 +4,7 @@
   responsiveLayout="scroll"
   [scrollable]="true"
   scrollHeight="820px"
-  [value]="examSubjects"
+  [value]="examSubjectGroup"
   [totalRecords]="totalRecords"
   [rows]="100"
   [paginator]="true"
@@ -12,10 +12,8 @@
   [showCurrentPageReport]="true"
   currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
   [rowHover]="true"
-  [(selection)]="selectedExamSubjects"
+  [(selection)]="selectedExamSubjectGroup"
   selectionMode="multiple"
-  (onRowSelect)="onRowSelect($event)"
-  (onRowUnselect)="onRowUnselect($event)"
   (onLazyLoad)="loadRows($event)"
   [lazy]="true">
   <ng-template pTemplate="header">
