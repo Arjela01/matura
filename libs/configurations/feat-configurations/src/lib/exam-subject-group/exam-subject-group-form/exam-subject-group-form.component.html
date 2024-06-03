@@ -1,0 +1,125 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="Code">Kodi *</label>
+    <input
+      type="number"
+      pInputText
+      id="Code"
+      name="Code"
+      [(ngModel)]="examSubject.code"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examSubject.code }" />
+    <small class="p-error block" *ngIf="submitted && !examSubject.code">
+      Kodi është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="Name">Emri *</label>
+    <input
+      type="text"
+      pInputText
+      id="Name"
+      name="Name"
+      [(ngModel)]="examSubject.name"
+      required
+      autofocus
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !examSubject.name }" />
+    <small class="p-error block" *ngIf="submitted && !examSubject.name">
+      Emri është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="Name">Emri i Jashtëm *</label>
+    <input
+      type="text"
+      pInputText
+      id="ExternalName"
+      name="ExternalName"
+      [(ngModel)]="examSubject.externalName"
+      required
+      autofocus />
+  </div>
+  <div class="field">
+    <label for="ExamType">Tipi i provimit *</label>
+    <p-dropdown
+      id="ExamType"
+      [options]="examTypes"
+      optionValue="key"
+      optionLabel="value"
+      name="examTypeId"
+      appendTo="body"
+      [filter]="true"
+      [autoDisplayFirst]="false"
+      [(ngModel)]="examSubject.examTypeId"
+      (onChange)="findExamTypeValue()"
+      [showClear]="true"
+      [required]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examSubject.examTypeId
+      }">
+    </p-dropdown>
+    <small class="p-error block" *ngIf="submitted && !examSubject.examTypeId">
+      Tipi i provimit është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field" *ngIf="examSubject.examTypeId">
+    <label class="mb-3">Me Zgjedhje? *</label>
+    <div class="formgrid grid">
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="IsOptionalTrue"
+          name="IsOptional"
+          [value]="true"
+          [(ngModel)]="examSubject.isOptional"></p-radioButton>
+        <label for="IsOptionalTrue">Po</label>
+      </div>
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="IsOptionalFalse"
+          name="IsOptional"
+          [value]="false"
+          [(ngModel)]="examSubject.isOptional"></p-radioButton>
+        <label for="IsOptionalFalse">Jo</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="field" *ngIf="examSubject.examTypeId">
+    <label class="mb-3">Vlerësohet? *</label>
+    <div class="formgrid grid">
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="IsNotGradedTrue"
+          name="IsNotGraded"
+          [value]="false"
+          [(ngModel)]="examSubject.isNotGraded"></p-radioButton>
+        <label for="IsNotGradedTrue">Po</label>
+      </div>
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="IsNotGradedFalse"
+          name="IsNotGraded"
+          [value]="true"
+          [(ngModel)]="examSubject.isNotGraded"></p-radioButton>
+        <label for="IsNotGradedFalse">Jo</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      [disabled]="form.invalid"
+      type="submit"
+      pButton
+      label="Ruaj"
+      class="p-button w-auto"></button>
+  </div>
+</form>
