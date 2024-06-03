@@ -128,6 +128,22 @@ export class ManageGradesScaleComponent implements OnInit {
       });
   }
 
+  clearGradeScale($event: number) {
+    this.gradesScaleApiService
+      .clearGradeScaleForExamType($event)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess(
+            'Pëshkallëzimi për këtë tip provimi u fshi me sukses'
+          );
+          this.displayClearModal = false;
+        } else this.toastService.showError(response.errorMessage);
+        if (response.isBadRequest)
+          this.toastService.showError('Ndodhi një gabim');
+      });
+  }
+
   onModalClose() {
     this.displayModal = false;
   }

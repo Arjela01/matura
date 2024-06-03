@@ -37,7 +37,7 @@ import { GradesScale } from '@msh/shared/domain-models';
 })
 export class ClearGradeScaleFormComponent {
   @Input() examTypesDropdown: DropdownModel<number>[] = [];
-  @Output() formSave = new EventEmitter<GradesScale>();
+  @Output() formSave = new EventEmitter<number>();
   @Output() formClose = new EventEmitter<undefined>();
   @Output() upload = new EventEmitter<any>();
   @ViewChild('form', { static: true })
@@ -59,7 +59,7 @@ export class ClearGradeScaleFormComponent {
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
-      this.formSave.emit(this.gradeScale);
+      this.formSave.emit(this.gradeScale.examTypeId);
     }
   }
 }

@@ -72,7 +72,7 @@
       class="h-full"
       [examTypesDropdown]="examTypeDropdown"
       (formClose)="onClearModalClose()"
-      (formSave)="onFormSave()">
+      (formSave)="clearGradeScale($event)">
     </msh-clear-grade-scale-form>
   </ng-template>
 </p-dialog>
