@@ -69,24 +69,13 @@
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="writingScore">
-              Pikët me shtjellim
-              <div>
-                <p-sortIcon field="writingScore"></p-sortIcon>
-                <p-columnFilter
-                  type="numeric"
-                  field="writingScore"
-                  display="menu"
-                  mshColumnFilterDirective></p-columnFilter>
-              </div>
-            </th>
-            <th pSortableColumn="multipleChoiceScore">
+            <th pSortableColumn="totalScore">
               Pikët me aternativa
               <div>
-                <p-sortIcon field="multipleChoiceScore"></p-sortIcon>
+                <p-sortIcon field="totalScore"></p-sortIcon>
                 <p-columnFilter
                   type="numeric"
-                  field="multipleChoiceScore"
+                  field="totalScore"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
@@ -171,10 +160,7 @@
               {{ examScore.barcode }}
             </td>
             <td style="width: 5%; min-width: 10rem">
-              {{ examScore.writingScore }}
-            </td>
-            <td style="width: 5%; min-width: 10rem">
-              {{ examScore.multipleChoiceScore }}
+              {{ examScore.totalScore }}
             </td>
             <td
               style="width: 5%; min-width: 10rem; border-right: 1px solid #ddd">
