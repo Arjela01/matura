@@ -24,57 +24,57 @@
         [lazy]="true">
         <ng-template pTemplate="header">
           <tr>
-            <th pSortableColumn="firstName">
+            <th pSortableColumn="studentFirstName">
               Emri
               <div>
-                <p-sortIcon field="firstName"></p-sortIcon>
+                <p-sortIcon field="studentFirstName"></p-sortIcon>
                 <p-columnFilter
                   type="text"
-                  field="firstName"
+                  field="studentFirstName"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="middleName">
+            <th pSortableColumn="studentMiddleName">
               Atësia
               <div>
-                <p-sortIcon field="middleName"></p-sortIcon>
+                <p-sortIcon field="studentMiddleName"></p-sortIcon>
                 <p-columnFilter
                   type="text"
-                  field="middleName"
+                  field="studentMiddleName"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="lastName">
+            <th pSortableColumn="studentLastName">
               Mbiemri
               <div>
-                <p-sortIcon field="lastName"></p-sortIcon>
+                <p-sortIcon field="studentLastName"></p-sortIcon>
                 <p-columnFilter
                   type="text"
-                  field="lastName"
+                  field="studentLastName"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="studentId">
-              Id e Maturantit
+            <th pSortableColumn="studentIdentifier">
+              Matura Id
               <div>
-                <p-sortIcon field="studentId"></p-sortIcon>
+                <p-sortIcon field="studentIdentifier"></p-sortIcon>
                 <p-columnFilter
                   type="text"
-                  field="studentId"
+                  field="studentIdentifier"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="idCard">
+            <th pSortableColumn="studentNid">
               NID
               <div>
-                <p-sortIcon field="idCard"></p-sortIcon>
+                <p-sortIcon field="studentNid"></p-sortIcon>
                 <p-columnFilter
                   type="text"
-                  field="idCard"
+                  field="studentNid"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
@@ -90,24 +90,35 @@
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
+            <th pSortableColumn="administrationOfficeName">
+              Zvap
+              <div>
+                <p-sortIcon field="administrationOfficeName"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="administrationOfficeName"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-failingStudent>
           <tr>
             <td style="width: 15%; min-width: 10rem">
-              {{ failingStudent.firstName }}
+              {{ failingStudent.studentFirstName }}
             </td>
             <td style="width: 15%; min-width: 10rem">
-              {{ failingStudent.middleName }}
+              {{ failingStudent.studentMiddleName }}
             </td>
             <td style="width: 15%; min-width: 10rem">
-              {{ failingStudent.lastName }}
+              {{ failingStudent.studentLastName }}
             </td>
             <td style="width: 15%; min-width: 10rem">
-              {{ failingStudent.studentId }}
+              {{ failingStudent.studentIdentifier }}
             </td>
             <td style="width: 15%; min-width: 10rem">
-              {{ failingStudent.idCard }}
+              {{ failingStudent.studentNid }}
             </td>
             <td style="width: 15%; min-width: 10rem">
               {{ failingStudent.highSchoolName }}
