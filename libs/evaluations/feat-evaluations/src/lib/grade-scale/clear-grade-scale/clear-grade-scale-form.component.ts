@@ -15,7 +15,6 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { GradesScale } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-clear-grade-scale-form',
