@@ -19,6 +19,7 @@ import { BehaviorSubject, combineLatest, map, Observable, tap } from 'rxjs';
 import { GradeModalFormComponent } from '../grade-form/grade-form.component';
 import { GradesScale } from '@msh/shared/domain-models';
 import { TooltipModule } from 'primeng/tooltip';
+import { Ripple } from 'primeng/ripple';
 
 @Component({
   selector: 'msh-grade-scale-action',
@@ -37,6 +38,7 @@ import { TooltipModule } from 'primeng/tooltip';
     DialogModule,
     ConfirmDialogModule,
     GradeModalFormComponent,
+    Ripple,
   ],
   templateUrl: './grade-scale-action.component.html',
   styleUrls: ['./grade-scale-action.component.scss'],
@@ -162,6 +164,22 @@ export class GradeScaleActionComponent {
   onNewClick() {
     this.displayModal = true;
   }
+  clearGradeScaleForExamSubjectId() {
+    this.gradesScaleApiService
+      .clearGradeScaleForExamSubject(this.examSubjectId)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess(
+            'Pëshkallëzimi për këtë lëndë provimi u fshi me sukses'
+          );
+          this.initializeTable();
+        } else this.toastService.showError(response.errorMessage);
+        if (response.isBadRequest)
+          this.toastService.showError('Ndodhi një gabim');
+      });
+  }
+
   deleteGradeScale(gradeScale: GradesScale) {
     this.gradesScaleApiService
       .delete(gradeScale?.id)
@@ -186,6 +204,7 @@ export class GradeScaleActionComponent {
       )
     );
   }
+
   addGradeScales(gradesScale: GradesScale) {
     gradesScale.examSubjectId = this.examSubjectId;
     this.gradesScaleApiService
