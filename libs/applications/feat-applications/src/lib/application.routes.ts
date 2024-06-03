@@ -208,8 +208,8 @@ export const APPLICATION_ROUTES: Route[] = [
   {
     path: 'failing-students-list',
     loadComponent: () =>
-      import('./failing-students-list/failing-students-list.component').then(
-        m => m.FailingStudentsListComponent
-      ),
+      import(
+        './failingStudents/failing-students-list/failing-students-list.component'
+      ).then(m => m.FailingStudentsListComponent),
   },
 ];
