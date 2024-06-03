@@ -14,12 +14,21 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class FailingStudentApiService {
-  constructor(private http: HttpClient, private apiservice: APIService) {}
+  constructor(
+    private http: HttpClient,
+    private apiservice: APIService
+  ) {}
 
   loadFailingStudents(
     event: TableLazyLoadEvent
   ): Observable<FailingStudentTableView> {
     return this.apiservice.post('/FailingStudents/TableData', event);
+  }
+
+  loadFailingStudentsList(
+    event: TableLazyLoadEvent
+  ): Observable<FailingStudentTableView> {
+    return this.apiservice.post('/FailingStudents/TableList', event);
   }
 
   loadStudentsToFail(

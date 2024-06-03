@@ -1,0 +1,114 @@
+<div class="flex ml-2 mb-5 page-header mb-header">
+  <h2 class="flex-1 mb-0">Lista e Mbetësve</h2>
+</div>
+
+<p-table
+  #dt
+  dataKey="id"
+  responsiveLayout="scroll"
+  [scrollable]="true"
+  scrollHeight="820px"
+  [value]="(failingStudentsList$ | async) || []"
+  [totalRecords]="totalRecords"
+  [rows]="100"
+  [paginator]="true"
+  [rowsPerPageOptions]="[100, 200, 300]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
+  [rowHover]="true"
+  selectionMode="multiple"
+  (onLazyLoad)="getFailingStudentsList($event)"
+  [lazy]="true">
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="firstName">
+        Emri
+        <div>
+        <p-sortIcon field="firstName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="firstName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="middleName">
+        Atësia
+        <div>
+        <p-sortIcon field="middleName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="middleName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="lastName">
+        Mbiemri
+        <div>
+        <p-sortIcon field="lastName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="lastName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="studentId">
+        Id e Maturantit
+        <div>
+        <p-sortIcon field="studentId"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="studentId"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="idCard">
+        NID
+        <div>
+        <p-sortIcon field="idCard"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="idCard"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="highSchoolName">
+        Shkolla e Mesme
+        <div>
+        <p-sortIcon field="highSchoolName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="highSchoolName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-failingStudent>
+    <tr>
+      <td style="width: 15%; min-width: 10rem">
+        {{ failingStudent.firstName }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ failingStudent.middleName }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ failingStudent.lastName }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ failingStudent.studentId }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ failingStudent.idCard }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ failingStudent.highSchoolName }}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
