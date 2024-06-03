@@ -104,16 +104,16 @@
   </div>
 
   <div class="field">
-    <label for="WritingScore">Pikët Totale *</label>
+    <label for="TotalScore">Pikët Totale *</label>
     <input
       type="text"
       pInputText
-      id="WritingScore"
-      name="WritingScore"
+      id="TotalScore"
+      name="TotalScore"
       [(ngModel)]="examScore.totalScore"
       required
       autofocus
-      #writingScoreInput
+      #totalScoreInput
       [ngClass]="{
         'ng-invalid ng-dirty': submitted && !examScore.totalScore
       }" />

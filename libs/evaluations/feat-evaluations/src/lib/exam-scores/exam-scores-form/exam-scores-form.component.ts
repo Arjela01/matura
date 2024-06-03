@@ -64,8 +64,8 @@ export class ExamScoresFormComponent implements OnChanges, OnDestroy {
   @ViewChild('barcodeInputField', { static: false }) barcodeInputField:
     | ElementRef<HTMLInputElement>
     | undefined;
-  @ViewChild('writingScoreInput', { static: false })
-  writingScoreInput: ElementRef | undefined;
+  @ViewChild('totalScoreInput', { static: false })
+  totalScoreInput: ElementRef | undefined;
   submitted = false;
   barcodePattern = BARCODE_REGEX;
   examScore: ExamScore = {
@@ -143,9 +143,9 @@ export class ExamScoresFormComponent implements OnChanges, OnDestroy {
         this.examScore.archiveFolderNr = res.data?.archiveFolderNr;
         this.barcodeExists = true;
 
-        if (this.writingScoreInput && this.writingScoreInput.nativeElement) {
+        if (this.totalScoreInput && this.totalScoreInput.nativeElement) {
           this.renderer
-            .selectRootElement(this.writingScoreInput.nativeElement)
+            .selectRootElement(this.totalScoreInput.nativeElement)
             .focus();
         }
       } else {
