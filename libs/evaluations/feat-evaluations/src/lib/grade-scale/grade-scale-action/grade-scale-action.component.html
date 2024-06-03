@@ -14,6 +14,14 @@
         style="background: #f7f7fa; color: #155eef"
         (click)="onExitForm()"></button>
       <button
+        *ngIf="(gradeScales | async)?.length > 0"
+        pButton
+        pRipple
+        icon="pi pi-upload"
+        class="p-button-danger ml-2 mr-2"
+        label="Zbraz"
+        (click)="clearGradeScaleForExamSubjectId()"></button>
+      <button
         pButton
         pRipple
         label="Shto"

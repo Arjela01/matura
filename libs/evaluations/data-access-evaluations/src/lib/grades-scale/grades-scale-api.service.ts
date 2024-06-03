@@ -30,6 +30,22 @@ export class GradesScaleService {
     );
   }
 
+  clearGradeScaleForExamType(
+    examTypeId: number
+  ): Observable<ApiResult<GradesScale>> {
+    return this.apiService.post<ApiResult<GradesScale>, GradesScale>(
+      `/GradeScale/ClearTypePoints/${examTypeId}`
+    );
+  }
+
+  clearGradeScaleForExamSubject(
+    examSubjectId: string
+  ): Observable<ApiResult<GradesScale>> {
+    return this.apiService.post<ApiResult<GradesScale>, GradesScale>(
+      `/GradeScale/ClearSubjectsPoints/${examSubjectId}`
+    );
+  }
+
   getScale(id: string): Observable<ApiResult<GradesScale[]>> {
     return this.apiService.get(`/GradeScale/${id}`);
   }
