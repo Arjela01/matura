@@ -205,4 +205,11 @@ export const APPLICATION_ROUTES: Route[] = [
         './students-average-grade/students-average-grade/students-average-grade-grid.component'
       ).then(m => m.StudentsAverageGradeGridComponent),
   },
+  {
+    path: 'failing-students-list',
+    loadComponent: () =>
+      import('./failing-students-list/failing-students-list.component').then(
+        m => m.FailingStudentsListComponent
+      ),
+  },
 ];
