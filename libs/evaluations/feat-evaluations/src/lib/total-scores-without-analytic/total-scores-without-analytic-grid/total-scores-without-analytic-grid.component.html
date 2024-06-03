@@ -43,17 +43,6 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="folderNumber">
-        Dosja
-        <div>
-          <p-sortIcon field="folderNumber"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="folderNumber"
-            display="menu"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
       <th pSortableColumn="barcode">
         Barkodi
         <div>
@@ -65,13 +54,24 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="folderNr">
+        Dosja
+        <div>
+          <p-sortIcon field="folderNr"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="folderNr"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
       <th pSortableColumn="indexNumber">
         Indeksi
         <div>
-          <p-sortIcon field="indexNumber"></p-sortIcon>
+          <p-sortIcon field="index"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="indexNumber"
+            field="index"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
@@ -98,13 +98,14 @@
         {{ totalScoresWithoutAnalytic.examSubjectName }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ totalScoresWithoutAnalytic.folderNumber }}
-      </td>
-      <td style="width: 15%; min-width: 10rem">
         {{ totalScoresWithoutAnalytic.barcode }}
       </td>
+
       <td style="width: 15%; min-width: 10rem">
-        {{ totalScoresWithoutAnalytic.indexNumber }}
+        {{ totalScoresWithoutAnalytic.folderNr }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ totalScoresWithoutAnalytic.index }}
       </td>
       <td style="width: 15%; min-width: 10rem">
         {{ totalScoresWithoutAnalytic.totalScore }}
