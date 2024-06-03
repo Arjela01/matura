@@ -7,7 +7,7 @@ import {
   ExamTypeApiService,
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import { ExamSubjectGroup } from '@msh/shared/domain-models';
+import { ExamSubject, ExamSubjectGroup } from '@msh/shared/domain-models';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -125,14 +125,24 @@ export class ManageExamSubjectGroupComponent implements OnInit {
 
   getExamSubjectGroups($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
-
     this.examSubjectGroupService
       .loadExamSubjects($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.examSubjectGroup$$.next(response.data);
+        const flattenedData = this.flattenExamSubjectGroups(response.data);
+        this.examSubjectGroup$$.next(flattenedData);
         this.totalRecords = response.total;
       });
+  }
+
+  flattenExamSubjectGroups(groups: ExamSubjectGroup[]): any[] {
+    return groups.map(group => ({
+      id: group.id,
+      name: group.name,
+      examSubjects: group.examSubjects
+        ? group.examSubjects.map(subject => subject.name).join(', ')
+        : '',
+    }));
   }
 
   addExamSubjectGroup(examSubjectGroup: ExamSubjectGroup) {

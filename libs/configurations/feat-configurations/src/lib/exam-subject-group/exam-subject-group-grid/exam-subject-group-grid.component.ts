@@ -3,6 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -38,7 +39,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamSubjectGroupGridComponent {
-  @Input() examSubjectGroup: ExamSubjectGroup[] = [];
+  @Input() examSubjectGroup!: ExamSubjectGroup[];
   @Input() totalRecords = 0;
   @Input() loading = false;
 

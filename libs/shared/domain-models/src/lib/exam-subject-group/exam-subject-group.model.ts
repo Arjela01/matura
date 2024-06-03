@@ -1,17 +1,9 @@
+import { ExamSubject } from '../exam-subject/exam-subject.model';
+
 export interface ExamSubjectGroup {
   id: string;
   name: string;
-  externalName: string;
-  code: string;
-  examTypeId?: number;
-  examSubjectIds?: string[];
-  examSubjectNames?: string[];
-  examTypeName?: string;
-  academicYearId?: number;
-  academicYear?: string;
-  credits: number;
-  isOptional: boolean;
-  isNotGraded: boolean;
+  examSubjects?: ExamSubject[];
 }
 
 export interface ExamSubjectGroupView {

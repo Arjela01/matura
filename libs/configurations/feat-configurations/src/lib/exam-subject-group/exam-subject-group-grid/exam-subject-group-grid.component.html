@@ -18,17 +18,6 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="code">
-        Kodi
-        <div>
-          <p-sortIcon field="code"></p-sortIcon>
-          <p-columnFilter
-            type="numeric"
-            field="code"
-            display="menu"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
       <th pSortableColumn="name">
         Emri
         <div>
@@ -40,89 +29,27 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="externalName">
-        Emri i Jashtëm
+      <th pSortableColumn="examSubjects">
+        Lëndët e Provimit
         <div>
-          <p-sortIcon field="externalName"></p-sortIcon>
+          <p-sortIcon field="examSubjects"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="externalName"
+            field="examSubjects"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="examTypeName">
-        Tipi i provimit
-        <div>
-          <p-sortIcon field="examTypeName"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="examTypeName"
-            display="menu"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="academicYear">
-        Viti
-        <div>
-          <p-sortIcon field="academicYear"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="academicYear"
-            display="menu"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="isOptional">
-        Me Zgjedhje?
-        <div>
-          <p-sortIcon field="isOptional"></p-sortIcon>
-          <p-columnFilter
-            type="boolean"
-            field="isOptional"
-            matchMode="equals"
-            display="menu"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="isNotGraded">
-        Vlerësohet?
-        <div>
-          <p-sortIcon field="isNotGraded"></p-sortIcon>
-          <p-columnFilter
-            type="boolean"
-            field="isNotGraded"
-            matchMode="equals"
-            display="menu"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
-      <th></th>
       <th></th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-examSubject>
+  <ng-template pTemplate="body" let-examSubjectGroup>
     <tr>
-      <td style="width: 14%; min-width: 10rem">
-        {{ examSubject.code }}
+      <td style="width: 18%; min-width: 10rem">
+        {{ examSubjectGroup.name }}
       </td>
       <td style="width: 18%; min-width: 10rem">
-        {{ examSubject.name }}
-      </td>
-      <td style="width: 18%; min-width: 10rem">
-        {{ examSubject.externalName }}
-      </td>
-      <td style="width: 18%; min-width: 10rem">
-        {{ examSubject.examTypeName }}
-      </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ examSubject.academicYear }}
-      </td>
-      <td style="width: 10%; min-width: 10rem">
-        {{ examSubject.isOptional ? 'Po' : 'Jo' }}
-      </td>
-      <td style="width: 10%; min-width: 10rem">
-        {{ examSubject.isNotGraded ? 'Jo' : 'Po'  }}
+        {{ examSubjectGroup.examSubjects }}
       </td>
       <td style="width: 14%; min-width: 10rem">
         <div class="flex">
@@ -130,7 +57,7 @@
             src="assets/svg/edit-form.svg"
             class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
             tooltipPosition="bottom"
-            (click)="onEditClick(examSubject)"
+            (click)="onEditClick(examSubjectGroup)"
             pTooltip="Ndrysho" />
 
           <img
@@ -138,7 +65,7 @@
             class="p-button-rounded p-button-danger p-button-text ml-m pointer"
             pTooltip="Fshi"
             tooltipPosition="bottom"
-            (click)="onDeleteClick(examSubject)" />
+            (click)="onDeleteClick(examSubjectGroup)" />
         </div>
       </td>
     </tr>
