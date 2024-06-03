@@ -24,35 +24,35 @@
         [lazy]="true">
         <ng-template pTemplate="header">
           <tr>
-            <th pSortableColumn="studentFirstName">
+            <th pSortableColumn="firstName">
               Emri
               <div>
-                <p-sortIcon field="studentFirstName"></p-sortIcon>
+                <p-sortIcon field="firstName"></p-sortIcon>
                 <p-columnFilter
                   type="text"
-                  field="studentFirstName"
+                  field="firstName"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="studentMiddleName">
+            <th pSortableColumn="middleName">
               Atësia
               <div>
-                <p-sortIcon field="studentMiddleName"></p-sortIcon>
+                <p-sortIcon field="middleName"></p-sortIcon>
                 <p-columnFilter
                   type="text"
-                  field="studentMiddleName"
+                  field="middleName"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="studentLastName">
+            <th pSortableColumn="lastName">
               Mbiemri
               <div>
-                <p-sortIcon field="studentLastName"></p-sortIcon>
+                <p-sortIcon field="lastName"></p-sortIcon>
                 <p-columnFilter
                   type="text"
-                  field="studentLastName"
+                  field="lastName"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
@@ -68,24 +68,24 @@
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="studentNid">
+            <th pSortableColumn="personalIdentifier">
               NID
               <div>
-                <p-sortIcon field="studentNid"></p-sortIcon>
+                <p-sortIcon field="personalIdentifier"></p-sortIcon>
                 <p-columnFilter
                   type="text"
-                  field="studentNid"
+                  field="personalIdentifier"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="highSchoolName">
+            <th pSortableColumn="schoolName">
               Shkolla e Mesme
               <div>
-                <p-sortIcon field="highSchoolName"></p-sortIcon>
+                <p-sortIcon field="schoolName"></p-sortIcon>
                 <p-columnFilter
                   type="text"
-                  field="highSchoolName"
+                  field="schoolName"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
@@ -101,30 +101,44 @@
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
+            <th pSortableColumn="subjectName">
+              Lënda Ngelëse
+              <div>
+                <p-sortIcon field="subjectName"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="subjectName"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-failingStudent>
           <tr>
             <td style="width: 15%; min-width: 10rem">
-              {{ failingStudent.studentFirstName }}
+              {{ failingStudent.firstName }}
             </td>
             <td style="width: 15%; min-width: 10rem">
-              {{ failingStudent.studentMiddleName }}
+              {{ failingStudent.middleName }}
             </td>
             <td style="width: 15%; min-width: 10rem">
-              {{ failingStudent.studentLastName }}
+              {{ failingStudent.lastName }}
             </td>
             <td style="width: 15%; min-width: 10rem">
               {{ failingStudent.studentIdentifier }}
             </td>
             <td style="width: 15%; min-width: 10rem">
-              {{ failingStudent.studentNid }}
+              {{ failingStudent.personalIdentifier }}
             </td>
             <td style="width: 15%; min-width: 10rem">
-              {{ failingStudent.highSchoolName }}
+              {{ failingStudent.schoolName }}
             </td>
             <td style="width: 15%; min-width: 10rem">
               {{ failingStudent.administrationOfficeName }}
+            </td>
+            <td style="width: 15%; min-width: 10rem">
+              {{ failingStudent.subjectName }}
             </td>
           </tr>
         </ng-template>

@@ -25,12 +25,6 @@ export class FailingStudentApiService {
     return this.apiservice.post('/FailingStudents/TableData', event);
   }
 
-  loadFailingStudentsList(
-    event: TableLazyLoadEvent
-  ): Observable<FailingStudentTableView> {
-    return this.apiservice.post('/FailingStudents/TableList', event);
-  }
-
   loadStudentsToFail(
     event: TableLazyLoadEvent
   ): Observable<FailingStudentTableView> {

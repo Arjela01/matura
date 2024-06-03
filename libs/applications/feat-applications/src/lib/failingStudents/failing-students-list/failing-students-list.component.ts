@@ -59,7 +59,7 @@ export class FailingStudentsListComponent {
     this.filters = Object.assign({}, $event);
 
     this.failingStudentsService
-      .loadFailingStudentsList($event)
+      .loadFailingStudents($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.failingStudentsList$$.next(response.data);
