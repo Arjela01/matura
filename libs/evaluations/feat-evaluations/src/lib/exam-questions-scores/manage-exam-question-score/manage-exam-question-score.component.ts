@@ -198,6 +198,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
     inputs.forEach((input: HTMLInputElement) => {
       input.value = '';
     });
+    this.totalScore = 0;
   }
 
   getExamQuestionScoresList($event: ExamQuestionScoreTotal) {
