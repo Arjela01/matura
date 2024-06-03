@@ -16,7 +16,6 @@ import { RippleModule } from 'primeng/ripple';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { StudentBanGridComponent } from '../../../../../applications/feat-applications/src/lib/student-ban/student-ban-grid/student-ban-grid.component';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { CurrentYearStudentGradesApiService } from '@msh/reports/data-access-reports';
 
@@ -35,7 +34,6 @@ import { CurrentYearStudentGradesApiService } from '@msh/reports/data-access-rep
     InputTextModule,
     ReactiveFormsModule,
     FormsModule,
-    StudentBanGridComponent,
     InputGroupAddonModule,
   ],
   templateUrl: './current-year-grades-data-view.component.html',
