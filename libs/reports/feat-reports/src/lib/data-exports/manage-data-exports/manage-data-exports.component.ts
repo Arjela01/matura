@@ -54,6 +54,9 @@ export class ManageDataExportsComponent implements OnInit {
         this.dataExports = (response.data as DataExport[]).filter(
           x => x.isVisible
         );
+        this.dataExports.sort((a, b) => {
+          return a.displayOrder - b.displayOrder;
+        });
         this.cd.detectChanges();
       });
   }

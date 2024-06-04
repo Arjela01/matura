@@ -26,9 +26,9 @@
       name="Grade"
       [(ngModel)]="gradeScale.grade"
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !gradeScale.score }" />
+      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !gradeScale.grade }" />
   </div>
-  <small class="p-error block" *ngIf="submitted && !gradeScale.score">
+  <small class="p-error block" *ngIf="submitted && !gradeScale.grade">
     Nota është fushë e kërkuar.
   </small>
   <div class="flex justify-content-end">
