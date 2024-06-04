@@ -7,7 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BehaviorSubject, forkJoin } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import {
   ExamQuestionModel,
   ExamQuestionScore,
@@ -15,7 +15,6 @@ import {
   ExamQuestionScoreCreateUpdateMultipleCommand,
   ExamQuestionScoreTotal,
   ExamQuestionsScoreDataEntry,
-  ExamSecret,
 } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -195,7 +194,9 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       input.value = '';
     });
     this.totalScore = 0;
-    this.dataEntryItems = [];
+    for (const item of this.dataEntryItems ?? []) {
+      item.examQuestionScore = {};
+    }
   }
 
   getExamQuestionScoresList($event: ExamQuestionScoreTotal) {
