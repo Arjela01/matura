@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ExamSubjectApiService } from '@msh/configurations/data-access-configurations';
@@ -42,7 +42,6 @@ import { Ripple } from 'primeng/ripple';
   ],
   templateUrl: './grade-scale-action.component.html',
   styleUrls: ['./grade-scale-action.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
 @UntilDestroy()
@@ -62,7 +61,8 @@ export class GradeScaleActionComponent {
     private confirmationService: ConfirmationService,
     private toastService: GlobalToastService,
     private router: Router,
-    private examSubjectApiService: ExamSubjectApiService
+    private examSubjectApiService: ExamSubjectApiService,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -83,6 +83,7 @@ export class GradeScaleActionComponent {
         );
         this.gradeScales$.next(gradeScales);
         this.examSubject.next(examSubjectChoosen.value);
+        this.cd.detectChanges();
       });
   }
 
@@ -96,12 +97,6 @@ export class GradeScaleActionComponent {
   }
 
   onFormSave(gradeScale: GradesScale) {
-    if (!this.areScoresValid(gradeScale)) {
-      this.toastService.showError(
-        'Bazuar në të dhënat e mëparshme pikët dhe nota e vendosur ndodhen në një interval të gabuar'
-      );
-      return;
-    }
     if (gradeScale.id) {
       this.updateGradeScales(gradeScale);
     }
@@ -213,7 +208,14 @@ export class GradeScaleActionComponent {
       .subscribe({
         next: (response: any) => {
           if (response.isSuccessful) {
+            if (!this.areScoresValid(gradesScale)) {
+              this.toastService.showError(
+                'Bazuar në të dhënat e mëparshme pikët dhe nota e vendosur ndodhen në një interval të gabuar'
+              );
+              return;
+            }
             this.toastService.showSuccess('Përshkallëzimi u shtua me sukses!');
+            this.initializeTable();
             this.displayModal = false;
           } else {
             response.errorMessage
@@ -247,7 +249,14 @@ export class GradeScaleActionComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
+          if (!this.areScoresValid(gradesScale)) {
+            this.toastService.showError(
+              'Bazuar në të dhënat e mëparshme pikët dhe nota e vendosur ndodhen në një interval të gabuar'
+            );
+            return;
+          }
           this.toastService.showSuccess('Përshkallëzimi u ndryshua me sukses!');
+          this.initializeTable();
           this.displayModal = false;
         } else {
           this.toastService.showError(response.errorMessage);
