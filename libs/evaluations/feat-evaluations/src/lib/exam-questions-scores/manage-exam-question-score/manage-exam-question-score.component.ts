@@ -195,6 +195,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
       input.value = '';
     });
     this.totalScore = 0;
+    this.dataEntryItems = [];
   }
 
   getExamQuestionScoresList($event: ExamQuestionScoreTotal) {
