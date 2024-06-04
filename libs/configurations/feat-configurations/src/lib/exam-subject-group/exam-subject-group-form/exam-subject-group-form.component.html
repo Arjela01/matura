@@ -30,15 +30,15 @@
       name="ExamDate"
       appendTo="body"
       [virtualScrollItemSize]="43"
-      [(ngModel)]="examSubjectGroup.examSubjects"
+      [(ngModel)]="examSubjectGroup.examSubjectIds"
       [showClear]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examSubjectGroup.examSubjects,
+        'ng-invalid ng-dirty': submitted && !examSubjectGroup.examSubjectIds,
       }">
     </p-multiSelect>
     <small
       class="p-error block"
-      *ngIf="submitted && !examSubjectGroup.examSubjects">
+      *ngIf="submitted && !examSubjectGroup.examSubjectIds">
       Tipi i provimit është fushë e kërkuar.
     </small>
   </div>

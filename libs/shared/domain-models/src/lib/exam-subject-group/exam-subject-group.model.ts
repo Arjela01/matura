@@ -4,6 +4,7 @@ export interface ExamSubjectGroup {
   id: string;
   name: string;
   examSubjects?: ExamSubject[];
+  examSubjectIds?: string[];
 }
 
 export interface ExamSubjectGroupView {

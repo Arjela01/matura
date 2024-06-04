@@ -78,6 +78,7 @@ export class ManageExamSubjectGroupComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
+    this.selectedExamSubjectGroup = {} as ExamSubjectGroup;
   }
 
   onDeleteSelectedClick() {
@@ -96,12 +97,12 @@ export class ManageExamSubjectGroupComponent implements OnInit {
           {},
           event.data as ExamSubjectGroup
         );
+        console.log(123, this.selectedExamSubjectGroup);
         this.displayModal = true;
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
-          message:
-            'Jeni i sigurt që doni të fshini lëndën e provimit të zgjedhur?',
+          message: 'Jeni i sigurt që doni të fshini grupin e zgjedhur?',
           accept: () => {
             this.deleteExamSubjectGroup(event.data as ExamSubjectGroup);
           },
@@ -142,6 +143,9 @@ export class ManageExamSubjectGroupComponent implements OnInit {
       examSubjects: group.examSubjects
         ? group.examSubjects.map(subject => subject.name).join(', ')
         : '',
+      examSubjectIds: group.examSubjects
+        ? group.examSubjects.map(subject => subject.id)
+        : '',
     }));
   }
 
@@ -151,14 +155,16 @@ export class ManageExamSubjectGroupComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Lënda e provimit u shtua me sukses!');
+          this.toastService.showSuccess(
+            'Grupi i lëndëve të provimit u shtua me sukses!'
+          );
           this.displayModal = false;
           this.getExamSubjectGroups(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së lëndës së provimit të zgjedhur!'
+            'Ndodhi një problem gjatë ndryshimit të grupit të zgjedhur!'
           );
       });
   }
@@ -170,7 +176,7 @@ export class ManageExamSubjectGroupComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess(
-            'Lënda e provimit u ndryshua me sukses!'
+            'Grupi i lëndëve të u ndryshua me sukses!'
           );
           this.displayModal = false;
           this.getExamSubjectGroups(this.filters as TableLazyLoadEvent);
@@ -178,7 +184,7 @@ export class ManageExamSubjectGroupComponent implements OnInit {
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë ndryshimit së lëndës së provimit të zgjedhur!'
+            'Ndodhi një problem gjatë ndryshimit të grupit të zgjedhur!'
           );
       });
   }
@@ -189,13 +195,15 @@ export class ManageExamSubjectGroupComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showInfo('Lënda e provimit u fshi me sukses!');
+          this.toastService.showInfo(
+            'Grupi i lëndës së provimit u fshi me sukses!'
+          );
           this.getExamSubjectGroups(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
           this.toastService.showError(
-            'Ndodhi një problem gjatë fshirjes së lëndës së provimit!'
+            'Ndodhi një problem gjatë fshirjes së grupit!'
           );
       });
   }
