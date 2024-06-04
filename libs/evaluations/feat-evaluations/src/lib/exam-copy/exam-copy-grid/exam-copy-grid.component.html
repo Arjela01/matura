@@ -17,14 +17,13 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="firstName">
+      <th pSortableColumn="applicationId">
         Numri i Aplikimit
-
         <div>
-          <p-sortIcon field="firstName"></p-sortIcon>
+          <p-sortIcon field="applicationId"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="firstName"
+            field="applicationId"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
@@ -106,35 +105,39 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="archiveFolder">
+      <th pSortableColumn="nr">
         Dosja
         <div>
-          <p-sortIcon field="archiveFolder"></p-sortIcon>
+          <p-sortIcon field="nr"></p-sortIcon>
           <p-columnFilter
-                  type="text"
-                  field="archiveFolder"
-                  display="menu"
-                  mshColumnFilterDirective></p-columnFilter>
+            type="text"
+            field="nr"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
+      </th>
+
       <th pSortableColumn="barcode">
         Barkodi
         <div>
           <p-sortIcon field="barcode"></p-sortIcon>
           <p-columnFilter
-                  type="text"
-                  field="barcode"
-                  display="menu"
-                  mshColumnFilterDirective></p-columnFilter>
+            type="text"
+            field="barcode"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
-      <th pSortableColumn="barcode">
+      </th>
+
+      <th pSortableColumn="index">
         Indeksi
         <div>
           <p-sortIcon field="index"></p-sortIcon>
           <p-columnFilter
-                  type="text"
-                  field="index"
-                  display="menu"
-                  mshColumnFilterDirective></p-columnFilter>
+            type="text"
+            field="index"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="decisionDueDate">
@@ -144,8 +147,7 @@
           <p-columnFilter
             type="date"
             field="decisionDueDate"
-            display="menu"
-          ></p-columnFilter>
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="dateCreated">
@@ -201,7 +203,7 @@
         {{ examCopy.examTypeName }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ examCopy.archiveFolder }}
+        {{ examCopy.nr }}
       </td>
       <td style="width: 15%; min-width: 10rem">
         {{ examCopy.barcode }}
@@ -210,10 +212,10 @@
         {{ examCopy.index }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ examCopy.decisionDueDate | date : 'dd/MM/yyyy' }}
+        {{ examCopy.decisionDueDate | date: 'dd/MM/yyyy' }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ examCopy.dateCreated | date : 'dd/MM/yyyy' }}
+        {{ examCopy.dateCreated | date: 'dd/MM/yyyy' }}
       </td>
       <td style="width: 15%; min-width: 10rem">
         <span
@@ -222,8 +224,8 @@
             examCopy.status === ExamCopyRequestStatusEnum.Declined
               ? ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
               : examCopy.status === ExamCopyRequestStatusEnum.Accepted
-              ? ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
-              : ['bg-yellow-300', 'yellow-text', 'px-3', 'py-1', 'fb']
+                ? ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
+                : ['bg-yellow-300', 'yellow-text', 'px-3', 'py-1', 'fb']
           ">
           {{ examCopy.status | examCopyRequestStatus }}
         </span>
