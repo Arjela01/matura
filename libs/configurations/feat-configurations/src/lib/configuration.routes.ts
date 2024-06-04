@@ -247,4 +247,11 @@ export const CONFIGURATION_ROUTES: Route[] = [
         './list-of-students/manage-list-of-students/manage-list-of-students.component'
       ).then(m => m.ManageListOfStudentsComponent),
   },
+  {
+    path: 'exam-subject-group',
+    loadComponent: () =>
+      import(
+        './exam-subject-group/manage-exam-subject-group/manage-exam-subject-group.component'
+      ).then(m => m.ManageExamSubjectGroupComponent),
+  },
 ];

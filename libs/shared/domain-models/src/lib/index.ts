@@ -67,3 +67,4 @@ export * from './student-list-publications/student-list-publication.model';
 export * from './student-list-publications/student-list-publication-diff-record.model';
 export * from './student-list-publications/student-list-publication-current-record.model';
 export * from './analytic-scores-without-total/exam-question-score-total.model';
+export * from './exam-subject-group/exam-subject-group.model';

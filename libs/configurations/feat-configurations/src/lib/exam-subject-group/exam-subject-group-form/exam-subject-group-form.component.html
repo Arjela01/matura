@@ -1,0 +1,60 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="Name">Emri *</label>
+    <input
+      type="text"
+      pInputText
+      id="Name"
+      name="Name"
+      [(ngModel)]="examSubjectGroup.name"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examSubjectGroup.name,
+      }" />
+    <small class="p-error block" *ngIf="submitted && !examSubjectGroup.name">
+      Emri është fushë e kërkuar.
+    </small>
+  </div>
+  <div class="field">
+    <label for="examSubjectName">Lënda e provimit *</label>
+    <p-multiSelect
+      class="mt-4 mb-4"
+      id="examSubjectName"
+      display="chip"
+      [virtualScroll]="true"
+      defaultLabel="Zgjidh Lëndën"
+      [options]="examSubjects"
+      optionValue="key"
+      optionLabel="value"
+      name="ExamDate"
+      appendTo="body"
+      [virtualScrollItemSize]="43"
+      [(ngModel)]="examSubjectGroup.examSubjectIds"
+      [showClear]="true"
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !examSubjectGroup.examSubjectIds,
+      }">
+    </p-multiSelect>
+    <small
+      class="p-error block"
+      *ngIf="submitted && !examSubjectGroup.examSubjectIds">
+      Lënda e Provimit është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      [disabled]="form.invalid"
+      type="submit"
+      pButton
+      label="Ruaj"
+      class="p-button w-auto"></button>
+  </div>
+</form>
