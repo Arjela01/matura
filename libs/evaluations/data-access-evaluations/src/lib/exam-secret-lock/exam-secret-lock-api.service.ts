@@ -1,17 +1,8 @@
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
-import { TableLazyLoadEvent } from 'primeng/table';
+import { Observable } from 'rxjs';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
-import { HttpParams } from '@angular/common/http';
-import {
-  ExamScoreTableView,
-  ExamSecret,
-  ExamSecretLock,
-  ExamSecretLockView,
-  ExamSecretTableView,
-  FileImport,
-} from '@msh/shared/domain-models';
+import { ExamSecretLock, ExamSecretLockView } from '@msh/shared/domain-models';
 
 @Injectable({
   providedIn: 'root',
