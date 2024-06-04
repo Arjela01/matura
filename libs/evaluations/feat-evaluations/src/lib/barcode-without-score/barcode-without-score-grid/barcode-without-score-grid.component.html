@@ -76,17 +76,6 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="createdByName">
-        Operatori
-        <div>
-          <p-sortIcon field="createdByName"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="createdByName"
-            display="menu"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
       <th pSortableColumn="isFolderClosed">
         Statusi
         <div>
@@ -140,9 +129,6 @@
       </td>
       <td style="width: 20%; min-width: 10rem">
         {{ barcodeWithoutScoresList.barcode }}
-      </td>
-      <td style="width: 20%; min-width: 10rem">
-        {{ barcodeWithoutScoresList.createdByName }}
       </td>
       <td>
         <span
