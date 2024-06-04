@@ -57,18 +57,6 @@
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-
-            <th pSortableColumn="totalScoresBarcode">
-              Barkodi
-              <div>
-                <p-sortIcon field="totalScoresBarcode"></p-sortIcon>
-                <p-columnFilter
-                  type="text"
-                  field="totalScoresBarcode"
-                  display="menu"
-                  mshColumnFilterDirective></p-columnFilter>
-              </div>
-            </th>
             <th pSortableColumn="folderNumber">
               Dosja
               <div>
@@ -87,6 +75,18 @@
                 <p-columnFilter
                   type="text"
                   field="indexNumber"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+
+            <th pSortableColumn="totalScoresBarcode">
+              Barkodi
+              <div>
+                <p-sortIcon field="totalScoresBarcode"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="totalScoresBarcode"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
@@ -170,13 +170,13 @@
               {{ score.totalScoresExamSubjectName }}
             </td>
             <td style="width: 25%; min-width: 10rem">
-              {{ score.totalScoresBarcode }}
-            </td>
-            <td style="width: 25%; min-width: 10rem">
               {{ score.folderNumber }}
             </td>
             <td style="width: 25%; min-width: 10rem">
               {{ score.indexNumber }}
+            </td>
+            <td style="width: 25%; min-width: 10rem">
+              {{ score.totalScoresBarcode }}
             </td>
             <td
               style="
