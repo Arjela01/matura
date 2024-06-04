@@ -62,10 +62,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
   @ViewChild(ExamQuestionScoreFiltersComponent)
   scoreFilterComponent!: ExamQuestionScoreFiltersComponent;
 
-  private examQuestionScoreList$$ = new BehaviorSubject<
-    ExamQuestionsScoreDataEntry[]
-  >([]);
-  examQuestionScoreList$ = this.examQuestionScoreList$$.asObservable();
+  dataEntryItems: ExamQuestionsScoreDataEntry[] = [];
 
   examQuestionScoreTotal: ExamQuestionScoreTotal = {};
 
@@ -160,13 +157,12 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
   }
 
   calculateTotalScore() {
-    this.totalScore = this.examQuestionScoreList$$
-      .getValue()
-      .reduce(
-        (acc: number, rowData: ExamQuestionsScoreDataEntry) =>
-          acc + (rowData.examQuestionScore.score ?? 0),
-        0
-      );
+    this.totalScore = this.dataEntryItems.reduce(
+      (acc: number, rowData: ExamQuestionsScoreDataEntry) =>
+        acc + (rowData.examQuestionScore.score ?? 0),
+      0
+    );
+    this.cd.markForCheck();
   }
 
   checkBarcode() {
@@ -228,7 +224,7 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
           return a.examQuestion.index - b.examQuestion.index;
         }
       );
-      this.examQuestionScoreList$$.next(result);
+      this.dataEntryItems = result ?? [];
       this.calculateTotalScore();
     });
   }

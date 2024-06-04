@@ -43,7 +43,7 @@
       <msh-exam-question-score-grid
         [examVariantMaximumScore]="examVariantTotalScore"
         [totalScore]="totalScore"
-        [examQuestionScoreList]="(examQuestionScoreList$ | async) || []"
+        [examQuestionScoreList]="dataEntryItems || []"
         [totalRecords]="totalRecords"
         (saveScores)="saveExamScores($event)"
         (calculate)="calculateTotalScore()">
