@@ -34,7 +34,7 @@ export class ColumnFilterDirective {
       originalApplyFilter.call(filter);
     };
 
-    if (filter.type !== 'boolean') {
+    if (filter.type === 'text') {
       filter.matchMode = 'contains';
     }
   }

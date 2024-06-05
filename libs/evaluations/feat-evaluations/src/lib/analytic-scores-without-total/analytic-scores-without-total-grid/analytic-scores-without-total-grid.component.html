@@ -76,13 +76,13 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="analyticScore">
+      <th pSortableColumn="totalScore">
         Totali
         <div>
-          <p-sortIcon field="analyticScore"></p-sortIcon>
+          <p-sortIcon field="totalScore"></p-sortIcon>
           <p-columnFilter
-            type="number"
-            field="analyticScore"
+            type="numeric"
+            field="totalScore"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
@@ -107,7 +107,7 @@
         {{ analyticScoresWithoutTotal.barcode }}
       </td>
       <td style="width: 20%; min-width: 10rem">
-        {{ analyticScoresWithoutTotal.analyticScore }}
+        {{ analyticScoresWithoutTotal.totalScore }}
       </td>
     </tr>
   </ng-template>
