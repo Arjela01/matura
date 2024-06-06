@@ -127,7 +127,7 @@ export class GlobalSearchComponent {
   }
 
   wordSearch(searchWords: string[], targetWords: string[]): boolean {
-    searchWords = [...new Set(searchWords)].sort((a, b) => a.length - b.length);
+    searchWords = [...new Set(searchWords)].sort((a, b) => b.length - a.length);
     targetWords = [...new Set(targetWords)];
 
     for (const searchWord of searchWords) {
