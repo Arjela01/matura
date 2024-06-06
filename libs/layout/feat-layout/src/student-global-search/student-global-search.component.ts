@@ -21,8 +21,6 @@ export class StudentGlobalSearchComponent {
   searchBoxVisible = false;
   searchQuery: any;
   searchResults: any[] = [];
-  itemsToSearch: Student[] = [];
-  studentGuid = '';
 
   event: any = {
     first: 0,
@@ -36,17 +34,18 @@ export class StudentGlobalSearchComponent {
     private studentService: StudentsAuditService,
     private router: Router
   ) {
-    this.itemsToSearch = [];
   }
 
   performSearch() {
-    if(!this.searchQuery)
+    const searchTerm = this.searchQuery?.trim();
+
+    if(!searchTerm)
       return;
 
-    if(/^\d/.test(this.searchQuery)) {
-      this.event.filters = {"studentId":[{"value":this.searchQuery,"matchMode":"equals","operator":"and"}]};
+    if(/^\d/.test(searchTerm)) {
+      this.event.filters = {"studentId":[{"value":searchTerm,"matchMode":"equals","operator":"and"}]};
     } else {
-      this.event.filters = {"idCard":[{"value":this.searchQuery,"matchMode":"equals","operator":"and"}]};
+      this.event.filters = {"idCard":[{"value":searchTerm,"matchMode":"equals","operator":"and"}]};
     }
 
     this.studentService
@@ -58,7 +57,7 @@ export class StudentGlobalSearchComponent {
         })
       )
       .subscribe(response => {
-        this.itemsToSearch = response.data ?? [];
+        this.searchResults = response.data ?? [];
       });
   }
 
@@ -95,8 +94,15 @@ export class StudentGlobalSearchComponent {
   }
 
   onItemClick() {
-    this.router.navigate([`/applications/students/view/${this.studentGuid}`]);
-    this.searchBoxVisible = false;
-    this.searchQuery = '';
+    if(this.searchResults.length == 1) {
+      const student = this.searchResults[0];
+      if(student.registrationYear == new Date().getFullYear().toString()) {
+        this.router.navigate([`/applications/students/view/${student.id}`]);
+      } else {
+        this.router.navigate([`/audit-log/student-audit/student-view/${student.id}`]);
+      }
+      this.searchBoxVisible = false;
+      this.searchQuery = '';
+    }
   }
 }

@@ -11,6 +11,9 @@
         [inputStyleClass]="'w-full search-input'"
         [panelStyleClass]="'w-full'"
         [styleClass]="'w-full'">
+        <ng-template let-student pTemplate="item">
+          {{student.studentId}} - {{student.firstName}} {{student.middleName}} {{student.lastName}} - {{student.idCard}}
+        </ng-template>
       </p-autoComplete>
     </div>
   </div>
