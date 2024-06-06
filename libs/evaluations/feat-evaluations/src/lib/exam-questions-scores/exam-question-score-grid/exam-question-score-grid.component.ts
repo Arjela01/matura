@@ -86,6 +86,11 @@ export class ExamQuestionScoreGridComponent {
     }
   }
 
+  onInputBlur(event: any): void {
+    const input = event.target as HTMLInputElement;
+    input.classList.remove('ng-invalid');
+  }
+
   focusNextRow(rowIndex: number) {
     const totalRows = this.examQuestionScoreList.length;
     if (rowIndex === totalRows) {
