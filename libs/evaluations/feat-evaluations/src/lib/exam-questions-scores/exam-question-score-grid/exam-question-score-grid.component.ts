@@ -71,11 +71,24 @@ export class ExamQuestionScoreGridComponent {
     this.calculate.emit();
   }
 
-  limitToTwoDigits(event: any) {
+  limitToTwoDigits(rowIndex: number, event: any): void {
     const input = event.target as HTMLInputElement;
-    if (input.value && input.value.length > 2) {
-      input.value = input.value.slice(0, 2);
+    let value = input.value;
+    if (value.length > 2) {
+      value = value.slice(0, 2);
     }
+    input.value = value;
+    if (rowIndex >= 0 && rowIndex < this.examQuestionScoreList.length) {
+      this.examQuestionScoreList[rowIndex].examQuestionScore.score = value
+        ? parseInt(value, 10)
+        : null;
+      this.onRowChange();
+    }
+  }
+
+  onInputBlur(event: any): void {
+    const input = event.target as HTMLInputElement;
+    input.classList.remove('ng-invalid');
   }
 
   focusNextRow(rowIndex: number) {
