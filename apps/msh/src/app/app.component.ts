@@ -10,7 +10,10 @@ import { ToastModule } from 'primeng/toast';
 import { FilterMatchMode, PrimeNGConfig } from 'primeng/api';
 import { HttpClientModule } from '@angular/common/http';
 import { GlobalSpinnerComponent, LoaderService } from '@msh/shared/util-shared';
-import { GlobalSearchComponent } from '@msh/layout/feat-layout';
+import {
+  GlobalSearchComponent,
+  StudentGlobalSearchComponent,
+} from '@msh/layout/feat-layout';
 
 @Component({
   selector: 'msh-root',
@@ -18,6 +21,7 @@ import { GlobalSearchComponent } from '@msh/layout/feat-layout';
     <router-outlet></router-outlet>
     <p-toast></p-toast>
     <msh-global-search></msh-global-search>
+    <msh-student-global-search></msh-student-global-search>
   `,
   styles: [],
   standalone: true,
@@ -28,6 +32,7 @@ import { GlobalSearchComponent } from '@msh/layout/feat-layout';
     ToastModule,
     HttpClientModule,
     GlobalSearchComponent,
+    StudentGlobalSearchComponent,
   ],
 })
 export class AppComponent implements OnInit, AfterViewChecked {
