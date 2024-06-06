@@ -283,7 +283,7 @@
             <td style="width: 5%; min-width: 10rem">
               {{ examGrade.isFall ? 'Po' : 'Jo' }}
             </td>
-            <td>
+            <td *ngIf="userRole === RoleName.Admin">
               <img
                 src="assets/svg/edit-form.svg"
                 class="p-button-rounded p-button-warning p-button-text mr-2 pointer"

@@ -14,6 +14,8 @@ import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { ExamGrade } from '@msh/shared/domain-models';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
+import { RoleName } from '../../../../../configurations/feat-configurations/src/lib/users/user-form/role-list';
 
 @UntilDestroy()
 @Component({
@@ -38,6 +40,7 @@ export class ExamGradeGridComponent {
   examGrade$ = this.examGrade$$.asObservable();
   totalRecords = 0;
   filters: TableLazyLoadEvent | null = null;
+  userRole = '';
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     skip(1),
     map(([_]) => {
@@ -51,7 +54,19 @@ export class ExamGradeGridComponent {
     private readonly examGradeService: ExamGradeApiService,
     private authFacade: AuthFacade,
     private readonly router: Router
-  ) {}
+  ) {
+    {
+      this.authFacade.token$.pipe(untilDestroyed(this)).subscribe(token => {
+        if (token) {
+          const decodedToken: any = jwtDecode(token);
+          this.userRole =
+            decodedToken[
+              'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
+            ];
+        }
+      });
+    }
+  }
 
   getExamGrades($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
@@ -68,4 +83,6 @@ export class ExamGradeGridComponent {
   onEditClick(examGrade: ExamGrade) {
     this.router.navigate([`/evaluations/exam-grade-change/${examGrade.id}`]);
   }
+
+  protected readonly RoleName = RoleName;
 }
