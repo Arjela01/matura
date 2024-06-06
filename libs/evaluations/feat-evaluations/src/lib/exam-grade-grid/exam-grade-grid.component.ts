@@ -15,7 +15,7 @@ import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { ExamGrade } from '@msh/shared/domain-models';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
-import { RoleName } from '../../../../../configurations/feat-configurations/src/lib/users/user-form/role-list';
+import { RoleName } from '@msh/configurations/feat-configurations';
 
 @UntilDestroy()
 @Component({

@@ -22,7 +22,6 @@ import { BehaviorSubject, combineLatest, switchMap } from 'rxjs';
 import { ExamAssignment } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { UserProfileApiService } from '@msh/user-section/data-access-user-section';
-import { RoleName } from '../../users/user-form/role-list';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ExamDateGridComponent } from '../../exam-date/exam-date-grid/exam-date-grid.component';
 
