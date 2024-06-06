@@ -107,6 +107,7 @@ export class ArchiveFolderViewComponent implements OnInit {
       .subscribe(folder => (this.archiveFolder = { ...folder.data }));
     this.changeFolderStatus();
   }
+
   goBack(): void {
     this.location.back();
   }

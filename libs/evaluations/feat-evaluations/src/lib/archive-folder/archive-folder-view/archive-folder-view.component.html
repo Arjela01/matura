@@ -60,15 +60,17 @@
           [rowHover]="true"
           selectionMode="multiple"
           (onLazyLoad)="loadRows($event)"
-          [lazy]="true">
+          [lazy]="true"
+          [sortField]="'index'"
+          [sortOrder]="1">
           <ng-template pTemplate="header">
             <tr>
-              <th pSortableColumn="nr">
+              <th pSortableColumn="index">
                 Numri
-                <p-sortIcon field="nr"></p-sortIcon>
+                <p-sortIcon field="index"></p-sortIcon>
                 <p-columnFilter
                   type="numeric"
-                  field="nr"
+                  field="index"
                   display="menu"></p-columnFilter>
               </th>
               <th pSortableColumn="barcode">
