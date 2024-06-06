@@ -1,3 +1,7 @@
 :host {
   display: block;
 }
+
+.download-link:hover span {
+  text-decoration: underline !important;
+}
