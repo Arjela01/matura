@@ -5,7 +5,7 @@
         [(ngModel)]="searchQuery"
         [suggestions]="searchResults"
         (completeMethod)="performSearch()"
-        (onSelect)="onItemClick()"
+        (onSelect)="onItemClick($event)"
         [className]="'w-full'"
         [delay]="500"
         [inputStyleClass]="'w-full search-input'"

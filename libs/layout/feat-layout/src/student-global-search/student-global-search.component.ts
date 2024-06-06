@@ -7,7 +7,6 @@ import { SharedModule } from 'primeng/api';
 import { Router } from '@angular/router';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { StudentsAuditService } from '@msh/audit-logs/data-access-audit-log';
-import { Student } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({
@@ -24,7 +23,7 @@ export class StudentGlobalSearchComponent {
 
   event: any = {
     first: 0,
-    rows: 1,
+    rows: 10,
     sortOrder: 1,
     filters: {},
     globalFilter: null,
@@ -33,19 +32,23 @@ export class StudentGlobalSearchComponent {
   constructor(
     private studentService: StudentsAuditService,
     private router: Router
-  ) {
-  }
+  ) {}
 
   performSearch() {
     const searchTerm = this.searchQuery?.trim();
 
-    if(!searchTerm)
-      return;
+    if (!searchTerm) return;
 
-    if(/^\d/.test(searchTerm)) {
-      this.event.filters = {"studentId":[{"value":searchTerm,"matchMode":"equals","operator":"and"}]};
+    if (/^\d/.test(searchTerm)) {
+      this.event.filters = {
+        studentId: [
+          { value: searchTerm, matchMode: 'equals', operator: 'and' },
+        ],
+      };
     } else {
-      this.event.filters = {"idCard":[{"value":searchTerm,"matchMode":"equals","operator":"and"}]};
+      this.event.filters = {
+        idCard: [{ value: searchTerm, matchMode: 'equals', operator: 'and' }],
+      };
     }
 
     this.studentService
@@ -93,16 +96,18 @@ export class StudentGlobalSearchComponent {
     }
   }
 
-  onItemClick() {
-    if(this.searchResults.length == 1) {
-      const student = this.searchResults[0];
-      if(student.registrationYear == new Date().getFullYear().toString()) {
-        this.router.navigate([`/applications/students/view/${student.id}`]);
-      } else {
-        this.router.navigate([`/audit-log/student-audit/student-view/${student.id}`]);
-      }
-      this.searchBoxVisible = false;
-      this.searchQuery = '';
+  onItemClick($event: any) {
+    const student = this.searchResults.find(x => x.id === $event.value.id);
+    if (!student) return;
+
+    if (student.registrationYear == new Date().getFullYear().toString()) {
+      this.router.navigate([`/applications/students/view/${student.id}`]);
+    } else {
+      this.router.navigate([
+        `/audit-log/student-audit/student-view/${student.id}`,
+      ]);
     }
+    this.searchBoxVisible = false;
+    this.searchQuery = '';
   }
 }
