@@ -28,7 +28,7 @@
               [max]="rowData.examQuestion.questionMaximumScore"
               [(ngModel)]="rowData.examQuestionScore.score"
               (ngModelChange)="onRowChange();"
-              (input)="limitToTwoDigits($event)" />
+              (input)="limitToTwoDigits(i,$event)" />
             <small
               class="p-error block mt-3"
               *ngIf="
