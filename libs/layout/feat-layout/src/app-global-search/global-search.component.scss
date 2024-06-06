@@ -18,7 +18,7 @@
 .search-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   height: 80vh;
   border-radius: 5px;
   padding: 20px;
@@ -36,47 +36,9 @@
 }
 
 .search-results {
-  max-height: 200px;
-  background: rgba(255, 255, 255, 0);
-  overflow-y: auto;
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 10px;
+  padding: 5px;
 }
 
-.search-results ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.no-results-li {
-  background-color: rgba(255, 255, 255, 0.96);
-  border: 1px solid #ccc;
-  padding: 3px 10px;
-  margin-bottom: 5px;
-  margin-top: 5px;
-}
-
-.search-results li {
-  margin: 10px 0;
-  padding: 12px;
-  font-size: 16px;
-  cursor: pointer;
-}
-.search-results li:hover {
-  background-color: #eef2ff;
-}
-
-.search-icon {
-  position: absolute;
-  top: 40%;
-  right: 20px;
-  transform: translateY(-50%);
-  cursor: pointer;
-  color: #007bff;
-}
-.not-found {
-  font-weight: bold;
+:host ::ng-deep li.p-focus {
+background: #eeeeee !important;
 }

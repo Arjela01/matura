@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'primeng/api';
 import { Router } from '@angular/router';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { MenuNode } from '@msh/layout/domain-layout';
 
 @UntilDestroy()
 @Component({
@@ -13,23 +15,26 @@ import { Router } from '@angular/router';
   selector: 'msh-global-search',
   templateUrl: './global-search.component.html',
   styleUrls: ['./global-search.component.scss'],
-  imports: [CommonModule, FormsModule, SharedModule],
+  imports: [CommonModule, FormsModule, SharedModule, AutoCompleteModule],
 })
 export class GlobalSearchComponent {
-  @Input() searchBoxVisible = false;
+  searchBoxVisible = false;
   searchQuery: any;
   searchResults: string[] = [];
-  itemsToSearch: string[] = [];
+  itemsToSearch: MenuNode[] = [];
 
   event: any = {
     first: 0,
-    rows: 100,
+    rows: 1000,
     sortOrder: 1,
     filters: {},
     globalFilter: null,
   };
 
-  constructor(private menuService: MenuApiService, private router: Router) {
+  constructor(
+    private menuService: MenuApiService,
+    private router: Router
+  ) {
     this.itemsToSearch = [];
   }
 
@@ -43,7 +48,11 @@ export class GlobalSearchComponent {
         })
       )
       .subscribe(response => {
-        this.itemsToSearch = response.data;
+        this.itemsToSearch = response.data ?? [];
+        for (const item of this.itemsToSearch) {
+          item.children =
+            this.itemsToSearch.filter(x => x.parentId === item.id) ?? [];
+        }
         this.performSearch();
       });
   }
@@ -54,14 +63,20 @@ export class GlobalSearchComponent {
       window.location.pathname === '/identity' ||
       window.location.pathname === '/user-login';
 
+    if (event.key === 'Escape') {
+      if (this.searchBoxVisible) {
+        this.searchBoxVisible = false;
+      }
+    }
+
     if (event.ctrlKey && event.shiftKey && event.key === 'F' && !isLoginPage) {
       if (!this.searchBoxVisible) {
-        this.searchBoxVisible = true;
         this.fetchMenuItems();
+        this.searchBoxVisible = true;
 
         setTimeout(() => {
-          const searchInput = document.getElementById(
-            'searchInput'
+          const searchInput = document.querySelector(
+            '.search-input-container input'
           ) as HTMLInputElement;
           if (searchInput) {
             searchInput.focus();
@@ -75,9 +90,9 @@ export class GlobalSearchComponent {
     }
   }
 
-  onItemClick(itemText: string) {
+  onItemClick($event: any) {
     const selectedItem: any = this.itemsToSearch.find(
-      (item: any) => item.text.toLowerCase() === itemText.toLowerCase()
+      (item: any) => item.text === $event.value
     );
 
     if (selectedItem && selectedItem.url) {
@@ -87,6 +102,34 @@ export class GlobalSearchComponent {
       this.searchQuery = '';
     }
     this.searchBoxVisible = false;
+    this.searchQuery = '';
+  }
+
+  makeWordSearchable(word: string) {
+    return word.toLowerCase().replace(/ç/g, 'c').replace(/ë/g, 'e');
+  }
+
+  getWords(sentence: string) {
+    return sentence
+      .split(' ')
+      .filter(w => w != null && w.length > 0)
+      .map(w => this.makeWordSearchable(w));
+  }
+
+  wordSearch(searchWords: string[], targetWords: string[]): boolean {
+    searchWords = [...new Set(searchWords)];
+    targetWords = [...new Set(targetWords)];
+
+    for (const searchWord of searchWords) {
+      const matchedWords = targetWords.filter(w => w.startsWith(searchWord));
+      if (matchedWords.length === 0) return false;
+
+      for (const matchedWord of matchedWords) {
+        targetWords = targetWords.filter(w => w !== matchedWord);
+      }
+    }
+
+    return true;
   }
 
   performSearch() {
@@ -94,16 +137,23 @@ export class GlobalSearchComponent {
       this.itemsToSearch !== undefined &&
       typeof this.searchQuery === 'string'
     ) {
-      this.searchResults = this.itemsToSearch
-        .filter((item: any) => {
-          if (typeof item === 'object' && item.text) {
-            return item.text
-              .toLowerCase()
-              .includes(this.searchQuery.toLowerCase());
-          }
-          return false;
+      const searchWords = this.getWords(this.searchQuery);
+
+      const result = this.itemsToSearch
+        .filter(
+          node =>
+            typeof node === 'object' &&
+            node.text &&
+            (!node.children || node.children.length == 0)
+        )
+        .map(node => {
+          return { node: node, words: this.getWords(node.text) };
         })
-        .map((item: any) => item.text);
+        .filter((item: any) => {
+          return this.wordSearch(searchWords, item.words);
+        })
+        .map((item: any) => item.node.text);
+      this.searchResults = result.sort((a, b) => a.words - a.words);
     }
     if (this.searchQuery === '') {
       this.searchResults = [];

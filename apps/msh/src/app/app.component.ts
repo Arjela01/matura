@@ -11,15 +11,13 @@ import { FilterMatchMode, PrimeNGConfig } from 'primeng/api';
 import { HttpClientModule } from '@angular/common/http';
 import { GlobalSpinnerComponent, LoaderService } from '@msh/shared/util-shared';
 import { GlobalSearchComponent } from '@msh/layout/feat-layout';
-import { SearchBoxService } from '@msh/layout/data-access-layout';
 
 @Component({
   selector: 'msh-root',
   template: `
     <router-outlet></router-outlet>
     <p-toast></p-toast>
-    <msh-global-search
-      [searchBoxVisible]="searchBoxVisible"></msh-global-search>
+    <msh-global-search></msh-global-search>
   `,
   styles: [],
   standalone: true,
@@ -33,12 +31,10 @@ import { SearchBoxService } from '@msh/layout/data-access-layout';
   ],
 })
 export class AppComponent implements OnInit, AfterViewChecked {
-  searchBoxVisible = false;
   constructor(
     private primengConfig: PrimeNGConfig,
     public loader: LoaderService,
-    private cd: ChangeDetectorRef,
-    private searchBoxService: SearchBoxService
+    private cd: ChangeDetectorRef
   ) {}
   ngOnInit() {
     this.primengConfig.setTranslation({
@@ -88,9 +84,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
       gte: 'Më i madh ose i barabartë',
       lt: 'Më i vogël se',
       lte: 'Më i vogël ose i barabartë',
-    });
-    this.searchBoxService.searchBoxVisible$.subscribe(isVisible => {
-      this.searchBoxVisible = isVisible;
     });
 
     this.primengConfig.filterMatchModeOptions = {

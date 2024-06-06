@@ -1,41 +1,18 @@
 <div class="search-overlay" *ngIf="searchBoxVisible">
   <div class="search-container">
     <div class="search-input-container">
-      <input
-        class="search-input"
-        type="text"
+
+      <p-autoComplete
         [(ngModel)]="searchQuery"
-        (input)="performSearch()"
-        placeholder="Kërko në Menu..."
-        autocomplete="off"
-        id="searchInput" />
-      <i class="pi pi-search search-icon"></i>
+        [suggestions]="searchResults"
+        (completeMethod)="performSearch()"
+        (onSelect)="onItemClick($event)"
+        [className]="'w-full'"
+        [delay]="0"
+        [inputStyleClass]="'w-full search-input'"
+        [panelStyleClass]="'w-full'"
+        [styleClass]="'w-full'">
+      </p-autoComplete>
     </div>
-    <ng-container>
-      <div
-        class="search-results"
-        [style.background-color]="
-          searchResults.length > 0 ? '#fff' : 'rgba(255, 255, 255, 0)'
-        "
-        [style.border]="searchResults.length > 0 ? '1px solid #ccc' : 'none'">
-        <ul>
-          <ng-container *ngIf="searchResults.length > 0; else noResults">
-            <li
-              *ngFor="let result of searchResults"
-              (click)="onItemClick(result)"
-              style="cursor: pointer">
-              {{ result }}
-            </li>
-          </ng-container>
-          <ng-template #noResults>
-            <li
-              *ngIf="searchQuery && searchQuery.trim() !== ''"
-              class="no-results-li">
-              Nuk u gjet Menu për "{{ searchQuery }}"
-            </li>
-          </ng-template>
-        </ul>
-      </div>
-    </ng-container>
   </div>
 </div>
