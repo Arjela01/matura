@@ -26,7 +26,7 @@ export class StudentGlobalSearchComponent {
 
   event: any = {
     first: 0,
-    rows: 1000,
+    rows: 1,
     sortOrder: 1,
     filters: {},
     globalFilter: null,
@@ -39,7 +39,16 @@ export class StudentGlobalSearchComponent {
     this.itemsToSearch = [];
   }
 
-  fetchStudents() {
+  performSearch() {
+    if(!this.searchQuery)
+      return;
+
+    if(/^\d/.test(this.searchQuery)) {
+      this.event.filters = {"studentId":[{"value":this.searchQuery,"matchMode":"equals","operator":"and"}]};
+    } else {
+      this.event.filters = {"idCard":[{"value":this.searchQuery,"matchMode":"equals","operator":"and"}]};
+    }
+
     this.studentService
       .loadStudents(this.event)
       .pipe(
@@ -50,7 +59,6 @@ export class StudentGlobalSearchComponent {
       )
       .subscribe(response => {
         this.itemsToSearch = response.data ?? [];
-        this.performSearch();
       });
   }
 
@@ -69,7 +77,6 @@ export class StudentGlobalSearchComponent {
     if (event.ctrlKey && event.shiftKey && event.key === 'L' && !isLoginPage) {
       if (!this.searchBoxVisible) {
         this.searchBoxVisible = true;
-        this.fetchStudents();
 
         setTimeout(() => {
           const searchInput = document.querySelector(
@@ -91,29 +98,5 @@ export class StudentGlobalSearchComponent {
     this.router.navigate([`/applications/students/view/${this.studentGuid}`]);
     this.searchBoxVisible = false;
     this.searchQuery = '';
-  }
-
-  performSearch() {
-    if (this.itemsToSearch !== undefined) {
-      let result;
-      if (/^\d/.test(this.searchQuery)) {
-        result = this.itemsToSearch.filter(
-          s => s.studentId === this.searchQuery
-        );
-      } else {
-        result = this.itemsToSearch.filter(s => s.idCard === this.searchQuery);
-      }
-      if (result.length > 0) {
-        this.studentGuid = result[0].id;
-      }
-      result = result.map(
-        s =>
-          `${s.studentId} , ${s.idCard} , ${s.firstName} ${s.middleName} ${s.lastName}`
-      );
-      this.searchResults = result;
-    }
-    if (this.searchQuery === '') {
-      this.searchResults = [];
-    }
   }
 }
