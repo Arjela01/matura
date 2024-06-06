@@ -164,13 +164,11 @@ export class ManageExamQuestionsScoreComponent implements OnInit {
     this.cd.markForCheck();
   }
 
-  checkBarcode() {
+  checkBarcode($event: ExamQuestionScoreTotal) {
     this.examQuestionScoreTotalsService
-      .isBarcodeFree(this.examQuestionScoreTotal.barcode)
+      .isBarcodeFree($event.barcode)
       .subscribe(response => {
-        if (!response.data) {
-          this.focusFirstInput();
-        } else {
+        if (response.data) {
           this.toastService.showError('Barkodi është hedhur tashmë!');
         }
       });

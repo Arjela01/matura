@@ -3,7 +3,6 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  HostListener,
   Input,
   Output,
   ViewChild,
@@ -23,6 +22,7 @@ import {
 import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { UntilDestroy } from '@ngneat/until-destroy';
+import { ExamQuestionScoreTotalsService } from '@msh/evaluations/data-access-evaluations';
 
 @UntilDestroy()
 @Component({
@@ -54,13 +54,15 @@ export class ExamQuestionScoreFiltersComponent {
   @Output() examSubjectChanged = new EventEmitter<ExamQuestionScoreTotal>();
   @Output() examTypeChanged = new EventEmitter<ExamQuestionScoreTotal>();
   @Output() examVariantChanged = new EventEmitter<ExamQuestionScoreTotal>();
+  @Output() barcodeChanged = new EventEmitter<ExamQuestionScoreTotal>();
 
   submitted = false;
   barcodePattern = BARCODE_REGEX;
 
   constructor(
     private readonly toastService: GlobalToastService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private readonly examQuestionScoreTotalsService: ExamQuestionScoreTotalsService
   ) {}
 
   onExamTypeChanged(): void {
@@ -82,7 +84,7 @@ export class ExamQuestionScoreFiltersComponent {
       this.examVariantChanged.emit(
         Object.assign({}, this.examQuestionScoreTotal)
       );
-      this.focusOnTestNumber();
+      this.focusOnBarcode();
     }
   }
 
@@ -121,7 +123,17 @@ export class ExamQuestionScoreFiltersComponent {
   clearFields() {
     this.form.controls['testNumber'].setValue('');
     this.form.controls['barcode'].setValue('');
-    this.focusOnTestNumber();
+    this.focusOnBarcode();
+  }
+
+  focusOnBarcode() {
+    setTimeout(() => {
+      const testNumberField =
+        this.elementRef.nativeElement.querySelector('#barcode');
+      if (testNumberField) {
+        testNumberField.focus();
+      }
+    });
   }
 
   focusOnTestNumber() {
@@ -134,14 +146,25 @@ export class ExamQuestionScoreFiltersComponent {
     });
   }
 
-  onKeyPress() {
-    setTimeout(() => {
-      const testNumberField =
-        this.elementRef.nativeElement.querySelector('#barcode');
-      if (testNumberField) {
-        testNumberField.focus();
-      }
-    });
+  checkBarcode() {
+    if (
+      !(this.examQuestionScoreTotal.barcode ?? '').match(this.barcodePattern)
+    ) {
+      this.toastService.showError('Barkodi nuk është i formatit të duhur.');
+      return;
+    }
+
+    this.examQuestionScoreTotalsService
+      .isBarcodeFree(this.examQuestionScoreTotal.barcode)
+      .subscribe(response => {
+        if (response.data) {
+          this.toastService.showError('Barkodi është hedhur tashmë!');
+        } else {
+          this.focusOnTestNumber();
+        }
+      });
+
+    this.barcodeChanged.emit(this.examQuestionScoreTotal);
   }
 
   protected readonly BARCODE_REGEX = BARCODE_REGEX;

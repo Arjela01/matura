@@ -28,16 +28,16 @@
   <div class="{{ this.showForm ? '' : 'hidden' }}">
     <div class="mt-4">
       <msh-exam-question-score-filters
-        (formSave)="checkBarcode()"
+        (formSave)="focusFirstInput()"
         (examTypeChanged)="getExamSubjectDropdown($event)"
         (examSubjectChanged)="getExamVariantDropdown($event)"
         (examVariantChanged)="getExamQuestionScoresList($event)"
         [examVariants]="examVariants"
         [examSubjects]="examSubjects"
         [examTypes]="examTypes"
-        [examQuestionScoreTotal]="
-          examQuestionScoreTotal
-        "></msh-exam-question-score-filters>
+        [examQuestionScoreTotal]="examQuestionScoreTotal"
+        (barcodeChanged)="checkBarcode($event)"
+      ></msh-exam-question-score-filters>
     </div>
     <div class="mt-4">
       <msh-exam-question-score-grid

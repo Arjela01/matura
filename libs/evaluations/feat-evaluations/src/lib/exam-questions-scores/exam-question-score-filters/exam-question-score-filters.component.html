@@ -1,6 +1,6 @@
 <div class="grid">
   <div class="col-5 p-fluid">
-    <form #form="ngForm" (ngSubmit)="defaultOnSubmit($event);">
+    <form #form="ngForm" (ngSubmit)="defaultOnSubmit($event)">
       <div class="field colmn w-8" [style]="{ width: '500px' }">
         <label for="examType">Tipi i Provimit *</label>
         <p-dropdown
@@ -20,7 +20,7 @@
           [showClear]="true"
           [ngClass]="{
             'ng-invalid ng-dirty':
-              submitted && !examQuestionScoreTotal.examTypeId
+              submitted && !examQuestionScoreTotal.examTypeId,
           }">
         </p-dropdown>
         <small
@@ -48,7 +48,7 @@
           [showClear]="true"
           [ngClass]="{
             'ng-invalid ng-dirty':
-              submitted && !examQuestionScoreTotal.examSubjectId
+              submitted && !examQuestionScoreTotal.examSubjectId,
           }">
         </p-dropdown>
         <small
@@ -77,7 +77,7 @@
           [showClear]="true"
           [ngClass]="{
             'ng-invalid ng-dirty':
-              submitted && !examQuestionScoreTotal.examVariantId
+              submitted && !examQuestionScoreTotal.examVariantId,
           }"
           >examQuestionScoreList
         </p-dropdown>
@@ -89,37 +89,12 @@
       </div>
 
       <div class="field colmn w-8">
-        <label for="testNumber">Nr. Testi *</label>
-        <input
-          #testNumber
-          type="text"
-          pInputText
-          [tabindex]="4"
-          autocomplete="off"
-          (keydown.enter)="onKeyPress()"
-          placeholder="Nr. Testi"
-          [disabled]="!examQuestionScoreTotal.examVariantId"
-          id="testNumber"
-          name="testNumber"
-          [(ngModel)]="examQuestionScoreTotal.testNumber"
-          required
-          [ngClass]="{
-            'ng-invalid ng-dirty': submitted && !examQuestionScoreTotal.barcode
-          }" />
-        <small
-          class="p-error block"
-          *ngIf="submitted && !examQuestionScoreTotal.barcode">
-          Nr. Testi është fushë e kërkuar.
-        </small>
-      </div>
-
-      <div class="field colmn w-8">
         <label for="barcode">Barkodi *</label>
         <input
           #barcode
           mshToUppercase
           type="text"
-          [tabindex]="5"
+          [tabindex]="4"
           maxlength="7"
           minlength="7"
           pInputText
@@ -129,17 +104,43 @@
           id="barcode"
           [pattern]="barcodePattern"
           name="barcode"
-          (change)="onSubmit()"
-          (keydown.enter)="onSubmit()"
+          (keydown.enter)="checkBarcode()"
+          (change)="checkBarcode()"
           [(ngModel)]="examQuestionScoreTotal.barcode"
           required
           [ngClass]="{
-            'ng-invalid ng-dirty': submitted && !examQuestionScoreTotal.barcode
+            'ng-invalid ng-dirty': submitted && !examQuestionScoreTotal.barcode,
           }" />
         <small
           class="p-error block"
           *ngIf="submitted && !examQuestionScoreTotal.barcode">
           Barkodi është fushë e kërkuar.
+        </small>
+      </div>
+
+      <div class="field colmn w-8">
+        <label for="testNumber">Nr. Testi *</label>
+        <input
+          #testNumber
+          type="text"
+          pInputText
+          [tabindex]="5"
+          autocomplete="off"
+          placeholder="Nr. Testi"
+          [disabled]="!examQuestionScoreTotal.examVariantId"
+          id="testNumber"
+          name="testNumber"
+          (change)="onSubmit()"
+          (keydown.enter)="onSubmit()"
+          [(ngModel)]="examQuestionScoreTotal.testNumber"
+          required
+          [ngClass]="{
+            'ng-invalid ng-dirty': submitted && !examQuestionScoreTotal.testNumber,
+          }" />
+        <small
+          class="p-error block"
+          *ngIf="submitted && !examQuestionScoreTotal.testNumber">
+          Nr. Testi është fushë e kërkuar.
         </small>
       </div>
     </form>
