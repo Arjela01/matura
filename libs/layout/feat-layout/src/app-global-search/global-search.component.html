@@ -12,6 +12,9 @@
         [inputStyleClass]="'w-full search-input'"
         [panelStyleClass]="'w-full'"
         [styleClass]="'w-full'">
+          <ng-template let-node pTemplate="item">
+              {{node.text}}
+          </ng-template>
       </p-autoComplete>
     </div>
   </div>

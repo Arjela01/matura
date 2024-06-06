@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { MenuApiService } from '@msh/configurations/data-access-configurations';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { catchError, throwError } from 'rxjs';
@@ -49,6 +49,7 @@ export class GlobalSearchComponent {
       )
       .subscribe(response => {
         this.itemsToSearch = response.data ?? [];
+        this.itemsToSearch = this.itemsToSearch.filter(node => node.isVisible);
         for (const item of this.itemsToSearch) {
           item.children =
             this.itemsToSearch.filter(x => x.parentId === item.id) ?? [];
@@ -92,11 +93,20 @@ export class GlobalSearchComponent {
 
   onItemClick($event: any) {
     const selectedItem: any = this.itemsToSearch.find(
-      (item: any) => item.text === $event.value
+      (item: any) => item.id === $event.value.id
     );
 
+    if (selectedItem.url.startsWith('http')) {
+      const parser = document.createElement('a');
+      parser.href = selectedItem.url;
+      selectedItem.url = parser.pathname;
+    }
+
+    if (selectedItem.url && selectedItem.url.startsWith('/'))
+      selectedItem.url = selectedItem.url.slice(1);
+
     if (selectedItem && selectedItem.url) {
-      this.router.navigateByUrl(selectedItem.url);
+      this.router.navigate([selectedItem.url]);
       this.searchBoxVisible = false;
       this.searchResults = [];
       this.searchQuery = '';
@@ -152,8 +162,8 @@ export class GlobalSearchComponent {
         .filter((item: any) => {
           return this.wordSearch(searchWords, item.words);
         })
-        .map((item: any) => item.node.text);
-      this.searchResults = result.sort((a, b) => a.words - a.words);
+        .map((item: any) => item.node);
+      this.searchResults = result.sort((a, b) => b.text - a.text);
     }
     if (this.searchQuery === '') {
       this.searchResults = [];
