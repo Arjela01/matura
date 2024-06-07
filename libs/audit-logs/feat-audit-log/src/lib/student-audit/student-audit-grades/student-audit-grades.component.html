@@ -11,6 +11,7 @@
                 <th>Lënda e Provimit</th>
                 <th>Nota</th>
                 <th>ID</th>
+                <th>Vjeshtë?</th>
                 <th>E Mbartur?</th>
                 <th *ngIf="avgGrade">Mesatarja</th>
               </tr>
@@ -22,6 +23,7 @@
                 <td class="font-semibold">{{ grade.examSubjectName }}</td>
                 <td class="font-semibold">{{ grade.grade }}</td>
                 <td class="font-semibold">{{ grade.studentStudentId }}</td>
+                <td class="font-semibold">{{ grade.isFall ? 'Po' : 'Jo' }}</td>
                 <td class="font-semibold">
                   {{ grade.isCarriedGrade === true ? 'Po' : 'Jo' }}
                 </td>
