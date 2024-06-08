@@ -82,7 +82,6 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
   data: any;
   examSecretNotes: DropdownModel<string>[] = [];
   responseSuccessful: any;
-  examSecretNoteId: any;
   examSecretTabularDataEntryItems: ExamSecretTabularDataEntryItem[] = [];
 
   constructor(
@@ -120,7 +119,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
       });
   }
 
-  onApplySearch($event: ExamSecretSearchModel, examSecret?: ExamSecret) {
+  onApplySearch($event: ExamSecretSearchModel) {
     this.filters = Object.assign({}, $event);
 
     forkJoin([
@@ -166,33 +165,32 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
         }));
         this.dataEntryItemList$$.next(this.examSecretTabularDataEntryItems);
         this.cd.detectChanges();
+      });
+  }
 
-        if (examSecret !== undefined) {
-          const currentBarcodeInput = document.querySelector<HTMLInputElement>(
-            `[examAssignmentId='${examSecret.id}']`
+  moveToNextBarcodeInput(rowItem: ExamSecretTabularDataEntryItem) {
+    const currentBarcodeInput = document.querySelector<HTMLInputElement>(
+      `[examAssignmentId='${rowItem.examAssignment.id}']`
+    );
+
+    if (currentBarcodeInput) {
+      console.log('movenext');
+      const currentRow = currentBarcodeInput.closest('tr');
+
+      if (currentRow) {
+        const nextRow = currentRow.nextElementSibling as HTMLTableRowElement;
+
+        if (nextRow) {
+          const nextRowBarcodeInput = nextRow.querySelector<HTMLInputElement>(
+            'input[name="barcode"]'
           );
 
-          if (currentBarcodeInput) {
-            const currentRow = currentBarcodeInput.closest('tr');
-
-            if (currentRow) {
-              const nextRow =
-                currentRow.nextElementSibling as HTMLTableRowElement;
-
-              if (nextRow) {
-                const nextRowBarcodeInput =
-                  nextRow.querySelector<HTMLInputElement>(
-                    'input[name="barcode"]'
-                  );
-
-                if (nextRowBarcodeInput) {
-                  nextRowBarcodeInput.focus();
-                }
-              }
-            }
+          if (nextRowBarcodeInput) {
+            nextRowBarcodeInput.focus();
           }
         }
-      });
+      }
+    }
   }
 
   prepExamSecret(x: ExamAssignment) {
@@ -280,6 +278,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
               ...this.examSecretTabularDataEntryItems,
             ]);
             this.cd.markForCheck();
+            this.moveToNextBarcodeInput(entryItem);
           } else {
             console.log('not found');
           }
