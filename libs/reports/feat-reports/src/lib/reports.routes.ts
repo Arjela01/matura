@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { EalbaniaGradesDataViewComponent } from './ealbania-grades-data-view/ealbania-grades-data-view.component';
 
 export const REPORTS_ROUTES: Route[] = [
   {
@@ -35,5 +36,12 @@ export const REPORTS_ROUTES: Route[] = [
       import(
         './current-year-grades-data-view/current-year-grades-data-view.component'
       ).then(m => m.CurrentYearGradesDataViewComponent),
+  },
+  {
+    path: 'ealbania-student-grades-data-view',
+    loadComponent: () =>
+      import(
+        './ealbania-grades-data-view/ealbania-grades-data-view.component'
+      ).then(m => m.EalbaniaGradesDataViewComponent),
   },
 ];

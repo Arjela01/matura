@@ -13,4 +13,10 @@ export class CurrentYearStudentGradesApiService {
       `/StudentGrades/GetCurrentYearGradesForStudentByNid/${nid}`
     );
   }
+
+  getGradesForStudentByNid(nid: string): Observable<any> {
+    return this.apiService.get(
+      `/StudentGrades/GetGradesForStudentByNid/${nid}`
+    );
+  }
 }

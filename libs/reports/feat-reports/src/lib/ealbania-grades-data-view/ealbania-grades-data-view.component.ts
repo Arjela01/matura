@@ -21,7 +21,7 @@ import { CurrentYearStudentGradesApiService } from '@msh/reports/data-access-rep
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-current-year-grades-data-view',
+  selector: 'msh-ealbania-grades-data-view',
   standalone: true,
   imports: [
     ButtonModule,
@@ -36,12 +36,12 @@ import { CurrentYearStudentGradesApiService } from '@msh/reports/data-access-rep
     FormsModule,
     InputGroupAddonModule,
   ],
-  templateUrl: './current-year-grades-data-view.component.html',
-  styleUrls: ['./current-year-grades-data-view.component.scss'],
+  templateUrl: './ealbania-grades-data-view.component.html',
+  styleUrls: ['./ealbania-grades-data-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class CurrentYearGradesDataViewComponent {
+export class EalbaniaGradesDataViewComponent {
   nid = '';
   response: any = undefined;
 
@@ -53,7 +53,7 @@ export class CurrentYearGradesDataViewComponent {
   onSearchClick() {
     this.response = undefined;
     this.currentYearStudentGradesApiService
-      .getCurrentYearGradesForStudentByNid(this.nid)
+      .getGradesForStudentByNid(this.nid)
       .subscribe(response => {
         this.response = response;
         this.cd.markForCheck();
