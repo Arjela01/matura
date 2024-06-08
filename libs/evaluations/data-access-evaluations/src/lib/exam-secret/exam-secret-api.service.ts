@@ -18,7 +18,7 @@ export class ExamSecretApiService {
   constructor(private apiService: APIService) {}
 
   loadExamSecrets(event: TableLazyLoadEvent): Observable<ExamSecretTableView> {
-    return this.apiService.post(`/ExamSecrets/TableData`, event);
+    return this.apiService.post(`/m/TableData`, event);
   }
 
   loadExamSecretFolderMismatch(

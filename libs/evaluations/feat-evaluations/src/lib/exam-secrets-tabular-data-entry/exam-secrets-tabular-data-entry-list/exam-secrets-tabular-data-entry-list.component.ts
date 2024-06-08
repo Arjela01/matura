@@ -51,7 +51,7 @@ export class ExamSecretsTabularDataEntryListComponent {
   @Input() examSecretNotes: DropdownModel<string>[] = [];
 
   @Input() examSecretSubject: any;
-  @Output() barcodeChange = new EventEmitter<any>();
+  @Output() barcodeChange = new EventEmitter<ExamSecretTabularDataEntryItem>();
   @Output() gridEvent = new EventEmitter<
     GridEvent<ExamSecret | ExamSecret[]>
   >();
@@ -63,8 +63,8 @@ export class ExamSecretsTabularDataEntryListComponent {
       data: examSecret,
     } as GridEvent<ExamSecret>);
   }
-  onExamSecretAddOrUpdate(examSecret: any) {
-    this.barcodeChange.emit(examSecret);
+  onExamSecretAddOrUpdate(item: ExamSecretTabularDataEntryItem) {
+    this.barcodeChange.emit(item);
   }
 
   protected readonly BARCODE_REGEX = BARCODE_REGEX;

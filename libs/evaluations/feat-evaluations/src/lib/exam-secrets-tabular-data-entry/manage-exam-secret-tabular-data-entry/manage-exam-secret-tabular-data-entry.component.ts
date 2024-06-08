@@ -31,6 +31,7 @@ import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import {
+  ExamAssignment,
   ExamSecret,
   ExamSecretSearchModel,
   ExamSecretTabularDataEntryItem,
@@ -82,6 +83,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
   examSecretNotes: DropdownModel<string>[] = [];
   responseSuccessful: any;
   examSecretNoteId: any;
+  examSecretTabularDataEntryItems: ExamSecretTabularDataEntryItem[] = [];
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -154,26 +156,15 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
           );
           result.push({
             examAssignment: x,
-            examSecret:
-              examSecret ||
-              ({
-                administrationOfficeId: x.administrationOfficeId,
-                examSiteId: x.examSiteId,
-                examTypeId: x.examTypeId,
-                examDateId: x.examDateId,
-                examSubjectId: x.examSubjectId,
-              } as ExamSecret),
+            examSecret: examSecret || this.prepExamSecret(x),
           });
         });
 
-        const resultAsExamSecretTabularDataEntryItem = result.map(
-          (entry: any) => ({
-            ...entry,
-            examSecret: entry.examSecret as ExamSecretTabularDataEntryItem,
-          })
-        );
-        console.log(resultAsExamSecretTabularDataEntryItem);
-        this.dataEntryItemList$$.next(resultAsExamSecretTabularDataEntryItem);
+        this.examSecretTabularDataEntryItems = result.map((entry: any) => ({
+          ...entry,
+          examSecret: entry.examSecret as ExamSecretTabularDataEntryItem,
+        }));
+        this.dataEntryItemList$$.next(this.examSecretTabularDataEntryItems);
         this.cd.detectChanges();
 
         if (examSecret !== undefined) {
@@ -202,6 +193,16 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
           }
         }
       });
+  }
+
+  prepExamSecret(x: ExamAssignment) {
+    return {
+      administrationOfficeId: x.administrationOfficeId,
+      examSiteId: x.examSiteId,
+      examTypeId: x.examTypeId,
+      examDateId: x.examDateId,
+      examSubjectId: x.examSubjectId,
+    } as ExamSecret;
   }
 
   loadAdministrationOffices() {
@@ -262,17 +263,26 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
       });
   }
 
-  save(examSecret: ExamSecret) {
+  save(examSecret: ExamSecret, rowItem: ExamSecretTabularDataEntryItem) {
     this.examSecretService
       .save(examSecret)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
           this.responseSuccessful = true;
-          this.onApplySearch(
-            this.filters as ExamSecretSearchModel,
-            response.data
+          console.log('save');
+          const entryItem = this.examSecretTabularDataEntryItems.find(
+            x => x.examAssignment.id == rowItem.examAssignment.id
           );
+          if (entryItem) {
+            entryItem.examSecret = response.data;
+            this.dataEntryItemList$$.next([
+              ...this.examSecretTabularDataEntryItems,
+            ]);
+            this.cd.markForCheck();
+          } else {
+            console.log('not found');
+          }
         } else {
           this.toastService.showError(response.errorMessage);
         }
@@ -289,10 +299,17 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.responseSuccessful = true;
-          this.onApplySearch(
-            this.filters as ExamSecretSearchModel,
-            response.data
+
+          const entryItem = this.examSecretTabularDataEntryItems.find(
+            x => x.examSecret.id == examSecret.id
           );
+          if (entryItem) {
+            entryItem.examSecret = response.data;
+            this.dataEntryItemList$$.next([
+              ...this.examSecretTabularDataEntryItems,
+            ]);
+            this.cd.markForCheck();
+          }
         } else {
           this.toastService.showError(response.errorMessage);
         }
@@ -309,7 +326,19 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Sekretimi u fshi!');
-          this.onApplySearch(this.filters as ExamSecretSearchModel);
+          const entryItem = this.examSecretTabularDataEntryItems.find(
+            x => x.examSecret.id == examSecret.id
+          );
+          if (entryItem) {
+            entryItem.examSecret = this.prepExamSecret(
+              entryItem.examAssignment
+            );
+
+            this.dataEntryItemList$$.next([
+              ...this.examSecretTabularDataEntryItems,
+            ]);
+            this.cd.markForCheck();
+          }
         } else {
           this.toastService.showError(response.errorMessage);
         }
@@ -321,7 +350,7 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
       });
   }
 
-  addOrUpdateExamSecret(rowItem: any) {
+  addOrUpdateExamSecret(rowItem: ExamSecretTabularDataEntryItem) {
     const saveTarget: ExamSecret = {
       id: rowItem.examSecret.id,
       examAssignmentId: rowItem.examAssignment.id,
@@ -331,12 +360,12 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
       examTypeId: rowItem.examAssignment.examTypeId,
       examDateId: rowItem.examAssignment.examDateId,
       examSubjectId: rowItem.examAssignment.examSubjectId,
-      barcode: rowItem.examSecret.barcode || null,
+      barcode: rowItem.examSecret.barcode,
       isFall: rowItem.examAssignment.isFall,
       examSecretNoteId: rowItem.examSecret.examSecretNoteId,
     };
     if (!saveTarget.id) {
-      this.save(saveTarget);
+      this.save(saveTarget, rowItem);
     } else {
       this.update(saveTarget);
     }
