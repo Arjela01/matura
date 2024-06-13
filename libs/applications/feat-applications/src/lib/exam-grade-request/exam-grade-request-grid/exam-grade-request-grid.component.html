@@ -17,13 +17,13 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="id">
+      <th pSortableColumn="number">
         Numri
         <div>
-        <p-sortIcon field="id"></p-sortIcon>
+        <p-sortIcon field="number"></p-sortIcon>
         <p-columnFilter
-          type="text"
-          field="id"
+          type="numeric"
+          field="number"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
         </div>
@@ -96,24 +96,24 @@
           mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="academicYearId">
+      <th pSortableColumn="academicYearName">
         Viti
         <div>
-        <p-sortIcon field="academicYearId"></p-sortIcon>
+        <p-sortIcon field="academicYearName"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="academicYearId"
+          field="academicYearName"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="status">
+      <th pSortableColumn="examGradesRequestStatusDescription">
         Statusi
         <div>
-        <p-sortIcon field="status"></p-sortIcon>
+        <p-sortIcon field="examGradesRequestStatusDescription"></p-sortIcon>
         <p-columnFilter
           type="text"
-          field="status"
+          field="examGradesRequestStatusDescription"
           display="menu"
           mshColumnFilterDirective></p-columnFilter>
         </div>

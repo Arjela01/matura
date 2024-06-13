@@ -3,11 +3,10 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
   ExamSubjectApiService,
-  ExamSubjectGroupApiService,
-  ExamTypeApiService,
+  ExamSubjectGroupApiService
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import { ExamSubject, ExamSubjectGroup } from '@msh/shared/domain-models';
+import { ExamSubjectGroup } from '@msh/shared/domain-models';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -19,11 +18,11 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ExamSubjectGroupFormComponent } from '../exam-subject-group-form/exam-subject-group-form.component';
 import { ExamSubjectGroupGridComponent } from '../exam-subject-group-grid/exam-subject-group-grid.component';
-import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({

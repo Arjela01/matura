@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,15 +6,15 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { DiplomaRecognition } from '@msh/shared/domain-models';
 import {
   ColumnFilterDirective,
+  DateFilterService,
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
-import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { SharedModule } from 'primeng/api';
+import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
@@ -39,6 +40,8 @@ export class DiplomaRecognitionGridComponent {
   >();
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
+  constructor(private dateFilterService: DateFilterService) {}
+
   onEditClick(diplomaRecognition: DiplomaRecognition) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
@@ -54,6 +57,8 @@ export class DiplomaRecognitionGridComponent {
   }
 
   loadRows($event: TableLazyLoadEvent) {
+    const filters = $event.filters as any;
+    $event.filters = this.dateFilterService.applyDateManipulation(filters);
     this.lazyLoadData.emit($event);
   }
 }
