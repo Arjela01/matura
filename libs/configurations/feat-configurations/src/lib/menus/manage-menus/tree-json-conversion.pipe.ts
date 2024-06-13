@@ -20,48 +20,27 @@ export class TreeJsonConversionPipe implements PipeTransform {
     const nodeMap: { [key: number]: TreeNode } = {};
 
     dataNodes.forEach((dataNode: any) => {
-      const node = this.convertNode(dataNode);
-      nodeMap[dataNode.id] = node;
+      nodeMap[dataNode.id] = this.convertNode(dataNode);
     });
-
-    const parentNodes: TreeNode[] = [];
-    const childNodesMap: { [key: number]: TreeNode[] } = {};
 
     dataNodes.forEach((dataNode: any) => {
       const node = nodeMap[dataNode.id];
       const parentId = dataNode.parentId;
 
       if (parentId) {
-        if (!childNodesMap[parentId]) {
-          childNodesMap[parentId] = [];
-        }
-        childNodesMap[parentId].push(node);
-      } else {
-        parentNodes.push(node);
-      }
+        const parentNode = nodeMap[parentId];
+        if (parentNode) {
+          parentNode.children = parentNode.children || [];
+          parentNode.children.push(node);
+          parentNode.children.sort((a, b) => {
+            return a.data.displayOrder - b.data.displayOrder;
+          });
+          treeNodes.sort((a, b) => {
+            return a.data.displayOrder - b.data.displayOrder;
+          });
+        } else treeNodes.push(node);
+      } else treeNodes.push(node);
     });
-
-    parentNodes.sort((a, b) => {
-      const displayOrderA = a.data.displayOrder || 0;
-      const displayOrderB = b.data.displayOrder || 0;
-      return displayOrderA - displayOrderB;
-    });
-    parentNodes.forEach(parentNode => {
-      if (childNodesMap[parentNode.data.id]) {
-        childNodesMap[parentNode.data.id].sort((a, b) => {
-          const displayOrderA = a.data.displayOrder || 0;
-          const displayOrderB = b.data.displayOrder || 0;
-          return displayOrderA - displayOrderB;
-        });
-        parentNode.children = childNodesMap[parentNode.data.id];
-      }
-    });
-    treeNodes.push(...parentNodes);
-    for (const parentId in childNodesMap) {
-      if (!nodeMap[parentId]) {
-        treeNodes.push(...childNodesMap[parentId]);
-      }
-    }
   }
 
   private convertNode(dataNode: any): TreeNode {
