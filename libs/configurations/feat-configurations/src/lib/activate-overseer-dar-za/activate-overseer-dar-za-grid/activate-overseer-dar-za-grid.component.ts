@@ -1,18 +1,18 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
-  Output,
+  Output
 } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { AdministrationOffice } from '@msh/shared/domain-models';
 import {
-  GridEvent,
-  GRID_ACTIONS,
   ColumnFilterDirective,
+  GRID_ACTIONS,
+  GridEvent,
 } from '@msh/shared/util-shared';
-import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -24,10 +24,6 @@ import {
   TableRowUnSelectEvent,
 } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import { AdministrationOffice } from '@msh/shared/domain-models';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { AdministrationOfficeApiService } from '@msh/configurations/data-access-configurations';
 
 @Component({
   selector: 'msh-activate-overseer-dar-za-grid',

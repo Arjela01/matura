@@ -6,20 +6,19 @@ import {
   Input,
   Output,
 } from '@angular/core';
+import { ExamCopy, ExamCopyRequestStatusEnum } from '@msh/shared/domain-models';
 import {
   ColumnFilterDirective, DateFilterService,
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
-import { TableLazyLoadEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
-import { TableModule } from 'primeng/table';
+import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { ExamCopyRequestStatusPipe } from './exam-copy-request-status-pipe';
-import { ExamCopy, ExamCopyRequestStatusEnum } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-exam-copy-grid',
