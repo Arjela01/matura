@@ -12,4 +12,17 @@ export class EalbaniaMessagesApiService {
   loadData(filter: TableLazyLoadEvent): Observable<any> {
     return this.apiService.post(`/EAlbaniaMessage/TableData`, filter);
   }
+
+  generateGradeMessages() {
+    return this.apiService.post(`/EAlbaniaMessage/GenerateGradeMessages`);
+  }
+
+
+  approveGradeMessages() {
+    return this.apiService.post(`/EAlbaniaMessage/ApproveGradeMessages`);
+  }
+
+  deleteGradeMessages() {
+    return this.apiService.post(`/EAlbaniaMessage/DeleteGradeMessages`);
+  }
 }

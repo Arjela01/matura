@@ -2,14 +2,17 @@
   <h2 class="flex-1">Njoftime në eAlbania</h2>
 </div>
 
-<div class="card">
-  <div class="font-bold">Njoftime për Notat</div>
-  <p-button label="Gjenero" />
-  <p-button label="Mirato" />
-  <p-button label="Fshi" />
+<div class="flex justify-content-start flex-wrap">
+  <p-card class="flex align-items-center justify-content-center">
+    <div class="text-2xl mb-3">Njoftime për Notat</div>
+    <p-button label="Gjenero" icon="pi pi-play-circle" severity="info" class="mr-1"
+              (onClick)="generateGradeMessages()" />
+    <p-button label="Mirato" icon="pi pi-check" severity="success" class="mr-1" (onClick)="approveGradeMessages()" />
+    <p-button label="Fshi" icon="pi pi-trash" severity="danger" (onClick)="deleteGradeMessages()" />
+  </p-card>
 </div>
 
-<div class="grid">
+<div class="grid mt-3">
   <div class="col-12">
     <div class="card">
       <p-table
@@ -220,28 +223,28 @@
               {{ message.messageSender }}
             </td>
             <td style="width: 10%">
+              {{ message.userEmail }}
+            </td>
+            <td style="width: 30%">
               {{ message.content }}
             </td>
             <td style="width: 10%">
-              {{ message.userEmail }}
+              {{ message.isApproved ? 'Po' : 'Jo' }}
             </td>
             <td style="width: 10%">
-              {{ message.isApproved }}
+              {{ message.ApprovalDate | date : 'dd/MM/yyyy' }}
             </td>
             <td style="width: 10%">
-              {{ message.ApprovalDate }}
+              {{ message.isDelivered ? 'Po' : 'Jo' }}
             </td>
             <td style="width: 10%">
-              {{ message.isDelivered }}
+              {{ message.deliveryDate | date : 'dd/MM/yyyy' }}
             </td>
             <td style="width: 10%">
-              {{ message.deliveryDate }}
+              {{ message.isDeliveryError ? 'Po' : 'Jo' }}
             </td>
             <td style="width: 10%">
-              {{ message.isDeliveryError }}
-            </td>
-            <td style="width: 10%">
-              {{ message.deliveryErrorDate }}
+              {{ message.deliveryErrorDate | date : 'dd/MM/yyyy' }}
             </td>
             <td style="width: 10%">
               {{ message.deliveryError }}
