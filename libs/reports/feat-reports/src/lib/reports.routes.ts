@@ -1,5 +1,6 @@
 import { Route } from '@angular/router';
 import { EalbaniaGradesDataViewComponent } from './ealbania-grades-data-view/ealbania-grades-data-view.component';
+import { EalbaniaMessagesGridComponent } from './ealbania-messages/ealbania-messages-grid.component';
 
 export const REPORTS_ROUTES: Route[] = [
   {
@@ -43,5 +44,12 @@ export const REPORTS_ROUTES: Route[] = [
       import(
         './ealbania-grades-data-view/ealbania-grades-data-view.component'
       ).then(m => m.EalbaniaGradesDataViewComponent),
+  },
+  {
+      path: 'ealbania-messages',
+    loadComponent: () =>
+      import(
+        './ealbania-messages/ealbania-messages-grid.component'
+      ).then(m => m.EalbaniaMessagesGridComponent),
   },
 ];

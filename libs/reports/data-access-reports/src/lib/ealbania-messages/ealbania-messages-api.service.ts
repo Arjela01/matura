@@ -1,0 +1,15 @@
+import { Injectable } from '@angular/core';
+import { APIService } from '@msh/shared/util-shared';
+import { Observable } from 'rxjs';
+import { TableLazyLoadEvent } from 'primeng/table';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class EalbaniaMessagesApiService {
+  constructor(private apiService: APIService) {}
+
+  loadData(filter: TableLazyLoadEvent): Observable<any> {
+    return this.apiService.post(`/EAlbaniaMessage/TableData`, filter);
+  }
+}
