@@ -25,4 +25,9 @@ export class EalbaniaMessagesApiService {
   deleteGradeMessages() {
     return this.apiService.post(`/EAlbaniaMessage/DeleteGradeMessages`);
   }
+
+  loadFakeReceiver(): Observable<any> {
+    return this.apiService.get(`/GGFakeReceiver`);
+
+  }
 }
