@@ -137,7 +137,14 @@
   <ng-template pTemplate="body" let-bannedStudent>
     <tr>
       <td style="width: 10%; min-width: 10rem">
-        {{ bannedStudent.studentStudentId }}
+        <a
+          [routerLink]="[
+            '/applications/students/view',
+            bannedStudent.studentId,
+          ]"
+          class="p-button-link">
+          {{ bannedStudent.studentStudentId }}
+        </a>
       </td>
       <td style="width: 10%; min-width: 10rem">
         {{ bannedStudent.studentFirstName }}

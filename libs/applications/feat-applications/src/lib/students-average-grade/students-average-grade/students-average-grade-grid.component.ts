@@ -9,6 +9,7 @@ import { SharedModule } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { AverageGradeService } from '@msh/applications/data-access-applications';
+import { RouterLink } from '@angular/router';
 
 @UntilDestroy()
 @Component({
@@ -20,6 +21,7 @@ import { AverageGradeService } from '@msh/applications/data-access-applications'
     SharedModule,
     TableModule,
     TooltipModule,
+    RouterLink,
   ],
   templateUrl: './students-average-grade-grid.component.html',
   styleUrls: ['./students-average-grade-grid.component.scss'],

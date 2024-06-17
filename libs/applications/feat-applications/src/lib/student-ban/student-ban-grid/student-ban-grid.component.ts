@@ -25,6 +25,7 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'msh-student-ban-grid',
@@ -41,6 +42,7 @@ import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
     DatePipe,
     AppDatePipe,
     AppBoolPipe,
+    RouterLink,
   ],
   templateUrl: './student-ban-grid.component.html',
   styleUrls: ['./student-ban-grid.component.scss'],

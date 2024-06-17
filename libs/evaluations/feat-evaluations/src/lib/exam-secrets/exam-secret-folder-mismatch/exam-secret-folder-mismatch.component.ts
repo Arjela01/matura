@@ -24,6 +24,7 @@ import { ExamSecretApiService } from '@msh/evaluations/data-access-evaluations';
 import { combineLatest, map, skip, tap } from 'rxjs';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { AppBoolPipe } from '@msh/shared/ui-shared';
+import { RouterLink } from '@angular/router';
 
 @UntilDestroy()
 @Component({
@@ -39,6 +40,7 @@ import { AppBoolPipe } from '@msh/shared/ui-shared';
     RippleModule,
     ColumnFilterDirective,
     AppBoolPipe,
+    RouterLink,
   ],
   templateUrl: './exam-secret-folder-mismatch.component.html',
   styleUrls: ['./exam-secret-folder-mismatch.component.scss'],

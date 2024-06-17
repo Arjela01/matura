@@ -103,7 +103,11 @@
   <ng-template pTemplate="body" let-student>
     <tr>
       <td style="width: 15%; min-width: 10rem">
-        {{ student.studentStudentId }}
+        <a
+          [routerLink]="['/applications/students/view', student.studentId]"
+          class="p-button-link">
+          {{ student.studentStudentId }}
+        </a>
       </td>
       <td style="width: 15%; min-width: 10rem">
         {{ student.studentFirstName }}

@@ -30,7 +30,18 @@
           </div>
 
           <div class="field">
-            <label for="schoolProfile">Matura</label>
+            <label for="administrationOfficeName">ZVAP</label>
+            <input
+              type="text"
+              pInputText
+              id="administrationOfficeName"
+              name="administrationOfficeName"
+              [(ngModel)]="student.administrationOfficeName"
+              disabled />
+          </div>
+
+          <div class="field">
+            <label for="academicYearName">Matura</label>
             <input
               type="text"
               pInputText

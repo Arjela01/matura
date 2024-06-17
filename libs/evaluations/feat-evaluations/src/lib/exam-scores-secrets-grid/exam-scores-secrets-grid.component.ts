@@ -14,6 +14,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import * as FileSaver from 'file-saver';
 import { ExamScore } from '@msh/shared/domain-models';
+import { RouterLink } from '@angular/router';
 @UntilDestroy()
 @Component({
   selector: 'msh-exam-score-grid',
@@ -27,6 +28,7 @@ import { ExamScore } from '@msh/shared/domain-models';
     CheckboxModule,
     RippleModule,
     ColumnFilterDirective,
+    RouterLink,
   ],
   templateUrl: './exam-scores-secrets-grid.component.html',
   styleUrls: ['./exam-scores-secrets-grid.component.scss'],

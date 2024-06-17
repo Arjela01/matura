@@ -13,7 +13,7 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { ExamGrade } from '@msh/shared/domain-models';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { RoleName } from '@msh/configurations/feat-configurations';
 import { AppBoolPipe } from '@msh/shared/ui-shared';
@@ -32,6 +32,7 @@ import { AppBoolPipe } from '@msh/shared/ui-shared';
     RippleModule,
     ColumnFilterDirective,
     AppBoolPipe,
+    RouterLink,
   ],
   templateUrl: './exam-grade-grid.component.html',
   styleUrls: ['./exam-grade-grid.component.scss'],

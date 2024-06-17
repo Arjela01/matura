@@ -17,6 +17,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
 import { ExamGradeChange } from '@msh/shared/domain-models';
 import { DialogModule } from 'primeng/dialog';
 import { AppBoolPipe, AppTimePipe } from '@msh/shared/ui-shared';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'msh-exam-grade-changes-grid',
@@ -33,6 +34,7 @@ import { AppBoolPipe, AppTimePipe } from '@msh/shared/ui-shared';
     DialogModule,
     AppTimePipe,
     AppBoolPipe,
+    RouterLink,
   ],
   templateUrl: './exam-grade-changes-grid.component.html',
   styleUrls: ['./exam-grade-changes-grid.component.scss'],

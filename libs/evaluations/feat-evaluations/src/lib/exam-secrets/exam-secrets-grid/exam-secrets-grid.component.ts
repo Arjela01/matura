@@ -22,6 +22,7 @@ import { ArchiveFolder, ExamSecret, Student } from '@msh/shared/domain-models';
 import { DialogModule } from 'primeng/dialog';
 import { ExamSecretHistoryGridComponent } from '../exam-secret-history/exam-secret-history-grid.component';
 import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'msh-exam-secret-grid',
@@ -40,6 +41,7 @@ import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
     DatePipe,
     AppDatePipe,
     AppBoolPipe,
+    RouterLink,
   ],
   templateUrl: './exam-secrets-grid.component.html',
   styleUrls: ['./exam-secrets-grid.component.scss'],

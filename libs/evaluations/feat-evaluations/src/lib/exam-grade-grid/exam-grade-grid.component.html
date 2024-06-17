@@ -230,7 +230,14 @@
         <ng-template pTemplate="body" let-examGrade>
           <tr>
             <td style="width: 10%; min-width: 10rem">
-              {{ examGrade.studentStudentId }}
+              <a
+                [routerLink]="[
+                  '/applications/students/view',
+                  examGrade.studentId,
+                ]"
+                class="p-button-link">
+                {{ examGrade.studentStudentId }}
+              </a>
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ examGrade.studentNid }}

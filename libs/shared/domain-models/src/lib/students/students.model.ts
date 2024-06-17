@@ -44,6 +44,7 @@ export interface Student extends SharedStudent {
   isDiplomaSealSentToEalbaniaDocs?: boolean;
   registrationYear?: string;
   averageGrade?: string;
+  administrationOfficeName?: string;
 }
 
 export interface StudentTableView {
