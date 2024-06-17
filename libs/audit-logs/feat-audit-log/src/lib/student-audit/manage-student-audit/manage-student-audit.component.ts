@@ -88,7 +88,7 @@ export class ManageStudentAuditComponent implements OnInit {
 
   getAvgGradeForStudent() {
     this.avgGradeService.getById(this.id).subscribe(res => {
-      this.avgGrade = res.data.averageGrade;
+      this.avgGrade = res?.data?.averageGrade;
       this.cd.detectChanges();
     });
   }
