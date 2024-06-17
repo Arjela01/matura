@@ -18,7 +18,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { RouterLink } from '@angular/router';
 import { ExamGrade } from '@msh/shared/domain-models';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
-import {AppBoolPipe} from "@msh/shared/ui-shared";
+import { AppBoolPipe } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'msh-student-audit-grades',

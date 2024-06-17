@@ -7,7 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { RouterLink } from '@angular/router';
 import { ExamGrade, Student } from '@msh/shared/domain-models';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
-import {AppBoolPipe} from "@msh/shared/ui-shared";
+import { AppBoolPipe } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'msh-students-grades',

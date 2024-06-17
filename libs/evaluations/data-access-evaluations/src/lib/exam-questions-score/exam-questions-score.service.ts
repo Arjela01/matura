@@ -4,7 +4,8 @@ import { ApiResult } from '@msh/shared/data-access-shared';
 import { APIService } from '@msh/shared/util-shared';
 
 import {
-  ExamQuestionScore, ExamQuestionScoreCreateUpdateMultipleCommand,
+  ExamQuestionScore,
+  ExamQuestionScoreCreateUpdateMultipleCommand,
 } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
 
@@ -19,8 +20,8 @@ export class ExamQuestionScoreService {
   }
 
   loadExamQuestionScoresByTotalId(id: any): Observable<any> {
-    if(!id) {
-      return of({data: []});
+    if (!id) {
+      return of({ data: [] });
     }
     return this.apiService.get(`/ExamQuestionScore/ForTotalId/${id}`);
   }
@@ -29,9 +30,7 @@ export class ExamQuestionScoreService {
     return this.apiService.get(`/ExamQuestionScore/${examQuestionId}`);
   }
 
-  save(
-    examScore: ExamQuestionScore
-  ): Observable<ApiResult<ExamQuestionScore>> {
+  save(examScore: ExamQuestionScore): Observable<ApiResult<ExamQuestionScore>> {
     return this.apiService.post<
       ApiResult<ExamQuestionScore>,
       ExamQuestionScore

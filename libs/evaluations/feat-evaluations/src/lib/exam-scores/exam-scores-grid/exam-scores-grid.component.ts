@@ -25,7 +25,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
 import { ExamScore } from '@msh/shared/domain-models';
 import { DialogModule } from 'primeng/dialog';
 import { ExamScoreHistoryGridComponent } from '../exam-score-history/exam-score-history-grid.component';
-import {AppBoolPipe} from "@msh/shared/ui-shared";
+import { AppBoolPipe } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'msh-exam-score-grid',

@@ -1,5 +1,4 @@
-export interface ExamGradeDiscoveryResult
-{
+export interface ExamGradeDiscoveryResult {
   isFound: boolean;
   grade?: number;
   studentId?: string;

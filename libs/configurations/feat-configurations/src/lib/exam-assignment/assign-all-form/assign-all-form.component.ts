@@ -86,16 +86,16 @@ export class AssignAllFormComponent {
     studentId: '',
     studentGuid: '',
     studentInputData: '',
-    studentName:'',
+    studentName: '',
     studentNameFilter: '',
     time: '',
     schoolProfileId: 0,
-    maxStudentsToAssign: undefined
+    maxStudentsToAssign: undefined,
   };
   assigned = false;
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor() { }
+  constructor() {}
 
   onCancelClick() {
     this.formClose.emit();

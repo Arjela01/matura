@@ -4,7 +4,7 @@ import {
   Component,
   EventEmitter,
   Input,
-  Output
+  Output,
 } from '@angular/core';
 import { ExamSubjectGroup } from '@msh/shared/domain-models';
 import {

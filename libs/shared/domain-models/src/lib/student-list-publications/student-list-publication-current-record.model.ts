@@ -25,7 +25,6 @@ export interface StudentListPublicationCurrentRecord {
   applicationFormType: string;
 }
 
-
 export interface StudentListPublicationCurrentRecordView {
   data: StudentListPublicationCurrentRecord[];
   total: number;

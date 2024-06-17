@@ -16,7 +16,7 @@ import { ExamGrade } from '@msh/shared/domain-models';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { RoleName } from '@msh/configurations/feat-configurations';
-import {AppBoolPipe} from "@msh/shared/ui-shared";
+import { AppBoolPipe } from '@msh/shared/ui-shared';
 
 @UntilDestroy()
 @Component({

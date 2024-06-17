@@ -10,7 +10,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class A1ZApiService {
-  constructor(private http: HttpClient, private apiService: APIService) {}
+  constructor(
+    private http: HttpClient,
+    private apiService: APIService
+  ) {}
 
   loadA1Z(event: TableLazyLoadEvent): Observable<A1ZTableView> {
     return this.apiService.post('/A1Z/TableData', event);

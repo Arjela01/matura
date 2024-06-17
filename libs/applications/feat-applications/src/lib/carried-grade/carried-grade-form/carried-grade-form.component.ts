@@ -97,7 +97,10 @@ export class CarriedGradesFormComponent implements OnChanges {
   examTypeId: any;
   forms: A1ZTableRecord[] = [];
 
-  constructor(private cd: ChangeDetectorRef, private route: ActivatedRoute) {}
+  constructor(
+    private cd: ChangeDetectorRef,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!this.isObjectEmpty(this.gradeDetails)) {
@@ -169,7 +172,7 @@ export class CarriedGradesFormComponent implements OnChanges {
       examTypeId: this.grade.examTypeId,
       academicYearId: this.grade.academicYearId,
     });
-    this.examTypeId = this.grade.examTypeId
+    this.examTypeId = this.grade.examTypeId;
   }
 
   clearFile() {

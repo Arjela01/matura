@@ -1,4 +1,4 @@
-export interface Permission{
+export interface Permission {
   name: string;
   permissionCategoryId: string;
   permissionCategoryName: string;
@@ -7,5 +7,5 @@ export interface Permission{
 
 export interface PermissionCategory {
   name: string;
-  permissions: Permission[]
+  permissions: Permission[];
 }

@@ -6,7 +6,10 @@ import { AuthFacade } from '../+state';
 
 @Injectable({ providedIn: 'root' })
 export class NoAuthGuard {
-  constructor(private authFacade: AuthFacade, private router: Router) {}
+  constructor(
+    private authFacade: AuthFacade,
+    private router: Router
+  ) {}
 
   canActivate(): Observable<boolean> {
     return this.authFacade.isAuthenticated$.pipe(

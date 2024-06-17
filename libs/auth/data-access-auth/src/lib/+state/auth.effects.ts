@@ -8,7 +8,7 @@ import {
 import { StorageService } from '@msh/shared/data-access-shared';
 import { AcademicYear, roleKey } from '@msh/shared/domain-models';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from 'jwt-decode';
 import { catchError, exhaustMap, map, of, switchMap, tap } from 'rxjs';
 import { USER_STORAGE_KEY, User } from '../models/user.model';
 import { AuthService } from '../services/auth.service';
@@ -137,7 +137,7 @@ export class AuthEffects {
         if (token[roleKey] !== 'Admin') {
           return of(
             AuthActions.initAcademicYear({
-                academicYear: activeYear,
+              academicYear: activeYear,
             })
           );
         }

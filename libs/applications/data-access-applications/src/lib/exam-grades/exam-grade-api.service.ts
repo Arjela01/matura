@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { APIService } from '@msh/shared/util-shared';
 import { ApiResult } from '@msh/shared/data-access-shared';
-import {ExamGrade, ExamGradeDiscoveryResult} from '@msh/shared/domain-models';
+import { ExamGrade, ExamGradeDiscoveryResult } from '@msh/shared/domain-models';
 
 @Injectable({
   providedIn: 'root',
@@ -27,9 +27,7 @@ export class ExamGradeApiService {
     return this.apiService.post(`/ExamGrade/DiscoverGrade`, body);
   }
 
-  getGradesForStudentsById(
-      id: string
-  ): Observable<ApiResult<ExamGrade[]>> {
+  getGradesForStudentsById(id: string): Observable<ApiResult<ExamGrade[]>> {
     const url = `/ExamGrade/GetExamGradesByStudentId/${id}`;
     return this.apiService.get<ApiResult<ExamGrade[]>>(url);
   }

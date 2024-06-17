@@ -4,7 +4,7 @@ import {
   Component,
   EventEmitter,
   Input,
-  Output
+  Output,
 } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AdministrationOffice } from '@msh/shared/domain-models';

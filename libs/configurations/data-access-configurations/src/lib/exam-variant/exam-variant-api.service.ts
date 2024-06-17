@@ -29,10 +29,10 @@ export class ExamVariantApiService {
 
   update(examVariant: ExamVariant): Observable<ApiResult<ExamVariant>> {
     return this.apiService
-      .post<ApiResult<ExamVariant>, ExamVariant>(
-        `/ExamVariant/Update`,
-        examVariant
-      )
+      .post<
+        ApiResult<ExamVariant>,
+        ExamVariant
+      >(`/ExamVariant/Update`, examVariant)
       .pipe(
         map(data => data),
         catchError(error => throwError(error)),

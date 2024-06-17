@@ -28,11 +28,7 @@ export class APIService {
     });
   }
 
-  getData<T>(
-    url: string,
-    params: any,
-    responseType = 'json'
-  ): Observable<T> {
+  getData<T>(url: string, params: any, responseType = 'json'): Observable<T> {
     return this.http.get<T>(`${this.api_url}${url}`, {
       headers: this.headers,
       params,

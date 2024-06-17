@@ -21,8 +21,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
-import {DropdownModule} from "primeng/dropdown";
-import {AppBoolPipe} from "@msh/shared/ui-shared";
+import { DropdownModule } from 'primeng/dropdown';
+import { AppBoolPipe } from '@msh/shared/ui-shared';
 
 @UntilDestroy()
 @Component({

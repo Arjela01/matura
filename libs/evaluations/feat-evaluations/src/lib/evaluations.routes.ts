@@ -253,7 +253,7 @@ export const EVALUATION_ROUTES: Route[] = [
     loadComponent: () =>
       import(
         './exam-questions-scores/manage-exam-question-score/manage-exam-question-score.component'
-        ).then(m => m.ManageExamQuestionsScoreComponent),
+      ).then(m => m.ManageExamQuestionsScoreComponent),
   },
   {
     path: 'exam-question-score-totals',
@@ -289,7 +289,7 @@ export const EVALUATION_ROUTES: Route[] = [
     loadComponent: () =>
       import(
         './student-list-publications/student-list-publications-grid/student-list-publications-grid.component'
-        ).then(m => m.StudentListPublicationsGridComponent),
+      ).then(m => m.StudentListPublicationsGridComponent),
   },
 
   {
@@ -297,13 +297,13 @@ export const EVALUATION_ROUTES: Route[] = [
     loadComponent: () =>
       import(
         './student-list-publications/current-student-list-publications-records/current-student-list-publications-records.component'
-        ).then(m => m.CurrentStudentListPublicationsRecordsComponent),
+      ).then(m => m.CurrentStudentListPublicationsRecordsComponent),
   },
   {
     path: 'student-list-publications/:id/diff',
     loadComponent: () =>
       import(
         './student-list-publications/diff-student-list-publications-records/diff-student-list-publications-records.component'
-        ).then(m => m.DiffStudentListPublicationsRecordsComponent),
+      ).then(m => m.DiffStudentListPublicationsRecordsComponent),
   },
 ];

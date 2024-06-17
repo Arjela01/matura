@@ -8,7 +8,10 @@ import { map, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class MenuApiService {
-  constructor(private http: HttpClient, private apiService: APIService) {}
+  constructor(
+    private http: HttpClient,
+    private apiService: APIService
+  ) {}
 
   loadMenus(): Observable<MenuNode[]> {
     return this.apiService.get<{ data: MenuNode[] }>(`/Menu`).pipe(

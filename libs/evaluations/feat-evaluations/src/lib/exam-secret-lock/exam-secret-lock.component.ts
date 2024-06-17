@@ -20,7 +20,7 @@ import { ExamSecretLockApiService } from '@msh/evaluations/data-access-evaluatio
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { InputSwitchModule } from 'primeng/inputswitch';
-import {AppBoolPipe} from "@msh/shared/ui-shared";
+import { AppBoolPipe } from '@msh/shared/ui-shared';
 
 @UntilDestroy()
 @Component({

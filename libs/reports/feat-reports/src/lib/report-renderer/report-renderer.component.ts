@@ -49,9 +49,8 @@ export class ReportRendererComponent implements OnInit {
   isFallObj: { value: string | number; key: string } | null = this.findIsFallID(
     this.route.snapshot.queryParams
   );
-  examTypeObj: { value: string | number; key: string } | null = this.findExamTypeID(
-    this.route.snapshot.queryParams
-  );
+  examTypeObj: { value: string | number; key: string } | null =
+    this.findExamTypeID(this.route.snapshot.queryParams);
   filters: { value: boolean; key: string } = this.initFilters();
   returnUrl?: string | null = null;
   displayModal = false;
@@ -109,18 +108,14 @@ export class ReportRendererComponent implements OnInit {
     return null;
   }
   findIsFallID(obj: { [x: string]: string | number }) {
-    const key = Object.keys(obj).find(
-      k => k.toLowerCase() === 'isfall'
-    );
+    const key = Object.keys(obj).find(k => k.toLowerCase() === 'isfall');
     if (key) {
       return { key: key, value: obj[key] };
     }
     return null;
   }
   findExamTypeID(obj: { [x: string]: string | number }) {
-    const key = Object.keys(obj).find(
-      k => k.toLowerCase() === 'examtypeid'
-    );
+    const key = Object.keys(obj).find(k => k.toLowerCase() === 'examtypeid');
     if (key) {
       return { key: key, value: obj[key] };
     }
@@ -160,7 +155,13 @@ export class ReportRendererComponent implements OnInit {
     }
     if (this.id && this.studentObj && this.yearObj) {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.studentObj.key}=${this.studentObj.value}&${this.yearObj.key}=${this.yearObj.value}`;
-    } else if (this.id && this.folderObj && this.yearObj&& this.isFallObj&& this.examTypeObj) {
+    } else if (
+      this.id &&
+      this.folderObj &&
+      this.yearObj &&
+      this.isFallObj &&
+      this.examTypeObj
+    ) {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&${this.folderObj.key}=${this.folderObj.value}&${this.yearObj.key}=${this.yearObj.value}&${this.isFallObj.key}=${this.isFallObj.value}&${this.examTypeObj.key}=${this.examTypeObj.value}`;
     } else {
       this.iframeUrl = `${this.reports_app_url}/?reportId=${this.id}&academicyearid=${this.academicYear}`;
@@ -191,15 +192,15 @@ export class ReportRendererComponent implements OnInit {
         currentUrl === `/${this.reportsPath}/view/${this.a1Report}`
           ? this.reportsPath
           : this.returnUrl
-          ? this.returnUrl
-          : this.a1Path;
+            ? this.returnUrl
+            : this.a1Path;
     } else if (this.id === this.a1ZReport.toString()) {
       destinationPath =
         currentUrl === `/${this.reportsPath}/view/${this.a1ZReport}`
           ? this.reportsPath
           : this.returnUrl
-          ? this.returnUrl
-          : this.a1ZPath;
+            ? this.returnUrl
+            : this.a1ZPath;
     } else if (this.id === this.archiveFolderReport.toString()) {
       destinationPath =
         currentUrl === `/${this.reportsPath}/view/${this.archiveFolderReport}`

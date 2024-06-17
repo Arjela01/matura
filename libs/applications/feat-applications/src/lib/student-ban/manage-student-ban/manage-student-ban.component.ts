@@ -199,7 +199,7 @@ export class ManageStudentBanComponent implements OnInit {
       studentFirstName: '',
       studentLastName: '',
       studentMiddleName: '',
-      studentId: ''
+      studentId: '',
     } as StudentBan;
     this.cd.detectChanges();
   }

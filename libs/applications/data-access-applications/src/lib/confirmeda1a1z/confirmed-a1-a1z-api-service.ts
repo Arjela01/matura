@@ -13,9 +13,10 @@ export class ConfirmedA1A1ZService {
 
   approveA1A1Z(studentId: string): Observable<ApiResult<Student>> {
     return this.apiService
-      .post<ApiResult<Student>, Student>(
-        `/A1A1ZConfirmation/Confirm?studentId=${studentId}`
-      )
+      .post<
+        ApiResult<Student>,
+        Student
+      >(`/A1A1ZConfirmation/Confirm?studentId=${studentId}`)
       .pipe(
         map((data: any) => data),
         catchError(error => throwError(error))
@@ -28,9 +29,10 @@ export class ConfirmedA1A1ZService {
   }
   refuseA1A1Z(studentId: string): Observable<ApiResult<Student>> {
     return this.apiService
-      .post<ApiResult<Student>, Student>(
-        `/A1A1ZConfirmation/Refuse?studentId=${studentId}`
-      )
+      .post<
+        ApiResult<Student>,
+        Student
+      >(`/A1A1ZConfirmation/Refuse?studentId=${studentId}`)
       .pipe(
         map((data: any) => data),
         catchError(error => throwError(error))

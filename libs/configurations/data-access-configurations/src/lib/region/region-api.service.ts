@@ -25,7 +25,10 @@ export class RegionApiService {
   }
 
   update(region: Region): Observable<ApiResult<Region>> {
-    return this.apiService.post<ApiResult<Region>, Region>(`/Region/Update`, region);
+    return this.apiService.post<ApiResult<Region>, Region>(
+      `/Region/Update`,
+      region
+    );
   }
 
   delete(regionId: string): Observable<ApiResult<unknown>> {

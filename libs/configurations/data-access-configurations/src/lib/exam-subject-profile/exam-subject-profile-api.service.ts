@@ -25,10 +25,10 @@ export class ExamSubjectProfileApiService {
     examSubjectProfile: ExamSubjectProfile
   ): Observable<ApiResult<ExamSubjectProfile>> {
     return this.apiService
-      .post<ApiResult<ExamSubjectProfile>, ExamSubjectProfile>(
-        `/ExamSubjectProfile`,
-        examSubjectProfile
-      )
+      .post<
+        ApiResult<ExamSubjectProfile>,
+        ExamSubjectProfile
+      >(`/ExamSubjectProfile`, examSubjectProfile)
       .pipe(
         map(data => data),
         catchError(error => throwError(error)),
@@ -40,10 +40,10 @@ export class ExamSubjectProfileApiService {
     examSubjectProfile: ExamSubjectProfile
   ): Observable<ApiResult<ExamSubjectProfile>> {
     return this.apiService
-      .post<ApiResult<ExamSubjectProfile>, ExamSubjectProfile>(
-        `/ExamSubjectProfile/Update`,
-        examSubjectProfile
-      )
+      .post<
+        ApiResult<ExamSubjectProfile>,
+        ExamSubjectProfile
+      >(`/ExamSubjectProfile/Update`, examSubjectProfile)
       .pipe(
         map(data => data),
         catchError(error => throwError(error)),

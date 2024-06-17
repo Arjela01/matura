@@ -20,7 +20,10 @@ export class GendersApiService {
   }
 
   update(gender: Gender): Observable<ApiResult<Gender>> {
-    return this.apiService.post<ApiResult<Gender>, Gender>(`/Gender/Update`, gender);
+    return this.apiService.post<ApiResult<Gender>, Gender>(
+      `/Gender/Update`,
+      gender
+    );
   }
 
   delete(genderId: number): Observable<ApiResult<unknown>> {

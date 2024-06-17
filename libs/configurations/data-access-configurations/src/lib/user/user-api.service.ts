@@ -14,7 +14,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UserApiService {
-  constructor(private http: HttpClient, private apiService: APIService) {}
+  constructor(
+    private http: HttpClient,
+    private apiService: APIService
+  ) {}
 
   loadUsers(event: TableLazyLoadEvent): Observable<UserTableView> {
     return this.apiService.post(`/User/TableData`, event);

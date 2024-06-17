@@ -61,7 +61,7 @@ export class ManageArchiveFolderCoverComponent implements OnInit {
     private readonly examTypeApiService: ExamTypeApiService,
     private readonly examVariantApiService: ExamVariantApiService,
     private router: Router
-  ) { }
+  ) {}
   items: MenuItem[] | any;
 
   ngOnInit() {

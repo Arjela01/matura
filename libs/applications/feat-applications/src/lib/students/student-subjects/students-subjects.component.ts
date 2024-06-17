@@ -5,7 +5,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ButtonModule } from 'primeng/button';
 import { RouterLink } from '@angular/router';
-import { ExamSubject} from '@msh/shared/domain-models';
+import { ExamSubject } from '@msh/shared/domain-models';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
 
 @Component({

@@ -71,7 +71,7 @@ import { MenuItemClickService } from '@msh/shared/util-shared';
                 : 'subset',
             queryParams: 'ignored',
             matrixParams: 'ignored',
-            fragment: 'ignored'
+            fragment: 'ignored',
           }
         "
         [fragment]="item.fragment"

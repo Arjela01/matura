@@ -19,7 +19,7 @@ import { RolesFormComponent } from '../roles-form/roles-form.component';
 import { RolesGridComponent } from '../roles-grid/roles-grid.component';
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent } from 'primeng/table';
-import {Router} from "@angular/router";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'msh-manage-roles',
@@ -60,7 +60,11 @@ export class ManageRolesComponent {
     switch (event.action) {
       case GRID_ACTIONS.EDIT:
         this.selectedRole = Object.assign({}, event.data as Role);
-        this.router.navigate(['/configurations', 'roles', this.selectedRole.id]);
+        this.router.navigate([
+          '/configurations',
+          'roles',
+          this.selectedRole.id,
+        ]);
         this.displayModal = true;
         break;
     }

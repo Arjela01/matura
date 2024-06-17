@@ -1,13 +1,10 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { A1zFormComponent } from '../a1z-form/a1z-form.component';
 import { ActivatedRoute } from '@angular/router';
 import { A1ZFormModeEnum } from '../a1z-form-mode.enum';
-import {CarriedGradesFormComponent} from "../../carried-grade/carried-grade-form/carried-grade-form.component";
+import { CarriedGradesFormComponent } from '../../carried-grade/carried-grade-form/carried-grade-form.component';
 
 @Component({
   selector: 'msh-a1z-form-edit',
@@ -15,7 +12,12 @@ import {CarriedGradesFormComponent} from "../../carried-grade/carried-grade-form
   templateUrl: './a1-z-form-edit.component.html',
   styleUrls: ['./a1-z-form-edit.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, FormsModule, A1zFormComponent, CarriedGradesFormComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    A1zFormComponent,
+    CarriedGradesFormComponent,
+  ],
   providers: [],
 })
 export class A1ZFormEditComponent {

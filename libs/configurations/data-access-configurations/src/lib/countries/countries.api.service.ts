@@ -8,7 +8,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CountriesApiService {
-  constructor(private http: HttpClient, private apiService: APIService) {}
+  constructor(
+    private http: HttpClient,
+    private apiService: APIService
+  ) {}
 
   loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(

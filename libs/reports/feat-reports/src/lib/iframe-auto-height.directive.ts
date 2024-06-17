@@ -10,7 +10,10 @@ export class IframeAutoHeightDirective {
     this.setHeight(event.target?.ownerDocument?.body?.offsetHeight);
   }
 
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
+  constructor(
+    private el: ElementRef,
+    private renderer: Renderer2
+  ) {}
 
   private setHeight(height: number) {
     let customHeight = height;

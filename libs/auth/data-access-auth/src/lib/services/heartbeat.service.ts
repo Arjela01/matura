@@ -28,5 +28,8 @@ export class HeartbeatService {
   public stopTimer(): void {
     this._stopTimer$.next();
   }
-  constructor(private apiService: APIService, private injector: Injector) {}
+  constructor(
+    private apiService: APIService,
+    private injector: Injector
+  ) {}
 }

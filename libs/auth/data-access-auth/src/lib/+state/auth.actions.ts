@@ -27,7 +27,7 @@ export const AuthActions = createActionGroup({
     }>(),
     'Change Academic Year': props<{ academicYear: Partial<AcademicYear> }>(),
     'Login Failure': props<{ error: Error }>(),
-      'Login Success': props<{
+    'Login Success': props<{
       loginResponse: LoginResponse;
     }>(),
     passwordChange: emptyProps(),

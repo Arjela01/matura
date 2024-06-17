@@ -48,10 +48,10 @@ export class ExamSubjectApiService {
 
   update(examSubject: ExamSubject): Observable<ApiResult<ExamSubject>> {
     return this.apiService
-      .post<ApiResult<ExamSubject>, ExamSubject>(
-        `/ExamSubject/Update`,
-        examSubject
-      )
+      .post<
+        ApiResult<ExamSubject>,
+        ExamSubject
+      >(`/ExamSubject/Update`, examSubject)
       .pipe(
         map(data => data),
         catchError(error => throwError(error)),

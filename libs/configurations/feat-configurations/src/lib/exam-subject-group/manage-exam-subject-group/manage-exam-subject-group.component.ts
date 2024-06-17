@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
   ExamSubjectApiService,
-  ExamSubjectGroupApiService
+  ExamSubjectGroupApiService,
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ExamSubjectGroup } from '@msh/shared/domain-models';

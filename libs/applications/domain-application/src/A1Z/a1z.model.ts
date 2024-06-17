@@ -38,7 +38,6 @@ export interface A1Z {
   carriedSubjectD2Id?: string;
   carriedGradeD2SubjectName?: string;
 
-
   subjectD3Id?: string;
   subjectD3Name?: string;
   subjectD3IsNotGraded?: boolean;

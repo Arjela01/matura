@@ -64,7 +64,7 @@ export class ManageA1ReportViewComponent {
     private readonly studentApiService: StudentsApiService,
     private readonly highSchoolApiService: HighSchoolApiService,
     private route: ActivatedRoute,
-    private a1zApiService: A1ZApiService,
+    private a1zApiService: A1ZApiService
   ) {
     this.id = this.route.snapshot.params['id'];
     this.reportType = this.route.snapshot.params['reportType'];

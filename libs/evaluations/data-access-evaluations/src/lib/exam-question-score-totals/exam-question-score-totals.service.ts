@@ -78,6 +78,8 @@ export class ExamQuestionScoreTotalsService {
   }
 
   isBarcodeFree(barcode: string | undefined): Observable<ApiResult<boolean>> {
-    return this.apiService.get(`/ExamQuestionScoreTotal/IsBarcodeFree/${barcode}`);
+    return this.apiService.get(
+      `/ExamQuestionScoreTotal/IsBarcodeFree/${barcode}`
+    );
   }
 }

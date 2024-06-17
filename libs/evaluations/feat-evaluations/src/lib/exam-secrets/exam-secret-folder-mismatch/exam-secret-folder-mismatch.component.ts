@@ -23,7 +23,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExamSecretApiService } from '@msh/evaluations/data-access-evaluations';
 import { combineLatest, map, skip, tap } from 'rxjs';
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import {AppBoolPipe} from "@msh/shared/ui-shared";
+import { AppBoolPipe } from '@msh/shared/ui-shared';
 
 @UntilDestroy()
 @Component({

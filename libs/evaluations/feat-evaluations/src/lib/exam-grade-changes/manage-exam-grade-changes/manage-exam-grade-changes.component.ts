@@ -47,7 +47,10 @@ export class ManageExamGradeChangesComponent implements OnInit {
 
   examSubjects: DropdownModel<string>[] = [];
   examGradeChangeTypes: DropdownModel<string>[] = [];
-  filters: TableLazyLoadEvent | null = {sortField: "sortField", sortOrder: -1};
+  filters: TableLazyLoadEvent | null = {
+    sortField: 'sortField',
+    sortOrder: -1,
+  };
   totalRecords = 0;
   selectedExamQuestion: ExamGradeChange | null = null;
   displayModal = false;

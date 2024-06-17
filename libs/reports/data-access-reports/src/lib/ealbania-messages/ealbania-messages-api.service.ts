@@ -17,7 +17,6 @@ export class EalbaniaMessagesApiService {
     return this.apiService.post(`/EAlbaniaMessage/GenerateGradeMessages`);
   }
 
-
   approveGradeMessages() {
     return this.apiService.post(`/EAlbaniaMessage/ApproveGradeMessages`);
   }
@@ -28,6 +27,5 @@ export class EalbaniaMessagesApiService {
 
   loadFakeReceiver(): Observable<any> {
     return this.apiService.get(`/GGFakeReceiver`);
-
   }
 }

@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { LoginRequest } from '../models/login-request.model';
 import { AuthActions } from './auth.actions';
 import { authQuery } from './auth.selectors';
-import {LoginResponse} from "../models/login-response.model";
+import { LoginResponse } from '../models/login-response.model';
 @Injectable({ providedIn: 'root' })
 export class AuthFacade {
   private readonly store = inject(Store);

@@ -72,5 +72,5 @@ export enum RoleName {
   DV = 'DV (Drejtoria e Vlerësimit)',
   MbikqyresFormularesh = 'Mbikqyres Formularesh',
   Operator = 'Operator',
-  HighSchool = 'HighSchool'
+  HighSchool = 'HighSchool',
 }

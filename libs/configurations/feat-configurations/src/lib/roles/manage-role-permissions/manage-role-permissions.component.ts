@@ -7,7 +7,10 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { PermissionsApiService, RolesApiService } from '@msh/configurations/data-access-configurations';
+import {
+  PermissionsApiService,
+  RolesApiService,
+} from '@msh/configurations/data-access-configurations';
 import {
   Permission,
   PermissionCategory,
@@ -38,7 +41,7 @@ import { RolesGridComponent } from '../roles-grid/roles-grid.component';
     ToolbarModule,
     RippleModule,
     FormsModule,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './manage-role-permissions.component.html',
   styleUrls: ['./manage-role-permissions.component.scss'],

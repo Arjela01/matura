@@ -8,7 +8,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ExamGradeApiService {
-  constructor(private http: HttpClient, private apiService: APIService) {}
+  constructor(
+    private http: HttpClient,
+    private apiService: APIService
+  ) {}
 
   //TODO: Replace any with ExamGrade model
   getExamGrade(studentId: number): Observable<ApiResult<any>> {
