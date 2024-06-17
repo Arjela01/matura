@@ -25,6 +25,16 @@
         class="mr-1 w-full"
         (onClick)="deleteGradeMessages()" />
     </div>
+    <div class="mt-2">
+      <span class="text-orange-800 pr-2"
+        >Në Pritje: {{ stats.waitingCount }}</span
+      >
+      <span class="text-green-500 pr-2">Dërguar: {{ stats.successCount }}</span>
+      <span class="text-red-500 pr-2">Gabim: {{ stats.errorCount }}</span>
+      <span class="text-blue-500"
+        >Për Miratim: {{ stats.needApprovalCount }}</span
+      >
+    </div>
   </p-card>
 </div>
 
@@ -91,39 +101,6 @@
                 <p-columnFilter
                   type="text"
                   field="studentLastName"
-                  display="menu"
-                  mshColumnFilterDirective></p-columnFilter>
-              </div>
-            </th>
-            <th pSortableColumn="topic">
-              <div class="white-space-nowrap">Tema</div>
-              <div class="white-space-nowrap">
-                <p-sortIcon field="topic"></p-sortIcon>
-                <p-columnFilter
-                  type="text"
-                  field="topic"
-                  display="menu"
-                  mshColumnFilterDirective></p-columnFilter>
-              </div>
-            </th>
-            <th pSortableColumn="messageSender">
-              <div class="white-space-nowrap">Dërguesi</div>
-              <div class="white-space-nowrap">
-                <p-sortIcon field="messageSender"></p-sortIcon>
-                <p-columnFilter
-                  type="text"
-                  field="messageSender"
-                  display="menu"
-                  mshColumnFilterDirective></p-columnFilter>
-              </div>
-            </th>
-            <th pSortableColumn="userEmail">
-              <div class="white-space-nowrap">Email</div>
-              <div class="white-space-nowrap">
-                <p-sortIcon field="userEmail"></p-sortIcon>
-                <p-columnFilter
-                  type="text"
-                  field="userEmail"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
@@ -217,30 +194,61 @@
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
+            <th pSortableColumn="userEmail">
+              <div class="white-space-nowrap">Email</div>
+              <div class="white-space-nowrap">
+                <p-sortIcon field="userEmail"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="userEmail"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="topic">
+              <div class="white-space-nowrap">Tema</div>
+              <div class="white-space-nowrap">
+                <p-sortIcon field="topic"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="topic"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="messageSender">
+              <div class="white-space-nowrap">Dërguesi</div>
+              <div class="white-space-nowrap">
+                <p-sortIcon field="messageSender"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="messageSender"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-message>
           <tr>
             <td style="width: 5%">
-                <div class="whitespace-nowrap flex">
+              <div class="whitespace-nowrap flex">
                 <p-button
-                        size="small"
-                        class="p-button-link p-button-rounded"
-                        icon="pi pi-check"
-                        severity="success"
-                        title="Mirato"
-                        (click)="approveMessage(message)"
-                        *ngIf="!message.isApproved"
-                />
+                  size="small"
+                  class="p-button-link p-button-rounded"
+                  icon="pi pi-check"
+                  severity="success"
+                  title="Mirato"
+                  (click)="approveMessage(message)"
+                  *ngIf="!message.isApproved" />
                 <p-button
-                        size="small"
-                        class="p-button-link p-button-rounded"
-                        icon="pi pi-trash"
-                        severity="danger"
-                        title="Fshi"
-                        (click)="deleteMessage(message)"
-                />
-                </div>
+                  size="small"
+                  class="p-button-link p-button-rounded"
+                  icon="pi pi-trash"
+                  severity="danger"
+                  title="Fshi"
+                  (click)="deleteMessage(message)" />
+              </div>
             </td>
             <td style="width: 10%">
               <a
@@ -261,31 +269,22 @@
             <td style="width: 10%">
               {{ message.studentLastName }}
             </td>
-            <td style="width: 10%">
-              {{ message.topic }}
-            </td>
-            <td style="width: 10%">
-              {{ message.messageSender }}
-            </td>
-            <td style="width: 10%">
-              {{ message.userEmail }}
-            </td>
             <td style="width: 30%">
               {{ message.content }}
             </td>
-            <td style="width: 10%">
+            <td style="width: 5%">
               {{ message.isApproved | app_bool }}
             </td>
             <td style="width: 10%">
               {{ message.ApprovalDate | app_date }}
             </td>
-            <td style="width: 10%">
+            <td style="width: 5%">
               {{ message.isDelivered | app_bool }}
             </td>
             <td style="width: 10%">
               {{ message.deliveryDate | app_date }}
             </td>
-            <td style="width: 10%">
+            <td style="width: 5%">
               {{ message.isDeliveryError | app_bool }}
             </td>
             <td style="width: 10%">
@@ -293,6 +292,15 @@
             </td>
             <td style="width: 10%">
               {{ message.deliveryError }}
+            </td>
+            <td style="width: 10%">
+              {{ message.userEmail }}
+            </td>
+            <td style="width: 10%">
+              {{ message.topic }}
+            </td>
+            <td style="width: 10%">
+              {{ message.messageSender }}
             </td>
           </tr>
         </ng-template>
@@ -302,24 +310,24 @@
 </div>
 
 <p-confirmDialog
-    #cd
-    header="Konfirmo"
-    icon="pi pi-exclamation-triangle"
-    [style]="{ width: '450px' }">
-    <ng-template pTemplate="footer">
-        <button
-                type="button"
-                pButton
-                icon="pi pi-times"
-                label="Jo"
-                class="p-button-text"
-                (click)="cd.reject()"></button>
-        <button
-                type="button"
-                pButton
-                icon="pi pi-check"
-                label="Po"
-                class="p-button"
-                (click)="cd.accept()"></button>
-    </ng-template>
+  #cd
+  header="Konfirmo"
+  icon="pi pi-exclamation-triangle"
+  [style]="{ width: '450px' }">
+  <ng-template pTemplate="footer">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Jo"
+      class="p-button-text"
+      (click)="cd.reject()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Po"
+      class="p-button"
+      (click)="cd.accept()"></button>
+  </ng-template>
 </p-confirmDialog>

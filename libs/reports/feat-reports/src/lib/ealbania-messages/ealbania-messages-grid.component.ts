@@ -1,5 +1,9 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+} from '@angular/core';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -9,7 +13,10 @@ import { TooltipModule } from 'primeng/tooltip';
 import { RouterLink } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { EAlbaniaMessage } from '@msh/shared/domain-models';
+import {
+  EAlbaniaMessage,
+  EAlbaniaMessageStatistics,
+} from '@msh/shared/domain-models';
 import {
   ColumnFilterDirective,
   GlobalToastService,
@@ -50,11 +57,18 @@ export class EalbaniaMessagesGridComponent {
   data$ = this.data$$.asObservable();
   totalRecords = 0;
   filters: TableLazyLoadEvent | null = null;
+  stats: EAlbaniaMessageStatistics = {
+    errorCount: 0,
+    waitingCount: 0,
+    successCount: 0,
+    needApprovalCount: 0,
+  } as EAlbaniaMessageStatistics;
 
   constructor(
     private readonly ealbaniaMessagesApiService: EalbaniaMessagesApiService,
     private readonly toastService: GlobalToastService,
-    private readonly confirmationService: ConfirmationService
+    private readonly confirmationService: ConfirmationService,
+    private readonly cd: ChangeDetectorRef
   ) {}
 
   getData($event: TableLazyLoadEvent) {
@@ -66,6 +80,14 @@ export class EalbaniaMessagesGridComponent {
       .subscribe(response => {
         this.data$$.next(response.data);
         this.totalRecords = response.total;
+      });
+
+    this.ealbaniaMessagesApiService
+      .getStatistics()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.stats = response;
+        this.cd.markForCheck();
       });
   }
 

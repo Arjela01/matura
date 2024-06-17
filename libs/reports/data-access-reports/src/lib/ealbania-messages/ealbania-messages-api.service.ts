@@ -13,6 +13,10 @@ export class EalbaniaMessagesApiService {
     return this.apiService.post(`/EAlbaniaMessage/TableData`, filter);
   }
 
+  getStatistics(): Observable<any> {
+    return this.apiService.post(`/EAlbaniaMessage/GetStats`);
+  }
+
   generateGradeMessages() {
     return this.apiService.post(`/EAlbaniaMessage/GenerateGradeMessages`);
   }
