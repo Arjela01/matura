@@ -45,7 +45,7 @@ import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
   templateUrl: './student-list-publications-grid.component.html',
   styleUrls: ['./student-list-publications-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ConfirmationService],
+  providers: [ConfirmationService, DatePipe],
 })
 @UntilDestroy()
 export class StudentListPublicationsGridComponent {

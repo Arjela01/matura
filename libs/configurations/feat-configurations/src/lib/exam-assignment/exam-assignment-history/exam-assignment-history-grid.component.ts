@@ -48,7 +48,7 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
   ],
   templateUrl: './exam-assignment-history-grid.component.html',
   styleUrls: ['./exam-assignment-history-grid.component.scss'],
-  providers: [Apollo],
+  providers: [Apollo, DatePipe],
 })
 @UntilDestroy()
 export class ExamAssignmentHistoryGridComponent {

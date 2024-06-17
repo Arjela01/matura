@@ -47,6 +47,7 @@ import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
   templateUrl: './exam-date-grid.component.html',
   styleUrls: ['./exam-date-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [DatePipe],
 })
 export class ExamDateGridComponent {
   @Input() examDates: ExamDate[] = [];

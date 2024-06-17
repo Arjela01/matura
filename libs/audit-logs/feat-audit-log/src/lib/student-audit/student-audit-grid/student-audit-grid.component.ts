@@ -31,6 +31,7 @@ import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
   templateUrl: './student-audit-grid.component.html',
   styleUrls: ['./student-audit-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [DatePipe],
 })
 export class StudentAuditGridComponent {
   private studentAuditList$$ = new BehaviorSubject<Student[]>([]);

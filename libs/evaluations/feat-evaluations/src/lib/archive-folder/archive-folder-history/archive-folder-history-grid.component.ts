@@ -45,7 +45,7 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
   ],
   templateUrl: './archive-folder-history-grid.component.html',
   styleUrls: ['./archive-folder-history-grid.component.scss'],
-  providers: [Apollo],
+  providers: [Apollo, DatePipe],
 })
 @UntilDestroy()
 export class ArchiveFolderHistoryGridComponent {

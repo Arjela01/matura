@@ -42,6 +42,7 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
     DatePipe,
     AppDatePipe,
   ],
+  providers: [DatePipe],
   templateUrl: './annual-grades-grid.component.html',
   styleUrls: ['./annual-grades-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

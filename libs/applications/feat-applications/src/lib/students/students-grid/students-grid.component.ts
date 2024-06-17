@@ -52,6 +52,7 @@ import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
   templateUrl: './students-grid.component.html',
   styleUrls: ['./students-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [DatePipe],
 })
 export class StudentsGridComponent {
   @Input() students: Student[] = [];

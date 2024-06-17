@@ -41,6 +41,7 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
     DatePipe,
     AppDatePipe,
   ],
+  providers: [DatePipe],
   templateUrl: './dashboard-items-grid.component.html',
   styleUrls: ['./dashboard-items-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

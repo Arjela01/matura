@@ -44,6 +44,7 @@ import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
   templateUrl: './exam-secrets-grid.component.html',
   styleUrls: ['./exam-secrets-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [DatePipe],
 })
 export class ExamSecretsGridComponent {
   @Input() examSecrets: ExamSecret[] = [];

@@ -41,6 +41,7 @@ import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
   templateUrl: './ealbania-messages-grid.component.html',
   styleUrls: ['./ealbania-messages-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [DatePipe],
 })
 export class EalbaniaMessagesGridComponent {
   private data$$ = new BehaviorSubject<EAlbaniaMessage[]>([]);

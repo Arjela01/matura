@@ -51,6 +51,7 @@ import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
   templateUrl: './exam-assignment-grid.component.html',
   styleUrls: ['./exam-assignment-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [DatePipe],
 })
 export class ExamAssignmentGridComponent {
   @Input() examAssignments: ExamAssignment[] = [];

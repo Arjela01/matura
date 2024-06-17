@@ -61,7 +61,7 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
   templateUrl: './a1-grid.component.html',
   styleUrls: ['./a1-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ConfirmationService, DialogService],
+  providers: [ConfirmationService, DialogService, DatePipe],
 })
 @UntilDestroy()
 export class A1GridComponent implements OnInit {

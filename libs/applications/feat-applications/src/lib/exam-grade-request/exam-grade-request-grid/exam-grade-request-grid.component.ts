@@ -39,6 +39,7 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
     DatePipe,
     AppDatePipe,
   ],
+  providers: [DatePipe],
   templateUrl: './exam-grade-request-grid.component.html',
   styleUrls: ['./exam-grade-request-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

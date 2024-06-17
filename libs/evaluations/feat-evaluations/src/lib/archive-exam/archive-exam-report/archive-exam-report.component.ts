@@ -40,7 +40,7 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
   templateUrl: './archive-exam-report.component.html',
   styleUrls: ['./archive-exam-report.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ConfirmationService],
+  providers: [ConfirmationService, DatePipe],
 })
 export class ArchiveExamReportComponent implements OnInit {
   private archiveFolderSubject = new BehaviorSubject<ArchiveFolder | null>(

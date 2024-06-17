@@ -38,6 +38,7 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
     DatePipe,
     AppDatePipe,
   ],
+  providers: [DatePipe],
   templateUrl: './exam-copy-grid.component.html',
   styleUrls: ['./exam-copy-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -37,6 +37,7 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
     DatePipe,
     AppDatePipe,
   ],
+  providers: [DatePipe],
   templateUrl: './student-data.component.html',
   styleUrls: ['./student-data.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

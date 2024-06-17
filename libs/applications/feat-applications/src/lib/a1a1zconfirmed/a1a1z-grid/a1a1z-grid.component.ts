@@ -45,6 +45,7 @@ import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
   templateUrl: './a1a1z-grid.component.html',
   styleUrls: ['./a1a1z-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [DatePipe],
 })
 export class A1a1zGridComponent {
   @Input() students: Student[] = [];

@@ -45,6 +45,7 @@ import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
   templateUrl: './student-ban-grid.component.html',
   styleUrls: ['./student-ban-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [DatePipe],
 })
 export class StudentBanGridComponent {
   @Input() bannedStudents: StudentBan[] = [];

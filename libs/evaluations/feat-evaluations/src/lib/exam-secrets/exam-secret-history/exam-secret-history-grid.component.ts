@@ -45,7 +45,7 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
   ],
   templateUrl: './exam-secret-history-grid.component.html',
   styleUrls: ['./exam-secret-history-grid.component.scss'],
-  providers: [Apollo],
+  providers: [Apollo, DatePipe],
 })
 @UntilDestroy()
 export class ExamSecretHistoryGridComponent {

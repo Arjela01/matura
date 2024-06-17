@@ -50,6 +50,7 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
     DatePipe,
     AppDatePipe,
   ],
+  providers: [DatePipe],
   templateUrl: './a2-form-annual-grades-view.component.html',
   styleUrls: ['./a2-form-annual-grades-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

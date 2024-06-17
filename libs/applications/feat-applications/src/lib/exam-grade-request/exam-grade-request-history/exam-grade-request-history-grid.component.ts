@@ -52,7 +52,7 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
   ],
   templateUrl: './exam-grade-request-history-grid.component.html',
   styleUrls: ['./exam-grade-request-history-grid.component.scss'],
-  providers: [Apollo],
+  providers: [Apollo, DatePipe],
 })
 @UntilDestroy()
 export class ExamGradeRequestHistoryGridComponent {

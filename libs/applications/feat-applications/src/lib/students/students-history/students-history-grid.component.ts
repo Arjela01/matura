@@ -56,7 +56,7 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
   ],
   templateUrl: './students-history-grid.component.html',
   styleUrls: ['./students-history-grid.component.scss'],
-  providers: [Apollo],
+  providers: [Apollo, DatePipe],
 })
 @UntilDestroy()
 export class StudentsHistoryGridComponent {

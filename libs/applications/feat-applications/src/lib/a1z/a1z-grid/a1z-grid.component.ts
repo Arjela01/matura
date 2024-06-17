@@ -47,6 +47,7 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
     DatePipe,
     AppDatePipe,
   ],
+  providers: [DatePipe],
   templateUrl: './a1z-grid.component.html',
   styleUrls: ['./a1z-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

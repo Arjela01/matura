@@ -7,17 +7,16 @@ import {
   Output,
 } from '@angular/core';
 import {
-  GridEvent,
-  GRID_ACTIONS,
   ColumnFilterDirective,
   DateFilterService,
+  GRID_ACTIONS,
+  GridEvent,
 } from '@msh/shared/util-shared';
-import { TableLazyLoadEvent } from 'primeng/table';
+import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
-import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { EmptySite, ExamAssignment } from '@msh/shared/domain-models';
 import { AppDatePipe } from '@msh/shared/ui-shared';
@@ -37,6 +36,7 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
     DatePipe,
     AppDatePipe,
   ],
+  providers: [DatePipe],
   templateUrl: './empty-site-grid.component.html',
   styleUrls: ['./empty-site-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -51,6 +51,7 @@ export class EmptySiteGridComponent {
   @Output() gridEvent = new EventEmitter<GridEvent<EmptySite | EmptySite[]>>();
 
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
+
   constructor(private dateFilterService: DateFilterService) {}
 
   onEmptySite(emptySite: EmptySite) {

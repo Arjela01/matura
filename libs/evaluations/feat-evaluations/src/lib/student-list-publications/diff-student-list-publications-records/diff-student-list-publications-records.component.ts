@@ -35,6 +35,7 @@ import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
   templateUrl: './diff-student-list-publications-records.component.html',
   styleUrls: ['./diff-student-list-publications-records.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [DatePipe],
 })
 @UntilDestroy()
 export class DiffStudentListPublicationsRecordsComponent {

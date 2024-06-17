@@ -35,6 +35,7 @@ import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
   templateUrl: './current-student-list-publications-records.component.html',
   styleUrls: ['./current-student-list-publications-records.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [DatePipe],
 })
 @UntilDestroy()
 export class CurrentStudentListPublicationsRecordsComponent {

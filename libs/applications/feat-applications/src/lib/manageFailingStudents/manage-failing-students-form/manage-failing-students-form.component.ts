@@ -40,6 +40,7 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
     DatePipe,
     AppDatePipe,
   ],
+  providers: [DatePipe],
   templateUrl: './manage-failing-students-form.component.html',
   styleUrls: ['./manage-failing-students-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

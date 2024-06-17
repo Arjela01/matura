@@ -30,6 +30,7 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
     DatePipe,
     AppDatePipe,
   ],
+  providers: [DatePipe],
   templateUrl: './diploma-recognition-grid.component.html',
   styleUrls: ['./diploma-recognition-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

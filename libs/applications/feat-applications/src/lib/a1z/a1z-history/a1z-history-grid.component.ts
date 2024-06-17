@@ -51,7 +51,7 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
   ],
   templateUrl: './a1z-history-grid.component.html',
   styleUrls: ['./a1z-history-grid.component.scss'],
-  providers: [Apollo],
+  providers: [Apollo, DatePipe],
 })
 @UntilDestroy()
 export class A1zHistoryGridComponent {
