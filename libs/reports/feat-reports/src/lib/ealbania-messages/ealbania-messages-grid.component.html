@@ -50,6 +50,7 @@
         [lazy]="true">
         <ng-template pTemplate="header">
           <tr>
+            <th></th>
             <th pSortableColumn="studentStudentId">
               <div class="white-space-nowrap">Matura ID</div>
               <div class="white-space-nowrap">
@@ -220,6 +221,27 @@
         </ng-template>
         <ng-template pTemplate="body" let-message>
           <tr>
+            <td style="width: 5%">
+                <div class="whitespace-nowrap flex">
+                <p-button
+                        size="small"
+                        class="p-button-link p-button-rounded"
+                        icon="pi pi-check"
+                        severity="success"
+                        title="Mirato"
+                        (click)="approveMessage(message)"
+                        *ngIf="!message.isApproved"
+                />
+                <p-button
+                        size="small"
+                        class="p-button-link p-button-rounded"
+                        icon="pi pi-trash"
+                        severity="danger"
+                        title="Fshi"
+                        (click)="deleteMessage(message)"
+                />
+                </div>
+            </td>
             <td style="width: 10%">
               <a
                 [routerLink]="[
@@ -278,3 +300,26 @@
     </div>
   </div>
 </div>
+
+<p-confirmDialog
+    #cd
+    header="Konfirmo"
+    icon="pi pi-exclamation-triangle"
+    [style]="{ width: '450px' }">
+    <ng-template pTemplate="footer">
+        <button
+                type="button"
+                pButton
+                icon="pi pi-times"
+                label="Jo"
+                class="p-button-text"
+                (click)="cd.reject()"></button>
+        <button
+                type="button"
+                pButton
+                icon="pi pi-check"
+                label="Po"
+                class="p-button"
+                (click)="cd.accept()"></button>
+    </ng-template>
+</p-confirmDialog>

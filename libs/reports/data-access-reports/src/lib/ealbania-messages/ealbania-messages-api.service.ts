@@ -28,4 +28,12 @@ export class EalbaniaMessagesApiService {
   loadFakeReceiver(): Observable<any> {
     return this.apiService.get(`/GGFakeReceiver`);
   }
+
+  approveMessage(id: any): Observable<any> {
+    return this.apiService.post(`/EAlbaniaMessage/Approve/${id}`);
+  }
+
+  deleteMessage(id: any): Observable<any> {
+    return this.apiService.post(`/EAlbaniaMessage/Delete/${id}`);
+  }
 }
