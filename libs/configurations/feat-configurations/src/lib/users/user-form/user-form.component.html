@@ -12,7 +12,7 @@
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.nid
+        'ng-invalid ng-dirty': submitted && !user.nid,
       }" />
     <small
       class="p-error block"
@@ -22,7 +22,9 @@
     <small
       class="p-error block"
       *ngIf="
-        submitted && nidModel.errors && nidModel.errors?.['albanianNidValidator']
+        submitted &&
+        nidModel.errors &&
+        nidModel.errors?.['albanianNidValidator']
       ">
       NID nuk i përshtatet formatit shqiptar.
     </small>
@@ -61,7 +63,7 @@
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.username
+        'ng-invalid ng-dirty': submitted && !user.username,
       }" />
     <small class="p-error block" *ngIf="submitted && !user.username">
       Përdoruesi është fushë e kërkuar.
@@ -84,7 +86,7 @@
       [showClear]="true"
       appendTo="body"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !user.roleId
+        'ng-invalid ng-dirty': submitted && !user.roleId,
       }">
     </p-dropdown>
     <small class="p-error block" *ngIf="submitted && !user.roleId">

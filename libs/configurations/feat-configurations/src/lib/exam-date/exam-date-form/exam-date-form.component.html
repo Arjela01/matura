@@ -14,7 +14,7 @@
       [showClear]="true"
       [required]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examDate.examTypeId
+        'ng-invalid ng-dirty': submitted && !examDate.examTypeId,
       }">
     </p-dropdown>
     <small class="p-error block" *ngIf="submitted && !examDate.examTypeId">
@@ -37,7 +37,7 @@
       [showClear]="true"
       [required]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examDate.examSiteId
+        'ng-invalid ng-dirty': submitted && !examDate.examSiteId,
       }">
     </p-dropdown>
     <small class="p-error block" *ngIf="submitted && !examDate.examSiteId">
@@ -60,7 +60,7 @@
       [required]="true"
       [filter]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examDate.examSiteIds
+        'ng-invalid ng-dirty': submitted && !examDate.examSiteIds,
       }">
     </p-multiSelect>
     <small class="p-error block" *ngIf="submitted && !examDate.examSiteIds">
@@ -79,7 +79,7 @@
       name="date"
       [minDate]="minimumDate"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !date
+        'ng-invalid ng-dirty': submitted && !date,
       }"></p-calendar>
     <small class="p-error block" *ngIf="submitted && !date">
       Data është fushë e kërkuar.

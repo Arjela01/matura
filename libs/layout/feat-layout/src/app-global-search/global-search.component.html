@@ -1,7 +1,6 @@
 <div class="search-overlay" *ngIf="searchBoxVisible">
   <div class="search-container">
     <div class="search-input-container">
-
       <p-autoComplete
         [(ngModel)]="searchQuery"
         [suggestions]="searchResults"
@@ -12,9 +11,9 @@
         [inputStyleClass]="'w-full search-input'"
         [panelStyleClass]="'w-full'"
         [styleClass]="'w-full'">
-          <ng-template let-node pTemplate="item">
-              {{node.text}}
-          </ng-template>
+        <ng-template let-node pTemplate="item">
+          {{ node.text }}
+        </ng-template>
       </p-autoComplete>
     </div>
   </div>

@@ -90,7 +90,10 @@
         Statusi
         <div>
           <p-sortIcon field="isFolderClosed"></p-sortIcon>
-          <p-columnFilter field="isFolderClosed" matchMode="equals" display="menu">
+          <p-columnFilter
+            field="isFolderClosed"
+            matchMode="equals"
+            display="menu">
             <ng-template
               pTemplate="filter"
               let-value
@@ -120,7 +123,7 @@
           [routerLink]="[
             '/evaluations',
             'archive-view',
-            barcodeCorrection.archiveFolderId
+            barcodeCorrection.archiveFolderId,
           ]">
           {{ this.barcodeCorrection.archiveFolderNr }}
         </a>

@@ -26,7 +26,7 @@
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !profileGroup.ordering
+        'ng-invalid ng-dirty': submitted && !profileGroup.ordering,
       }" />
     <small class="p-error block" *ngIf="submitted && !profileGroup.ordering">
       Renditja është fushë e kërkuar.

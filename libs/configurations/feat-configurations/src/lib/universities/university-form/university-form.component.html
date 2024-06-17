@@ -31,7 +31,7 @@
       [showClear]="true"
       [required]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !university.regionId
+        'ng-invalid ng-dirty': submitted && !university.regionId,
       }">
     </p-dropdown>
     <small class="p-error block" *ngIf="submitted && !university.regionId">
@@ -54,7 +54,7 @@
       [showClear]="true"
       [required]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !university.cityId
+        'ng-invalid ng-dirty': submitted && !university.cityId,
       }">
     </p-dropdown>
   </div>

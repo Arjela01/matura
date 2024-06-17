@@ -23,24 +23,24 @@
       <th pSortableColumn="cityName">
         ZVAP
         <div>
-        <p-sortIcon field="cityName"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="cityName"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+          <p-sortIcon field="cityName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="cityName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="isAllowedToLogin">
         Statusi
         <div>
-        <p-sortIcon field="isAllowedToLogin"></p-sortIcon>
-        <p-columnFilter
-          type="boolean"
-          matchMode="equals"
-          field="isAllowedToLogin"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+          <p-sortIcon field="isAllowedToLogin"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            matchMode="equals"
+            field="isAllowedToLogin"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th>Veprime</th>
@@ -73,8 +73,8 @@
             (click)="changeStatus(activateOverseer)"
             [ngClass]="
               activateOverseer.isAllowedToLogin === true
-                ?['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
-                :['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
+                ? ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
+                : ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
             ">
             {{
               activateOverseer.isAllowedToLogin === true

@@ -15,7 +15,9 @@
       appendTo="body"
       [ngClass]="{
         'ng-invalid ng-dirty':
-          submitted && !diplomaFile.studentType && diplomaFile.studentType !== 0
+          submitted &&
+          !diplomaFile.studentType &&
+          diplomaFile.studentType !== 0,
       }">
     </p-dropdown>
     <small
@@ -43,7 +45,7 @@
       appendTo="body"
       [ngClass]="{
         'ng-invalid ng-dirty':
-          submitted && (!diplomaFile.darZaId || diplomaFile.darZaId === 0)
+          submitted && (!diplomaFile.darZaId || diplomaFile.darZaId === 0),
       }">
     </p-dropdown>
     <small class="p-error block" *ngIf="submitted && !diplomaFile.darZaId">

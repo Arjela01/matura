@@ -108,7 +108,7 @@
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !studyProgram.maturaCoefficient
+        'ng-invalid ng-dirty': submitted && !studyProgram.maturaCoefficient,
       }" />
     <small
       class="p-error block"
@@ -128,7 +128,7 @@
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !studyProgram.minAverageGrade
+        'ng-invalid ng-dirty': submitted && !studyProgram.minAverageGrade,
       }" />
     <small
       class="p-error block"
@@ -164,7 +164,7 @@
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !studyProgram.usedQuota
+        'ng-invalid ng-dirty': submitted && !studyProgram.usedQuota,
       }" />
     <small class="p-error block" *ngIf="submitted && !studyProgram.usedQuota">
       Kuotat e zëna është fushë e kërkuar.
@@ -182,7 +182,7 @@
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !studyProgram.studentScores
+        'ng-invalid ng-dirty': submitted && !studyProgram.studentScores,
       }" />
     <small
       class="p-error block"
@@ -245,7 +245,8 @@
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !studyProgram.competitionCoefficient
+        'ng-invalid ng-dirty':
+          submitted && !studyProgram.competitionCoefficient,
       }" />
     <small
       class="p-error block"
@@ -265,7 +266,7 @@
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !studyProgram.competitionMaxScore
+        'ng-invalid ng-dirty': submitted && !studyProgram.competitionMaxScore,
       }" />
     <small
       class="p-error block"
@@ -285,7 +286,7 @@
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !studyProgram.competitionMinScore
+        'ng-invalid ng-dirty': submitted && !studyProgram.competitionMinScore,
       }" />
     <small
       class="p-error block"

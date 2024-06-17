@@ -55,7 +55,7 @@
               autofocus
               [ngClass]="{
                 'ng-invalid ng-dirty':
-                  submitted && !diplomaRecognition.firstName
+                  submitted && !diplomaRecognition.firstName,
               }" />
             <small
               class="p-error block"
@@ -78,7 +78,7 @@
               required
               [ngClass]="{
                 'ng-invalid ng-dirty':
-                  submitted && !diplomaRecognition.fatherName
+                  submitted && !diplomaRecognition.fatherName,
               }" />
             <small
               class="p-error block"
@@ -101,7 +101,7 @@
               autofocus
               [ngClass]="{
                 'ng-invalid ng-dirty':
-                  submitted && !diplomaRecognition.fatherName
+                  submitted && !diplomaRecognition.fatherName,
               }" />
             <small
               class="p-error block"
@@ -123,7 +123,7 @@
               name="idCard"
               autofocus
               [ngClass]="{
-                'ng-invalid ng-dirty': submitted && !diplomaRecognition.idCard
+                'ng-invalid ng-dirty': submitted && !diplomaRecognition.idCard,
               }" />
             <small
               class="p-error block"
@@ -147,7 +147,8 @@
               [(ngModel)]="diplomaRecognition.genderID"
               [autoDisplayFirst]="false"
               [ngClass]="{
-                'ng-invalid ng-dirty': submitted && !diplomaRecognition.genderID
+                'ng-invalid ng-dirty':
+                  submitted && !diplomaRecognition.genderID,
               }">
             </p-dropdown>
             <small
@@ -173,7 +174,7 @@
               name="dateOfBirth"
               [ngClass]="{
                 'ng-invalid ng-dirty':
-                  submitted && !diplomaRecognition.dateOfBirth
+                  submitted && !diplomaRecognition.dateOfBirth,
               }"></p-calendar>
             <small
               class="p-error block"
@@ -195,7 +196,7 @@
               required
               autofocus
               [ngClass]="{
-                'ng-invalid ng-dirty': submitted && !diplomaRecognition.address
+                'ng-invalid ng-dirty': submitted && !diplomaRecognition.address,
               }" />
             <small
               class="p-error block"
@@ -221,7 +222,7 @@
               [autoDisplayFirst]="false"
               [ngClass]="{
                 'ng-invalid ng-dirty':
-                  submitted && !diplomaRecognition.nationalityID
+                  submitted && !diplomaRecognition.nationalityID,
               }">
             </p-dropdown>
             <small
@@ -244,7 +245,7 @@
               required
               autofocus
               [ngClass]="{
-                'ng-invalid ng-dirty': submitted && !diplomaRecognition.city
+                'ng-invalid ng-dirty': submitted && !diplomaRecognition.city,
               }" />
             <small
               class="p-error block"
@@ -267,7 +268,7 @@
               autofocus
               [ngClass]="{
                 'ng-invalid ng-dirty':
-                  submitted && !diplomaRecognition.municipality
+                  submitted && !diplomaRecognition.municipality,
               }" />
             <small
               class="p-error block"
@@ -290,7 +291,7 @@
               autofocus
               [ngClass]="{
                 'ng-invalid ng-dirty':
-                  submitted && !diplomaRecognition.postalCode
+                  submitted && !diplomaRecognition.postalCode,
               }" />
             <small
               class="p-error block"
@@ -313,7 +314,7 @@
             autofocus
             [ngClass]="{
               'ng-invalid ng-dirty':
-                submitted && (!emailInput.valid || !diplomaRecognition.email)
+                submitted && (!emailInput.valid || !diplomaRecognition.email),
             }"
             #emailInput="ngModel" />
           <small
@@ -336,7 +337,7 @@
               name="email"
               autofocus
               [ngClass]="{
-                'ng-invalid ng-dirty': submitted && !diplomaRecognition.cel
+                'ng-invalid ng-dirty': submitted && !diplomaRecognition.cel,
               }" />
             <small
               class="p-error block"
@@ -357,7 +358,7 @@
               name="telFix"
               autofocus
               [ngClass]="{
-                'ng-invalid ng-dirty': submitted && !diplomaRecognition.telFix
+                'ng-invalid ng-dirty': submitted && !diplomaRecognition.telFix,
               }" />
             <small
               class="p-error block"
@@ -397,7 +398,7 @@
               autofocus
               [ngClass]="{
                 'ng-invalid ng-dirty':
-                  submitted && !diplomaRecognition.schoolName
+                  submitted && !diplomaRecognition.schoolName,
               }" />
             <small
               class="p-error block"
@@ -421,7 +422,7 @@
               name="acceptedDate"
               [ngClass]="{
                 'ng-invalid ng-dirty':
-                  submitted && !diplomaRecognition.schoolStartDate
+                  submitted && !diplomaRecognition.schoolStartDate,
               }"></p-calendar>
             <small
               class="p-error block"
@@ -445,7 +446,7 @@
               name="schoolGraduationDate"
               [ngClass]="{
                 'ng-invalid ng-dirty':
-                  submitted && !diplomaRecognition.schoolGraduationDate
+                  submitted && !diplomaRecognition.schoolGraduationDate,
               }"></p-calendar>
             <small
               class="p-error block"
@@ -468,7 +469,7 @@
               autofocus
               [ngClass]="{
                 'ng-invalid ng-dirty':
-                  submitted && !diplomaRecognition.yearsOfStudy
+                  submitted && !diplomaRecognition.yearsOfStudy,
               }" />
             <small
               class="p-error block"
@@ -492,7 +493,7 @@
               autofocus
               [ngClass]="{
                 'ng-invalid ng-dirty':
-                  submitted && !diplomaRecognition.schoolCity
+                  submitted && !diplomaRecognition.schoolCity,
               }" />
             <small
               class="p-error block"
@@ -515,7 +516,7 @@
               autofocus
               [ngClass]="{
                 'ng-invalid ng-dirty':
-                  submitted && !diplomaRecognition.schoolPostalCode
+                  submitted && !diplomaRecognition.schoolPostalCode,
               }" />
             <small
               class="p-error block"
@@ -537,7 +538,7 @@
               autofocus
               [ngClass]="{
                 'ng-invalid ng-dirty':
-                  submitted && !diplomaRecognition.schoolWebSite
+                  submitted && !diplomaRecognition.schoolWebSite,
               }" />
             <small
               class="p-error block"
@@ -563,7 +564,7 @@
               [autoDisplayFirst]="false"
               [ngClass]="{
                 'ng-invalid ng-dirty':
-                  submitted && !diplomaRecognition.nationalityID
+                  submitted && !diplomaRecognition.nationalityID,
               }">
             </p-dropdown>
             <small
@@ -587,7 +588,7 @@
               autofocus
               [ngClass]="{
                 'ng-invalid ng-dirty':
-                  submitted && !diplomaRecognition.schoolAddress
+                  submitted && !diplomaRecognition.schoolAddress,
               }" />
             <small
               class="p-error block"
@@ -611,7 +612,7 @@
             [ngClass]="{
               'ng-invalid ng-dirty':
                 submitted &&
-                (!emailInput.valid || !diplomaRecognition.schoolEmail)
+                (!emailInput.valid || !diplomaRecognition.schoolEmail),
             }"
             #emailInput="ngModel" />
           <small
@@ -636,7 +637,7 @@
               autofocus
               [ngClass]="{
                 'ng-invalid ng-dirty':
-                  submitted && !diplomaRecognition.schoolTelFix
+                  submitted && !diplomaRecognition.schoolTelFix,
               }" />
             <small
               class="p-error block"
@@ -748,7 +749,7 @@
               [ngClass]="{
                 'ng-invalid ng-dirty':
                   submitted &&
-                  !diplomaRecognition.diplomaRecognitionsRequestStatusID
+                  !diplomaRecognition.diplomaRecognitionsRequestStatusID,
               }">
             </p-dropdown>
             <small

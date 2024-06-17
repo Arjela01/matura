@@ -14,7 +14,8 @@
       [showClear]="true"
       appendTo="body"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examGradeChange.examGradeChangeTypeId
+        'ng-invalid ng-dirty':
+          submitted && !examGradeChange.examGradeChangeTypeId,
       }">
     </p-dropdown>
     <small
@@ -56,7 +57,7 @@
       [(ngModel)]="examGradeChange.newScore"
       required
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examGradeChange.newScore
+        'ng-invalid ng-dirty': submitted && !examGradeChange.newScore,
       }" />
     <small class="p-error block" *ngIf="submitted && !examGradeChange.newScore">
       Pikët e reja janë fushë e kërkuar.
@@ -99,7 +100,7 @@
       [showClear]="true"
       appendTo="body"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examGradeChange.newExamSubjectId
+        'ng-invalid ng-dirty': submitted && !examGradeChange.newExamSubjectId,
       }">
     </p-dropdown>
     <small

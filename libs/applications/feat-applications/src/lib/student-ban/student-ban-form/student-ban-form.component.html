@@ -13,7 +13,7 @@
               name="studentInputData"
               [(ngModel)]="studentInputData"
               [ngClass]="{
-                'ng-invalid ng-dirty': submitted && !studentInputData
+                'ng-invalid ng-dirty': submitted && !studentInputData,
               }" />
 
             <p-button
@@ -45,7 +45,7 @@
             [(ngModel)]="studentBan.examTypeId"
             [showClear]="true"
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !studentBan.examTypeId
+              'ng-invalid ng-dirty': submitted && !studentBan.examTypeId,
             }">
           </p-dropdown>
           <small
@@ -69,7 +69,7 @@
             [pattern]="barcodePattern"
             [(ngModel)]="studentBan.barcode"
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !studentBan.barcode
+              'ng-invalid ng-dirty': submitted && !studentBan.barcode,
             }" />
           <small class="p-error block" *ngIf="submitted && !studentBan.barcode">
             Barkodi është fushë e kërkuar.
@@ -86,7 +86,7 @@
             name="effectiveDate"
             appendTo="body"
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !effectiveDate
+              'ng-invalid ng-dirty': submitted && !effectiveDate,
             }"></p-calendar>
           <small class="p-error block" *ngIf="submitted && !effectiveDate">
             Data është fushë e kërkuar.
@@ -104,7 +104,7 @@
             required
             [(ngModel)]="studentBan.description"
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !studentBan.description
+              'ng-invalid ng-dirty': submitted && !studentBan.description,
             }"></textarea>
 
           <small

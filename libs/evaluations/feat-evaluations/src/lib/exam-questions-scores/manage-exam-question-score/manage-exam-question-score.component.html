@@ -36,8 +36,9 @@
         [examSubjects]="examSubjects"
         [examTypes]="examTypes"
         [examQuestionScoreTotal]="examQuestionScoreTotal"
-        (barcodeChanged)="checkBarcode($event)"
-      ></msh-exam-question-score-filters>
+        (barcodeChanged)="
+          checkBarcode($event)
+        "></msh-exam-question-score-filters>
     </div>
     <div class="mt-4">
       <msh-exam-question-score-grid

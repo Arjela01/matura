@@ -10,7 +10,7 @@
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examGradeRequest.idCard
+        'ng-invalid ng-dirty': submitted && !examGradeRequest.idCard,
       }" />
     <small class="p-error block" *ngIf="submitted && !examGradeRequest.idCard">
       NID është fushë e kërkuar.
@@ -37,7 +37,7 @@
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examGradeRequest.firstName
+        'ng-invalid ng-dirty': submitted && !examGradeRequest.firstName,
       }" />
     <small
       class="p-error block"
@@ -57,7 +57,7 @@
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examGradeRequest.middleName
+        'ng-invalid ng-dirty': submitted && !examGradeRequest.middleName,
       }" />
     <small
       class="p-error block"
@@ -76,7 +76,7 @@
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examGradeRequest.lastName
+        'ng-invalid ng-dirty': submitted && !examGradeRequest.lastName,
       }" />
     <small
       class="p-error block"
@@ -96,18 +96,16 @@
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examGradeRequest.email
+        'ng-invalid ng-dirty': submitted && !examGradeRequest.email,
       }" />
-    <small
-      class="p-error block"
-      *ngIf="submitted && !examGradeRequest.email">
+    <small class="p-error block" *ngIf="submitted && !examGradeRequest.email">
       Email është fushë e kërkuar.
     </small>
   </div>
 
   <div class="field">
     <label for="highSchool"
-    >Shkolla ku keni përfunduar arsimin e mesëm. *</label
+      >Shkolla ku keni përfunduar arsimin e mesëm. *</label
     >
     <p-dropdown
       id="highSchool"
@@ -122,9 +120,8 @@
       [(ngModel)]="examGradeRequest.highSchoolId"
       [showClear]="true"
       [ngClass]="{
-                'ng-invalid ng-dirty':
-                  submitted && !examGradeRequest.highSchoolId
-              }">
+        'ng-invalid ng-dirty': submitted && !examGradeRequest.highSchoolId,
+      }">
     </p-dropdown>
     <small
       class="p-error block"
@@ -143,7 +140,7 @@
       appendTo="body"
       name="date"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !date
+        'ng-invalid ng-dirty': submitted && !date,
       }"></p-calendar>
     <small class="p-error block" *ngIf="submitted && !date">
       Ditëlindja është fushë e kërkuar.

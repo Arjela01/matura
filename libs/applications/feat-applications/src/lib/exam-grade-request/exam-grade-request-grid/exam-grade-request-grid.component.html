@@ -20,102 +20,102 @@
       <th pSortableColumn="number">
         Numri
         <div>
-        <p-sortIcon field="number"></p-sortIcon>
-        <p-columnFilter
-          type="numeric"
-          field="number"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+          <p-sortIcon field="number"></p-sortIcon>
+          <p-columnFilter
+            type="numeric"
+            field="number"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="idCard">
         NID
         <div>
-        <p-sortIcon field="idCard"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="idCard"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+          <p-sortIcon field="idCard"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="idCard"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="maturaId">
         Matura ID
         <div>
-        <p-sortIcon field="maturaId"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="maturaId"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+          <p-sortIcon field="maturaId"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="maturaId"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="firstName">
         Emri
         <div>
-        <p-sortIcon field="firstName"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="firstName"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+          <p-sortIcon field="firstName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="firstName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="middleName">
         Atësia
         <div>
-        <p-sortIcon field="middleName"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="middleName"
-          matchMode="equals"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+          <p-sortIcon field="middleName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="middleName"
+            matchMode="equals"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="lastName">
         Mbiemri
         <div>
-        <p-sortIcon field="lastName"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="lastName"
-          matchMode="equals"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+          <p-sortIcon field="lastName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="lastName"
+            matchMode="equals"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="dateOfBirth">
         Datëlindja
         <div>
-        <p-sortIcon field="dateOfBirth"></p-sortIcon>
-        <p-columnFilter
-          type="date"
-          field="dateOfBirth"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+          <p-sortIcon field="dateOfBirth"></p-sortIcon>
+          <p-columnFilter
+            type="date"
+            field="dateOfBirth"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="academicYearName">
         Viti
         <div>
-        <p-sortIcon field="academicYearName"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="academicYearName"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+          <p-sortIcon field="academicYearName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="academicYearName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="examGradesRequestStatusDescription">
         Statusi
         <div>
-        <p-sortIcon field="examGradesRequestStatusDescription"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="examGradesRequestStatusDescription"
-          display="menu"
-          mshColumnFilterDirective></p-columnFilter>
+          <p-sortIcon field="examGradesRequestStatusDescription"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="examGradesRequestStatusDescription"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
       <th></th>
@@ -154,15 +154,15 @@
               examGradeRequest.examGradesRequestStatusId == 3
                 ? ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
                 : examGradeRequest.examGradesRequestStatusId == 2
-                ? ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
-                : ['surface-300', 'gray-text', 'px-3', 'py-1', 'fb']
+                  ? ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
+                  : ['surface-300', 'gray-text', 'px-3', 'py-1', 'fb']
             ">
             {{
               examGradeRequest.examGradesRequestStatusId == 3
                 ? 'Refuzuar'
                 : examGradeRequest.examGradesRequestStatusId == 2
-                ? 'Aprovuar'
-                : 'E Re'
+                  ? 'Aprovuar'
+                  : 'E Re'
             }}
           </span>
         </div>
@@ -176,7 +176,7 @@
             [routerLink]="[
               '/applications/manage-grade-request-details',
               examGradeRequest.id,
-              examGradeRequest.idCard
+              examGradeRequest.idCard,
             ]"
             pTooltip="Ndrysho" />
           <img

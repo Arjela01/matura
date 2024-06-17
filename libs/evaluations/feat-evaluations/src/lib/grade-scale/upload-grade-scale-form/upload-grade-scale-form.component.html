@@ -13,7 +13,7 @@
       [(ngModel)]="gradeScale.examTypeId"
       [showClear]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !gradeScale.examTypeId
+        'ng-invalid ng-dirty': submitted && !gradeScale.examTypeId,
       }">
     </p-dropdown>
     <small class="p-error block" *ngIf="submitted && !gradeScale.examTypeId">

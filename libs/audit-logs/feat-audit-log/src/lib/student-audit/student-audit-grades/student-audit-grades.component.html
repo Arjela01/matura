@@ -28,9 +28,9 @@
                   {{ grade.isCarriedGrade === true | app_bool }}
                 </td>
                 <td
-                        *ngIf="grade === grades[0] && avgGrade"
-                        [attr.rowspan]="grades.length"
-                        class="font-semibold text-center align-middle">
+                  *ngIf="grade === grades[0] && avgGrade"
+                  [attr.rowspan]="grades.length"
+                  class="font-semibold text-center align-middle">
                   {{ avgGrade }}
                 </td>
               </tr>

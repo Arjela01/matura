@@ -30,7 +30,7 @@
       [showClear]="true"
       [required]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examType
+        'ng-invalid ng-dirty': submitted && !examType,
       }">
     </p-dropdown>
     <small class="p-error block" *ngIf="submitted && !examType">
@@ -52,7 +52,7 @@
       [showClear]="true"
       [required]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examVariant.examSubjectId
+        'ng-invalid ng-dirty': submitted && !examVariant.examSubjectId,
       }">
     </p-dropdown>
     <small
@@ -88,7 +88,7 @@
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examVariant.maximumScore
+        'ng-invalid ng-dirty': submitted && !examVariant.maximumScore,
       }" />
     <small
       class="p-error block"
@@ -107,7 +107,7 @@
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examVariant.numberOfQuestions
+        'ng-invalid ng-dirty': submitted && !examVariant.numberOfQuestions,
       }" />
     <small
       class="p-error block"

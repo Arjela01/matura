@@ -34,8 +34,7 @@
       id="quotes"
       name="quotes"
       [(ngModel)]="examSite.quota"
-      autofocus
-       />
+      autofocus />
   </div>
 
   <div class="field">
@@ -55,7 +54,7 @@
       [showClear]="true"
       appendTo="body"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examSite.administrationOfficeId
+        'ng-invalid ng-dirty': submitted && !examSite.administrationOfficeId,
       }">
     </p-dropdown>
     <small
@@ -81,7 +80,7 @@
       display="chip"
       appendTo="body"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examSite.highschoolIds
+        'ng-invalid ng-dirty': submitted && !examSite.highschoolIds,
       }">
     </p-multiSelect>
     <small class="p-error block" *ngIf="submitted && !examSite.highschoolIds">

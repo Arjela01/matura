@@ -2,64 +2,64 @@
   <div>
     <table class="analytical-score-grid">
       <thead>
-      <tr>
-        <th style="width: 15%">Numri</th>
-        <th style="width: 30%">Pikët</th>
-        <th style="width: 30%">Pikët Maksimale</th>
-        <th style="width: 5%" *ngIf="examVariantId">Fshi</th>
-      </tr>
+        <tr>
+          <th style="width: 15%">Numri</th>
+          <th style="width: 30%">Pikët</th>
+          <th style="width: 30%">Pikët Maksimale</th>
+          <th style="width: 5%" *ngIf="examVariantId">Fshi</th>
+        </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let rowData of examQuestionScoreList; let i = index">
-        <td>
-          {{ rowData.examQuestion.index }}{{ rowData.examQuestion.section }}
-        </td>
-        <td>
-          <ng-container>
-            <input
-              [tabIndex]="(i + 100)"
-              type="number"
-              (keydown.enter)="focusNextRow(i + 1)"
-              pInputText
-              name="score"
-              tabindex="1"
-              [min]="0"
-              style="width: 50%"
-              [max]="rowData.examQuestion.questionMaximumScore"
-              [(ngModel)]="rowData.examQuestionScore.score"
-              (ngModelChange)="onRowChange();"
-              (input)="limitToTwoDigits(i,$event)"
-              (blur)="onInputBlur($event)"/>
-            <small
-              class="p-error block mt-3"
-              *ngIf="
+        <tr *ngFor="let rowData of examQuestionScoreList; let i = index">
+          <td>
+            {{ rowData.examQuestion.index }}{{ rowData.examQuestion.section }}
+          </td>
+          <td>
+            <ng-container>
+              <input
+                [tabIndex]="i + 100"
+                type="number"
+                (keydown.enter)="focusNextRow(i + 1)"
+                pInputText
+                name="score"
+                tabindex="1"
+                [min]="0"
+                style="width: 50%"
+                [max]="rowData.examQuestion.questionMaximumScore"
+                [(ngModel)]="rowData.examQuestionScore.score"
+                (ngModelChange)="onRowChange()"
+                (input)="limitToTwoDigits(i, $event)"
+                (blur)="onInputBlur($event)" />
+              <small
+                class="p-error block mt-3"
+                *ngIf="
                   rowData.examQuestionScore.score >
                   rowData.examQuestion.questionMaximumScore
                 ">
-              Pikët e marra nuk mund të kalojně pikët maksimale.
-            </small>
-          </ng-container>
-        </td>
-        <td>{{ rowData.examQuestion.questionMaximumScore }}</td>
-      </tr>
+                Pikët e marra nuk mund të kalojně pikët maksimale.
+              </small>
+            </ng-container>
+          </td>
+          <td>{{ rowData.examQuestion.questionMaximumScore }}</td>
+        </tr>
       </tbody>
       <tfoot *ngIf="examQuestionScoreList.length">
-      <tr class="font-semibold">
-        <td colspan="1">Totali</td>
-        <td>
-          {{ totalScore }}
-          /
-          <strong
-            style="color: blue"
-            pTooltip="Pikët Maksimale të Variantit"
-            tooltipPosition="top"
-            placeholder="Top"
-          >{{ examVariantMaximumScore }}</strong
-          >
-        </td>
-        <td></td>
-        <td *ngIf="examVariantId"></td>
-      </tr>
+        <tr class="font-semibold">
+          <td colspan="1">Totali</td>
+          <td>
+            {{ totalScore }}
+            /
+            <strong
+              style="color: blue"
+              pTooltip="Pikët Maksimale të Variantit"
+              tooltipPosition="top"
+              placeholder="Top"
+              >{{ examVariantMaximumScore }}</strong
+            >
+          </td>
+          <td></td>
+          <td *ngIf="examVariantId"></td>
+        </tr>
       </tfoot>
     </table>
   </div>

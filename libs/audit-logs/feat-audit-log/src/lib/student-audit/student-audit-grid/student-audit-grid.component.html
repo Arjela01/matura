@@ -1,200 +1,202 @@
 <div class="flex ml-2 mb-2 page-header mb-header">
-    <h2 class="flex-1">Maturantë ndër Vite</h2>
+  <h2 class="flex-1">Maturantë ndër Vite</h2>
 </div>
 
 <p-table
-    #dt
-    dataKey="Id"
-    responsiveLayout="scroll"
-    [scrollable]="true"
-    scrollHeight="820px"
-    [totalRecords]="totalRecords"
-    [rows]="100"
-    [paginator]="true"
-    [rowsPerPageOptions]="[100, 200, 300]"
-    [showCurrentPageReport]="true"
-    currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
-    [rowHover]="true"
-    selectionMode="multiple"
-    (onLazyLoad)="getStudents($event)"
-    [value]="(studentAuditList$ | async) || []"
-    [lazy]="true">
-    <ng-template pTemplate="header">
-        <tr>
-            <th pSortableColumn="studentId">
-                Matura ID
-                <div>
-                    <p-sortIcon field="studentId"></p-sortIcon>f
-                    <p-columnFilter
-                            type="text"
-                            field="studentId"
-                            display="menu"
-                            mshColumnFilterDirective></p-columnFilter>
-                </div>
-            </th>
-            <th pSortableColumn="idCard">
-                NID
-                <div>
-                    <p-sortIcon field="idCard"></p-sortIcon>
-                    <p-columnFilter
-                            type="text"
-                            field="idCard"
-                            display="menu"
-                            mshColumnFilterDirective></p-columnFilter>
-                </div>
-            </th>
-            <th pSortableColumn="firstName">
-                Emri
-                <div>
-                    <p-sortIcon field="firstName"></p-sortIcon>
-                    <p-columnFilter
-                            type="text"
-                            field="firstName"
-                            display="menu"
-                            mshColumnFilterDirective></p-columnFilter>
-                </div>
-            </th>
-            <th pSortableColumn="middleName">
-                Atësia
-                <div>
-                    <p-sortIcon field="middleName"></p-sortIcon>
-                    <p-columnFilter
-                            type="text"
-                            field="middleName"
-                            display="menu"
-                            mshColumnFilterDirective></p-columnFilter>
-                </div>
-            </th>
-            <th pSortableColumn="lastName">
-                Mbiemri
-                <div>
-                    <p-sortIcon field="lastName"></p-sortIcon>
-                    <p-columnFilter
-                            type="text"
-                            field="lastName"
-                            display="menu"
-                            mshColumnFilterDirective></p-columnFilter>
-                </div>
-            </th>
-            <th pSortableColumn="birthDate">
-                Datëlindja
-                <div>
-                    <p-sortIcon field="birthDate"></p-sortIcon>
-                    <p-columnFilter
-                            type="date"
-                            field="birthDate"
-                            display="menu"
-                            mshColumnFilterDirective></p-columnFilter>
-                </div>
-            </th>
-            <th pSortableColumn="highSchoolName">
-                Shkolla
-                <div>
-                    <p-sortIcon field="highSchoolName"></p-sortIcon>
-                    <p-columnFilter
-                            type="text"
-                            field="highSchoolName"
-                            display="menu"
-                            mshColumnFilterDirective></p-columnFilter>
-                </div>
-            </th>
-            <th pSortableColumn="profileName">
-                Profili
-                <div>
-                    <p-sortIcon field="profileName"></p-sortIcon>
-                    <p-columnFilter
-                            type="text"
-                            field="profileName"
-                            display="menu"
-                            mshColumnFilterDirective></p-columnFilter>
-                </div>
-            </th>
-            <th pSortableColumn="registrationYear">
-                Viti
-                <div>
-                    <p-sortIcon field="registrationYear"></p-sortIcon>
-                    <p-columnFilter
-                            type="text"
-                            field="registrationYear"
-                            display="menu"
-                            mshColumnFilterDirective></p-columnFilter>
-                </div>
-            </th>
-            <th pSortableColumn="isEAlbaniaApplication">
-                Krijuar nga e-Albania?
-                <div>
-                    <p-sortIcon field="isEAlbaniaApplication"></p-sortIcon>
-                    <p-columnFilter
-                            type="boolean"
-                            matchMode="equals"
-                            field="isEAlbaniaApplication"
-                            display="menu"></p-columnFilter>
-                </div>
-            </th>
-            <th pSortableColumn="isAN">
-                AK?
-                <div>
-                    <p-sortIcon field="isAN"></p-sortIcon>
-                    <p-columnFilter
-                            type="boolean"
-                            matchMode="equals"
-                            field="isAN"
-                            display="menu"></p-columnFilter>
-                </div>
-            </th>
-            <th pSortableColumn="isFall">
-                Vjeshtë
-                <div>
-                    <p-sortIcon field="isFall"></p-sortIcon>
-                    <p-columnFilter
-                            type="boolean"
-                            matchMode="equals"
-                            field="isFall"
-                            display="menu"></p-columnFilter>
-                </div>
-            </th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-student>
-        <tr>
-            <td style="width: 14%; min-width: 10rem">
-                <a [routerLink]="['/audit-log/student-audit/student-view', student.id]"
-                   class="p-button-link"
-                >{{ !student.studentId ? 'Nuk ka' : student.studentId }}</a>
-            </td>
-            <td style="width: 14%; min-width: 10rem">
-                {{ student.idCard }}
-            </td>
-            <td style="width: 14%; min-width: 10rem">
-                {{ student.firstName }}
-            </td>
-            <td style="width: 14%; min-width: 10rem">
-                {{ student.middleName }}
-            </td>
-            <td style="width: 14%; min-width: 10rem">
-                {{ student.lastName }}
-            </td>
-            <td style="width: 14%; min-width: 10rem">
-                {{ student.birthDate | app_date }}
-            </td>
-            <td style="width: 14%; min-width: 10rem">
-                {{ student.highSchoolName }}
-            </td>
-            <td style="width: 14%; min-width: 10rem">
-                {{ student.profileName }}
-            </td>
-            <td style="width: 14%; min-width: 10rem">
-                {{ student.registrationYear }}
-            </td>
-            <td style="width: 14%; min-width: 10rem">
-                {{ student.isEAlbaniaApplication | app_bool }}
-            </td>
-            <td style="width: 14%; min-width: 10rem">
-                {{ student.isAN | app_bool }}
-            </td>
-            <td style="width: 14%; min-width: 10rem">
-                {{ student.isFall | app_bool }}
-            </td>
-        </tr>
-    </ng-template>
+  #dt
+  dataKey="Id"
+  responsiveLayout="scroll"
+  [scrollable]="true"
+  scrollHeight="820px"
+  [totalRecords]="totalRecords"
+  [rows]="100"
+  [paginator]="true"
+  [rowsPerPageOptions]="[100, 200, 300]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
+  [rowHover]="true"
+  selectionMode="multiple"
+  (onLazyLoad)="getStudents($event)"
+  [value]="(studentAuditList$ | async) || []"
+  [lazy]="true">
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="studentId">
+        Matura ID
+        <div>
+          <p-sortIcon field="studentId"></p-sortIcon>f
+          <p-columnFilter
+            type="text"
+            field="studentId"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="idCard">
+        NID
+        <div>
+          <p-sortIcon field="idCard"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="idCard"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="firstName">
+        Emri
+        <div>
+          <p-sortIcon field="firstName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="firstName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="middleName">
+        Atësia
+        <div>
+          <p-sortIcon field="middleName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="middleName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="lastName">
+        Mbiemri
+        <div>
+          <p-sortIcon field="lastName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="lastName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="birthDate">
+        Datëlindja
+        <div>
+          <p-sortIcon field="birthDate"></p-sortIcon>
+          <p-columnFilter
+            type="date"
+            field="birthDate"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="highSchoolName">
+        Shkolla
+        <div>
+          <p-sortIcon field="highSchoolName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="highSchoolName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="profileName">
+        Profili
+        <div>
+          <p-sortIcon field="profileName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="profileName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="registrationYear">
+        Viti
+        <div>
+          <p-sortIcon field="registrationYear"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="registrationYear"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="isEAlbaniaApplication">
+        Krijuar nga e-Albania?
+        <div>
+          <p-sortIcon field="isEAlbaniaApplication"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            matchMode="equals"
+            field="isEAlbaniaApplication"
+            display="menu"></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="isAN">
+        AK?
+        <div>
+          <p-sortIcon field="isAN"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            matchMode="equals"
+            field="isAN"
+            display="menu"></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="isFall">
+        Vjeshtë
+        <div>
+          <p-sortIcon field="isFall"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            matchMode="equals"
+            field="isFall"
+            display="menu"></p-columnFilter>
+        </div>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-student>
+    <tr>
+      <td style="width: 14%; min-width: 10rem">
+        <a
+          [routerLink]="['/audit-log/student-audit/student-view', student.id]"
+          class="p-button-link"
+          >{{ !student.studentId ? 'Nuk ka' : student.studentId }}</a
+        >
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ student.idCard }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ student.firstName }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ student.middleName }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ student.lastName }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ student.birthDate | app_date }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ student.highSchoolName }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ student.profileName }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ student.registrationYear }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ student.isEAlbaniaApplication | app_bool }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ student.isAN | app_bool }}
+      </td>
+      <td style="width: 14%; min-width: 10rem">
+        {{ student.isFall | app_bool }}
+      </td>
+    </tr>
+  </ng-template>
 </p-table>

@@ -17,7 +17,7 @@
             [autoDisplayFirst]="false"
             [ngClass]="{
               'ng-invalid ng-dirty':
-                submitted && !dashboardItem.dashboardSectionId
+                submitted && !dashboardItem.dashboardSectionId,
             }">
           </p-dropdown>
           <small
@@ -38,7 +38,7 @@
             [style]="{ width: '100%' }"
             autofocus
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !dashboardItem.title
+              'ng-invalid ng-dirty': submitted && !dashboardItem.title,
             }" />
           <small
             class="p-error block"
@@ -58,7 +58,7 @@
             name="description"
             [(ngModel)]="dashboardItem.description"
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !dashboardItem.description
+              'ng-invalid ng-dirty': submitted && !dashboardItem.description,
             }"></textarea>
 
           <small
@@ -161,7 +161,7 @@
             name="startDate"
             (onSelect)="updateEndDateRange()"
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !formattedStartDate
+              'ng-invalid ng-dirty': submitted && !formattedStartDate,
             }"></p-calendar>
           <small class="p-error block" *ngIf="submitted && !formattedStartDate">
             Data është fushë e kërkuar.

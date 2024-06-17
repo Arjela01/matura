@@ -10,7 +10,7 @@
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !universityDepartment.name
+        'ng-invalid ng-dirty': submitted && !universityDepartment.name,
       }" />
     <small
       class="p-error block"
@@ -33,7 +33,7 @@
       [showClear]="true"
       [required]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !universityDepartment.universityId
+        'ng-invalid ng-dirty': submitted && !universityDepartment.universityId,
       }">
     </p-dropdown>
   </div>

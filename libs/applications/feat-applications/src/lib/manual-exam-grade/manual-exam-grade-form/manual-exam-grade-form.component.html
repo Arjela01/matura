@@ -32,15 +32,12 @@
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !manualExamGrade.grade
+        'ng-invalid ng-dirty': submitted && !manualExamGrade.grade,
       }" />
-    <small
-      class="p-error block"
-      *ngIf="submitted && !manualExamGrade.grade">
+    <small class="p-error block" *ngIf="submitted && !manualExamGrade.grade">
       Nota është fushë e kërkuar.
     </small>
   </div>
-
 
   <div class="flex justify-content-end">
     <button

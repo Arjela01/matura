@@ -14,7 +14,7 @@
       required
       [pattern]="barcodePattern"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !archiveExam.barcode
+        'ng-invalid ng-dirty': submitted && !archiveExam.barcode,
       }" />
     <small class="p-error block" *ngIf="submitted && !archiveExam.barcode">
       Barkodi është fushë e kërkuar.

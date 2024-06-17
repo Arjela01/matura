@@ -135,7 +135,8 @@
           [(ngModel)]="examQuestionScoreTotal.testNumber"
           required
           [ngClass]="{
-            'ng-invalid ng-dirty': submitted && !examQuestionScoreTotal.testNumber,
+            'ng-invalid ng-dirty':
+              submitted && !examQuestionScoreTotal.testNumber,
           }" />
         <small
           class="p-error block"

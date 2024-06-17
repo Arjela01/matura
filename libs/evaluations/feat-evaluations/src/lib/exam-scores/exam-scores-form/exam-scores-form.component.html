@@ -16,7 +16,7 @@
       [required]="true"
       [filter]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examTypeId
+        'ng-invalid ng-dirty': submitted && !examTypeId,
       }">
     </p-dropdown>
     <small class="p-error block" *ngIf="submitted && !examTypeId">
@@ -41,7 +41,7 @@
       [(ngModel)]="examScore.examSubjectId"
       [showClear]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examSubjectId
+        'ng-invalid ng-dirty': submitted && !examSubjectId,
       }">
     </p-dropdown>
     <small class="p-error block" *ngIf="submitted && !examSubjectId">
@@ -66,7 +66,7 @@
         (change)="onGetIndexClick(examScore.barcode)"
         [ngClass]="{
           'ng-invalid ng-dirty':
-            submitted && (!examScore.barcode || !barcodeExists)
+            submitted && (!examScore.barcode || !barcodeExists),
         }" />
     </div>
     <small class="p-error block" *ngIf="submitted && !examScore.barcode">
@@ -115,7 +115,7 @@
       autofocus
       #totalScoreInput
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examScore.totalScore
+        'ng-invalid ng-dirty': submitted && !examScore.totalScore,
       }" />
     <small class="p-error block" *ngIf="submitted && !examScore.totalScore">
       Pikët Totale janë fushë e kërkuar.

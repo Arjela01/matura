@@ -59,7 +59,9 @@
       autofocus
       [ngClass]="{
         'ng-invalid ng-dirty':
-          submitted && !dataExport.displayOrder && dataExport.displayOrder !== 0
+          submitted &&
+          !dataExport.displayOrder &&
+          dataExport.displayOrder !== 0,
       }" />
     <small
       class="p-error block"

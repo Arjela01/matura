@@ -113,9 +113,7 @@
         {{ diplomaRecognitionRecords.schoolName }}
       </td>
       <td style="width: 20%">
-        {{
-          diplomaRecognitionRecords.schoolGraduationDate | app_date
-        }}
+        {{ diplomaRecognitionRecords.schoolGraduationDate | app_date }}
       </td>
       <td style="width: 20%">
         <div class="flex">
@@ -124,23 +122,23 @@
               diplomaRecognitionRecords.diplomaRecognitionsRequestStatusID === 2
                 ? ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
                 : diplomaRecognitionRecords.diplomaRecognitionsRequestStatusID ===
-                  3
-                ? ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
-                : diplomaRecognitionRecords.diplomaRecognitionsRequestStatusID ===
-                  4
-                ? ['bg-yellow-300', 'orange-text', 'px-3', 'py-1', 'fb']
-                : ['bg-gray-300', 'gray-text', 'px-3', 'py-1', 'fb']
+                    3
+                  ? ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
+                  : diplomaRecognitionRecords.diplomaRecognitionsRequestStatusID ===
+                      4
+                    ? ['bg-yellow-300', 'orange-text', 'px-3', 'py-1', 'fb']
+                    : ['bg-gray-300', 'gray-text', 'px-3', 'py-1', 'fb']
             ">
             {{
               diplomaRecognitionRecords.diplomaRecognitionsRequestStatusID === 2
                 ? 'Refuzuar'
                 : diplomaRecognitionRecords.diplomaRecognitionsRequestStatusID ===
-                  3
-                ? 'Miratuar'
-                : diplomaRecognitionRecords.diplomaRecognitionsRequestStatusID ===
-                  4
-                ? 'Në Pritje'
-                : 'E Re'
+                    3
+                  ? 'Miratuar'
+                  : diplomaRecognitionRecords.diplomaRecognitionsRequestStatusID ===
+                      4
+                    ? 'Në Pritje'
+                    : 'E Re'
             }}
           </span>
         </div>

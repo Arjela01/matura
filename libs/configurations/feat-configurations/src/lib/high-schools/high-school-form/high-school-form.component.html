@@ -41,7 +41,9 @@
       [(ngModel)]="highSchool.officialName"
       required
       autofocus
-      [ngClass]="{ 'ng-invalid ng-dirty': submitted && !highSchool.officialName }" />
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !highSchool.officialName,
+      }" />
     <small class="p-error block" *ngIf="submitted && !highSchool.officialName">
       Emri Zyrtar është fushë e kërkuar.
     </small>
@@ -83,7 +85,7 @@
       [showClear]="true"
       [required]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !highSchool.administrationOfficeId
+        'ng-invalid ng-dirty': submitted && !highSchool.administrationOfficeId,
       }">
     </p-dropdown>
     <small
@@ -108,7 +110,7 @@
       [required]="true"
       [filter]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !highSchool.regionId
+        'ng-invalid ng-dirty': submitted && !highSchool.regionId,
       }">
     </p-dropdown>
     <small class="p-error block" *ngIf="submitted && !highSchool.regionId">
@@ -131,7 +133,7 @@
       [showClear]="true"
       [required]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !highSchool.cityId
+        'ng-invalid ng-dirty': submitted && !highSchool.cityId,
       }">
     </p-dropdown>
     <small class="p-error block" *ngIf="submitted && !highSchool.cityId">

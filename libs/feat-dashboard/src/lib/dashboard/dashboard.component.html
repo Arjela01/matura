@@ -115,7 +115,10 @@
                     (click)="downloadDocument(card)"
                     icon="pi pi-download"></p-button>
                 </div>
-                <a *ngIf="card.linkUrl" href="{{ card.linkUrl }}" target="_blank">
+                <a
+                  *ngIf="card.linkUrl"
+                  href="{{ card.linkUrl }}"
+                  target="_blank">
                   <p-button
                     label="Link"
                     icon="pi pi-link"

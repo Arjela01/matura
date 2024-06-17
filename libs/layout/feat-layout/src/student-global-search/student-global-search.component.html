@@ -12,7 +12,8 @@
         [panelStyleClass]="'w-full'"
         [styleClass]="'w-full'">
         <ng-template let-student pTemplate="item">
-          {{student.studentId}} - {{student.firstName}} {{student.middleName}} {{student.lastName}} - {{student.idCard}}
+          {{ student.studentId }} - {{ student.firstName }}
+          {{ student.middleName }} {{ student.lastName }} - {{ student.idCard }}
         </ng-template>
       </p-autoComplete>
     </div>

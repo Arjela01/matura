@@ -53,7 +53,7 @@
       [showClear]="true"
       [required]="true"
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !city.regionId
+        'ng-invalid ng-dirty': submitted && !city.regionId,
       }">
     </p-dropdown>
     <small class="p-error block" *ngIf="submitted && !city.regionId">

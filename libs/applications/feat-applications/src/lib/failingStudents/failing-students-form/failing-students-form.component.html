@@ -10,7 +10,7 @@
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !failingStudent.subject
+        'ng-invalid ng-dirty': submitted && !failingStudent.subject,
       }" />
     <small class="p-error block" *ngIf="submitted && !failingStudent.subject">
       Lënda është fushë e kërkuar.

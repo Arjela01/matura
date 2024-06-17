@@ -94,8 +94,7 @@
             type="boolean"
             matchMode="equals"
             field="isDiplomaSealSentToEalbaniaDocs"
-            display="menu"
-            ></p-columnFilter>
+            display="menu"></p-columnFilter>
         </div>
       </th>
       <th pSortableColumn="idCard">
@@ -149,9 +148,8 @@
               style="background: transparent; border: white; margin-top: 10px"
               pTooltip="Printo Diploma"
               tooltipPosition="bottom"
-              (click)="onPrint(student)" >
-              <img src="assets/svg/print.svg"/>
-
+              (click)="onPrint(student)">
+              <img src="assets/svg/print.svg" />
             </button>
           </div>
           <div>
@@ -160,8 +158,7 @@
               pTooltip="Vulos Diploma"
               tooltipPosition="bottom"
               [disabled]="responseLoaded"
-              (click)="onSeal(student)"
-            >
+              (click)="onSeal(student)">
               <img src="assets/svg/electronic-seal.svg" alt="Seal" />
             </button>
           </div>

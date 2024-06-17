@@ -81,13 +81,24 @@
         {{ record.publishDate | app_date }}
       </td>
       <td style="width: 25%">
-        <button pButton *ngIf="!record.isPublished" (click)="publishItem(record)" class="p-button-link mr-2">Publiko</button>
-        <button pButton *ngIf="!record.isPublished" (click)="deleteItem(record)" class="p-button-link">Fshi</button>
+        <button
+          pButton
+          *ngIf="!record.isPublished"
+          (click)="publishItem(record)"
+          class="p-button-link mr-2">
+          Publiko
+        </button>
+        <button
+          pButton
+          *ngIf="!record.isPublished"
+          (click)="deleteItem(record)"
+          class="p-button-link">
+          Fshi
+        </button>
       </td>
     </tr>
   </ng-template>
 </p-table>
-
 
 <p-confirmDialog
   #cd

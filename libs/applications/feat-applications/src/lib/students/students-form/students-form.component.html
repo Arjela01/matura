@@ -25,7 +25,7 @@
             [autoDisplayFirst]="false"
             [showClear]="true"
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !student.highSchoolId
+              'ng-invalid ng-dirty': submitted && !student.highSchoolId,
             }">
           </p-dropdown>
           <small
@@ -65,7 +65,7 @@
             [virtualScrollItemSize]="10"
             [filter]="true"
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !student.profileId
+              'ng-invalid ng-dirty': submitted && !student.profileId,
             }">
           </p-dropdown>
           <small class="p-error block" *ngIf="submitted && !student.profileId">
@@ -149,7 +149,7 @@
             [(ngModel)]="student.schoolFinished"
             autofocus
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !student.schoolFinished
+              'ng-invalid ng-dirty': submitted && !student.schoolFinished,
             }" />
           <small
             class="p-error block"
@@ -174,7 +174,7 @@
             required
             autofocus
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !student.graduationYear
+              'ng-invalid ng-dirty': submitted && !student.graduationYear,
             }" />
           <small
             class="p-error block"
@@ -197,7 +197,7 @@
             [autoDisplayFirst]="false"
             [ngClass]="{
               'ng-invalid ng-dirty':
-                submitted && (!student.countryId || student.countryId === 0)
+                submitted && (!student.countryId || student.countryId === 0),
             }">
           </p-dropdown>
         </div>
@@ -214,7 +214,7 @@
             (change)="validateNID()"
             autofocus
             [ngClass]="{
-              'ng-invalid ng-dirty': !student.idCard || !validNid
+              'ng-invalid ng-dirty': !student.idCard || !validNid,
             }" />
 
           <small class="p-error block" *ngIf="!validNid">
@@ -236,7 +236,7 @@
             [(ngModel)]="student.oldID"
             autofocus
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !student.oldID
+              'ng-invalid ng-dirty': submitted && !student.oldID,
             }" />
         </div>
 
@@ -251,7 +251,7 @@
             required
             autofocus
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !student.firstName
+              'ng-invalid ng-dirty': submitted && !student.firstName,
             }" />
           <small class="p-error block" *ngIf="submitted && !student.firstName">
             Emri është fushë e kërkuar.
@@ -268,7 +268,7 @@
             [(ngModel)]="student.middleName"
             autofocus
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !student.middleName
+              'ng-invalid ng-dirty': submitted && !student.middleName,
             }" />
         </div>
 
@@ -283,7 +283,7 @@
             required
             autofocus
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !student.lastName
+              'ng-invalid ng-dirty': submitted && !student.lastName,
             }" />
           <small class="p-error block" *ngIf="submitted && !student.lastName">
             Mbiemri është fushë e kërkuar.
@@ -300,7 +300,7 @@
             id="birthDate"
             name="birthDate"
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !student.birthDate
+              'ng-invalid ng-dirty': submitted && !student.birthDate,
             }"></p-calendar>
           <small class="p-error block" *ngIf="submitted && !student.birthDate">
             Datëlindja është fushë e kërkuar.
@@ -318,7 +318,7 @@
             required
             autofocus
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !student.birthPlace
+              'ng-invalid ng-dirty': submitted && !student.birthPlace,
             }" />
           <small class="p-error block" *ngIf="submitted && !student.birthPlace">
             Vendlindja është fushë e kërkuar.
@@ -339,7 +339,7 @@
             [autoDisplayFirst]="false"
             [ngClass]="{
               'ng-invalid ng-dirty':
-                submitted && (!student.genderId || student.genderId === 0)
+                submitted && (!student.genderId || student.genderId === 0),
             }">
           </p-dropdown>
           <small class="p-error block" *ngIf="submitted && !student.genderId">
@@ -358,7 +358,7 @@
             [filter]="true"
             [required]="true"
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !student.studyClass
+              'ng-invalid ng-dirty': submitted && !student.studyClass,
             }">
           </p-dropdown>
           <small class="p-error block" *ngIf="submitted && !student.studyClass">
@@ -377,7 +377,7 @@
             [filter]="true"
             [required]="true"
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !student.session
+              'ng-invalid ng-dirty': submitted && !student.session,
             }">
           </p-dropdown>
           <small class="p-error block" *ngIf="submitted && !student.session">
@@ -398,7 +398,7 @@
             autofocus
             [ngClass]="{
               'ng-invalid ng-dirty':
-                submitted && (!emailInput.valid || !student.email)
+                submitted && (!emailInput.valid || !student.email),
             }"
             #emailInput="ngModel" />
           <small
@@ -420,7 +420,7 @@
             required
             autofocus
             [ngClass]="{
-              'ng-invalid ng-dirty': submitted && !student.mobilePhone
+              'ng-invalid ng-dirty': submitted && !student.mobilePhone,
             }" />
           <small
             class="p-error block"

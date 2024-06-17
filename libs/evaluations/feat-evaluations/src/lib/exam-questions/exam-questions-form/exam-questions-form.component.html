@@ -11,7 +11,7 @@
       #indexInputField
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examQuestion.index
+        'ng-invalid ng-dirty': submitted && !examQuestion.index,
       }" />
     <small class="p-error block" *ngIf="submitted && !examQuestion.index">
       Emri është fushë e kërkuar.
@@ -27,7 +27,7 @@
       [(ngModel)]="examQuestion.section"
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examQuestion.section
+        'ng-invalid ng-dirty': submitted && !examQuestion.section,
       }" />
   </div>
 
@@ -42,7 +42,7 @@
       required
       autofocus
       [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examQuestion.questionMaximumScore
+        'ng-invalid ng-dirty': submitted && !examQuestion.questionMaximumScore,
       }" />
     <small
       class="p-error block"
