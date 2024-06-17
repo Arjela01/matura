@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -37,6 +37,7 @@ import { AppBoolPipe, AppTimePipe } from '@msh/shared/ui-shared';
   templateUrl: './exam-grade-changes-grid.component.html',
   styleUrls: ['./exam-grade-changes-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [DatePipe],
 })
 export class ExamGradeChangesGridComponent {
   @Input() examGradeChanges: ExamGradeChange[] = [];

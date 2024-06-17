@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -21,6 +21,7 @@ import { AppBoolPipe, AppDatePipe, AppTimePipe } from '@msh/shared/ui-shared';
   templateUrl: './a1-report-view.component.html',
   styleUrls: ['./a1-report-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [DatePipe],
 })
 export class A1ReportViewComponent {
   @Input() a1: A1Z | null = null;
