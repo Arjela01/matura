@@ -1,0 +1,257 @@
+<div class="flex ml-2 mb-2 page-header mb-header">
+  <h2 class="flex-1">Njoftime në eAlbania</h2>
+</div>
+
+<div class="flex justify-content-start flex-wrap">
+  <p-card class="flex align-items-center justify-content-center">
+    <div class="text-2xl mb-3">Njoftime për Notat</div>
+    <p-button label="Gjenero" icon="pi pi-play-circle" severity="info" class="mr-1"
+              (onClick)="generateGradeMessages()" />
+    <p-button label="Mirato" icon="pi pi-check" severity="success" class="mr-1" (onClick)="approveGradeMessages()" />
+    <p-button label="Fshi" icon="pi pi-trash" severity="danger" (onClick)="deleteGradeMessages()" />
+  </p-card>
+</div>
+
+<div class="grid mt-3">
+  <div class="col-12">
+    <div class="card">
+      <p-table
+        #dt
+        dataKey="id"
+        responsiveLayout="scroll"
+        [scrollable]="true"
+        scrollHeight="820px"
+        [value]="(data$ | async) || []"
+        [totalRecords]="totalRecords"
+        [rows]="10"
+        [paginator]="true"
+        [rowsPerPageOptions]="[10, 20, 30]"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
+        [rowHover]="true"
+        selectionMode="multiple"
+        (onLazyLoad)="getData($event)"
+        [lazy]="true">
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="studentStudentId">
+              <div class="white-space-nowrap">Matura ID</div>
+              <div class="white-space-nowrap">
+                <p-sortIcon field="studentStudentId"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="studentStudentId"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="studentFirstName">
+              <div class="white-space-nowrap">Emri</div>
+              <div class="white-space-nowrap">
+                <p-sortIcon field="studentFirstName"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="studentFirstName"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="studentMiddleName">
+              <div class="white-space-nowrap">Atësia</div>
+              <div class="white-space-nowrap">
+                <p-sortIcon field="studentMiddleName"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="studentMiddleName"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="studentLastName">
+              <div class="white-space-nowrap">Mbiemri</div>
+              <div class="white-space-nowrap">
+                <p-sortIcon field="studentLastName"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="studentLastName"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="topic">
+              <div class="white-space-nowrap">Tema</div>
+              <div class="white-space-nowrap">
+                <p-sortIcon field="topic"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="topic"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="messageSender">
+              <div class="white-space-nowrap">Dërguesi</div>
+              <div class="white-space-nowrap">
+                <p-sortIcon field="messageSender"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="messageSender"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="userEmail">
+              <div class="white-space-nowrap">Email</div>
+              <div class="white-space-nowrap">
+                <p-sortIcon field="userEmail"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="userEmail"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="content">
+              <div class="white-space-nowrap">Mesazhi</div>
+              <div class="white-space-nowrap">
+                <p-sortIcon field="content"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="content"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="isApproved">
+              <div class="white-space-nowrap">Miratuar?</div>
+              <div class="white-space-nowrap">
+                <p-sortIcon field="isApproved"></p-sortIcon>
+                <p-columnFilter
+                  type="boolean"
+                  field="isApproved"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="approvalDate">
+              <div class="white-space-nowrap">Data e Miratimit</div>
+              <div class="white-space-nowrap">
+                <p-sortIcon field="approvalDate"></p-sortIcon>
+                <p-columnFilter
+                  type="date"
+                  field="approvalDate"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="isDelivered">
+              <div class="white-space-nowrap">Dërguar?</div>
+              <div class="white-space-nowrap">
+                <p-sortIcon field="isDelivered"></p-sortIcon>
+                <p-columnFilter
+                  type="boolean"
+                  field="isDelivered"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="deliveryDate">
+              <div class="white-space-nowrap">Data e Dërgimit</div>
+              <div class="white-space-nowrap">
+                <p-sortIcon field="deliveryDate"></p-sortIcon>
+                <p-columnFilter
+                  type="date"
+                  field="deliveryDate"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+
+            <th pSortableColumn="isDeliveryError">
+              <div class="white-space-nowrap">Gabim?</div>
+              <div class="white-space-nowrap">
+                <p-sortIcon field="isDeliveryError"></p-sortIcon>
+                <p-columnFilter
+                  type="boolean"
+                  field="isDeliveryError"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="deliveryErrorDate">
+              <div class="white-space-nowrap">Data e Gabimit</div>
+              <div class="white-space-nowrap">
+                <p-sortIcon field="deliveryErrorDate"></p-sortIcon>
+                <p-columnFilter
+                  type="date"
+                  field="deliveryErrorDate"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="deliveryError">
+              <div class="white-space-nowrap">Gabimi</div>
+              <div class="white-space-nowrap">
+                <p-sortIcon field="deliveryError"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="deliveryError"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-message>
+          <tr>
+            <td style="width: 10%">
+              {{ message.studentStudentId }}
+            </td>
+            <td style="width: 10%">
+              {{ message.studentFirstName }}
+            </td>
+            <td style="width: 10%">
+              {{ message.studentMiddleName }}
+            </td>
+            <td style="width: 10%">
+              {{ message.studentLastName }}
+            </td>
+            <td style="width: 10%">
+              {{ message.topic }}
+            </td>
+            <td style="width: 10%">
+              {{ message.messageSender }}
+            </td>
+            <td style="width: 10%">
+              {{ message.userEmail }}
+            </td>
+            <td style="width: 30%">
+              {{ message.content }}
+            </td>
+            <td style="width: 10%">
+              {{ message.isApproved ? 'Po' : 'Jo' }}
+            </td>
+            <td style="width: 10%">
+              {{ message.ApprovalDate | date : 'dd/MM/yyyy' }}
+            </td>
+            <td style="width: 10%">
+              {{ message.isDelivered ? 'Po' : 'Jo' }}
+            </td>
+            <td style="width: 10%">
+              {{ message.deliveryDate | date : 'dd/MM/yyyy' }}
+            </td>
+            <td style="width: 10%">
+              {{ message.isDeliveryError ? 'Po' : 'Jo' }}
+            </td>
+            <td style="width: 10%">
+              {{ message.deliveryErrorDate | date : 'dd/MM/yyyy' }}
+            </td>
+            <td style="width: 10%">
+              {{ message.deliveryError }}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

@@ -41,7 +41,7 @@ export class ProcessesApiService {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Procesi rifilloi me sukses!');
+          this.toastService.showSuccess('Procesi mbaroi me sukses!');
           const dataArray = this.format(response.data);
           this.calculateGrade$$.next(dataArray);
         }

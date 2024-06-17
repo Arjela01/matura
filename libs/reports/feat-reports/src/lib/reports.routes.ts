@@ -1,5 +1,7 @@
 import { Route } from '@angular/router';
 import { EalbaniaGradesDataViewComponent } from './ealbania-grades-data-view/ealbania-grades-data-view.component';
+import { EalbaniaMessagesGridComponent } from './ealbania-messages/ealbania-messages-grid.component';
+import { GgFakeReceiverComponent } from './gg-fake-receiver/gg-fake-receiver.component';
 
 export const REPORTS_ROUTES: Route[] = [
   {
@@ -43,5 +45,19 @@ export const REPORTS_ROUTES: Route[] = [
       import(
         './ealbania-grades-data-view/ealbania-grades-data-view.component'
       ).then(m => m.EalbaniaGradesDataViewComponent),
+  },
+  {
+    path: 'ealbania-messages',
+    loadComponent: () =>
+      import('./ealbania-messages/ealbania-messages-grid.component').then(
+        m => m.EalbaniaMessagesGridComponent
+      ),
+  },
+  {
+    path: 'gg-fake-receiver',
+    loadComponent: () =>
+      import('./gg-fake-receiver/gg-fake-receiver.component').then(
+        m => m.GgFakeReceiverComponent
+      ),
   },
 ];
