@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -39,14 +39,13 @@ import { CardModule } from 'primeng/card';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GgFakeReceiverComponent implements OnInit {
-  private data$$ = new BehaviorSubject<string[]>([]);
-  data$ = this.data$$.asObservable();
+  data: string[] = [];
   totalRecords = 0;
   filters: TableLazyLoadEvent | null = null;
 
   constructor(
     private readonly ealbaniaMessagesApiService: EalbaniaMessagesApiService,
-    private readonly toastService: GlobalToastService
+    private readonly cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -54,12 +53,12 @@ export class GgFakeReceiverComponent implements OnInit {
   }
 
   getData() {
-
     this.ealbaniaMessagesApiService
       .loadFakeReceiver()
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.data$$.next(response.data);
+        this.data = response;
+        this.cd.markForCheck();
       });
   }
 }
