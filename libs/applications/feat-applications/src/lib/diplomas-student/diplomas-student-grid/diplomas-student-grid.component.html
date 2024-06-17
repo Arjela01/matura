@@ -20,90 +20,189 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="darZaName">
+      <th pSortableColumn="administrationOfficeName">
         ZVAP
         <div>
-          <p-sortIcon field="darZaName"></p-sortIcon>
+          <p-sortIcon field="administrationOfficeName"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="darZaName"
+            field="administrationOfficeName"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="schoolName">
+      <th pSortableColumn="highSchoolName">
         Shkolla
         <div>
-          <p-sortIcon field="schoolName"></p-sortIcon>
+          <p-sortIcon field="highSchoolName"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="schoolName"
+            field="highSchoolName"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="studentId">
+      <th pSortableColumn="studentStudentId">
         Matura ID
         <div>
-          <p-sortIcon field="studentId"></p-sortIcon>
+          <p-sortIcon field="studentStudentId"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="studentId"
+            field="studentStudentId"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="fullName">
-        Emri i plotë
+      <th pSortableColumn="studentFirstName">
+        Emri
         <div>
-          <p-sortIcon field="fullName"></p-sortIcon>
+          <p-sortIcon field="studentFirstName"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="fullName"
+            field="studentFirstName"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="printedDate">
-        Data e printimit
+      <th pSortableColumn="studentMiddleName">
+        Atësi
         <div>
-          <p-sortIcon field="printedDate"></p-sortIcon>
+          <p-sortIcon field="studentMiddleName"></p-sortIcon>
           <p-columnFilter
-            type="date"
-            field="printedDate"
+            type="text"
+            field="studentMiddleName"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="ealbaniaDocsDiplomaPrintedDate">
-        Data e Vulosjes
+      <th pSortableColumn="studentLastName">
+        Mbiemri
         <div>
-          <p-sortIcon field="ealbaniaDocsDiplomaPrintedDate"></p-sortIcon>
+          <p-sortIcon field="studentLastName"></p-sortIcon>
           <p-columnFilter
-            type="date"
-            field="ealbaniaDocsDiplomaPrintedDate"
+            type="text"
+            field="studentLastName"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="isDiplomaSealSentToEalbaniaDocs">
-        Dërguar te e-Albania?
-        <div>
-          <p-sortIcon field="isDiplomaSealSentToEalbaniaDocs"></p-sortIcon>
-          <p-columnFilter
-            type="boolean"
-            matchMode="equals"
-            field="isDiplomaSealSentToEalbaniaDocs"
-            display="menu"></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="idCard">
+      <th pSortableColumn="studentIdCard">
         NID
         <div>
-          <p-sortIcon field="idCard"></p-sortIcon>
+          <p-sortIcon field="studentIdCard"></p-sortIcon>
           <p-columnFilter
             type="text"
-            field="idCard"
+            field="studentIdCard"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="countryName">
+        Nënshtetësia
+        <div>
+          <p-sortIcon field="countryName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="countryName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="averageGrade">
+        Mesatarja
+        <div>
+          <p-sortIcon field="averageGrade"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="averageGrade"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="isPrinted">
+        Printuar?
+        <div>
+          <p-sortIcon field="isPrinted"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            field="isPrinted"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="isPrinted">
+        Data e Printimit
+        <div>
+          <p-sortIcon field="isPrinted"></p-sortIcon>
+          <p-columnFilter
+            type="date"
+            field="isPrinted"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="isDelivered">
+        Dërguar në eAlbania?
+        <div>
+          <p-sortIcon field="isDelivered"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            field="isDelivered"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="deliveryDate">
+        Data e Dërgimit
+        <div>
+          <p-sortIcon field="deliveryDate"></p-sortIcon>
+          <p-columnFilter
+            type="date"
+            field="deliveryDate"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="isSealError">
+        Gabim në Vulosje?
+        <div>
+          <p-sortIcon field="isSealError"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            field="isSealError"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="isDeliveryError">
+        Gabim në Dërgim?
+        <div>
+          <p-sortIcon field="isDeliveryError"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            field="isDeliveryError"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="errorDate">
+        Data e Gabimit
+        <div>
+          <p-sortIcon field="errorDate"></p-sortIcon>
+          <p-columnFilter
+            type="date"
+            field="errorDate"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="error">
+        Gabimi
+        <div>
+          <p-sortIcon field="error"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="error"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
@@ -114,33 +213,56 @@
 
   <ng-template pTemplate="body" let-student>
     <tr>
-      <td style="width: 14%; min-width: 10rem">
-        {{ student.darZaName }}
+      <td style="width: 10%; min-width: 10rem">
+        {{ student.administrationOfficeName }}
       </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ student.schoolName }}
+      <td style="width: 10%; min-width: 10rem">
+        {{ student.highSchoolName }}
       </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ student.studentId }}
+      <td style="width: 10%; min-width: 10rem">
+        {{ student.studentStudentId }}
       </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ student.fullName }}
+      <td style="width: 10%; min-width: 10rem">
+        {{ student.studentFirstName }}
       </td>
-
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 10%; min-width: 10rem">
+        {{ student.studentMiddleName }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ student.studentLastName }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ student.studentIdCard }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ student.countryName }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ student.isPrinted | app_bool }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
         {{ student.printedDate | app_date }}
       </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ student.ealbaniaDocsDiplomaPrintedDate | app_date }}
+      <td style="width: 10%; min-width: 10rem">
+        {{ student.isDelivered | app_bool }}
       </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ student.isDiplomaSealSentToEalbaniaDocs | app_bool }}
+      <td style="width: 10%; min-width: 10rem">
+        {{ student.deliveryDate | app_date }}
       </td>
-      <td style="width: 14%; min-width: 10rem">
-        {{ student.idCard }}
+      <td style="width: 10%; min-width: 10rem">
+        {{ student.isSealError | app_bool }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ student.isDeliveryError | app_bool }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ student.errorDate | app_date }}
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ student.error }}
       </td>
 
-      <td style="width: 14%; min-width: 10rem">
+      <td style="width: 10%; min-width: 10rem">
         <div class="flex">
           <div>
             <button

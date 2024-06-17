@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AcademicYear, DiplomaStatusData } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { Observable, catchError, map, throwError } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { ApiResult } from '@msh/shared/data-access-shared';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class DiplomasStudentApiService {
       localStorage.getItem('academicYear') as string
     ) as AcademicYear;
     return this.apiService.get<any>(
-      `/PrintedDiplomas/${id}?academicYearId=${academicYear.id}&isReportAll=${allReports}`,
+      `/Diplomas/${id}?academicYearId=${academicYear.id}&isReportAll=${allReports}`,
       new HttpParams(),
       'blob'
     );
@@ -28,7 +28,7 @@ export class DiplomasStudentApiService {
       localStorage.getItem('academicYear') as string
     ) as AcademicYear;
     return this.apiService.get<any>(
-      `/PrintedDiplomas/ElectronicSealForeigner/${id}?academicYearId=${academicYear.id}&isReportAll=${allReports}`,
+      `/Diplomas/ElectronicSealForeigner/${id}?academicYearId=${academicYear.id}&isReportAll=${allReports}`,
       new HttpParams(),
       'blob'
     );
@@ -40,34 +40,38 @@ export class DiplomasStudentApiService {
     allReports: boolean
   ): Observable<ApiResult<any>> {
     return this.apiService.post<ApiResult<any>, any>(
-      `/PrintedDiplomas/ElectronicSeal/${studentId}?academicYearId=${academicYearId}&isReportAll=${allReports}`,
+      `/Diplomas/ElectronicSeal/${studentId}?academicYearId=${academicYearId}&isReportAll=${allReports}`,
       {}
     );
   }
 
   printAllElectronicSeal(data: string): Observable<any> {
     return this.apiService.get<any>(
-      `/PrintedDiplomas/GenerateElectronicSealDiplomasPdf${data}`,
+      `/Diplomas/GenerateElectronicSealDiplomasPdf${data}`,
       new HttpParams()
     );
   }
 
   exportAllDiplomas(data: string): Observable<BlobPart> {
     return this.apiService.get<any>(
-      `/PrintedDiplomas/GenerateDiplomasPdf${data}`,
+      `/Diplomas/GenerateDiplomasPdf${data}`,
       new HttpParams(),
       'blob'
     );
   }
 
-  loadStudentDiplomas(event: TableLazyLoadEvent): Observable<any> {
-    return this.apiService.post(`/PrintedDiplomas/TableData`, event).pipe(
+  loadDiplomas(event: TableLazyLoadEvent): Observable<any> {
+    return this.apiService.post(`/Diplomas/TableData`, event).pipe(
       map((data: any) => data),
       catchError(error => throwError(error))
     );
   }
 
   getStudentSealSummary(): Observable<DiplomaStatusData> {
-    return this.apiService.get<any>(`/PrintedDiplomas/GetStudentSealSummary`);
+    return this.apiService.get<any>(`/Diplomas/GetStudentSealSummary`);
+  }
+
+  generateDiplomas(): Observable<any> {
+    return this.apiService.post(`/Diplomas/GenerateDiplomas`);
   }
 }

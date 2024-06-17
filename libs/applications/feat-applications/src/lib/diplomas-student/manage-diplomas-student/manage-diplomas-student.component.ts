@@ -16,8 +16,8 @@ import {
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { Status, Student, StudentType } from '@msh/shared/domain-models';
 import {
-  GRID_ACTIONS,
   GlobalToastService,
+  GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -30,16 +30,17 @@ import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
 import {
   BehaviorSubject,
-  Observable,
   combineLatest,
   map,
-  tap,
+  Observable,
   skip,
+  tap,
 } from 'rxjs';
 import { DiplomasStudentFormComponent } from '../diplomas-student-form/diplomas-student-form.component';
 import { DiplomasStudentGridComponent } from '../diplomas-student-grid/diplomas-student-grid.component';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { PrintedDiplomasForeignStudentsComponent } from '../printed-diplomas-foreign-students/printed-diplomas-foreign-students.component';
+
 interface Filter {
   value: any;
   matchMode: string;
@@ -50,6 +51,7 @@ interface InitialFilter {
   isPrinted?: Filter[];
   countryId?: Filter[];
 }
+
 @Component({
   selector: 'msh-manage-diplomas-student',
   standalone: true,
@@ -115,13 +117,15 @@ export class ManageDiplomasStudentComponent implements OnInit {
     }),
     tap()
   );
+
   constructor(
     private readonly studentService: StudentsApiService,
     private readonly toastService: GlobalToastService,
     private diplomasService: DiplomasStudentApiService,
     private administrationOfficeApiService: AdministrationOfficeApiService,
     private highschoolApiService: HighSchoolApiService,
-    private authFacade: AuthFacade
+    private authFacade: AuthFacade,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -133,6 +137,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
     this.selectedAction = action;
     this.displayModal = true;
   }
+
   onModalClose() {
     this.displayModal = false;
   }
@@ -145,6 +150,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
         this.administrationOffices = response.data;
       });
   }
+
   getHighSchoolsDropdown() {
     this.highschoolApiService
       .loadDropDownList()
@@ -179,6 +185,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
         this.getStudentDiplomas(this.filters as TableLazyLoadEvent);
       });
   }
+
   onFormSave(data: string) {
     if (this.selectedAction === 'print') {
       this.printAllDiplomas(data);
@@ -186,6 +193,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
       this.sealAllDiplomas(data);
     }
   }
+
   sealDiploma(event: GridEvent<Student>) {
     if (event.data?.countryId === 3) {
       this.printed = !this.printed;
@@ -227,6 +235,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
         .add(() => this.responseLoaded.next(false));
     }
   }
+
   sealAllDiplomas(data: string) {
     this.responseLoaded.next(true);
     this.diplomasService
@@ -319,7 +328,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
     this.filters = $event;
 
     this.diplomasService
-      .loadStudentDiplomas($event)
+      .loadDiplomas($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         const students = [...response.data];
@@ -352,5 +361,16 @@ export class ManageDiplomasStudentComponent implements OnInit {
       .subscribe(res => {
         this.diplomaStatus = res.data;
       });
+  }
+
+  generateDiplomas() {
+    this.confirmationService.confirm({
+      message: 'Jeni i sigurt që doni të refuzoni formularin?',
+      accept: () => {
+        this.diplomasService.generateDiplomas().subscribe(response => {
+          this.toastService.showSuccess('Diplomat u gjeneruan me sukses');
+        });
+      },
+    });
   }
 }
