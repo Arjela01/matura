@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -18,7 +18,7 @@ import { Apollo, gql } from 'apollo-angular';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { ARCHIVE_FOLDER } from '../archive-folder-query';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppDatePipe } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'msh-archive-folder-history-grid',
@@ -40,6 +40,7 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     TableModule,
     RouterLink,
     ColumnFilterDirective,
+    DatePipe,
     AppDatePipe,
   ],
   templateUrl: './archive-folder-history-grid.component.html',

@@ -281,7 +281,7 @@
               {{ examGrade.roundedGrade }}
             </td>
             <td style="width: 5%; min-width: 10rem">
-              {{ examGrade.isFall ? 'Po' : 'Jo' }}
+              {{ examGrade.isFall | app_bool }}
             </td>
             <td *ngIf="userRole === RoleName.Admin">
               <img

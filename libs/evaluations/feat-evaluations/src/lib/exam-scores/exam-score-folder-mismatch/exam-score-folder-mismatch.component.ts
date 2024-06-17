@@ -21,6 +21,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
 import { ExamScore } from '@msh/shared/domain-models';
 import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import {AppBoolPipe} from "@msh/shared/ui-shared";
 
 @UntilDestroy()
 @Component({
@@ -35,6 +36,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
     CheckboxModule,
     RippleModule,
     ColumnFilterDirective,
+    AppBoolPipe,
   ],
   templateUrl: './exam-score-folder-mismatch.component.html',
   styleUrls: ['./exam-score-folder-mismatch.component.scss'],

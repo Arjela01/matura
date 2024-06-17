@@ -23,6 +23,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import {AppBoolPipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-data-export-grid',
@@ -36,6 +37,7 @@ import { TooltipModule } from 'primeng/tooltip';
     CheckboxModule,
     RippleModule,
     ColumnFilterDirective,
+    AppBoolPipe,
   ],
   templateUrl: './data-export-grid.component.html',
   styleUrls: ['./data-export-grid.component.scss'],

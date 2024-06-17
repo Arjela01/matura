@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -29,7 +29,7 @@ import {
 } from '@msh/shared/util-shared';
 import { FailingStudent } from '@msh/applications/domain-application';
 import { STUDENTS } from '../students-query';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppDatePipe } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'msh-students-history-grid',
@@ -51,6 +51,7 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     TableModule,
     RouterLink,
     ColumnFilterDirective,
+    DatePipe,
     AppDatePipe,
   ],
   templateUrl: './students-history-grid.component.html',

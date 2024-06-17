@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -8,7 +8,8 @@ import {
 } from '@angular/core';
 import { ExamCopy, ExamCopyRequestStatusEnum } from '@msh/shared/domain-models';
 import {
-  ColumnFilterDirective, DateFilterService,
+  ColumnFilterDirective,
+  DateFilterService,
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
@@ -19,7 +20,7 @@ import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { ExamCopyRequestStatusPipe } from './exam-copy-request-status-pipe';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppDatePipe } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'msh-exam-copy-grid',
@@ -34,6 +35,7 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     RippleModule,
     ExamCopyRequestStatusPipe,
     ColumnFilterDirective,
+    DatePipe,
     AppDatePipe,
   ],
   templateUrl: './exam-copy-grid.component.html',

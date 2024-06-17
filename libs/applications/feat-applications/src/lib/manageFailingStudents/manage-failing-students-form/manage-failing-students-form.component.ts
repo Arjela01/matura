@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -22,7 +22,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppDatePipe } from '@msh/shared/ui-shared';
 
 @UntilDestroy()
 @Component({
@@ -37,6 +37,7 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     InputTextareaModule,
     ButtonModule,
     CheckboxModule,
+    DatePipe,
     AppDatePipe,
   ],
   templateUrl: './manage-failing-students-form.component.html',

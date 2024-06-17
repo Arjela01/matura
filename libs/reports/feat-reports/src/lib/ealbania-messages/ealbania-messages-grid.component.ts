@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -17,7 +17,7 @@ import {
 } from '@msh/shared/util-shared';
 import { EalbaniaMessagesApiService } from '@msh/reports/data-access-reports';
 import { CardModule } from 'primeng/card';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
 
 @UntilDestroy()
 @Component({
@@ -34,7 +34,9 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     RouterLink,
     ColumnFilterDirective,
     CardModule,
+    DatePipe,
     AppDatePipe,
+    AppBoolPipe,
   ],
   templateUrl: './ealbania-messages-grid.component.html',
   styleUrls: ['./ealbania-messages-grid.component.scss'],

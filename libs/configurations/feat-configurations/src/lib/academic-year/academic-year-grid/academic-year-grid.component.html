@@ -52,11 +52,11 @@
         {{ academicYear.year }}
       </td>
       <td style="width: 33%; min-width: 10rem">
-        {{ academicYear.isActive ? 'Po' : 'Jo' }}
+        {{ academicYear.isActive | app_bool }}
       </td>
 
       <td style="width: 33%; min-width: 10rem">
-        {{ academicYear.isFall ? 'Po' : 'Jo' }}
+        {{ academicYear.isFall | app_bool }}
       </td>
       <td>
         <div class="flex">

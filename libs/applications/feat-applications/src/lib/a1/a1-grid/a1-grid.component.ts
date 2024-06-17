@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -12,8 +12,8 @@ import {
 import { AcademicYear, Student } from '@msh/shared/domain-models';
 import {
   ColumnFilterDirective,
-  GRID_ACTIONS,
   GlobalToastService,
+  GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService } from 'primeng/api';
@@ -32,7 +32,8 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { A1HistoryGridComponent } from '../a1-history/a1-history-grid.component';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppDatePipe } from '@msh/shared/ui-shared';
+
 @Component({
   selector: 'a1-grid',
   standalone: true,
@@ -54,6 +55,7 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     ColumnFilterDirective,
     RouterLink,
     A1HistoryGridComponent,
+    DatePipe,
     AppDatePipe,
   ],
   templateUrl: './a1-grid.component.html',
@@ -93,6 +95,7 @@ export class A1GridComponent implements OnInit {
       PermissionEnum.EditApplications as any
     );
   }
+
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     skip(1),
     map(([_]) => {
@@ -102,12 +105,15 @@ export class A1GridComponent implements OnInit {
     }),
     tap()
   );
+
   onNewClick() {
     this.router.navigate(['applications/a1/add']);
   }
+
   onHistoryModalClose() {
     this.displayHistoryForm = false;
   }
+
   updateA1(a1: A1Z) {
     this.a1ApiService
       .update(a1)
@@ -156,6 +162,7 @@ export class A1GridComponent implements OnInit {
         break;
     }
   }
+
   deleteA1(a1: A1Z) {
     if (!a1.id) return;
 
@@ -186,6 +193,7 @@ export class A1GridComponent implements OnInit {
         this.displayForm = false;
       });
   }
+
   onViewClick(a1: A1ZTableRecord) {
     this.router.navigate([`/applications/a1/view/${a1.id}`]);
   }

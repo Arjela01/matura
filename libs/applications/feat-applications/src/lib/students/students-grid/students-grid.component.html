@@ -175,13 +175,13 @@
         {{ student.profileName }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ student.isEAlbaniaApplication ? 'Po' : 'Jo' }}
+        {{ student.isEAlbaniaApplication | app_bool }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ student.isAN ? 'Po' : 'Jo' }}
+        {{ student.isAN | app_bool }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ student.isFall ? 'Po' : 'Jo' }}
+        {{ student.isFall | app_bool }}
       </td>
       <td style="width: 14%; min-width: 10rem">
         <div class="flex">

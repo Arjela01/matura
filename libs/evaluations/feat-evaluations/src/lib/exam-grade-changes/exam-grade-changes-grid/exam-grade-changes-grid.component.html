@@ -203,7 +203,7 @@
         {{ examGrade.examGradeChangeTypeName }}
       </td>
       <td style="width: 3%; min-width: 10rem">
-        {{ examGrade.isGradeChanged ? 'Po' : 'Jo' }}
+        {{ examGrade.isGradeChanged | app_bool }}
       </td>
       <td style="width: 3%; min-width: 10rem">
         {{ examGrade.previousGrade }}
@@ -212,7 +212,7 @@
         {{ examGrade.newGrade }}
       </td>
       <td style="width: 3%; min-width: 10rem">
-        {{ examGrade.isScoreChanged ? 'Po' : 'Jo' }}
+        {{ examGrade.isScoreChanged | app_bool }}
       </td>
       <td style="width: 3%; min-width: 10rem">
         {{ examGrade.previousScore }}
@@ -221,7 +221,7 @@
         {{ examGrade.newScore }}
       </td>
       <td style="width: 3%; min-width: 10rem">
-        {{ examGrade.isExamSubjectChanged ? 'Po' : 'Jo' }}
+        {{ examGrade.isExamSubjectChanged | app_bool }}
       </td>
       <td style="width: 10%; min-width: 10rem">
         {{ examGrade.previousExamSubjectName }}

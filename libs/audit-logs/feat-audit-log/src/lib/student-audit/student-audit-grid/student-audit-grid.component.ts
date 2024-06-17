@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { DialogModule } from 'primeng/dialog';
 import { SharedModule } from 'primeng/api';
@@ -10,7 +10,7 @@ import { ExamGrade, Student } from '@msh/shared/domain-models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { StudentsAuditService } from '@msh/audit-logs/data-access-audit-log';
 import { RouterLink } from '@angular/router';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
 
 @UntilDestroy()
 @Component({
@@ -24,7 +24,9 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     TableModule,
     TooltipModule,
     RouterLink,
+    DatePipe,
     AppDatePipe,
+    AppBoolPipe,
   ],
   templateUrl: './student-audit-grid.component.html',
   styleUrls: ['./student-audit-grid.component.scss'],

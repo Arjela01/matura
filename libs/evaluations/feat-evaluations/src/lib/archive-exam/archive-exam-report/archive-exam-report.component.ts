@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import {
@@ -20,7 +20,7 @@ import { GlobalToastService } from '@msh/shared/util-shared';
 
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppDatePipe } from '@msh/shared/ui-shared';
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-archive-exams',
@@ -34,6 +34,7 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     ToolbarModule,
     RouterLink,
     ArchiveFormComponent,
+    DatePipe,
     AppDatePipe,
   ],
   templateUrl: './archive-exam-report.component.html',

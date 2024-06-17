@@ -313,7 +313,7 @@
                 [disabled]="true"
                 id="enableZ1Subject"
                 name="enableZ1Subject"
-                [ngModel]="a1z.carryZ1 ? 'Po' : 'Jo'"
+                [ngModel]="a1z.carryZ1 | app_bool"
                 autofocus
               />
             </td>

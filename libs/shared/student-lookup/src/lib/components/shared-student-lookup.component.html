@@ -109,7 +109,7 @@
         {{ student.idCard }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ student.isFall ? 'Po' : 'Jo' }}
+        {{ student.isFall | app_bool }}
       </td>
     </tr>
   </ng-template>

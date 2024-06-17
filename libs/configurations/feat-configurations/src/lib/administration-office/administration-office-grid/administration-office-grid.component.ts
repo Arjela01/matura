@@ -23,6 +23,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { CheckboxModule } from 'primeng/checkbox';
 import { RippleModule } from 'primeng/ripple';
+import {AppBoolPipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-administration-office-grid',
@@ -36,6 +37,7 @@ import { RippleModule } from 'primeng/ripple';
     CheckboxModule,
     RippleModule,
     ColumnFilterDirective,
+    AppBoolPipe,
   ],
   templateUrl: './administration-office-grid.component.html',
   styleUrls: ['./administration-office-grid.component.scss'],

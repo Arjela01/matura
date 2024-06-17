@@ -164,7 +164,7 @@
             </td>
             <td
               style="width: 5%; min-width: 10rem; border-right: 1px solid #ddd">
-              {{ examScore.isFall ? 'Po' : 'Jo' }}
+              {{ examScore.isFall | app_bool }}
             </td>
             <td style="width: 5%; min-width: 10rem">
               {{ examScore.archiveFolderNr }}

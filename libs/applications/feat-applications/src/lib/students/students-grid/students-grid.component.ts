@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -28,7 +28,7 @@ import { RouterLink } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { StudentsHistoryGridComponent } from '../students-history/students-history-grid.component';
 import { PermissionEnum } from '@msh/auth/data-access-auth';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'msh-students-grid',
@@ -45,7 +45,9 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     ColumnFilterDirective,
     StudentsHistoryGridComponent,
     DialogModule,
+    DatePipe,
     AppDatePipe,
+    AppBoolPipe,
   ],
   templateUrl: './students-grid.component.html',
   styleUrls: ['./students-grid.component.scss'],

@@ -232,10 +232,10 @@
         {{ record.birthPlace }}
       </td>
       <td>
-        {{ record.isFall ? 'Po' : 'Jo' }}
+        {{ record.isFall | app_bool }}
       </td>
       <td>
-        {{ record.isApplyingToForeignCountries ? 'Po' : 'Jo' }}
+        {{ record.isApplyingToForeignCountries | app_bool }}
       </td>
       <td>
         {{ record.highSchoolCode }}

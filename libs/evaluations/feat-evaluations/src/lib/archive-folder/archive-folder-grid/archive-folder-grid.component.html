@@ -141,7 +141,7 @@
         {{ archiveFolder.examSubjectName }}
       </td>
       <td style="width: 5%; min-width: 10rem">
-        {{ archiveFolder.isFall ? 'Po' : 'Jo' }}
+        {{ archiveFolder.isFall | app_bool }}
       </td>
       <td class="text-center" style="width: 10%">
         <a

@@ -23,6 +23,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import {AppBoolPipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-study-program-grid',
@@ -36,6 +37,7 @@ import { TooltipModule } from 'primeng/tooltip';
     CheckboxModule,
     RippleModule,
     ColumnFilterDirective,
+    AppBoolPipe,
   ],
   templateUrl: './study-program-grid.component.html',
   styleUrls: ['./study-program-grid.component.scss'],

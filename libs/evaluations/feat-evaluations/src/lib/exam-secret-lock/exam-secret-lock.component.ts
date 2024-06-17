@@ -20,6 +20,7 @@ import { ExamSecretLockApiService } from '@msh/evaluations/data-access-evaluatio
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import {AppBoolPipe} from "@msh/shared/ui-shared";
 
 @UntilDestroy()
 @Component({
@@ -39,6 +40,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     RouterLink,
     ColumnFilterDirective,
     InputSwitchModule,
+    AppBoolPipe,
   ],
   templateUrl: './exam-secret-lock.component.html',
   styleUrls: ['./exam-secret-lock.component.scss'],

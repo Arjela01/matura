@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -28,7 +28,7 @@ import {
 } from '@msh/evaluations/data-access-evaluations';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { GlobalToastService } from '@msh/shared/util-shared';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppDatePipe } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'msh-a2-form-annual-grades-view',
@@ -47,6 +47,7 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     InputMaskModule,
     RouterLink,
     TableModule,
+    DatePipe,
     AppDatePipe,
   ],
   templateUrl: './a2-form-annual-grades-view.component.html',

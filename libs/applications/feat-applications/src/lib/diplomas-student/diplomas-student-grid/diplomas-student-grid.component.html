@@ -135,7 +135,7 @@
         {{ student.ealbaniaDocsDiplomaPrintedDate | app_date }}
       </td>
       <td style="width: 14%; min-width: 10rem">
-        {{ student.isDiplomaSealSentToEalbaniaDocs ? 'Po' : 'Jo' }}
+        {{ student.isDiplomaSealSentToEalbaniaDocs | app_bool }}
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ student.idCard }}

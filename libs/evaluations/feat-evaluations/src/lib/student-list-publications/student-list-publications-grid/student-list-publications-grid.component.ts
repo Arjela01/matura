@@ -5,7 +5,7 @@ import {
   EventEmitter,
   Output,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import {
   ExamQuestionModel,
   StudentListPublication,
@@ -24,7 +24,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Router } from '@angular/router';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { StudentListPublicationService } from '@msh/evaluations/data-access-evaluations';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'msh-exam-question-grid',
@@ -38,7 +38,9 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     ButtonModule,
     RippleModule,
     ConfirmDialogModule,
+    DatePipe,
     AppDatePipe,
+    AppBoolPipe,
   ],
   templateUrl: './student-list-publications-grid.component.html',
   styleUrls: ['./student-list-publications-grid.component.scss'],

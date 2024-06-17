@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -9,13 +9,14 @@ import {
 import { RouterLink } from '@angular/router';
 import { ExamAssignment } from '@msh/shared/domain-models';
 import {
-  ColumnFilterDirective, DateFilterService,
+  ColumnFilterDirective,
+  DateFilterService,
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
-import { DialogModule } from "primeng/dialog";
+import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import {
@@ -25,8 +26,8 @@ import {
   TableRowUnSelectEvent,
 } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import { ExamAssignmentHistoryGridComponent } from "../exam-assignment-history/exam-assignment-history-grid.component";
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { ExamAssignmentHistoryGridComponent } from '../exam-assignment-history/exam-assignment-history-grid.component';
+import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'msh-exam-assignment-grid',
@@ -43,7 +44,9 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     ColumnFilterDirective,
     DialogModule,
     ExamAssignmentHistoryGridComponent,
+    DatePipe,
     AppDatePipe,
+    AppBoolPipe,
   ],
   templateUrl: './exam-assignment-grid.component.html',
   styleUrls: ['./exam-assignment-grid.component.scss'],

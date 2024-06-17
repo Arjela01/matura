@@ -99,7 +99,7 @@
         {{ administrationOffice.name }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ administrationOffice.isRegionalOffice ? 'Po' : 'Jo' }}
+        {{ administrationOffice.isRegionalOffice | app_bool }}
       </td>
       <td style="width: 15%; min-width: 10rem">
         {{ administrationOffice.directorName }}

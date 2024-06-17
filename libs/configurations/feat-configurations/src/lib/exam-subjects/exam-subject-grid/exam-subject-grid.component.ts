@@ -23,6 +23,7 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
+import {AppBoolPipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-exam-subject-grid',
@@ -36,6 +37,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
     CheckboxModule,
     RippleModule,
     ColumnFilterDirective,
+    AppBoolPipe,
   ],
   templateUrl: './exam-subject-grid.component.html',
   styleUrls: ['./exam-subject-grid.component.scss'],

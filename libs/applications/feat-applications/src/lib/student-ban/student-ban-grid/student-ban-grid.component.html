@@ -155,7 +155,7 @@
                 {{ bannedStudent.examTypeName }}
             </td>
             <td style="width: 5%; min-width: 10rem">
-                {{ bannedStudent.isBanned ? 'Po' : 'Jo' }}
+                {{ bannedStudent.isBanned | app_bool }}
             </td>
             <td style="width: 14%; min-width: 10rem">
                 {{ bannedStudent.effectiveDate | app_date }}
@@ -164,7 +164,7 @@
                 {{ bannedStudent.description }}
             </td>
             <td style="width: 5%; min-width: 10rem">
-                {{ bannedStudent.isFall ? 'Po' : 'Jo' }}
+                {{ bannedStudent.isFall | app_bool }}
             </td>
             <td>
                 <div class="flex">

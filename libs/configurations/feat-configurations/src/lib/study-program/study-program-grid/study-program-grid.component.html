@@ -164,7 +164,7 @@
         {{ studyProgram.academicYear }}
       </td>
       <td style="width: 5%; min-width: 10rem">
-        {{ studyProgram.isTwoYearLong === 1 ? 'Po' : 'Jo' }}
+        {{ studyProgram.isTwoYearLong === 1 | app_bool }}
       </td>
       <td style="width: 5%; min-width: 10rem">
         {{ studyProgram.minAverageGrade }}
@@ -185,10 +185,10 @@
         {{ studyProgram.maturaCoefficient }}
       </td>
       <td style="width: 5%; min-width: 10rem">
-        {{ studyProgram.isWithCompetition ? 'Po' : 'Jo' }}
+        {{ studyProgram.isWithCompetition | app_bool }}
       </td>
       <td style="width: 5%; min-width: 10rem">
-        {{ studyProgram.isValidForRace ? 'Po' : 'Jo' }}
+        {{ studyProgram.isValidForRace | app_bool }}
       </td>
       <td style="width: 5%; min-width: 10rem">
         {{ studyProgram.competitionMaxScore }}

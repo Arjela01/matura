@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -15,7 +15,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppDatePipe } from '@msh/shared/ui-shared';
 
 @UntilDestroy()
 @Component({
@@ -34,6 +34,7 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     CalendarModule,
     InputMaskModule,
     RouterLink,
+    DatePipe,
     AppDatePipe,
   ],
   templateUrl: './student-data.component.html',

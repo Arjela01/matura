@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -11,7 +11,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { RouterLink } from '@angular/router';
 import { Student } from '@msh/shared/domain-models';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppDatePipe } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'msh-student-audit-data',
@@ -28,6 +28,7 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     CalendarModule,
     DropdownModule,
     RouterLink,
+    DatePipe,
     AppDatePipe,
   ],
   templateUrl: './student-audit-data.component.html',

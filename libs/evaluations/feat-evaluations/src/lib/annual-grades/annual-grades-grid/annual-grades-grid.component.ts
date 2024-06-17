@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -23,7 +23,7 @@ import { StudentsApiService } from '@msh/configurations/data-access-configuratio
 import { ExamGrade, Student } from '@msh/shared/domain-models';
 import { ColumnFilterDirective, GridEvent } from '@msh/shared/util-shared';
 import * as FileSaver from 'file-saver';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppDatePipe } from '@msh/shared/ui-shared';
 
 @UntilDestroy()
 @Component({
@@ -39,6 +39,7 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     RippleModule,
     RouterLink,
     ColumnFilterDirective,
+    DatePipe,
     AppDatePipe,
   ],
   templateUrl: './annual-grades-grid.component.html',

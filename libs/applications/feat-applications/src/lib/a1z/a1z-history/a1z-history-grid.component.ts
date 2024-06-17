@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -24,7 +24,7 @@ import { Apollo, gql } from 'apollo-angular';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { A1Z_FORMS } from '../query-a1z';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppDatePipe } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'msh-a1z-history-grid',
@@ -46,6 +46,7 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     TableModule,
     RouterLink,
     ColumnFilterDirective,
+    DatePipe,
     AppDatePipe,
   ],
   templateUrl: './a1z-history-grid.component.html',

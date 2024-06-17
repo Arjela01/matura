@@ -92,10 +92,10 @@
         {{ examType.maximumValueMultipleScore }}
       </td>
       <td style="width: 20%">
-        {{ examType.isOptional ? 'Po' : 'Jo' }}
+        {{ examType.isOptional | app_bool }}
       </td>
       <td style="width: 20%">
-        {{ examType.dependsOnSchoolProfile ? 'Po' : 'Jo' }}
+        {{ examType.dependsOnSchoolProfile | app_bool }}
       </td>
       <td>
         <div class="flex">

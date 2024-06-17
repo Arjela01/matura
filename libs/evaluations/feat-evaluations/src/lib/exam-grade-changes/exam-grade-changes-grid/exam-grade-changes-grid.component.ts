@@ -12,13 +12,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { CheckboxModule } from 'primeng/checkbox';
 import { RippleModule } from 'primeng/ripple';
-import {
-  ColumnFilterDirective,
-} from '@msh/shared/util-shared';
+import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ExamGradeChange } from '@msh/shared/domain-models';
 import { DialogModule } from 'primeng/dialog';
-import {AppTimePipe} from "@msh/shared/ui-shared";
+import { AppBoolPipe, AppTimePipe } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'msh-exam-grade-changes-grid',
@@ -34,6 +32,7 @@ import {AppTimePipe} from "@msh/shared/ui-shared";
     ColumnFilterDirective,
     DialogModule,
     AppTimePipe,
+    AppBoolPipe,
   ],
   templateUrl: './exam-grade-changes-grid.component.html',
   styleUrls: ['./exam-grade-changes-grid.component.scss'],

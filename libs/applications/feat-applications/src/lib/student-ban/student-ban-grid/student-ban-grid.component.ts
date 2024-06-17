@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -24,7 +24,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'msh-student-ban-grid',
@@ -38,7 +38,9 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     CheckboxModule,
     RippleModule,
     ColumnFilterDirective,
+    DatePipe,
     AppDatePipe,
+    AppBoolPipe,
   ],
   templateUrl: './student-ban-grid.component.html',
   styleUrls: ['./student-ban-grid.component.scss'],

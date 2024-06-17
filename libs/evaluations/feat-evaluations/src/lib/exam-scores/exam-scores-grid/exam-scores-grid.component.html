@@ -107,7 +107,7 @@
         {{ examScore.totalScore }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ examScore.isFall ? 'Po' : 'Jo' }}
+        {{ examScore.isFall | app_bool }}
       </td>
       <td>
         <div class="flex">

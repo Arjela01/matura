@@ -33,6 +33,7 @@ import { ArchiveFolder, statuses, Student } from '@msh/shared/domain-models';
 import { DialogModule } from 'primeng/dialog';
 import { ArchiveFolderHistoryGridComponent } from '../archive-folder-history/archive-folder-history-grid.component';
 import { DropdownModule } from 'primeng/dropdown';
+import {AppBoolPipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-archive-folder-grid',
@@ -53,6 +54,7 @@ import { DropdownModule } from 'primeng/dropdown';
     DialogModule,
     ArchiveFolderHistoryGridComponent,
     DropdownModule,
+    AppBoolPipe,
   ],
   templateUrl: './archive-folder-grid.component.html',
   styleUrls: ['./archive-folder-grid.component.scss'],

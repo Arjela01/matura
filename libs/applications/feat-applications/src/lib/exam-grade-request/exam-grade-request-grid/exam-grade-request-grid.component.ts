@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ExamGradeRequestModel } from '@msh/shared/domain-models';
 import {
   ColumnFilterDirective,
@@ -20,7 +20,7 @@ import { RouterLink } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { StudentsHistoryGridComponent } from '../../students/students-history/students-history-grid.component';
 import { ExamGradeRequestHistoryGridComponent } from '../exam-grade-request-history/exam-grade-request-history-grid.component';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppDatePipe } from '@msh/shared/ui-shared';
 
 @UntilDestroy()
 @Component({
@@ -36,6 +36,7 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     DialogModule,
     StudentsHistoryGridComponent,
     ExamGradeRequestHistoryGridComponent,
+    DatePipe,
     AppDatePipe,
   ],
   templateUrl: './exam-grade-request-grid.component.html',

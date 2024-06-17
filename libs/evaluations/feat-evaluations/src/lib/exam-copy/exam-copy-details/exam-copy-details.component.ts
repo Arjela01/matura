@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -25,7 +25,7 @@ import { RefuseExamCopyComponent } from '../refuse-exam-copy/refuse-exam-copy.co
 import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { ExamCopy } from '@msh/shared/domain-models';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppDatePipe } from '@msh/shared/ui-shared';
 
 @UntilDestroy()
 @Component({
@@ -43,6 +43,7 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     ApproveExamCopyComponent,
     RefuseExamCopyComponent,
     CheckboxModule,
+    DatePipe,
     AppDatePipe,
   ],
   templateUrl: './exam-copy-details.component.html',

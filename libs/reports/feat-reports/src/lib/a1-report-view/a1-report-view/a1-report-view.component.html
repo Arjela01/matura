@@ -88,11 +88,11 @@
           </tr>
           <tr class="w-full mt-4">
             <td>16. Aplikoni jashtë shtetit?</td>
-            <td>{{ a1.isApplyingToForeignCountries ? 'Po' : 'Jo' }}</td>
+            <td>{{ a1.isApplyingToForeignCountries | app_bool }}</td>
           </tr>
           <tr class="w-full mt-4">
             <td>17. Keni marrë diplomë/dëftesë pjekurie?</td>
-            <td>{{ a1.alreadyHaveDiploma ? 'Po' : 'Jo' }}</td>
+            <td>{{ a1.alreadyHaveDiploma | app_bool }}</td>
           </tr>
           <tr class="w-full mt-4" *ngIf="a1.isA1">
             <td>18. Klasa</td>

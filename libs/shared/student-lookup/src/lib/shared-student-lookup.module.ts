@@ -9,6 +9,7 @@ import { RippleModule } from 'primeng/ripple';
 import { SharedStudentApiService } from './services/shared-student-api.service';
 import { SharedStudentLookupComponent } from './components/shared-student-lookup.component';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
+import { AppBoolPipe } from '@msh/shared/ui-shared';
 
 @NgModule({
   declarations: [SharedStudentLookupComponent],
@@ -21,6 +22,7 @@ import { ColumnFilterDirective } from '@msh/shared/util-shared';
     CheckboxModule,
     RippleModule,
     ColumnFilterDirective,
+    AppBoolPipe,
   ],
   providers: [SharedStudentApiService],
   exports: [SharedStudentLookupComponent],

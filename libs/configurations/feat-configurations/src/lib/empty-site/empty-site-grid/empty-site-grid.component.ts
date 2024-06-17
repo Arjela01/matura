@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -9,7 +9,8 @@ import {
 import {
   GridEvent,
   GRID_ACTIONS,
-  ColumnFilterDirective, DateFilterService,
+  ColumnFilterDirective,
+  DateFilterService,
 } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -19,7 +20,7 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { EmptySite, ExamAssignment } from '@msh/shared/domain-models';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppDatePipe } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'msh-empty-site-grid',
@@ -33,6 +34,7 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     CheckboxModule,
     RippleModule,
     ColumnFilterDirective,
+    DatePipe,
     AppDatePipe,
   ],
   templateUrl: './empty-site-grid.component.html',

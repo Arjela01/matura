@@ -23,6 +23,7 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { Profile } from '@msh/shared/domain-models';
+import {AppBoolPipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-profile-grid',
@@ -36,6 +37,7 @@ import { Profile } from '@msh/shared/domain-models';
     CheckboxModule,
     RippleModule,
     ColumnFilterDirective,
+    AppBoolPipe,
   ],
   templateUrl: './profile-grid.component.html',
   styleUrls: ['./profile-grid.component.scss'],

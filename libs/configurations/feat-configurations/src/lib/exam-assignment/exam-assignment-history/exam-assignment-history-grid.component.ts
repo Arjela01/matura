@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -16,9 +16,12 @@ import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { RouterLink } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { ColumnFilterDirective, EXAM_ASSIGNMENT } from '@msh/shared/util-shared';
-import { ExamAssignment } from "@msh/shared/domain-models";
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import {
+  ColumnFilterDirective,
+  EXAM_ASSIGNMENT,
+} from '@msh/shared/util-shared';
+import { ExamAssignment } from '@msh/shared/domain-models';
+import { AppDatePipe } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'msh-exam-assignment-history-grid',
@@ -40,6 +43,7 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     TableModule,
     RouterLink,
     ColumnFilterDirective,
+    DatePipe,
     AppDatePipe,
   ],
   templateUrl: './exam-assignment-history-grid.component.html',

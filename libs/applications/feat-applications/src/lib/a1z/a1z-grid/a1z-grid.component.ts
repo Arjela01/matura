@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -27,7 +27,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { Router, RouterLink } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { A1zHistoryGridComponent } from '../a1z-history/a1z-history-grid.component';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppDatePipe } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'msh-a1z-grid',
@@ -44,6 +44,7 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     RouterLink,
     A1zHistoryGridComponent,
     DialogModule,
+    DatePipe,
     AppDatePipe,
   ],
   templateUrl: './a1z-grid.component.html',

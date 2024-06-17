@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -16,7 +16,7 @@ import {
 import { SharedModule } from 'primeng/api';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppDatePipe } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'msh-diploma-recognition-grid',
@@ -27,6 +27,7 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     SharedModule,
     TableModule,
     TooltipModule,
+    DatePipe,
     AppDatePipe,
   ],
   templateUrl: './diploma-recognition-grid.component.html',

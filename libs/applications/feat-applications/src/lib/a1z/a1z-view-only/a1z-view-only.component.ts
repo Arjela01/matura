@@ -22,6 +22,7 @@ import { RippleModule } from 'primeng/ripple';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import {DropdownModule} from "primeng/dropdown";
+import {AppBoolPipe} from "@msh/shared/ui-shared";
 
 @UntilDestroy()
 @Component({
@@ -45,7 +46,8 @@ import {DropdownModule} from "primeng/dropdown";
     InputTextModule,
     CheckboxModule,
     RippleModule,
-    DropdownModule
+    DropdownModule,
+    AppBoolPipe,
   ],
   providers: [ConfirmationService],
 })

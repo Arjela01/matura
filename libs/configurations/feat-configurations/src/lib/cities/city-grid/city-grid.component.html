@@ -63,7 +63,7 @@
         {{ city.name }}
       </td>
       <td style="width: 30%; min-width: 10rem">
-        {{ city.isCity ? 'Po' : 'Jo' }}
+        {{ city.isCity | app_bool }}
       </td>
       <td style="width: 30%; min-width: 10rem">
         {{ city.regionName }}

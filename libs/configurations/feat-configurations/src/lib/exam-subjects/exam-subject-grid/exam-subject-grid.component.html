@@ -121,7 +121,7 @@
         {{ examSubject.academicYear }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ examSubject.isOptional ? 'Po' : 'Jo' }}
+        {{ examSubject.isOptional | app_bool }}
       </td>
       <td style="width: 10%; min-width: 10rem">
         {{ examSubject.isNotGraded ? 'Jo' : 'Po'  }}

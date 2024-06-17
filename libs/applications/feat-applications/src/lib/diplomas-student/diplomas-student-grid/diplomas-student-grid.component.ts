@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -9,7 +9,8 @@ import {
 import { RouterLink } from '@angular/router';
 import { Student } from '@msh/shared/domain-models';
 import {
-  ColumnFilterDirective, DateFilterService,
+  ColumnFilterDirective,
+  DateFilterService,
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
@@ -24,7 +25,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'msh-diplomas-student-grid',
@@ -39,7 +40,9 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     RippleModule,
     RouterLink,
     ColumnFilterDirective,
+    DatePipe,
     AppDatePipe,
+    AppBoolPipe,
   ],
   templateUrl: './diplomas-student-grid.component.html',
   styleUrls: ['./diplomas-student-grid.component.scss'],

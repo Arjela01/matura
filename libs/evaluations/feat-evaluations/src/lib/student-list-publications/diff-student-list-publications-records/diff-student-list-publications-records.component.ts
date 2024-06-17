@@ -3,7 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import {
   ExamQuestionModel,
   StudentListPublicationDiffRecord,
@@ -16,7 +16,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { StudentListPublicationService } from '@msh/evaluations/data-access-evaluations';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'msh-diff-student-list-publications-records',
@@ -28,7 +28,9 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     TableModule,
     TooltipModule,
     ButtonModule,
+    DatePipe,
     AppDatePipe,
+    AppBoolPipe,
   ],
   templateUrl: './diff-student-list-publications-records.component.html',
   styleUrls: ['./diff-student-list-publications-records.component.scss'],

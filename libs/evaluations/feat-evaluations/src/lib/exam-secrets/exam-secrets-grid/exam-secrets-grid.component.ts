@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -21,7 +21,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
 import { ArchiveFolder, ExamSecret, Student } from '@msh/shared/domain-models';
 import { DialogModule } from 'primeng/dialog';
 import { ExamSecretHistoryGridComponent } from '../exam-secret-history/exam-secret-history-grid.component';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'msh-exam-secret-grid',
@@ -37,7 +37,9 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     ColumnFilterDirective,
     DialogModule,
     ExamSecretHistoryGridComponent,
+    DatePipe,
     AppDatePipe,
+    AppBoolPipe,
   ],
   templateUrl: './exam-secrets-grid.component.html',
   styleUrls: ['./exam-secrets-grid.component.scss'],

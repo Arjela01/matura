@@ -157,7 +157,7 @@
         {{ examAssignment.date | app_date }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ examAssignment.isFall ? 'Po' : 'Jo' }}
+        {{ examAssignment.isFall | app_bool }}
       </td>
       <td style="width: 15%; min-width: 10rem">
         <a

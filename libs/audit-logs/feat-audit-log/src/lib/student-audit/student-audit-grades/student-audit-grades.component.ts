@@ -18,6 +18,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { RouterLink } from '@angular/router';
 import { ExamGrade } from '@msh/shared/domain-models';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
+import {AppBoolPipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-student-audit-grades',
@@ -35,6 +36,7 @@ import { ColumnFilterDirective } from '@msh/shared/util-shared';
     DropdownModule,
     RouterLink,
     ColumnFilterDirective,
+    AppBoolPipe,
   ],
   templateUrl: './student-audit-grades.component.html',
   styleUrls: ['./student-audit-grades.component.scss'],

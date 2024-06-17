@@ -75,7 +75,7 @@
         </a>
       </td>
       <td style="width: 25%">
-        {{ record.isPublished ? 'Po' : 'Jo' }}
+        {{ record.isPublished | app_bool }}
       </td>
       <td style="width: 25%">
         {{ record.publishDate | app_date }}

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -10,7 +10,8 @@ import { Student } from '@msh/shared/domain-models';
 import {
   GridEvent,
   GRID_ACTIONS,
-  ColumnFilterDirective, DateFilterService,
+  ColumnFilterDirective,
+  DateFilterService,
 } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -21,7 +22,7 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { RouterLink } from '@angular/router';
-import {AppDatePipe} from "@msh/shared/ui-shared";
+import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'a1a1z-grid',
@@ -37,7 +38,9 @@ import {AppDatePipe} from "@msh/shared/ui-shared";
     ChipModule,
     ColumnFilterDirective,
     RouterLink,
+    DatePipe,
     AppDatePipe,
+    AppBoolPipe,
   ],
   templateUrl: './a1a1z-grid.component.html',
   styleUrls: ['./a1a1z-grid.component.scss'],

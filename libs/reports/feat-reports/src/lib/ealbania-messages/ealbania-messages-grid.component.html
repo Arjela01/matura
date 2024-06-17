@@ -233,19 +233,19 @@
                             {{ message.content }}
                         </td>
                         <td style="width: 10%">
-                            {{ message.isApproved ? 'Po' : 'Jo' }}
+                            {{ message.isApproved | app_bool }}
                         </td>
                         <td style="width: 10%">
                             {{ message.ApprovalDate | app_date }}
                         </td>
                         <td style="width: 10%">
-                            {{ message.isDelivered ? 'Po' : 'Jo' }}
+                            {{ message.isDelivered | app_bool }}
                         </td>
                         <td style="width: 10%">
                             {{ message.deliveryDate | app_date }}
                         </td>
                         <td style="width: 10%">
-                            {{ message.isDeliveryError ? 'Po' : 'Jo' }}
+                            {{ message.isDeliveryError | app_bool }}
                         </td>
                         <td style="width: 10%">
                             {{ message.deliveryErrorDate | app_date }}
