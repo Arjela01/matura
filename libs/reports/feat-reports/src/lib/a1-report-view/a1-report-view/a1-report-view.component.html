@@ -68,7 +68,7 @@
           </tr>
           <tr class="w-full mt-4">
             <td>11. Datëlindja</td>
-            <td>{{ a1.studentBirthDate | date : 'dd/MM/yyyy' }}</td>
+            <td>{{ a1.studentBirthDate | app_date }}</td>
           </tr>
           <tr class="w-full mt-4">
             <td>12. Vendlindja</td>
@@ -152,7 +152,7 @@
               <span class="px-4">Printuar më </span>
             </td>
             <td>
-              {{ todayDate | date : 'dd/MM/yyyy HH:mm' }}
+              {{ todayDate | app_time }}
             </td>
             <td>Mbikqyrës formularësh</td>
           </tr>

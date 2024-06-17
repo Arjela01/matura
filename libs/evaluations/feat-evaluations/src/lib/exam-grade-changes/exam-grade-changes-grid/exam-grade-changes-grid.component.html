@@ -233,7 +233,7 @@
         {{ examGrade.comments }}
       </td>
       <td style="width: 20%; min-width: 10rem">
-        {{ examGrade.createdOn | date : 'dd/MM/yyyy HH:mm' }}
+        {{ examGrade.createdOn | app_time }}
       </td>
     </tr>
   </ng-template>

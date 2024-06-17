@@ -28,6 +28,7 @@ import { RouterLink } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { StudentsHistoryGridComponent } from '../students-history/students-history-grid.component';
 import { PermissionEnum } from '@msh/auth/data-access-auth';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-students-grid',
@@ -44,6 +45,7 @@ import { PermissionEnum } from '@msh/auth/data-access-auth';
     ColumnFilterDirective,
     StudentsHistoryGridComponent,
     DialogModule,
+    AppDatePipe,
   ],
   templateUrl: './students-grid.component.html',
   styleUrls: ['./students-grid.component.scss'],

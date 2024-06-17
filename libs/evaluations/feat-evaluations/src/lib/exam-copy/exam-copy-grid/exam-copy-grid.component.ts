@@ -19,6 +19,7 @@ import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { ExamCopyRequestStatusPipe } from './exam-copy-request-status-pipe';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-exam-copy-grid',
@@ -33,6 +34,7 @@ import { ExamCopyRequestStatusPipe } from './exam-copy-request-status-pipe';
     RippleModule,
     ExamCopyRequestStatusPipe,
     ColumnFilterDirective,
+    AppDatePipe,
   ],
   templateUrl: './exam-copy-grid.component.html',
   styleUrls: ['./exam-copy-grid.component.scss'],

@@ -24,6 +24,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Router } from '@angular/router';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { StudentListPublicationService } from '@msh/evaluations/data-access-evaluations';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-exam-question-grid',
@@ -37,6 +38,7 @@ import { StudentListPublicationService } from '@msh/evaluations/data-access-eval
     ButtonModule,
     RippleModule,
     ConfirmDialogModule,
+    AppDatePipe,
   ],
   templateUrl: './student-list-publications-grid.component.html',
   styleUrls: ['./student-list-publications-grid.component.scss'],
@@ -127,6 +129,10 @@ export class StudentListPublicationsGridComponent {
   }
 
   gotoCurrentList() {
-    this.router.navigate(['/evaluations', 'student-list-publications', 'current']);
+    this.router.navigate([
+      '/evaluations',
+      'student-list-publications',
+      'current',
+    ]);
   }
 }

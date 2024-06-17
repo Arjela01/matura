@@ -17,6 +17,7 @@ import {
 } from '@msh/shared/util-shared';
 import { EalbaniaMessagesApiService } from '@msh/reports/data-access-reports';
 import { CardModule } from 'primeng/card';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @UntilDestroy()
 @Component({
@@ -33,6 +34,7 @@ import { CardModule } from 'primeng/card';
     RouterLink,
     ColumnFilterDirective,
     CardModule,
+    AppDatePipe,
   ],
   templateUrl: './ealbania-messages-grid.component.html',
   styleUrls: ['./ealbania-messages-grid.component.scss'],

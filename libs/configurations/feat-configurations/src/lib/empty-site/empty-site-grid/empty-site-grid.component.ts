@@ -19,6 +19,7 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { EmptySite, ExamAssignment } from '@msh/shared/domain-models';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-empty-site-grid',
@@ -32,6 +33,7 @@ import { EmptySite, ExamAssignment } from '@msh/shared/domain-models';
     CheckboxModule,
     RippleModule,
     ColumnFilterDirective,
+    AppDatePipe,
   ],
   templateUrl: './empty-site-grid.component.html',
   styleUrls: ['./empty-site-grid.component.scss'],

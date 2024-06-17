@@ -15,6 +15,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @UntilDestroy()
 @Component({
@@ -33,6 +34,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     CalendarModule,
     InputMaskModule,
     RouterLink,
+    AppDatePipe,
   ],
   templateUrl: './student-data.component.html',
   styleUrls: ['./student-data.component.scss'],

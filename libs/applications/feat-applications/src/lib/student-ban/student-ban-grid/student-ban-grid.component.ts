@@ -24,6 +24,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-student-ban-grid',
@@ -37,6 +38,7 @@ import { TooltipModule } from 'primeng/tooltip';
     CheckboxModule,
     RippleModule,
     ColumnFilterDirective,
+    AppDatePipe,
   ],
   templateUrl: './student-ban-grid.component.html',
   styleUrls: ['./student-ban-grid.component.scss'],

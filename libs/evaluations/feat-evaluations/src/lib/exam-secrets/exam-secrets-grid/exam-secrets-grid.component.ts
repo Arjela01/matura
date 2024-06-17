@@ -21,6 +21,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
 import { ArchiveFolder, ExamSecret, Student } from '@msh/shared/domain-models';
 import { DialogModule } from 'primeng/dialog';
 import { ExamSecretHistoryGridComponent } from '../exam-secret-history/exam-secret-history-grid.component';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-exam-secret-grid',
@@ -36,6 +37,7 @@ import { ExamSecretHistoryGridComponent } from '../exam-secret-history/exam-secr
     ColumnFilterDirective,
     DialogModule,
     ExamSecretHistoryGridComponent,
+    AppDatePipe,
   ],
   templateUrl: './exam-secrets-grid.component.html',
   styleUrls: ['./exam-secrets-grid.component.scss'],

@@ -27,6 +27,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { Router, RouterLink } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { A1zHistoryGridComponent } from '../a1z-history/a1z-history-grid.component';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-a1z-grid',
@@ -43,6 +44,7 @@ import { A1zHistoryGridComponent } from '../a1z-history/a1z-history-grid.compone
     RouterLink,
     A1zHistoryGridComponent,
     DialogModule,
+    AppDatePipe,
   ],
   templateUrl: './a1z-grid.component.html',
   styleUrls: ['./a1z-grid.component.scss'],
@@ -65,7 +67,7 @@ export class A1zGridComponent {
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
   constructor(
     private dateFilterService: DateFilterService,
-    private router: Router,
+    private router: Router
   ) {}
 
   onEditClick(A1Z: A1ZTableRecord) {
@@ -121,9 +123,7 @@ export class A1zGridComponent {
     $event.filters = this.dateFilterService.applyDateManipulation(filters);
     this.lazyLoadData.emit($event);
   }
-  onViewClick( a1z: A1ZTableRecord){
-    this.router.navigate([
-      `/applications/a1z/view/${a1z.id}`,
-    ])
+  onViewClick(a1z: A1ZTableRecord) {
+    this.router.navigate([`/applications/a1z/view/${a1z.id}`]);
   }
 }

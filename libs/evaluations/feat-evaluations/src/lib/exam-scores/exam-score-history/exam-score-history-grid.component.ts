@@ -24,6 +24,7 @@ import {
   ColumnFilterDirective,
 } from '@msh/shared/util-shared';
 import {EXAM_SCORE} from "../exam-score-query";
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-exam-score-history-grid',
@@ -45,6 +46,7 @@ import {EXAM_SCORE} from "../exam-score-query";
     TableModule,
     RouterLink,
     ColumnFilterDirective,
+    AppDatePipe,
   ],
   templateUrl: './exam-score-history-grid.component.html',
   styleUrls: ['./exam-score-history-grid.component.scss'],
@@ -58,14 +60,16 @@ export class ExamScoreHistoryGridComponent {
   @Input() recordId: any;
   @Input() recordData: any;
 
-
   pageSize = 50;
   totalCount = 0;
   currentPage = 1;
   where: any = null;
   orderBy: any = null;
 
-  constructor( private apollo: Apollo , private cd: ChangeDetectorRef) {}
+  constructor(
+    private apollo: Apollo,
+    private cd: ChangeDetectorRef
+  ) {}
 
   loadRows($event: TableLazyLoadEvent) {
     const flattenSort = $event.sortField

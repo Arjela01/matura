@@ -49,7 +49,7 @@
               {{ record.lastName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.birthDate | date }}
+              {{ record.birthDate | app_date }}
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ record.birthPlace }}
@@ -67,10 +67,10 @@
               </ng-template>
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.diplomaPrintedDate | date }}
+              {{ record.diplomaPrintedDate | app_date }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.ealbaniaDocsDiplomaPrintedDate | date }}
+              {{ record.ealbaniaDocsDiplomaPrintedDate | app_date }}
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ record?.auditOperation }}
@@ -86,7 +86,7 @@
               {{ record?.auditHostname }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record?.auditTimestamp | date }}
+              {{ record?.auditTimestamp | app_date }}
             </td>
           </tr>
         </ng-template>

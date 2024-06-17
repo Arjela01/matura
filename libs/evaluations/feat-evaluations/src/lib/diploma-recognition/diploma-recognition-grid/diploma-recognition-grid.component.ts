@@ -16,6 +16,7 @@ import {
 import { SharedModule } from 'primeng/api';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-diploma-recognition-grid',
@@ -26,6 +27,7 @@ import { TooltipModule } from 'primeng/tooltip';
     SharedModule,
     TableModule,
     TooltipModule,
+    AppDatePipe,
   ],
   templateUrl: './diploma-recognition-grid.component.html',
   styleUrls: ['./diploma-recognition-grid.component.scss'],

@@ -154,7 +154,7 @@
         {{ examAssignment.examSubjectName }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ examAssignment.date | date : 'dd/MM/yyyy' }}
+        {{ examAssignment.date | app_date }}
       </td>
       <td style="width: 10%; min-width: 10rem">
         {{ examAssignment.isFall ? 'Po' : 'Jo' }}

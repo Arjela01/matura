@@ -29,6 +29,7 @@ import {
 } from '@msh/shared/util-shared';
 import { FailingStudent } from '@msh/applications/domain-application';
 import { STUDENTS } from '../students-query';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-students-history-grid',
@@ -50,6 +51,7 @@ import { STUDENTS } from '../students-query';
     TableModule,
     RouterLink,
     ColumnFilterDirective,
+    AppDatePipe,
   ],
   templateUrl: './students-history-grid.component.html',
   styleUrls: ['./students-history-grid.component.scss'],
@@ -73,7 +75,10 @@ export class StudentsHistoryGridComponent {
   where: any = null;
   orderBy: any = null;
 
-  constructor(private apollo: Apollo, private cd: ChangeDetectorRef) {}
+  constructor(
+    private apollo: Apollo,
+    private cd: ChangeDetectorRef
+  ) {}
 
   loadRows($event: TableLazyLoadEvent) {
     const flattenSort = $event.sortField

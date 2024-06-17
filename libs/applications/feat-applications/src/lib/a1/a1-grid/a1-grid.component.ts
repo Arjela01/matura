@@ -32,6 +32,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { A1HistoryGridComponent } from '../a1-history/a1-history-grid.component';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 @Component({
   selector: 'a1-grid',
   standalone: true,
@@ -53,6 +54,7 @@ import { A1HistoryGridComponent } from '../a1-history/a1-history-grid.component'
     ColumnFilterDirective,
     RouterLink,
     A1HistoryGridComponent,
+    AppDatePipe,
   ],
   templateUrl: './a1-grid.component.html',
   styleUrls: ['./a1-grid.component.scss'],

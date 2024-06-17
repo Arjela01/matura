@@ -16,6 +16,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { StudentListPublicationService } from '@msh/evaluations/data-access-evaluations';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-diff-student-list-publications-records',
@@ -27,6 +28,7 @@ import { StudentListPublicationService } from '@msh/evaluations/data-access-eval
     TableModule,
     TooltipModule,
     ButtonModule,
+    AppDatePipe,
   ],
   templateUrl: './diff-student-list-publications-records.component.html',
   styleUrls: ['./diff-student-list-publications-records.component.scss'],

@@ -20,6 +20,7 @@ import { RouterLink } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { StudentsHistoryGridComponent } from '../../students/students-history/students-history-grid.component';
 import { ExamGradeRequestHistoryGridComponent } from '../exam-grade-request-history/exam-grade-request-history-grid.component';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @UntilDestroy()
 @Component({
@@ -35,6 +36,7 @@ import { ExamGradeRequestHistoryGridComponent } from '../exam-grade-request-hist
     DialogModule,
     StudentsHistoryGridComponent,
     ExamGradeRequestHistoryGridComponent,
+    AppDatePipe,
   ],
   templateUrl: './exam-grade-request-grid.component.html',
   styleUrls: ['./exam-grade-request-grid.component.scss'],

@@ -23,6 +23,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-dashboard-items-grid',
@@ -36,6 +37,7 @@ import { TooltipModule } from 'primeng/tooltip';
     CheckboxModule,
     RippleModule,
     ColumnFilterDirective,
+    AppDatePipe,
   ],
   templateUrl: './dashboard-items-grid.component.html',
   styleUrls: ['./dashboard-items-grid.component.scss'],

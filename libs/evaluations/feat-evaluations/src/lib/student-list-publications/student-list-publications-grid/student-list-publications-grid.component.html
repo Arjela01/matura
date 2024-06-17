@@ -71,14 +71,14 @@
     <tr>
       <td style="width: 25%">
         <a (click)="onRowClick(record)" class="btn btn-link cursor-pointer">
-          {{ record.createdOn | date : 'dd/MM/yyyy' }}
+          {{ record.createdOn | app_date }}
         </a>
       </td>
       <td style="width: 25%">
         {{ record.isPublished ? 'Po' : 'Jo' }}
       </td>
       <td style="width: 25%">
-        {{ record.publishDate | date : 'dd/MM/yyyy' }}
+        {{ record.publishDate | app_date }}
       </td>
       <td style="width: 25%">
         <button pButton *ngIf="!record.isPublished" (click)="publishItem(record)" class="p-button-link mr-2">Publiko</button>

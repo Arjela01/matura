@@ -20,6 +20,7 @@ import { GlobalToastService } from '@msh/shared/util-shared';
 
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-archive-exams',
@@ -33,6 +34,7 @@ import autoTable from 'jspdf-autotable';
     ToolbarModule,
     RouterLink,
     ArchiveFormComponent,
+    AppDatePipe,
   ],
   templateUrl: './archive-exam-report.component.html',
   styleUrls: ['./archive-exam-report.component.scss'],

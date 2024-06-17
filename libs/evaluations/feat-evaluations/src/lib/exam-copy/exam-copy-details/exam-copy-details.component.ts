@@ -25,6 +25,7 @@ import { RefuseExamCopyComponent } from '../refuse-exam-copy/refuse-exam-copy.co
 import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { ExamCopy } from '@msh/shared/domain-models';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @UntilDestroy()
 @Component({
@@ -42,6 +43,7 @@ import { ExamCopy } from '@msh/shared/domain-models';
     ApproveExamCopyComponent,
     RefuseExamCopyComponent,
     CheckboxModule,
+    AppDatePipe,
   ],
   templateUrl: './exam-copy-details.component.html',
   styleUrls: ['./exam-copy-details.component.scss'],

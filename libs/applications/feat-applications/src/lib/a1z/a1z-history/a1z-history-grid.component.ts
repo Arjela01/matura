@@ -24,6 +24,7 @@ import { Apollo, gql } from 'apollo-angular';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { A1Z_FORMS } from '../query-a1z';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-a1z-history-grid',
@@ -45,6 +46,7 @@ import { A1Z_FORMS } from '../query-a1z';
     TableModule,
     RouterLink,
     ColumnFilterDirective,
+    AppDatePipe,
   ],
   templateUrl: './a1z-history-grid.component.html',
   styleUrls: ['./a1z-history-grid.component.scss'],
@@ -64,7 +66,10 @@ export class A1zHistoryGridComponent {
   where: any = null;
   orderBy: any = null;
 
-  constructor(private apollo: Apollo, private cd: ChangeDetectorRef) {}
+  constructor(
+    private apollo: Apollo,
+    private cd: ChangeDetectorRef
+  ) {}
 
   loadRows($event: TableLazyLoadEvent) {
     const flattenSort = $event.sortField

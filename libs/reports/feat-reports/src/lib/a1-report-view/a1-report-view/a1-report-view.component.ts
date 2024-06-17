@@ -13,10 +13,11 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
+import { AppDatePipe, AppTimePipe } from '@msh/shared/ui-shared';
 @Component({
   selector: 'msh-a1-report-view',
   standalone: true,
-  imports: [CommonModule, MenubarModule],
+  imports: [CommonModule, MenubarModule, AppDatePipe, AppTimePipe],
   templateUrl: './a1-report-view.component.html',
   styleUrls: ['./a1-report-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

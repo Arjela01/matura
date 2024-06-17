@@ -10,6 +10,7 @@ import {RippleModule} from 'primeng/ripple';
 import {TooltipModule} from 'primeng/tooltip';
 import {CalendarModule} from "primeng/calendar";
 import {FormsModule} from "@angular/forms";
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-exam-date-grid',
@@ -23,6 +24,7 @@ import {FormsModule} from "@angular/forms";
     CheckboxModule,
     RippleModule,
     ColumnFilterDirective,
+    AppDatePipe,
   ],
   templateUrl: './exam-date-grid.component.html',
   styleUrls: ['./exam-date-grid.component.scss'],
@@ -81,11 +83,9 @@ export class ExamDateGridComponent {
     } as GridEvent<ExamDate>);
   }
 
-
   loadRows($event: TableLazyLoadEvent) {
     const filters = $event.filters as any;
     $event.filters = this.dateFilterService.applyDateManipulation(filters);
     this.lazyLoadData.emit($event);
   }
-
 }

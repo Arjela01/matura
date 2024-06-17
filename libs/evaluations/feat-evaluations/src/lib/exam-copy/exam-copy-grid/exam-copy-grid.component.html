@@ -212,10 +212,10 @@
         {{ examCopy.index }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ examCopy.decisionDueDate | date: 'dd/MM/yyyy' }}
+        {{ examCopy.decisionDueDate | app_date }}
       </td>
       <td style="width: 15%; min-width: 10rem">
-        {{ examCopy.dateCreated | date: 'dd/MM/yyyy' }}
+        {{ examCopy.dateCreated | app_date }}
       </td>
       <td style="width: 15%; min-width: 10rem">
         <span

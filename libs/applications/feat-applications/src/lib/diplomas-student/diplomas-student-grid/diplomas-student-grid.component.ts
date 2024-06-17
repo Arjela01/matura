@@ -24,6 +24,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-diplomas-student-grid',
@@ -38,6 +39,7 @@ import { TooltipModule } from 'primeng/tooltip';
     RippleModule,
     RouterLink,
     ColumnFilterDirective,
+    AppDatePipe,
   ],
   templateUrl: './diplomas-student-grid.component.html',
   styleUrls: ['./diplomas-student-grid.component.scss'],
@@ -51,7 +53,7 @@ export class DiplomasStudentGridComponent {
 
   //Keep it local state because of Table Header checkbox not syncing
   selectedStudents: Student[] = [];
-  @Input() responseLoaded: any
+  @Input() responseLoaded: any;
 
   @Output() gridEvent = new EventEmitter<GridEvent<Student>>();
 

@@ -18,6 +18,7 @@ import { Apollo, gql } from 'apollo-angular';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { EXAM_SECRET } from '../exam-secrets-query';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-exam-secret-history-grid',
@@ -39,6 +40,7 @@ import { EXAM_SECRET } from '../exam-secrets-query';
     TableModule,
     RouterLink,
     ColumnFilterDirective,
+    AppDatePipe,
   ],
   templateUrl: './exam-secret-history-grid.component.html',
   styleUrls: ['./exam-secret-history-grid.component.scss'],
@@ -59,7 +61,10 @@ export class ExamSecretHistoryGridComponent {
   where: any = null;
   orderBy: any = null;
 
-  constructor(private apollo: Apollo, private cd: ChangeDetectorRef) {}
+  constructor(
+    private apollo: Apollo,
+    private cd: ChangeDetectorRef
+  ) {}
 
   loadRows($event: TableLazyLoadEvent) {
     const flattenSort = $event.sortField

@@ -26,7 +26,7 @@
         <ng-template pTemplate="body" let-record>
           <tr>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.examDate?.date | date : 'dd/MM/yyyy' }}
+              {{ record.examDate?.date | app_date }}
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ record.student?.studentId }}
@@ -51,7 +51,7 @@
               {{ record?.auditHostname }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record?.auditTimestamp | date }}
+              {{ record?.auditTimestamp | app_date }}
             </td>
           </tr>
         </ng-template>

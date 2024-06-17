@@ -28,6 +28,7 @@ import {
 } from '@msh/evaluations/data-access-evaluations';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { GlobalToastService } from '@msh/shared/util-shared';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-a2-form-annual-grades-view',
@@ -46,6 +47,7 @@ import { GlobalToastService } from '@msh/shared/util-shared';
     InputMaskModule,
     RouterLink,
     TableModule,
+    AppDatePipe,
   ],
   templateUrl: './a2-form-annual-grades-view.component.html',
   styleUrls: ['./a2-form-annual-grades-view.component.scss'],

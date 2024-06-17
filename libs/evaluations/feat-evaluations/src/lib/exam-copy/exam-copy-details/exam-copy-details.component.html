@@ -141,7 +141,7 @@
         id="dateOfBirth"
         name="dateOfBirth"
         disabled
-        [value]="examCopy.dateOfBirth | date"
+        [value]="examCopy.dateOfBirth | app_date"
         autofocus />
     </div>
     <div class="field col-2">
@@ -245,7 +245,7 @@
           id="dateCreated"
           name="dateCreated"
           disabled
-          [value]="examCopy.dateCreated | date"
+          [value]="examCopy.dateCreated | app_date"
           autofocus />
       </div>
       <div class="field col-2">
@@ -256,7 +256,7 @@
           id="decisionDueDate"
           name="decisionDueDate"
           disabled
-          [value]="examCopy.decisionDueDate | date"
+          [value]="examCopy.decisionDueDate | app_date"
           autofocus />
       </div>
       <div class="field col-2">
@@ -286,7 +286,7 @@
           id="decisionDate"
           name="decisionDate"
           disabled
-          [value]="examCopy.decisionDate | date"
+          [value]="examCopy.decisionDate | app_date"
           autofocus />
       </div>
       <div class="field col-2">

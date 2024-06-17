@@ -23,6 +23,7 @@ import { StudentsApiService } from '@msh/configurations/data-access-configuratio
 import { ExamGrade, Student } from '@msh/shared/domain-models';
 import { ColumnFilterDirective, GridEvent } from '@msh/shared/util-shared';
 import * as FileSaver from 'file-saver';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @UntilDestroy()
 @Component({
@@ -38,6 +39,7 @@ import * as FileSaver from 'file-saver';
     RippleModule,
     RouterLink,
     ColumnFilterDirective,
+    AppDatePipe,
   ],
   templateUrl: './annual-grades-grid.component.html',
   styleUrls: ['./annual-grades-grid.component.scss'],

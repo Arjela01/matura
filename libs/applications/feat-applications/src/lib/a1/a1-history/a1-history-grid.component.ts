@@ -25,6 +25,7 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { ColumnFilterDirective, GridEvent } from '@msh/shared/util-shared';
 import { FailingStudent } from '@msh/applications/domain-application';
 import { A1_FORMS } from '../query-a1';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-a1-history-grid',
@@ -46,6 +47,7 @@ import { A1_FORMS } from '../query-a1';
     TableModule,
     RouterLink,
     ColumnFilterDirective,
+    AppDatePipe,
   ],
   templateUrl: './a1-history-grid.component.html',
   styleUrls: ['./a1-history-grid.component.scss'],
@@ -69,7 +71,10 @@ export class A1HistoryGridComponent {
   where: any = null;
   orderBy: any = null;
 
-  constructor(private apollo: Apollo, private cd: ChangeDetectorRef) {}
+  constructor(
+    private apollo: Apollo,
+    private cd: ChangeDetectorRef
+  ) {}
 
   loadRows($event: TableLazyLoadEvent) {
     const flattenSort = $event.sortField

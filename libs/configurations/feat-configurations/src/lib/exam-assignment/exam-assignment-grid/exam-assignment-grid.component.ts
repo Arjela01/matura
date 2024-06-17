@@ -26,6 +26,7 @@ import {
 } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { ExamAssignmentHistoryGridComponent } from "../exam-assignment-history/exam-assignment-history-grid.component";
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-exam-assignment-grid',
@@ -42,6 +43,7 @@ import { ExamAssignmentHistoryGridComponent } from "../exam-assignment-history/e
     ColumnFilterDirective,
     DialogModule,
     ExamAssignmentHistoryGridComponent,
+    AppDatePipe,
   ],
   templateUrl: './exam-assignment-grid.component.html',
   styleUrls: ['./exam-assignment-grid.component.scss'],
@@ -63,7 +65,7 @@ export class ExamAssignmentGridComponent {
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
   @Input() examAssignmentId: any;
   @Input() selectedRecord: any;
-  constructor(private dateFilterService: DateFilterService) { }
+  constructor(private dateFilterService: DateFilterService) {}
 
   examAssignment: ExamAssignment = {
     id: '',

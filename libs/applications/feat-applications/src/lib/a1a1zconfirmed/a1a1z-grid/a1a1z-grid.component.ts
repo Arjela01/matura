@@ -21,6 +21,7 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { RouterLink } from '@angular/router';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'a1a1z-grid',
@@ -36,6 +37,7 @@ import { RouterLink } from '@angular/router';
     ChipModule,
     ColumnFilterDirective,
     RouterLink,
+    AppDatePipe,
   ],
   templateUrl: './a1a1z-grid.component.html',
   styleUrls: ['./a1a1z-grid.component.scss'],

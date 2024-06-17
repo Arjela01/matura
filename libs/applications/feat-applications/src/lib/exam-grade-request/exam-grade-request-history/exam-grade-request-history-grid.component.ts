@@ -25,6 +25,7 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { ColumnFilterDirective, GridEvent } from '@msh/shared/util-shared';
 import { ExamGradeRequestModel } from '@msh/shared/domain-models';
 import { EXAM_GRADE_REQUEST_QUERY } from '../exam-grade-request.query';
+import {AppDatePipe} from "@msh/shared/ui-shared";
 
 @Component({
   selector: 'msh-exam-grade-request-history-grid',
@@ -46,6 +47,7 @@ import { EXAM_GRADE_REQUEST_QUERY } from '../exam-grade-request.query';
     TableModule,
     RouterLink,
     ColumnFilterDirective,
+    AppDatePipe,
   ],
   templateUrl: './exam-grade-request-history-grid.component.html',
   styleUrls: ['./exam-grade-request-history-grid.component.scss'],
@@ -68,7 +70,10 @@ export class ExamGradeRequestHistoryGridComponent {
   where: any = null;
   orderBy: any = null;
 
-  constructor(private apollo: Apollo, private cd: ChangeDetectorRef) {}
+  constructor(
+    private apollo: Apollo,
+    private cd: ChangeDetectorRef
+  ) {}
 
   loadRows($event: TableLazyLoadEvent) {
     const flattenSort = $event.sortField
