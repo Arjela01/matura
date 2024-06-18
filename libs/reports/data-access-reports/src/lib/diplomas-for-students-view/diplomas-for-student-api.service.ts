@@ -19,7 +19,7 @@ export class DiplomasForStudentApiService {
     );
   }
 
-  sendDiplomaToSeal(data: SealDiplomaModel): Observable<ApiResult<any>> {
-    return this.apiService.post<ApiResult<any>, any>(`/DiplomasHistory`, data);
+  sendDiplomaToSeal(data: SealDiplomaModel): Observable<any> {
+    return this.apiService.post(`/DiplomasHistory`, data);
   }
 }

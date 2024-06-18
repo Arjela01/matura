@@ -89,9 +89,8 @@ export class DiplomaForStudentsViewComponent {
         studentId: this.maturaId,
         file: base64data,
       };
-      this.diplomasForStudent
-        .sendDiplomaToSeal(valuesToSend)
-        .subscribe(response => {
+      this.diplomasForStudent.sendDiplomaToSeal(valuesToSend).subscribe({
+        next: response => {
           if (response.isSuccessful) {
             const blob = new Blob([response.data], {
               type: 'application/pdf',
@@ -99,10 +98,17 @@ export class DiplomaForStudentsViewComponent {
             FileSaver.saveAs(blob, `Diploma`);
             this.toastService.showSuccess('Diploma u vulos me sukses');
           } else {
-            this.toastService.showError(response.errorMessage);
+            this.toastService.showError(response.error);
           }
           this.cd.markForCheck();
-        });
+        },
+        error: err => {
+          if (err.status === 400) {
+            this.toastService.showError(err.error);
+          }
+          this.cd.markForCheck();
+        },
+      });
     };
   }
 }
