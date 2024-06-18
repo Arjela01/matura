@@ -79,6 +79,7 @@ export class DiplomaForStudentsViewComponent {
       },
     });
   }
+
   onSealAndDownloadClick() {
     const reader = new FileReader();
     reader.readAsDataURL(this.file);
