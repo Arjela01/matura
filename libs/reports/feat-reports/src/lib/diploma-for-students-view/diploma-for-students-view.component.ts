@@ -82,21 +82,28 @@ export class DiplomaForStudentsViewComponent {
     });
   }
   onSealAndDownloadClick() {
-    const valuesToSend = {
-      studentId: this.maturaId,
-      file: this.url,
+    const reader = new FileReader();
+    reader.readAsDataURL(this.file);
+    reader.onloadend = () => {
+      const base64data = reader.result?.toString().split(',')[1] ?? '';
+      const valuesToSend = {
+        studentId: this.maturaId,
+        file: base64data,
+      };
+      this.diplomasForStudent
+        .sendDiplomaToSeal(valuesToSend)
+        .subscribe(response => {
+          if (response.isSuccessful) {
+            const blob = new Blob([response], {
+              type: 'application/pdf',
+            });
+            FileSaver.saveAs(blob, `Diploma`);
+            this.toastService.showSuccess('Diploma u vulos me sukses');
+          } else {
+            this.toastService.showError(response);
+          }
+          this.cd.markForCheck();
+        });
     };
-    this.diplomasForStudent
-      .sendDiplomaToSeal(valuesToSend)
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          const blob = new Blob([response], {
-            type: 'application/pdf',
-          });
-          FileSaver.saveAs(blob, `Diploma`);
-          this.toastService.showSuccess('Diploma u vulos me sukses');
-        } else this.toastService.showError(response);
-        this.cd.markForCheck();
-      });
   }
 }
