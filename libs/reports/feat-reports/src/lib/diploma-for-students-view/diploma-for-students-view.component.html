@@ -15,18 +15,21 @@
       required
       autofocus />
     <button
+      [disabled]="!maturaId"
       type="submit"
       pButton
       icon="pi pi-search"
       label="Kërko"
       class="w-auto mr-2"></button>
     <button
+      [disabled]="!file"
       pButton
       label="Vulos dhe Shkarko"
       icon="pi pi-print"
-      class="w-auto mr-2"></button>
+      class="w-auto mr-2"
+      (click)="onSealAndDownloadClick()"></button>
   </p-inputGroup>
 </form>
 <div *ngIf="pdfSrc">
-  <iframe [src]="pdfSrc" width="100%" height="600px"></iframe>
+  <iframe [src]="pdfSrc" width="100%" height="800px" class="mt-4"></iframe>
 </div>

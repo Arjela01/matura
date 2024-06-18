@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { APIService } from '@msh/shared/util-shared';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { TableLazyLoadEvent } from 'primeng/table';
-import { StudentTableView } from '@msh/shared/domain-models';
+import { HttpParams } from '@angular/common/http';
+import { ApiResult } from '@msh/shared/data-access-shared';
 
 @Injectable({
   providedIn: 'root',
@@ -11,13 +11,17 @@ export class DiplomasForStudentApiService {
   constructor(private apiService: APIService) {}
 
   getDiplomasForStudentById(id: string): Observable<any> {
-    return this.apiService.get(`/DiplomasHistory/${id}`);
+    return this.apiService.get(
+      `/DiplomasHistory/${id}`,
+      new HttpParams(),
+      'blob'
+    );
   }
 
-  // sendDiplomaToSeal(event: TableLazyLoadEvent): Observable<StudentTableView> {
-  //   return this.apiService.post(`/AverageGrade/TableData`, event).pipe(
-  //     map((data: any) => data),
-  //     catchError(error => throwError(error))
-  //   );
-  // }
+  sendDiplomaToSeal(data: { studentId: string; file: any }): Observable<any> {
+    return this.apiService.post(`/DiplomasHistory`, data).pipe(
+      map((data: any) => data),
+      catchError(error => throwError(error))
+    );
+  }
 }

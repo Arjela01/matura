@@ -19,6 +19,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { DiplomasForStudentApiService } from '../../../../data-access-reports/src/lib/diplomas-for-students-view/diplomas-for-student-api.service';
 import { GlobalToastService } from '@msh/shared/util-shared';
+import { DomSanitizer } from '@angular/platform-browser';
+import * as FileSaver from 'file-saver';
 
 @UntilDestroy()
 @Component({
@@ -44,44 +46,57 @@ import { GlobalToastService } from '@msh/shared/util-shared';
 })
 export class DiplomaForStudentsViewComponent {
   maturaId = '';
-  pdfSrc: string | ArrayBuffer | null = null;
+  pdfSrc!: any;
+  url!: string;
   file: any;
 
   constructor(
     private readonly diplomasForStudent: DiplomasForStudentApiService,
     private readonly toastService: GlobalToastService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private sanitizer: DomSanitizer
   ) {}
 
   onSearchClick() {
-    this.diplomasForStudent
-      .getDiplomasForStudentById(this.maturaId)
-      .subscribe(response => {
+    this.diplomasForStudent.getDiplomasForStudentById(this.maturaId).subscribe({
+      next: (response: Blob) => {
         if (response) {
-          this.file = response;
-          const byteArray = new Uint8Array(this.file);
-          const blob = new Blob([byteArray], { type: 'application/pdf' });
-          this.pdfSrc = URL.createObjectURL(blob);
-          console.log(123, response);
-          console.log(123, this.pdfSrc);
+          try {
+            const blob = new Blob([response], { type: 'application/pdf' });
+            this.url = URL.createObjectURL(blob);
+            this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(
+              this.url
+            );
+            this.file = response;
+          } catch (error) {
+            this.toastService.showError('Failed to create PDF Blob.');
+          }
+        } else {
+          this.toastService.showError('Empty response received.');
+        }
+        this.cd.markForCheck();
+      },
+      error: err => {
+        this.toastService.showError(err);
+      },
+    });
+  }
+  onSealAndDownloadClick() {
+    const valuesToSend = {
+      studentId: this.maturaId,
+      file: this.url,
+    };
+    this.diplomasForStudent
+      .sendDiplomaToSeal(valuesToSend)
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          const blob = new Blob([response], {
+            type: 'application/pdf',
+          });
+          FileSaver.saveAs(blob, `Diploma`);
+          this.toastService.showSuccess('Diploma u vulos me sukses');
         } else this.toastService.showError(response);
         this.cd.markForCheck();
       });
   }
-
-  // onSealAndDownloadClick() {
-  //   this.diplomasForStudent
-  //     .getDiplomasForStudentById(this.maturaId)
-  //     .subscribe(response => {
-  //       if (response) {
-  //         this.file = response;
-  //         const byteArray = new Uint8Array(this.file);
-  //         const blob = new Blob([byteArray], { type: 'application/pdf' });
-  //         this.pdfSrc = URL.createObjectURL(blob);
-  //         console.log(123, response);
-  //         console.log(123, this.pdfSrc);
-  //       } else this.toastService.showError(response);
-  //       this.cd.markForCheck();
-  //     });
-  // }
 }
