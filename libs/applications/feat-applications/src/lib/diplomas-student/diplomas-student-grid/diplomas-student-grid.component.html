@@ -211,55 +211,55 @@
     </tr>
   </ng-template>
 
-  <ng-template pTemplate="body" let-student>
+  <ng-template pTemplate="body" let-diploma>
     <tr>
       <td style="width: 10%; min-width: 10rem">
-        {{ student.administrationOfficeName }}
+        {{ diploma.administrationOfficeName }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ student.highSchoolName }}
+        {{ diploma.highSchoolName }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ student.studentStudentId }}
+        {{ diploma.studentStudentId }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ student.studentFirstName }}
+        {{ diploma.studentFirstName }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ student.studentMiddleName }}
+        {{ diploma.studentMiddleName }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ student.studentLastName }}
+        {{ diploma.studentLastName }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ student.studentIdCard }}
+        {{ diploma.studentIdCard }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ student.countryName }}
+        {{ diploma.countryName }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ student.isPrinted | app_bool }}
+        {{ diploma.isPrinted | app_bool }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ student.printedDate | app_date }}
+        {{ diploma.printedDate | app_date }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ student.isDelivered | app_bool }}
+        {{ diploma.isDelivered | app_bool }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ student.deliveryDate | app_date }}
+        {{ diploma.deliveryDate | app_date }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ student.isSealError | app_bool }}
+        {{ diploma.isSealError | app_bool }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ student.isDeliveryError | app_bool }}
+        {{ diploma.isDeliveryError | app_bool }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ student.errorDate | app_date }}
+        {{ diploma.errorDate | app_date }}
       </td>
       <td style="width: 10%; min-width: 10rem">
-        {{ student.error }}
+        {{ diploma.error }}
       </td>
 
       <td style="width: 10%; min-width: 10rem">
@@ -270,7 +270,7 @@
               style="background: transparent; border: white; margin-top: 10px"
               pTooltip="Printo Diploma"
               tooltipPosition="bottom"
-              (click)="onPrint(student)">
+              (click)="onPrint(diploma)">
               <img src="assets/svg/print.svg" />
             </button>
           </div>
@@ -280,7 +280,7 @@
               pTooltip="Vulos Diploma"
               tooltipPosition="bottom"
               [disabled]="responseLoaded"
-              (click)="onSeal(student)">
+              (click)="onSeal(diploma)">
               <img src="assets/svg/electronic-seal.svg" alt="Seal" />
             </button>
           </div>
