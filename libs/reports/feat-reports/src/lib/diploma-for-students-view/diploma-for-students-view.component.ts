@@ -91,14 +91,14 @@ export class DiplomaForStudentsViewComponent {
       };
       this.diplomasForStudent.sendDiplomaToSeal(valuesToSend).subscribe({
         next: response => {
-          if (response.isSuccessful) {
-            const blob = new Blob([response.data], {
+          if (response instanceof Uint8Array) {
+            const blob = new Blob([response], {
               type: 'application/pdf',
             });
             FileSaver.saveAs(blob, `Diploma`);
             this.toastService.showSuccess('Diploma u vulos me sukses');
           } else {
-            this.toastService.showError(response.error);
+            this.toastService.showError(response);
           }
           this.cd.markForCheck();
         },
