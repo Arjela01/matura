@@ -94,13 +94,13 @@ export class DiplomaForStudentsViewComponent {
         .sendDiplomaToSeal(valuesToSend)
         .subscribe(response => {
           if (response.isSuccessful) {
-            const blob = new Blob([response], {
+            const blob = new Blob([response.data], {
               type: 'application/pdf',
             });
             FileSaver.saveAs(blob, `Diploma`);
             this.toastService.showSuccess('Diploma u vulos me sukses');
           } else {
-            this.toastService.showError(response);
+            this.toastService.showError(response.errorMessage);
           }
           this.cd.markForCheck();
         });
