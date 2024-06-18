@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AcademicYear, DiplomaStatusData } from '@msh/shared/domain-models';
+import { DiplomaStatusData } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { catchError, map, Observable, throwError } from 'rxjs';
@@ -12,23 +12,17 @@ import { ApiResult } from '@msh/shared/data-access-shared';
 export class DiplomasStudentApiService {
   constructor(private apiService: APIService) {}
 
-  exportDiplomasStudent(id: string, allReports: boolean) {
-    const academicYear = JSON.parse(
-      localStorage.getItem('academicYear') as string
-    ) as AcademicYear;
+  print(id: string) {
     return this.apiService.get<any>(
-      `/Diplomas/${id}?academicYearId=${academicYear.id}&isReportAll=${allReports}`,
+      `/Diplomas/Print/${id}`,
       new HttpParams(),
       'blob'
     );
   }
 
-  printElectronicSealForForeignStudent(id: string, allReports: boolean) {
-    const academicYear = JSON.parse(
-      localStorage.getItem('academicYear') as string
-    ) as AcademicYear;
+  printSealed(id: string) {
     return this.apiService.get<any>(
-      `/Diplomas/ElectronicSealForeigner/${id}?academicYearId=${academicYear.id}&isReportAll=${allReports}`,
+      `/Diplomas/PrintSealed/${id}`,
       new HttpParams(),
       'blob'
     );

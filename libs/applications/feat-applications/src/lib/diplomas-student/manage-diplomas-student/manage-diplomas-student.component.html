@@ -11,17 +11,15 @@
     class="flex align-items-right justify-content-right"
     *ngIf="!foreignStudent">
     <div class="my-2">
-
-        <p-button
-                (click)="generateDiplomas()"
-                label="Gjenero Diplomat"
-                icon="pi pi-play"
-                class="mr-2"
-        />
+      <p-button
+        (click)="generateDiplomas()"
+        label="Gjenero Diplomat"
+        icon="pi pi-play"
+        class="mr-2" />
       <button
         pButton
         pRipple
-        label="Printo diploma"
+        label="Diplomat e Maturantëve të Huaj"
         icon="pi pi-print"
         (click)="onNewClick('print')"
         class="p-button-success mr-2"></button>
@@ -30,9 +28,10 @@
       <button
         pButton
         pRipple
-        label="Vulos diploma"
+        icon="pi pi-chevron-circle-up"
+        label="Vulos dhe Dërgo në eAlbania"
         (click)="onNewClick('seal')"
-        class="p-button-success mr-2"></button>
+        class="p-button-danger mr-2"></button>
     </div>
   </div>
 </div>
@@ -40,10 +39,9 @@
   <div class="col-12">
     <div class="card">
       <msh-diplomas-student-grid
-        [students]="(studentList$ | async) || []"
+        [diplomas]="(diplomaList$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
-        [responseLoaded]="responseLoaded$ | async"
         (lazyLoadData)="getStudentDiplomas($event)">
       </msh-diplomas-student-grid>
     </div>
@@ -65,7 +63,6 @@
       [administrationOffices]="administrationOffices"
       [isPrinted]="!printed"
       [highSchools]="(highSchools$ | async)!!"
-      [responseLoaded]="responseLoaded$ | async"
       [studentTypes]="studentTypes"
       (admOfficeChanged)="getHighSchoolsByOffice($event)"
       (formClose)="onModalClose()"

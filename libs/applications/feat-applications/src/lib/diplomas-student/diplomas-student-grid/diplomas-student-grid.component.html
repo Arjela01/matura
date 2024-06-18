@@ -4,7 +4,7 @@
   responsiveLayout="scroll"
   [scrollable]="true"
   scrollHeight="820px"
-  [value]="students"
+  [value]="diplomas"
   [totalRecords]="totalRecords"
   [rows]="100"
   [paginator]="true"
@@ -12,10 +12,7 @@
   [showCurrentPageReport]="true"
   currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
   [rowHover]="true"
-  [(selection)]="selectedStudents"
   selectionMode="multiple"
-  (onRowSelect)="onRowSelect($event)"
-  (onRowUnselect)="onRowUnselect($event)"
   (onLazyLoad)="loadRows($event)"
   [lazy]="true">
   <ng-template pTemplate="header">
@@ -279,7 +276,6 @@
               class="p-button p-button-rounded p-button p-button-text ml-m pointer ml-3 seal-button"
               pTooltip="Vulos Diploma"
               tooltipPosition="bottom"
-              [disabled]="responseLoaded"
               (click)="onSeal(diploma)">
               <img src="assets/svg/electronic-seal.svg" alt="Seal" />
             </button>
