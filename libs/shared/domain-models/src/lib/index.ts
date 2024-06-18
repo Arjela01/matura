@@ -70,3 +70,4 @@ export * from './analytic-scores-without-total/exam-question-score-total.model';
 export * from './exam-subject-group/exam-subject-group.model';
 export * from './ealbania-messages/ealbania-message.model';
 export * from './ealbania-messages/ealbania-message-statistics.model';
+export * from './seal-diploma/seal-diploma.model';

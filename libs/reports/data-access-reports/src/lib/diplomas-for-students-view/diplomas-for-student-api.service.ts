@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { APIService } from '@msh/shared/util-shared';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { ApiResult } from '@msh/shared/data-access-shared';
-import { ExamAssignmentImportCommand } from '@msh/configurations/domain-configurations';
+import { SealDiplomaModel } from '@msh/shared/domain-models';
 
 @Injectable({
   providedIn: 'root',
@@ -19,10 +19,7 @@ export class DiplomasForStudentApiService {
     );
   }
 
-  sendDiplomaToSeal(data: {
-    studentId: string;
-    file: any;
-  }): Observable<ApiResult<any>> {
+  sendDiplomaToSeal(data: SealDiplomaModel): Observable<ApiResult<any>> {
     return this.apiService.post<ApiResult<any>, any>(`/DiplomasHistory`, data);
   }
 }

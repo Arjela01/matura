@@ -17,7 +17,7 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
-import { DiplomasForStudentApiService } from '../../../../data-access-reports/src/lib/diplomas-for-students-view/diplomas-for-student-api.service';
+import { DiplomasForStudentApiService } from '@msh/reports/data-access-reports';
 import { GlobalToastService } from '@msh/shared/util-shared';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as FileSaver from 'file-saver';
@@ -45,7 +45,7 @@ import * as FileSaver from 'file-saver';
   providers: [ConfirmationService],
 })
 export class DiplomaForStudentsViewComponent {
-  maturaId = '';
+  maturaId!: string;
   pdfSrc!: any;
   url!: string;
   file: any;
@@ -69,10 +69,8 @@ export class DiplomaForStudentsViewComponent {
             );
             this.file = response;
           } catch (error) {
-            this.toastService.showError('Failed to create PDF Blob.');
+            this.toastService.showError(error as string);
           }
-        } else {
-          this.toastService.showError('Empty response received.');
         }
         this.cd.markForCheck();
       },
