@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   Input,
   OnInit,
@@ -11,7 +12,6 @@ import {
   AdministrationOfficeApiService,
   DiplomasStudentApiService,
   HighSchoolApiService,
-  StudentsApiService,
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { Diploma, Student, StudentType } from '@msh/shared/domain-models';
@@ -107,7 +107,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
   );
 
   constructor(
-    private readonly studentService: StudentsApiService,
+    private readonly cd: ChangeDetectorRef,
     private readonly toastService: GlobalToastService,
     private diplomasService: DiplomasStudentApiService,
     private administrationOfficeApiService: AdministrationOfficeApiService,
@@ -273,7 +273,29 @@ export class ManageDiplomasStudentComponent implements OnInit {
       message: 'Jeni i sigurt që doni të refuzoni formularin?',
       accept: () => {
         this.diplomasService.generateDiplomas().subscribe(response => {
-          this.toastService.showSuccess('Diplomat u gjeneruan me sukses');
+          if (response.isSuccessful) {
+            this.toastService.showSuccess('Diplomat u gjeneruan me sukses');
+          } else {
+            this.toastService.showError(response.errorMessage);
+          }
+          this.cd.markForCheck();
+        });
+      },
+    });
+  }
+
+  sendToEAlbania() {
+    this.confirmationService.confirm({
+      message:
+        'Jeni i sigurt që doni të filloni procesin për dërgimin në eAlbania?',
+      accept: () => {
+        this.diplomasService.sendToEAlbania().subscribe(response => {
+          if (response.isSuccessful) {
+            this.toastService.showSuccess('Diplomat u gjeneruan me sukses');
+          } else {
+            this.toastService.showError(response.errorMessage);
+          }
+          this.cd.markForCheck();
         });
       },
     });

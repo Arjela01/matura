@@ -68,4 +68,8 @@ export class DiplomasStudentApiService {
   generateDiplomas(): Observable<any> {
     return this.apiService.post(`/Diplomas/GenerateDiplomas`);
   }
+
+  sendToEAlbania(): Observable<any> {
+    return this.apiService.post(`/Diplomas/SendToEAlbania`);
+  }
 }
