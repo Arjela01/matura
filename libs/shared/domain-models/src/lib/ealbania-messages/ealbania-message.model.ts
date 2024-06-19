@@ -16,6 +16,7 @@ export interface EAlbaniaMessage {
   studentFirstName?: string;
   studentLastName?: string;
   examTypeId?: number;
+  examTypeName?: number;
   academicYearId?: number;
   academicYearName?: string;
 }

@@ -105,6 +105,17 @@
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
+            <th pSortableColumn="examTypeName">
+              <div class="white-space-nowrap">Tipi</div>
+              <div class="white-space-nowrap">
+                <p-sortIcon field="examTypeName"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="examTypeName"
+                  display="menu"
+                  mshColumnFilterDirective></p-columnFilter>
+              </div>
+            </th>
             <th pSortableColumn="content">
               <div class="white-space-nowrap">Mesazhi</div>
               <div class="white-space-nowrap">
@@ -268,6 +279,9 @@
             </td>
             <td style="width: 10%">
               {{ message.studentLastName }}
+            </td>
+            <td style="width: 10%">
+              {{ message.examTypeName }}
             </td>
             <td style="width: 30%">
               {{ message.content }}
