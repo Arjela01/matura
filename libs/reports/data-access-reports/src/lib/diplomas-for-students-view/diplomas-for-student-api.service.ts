@@ -12,11 +12,7 @@ export class DiplomasForStudentApiService {
   constructor(private apiService: APIService) {}
 
   getDiplomasForStudentById(id: string): Observable<any> {
-    return this.apiService.get(
-      `/DiplomasHistory/${id}`,
-      new HttpParams(),
-      'blob'
-    );
+    return this.apiService.get(`/DiplomasHistory/${id}`);
   }
 
   sendDiplomaToSeal(data: SealDiplomaModel): Observable<any> {

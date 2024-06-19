@@ -59,23 +59,19 @@ export class DiplomaForStudentsViewComponent {
 
   onSearchClick() {
     this.diplomasForStudent.getDiplomasForStudentById(this.maturaId).subscribe({
-      next: (response: Blob) => {
-        if (response) {
-          try {
-            const blob = new Blob([response], { type: 'application/pdf' });
-            this.url = URL.createObjectURL(blob);
-            this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(
-              this.url
-            );
-            this.file = response;
-          } catch (error) {
-            this.toastService.showError(error as string);
-          }
+      next: (response: any) => {
+        if (response.isSuccessful) {
+          const blob = new Blob([response.data], { type: 'application/pdf' });
+          this.url = URL.createObjectURL(blob);
+          this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+          this.file = response.data;
         }
         this.cd.markForCheck();
       },
       error: err => {
-        this.toastService.showError(err);
+        if (err.status === 400) {
+          this.toastService.showError(err.error.errorMessage);
+        }
       },
     });
   }
