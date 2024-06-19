@@ -42,6 +42,7 @@ export class ConnectExamSecretsComponent implements OnInit {
   executionLog!: string;
   examTypes: DropdownModel<number>[] = [];
   selectedExamType: number | null = null;
+  isLoading: boolean = false;
 
   columns = [
     { field: 'processStatus', header: 'Statusi' },
@@ -66,6 +67,12 @@ export class ConnectExamSecretsComponent implements OnInit {
   ngOnInit() {
     this.selectedExamType = null;
     this.getExamTypes();
+
+    this.process.loadingState$
+      .pipe(untilDestroyed(this))
+      .subscribe(isLoading => {
+        this.isLoading = isLoading;
+      });
   }
 
   getProcessData($event: TableLazyLoadEvent, processType: number) {

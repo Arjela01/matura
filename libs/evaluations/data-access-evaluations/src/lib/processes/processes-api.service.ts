@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { GlobalToastService } from '@msh/shared/util-shared';
 import { CalculationProcessesApiService } from '../calculation-processes/calculation-processes-api.service';
 import { TableLazyLoadEvent } from 'primeng/table';
@@ -14,6 +14,8 @@ import { ApplicationProcess } from '@msh/shared/domain-models';
 export class ProcessesApiService {
   private calculateGrade$$ = new BehaviorSubject<ApplicationProcess[]>([]);
   calculateGrade$ = this.calculateGrade$$.asObservable();
+  private loadingState$$ = new Subject<boolean>();
+  loadingState$ = this.loadingState$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
   appProcessType!: string;
   executionLog!: string;
@@ -36,21 +38,28 @@ export class ProcessesApiService {
   }
 
   post(processType: number, examTypeId?: any) {
+    this.loadingState$$.next(true);
     this.calculateGradesService
       .loadProcess(processType, examTypeId)
       .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response.isSuccessful) {
-          this.toastService.showSuccess('Procesi mbaroi me sukses!');
-          const dataArray = this.format(response.data);
-          this.calculateGrade$$.next(dataArray);
-        }
-        if (response.isBadRequest) {
+      .subscribe({
+        next: response => {
+          this.loadingState$$.next(false);
+          if (response.isSuccessful) {
+            this.toastService.showSuccess('Procesi mbaroi me sukses!');
+            const dataArray = this.format(response.data);
+            this.calculateGrade$$.next(dataArray);
+          } else {
+            this.loadingState$$.next(false);
+            this.toastService.showError(
+              response.errorMessage || 'Dicka shkoi keq!'
+            );
+          }
+        },
+        error: () => {
+          this.loadingState$$.next(false);
           this.toastService.showError('Dicka shkoi keq!');
-        }
-        if (!response.isSuccessful) {
-          this.toastService.showError(response.errorMessage);
-        }
+        },
       });
   }
 
