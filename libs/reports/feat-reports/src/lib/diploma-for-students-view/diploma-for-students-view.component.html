@@ -1,0 +1,36 @@
+<div class="flex center mb-2 page-header mb-header">
+  <h2 class="flex-1 mb-0">Printo Diplomë për Maturant</h2>
+</div>
+<form class="mt-4">
+  <p-inputGroup>
+    <p-inputGroupAddon> Matura ID </p-inputGroupAddon>
+
+    <input
+      type="text"
+      pInputText
+      id="nid"
+      name="nid"
+      [required]="true"
+      [(ngModel)]="maturaId"
+      required
+      autofocus />
+    <button
+      [disabled]="!maturaId"
+      type="button"
+      pButton
+      icon="pi pi-search"
+      label="Kërko"
+      (click)="onSearchClick()"
+      class="w-auto mr-2"></button>
+    <button
+      [disabled]="!file"
+      pButton
+      label="Vulos dhe Shkarko"
+      icon="pi pi-print"
+      class="w-auto mr-2"
+      (click)="onSealAndDownloadClick()"></button>
+  </p-inputGroup>
+</form>
+<div *ngIf="pdfSrc">
+  <iframe [src]="pdfSrc" width="100%" height="800px" class="mt-5"></iframe>
+</div>
