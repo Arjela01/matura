@@ -14,15 +14,26 @@
   </div>
   <div class="flex justify-content-end">
     <div class="my-2 flex align-items-center">
-      {{isLoading}}
       <div class="actions">
         <button
-          pButton
           type="button"
-          label="Fillo Procesin"
-          loadingIcon="pi pi-spin pi-sync"
+          pButton
+          pRipple
           (click)="postProcess()"
-          [loading]="isLoading"></button>
+          [disabled]="isLoading">
+          <ng-container *ngIf="isLoading; else labelTmpl">
+            <div class="spinner-container">
+              <i
+                *ngIf="isLoading"
+                class="pi pi-spin pi-spinner"
+                style="font-size: 1.5rem">
+              </i>
+            </div>
+          </ng-container>
+          <ng-template #labelTmpl>
+            <span>Fillo Procesin</span>
+          </ng-template>
+        </button>
         <button
           style="margin-left: 11px"
           pRipple
