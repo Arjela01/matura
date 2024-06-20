@@ -58,7 +58,7 @@ export class DiplomaForStudentsViewComponent {
   ) {}
 
   onSearchClick() {
-    this.diplomasForStudent.getDiplomasForStudentById(this.maturaId).subscribe({
+    this.diplomasForStudent.getDiplomaForStudentById(this.maturaId).subscribe({
       next: (response: Blob) => {
         if (response) {
           try {
@@ -84,12 +84,7 @@ export class DiplomaForStudentsViewComponent {
     const reader = new FileReader();
     reader.readAsDataURL(this.file);
     reader.onloadend = () => {
-      const base64data = reader.result?.toString().split(',')[1] ?? '';
-      const valuesToSend = {
-        studentId: this.maturaId,
-        file: base64data,
-      };
-      this.diplomasForStudent.sendDiplomaToSeal(valuesToSend).subscribe({
+      this.diplomasForStudent.getSealedDiplomaForStudentById(this.maturaId).subscribe({
         next: response => {
           if (response.isSuccessful) {
             const blob = new Blob([response.data], {
