@@ -3,6 +3,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  OnDestroy,
+  OnInit,
 } from '@angular/core';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -26,6 +28,7 @@ import { CardModule } from 'primeng/card';
 import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { SignalrService } from '@msh/shared/data-access-shared';
 
 @UntilDestroy()
 @Component({
@@ -52,7 +55,7 @@ import { ConfirmationService } from 'primeng/api';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [DatePipe, ConfirmationService],
 })
-export class EalbaniaMessagesGridComponent {
+export class EalbaniaMessagesGridComponent implements OnInit, OnDestroy {
   private data$$ = new BehaviorSubject<EAlbaniaMessage[]>([]);
   data$ = this.data$$.asObservable();
   totalRecords = 0;
@@ -68,8 +71,26 @@ export class EalbaniaMessagesGridComponent {
     private readonly ealbaniaMessagesApiService: EalbaniaMessagesApiService,
     private readonly toastService: GlobalToastService,
     private readonly confirmationService: ConfirmationService,
-    private readonly cd: ChangeDetectorRef
+    private readonly cd: ChangeDetectorRef,
+    private readonly signalrService: SignalrService
   ) {}
+
+  ngOnInit() {
+    this.signalrService.startConnection();
+    this.subscribeToStatisticsUpdates();
+  }
+  ngOnDestroy() {
+    this.signalrService.stopConnection();
+  }
+  private subscribeToStatisticsUpdates() {
+    this.signalrService
+      .getMessageReceivedObservable()
+      .pipe(untilDestroyed(this))
+      .subscribe(stats => {
+        this.stats = stats.data;
+        this.cd.markForCheck();
+      });
+  }
 
   getData($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
@@ -80,14 +101,6 @@ export class EalbaniaMessagesGridComponent {
       .subscribe(response => {
         this.data$$.next(response.data);
         this.totalRecords = response.total;
-      });
-
-    this.ealbaniaMessagesApiService
-      .getStatistics()
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.stats = response;
-        this.cd.markForCheck();
       });
   }
 
