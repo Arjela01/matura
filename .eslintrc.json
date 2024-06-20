@@ -51,7 +51,8 @@
                 "onlyDependOnLibsWithTags": [
                   "type:util",
                   "type:data-access",
-                  "type:domain"
+                  "type:domain",
+                  "scope:shared"
                 ]
               },
               {

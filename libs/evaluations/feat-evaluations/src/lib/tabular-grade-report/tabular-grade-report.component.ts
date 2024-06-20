@@ -39,7 +39,7 @@ export class TabularGradeReportComponent implements OnInit {
     Application_Process.CreateTabularGradeReport;
   appProcessType!: string;
   executionLog!: string;
-  isLoading: boolean = false;
+  isLoading = false;
 
   columns = [
     { field: 'processStatus', header: 'Statusi' },

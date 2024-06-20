@@ -41,7 +41,7 @@ export class CalculateGradesComponent implements OnInit {
   executionLog!: string;
   examTypes: DropdownModel<number>[] = [];
   selectedExamType: number | null = null;
-  isLoading: boolean = false;
+  isLoading = false;
 
   columns = [
     { field: 'processStatus', header: 'Statusi' },
