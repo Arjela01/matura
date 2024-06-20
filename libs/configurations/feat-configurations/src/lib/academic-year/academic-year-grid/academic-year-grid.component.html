@@ -37,10 +37,10 @@
           <p-sortIcon field="isActive"></p-sortIcon>
         </div>
       </th>
-      <th pSortableColumn="isFall">
-        Vjeshtë?
+      <th pSortableColumn="directorName">
+        Drejtori
         <div>
-          <p-sortIcon field="isFall"></p-sortIcon>
+          <p-sortIcon field="directorName"></p-sortIcon>
         </div>
       </th>
       <th></th>
@@ -54,9 +54,8 @@
       <td style="width: 33%; min-width: 10rem">
         {{ academicYear.isActive | app_bool }}
       </td>
-
       <td style="width: 33%; min-width: 10rem">
-        {{ academicYear.isFall | app_bool }}
+        {{ academicYear.directorName }}
       </td>
       <td>
         <div class="flex">

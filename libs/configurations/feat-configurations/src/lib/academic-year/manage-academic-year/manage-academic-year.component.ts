@@ -47,7 +47,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
 export class ManageAcademicYearComponent {
   private academicYears$$ = new BehaviorSubject<AcademicYear[]>([]);
   academicYears$ = this.academicYears$$.asObservable();
-  filters: TableLazyLoadEvent | null = null;
+  filters: TableLazyLoadEvent | null = { sortField: 'year', sortOrder: -1 };
 
   totalRecords = 0;
   selectedAcademicYear: AcademicYear | null = null;
