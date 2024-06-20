@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -33,12 +33,13 @@ import * as FileSaver from 'file-saver';
   styleUrls: ['./tabular-grade-report.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TabularGradeReportComponent {
+export class TabularGradeReportComponent implements OnInit {
   filters: TableLazyLoadEvent | null = null;
   processType: Application_Process =
     Application_Process.CreateTabularGradeReport;
   appProcessType!: string;
   executionLog!: string;
+  isLoading: boolean = false;
 
   columns = [
     { field: 'processStatus', header: 'Statusi' },
@@ -59,6 +60,14 @@ export class TabularGradeReportComponent {
     private readonly calculateGradesService: CalculationProcessesApiService,
     private readonly process: ProcessesApiService
   ) {}
+
+  ngOnInit() {
+    this.process.loadingState$
+      .pipe(untilDestroyed(this))
+      .subscribe(isLoading => {
+        this.isLoading = isLoading;
+      });
+  }
 
   getProcessData($event: TableLazyLoadEvent, processType: number) {
     this.filters = { ...$event };

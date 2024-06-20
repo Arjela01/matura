@@ -14,10 +14,15 @@
   </div>
   <div class="flex justify-content-end">
     <div class="my-2 flex align-items-center">
+      {{isLoading}}
       <div class="actions">
-        <button pButton type="button" (click)="postProcess()">
-          Fillo procesin
-        </button>
+        <button
+          pButton
+          type="button"
+          label="Fillo Procesin"
+          loadingIcon="pi pi-spin pi-sync"
+          (click)="postProcess()"
+          [loading]="isLoading"></button>
         <button
           style="margin-left: 11px"
           pRipple
