@@ -21,6 +21,7 @@ import { DiplomasForStudentApiService } from '@msh/reports/data-access-reports';
 import { GlobalToastService } from '@msh/shared/util-shared';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as FileSaver from 'file-saver';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -81,19 +82,19 @@ export class DiplomaForStudentsViewComponent {
   }
 
   onSealAndDownloadClick() {
-    const reader = new FileReader();
-    reader.readAsDataURL(this.file);
-    reader.onloadend = () => {
-      this.diplomasForStudent.getSealedDiplomaForStudentById(this.maturaId).subscribe({
+    this.diplomasForStudent
+      .getSealedDiplomaForStudentById(this.maturaId)
+      .subscribe({
         next: response => {
-          if (response.isSuccessful) {
-            const blob = new Blob([response.data], {
+          if (response.type == 'application/json') {
+            response.text().then((data: any) => {
+              this.toastService.showError(JSON.parse(data).errorMessage);
+            });
+          } else {
+            const blob = new Blob([response], {
               type: 'application/pdf',
             });
-            FileSaver.saveAs(blob, `Diploma`);
-            this.toastService.showSuccess('Diploma u vulos me sukses');
-          } else {
-            this.toastService.showError(response.errorMessage);
+            FileSaver.saveAs(blob, `Diploma_Sealed_${this.maturaId}`);
           }
         },
         error: err => {
@@ -103,6 +104,5 @@ export class DiplomaForStudentsViewComponent {
           this.cd.markForCheck();
         },
       });
-    };
   }
 }
