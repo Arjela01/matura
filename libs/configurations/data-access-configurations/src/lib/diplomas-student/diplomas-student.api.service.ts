@@ -55,6 +55,8 @@ export class DiplomasStudentApiService {
   }
 
   printForeignDiplomas():Observable<any> {
-    return this.apiService.post(`/Diplomas/PrintForeignDiplomas`);
+    return this.apiService.get(`/Diplomas/PrintForeignDiplomas`,
+      new HttpParams(),
+      'blob');
   }
 }
