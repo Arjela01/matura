@@ -3,18 +3,24 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Input,
+  OnDestroy,
   OnInit,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AuthFacade } from '@msh/auth/data-access-auth';
+import { AuthFacade, SignalrService } from '@msh/auth/data-access-auth';
 import {
   AdministrationOfficeApiService,
   DiplomasStudentApiService,
   HighSchoolApiService,
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import { Diploma, Student, StudentType } from '@msh/shared/domain-models';
+import {
+  Diploma,
+  DiplomaMessageStatistic,
+  NotificationEnum,
+  Student,
+  StudentType,
+} from '@msh/shared/domain-models';
 import {
   GlobalToastService,
   GRID_ACTIONS,
@@ -39,7 +45,6 @@ import {
 import { DiplomasStudentFormComponent } from '../diplomas-student-form/diplomas-student-form.component';
 import { DiplomasStudentGridComponent } from '../diplomas-student-grid/diplomas-student-grid.component';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { PrintedDiplomasForeignStudentsComponent } from '../printed-diplomas-foreign-students/printed-diplomas-foreign-students.component';
 
 @Component({
   selector: 'msh-manage-diplomas-student',
@@ -61,7 +66,7 @@ import { PrintedDiplomasForeignStudentsComponent } from '../printed-diplomas-for
   providers: [ConfirmationService],
 })
 @UntilDestroy()
-export class ManageDiplomasStudentComponent implements OnInit {
+export class ManageDiplomasStudentComponent implements OnInit, OnDestroy {
   private diplomaList$$ = new BehaviorSubject<Diploma[]>([]);
   diplomaList$ = this.diplomaList$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
@@ -71,7 +76,12 @@ export class ManageDiplomasStudentComponent implements OnInit {
   selectedStudent: Student | null = null;
   selectedAction!: string;
   responseLoaded = new BehaviorSubject<boolean>(false);
-
+  status: DiplomaMessageStatistic = {
+    errorCount: 0,
+    waitingCount: 0,
+    successCount: 0,
+    needApprovalCount: 0,
+  } as DiplomaMessageStatistic;
   studentTypes: DropdownModel<number>[] = [
     {
       key: StudentType.PreviousStudent,
@@ -109,12 +119,31 @@ export class ManageDiplomasStudentComponent implements OnInit {
     private administrationOfficeApiService: AdministrationOfficeApiService,
     private highschoolApiService: HighSchoolApiService,
     private authFacade: AuthFacade,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private readonly signalrService: SignalrService
   ) {}
 
   ngOnInit(): void {
     this.getAdministrationOfficeDropdown();
     this.getStudentSealSummary();
+    this.signalrService.startConnection();
+    this.subscribeToStatisticsUpdates();
+  }
+
+  ngOnDestroy() {
+    this.signalrService.stopConnection();
+  }
+
+  private subscribeToStatisticsUpdates() {
+    this.signalrService
+      .getMessageReceivedObservable()
+      .pipe(untilDestroyed(this))
+      .subscribe(status => {
+        if (status.notificationEnum == NotificationEnum.GenerateDiploma) {
+          this.status = status.data;
+          this.cd.markForCheck();
+        }
+      });
   }
 
   onNewClick(action: string) {

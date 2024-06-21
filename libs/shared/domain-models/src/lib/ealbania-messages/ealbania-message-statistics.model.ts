@@ -4,3 +4,5 @@ export interface EAlbaniaMessageStatistics {
   successCount?: number;
   needApprovalCount?: number;
 }
+
+export interface DiplomaMessageStatistic extends EAlbaniaMessageStatistics {}

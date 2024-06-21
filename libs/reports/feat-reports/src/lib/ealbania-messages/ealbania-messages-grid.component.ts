@@ -80,9 +80,11 @@ export class EalbaniaMessagesGridComponent implements OnInit, OnDestroy {
     this.signalrService.startConnection();
     this.subscribeToStatisticsUpdates();
   }
+
   ngOnDestroy() {
     this.signalrService.stopConnection();
   }
+
   private subscribeToStatisticsUpdates() {
     this.signalrService
       .getMessageReceivedObservable()
