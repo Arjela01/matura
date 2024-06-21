@@ -33,12 +33,25 @@
       </div>
       <div class="actions">
         <button
-          pButton
+          class="mt-2"
           type="button"
-          label="Fillo Procesin"
-          loadingIcon="pi pi-spin pi-sync"
+          pButton
+          pRipple
           (click)="postProcess()"
-          [loading]="isLoading"></button>
+          [disabled]="isLoading">
+          <ng-container *ngIf="isLoading; else labelTmpl">
+            <div class="spinner-container">
+              <i
+                *ngIf="isLoading"
+                class="pi pi-spin pi-spinner"
+                style="font-size: 1.5rem">
+              </i>
+            </div>
+          </ng-container>
+          <ng-template #labelTmpl>
+            <span>Fillo Procesin</span>
+          </ng-template>
+        </button>
       </div>
     </div>
   </div>
