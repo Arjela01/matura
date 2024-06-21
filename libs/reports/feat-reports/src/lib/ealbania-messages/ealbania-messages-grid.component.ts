@@ -6,29 +6,30 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { TableLazyLoadEvent, TableModule } from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
-import { CheckboxModule } from 'primeng/checkbox';
-import { InputTextModule } from 'primeng/inputtext';
-import { RippleModule } from 'primeng/ripple';
-import { TooltipModule } from 'primeng/tooltip';
 import { RouterLink } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { EalbaniaMessagesApiService } from '@msh/reports/data-access-reports';
+import { SignalrService } from '@msh/shared/data-access-shared';
 import {
   EAlbaniaMessage,
   EAlbaniaMessageStatistics,
+  NotificationEnum,
 } from '@msh/shared/domain-models';
+import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
 import {
   ColumnFilterDirective,
   GlobalToastService,
 } from '@msh/shared/util-shared';
-import { EalbaniaMessagesApiService } from '@msh/reports/data-access-reports';
-import { CardModule } from 'primeng/card';
-import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService } from 'primeng/api';
-import { SignalrService } from '@msh/shared/data-access-shared';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { RippleModule } from 'primeng/ripple';
+import { TableLazyLoadEvent, TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
+import { BehaviorSubject } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -87,8 +88,11 @@ export class EalbaniaMessagesGridComponent implements OnInit, OnDestroy {
       .getMessageReceivedObservable()
       .pipe(untilDestroyed(this))
       .subscribe(stats => {
-        this.stats = stats.data;
-        this.cd.markForCheck();
+        if(stats.notificationEnum == NotificationEnum.EalbaniaNotification)
+        {
+          this.stats = stats.data;
+          this.cd.markForCheck();
+        }
       });
   }
 
