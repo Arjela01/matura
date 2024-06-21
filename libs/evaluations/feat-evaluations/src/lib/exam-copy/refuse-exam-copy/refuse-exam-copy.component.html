@@ -1,24 +1,27 @@
 <form #form="ngForm" (ngSubmit)="onRefuse()">
-  <div class="field col-4">
-    <label for="comments">Arsyeja</label>
-    <input
-      type="text"
-      pInputText
+  <div class="field">
+    <label for="comments">Arsyeja *</label>
+    <textarea
+      pInputTextarea
       id="comments"
       name="comments"
       [(ngModel)]="examCopy.comments"
-      autofocus />
+      rows="5"
+      autofocus>
+    </textarea>
   </div>
 
-  <button
-    type="submit"
-    pButton
-    label="Refuzo"
-    class="p-button w-auto mr-2"></button>
-  <button
-    type="button"
-    pButton
-    label="Kthehu"
-    class="p-button-text w-auto mr-2"
-    (click)="onCancelClick()"></button>
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      label="Kthehu"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      type="submit"
+      pButton
+      label="Refuzo"
+      class="p-button w-auto mr-2"></button>
+  </div>
 </form>

@@ -1,368 +1,404 @@
-<form #form="ngForm" (ngSubmit)="onSubmit()">
-  <div class="text-xl mt-2 mb-2 font-bold">Të dhënat e maturantit</div>
-  <div class="grid">
-    <div class="field col-2">
-      <label for="firstName">Emri *</label>
-      <input
-        type="text"
-        pInputText
-        id="firstName"
-        name="firstName"
-        disabled
-        [value]="examCopy.firstName"
-        autofocus />
-    </div>
-    <div class="field col-2">
-      <label for="lastName">Mbiemri *</label>
-      <input
-        type="text"
-        pInputText
-        id="lastName"
-        name="lastName"
-        disabled
-        [value]="examCopy.lastName"
-        autofocus />
-    </div>
-    <div class="field col-2">
-      <label for="email">Email *</label>
-      <input
-        type="text"
-        disabled
-        pInputText
-        id="email"
-        name="email"
-        [value]="examCopy.email"
-        autofocus />
-    </div>
-    <div class="field col-2">
-      <label for="gender">Gjinia *</label>
-      <input
-        type="text"
-        pInputText
-        id="gender"
-        disabled
-        name="gender"
-        [value]="examCopy.gender"
-        autofocus />
-    </div>
-    <div class="field col-2">
-      <label for="administrationOffice">ZVAP *</label>
-      <input
-        type="text"
-        pInputText
-        id="administrationOffice"
-        disabled
-        name="administrationOffice"
-        [value]="examCopy.administrationOffice"
-        autofocus />
-    </div>
-    <div class="field col-2">
-      <label for="fatherName">Atësia</label>
-      <input
-        type="text"
-        pInputText
-        id="fatherName"
-        name="fatherName"
-        [value]="examCopy.fatherName"
-        disabled
-        autofocus />
-    </div>
-    <div class="field col-2">
-      <label for="placeOfBirth">Vendlindja</label>
-      <input
-        type="text"
-        pInputText
-        id="placeOfBirth"
-        name="placeOfBirth"
-        [value]="examCopy.placeOfBirth"
-        disabled
-        autofocus />
-    </div>
-    <div class="field col-2">
-      <label for="city">Qyteti</label>
-      <input
-        type="text"
-        pInputText
-        id="city"
-        name="city"
-        [value]="examCopy.city"
-        disabled
-        autofocus />
-    </div>
-    <div class="field col-2">
-      <label for="municipalityUnit">Njësia Bashkiake</label>
-      <input
-        type="text"
-        pInputText
-        id="municipalityUnit"
-        disabled
-        name="municipalityUnit"
-        [value]="examCopy.municipalityUnit"
-        autofocus />
-    </div>
-    <div class="field col-2">
-      <label for="telFix">Numri Fiks</label>
-      <input
-        type="text"
-        pInputText
-        id="telFix"
-        name="telFix"
-        disabled
-        [value]="examCopy.telFix"
-        autofocus />
-    </div>
-    <div class="field col-2">
-      <label for="schoolName">Shkolla</label>
-      <input
-        type="text"
-        pInputText
-        id="schoolName"
-        name="schoolName"
-        disabled
-        [value]="examCopy.schoolName"
-        autofocus />
-    </div>
-    <div class="field col-2">
-      <label for="remarks">Shënime</label>
-      <input
-        type="text"
-        pInputText
-        id="remarks"
-        name="remarks"
-        disabled
-        [value]="examCopy.remarks"
-        autofocus />
-    </div>
-    <div class="field col-2">
-      <label for="dateOfBirth">Datëlindja</label>
-      <input
-        type="text"
-        pInputText
-        id="dateOfBirth"
-        name="dateOfBirth"
-        disabled
-        [value]="examCopy.dateOfBirth | app_date"
-        autofocus />
-    </div>
-    <div class="field col-2">
-      <label for="nationality">Shtetësia</label>
-      <input
-        type="text"
-        pInputText
-        id="nationality"
-        name="nationality"
-        disabled
-        [value]="examCopy.nationality"
-        autofocus />
-    </div>
-    <div class="field col-2">
-      <label for="region">Rrethi</label>
-      <input
-        type="text"
-        pInputText
-        id="region"
-        disabled
-        name="region"
-        [value]="examCopy.region"
-        autofocus />
-    </div>
-    <div class="field col-2">
-      <label for="maturaId">Id e Maturantit</label>
-      <input
-        type="text"
-        pInputText
-        id="maturaId"
-        disabled
-        name="maturaId"
-        [value]="examCopy.maturaId"
-        autofocus />
-    </div>
-    <div class="field col-2">
-      <label for="nid">NID</label>
-      <input
-        type="text"
-        pInputText
-        id="nid"
-        disabled
-        name="nid"
-        [value]="examCopy.nid"
-        autofocus />
-    </div>
-    <div class="field col-2">
-      <label for="address">Adresa</label>
-      <input
-        type="text"
-        pInputText
-        id="address"
-        name="address"
-        disabled
-        [value]="examCopy.address"
-        autofocus />
-    </div>
-    <div class="field col-2">
-      <label for="postalCode">Kodi Postar</label>
-      <input
-        type="text"
-        pInputText
-        id="postalCode"
-        name="postalCode"
-        disabled
-        [value]="examCopy.postalCode"
-        autofocus />
-    </div>
-    <div class="field col-2">
-      <label for="cel">Nr. Cel</label>
-      <input
-        type="text"
-        pInputText
-        id="cel"
-        name="cel"
-        disabled
-        [value]="examCopy.cel"
-        autofocus />
+<div class="flex ml-2 mb-2 page-header mb-header">
+  <h2 class="flex-1 m-0">
+    Detajet për aplikimin e marrjes së kopjes së testit të maturës
+  </h2>
+  <div class="flex align-items-right justify-content-right">
+    <div class="my-2">
+      <button
+        pButton
+        label="Aplikim në Pritje"
+        class="p-button-warning p-button-outlined mr-2"
+        *ngIf="examCopy.status === 1"></button>
+
+      <button
+        pButton
+        label="Aplikim i Refuzuar"
+        class="p-button-danger p-button-outlined mr-2"
+        *ngIf="examCopy.status === 3"></button>
+
+      <button
+        pButton
+        label="Aplikim i Miratuar"
+        class="p-button-success p-button-outlined mr-2"
+        *ngIf="examCopy.status === 2"></button>
     </div>
   </div>
+</div>
 
-  <div class="text-xl mt-2 mb-2 font-bold">Të dhënat e aplikimit</div>
-  <div>
-    <div class="grid">
-      <div class="field col-2">
-        <label for="applicationId">Numër Aplikimi</label>
-        <input
-          type="text"
-          pInputText
-          id="applicationId"
-          disabled
-          name="applicationId"
-          [value]="examCopy.applicationId"
-          autofocus />
-      </div>
-      <div class="field col-2">
-        <label for="dateCreated">Datë aplikimi</label>
-        <input
-          type="text"
-          pInputText
-          id="dateCreated"
-          name="dateCreated"
-          disabled
-          [value]="examCopy.dateCreated | app_date"
-          autofocus />
-      </div>
-      <div class="field col-2">
-        <label for="decisionDueDate">Afati i Vendimit</label>
-        <input
-          type="text"
-          pInputText
-          id="decisionDueDate"
-          name="decisionDueDate"
-          disabled
-          [value]="examCopy.decisionDueDate | app_date"
-          autofocus />
-      </div>
-      <div class="field col-2">
-        <label for="decisionDate">Statusi</label>
-        <div
-          [ngClass]="
-            examCopy.status === 3
-              ? ['bg-red-300', 'red-text', 'px-6', 'py-3', 'fb']
-              : examCopy.status === 2
-                ? ['bg-green-300', 'green-text', 'px-6', 'py-3', 'fb']
-                : ['bg-yellow-300', 'yellow-text', 'px-6', 'py-3', 'fb']
-          ">
-          {{
-            examCopy.status === 1
-              ? 'Draft'
-              : examCopy.status === 2
-                ? 'Pranuar'
-                : 'Refuzuar'
-          }}
+<div class="grid">
+  <div class="col-12 p-fluid">
+    <div class="card-form px-6 py-4 mb-header mt-2">
+      <form #form="ngForm" class="m-4 w-5" (ngSubmit)="onSubmit()">
+        <h5 class="mb-3 font-bold">Të dhënat e maturantit</h5>
+        <div class="field">
+          <label for="firstName">Emri *</label>
+          <input
+            type="text"
+            pInputText
+            id="firstName"
+            name="firstName"
+            disabled
+            [value]="examCopy.firstName"
+            autofocus />
         </div>
-      </div>
-      <div class="field col-2">
-        <label for="decisionDate">Datë Vendimi</label>
-        <input
-          type="text"
-          pInputText
-          id="decisionDate"
-          name="decisionDate"
-          disabled
-          [value]="examCopy.decisionDate | app_date"
-          autofocus />
-      </div>
-      <div class="field col-2">
-        <label for="comments">Komente</label>
-        <input
-          type="text"
-          pInputText
-          disabled
-          id="comments"
-          name="comments"
-          [value]="examCopy.comments"
-          autofocus />
-      </div>
-      <div class="field col-2" *ngIf="examCopy.status === 2">
-        <label>Dokumenti</label>
-        <input
-          style="min-width: 200px !important"
-          disabled
-          pInputText
-          type="text"
-          [value]="
-            (updatedFile ? updatedFile.name : '') || examCopy.documentName
-          " />
-      </div>
-    </div>
-    <div class="flex justify-content-end">
-      <div
-        *ngIf="examCopy.status === 2"
-        class="field col-2 mt-2 mb-0 sm:mr-0"
-        style="display: contents">
-        <button
-          pButton
-          pRipple
-          icon="pi pi-download"
-          label="Shkarko"
-          (click)="downloadFile(examCopy.attachedDocument)"></button>
-      </div>
-      <div
-        *ngIf="examCopy.status === 2"
-        class="field col-2 mt-2 mb-0 sm:mr-0"
-        style="display: contents">
-        <button
-          type="button"
-          pButton
-          (click)="onConfirm()"
-          label="Ndrysho"
-          class="p-button ml-2 w-auto"></button>
-      </div>
-    </div>
-  </div>
+        <div class="field">
+          <label for="lastName">Mbiemri *</label>
+          <input
+            type="text"
+            pInputText
+            id="lastName"
+            name="lastName"
+            disabled
+            [value]="examCopy.lastName"
+            autofocus />
+        </div>
+        <div class="field">
+          <label for="email">Email *</label>
+          <input
+            type="text"
+            disabled
+            pInputText
+            id="email"
+            name="email"
+            [value]="examCopy.email"
+            autofocus />
+        </div>
+        <div class="field">
+          <label for="gender">Gjinia *</label>
+          <input
+            type="text"
+            pInputText
+            id="gender"
+            disabled
+            name="gender"
+            [value]="examCopy.gender"
+            autofocus />
+        </div>
+        <div class="field">
+          <label for="administrationOffice">ZVAP *</label>
+          <input
+            type="text"
+            pInputText
+            id="administrationOffice"
+            disabled
+            name="administrationOffice"
+            [value]="examCopy.administrationOffice"
+            autofocus />
+        </div>
+        <div class="field">
+          <label for="fatherName">Atësia</label>
+          <input
+            type="text"
+            pInputText
+            id="fatherName"
+            name="fatherName"
+            [value]="examCopy.fatherName"
+            disabled
+            autofocus />
+        </div>
+        <div class="field">
+          <label for="placeOfBirth">Vendlindja</label>
+          <input
+            type="text"
+            pInputText
+            id="placeOfBirth"
+            name="placeOfBirth"
+            [value]="examCopy.placeOfBirth"
+            disabled
+            autofocus />
+        </div>
+        <div class="field">
+          <label for="city">Qyteti</label>
+          <input
+            type="text"
+            pInputText
+            id="city"
+            name="city"
+            [value]="examCopy.city"
+            disabled
+            autofocus />
+        </div>
+        <div class="field">
+          <label for="municipalityUnit">Njësia Bashkiake</label>
+          <input
+            type="text"
+            pInputText
+            id="municipalityUnit"
+            disabled
+            name="municipalityUnit"
+            [value]="examCopy.municipalityUnit"
+            autofocus />
+        </div>
+        <div class="field">
+          <label for="telFix">Numri Fiks</label>
+          <input
+            type="text"
+            pInputText
+            id="telFix"
+            name="telFix"
+            disabled
+            [value]="examCopy.telFix"
+            autofocus />
+        </div>
+        <div class="field">
+          <label for="schoolName">Shkolla</label>
+          <input
+            type="text"
+            pInputText
+            id="schoolName"
+            name="schoolName"
+            disabled
+            [value]="examCopy.schoolName"
+            autofocus />
+        </div>
+        <div class="field">
+          <label for="remarks">Shënime</label>
+          <input
+            type="text"
+            pInputText
+            id="remarks"
+            name="remarks"
+            disabled
+            [value]="examCopy.remarks"
+            autofocus />
+        </div>
+        <div class="field">
+          <label for="dateOfBirth">Datëlindja</label>
+          <input
+            type="text"
+            pInputText
+            id="dateOfBirth"
+            name="dateOfBirth"
+            disabled
+            [value]="examCopy.dateOfBirth | app_date"
+            autofocus />
+        </div>
+        <div class="field">
+          <label for="nationality">Shtetësia</label>
+          <input
+            type="text"
+            pInputText
+            id="nationality"
+            name="nationality"
+            disabled
+            [value]="examCopy.nationality"
+            autofocus />
+        </div>
+        <div class="field">
+          <label for="region">Rrethi</label>
+          <input
+            type="text"
+            pInputText
+            id="region"
+            disabled
+            name="region"
+            [value]="examCopy.region"
+            autofocus />
+        </div>
+        <div class="field">
+          <label for="maturaId">Id e Maturantit</label>
+          <input
+            type="text"
+            pInputText
+            id="maturaId"
+            disabled
+            name="maturaId"
+            [value]="examCopy.maturaId"
+            autofocus />
+        </div>
+        <div class="field">
+          <label for="nid">NID</label>
+          <input
+            type="text"
+            pInputText
+            id="nid"
+            disabled
+            name="nid"
+            [value]="examCopy.nid"
+            autofocus />
+        </div>
+        <div class="field">
+          <label for="address">Adresa</label>
+          <input
+            type="text"
+            pInputText
+            id="address"
+            name="address"
+            disabled
+            [value]="examCopy.address"
+            autofocus />
+        </div>
+        <div class="field">
+          <label for="postalCode">Kodi Postar</label>
+          <input
+            type="text"
+            pInputText
+            id="postalCode"
+            name="postalCode"
+            disabled
+            [value]="examCopy.postalCode"
+            autofocus />
+        </div>
+        <div class="field">
+          <label for="cel">Nr. Cel</label>
+          <input
+            type="text"
+            pInputText
+            id="cel"
+            name="cel"
+            disabled
+            [value]="examCopy.cel"
+            autofocus />
+        </div>
 
-  <div *ngIf="examCopy.status === 1" class="flex justify-content-end">
-    <button
-      type="button"
-      pButton
-      label="Anullo"
-      class="p-button-text w-auto mr-2"
-      (click)="onCancelClick()"></button>
-    <button
-      type="button"
-      pButton
-      label="Refuzo"
-      class="p-button-text w-auto mr-2"
-      (click)="onRefuse()"></button>
-    <button
-      type="button"
-      pButton
-      (click)="onConfirm()"
-      label="Aprovo"
-      class="p-button w-auto"></button>
+        <h5 class="mb-3 font-bold">Të dhënat e aplikimit</h5>
+        <div class="field">
+          <label for="applicationId">Numër Aplikimi</label>
+          <input
+            type="text"
+            pInputText
+            id="applicationId"
+            disabled
+            name="applicationId"
+            [value]="examCopy.applicationId"
+            autofocus />
+        </div>
+        <div class="field">
+          <label for="dateCreated">Datë aplikimi</label>
+          <input
+            type="text"
+            pInputText
+            id="dateCreated"
+            name="dateCreated"
+            disabled
+            [value]="examCopy.dateCreated | app_date"
+            autofocus />
+        </div>
+        <div class="field">
+          <label for="decisionDueDate">Afati i Vendimit</label>
+          <input
+            type="text"
+            pInputText
+            id="decisionDueDate"
+            name="decisionDueDate"
+            disabled
+            [value]="examCopy.decisionDueDate | app_date"
+            autofocus />
+        </div>
+        <div class="field">
+          <label for="decisionDate">Datë Vendimi</label>
+          <input
+            type="text"
+            pInputText
+            id="decisionDate"
+            name="decisionDate"
+            disabled
+            [value]="examCopy.decisionDate | app_date"
+            autofocus />
+        </div>
+        <div class="field">
+          <label for="comments">Komente</label>
+          <input
+            type="text"
+            pInputText
+            disabled
+            id="comments"
+            name="comments"
+            [value]="examCopy.comments"
+            autofocus />
+        </div>
+
+        <div *ngIf="examCopy.status === 2">
+          <h5 class="mb-3 mt-3 font-bold">Dokumenti i Përgjigjjes</h5>
+          <div class="field">
+            <p-table
+              [value]="[examCopy.documentName]"
+              [paginator]="false"
+              [rows]="examCopy.documentName"
+              [showCurrentPageReport]="false"
+              [rowsPerPageOptions]="[]">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>Dokumenti</th>
+                  <th></th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body">
+                <tr>
+                  <td>
+                    <a
+                      href="javascript:void(0)"
+                      (click)="downloadFile(examCopy.attachedDocument)">
+                      {{ examCopy.documentName }}
+                    </a>
+                  </td>
+                  <td
+                    class="flex justify-content-end"
+                    *ngIf="examCopy.status === 2">
+                    <img
+                      src="assets/svg/edit-form.svg"
+                      class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
+                      tooltipPosition="bottom"
+                      (click)="onConfirm()"
+                      pTooltip="Ndrysho" />
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+
+        <div *ngIf="examCopy.status === 1">
+          <h5>Dokumentet e Aplikimit</h5>
+          <div class="field mt-4 mb-4">
+            <label for="files">Importo Dokument *</label>
+            <p-fileUpload
+              id="files"
+              name="files"
+              url="https://www.primefaces.org/cdn/api/upload.php"
+              (uploadHandler)="handleUpload($event)"
+              [auto]="true"
+              [customUpload]="true"
+              [(ngModel)]="examCopy.attachedDocument"
+              accept=".xlsm,.xlsx,application/msexcel,.doc,.docx,.csv,.epub,.html,.odt,.pdf"
+              chooseLabel="Zgjidh">
+            </p-fileUpload>
+            <small
+              class="p-error block"
+              *ngIf="submitted && !examCopy.attachedDocument">
+              Ju lutem zgjidhni një dokument.
+            </small>
+          </div>
+        </div>
+
+        <div
+          *ngIf="examCopy.status === 1"
+          class="mt-5 flex justify-content-start">
+          <button
+            type="submit"
+            pButton
+            label="Ruaj"
+            class="p-button w-auto mr-2"></button>
+          <button
+            type="button"
+            pButton
+            label="Refuzo"
+            class="p-button-text w-auto mr-2"
+            (click)="onRefuse()"></button>
+          <button
+            type="button"
+            pButton
+            label="Anullo"
+            class="p-button-text w-auto mr-2"></button>
+        </div>
+      </form>
+    </div>
   </div>
-</form>
+</div>
 
 <p-dialog
   [(visible)]="confirmModal"
-  [style]="{ width: '800px' }"
+  [style]="{ width: '600px' }"
   header="Ngarko Kopjen e Tezës"
   [modal]="true"
   [draggable]="false"
@@ -381,7 +417,7 @@
 
 <p-dialog
   [(visible)]="refuseModal"
-  [style]="{ width: '800px' }"
+  [style]="{ width: '500px' }"
   header="Arsyeja e Refuzimit"
   [modal]="true"
   [draggable]="false"
