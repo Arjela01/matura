@@ -164,6 +164,13 @@ export const EVALUATION_ROUTES: Route[] = [
       ),
   },
   {
+    path: 'exam-copy/form/:applicationId',
+    loadComponent: () =>
+      import('./exam-copy/exam-copy-details/exam-copy-details.component').then(
+        m => m.ExamCopyDetailsComponent
+      ),
+  },
+  {
     path: 'exam-secret-tabular-data-entry',
     loadComponent: () =>
       import(

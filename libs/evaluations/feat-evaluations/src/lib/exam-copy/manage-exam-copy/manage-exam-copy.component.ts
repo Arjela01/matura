@@ -72,15 +72,6 @@ export class ManageExamCopyComponent {
     tap()
   );
 
-  onGridEvent(event: GridEvent<ExamCopy | ExamCopy[]>) {
-    switch (event.action) {
-      case GRID_ACTIONS.EDIT:
-        this.selecetdExamCopy = Object.assign({}, event.data as ExamCopy);
-        this.displayModal = true;
-        break;
-    }
-  }
-
   onModalClose() {
     this.displayModal = false;
     this.selecetdExamCopy = null;

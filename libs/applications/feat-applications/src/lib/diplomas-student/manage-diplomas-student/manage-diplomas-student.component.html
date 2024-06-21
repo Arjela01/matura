@@ -1,22 +1,36 @@
 <div class="flex ml-2 page-header mb-header">
   <h2 class="flex-1 mb-0">Diploma</h2>
-  <div class="flex align-items-right justify-content-right">
-    <div class="my-2">
-      <p-button
-        (click)="generateDiplomas()"
-        label="Gjenero Diplomat"
-        icon="pi pi-play"
-        class="mr-2">
-      </p-button>
+  <div class="flex-col">
+    <div class="flex">
+      <div class="my-2">
+        <p-button
+          (click)="generateDiplomas()"
+          label="Gjenero Diplomat"
+          icon="pi pi-play"
+          class="mr-2">
+        </p-button>
+      </div>
+      <div class="my-2">
+        <button
+          pButton
+          pRipple
+          icon="pi pi-chevron-circle-up"
+          label="Vulos dhe Dërgo në eAlbania"
+          (click)="sendToEAlbania()"
+          class="p-button-danger mr-2"></button>
+      </div>
     </div>
-    <div class="my-2">
-      <button
-        pButton
-        pRipple
-        icon="pi pi-chevron-circle-up"
-        label="Vulos dhe Dërgo në eAlbania"
-        (click)="sendToEAlbania()"
-        class="p-button-danger mr-2"></button>
+    <div class="mt-2 mb-2 ml-7">
+      <span class="text-orange-800 pr-2"
+        >Në Pritje: {{ status.waitingCount }}</span
+      >
+      <span class="text-green-500 pr-2"
+        >Dërguar: {{ status.successCount }}</span
+      >
+      <span class="text-red-500 pr-2">Gabim: {{ status.errorCount }}</span>
+      <span class="text-blue-500"
+        >Për Miratim: {{ status.needApprovalCount }}</span
+      >
     </div>
   </div>
 </div>
