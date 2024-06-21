@@ -28,34 +28,15 @@ export class DiplomasStudentApiService {
     );
   }
 
-  printElectronicSeal(
-    studentId: string,
-    academicYearId: number,
-    allReports: boolean
-  ): Observable<ApiResult<any>> {
-    return this.apiService.post<ApiResult<any>, any>(
-      `/Diplomas/ElectronicSeal/${studentId}?academicYearId=${academicYearId}&isReportAll=${allReports}`,
-      {}
-    );
-  }
-
-  printAllElectronicSeal(data: string): Observable<any> {
-    return this.apiService.get<any>(
-      `/Diplomas/GenerateElectronicSealDiplomasPdf${data}`,
-      new HttpParams()
-    );
-  }
-
-  exportAllDiplomas(data: string): Observable<BlobPart> {
-    return this.apiService.get<any>(
-      `/Diplomas/GenerateDiplomasPdf${data}`,
-      new HttpParams(),
-      'blob'
-    );
-  }
-
   loadDiplomas(event: TableLazyLoadEvent): Observable<any> {
     return this.apiService.post(`/Diplomas/TableData`, event).pipe(
+      map((data: any) => data),
+      catchError(error => throwError(error))
+    );
+  }
+
+  loadForeginDiplomas(event: TableLazyLoadEvent): Observable<any> {
+    return this.apiService.post(`/Diplomas/ForeignTableData`, event).pipe(
       map((data: any) => data),
       catchError(error => throwError(error))
     );
@@ -71,5 +52,9 @@ export class DiplomasStudentApiService {
 
   sendToEAlbania(): Observable<any> {
     return this.apiService.post(`/Diplomas/SendToEAlbania`);
+  }
+
+  printForeignDiplomas():Observable<any> {
+    return this.apiService.post(`/Diplomas/PrintForeignDiplomas`);
   }
 }

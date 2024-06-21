@@ -47,7 +47,6 @@ export class DiplomasStudentFormComponent {
   @Output() admOfficeChanged = new EventEmitter<string>();
   @Input() studentTypes: DropdownModel<number>[] = [];
   @Input() administrationOffices: DropdownModel<number>[] = [];
-  @Input() isPrinted = false;
   @Input() highSchools: DropdownModel<number>[] = [];
   @Input() responseLoaded: any;
   @Input() selectedAction!: string;
@@ -61,7 +60,6 @@ export class DiplomasStudentFormComponent {
     studentId: '',
     schoolId: 0,
     isForeign: false,
-    isPrinted: this.isPrinted,
     isProfessional: false,
     darZaId: 0,
   };
@@ -111,7 +109,6 @@ export class DiplomasStudentFormComponent {
       } else {
         this.diplomaFile.isForeign = this.isForeign;
       }
-      initialUrl += `&isPrinted=${this.isPrinted}&isForeign=${this.diplomaFile.isForeign}&academicYearId=${accademicYear?.id}`;
       this.formSave.emit(initialUrl);
     }
   }

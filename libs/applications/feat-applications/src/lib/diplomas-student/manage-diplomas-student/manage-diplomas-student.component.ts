@@ -52,7 +52,6 @@ import { PrintedDiplomasForeignStudentsComponent } from '../printed-diplomas-for
     ToolbarModule,
     DiplomasStudentFormComponent,
     DiplomasStudentGridComponent,
-    PrintedDiplomasForeignStudentsComponent,
     RippleModule,
     RouterLink,
   ],
@@ -63,9 +62,6 @@ import { PrintedDiplomasForeignStudentsComponent } from '../printed-diplomas-for
 })
 @UntilDestroy()
 export class ManageDiplomasStudentComponent implements OnInit {
-  @Input() printed = false;
-  @Input() title = 'Diplomat';
-  @Input() foreignStudent = false;
   private diplomaList$$ = new BehaviorSubject<Diploma[]>([]);
   diplomaList$ = this.diplomaList$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
@@ -177,14 +173,6 @@ export class ManageDiplomasStudentComponent implements OnInit {
       });
   }
 
-  onFormSave(data: string) {
-    if (this.selectedAction === 'print') {
-      this.printAllDiplomas(data);
-    } else if (this.selectedAction === 'seal') {
-      this.sealAllDiplomas(data);
-    }
-  }
-
   sealDiploma(event: GridEvent<Diploma>) {
     this.diplomasService
       .printSealed(event.data?.studentId as string)
@@ -205,37 +193,6 @@ export class ManageDiplomasStudentComponent implements OnInit {
         }
       })
       .add(() => this.responseLoaded.next(false));
-  }
-
-  sealAllDiplomas(data: string) {
-    this.responseLoaded.next(true);
-    this.diplomasService
-      .printAllElectronicSeal(data)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        if (response === true) {
-          this.toastService.showInfo('Filloi procesi i vulosjes së diplomave!');
-        } else {
-          this.toastService.showError('Ndodhi një gabim!');
-        }
-      })
-      .add(() => this.responseLoaded.next(false));
-  }
-
-  printAllDiplomas(data: string) {
-    this.diplomasService.exportAllDiplomas(data).subscribe(
-      response => {
-        const blob = new Blob([response], {
-          type: 'application/pdf',
-        });
-        FileSaver.saveAs(blob, `Diplomat`);
-        this.displayModal = false;
-        this.getStudentDiplomas(this.filters as TableLazyLoadEvent);
-      },
-      err => {
-        this.toastService.showError(err.error);
-      }
-    );
   }
 
   getHighSchoolsByOffice(administrationOfficeId: string): void {
@@ -270,7 +227,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
 
   generateDiplomas() {
     this.confirmationService.confirm({
-      message: 'Jeni i sigurt që doni të refuzoni formularin?',
+      message: 'Jeni i sigurt që doni të gjeneroni diplomat?',
       accept: () => {
         this.diplomasService.generateDiplomas().subscribe(response => {
           if (response.isSuccessful) {

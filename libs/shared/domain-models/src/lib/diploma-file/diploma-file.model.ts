@@ -5,7 +5,7 @@ export interface IDiplomaFile {
   studentId: string;
   isForeign: boolean | '';
   isProfessional: boolean;
-  isPrinted: boolean;
+  isPrinted?: boolean;
 }
 
 export enum StudentType {

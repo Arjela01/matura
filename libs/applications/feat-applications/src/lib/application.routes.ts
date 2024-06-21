@@ -150,13 +150,6 @@ export const APPLICATION_ROUTES: Route[] = [
       ).then(m => m.ManageDiplomasStudentComponent),
   },
   {
-    path: 'printed-diplomas',
-    loadComponent: () =>
-      import(
-        './diplomas-student/printed-diplomas/printed-diplomas.component'
-      ).then(m => m.PrintedDiplomasComponent),
-  },
-  {
     path: 'printed-diplomas-foreign-students',
     loadComponent: () =>
       import(

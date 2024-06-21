@@ -1,15 +1,6 @@
-<div
-  [ngClass]="{
-    flex: true,
-    'ml-2': true,
-    'mb-5': foreignStudent,
-    'mb-2': !foreignStudent,
-  }"
-  class="page-header mb-header">
-  <h2 class="flex-1 mb-0">Diplomat</h2>
-  <div
-    class="flex align-items-right justify-content-right"
-    *ngIf="!foreignStudent">
+<div class="flex ml-2 page-header mb-header">
+  <h2 class="flex-1 mb-0">Diploma</h2>
+  <div class="flex align-items-right justify-content-right">
     <div class="my-2">
       <p-button
         (click)="generateDiplomas()"
@@ -17,13 +8,6 @@
         icon="pi pi-play"
         class="mr-2">
       </p-button>
-      <button
-        pButton
-        pRipple
-        label="Diplomat e Maturantëve të Huaj"
-        icon="pi pi-print"
-        (click)="onNewClick('print')"
-        class="p-button-success mr-2"></button>
     </div>
     <div class="my-2">
       <button
@@ -62,12 +46,10 @@
       [diplomaStatus]="diplomaStatus"
       [selectedAction]="selectedAction"
       [administrationOffices]="administrationOffices"
-      [isPrinted]="!printed"
       [highSchools]="(highSchools$ | async)!!"
       [studentTypes]="studentTypes"
       (admOfficeChanged)="getHighSchoolsByOffice($event)"
-      (formClose)="onModalClose()"
-      (formSave)="onFormSave($event)">
+      (formClose)="onModalClose()">
     </msh-diplomas-student-form>
   </ng-template>
 </p-dialog>
