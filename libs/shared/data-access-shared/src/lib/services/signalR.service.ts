@@ -17,7 +17,6 @@ export class SignalrService {
       .withUrl(hubUrl)
       .configureLogging(signalR.LogLevel.Information)
       .build();
-    this.startConnection();
   }
   public startConnection() {
     this.hubConnection.start().then(() => {
