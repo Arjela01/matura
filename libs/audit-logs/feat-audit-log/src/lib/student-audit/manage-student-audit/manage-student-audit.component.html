@@ -1,29 +1,33 @@
-<div class="flex center mb-2 page-header mb-header">
-  <h2 class="flex-1 mb-0">Detajet e Maturantit</h2>
-  <div class="flex align-items-right justify-content-right">
-    <div class="my-2">
-      <button
-        type="button"
-        pButton
-        icon="pi pi-arrow-left"
-        label="Kthehu"
-        class="w-auto mr-2"
-        style="background: #f7f7fa; color: #155eef"
-        [routerLink]="'/audit-log/student-audit'"></button>
+<div class="flex mb-2 page-header center mb-header">
+  <h2 class="flex-1">Maturantë ndër Vite</h2>
+</div>
+
+<div class="grid mt-3">
+  <div class="col-12">
+    <div class="card">
+      <msh-student-audit-grid
+        [students]="(studentAuditList$ | async) || []"
+        [totalRecords]="totalRecords"
+        (gridEvent)="onGridEvent($event)"
+        (lazyLoadData)="getStudents($event)">
+      </msh-student-audit-grid>
     </div>
   </div>
 </div>
-<p-tabView>
-  <p-tabPanel header="Të dhëna të përgjithshme">
-    <msh-student-audit-data [student]="student"></msh-student-audit-data>
-  </p-tabPanel>
-  <p-tabPanel header="Notat">
-    <msh-student-audit-grades
-      [grades]="(grades$ | async) || []"
-      [avgGrade]="avgGrade"></msh-student-audit-grades
-  ></p-tabPanel>
-  <p-tabPanel header="Pikët">
-    <msh-students-audit--scores
-      [scores]="(scores$ | async) || []"></msh-students-audit--scores
-  ></p-tabPanel>
-</p-tabView>
+<p-dialog
+  [(visible)]="displayModal"
+  [style]="{ width: '500px' }"
+  header="Të dhënat e Maturantit"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid"
+  (onHide)="onModalClose()">
+  <ng-template pTemplate="content">
+    <msh-student-audit-form
+      [studentDetails]="selectedStudent"
+      (formClose)="onModalClose()"
+      (formSave)="updateStudentData($event)">
+    </msh-student-audit-form>
+  </ng-template>
+</p-dialog>

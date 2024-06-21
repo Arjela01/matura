@@ -18,6 +18,14 @@ export class StudentsAuditService {
   loadStudents(event: TableLazyLoadEvent): Observable<StudentTableView> {
     return this.apiService.post(`/StudentHistory/TableDataHistory`, event);
   }
+
+  updateStudent(student: Student): Observable<ApiResult<Student>> {
+    return this.apiService.post(
+      `/StudentHistory/UpdateStudentHistory`,
+      student
+    );
+  }
+
   getStudentsById(nid: string): Observable<ApiResult<Student>> {
     const url = `/StudentHistory/GetByStudentId/${nid}`;
     return this.apiService.get<ApiResult<Student>>(url);

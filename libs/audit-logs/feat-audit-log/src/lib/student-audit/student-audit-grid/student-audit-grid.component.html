@@ -1,7 +1,3 @@
-<div class="flex ml-2 mb-2 page-header mb-header">
-  <h2 class="flex-1">Maturantë ndër Vite</h2>
-</div>
-
 <p-table
   #dt
   dataKey="Id"
@@ -16,8 +12,8 @@
   currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
   [rowHover]="true"
   selectionMode="multiple"
-  (onLazyLoad)="getStudents($event)"
-  [value]="(studentAuditList$ | async) || []"
+  (onLazyLoad)="loadRows($event)"
+  [value]="students"
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
@@ -153,6 +149,7 @@
             display="menu"></p-columnFilter>
         </div>
       </th>
+      <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-student>
@@ -196,6 +193,17 @@
       </td>
       <td style="width: 14%; min-width: 10rem">
         {{ student.isFall | app_bool }}
+      </td>
+
+      <td style="width: 5%; min-width: 8rem">
+        <div class="flex justify-content-center">
+          <img
+            src="assets/svg/edit-form.svg"
+            class="p-button-rounded p-button-danger p-button-text pointer"
+            pTooltip="Ndrysho"
+            tooltipPosition="bottom"
+            (click)="onEditClick(student)" />
+        </div>
       </td>
     </tr>
   </ng-template>
