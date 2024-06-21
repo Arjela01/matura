@@ -1,16 +1,24 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { ColumnFilterDirective } from '@msh/shared/util-shared';
+import {
+  ColumnFilterDirective,
+  GRID_ACTIONS,
+  GridEvent,
+} from '@msh/shared/util-shared';
 import { DialogModule } from 'primeng/dialog';
 import { SharedModule } from 'primeng/api';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import { BehaviorSubject } from 'rxjs';
-import { ExamGrade, Student } from '@msh/shared/domain-models';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { StudentsAuditService } from '@msh/audit-logs/data-access-audit-log';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { RouterLink } from '@angular/router';
 import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
+import { BarcodeCorrection, Student } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({
@@ -34,21 +42,20 @@ import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
   providers: [DatePipe],
 })
 export class StudentAuditGridComponent {
-  private studentAuditList$$ = new BehaviorSubject<Student[]>([]);
-  studentAuditList$ = this.studentAuditList$$.asObservable();
-  totalRecords = 0;
-  filters: TableLazyLoadEvent | null = null;
-  constructor(private readonly studentAuditService: StudentsAuditService) {}
+  @Input() students: Student[] = [];
+  @Input() totalRecords = 0;
 
-  getStudents($event: TableLazyLoadEvent) {
-    this.filters = Object.assign({}, $event);
+  @Output() gridEvent = new EventEmitter<GridEvent<Student | Student[]>>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
-    this.studentAuditService
-      .loadStudents($event)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.studentAuditList$$.next(response.data);
-        this.totalRecords = response.total;
-      });
+  onEditClick(student: Student) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.EDIT,
+      data: student,
+    } as GridEvent<Student>);
+  }
+
+  loadRows($event: TableLazyLoadEvent) {
+    this.lazyLoadData.emit($event);
   }
 }

@@ -1,0 +1,90 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="IdCard">Karta Identitetit *</label>
+    <input
+      type="text"
+      pInputText
+      id="IdCard"
+      name="IdCard"
+      [(ngModel)]="student.idCard"
+      required
+      (change)="validateNID()"
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': !student.idCard || !validNid,
+      }" />
+    <small class="p-error block" *ngIf="!validNid">
+      NID nuk i përshtatet formatit shqiptar. Duhet të përmbajë 10 karaktere, të
+      fillojë dhe të mbarojë me gërma të mëdha.
+    </small>
+    <small class="p-error block" *ngIf="submitted && !student.idCard">
+      NID është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="firstName">Emri *</label>
+    <input
+      type="text"
+      pInputText
+      id="firstName"
+      name="firstName"
+      [(ngModel)]="student.firstName"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !student.firstName,
+      }" />
+    <small class="p-error block" *ngIf="submitted && !student.firstName">
+      Emri është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="middleName">Atësia</label>
+    <input
+      type="text"
+      pInputText
+      id="middleName"
+      name="middleName"
+      [(ngModel)]="student.middleName"
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !student.middleName,
+      }" />
+  </div>
+
+  <div class="field">
+    <label for="lastName">Mbiemri *</label>
+    <input
+      type="text"
+      pInputText
+      id="lastName"
+      name="lastName"
+      [(ngModel)]="student.lastName"
+      required
+      autofocus
+      [ngClass]="{
+        'ng-invalid ng-dirty': submitted && !student.lastName,
+      }" />
+    <small class="p-error block" *ngIf="submitted && !student.lastName">
+      Mbiemri është fushë e kërkuar.
+    </small>
+  </div>
+
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      [disabled]="!form.valid"
+      type="submit"
+      pButton
+      label="Ruaj"
+      class="p-button w-auto"></button>
+  </div>
+</form>

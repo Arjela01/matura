@@ -1,95 +1,99 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { FormsModule } from '@angular/forms';
-import { InputTextModule } from 'primeng/inputtext';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { StudentAuditDataComponent } from '../student-audit-data/student-audit-data.component';
-import { TabViewModule } from 'primeng/tabview';
-import { StudentsAuditService } from '@msh/audit-logs/data-access-audit-log';
-import { ExamGrade, ExamScore, Student } from '@msh/shared/domain-models';
-import { StudentAuditGradesComponent } from '../student-audit-grades/student-audit-grades.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
+import { ToolbarModule } from 'primeng/toolbar';
+import {
+  GlobalToastService,
+  GRID_ACTIONS,
+  GridEvent,
+} from '@msh/shared/util-shared';
 import { BehaviorSubject } from 'rxjs';
-import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
-import { StudentAuditScoresComponent } from '../student-audit-scores/students-audit-scores.component';
-import { AverageGradeService } from '@msh/applications/data-access-applications';
+import { RouterLink } from '@angular/router';
+import { Student } from '@msh/shared/domain-models';
+import { TableLazyLoadEvent } from 'primeng/table';
+import { StudentsAuditService } from '@msh/audit-logs/data-access-audit-log';
+import { StudentAuditGridComponent } from '../student-audit-grid/student-audit-grid.component';
+import { StudentAuditFormComponent } from '../student-audit-edit/student-audit-form.component';
 
+@UntilDestroy()
 @Component({
   selector: 'msh-manage-student-audit',
   standalone: true,
   imports: [
-    CommonModule,
     ButtonModule,
-    FormsModule,
-    InputTextModule,
-    RadioButtonModule,
-    TabViewModule,
+    CommonModule,
+    DialogModule,
+    ConfirmDialogModule,
+    ToolbarModule,
     RouterLink,
-    StudentAuditDataComponent,
-    StudentAuditGradesComponent,
-    StudentAuditScoresComponent,
+    StudentAuditGridComponent,
+    StudentAuditFormComponent,
   ],
   templateUrl: './manage-student-audit.component.html',
   styleUrls: ['./manage-student-audit.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ConfirmationService],
 })
-export class ManageStudentAuditComponent implements OnInit {
-  private grades$$ = new BehaviorSubject<ExamGrade[]>([]);
-  grades$ = this.grades$$.asObservable();
-
-  private scores$$ = new BehaviorSubject<ExamScore[]>([]);
-  scores$ = this.scores$$.asObservable();
-
-  id = '';
-  finishedAtSameSchool = true;
-  student!: Student;
-  avgGrade!: number;
+export class ManageStudentAuditComponent {
+  private studentAuditList$$ = new BehaviorSubject<Student[]>([]);
+  studentAuditList$ = this.studentAuditList$$.asObservable();
+  filters: TableLazyLoadEvent | null = null;
+  selectedStudent: Student | null = null;
+  totalRecords = 0;
+  displayModal = false;
 
   constructor(
-    private readonly route: ActivatedRoute,
-    private readonly studentAuditService: StudentsAuditService,
-    private readonly examScoreService: ExamScoreApiService,
-    private readonly cd: ChangeDetectorRef,
-    private readonly avgGradeService: AverageGradeService
-  ) {
-    this.id = this.route.snapshot.paramMap.get('id') ?? '';
+    private readonly toastService: GlobalToastService,
+    private readonly studentAuditService: StudentsAuditService
+  ) {}
+
+  onNewClick() {
+    this.displayModal = true;
   }
 
-  ngOnInit() {
-    this.getAvgGradeForStudent();
-    this.getScoresForStudentId();
-    this.getStudentDataByID();
-    this.getStudentGradesByID();
+  onGridEvent(event: GridEvent<Student | Student[]>) {
+    switch (event.action) {
+      case GRID_ACTIONS.EDIT:
+        this.selectedStudent = Object.assign({}, event.data as Student);
+        this.displayModal = true;
+        break;
+    }
   }
 
-  getStudentDataByID() {
-    this.studentAuditService.getStudentsById(this.id).subscribe(res => {
-      this.student = res.data;
-      this.finishedAtSameSchool =
-        this.student?.schoolFinished == '' ||
-        this.student?.schoolFinished == null;
-      this.cd.detectChanges();
-    });
+  onModalClose() {
+    this.displayModal = false;
   }
 
-  getScoresForStudentId() {
-    this.examScoreService.getScoresForStudent(this.id).subscribe(res => {
-      this.scores$$.next(res.data);
-      this.cd.detectChanges();
-    });
-  }
+  getStudents($event: TableLazyLoadEvent) {
+    this.filters = Object.assign({}, $event);
 
-  getStudentGradesByID() {
-    this.studentAuditService.getStudentsGradesById(this.id).subscribe(res => {
-      this.grades$$.next(res.data);
-      this.cd.detectChanges();
-    });
+    this.studentAuditService
+      .loadStudents($event)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.studentAuditList$$.next(response.data);
+        this.totalRecords = response.total;
+      });
   }
+  updateStudentData(student: Student) {
+    this.studentAuditService
+      .updateStudent(student)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Maturanti u ndryshua me sukses!');
+          this.displayModal = false;
+          this.getStudents(this.filters as TableLazyLoadEvent);
+        } else this.toastService.showError(response.errorMessage);
 
-  getAvgGradeForStudent() {
-    this.avgGradeService.getById(this.id).subscribe(res => {
-      this.avgGrade = res?.data?.averageGrade;
-      this.cd.detectChanges();
-    });
+        if (response.isBadRequest)
+          this.toastService.showError(
+            'Ndodhi një problem gjatë ndryshimit së maturantit!'
+          );
+      });
   }
 }

@@ -1,0 +1,29 @@
+<div class="flex center mb-2 page-header mb-header">
+  <h2 class="flex-1 mb-0">Detajet e Maturantit</h2>
+  <div class="flex align-items-right justify-content-right">
+    <div class="my-2">
+      <button
+        type="button"
+        pButton
+        icon="pi pi-arrow-left"
+        label="Kthehu"
+        class="w-auto mr-2"
+        style="background: #f7f7fa; color: #155eef"
+        [routerLink]="'/audit-log/student-audit'"></button>
+    </div>
+  </div>
+</div>
+<p-tabView>
+  <p-tabPanel header="Të dhëna të përgjithshme">
+    <msh-student-audit-data [student]="student"></msh-student-audit-data>
+  </p-tabPanel>
+  <p-tabPanel header="Notat">
+    <msh-student-audit-grades
+      [grades]="(grades$ | async) || []"
+      [avgGrade]="avgGrade"></msh-student-audit-grades
+  ></p-tabPanel>
+  <p-tabPanel header="Pikët">
+    <msh-students-audit--scores
+      [scores]="(scores$ | async) || []"></msh-students-audit--scores
+  ></p-tabPanel>
+</p-tabView>
