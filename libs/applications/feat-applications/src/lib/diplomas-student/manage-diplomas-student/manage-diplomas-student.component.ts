@@ -213,6 +213,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
         const diplomas = [...response.data];
         this.diplomaList$$.next(diplomas);
         this.totalRecords = response.total;
+        this.cd.markForCheck();
       });
   }
 
@@ -235,7 +236,7 @@ export class ManageDiplomasStudentComponent implements OnInit {
           } else {
             this.toastService.showError(response.errorMessage);
           }
-          this.cd.markForCheck();
+          this.getStudentDiplomas(this.filters as TableLazyLoadEvent);
         });
       },
     });
