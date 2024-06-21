@@ -21,6 +21,7 @@ import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { ExamCopyRequestStatusPipe } from './exam-copy-request-status-pipe';
 import { AppDatePipe } from '@msh/shared/ui-shared';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'msh-exam-copy-grid',
@@ -45,21 +46,20 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
 })
 export class ExamCopyGridComponent {
   ExamCopyRequestStatusEnum = ExamCopyRequestStatusEnum;
-
   @Input() examCopies: ExamCopy[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
-
-  @Output() gridEvent = new EventEmitter<GridEvent<ExamCopy | ExamCopy[]>>();
-
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
-  constructor(private dateFilterService: DateFilterService) {}
+
+  constructor(
+    private dateFilterService: DateFilterService,
+    private router: Router
+  ) {}
 
   onProceedClick(examCopy: ExamCopy) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.EDIT,
-      data: examCopy,
-    } as GridEvent<ExamCopy>);
+    this.router.navigate([
+      `/evaluations/exam-copy/form/${examCopy.applicationId}`,
+    ]);
   }
 
   loadRows($event: TableLazyLoadEvent) {

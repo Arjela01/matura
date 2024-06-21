@@ -22,10 +22,15 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ApproveExamCopyComponent } from '../approve-exam-copy/approve-exam-copy.component';
 import { RefuseExamCopyComponent } from '../refuse-exam-copy/refuse-exam-copy.component';
-import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
-import { ExamCopy } from '@msh/shared/domain-models';
+import { ExamCopy, ExamCopyConfirm } from '@msh/shared/domain-models';
 import { AppDatePipe } from '@msh/shared/ui-shared';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Ripple } from 'primeng/ripple';
+import { TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
+import { FileUploadModule } from 'primeng/fileupload';
+import { GlobalToastService } from '@msh/shared/util-shared';
 
 @UntilDestroy()
 @Component({
@@ -45,6 +50,10 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
     CheckboxModule,
     DatePipe,
     AppDatePipe,
+    Ripple,
+    TableModule,
+    TooltipModule,
+    FileUploadModule,
   ],
   providers: [DatePipe],
   templateUrl: './exam-copy-details.component.html',
@@ -52,62 +61,33 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamCopyDetailsComponent implements OnInit {
+  @ViewChild('form', { static: true }) form!: NgForm;
   @Input() examCopies$: Observable<ExamCopy[]> | undefined;
-  submitted = false;
 
+  @Output() documentUploaded = new EventEmitter<boolean>();
+
+  base64?: string;
+  confirmExamCopy: ExamCopyConfirm = {
+    applicationId: '',
+    attachedDocument: '',
+    documentName: '',
+  };
+  submitted = false;
   confirmModal = false;
   refuseModal = false;
   updatedFile!: File;
-
-  examCopy: ExamCopy = {
-    dateCreated: undefined,
-    address: undefined,
-    decisionDueDate: undefined,
-    administrationOffice: undefined,
-    city: undefined,
-    applicationId: undefined,
-    attachedDocument: undefined,
-    cel: undefined,
-    comments: undefined,
-    dateOfBirth: undefined,
-    decisionDate: undefined,
-    documentName: undefined,
-    email: undefined,
-    fatherName: undefined,
-    firstName: undefined,
-    gender: undefined,
-    lastName: undefined,
-    maturaId: undefined,
-    municipalityUnit: undefined,
-    nationality: undefined,
-    nid: undefined,
-    placeOfBirth: undefined,
-    postalCode: undefined,
-    region: undefined,
-    remarks: undefined,
-    schoolCode: undefined,
-    schoolName: undefined,
-    service: undefined,
-    status: undefined,
-    subject: undefined,
-    telFix: undefined,
-  };
-
-  @Input() set examCopyDetails(details: ExamCopy | null) {
-    if (details) {
-      this.examCopy = Object.assign({}, details);
-    }
-  }
-  @Output() formSave = new EventEmitter<ExamCopy>();
-  @Output() formClose = new EventEmitter<undefined>();
-  @Output() documentUploaded = new EventEmitter<boolean>();
-
-  @ViewChild('form', { static: true }) form!: NgForm;
+  examCopy: ExamCopy = {};
+  applicationId = '';
 
   constructor(
     private cd: ChangeDetectorRef,
-    private readonly examCopyService: ExamCopyApiService
-  ) {}
+    private readonly examCopyService: ExamCopyApiService,
+    private readonly route: ActivatedRoute,
+    private readonly toastService: GlobalToastService,
+    private readonly router: Router
+  ) {
+    this.applicationId = this.route.snapshot.params['applicationId'];
+  }
 
   onConfirmModalClose() {
     this.confirmModal = false;
@@ -124,13 +104,7 @@ export class ExamCopyDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.examCopy.applicationId) {
-      this.getDetails(this.examCopy.applicationId);
-    }
-  }
-
-  onCancelClick() {
-    this.formClose.emit();
+    this.getDetails(this.applicationId);
   }
 
   onConfirm() {
@@ -170,13 +144,38 @@ export class ExamCopyDetailsComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    if (this.form.valid) {
-      this.formSave.emit(this.examCopy);
-    }
+    this.confirmExamCopy.applicationId = this.applicationId;
+    console.log(123, this.confirmExamCopy);
+    this.examCopyService
+      .confirm(this.confirmExamCopy)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (!response.isSuccessful) {
+          this.toastService.showError(
+            response.errorMessage ?? 'Ndodhi një problem gjatë konfirmimit'
+          );
+        }
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Konfirmimi u krye me sukses');
+          this.router.navigate(['/evaluations/exam-copy/list-of-exam-copies']);
+        }
+      });
   }
 
   onFileUploaded(file: File) {
     this.updatedFile = file;
     this.examCopy.documentName = this.updatedFile ? this.updatedFile.name : '';
+  }
+
+  handleUpload(data: any) {
+    const file = data.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const base64 = reader.result as string;
+      this.base64 = base64.split(',')[1];
+      this.confirmExamCopy.attachedDocument = this.base64;
+      this.confirmExamCopy.documentName = file.name;
+    };
   }
 }

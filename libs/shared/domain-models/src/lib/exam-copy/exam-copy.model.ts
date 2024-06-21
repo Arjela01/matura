@@ -27,7 +27,7 @@ export interface ExamCopy {
   remarks?: string;
   subject?: string;
   attachedDocument?: string;
-  documentName?: string;
+  documentName?: any;
   status?: number;
   decisionDate?: string;
 }

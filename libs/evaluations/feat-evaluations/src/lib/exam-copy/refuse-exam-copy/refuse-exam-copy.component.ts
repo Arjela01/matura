@@ -17,74 +17,50 @@ import { GlobalToastService } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @UntilDestroy()
 @Component({
   selector: 'msh-refuse-exam-copy',
   standalone: true,
-  imports: [CommonModule, FormsModule, InputTextModule, ButtonModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    InputTextModule,
+    ButtonModule,
+    InputTextareaModule,
+  ],
   templateUrl: './refuse-exam-copy.component.html',
   styleUrls: ['./refuse-exam-copy.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RefuseExamCopyComponent implements OnInit {
-  examCopy: ExamCopy = {
-    address: undefined,
-    administrationOffice: undefined,
-    city: undefined,
-    applicationId: undefined,
-    attachedDocument: undefined,
-    cel: undefined,
-    comments: undefined,
-    dateOfBirth: undefined,
-    decisionDate: undefined,
-    documentName: undefined,
-    email: undefined,
-    fatherName: undefined,
-    firstName: undefined,
-    gender: undefined,
-    lastName: undefined,
-    maturaId: undefined,
-    municipalityUnit: undefined,
-    nationality: undefined,
-    nid: undefined,
-    placeOfBirth: undefined,
-    postalCode: undefined,
-    region: undefined,
-    remarks: undefined,
-    schoolCode: undefined,
-    schoolName: undefined,
-    service: undefined,
-    status: undefined,
-    subject: undefined,
-    telFix: undefined,
-  };
-
-  examCopyRefuse: ExamCopyRefuse = {
-    applicationId: '',
-  };
-
-  applicationId = '';
-
   @ViewChild('form', { static: true }) form!: NgForm;
-
   @Input() set examCopyDetails(details: ExamCopy | null) {
     if (details) {
       this.examCopy = Object.assign({}, details);
     }
   }
+  applicationId = '';
+  examCopy: ExamCopy = {};
+  examCopyRefuse: ExamCopyRefuse = {
+    applicationId: '',
+  };
 
   constructor(
     private cd: ChangeDetectorRef,
     private readonly examCopyService: ExamCopyApiService,
-    private readonly toastService: GlobalToastService
+    private readonly toastService: GlobalToastService,
+    private readonly route: Router
   ) {}
+
   ngOnInit(): void {
     this.examCopyRefuse.applicationId = this.examCopy.applicationId ?? '';
   }
 
   onCancelClick() {
-    window.location.reload();
+    this.route.navigate(['/evaluations/exam-copy/list-of-exam-copies']);
   }
 
   onRefuse() {
@@ -97,10 +73,9 @@ export class RefuseExamCopyComponent implements OnInit {
             response.errorMessage ?? 'Ndodhi një problem gjatë refuzimit'
           );
         }
-
         if (response.isSuccessful) {
           this.toastService.showSuccess('Refuzimi u krye me sukses');
-          window.location.reload();
+          this.route.navigate(['/evaluations/exam-copy/list-of-exam-copies']);
         }
       });
   }
