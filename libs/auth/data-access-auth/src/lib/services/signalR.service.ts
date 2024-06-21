@@ -1,25 +1,24 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
-import { TOKEN_STORAGE_KEY } from '@msh/auth/data-access-auth';
 import { NotificationEnum } from '@msh/shared/domain-models';
 import { environment } from '@msh/shared/environments';
 import { Observable, Subject } from 'rxjs';
-import { StorageService } from './storage.service';
+import { StorageService } from '@msh/shared/data-access-shared';
+import { TOKEN_STORAGE_KEY } from './token.interceptor';
 @Injectable({
   providedIn: 'root',
 })
 export class SignalrService {
-
   private readonly hubConnection: signalR.HubConnection;
   private messageReceived$ = new Subject<{
-    notificationEnum: any;
+    notificationEnum: NotificationEnum;
     data: any;
   }>();
   constructor(private storageService: StorageService) {
     const hubUrl = `${environment.api_url}/maturaHub`;
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(hubUrl, {
-        accessTokenFactory: () => this.getAccessToken()
+        accessTokenFactory: () => this.getAccessToken(),
       })
       .configureLogging(signalR.LogLevel.Error)
       .build();
@@ -34,7 +33,7 @@ export class SignalrService {
       .catch(err => {
         console.error('Error while starting SignalR connection:', err);
         setTimeout(() => {
-          this.startConnection(); 
+          this.startConnection();
         }, 5000);
       });
   }

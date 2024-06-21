@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { EalbaniaMessagesApiService } from '@msh/reports/data-access-reports';
-import { SignalrService } from '@msh/shared/data-access-shared';
 import {
   EAlbaniaMessage,
   EAlbaniaMessageStatistics,
@@ -30,6 +29,7 @@ import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject } from 'rxjs';
+import { SignalrService } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
@@ -88,8 +88,7 @@ export class EalbaniaMessagesGridComponent implements OnInit, OnDestroy {
       .getMessageReceivedObservable()
       .pipe(untilDestroyed(this))
       .subscribe(stats => {
-        if(stats.notificationEnum == NotificationEnum.EalbaniaNotification)
-        {
+        if (stats.notificationEnum == NotificationEnum.EalbaniaNotification) {
           this.stats = stats.data;
           this.cd.markForCheck();
         }
