@@ -123,17 +123,18 @@
           <p-columnFilter
             type="boolean"
             field="isPrinted"
+            matchMode="equals"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="isPrinted">
+      <th pSortableColumn="printedDate">
         Data e Printimit
         <div>
-          <p-sortIcon field="isPrinted"></p-sortIcon>
+          <p-sortIcon field="printedDate"></p-sortIcon>
           <p-columnFilter
             type="date"
-            field="isPrinted"
+            field="printedDate"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
@@ -145,6 +146,7 @@
           <p-columnFilter
             type="boolean"
             field="isDelivered"
+            matchMode="equals"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
@@ -167,6 +169,7 @@
           <p-columnFilter
             type="boolean"
             field="isSealError"
+            matchMode="equals"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
@@ -179,6 +182,7 @@
             type="boolean"
             field="isDeliveryError"
             display="menu"
+            matchMode="equals"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
@@ -210,56 +214,59 @@
 
   <ng-template pTemplate="body" let-diploma>
     <tr>
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 10%">
         {{ diploma.administrationOfficeName }}
       </td>
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 10%">
         {{ diploma.highSchoolName }}
       </td>
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 10%">
         {{ diploma.studentStudentId }}
       </td>
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 10%">
         {{ diploma.studentFirstName }}
       </td>
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 10%">
         {{ diploma.studentMiddleName }}
       </td>
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 10%">
         {{ diploma.studentLastName }}
       </td>
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 10%">
         {{ diploma.studentIdCard }}
       </td>
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 10%">
         {{ diploma.countryName }}
       </td>
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 10%">
+        {{ diploma.averageGrade }}
+      </td>
+      <td style="width: 10%">
         {{ diploma.isPrinted | app_bool }}
       </td>
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 10%">
         {{ diploma.printedDate | app_date }}
       </td>
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 10%">
         {{ diploma.isDelivered | app_bool }}
       </td>
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 10%">
         {{ diploma.deliveryDate | app_date }}
       </td>
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 10%">
         {{ diploma.isSealError | app_bool }}
       </td>
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 10%">
         {{ diploma.isDeliveryError | app_bool }}
       </td>
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 10%">
         {{ diploma.errorDate | app_date }}
       </td>
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 10%">
         {{ diploma.error }}
       </td>
 
-      <td style="width: 10%; min-width: 10rem">
+      <td style="width: 10%">
         <div class="flex">
           <div>
             <button
