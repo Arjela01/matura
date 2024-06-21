@@ -16,7 +16,7 @@ import {
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   Diploma,
-  DiplomaMessageStatistic,
+  EAlbaniaMessageStatistics,
   NotificationEnum,
   Student,
   StudentType,
@@ -76,12 +76,12 @@ export class ManageDiplomasStudentComponent implements OnInit, OnDestroy {
   selectedStudent: Student | null = null;
   selectedAction!: string;
   responseLoaded = new BehaviorSubject<boolean>(false);
-  status: DiplomaMessageStatistic = {
+  status: EAlbaniaMessageStatistics = {
     errorCount: 0,
     waitingCount: 0,
     successCount: 0,
     needApprovalCount: 0,
-  } as DiplomaMessageStatistic;
+  } as EAlbaniaMessageStatistics;
   studentTypes: DropdownModel<number>[] = [
     {
       key: StudentType.PreviousStudent,
