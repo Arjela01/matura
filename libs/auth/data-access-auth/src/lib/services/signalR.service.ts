@@ -41,7 +41,14 @@ export class SignalrService {
     if (this.hubConnection) {
 
       this.hubConnection.on(
-        'InitialStatsAsync',
+        'InitialDiplomaStatsAsync',
+        (notificationEnum: NotificationEnum, data: any) => {
+          this.messageReceived$.next({ notificationEnum, data });
+        }
+      );
+
+      this.hubConnection.on(
+        'InitialEalbaniaStatsAsync',
         (notificationEnum: NotificationEnum, data: any) => {
           this.messageReceived$.next({ notificationEnum, data });
         }
