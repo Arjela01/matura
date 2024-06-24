@@ -144,7 +144,6 @@ export class ExamCopyDetailsComponent implements OnInit {
         displayText: this.getStatusDisplayText(this.examCopy.status) as any,
       },
     };
-    console.log(123, valuesToSend);
     this.submitted = true;
     if (this.form.valid) {
       this.updateExamCopy(valuesToSend);
@@ -185,7 +184,7 @@ export class ExamCopyDetailsComponent implements OnInit {
   getTranslatedStatus(key: number): DropdownModel<any> {
     const translations: { [key: number]: string } = {
       1: 'Aplikim në Pritje',
-      2: 'Aplikim i Miratuar',
+      2: 'Aplikim i Pranuar',
       3: 'Aplikim i Refuzuar',
     };
     return { key, value: translations[key] || '' };
