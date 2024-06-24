@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import {
   ExamCopy,
-  ExamCopyConfirm,
   ExamCopyTableView,
+  ExamCopyUpdate,
 } from '@msh/shared/domain-models';
 
 @Injectable({
@@ -20,12 +20,8 @@ export class ExamCopyApiService {
     return this.apiService.post(`/ExamCopyRequest/TableData`, event);
   }
 
-  confirm(body: ExamCopyConfirm): Observable<ApiResult<unknown>> {
-    return this.apiService.post(`/ExamCopyRequest/Confirm`, body);
-  }
-
-  refuse(body: ExamCopyRefuse): Observable<ApiResult<unknown>> {
-    return this.apiService.post(`/ExamCopyRequest/Refuse`, body);
+  update(body: ExamCopyUpdate): Observable<ApiResult<ExamCopyUpdate>> {
+    return this.apiService.post(`/ExamCopyRequest/Update`, body);
   }
 
   getById(applicationId: string): Observable<ApiResult<ExamCopy>> {
@@ -40,8 +36,4 @@ export class ExamCopyApiService {
       'blob'
     );
   }
-}
-
-export interface ExamCopyRefuse {
-  applicationId: string;
 }
