@@ -127,9 +127,9 @@ export class ManageDiplomasStudentComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.subscribeToStatisticsUpdates();
     this.getAdministrationOfficeDropdown();
     this.getStudentSealSummary();
-    this.subscribeToStatisticsUpdates();
   }
 
   ngOnDestroy() {
@@ -141,7 +141,7 @@ export class ManageDiplomasStudentComponent implements OnInit, OnDestroy {
       .getMessageReceivedObservable()
       .pipe(untilDestroyed(this))
       .subscribe(status => {
-        if (status.notificationEnum == NotificationEnum.GenerateDiploma) {
+        if (status.notificationEnum == NotificationEnum.DiplomaNotification) {
           this.status = status.data;
           this.cd.markForCheck();
         }
