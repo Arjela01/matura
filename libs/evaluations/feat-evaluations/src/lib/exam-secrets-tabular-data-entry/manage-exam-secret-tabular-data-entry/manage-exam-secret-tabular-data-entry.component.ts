@@ -57,10 +57,6 @@ import {
   providers: [ConfirmationService],
 })
 export class ManageExamSecretTabularDataEntryComponent implements OnInit {
-  private dataEntryItemList$$ = new BehaviorSubject<
-    ExamSecretTabularDataEntryItem[]
-  >([]);
-  dataEntryItemList$ = this.dataEntryItemList$$.asObservable();
   filters: ExamSecretSearchModel | null = null;
   examSecretSubjects: any = [];
   totalRecords = 0;
@@ -71,7 +67,6 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
     filters: {},
     globalFilter: null,
   };
-  searchModel: ExamSecretSearchModel = {} as ExamSecretSearchModel;
   examSites: DropdownModel<string>[] = [];
   examTypes: DropdownModel<number>[] = [];
   administrationOffices: DropdownModel<number>[] = [];
@@ -163,7 +158,6 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
           ...entry,
           examSecret: entry.examSecret as ExamSecretTabularDataEntryItem,
         }));
-        this.dataEntryItemList$$.next(this.examSecretTabularDataEntryItems);
         this.cd.detectChanges();
       });
   }
@@ -268,15 +262,14 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.responseSuccessful = true;
-          console.log('save');
           const entryItem = this.examSecretTabularDataEntryItems.find(
             x => x.examAssignment.id == rowItem.examAssignment.id
           );
           if (entryItem) {
             entryItem.examSecret = response.data;
-            this.dataEntryItemList$$.next([
+            this.examSecretTabularDataEntryItems = [
               ...this.examSecretTabularDataEntryItems,
-            ]);
+            ];
             this.cd.markForCheck();
             this.moveToNextBarcodeInput(entryItem);
           } else {
@@ -304,9 +297,9 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
           );
           if (entryItem) {
             entryItem.examSecret = response.data;
-            this.dataEntryItemList$$.next([
+            this.examSecretTabularDataEntryItems = [
               ...this.examSecretTabularDataEntryItems,
-            ]);
+            ];
             this.cd.markForCheck();
           }
         } else {
@@ -333,10 +326,10 @@ export class ManageExamSecretTabularDataEntryComponent implements OnInit {
               entryItem.examAssignment
             );
 
-            this.dataEntryItemList$$.next([
+            this.examSecretTabularDataEntryItems = [
               ...this.examSecretTabularDataEntryItems,
-            ]);
-            this.cd.markForCheck();
+            ];
+            this.cd.detectChanges();
           }
         } else {
           this.toastService.showError(response.errorMessage);
