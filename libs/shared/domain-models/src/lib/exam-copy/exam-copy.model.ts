@@ -37,8 +37,19 @@ export interface ExamCopyTableView {
   data: ExamCopy[];
 }
 
-export interface ExamCopyConfirm {
+export interface ExamCopyUpdate {
   applicationId?: string;
   documentName?: string;
   attachedDocument?: string;
+  statusEnum?: ExamCopyStatuses;
+}
+export interface ExamCopyStatuses {
+  id?: number;
+  displayText?: StatusEnum;
+}
+
+export enum StatusEnum {
+  Draft = 1,
+  Accepted,
+  Declined,
 }
