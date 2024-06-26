@@ -13,14 +13,22 @@ import { LoaderService } from '../services/loader.service';
 export class LoadingInterceptor implements HttpInterceptor {
   private totalRequests = 0;
   private urlsWithoutSpinner = ['VerifyToken', 'Auth'];
+
   constructor(private loadingService: LoaderService) {}
 
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
+    if (request.url.includes('VerifyToken')) {
+      return next.handle(request);
+    }
     this.totalRequests++;
-    if (this.urlsWithoutSpinner.some(url => request.url.includes(url))) {
+    const isExcludedUrl = this.urlsWithoutSpinner.some(url =>
+      request.url.includes(url)
+    );
+
+    if (isExcludedUrl) {
       this.loadingService.setLoading(false);
     } else {
       this.loadingService.setLoading(true);
@@ -29,7 +37,7 @@ export class LoadingInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       finalize(() => {
         this.totalRequests--;
-        if (this.totalRequests == 0) {
+        if (this.totalRequests === 0) {
           this.loadingService.setLoading(false);
         }
       })
