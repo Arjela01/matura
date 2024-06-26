@@ -12,16 +12,15 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
-import { RippleModule } from 'primeng/ripple';
-import { InputGroupModule } from 'primeng/inputgroup';
-import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { DomSanitizer } from '@angular/platform-browser';
 import { DiplomasForStudentApiService } from '@msh/reports/data-access-reports';
 import { GlobalToastService } from '@msh/shared/util-shared';
-import { DomSanitizer } from '@angular/platform-browser';
 import * as FileSaver from 'file-saver';
-import { TableLazyLoadEvent } from 'primeng/table';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { InputTextModule } from 'primeng/inputtext';
+import { RippleModule } from 'primeng/ripple';
 
 @UntilDestroy()
 @Component({
@@ -58,10 +57,18 @@ export class DiplomaForStudentsViewComponent {
     private sanitizer: DomSanitizer
   ) {}
 
+  isValidPdf(response: string): boolean {
+    if (!response.trim().startsWith('%PDF-')) {
+      return false;
+    }
+    return true;
+  }
+
   onSearchClick() {
     this.diplomasForStudent.getDiplomaForStudentById(this.maturaId).subscribe({
-      next: (response: Blob) => {
-        if (response) {
+      next: async (response: any) => {
+        const responseText = await response.text();
+        if (this.isValidPdf(responseText)) {
           try {
             const blob = new Blob([response], { type: 'application/pdf' });
             this.url = URL.createObjectURL(blob);
@@ -72,12 +79,19 @@ export class DiplomaForStudentsViewComponent {
           } catch (error) {
             this.toastService.showError(error as string);
           }
+        } else {
+          const resp = JSON.parse(responseText);
+          this.toastService.showError(resp.errorMessage);
+
+          const blob = new Blob(undefined, { type: 'application/pdf' });
+          this.url = URL.createObjectURL(blob);
+          this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(
+            this.url
+          );
+          this.file = response;
         }
         this.cd.markForCheck();
-      },
-      error: err => {
-        this.toastService.showError('Nuk u gjet diploma për këtë maturant!');
-      },
+      }
     });
   }
 
@@ -85,24 +99,23 @@ export class DiplomaForStudentsViewComponent {
     this.diplomasForStudent
       .getSealedDiplomaForStudentById(this.maturaId)
       .subscribe({
-        next: response => {
-          if (response.type == 'application/json') {
-            response.text().then((data: any) => {
-              this.toastService.showError(JSON.parse(data).errorMessage);
-            });
+        next: async (response: any) => {
+          const responseText = await response.text();
+          if (this.isValidPdf(responseText)) {
+            try {
+              const blob = new Blob([response], {
+                type: 'application/pdf',
+              });
+              FileSaver.saveAs(blob, `Diploma_Sealed_${this.maturaId}`);
+            } catch (error) {
+              this.toastService.showError(error as string);
+            }
           } else {
-            const blob = new Blob([response], {
-              type: 'application/pdf',
-            });
-            FileSaver.saveAs(blob, `Diploma_Sealed_${this.maturaId}`);
-          }
-        },
-        error: err => {
-          if (err.status === 400) {
-            this.toastService.showError(err.error.errorMessage);
+            const resp = JSON.parse(responseText);
+            this.toastService.showError(resp.errorMessage);
           }
           this.cd.markForCheck();
-        },
+        }
       });
   }
 }
