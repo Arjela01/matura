@@ -22,8 +22,8 @@ import {
   StudentType,
 } from '@msh/shared/domain-models';
 import {
-  GlobalToastService,
   GRID_ACTIONS,
+  GlobalToastService,
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -33,18 +33,18 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import {
   BehaviorSubject,
+  Observable,
   combineLatest,
   map,
-  Observable,
   skip,
   tap,
 } from 'rxjs';
 import { DiplomasStudentFormComponent } from '../diplomas-student-form/diplomas-student-form.component';
 import { DiplomasStudentGridComponent } from '../diplomas-student-grid/diplomas-student-grid.component';
-import { TableLazyLoadEvent } from 'primeng/table';
 
 @Component({
   selector: 'msh-manage-diplomas-student',
@@ -121,13 +121,15 @@ export class ManageDiplomasStudentComponent implements OnInit, OnDestroy {
     private authFacade: AuthFacade,
     private confirmationService: ConfirmationService,
     private readonly signalrService: SignalrService
-  ) {}
+  ) {
+
+    this.signalrService.startConnection();
+  }
 
   ngOnInit(): void {
+    this.subscribeToStatisticsUpdates();
     this.getAdministrationOfficeDropdown();
     this.getStudentSealSummary();
-    this.signalrService.startConnection();
-    this.subscribeToStatisticsUpdates();
   }
 
   ngOnDestroy() {
@@ -139,7 +141,7 @@ export class ManageDiplomasStudentComponent implements OnInit, OnDestroy {
       .getMessageReceivedObservable()
       .pipe(untilDestroyed(this))
       .subscribe(status => {
-        if (status.notificationEnum == NotificationEnum.GenerateDiploma) {
+        if (status.notificationEnum == NotificationEnum.DiplomaNotification) {
           this.status = status.data;
           this.cd.markForCheck();
         }

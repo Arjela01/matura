@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
+import { StorageService } from '@msh/shared/data-access-shared';
 import { NotificationEnum } from '@msh/shared/domain-models';
 import { environment } from '@msh/shared/environments';
 import { Observable, Subject } from 'rxjs';
-import { StorageService } from '@msh/shared/data-access-shared';
 import { TOKEN_STORAGE_KEY } from './token.interceptor';
 @Injectable({
   providedIn: 'root',
@@ -39,12 +39,28 @@ export class SignalrService {
   }
   public registerHubEvents() {
     if (this.hubConnection) {
+
+      this.hubConnection.on(
+        'InitialDiplomaStatsAsync',
+        (notificationEnum: NotificationEnum, data: any) => {
+          this.messageReceived$.next({ notificationEnum, data });
+        }
+      );
+
+      this.hubConnection.on(
+        'InitialEalbaniaStatsAsync',
+        (notificationEnum: NotificationEnum, data: any) => {
+          this.messageReceived$.next({ notificationEnum, data });
+        }
+      );
+
       this.hubConnection.on(
         'SendNotificationAsync',
         (notificationEnum: NotificationEnum, data: any) => {
           this.messageReceived$.next({ notificationEnum, data });
         }
       );
+      
     }
   }
   public getMessageReceivedObservable(): Observable<{

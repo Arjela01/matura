@@ -21,15 +21,22 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ApproveExamCopyComponent } from '../approve-exam-copy/approve-exam-copy.component';
-import { RefuseExamCopyComponent } from '../refuse-exam-copy/refuse-exam-copy.component';
 import { Observable } from 'rxjs';
-import { ExamCopy, ExamCopyConfirm } from '@msh/shared/domain-models';
+import {
+  ExamCopy,
+  ExamCopyStatuses,
+  ExamCopyUpdate,
+  ExamGradeChange,
+  StatusEnum,
+} from '@msh/shared/domain-models';
 import { AppDatePipe } from '@msh/shared/ui-shared';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Ripple } from 'primeng/ripple';
-import { TableModule } from 'primeng/table';
+import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { FileUploadModule } from 'primeng/fileupload';
+import { DropdownModule } from 'primeng/dropdown';
+import { DropdownModel } from '@msh/shared/data-access-shared';
 import { GlobalToastService } from '@msh/shared/util-shared';
 
 @UntilDestroy()
@@ -46,7 +53,6 @@ import { GlobalToastService } from '@msh/shared/util-shared';
     InputTextareaModule,
     ButtonModule,
     ApproveExamCopyComponent,
-    RefuseExamCopyComponent,
     CheckboxModule,
     DatePipe,
     AppDatePipe,
@@ -54,6 +60,7 @@ import { GlobalToastService } from '@msh/shared/util-shared';
     TableModule,
     TooltipModule,
     FileUploadModule,
+    DropdownModule,
   ],
   providers: [DatePipe],
   templateUrl: './exam-copy-details.component.html',
@@ -62,20 +69,12 @@ import { GlobalToastService } from '@msh/shared/util-shared';
 })
 export class ExamCopyDetailsComponent implements OnInit {
   @ViewChild('form', { static: true }) form!: NgForm;
-  @Input() examCopies$: Observable<ExamCopy[]> | undefined;
-
-  @Output() documentUploaded = new EventEmitter<boolean>();
-
+  statuses: DropdownModel<any>[] = [];
   base64?: string;
-  confirmExamCopy: ExamCopyConfirm = {
-    applicationId: '',
-    attachedDocument: '',
-    documentName: '',
-  };
   submitted = false;
   confirmModal = false;
-  refuseModal = false;
   updatedFile!: File;
+  updatedExamCopy: ExamCopyUpdate = {};
   examCopy: ExamCopy = {};
   applicationId = '';
 
@@ -89,30 +88,23 @@ export class ExamCopyDetailsComponent implements OnInit {
     this.applicationId = this.route.snapshot.params['applicationId'];
   }
 
-  onConfirmModalClose() {
-    this.confirmModal = false;
-  }
   onFormClose() {
     this.confirmModal = false;
   }
-  onDocumentUploaded() {
-    this.documentUploaded.emit(true);
-  }
 
-  onRefuseModalClose() {
-    this.refuseModal = false;
+  goBack() {
+    this.router.navigate([`evaluations/exam-copy/list-of-exam-copies`]);
   }
 
   ngOnInit(): void {
     this.getDetails(this.applicationId);
+    this.statuses = Object.keys(StatusEnum)
+      .filter(key => !isNaN(Number(key)))
+      .map(key => this.getTranslatedStatus(Number(key)));
   }
 
   onConfirm() {
     this.confirmModal = true;
-  }
-
-  onRefuse() {
-    this.refuseModal = true;
   }
 
   getDetails(applicationId: string) {
@@ -143,22 +135,32 @@ export class ExamCopyDetailsComponent implements OnInit {
   }
 
   onSubmit() {
+    const valuesToSend: ExamCopyUpdate = {
+      applicationId: this.applicationId,
+      documentName: this.examCopy.documentName,
+      attachedDocument: this.examCopy.attachedDocument,
+      statusEnum: {
+        id: this.examCopy.status,
+        displayText: this.getStatusDisplayText(this.examCopy.status) as any,
+      },
+    };
     this.submitted = true;
-    this.confirmExamCopy.applicationId = this.applicationId;
-    console.log(123, this.confirmExamCopy);
+    if (this.form.valid) {
+      this.updateExamCopy(valuesToSend);
+    }
+  }
+
+  updateExamCopy(examCopy: ExamCopyUpdate) {
     this.examCopyService
-      .confirm(this.confirmExamCopy)
+      .update(examCopy)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        if (!response.isSuccessful) {
-          this.toastService.showError(
-            response.errorMessage ?? 'Ndodhi një problem gjatë konfirmimit'
-          );
-        }
         if (response.isSuccessful) {
-          this.toastService.showSuccess('Konfirmimi u krye me sukses');
-          this.router.navigate(['/evaluations/exam-copy/list-of-exam-copies']);
-        }
+          this.toastService.showSuccess('Veprimi u krye me sukses');
+          this.goBack();
+        } else this.toastService.showError(response.errorMessage);
+        if (response.isBadRequest)
+          this.toastService.showError('Ndodhi një problem!');
       });
   }
 
@@ -174,8 +176,22 @@ export class ExamCopyDetailsComponent implements OnInit {
     reader.onload = () => {
       const base64 = reader.result as string;
       this.base64 = base64.split(',')[1];
-      this.confirmExamCopy.attachedDocument = this.base64;
-      this.confirmExamCopy.documentName = file.name;
+      this.examCopy.attachedDocument = this.base64;
+      this.examCopy.documentName = file.name;
     };
+  }
+
+  getTranslatedStatus(key: number): DropdownModel<any> {
+    const translations: { [key: number]: string } = {
+      1: 'Aplikim në Pritje',
+      2: 'Aplikim i Pranuar',
+      3: 'Aplikim i Refuzuar',
+    };
+    return { key, value: translations[key] || '' };
+  }
+
+  getStatusDisplayText(statusId?: number): string {
+    const status = this.statuses.find(status => status.key === statusId);
+    return status ? status.value : '';
   }
 }

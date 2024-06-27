@@ -18,7 +18,7 @@
 
       <button
         pButton
-        label="Aplikim i Miratuar"
+        label="Aplikim i Pranuar"
         class="p-button-success p-button-outlined mr-2"
         *ngIf="examCopy.status === 2"></button>
     </div>
@@ -308,7 +308,7 @@
             autofocus />
         </div>
 
-        <div *ngIf="examCopy.status === 2">
+        <div *ngIf="examCopy.status === 2 || examCopy.status === 3">
           <h5 class="mb-3 mt-3 font-bold">Dokumenti i Përgjigjjes</h5>
           <div class="field">
             <p-table
@@ -334,7 +334,7 @@
                   </td>
                   <td
                     class="flex justify-content-end"
-                    *ngIf="examCopy.status === 2">
+                    *ngIf="examCopy.status === 2 || examCopy.status === 3">
                     <img
                       src="assets/svg/edit-form.svg"
                       class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
@@ -349,7 +349,7 @@
         </div>
 
         <div *ngIf="examCopy.status === 1">
-          <h5>Dokumentet e Aplikimit</h5>
+          <h5 class="mb-3 mt-3 font-bold">Dokumenti i Përgjigjjes</h5>
           <div class="field mt-4 mb-4">
             <label for="files">Importo Dokument *</label>
             <p-fileUpload
@@ -371,25 +371,41 @@
           </div>
         </div>
 
-        <div
-          *ngIf="examCopy.status === 1"
-          class="mt-5 flex justify-content-start">
+        <h5 class="font-bold mt-4">Statusi</h5>
+        <div class="field">
+          <label>Statusi i aplikimt *</label>
+          <div>
+            <p-dropdown
+              id="status"
+              name="status"
+              [options]="statuses"
+              optionValue="key"
+              optionLabel="value"
+              [required]="true"
+              [filter]="true"
+              [(ngModel)]="examCopy.status"
+              [ngClass]="{
+                'ng-invalid ng-dirty': submitted && !examCopy.status,
+              }">
+            </p-dropdown>
+            <small class="p-error block" *ngIf="submitted && !examCopy.status">
+              Statusi është fushë e kërkuar.
+            </small>
+          </div>
+        </div>
+
+        <div class="mt-5 flex justify-content-end">
+          <button
+            type="button"
+            (click)="goBack()"
+            pButton
+            label="Anullo"
+            class="p-button-text w-auto mr-2"></button>
           <button
             type="submit"
             pButton
             label="Ruaj"
             class="p-button w-auto mr-2"></button>
-          <button
-            type="button"
-            pButton
-            label="Refuzo"
-            class="p-button-text w-auto mr-2"
-            (click)="onRefuse()"></button>
-          <button
-            type="button"
-            pButton
-            label="Anullo"
-            class="p-button-text w-auto mr-2"></button>
         </div>
       </form>
     </div>
@@ -404,27 +420,12 @@
   [draggable]="false"
   [resizable]="false"
   class="p-fluid"
-  (onHide)="onConfirmModalClose()">
+  (onHide)="onFormClose()">
   <ng-template pTemplate="content">
     <msh-approve-exam-copy
       (fileUploaded)="onFileUploaded($event)"
       [examCopyDetails]="examCopy"
-      (formClose)="onFormClose()"
-      (documentUploaded)="onDocumentUploaded()">
+      (formClose)="onFormClose()">
     </msh-approve-exam-copy>
-  </ng-template>
-</p-dialog>
-
-<p-dialog
-  [(visible)]="refuseModal"
-  [style]="{ width: '500px' }"
-  header="Arsyeja e Refuzimit"
-  [modal]="true"
-  [draggable]="false"
-  [resizable]="false"
-  class="p-fluid"
-  (onHide)="onRefuseModalClose()">
-  <ng-template pTemplate="content">
-    <msh-refuse-exam-copy [examCopyDetails]="examCopy"> </msh-refuse-exam-copy>
   </ng-template>
 </p-dialog>

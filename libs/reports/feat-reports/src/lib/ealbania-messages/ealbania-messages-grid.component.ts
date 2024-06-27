@@ -7,11 +7,12 @@ import {
   OnInit,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { SignalrService } from '@msh/auth/data-access-auth';
 import { EalbaniaMessagesApiService } from '@msh/reports/data-access-reports';
 import {
   EAlbaniaMessage,
   EAlbaniaMessageStatistics,
-  NotificationEnum,
+  NotificationEnum
 } from '@msh/shared/domain-models';
 import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
 import {
@@ -29,7 +30,6 @@ import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject } from 'rxjs';
-import { SignalrService } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
@@ -74,10 +74,11 @@ export class EalbaniaMessagesGridComponent implements OnInit, OnDestroy {
     private readonly confirmationService: ConfirmationService,
     private readonly cd: ChangeDetectorRef,
     private readonly signalrService: SignalrService
-  ) {}
+  ) {
+    this.signalrService.startConnection();
+  }
 
   ngOnInit() {
-    this.signalrService.startConnection();
     this.subscribeToStatisticsUpdates();
   }
 

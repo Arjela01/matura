@@ -6,5 +6,5 @@ export enum FormMode {
 export enum NotificationEnum {
   MaturaNotification,
   EalbaniaNotification,
-  GenerateDiploma
+  DiplomaNotification
 }
