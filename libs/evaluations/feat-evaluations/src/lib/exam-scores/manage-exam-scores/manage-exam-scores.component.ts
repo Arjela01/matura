@@ -168,6 +168,7 @@ export class ManageExamScoresComponent implements OnInit {
       totalScore: examScore.totalScore,
       archiveFolderNr: examScore.archiveFolderNr,
       archiveExamIndex: examScore.archiveExamIndex,
+      isFall: examScore.isFall,
     };
 
     if (examScore.id) {
