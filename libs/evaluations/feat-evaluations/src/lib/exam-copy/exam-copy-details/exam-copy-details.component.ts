@@ -178,6 +178,7 @@ export class ExamCopyDetailsComponent implements OnInit {
       this.base64 = base64.split(',')[1];
       this.examCopy.attachedDocument = this.base64;
       this.examCopy.documentName = file.name;
+      this.cd.detectChanges();
     };
   }
 
