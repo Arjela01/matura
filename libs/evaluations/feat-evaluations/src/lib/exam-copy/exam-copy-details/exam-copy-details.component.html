@@ -296,17 +296,6 @@
             [value]="examCopy.decisionDate | app_date"
             autofocus />
         </div>
-        <div class="field">
-          <label for="comments">Komente</label>
-          <input
-            type="text"
-            pInputText
-            disabled
-            id="comments"
-            name="comments"
-            [value]="examCopy.comments"
-            autofocus />
-        </div>
 
         <div *ngIf="examCopy.status === 2 || examCopy.status === 3">
           <h5 class="mb-3 mt-3 font-bold">Dokumenti i Përgjigjjes</h5>
@@ -392,6 +381,18 @@
               Statusi është fushë e kërkuar.
             </small>
           </div>
+        </div>
+
+        <div class="field">
+          <label for="comments">Komente</label>
+          <textarea
+            type="text"
+            pInputTextarea
+            id="comments"
+            name="comments"
+            [value]="examCopy.comments"
+            rows="5"
+            autofocus></textarea>
         </div>
 
         <div class="mt-5 flex justify-content-end">
