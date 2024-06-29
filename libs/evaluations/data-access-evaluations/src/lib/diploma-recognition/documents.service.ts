@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { ApiResult } from '@msh/shared/data-access-shared';
-import { APIService } from '@msh/shared/util-shared';
 import {
-  DiplomaRecognitionDocuments,
-  DiplomaRecognitionView,
+  DiplomaRecognitionDocuments
 } from '@msh/shared/domain-models';
+import { APIService } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +21,7 @@ export class DiplomaRecognitionDocumentsService {
       ApiResult<DiplomaRecognitionDocuments>,
       DiplomaRecognitionDocuments
     >(
-      `/DiplomaRecognitionRequest/${requestId}/ResponseFiles`,
+      `/DiplomaRecognitionRequestResponseFile/${requestId}/ResponseFiles`,
       responseDocuments
     );
   }
@@ -32,7 +31,7 @@ export class DiplomaRecognitionDocumentsService {
     fileId: number
   ): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<DiplomaRecognitionDocuments>>(
-      `/DiplomaRecognitionRequest/${requestId}/ResponseFiles/${fileId}`
+      `/DiplomaRecognitionRequestResponseFile/${requestId}/ResponseFiles/${fileId}`
     );
   }
 
@@ -44,7 +43,7 @@ export class DiplomaRecognitionDocumentsService {
       ApiResult<DiplomaRecognitionDocuments>,
       DiplomaRecognitionDocuments
     >(
-      `/DiplomaRecognitionRequest/${requestId}/ApplicationFiles`,
+      `/DiplomaRecognitionRequestApplicationFile/${requestId}/ApplicationFiles`,
       responseDocuments
     );
   }
@@ -54,7 +53,7 @@ export class DiplomaRecognitionDocumentsService {
     fileId: number
   ): Observable<ApiResult<unknown>> {
     return this.apiService.delete<ApiResult<DiplomaRecognitionDocuments>>(
-      `/DiplomaRecognitionRequest/${requestId}/ApplicationFiles/${fileId}`
+      `/DiplomaRecognitionRequestApplicationFile/${requestId}/ApplicationFiles/${fileId}`
     );
   }
 
@@ -63,20 +62,20 @@ export class DiplomaRecognitionDocumentsService {
     event: TableLazyLoadEvent
   ): Observable<any> {
     return this.apiService.post(
-      `/DiplomaRecognitionRequest/${requestId}/ResponseFiles/TableData`,
+      `/DiplomaRecognitionRequestResponseFile/${requestId}/ResponseFiles/TableData`,
       event
     );
   }
 
   getOneResponseFile(requestId: number, fileId: number): Observable<any> {
     return this.apiService.get(
-      `/DiplomaRecognitionRequest/${requestId}/ResponseFiles/${fileId}`
+      `/DiplomaRecognitionRequestResponseFile/${requestId}/ResponseFiles/${fileId}`
     );
   }
 
   getOneRequestFile(requestId: number, fileId: number): Observable<any> {
     return this.apiService.get(
-      `/DiplomaRecognitionRequest/${requestId}/ApplicationFiles/${fileId}`
+      `/DiplomaRecognitionRequestApplicationFile/${requestId}/ApplicationFiles/${fileId}`
     );
   }
 
@@ -85,7 +84,7 @@ export class DiplomaRecognitionDocumentsService {
     event: TableLazyLoadEvent
   ): Observable<any> {
     return this.apiService.post(
-      `/DiplomaRecognitionRequest/${requestId}/ApplicationFiles/TableData`,
+      `/DiplomaRecognitionRequestApplicationFile/${requestId}/ApplicationFiles/TableData`,
       event
     );
   }
