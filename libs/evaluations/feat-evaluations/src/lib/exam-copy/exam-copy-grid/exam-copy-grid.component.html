@@ -61,6 +61,17 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="nid">
+        NID
+        <div>
+          <p-sortIcon field="nid"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="nid"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
       <th pSortableColumn="administrationOffice">
         ZVAP
         <div style="width: 4rem">
@@ -178,46 +189,49 @@
   </ng-template>
   <ng-template pTemplate="body" let-examCopy>
     <tr>
-      <td style="width: 15%; min-width: 10rem">
+      <td style="width: 15%">
         {{ examCopy.applicationId }}
       </td>
-      <td style="width: 15%; min-width: 10rem">
+      <td style="width: 15%">
         {{ examCopy.maturaId }}
       </td>
-      <td style="width: 15%; min-width: 10rem">
+      <td style="width: 15%">
         {{ examCopy.firstName }}
       </td>
-      <td style="width: 15%; min-width: 10rem">
+      <td style="width: 15%">
         {{ examCopy.lastName }}
       </td>
-      <td style="width: 15%; min-width: 10rem">
+      <td style="width: 10%; min-width: 5rem">
+        {{ examCopy.nid }}
+      </td>
+      <td style="width: 15%">
         {{ examCopy.administrationOffice }}
       </td>
-      <td style="width: 15%; min-width: 10rem">
+      <td style="width: 15%">
         {{ examCopy.schoolName }}
       </td>
-      <td style="width: 15%; min-width: 10rem">
+      <td style="width: 15%">
         {{ examCopy.subject }}
       </td>
-      <td style="width: 15%; min-width: 10rem">
+      <td style="width: 15%">
         {{ examCopy.examTypeName }}
       </td>
-      <td style="width: 15%; min-width: 10rem">
+      <td style="width: 15%">
         {{ examCopy.nr }}
       </td>
-      <td style="width: 15%; min-width: 10rem">
+      <td style="width: 15%">
         {{ examCopy.barcode }}
       </td>
-      <td style="width: 15%; min-width: 10rem">
+      <td style="width: 15%">
         {{ examCopy.index }}
       </td>
-      <td style="width: 15%; min-width: 10rem">
+      <td style="width: 15%">
         {{ examCopy.decisionDueDate | app_date }}
       </td>
-      <td style="width: 15%; min-width: 10rem">
+      <td style="width: 15%">
         {{ examCopy.dateCreated | app_date }}
       </td>
-      <td style="width: 15%; min-width: 10rem">
+      <td style="width: 15%">
         <span
           class="status"
           [ngClass]="
