@@ -11,3 +11,6 @@
     display: none;
   }
 }
+::ng-deep .p-fileupload .p-fileupload-content {
+  padding: 0;
+}
