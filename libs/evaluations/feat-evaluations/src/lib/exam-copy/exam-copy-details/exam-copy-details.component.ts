@@ -143,6 +143,7 @@ export class ExamCopyDetailsComponent implements OnInit {
         id: this.examCopy.status,
         displayText: this.getStatusDisplayText(this.examCopy.status) as any,
       },
+      comments: this.examCopy.comments,
     };
     this.submitted = true;
     if (this.form.valid) {

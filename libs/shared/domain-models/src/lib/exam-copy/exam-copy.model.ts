@@ -42,7 +42,9 @@ export interface ExamCopyUpdate {
   documentName?: string;
   attachedDocument?: string;
   statusEnum?: ExamCopyStatuses;
+  comments?: string;
 }
+
 export interface ExamCopyStatuses {
   id?: number;
   displayText?: StatusEnum;
