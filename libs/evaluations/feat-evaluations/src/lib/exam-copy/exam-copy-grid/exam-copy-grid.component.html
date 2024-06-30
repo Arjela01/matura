@@ -161,6 +161,17 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="testNumber">
+        Nr Testi
+        <div>
+          <p-sortIcon field="testNumber"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="testNumber"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
       <th pSortableColumn="grade">
         Nota
         <div>
@@ -248,6 +259,9 @@
       </td>
       <td style="width: 10%">
         {{ examCopy.totalScore }}
+      </td>
+      <td style="width: 10%">
+        {{ examCopy.testNumber }}
       </td>
       <td style="width: 10%">
         {{ examCopy.grade }}
