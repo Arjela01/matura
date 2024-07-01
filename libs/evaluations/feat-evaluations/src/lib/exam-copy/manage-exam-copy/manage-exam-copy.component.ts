@@ -10,6 +10,7 @@ import {
   GRID_ACTIONS,
   GlobalToastService,
   GridEvent,
+  API_URL,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import * as FileSaver from 'file-saver';
@@ -25,7 +26,9 @@ import { ExamCopyDetailsComponent } from '../exam-copy-details/exam-copy-details
 import { ExamCopyGridComponent } from '../exam-copy-grid/exam-copy-grid.component';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ExamSecretsFormComponent } from '../../exam-secrets/exam-secrets-form/exam-secrets-form.component';
-import { FileUploadModule } from 'primeng/fileupload';
+import { FileUploadEvent, FileUploadModule } from 'primeng/fileupload';
+import { HttpResponse } from '@microsoft/signalr';
+import { HttpEventType } from '@angular/common/http';
 
 @UntilDestroy()
 @Component({
@@ -111,5 +114,40 @@ export class ManageExamCopyComponent {
 
   showUploadDialog() {
     this.displayModal = true;
+  }
+
+  file: any = null;
+
+  uploadFile($event: MouseEvent) {
+    console.log(this.file);
+    if (this.file) {
+      this.examCopyService.uploadFile(this.file).subscribe({
+        next: event => {
+          if (event.type === HttpEventType.UploadProgress) {
+            console.log(
+              'Upload progress:',
+              Math.round((100 * event.loaded) / event.total!)
+            );
+          } else if (event.type == HttpEventType.Response) {
+            if(event.body.isSuccessful) {
+              this.toastService.showSuccess('Ngarkim i suksesshëm');
+            } else {
+              this.toastService.showError('Ngarkim me gabime: ' + event.body.errorMessage);
+            }
+          }
+        },
+        error: error => {
+          this.toastService.showError('Gabim në ngarkim ' + error);
+        },
+      });
+    }
+  }
+
+  onUpload($event: any) {
+    if ($event.files.length > 0) {
+      this.file = $event.files[0];
+    } else {
+      this.file = null;
+    }
   }
 }

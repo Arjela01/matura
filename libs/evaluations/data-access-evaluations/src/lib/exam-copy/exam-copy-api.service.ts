@@ -1,20 +1,25 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { ApiResult } from '@msh/shared/data-access-shared';
-import { APIService } from '@msh/shared/util-shared';
+import { API_URL, APIService } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
-import { HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {
   ExamCopy,
   ExamCopyTableView,
   ExamCopyUpdate,
 } from '@msh/shared/domain-models';
+import { HttpResponse } from '@microsoft/signalr';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExamCopyApiService {
-  constructor(private apiService: APIService) {}
+  constructor(
+    private apiService: APIService,
+    private http: HttpClient,
+    @Inject(API_URL) private api_url: string
+  ) {}
 
   loadExamCopies(event: TableLazyLoadEvent): Observable<ExamCopyTableView> {
     return this.apiService.post(`/ExamCopyRequest/TableData`, event);
@@ -29,11 +34,26 @@ export class ExamCopyApiService {
       `/ExamCopyRequest/GetByApplicationId/${applicationId}`
     );
   }
+
   exportTemplate(): Observable<ApiResult<unknown>> {
     return this.apiService.get<any>(
       `/ExamCopyRequest/Export`,
       new HttpParams(),
       'blob'
     );
+  }
+
+  uploadFile(file: File): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+    const url = `${this.api_url}/ExamCopyRequest/UploadFiles`;
+
+    return this.http.post(url, formData, {
+      headers: new HttpHeaders({
+        Accept: 'application/json',
+      }),
+      reportProgress: true,
+      observe: 'events',
+    });
   }
 }

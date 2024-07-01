@@ -6,6 +6,7 @@
       pRipple
       icon="pi pi-download"
       pButton
+      class="mr-2"
       label="Shkarko"
       (click)="downloadTemplateFile()"></button>
 
@@ -63,14 +64,18 @@
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
     <p-fileUpload
-      name="myfile[]"
-      [multiple]="true"
+      name="file"
+      [multiple]="false"
       [customUpload]="true"
-      chooseLabel="Ngarko"
+      chooseLabel="Zgjidh"
       [auto]="true"
       accept=".zip"
       (uploadHandler)="onUpload($event)">
     </p-fileUpload>
+
+
+    <p-button type="button" label="Ngarko" (onClick)="uploadFile($event)">
+    </p-button>
   </ng-template>
 </p-dialog>
 
