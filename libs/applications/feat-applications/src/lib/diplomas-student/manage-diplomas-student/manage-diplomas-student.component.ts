@@ -122,7 +122,6 @@ export class ManageDiplomasStudentComponent implements OnInit, OnDestroy {
     private confirmationService: ConfirmationService,
     private readonly signalrService: SignalrService
   ) {
-
     this.signalrService.startConnection();
   }
 
@@ -183,6 +182,9 @@ export class ManageDiplomasStudentComponent implements OnInit, OnDestroy {
       case GRID_ACTIONS.SEAL:
         this.sealDiploma(event);
         break;
+      case GRID_ACTIONS.CUSTOM_ACTION1:
+        this.sendToEalbaniaByStudentId(event);
+        break;
     }
   }
 
@@ -221,6 +223,19 @@ export class ManageDiplomasStudentComponent implements OnInit, OnDestroy {
             `Diploma_Sealed_${event.data?.studentStudentId}`
           );
           this.getStudentDiplomas(this.filters as TableLazyLoadEvent);
+        }
+      })
+      .add(() => this.responseLoaded.next(false));
+  }
+
+  sendToEalbaniaByStudentId(event: GridEvent<Diploma>) {
+    this.diplomasService
+      .sendToEalbaniaByStudentId(event.data?.studentId as string)
+      .subscribe((response: any) => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Diploma u dërgua me sukses');
+        } else {
+          this.toastService.showError(response.errorMessage);
         }
       })
       .add(() => this.responseLoaded.next(false));

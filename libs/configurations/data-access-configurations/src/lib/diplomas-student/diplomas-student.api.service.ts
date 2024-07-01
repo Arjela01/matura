@@ -59,4 +59,8 @@ export class DiplomasStudentApiService {
       new HttpParams(),
       'blob');
   }
+
+  sendToEalbaniaByStudentId(studentId: string): Observable<any> {
+    return this.apiService.get(`/Diplomas/SendToEalbaniaStudentId/${studentId}`);
+  }
 }

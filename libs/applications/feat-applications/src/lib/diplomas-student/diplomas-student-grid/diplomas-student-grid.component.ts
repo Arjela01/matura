@@ -66,6 +66,13 @@ export class DiplomasStudentGridComponent {
     } as GridEvent<Diploma>);
   }
 
+  onEalbania(data: Diploma) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.CUSTOM_ACTION1,
+      data: data,
+    } as GridEvent<Diploma>);
+  }
+
   loadRows($event: TableLazyLoadEvent) {
     const filters = $event.filters as any;
     $event.filters = this.dateFilterService.applyDateManipulation(filters);

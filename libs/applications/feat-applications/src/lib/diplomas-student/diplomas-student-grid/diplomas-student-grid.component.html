@@ -17,6 +17,7 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
+      <th></th>
       <th pSortableColumn="administrationOfficeName">
         ZVAP
         <div>
@@ -208,12 +209,30 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th></th>
     </tr>
   </ng-template>
 
   <ng-template pTemplate="body" let-diploma>
     <tr>
+    <td>
+      <div class="flex align-content-start">
+        <img
+          src="assets/svg/print.svg"
+          class="p-button-rounded p-button-danger p-button-text mr-1 block pointer"
+          pTooltip="Shkarko"
+          tooltipPosition="bottom" (click)="onPrint(diploma)"  alt="Shkarko"/>
+        <img
+          src="assets/svg/electronic-seal.svg"
+          class="p-button-rounded p-button-danger p-button-text ml-m mr-1 pointer"
+          pTooltip="Vulos dhe Shkarko"
+          tooltipPosition="bottom" (click)="onSeal(diploma)" alt="Vulos dhe Shkarko" />
+        <img
+          src="assets/svg/eAlbania.svg"
+          class="p-button-rounded p-button-danger p-button-text ml-m pointer h-2rem"
+          pTooltip="Dërgo në eAlbania të Vulosur"
+          tooltipPosition="bottom" (click)="onEalbania(diploma)" alt="Dërgo në eAlbania të Vulosur" />
+      </div>
+    </td>
       <td style="width: 10%">
         {{ diploma.administrationOfficeName }}
       </td>
@@ -266,29 +285,7 @@
         {{ diploma.error }}
       </td>
 
-      <td style="width: 10%">
-        <div class="flex">
-          <div>
-            <button
-              class="p-button-rounded p-button-danger p-button-text ml-m pointer ml-3"
-              style="background: transparent; border: white; margin-top: 10px"
-              pTooltip="Printo Diploma"
-              tooltipPosition="bottom"
-              (click)="onPrint(diploma)">
-              <img src="assets/svg/print.svg" />
-            </button>
-          </div>
-          <div>
-            <button
-              class="p-button p-button-rounded p-button p-button-text ml-m pointer ml-3 seal-button"
-              pTooltip="Vulos Diploma"
-              tooltipPosition="bottom"
-              (click)="onSeal(diploma)">
-              <img src="assets/svg/electronic-seal.svg" alt="Seal" />
-            </button>
-          </div>
-        </div>
-      </td>
+
     </tr>
   </ng-template>
 </p-table>
