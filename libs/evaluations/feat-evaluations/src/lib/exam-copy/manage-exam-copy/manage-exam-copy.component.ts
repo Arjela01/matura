@@ -24,6 +24,8 @@ import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { ExamCopyDetailsComponent } from '../exam-copy-details/exam-copy-details.component';
 import { ExamCopyGridComponent } from '../exam-copy-grid/exam-copy-grid.component';
 import { AuthFacade } from '@msh/auth/data-access-auth';
+import { ExamSecretsFormComponent } from '../../exam-secrets/exam-secrets-form/exam-secrets-form.component';
+import { FileUploadModule } from 'primeng/fileupload';
 
 @UntilDestroy()
 @Component({
@@ -43,6 +45,8 @@ import { AuthFacade } from '@msh/auth/data-access-auth';
     ConfirmDialogModule,
     ExamCopyGridComponent,
     ExamCopyDetailsComponent,
+    ExamSecretsFormComponent,
+    FileUploadModule,
   ],
 })
 export class ManageExamCopyComponent {
@@ -103,5 +107,9 @@ export class ManageExamCopyComponent {
         });
         FileSaver.saveAs(blob, 'AplikimKopjeTesti_Template');
       });
+  }
+
+  showUploadDialog() {
+    this.displayModal = true;
   }
 }
