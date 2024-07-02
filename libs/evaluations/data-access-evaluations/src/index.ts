@@ -17,3 +17,4 @@ export * from './lib/exam-questions-score/exam-questions-score.service';
 export * from './lib/exam-secret-lock/exam-secret-lock-api.service';
 export * from './lib/exam-grade-changes/exam-grade-changes-api.service';
 export * from './lib/student-list-publications/student-list-publication.service';
+export * from './lib/regrading/regrading-api.service';

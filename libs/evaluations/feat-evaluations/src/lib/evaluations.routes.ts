@@ -102,10 +102,10 @@ export const EVALUATION_ROUTES: Route[] = [
       ).then(m => m.ExamSecretsFormComponent),
   },
   {
-    path: 'exam-grades-grid',
+    path: 'exam-grade',
     loadComponent: () =>
-      import('./exam-grade-grid/exam-grade-grid.component').then(
-        m => m.ExamGradeGridComponent
+      import('./exam-grade/manage-exam-grade/manage-exam-grade.component').then(
+        m => m.ManageExamGradeComponent
       ),
   },
   {
@@ -312,5 +312,12 @@ export const EVALUATION_ROUTES: Route[] = [
       import(
         './student-list-publications/diff-student-list-publications-records/diff-student-list-publications-records.component'
       ).then(m => m.DiffStudentListPublicationsRecordsComponent),
+  },
+  {
+    path: 'regrading',
+    loadComponent: () =>
+      import('./regarding/manage-regrading/manage-regrading.component').then(
+        m => m.ManageRegradingComponent
+      ),
   },
 ];

@@ -304,4 +304,17 @@ export class ManageDiplomasStudentComponent implements OnInit, OnDestroy {
       },
     });
   }
+
+  sealAndSendToEAlbania() {
+    this.diplomasService.sendToEAlbania().subscribe(response => {
+      if (response.isSuccessful) {
+        this.toastService.showSuccess(
+          'Diplomat u vulos dhe u dërgua me sukses'
+        );
+      } else {
+        this.toastService.showError(response.errorMessage);
+      }
+      this.cd.markForCheck();
+    });
+  }
 }
