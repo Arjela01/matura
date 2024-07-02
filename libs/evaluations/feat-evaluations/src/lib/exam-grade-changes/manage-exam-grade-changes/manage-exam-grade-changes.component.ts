@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -55,7 +60,7 @@ export class ManageExamGradeChangesComponent implements OnInit {
   selectedExamQuestion: ExamGradeChange | null = null;
   displayModal = false;
   academicYearId = 0;
-  examGradeId = '';
+  @Input() examGradeId = '';
 
   constructor(
     private readonly toastService: GlobalToastService,
@@ -69,7 +74,6 @@ export class ManageExamGradeChangesComponent implements OnInit {
     if (academicYear) {
       this.academicYearId = academicYear.id;
     }
-    this.examGradeId = this.route.snapshot.params['id'] ?? '';
   }
 
   ngOnInit() {

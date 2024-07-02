@@ -1,0 +1,38 @@
+<div class="grid">
+  <div class="col-12 p-fluid">
+    <div class="card">
+      <form #form="ngForm" (ngSubmit)="onSubmit()">
+        <div class="field mt-4 mb-4">
+          <label>Importo Dokument *</label>
+          <p-fileUpload
+            name="myfile[]"
+            [multiple]="false"
+            [customUpload]="true"
+            accept=".xlsm,.xlsx,application/msexcel"
+            chooseLabel="Zgjidh"
+            [auto]="true"
+            (uploadHandler)="onUploadFile($event)">
+          </p-fileUpload>
+          <small class="p-error block" *ngIf="submitted && !command.file">
+            Ju lutem zgjidhni një dokument.
+          </small>
+        </div>
+
+        <div class="flex justify-content-end">
+          <button
+            type="button"
+            pButton
+            label="Anullo"
+            class="p-button-text w-auto mr-2"
+            (click)="onCancelClick()"></button>
+          <button
+            [disabled]="form.invalid"
+            type="submit"
+            pButton
+            label="Ngarko"
+            class="p-button w-auto"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -26,7 +26,7 @@
   </div>
 
   <div class="field">
-    <label class="mb-3">Ndrysho pikët? *</label>
+    <label class="mb-3">Ndrysho pikët?</label>
     <div class="form grid grid">
       <div class="field-radiobutton col-6">
         <p-radioButton
@@ -48,24 +48,17 @@
   </div>
 
   <div class="field" *ngIf="examGradeChange.isScoreChanged">
-    <label for="newScore">Pikët u bënë *</label>
+    <label for="newScore">Pikët u bënë </label>
     <input
       type="text"
       pInputText
       id="newScore"
       name="newScore"
-      [(ngModel)]="examGradeChange.newScore"
-      required
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examGradeChange.newScore,
-      }" />
-    <small class="p-error block" *ngIf="submitted && !examGradeChange.newScore">
-      Pikët e reja janë fushë e kërkuar.
-    </small>
+      [(ngModel)]="examGradeChange.newScore" />
   </div>
 
   <div class="field">
-    <label class="mb-3">Ndrysho Lëndën? *</label>
+    <label class="mb-3">Ndrysho Lëndën?</label>
     <div class="form grid grid">
       <div class="field-radiobutton col-6">
         <p-radioButton
@@ -98,16 +91,8 @@
       [autoDisplayFirst]="false"
       [(ngModel)]="examGradeChange.newExamSubjectId"
       [showClear]="true"
-      appendTo="body"
-      [ngClass]="{
-        'ng-invalid ng-dirty': submitted && !examGradeChange.newExamSubjectId,
-      }">
+      appendTo="body">
     </p-dropdown>
-    <small
-      class="p-error block"
-      *ngIf="submitted && !examGradeChange.newExamSubjectId">
-      Lënda e re është fushë e kërkuar.
-    </small>
   </div>
 
   <div class="field">
