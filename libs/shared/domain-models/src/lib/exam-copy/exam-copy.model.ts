@@ -1,4 +1,5 @@
 export interface ExamCopy {
+  id?: string;
   applicationId?: string;
   maturaId?: string;
   nid?: string;
@@ -38,7 +39,7 @@ export interface ExamCopyTableView {
 }
 
 export interface ExamCopyUpdate {
-  applicationId?: string;
+  id?: string;
   documentName?: string;
   attachedDocument?: string;
   statusEnum?: ExamCopyStatuses;

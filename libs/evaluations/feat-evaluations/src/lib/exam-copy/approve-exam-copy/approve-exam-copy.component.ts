@@ -55,7 +55,7 @@ export class ApproveExamCopyComponent implements OnInit {
   @Output() fileUploaded: EventEmitter<File> = new EventEmitter<File>();
   base64?: string;
   updateExamCopy: ExamCopyUpdate = {
-    applicationId: '',
+    id: '',
     attachedDocument: '',
     documentName: '',
   };
@@ -63,7 +63,7 @@ export class ApproveExamCopyComponent implements OnInit {
   displayUploadModal = false;
 
   ngOnInit(): void {
-    this.updateExamCopy.applicationId = this.examCopy?.applicationId;
+    this.updateExamCopy.id = this.examCopy?.applicationId;
   }
 
   onCancelClick() {

@@ -76,7 +76,7 @@ export class ExamCopyDetailsComponent implements OnInit {
   updatedFile!: File;
   updatedExamCopy: ExamCopyUpdate = {};
   examCopy: ExamCopy = {};
-  applicationId = '';
+  id = '';
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -85,7 +85,7 @@ export class ExamCopyDetailsComponent implements OnInit {
     private readonly toastService: GlobalToastService,
     private readonly router: Router
   ) {
-    this.applicationId = this.route.snapshot.params['applicationId'];
+    this.id = this.route.snapshot.params['applicationId'];
   }
 
   onFormClose() {
@@ -97,7 +97,7 @@ export class ExamCopyDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getDetails(this.applicationId);
+    this.getDetails(this.id);
     this.statuses = Object.keys(StatusEnum)
       .filter(key => !isNaN(Number(key)))
       .map(key => this.getTranslatedStatus(Number(key)));
@@ -136,7 +136,7 @@ export class ExamCopyDetailsComponent implements OnInit {
 
   onSubmit() {
     const valuesToSend: ExamCopyUpdate = {
-      applicationId: this.applicationId,
+      id: this.id,
       documentName: this.examCopy.documentName,
       attachedDocument: this.examCopy.attachedDocument,
       statusEnum: {

@@ -59,9 +59,7 @@ export class ExamCopyGridComponent {
   ) {}
 
   onProceedClick(examCopy: ExamCopy) {
-    this.router.navigate([
-      `/evaluations/exam-copy/form/${examCopy.applicationId}`,
-    ]);
+    this.router.navigate([`/evaluations/exam-copy/form/${examCopy.id}`]);
   }
 
   loadRows($event: TableLazyLoadEvent) {

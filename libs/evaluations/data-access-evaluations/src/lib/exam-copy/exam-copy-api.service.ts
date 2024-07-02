@@ -9,7 +9,6 @@ import {
   ExamCopyTableView,
   ExamCopyUpdate,
 } from '@msh/shared/domain-models';
-import { HttpResponse } from '@microsoft/signalr';
 
 @Injectable({
   providedIn: 'root',
@@ -30,9 +29,7 @@ export class ExamCopyApiService {
   }
 
   getById(applicationId: string): Observable<ApiResult<ExamCopy>> {
-    return this.apiService.get(
-      `/ExamCopyRequest/GetByApplicationId/${applicationId}`
-    );
+    return this.apiService.get(`/ExamCopyRequest/GetById/${applicationId}`);
   }
 
   exportTemplate(): Observable<ApiResult<unknown>> {
@@ -55,5 +52,13 @@ export class ExamCopyApiService {
       reportProgress: true,
       observe: 'events',
     });
+  }
+
+  downloadAttachment(id?: string) {
+    return this.apiService.get<any>(
+      `/ExamCopyRequest/DownloadAttachment/${id}`,
+      new HttpParams(),
+      'blob'
+    );
   }
 }
