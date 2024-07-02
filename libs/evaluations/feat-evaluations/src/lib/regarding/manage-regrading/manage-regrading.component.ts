@@ -122,6 +122,7 @@ export class ManageRegradingComponent {
   }
 
   onFormSave(examGradeChange: ExamGradeChange) {
+    console.log(this.selectedGrade);
     const valuesToSend = {
       ...examGradeChange,
       examGradeId: this.selectedGrade?.id,

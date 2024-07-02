@@ -208,12 +208,6 @@
       </td>
       <td class="text-center" style="width: 5%; min-width: 10rem">
         <img
-          src="assets/svg/open.svg"
-          class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
-          tooltipPosition="bottom"
-          (click)="onEditClick(examGrade)"
-          pTooltip="Rivlësim/Korrigjim" />
-        <img
           *ngIf="examGrade.status === 1"
           src="assets/svg/edit-form.svg"
           class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
