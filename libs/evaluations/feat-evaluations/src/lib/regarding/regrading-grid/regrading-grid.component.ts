@@ -1,0 +1,64 @@
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { Regrading, StudentBan } from '@msh/shared/domain-models';
+import { TableLazyLoadEvent, TableModule } from 'primeng/table';
+import {
+  ColumnFilterDirective,
+  GRID_ACTIONS,
+  GridEvent,
+} from '@msh/shared/util-shared';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { TooltipModule } from 'primeng/tooltip';
+import { CheckboxModule } from 'primeng/checkbox';
+import { RippleModule } from 'primeng/ripple';
+import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
+import { RouterLink } from '@angular/router';
+import { RoleName } from '@msh/configurations/feat-configurations';
+
+@Component({
+  selector: 'msh-regrading-grid',
+  standalone: true,
+  imports: [
+    CommonModule,
+    TableModule,
+    ButtonModule,
+    InputTextModule,
+    TooltipModule,
+    CheckboxModule,
+    RippleModule,
+    ColumnFilterDirective,
+    DatePipe,
+    AppDatePipe,
+    AppBoolPipe,
+    RouterLink,
+  ],
+  templateUrl: './regrading-grid.component.html',
+  styleUrl: './regrading-grid.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class RegradingGridComponent {
+  @Input() regrading: Regrading[] = [];
+  @Input() totalRecords = 0;
+  @Input() loading = false;
+
+  @Output() gridEvent = new EventEmitter<GridEvent<Regrading | Regrading[]>>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
+
+  loadRows($event: TableLazyLoadEvent) {
+    this.lazyLoadData.emit($event);
+  }
+
+  onEditClick(grade: Regrading) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.EDIT,
+      data: grade,
+    } as GridEvent<Regrading>);
+  }
+}

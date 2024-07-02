@@ -71,3 +71,4 @@ export * from './exam-subject-group/exam-subject-group.model';
 export * from './ealbania-messages/ealbania-message.model';
 export * from './ealbania-messages/ealbania-message-statistics.model';
 export * from './diplomas/diplomas.model';
+export * from './regrading/regrading.model';

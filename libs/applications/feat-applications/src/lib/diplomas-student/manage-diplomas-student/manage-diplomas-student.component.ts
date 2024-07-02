@@ -122,7 +122,6 @@ export class ManageDiplomasStudentComponent implements OnInit, OnDestroy {
     private confirmationService: ConfirmationService,
     private readonly signalrService: SignalrService
   ) {
-
     this.signalrService.startConnection();
   }
 
@@ -287,6 +286,19 @@ export class ManageDiplomasStudentComponent implements OnInit, OnDestroy {
           this.cd.markForCheck();
         });
       },
+    });
+  }
+
+  sealAndSendToEAlbania() {
+    this.diplomasService.sendToEAlbania().subscribe(response => {
+      if (response.isSuccessful) {
+        this.toastService.showSuccess(
+          'Diplomat u vulos dhe u dërgua me sukses'
+        );
+      } else {
+        this.toastService.showError(response.errorMessage);
+      }
+      this.cd.markForCheck();
     });
   }
 }
