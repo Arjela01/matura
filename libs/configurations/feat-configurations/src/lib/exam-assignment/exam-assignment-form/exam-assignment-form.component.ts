@@ -226,7 +226,7 @@ export class ExamAssignmentFormComponent implements OnInit, DoCheck, OnChanges {
   getStudents($event: TableLazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
     const params = {
-      isFall: !!this.hasAdditionalValue?.additionalValue?.includes('True'),
+      isFall: this.hasAdditionalValue?.additionalValue,
       examSiteId: this.examAssignment.examSiteId,
     };
     this.studentService
