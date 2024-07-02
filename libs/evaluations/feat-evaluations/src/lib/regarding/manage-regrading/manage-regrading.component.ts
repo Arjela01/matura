@@ -58,7 +58,6 @@ export class ManageRegradingComponent {
   private regrading$$ = new BehaviorSubject<Regrading[]>([]);
   regrading$ = this.regrading$$.asObservable();
 
-  grade: Regrading = {};
   filters: TableLazyLoadEvent | null = null;
   selectedGrade: Regrading | null = null;
   totalRecords = 0;
@@ -215,11 +214,11 @@ export class ManageRegradingComponent {
 
   onStatusUpdate($event: any) {
     const valuesToSend: RegradingUpdate = {
-      regradingRequestID: $event.id,
+      regradingRequestID: this.selectedGrade?.id,
       academicYearId: this.academicYearId,
       statusEnum: {
-        id: $event.status.id,
-        displayText: this.getStatusDisplayText($event.status.id) as any,
+        id: $event.status,
+        displayText: this.getStatusDisplayText($event.status) as any,
       },
       comments: $event.comments,
     };
@@ -238,6 +237,7 @@ export class ManageRegradingComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Veprimi u krye me sukses');
+          this.onUpdateModalClose();
         } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest)
           this.toastService.showError('Ndodhi një problem!');

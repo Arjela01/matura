@@ -78,7 +78,7 @@
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
     <msh-update-status-form
-      [details]="grade"
+      [details]="selectedGrade"
       [statuses]="statuses"
       (formClose)="onUpdateModalClose()"
       (formSave)="onStatusUpdate($event)">

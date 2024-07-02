@@ -49,12 +49,10 @@ export class UpdateStatusFormComponent {
   @ViewChild('form', { static: true }) form!: NgForm;
   filters: TableLazyLoadEvent | null = null;
   submitted = false;
-  displayStatusModal = false;
   regradingStatus: Regrading = {};
 
   onCancelClick() {
     this.formClose.emit();
-    this.displayStatusModal = false;
   }
 
   onSubmit() {
