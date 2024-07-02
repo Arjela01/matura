@@ -20,7 +20,7 @@ import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { ExamCopyRequestStatusPipe } from './exam-copy-request-status-pipe';
-import { AppDatePipe } from '@msh/shared/ui-shared';
+import { AppBoolPipe, AppDatePipe, AppTimePipe } from '@msh/shared/ui-shared';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -38,6 +38,8 @@ import { ActivatedRoute, Router } from '@angular/router';
     ColumnFilterDirective,
     DatePipe,
     AppDatePipe,
+    AppBoolPipe,
+    AppTimePipe,
   ],
   providers: [DatePipe],
   templateUrl: './exam-copy-grid.component.html',

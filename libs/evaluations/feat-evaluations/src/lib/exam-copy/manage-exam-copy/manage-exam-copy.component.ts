@@ -129,10 +129,16 @@ export class ManageExamCopyComponent {
               Math.round((100 * event.loaded) / event.total!)
             );
           } else if (event.type == HttpEventType.Response) {
-            if(event.body.isSuccessful) {
+            if (event.body.isSuccessful) {
               this.toastService.showSuccess('Ngarkim i suksesshëm');
+              this.displayModal = false;
+              if (this.filters) {
+                this.getExamCopies(this.filters as TableLazyLoadEvent);
+              }
             } else {
-              this.toastService.showError('Ngarkim me gabime: ' + event.body.errorMessage);
+              this.toastService.showError(
+                'Ngarkim me gabime: ' + event.body.errorMessage
+              );
             }
           }
         },

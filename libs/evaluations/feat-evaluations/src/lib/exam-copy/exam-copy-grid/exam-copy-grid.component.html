@@ -17,8 +17,24 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
+      <th colspan="19"></th>
+      <th colspan="5" class="bg-gray-100 text-center">Dërgimi Automatik</th>
+    </tr>
+    <tr class="vertical-align-top">
+      <th>Procedo</th>
+      <th pSortableColumn="statusDescription">
+        Statusi i Aplikimit
+        <div>
+          <p-sortIcon field="statusDescription"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="statusDescription"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
       <th pSortableColumn="applicationId">
-        Numri i Aplikimit
+        Numri
         <div>
           <p-sortIcon field="applicationId"></p-sortIcon>
           <p-columnFilter
@@ -204,75 +220,68 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="statusDescription">
-        Statusi i Aplikimit
+      <th pSortableColumn="isQueueReady" class="bg-gray-100">
+        Gati për Dërgim
         <div>
-          <p-sortIcon field="statusDescription"></p-sortIcon>
+          <p-sortIcon field="isQueueReady"></p-sortIcon>
           <p-columnFilter
-            type="text"
-            field="statusDescription"
+            type="boolean"
+            matchMode="equals"
+            field="isQueueReady"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th></th>
-      <th>Procedo</th>
+
+      <th pSortableColumn="isQueued" class="bg-gray-100">
+        Në Radhë
+        <div>
+          <p-sortIcon field="isQueued"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            matchMode="equals"
+            field="isQueued"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="queueDate" class="bg-gray-100">
+        Data e Shtimit
+        <div>
+          <p-sortIcon field="queueDate"></p-sortIcon>
+          <p-columnFilter
+            type="date"
+            field="queueDate"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="dequeueDate" class="bg-gray-100">
+        Data e Heqjes
+        <div>
+          <p-sortIcon field="dequeueDate"></p-sortIcon>
+          <p-columnFilter
+            type="date"
+            field="dequeueDate"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-examCopy>
-    <tr>
-      <td style="width: 10%">
-        {{ examCopy.applicationId }}
+    <tr class="vertical-align-top">
+      <td>
+        <div class="flex">
+          <img
+            src="assets/svg/edit-form.svg"
+            class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
+            tooltipPosition="bottom"
+            (click)="onProceedClick(examCopy)"
+            pTooltip="Detajet" />
+        </div>
       </td>
-      <td style="width: 10%">
-        {{ examCopy.maturaId }}
-      </td>
-      <td style="width: 10%">
-        {{ examCopy.firstName }}
-      </td>
-      <td style="width: 10%">
-        {{ examCopy.lastName }}
-      </td>
-      <td style="width: 10%; min-width: 5rem">
-        {{ examCopy.nid }}
-      </td>
-      <td style="width: 10%">
-        {{ examCopy.administrationOffice }}
-      </td>
-      <td style="width: 10%">
-        {{ examCopy.schoolName }}
-      </td>
-      <td style="width: 10%">
-        {{ examCopy.subject }}
-      </td>
-      <td style="width: 10%">
-        {{ examCopy.examTypeName }}
-      </td>
-      <td style="width: 10%">
-        {{ examCopy.barcode }}
-      </td>
-      <td style="width: 10%">
-        {{ examCopy.nr }}
-      </td>
-      <td style="width: 10%">
-        {{ examCopy.index }}
-      </td>
-      <td style="width: 10%">
-        {{ examCopy.totalScore }}
-      </td>
-      <td style="width: 10%">
-        {{ examCopy.testNumber }}
-      </td>
-      <td style="width: 10%">
-        {{ examCopy.grade }}
-      </td>
-      <td style="width: 10%">
-        {{ examCopy.decisionDueDate | app_date }}
-      </td>
-      <td style="width: 10%">
-        {{ examCopy.dateCreated | app_date }}
-      </td>
-      <td style="width: 10%">
+      <td style="max-width: 10%">
         <span
           class="status"
           [ngClass]="
@@ -285,16 +294,69 @@
           {{ examCopy.status | examCopyRequestStatus }}
         </span>
       </td>
-      <td></td>
-      <td>
-        <div class="flex">
-          <img
-            src="assets/svg/edit-form.svg"
-            class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
-            tooltipPosition="bottom"
-            (click)="onProceedClick(examCopy)"
-            pTooltip="Detajet" />
-        </div>
+
+      <td style="max-width: 10%">
+        {{ examCopy.applicationId }}
+      </td>
+      <td style="max-width: 10%">
+        {{ examCopy.maturaId }}
+      </td>
+      <td style="max-width: 10%">
+        {{ examCopy.firstName }}
+      </td>
+      <td style="max-width: 10%">
+        {{ examCopy.lastName }}
+      </td>
+      <td style="width: 10%; min-width: 5rem">
+        {{ examCopy.nid }}
+      </td>
+      <td style="max-width: 10%">
+        {{ examCopy.administrationOffice }}
+      </td>
+      <td style="max-width: 10%">
+        {{ examCopy.schoolName }}
+      </td>
+      <td style="max-width: 10%">
+        {{ examCopy.subject }}
+      </td>
+      <td style="max-width: 10%">
+        {{ examCopy.examTypeName }}
+      </td>
+      <td style="max-width: 10%">
+        {{ examCopy.barcode }}
+      </td>
+      <td style="max-width: 10%">
+        {{ examCopy.nr }}
+      </td>
+      <td style="max-width: 10%">
+        {{ examCopy.index }}
+      </td>
+      <td style="max-width: 10%">
+        {{ examCopy.totalScore }}
+      </td>
+      <td style="max-width: 10%">
+        {{ examCopy.testNumber }}
+      </td>
+      <td style="max-width: 10%">
+        {{ examCopy.grade }}
+      </td>
+      <td style="max-width: 10%">
+        {{ examCopy.decisionDueDate | app_date }}
+      </td>
+      <td style="max-width: 10%">
+        {{ examCopy.dateCreated | app_date }}
+      </td>
+      <td style="max-width: 10%">
+        {{ examCopy.isQueueReady | app_bool }}
+      </td>
+      <td style="max-width: 10%">
+        {{ examCopy.isQueued | app_bool }}
+      </td>
+      <td style="max-width: 10%">
+        {{ examCopy.queueDate | app_time }}
+      </td>
+      <td style="max-width: 10%">
+        {{ examCopy.dequeueDate | app_time }}
       </td>
     </tr>
   </ng-template>
