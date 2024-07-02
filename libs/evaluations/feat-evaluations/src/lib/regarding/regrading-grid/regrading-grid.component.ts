@@ -6,7 +6,11 @@ import {
   Output,
 } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { Regrading, StudentBan } from '@msh/shared/domain-models';
+import {
+  ExamCopyRequestStatusEnum,
+  Regrading,
+  StudentBan,
+} from '@msh/shared/domain-models';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import {
   ColumnFilterDirective,
@@ -21,6 +25,7 @@ import { RippleModule } from 'primeng/ripple';
 import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
 import { RouterLink } from '@angular/router';
 import { RoleName } from '@msh/configurations/feat-configurations';
+import { ExamCopyRequestStatusPipe } from '../../exam-copy/exam-copy-grid/exam-copy-request-status-pipe';
 
 @Component({
   selector: 'msh-regrading-grid',
@@ -38,6 +43,7 @@ import { RoleName } from '@msh/configurations/feat-configurations';
     AppDatePipe,
     AppBoolPipe,
     RouterLink,
+    ExamCopyRequestStatusPipe,
   ],
   templateUrl: './regrading-grid.component.html',
   styleUrl: './regrading-grid.component.scss',
@@ -61,4 +67,13 @@ export class RegradingGridComponent {
       data: grade,
     } as GridEvent<Regrading>);
   }
+
+  onUpdateStatus(grade: Regrading) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.CUSTOM_ACTION1,
+      data: grade,
+    } as GridEvent<Regrading>);
+  }
+
+  protected readonly ExamCopyRequestStatusEnum = ExamCopyRequestStatusEnum;
 }

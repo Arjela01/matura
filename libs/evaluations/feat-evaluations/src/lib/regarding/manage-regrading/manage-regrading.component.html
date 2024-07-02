@@ -67,4 +67,23 @@
   </ng-template>
 </p-dialog>
 
+<p-dialog
+  [(visible)]="displayStatusModal"
+  [style]="{ width: '500px' }"
+  header="Ndrysho Statusin"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid"
+  (onHide)="onModalClose()">
+  <ng-template pTemplate="content">
+    <msh-update-status-form
+      [details]="grade"
+      [statuses]="statuses"
+      (formClose)="onUpdateModalClose()"
+      (formSave)="onStatusUpdate($event)">
+    </msh-update-status-form>
+  </ng-template>
+</p-dialog>
+
 <ng-container *ngIf="academicYear$ | async"></ng-container>

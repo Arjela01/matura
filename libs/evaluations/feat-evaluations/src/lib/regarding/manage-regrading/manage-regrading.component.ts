@@ -1,7 +1,14 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
-import { ExamGradeChange, Regrading } from '@msh/shared/domain-models';
+import {
+  ExamCopy,
+  ExamCopyUpdate,
+  ExamGradeChange,
+  Regrading,
+  RegradingUpdate,
+  StatusEnum,
+} from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -25,6 +32,7 @@ import {
 } from '@msh/shared/util-shared';
 import { ExamSubjectApiService } from '@msh/configurations/data-access-configurations';
 import * as FileSaver from 'file-saver';
+import { UpdateStatusFormComponent } from '../update-status-form/update-status-form.component';
 
 @UntilDestroy()
 @Component({
@@ -40,6 +48,7 @@ import * as FileSaver from 'file-saver';
     RegradingGridComponent,
     UploadComponent,
     ExamGradeChangesFormComponent,
+    UpdateStatusFormComponent,
   ],
   templateUrl: './manage-regrading.component.html',
   styleUrl: './manage-regrading.component.scss',
@@ -49,15 +58,18 @@ export class ManageRegradingComponent {
   private regrading$$ = new BehaviorSubject<Regrading[]>([]);
   regrading$ = this.regrading$$.asObservable();
 
+  grade: Regrading = {};
   filters: TableLazyLoadEvent | null = null;
   selectedGrade: Regrading | null = null;
   totalRecords = 0;
   displayUploadModal = false;
+  displayStatusModal = false;
+  statuses: DropdownModel<any>[] = [];
 
   examSubjects: DropdownModel<string>[] = [];
   examGradeChangeTypes: DropdownModel<string>[] = [];
   displayModal = false;
-  academicYearId = 0;
+  academicYearId: any;
 
   constructor(
     private readonly authFacade: AuthFacade,
@@ -87,6 +99,9 @@ export class ManageRegradingComponent {
   ngOnInit() {
     this.getExamSubjects();
     this.getExamGradeChangeTypes();
+    this.statuses = Object.keys(StatusEnum)
+      .filter(key => !isNaN(Number(key)))
+      .map(key => this.getTranslatedStatus(Number(key)));
   }
 
   onNewClick() {
@@ -99,6 +114,10 @@ export class ManageRegradingComponent {
       case GRID_ACTIONS.EDIT:
         this.selectedGrade = Object.assign({}, event.data as Regrading);
         this.displayModal = true;
+        break;
+      case GRID_ACTIONS.CUSTOM_ACTION1:
+        this.selectedGrade = Object.assign({}, event.data as Regrading);
+        this.displayStatusModal = true;
         break;
     }
   }
@@ -124,6 +143,10 @@ export class ManageRegradingComponent {
 
   onModalClose() {
     this.displayModal = false;
+  }
+
+  onUpdateModalClose() {
+    this.displayStatusModal = false;
   }
 
   getExamSubjects() {
@@ -179,6 +202,45 @@ export class ManageRegradingComponent {
         } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest)
           this.toastService.showError('Ndodhi një problem gjatë rivlërsimit!');
+      });
+  }
+  getTranslatedStatus(key: number): DropdownModel<any> {
+    const translations: { [key: number]: string } = {
+      1: 'Kërkesë në Pritje',
+      2: 'Kërkesë e Pranuar',
+      3: 'Kërkesë e Refuzuar',
+    };
+    return { key, value: translations[key] || '' };
+  }
+
+  onStatusUpdate($event: any) {
+    const valuesToSend: RegradingUpdate = {
+      regradingRequestID: $event.id,
+      academicYearId: this.academicYearId,
+      statusEnum: {
+        id: $event.status.id,
+        displayText: this.getStatusDisplayText($event.status.id) as any,
+      },
+      comments: $event.comments,
+    };
+    this.updateStatus(valuesToSend);
+  }
+
+  getStatusDisplayText(statusId?: number): string {
+    const status = this.statuses.find(status => status.key === statusId);
+    return status ? status.value : '';
+  }
+
+  updateStatus(regrading: Regrading) {
+    this.regradingApiService
+      .updateStatus(regrading)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Veprimi u krye me sukses');
+        } else this.toastService.showError(response.errorMessage);
+        if (response.isBadRequest)
+          this.toastService.showError('Ndodhi një problem!');
       });
   }
 }

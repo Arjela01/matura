@@ -3,8 +3,10 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { APIService } from '@msh/shared/util-shared';
 import {
+  Regrading,
   RegradingImportCommand,
   RegradingTableView,
+  RegradingUpdate,
 } from '@msh/shared/domain-models';
 import { ApiResult } from '@msh/shared/data-access-shared';
 import { HttpParams } from '@angular/common/http';
@@ -29,6 +31,13 @@ export class RegradingApiService {
       ApiResult<RegradingImportCommand>,
       RegradingImportCommand
     >(`/RegradingRequest/Import`, command);
+  }
+
+  updateStatus(body: Regrading): Observable<ApiResult<Regrading>> {
+    return this.apiService.post<ApiResult<Regrading>, Regrading>(
+      `/RegradingRequest/Update`,
+      body
+    );
   }
 
   exportTemplate(): Observable<ApiResult<unknown>> {

@@ -5,7 +5,10 @@ import { ExamGrade } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { RegradingApiService } from '@msh/evaluations/data-access-evaluations';
+import {
+  ExamGradeApiService,
+  RegradingApiService,
+} from '@msh/evaluations/data-access-evaluations';
 import { ButtonDirective } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -52,7 +55,7 @@ export class ManageExamGradeComponent {
 
   constructor(
     private readonly authFacade: AuthFacade,
-    private readonly regradingApiService: RegradingApiService
+    private readonly examGradeService: ExamGradeApiService
   ) {}
 
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
@@ -87,7 +90,7 @@ export class ManageExamGradeComponent {
   getGrade($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    this.regradingApiService
+    this.examGradeService
       .loadExamGrades($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {

@@ -34,7 +34,7 @@ import { RegradingApiService } from '@msh/evaluations/data-access-evaluations';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UploadComponent {
-  @Input() set gradeDetails(details: Regrading | null) {
+  @Input() set gradeDetails(details: any | null) {
     if (details) {
       this.command = Object.assign({}, details);
     }
