@@ -17,7 +17,9 @@
               'ng-invalid ng-dirty': submitted && !regradingStatus.status,
             }">
           </p-dropdown>
-          <small class="p-error block" *ngIf="submitted && !regradingStatus.status">
+          <small
+            class="p-error block"
+            *ngIf="submitted && !regradingStatus.status">
             Statusi është fushë e kërkuar.
           </small>
         </div>
@@ -28,6 +30,7 @@
             type="text"
             pInputTextarea
             id="comments"
+            [disabled]="regradingStatus.status === 1"
             name="comments"
             [(ngModel)]="regradingStatus.comments"
             rows="5"
@@ -42,10 +45,10 @@
             class="p-button-text w-auto mr-2"
             (click)="onCancelClick()"></button>
           <button
-            [disabled]="form.invalid"
+            [disabled]="form.invalid || regradingStatus.status === 1"
             type="submit"
             pButton
-            label="Ndrysho"
+            label="Ruaj"
             class="p-button w-auto"></button>
         </div>
       </form>

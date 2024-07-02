@@ -237,7 +237,8 @@ export class ManageRegradingComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Veprimi u krye me sukses');
-          this.onUpdateModalClose();
+          this.displayStatusModal = false;
+          this.getGrade(this.filters as TableLazyLoadEvent);
         } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest)
           this.toastService.showError('Ndodhi një problem!');
