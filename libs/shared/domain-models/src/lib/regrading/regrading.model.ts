@@ -8,6 +8,7 @@ export interface Regrading {
   lastName?: string;
   grade?: number;
   score?: number;
+  examGradeId?: string;
   administrationOfficeName?: string;
   administrationOfficeId?: number;
   schoolName?: string;

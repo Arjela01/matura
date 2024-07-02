@@ -33,6 +33,7 @@ import {
 import { ExamSubjectApiService } from '@msh/configurations/data-access-configurations';
 import * as FileSaver from 'file-saver';
 import { UpdateStatusFormComponent } from '../update-status-form/update-status-form.component';
+import { ManageExamGradeChangesComponent } from '../../exam-grade-changes/manage-exam-grade-changes/manage-exam-grade-changes.component';
 
 @UntilDestroy()
 @Component({
@@ -49,6 +50,7 @@ import { UpdateStatusFormComponent } from '../update-status-form/update-status-f
     UploadComponent,
     ExamGradeChangesFormComponent,
     UpdateStatusFormComponent,
+    ManageExamGradeChangesComponent,
   ],
   templateUrl: './manage-regrading.component.html',
   styleUrl: './manage-regrading.component.scss',
@@ -69,6 +71,7 @@ export class ManageRegradingComponent {
   examGradeChangeTypes: DropdownModel<string>[] = [];
   displayModal = false;
   academicYearId: any;
+  examGradeId: any;
 
   constructor(
     private readonly authFacade: AuthFacade,
@@ -112,6 +115,7 @@ export class ManageRegradingComponent {
     switch (event.action) {
       case GRID_ACTIONS.EDIT:
         this.selectedGrade = Object.assign({}, event.data as Regrading);
+        this.examGradeId = this.selectedGrade.examGradeId;
         this.displayModal = true;
         break;
       case GRID_ACTIONS.CUSTOM_ACTION1:
