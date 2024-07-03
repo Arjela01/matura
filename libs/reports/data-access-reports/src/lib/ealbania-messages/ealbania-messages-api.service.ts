@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { APIService } from '@msh/shared/util-shared';
-import { Observable } from 'rxjs';
+import { interval, Observable, retry, share, startWith, switchMap } from 'rxjs';
 import { TableLazyLoadEvent } from 'primeng/table';
 
 @Injectable({
@@ -14,7 +14,12 @@ export class EalbaniaMessagesApiService {
   }
 
   getStatistics(): Observable<any> {
-    return this.apiService.post(`/EAlbaniaMessage/GetStats`);
+    return interval(5000).pipe(
+      startWith(0),
+      switchMap(() => this.apiService.get('/EAlbaniaMessage/GetStats')),
+      retry(),
+      share()
+    );
   }
 
   generateGradeMessages() {
