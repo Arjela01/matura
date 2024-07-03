@@ -7,7 +7,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AuthFacade, SignalrService } from '@msh/auth/data-access-auth';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
   AdministrationOfficeApiService,
   DiplomasStudentApiService,
@@ -66,7 +66,7 @@ import { DiplomasStudentGridComponent } from '../diplomas-student-grid/diplomas-
   providers: [ConfirmationService],
 })
 @UntilDestroy()
-export class ManageDiplomasStudentComponent implements OnInit, OnDestroy {
+export class ManageDiplomasStudentComponent implements OnInit {
   private diplomaList$$ = new BehaviorSubject<Diploma[]>([]);
   diplomaList$ = this.diplomaList$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
@@ -119,32 +119,20 @@ export class ManageDiplomasStudentComponent implements OnInit, OnDestroy {
     private administrationOfficeApiService: AdministrationOfficeApiService,
     private highschoolApiService: HighSchoolApiService,
     private authFacade: AuthFacade,
-    private confirmationService: ConfirmationService,
-    private readonly signalrService: SignalrService
+    private confirmationService: ConfirmationService
   ) {
-    this.signalrService.startConnection();
+    this.diplomasService
+      .getDiplomaStats()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.status = response;
+        this.cd.markForCheck();
+      });
   }
 
   ngOnInit(): void {
-    this.subscribeToStatisticsUpdates();
     this.getAdministrationOfficeDropdown();
     this.getStudentSealSummary();
-  }
-
-  ngOnDestroy() {
-    this.signalrService.stopConnection();
-  }
-
-  private subscribeToStatisticsUpdates() {
-    this.signalrService
-      .getMessageReceivedObservable()
-      .pipe(untilDestroyed(this))
-      .subscribe(status => {
-        if (status.notificationEnum == NotificationEnum.DiplomaNotification) {
-          this.status = status.data;
-          this.cd.markForCheck();
-        }
-      });
   }
 
   onNewClick(action: string) {
@@ -302,19 +290,6 @@ export class ManageDiplomasStudentComponent implements OnInit, OnDestroy {
           this.cd.markForCheck();
         });
       },
-    });
-  }
-
-  sealAndSendToEAlbania() {
-    this.diplomasService.sendToEAlbania().subscribe(response => {
-      if (response.isSuccessful) {
-        this.toastService.showSuccess(
-          'Diplomat u vulos dhe u dërgua me sukses'
-        );
-      } else {
-        this.toastService.showError(response.errorMessage);
-      }
-      this.cd.markForCheck();
     });
   }
 }

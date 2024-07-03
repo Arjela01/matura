@@ -7,12 +7,11 @@ import {
   OnInit,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SignalrService } from '@msh/auth/data-access-auth';
 import { EalbaniaMessagesApiService } from '@msh/reports/data-access-reports';
 import {
   EAlbaniaMessage,
   EAlbaniaMessageStatistics,
-  NotificationEnum
+  NotificationEnum,
 } from '@msh/shared/domain-models';
 import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
 import {
@@ -56,7 +55,7 @@ import { BehaviorSubject } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [DatePipe, ConfirmationService],
 })
-export class EalbaniaMessagesGridComponent implements OnInit, OnDestroy {
+export class EalbaniaMessagesGridComponent {
   private data$$ = new BehaviorSubject<EAlbaniaMessage[]>([]);
   data$ = this.data$$.asObservable();
   totalRecords = 0;
@@ -72,29 +71,14 @@ export class EalbaniaMessagesGridComponent implements OnInit, OnDestroy {
     private readonly ealbaniaMessagesApiService: EalbaniaMessagesApiService,
     private readonly toastService: GlobalToastService,
     private readonly confirmationService: ConfirmationService,
-    private readonly cd: ChangeDetectorRef,
-    private readonly signalrService: SignalrService
+    private readonly cd: ChangeDetectorRef
   ) {
-    this.signalrService.startConnection();
-  }
-
-  ngOnInit() {
-    this.subscribeToStatisticsUpdates();
-  }
-
-  ngOnDestroy() {
-    this.signalrService.stopConnection();
-  }
-
-  private subscribeToStatisticsUpdates() {
-    this.signalrService
-      .getMessageReceivedObservable()
+    this.ealbaniaMessagesApiService
+      .getStatistics()
       .pipe(untilDestroyed(this))
-      .subscribe(stats => {
-        if (stats.notificationEnum == NotificationEnum.EalbaniaNotification) {
-          this.stats = stats.data;
-          this.cd.markForCheck();
-        }
+      .subscribe(response => {
+        this.stats = response;
+        this.cd.markForCheck();
       });
   }
 
