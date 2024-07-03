@@ -122,7 +122,6 @@ export class ManageDiplomasStudentComponent implements OnInit, OnDestroy {
     private confirmationService: ConfirmationService,
     private signalrService: SignalrService
   ) {
-    this.signalrService.startConnection();
     this.diplomasService
       .getDiplomaStats()
       .pipe(untilDestroyed(this))

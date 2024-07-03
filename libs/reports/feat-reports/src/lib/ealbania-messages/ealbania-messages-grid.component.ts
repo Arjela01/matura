@@ -82,7 +82,6 @@ export class EalbaniaMessagesGridComponent implements OnInit, OnDestroy {
         this.stats = response;
         this.cd.markForCheck();
       });
-    this.signalrService.startConnection();
   }
 
   ngOnInit() {
