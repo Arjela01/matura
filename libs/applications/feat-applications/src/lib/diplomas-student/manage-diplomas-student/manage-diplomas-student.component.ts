@@ -22,8 +22,8 @@ import {
   StudentType,
 } from '@msh/shared/domain-models';
 import {
-  GlobalToastService,
   GRID_ACTIONS,
+  GlobalToastService,
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -37,9 +37,9 @@ import { TableLazyLoadEvent } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import {
   BehaviorSubject,
+  Observable,
   combineLatest,
   map,
-  Observable,
   skip,
   tap,
 } from 'rxjs';

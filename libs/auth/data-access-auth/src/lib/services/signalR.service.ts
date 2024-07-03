@@ -60,7 +60,7 @@ export class SignalrService {
           this.messageReceived$.next({ notificationEnum, data });
         }
       );
-      
+
     }
   }
   public getMessageReceivedObservable(): Observable<{
