@@ -10,8 +10,6 @@ import { ExamCopy, ExamCopyRequestStatusEnum } from '@msh/shared/domain-models';
 import {
   ColumnFilterDirective,
   DateFilterService,
-  GRID_ACTIONS,
-  GridEvent,
 } from '@msh/shared/util-shared';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -21,7 +19,7 @@ import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { ExamCopyRequestStatusPipe } from './exam-copy-request-status-pipe';
 import { AppBoolPipe, AppDatePipe, AppTimePipe } from '@msh/shared/ui-shared';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'msh-exam-copy-grid',

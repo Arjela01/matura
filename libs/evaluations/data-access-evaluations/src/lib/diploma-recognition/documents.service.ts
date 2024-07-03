@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiResult } from '@msh/shared/data-access-shared';
-import {
-  DiplomaRecognitionDocuments
-} from '@msh/shared/domain-models';
+import { DiplomaRecognitionDocuments } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';

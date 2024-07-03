@@ -85,13 +85,11 @@ export class DiplomaForStudentsViewComponent {
 
           const blob = new Blob(undefined, { type: 'application/pdf' });
           this.url = URL.createObjectURL(blob);
-          this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(
-            this.url
-          );
+          this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
           this.file = response;
         }
         this.cd.markForCheck();
-      }
+      },
     });
   }
 
@@ -115,7 +113,7 @@ export class DiplomaForStudentsViewComponent {
             this.toastService.showError(resp.errorMessage);
           }
           this.cd.markForCheck();
-        }
+        },
       });
   }
 }

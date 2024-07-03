@@ -1,6 +1,4 @@
 import { Route } from '@angular/router';
-import { ManageGradeRequestDetailsComponent } from './exam-grade-request/manage-grade-request-details/manage-grade-request-details.component';
-import { StudentsViewComponent } from './students/student-view/students-view.component';
 
 export const APPLICATION_ROUTES: Route[] = [
   {

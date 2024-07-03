@@ -11,5 +11,5 @@ export interface MaturaNotificationStatus {
 export enum NotificationEnum {
   MaturaNotification = 1,
   EalbaniaNotification = 2,
-  DiplomaNotification = 3
+  DiplomaNotification = 3,
 }

@@ -39,7 +39,6 @@ export class SignalrService {
   }
   public registerHubEvents() {
     if (this.hubConnection) {
-
       this.hubConnection.on(
         'InitialDiplomaStatsAsync',
         (notificationEnum: MaturaNotificationStatus, data: any) => {
@@ -60,7 +59,6 @@ export class SignalrService {
           this.messageReceived$.next({ notificationEnum, data });
         }
       );
-
     }
   }
   public getMessageReceivedObservable(): Observable<{
