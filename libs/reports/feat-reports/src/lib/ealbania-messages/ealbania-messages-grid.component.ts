@@ -12,7 +12,7 @@ import { EalbaniaMessagesApiService } from '@msh/reports/data-access-reports';
 import {
   EAlbaniaMessage,
   EAlbaniaMessageStatistics,
-  NotificationEnum
+  NotificationEnum,
 } from '@msh/shared/domain-models';
 import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
 import {
@@ -75,6 +75,13 @@ export class EalbaniaMessagesGridComponent implements OnInit, OnDestroy {
     private readonly cd: ChangeDetectorRef,
     private readonly signalrService: SignalrService
   ) {
+    this.ealbaniaMessagesApiService
+      .getStatistics()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.stats = response;
+        this.cd.markForCheck();
+      });
     this.signalrService.startConnection();
   }
 
@@ -91,7 +98,9 @@ export class EalbaniaMessagesGridComponent implements OnInit, OnDestroy {
       .getMessageReceivedObservable()
       .pipe(untilDestroyed(this))
       .subscribe(stats => {
-        if (stats.notificationEnum.id == NotificationEnum.EalbaniaNotification) {
+        if (
+          stats.notificationEnum.id == NotificationEnum.EalbaniaNotification
+        ) {
           this.stats = stats.data;
           this.cd.markForCheck();
         }

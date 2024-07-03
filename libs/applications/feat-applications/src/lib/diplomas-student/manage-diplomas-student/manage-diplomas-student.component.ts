@@ -22,8 +22,8 @@ import {
   StudentType,
 } from '@msh/shared/domain-models';
 import {
-  GlobalToastService,
   GRID_ACTIONS,
+  GlobalToastService,
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -37,9 +37,9 @@ import { TableLazyLoadEvent } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import {
   BehaviorSubject,
+  Observable,
   combineLatest,
   map,
-  Observable,
   skip,
   tap,
 } from 'rxjs';
@@ -123,6 +123,13 @@ export class ManageDiplomasStudentComponent implements OnInit, OnDestroy {
     private readonly signalrService: SignalrService
   ) {
     this.signalrService.startConnection();
+    this.diplomasService
+      .getDiplomaStats()
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.status = response;
+        this.cd.markForCheck();
+      });
   }
 
   ngOnInit(): void {
@@ -140,7 +147,9 @@ export class ManageDiplomasStudentComponent implements OnInit, OnDestroy {
       .getMessageReceivedObservable()
       .pipe(untilDestroyed(this))
       .subscribe(status => {
-        if (status.notificationEnum.id == NotificationEnum.DiplomaNotification) {
+        if (
+          status.notificationEnum.id == NotificationEnum.DiplomaNotification
+        ) {
           this.status = status.data;
           this.cd.markForCheck();
         }

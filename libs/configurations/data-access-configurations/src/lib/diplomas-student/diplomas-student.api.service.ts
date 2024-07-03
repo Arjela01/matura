@@ -3,8 +3,17 @@ import { Injectable } from '@angular/core';
 import { DiplomaStatusData } from '@msh/shared/domain-models';
 import { APIService } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { catchError, map, Observable, throwError } from 'rxjs';
-import { ApiResult } from '@msh/shared/data-access-shared';
+import {
+  catchError,
+  interval,
+  map,
+  Observable,
+  retry,
+  share,
+  startWith,
+  switchMap,
+  throwError,
+} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -65,6 +74,15 @@ export class DiplomasStudentApiService {
   sendToEalbaniaByStudentId(studentId: string): Observable<any> {
     return this.apiService.get(
       `/Diplomas/SendToEalbaniaStudentId/${studentId}`
+    );
+  }
+
+  getDiplomaStats(): Observable<any> {
+    return interval(5000).pipe(
+      startWith(0),
+      switchMap(() => this.apiService.get('/Diplomas/GetStats')),
+      retry(),
+      share()
     );
   }
 }

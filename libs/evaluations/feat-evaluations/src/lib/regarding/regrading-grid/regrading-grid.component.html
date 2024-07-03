@@ -158,7 +158,7 @@
     <tr>
       <td style="width: 10%; min-width: 10rem">
         <a
-          [routerLink]="['/applications/students/view', examGrade.studentId]"
+          [routerLink]="['/applications/students/view', examGrade.studentID]"
           class="p-button-link">
           {{ examGrade.maturaId }}
         </a>
@@ -214,7 +214,6 @@
           (click)="onEditClick(examGrade)"
           pTooltip="Rivlerëso/Korrigjo" />
         <img
-          *ngIf="examGrade.status === 1"
           src="assets/svg/edit-form.svg"
           class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
           tooltipPosition="bottom"
