@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { StorageService } from '@msh/shared/data-access-shared';
-import { NotificationEnum } from '@msh/shared/domain-models';
+import { MaturaNotificationStatus } from '@msh/shared/domain-models';
 import { environment } from '@msh/shared/environments';
 import { Observable, Subject } from 'rxjs';
 import { TOKEN_STORAGE_KEY } from './token.interceptor';
@@ -11,7 +11,7 @@ import { TOKEN_STORAGE_KEY } from './token.interceptor';
 export class SignalrService {
   private readonly hubConnection: signalR.HubConnection;
   private messageReceived$ = new Subject<{
-    notificationEnum: NotificationEnum;
+    notificationEnum: MaturaNotificationStatus;
     data: any;
   }>();
   constructor(private storageService: StorageService) {
@@ -42,21 +42,21 @@ export class SignalrService {
 
       this.hubConnection.on(
         'InitialDiplomaStatsAsync',
-        (notificationEnum: NotificationEnum, data: any) => {
+        (notificationEnum: MaturaNotificationStatus, data: any) => {
           this.messageReceived$.next({ notificationEnum, data });
         }
       );
 
       this.hubConnection.on(
         'InitialEalbaniaStatsAsync',
-        (notificationEnum: NotificationEnum, data: any) => {
+        (notificationEnum: MaturaNotificationStatus, data: any) => {
           this.messageReceived$.next({ notificationEnum, data });
         }
       );
 
       this.hubConnection.on(
         'SendNotificationAsync',
-        (notificationEnum: NotificationEnum, data: any) => {
+        (notificationEnum: MaturaNotificationStatus, data: any) => {
           this.messageReceived$.next({ notificationEnum, data });
         }
       );
@@ -64,7 +64,7 @@ export class SignalrService {
     }
   }
   public getMessageReceivedObservable(): Observable<{
-    notificationEnum: NotificationEnum;
+    notificationEnum: MaturaNotificationStatus;
     data: any;
   }> {
     return this.messageReceived$.asObservable();

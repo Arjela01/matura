@@ -140,7 +140,7 @@ export class ManageDiplomasStudentComponent implements OnInit, OnDestroy {
       .getMessageReceivedObservable()
       .pipe(untilDestroyed(this))
       .subscribe(status => {
-        if (status.notificationEnum == NotificationEnum.DiplomaNotification) {
+        if (status.notificationEnum.id == NotificationEnum.DiplomaNotification) {
           this.status = status.data;
           this.cd.markForCheck();
         }

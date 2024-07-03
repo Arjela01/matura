@@ -91,7 +91,7 @@ export class EalbaniaMessagesGridComponent implements OnInit, OnDestroy {
       .getMessageReceivedObservable()
       .pipe(untilDestroyed(this))
       .subscribe(stats => {
-        if (stats.notificationEnum == NotificationEnum.EalbaniaNotification) {
+        if (stats.notificationEnum.id == NotificationEnum.EalbaniaNotification) {
           this.stats = stats.data;
           this.cd.markForCheck();
         }
