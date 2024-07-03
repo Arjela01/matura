@@ -267,6 +267,28 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="eAlbaniaDocumentResponse" class="bg-gray-100">
+        Përgjigja për Dokumentin
+        <div>
+          <p-sortIcon field="eAlbaniaDocumentResponse"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="eAlbaniaDocumentResponse"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="eAlbaniaMessageResponse" class="bg-gray-100">
+        Përgjigja për Mesazhin
+        <div>
+          <p-sortIcon field="eAlbaniaMessageResponse"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="eAlbaniaMessageResponse"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-examCopy>
@@ -357,6 +379,12 @@
       </td>
       <td style="max-width: 10%">
         {{ examCopy.dequeueDate | app_time }}
+      </td>
+      <td style="max-width: 10%">
+        {{ examCopy.eAlbaniaDocumentResponse }}
+      </td>
+      <td style="max-width: 10%">
+        {{ examCopy.eAlbaniaMessageResponse }}
       </td>
     </tr>
   </ng-template>

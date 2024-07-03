@@ -22,8 +22,8 @@ import {
   StudentType,
 } from '@msh/shared/domain-models';
 import {
-  GRID_ACTIONS,
   GlobalToastService,
+  GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -37,9 +37,9 @@ import { TableLazyLoadEvent } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import {
   BehaviorSubject,
-  Observable,
   combineLatest,
   map,
+  Observable,
   skip,
   tap,
 } from 'rxjs';
@@ -234,6 +234,7 @@ export class ManageDiplomasStudentComponent implements OnInit, OnDestroy {
       .subscribe((response: any) => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Diploma u dërgua me sukses');
+          this.getStudentDiplomas(this.filters as TableLazyLoadEvent);
         } else {
           this.toastService.showError(response.errorMessage);
         }
@@ -288,33 +289,47 @@ export class ManageDiplomasStudentComponent implements OnInit, OnDestroy {
     });
   }
 
-  sendToEAlbania() {
+  approveStudentsApplyingAbroad() {
     this.confirmationService.confirm({
       message:
         'Jeni i sigurt që doni të filloni procesin për dërgimin në eAlbania?',
       accept: () => {
-        this.diplomasService.sendToEAlbania().subscribe(response => {
-          if (response.isSuccessful) {
-            this.toastService.showSuccess('Diplomat u gjeneruan me sukses');
-          } else {
-            this.toastService.showError(response.errorMessage);
-          }
-          this.cd.markForCheck();
-        });
+        const approvalCriteria = {
+          onlyStudentsApplyingAbroad: true,
+        };
+        this.diplomasService
+          .sendToEAlbania(approvalCriteria)
+          .subscribe(response => {
+            if (response.isSuccessful) {
+              this.toastService.showSuccess('Diplomat u gjeneruan me sukses');
+            } else {
+              this.toastService.showError(response.errorMessage);
+            }
+            this.cd.markForCheck();
+          });
       },
     });
   }
 
-  sealAndSendToEAlbania() {
-    this.diplomasService.sendToEAlbania().subscribe(response => {
-      if (response.isSuccessful) {
-        this.toastService.showSuccess(
-          'Diplomat u vulos dhe u dërgua me sukses'
-        );
-      } else {
-        this.toastService.showError(response.errorMessage);
-      }
-      this.cd.markForCheck();
+  approveEveryone() {
+    this.confirmationService.confirm({
+      message:
+        'Jeni i sigurt që doni të filloni procesin për dërgimin në eAlbania?',
+      accept: () => {
+        const approvalCriteria = {
+          onlyStudentsApplyingAbroad: false,
+        };
+        this.diplomasService
+          .sendToEAlbania(approvalCriteria)
+          .subscribe(response => {
+            if (response.isSuccessful) {
+              this.toastService.showSuccess('Diplomat u gjeneruan me sukses');
+            } else {
+              this.toastService.showError(response.errorMessage);
+            }
+            this.cd.markForCheck();
+          });
+      },
     });
   }
 }

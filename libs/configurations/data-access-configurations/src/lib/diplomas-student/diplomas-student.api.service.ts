@@ -50,17 +50,21 @@ export class DiplomasStudentApiService {
     return this.apiService.post(`/Diplomas/GenerateDiplomas`);
   }
 
-  sendToEAlbania(): Observable<any> {
-    return this.apiService.post(`/Diplomas/SendToEAlbania`);
+  sendToEAlbania(approvalCriteria: any): Observable<any> {
+    return this.apiService.post(`/Diplomas/SendToEAlbania`, approvalCriteria);
   }
 
-  printForeignDiplomas():Observable<any> {
-    return this.apiService.get(`/Diplomas/PrintForeignDiplomas`,
+  printForeignDiplomas(): Observable<any> {
+    return this.apiService.get(
+      `/Diplomas/PrintForeignDiplomas`,
       new HttpParams(),
-      'blob');
+      'blob'
+    );
   }
 
   sendToEalbaniaByStudentId(studentId: string): Observable<any> {
-    return this.apiService.get(`/Diplomas/SendToEalbaniaStudentId/${studentId}`);
+    return this.apiService.get(
+      `/Diplomas/SendToEalbaniaStudentId/${studentId}`
+    );
   }
 }

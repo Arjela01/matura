@@ -117,25 +117,13 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="isPrinted">
-        Printuar?
+      <th pSortableColumn="sendOrder">
+        Radha
         <div>
-          <p-sortIcon field="isPrinted"></p-sortIcon>
+          <p-sortIcon field="sendOrder"></p-sortIcon>
           <p-columnFilter
-            type="boolean"
-            field="isPrinted"
-            matchMode="equals"
-            display="menu"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="printedDate">
-        Data e Printimit
-        <div>
-          <p-sortIcon field="printedDate"></p-sortIcon>
-          <p-columnFilter
-            type="date"
-            field="printedDate"
+            type="numeric"
+            field="sendOrder"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
@@ -209,83 +197,98 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="eAlbaniaDocumentResponse">
+        Përgjigje nga eAlbania
+        <div>
+          <p-sortIcon field="eAlbaniaDocumentResponse"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="eAlbaniaDocumentResponse"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
     </tr>
   </ng-template>
 
   <ng-template pTemplate="body" let-diploma>
     <tr>
-    <td>
-      <div class="flex align-content-start">
-        <img
-          src="assets/svg/print.svg"
-          class="p-button-rounded p-button-danger p-button-text mr-1 block pointer"
-          pTooltip="Shkarko"
-          tooltipPosition="bottom" (click)="onPrint(diploma)"  alt="Shkarko"/>
-        <img
-          src="assets/svg/electronic-seal.svg"
-          class="p-button-rounded p-button-danger p-button-text ml-m mr-1 pointer"
-          pTooltip="Vulos dhe Shkarko"
-          tooltipPosition="bottom" (click)="onSeal(diploma)" alt="Vulos dhe Shkarko" />
-        <img
-          src="assets/svg/eAlbania.svg"
-          class="p-button-rounded p-button-danger p-button-text ml-m pointer h-2rem"
-          pTooltip="Dërgo në eAlbania të Vulosur"
-          tooltipPosition="bottom" (click)="onEalbania(diploma)" alt="Dërgo në eAlbania të Vulosur" />
-      </div>
-    </td>
-      <td style="width: 10%">
+      <td>
+        <div class="flex align-content-start">
+          <img
+            src="assets/svg/print.svg"
+            class="p-button-rounded p-button-danger p-button-text mr-1 block pointer"
+            pTooltip="Shkarko"
+            tooltipPosition="bottom"
+            (click)="onPrint(diploma)"
+            alt="Shkarko" />
+          <img
+            src="assets/svg/electronic-seal.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m mr-1 pointer"
+            pTooltip="Vulos dhe Shkarko"
+            tooltipPosition="bottom"
+            (click)="onSeal(diploma)"
+            alt="Vulos dhe Shkarko" />
+          <img
+            src="assets/svg/eAlbania.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m pointer h-2rem"
+            pTooltip="Dërgo në eAlbania të Vulosur"
+            tooltipPosition="bottom"
+            (click)="onEalbania(diploma)"
+            alt="Dërgo në eAlbania të Vulosur" />
+        </div>
+      </td>
+      <td style="max-width: 10%">
         {{ diploma.administrationOfficeName }}
       </td>
-      <td style="width: 10%">
+      <td style="max-width: 10%">
         {{ diploma.highSchoolName }}
       </td>
-      <td style="width: 10%">
+      <td style="max-width: 10%">
         {{ diploma.studentStudentId }}
       </td>
-      <td style="width: 10%">
+      <td style="max-width: 10%">
         {{ diploma.studentFirstName }}
       </td>
-      <td style="width: 10%">
+      <td style="max-width: 10%">
         {{ diploma.studentMiddleName }}
       </td>
-      <td style="width: 10%">
+      <td style="max-width: 10%">
         {{ diploma.studentLastName }}
       </td>
-      <td style="width: 10%">
+      <td style="max-width: 10%">
         {{ diploma.studentIdCard }}
       </td>
-      <td style="width: 10%">
+      <td style="max-width: 10%">
         {{ diploma.countryName }}
       </td>
-      <td style="width: 10%">
+      <td style="max-width: 10%">
         {{ diploma.averageGrade }}
       </td>
-      <td style="width: 10%">
-        {{ diploma.isPrinted | app_bool }}
+      <td style="max-width: 5%">
+        {{ diploma.sendOrder }}
       </td>
-      <td style="width: 10%">
-        {{ diploma.printedDate | app_date }}
-      </td>
-      <td style="width: 10%">
+      <td style="max-width: 10%">
         {{ diploma.isDelivered | app_bool }}
       </td>
-      <td style="width: 10%">
+      <td style="max-width: 10%">
         {{ diploma.deliveryDate | app_date }}
       </td>
-      <td style="width: 10%">
+      <td style="max-width: 10%">
         {{ diploma.isSealError | app_bool }}
       </td>
-      <td style="width: 10%">
+      <td style="max-width: 10%">
         {{ diploma.isDeliveryError | app_bool }}
       </td>
-      <td style="width: 10%">
+      <td style="max-width: 10%">
         {{ diploma.errorDate | app_date }}
       </td>
-      <td style="width: 10%">
+      <td style="max-width: 10%">
         {{ diploma.error }}
       </td>
-
-
+      <td style="max-width: 10%">
+        {{ diploma.eAlbaniaDocumentResponse }}
+      </td>
     </tr>
   </ng-template>
 </p-table>

@@ -15,8 +15,17 @@
           pButton
           pRipple
           icon="pi pi-chevron-circle-up"
-          label="Vulos dhe Dërgo në eAlbania"
-          (click)="sendToEAlbania()"
+          label="Dërgo Diplomat për Maturantë që Aplikojnë Jashtë"
+          (click)="approveStudentsApplyingAbroad()"
+          class="p-button-danger mr-2"></button>
+      </div>
+      <div class="my-2">
+        <button
+          pButton
+          pRipple
+          icon="pi pi-chevron-circle-up"
+          label="Dërgo Diplomat të Gjithë"
+          (click)="approveEveryone()"
           class="p-button-danger mr-2"></button>
       </div>
     </div>
