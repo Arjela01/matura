@@ -3,8 +3,13 @@ export enum FormMode {
   Edit,
 }
 
+export interface MaturaNotificationStatus {
+  id?: number;
+  displayText?: NotificationEnum;
+}
+
 export enum NotificationEnum {
-  MaturaNotification,
-  EalbaniaNotification,
-  DiplomaNotification
+  MaturaNotification = 1,
+  EalbaniaNotification = 2,
+  DiplomaNotification = 3
 }
