@@ -12,7 +12,7 @@ import { LoaderService } from '../services/loader.service';
 @Injectable({ providedIn: 'root' })
 export class LoadingInterceptor implements HttpInterceptor {
   private totalRequests = 0;
-  private urlsWithoutSpinner = ['VerifyToken', 'Auth'];
+  private urlsWithoutSpinner = ['VerifyToken', 'Auth', 'GetStats'];
 
   constructor(private loadingService: LoaderService) {}
 
@@ -20,7 +20,10 @@ export class LoadingInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    if (request.url.includes('VerifyToken')) {
+    if (
+      request.url.includes('VerifyToken') &&
+      request.url.includes('GetStats')
+    ) {
       return next.handle(request);
     }
     this.totalRequests++;
