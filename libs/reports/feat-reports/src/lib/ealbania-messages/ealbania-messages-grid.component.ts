@@ -73,7 +73,7 @@ export class EalbaniaMessagesGridComponent implements OnInit, OnDestroy {
     private readonly toastService: GlobalToastService,
     private readonly confirmationService: ConfirmationService,
     private readonly cd: ChangeDetectorRef,
-    private readonly signalrService: SignalrService
+    private signalrService: SignalrService
   ) {
     this.ealbaniaMessagesApiService
       .getStatistics()
