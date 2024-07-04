@@ -117,6 +117,7 @@ export class ManageExamCopyComponent {
   }
 
   file: any = null;
+  uploadProgress = 0;
 
   uploadFile($event: MouseEvent) {
     console.log(this.file);
@@ -124,10 +125,10 @@ export class ManageExamCopyComponent {
       this.examCopyService.uploadFile(this.file).subscribe({
         next: event => {
           if (event.type === HttpEventType.UploadProgress) {
-            console.log(
-              'Upload progress:',
-              Math.round((100 * event.loaded) / event.total!)
+            this.uploadProgress = Math.round(
+              (100 * event.loaded) / event.total!
             );
+            this.cd.markForCheck();
           } else if (event.type == HttpEventType.Response) {
             if (event.body.isSuccessful) {
               this.toastService.showSuccess('Ngarkim i suksesshëm');
