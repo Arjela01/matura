@@ -53,6 +53,7 @@ export class RegradingGridComponent {
   @Input() regrading: Regrading[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
+  @Input() userRole = '';
 
   @Output() gridEvent = new EventEmitter<GridEvent<Regrading | Regrading[]>>();
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
@@ -76,4 +77,5 @@ export class RegradingGridComponent {
   }
 
   protected readonly ExamCopyRequestStatusEnum = ExamCopyRequestStatusEnum;
+  protected readonly RoleName = RoleName;
 }

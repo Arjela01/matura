@@ -22,6 +22,7 @@
   <div class="col-12">
     <div class="card">
       <msh-regrading-grid
+        [userRole]="userRole"
         [regrading]="(regrading$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"

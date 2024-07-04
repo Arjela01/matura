@@ -214,6 +214,7 @@
           (click)="onEditClick(examGrade)"
           pTooltip="Rivlerëso/Korrigjo" />
         <img
+          *ngIf="userRole === RoleName.Admin"
           src="assets/svg/edit-form.svg"
           class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
           tooltipPosition="bottom"

@@ -30,7 +30,6 @@
             type="text"
             pInputTextarea
             id="comments"
-            [disabled]="regradingStatus.status === 1"
             name="comments"
             [(ngModel)]="regradingStatus.comments"
             rows="5"
@@ -45,7 +44,7 @@
             class="p-button-text w-auto mr-2"
             (click)="onCancelClick()"></button>
           <button
-            [disabled]="form.invalid || regradingStatus.status === 1"
+            [disabled]="form.invalid"
             type="submit"
             pButton
             label="Ruaj"
