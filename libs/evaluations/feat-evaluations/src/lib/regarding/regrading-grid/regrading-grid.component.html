@@ -129,6 +129,18 @@
         </div>
       </th>
 
+      <th pSortableColumn="barcode">
+        Barkodi
+        <div>
+          <p-sortIcon field="barcode"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="barcode"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+
       <th pSortableColumn="grade">
         Nota e shkallëzuar
         <div>
@@ -140,6 +152,7 @@
             matchMode="equals"></p-columnFilter>
         </div>
       </th>
+
       <th pSortableColumn="status">
         Statusi
         <div>
@@ -189,6 +202,9 @@
       </td>
       <td style="width: 5%; min-width: 10rem">
         {{ examGrade.score }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examGrade.barcode }}
       </td>
       <td style="width: 5%; min-width: 10rem">
         {{ examGrade.grade }}
