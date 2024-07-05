@@ -52,7 +52,7 @@ export class ApproveExamCopyComponent implements OnInit {
   }
 
   @Output() formClose = new EventEmitter<undefined>();
-  @Output() fileUploaded: EventEmitter<File> = new EventEmitter<File>();
+  @Output() fileUploaded: EventEmitter<any> = new EventEmitter<any>();
   base64?: string;
   updateExamCopy: ExamCopyUpdate = {
     id: '',
@@ -72,16 +72,7 @@ export class ApproveExamCopyComponent implements OnInit {
   }
 
   handleUpload(data: any) {
-    const file = data.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      const base64 = reader.result as string;
-      this.base64 = base64.split(',')[1];
-      this.updateExamCopy.attachedDocument = this.base64;
-      this.updateExamCopy.documentName = file.name;
-      this.fileUploaded.emit(file);
-    };
+    this.fileUploaded.emit(data);
   }
 
   onConfirm() {

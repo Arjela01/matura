@@ -165,9 +165,8 @@ export class ExamCopyDetailsComponent implements OnInit {
       });
   }
 
-  onFileUploaded(file: File) {
-    this.updatedFile = file;
-    this.examCopy.documentName = this.updatedFile ? this.updatedFile.name : '';
+  onFileUploaded(data: any) {
+    this.handleUpload(data);
   }
 
   handleUpload(data: any) {
