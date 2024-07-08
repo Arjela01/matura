@@ -34,6 +34,7 @@ import { ExamSubjectApiService } from '@msh/configurations/data-access-configura
 import * as FileSaver from 'file-saver';
 import { UpdateStatusFormComponent } from '../update-status-form/update-status-form.component';
 import { ManageExamGradeChangesComponent } from '../../exam-grade-changes/manage-exam-grade-changes/manage-exam-grade-changes.component';
+import { jwtDecode } from 'jwt-decode';
 
 @UntilDestroy()
 @Component({
@@ -72,6 +73,7 @@ export class ManageRegradingComponent {
   displayModal = false;
   academicYearId: any;
   examGradeId: any;
+  userRole = '';
 
   constructor(
     private readonly authFacade: AuthFacade,
@@ -85,6 +87,17 @@ export class ManageRegradingComponent {
     );
     if (academicYear) {
       this.academicYearId = academicYear.id;
+    }
+    {
+      this.authFacade.token$.pipe(untilDestroyed(this)).subscribe(token => {
+        if (token) {
+          const decodedToken: any = jwtDecode(token);
+          this.userRole =
+            decodedToken[
+              'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
+            ];
+        }
+      });
     }
   }
 
