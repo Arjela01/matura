@@ -40,8 +40,6 @@ export interface Student extends SharedStudent {
   isA1?: boolean;
   isDiplomaRequirementException?: boolean;
   countryId?: number;
-  ealbaniaDocsDiplomaPrintedDate?: Date;
-  isDiplomaSealSentToEalbaniaDocs?: boolean;
   registrationYear?: string;
   averageGrade?: string;
   administrationOfficeName?: string;

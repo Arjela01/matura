@@ -20,9 +20,6 @@
             <th>Mbiemri</th>
             <th>Datëlindja</th>
             <th>Vendlindja</th>
-            <th>Është Printuar Diploma?</th>
-            <th>Data e Printimit të Diplomës</th>
-            <th>Data e Vulosjes së Diplomës</th>
             <th>Veprimi i Kryer</th>
             <th>Përdoruesi</th>
             <th>Emri i Hostit</th>
@@ -53,24 +50,6 @@
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ record.birthPlace }}
-            </td>
-            <td style="width: 10%; min-width: 10rem">
-              <ng-container *ngIf="record.isPrinted === 1; else notPrinted">
-                Po
-              </ng-container>
-              <ng-template #notPrinted>
-                <ng-container *ngIf="record.isPrinted === 0"> Jo </ng-container>
-                <ng-container
-                  *ngIf="record.isPrinted !== 0 && record.isPrinted !== 1">
-                  {{ record.isPrinted }}
-                </ng-container>
-              </ng-template>
-            </td>
-            <td style="width: 10%; min-width: 10rem">
-              {{ record.diplomaPrintedDate | app_date }}
-            </td>
-            <td style="width: 10%; min-width: 10rem">
-              {{ record.ealbaniaDocsDiplomaPrintedDate | app_date }}
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ record?.auditOperation }}
