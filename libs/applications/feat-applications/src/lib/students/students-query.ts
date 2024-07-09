@@ -15,10 +15,6 @@ export const STUDENTS = `
             studentId
             firstName
             middleName
-            ealbaniaDocsDiplomaPrintedDate
-            isDiplomaSealSentToEalbaniaDocs
-            diplomaPrintedDate
-            isPrinted
             lastName
             birthDate
             birthPlace
@@ -32,8 +28,6 @@ export const STUDENTS = `
             isEAlbaniaApplication
             isDiplomaRequirementException
             isFall
-            isPrinted
-            diplomaPrintedDate
             id
             isDeleted
             createdIP
