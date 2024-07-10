@@ -176,16 +176,4 @@ export class ManageDiplomaRequestComponent {
           );
       });
   }
-  // clearSelectedStudent() {
-  //   this.selectedBannedStudent = {
-  //     ...this.selectedBannedStudent,
-  //     studentInputData: '',
-  //     studentStudentId: '',
-  //     studentFirstName: '',
-  //     studentLastName: '',
-  //     studentMiddleName: '',
-  //     studentId: '',
-  //   } as StudentBan;
-  //   this.cd.detectChanges();
-  // }
 }

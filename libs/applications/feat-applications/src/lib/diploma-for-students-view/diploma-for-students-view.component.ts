@@ -11,7 +11,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DiplomasForStudentApiService } from '@msh/reports/data-access-reports';
-import { GlobalToastService, GridEvent } from '@msh/shared/util-shared';
+import { GlobalToastService } from '@msh/shared/util-shared';
 import * as FileSaver from 'file-saver';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
