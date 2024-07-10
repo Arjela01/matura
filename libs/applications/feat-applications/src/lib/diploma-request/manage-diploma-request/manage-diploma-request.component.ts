@@ -2,13 +2,11 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  OnInit,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { DiplomaRequest } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ConfirmationService, PrimeTemplate } from 'primeng/api';
 import {
   GlobalToastService,
@@ -16,7 +14,7 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import { untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { DiplomaRequestService } from '../../../../../data-access-applications/src/lib/diploma-request/diploma-request.service';
 import { Button, ButtonDirective } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -24,7 +22,10 @@ import { DialogModule } from 'primeng/dialog';
 import { DiplomasStudentFormComponent } from '../../diplomas-student/diplomas-student-form/diplomas-student-form.component';
 import { DiplomasStudentGridComponent } from '../../diplomas-student/diplomas-student-grid/diplomas-student-grid.component';
 import { Ripple } from 'primeng/ripple';
+import { DiplomaRequestGridComponent } from '../diploma-request-grid/diploma-request-grid.component';
+import { DiplomaRequestFormComponent } from '../diploma-request-form/diploma-request-form.component';
 
+@UntilDestroy()
 @Component({
   selector: 'manage-diploma-request',
   standalone: true,
@@ -38,7 +39,10 @@ import { Ripple } from 'primeng/ripple';
     DiplomasStudentGridComponent,
     PrimeTemplate,
     Ripple,
+    DiplomaRequestGridComponent,
+    DiplomaRequestFormComponent,
   ],
+  providers: [DatePipe, ConfirmationService],
   templateUrl: './manage-diploma-request.component.html',
   styleUrl: './manage-diploma-request.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -98,7 +102,7 @@ export class ManageDiplomaRequestComponent {
     }
   }
 
-  onFormSave(diplomaRequest: DiplomaRequest) {
+  onFormSave(diplomaRequest: any) {
     if (diplomaRequest.id) {
       this.updateRequest(diplomaRequest);
     }

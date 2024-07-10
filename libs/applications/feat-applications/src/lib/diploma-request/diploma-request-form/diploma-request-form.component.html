@@ -1,1 +1,96 @@
-<p>diploma-request-form works!</p>
+<div class="grid">
+  <div class="col-12 p-fluid">
+    <div class="card" style="border: 0">
+      <form #form="ngForm">
+        <div class="field mt-4 mb-4">
+          <label for="studentInputData">Maturanti *</label>
+          <div class="p-inputgroup">
+            <input
+              [value]="studentInputData"
+              type="text"
+              pInputText
+              disabled
+              id="studentInputData"
+              name="studentInputData"
+              [(ngModel)]="studentInputData"
+              [ngClass]="{
+                'ng-invalid ng-dirty': submitted && !studentInputData,
+              }" />
+
+            <p-button
+              styleClass="p-button-secondary"
+              icon="pi pi-times"
+              (click)="clearStudent()"
+              [style]="{ height: '100%' }"></p-button>
+            <p-button
+              label="Kërko"
+              icon="pi pi-search"
+              (click)="onNewClick()"
+              [style]="{ height: '100%' }"></p-button>
+          </div>
+          <small class="p-error block" *ngIf="submitted && !studentInputData">
+            Maturant është fushë e kërkuar.
+          </small>
+
+          <div class="field mt-4 mb-4">
+            <label for="attachedDocument">Importo Dokument *</label>
+            <p-fileUpload
+              id="attachedDocument"
+              name="attachedDocument"
+              url="https://www.primefaces.org/cdn/api/upload.php"
+              (uploadHandler)="handleUpload($event)"
+              [auto]="true"
+              [customUpload]="true"
+              [(ngModel)]="diplomaRequest.attachedDocument"
+              accept=".xlsm,.xlsx,application/msexcel,.doc,.docx,.csv,.epub,.html,.odt,.pdf"
+              chooseLabel="Zgjidh">
+            </p-fileUpload>
+            <small
+              class="p-error block"
+              *ngIf="submitted && !diplomaRequest.attachedDocument">
+              Ju lutem zgjidhni një dokument.
+            </small>
+            <div *ngIf="diplomaRequest.fileName" class="mt-2">
+              <span>{{ diplomaRequest.fileName }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-content-end">
+          <button
+            type="button"
+            pButton
+            label="Anullo"
+            class="p-button-text w-auto mr-2"
+            (click)="onCancelClick()"></button>
+          <button
+            [disabled]="form.invalid"
+            type="submit"
+            pButton
+            label="Ruaj"
+            class="p-button w-auto"
+            (click)="onSubmit()"></button>
+        </div>
+
+        <p-dialog
+          [(visible)]="displayStudentModal"
+          [style]="{ width: '1200px' }"
+          [modal]="true"
+          [draggable]="false"
+          [resizable]="false"
+          header="Kërko Maturantin"
+          class="p-fluid"
+          (onHide)="onModalClose()">
+          <ng-template pTemplate="content">
+            <msh-shared-student-lookup
+              [students]="(studentList$ | async) || []"
+              [totalRecords]="totalRecords"
+              (gridEvent)="onGridEvent($event)"
+              (lazyLoadData)="getStudents($event)">
+            </msh-shared-student-lookup>
+          </ng-template>
+        </p-dialog>
+      </form>
+    </div>
+  </div>
+</div>

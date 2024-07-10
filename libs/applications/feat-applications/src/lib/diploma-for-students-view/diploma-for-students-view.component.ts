@@ -1,9 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { ConfirmationService } from 'primeng/api';
@@ -15,12 +11,14 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DiplomasForStudentApiService } from '@msh/reports/data-access-reports';
-import { GlobalToastService } from '@msh/shared/util-shared';
+import { GlobalToastService, GridEvent } from '@msh/shared/util-shared';
 import * as FileSaver from 'file-saver';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
+import { DiplomaRequestService } from '../../../../data-access-applications/src/lib/diploma-request/diploma-request.service';
+import { ActivatedRoute } from '@angular/router';
 
 @UntilDestroy()
 @Component({
@@ -41,21 +39,30 @@ import { RippleModule } from 'primeng/ripple';
   ],
   templateUrl: './diploma-for-students-view.component.html',
   styleUrls: ['./diploma-for-students-view.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class DiplomaForStudentsViewComponent {
-  maturaId!: string;
+export class DiplomaForStudentsViewComponent implements OnInit {
+  maturaId: any;
   pdfSrc!: any;
   url!: string;
   file: any;
+  id!: any;
 
   constructor(
     private readonly diplomasForStudent: DiplomasForStudentApiService,
     private readonly toastService: GlobalToastService,
+    private readonly diplomaRequestApiService: DiplomaRequestService,
     private cd: ChangeDetectorRef,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private route: ActivatedRoute
   ) {}
+
+  ngOnInit() {
+    this.id = this.route.snapshot.params['id'];
+    if (this.id) {
+      this.getDiplomaById();
+    }
+  }
 
   isValidPdf(response: string): boolean {
     if (!response.trim().startsWith('%PDF-')) {
@@ -64,8 +71,8 @@ export class DiplomaForStudentsViewComponent {
     return true;
   }
 
-  onSearchClick() {
-    this.diplomasForStudent.getDiplomaForStudentById(this.maturaId).subscribe({
+  getDiplomaForStudent(maturaId: string) {
+    this.diplomasForStudent.getDiplomaForStudentById(maturaId).subscribe({
       next: async (response: any) => {
         const responseText = await response.text();
         if (this.isValidPdf(responseText)) {
@@ -114,6 +121,29 @@ export class DiplomaForStudentsViewComponent {
           }
           this.cd.markForCheck();
         },
+      });
+  }
+
+  sendToEAlbania() {
+    this.diplomaRequestApiService
+      .sendToEAlbania(this.id)
+      .subscribe((response: any) => {
+        if (response.isSuccessful) {
+          this.toastService.showSuccess('Diploma u dërgua me sukses');
+        } else {
+          this.toastService.showError(response.errorMessage);
+        }
+      });
+  }
+
+  getDiplomaById(): void {
+    this.diplomaRequestApiService
+      .getOne(this.id)
+      .pipe()
+      .subscribe(response => {
+        this.maturaId = response.data.studentStudentId;
+        this.cd.detectChanges();
+        this.getDiplomaForStudent(this.maturaId);
       });
   }
 }

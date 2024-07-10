@@ -8,20 +8,12 @@
     <input
       type="text"
       pInputText
+      disabled
       id="nid"
       name="nid"
-      [required]="true"
       [(ngModel)]="maturaId"
       required
       autofocus />
-    <button
-      [disabled]="!maturaId"
-      type="button"
-      pButton
-      icon="pi pi-search"
-      label="Kërko"
-      (click)="onSearchClick()"
-      class="w-auto mr-2"></button>
     <button
       [disabled]="!maturaId"
       pButton
@@ -29,6 +21,14 @@
       icon="pi pi-print"
       class="w-auto mr-2"
       (click)="onSealAndDownloadClick()"></button>
+    <button
+      [disabled]="!maturaId"
+      type="button"
+      pButton
+      icon="pi pi-search"
+      (click)="sendToEAlbania()"
+      label="Dërgo në e-Albania"
+      class="w-auto mr-2"></button>
   </p-inputGroup>
 </form>
 <div *ngIf="pdfSrc">

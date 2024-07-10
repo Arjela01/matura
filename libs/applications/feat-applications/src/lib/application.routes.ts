@@ -203,4 +203,18 @@ export const APPLICATION_ROUTES: Route[] = [
         './failingStudents/failing-students-list/failing-students-list.component'
       ).then(m => m.FailingStudentsListComponent),
   },
+  {
+    path: 'diploma-request',
+    loadComponent: () =>
+      import(
+        './diploma-request/manage-diploma-request/manage-diploma-request.component'
+      ).then(m => m.ManageDiplomaRequestComponent),
+  },
+  {
+    path: 'diploma-request/:id',
+    loadComponent: () =>
+      import(
+        './diploma-for-students-view/diploma-for-students-view.component'
+      ).then(m => m.DiplomaForStudentsViewComponent),
+  },
 ];

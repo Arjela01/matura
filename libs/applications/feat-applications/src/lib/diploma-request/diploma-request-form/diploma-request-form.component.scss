@@ -1,3 +1,12 @@
 :host {
   display: block;
 }
+::ng-deep .p-fileupload-files,
+::ng-deep .p-fileupload-content{
+  .p-fileupload-row > div:nth-child(2){
+    display: none;
+  }
+}
+::ng-deep .p-fileupload .p-fileupload-content {
+  padding: 0;
+}

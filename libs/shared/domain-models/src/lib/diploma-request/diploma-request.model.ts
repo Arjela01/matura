@@ -11,9 +11,19 @@ export interface DiplomaRequest {
   isDelivered?: boolean;
   deliveryDate?: Date;
   eAlbaniaDocumentResponse?: string;
+  studentInputData?: string;
+  attachedDocument?: string;
+  fileName?: string;
 }
 
 export interface DiplomaRequestTableView {
   data: DiplomaRequest[];
   total: number;
+}
+
+export interface DiplomaRequestPostData {
+  attachedDocument?: string;
+  fileName?: string;
+  studentID?: string;
+  academicYearId?: number;
 }

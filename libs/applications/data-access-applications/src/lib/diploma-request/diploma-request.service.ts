@@ -33,7 +33,7 @@ export class DiplomaRequestService {
   }
 
   getOne(id: string): Observable<ApiResult<DiplomaRequest>> {
-    return this.apiservice.get(`/DiplomaRequest/${id}`);
+    return this.apiservice.get(`/DiplomaRequest/GetById/${id}`);
   }
 
   update(

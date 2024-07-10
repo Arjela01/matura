@@ -129,29 +129,12 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th></th>
     </tr>
   </ng-template>
 
   <ng-template pTemplate="body" let-diploma>
     <tr>
-      <td>
-        <div class="flex align-content-start">
-          <img
-            src="assets/svg/edit-form.svg"
-            class="p-button-rounded p-button-danger p-button-text mr-1 block pointer"
-            pTooltip="Shkarko"
-            tooltipPosition="bottom"
-            (click)="onEdit(diploma)"
-            alt="Ndrysho" />
-          <img
-            src="assets/svg/delete.svg"
-            class="p-button-rounded p-button-danger p-button-text ml-m mr-1 pointer"
-            pTooltip="Vulos dhe Shkarko"
-            tooltipPosition="bottom"
-            (click)="onDelete(diploma)"
-            alt="Fshi" />
-        </div>
-      </td>
       <td style="max-width: 10%">
         {{ diploma.studentStudentId }}
       </td>
@@ -181,6 +164,31 @@
       </td>
       <td style="max-width: 10%">
         {{ diploma.eAlbaniaDocumentResponse }}
+      </td>
+      <td>
+        <div class="flex align-content-end">
+          <a [routerLink]="['/applications', 'diploma-request', diploma.id]">
+            <img
+              src="assets/svg/view-form.svg"
+              class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
+              tooltipPosition="bottom"
+              pTooltip="Shiko më shumë" />
+          </a>
+          <img
+            src="assets/svg/edit-form.svg"
+            class="p-button-rounded p-button-danger p-button-text mr-1 block pointer"
+            pTooltip="Ndrysho"
+            tooltipPosition="bottom"
+            (click)="onEdit(diploma)"
+            alt="Ndrysho" />
+          <img
+            src="assets/svg/delete-form.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m mr-1 pointer"
+            pTooltip="Fshi"
+            tooltipPosition="bottom"
+            (click)="onDelete(diploma)"
+            alt="Fshi" />
+        </div>
       </td>
     </tr>
   </ng-template>
