@@ -17,7 +17,7 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
-import { DiplomaRequestService } from '../../../../data-access-applications/src/lib/diploma-request/diploma-request.service';
+import { DiplomaRequestService } from '@msh/applications/data-access-applications';
 import { ActivatedRoute } from '@angular/router';
 
 @UntilDestroy()

@@ -15,7 +15,7 @@ import {
 } from '@msh/shared/util-shared';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { DiplomaRequestService } from '../../../../../data-access-applications/src/lib/diploma-request/diploma-request.service';
+import { DiplomaRequestService } from '@msh/applications/data-access-applications';
 import { Button, ButtonDirective } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
