@@ -60,11 +60,4 @@ export const REPORTS_ROUTES: Route[] = [
         m => m.GgFakeReceiverComponent
       ),
   },
-  {
-    path: 'diplomas-for-student-view',
-    loadComponent: () =>
-      import(
-        './diploma-for-students-view/diploma-for-students-view.component'
-      ).then(m => m.DiplomaForStudentsViewComponent),
-  },
 ];

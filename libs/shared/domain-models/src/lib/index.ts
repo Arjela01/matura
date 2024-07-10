@@ -72,3 +72,4 @@ export * from './ealbania-messages/ealbania-message.model';
 export * from './ealbania-messages/ealbania-message-statistics.model';
 export * from './diplomas/diplomas.model';
 export * from './regrading/regrading.model';
+export * from './diploma-request/diploma-request.model';

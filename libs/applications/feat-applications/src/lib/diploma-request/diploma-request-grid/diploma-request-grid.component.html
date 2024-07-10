@@ -1,0 +1,195 @@
+<p-table
+  #dt
+  dataKey="id"
+  responsiveLayout="scroll"
+  [scrollable]="true"
+  scrollHeight="820px"
+  [value]="diplomas"
+  [totalRecords]="totalRecords"
+  [rows]="100"
+  [paginator]="true"
+  [rowsPerPageOptions]="[100, 200, 300]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Shfaqur {first} deri {last} nga {totalRecords} rekorde"
+  [rowHover]="true"
+  selectionMode="multiple"
+  (onLazyLoad)="loadRows($event)"
+  [lazy]="true">
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="studentStudentId">
+        Matura ID
+        <div>
+          <p-sortIcon field="studentStudentId"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="studentStudentId"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="studentFirstName">
+        Emri
+        <div>
+          <p-sortIcon field="studentFirstName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="studentFirstName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="studentMiddleName">
+        Atësi
+        <div>
+          <p-sortIcon field="studentMiddleName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="studentMiddleName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="studentLastName">
+        Mbiemri
+        <div>
+          <p-sortIcon field="studentLastName"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="studentLastName"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="studentNID">
+        NID
+        <div>
+          <p-sortIcon field="studentNID"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="studentNID"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="isApproved">
+        Është aprovuar?
+        <div>
+          <p-sortIcon field="isApproved"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            field="isApproved"
+            display="menu"
+            matchMode="equals"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="approvalDate">
+        Data e Aprovimit
+        <div>
+          <p-sortIcon field="approvalDate"></p-sortIcon>
+          <p-columnFilter
+            type="date"
+            field="approvalDate"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="isDelivered">
+        Është aprovuar?
+        <div>
+          <p-sortIcon field="isDelivered"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            field="isDelivered"
+            display="menu"
+            matchMode="equals"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="deliveryDate">
+        Data e Dërgimit
+        <div>
+          <p-sortIcon field="deliveryDate"></p-sortIcon>
+          <p-columnFilter
+            type="date"
+            field="deliveryDate"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="eAlbaniaDocumentResponse">
+        Përgjigje nga eAlbania
+        <div>
+          <p-sortIcon field="eAlbaniaDocumentResponse"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="eAlbaniaDocumentResponse"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th></th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-diploma>
+    <tr>
+      <td style="max-width: 10%">
+        {{ diploma.studentStudentId }}
+      </td>
+      <td style="max-width: 10%">
+        {{ diploma.studentFirstName }}
+      </td>
+      <td style="max-width: 10%">
+        {{ diploma.studentMiddleName }}
+      </td>
+      <td style="max-width: 10%">
+        {{ diploma.studentLastName }}
+      </td>
+      <td style="max-width: 10%">
+        {{ diploma.studentIdCard }}
+      </td>
+      <td style="max-width: 10%">
+        {{ diploma.isApproved | app_bool }}
+      </td>
+      <td style="max-width: 10%">
+        {{ diploma.approvalDate | app_date }}
+      </td>
+      <td style="max-width: 10%">
+        {{ diploma.isDelivered | app_bool }}
+      </td>
+      <td style="max-width: 10%">
+        {{ diploma.deliveryDate | app_date }}
+      </td>
+      <td style="max-width: 10%">
+        {{ diploma.eAlbaniaDocumentResponse }}
+      </td>
+      <td>
+        <div class="flex align-content-end">
+          <a [routerLink]="['/applications', 'diploma-request', diploma.id]">
+            <img
+              src="assets/svg/view-form.svg"
+              class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
+              tooltipPosition="bottom"
+              pTooltip="Shiko më shumë" />
+          </a>
+          <img
+            src="assets/svg/edit-form.svg"
+            class="p-button-rounded p-button-danger p-button-text mr-1 block pointer"
+            pTooltip="Ndrysho"
+            tooltipPosition="bottom"
+            (click)="onEdit(diploma)"
+            alt="Ndrysho" />
+          <img
+            src="assets/svg/delete-form.svg"
+            class="p-button-rounded p-button-danger p-button-text ml-m mr-1 pointer"
+            pTooltip="Fshi"
+            tooltipPosition="bottom"
+            (click)="onDelete(diploma)"
+            alt="Fshi" />
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
