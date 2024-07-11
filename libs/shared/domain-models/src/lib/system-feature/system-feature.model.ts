@@ -1,8 +1,8 @@
 export interface SystemFeatureModel {
   name?: string;
   isAvailable?: boolean;
-  availableFrom?: Date;
-  availableTo?: Date;
+  availableFrom?: any;
+  availableTo?: any;
   id?: number;
 }
 

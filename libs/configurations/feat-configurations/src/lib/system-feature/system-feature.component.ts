@@ -53,7 +53,8 @@ export class SystemFeatureComponent implements OnInit {
 
   constructor(
     private readonly toastService: GlobalToastService,
-    private readonly systemFeatService: SystemFeatService
+    private readonly systemFeatService: SystemFeatService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit() {
@@ -67,22 +68,30 @@ export class SystemFeatureComponent implements OnInit {
       .subscribe(res => {
         const formattedFeatures = res.data.map(feature => ({
           ...feature,
-          availableFrom:
-            feature.availableFrom && feature.isAvailable === true
-              ? new Date(feature.availableFrom)
-              : null,
-          availableTo:
-            feature.availableTo && feature.isAvailable === true
-              ? new Date(feature.availableTo)
-              : null,
+          availableFrom: feature.availableFrom
+            ? new Date(feature.availableFrom)
+            : null,
+          availableTo: feature.availableTo
+            ? new Date(feature.availableTo)
+            : null,
         }));
         this.features$$.next(formattedFeatures as any);
       });
   }
 
   onToggle(systemFeat: SystemFeatureModel) {
+    const updatedFeat: SystemFeatureModel = {
+      ...systemFeat,
+      availableFrom: systemFeat.availableFrom
+        ? this.convertDateToUTCString(systemFeat.availableFrom)
+        : null,
+      availableTo: systemFeat.availableTo
+        ? this.convertDateToUTCString(systemFeat.availableTo)
+        : null,
+    };
+
     this.systemFeatService
-      .update(systemFeat)
+      .update(updatedFeat)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         if (response.isSuccessful) {
@@ -95,5 +104,11 @@ export class SystemFeatureComponent implements OnInit {
           this.toastService.showError('Ndodhi një problem!');
         }
       });
+  }
+
+  convertDateToUTCString(date: Date): string {
+    return new Date(
+      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+    ).toISOString();
   }
 }
