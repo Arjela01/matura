@@ -254,4 +254,11 @@ export const CONFIGURATION_ROUTES: Route[] = [
         './exam-subject-group/manage-exam-subject-group/manage-exam-subject-group.component'
       ).then(m => m.ManageExamSubjectGroupComponent),
   },
+  {
+    path: 'system-feature',
+    loadComponent: () =>
+      import('./system-feature/system-feature.component').then(
+        m => m.SystemFeatureComponent
+      ),
+  },
 ];
