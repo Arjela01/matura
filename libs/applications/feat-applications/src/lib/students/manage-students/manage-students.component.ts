@@ -112,7 +112,7 @@ export class ManageStudentsComponent implements OnInit {
       case GRID_ACTIONS.HISTORY:
         this.selectedRecord = Object.assign({}, event.data);
         this.studentId = event.data.id;
-        this.headerText = `Historiku për Studentin {${event.data.studentId}}`;
+        this.headerText = `Historiku për Maturantin {${event.data.studentId}}`;
         this.displayHistoryForm = true;
         break;
       case GRID_ACTIONS.SELECT_ROW:
