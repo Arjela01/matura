@@ -1,9 +1,9 @@
 <div class="flex center mb-2 page-header mb-header">
-  <h2 class="flex-1 mb-0">Printo Diplomë për Maturant</h2>
+  <h2 class="flex-1 mb-0">Detajet e Kërkesës për Diplomë</h2>
 </div>
 <form class="mt-4">
   <p-inputGroup>
-    <p-inputGroupAddon> Matura ID</p-inputGroupAddon>
+    <p-inputGroupAddon>Matura ID</p-inputGroupAddon>
 
     <input
       type="text"
@@ -11,18 +11,15 @@
       disabled
       id="nid"
       name="nid"
-      [(ngModel)]="maturaId"
       required
       autofocus />
     <button
-      [disabled]="!maturaId"
       pButton
       label="Vulos dhe Shkarko"
       icon="pi pi-print"
       class="w-auto mr-2"
       (click)="onSealAndDownloadClick()"></button>
     <button
-      [disabled]="!maturaId"
       type="button"
       pButton
       icon="pi pi-search"

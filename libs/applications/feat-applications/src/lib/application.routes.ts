@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { DiplomaRequestPrintComponent } from './diploma-request/diploma-request-print/diploma-request-print.component';
 
 export const APPLICATION_ROUTES: Route[] = [
   {
@@ -214,7 +215,7 @@ export const APPLICATION_ROUTES: Route[] = [
     path: 'diploma-request/:id',
     loadComponent: () =>
       import(
-        './diploma-for-students-view/diploma-for-students-view.component'
-      ).then(m => m.DiplomaForStudentsViewComponent),
+        './diploma-request/diploma-request-print/diploma-request-print.component'
+      ).then(m => m.DiplomaRequestPrintComponent),
   },
 ];

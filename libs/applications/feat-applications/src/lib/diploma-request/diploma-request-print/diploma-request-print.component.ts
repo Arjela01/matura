@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, signal } from '@angular/core';
 
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { ConfirmationService } from 'primeng/api';
@@ -19,10 +19,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { DiplomaRequestService } from '@msh/applications/data-access-applications';
 import { ActivatedRoute } from '@angular/router';
+import { DiplomaRequest } from '@msh/shared/domain-models';
 
 @UntilDestroy()
 @Component({
-  selector: 'msh-diploma-for-students-view',
+  selector: 'msh-diploma-request-print',
   standalone: true,
   imports: [
     ButtonModule,
@@ -37,16 +38,16 @@ import { ActivatedRoute } from '@angular/router';
     FormsModule,
     InputGroupAddonModule,
   ],
-  templateUrl: './diploma-for-students-view.component.html',
-  styleUrls: ['./diploma-for-students-view.component.scss'],
+  templateUrl: './diploma-request-print.component.html',
+  styleUrls: ['./diploma-request-print.component.scss'],
   providers: [ConfirmationService],
 })
-export class DiplomaForStudentsViewComponent implements OnInit {
-  maturaId: any;
+export class DiplomaRequestPrintComponent implements OnInit {
   pdfSrc!: any;
   url!: string;
   file: any;
   id!: any;
+  diplomaRequest = {} as DiplomaRequest;
 
   constructor(
     private readonly diplomasForStudent: DiplomasForStudentApiService,
@@ -141,7 +142,7 @@ export class DiplomaForStudentsViewComponent implements OnInit {
       .getOne(this.id)
       .pipe()
       .subscribe(response => {
-        this.maturaId = response.data.studentStudentId;
+        this.diplomaRequest = response.data;
         this.cd.detectChanges();
         this.getDiplomaForStudent(this.maturaId);
       });
