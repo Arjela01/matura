@@ -1,0 +1,55 @@
+<div class="flex center mb-5 mt-2 page-header mb-header">
+  <h2 class="flex-1 mb-0">Kontrollet e Sistemit</h2>
+</div>
+<div class="grid">
+  <div class="col-12 p-fluid">
+    <div class="card-form px-6 py-6">
+      <ng-container *ngIf="features$">
+        <div class="col-6">
+          <table id="my-table-2">
+            <thead>
+              <tr>
+                <th>Emri</th>
+                <th>Është në dispozicion?</th>
+                <th>Nga data</th>
+                <th>Në datë</th>
+                <th>Fik/Ndiz</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let feat of (features$ | async) || []">
+                <td class="font-semibold">{{ feat.name }}</td>
+                <td class="font-semibold">
+                  {{ feat.isAvailable === true | app_bool }}
+                </td>
+                <td class="font-semibold">
+                  <p-calendar
+                    [(ngModel)]="feat.availableFrom"
+                    placeholder="Nga"
+                    dateFormat="dd.mm.yy"
+                    appendTo="body">
+                  </p-calendar>
+                </td>
+                <td class="font-semibold">
+                  <p-calendar
+                    [(ngModel)]="feat.availableTo"
+                    placeholder="Në"
+                    dateFormat="dd.mm.yy"
+                    appendTo="body">
+                  </p-calendar>
+                </td>
+                <td>
+                  <p-inputSwitch
+                    class="center-content"
+                    [(ngModel)]="feat.isAvailable"
+                    (onChange)="onToggle(feat)">
+                  </p-inputSwitch>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

@@ -36,3 +36,4 @@ export * from './lib/universities/university-api.service';
 export * from './lib/university-departments/university-department-api.service';
 export * from './lib/user/user-api.service';
 export * from './lib/exam-subject-group/exam-subject-group-api.service';
+export * from './lib/system-flags/system-feat.service';
