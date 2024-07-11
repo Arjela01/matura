@@ -53,8 +53,7 @@ export class SystemFeatureComponent implements OnInit {
 
   constructor(
     private readonly toastService: GlobalToastService,
-    private readonly systemFeatService: SystemFeatService,
-    private datePipe: DatePipe
+    private readonly systemFeatService: SystemFeatService
   ) {}
 
   ngOnInit() {
