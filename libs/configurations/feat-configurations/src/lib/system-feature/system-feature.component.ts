@@ -68,12 +68,14 @@ export class SystemFeatureComponent implements OnInit {
       .subscribe(res => {
         const formattedFeatures = res.data.map(feature => ({
           ...feature,
-          availableFrom: feature.availableFrom
-            ? new Date(feature.availableFrom)
-            : null,
-          availableTo: feature.availableTo
-            ? new Date(feature.availableTo)
-            : null,
+          availableFrom:
+            feature.availableFrom && feature.isAvailable === true
+              ? new Date(feature.availableFrom)
+              : null,
+          availableTo:
+            feature.availableTo && feature.isAvailable === true
+              ? new Date(feature.availableTo)
+              : null,
         }));
         this.features$$.next(formattedFeatures as any);
       });
