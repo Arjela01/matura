@@ -7,13 +7,16 @@ import {
   StudentListPublicationCurrentRecordView,
   StudentListPublicationView,
 } from '@msh/shared/domain-models';
-import { HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StudentListPublicationService {
-  constructor(private apiService: APIService) {}
+  constructor(
+    private apiService: APIService,
+    private httpClient: HttpClient
+  ) {}
 
   loadDataStudentListPublications(
     event: TableLazyLoadEvent
@@ -55,10 +58,12 @@ export class StudentListPublicationService {
   }
 
   download(id: number) {
-    return this.apiService.get<any>(
-      `/StudentListPublication/Download/${id}`,
-      new HttpParams(),
-      'blob'
+    return this.httpClient.get(
+      this.apiService.resolveUrl(`/StudentListPublication/Download/${id}`),
+      {
+        responseType: 'blob',
+        observe: 'response',
+      }
     );
   }
 }

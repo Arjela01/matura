@@ -135,15 +135,28 @@ export class StudentListPublicationsGridComponent {
     this.studentListPublicationService
       .download(record.id)
       .subscribe(response => {
-        if (response.type == 'application/json') {
-          response.text().then((data: any) => {
+        const contentType = response.headers.get('content-type')!;
+        const contentDisposition = response.headers.get('content-disposition');
+
+        if (contentType == 'application/json') {
+          response.body!.text().then((data: any) => {
             this.toastService.showError(JSON.parse(data).errorMessage);
           });
         } else {
-          const blob = new Blob([response], {
-            type: response.type,
+          const blob = new Blob([response.body!], {
+            type: contentType,
           });
-          FileSaver.saveAs(blob, `aa`);
+
+          if (contentDisposition) {
+            const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+            const matches = filenameRegex.exec(contentDisposition);
+            if (matches && matches[1]) {
+              const filename = matches[1].replace(/['"]/g, '');
+              FileSaver.saveAs(blob, filename);
+            }
+          } else {
+            FileSaver.saveAs(blob, 'data.zip');
+          }
         }
       });
   }

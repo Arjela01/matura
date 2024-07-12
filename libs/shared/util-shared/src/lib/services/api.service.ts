@@ -80,4 +80,8 @@ export class APIService {
       params,
     });
   }
+
+  resolveUrl(relativeUrl: string) {
+    return `${this.api_url}${relativeUrl}`;
+  }
 }
