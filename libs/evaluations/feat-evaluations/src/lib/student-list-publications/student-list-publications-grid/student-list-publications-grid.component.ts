@@ -25,6 +25,7 @@ import { Router } from '@angular/router';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { StudentListPublicationService } from '@msh/evaluations/data-access-evaluations';
 import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'msh-exam-question-grid',
@@ -128,6 +129,23 @@ export class StudentListPublicationsGridComponent {
           });
       },
     });
+  }
+
+  download(record: any) {
+    this.studentListPublicationService
+      .download(record.id)
+      .subscribe(response => {
+        if (response.type == 'application/json') {
+          response.text().then((data: any) => {
+            this.toastService.showError(JSON.parse(data).errorMessage);
+          });
+        } else {
+          const blob = new Blob([response], {
+            type: response.type,
+          });
+          FileSaver.saveAs(blob, `aa`);
+        }
+      });
   }
 
   gotoCurrentList() {

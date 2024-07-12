@@ -7,6 +7,7 @@ import {
   StudentListPublicationCurrentRecordView,
   StudentListPublicationView,
 } from '@msh/shared/domain-models';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -51,5 +52,13 @@ export class StudentListPublicationService {
 
   delete(id: any) {
     return this.apiService.post(`/StudentListPublication/Delete/${id}`);
+  }
+
+  download(id: number) {
+    return this.apiService.get<any>(
+      `/StudentListPublication/Download/${id}`,
+      new HttpParams(),
+      'blob'
+    );
   }
 }

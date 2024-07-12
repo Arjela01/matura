@@ -95,6 +95,13 @@
           class="p-button-link">
           Fshi
         </button>
+        <button
+          pButton
+          *ngIf="record.isPublished"
+          (click)="download(record)"
+          class="p-button-link">
+          Shkarko
+        </button>
       </td>
     </tr>
   </ng-template>
