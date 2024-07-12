@@ -1,7 +1,7 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -19,6 +19,7 @@ import { RippleModule } from 'primeng/ripple';
 import { DiplomaRequestApiService } from '@msh/applications/data-access-applications';
 import { ActivatedRoute } from '@angular/router';
 import { DiplomaRequest } from '@msh/shared/domain-models';
+import { AppTimePipe } from '@msh/shared/ui-shared';
 
 @UntilDestroy()
 @Component({
@@ -36,10 +37,11 @@ import { DiplomaRequest } from '@msh/shared/domain-models';
     ReactiveFormsModule,
     FormsModule,
     InputGroupAddonModule,
+    AppTimePipe,
   ],
   templateUrl: './diploma-request-print.component.html',
   styleUrls: ['./diploma-request-print.component.scss'],
-  providers: [ConfirmationService],
+  providers: [ConfirmationService, DatePipe],
 })
 export class DiplomaRequestPrintComponent implements OnInit {
   pdfSrc!: any;
@@ -113,7 +115,10 @@ export class DiplomaRequestPrintComponent implements OnInit {
               const blob = new Blob([response], {
                 type: 'application/pdf',
               });
-              FileSaver.saveAs(blob, `Diploma_Sealed_${this.diplomaRequest.studentStudentId}`);
+              FileSaver.saveAs(
+                blob,
+                `Diploma_Sealed_${this.diplomaRequest.studentStudentId}`
+              );
             } catch (error) {
               this.toastService.showError(error as string);
             }
@@ -141,9 +146,25 @@ export class DiplomaRequestPrintComponent implements OnInit {
   getDiplomaById(): void {
     this.diplomaRequestApiService
       .getOne(this.id)
-      .pipe()
+      .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.diplomaRequest = response.data;
+        this.cd.detectChanges();
+      });
+  }
+
+  downloadDocument(): void {
+    this.diplomaRequestApiService
+      .downloadRequestDocument(this.id)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        const blob = new Blob([response], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Dokumenti_${this.diplomaRequest.id}.pdf`;
+        a.click();
+        window.URL.revokeObjectURL(url);
         this.cd.detectChanges();
       });
   }
