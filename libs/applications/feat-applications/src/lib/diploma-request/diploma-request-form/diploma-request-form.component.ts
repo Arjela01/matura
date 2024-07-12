@@ -36,6 +36,7 @@ import { PrimeTemplate } from 'primeng/api';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
 import { FileUploadModule } from 'primeng/fileupload';
+import { Ripple } from 'primeng/ripple';
 
 @UntilDestroy()
 @Component({
@@ -57,6 +58,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     SharedStudentLookupModule,
     UpperCaseInputDirective,
     FileUploadModule,
+    Ripple,
   ],
   templateUrl: './diploma-request-form.component.html',
   styleUrl: './diploma-request-form.component.scss',

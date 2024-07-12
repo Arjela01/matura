@@ -16,10 +16,11 @@
   (onLazyLoad)="loadRows($event)"
   [lazy]="true">
   <ng-template pTemplate="header">
-    <tr>
+    <tr class="vertical-align-top">
+      <th>Detaje</th>
       <th pSortableColumn="studentStudentId">
         Matura ID
-        <div>
+        <div class="flex">
           <p-sortIcon field="studentStudentId"></p-sortIcon>
           <p-columnFilter
             type="text"
@@ -30,7 +31,7 @@
       </th>
       <th pSortableColumn="studentFirstName">
         Emri
-        <div>
+        <div class="flex">
           <p-sortIcon field="studentFirstName"></p-sortIcon>
           <p-columnFilter
             type="text"
@@ -41,7 +42,7 @@
       </th>
       <th pSortableColumn="studentMiddleName">
         Atësi
-        <div>
+        <div class="flex">
           <p-sortIcon field="studentMiddleName"></p-sortIcon>
           <p-columnFilter
             type="text"
@@ -52,7 +53,7 @@
       </th>
       <th pSortableColumn="studentLastName">
         Mbiemri
-        <div>
+        <div class="flex">
           <p-sortIcon field="studentLastName"></p-sortIcon>
           <p-columnFilter
             type="text"
@@ -63,7 +64,7 @@
       </th>
       <th pSortableColumn="studentNID">
         NID
-        <div>
+        <div class="flex">
           <p-sortIcon field="studentNID"></p-sortIcon>
           <p-columnFilter
             type="text"
@@ -73,8 +74,8 @@
         </div>
       </th>
       <th pSortableColumn="isApproved">
-        Është aprovuar?
-        <div>
+        Aprovuar?
+        <div class="flex">
           <p-sortIcon field="isApproved"></p-sortIcon>
           <p-columnFilter
             type="boolean"
@@ -86,7 +87,7 @@
       </th>
       <th pSortableColumn="approvalDate">
         Data e Aprovimit
-        <div>
+        <div class="flex">
           <p-sortIcon field="approvalDate"></p-sortIcon>
           <p-columnFilter
             type="date"
@@ -96,8 +97,8 @@
         </div>
       </th>
       <th pSortableColumn="isDelivered">
-        Është aprovuar?
-        <div>
+        Dërguar?
+        <div class="flex">
           <p-sortIcon field="isDelivered"></p-sortIcon>
           <p-columnFilter
             type="boolean"
@@ -109,7 +110,7 @@
       </th>
       <th pSortableColumn="deliveryDate">
         Data e Dërgimit
-        <div>
+        <div class="flex">
           <p-sortIcon field="deliveryDate"></p-sortIcon>
           <p-columnFilter
             type="date"
@@ -120,7 +121,7 @@
       </th>
       <th pSortableColumn="eAlbaniaDocumentResponse">
         Përgjigje nga eAlbania
-        <div>
+        <div class="flex">
           <p-sortIcon field="eAlbaniaDocumentResponse"></p-sortIcon>
           <p-columnFilter
             type="text"
@@ -135,8 +136,23 @@
 
   <ng-template pTemplate="body" let-diploma>
     <tr>
+      <td>
+        <div class="flex align-content-end">
+          <a [routerLink]="['/applications', 'diploma-request', diploma.id]">
+            <img
+              src="assets/svg/open.svg"
+              class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
+              tooltipPosition="bottom"
+              pTooltip="Shiko më shumë" />
+          </a>
+        </div>
+      </td>
       <td style="max-width: 10%">
-        {{ diploma.studentStudentId }}
+        <a
+          [routerLink]="['/applications/students/view', diploma.studentId]"
+          class="p-button-link">
+          {{ diploma.studentStudentId }}
+        </a>
       </td>
       <td style="max-width: 10%">
         {{ diploma.studentFirstName }}
@@ -148,7 +164,7 @@
         {{ diploma.studentLastName }}
       </td>
       <td style="max-width: 10%">
-        {{ diploma.studentIdCard }}
+        {{ diploma.studentNID }}
       </td>
       <td style="max-width: 10%">
         {{ diploma.isApproved | app_bool }}
@@ -167,13 +183,6 @@
       </td>
       <td>
         <div class="flex align-content-end">
-          <a [routerLink]="['/applications', 'diploma-request', diploma.id]">
-            <img
-              src="assets/svg/view-form.svg"
-              class="p-button-rounded p-button-warning p-button-text mr-2 pointer"
-              tooltipPosition="bottom"
-              pTooltip="Shiko më shumë" />
-          </a>
           <img
             src="assets/svg/edit-form.svg"
             class="p-button-rounded p-button-danger p-button-text mr-1 block pointer"

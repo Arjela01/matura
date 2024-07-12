@@ -1,33 +1,36 @@
 <div class="flex center mb-2 page-header mb-header">
   <h2 class="flex-1 mb-0">Detajet e Kërkesës për Diplomë</h2>
+  <div class="flex align-items-right justify-content-right">
+    <div class="my-2">
+      <button
+        pButton
+        label="Vulos dhe Shkarko"
+        icon="pi pi-print"
+        class="w-auto mr-2"
+        (click)="onSealAndDownloadClick()"></button>
+      <button
+        type="button"
+        pButton
+        severity="danger"
+        icon="pi pi-upload"
+        (click)="sendToEAlbania()"
+        label="Dërgo në e-Albania"
+        class="w-auto mr-2"></button>
+    </div>
+  </div>
 </div>
-<form class="mt-4">
-  <p-inputGroup>
-    <p-inputGroupAddon>Matura ID</p-inputGroupAddon>
-
-    <input
-      type="text"
-      pInputText
-      disabled
-      id="nid"
-      name="nid"
-      required
-      autofocus />
-    <button
-      pButton
-      label="Vulos dhe Shkarko"
-      icon="pi pi-print"
-      class="w-auto mr-2"
-      (click)="onSealAndDownloadClick()"></button>
-    <button
-      type="button"
-      pButton
-      icon="pi pi-search"
-      (click)="sendToEAlbania()"
-      label="Dërgo në e-Albania"
-      class="w-auto mr-2"></button>
-  </p-inputGroup>
-</form>
+<div class="">
+  Maturant:
+  <span class="font-bold">
+    {{ diplomaRequest.studentFirstName }}
+    {{ diplomaRequest.studentMiddleName }} {{ diplomaRequest.studentLastName }}
+  </span>
+  me ID Mature
+  <span class="font-bold"> {{ diplomaRequest.studentStudentId }}</span> dhe NID
+  <span class="font-bold">
+    {{ diplomaRequest.studentNID }}
+  </span>
+</div>
 <div *ngIf="pdfSrc">
   <iframe [src]="pdfSrc" width="100%" height="800px" class="mt-5"></iframe>
 </div>

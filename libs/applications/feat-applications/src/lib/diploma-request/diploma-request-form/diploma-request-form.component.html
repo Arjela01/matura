@@ -16,10 +16,11 @@
               [ngClass]="{
                 'ng-invalid ng-dirty': submitted && !studentInputData,
               }" />
-
             <p-button
-              styleClass="p-button-secondary"
+              severity="secondary"
+              outlined="true"
               icon="pi pi-times"
+              pRipple
               (click)="clearStudent()"
               [style]="{ height: '100%' }"></p-button>
             <p-button
@@ -71,8 +72,9 @@
 
         <p-dialog
           [(visible)]="displayStudentModal"
-          [style]="{ width: '1200px' }"
+          [style]="{ width: '90%' }"
           [modal]="true"
+          appendTo="body"
           [draggable]="false"
           [resizable]="false"
           header="Kërko Maturantin"
