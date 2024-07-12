@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { ConfirmationService } from 'primeng/api';
@@ -10,14 +10,13 @@ import { ToolbarModule } from 'primeng/toolbar';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { DiplomasForStudentApiService } from '@msh/reports/data-access-reports';
 import { GlobalToastService } from '@msh/shared/util-shared';
 import * as FileSaver from 'file-saver';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
-import { DiplomaRequestService } from '@msh/applications/data-access-applications';
+import { DiplomaRequestApiService } from '@msh/applications/data-access-applications';
 import { ActivatedRoute } from '@angular/router';
 import { DiplomaRequest } from '@msh/shared/domain-models';
 
@@ -50,9 +49,8 @@ export class DiplomaRequestPrintComponent implements OnInit {
   diplomaRequest = {} as DiplomaRequest;
 
   constructor(
-    private readonly diplomasForStudent: DiplomasForStudentApiService,
     private readonly toastService: GlobalToastService,
-    private readonly diplomaRequestApiService: DiplomaRequestService,
+    private readonly diplomaRequestApiService: DiplomaRequestApiService,
     private cd: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
     private route: ActivatedRoute
@@ -62,6 +60,7 @@ export class DiplomaRequestPrintComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
     if (this.id) {
       this.getDiplomaById();
+      this.getDiplomaForStudent();
     }
   }
 
@@ -72,8 +71,8 @@ export class DiplomaRequestPrintComponent implements OnInit {
     return true;
   }
 
-  getDiplomaForStudent(maturaId: string) {
-    this.diplomasForStudent.getDiplomaForStudentById(maturaId).subscribe({
+  getDiplomaForStudent() {
+    this.diplomaRequestApiService.print(this.id).subscribe({
       next: async (response: any) => {
         const responseText = await response.text();
         if (this.isValidPdf(responseText)) {
@@ -102,8 +101,10 @@ export class DiplomaRequestPrintComponent implements OnInit {
   }
 
   onSealAndDownloadClick() {
-    this.diplomasForStudent
-      .getSealedDiplomaForStudentById(this.maturaId)
+    if (!this.diplomaRequest) return;
+
+    this.diplomaRequestApiService
+      .printSealed(this.diplomaRequest.id)
       .subscribe({
         next: async (response: any) => {
           const responseText = await response.text();
@@ -112,7 +113,7 @@ export class DiplomaRequestPrintComponent implements OnInit {
               const blob = new Blob([response], {
                 type: 'application/pdf',
               });
-              FileSaver.saveAs(blob, `Diploma_Sealed_${this.maturaId}`);
+              FileSaver.saveAs(blob, `Diploma_Sealed_${this.diplomaRequest.studentStudentId}`);
             } catch (error) {
               this.toastService.showError(error as string);
             }
@@ -144,7 +145,6 @@ export class DiplomaRequestPrintComponent implements OnInit {
       .subscribe(response => {
         this.diplomaRequest = response.data;
         this.cd.detectChanges();
-        this.getDiplomaForStudent(this.maturaId);
       });
   }
 }

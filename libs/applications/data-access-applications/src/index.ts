@@ -6,4 +6,4 @@ export * from './lib/exam-grades/exam-grade-api.service';
 export * from './lib/exam-grade-request/exam-grade-request.service';
 export * from './lib/manual-exam-grade/manual-exam-grade.service';
 export * from './lib/average-grade/average-grade.service';
-export * from './lib/diploma-request/diploma-request.service';
+export * from './lib/diploma-request/diploma-request-api.service';

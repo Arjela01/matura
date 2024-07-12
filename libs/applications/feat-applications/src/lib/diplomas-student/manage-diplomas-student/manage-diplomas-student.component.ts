@@ -238,7 +238,7 @@ export class ManageDiplomasStudentComponent implements OnInit, OnDestroy {
 
   sendToEalbaniaByStudentId(event: GridEvent<Diploma>) {
     this.diplomasService
-      .sendToEalbaniaByStudentId(event.data?.studentId as string)
+      .sendToEAlbaniaById(event.data?.studentId as string)
       .subscribe((response: any) => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Diploma u dërgua me sukses');

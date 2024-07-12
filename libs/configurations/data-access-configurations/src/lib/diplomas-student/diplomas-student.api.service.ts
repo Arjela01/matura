@@ -37,6 +37,10 @@ export class DiplomasStudentApiService {
     );
   }
 
+  sendToEAlbaniaById(id: string): Observable<any> {
+    return this.apiService.get(`/Diplomas/SendToEAlbaniaById/${id}`);
+  }
+
   loadDiplomas(event: TableLazyLoadEvent): Observable<any> {
     return this.apiService.post(`/Diplomas/TableData`, event).pipe(
       map((data: any) => data),
@@ -68,12 +72,6 @@ export class DiplomasStudentApiService {
       `/Diplomas/PrintForeignDiplomas`,
       new HttpParams(),
       'blob'
-    );
-  }
-
-  sendToEalbaniaByStudentId(studentId: string): Observable<any> {
-    return this.apiService.get(
-      `/Diplomas/SendToEalbaniaStudentId/${studentId}`
     );
   }
 

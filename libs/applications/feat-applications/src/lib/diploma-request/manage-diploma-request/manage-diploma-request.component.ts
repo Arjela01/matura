@@ -15,7 +15,7 @@ import {
 } from '@msh/shared/util-shared';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { DiplomaRequestService } from '@msh/applications/data-access-applications';
+import { DiplomaRequestApiService } from '@msh/applications/data-access-applications';
 import { Button, ButtonDirective } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -58,7 +58,7 @@ export class ManageDiplomaRequestComponent {
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
-    private readonly diplomaRequestService: DiplomaRequestService,
+    private readonly diplomaRequestService: DiplomaRequestApiService,
     private cd: ChangeDetectorRef,
     private readonly authFacade: AuthFacade
   ) {}
