@@ -5,12 +5,12 @@
   <div class="col-12 p-fluid">
     <div class="card-form px-6 py-6">
       <ng-container *ngIf="features$">
-        <div class="col-6">
+        <div class="col-8">
           <table id="my-table-2">
             <thead>
               <tr>
                 <th>Emri</th>
-                <th style="text-align: center;">Është në dispozicion?</th>
+                <th style="text-align: center;">Aktive?</th>
                 <th>Nga data</th>
                 <th>Në datë</th>
               </tr>
@@ -22,19 +22,27 @@
                   <p-inputSwitch
                     class="center-content"
                     [(ngModel)]="feat.isAvailable"
-                    (onChange)="onToggle(feat)">
+                    (onChange)="saveChanges(feat)">
                   </p-inputSwitch>
                 </td>
                 <td class="font-semibold">
                   <p-calendar
+                    [disabled]="!feat.isAvailable"
                     [(ngModel)]="feat.availableFrom"
+                    (onSelect)="saveChanges(feat)"
+                    (onClear)="saveChanges(feat)"
+                    [showClear]="true"
                     dateFormat="dd.mm.yy"
                     appendTo="body">
                   </p-calendar>
                 </td>
                 <td class="font-semibold">
                   <p-calendar
+                    [disabled]="!feat.isAvailable"
                     [(ngModel)]="feat.availableTo"
+                    (onSelect)="saveChanges(feat)"
+                    (onClear)="saveChanges(feat)"
+                    [showClear]="true"
                     dateFormat="dd.mm.yy"
                     appendTo="body">
                   </p-calendar>

@@ -80,7 +80,7 @@ export class SystemFeatureComponent implements OnInit {
       });
   }
 
-  onToggle(systemFeat: SystemFeatureModel) {
+  saveChanges(systemFeat: SystemFeatureModel) {
     const updatedFeat: SystemFeatureModel = {
       ...systemFeat,
       availableFrom: systemFeat.availableFrom
@@ -97,7 +97,6 @@ export class SystemFeatureComponent implements OnInit {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Ndryshimi u krye me sukses!');
-          this.getSystemFeatures();
         } else {
           this.toastService.showError(response.errorMessage);
         }
