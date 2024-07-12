@@ -43,7 +43,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 })
 export class ExamSiteFormComponent implements OnInit {
   @Input() administrationOffices: DropdownModel<number>[] = [];
-  @Input() highschools: DropdownModel<string>[] = [];
+  @Input() highschools: DropdownModel<number>[] = [];
   @Input() set examSitesDetails(details: ExamSite | null) {
     if (details) {
       this.examSite = Object.assign({}, details);

@@ -17,6 +17,14 @@ export class HighSchoolApiService {
     );
   }
 
+  loadDropDownListWithAdministrationOffice(): Observable<
+    ApiResult<DropdownModel<number>[]>
+  > {
+    return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
+      '/HighSchool/DropdownListWithAdministrationOffice'
+    );
+  }
+
   loadHighSchools(event: TableLazyLoadEvent): Observable<HighSchoolTableView> {
     return this.apiService.post(`/HighSchool/TableData`, event);
   }

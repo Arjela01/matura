@@ -63,7 +63,7 @@ export class ManageExamSiteComponent implements OnInit {
   selectedExamSites: ExamSite[] = [];
   displayModal = false;
   administrationOffices: DropdownModel<number>[] = [];
-  highSchools: DropdownModel<string>[] = [];
+  highSchools: DropdownModel<number>[] = [];
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     skip(1),
     map(([_]) => {
@@ -85,6 +85,7 @@ export class ManageExamSiteComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAdministrationOfficeDropdown();
+    this.getHighSchools();
   }
 
   onNewClick() {
@@ -117,7 +118,7 @@ export class ManageExamSiteComponent implements OnInit {
         break;
       case GRID_ACTIONS.EDIT:
         this.selectedExamSite = Object.assign({}, event.data as ExamSite);
-        this.getHighSchools(this.selectedExamSite.administrationOfficeId);
+        this.getHighSchools();
         this.getAdministrationOfficeDropdown();
         this.displayModal = true;
         break;
@@ -145,11 +146,13 @@ export class ManageExamSiteComponent implements OnInit {
       this.addExamSite(examSite);
     }
   }
+
   onAdministrationOfficeChanged(administrationOfficeId: any) {
     if (this.selectedExamSite != null)
       this.selectedExamSite.administrationOfficeId = administrationOfficeId;
-    this.getHighSchools(administrationOfficeId);
+    // this.getHighSchools();
   }
+
   onHighSchoolChanged(highSchoolIds: any) {
     if (this.selectedExamSite !== null) {
       this.selectedExamSite.highschoolIds = highSchoolIds;
@@ -169,9 +172,9 @@ export class ManageExamSiteComponent implements OnInit {
       });
   }
 
-  getHighSchools(administrationOfficeId?: any) {
+  getHighSchools() {
     this.highSchoolService
-      .forAdministrationOffice(administrationOfficeId)
+      .loadDropDownListWithAdministrationOffice()
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.highSchools = response.data;
