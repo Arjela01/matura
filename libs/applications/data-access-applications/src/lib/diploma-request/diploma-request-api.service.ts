@@ -57,15 +57,26 @@ export class DiplomaRequestApiService {
   }
 
   print(id: string): Observable<any> {
-    return this.apiService.get(`/DiplomaRequest/Print/${id}`,
+    return this.apiService.get(
+      `/DiplomaRequest/Print/${id}`,
       new HttpParams(),
-      'blob');
+      'blob'
+    );
   }
 
-
   printSealed(id: string): Observable<any> {
-    return this.apiService.get(`/DiplomaRequest/PrintSealed/${id}`,
+    return this.apiService.get(
+      `/DiplomaRequest/PrintSealed/${id}`,
       new HttpParams(),
-      'blob');
+      'blob'
+    );
+  }
+
+  downloadRequestDocument(id: string): Observable<any> {
+    return this.apiService.get(
+      `/DiplomaRequest/Download/${id}`,
+      new HttpParams(),
+      'blob'
+    );
   }
 }

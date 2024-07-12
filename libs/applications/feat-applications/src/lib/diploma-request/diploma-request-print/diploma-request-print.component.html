@@ -31,6 +31,17 @@
     {{ diplomaRequest.studentNID }}
   </span>
 </div>
+<div class="mt-2">
+  <a href="javascript:void(0)" (click)="downloadDocument()" class="font-bold"
+    >Dokumenti</a
+  >
+  <span *ngIf="diplomaRequest.isDelivered === true" class="ml-2"
+    >dëguar në e-Albania në datë
+    <span class="font-bold ml-2">{{
+      diplomaRequest.deliveryDate | app_time
+    }}</span></span
+  >
+</div>
 <div *ngIf="pdfSrc">
   <iframe [src]="pdfSrc" width="100%" height="800px" class="mt-5"></iframe>
 </div>

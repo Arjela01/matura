@@ -261,4 +261,11 @@ export const CONFIGURATION_ROUTES: Route[] = [
         m => m.SystemFeatureComponent
       ),
   },
+  {
+    path: 'system-sessions',
+    loadComponent: () =>
+      import('./system-sessions/system-sessions-grid.component').then(
+        m => m.SystemSessionsGridComponent
+      ),
+  },
 ];

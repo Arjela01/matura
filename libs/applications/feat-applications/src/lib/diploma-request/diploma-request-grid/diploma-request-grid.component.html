@@ -73,29 +73,6 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="isApproved">
-        Aprovuar?
-        <div class="flex">
-          <p-sortIcon field="isApproved"></p-sortIcon>
-          <p-columnFilter
-            type="boolean"
-            field="isApproved"
-            display="menu"
-            matchMode="equals"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
-      <th pSortableColumn="approvalDate">
-        Data e Aprovimit
-        <div class="flex">
-          <p-sortIcon field="approvalDate"></p-sortIcon>
-          <p-columnFilter
-            type="date"
-            field="approvalDate"
-            display="menu"
-            mshColumnFilterDirective></p-columnFilter>
-        </div>
-      </th>
       <th pSortableColumn="isDelivered">
         Dërguar?
         <div class="flex">
@@ -165,12 +142,6 @@
       </td>
       <td style="max-width: 10%">
         {{ diploma.studentNID }}
-      </td>
-      <td style="max-width: 10%">
-        {{ diploma.isApproved | app_bool }}
-      </td>
-      <td style="max-width: 10%">
-        {{ diploma.approvalDate | app_date }}
       </td>
       <td style="max-width: 10%">
         {{ diploma.isDelivered | app_bool }}
