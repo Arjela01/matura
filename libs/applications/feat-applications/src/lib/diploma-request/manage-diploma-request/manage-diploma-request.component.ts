@@ -24,6 +24,7 @@ import { DiplomasStudentGridComponent } from '../../diplomas-student/diplomas-st
 import { Ripple } from 'primeng/ripple';
 import { DiplomaRequestGridComponent } from '../diploma-request-grid/diploma-request-grid.component';
 import { DiplomaRequestFormComponent } from '../diploma-request-form/diploma-request-form.component';
+import { Router } from '@angular/router';
 
 @UntilDestroy()
 @Component({
@@ -60,7 +61,8 @@ export class ManageDiplomaRequestComponent {
     private readonly toastService: GlobalToastService,
     private readonly diplomaRequestService: DiplomaRequestApiService,
     private cd: ChangeDetectorRef,
-    private readonly authFacade: AuthFacade
+    private readonly authFacade: AuthFacade,
+    private readonly router: Router
   ) {}
 
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
@@ -131,8 +133,9 @@ export class ManageDiplomaRequestComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Kërkesa u shtua me sukses!');
-          this.displayModal = false;
-          this.getDiplomaRequests(this.filters as TableLazyLoadEvent);
+          this.router.navigate([
+            `/applications/diploma-request/${response.data.id}`,
+          ]);
         } else this.toastService.showError(response.errorMessage);
 
         if (response.isBadRequest)
@@ -150,8 +153,9 @@ export class ManageDiplomaRequestComponent {
       .subscribe(response => {
         if (response.isSuccessful) {
           this.toastService.showSuccess('Ndryshimi u ruajt me sukses!');
-          this.displayModal = false;
-          this.getDiplomaRequests(this.filters as TableLazyLoadEvent);
+          this.router.navigate([
+            `/applications/diploma-request/${this.selectedDiplomaRequest?.id}`,
+          ]);
         } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest)
           this.toastService.showError(
