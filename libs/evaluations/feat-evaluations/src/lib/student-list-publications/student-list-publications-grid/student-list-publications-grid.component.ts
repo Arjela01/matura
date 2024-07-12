@@ -181,7 +181,7 @@ export class StudentListPublicationsGridComponent {
             this.toastService.showError(JSON.parse(data).errorMessage);
           });
         } else {
-          const blob = new Blob([response.body!], {
+          const blob = new Blob(['\ufeff', response.body!], {
             type: contentType,
           });
 
