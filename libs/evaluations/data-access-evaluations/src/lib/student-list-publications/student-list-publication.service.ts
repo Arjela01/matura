@@ -66,4 +66,14 @@ export class StudentListPublicationService {
       }
     );
   }
+
+  downloadProfiles() {
+    return this.httpClient.get(
+      this.apiService.resolveUrl(`/StudentListPublication/DownloadProfiles`),
+      {
+        responseType: 'blob',
+        observe: 'response',
+      }
+    );
+  }
 }

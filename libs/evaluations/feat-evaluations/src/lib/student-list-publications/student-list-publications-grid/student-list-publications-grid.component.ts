@@ -168,4 +168,34 @@ export class StudentListPublicationsGridComponent {
       'current',
     ]);
   }
+
+  downloadProfiles() {
+    this.studentListPublicationService
+      .downloadProfiles()
+      .subscribe(response => {
+        const contentType = response.headers.get('content-type')!;
+        const contentDisposition = response.headers.get('content-disposition');
+
+        if (contentType == 'application/json') {
+          response.body!.text().then((data: any) => {
+            this.toastService.showError(JSON.parse(data).errorMessage);
+          });
+        } else {
+          const blob = new Blob([response.body!], {
+            type: contentType,
+          });
+
+          if (contentDisposition) {
+            const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+            const matches = filenameRegex.exec(contentDisposition);
+            if (matches && matches[1]) {
+              const filename = matches[1].replace(/['"]/g, '');
+              FileSaver.saveAs(blob, filename);
+            }
+          } else {
+            FileSaver.saveAs(blob, 'profiles.csv');
+          }
+        }
+      });
+  }
 }
