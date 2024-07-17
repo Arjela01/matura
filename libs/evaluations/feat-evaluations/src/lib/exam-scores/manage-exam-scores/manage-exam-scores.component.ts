@@ -103,7 +103,7 @@ export class ManageExamScoresComponent implements OnInit {
     this.displayModal = true;
     this.selectedExamScore = {
       totalScore: 0,
-      isFall: true,
+      isFall: this.currentAcademicYear?.isFall ?? false,
       archiveFolderNr: 0,
       archiveExamIndex: 0
     } as ExamScore;

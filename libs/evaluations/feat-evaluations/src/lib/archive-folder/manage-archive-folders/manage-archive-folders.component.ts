@@ -109,7 +109,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
   onNewClick() {
     this.displayModal = true;
     this.selectedArchiveFolder = {
-      isFall: true
+      isFall: this.currentAcademicYear?.isFall ?? false,
     } as ArchiveFolder;
   }
 

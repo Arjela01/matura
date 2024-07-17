@@ -52,8 +52,8 @@ export class AcademicYearFormComponent {
   academicYear: AcademicYear = {
     id: 0,
     year: '',
-    isFall: true,
-    isActive: true,
+    isFall: false,
+    isActive: true
   };
 
   onCancelClick() {
