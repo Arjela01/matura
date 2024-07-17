@@ -1,40 +1,38 @@
-import { AuthFacade } from '@msh/auth/data-access-auth';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ToolbarModule } from 'primeng/toolbar';
-import { ExamScoresFormComponent } from '../exam-scores-form/exam-scores-form.component';
-import { ExamScoresGridComponent } from '../exam-scores-grid/exam-scores-grid.component';
-import { ConfirmationService } from 'primeng/api';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
-  BehaviorSubject,
-  combineLatest,
-  map,
-  of,
-  skip,
-  switchMap,
-  tap,
-} from 'rxjs';
+  ExamSubjectApiService,
+  ExamTypeApiService,
+} from '@msh/configurations/data-access-configurations';
+import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
+import { DropdownModel } from '@msh/shared/data-access-shared';
+import { AcademicYear, ExamScore } from '@msh/shared/domain-models';
 import {
   GlobalToastService,
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {
-  ExamSubjectApiService,
-  ExamTypeApiService,
-} from '@msh/configurations/data-access-configurations';
-import { DropdownModel } from '@msh/shared/data-access-shared';
-import { RippleModule } from 'primeng/ripple';
-import { FileUploadModule } from 'primeng/fileupload';
-import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
 import * as FileSaver from 'file-saver';
-import { AcademicYear, ExamScore } from '@msh/shared/domain-models';
+import { ConfirmationService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
+import { FileUploadModule } from 'primeng/fileupload';
+import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { FormsModule } from '@angular/forms';
+import { ToolbarModule } from 'primeng/toolbar';
+import {
+  BehaviorSubject,
+  combineLatest,
+  map,
+  skip,
+  tap
+} from 'rxjs';
+import { ExamScoresFormComponent } from '../exam-scores-form/exam-scores-form.component';
+import { ExamScoresGridComponent } from '../exam-scores-grid/exam-scores-grid.component';
 
 @UntilDestroy()
 @Component({
@@ -105,9 +103,9 @@ export class ManageExamScoresComponent implements OnInit {
     this.displayModal = true;
     this.selectedExamScore = {
       totalScore: 0,
-      isFall: this.currentAcademicYear?.isFall ?? false,
+      isFall: true,
       archiveFolderNr: 0,
-      archiveExamIndex: 0,
+      archiveExamIndex: 0
     } as ExamScore;
   }
 

@@ -22,8 +22,7 @@ import {
 import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
 import {
   AcademicYear,
-  ArchiveFolder,
-  ExamSecret,
+  ArchiveFolder
 } from '@msh/shared/domain-models';
 import {
   GRID_ACTIONS,
@@ -110,7 +109,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
   onNewClick() {
     this.displayModal = true;
     this.selectedArchiveFolder = {
-      isFall: this.currentAcademicYear?.isFall ?? false,
+      isFall: true
     } as ArchiveFolder;
   }
 

@@ -80,7 +80,7 @@ export class ExamScoresFormComponent implements OnChanges, OnDestroy {
     academicYearId: 1,
     maximumValueMultipleScore: 0,
     maximumValueWritingScore: 0,
-    isFall: false,
+    isFall: false
   };
   examTypeId: any;
   examSubjectId: any;
