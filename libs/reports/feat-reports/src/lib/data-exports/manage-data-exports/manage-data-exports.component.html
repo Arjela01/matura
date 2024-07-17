@@ -1,16 +1,37 @@
 <div class="flex center mb-5 ml-2 page-header mb-header">
   <h2 class="flex-1 mb-0">Eksportim të Dhënash</h2>
 </div>
+
 <div class="grid">
   <div class="col-12">
     <div class="card p-6">
-      <div *ngFor="let dataExport of dataExports">
-        <a (click)="download(dataExport)" class="download-link mb-1 text-lg">
-          <div class="flex align-items-center pb-2 pt-2 cursor-pointer w-full">
-            <i class="pi pi-download mr-2 ml-2"></i>
-            <span>{{ dataExport.name }}</span>
-          </div>
-        </a>
+      <div class="grid mb-5">
+        <div class="col-6">
+          <h3 class="text-center font-bold bg-gray-100 border-1 border-200">Jo Vjeshtë</h3>
+          <ng-container *ngFor="let dataExport of dataExports">
+            <div *ngIf="!dataExport.isFall">
+              <a (click)="download(dataExport)" class="download-link mb-1 text-lg">
+                <div class="flex align-items-center pb-2 pt-2 cursor-pointer w-full">
+                  <i class="pi pi-download mr-2 ml-2"></i>
+                  <span>{{ dataExport.name }}</span>
+                </div>
+              </a>
+            </div>
+          </ng-container>
+        </div>
+        <div class="col-6">
+          <h3 class="text-center font-bold bg-gray-100 border-1 border-200">Vjeshtë</h3>
+          <ng-container *ngFor="let dataExport of dataExports">
+            <div *ngIf="dataExport.isFall">
+              <a (click)="download(dataExport)" class="download-link mb-1 text-lg">
+                <div class="flex align-items-center pb-2 pt-2 cursor-pointer w-full">
+                  <i class="pi pi-download mr-2 ml-2"></i>
+                  <span>{{ dataExport.name }}</span>
+                </div>
+              </a>
+            </div>
+          </ng-container>
+        </div>
       </div>
     </div>
   </div>

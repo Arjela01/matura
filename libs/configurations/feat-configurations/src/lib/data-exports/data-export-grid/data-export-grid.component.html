@@ -70,6 +70,12 @@
           <p-sortIcon field="isVisible"></p-sortIcon>
         </div>
       </th>
+      <th pSortableColumn="isFall">
+        Është Vjeshtë?
+        <div>
+          <p-sortIcon field="isFall"></p-sortIcon>
+        </div>
+      </th>
       <th></th>
     </tr>
   </ng-template>
@@ -89,6 +95,9 @@
       </td>
       <td style="width: 25%; min-width: 10rem">
         {{ dataExport.isVisible | app_bool }}
+      </td>
+      <td style="width: 25%; min-width: 10rem">
+        {{ dataExport.isFall | app_bool }}
       </td>
       <td>
         <div class="flex">

@@ -5,6 +5,7 @@ export interface DataExport {
   name: string;
   query: string;
   roles: string[];
+  isFall: boolean;
 }
 export interface DataExportTableView {
   data: DataExport[];
