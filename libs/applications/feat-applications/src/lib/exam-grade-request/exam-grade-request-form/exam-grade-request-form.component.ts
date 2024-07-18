@@ -1,3 +1,4 @@
+import { CommonModule, formatDate } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -6,19 +7,18 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { CommonModule, formatDate } from '@angular/common';
-import { ExamGradeRequestModel } from '@msh/shared/domain-models';
 import { FormsModule, NgForm } from '@angular/forms';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { ButtonModule } from 'primeng/button';
-import { CheckboxModule } from 'primeng/checkbox';
-import { UntilDestroy } from '@ngneat/until-destroy';
-import { CalendarModule } from 'primeng/calendar';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import { ExamGradeRequestModel } from '@msh/shared/domain-models';
+import { UntilDestroy } from '@ngneat/until-destroy';
+import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @UntilDestroy()
 @Component({
@@ -73,6 +73,8 @@ export class ExamGradeRequestFormComponent {
     maturaId: '',
     email: '',
     highSchoolId: '',
+    isQueued: false,
+    isQueueReady: false
   };
 
   onCancelClick() {

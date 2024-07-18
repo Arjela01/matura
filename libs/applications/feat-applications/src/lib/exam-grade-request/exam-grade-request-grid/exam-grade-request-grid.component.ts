@@ -1,3 +1,4 @@
+import { CommonModule, DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,22 +6,21 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { ExamGradeRequestModel } from '@msh/shared/domain-models';
+import { AppBoolPipe, AppDatePipe, AppTimePipe } from '@msh/shared/ui-shared';
 import {
   ColumnFilterDirective,
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
-import { TableLazyLoadEvent, TableModule } from 'primeng/table';
-import { SharedModule } from 'primeng/api';
-import { TooltipModule } from 'primeng/tooltip';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { RouterLink } from '@angular/router';
+import { SharedModule } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
+import { TableLazyLoadEvent, TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
 import { StudentsHistoryGridComponent } from '../../students/students-history/students-history-grid.component';
 import { ExamGradeRequestHistoryGridComponent } from '../exam-grade-request-history/exam-grade-request-history-grid.component';
-import { AppDatePipe } from '@msh/shared/ui-shared';
 
 @UntilDestroy()
 @Component({
@@ -38,6 +38,8 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
     ExamGradeRequestHistoryGridComponent,
     DatePipe,
     AppDatePipe,
+    AppBoolPipe,
+    AppTimePipe
   ],
   providers: [DatePipe],
   templateUrl: './exam-grade-request-grid.component.html',

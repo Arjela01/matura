@@ -1,38 +1,37 @@
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   OnInit,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
+import { ExamGradeRequestService } from '@msh/applications/data-access-applications';
+import { AuthFacade } from '@msh/auth/data-access-auth';
+import {
+  AcademicYearApiService,
+  HighSchoolApiService,
+} from '@msh/configurations/data-access-configurations';
+import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   ExamGradeRequestModel,
-  ExamGradesRequestStatus,
 } from '@msh/shared/domain-models';
-import { TableLazyLoadEvent } from 'primeng/table';
-import { ConfirmationService, SharedModule } from 'primeng/api';
 import {
   GlobalToastService,
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ExamGradeRequestService } from '@msh/applications/data-access-applications';
+import { ConfirmationService, SharedModule } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
-import { ExamGradeRequestGridComponent } from '../exam-grade-request-grid/exam-grade-request-grid.component';
-import { ExamGradeRequestFormComponent } from '../exam-grade-request-form/exam-grade-request-form.component';
-import {
-  AcademicYearApiService,
-  HighSchoolApiService,
-} from '@msh/configurations/data-access-configurations';
-import { DropdownModel } from '@msh/shared/data-access-shared';
+import { TableLazyLoadEvent } from 'primeng/table';
+import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { ManualExamGradeFormComponent } from '../../manual-exam-grade/manual-exam-grade-form/manual-exam-grade-form.component';
 import { StudentsGridComponent } from '../../students/students-grid/students-grid.component';
-import { AuthFacade } from '@msh/auth/data-access-auth';
+import { ExamGradeRequestFormComponent } from '../exam-grade-request-form/exam-grade-request-form.component';
+import { ExamGradeRequestGridComponent } from '../exam-grade-request-grid/exam-grade-request-grid.component';
 
 @UntilDestroy()
 @Component({
