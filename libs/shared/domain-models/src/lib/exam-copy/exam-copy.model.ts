@@ -31,6 +31,12 @@ export interface ExamCopy {
   documentName?: any;
   status?: number;
   decisionDate?: string;
+
+  isQueued: boolean;
+  queueDate?: string;
+  dequeueDate?: string;
+  isQueueReady: boolean;
+  eAlbaniaDocumentResponse?: string;
 }
 
 export interface ExamCopyTableView {

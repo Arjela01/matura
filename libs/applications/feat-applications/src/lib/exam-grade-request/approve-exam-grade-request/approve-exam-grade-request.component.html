@@ -1,0 +1,29 @@
+<form #form="ngForm" class="flex flex-column h-full">
+  <div class="field mt-4 mb-4">
+    <label>Importo Dokument *</label>
+    <p-fileUpload
+      name="myfile[]"
+      [multiple]="true"
+      [auto]="true"
+      [customUpload]="true"
+      accept=".xlsm,.xlsx,application/msexcel,.doc,.docx,.csv,.epub,.html,.odt,.pdf"
+      chooseLabel="Zgjidh"
+      (uploadHandler)="handleUpload($event)">
+    </p-fileUpload>
+  </div>
+  <div class="flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      label="Anullo"
+      class="p-button-text w-auto mr-2"
+      (click)="onCancelClick()"></button>
+    <button
+      [disabled]="form.invalid"
+      type="button"
+      pButton
+      label="Ngarko"
+      class="p-button w-auto"
+      (click)="onConfirm()"></button>
+  </div>
+</form>

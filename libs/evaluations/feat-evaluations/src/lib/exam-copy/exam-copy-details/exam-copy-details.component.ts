@@ -3,41 +3,35 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
-  Input,
   OnInit,
-  Output,
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ExamCopyApiService } from '@msh/evaluations/data-access-evaluations';
+import { DropdownModel } from '@msh/shared/data-access-shared';
+import {
+  ExamCopy,
+  ExamCopyUpdate,
+  StatusEnum,
+} from '@msh/shared/domain-models';
+import { AppDatePipe } from '@msh/shared/ui-shared';
+import { GlobalToastService } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import * as FileSaver from 'file-saver';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { FileUploadModule } from 'primeng/fileupload';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { ApproveExamCopyComponent } from '../approve-exam-copy/approve-exam-copy.component';
-import { Observable } from 'rxjs';
-import {
-  ExamCopy,
-  ExamCopyStatuses,
-  ExamCopyUpdate,
-  ExamGradeChange,
-  StatusEnum,
-} from '@msh/shared/domain-models';
-import { AppDatePipe } from '@msh/shared/ui-shared';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Ripple } from 'primeng/ripple';
-import { TableLazyLoadEvent, TableModule } from 'primeng/table';
+import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import { FileUploadModule } from 'primeng/fileupload';
-import { DropdownModule } from 'primeng/dropdown';
-import { DropdownModel } from '@msh/shared/data-access-shared';
-import { GlobalToastService } from '@msh/shared/util-shared';
+import { ApproveExamCopyComponent } from '../approve-exam-copy/approve-exam-copy.component';
 
 @UntilDestroy()
 @Component({
@@ -75,7 +69,10 @@ export class ExamCopyDetailsComponent implements OnInit {
   confirmModal = false;
   updatedFile!: File;
   updatedExamCopy: ExamCopyUpdate = {};
-  examCopy: ExamCopy = {};
+  examCopy: ExamCopy = {
+    isQueued: false,
+    isQueueReady: false
+  };
   id = '';
 
   constructor(

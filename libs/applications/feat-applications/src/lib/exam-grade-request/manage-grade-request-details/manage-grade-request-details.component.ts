@@ -1,20 +1,11 @@
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   OnInit,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { TabViewModule } from 'primeng/tabview';
-import { ManageManualExamGradeComponent } from '../../manual-exam-grade/manage-manual-exam-grade/manage-manual-exam-grade.component';
-import { ExamGradeRequestEditComponent } from '../exam-grade-request-edit/exam-grade-request-edit.component';
-import { ButtonModule } from 'primeng/button';
-import { RippleModule } from 'primeng/ripple';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ExamGradeRequestFormComponent } from '../exam-grade-request-form/exam-grade-request-form.component';
-import { GlobalToastService } from '@msh/shared/util-shared';
 import { ExamGradeRequestService } from '@msh/applications/data-access-applications';
 import {
   AcademicYearApiService,
@@ -22,8 +13,16 @@ import {
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { ExamGradeRequestModel } from '@msh/shared/domain-models';
+import { GlobalToastService } from '@msh/shared/util-shared';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ButtonModule } from 'primeng/button';
+import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { TabViewModule } from 'primeng/tabview';
 import { BehaviorSubject } from 'rxjs';
+import { ManageManualExamGradeComponent } from '../../manual-exam-grade/manage-manual-exam-grade/manage-manual-exam-grade.component';
+import { ExamGradeRequestEditComponent } from '../exam-grade-request-edit/exam-grade-request-edit.component';
+import { ExamGradeRequestFormComponent } from '../exam-grade-request-form/exam-grade-request-form.component';
 
 @UntilDestroy()
 @Component({
@@ -70,9 +69,9 @@ export class ManageGradeRequestDetailsComponent implements OnInit {
   };
 
   ngOnInit() {
+    this.getExamRequestById();
     this.getAcademicYears();
     this.getExamRequestStatus();
-    this.getExamRequestById();
     this.getHighSchools();
   }
   getExamRequestById() {
