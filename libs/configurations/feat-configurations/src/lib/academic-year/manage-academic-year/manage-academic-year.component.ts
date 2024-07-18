@@ -9,21 +9,21 @@ import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
 import { AcademicYearApiService } from '@msh/configurations/data-access-configurations';
-import { AcademicYear } from '@msh/shared/domain-models';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import { AcademicYear } from '@msh/shared/domain-models';
 
 import {
   GlobalToastService,
-  GridEvent,
   GRID_ACTIONS,
+  GridEvent,
 } from '@msh/shared/util-shared';
 
+import { AuthFacade } from '@msh/auth/data-access-auth';
+import { RippleModule } from 'primeng/ripple';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { BehaviorSubject } from 'rxjs';
 import { AcademicYearFormComponent } from '../academic-year-form/academic-year-form.component';
 import { AcademicYearGridComponent } from '../academic-year-grid/academic-year-grid.component';
-import { RippleModule } from 'primeng/ripple';
-import { AuthFacade } from '@msh/auth/data-access-auth';
-import { TableLazyLoadEvent } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -64,7 +64,10 @@ export class ManageAcademicYearComponent {
 
   onNewClick() {
     this.displayModal = true;
-    this.selectedAcademicYear = {} as AcademicYear;
+    this.selectedAcademicYear = {
+      isActive: false,
+      isFall: false 
+    } as AcademicYear;
   }
 
   onDeleteSelectedClick() {

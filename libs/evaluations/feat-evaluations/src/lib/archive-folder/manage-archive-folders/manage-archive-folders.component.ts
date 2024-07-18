@@ -22,8 +22,7 @@ import {
 import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
 import {
   AcademicYear,
-  ArchiveFolder,
-  ExamSecret,
+  ArchiveFolder
 } from '@msh/shared/domain-models';
 import {
   GRID_ACTIONS,
