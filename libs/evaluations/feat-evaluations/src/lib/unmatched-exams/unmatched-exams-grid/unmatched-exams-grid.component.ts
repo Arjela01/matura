@@ -1,20 +1,21 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
 import { TableLazyLoadEvent } from 'primeng/table';
 
+import { AuthFacade } from '@msh/auth/data-access-auth';
+import { ExamScore } from '@msh/shared/domain-models';
+import { AppBoolPipe } from '@msh/shared/ui-shared';
+import { ColumnFilterDirective } from '@msh/shared/util-shared';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TableModule } from 'primeng/table';
 import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ColumnFilterDirective } from '@msh/shared/util-shared';
-import { ExamScore } from '@msh/shared/domain-models';
-import { AuthFacade } from '@msh/auth/data-access-auth';
 
 @UntilDestroy()
 @Component({
   selector: 'msh-unmatched-exams-grid',
   standalone: true,
-  imports: [CommonModule, TableModule, ColumnFilterDirective],
+  imports: [CommonModule, TableModule, ColumnFilterDirective, AppBoolPipe],
   templateUrl: './unmatched-exams-grid.component.html',
   styleUrls: ['./unmatched-exams-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
