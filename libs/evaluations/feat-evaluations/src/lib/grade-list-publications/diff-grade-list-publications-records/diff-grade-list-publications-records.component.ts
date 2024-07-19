@@ -6,7 +6,7 @@ import {
 import { CommonModule, DatePipe } from '@angular/common';
 import {
   ExamQuestionModel,
-  StudentListPublicationDiffRecord,
+  GradeListPublicationDiffRecord,
 } from '@msh/shared/domain-models';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
@@ -15,7 +15,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-import { StudentListPublicationService } from '@msh/evaluations/data-access-evaluations';
+import { GradeListPublicationService } from '@msh/evaluations/data-access-evaluations';
 import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
 
 @Component({
@@ -42,7 +42,7 @@ export class DiffGradeListPublicationsRecordsComponent {
   id: string | null = null;
 
   constructor(
-    public studentListPublicationService: StudentListPublicationService,
+    public gradeListPublicationService: GradeListPublicationService,
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router
@@ -50,15 +50,15 @@ export class DiffGradeListPublicationsRecordsComponent {
     this.id = this.route.snapshot.paramMap.get('id');
   }
 
-  records: StudentListPublicationDiffRecord[] = [];
+  records: GradeListPublicationDiffRecord[] = [];
 
   examQuestions: ExamQuestionModel[] = [];
   totalRecords = 0;
 
   loadRows($event: TableLazyLoadEvent) {
     if (!this.id) return;
-    this.studentListPublicationService
-      .loadDataStudentListPublicationDiffRecords(this.id, $event)
+    this.gradeListPublicationService
+      .loadDataGradeListPublicationDiffRecords(this.id, $event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.records = response.data;
@@ -68,6 +68,6 @@ export class DiffGradeListPublicationsRecordsComponent {
   }
 
   onBackButtonClick() {
-    this.router.navigate(['/evaluations', 'student-list-publications']);
+    this.router.navigate(['/evaluations', 'grade-list-publications']);
   }
 }

@@ -1,11 +1,11 @@
-export interface StudentListPublicationDiffRecord {
+export interface GradeListPublicationDiffRecord {
   id: number;
   academicYearId: number;
   academicYearIsActive: boolean;
   academicYearName: string;
-  studentListPublicationId: number;
+  gradeListPublicationId: number;
   actionType: string;
-  studentId: string;
+  gradeId: string;
   oldID: string;
   idCard: string;
   firstName: string;
@@ -25,7 +25,7 @@ export interface StudentListPublicationDiffRecord {
   applicationFormType: string;
 }
 
-export interface StudentListPublicationDiffRecordView {
-  data: StudentListPublicationDiffRecord[];
+export interface GradeListPublicationDiffRecordView {
+  data: GradeListPublicationDiffRecord[];
   total: number;
 }

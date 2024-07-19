@@ -74,3 +74,6 @@ export * from './diplomas/diplomas.model';
 export * from './regrading/regrading.model';
 export * from './diploma-request/diploma-request.model';
 export * from './system-sessions/system-sessions.model';
+export * from './grade-list-publications/grade-list-publication.model';
+export * from './grade-list-publications/grade-list-publication-diff-record.model';
+export * from './grade-list-publications/grade-list-publication-current-record.model';

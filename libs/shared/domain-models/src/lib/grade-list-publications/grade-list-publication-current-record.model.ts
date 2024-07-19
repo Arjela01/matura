@@ -1,11 +1,11 @@
-export interface StudentListPublicationCurrentRecord {
+export interface GradeListPublicationCurrentRecord {
   id: number;
   academicYearId: number;
   academicYearIsActive: boolean;
   academicYearName: string;
-  studentListPublicationId: number;
+  gradeListPublicationId: number;
   actionType: string;
-  studentId: string;
+  gradeId: string;
   oldID: string;
   idCard: string;
   firstName: string;
@@ -25,7 +25,7 @@ export interface StudentListPublicationCurrentRecord {
   applicationFormType: string;
 }
 
-export interface StudentListPublicationCurrentRecordView {
-  data: StudentListPublicationCurrentRecord[];
+export interface GradeListPublicationCurrentRecordView {
+  data: GradeListPublicationCurrentRecord[];
   total: number;
 }

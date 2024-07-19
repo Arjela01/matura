@@ -8,7 +8,7 @@ import {
 import { CommonModule, DatePipe } from '@angular/common';
 import {
   ExamQuestionModel,
-  StudentListPublication,
+  GradeListPublication,
 } from '@msh/shared/domain-models';
 import {
   ColumnFilterDirective,
@@ -23,7 +23,7 @@ import { RippleModule } from 'primeng/ripple';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Router } from '@angular/router';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { StudentListPublicationService } from '@msh/evaluations/data-access-evaluations';
+import { GradeListPublicationService } from '@msh/evaluations/data-access-evaluations';
 import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
 import * as FileSaver from 'file-saver';
 
@@ -51,14 +51,14 @@ import * as FileSaver from 'file-saver';
 @UntilDestroy()
 export class GradeListPublicationsGridComponent {
   constructor(
-    public studentListPublicationService: StudentListPublicationService,
+    public gradeListPublicationService: GradeListPublicationService,
     private cd: ChangeDetectorRef,
     private router: Router,
     private toastService: GlobalToastService,
     private readonly confirmationService: ConfirmationService
   ) {}
 
-  records: StudentListPublication[] = [];
+  records: GradeListPublication[] = [];
   totalRecords = 0;
   event: any;
 
@@ -67,10 +67,10 @@ export class GradeListPublicationsGridComponent {
   >();
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
-  onRowClick(record: StudentListPublication) {
+  onRowClick(record: GradeListPublication) {
     this.router.navigate([
       '/evaluations',
-      'student-list-publications',
+      'grade-list-publications',
       record.id,
       'diff',
     ]);
@@ -78,8 +78,8 @@ export class GradeListPublicationsGridComponent {
 
   loadRows($event: TableLazyLoadEvent) {
     this.event = $event;
-    this.studentListPublicationService
-      .loadDataStudentListPublications($event)
+    this.gradeListPublicationService
+      .loadDataGradeListPublications($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.records = response.data;
@@ -91,7 +91,7 @@ export class GradeListPublicationsGridComponent {
     this.confirmationService.confirm({
       message: 'Jeni i sigurt që doni të krijoni një publikim të ri?',
       accept: () => {
-        this.studentListPublicationService
+        this.gradeListPublicationService
           .generateNewPublication()
           .subscribe(response => {
             if (response.isSuccessful) {
@@ -109,7 +109,7 @@ export class GradeListPublicationsGridComponent {
     this.confirmationService.confirm({
       message: 'Jeni i sigurt që doni të publikoni këto të dhëna?',
       accept: () => {
-        this.studentListPublicationService
+        this.gradeListPublicationService
           .publish(record.id)
           .subscribe(response => {
             this.loadRows(this.event);
@@ -122,7 +122,7 @@ export class GradeListPublicationsGridComponent {
     this.confirmationService.confirm({
       message: 'Jeni i sigurt që doni të fshini këtë publikim?',
       accept: () => {
-        this.studentListPublicationService
+        this.gradeListPublicationService
           .delete(record.id)
           .subscribe(response => {
             this.loadRows(this.event);
@@ -132,70 +132,66 @@ export class GradeListPublicationsGridComponent {
   }
 
   download(record: any) {
-    this.studentListPublicationService
-      .download(record.id)
-      .subscribe(response => {
-        const contentType = response.headers.get('content-type')!;
-        const contentDisposition = response.headers.get('content-disposition');
+    this.gradeListPublicationService.download(record.id).subscribe(response => {
+      const contentType = response.headers.get('content-type')!;
+      const contentDisposition = response.headers.get('content-disposition');
 
-        if (contentType == 'application/json') {
-          response.body!.text().then((data: any) => {
-            this.toastService.showError(JSON.parse(data).errorMessage);
-          });
-        } else {
-          const blob = new Blob([response.body!], {
-            type: contentType,
-          });
+      if (contentType == 'application/json') {
+        response.body!.text().then((data: any) => {
+          this.toastService.showError(JSON.parse(data).errorMessage);
+        });
+      } else {
+        const blob = new Blob([response.body!], {
+          type: contentType,
+        });
 
-          if (contentDisposition) {
-            const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-            const matches = filenameRegex.exec(contentDisposition);
-            if (matches && matches[1]) {
-              const filename = matches[1].replace(/['"]/g, '');
-              FileSaver.saveAs(blob, filename);
-            }
-          } else {
-            FileSaver.saveAs(blob, 'data.zip');
+        if (contentDisposition) {
+          const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+          const matches = filenameRegex.exec(contentDisposition);
+          if (matches && matches[1]) {
+            const filename = matches[1].replace(/['"]/g, '');
+            FileSaver.saveAs(blob, filename);
           }
+        } else {
+          FileSaver.saveAs(blob, 'data.zip');
         }
-      });
+      }
+    });
   }
 
   gotoCurrentList() {
     this.router.navigate([
       '/evaluations',
-      'student-list-publications',
+      'grade-list-publications',
       'current',
     ]);
   }
 
   downloadProfiles() {
-    this.studentListPublicationService
-      .downloadProfiles()
-      .subscribe(response => {
-        const contentType = response.headers.get('content-type')!;
-        const contentDisposition = response.headers.get('content-disposition');
+    this.gradeListPublicationService.downloadProfiles().subscribe(response => {
+      const contentType = response.headers.get('content-type')!;
+      const contentDisposition = response.headers.get('content-disposition');
 
-        if (contentType == 'application/json') {
-          response.body!.text().then((data: any) => {
-            this.toastService.showError(JSON.parse(data).errorMessage);
-          });
-        } else {
-          const blob = new Blob(['\ufeff', response.body!], {
-            type: contentType,
-          });
+      if (contentType == 'application/json') {
+        response.body!.text().then((data: any) => {
+          this.toastService.showError(JSON.parse(data).errorMessage);
+        });
+      } else {
+        const blob = new Blob(['\ufeff', response.body!], {
+          type: contentType,
+        });
 
-          if (contentDisposition) {
-            const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-            const matches = filenameRegex.exec(contentDisposition);
-            if (matches && matches[1]) {
-              const filename = matches[1].replace(/['"]/g, '');
-              FileSaver.saveAs(blob, filename);
-            }
-          } else {
-            FileSaver.saveAs(blob, 'profiles.csv');
+        if (contentDisposition) {
+          const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+          const matches = filenameRegex.exec(contentDisposition);
+          if (matches && matches[1]) {
+            const filename = matches[1].replace(/['"]/g, '');
+            FileSaver.saveAs(blob, filename);
           }
+        } else {
+          FileSaver.saveAs(blob, 'profiles.csv');
         }
-      });
+      }
+    });
   }
 }

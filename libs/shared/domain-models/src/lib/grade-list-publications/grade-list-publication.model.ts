@@ -1,4 +1,4 @@
-export interface StudentListPublication {
+export interface GradeListPublication {
   id: number;
   isPublished: boolean;
   publishDate?: Date;
@@ -7,7 +7,7 @@ export interface StudentListPublication {
   academicYearName: string;
 }
 
-export interface StudentListPublicationView {
-  data: StudentListPublication[];
+export interface GradeListPublicationView {
+  data: GradeListPublication[];
   total: number;
 }
