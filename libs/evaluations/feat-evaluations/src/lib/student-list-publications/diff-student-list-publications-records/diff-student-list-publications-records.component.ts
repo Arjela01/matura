@@ -19,7 +19,7 @@ import { StudentListPublicationService } from '@msh/evaluations/data-access-eval
 import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
 
 @Component({
-  selector: 'msh-diff-student-list-publications-records',
+  selector: 'msh-diff-grade-list-publications-records',
   standalone: true,
   imports: [
     CommonModule,

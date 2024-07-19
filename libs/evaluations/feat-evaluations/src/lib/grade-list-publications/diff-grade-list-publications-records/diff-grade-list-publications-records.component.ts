@@ -19,7 +19,7 @@ import { StudentListPublicationService } from '@msh/evaluations/data-access-eval
 import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
 
 @Component({
-  selector: 'msh-current-grade-list-publications-records',
+  selector: 'msh-diff-grade-list-publications-records',
   standalone: true,
   imports: [
     CommonModule,
@@ -32,26 +32,33 @@ import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
     AppDatePipe,
     AppBoolPipe,
   ],
-  templateUrl: './current-student-list-publications-records.component.html',
-  styleUrls: ['./current-student-list-publications-records.component.scss'],
+  templateUrl: './diff-grade-list-publications-records.component.html',
+  styleUrls: ['./diff-grade-list-publications-records.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [DatePipe],
 })
 @UntilDestroy()
-export class CurrentStudentListPublicationsRecordsComponent {
+export class DiffGradeListPublicationsRecordsComponent {
+  id: string | null = null;
+
   constructor(
     public studentListPublicationService: StudentListPublicationService,
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+    this.id = this.route.snapshot.paramMap.get('id');
+  }
 
   records: StudentListPublicationDiffRecord[] = [];
+
+  examQuestions: ExamQuestionModel[] = [];
   totalRecords = 0;
 
   loadRows($event: TableLazyLoadEvent) {
+    if (!this.id) return;
     this.studentListPublicationService
-      .loadDataStudentListPublicationCurrentRecords($event)
+      .loadDataStudentListPublicationDiffRecords(this.id, $event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.records = response.data;

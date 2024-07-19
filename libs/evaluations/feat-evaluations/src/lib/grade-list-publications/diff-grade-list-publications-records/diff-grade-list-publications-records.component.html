@@ -1,0 +1,269 @@
+<div class="flex mb-2 page-header center justify-content-between mb-header">
+  <h2 class="mb-0">Detajet e Publikimit të Listës së Notave</h2>
+  <div class="flex align-items-right justify-content-right">
+    <div class="my-2">
+      <p-button
+        type="button"
+        icon="pi pi-arrow-left"
+        styleClass="p-button-link"
+        (click)="onBackButtonClick()"
+        [label]="'Kthehu'"></p-button>
+    </div>
+  </div>
+</div>
+
+<p-table
+  #dt
+  dataKey="id"
+  responsiveLayout="scroll"
+  [scrollable]="true"
+  scrollHeight="820px"
+  [value]="records"
+  [totalRecords]="totalRecords"
+  [rows]="100"
+  [paginator]="true"
+  [rowsPerPageOptions]="[100, 200, 300]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
+  [rowHover]="true"
+  selectionMode="multiple"
+  (onLazyLoad)="loadRows($event)"
+  [lazy]="true">
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="actionType">
+        <div>Veprimi</div>
+        <p-sortIcon field="actionType"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="actionType"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="studentId">
+        <div>Matura ID</div>
+        <p-sortIcon field="studentId"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="studentId"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="oldID">
+        <div>ID e Vjetër</div>
+        <p-sortIcon field="oldID"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="oldID"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="idCard">
+        <div>NID</div>
+        <p-sortIcon field="idCard"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="idCard"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="firstName">
+        <div>Emri</div>
+        <p-sortIcon field="firstName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="firstName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="middleName">
+        <div>Atësia</div>
+        <p-sortIcon field="middleName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="middleName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="lastName">
+        <div>Mbiemri</div>
+        <p-sortIcon field="lastName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="lastName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="email">
+        <div>Email</div>
+        <p-sortIcon field="email"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="email"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="mobilePhone">
+        <div>Telefoni</div>
+        <p-sortIcon field="mobilePhone"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="mobilePhone"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="gender">
+        <div>Gjinia</div>
+        <p-sortIcon field="gender"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="gender"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="birthDate">
+        <div>Ditlindja</div>
+        <p-sortIcon field="birthDate"></p-sortIcon>
+        <p-columnFilter
+          type="date"
+          field="birthDate"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="birthPlace">
+        <div>Vendlindja</div>
+        <p-sortIcon field="birthDate"></p-sortIcon>
+        <p-columnFilter
+          type="date"
+          field="birthPlace"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="isFall">
+        <div>Vjeshtë</div>
+        <p-sortIcon field="isFall"></p-sortIcon>
+        <p-columnFilter
+          type="boolean"
+          field="isFall"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="isApplyingToForeignCountries">
+        <div>Aplikon jashtë vendit?</div>
+        <p-sortIcon field="isApplyingToForeignCountries"></p-sortIcon>
+        <p-columnFilter
+          type="boolean"
+          field="isApplyingToForeignCountries"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="highSchoolCode">
+        <div>Kodi i Shkollës</div>
+        <p-sortIcon field="highSchoolCode"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="highSchoolCode"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="highSchoolName">
+        <div>Shkolla</div>
+        <p-sortIcon field="highSchoolName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="highSchoolName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="legacySchoolName">
+        <div>Shkolla e Vjetër</div>
+        <p-sortIcon field="legacySchoolName"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="legacySchoolName"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="profileCode">
+        <div>Indeksi i Profilit</div>
+        <p-sortIcon field="profileCode"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="profileCode"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th pSortableColumn="applicationFormType">
+        <div>Formulari</div>
+        <p-sortIcon field="applicationFormType"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="applicationFormType"
+          display="menu"
+          mshColumnFilterDirective></p-columnFilter>
+      </th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-record>
+    <tr>
+      <td>
+        {{ record.actionType }}
+      </td>
+      <td>
+        {{ record.studentId }}
+      </td>
+      <td>
+        {{ record.oldID }}
+      </td>
+      <td>
+        {{ record.idCard }}
+      </td>
+      <td>
+        {{ record.firstName }}
+      </td>
+      <td>
+        {{ record.middleName }}
+      </td>
+      <td>
+        {{ record.lastName }}
+      </td>
+      <td>
+        {{ record.email }}
+      </td>
+      <td>
+        {{ record.mobilePhone }}
+      </td>
+      <td>
+        {{ record.gender }}
+      </td>
+      <td>
+        {{ record.birthDate | app_date }}
+      </td>
+      <td>
+        {{ record.birthPlace }}
+      </td>
+      <td>
+        {{ record.isFall | app_bool }}
+      </td>
+      <td>
+        {{ record.isApplyingToForeignCountries | app_bool }}
+      </td>
+      <td>
+        {{ record.highSchoolCode }}
+      </td>
+      <td>
+        {{ record.highSchoolName }}
+      </td>
+      <td>
+        {{ record.legacySchoolName }}
+      </td>
+      <td>
+        {{ record.profileCode }}
+      </td>
+      <td>
+        {{ record.applicationFormType }}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

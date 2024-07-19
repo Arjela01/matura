@@ -290,7 +290,6 @@ export const EVALUATION_ROUTES: Route[] = [
         './exam-grade-changes/manage-exam-grade-changes/manage-exam-grade-changes.component'
       ).then(m => m.ManageExamGradeChangesComponent),
   },
-
   {
     path: 'student-list-publications',
     loadComponent: () =>
@@ -298,7 +297,6 @@ export const EVALUATION_ROUTES: Route[] = [
         './student-list-publications/student-list-publications-grid/student-list-publications-grid.component'
       ).then(m => m.StudentListPublicationsGridComponent),
   },
-
   {
     path: 'student-list-publications/current',
     loadComponent: () =>
@@ -313,6 +311,29 @@ export const EVALUATION_ROUTES: Route[] = [
         './student-list-publications/diff-student-list-publications-records/diff-student-list-publications-records.component'
       ).then(m => m.DiffStudentListPublicationsRecordsComponent),
   },
+
+  {
+    path: 'grade-list-publications',
+    loadComponent: () =>
+      import(
+        './grade-list-publications/grade-list-publications-grid/grade-list-publications-grid.component'
+      ).then(m => m.GradeListPublicationsGridComponent),
+  },
+  {
+    path: 'grade-list-publications/current',
+    loadComponent: () =>
+      import(
+        './grade-list-publications/current-grade-list-publications-records/current-grade-list-publications-records.component'
+      ).then(m => m.CurrentGradeListPublicationsRecordsComponent),
+  },
+  {
+    path: 'grade-list-publications/:id/diff',
+    loadComponent: () =>
+      import(
+        './grade-list-publications/diff-grade-list-publications-records/diff-grade-list-publications-records.component'
+      ).then(m => m.DiffGradeListPublicationsRecordsComponent),
+  },
+
   {
     path: 'regrading',
     loadComponent: () =>

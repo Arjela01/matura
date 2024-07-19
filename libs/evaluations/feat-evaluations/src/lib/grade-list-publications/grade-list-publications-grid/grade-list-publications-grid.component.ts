@@ -28,7 +28,7 @@ import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
 import * as FileSaver from 'file-saver';
 
 @Component({
-  selector: 'msh-student-list-publications-grid',
+  selector: 'msh-grade-list-publications-grid',
   standalone: true,
   imports: [
     CommonModule,
@@ -43,13 +43,13 @@ import * as FileSaver from 'file-saver';
     AppDatePipe,
     AppBoolPipe,
   ],
-  templateUrl: './student-list-publications-grid.component.html',
-  styleUrls: ['./student-list-publications-grid.component.scss'],
+  templateUrl: './grade-list-publications-grid.component.html',
+  styleUrls: ['./grade-list-publications-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService, DatePipe],
 })
 @UntilDestroy()
-export class StudentListPublicationsGridComponent {
+export class GradeListPublicationsGridComponent {
   constructor(
     public studentListPublicationService: StudentListPublicationService,
     private cd: ChangeDetectorRef,

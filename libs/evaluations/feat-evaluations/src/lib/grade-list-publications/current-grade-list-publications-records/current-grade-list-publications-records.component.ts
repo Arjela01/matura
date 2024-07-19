@@ -32,13 +32,13 @@ import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
     AppDatePipe,
     AppBoolPipe,
   ],
-  templateUrl: './current-student-list-publications-records.component.html',
-  styleUrls: ['./current-student-list-publications-records.component.scss'],
+  templateUrl: './current-grade-list-publications-records.component.html',
+  styleUrls: ['./current-grade-list-publications-records.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [DatePipe],
 })
 @UntilDestroy()
-export class CurrentStudentListPublicationsRecordsComponent {
+export class CurrentGradeListPublicationsRecordsComponent {
   constructor(
     public studentListPublicationService: StudentListPublicationService,
     private cd: ChangeDetectorRef,
