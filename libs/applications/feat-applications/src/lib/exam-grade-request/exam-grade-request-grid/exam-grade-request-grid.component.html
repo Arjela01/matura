@@ -17,6 +17,18 @@
   [lazy]="true">
   <ng-template pTemplate="header">
     <tr>
+      <th>Procedo</th>
+      <th pSortableColumn="examGradesRequestStatusDescription">
+        Statusi
+        <div>
+          <p-sortIcon field="examGradesRequestStatusDescription"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="examGradesRequestStatusDescription"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
       <th pSortableColumn="number">
         Numri
         <div>
@@ -107,66 +119,68 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th pSortableColumn="examGradesRequestStatusDescription">
-        Statusi
+      <th pSortableColumn="isQueueReady">
+        Gati për Dërgim
         <div>
-          <p-sortIcon field="examGradesRequestStatusDescription"></p-sortIcon>
+          <p-sortIcon field="isQueueReady"></p-sortIcon>
           <p-columnFilter
-            type="text"
-            field="examGradesRequestStatusDescription"
+            type="boolean"
+            matchMode="equals"
+            field="isQueueReady"
             display="menu"
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
-      <th></th>
+
+      <th pSortableColumn="isQueued">
+        Në Radhë
+        <div>
+          <p-sortIcon field="isQueued"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            matchMode="equals"
+            field="isQueued"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="queueDate">
+        Data e Shtimit
+        <div>
+          <p-sortIcon field="queueDate"></p-sortIcon>
+          <p-columnFilter
+            type="date"
+            field="queueDate"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="dequeueDate">
+        Data e Heqjes
+        <div>
+          <p-sortIcon field="dequeueDate"></p-sortIcon>
+          <p-columnFilter
+            type="date"
+            field="dequeueDate"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
+      <th pSortableColumn="eAlbaniaDocumentResponse">
+        Përgjigja për Dokumentin
+        <div>
+          <p-sortIcon field="eAlbaniaDocumentResponse"></p-sortIcon>
+          <p-columnFilter
+            type="text"
+            field="eAlbaniaDocumentResponse"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-examGradeRequest>
     <tr>
-      <td style="width: 10%; min-width: 10rem">
-        {{ examGradeRequest.id }}
-      </td>
-      <td style="width: 5%; min-width: 10rem">
-        {{ examGradeRequest.idCard }}
-      </td>
-      <td style="width: 15%; min-width: 10rem">
-        {{ examGradeRequest.maturaId }}
-      </td>
-      <td style="width: 5%; min-width: 10rem">
-        {{ examGradeRequest.firstName }}
-      </td>
-      <td style="width: 5%; min-width: 10rem">
-        {{ examGradeRequest.middleName }}
-      </td>
-      <td style="width: 15%; min-width: 10rem">
-        {{ examGradeRequest.lastName }}
-      </td>
-      <td style="width: 15%; min-width: 10rem">
-        {{ examGradeRequest.dateOfBirth | app_date }}
-      </td>
-      <td style="width: 5%; min-width: 10rem">
-        {{ examGradeRequest.academicYearName }}
-      </td>
-      <td style="width: 10%; min-width: 10rem">
-        <div class="flex">
-          <span
-            [ngClass]="
-              examGradeRequest.examGradesRequestStatusId == 3
-                ? ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
-                : examGradeRequest.examGradesRequestStatusId == 2
-                  ? ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
-                  : ['surface-300', 'gray-text', 'px-3', 'py-1', 'fb']
-            ">
-            {{
-              examGradeRequest.examGradesRequestStatusId == 3
-                ? 'Refuzuar'
-                : examGradeRequest.examGradesRequestStatusId == 2
-                  ? 'Aprovuar'
-                  : 'E Re'
-            }}
-          </span>
-        </div>
-      </td>
       <td>
         <div class="flex">
           <img
@@ -193,6 +207,65 @@
             tooltipPosition="bottom"
             (click)="onDeleteClick(examGradeRequest)" />
         </div>
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        <div class="flex">
+          <span
+            [ngClass]="
+              examGradeRequest.examGradesRequestStatusId == 3
+                ? ['bg-red-300', 'red-text', 'px-3', 'py-1', 'fb']
+                : examGradeRequest.examGradesRequestStatusId == 2
+                  ? ['bg-green-300', 'green-text', 'px-3', 'py-1', 'fb']
+                  : ['surface-300', 'gray-text', 'px-3', 'py-1', 'fb']
+            ">
+            {{
+              examGradeRequest.examGradesRequestStatusId == 3
+                ? 'Refuzuar'
+                : examGradeRequest.examGradesRequestStatusId == 2
+                  ? 'Aprovuar'
+                  : 'E Re'
+            }}
+          </span>
+        </div>
+      </td>
+      <td style="width: 10%; min-width: 10rem">
+        {{ examGradeRequest.id }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examGradeRequest.idCard }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ examGradeRequest.maturaId }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examGradeRequest.firstName }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examGradeRequest.middleName }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ examGradeRequest.lastName }}
+      </td>
+      <td style="width: 15%; min-width: 10rem">
+        {{ examGradeRequest.dateOfBirth | app_date }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examGradeRequest.academicYearName }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examGradeRequest.isQueueReady | app_bool }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examGradeRequest.isQueued | app_bool }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examGradeRequest.queueDate | app_time }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examGradeRequest.dequeueDate | app_time }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examGradeRequest.eAlbaniaDocumentResponse }}
       </td>
     </tr>
   </ng-template>

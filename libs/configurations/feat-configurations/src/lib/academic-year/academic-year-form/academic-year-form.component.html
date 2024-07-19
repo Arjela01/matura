@@ -46,6 +46,26 @@
       </div>
     </div>
 
+    <label class="mb-3">Është vjeshtë? *</label>
+    <div class="formgrid grid">
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="IsFallTrue"
+          name="IsFall"
+          [value]="true"
+          [(ngModel)]="academicYear.isFall"></p-radioButton>
+        <label for="IsFallTrue">Po</label>
+      </div>
+      <div class="field-radiobutton col-6">
+        <p-radioButton
+          id="IsFallFalse"
+          name="IsFall"
+          [value]="false"
+          [(ngModel)]="academicYear.isFall"></p-radioButton>
+        <label for="IsFallFalse">Jo</label>
+      </div>
+    </div>
+
     <div class="field p-fluid">
       <label for="directorName">Drejtori</label>
       <input

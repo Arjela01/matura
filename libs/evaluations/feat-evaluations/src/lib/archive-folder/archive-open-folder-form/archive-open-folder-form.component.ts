@@ -11,7 +11,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import { ArchiveFolder } from '@msh/shared/domain-models';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
@@ -19,11 +21,6 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { MessageService } from 'primeng/api';
-import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
-import { ArchiveFolder } from '@msh/shared/domain-models';
 
 @Component({
   selector: 'msh-archive-open-folder-form',
@@ -59,8 +56,6 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
 
   @ViewChild('form', { static: true }) form!: NgForm;
 
-  id: any;
-
   submitted = false;
   saving = false;
 
@@ -68,7 +63,7 @@ export class ArchiveOpenFolderFormComponent implements OnChanges {
     nr: 0,
     isClosed: false,
     lastUserId: undefined,
-    totalArchiveExams: 0,
+    totalArchiveExams: 0
   };
   examTypeId: any;
   examSubjectId: any;

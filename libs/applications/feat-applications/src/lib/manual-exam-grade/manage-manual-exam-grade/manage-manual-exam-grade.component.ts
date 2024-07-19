@@ -1,46 +1,45 @@
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  OnInit,
-  Output,
+  OnInit
 } from '@angular/core';
-import { CommonModule, formatDate } from '@angular/common';
-import { BehaviorSubject } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ManualExamGradeService } from '@msh/applications/data-access-applications';
+import { ExamSubjectApiService } from '@msh/configurations/data-access-configurations';
+import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   ExamGradeRequestModel,
   ManualExamGradeModel,
 } from '@msh/shared/domain-models';
-import { TableLazyLoadEvent } from 'primeng/table';
-import { DropdownModel } from '@msh/shared/data-access-shared';
-import { ConfirmationService, SharedModule } from 'primeng/api';
 import {
   GlobalToastService,
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
-import { ExamSubjectApiService } from '@msh/configurations/data-access-configurations';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ConfirmationService, SharedModule } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
-import { RippleModule } from 'primeng/ripple';
-import { ManualExamGradeService } from '@msh/applications/data-access-applications';
-import { ExamGradeRequestFormComponent } from '../../exam-grade-request/exam-grade-request-form/exam-grade-request-form.component';
-import { ExamGradeRequestGridComponent } from '../../exam-grade-request/exam-grade-request-grid/exam-grade-request-grid.component';
-import { ManualExamGradeGridComponent } from '../manual-exam-grade-grid/manual-exam-grade-grid.component';
-import { ManualExamGradeFormComponent } from '../manual-exam-grade-form/manual-exam-grade-form.component';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { TabViewModule } from 'primeng/tabview';
-import { A1a1zConfirmationDialogComponent } from '../../students/manage-students/a1a1z-confirmation-dialog/a1a1z-confirmation-dialog.component';
-import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
-import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PaginatorModule } from 'primeng/paginator';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { InputTextareaModule } from 'primeng/inputtextarea';
+import { RippleModule } from 'primeng/ripple';
+import { TableLazyLoadEvent } from 'primeng/table';
+import { TabViewModule } from 'primeng/tabview';
+import { BehaviorSubject } from 'rxjs';
+import { ExamGradeRequestFormComponent } from '../../exam-grade-request/exam-grade-request-form/exam-grade-request-form.component';
+import { ExamGradeRequestGridComponent } from '../../exam-grade-request/exam-grade-request-grid/exam-grade-request-grid.component';
+import { A1a1zConfirmationDialogComponent } from '../../students/manage-students/a1a1z-confirmation-dialog/a1a1z-confirmation-dialog.component';
+import { ManualExamGradeFormComponent } from '../manual-exam-grade-form/manual-exam-grade-form.component';
+import { ManualExamGradeGridComponent } from '../manual-exam-grade-grid/manual-exam-grade-grid.component';
 
 @UntilDestroy()
 @Component({
@@ -95,7 +94,6 @@ export class ManageManualExamGradeComponent implements OnInit {
     private readonly examSubjectService: ExamSubjectApiService,
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
-    private router: Router
   ) {
     this.idCard = this.route.snapshot.paramMap.get('idCard');
   }
@@ -118,6 +116,8 @@ export class ManageManualExamGradeComponent implements OnInit {
     maturaId: '',
     email: '',
     highSchoolId: '',
+    isQueued: false,
+    isQueueReady: false
   };
 
   ngOnInit() {

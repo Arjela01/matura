@@ -37,6 +37,12 @@
           <p-sortIcon field="isActive"></p-sortIcon>
         </div>
       </th>
+      <th pSortableColumn="isFall">
+        Është vjeshtë?
+        <div>
+          <p-sortIcon field="isFall"></p-sortIcon>
+        </div>
+      </th>
       <th pSortableColumn="directorName">
         Drejtori
         <div>
@@ -53,6 +59,9 @@
       </td>
       <td style="width: 33%; min-width: 10rem">
         {{ academicYear.isActive | app_bool }}
+      </td>
+      <td style="width: 33%; min-width: 10rem">
+        {{ academicYear.isFall | app_bool }}
       </td>
       <td style="width: 33%; min-width: 10rem">
         {{ academicYear.directorName }}

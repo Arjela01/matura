@@ -12,6 +12,14 @@ export interface ExamGradeRequestModel {
   description: string;
   email: string;
   highSchoolId: string;
+  attachedDocument?: string;
+  documentName?: any;
+  comments?: string;
+  isQueued: boolean;
+  queueDate?: string;
+  dequeueDate?: string;
+  isQueueReady: boolean;
+  eAlbaniaDocumentResponse?: string;
 }
 
 export interface ExamGradeRequestView {
