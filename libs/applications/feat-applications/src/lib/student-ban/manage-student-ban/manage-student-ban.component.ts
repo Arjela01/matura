@@ -12,7 +12,7 @@ import {
   ExamTypeApiService,
   StudentBanApiService,
 } from '@msh/configurations/data-access-configurations';
-import { StudentBan } from '@msh/shared/domain-models';
+import { AcademicYear, ExamDate, StudentBan } from '@msh/shared/domain-models';
 
 import {
   GlobalToastService,
@@ -55,6 +55,7 @@ export class ManageStudentBanComponent implements OnInit {
   selectedBannedStudent: StudentBan | null = null;
   examTypes: DropdownModel<number>[] = [];
   displayModal = false;
+  currentAcademicYear?: Partial<AcademicYear>;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -67,7 +68,8 @@ export class ManageStudentBanComponent implements OnInit {
 
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     skip(1),
-    map(([_]) => {
+    map(([data]) => {
+      this.currentAcademicYear = data;
       if (this.filters) {
         this.getBannedStudents(this.filters as TableLazyLoadEvent);
       }
@@ -81,7 +83,9 @@ export class ManageStudentBanComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
-    this.selectedBannedStudent = {} as StudentBan;
+    this.selectedBannedStudent = {
+      isFall: this.currentAcademicYear?.isFall ?? false,
+    } as StudentBan;
   }
 
   onModalClose() {

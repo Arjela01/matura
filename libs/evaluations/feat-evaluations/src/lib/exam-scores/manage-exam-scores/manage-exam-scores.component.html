@@ -1,17 +1,17 @@
 <div class="flex center mb-2 page-header mb-header align-items-top">
   <h2 class="flex-1 mb-0">Lista e Pikëve</h2>
 
-  <div class="my-2">
-    <div class="flex align-items-right justify-content-right">
-      <div class="my-2">
-        <button
-          pButton
-          pRipple
-          label="Shto"
-          icon="pi pi-plus"
-          class="p-button-success mr-2"
-          (click)="onNewClick()"></button>
-      </div>
+  <div class="flex justify-content-right">
+    <div class="my-2">
+      <button
+        pButton
+        pRipple
+        label="Shto"
+        icon="pi pi-plus"
+        class="p-button-success mr-2"
+        (click)="onNewClick()"></button>
+    </div>
+    <div class="my-2 ml-2">
       <button
         pButton
         pRipple
@@ -19,16 +19,17 @@
         label="Shkarko"
         (click)="downloadFile()"></button>
     </div>
-    <p-fileUpload
-      name="myfile[]"
-      styleClass="topFileUpload"
-      [multiple]="true"
-      [customUpload]="true"
-      chooseLabel="Ngarko"
-      [auto]="true"
-      accept=".xlsm,.xlsx,application/msexcel"
-      (uploadHandler)="onUpload($event)">
-    </p-fileUpload>
+    <div class="my-2 ml-2">
+      <p-fileUpload
+        name="myfile[]"
+        [multiple]="true"
+        [customUpload]="true"
+        chooseLabel="Ngarko"
+        [auto]="true"
+        accept=".xlsm,.xlsx,application/msexcel"
+        (uploadHandler)="onUpload($event)">
+      </p-fileUpload>
+    </div>
   </div>
 </div>
 
