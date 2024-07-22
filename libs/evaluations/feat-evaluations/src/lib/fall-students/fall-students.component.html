@@ -1,0 +1,51 @@
+<div
+  class="flex mb-2 page-header center justify-content-between mb-header align-items-top">
+  <div>
+    <h2 class="mb-0">Maturantet e Vjeshtës</h2>
+    <div class="mt-4">
+      <span>Emri i procesit:</span>
+      {{ appProcessType }}
+    </div>
+    <div style="margin: 10px 0 19px 0">
+      <span>Statusi:</span>
+      {{ executionLog }}
+    </div>
+    <h4>Procesi i fundit i ekzekutuar</h4>
+  </div>
+  <div class="flex justify-content-end">
+    <div class="my-2 flex align-items-center">
+      <div class="actions">
+        <button
+          type="button"
+          pButton
+          pRipple
+          (click)="postProcess()"
+          [disabled]="isLoading">
+          <ng-container *ngIf="isLoading; else labelTmpl">
+            <div class="spinner-container">
+              <i
+                *ngIf="isLoading"
+                class="pi pi-spin pi-spinner"
+                style="font-size: 1.5rem">
+              </i>
+            </div>
+          </ng-container>
+          <ng-template #labelTmpl>
+            <span>Fillo Procesin</span>
+          </ng-template>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <msh-grid
+        [gridData]="(process$ | async) || []"
+        [columns]="columns"
+        (dataEmitted)="getProcessData($event, processType)"></msh-grid>
+    </div>
+  </div>
+</div>

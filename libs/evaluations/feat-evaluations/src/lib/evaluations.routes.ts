@@ -134,7 +134,13 @@ export const EVALUATION_ROUTES: Route[] = [
     loadComponent: () =>
       import('./tableT/tableT-grid.component').then(m => m.TableTGridComponent),
   },
-
+  {
+    path: 'fall-students',
+    loadComponent: () =>
+      import('./fall-students/fall-students.component').then(
+        m => m.FallStudentsComponent
+      ),
+  },
   {
     path: 'grades-scale',
     loadComponent: () =>

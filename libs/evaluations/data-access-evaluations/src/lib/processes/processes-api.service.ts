@@ -13,7 +13,7 @@ import { ApplicationProcess } from '@msh/shared/domain-models';
 })
 export class ProcessesApiService {
   private calculateGrade$$ = new BehaviorSubject<ApplicationProcess[]>([]);
-  calculateGrade$ = this.calculateGrade$$.asObservable();
+  startProcess$ = this.calculateGrade$$.asObservable();
   private loadingState$$ = new Subject<boolean>();
   loadingState$ = this.loadingState$$.asObservable();
   filters: TableLazyLoadEvent | null = null;

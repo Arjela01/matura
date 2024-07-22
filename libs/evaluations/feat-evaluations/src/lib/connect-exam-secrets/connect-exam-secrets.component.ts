@@ -51,7 +51,7 @@ export class ConnectExamSecretsComponent implements OnInit {
     { field: 'endTimeToShow', header: 'Koha e mbarimit' },
   ];
 
-  calculateGrade$ = this.process.calculateGrade$.pipe(
+  calculateGrade$ = this.process.startProcess$.pipe(
     tap(res => {
       this.appProcessType = res[0]?.appProcessType;
       this.executionLog = res[0]?.processStatus;
