@@ -24,13 +24,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
-import {
-  BehaviorSubject,
-  combineLatest,
-  map,
-  skip,
-  tap
-} from 'rxjs';
+import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { ExamScoresFormComponent } from '../exam-scores-form/exam-scores-form.component';
 import { ExamScoresGridComponent } from '../exam-scores-grid/exam-scores-grid.component';
 
@@ -87,7 +81,8 @@ export class ManageExamScoresComponent implements OnInit {
 
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     skip(1),
-    map(([_]) => {
+    map(([data]) => {
+      this.currentAcademicYear = data;
       if (this.filters) {
         this.getExamScores(this.filters as TableLazyLoadEvent);
       }
@@ -105,7 +100,7 @@ export class ManageExamScoresComponent implements OnInit {
       totalScore: 0,
       isFall: this.currentAcademicYear?.isFall ?? false,
       archiveFolderNr: 0,
-      archiveExamIndex: 0
+      archiveExamIndex: 0,
     } as ExamScore;
   }
 
