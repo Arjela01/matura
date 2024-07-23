@@ -67,7 +67,6 @@ export class ManageStudentBanComponent implements OnInit {
   ) {}
 
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    skip(1),
     map(([data]) => {
       this.currentAcademicYear = data;
       if (this.filters) {
@@ -82,6 +81,7 @@ export class ManageStudentBanComponent implements OnInit {
   }
 
   onNewClick() {
+    console.log(123, this.currentAcademicYear);
     this.displayModal = true;
     this.selectedBannedStudent = {
       isFall: this.currentAcademicYear?.isFall ?? false,
