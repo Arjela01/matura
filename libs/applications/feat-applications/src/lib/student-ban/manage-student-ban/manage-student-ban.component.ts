@@ -81,7 +81,6 @@ export class ManageStudentBanComponent implements OnInit {
   }
 
   onNewClick() {
-    console.log(123, this.currentAcademicYear);
     this.displayModal = true;
     this.selectedBannedStudent = {
       isFall: this.currentAcademicYear?.isFall ?? false,
