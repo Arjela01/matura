@@ -6,15 +6,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { RippleModule } from 'primeng/ripple';
 import { GridComponent } from '../grid/grid.component';
-import {
-  CalculationProcessesApiService,
-  ProcessesApiService,
-} from '@msh/evaluations/data-access-evaluations';
+import { ProcessesApiService } from '@msh/evaluations/data-access-evaluations';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { tap } from 'rxjs';
 import { Application_Process } from '../grid/grid-type.enum';
-import * as FileSaver from 'file-saver';
 
 @UntilDestroy()
 @Component({
@@ -56,10 +52,7 @@ export class TabularGradeReportComponent implements OnInit {
     })
   );
 
-  constructor(
-    private readonly calculateGradesService: CalculationProcessesApiService,
-    private readonly process: ProcessesApiService
-  ) {}
+  constructor(private readonly process: ProcessesApiService) {}
 
   ngOnInit() {
     this.process.loadingState$
@@ -76,17 +69,5 @@ export class TabularGradeReportComponent implements OnInit {
 
   postProcess() {
     this.process.post(this.processType);
-  }
-
-  downloadFile() {
-    this.calculateGradesService
-      .export()
-      .pipe(untilDestroyed(this))
-      .subscribe((response: any) => {
-        const blob: any = new Blob([response], {
-          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        });
-        FileSaver.saveAs(blob, 'TabelaT');
-      });
   }
 }
