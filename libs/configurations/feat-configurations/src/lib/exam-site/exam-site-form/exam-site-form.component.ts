@@ -9,18 +9,18 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { ExamSite } from '@msh/shared/domain-models';
+import { ExamSiteApiService } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
+import { ExamSite } from '@msh/shared/domain-models';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { RadioButtonModule } from 'primeng/radiobutton';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { ExamSiteApiService } from '@msh/configurations/data-access-configurations';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @UntilDestroy()
 @Component({
@@ -42,11 +42,14 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   styleUrls: ['./exam-site-form.component.scss'],
 })
 export class ExamSiteFormComponent implements OnInit {
+
+  isFall = false;
   @Input() administrationOffices: DropdownModel<number>[] = [];
   @Input() highschools: DropdownModel<number>[] = [];
   @Input() set examSitesDetails(details: ExamSite | null) {
     if (details) {
       this.examSite = Object.assign({}, details);
+      this.isFall = this.examSite.isFall;
     }
   }
 
@@ -70,6 +73,7 @@ export class ExamSiteFormComponent implements OnInit {
     administrationOfficeId: 0,
     administrationOfficeName: '',
     academicYearId: 1,
+    isFall: this.isFall
   };
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -121,6 +125,7 @@ export class ExamSiteFormComponent implements OnInit {
         id: null,
         name: '',
         quota: 0,
+        isFall: this.isFall
       };
     }
   }

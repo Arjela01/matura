@@ -19,7 +19,7 @@ import {
   HighSchoolApiService,
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import { ExamSite } from '@msh/shared/domain-models';
+import { AcademicYear, ExamSite } from '@msh/shared/domain-models';
 
 import {
   GRID_ACTIONS,
@@ -30,7 +30,7 @@ import {
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ExamSiteFormComponent } from '../exam-site-form/exam-site-form.component';
 import { ExamSiteGridComponent } from '../exam-site-grid/exam-site-grid.component';
 
@@ -57,7 +57,7 @@ export class ManageExamSiteComponent implements OnInit {
   private examSites$$ = new BehaviorSubject<ExamSite[]>([]);
   examSites$ = this.examSites$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
-
+  currentAcademicYear?: Partial<AcademicYear>;
   totalRecords = 0;
   selectedExamSite: ExamSite | null = null;
   selectedExamSites: ExamSite[] = [];
@@ -65,10 +65,10 @@ export class ManageExamSiteComponent implements OnInit {
   administrationOffices: DropdownModel<number>[] = [];
   highSchools: DropdownModel<number>[] = [];
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    skip(1),
-    map(([_]) => {
+    map(([academicYear]) => {
+      this.currentAcademicYear = academicYear;
       if (this.filters) {
-        this.getExamSites(this.filters);
+        this.getExamSites(this.filters as TableLazyLoadEvent);
       }
     }),
     tap()
@@ -90,7 +90,10 @@ export class ManageExamSiteComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
-    this.selectedExamSite = {} as ExamSite;
+    this.selectedExamSite = {
+      isFall: this.currentAcademicYear?.isFall ?? false,
+    } as ExamSite;
+    console.log('This selected examSite: ' + JSON.stringify(this.selectedExamSite))
   }
 
   onGridEvent(event: GridEvent<ExamSite | ExamSite[]>) {

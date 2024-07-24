@@ -9,6 +9,7 @@ export interface ExamSite {
   highschoolIds?: any;
   highschoolsNames?: string[];
   highSchools?: any;
+  isFall: boolean;
 }
 
 export interface ExamSiteTableView {
