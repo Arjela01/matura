@@ -75,6 +75,17 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="isFall">
+        Vjeshtë?
+        <div>
+          <p-sortIcon field="isFall"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            field="isFall"
+            matchMode="equals"
+            display="menu"></p-columnFilter>
+        </div>
+      </th>
       <th></th>
     </tr>
   </ng-template>
@@ -94,6 +105,9 @@
       </td>
       <td style="width: 18%; min-width: 10rem">
         {{ examSite.academicYear }}
+      </td>
+      <td style="width: 5%; min-width: 10rem">
+        {{ examSite.isFall | app_bool }}
       </td>
       <td>
         <div class="flex">
