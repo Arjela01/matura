@@ -24,6 +24,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
 import { UserProfileApiService } from '@msh/user-section/data-access-user-section';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ExamDateGridComponent } from '../../exam-date/exam-date-grid/exam-date-grid.component';
+import { CustomSwitchComponent } from '@msh/shared/ui-shared';
 
 @UntilDestroy()
 @Component({
@@ -37,6 +38,7 @@ import { ExamDateGridComponent } from '../../exam-date/exam-date-grid/exam-date-
     ListOfStudentsFiltersComponent,
     ListOfStudentsGridComponent,
     ExamDateGridComponent,
+    CustomSwitchComponent,
   ],
   templateUrl: './manage-list-of-students.component.html',
   styleUrls: ['./manage-list-of-students.component.scss'],
@@ -55,6 +57,7 @@ export class ManageListOfStudentsComponent implements OnInit {
   administrationOfficeId = 0;
   userRole = '';
   academicYear: any;
+  isOn = false;
 
   event = {
     first: 0,
@@ -87,6 +90,7 @@ export class ManageListOfStudentsComponent implements OnInit {
             }
           }
           this.academicYear = { ...data };
+          this.isOn = this.academicYear?.isFall ?? false;
           return combineLatest([this.userService.getLoggedInUserData()]);
         })
       )
@@ -96,6 +100,11 @@ export class ManageListOfStudentsComponent implements OnInit {
         this.highSchoolId = user.data.highSchoolId;
         this.examSiteData();
       });
+  }
+
+  onSwitchChange(event: any) {
+    this.isOn = event;
+    this.getExamAssignments(this.filters as TableLazyLoadEvent);
   }
 
   getAdministrationOfficesDropdown() {
@@ -109,6 +118,17 @@ export class ManageListOfStudentsComponent implements OnInit {
   }
 
   getExamAssignments($event: any) {
+    if (this.isOn && this.academicYear?.isFall) {
+      this.event.filters = {
+        ...this.event.filters,
+        isFall: {
+          value: this.academicYear.isFall,
+          matchMode: 'equals',
+        },
+      };
+    } else {
+      this.event.filters = {};
+    }
     this.examAssignmentService
       .getAssignments(this.event, $event.examDateId)
       .pipe(untilDestroyed(this))

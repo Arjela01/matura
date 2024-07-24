@@ -1,5 +1,14 @@
-<div>
+<div class="flex ml-2 mb-5 page-header mb-header">
   <h2 class="flex-1 mb-0">Lista Emërore</h2>
+  <div class="flex justify-content-between">
+    <msh-custom-switch
+      [(isOn)]="isOn"
+      [label]="'Vjeshtë'"
+      (isOnChange)="onSwitchChange($event)">
+    </msh-custom-switch>
+  </div>
+</div>
+<div>
   <div class="mt-4">
     <msh-list-of-students-filters
       [showSortButton]="showSortButton"

@@ -1,39 +1,53 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
 import { TableLazyLoadEvent } from 'primeng/table';
 
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import { ExamScore } from '@msh/shared/domain-models';
-import { AppBoolPipe } from '@msh/shared/ui-shared';
+import { AcademicYear, ExamScore } from '@msh/shared/domain-models';
+import { AppBoolPipe, CustomSwitchComponent } from '@msh/shared/ui-shared';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TableModule } from 'primeng/table';
-import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
+import { combineLatest, distinctUntilChanged, map, tap } from 'rxjs';
 
 @UntilDestroy()
 @Component({
   selector: 'msh-unmatched-exams-grid',
   standalone: true,
-  imports: [CommonModule, TableModule, ColumnFilterDirective, AppBoolPipe],
+  imports: [
+    CommonModule,
+    TableModule,
+    ColumnFilterDirective,
+    AppBoolPipe,
+    CustomSwitchComponent,
+  ],
   templateUrl: './unmatched-exams-grid.component.html',
   styleUrls: ['./unmatched-exams-grid.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UnmatchedExamsGridComponent {
-  private unmatchedExams$$ = new BehaviorSubject<ExamScore[]>([]);
-  unmatchedExams$ = this.unmatchedExams$$.asObservable();
+export class UnmatchedExamsGridComponent implements OnInit {
+  unmatchedExams: ExamScore[] = [];
   totalRecords = 0;
   filters: TableLazyLoadEvent | null = null;
+  isOn = false;
+  currentAcademicYear!: Partial<AcademicYear>;
 
   constructor(
     private readonly examScoreApiService: ExamScoreApiService,
-    private readonly authFacade: AuthFacade
+    private readonly authFacade: AuthFacade,
+    private readonly cd: ChangeDetectorRef
   ) {}
 
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    skip(1),
-    map(([_]) => {
+    distinctUntilChanged(),
+    map(([data]) => {
+      this.currentAcademicYear = data;
+      this.isOn = this.currentAcademicYear?.isFall ?? false;
       if (this.filters) {
         this.unmatchedExamScore(this.filters as TableLazyLoadEvent);
       }
@@ -41,15 +55,37 @@ export class UnmatchedExamsGridComponent {
     tap()
   );
 
+  onSwitchChange(event: any) {
+    this.isOn = event;
+    this.unmatchedExamScore(this.filters as TableLazyLoadEvent);
+  }
+
+  ngOnInit(): void {
+    this.academicYear$.pipe(untilDestroyed(this)).subscribe();
+  }
+
   unmatchedExamScore($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
+    if (this.isOn && this.currentAcademicYear?.isFall) {
+      this.filters.filters = {
+        ...this.filters.filters,
+        isFall: {
+          value: this.currentAcademicYear.isFall,
+          matchMode: 'equals',
+        },
+      };
+    } else {
+      this.filters.filters = {};
+    }
+
     this.examScoreApiService
-      .loadUnmatchedExamScores($event)
+      .loadUnmatchedExamScores(this.filters)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.unmatchedExams$$.next(response.data);
+        this.unmatchedExams = response.data;
         this.totalRecords = response.total;
+        this.cd.detectChanges();
       });
   }
 }
