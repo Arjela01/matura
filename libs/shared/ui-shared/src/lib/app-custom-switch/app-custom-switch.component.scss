@@ -1,0 +1,48 @@
+:host {
+  display: block;
+}
+
+.custom-switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.switch-container {
+  position: relative;
+  display: inline-block;
+}
+
+.switch-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9;
+  color: black;
+  font-weight: bolder;
+}
+
+::ng-deep .p-inputswitch .p-inputswitch-slider {
+  width: 100px;
+  height: 30px;
+  background: #d4d4d8;
+  transition: none;
+  border-radius: 30px;
+  margin-left: -71px;
+}
+
+::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before {
+  transform: translateX(5.25rem);
+}
+
+.text-white {
+  color: white;
+  margin-left: -50px;
+}
+
+.text-black {
+  color: black;
+  margin-left: -32px;
+}

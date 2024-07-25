@@ -28,9 +28,10 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ExamSecretsFormComponent } from '../exam-secrets-form/exam-secrets-form.component';
 import { ExamSecretsGridComponent } from '../exam-secrets-grid/exam-secrets-grid.component';
-import { ExamSecret } from '@msh/shared/domain-models';
+import { AcademicYear, ExamSecret } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ArchiveFolderGridComponent } from '../../archive-folder/archive-folder-grid/archive-folder-grid.component';
+import { CustomSwitchComponent } from '@msh/shared/ui-shared';
 
 @UntilDestroy()
 @Component({
@@ -47,6 +48,7 @@ import { ArchiveFolderGridComponent } from '../../archive-folder/archive-folder-
     RippleModule,
     FileUploadModule,
     ArchiveFolderGridComponent,
+    CustomSwitchComponent,
   ],
   templateUrl: './manage-exam-secrets.component.html',
   styleUrls: ['./manage-exam-secrets.component.scss'],
@@ -71,9 +73,13 @@ export class ManageExamSecretsComponent implements OnInit {
   selectedRecord: any;
   headerText: any;
   displayHistoryForm = false;
+  isOn = false;
+  currentAcademicYear!: Partial<AcademicYear>;
 
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    map(([_]) => {
+    map(([data]) => {
+      this.currentAcademicYear = data;
+      this.isOn = this.currentAcademicYear?.isFall ?? false;
       if (this.filters) {
         this.getExamSecrets(this.filters as TableLazyLoadEvent);
       }
@@ -97,6 +103,12 @@ export class ManageExamSecretsComponent implements OnInit {
   ngOnInit(): void {
     this.getAdministrationOffices();
     this.getExamSecretNotes();
+    this.academicYear$.pipe(untilDestroyed(this)).subscribe();
+  }
+
+  onSwitchChange(event: any) {
+    this.isOn = event;
+    this.getExamSecrets(this.filters as TableLazyLoadEvent);
   }
 
   onNewClick() {
@@ -215,8 +227,22 @@ export class ManageExamSecretsComponent implements OnInit {
   getExamSecrets($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
+    this.filters = Object.assign({}, $event);
+
+    if (this.isOn && this.currentAcademicYear?.isFall) {
+      this.filters.filters = {
+        ...this.filters.filters,
+        isFall: {
+          value: this.currentAcademicYear.isFall,
+          matchMode: 'equals',
+        },
+      };
+    } else {
+      this.filters.filters = {};
+    }
+
     this.examSecretService
-      .loadExamSecrets($event)
+      .loadExamSecrets(this.filters)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examSecrets$$.next(response.data);

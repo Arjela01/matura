@@ -1,0 +1,14 @@
+<div class="custom-switch">
+  <div class="switch-container">
+    <span
+      class="switch-label"
+      [ngClass]="{ 'text-white': isOn, 'text-black': !isOn }">
+      {{ label }}
+    </span>
+    <p-inputSwitch
+      class="custom-input-switch"
+      [(ngModel)]="isOn"
+      (onChange)="onSwitchChange($event)">
+    </p-inputSwitch>
+  </div>
+</div>

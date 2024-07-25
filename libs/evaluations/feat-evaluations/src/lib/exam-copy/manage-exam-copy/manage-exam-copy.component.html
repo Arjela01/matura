@@ -1,84 +1,84 @@
 <div class="flex center mb-2 page-header mb-header">
-    <h2 class="flex-1 mb-0">Aplikimet për Kopje Testi</h2>
-    <div class="flex align-items-right justify-content-right"></div>
-    <div class="my-2 ml-2">
-        <button
-                pRipple
-                icon="pi pi-download"
-                pButton
-                class="mr-2"
-                label="Shkarko"
-                (click)="downloadTemplateFile()"></button>
+  <h2 class="flex-1 mb-0">Aplikimet për Kopje Testi</h2>
+  <div class="flex align-items-right justify-content-right"></div>
+  <div class="my-2 ml-2">
+    <button
+      pRipple
+      icon="pi pi-download"
+      pButton
+      class="mr-2"
+      label="Shkarko"
+      (click)="downloadTemplateFile()"></button>
 
-        <button
-                pRipple
-                icon="pi pi-upload"
-                pButton
-                label="Ngarko"
-                (click)="showUploadDialog()"></button>
-    </div>
+    <button
+      pRipple
+      icon="pi pi-upload"
+      pButton
+      label="Ngarko"
+      (click)="showUploadDialog()"></button>
+  </div>
 </div>
 <div class="grid">
-    <div class="col-12">
-        <div class="card">
-            <msh-exam-copy-grid
-                    [examCopies]="(examCopies$ | async) || []"
-                    [totalRecords]="totalRecords"
-                    (lazyLoadData)="getExamCopies($event)">
-            </msh-exam-copy-grid>
-        </div>
+  <div class="col-12">
+    <div class="card">
+      <msh-exam-copy-grid
+        [examCopies]="(examCopies$ | async) || []"
+        [totalRecords]="totalRecords"
+        (lazyLoadData)="getExamCopies($event)">
+      </msh-exam-copy-grid>
     </div>
+  </div>
 </div>
 
 <p-confirmDialog
-    #cd
-    header="Konfirmo"
-    icon="pi pi-exclamation-triangle"
-    [style]="{ width: '450px' }">
-    <ng-template pTemplate="footer">
-        <button
-                type="button"
-                pButton
-                icon="pi pi-times"
-                label="Jo"
-                class="p-button-text"
-                (click)="cd.reject()"></button>
-        <button
-                type="button"
-                pButton
-                icon="pi pi-check"
-                label="Po"
-                class="p-button border"
-                (click)="cd.accept()"></button>
-    </ng-template>
+  #cd
+  header="Konfirmo"
+  icon="pi pi-exclamation-triangle"
+  [style]="{ width: '450px' }">
+  <ng-template pTemplate="footer">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Jo"
+      class="p-button-text"
+      (click)="cd.reject()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Po"
+      class="p-button border"
+      (click)="cd.accept()"></button>
+  </ng-template>
 </p-confirmDialog>
 
 <p-dialog
-        [(visible)]="displayModal"
-        [style]="{ width: '500px' }"
-        header="Ngarko Teste si zip"
-        [modal]="true"
-        [draggable]="false"
-        [resizable]="false"
-        class="p-fluid"
-        (onHide)="onModalClose()">
-    <ng-template pTemplate="content">
-        <p-fileUpload
-                name="file"
-                [multiple]="false"
-                [customUpload]="true"
-                chooseLabel="Zgjidh"
-                [auto]="true"
-                accept=".zip"
-                (uploadHandler)="onUpload($event)">
-        </p-fileUpload>
-        <p-progressBar [value]="uploadProgress"/>
+  [(visible)]="displayModal"
+  [style]="{ width: '500px' }"
+  header="Ngarko Teste si zip"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid"
+  (onHide)="onModalClose()">
+  <ng-template pTemplate="content">
+    <p-fileUpload
+      name="file"
+      [multiple]="false"
+      [customUpload]="true"
+      chooseLabel="Zgjidh"
+      [auto]="true"
+      accept=".zip"
+      (uploadHandler)="onUpload($event)">
+    </p-fileUpload>
+    <p-progressBar [value]="uploadProgress" />
 
-        <div class="mt-3" >
-            <p-button type="button" label="Ngarko" (onClick)="uploadFile($event)">
-            </p-button>
-        </div>
-    </ng-template>
+    <div class="mt-3">
+      <p-button type="button" label="Ngarko" (onClick)="uploadFile($event)">
+      </p-button>
+    </div>
+  </ng-template>
 </p-dialog>
 
 <ng-container *ngIf="academicYear$ | async"></ng-container>

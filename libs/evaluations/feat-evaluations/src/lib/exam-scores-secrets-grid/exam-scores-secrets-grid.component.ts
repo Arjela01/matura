@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
-import { ExamScore } from '@msh/shared/domain-models';
-import { AppBoolPipe } from '@msh/shared/ui-shared';
+import { AcademicYear, ExamScore } from '@msh/shared/domain-models';
+import { AppBoolPipe, CustomSwitchComponent } from '@msh/shared/ui-shared';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import * as FileSaver from 'file-saver';
@@ -14,7 +14,14 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  distinctUntilChanged,
+  map,
+  skip,
+  tap,
+} from 'rxjs';
 @UntilDestroy()
 @Component({
   selector: 'msh-exam-score-grid',
@@ -29,20 +36,25 @@ import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
     RippleModule,
     ColumnFilterDirective,
     RouterLink,
-    AppBoolPipe
-],
+    AppBoolPipe,
+    CustomSwitchComponent,
+  ],
   templateUrl: './exam-scores-secrets-grid.component.html',
   styleUrls: ['./exam-scores-secrets-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamScoresSecretsGridComponent {
+export class ExamScoresSecretsGridComponent implements OnInit {
   private examScores$$ = new BehaviorSubject<ExamScore[]>([]);
   examScores$ = this.examScores$$.asObservable();
+  isOn = false;
+  currentAcademicYear!: Partial<AcademicYear>;
   filters: TableLazyLoadEvent | null = null;
   totalRecords = 0;
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    skip(1),
-    map(([_]) => {
+    distinctUntilChanged(),
+    map(([data]) => {
+      this.currentAcademicYear = data;
+      this.isOn = this.currentAcademicYear?.isFall ?? false;
       if (this.filters) {
         this.getExamScores(this.filters as TableLazyLoadEvent);
       }
@@ -54,30 +66,36 @@ export class ExamScoresSecretsGridComponent {
     private authFacade: AuthFacade
   ) {}
 
+  onSwitchChange(event: any) {
+    this.isOn = event;
+    this.getExamScores(this.filters as TableLazyLoadEvent);
+  }
+
+  ngOnInit(): void {
+    this.academicYear$.pipe(untilDestroyed(this)).subscribe();
+  }
+
   getExamScores($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
+    if (this.isOn && this.currentAcademicYear?.isFall) {
+      this.filters.filters = {
+        ...this.filters.filters,
+        isFall: {
+          value: this.currentAcademicYear.isFall,
+          matchMode: 'equals',
+        },
+      };
+    } else {
+      this.filters.filters = {};
+    }
+
     this.examScoreService
-      .loadMatchedExamScores($event)
+      .loadMatchedExamScores(this.filters)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examScores$$.next(response.data);
         this.totalRecords = response.total;
-      });
-  }
-
-  downloadFile() {
-    this.examScoreService
-      .exportExamScoreSecret()
-      .pipe(untilDestroyed(this))
-      .subscribe((response: any) => {
-        const blob: any = new Blob([response], {
-          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        });
-        FileSaver.saveAs(
-          blob,
-          'Piket e provimit pas sekretimit Export[TEMPLATE]'
-        );
       });
   }
 }
