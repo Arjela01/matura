@@ -1,5 +1,12 @@
 <div class="flex ml-2 mb-5 page-header mb-header">
   <h2 class="flex-1 mb-0">Pikë Analitike</h2>
+  <div class="flex align-items-right justify-content-right">
+    <msh-custom-switch
+      [(isOn)]="isOn"
+      [label]="'Vjeshtë'"
+      (isOnChange)="onSwitchChange($event)">
+    </msh-custom-switch>
+  </div>
 </div>
 
 <p-table
@@ -87,6 +94,17 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="isFall">
+        Vjeshtë
+        <div>
+          <p-sortIcon field="isFall"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            matchMode="equals"
+            field="isFall"
+            display="menu"></p-columnFilter>
+        </div>
+      </th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-analyticScores>
@@ -108,6 +126,9 @@
       </td>
       <td style="width: 20%; min-width: 10rem">
         {{ analyticScores.totalScore }}
+      </td>
+      <td style="width: 20%; min-width: 10rem">
+        {{ analyticScores.isFall | app_bool }}
       </td>
       <td style="width: 5%; min-width: 10rem">
         <div class="flex">

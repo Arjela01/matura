@@ -23,7 +23,7 @@
   currentPageReportTemplate="Shfaqen {first} deri {last} nga {totalRecords} rekorde"
   [rowHover]="true"
   (onLazyLoad)="getExamScoresWithoutAnalyticScoresList($event)"
-  [value]="(totalScoresWithoutAnalyticList$ | async) || []"
+  [value]="totalScoresWithoutAnalyticList"
   selectionMode="multiple"
   [lazy]="true">
   <ng-template pTemplate="header">
