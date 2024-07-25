@@ -2,6 +2,13 @@
   <h2 class="flex-1 mb-0">Dosjet</h2>
   <div class="flex align-items-right justify-content-right">
     <div class="my-2">
+      <msh-custom-switch
+        [(isOn)]="isOn"
+        [label]="'Vjeshtë'"
+        (isOnChange)="onSwitchChange($event)">
+      </msh-custom-switch>
+    </div>
+    <div>
       <button
         pButton
         pRipple

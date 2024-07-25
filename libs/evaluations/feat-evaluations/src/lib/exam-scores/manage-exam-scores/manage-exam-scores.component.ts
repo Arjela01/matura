@@ -27,6 +27,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { ExamScoresFormComponent } from '../exam-scores-form/exam-scores-form.component';
 import { ExamScoresGridComponent } from '../exam-scores-grid/exam-scores-grid.component';
+import { CustomSwitchComponent } from '@msh/shared/ui-shared';
 
 @UntilDestroy()
 @Component({
@@ -43,6 +44,7 @@ import { ExamScoresGridComponent } from '../exam-scores-grid/exam-scores-grid.co
     RippleModule,
     FileUploadModule,
     FormsModule,
+    CustomSwitchComponent,
   ],
   templateUrl: './manage-exam-scores.component.html',
   styleUrls: ['./manage-exam-scores.component.scss'],
@@ -63,6 +65,7 @@ export class ManageExamScoresComponent implements OnInit {
   examSubjects: DropdownModel<string>[] = [];
   base64: string | ArrayBuffer | null | undefined;
   currentAcademicYear?: Partial<AcademicYear>;
+  isOn = false;
 
   examScoreId: string | undefined;
   selectedRecord: any;
@@ -82,6 +85,7 @@ export class ManageExamScoresComponent implements OnInit {
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([data]) => {
       this.currentAcademicYear = data;
+      this.isOn = this.currentAcademicYear?.isFall ?? false;
       if (this.filters) {
         this.getExamScores(this.filters as TableLazyLoadEvent);
       }
@@ -91,6 +95,12 @@ export class ManageExamScoresComponent implements OnInit {
 
   ngOnInit(): void {
     this.getExamTypes();
+    this.academicYear$.pipe(untilDestroyed(this)).subscribe();
+  }
+
+  onSwitchChange(event: any) {
+    this.isOn = event;
+    this.getExamScores(this.filters as TableLazyLoadEvent);
   }
 
   onNewClick() {
@@ -179,8 +189,20 @@ export class ManageExamScoresComponent implements OnInit {
   getExamScores($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
+    if (this.isOn && this.currentAcademicYear?.isFall) {
+      this.filters.filters = {
+        ...this.filters.filters,
+        isFall: {
+          value: this.currentAcademicYear.isFall,
+          matchMode: 'equals',
+        },
+      };
+    } else {
+      this.filters.filters = {};
+    }
+
     this.examScoreService
-      .loadExamScores($event)
+      .loadExamScores(this.filters)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examScores$$.next(response.data);

@@ -20,10 +20,7 @@ import {
   ExamTypeApiService,
 } from '@msh/configurations/data-access-configurations';
 import { ArchiveFolderApiService } from '@msh/evaluations/data-access-evaluations';
-import {
-  AcademicYear,
-  ArchiveFolder
-} from '@msh/shared/domain-models';
+import { AcademicYear, ArchiveFolder } from '@msh/shared/domain-models';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -34,6 +31,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ArchiveFolderGridComponent } from '../archive-folder-grid/archive-folder-grid.component';
 import { ArchiveOpenFolderFormComponent } from '../archive-open-folder-form/archive-open-folder-form.component';
+import { CustomSwitchComponent } from '@msh/shared/ui-shared';
 
 @UntilDestroy()
 @Component({
@@ -49,6 +47,7 @@ import { ArchiveOpenFolderFormComponent } from '../archive-open-folder-form/arch
     ToolbarModule,
     RouterLink,
     RippleModule,
+    CustomSwitchComponent,
   ],
   templateUrl: './manage-archive-folders.component.html',
   styleUrls: ['./manage-archive-folders.component.scss'],
@@ -68,7 +67,8 @@ export class ManageArchiveFoldersComponent implements OnInit {
   selectedArchiveFolders: ArchiveFolder[] = [];
   archiveFolder: ArchiveFolder = {} as ArchiveFolder;
   displayModal = false;
-  currentAcademicYear?: Partial<AcademicYear>;
+  isOn = false;
+  currentAcademicYear!: Partial<AcademicYear>;
 
   folderNr: string | undefined;
   selectedRecord: any;
@@ -93,6 +93,7 @@ export class ManageArchiveFoldersComponent implements OnInit {
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([academicYear]) => {
       this.currentAcademicYear = academicYear;
+      this.isOn = this.currentAcademicYear?.isFall ?? false;
       if (this.filters) {
         this.getArchiveFolders(this.filters as TableLazyLoadEvent);
       }
@@ -104,6 +105,12 @@ export class ManageArchiveFoldersComponent implements OnInit {
       PermissionEnum.EditApplications as any
     );
     this.getExamTypes();
+    this.academicYear$.pipe(untilDestroyed(this)).subscribe();
+  }
+
+  onSwitchChange(event: any) {
+    this.isOn = event;
+    this.getArchiveFolders(this.filters as TableLazyLoadEvent);
   }
 
   onNewClick() {
@@ -195,8 +202,20 @@ export class ManageArchiveFoldersComponent implements OnInit {
   getArchiveFolders($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
+    if (this.isOn && this.currentAcademicYear?.isFall) {
+      this.filters.filters = {
+        ...this.filters.filters,
+        isFall: {
+          value: this.currentAcademicYear.isFall,
+          matchMode: 'equals',
+        },
+      };
+    } else {
+      this.filters.filters = {};
+    }
+
     this.archiveFolderService
-      .loadArchiveFolder($event)
+      .loadArchiveFolder(this.filters)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.archiveFolders$$.next(response.data);

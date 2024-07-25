@@ -13,15 +13,23 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  distinctUntilChanged,
+  map,
+  skip,
+  tap,
+} from 'rxjs';
 import {
   EmptySiteApiService,
   ExamAssignmentApiService,
 } from '@msh/configurations/data-access-configurations';
 import { EmptySiteGridComponent } from '../empty-site-grid/empty-site-grid.component';
-import { EmptySite } from '@msh/shared/domain-models';
+import { AcademicYear, EmptySite } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { AuthFacade } from '@msh/auth/data-access-auth';
+import { CustomSwitchComponent } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'msh-manage-empty-site',
@@ -35,6 +43,7 @@ import { AuthFacade } from '@msh/auth/data-access-auth';
     RippleModule,
     RouterLink,
     EmptySiteGridComponent,
+    CustomSwitchComponent,
   ],
   templateUrl: './manage-empty-site.component.html',
   styleUrls: ['./manage-empty-site.component.scss'],
@@ -48,6 +57,8 @@ export class ManageEmptySiteComponent {
   filters: TableLazyLoadEvent | null = null;
   totalRecords = 0;
   examDateId = 0;
+  isOn = false;
+  currentAcademicYear!: Partial<AcademicYear>;
 
   constructor(
     private readonly emptySiteService: EmptySiteApiService,
@@ -58,8 +69,10 @@ export class ManageEmptySiteComponent {
   ) {}
 
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    skip(1),
-    map(([_]) => {
+    distinctUntilChanged(),
+    map(([data]) => {
+      this.currentAcademicYear = data;
+      this.isOn = this.currentAcademicYear?.isFall ?? false;
       if (this.filters) {
         this.getEmptySites(this.filters as TableLazyLoadEvent);
       }
@@ -84,6 +97,11 @@ export class ManageEmptySiteComponent {
     }
   }
 
+  onSwitchChange(event: any) {
+    this.isOn = event;
+    this.getEmptySites(this.filters as TableLazyLoadEvent);
+  }
+
   emptySite(examDateId: number) {
     this.emptySiteService
       .emptySite(examDateId)
@@ -103,8 +121,21 @@ export class ManageEmptySiteComponent {
 
   getEmptySites($event: TableLazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
+
+    if (this.isOn && this.currentAcademicYear?.isFall) {
+      this.filters.filters = {
+        ...this.filters.filters,
+        isFall: {
+          value: this.currentAcademicYear.isFall,
+          matchMode: 'equals',
+        },
+      };
+    } else {
+      this.filters.filters = {};
+    }
+
     this.emptySiteService
-      .loadEmptySite($event)
+      .loadEmptySite(this.filters)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         const emptySites = [...response.data];
