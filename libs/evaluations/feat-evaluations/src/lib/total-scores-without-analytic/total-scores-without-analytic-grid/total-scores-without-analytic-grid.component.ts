@@ -67,7 +67,6 @@ export class TotalScoresWithoutAnalyticGridComponent implements OnInit {
   );
 
   onSwitchChange(event: any) {
-    debugger;
     this.isOn = event;
     this.getExamScoresWithoutAnalyticScoresList(
       this.filters as TableLazyLoadEvent
