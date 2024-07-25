@@ -1,7 +1,17 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
-import { ExamQuestionScoreTotal } from '@msh/shared/domain-models';
+import {
+  BehaviorSubject,
+  combineLatest,
+  distinctUntilChanged,
+  map,
+  skip,
+  tap,
+} from 'rxjs';
+import {
+  AcademicYear,
+  ExamQuestionScoreTotal,
+} from '@msh/shared/domain-models';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { ExamQuestionScoreTotalsService } from '@msh/evaluations/data-access-evaluations';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -14,6 +24,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { Router } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { AppBoolPipe, CustomSwitchComponent } from '@msh/shared/ui-shared';
 
 @UntilDestroy()
 @Component({
@@ -26,17 +37,21 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     TableModule,
     TooltipModule,
     ConfirmDialogModule,
+    CustomSwitchComponent,
+    AppBoolPipe,
   ],
   providers: [ConfirmationService],
   templateUrl: './exam-question-score-total-grid.component.html',
   styleUrls: ['./exam-question-score-total-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamQuestionScoreTotalGridComponent {
+export class ExamQuestionScoreTotalGridComponent implements OnInit {
   private records$$ = new BehaviorSubject<ExamQuestionScoreTotal[]>([]);
   analyticScoresList$ = this.records$$.asObservable();
   totalRecords = 0;
   filters: TableLazyLoadEvent | null = null;
+  isOn = false;
+  currentAcademicYear!: Partial<AcademicYear>;
 
   constructor(
     private readonly examQuestionScoreTotalsService: ExamQuestionScoreTotalsService,
@@ -47,8 +62,10 @@ export class ExamQuestionScoreTotalGridComponent {
   ) {}
 
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    skip(1),
-    map(([_]) => {
+    distinctUntilChanged(),
+    map(([data]) => {
+      this.currentAcademicYear = data;
+      this.isOn = this.currentAcademicYear?.isFall ?? false;
       if (this.filters) {
         this.loadTableData(this.filters as TableLazyLoadEvent);
       }
@@ -56,11 +73,32 @@ export class ExamQuestionScoreTotalGridComponent {
     tap()
   );
 
+  onSwitchChange(event: any) {
+    this.isOn = event;
+    this.loadTableData(this.filters as TableLazyLoadEvent);
+  }
+
+  ngOnInit(): void {
+    this.academicYear$.pipe(untilDestroyed(this)).subscribe();
+  }
+
   loadTableData($event: TableLazyLoadEvent | null) {
     this.filters = Object.assign({}, $event);
 
+    if (this.isOn && this.currentAcademicYear?.isFall) {
+      this.filters.filters = {
+        ...this.filters.filters,
+        isFall: {
+          value: this.currentAcademicYear.isFall,
+          matchMode: 'equals',
+        },
+      };
+    } else {
+      this.filters.filters = {};
+    }
+
     this.examQuestionScoreTotalsService
-      .loadTableData($event)
+      .loadTableData(this.filters)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.records$$.next(response.data);

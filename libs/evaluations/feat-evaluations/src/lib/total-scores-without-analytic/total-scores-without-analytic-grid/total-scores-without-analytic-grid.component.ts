@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   BehaviorSubject,
@@ -33,14 +38,9 @@ import { AppBoolPipe, CustomSwitchComponent } from '@msh/shared/ui-shared';
   ],
   templateUrl: './total-scores-without-analytic-grid.component.html',
   styleUrls: ['./total-scores-without-analytic-grid.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TotalScoresWithoutAnalyticGridComponent {
-  private totalScoresWithoutAnalyticList$$ = new BehaviorSubject<ExamScores[]>(
-    []
-  );
-  totalScoresWithoutAnalyticList$ =
-    this.totalScoresWithoutAnalyticList$$.asObservable();
+export class TotalScoresWithoutAnalyticGridComponent implements OnInit {
+  totalScoresWithoutAnalyticList: ExamScores[] = [];
   totalRecords = 0;
   filters: TableLazyLoadEvent | null = null;
   isOn = false;
@@ -48,7 +48,8 @@ export class TotalScoresWithoutAnalyticGridComponent {
 
   constructor(
     private readonly examQuestionScoreTotalsService: ExamQuestionScoreTotalsService,
-    private readonly authFacade: AuthFacade
+    private readonly authFacade: AuthFacade,
+    private readonly cd: ChangeDetectorRef
   ) {}
 
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
@@ -66,10 +67,15 @@ export class TotalScoresWithoutAnalyticGridComponent {
   );
 
   onSwitchChange(event: any) {
+    debugger;
     this.isOn = event;
     this.getExamScoresWithoutAnalyticScoresList(
       this.filters as TableLazyLoadEvent
     );
+  }
+
+  ngOnInit(): void {
+    this.academicYear$.pipe(untilDestroyed(this)).subscribe();
   }
 
   getExamScoresWithoutAnalyticScoresList($event: TableLazyLoadEvent) {
@@ -91,8 +97,9 @@ export class TotalScoresWithoutAnalyticGridComponent {
       .getExamScoresWithoutExamQuestionTotals(this.filters)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.totalScoresWithoutAnalyticList$$.next(response.data);
+        this.totalScoresWithoutAnalyticList = response.data;
         this.totalRecords = response.total;
+        this.cd.markForCheck();
       });
   }
 }
