@@ -13,7 +13,7 @@ import {
   ProfileApiService,
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import { ExamAssignment } from '@msh/shared/domain-models';
+import { AcademicYear, ExamAssignment } from '@msh/shared/domain-models';
 import {
   GlobalToastService,
   GRID_ACTIONS,
@@ -28,12 +28,20 @@ import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  distinctUntilChanged,
+  map,
+  skip,
+  tap,
+} from 'rxjs';
 import { AssignAllFormComponent } from '../assign-all-form/assign-all-form.component';
 import { ExamAssignmentFormComponent } from '../exam-assignment-form/exam-assignment-form.component';
 import { ExamAssignmentGridComponent } from '../exam-assignment-grid/exam-assignment-grid.component';
 import { UploadFormComponent } from '../upload-form/upload-form.component';
 import { AuthFacade } from '@msh/auth/data-access-auth';
+import { CustomSwitchComponent } from '@msh/shared/ui-shared';
 
 @UntilDestroy()
 @Component({
@@ -50,6 +58,7 @@ import { AuthFacade } from '@msh/auth/data-access-auth';
     FileUploadModule,
     UploadFormComponent,
     AssignAllFormComponent,
+    CustomSwitchComponent,
   ],
   templateUrl: './manage-exam-assignment.component.html',
   styleUrls: ['./manage-exam-assignment.component.scss'],
@@ -79,6 +88,8 @@ export class ManageExamAssignmentComponent implements OnInit {
   selectedRecord: ExamAssignment | null = null;
   displayHistoryForm = false;
   examAssignmentId!: string;
+  isOn = false;
+  currentAcademicYear!: Partial<AcademicYear>;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -93,8 +104,10 @@ export class ManageExamAssignmentComponent implements OnInit {
   ) {}
 
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    skip(1),
-    map(([_]) => {
+    distinctUntilChanged(),
+    map(([data]) => {
+      this.currentAcademicYear = data;
+      this.isOn = this.currentAcademicYear?.isFall ?? false;
       if (this.filters) {
         this.getExamAssignments(this.filters as TableLazyLoadEvent);
       }
@@ -159,6 +172,7 @@ export class ManageExamAssignmentComponent implements OnInit {
   ngOnInit(): void {
     this.getAdministrationOfficeDropdown();
     this.getSchoolProfiles();
+    this.academicYear$.pipe(untilDestroyed(this)).subscribe();
   }
 
   onUploadClose() {
@@ -210,6 +224,11 @@ export class ManageExamAssignmentComponent implements OnInit {
     }
   }
 
+  onSwitchChange(event: any) {
+    this.isOn = event;
+    this.getExamAssignments(this.filters as TableLazyLoadEvent);
+  }
+
   getExamSite(administrationOfficeId: any) {
     this.examSiteService
       .forAdministrationOffice(administrationOfficeId)
@@ -221,8 +240,20 @@ export class ManageExamAssignmentComponent implements OnInit {
   getExamAssignments($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
+    if (this.isOn && this.currentAcademicYear?.isFall) {
+      this.filters.filters = {
+        ...this.filters.filters,
+        isFall: {
+          value: this.currentAcademicYear.isFall,
+          matchMode: 'equals',
+        },
+      };
+    } else {
+      this.filters.filters = {};
+    }
+
     this.examAssignmentService
-      .loadExamAssignments($event)
+      .loadExamAssignments(this.filters)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         response.data.map(examAssignment => {

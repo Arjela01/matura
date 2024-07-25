@@ -20,13 +20,21 @@ import {
   GRID_ACTIONS,
 } from '@msh/shared/util-shared';
 
-import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  distinctUntilChanged,
+  map,
+  skip,
+  tap,
+} from 'rxjs';
 import { StudentBanFormComponent } from '../student-ban-form/student-ban-form.component';
 import { StudentBanGridComponent } from '../student-ban-grid/student-ban-grid.component';
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { AuthFacade } from '@msh/auth/data-access-auth';
+import { CustomSwitchComponent } from '@msh/shared/ui-shared';
 
 @UntilDestroy()
 @Component({
@@ -41,6 +49,7 @@ import { AuthFacade } from '@msh/auth/data-access-auth';
     StudentBanGridComponent,
     ToolbarModule,
     RippleModule,
+    CustomSwitchComponent,
   ],
   templateUrl: './manage-student-ban.component.html',
   styleUrls: ['./manage-student-ban.component.scss'],
@@ -56,6 +65,7 @@ export class ManageStudentBanComponent implements OnInit {
   examTypes: DropdownModel<number>[] = [];
   displayModal = false;
   currentAcademicYear?: Partial<AcademicYear>;
+  isOn = false;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -67,8 +77,10 @@ export class ManageStudentBanComponent implements OnInit {
   ) {}
 
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    distinctUntilChanged(),
     map(([data]) => {
       this.currentAcademicYear = data;
+      this.isOn = this.currentAcademicYear?.isFall ?? false;
       if (this.filters) {
         this.getBannedStudents(this.filters as TableLazyLoadEvent);
       }
@@ -78,6 +90,12 @@ export class ManageStudentBanComponent implements OnInit {
 
   ngOnInit() {
     this.getExamTypes();
+    this.academicYear$.pipe(untilDestroyed(this)).subscribe();
+  }
+
+  onSwitchChange(event: any) {
+    this.isOn = event;
+    this.getBannedStudents(this.filters as TableLazyLoadEvent);
   }
 
   onNewClick() {
@@ -124,8 +142,20 @@ export class ManageStudentBanComponent implements OnInit {
   getBannedStudents($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
+    if (this.isOn && this.currentAcademicYear?.isFall) {
+      this.filters.filters = {
+        ...this.filters.filters,
+        isFall: {
+          value: this.currentAcademicYear.isFall,
+          matchMode: 'equals',
+        },
+      };
+    } else {
+      this.filters.filters = {};
+    }
+
     this.studentBannedService
-      .loadBannedStudents($event)
+      .loadBannedStudents(this.filters)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.bannedStudents$$.next(response.data);
