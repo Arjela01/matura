@@ -27,4 +27,27 @@
   </ng-template>
 </p-dialog>
 
+<p-confirmDialog
+  #cd
+  header="Konfirmo"
+  icon="pi pi-exclamation-triangle"
+  [style]="{ width: '450px' }">
+  <ng-template pTemplate="footer">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Jo"
+      class="p-button-text"
+      (click)="cd.reject()"></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Po"
+      class="p-button"
+      (click)="cd.accept()"></button>
+  </ng-template>
+</p-confirmDialog>
+
 <ng-container *ngIf="academicYear$ | async"></ng-container>
