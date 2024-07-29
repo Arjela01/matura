@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, throwError } from 'rxjs';
-import { TableLazyLoadEvent } from 'primeng/table';
-import { APIService } from '@msh/shared/util-shared';
 import { ApiResult } from '@msh/shared/data-access-shared';
-import { ExamGradeTableView } from '@msh/shared/domain-models';
+import { ExamGrade, ExamGradeTableView } from '@msh/shared/domain-models';
+import { APIService } from '@msh/shared/util-shared';
+import { TableLazyLoadEvent } from 'primeng/table';
+import { catchError, map, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -20,5 +20,9 @@ export class ExamGradeApiService {
       map((data: any) => data),
       catchError(error => throwError(error))
     );
+  }
+
+  delete(examGradeId: any): Observable<ApiResult<unknown>> {
+    return this.apiService.delete<ApiResult<ExamGrade>>(`/ExamGrade/${examGradeId}`);
   }
 }

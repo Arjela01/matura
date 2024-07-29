@@ -6,21 +6,20 @@ import {
   Input,
   Output,
 } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
+import { RoleName } from '@msh/configurations/feat-configurations';
+import { ExamGrade } from '@msh/shared/domain-models';
+import { AppBoolPipe } from '@msh/shared/ui-shared';
 import {
   ColumnFilterDirective,
   GRID_ACTIONS,
   GridEvent,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { TableLazyLoadEvent } from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
-import { TableModule } from 'primeng/table';
-import { ExamGrade } from '@msh/shared/domain-models';
-import { RouterLink } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
-import { RoleName } from '@msh/configurations/feat-configurations';
-import { AppBoolPipe } from '@msh/shared/ui-shared';
+import { ButtonModule } from 'primeng/button';
+import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 
 @UntilDestroy()
 @Component({
@@ -36,7 +35,7 @@ import { AppBoolPipe } from '@msh/shared/ui-shared';
   ],
   templateUrl: './exam-grade-grid.component.html',
   styleUrls: ['./exam-grade-grid.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExamGradeGridComponent {
   @Input() examGrades: ExamGrade[] = [];
@@ -68,6 +67,13 @@ export class ExamGradeGridComponent {
   onEditClick(grade: ExamGrade) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
+      data: grade,
+    } as GridEvent<ExamGrade>);
+  }
+
+  onDeleteClick(grade: ExamGrade) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.DELETE,
       data: grade,
     } as GridEvent<ExamGrade>);
   }
