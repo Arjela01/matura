@@ -131,7 +131,8 @@ export class ManageEmptySiteComponent {
         },
       };
     } else {
-      this.filters.filters = {};
+      const { isFall, ...restFilters } = this.filters.filters || {};
+      this.filters.filters = restFilters;
     }
 
     this.emptySiteService
