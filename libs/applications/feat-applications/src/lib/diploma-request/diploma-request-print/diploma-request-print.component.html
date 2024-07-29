@@ -32,14 +32,17 @@
   </span>
 </div>
 <div class="mt-2">
-  <a href="javascript:void(0)" (click)="downloadDocument()" class="font-bold"
-    >Dokumenti</a
-  >
-  <span *ngIf="diplomaRequest.isDelivered === true" class="ml-2"
-    >dëguar në e-Albania në datë
+  <span *ngIf="diplomaRequest.isDelivered === true">
+    <span>Diploma është dëguar në e-Albania në datë</span>
     <span class="font-bold ml-2">{{
       diplomaRequest.deliveryDate | app_time
-    }}</span></span
+    }}.</span></span
+  >
+  <a
+    href="javascript:void(0)"
+    (click)="downloadDocument()"
+    class="font-bold ml-2"
+    >Shkarko Kërkesën</a
   >
 </div>
 <div *ngIf="pdfSrc">
