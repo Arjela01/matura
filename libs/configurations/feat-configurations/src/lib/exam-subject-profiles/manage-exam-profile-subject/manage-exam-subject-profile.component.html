@@ -11,72 +11,64 @@
         (click)="onNewClick()"></button>
     </div>
   </div>
-  <div class="my-2">
-    <button
-      pRipple
-      icon="pi pi-download"
-      pButton
-      label="Shkarko Template"
-      (click)="downloadTemplateFile()"></button>
-  </div>
-</div>
 
-<div class="grid">
-  <div class="col-12">
-    <div class="card">
-      <msh-exam-subject-profile-grid
-        [examSubjects]="(examSubjectProfiles$ | async) || []"
-        [totalRecords]="totalRecords"
-        (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getExamSubjectProfiles($event)">
-      </msh-exam-subject-profile-grid>
+  <div class="grid">
+    <div class="col-12">
+      <div class="card">
+        <msh-exam-subject-profile-grid
+          [examSubjects]="(examSubjectProfiles$ | async) || []"
+          [totalRecords]="totalRecords"
+          (gridEvent)="onGridEvent($event)"
+          (lazyLoadData)="getExamSubjectProfiles($event)">
+        </msh-exam-subject-profile-grid>
+      </div>
     </div>
   </div>
+
+  <p-dialog
+    [(visible)]="displayModal"
+    [style]="{ width: '500px' }"
+    header="Detajet e Lëndë-Profile"
+    [modal]="true"
+    [draggable]="false"
+    [resizable]="true"
+    class="p-fluid"
+    (onHide)="onModalClose()">
+    <ng-template pTemplate="content">
+      <msh-exam-subject-profile-form
+        [examSubjectDetails]="selectedExamSubject"
+        [examTypes]="examTypes"
+        [examSubjects]="examSubjects"
+        [academicYears]="academicYears"
+        (loadExamSubjects)="loadExamSubjects($event)"
+        [profiles]="profiles"
+        (formClose)="onModalClose()"
+        (formSave)="onFormSave($event)">
+      </msh-exam-subject-profile-form>
+    </ng-template>
+  </p-dialog>
+
+  <p-confirmDialog
+    #cd
+    header="Konfirmo"
+    icon="pi pi-exclamation-triangle"
+    [style]="{ width: '450px' }">
+    <ng-template pTemplate="footer">
+      <button
+        type="button"
+        pButton
+        icon="pi pi-times"
+        label="Jo"
+        class="p-button-text"
+        (click)="cd.reject()"></button>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-check"
+        label="Po"
+        class="p-button border"
+        (click)="cd.accept()"></button>
+    </ng-template>
+  </p-confirmDialog>
+  <ng-container *ngIf="academicYear$ | async"></ng-container>
 </div>
-
-<p-dialog
-  [(visible)]="displayModal"
-  [style]="{ width: '500px' }"
-  header="Detajet e Lëndë-Profile"
-  [modal]="true"
-  [draggable]="false"
-  [resizable]="true"
-  class="p-fluid"
-  (onHide)="onModalClose()">
-  <ng-template pTemplate="content">
-    <msh-exam-subject-profile-form
-      [examSubjectDetails]="selectedExamSubject"
-      [examTypes]="examTypes"
-      [examSubjects]="examSubjects"
-      [academicYears]="academicYears"
-      (loadExamSubjects)="loadExamSubjects($event)"
-      [profiles]="profiles"
-      (formClose)="onModalClose()"
-      (formSave)="onFormSave($event)">
-    </msh-exam-subject-profile-form>
-  </ng-template>
-</p-dialog>
-
-<p-confirmDialog
-  #cd
-  header="Konfirmo"
-  icon="pi pi-exclamation-triangle"
-  [style]="{ width: '450px' }">
-  <ng-template pTemplate="footer">
-    <button
-      type="button"
-      pButton
-      icon="pi pi-times"
-      label="Jo"
-      class="p-button-text"
-      (click)="cd.reject()"></button>
-    <button
-      type="button"
-      pButton
-      icon="pi pi-check"
-      label="Po"
-      class="p-button border"
-      (click)="cd.accept()"></button>
-  </ng-template>
-</p-confirmDialog>
-<ng-container *ngIf="academicYear$ | async"></ng-container>

@@ -280,16 +280,4 @@ export class ManageExamSubjectProfileComponent implements OnInit {
         this.cd.detectChanges();
       });
   }
-
-  downloadTemplateFile() {
-    this.examSubjectProfileService
-      .exportTemplate()
-      .pipe(untilDestroyed(this))
-      .subscribe((response: any) => {
-        const blob: any = new Blob([response], {
-          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        });
-        FileSaver.saveAs(blob, 'LendeProfili_Template');
-      });
-  }
 }
