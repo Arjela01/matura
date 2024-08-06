@@ -225,16 +225,4 @@ export class ManageExamSubjectComponent implements OnInit {
       this.examTypes = response.data;
     });
   }
-
-  downloadTemplateFile() {
-    this.examSubjectService
-      .exportTemplate()
-      .pipe(untilDestroyed(this))
-      .subscribe((response: any) => {
-        const blob: any = new Blob([response], {
-          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        });
-        FileSaver.saveAs(blob, 'LëndëProvimi_Template');
-      });
-  }
 }
