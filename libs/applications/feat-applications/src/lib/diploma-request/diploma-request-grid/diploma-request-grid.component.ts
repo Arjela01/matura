@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
-import { DiplomaRequest } from '@msh/shared/domain-models';
+import { DiplomaRequest, Student } from '@msh/shared/domain-models';
 import {
   ColumnFilterDirective,
   DateFilterService,
@@ -21,6 +21,9 @@ import { TooltipModule } from 'primeng/tooltip';
 import { CheckboxModule } from 'primeng/checkbox';
 import { RippleModule } from 'primeng/ripple';
 import { RouterLink } from '@angular/router';
+import { DialogModule } from 'primeng/dialog';
+import { STUDENTS } from '../../students/students-query';
+import { DiplomaRequestHistoryComponent } from '../diploma-request-history/diploma-request-history.component';
 
 @Component({
   selector: 'msh-diploma-request-grid',
@@ -38,6 +41,8 @@ import { RouterLink } from '@angular/router';
     DatePipe,
     AppDatePipe,
     AppBoolPipe,
+    DialogModule,
+    DiplomaRequestHistoryComponent,
   ],
   templateUrl: './diploma-request-grid.component.html',
   styleUrl: './diploma-request-grid.component.scss',
@@ -46,6 +51,10 @@ import { RouterLink } from '@angular/router';
 export class DiplomaRequestGridComponent {
   @Input() diplomas: DiplomaRequest[] = [];
   @Input() totalRecords = 0;
+  @Input() id: any;
+  @Input() headerText = '';
+  @Input() displayHistoryForm = true;
+  @Input() selectedRecord: any;
   @Output() gridEvent = new EventEmitter<GridEvent<DiplomaRequest>>();
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
@@ -54,6 +63,14 @@ export class DiplomaRequestGridComponent {
   onEdit(data: DiplomaRequest) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
+      data: data,
+    } as GridEvent<DiplomaRequest>);
+  }
+
+  onHistoryClick(data: DiplomaRequest) {
+    this.displayHistoryForm = true;
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.HISTORY,
       data: data,
     } as GridEvent<DiplomaRequest>);
   }
@@ -70,4 +87,6 @@ export class DiplomaRequestGridComponent {
     $event.filters = this.dateFilterService.applyDateManipulation(filters);
     this.lazyLoadData.emit($event);
   }
+
+  protected readonly STUDENTS = STUDENTS;
 }

@@ -19,7 +19,11 @@
         [users]="(users$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getUsers($event)">
+        (lazyLoadData)="getUsers($event)"
+        [selectedRecord]="selectedRecord"
+        [id]="id"
+        [headerText]="headerText"
+        [displayHistoryForm]="displayHistoryForm">
       </msh-user-grid>
     </div>
   </div>

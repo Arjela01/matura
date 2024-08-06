@@ -8,7 +8,11 @@
         [examGrades]="(examGrades$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getGrade($event)">
+        (lazyLoadData)="getGrade($event)"
+        [selectedRecord]="selectedRecord"
+        [studentId]="studentId"
+        [headerText]="headerText"
+        [displayHistoryForm]="displayHistoryForm">
       </msh-exam-grade-grid>
     </div>
   </div>

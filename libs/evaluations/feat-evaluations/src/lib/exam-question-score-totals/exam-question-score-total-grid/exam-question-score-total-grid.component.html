@@ -140,6 +140,12 @@
             pTooltip="Ndrysho" />
 
           <img
+            src="assets/svg/history.svg"
+            class="p-button-rounded p-button-warning p-button-text mr-2 ml-2 pointer"
+            tooltipPosition="bottom"
+            (click)="onHistoryClick(analyticScores)"
+            pTooltip="Historia" />
+          <img
             src="assets/svg/delete-form.svg"
             class="p-button-rounded p-button-danger p-button-text pointer"
             pTooltip="Fshi"
@@ -173,3 +179,18 @@
       (click)="cd.accept()"></button>
   </ng-template>
 </p-confirmDialog>
+<p-dialog
+  [(visible)]="displayHistoryForm"
+  [style]="{ width: '80%' }"
+  [modal]="true"
+  [header]="headerText"
+  [draggable]="false"
+  [resizable]="false"
+  class="p-fluid">
+  <ng-template pTemplate="content">
+    <msh-question-history
+      [recordId]="id"
+      [recordData]="selectedRecord">
+    </msh-question-history>
+  </ng-template>
+</p-dialog>
