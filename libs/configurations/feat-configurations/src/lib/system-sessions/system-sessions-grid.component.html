@@ -11,7 +11,7 @@
         responsiveLayout="scroll"
         [scrollable]="true"
         scrollHeight="820px"
-        [value]="(sessions$ | async) || []"
+        [value]="sessions"
         [totalRecords]="totalRecords"
         [rows]="100"
         [paginator]="true"
@@ -24,10 +24,10 @@
         [lazy]="true">
         <ng-template pTemplate="header">
           <tr>
-            <th pSortableColumn="userName">
+            <th pSortableColumn="username">
               Përdoruesi
               <div>
-                <p-sortIcon field="userName"></p-sortIcon>
+                <p-sortIcon field="username"></p-sortIcon>
                 <p-columnFilter
                   type="text"
                   field="userName"
@@ -84,19 +84,19 @@
         <ng-template pTemplate="body" let-session>
           <tr>
             <td style="width: 10%; min-width: 10rem">
-              {{ session.userName }}
+              {{ session.username }}
             </td>
-            <td style="width: 25%; min-width: 10rem">
+            <td style="width: 10%; min-width: 10rem">
               {{ session.firstName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ session.lastName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ session.lastAccessTime | app_time }}
+              {{ session.lastLoginTime | app_time }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ session.expirationTime | app_time }}
+              {{ session.dateDisabled | app_time }}
             </td>
           </tr>
         </ng-template>

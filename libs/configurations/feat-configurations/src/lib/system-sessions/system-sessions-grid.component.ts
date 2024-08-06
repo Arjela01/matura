@@ -1,5 +1,9 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -14,7 +18,7 @@ import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { SystemSessionsModel } from '@msh/shared/domain-models';
 import { SystemSessionsService } from '@msh/configurations/data-access-configurations';
-import { AppTimePipe } from '@msh/shared/ui-shared';
+import { AppDatePipe, AppTimePipe } from '@msh/shared/ui-shared';
 @UntilDestroy()
 @Component({
   selector: 'msh-system-sessions',
@@ -30,18 +34,17 @@ import { AppTimePipe } from '@msh/shared/ui-shared';
     ColumnFilterDirective,
     RouterLink,
     AppTimePipe,
+    AppDatePipe,
   ],
   templateUrl: './system-sessions-grid.component.html',
   styleUrls: ['./system-sessions-grid.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [AppDatePipe, DatePipe],
 })
 export class SystemSessionsGridComponent {
-  private sessions$$ = new BehaviorSubject<SystemSessionsModel[]>([]);
-  sessions$ = this.sessions$$.asObservable();
+  sessions: SystemSessionsModel[] = [];
   filters: TableLazyLoadEvent | null = null;
   totalRecords = 0;
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    skip(1),
     map(([_]) => {
       if (this.filters) {
         this.getSessions(this.filters as TableLazyLoadEvent);
@@ -51,7 +54,8 @@ export class SystemSessionsGridComponent {
   );
   constructor(
     private readonly systemSessions: SystemSessionsService,
-    private authFacade: AuthFacade
+    private authFacade: AuthFacade,
+    private readonly cd: ChangeDetectorRef
   ) {}
 
   getSessions($event: TableLazyLoadEvent) {
@@ -61,8 +65,9 @@ export class SystemSessionsGridComponent {
       .loadSessions($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.sessions$$.next(response.data);
+        this.sessions = response.data;
         this.totalRecords = response.total;
+        this.cd.detectChanges();
       });
   }
 }
