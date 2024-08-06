@@ -19,7 +19,11 @@
         [diplomas]="(diplomaRequests$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getDiplomaRequests($event)">
+        (lazyLoadData)="getDiplomaRequests($event)"
+        [selectedRecord]="selectedRecord"
+        [id]="id"
+        [headerText]="headerText"
+        [displayHistoryForm]="displayHistoryForm">
       </msh-diploma-request-grid>
     </div>
   </div>

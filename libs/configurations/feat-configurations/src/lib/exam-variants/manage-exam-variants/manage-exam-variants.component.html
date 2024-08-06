@@ -19,7 +19,11 @@
         [examVariants]="(examVariants$ | async) || []"
         (gridEvent)="onGridEvent($event)"
         [totalRecords]="totalRecords"
-        (lazyLoadData)="getExamVariants($event)">
+        (lazyLoadData)="getExamVariants($event)"
+        [selectedRecord]="selectedRecord"
+        [id]="id"
+        [headerText]="headerText"
+        [displayHistoryForm]="displayHistoryForm">
       </msh-exam-variant-grid>
     </div>
   </div>

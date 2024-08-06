@@ -24,7 +24,12 @@
       <msh-exam-copy-grid
         [examCopies]="(examCopies$ | async) || []"
         [totalRecords]="totalRecords"
-        (lazyLoadData)="getExamCopies($event)">
+        (lazyLoadData)="getExamCopies($event)"
+        (gridEvent)="onGridEvent($event)"
+        [selectedRecord]="selectedRecord"
+        [examCopyId]="examCopyId"
+        [headerText]="headerText"
+        [displayHistoryForm]="displayHistoryForm">
       </msh-exam-copy-grid>
     </div>
   </div>

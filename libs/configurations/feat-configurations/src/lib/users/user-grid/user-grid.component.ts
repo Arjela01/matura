@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from '@msh/shared/domain-models';
+import { Student, User } from '@msh/shared/domain-models';
 import {
   GridEvent,
   GRID_ACTIONS,
@@ -27,6 +27,8 @@ import {
 } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { RoleName } from '../user-form/role-list';
+import { DialogModule } from 'primeng/dialog';
+import { UserHistoryComponent } from '../user-history/user-history.component';
 
 @Component({
   selector: 'msh-user-grid',
@@ -40,33 +42,33 @@ import { RoleName } from '../user-form/role-list';
     CheckboxModule,
     RippleModule,
     ColumnFilterDirective,
+    DialogModule,
+    UserHistoryComponent,
   ],
   templateUrl: './user-grid.component.html',
   styleUrls: ['./user-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserGridComponent {
-  @Input() loading = false;
-
-  //Keep it local state because of Table Header checkbox not syncing
-  selectedUsers: User[] = [];
-
-  @Output() formSave = new EventEmitter<User>();
-
-  @ViewChild('form', { static: true }) form!: NgForm;
-  saving = false;
-
-  @Input() users: User[] = [];
-  @Input() totalRecords = 0;
-
-  @Output() gridEvent = new EventEmitter<GridEvent<User | User[]>>();
-
-  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
   @Input() set usersDetails(details: User | null) {
     if (details) {
       this.user = Object.assign({}, details);
     }
   }
+  @Input() loading = false;
+  selectedUsers: User[] = [];
+
+  @ViewChild('form', { static: true }) form!: NgForm;
+  @Input() users: User[] = [];
+  @Input() totalRecords = 0;
+  @Input() userId: any;
+  @Input() headerText = '';
+  @Input() displayHistoryForm = true;
+  @Input() selectedRecord: any;
+
+  @Output() formSave = new EventEmitter<User>();
+  @Output() gridEvent = new EventEmitter<GridEvent<User | User[]>>();
+  @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
   constructor(private route: ActivatedRoute) {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -102,6 +104,14 @@ export class UserGridComponent {
     } as GridEvent<User>);
   }
 
+  onHistoryClick(user: User) {
+    this.displayHistoryForm = true;
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.HISTORY,
+      data: user,
+    } as GridEvent<User>);
+  }
+
   onEditClick(user: User) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
@@ -113,20 +123,6 @@ export class UserGridComponent {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,
       data: user,
-    } as GridEvent<User>);
-  }
-
-  onRowSelect($event: TableRowSelectEvent) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.SELECT_ROW,
-      data: $event.data,
-    } as GridEvent<User>);
-  }
-
-  onRowUnselect($event: TableRowUnSelectEvent) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.UNSELECT_ROW,
-      data: $event.data,
     } as GridEvent<User>);
   }
 

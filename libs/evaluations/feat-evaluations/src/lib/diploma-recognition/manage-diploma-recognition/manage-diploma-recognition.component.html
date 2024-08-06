@@ -19,7 +19,11 @@
         [diplomaRecognitionRecords]="(diplomaRecognition$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getDiplomaRecognitionRecords($event)">
+        (lazyLoadData)="getDiplomaRecognitionRecords($event)"
+        [selectedRecord]="selectedRecord"
+        [id]="id"
+        [headerText]="headerText"
+        [displayHistoryForm]="displayHistoryForm">
       </msh-diploma-recognition-grid>
     </div>
   </div>

@@ -46,6 +46,7 @@ import { ExamVariantFormComponent } from '../exam-variant-form/exam-variant-form
 import { ExamVariantGridComponent } from '../exam-variant-grid/exam-variant-grid.component';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { Router } from '@angular/router';
+import { StudentsGridComponent } from '../../../../../../applications/feat-applications/src/lib/students/students-grid/students-grid.component';
 
 @UntilDestroy()
 @Component({
@@ -60,6 +61,7 @@ import { Router } from '@angular/router';
     ExamVariantGridComponent,
     ToolbarModule,
     RippleModule,
+    StudentsGridComponent,
   ],
   templateUrl: './manage-exam-variants.component.html',
   styleUrls: ['./manage-exam-variants.component.scss'],
@@ -69,29 +71,28 @@ import { Router } from '@angular/router';
 export class ManageExamVariantsComponent implements OnInit {
   examVariants$$ = new BehaviorSubject<ExamVariant[]>([]);
   examVariants$ = this.examVariants$$.asObservable();
+
   filters: TableLazyLoadEvent | null = null;
   totalRecords = 0;
+  id: string | undefined;
+  selectedRecord: any;
+  headerText: any;
+  displayHistoryForm = false;
   selectedExamVariant: ExamVariant | null = null;
   selectedExamVariants: ExamVariant[] = [];
   displayModal = false;
-  profileGroups: DropdownModel<number>[] = [];
   profiles: DropdownModel<number>[] = [];
   examTypes: DropdownModel<number>[] = [];
   examSubjects: DropdownModel<string>[] = [];
   academicYears: any[] = [];
-  academicYearForm: Partial<AcademicYear> = {
-    id: 0,
-    year: '',
-  };
   academicYear: Partial<AcademicYear> | null = null;
+
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
     private readonly examVariantService: ExamVariantApiService,
-    private readonly profileGroupApiService: ProfileGroupApiService,
     private readonly examTypesApiService: ExamTypeApiService,
     private readonly examSubjectsApiService: ExamSubjectApiService,
-    private readonly profileApiService: ProfileApiService,
     private readonly cd: ChangeDetectorRef,
     private readonly examSubjectService: ExamSubjectApiService,
     private academicApiService: AcademicYearApiService,
@@ -155,8 +156,14 @@ export class ManageExamVariantsComponent implements OnInit {
         this.cd.detectChanges();
       });
   }
-  onGridEvent(event: GridEvent<ExamVariant | ExamVariant[]>) {
+  onGridEvent(event: GridEvent<any | ExamVariant[]>) {
     switch (event.action) {
+      case GRID_ACTIONS.HISTORY:
+        this.selectedRecord = Object.assign({}, event.data);
+        this.id = event.data.id;
+        this.headerText = `Historiku për Variantin {${event.data.id}}`;
+        this.displayHistoryForm = true;
+        break;
       case GRID_ACTIONS.EDIT:
         this.selectedExamVariant = Object.assign({}, event.data as ExamVariant);
         this.displayModal = true;
