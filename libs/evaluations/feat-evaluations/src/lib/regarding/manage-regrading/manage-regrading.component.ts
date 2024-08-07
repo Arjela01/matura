@@ -203,7 +203,6 @@ export class ManageRegradingComponent {
   }
 
   getExamCopy(idCard: string) {
-    debugger;
     this.regradingApiService
       .getExamCopyByIdCard(idCard)
       .pipe(untilDestroyed(this))
