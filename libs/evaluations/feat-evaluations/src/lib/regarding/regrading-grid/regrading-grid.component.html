@@ -152,7 +152,6 @@
             matchMode="equals"></p-columnFilter>
         </div>
       </th>
-
       <th pSortableColumn="statusName">
         Statusi
         <div>
@@ -164,6 +163,7 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th>Aplikimi për kopje testi</th>
       <th></th>
     </tr>
   </ng-template>
@@ -221,6 +221,11 @@
           ">
           {{ examGrade.status | examCopyRequestStatus }}
         </span>
+      </td>
+      <td>
+        <a (click)="onClick(examGrade)" class="p-button-link cursor: pointer">
+          Shiko Aplikimin
+        </a>
       </td>
       <td class="text-center" style="width: 5%; min-width: 10rem">
         <img
