@@ -25,7 +25,6 @@ import {
 } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
-import { EXAM_SITE } from '@msh/audit-logs/feat-audit-log';
 import { ExamSiteHistoryGridComponent } from '../exam-site-history/exam-site-history-grid.component';
 
 @Component({

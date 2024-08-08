@@ -13,11 +13,8 @@
         [lazy]="true">
         <ng-template pTemplate="header">
           <tr>
-            <th>Tipi</th>
-            <th>Lënda</th>
             <th>Varianti</th>
-            <th>Barkodi</th>
-            <th>Nr. Testi</th>
+            <th>Nr. Pyetjeve</th>
             <th>Totali</th>
             <th>Veprimi i Kryer</th>
             <th>Përdoruesi</th>
@@ -30,22 +27,13 @@
         <ng-template pTemplate="body" let-record>
           <tr>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.examTypeName }}
+              {{ record?.examVariant?.name }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.examSubjectName }}
+              {{ record?.examVariant?.numberOfQuestions }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.examVariantName }}
-            </td>
-            <td style="width: 10%; min-width: 10rem">
-              {{ record.barcode }}
-            </td>
-            <td style="width: 10%; min-width: 10rem">
-              {{ record.testNumber }}
-            </td>
-            <td style="width: 10%; min-width: 10rem">
-              {{ record.totalScore }}
+              {{ record?.examVariant?.maximumScore }}
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ record?.auditOperation }}

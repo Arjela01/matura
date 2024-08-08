@@ -30,7 +30,7 @@ import {
 } from '@msh/shared/util-shared';
 import { FailingStudent } from '@msh/applications/domain-application';
 import { AppDatePipe } from '@msh/shared/ui-shared';
-import { EXAM_VARIANT } from '@msh/audit-logs/feat-audit-log';
+import { EXAM_VARIANT } from '@msh/shared/util-shared';
 
 @Component({
   selector: 'msh-exam-variant-history',

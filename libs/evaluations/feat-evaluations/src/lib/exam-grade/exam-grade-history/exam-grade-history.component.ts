@@ -24,6 +24,7 @@ import { Apollo, gql } from 'apollo-angular';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import {
   ColumnFilterDirective,
+  EXAM_GRADE,
   GRADE_SCALE,
   GridEvent,
   WhereBuilder,
@@ -105,7 +106,7 @@ export class ExamGradeHistoryComponent {
     this.apollo
       .watchQuery<any>({
         query: gql`
-          ${GRADE_SCALE}
+          ${EXAM_GRADE}
         `,
         variables: {
           pagesize: this.pageSize,
