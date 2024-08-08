@@ -1843,12 +1843,37 @@ export const diplomaRequest = `
         hasPreviousPage
        }
         items {
-            studentStudentId
-            studentMiddleName
-            studentLastName
-            studentIdCard
-            studentId
-            studentFirstName
+            student {
+                birthDate
+                birthPlace
+                isConfirmedBySupervisor
+                isAN
+                email
+                firstName
+                idCard
+                isA2A3
+                isEAlbaniaApplication
+                lastName
+                middleName
+                mobilePhone
+                oldID
+                schoolFinished
+                schoolName
+                session
+                studentId
+                studyClass
+                graduationYear
+                isFall
+                isPrinted
+                diplomaPrintedDate
+                id
+                isDeleted
+                createdIP
+                createdOn
+                deletedIP
+                deletedOn
+                modifiedIP
+            }
             printedDate
             isSealError
             isPrinted
@@ -1857,9 +1882,6 @@ export const diplomaRequest = `
             highSchoolName
             eAlbaniaDocumentResponse
             deliveryDate
-            countryName
-            administrationOfficeName
-            academicYearName
             isDeleted
             createdIP
             createdOn
