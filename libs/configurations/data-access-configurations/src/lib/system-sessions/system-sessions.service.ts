@@ -11,9 +11,11 @@ export class SystemSessionsService {
   constructor(private apiService: APIService) {}
 
   loadSessions(event: TableLazyLoadEvent): Observable<SystemSessionsView> {
-    return this.apiService.post(`/SystemSession/TableDataHistory`, event).pipe(
-      map((data: any) => data),
-      catchError(error => throwError(error))
-    );
+    return this.apiService
+      .post(`/SystemSession/TableDataSystemSession`, event)
+      .pipe(
+        map((data: any) => data),
+        catchError(error => throwError(error))
+      );
   }
 }

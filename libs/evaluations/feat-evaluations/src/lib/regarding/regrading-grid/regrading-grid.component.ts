@@ -53,6 +53,7 @@ export class RegradingGridComponent {
   @Input() regrading: Regrading[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
+  @Input() examCopyId = '';
   @Input() userRole = '';
 
   @Output() gridEvent = new EventEmitter<GridEvent<Regrading | Regrading[]>>();
@@ -65,6 +66,13 @@ export class RegradingGridComponent {
   onEditClick(grade: Regrading) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
+      data: grade,
+    } as GridEvent<Regrading>);
+  }
+
+  onClick(grade: Regrading) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.CUSTOM_ACTION2,
       data: grade,
     } as GridEvent<Regrading>);
   }

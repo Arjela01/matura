@@ -3,6 +3,7 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { APIService } from '@msh/shared/util-shared';
 import {
+  ExamCopy,
   Regrading,
   RegradingImportCommand,
   RegradingTableView,
@@ -38,6 +39,11 @@ export class RegradingApiService {
       `/RegradingRequest/Update`,
       body
     );
+  }
+
+  getExamCopyByIdCard(idCard: string): Observable<ApiResult<any>> {
+    return this.apiService.get(`
+/ExamCopyRequest/GetExamCopyRequestsByNid/${idCard}`);
   }
 
   exportTemplate(): Observable<ApiResult<unknown>> {

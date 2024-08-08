@@ -35,6 +35,7 @@ import * as FileSaver from 'file-saver';
 import { UpdateStatusFormComponent } from '../update-status-form/update-status-form.component';
 import { ManageExamGradeChangesComponent } from '../../exam-grade-changes/manage-exam-grade-changes/manage-exam-grade-changes.component';
 import { jwtDecode } from 'jwt-decode';
+import { Router } from '@angular/router';
 
 @UntilDestroy()
 @Component({
@@ -74,13 +75,15 @@ export class ManageRegradingComponent {
   academicYearId: any;
   examGradeId: any;
   userRole = '';
+  examCopyId: any;
 
   constructor(
     private readonly authFacade: AuthFacade,
     private readonly regradingApiService: RegradingApiService,
     private readonly examGradeChangeService: ExamGradeChangesApiService,
     private readonly examSubjectService: ExamSubjectApiService,
-    private readonly toastService: GlobalToastService
+    private readonly toastService: GlobalToastService,
+    private router: Router
   ) {
     const academicYear = JSON.parse(
       localStorage.getItem('academicYear') as string
@@ -135,11 +138,14 @@ export class ManageRegradingComponent {
         this.selectedGrade = Object.assign({}, event.data as Regrading);
         this.displayStatusModal = true;
         break;
+      case GRID_ACTIONS.CUSTOM_ACTION2:
+        this.selectedGrade = Object.assign({}, event.data as Regrading);
+        this.getExamCopy(this.selectedGrade.nid as string);
+        break;
     }
   }
 
   onFormSave(examGradeChange: ExamGradeChange) {
-    console.log(this.selectedGrade);
     const valuesToSend = {
       ...examGradeChange,
       examGradeId: this.selectedGrade?.id,
@@ -193,6 +199,16 @@ export class ManageRegradingComponent {
       .subscribe(response => {
         this.regrading$$.next(response.data);
         this.totalRecords = response.total;
+      });
+  }
+
+  getExamCopy(idCard: string) {
+    this.regradingApiService
+      .getExamCopyByIdCard(idCard)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.examCopyId = response.data[0].id;
+        this.router.navigate(['/applications/exam-copy/form', this.examCopyId]);
       });
   }
 
