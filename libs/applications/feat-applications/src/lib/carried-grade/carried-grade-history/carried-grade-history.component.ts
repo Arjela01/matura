@@ -22,13 +22,10 @@ import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { RouterLink } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import {
-  CARRIED_GRADE,
-  ColumnFilterDirective,
-  GridEvent,
-} from '@msh/shared/util-shared';
+import { ColumnFilterDirective, GridEvent } from '@msh/shared/util-shared';
 import { FailingStudent } from '@msh/applications/domain-application';
 import { AppDatePipe } from '@msh/shared/ui-shared';
+import { CARRIED_GRADE } from '@msh/audit-logs/feat-audit-log';
 
 @Component({
   selector: 'msh-carried-grade-history',

@@ -17,6 +17,7 @@
             <th>Adresa</th>
             <th>Kuotat</th>
             <th>Zvap</th>
+            <th>Vjeshtë?</th>
             <th>Veprimi i Kryer</th>
             <th>Përdoruesi</th>
             <th>Emri i Hostit</th>
@@ -37,7 +38,10 @@
               {{ record.quota }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.administrationOfficeName }}
+              {{ record.administrationOffice.name }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record.isFall | app_bool }}
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ record?.auditOperation }}

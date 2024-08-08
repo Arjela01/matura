@@ -29,7 +29,7 @@ import {
   GridEvent,
 } from '@msh/shared/util-shared';
 import { FailingStudent } from '@msh/applications/domain-application';
-import { AppDatePipe } from '@msh/shared/ui-shared';
+import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
 
 @Component({
   selector: 'msh-exam-site-history',
@@ -53,6 +53,7 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
     ColumnFilterDirective,
     DatePipe,
     AppDatePipe,
+    AppBoolPipe,
   ],
   templateUrl: './exam-site-history-grid.component.html',
   styleUrls: ['./exam-site-history-grid.component.scss'],
