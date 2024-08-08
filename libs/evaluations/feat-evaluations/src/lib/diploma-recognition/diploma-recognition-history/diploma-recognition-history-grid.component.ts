@@ -29,7 +29,7 @@ import {
 } from '@msh/shared/util-shared';
 import { FailingStudent } from '@msh/applications/domain-application';
 import { AppDatePipe } from '@msh/shared/ui-shared';
-import { diplomaRequest } from '@msh/audit-logs/feat-audit-log';
+import { diplomaRequest } from '@msh/shared/util-shared';
 
 @Component({
   selector: 'msh-diploma-recognition-history-grid',

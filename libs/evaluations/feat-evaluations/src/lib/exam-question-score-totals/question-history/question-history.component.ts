@@ -25,7 +25,7 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { ColumnFilterDirective, GridEvent } from '@msh/shared/util-shared';
 import { FailingStudent } from '@msh/applications/domain-application';
 import { AppDatePipe } from '@msh/shared/ui-shared';
-import { examQuestionScoreTotal } from '@msh/audit-logs/feat-audit-log';
+import { examQuestionScoreTotal } from '@msh/shared/util-shared';
 
 @Component({
   selector: 'msh-question-history',
@@ -65,7 +65,7 @@ export class QuestionHistoryComponent {
     GridEvent<FailingStudent | FailingStudent[]>
   >();
 
-  queryName = 'examQuestion';
+  queryName = 'examQuestionScoreTotal';
   pageSize = 50;
   totalCount = 0;
   currentPage = 1;

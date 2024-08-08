@@ -25,7 +25,7 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { ColumnFilterDirective, GridEvent } from '@msh/shared/util-shared';
 import { FailingStudent } from '@msh/applications/domain-application';
 import { AppDatePipe } from '@msh/shared/ui-shared';
-import { CARRIED_GRADE } from '@msh/audit-logs/feat-audit-log';
+import { CARRIED_GRADE } from '@msh/shared/util-shared';
 
 @Component({
   selector: 'msh-carried-grade-history',

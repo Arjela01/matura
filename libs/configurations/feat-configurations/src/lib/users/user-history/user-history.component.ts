@@ -22,13 +22,10 @@ import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { RouterLink } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import {
-  ColumnFilterDirective,
-  GridEvent,
-  USERS,
-} from '@msh/shared/util-shared';
+import { ColumnFilterDirective, GridEvent } from '@msh/shared/util-shared';
 import { FailingStudent } from '@msh/applications/domain-application';
 import { AppDatePipe } from '@msh/shared/ui-shared';
+import { USERS } from '@msh/shared/util-shared';
 
 @Component({
   selector: 'msh-user-history',
@@ -68,7 +65,7 @@ export class UserHistoryComponent {
     GridEvent<FailingStudent | FailingStudent[]>
   >();
 
-  queryName = 'user';
+  queryName = 'aspNetUser';
   pageSize = 50;
   totalCount = 0;
   currentPage = 1;

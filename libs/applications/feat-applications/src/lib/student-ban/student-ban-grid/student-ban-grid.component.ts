@@ -27,7 +27,6 @@ import { TooltipModule } from 'primeng/tooltip';
 import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
 import { RouterLink } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
-import { STUDENT_BAN } from '@msh/audit-logs/feat-audit-log';
 import { StudentBanHistoryComponent } from '../student-ban-history/student-ban-history.component';
 
 @Component({
