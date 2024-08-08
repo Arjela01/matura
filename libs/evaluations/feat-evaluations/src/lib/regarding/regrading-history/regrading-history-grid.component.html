@@ -32,28 +32,28 @@
         <ng-template pTemplate="body" let-record>
           <tr>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.studentId }}
+              {{ record?.student?.studentId }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.idCard }}
+              {{ record?.student?.idCard }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.firstName }}
+              {{ record?.student?.firstName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.middleName }}
+              {{ record?.student?.middleName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.lastName }}
+              {{ record?.student?.lastName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.examTypeName }}
+              {{ record?.examType?.name }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.examSubjectName }}
+              {{ record?.examSubject?.name }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.admnistationOfficeName }}
+              {{ record?.admnistationOffice?.name }}
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ record?.auditOperation }}

@@ -29,6 +29,7 @@ import {
 } from '@msh/shared/util-shared';
 import { FailingStudent } from '@msh/applications/domain-application';
 import { AppDatePipe } from '@msh/shared/ui-shared';
+import { regradingRequest } from '@msh/audit-logs/feat-audit-log';
 
 @Component({
   selector: 'msh-regrading-history',
@@ -68,7 +69,7 @@ export class RegradingHistoryGridComponent {
     GridEvent<FailingStudent | FailingStudent[]>
   >();
 
-  queryName = 'regrading';
+  queryName = 'regradingRequest';
   pageSize = 50;
   totalCount = 0;
   currentPage = 1;
@@ -104,7 +105,7 @@ export class RegradingHistoryGridComponent {
     this.apollo
       .watchQuery<any>({
         query: gql`
-          ${EXAM_COPY_REQUEST}
+          ${regradingRequest}
         `,
         variables: {
           pagesize: this.pageSize,

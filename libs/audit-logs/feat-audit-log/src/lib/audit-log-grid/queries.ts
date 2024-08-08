@@ -187,6 +187,12 @@ export const CARRIED_GRADE = `
             }
              student {
                 id
+                idCard
+                firstName
+                middleName
+                lastName
+                birthPlace
+                studentId
              }
             academicYear {
                 isActive
@@ -1711,27 +1717,58 @@ export const STUDENTS = `
 `;
 
 export const regradingRequest = `
-  query RegradingRequest($pagesize: Int, $skip: Int,$where: RegradingRequestFilterInput,
-  $order:[RegradingRequestFilterInput!]) {
-    regradingRequest(take: $pagesize, skip: $skip,where: $where,order: $order
-) {
+  query RegradingRequest
+  ($pagesize: Int, $skip: Int,$where: RegradingRequestAuditFilterInput,
+   $order:[RegradingRequestAuditSortInput!]) {
+    regradingRequest (take: $pagesize, skip: $skip,where: $where,
+    order: $order){
     totalCount
       pageInfo {
         hasNextPage
         hasPreviousPage
        }
         items {
-            studentID
-            firstName
-            fatherName
-            lastName
-            maturaId
-            nid
-            grade
-            statusName
-            examSubjectName
-            examTypeName
-            schoolName
+        student {
+                birthDate
+                birthPlace
+                isConfirmedBySupervisor
+                isAN
+                email
+                firstName
+                idCard
+                isA2A3
+                isEAlbaniaApplication
+                lastName
+                middleName
+                mobilePhone
+                oldID
+                schoolFinished
+                schoolName
+                session
+                studentId
+                studyClass
+                graduationYear
+                isFall
+                isPrinted
+                diplomaPrintedDate
+                id
+                isDeleted
+                createdIP
+                createdOn
+                deletedIP
+                deletedOn
+                modifiedIP
+            }
+            examSubject
+            {
+            name
+            id
+            }
+            examType
+            {
+            id
+            name
+            }
             auditOperation
             auditHostname
             auditSIDUsername
@@ -1745,12 +1782,7 @@ export const regradingRequest = `
             deletedOn
             modifiedIP
         }
-        modified {
-                displayName
-            }
-            deleted {
-                displayName
-            }
+
 
       }
       }
@@ -1759,24 +1791,36 @@ export const regradingRequest = `
 `;
 
 export const examQuestionScoreTotal = `
-  query ExamQuestionScoreTotal($pagesize: Int, $skip: Int,$where: ExamQuestionScoreTotalFilterInput,
-  $order:[ExamQuestionScoreTotalFilterInput!]) {
-    examQuestionScoreTotal(take: $pagesize, skip: $skip,where: $where,order: $order
-) {
+   query ExamQuestionScoreTotal
+  ($pagesize: Int, $skip: Int,$where: ExamQuestionScoreTotalAuditFilterInput,
+   $order:[ExamQuestionScoreTotalAuditSortInput!]) {
+    ExamQuestionScoreTotal (take: $pagesize, skip: $skip,where: $where,
+    order: $order){
     totalCount
       pageInfo {
         hasNextPage
         hasPreviousPage
        }
         items {
-            examTypeName
-            examVariantName
-            examSubjectName
+            examType{
+            id
+            name
+            }
+            examVariant{
+            id
+            name
             barcode
-            examVariantName
             testNumber
             totalScore
-            academicYearName
+            }
+            examSubject{
+            id
+            name
+            }
+            academicYear{
+            id
+            name
+            }
             auditOperation
             auditHostname
             auditSIDUsername
@@ -1852,10 +1896,11 @@ export const diploma = `
 `;
 
 export const dataExport = `
-  query DataExport($pagesize: Int, $skip: Int,$where: DataExportFilterInput,
-  $order:[DataExportFilterInput!]) {
-    dataExport(take: $pagesize, skip: $skip,where: $where,order: $order
-) {
+ query DataExport
+  ($pagesize: Int, $skip: Int,$where: DataExportAuditFilterInput,
+   $order:[DataExportAuditSortInput!]) {
+    dataExport (take: $pagesize, skip: $skip,where: $where,
+    order: $order){
     totalCount
       pageInfo {
         hasNextPage
@@ -1874,12 +1919,6 @@ export const dataExport = `
             deletedOn
             modifiedIP
         }
-        modified {
-                displayName
-            }
-            deleted {
-                displayName
-            }
 
       }
       }

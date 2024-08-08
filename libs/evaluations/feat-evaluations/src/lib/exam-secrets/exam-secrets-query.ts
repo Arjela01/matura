@@ -17,6 +17,7 @@ export const EXAM_SECRET = `
             auditTimestamp
             barcode
             isFall
+            isExternalData
             isDeleted
             createdIP
             createdOn

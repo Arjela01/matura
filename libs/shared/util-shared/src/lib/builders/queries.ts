@@ -181,6 +181,7 @@ export const EXAM_SECRET = `
             auditTimestamp
             barcode
             isFall
+            isExternalData
             isDeleted
             createdIP
             createdOn
@@ -2219,6 +2220,7 @@ export const EXAM_SITE = `
             address
             quota
             id
+            isFall
             isDeleted
             createdIP
             createdOn

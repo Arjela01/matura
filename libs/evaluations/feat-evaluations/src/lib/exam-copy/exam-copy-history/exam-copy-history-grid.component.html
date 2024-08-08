@@ -13,6 +13,8 @@
         [lazy]="true">
         <ng-template pTemplate="header">
           <tr>
+            <th>ID</th>
+            <th>Lënda</th>
             <th>ID Maturanti</th>
             <th>NID</th>
             <th>Emri i maturantit</th>
@@ -31,16 +33,22 @@
         <ng-template pTemplate="body" let-record>
           <tr>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.studentId }}
+              {{ record.applicationId }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.idCard }}
+              {{ record.subject }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record.maturaId }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record.nid }}
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ record.firstName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.middleName }}
+              {{ record.fatherName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ record.lastName }}
@@ -49,7 +57,7 @@
               {{ record.birthDate | app_date }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.birthPlace }}
+              {{ record.placeOfBirth }}
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ record?.auditOperation }}
