@@ -1515,7 +1515,6 @@ export const STUDENT_BAN = `
             description
             isBanned
             effectiveDate
-            banRemovalDate
             id
             isDeleted
             createdIP

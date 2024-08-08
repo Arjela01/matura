@@ -25,6 +25,7 @@ import { Ripple } from 'primeng/ripple';
 import { DiplomaRequestGridComponent } from '../diploma-request-grid/diploma-request-grid.component';
 import { DiplomaRequestFormComponent } from '../diploma-request-form/diploma-request-form.component';
 import { Router } from '@angular/router';
+import { StudentsGridComponent } from '../../students/students-grid/students-grid.component';
 
 @UntilDestroy()
 @Component({
@@ -42,6 +43,7 @@ import { Router } from '@angular/router';
     Ripple,
     DiplomaRequestGridComponent,
     DiplomaRequestFormComponent,
+    StudentsGridComponent,
   ],
   providers: [DatePipe, ConfirmationService],
   templateUrl: './manage-diploma-request.component.html',
@@ -55,6 +57,10 @@ export class ManageDiplomaRequestComponent {
   totalRecords = 0;
   selectedDiplomaRequest: DiplomaRequest | null = null;
   displayModal = false;
+  id: string | undefined;
+  selectedRecord: any;
+  headerText: any;
+  displayHistoryForm = false;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -84,8 +90,14 @@ export class ManageDiplomaRequestComponent {
     this.displayModal = false;
   }
 
-  onGridEvent(event: GridEvent<DiplomaRequest | DiplomaRequest[]>) {
+  onGridEvent(event: GridEvent<any | DiplomaRequest[]>) {
     switch (event.action) {
+      case GRID_ACTIONS.HISTORY:
+        this.selectedRecord = Object.assign({}, event.data);
+        this.id = event.data.id;
+        this.headerText = `Historiku për Kërkesën {${event.data.id}}`;
+        this.displayHistoryForm = true;
+        break;
       case GRID_ACTIONS.EDIT:
         this.selectedDiplomaRequest = Object.assign(
           {},

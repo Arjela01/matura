@@ -38,6 +38,7 @@ import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
 import { CarriedGradesFormComponent } from '../carried-grade-form/carried-grade-form.component';
 import { CarriedGradesGridComponent } from '../carried-grade-grid/carried-grades-grid.component';
 import { AuthFacade } from '@msh/auth/data-access-auth';
+import { StudentsGridComponent } from '../../students/students-grid/students-grid.component';
 
 @Component({
   selector: 'msh-manage-carried-grades',
@@ -56,6 +57,7 @@ import { AuthFacade } from '@msh/auth/data-access-auth';
     RippleModule,
     CarriedGradesFormComponent,
     SharedStudentLookupModule,
+    StudentsGridComponent,
   ],
 })
 @UntilDestroy()
@@ -74,7 +76,10 @@ export class ManageCarriedGradesComponent implements OnInit {
   academicYearsDropdown: DropdownModel<number>[] = [];
 
   nid: string | undefined = undefined;
-  showStudentSearchButton = true;
+  studentId: string | undefined;
+  selectedRecord: any;
+  headerText: any;
+  displayHistoryForm = false;
   studentInputData = '';
   showStudentModal = false;
   selectedStudent?: SharedStudent;
@@ -124,27 +129,13 @@ export class ManageCarriedGradesComponent implements OnInit {
     this.selectedCarriedGrade = {} as CarriedGrade;
   }
 
-  onGridEvent(event: GridEvent<CarriedGrade | CarriedGrade[]>) {
+  onGridEvent(event: GridEvent<any | CarriedGrade[]>) {
     switch (event.action) {
-      case GRID_ACTIONS.SELECT_ROW:
-        this.selectedCarriedGrades = [
-          ...this.selectedCarriedGrades,
-          event.data as CarriedGrade,
-        ];
-        break;
-      case GRID_ACTIONS.UNSELECT_ROW:
-        this.selectedCarriedGrades = this.selectedCarriedGrades.filter(rep => {
-          rep.id !== (event.data as CarriedGrade).id;
-        });
-        break;
-      case GRID_ACTIONS.SELECT_MANY:
-        this.selectedCarriedGrades = [
-          ...this.selectedCarriedGrades,
-          ...(event.data as CarriedGrade[]),
-        ];
-        break;
-      case GRID_ACTIONS.UNSELECT_ALL:
-        this.selectedCarriedGrades = [];
+      case GRID_ACTIONS.HISTORY:
+        this.selectedRecord = Object.assign({}, event.data);
+        this.studentId = event.data.id;
+        this.headerText = `Historiku për Notën {${event.data.studentId}}`;
+        this.displayHistoryForm = true;
         break;
       case GRID_ACTIONS.EDIT:
         this.displayModal = true;

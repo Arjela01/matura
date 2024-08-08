@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   BehaviorSubject,
@@ -11,6 +16,7 @@ import {
 import {
   AcademicYear,
   ExamQuestionScoreTotal,
+  Student,
 } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { ExamQuestionScoreTotalsService } from '@msh/evaluations/data-access-evaluations';
@@ -18,6 +24,8 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   ColumnFilterDirective,
   GlobalToastService,
+  GRID_ACTIONS,
+  GridEvent,
 } from '@msh/shared/util-shared';
 import { ConfirmationService, SharedModule } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
@@ -25,6 +33,9 @@ import { Router } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { AppBoolPipe, CustomSwitchComponent } from '@msh/shared/ui-shared';
+import { DialogModule } from 'primeng/dialog';
+import { StudentsHistoryGridComponent } from '../../../../../../applications/feat-applications/src/lib/students/students-history/students-history-grid.component';
+import { QuestionHistoryComponent } from '../question-history/question-history.component';
 
 @UntilDestroy()
 @Component({
@@ -39,6 +50,9 @@ import { AppBoolPipe, CustomSwitchComponent } from '@msh/shared/ui-shared';
     ConfirmDialogModule,
     CustomSwitchComponent,
     AppBoolPipe,
+    DialogModule,
+    StudentsHistoryGridComponent,
+    QuestionHistoryComponent,
   ],
   providers: [ConfirmationService],
   templateUrl: './exam-question-score-total-grid.component.html',
@@ -52,6 +66,10 @@ export class ExamQuestionScoreTotalGridComponent implements OnInit {
   filters: TableLazyLoadEvent | null = null;
   isOn = false;
   currentAcademicYear!: Partial<AcademicYear>;
+  id: any;
+  headerText = '';
+  displayHistoryForm = false;
+  selectedRecord: any;
 
   constructor(
     private readonly examQuestionScoreTotalsService: ExamQuestionScoreTotalsService,
@@ -111,6 +129,14 @@ export class ExamQuestionScoreTotalGridComponent implements OnInit {
     this.router.navigate([
       `/evaluations/exam-question-score/${analyticScore.id}`,
     ]);
+  }
+
+  onHistoryClick(analyticScore: ExamQuestionScoreTotal) {
+    this.displayHistoryForm = true;
+    this.selectedRecord = analyticScore;
+    this.id = analyticScore.id;
+    this.headerText = `Historiku {${analyticScore.id}}`;
+    this.displayHistoryForm = true;
   }
 
   onDeleteClick(item: any) {

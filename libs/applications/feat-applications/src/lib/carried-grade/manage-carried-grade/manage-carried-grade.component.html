@@ -19,7 +19,11 @@
         [carriedGrades]="(carriedGrades$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getCarriedGrades($event)">
+        (lazyLoadData)="getCarriedGrades($event)"
+        [selectedRecord]="selectedRecord"
+        [studentId]="studentId"
+        [headerText]="headerText"
+        [displayHistoryForm]="displayHistoryForm">
       </msh-carried-grades-grid>
     </div>
   </div>

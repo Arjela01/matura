@@ -6,10 +6,16 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { ExamCopy, ExamCopyRequestStatusEnum } from '@msh/shared/domain-models';
+import {
+  ExamCopy,
+  ExamCopyRequestStatusEnum,
+  Student,
+} from '@msh/shared/domain-models';
 import {
   ColumnFilterDirective,
   DateFilterService,
+  GRID_ACTIONS,
+  GridEvent,
 } from '@msh/shared/util-shared';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -20,6 +26,8 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ExamCopyRequestStatusPipe } from './exam-copy-request-status-pipe';
 import { AppBoolPipe, AppDatePipe, AppTimePipe } from '@msh/shared/ui-shared';
 import { Router } from '@angular/router';
+import { DialogModule } from 'primeng/dialog';
+import { ExamCopyHistoryGridComponent } from '../exam-copy-history/exam-copy-history-grid.component';
 
 @Component({
   selector: 'msh-exam-copy-grid',
@@ -38,6 +46,8 @@ import { Router } from '@angular/router';
     AppDatePipe,
     AppBoolPipe,
     AppTimePipe,
+    DialogModule,
+    ExamCopyHistoryGridComponent,
   ],
   providers: [DatePipe],
   templateUrl: './exam-copy-grid.component.html',
@@ -47,8 +57,13 @@ import { Router } from '@angular/router';
 export class ExamCopyGridComponent {
   ExamCopyRequestStatusEnum = ExamCopyRequestStatusEnum;
   @Input() examCopies: ExamCopy[] = [];
+  @Input() examCopyId: any;
+  @Input() headerText = '';
+  @Input() displayHistoryForm = true;
+  @Input() selectedRecord: any;
   @Input() totalRecords = 0;
   @Input() loading = false;
+  @Output() gridEvent = new EventEmitter<GridEvent<ExamCopy | ExamCopy[]>>();
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
   constructor(
@@ -58,6 +73,14 @@ export class ExamCopyGridComponent {
 
   onProceedClick(examCopy: ExamCopy) {
     this.router.navigate([`/evaluations/exam-copy/form/${examCopy.id}`]);
+  }
+
+  onHistoryClick(examCopy: ExamCopy) {
+    this.displayHistoryForm = true;
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.HISTORY,
+      data: examCopy,
+    } as GridEvent<ExamCopy>);
   }
 
   loadRows($event: TableLazyLoadEvent) {

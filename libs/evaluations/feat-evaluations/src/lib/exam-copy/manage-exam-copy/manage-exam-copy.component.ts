@@ -5,7 +5,7 @@ import {
   Component,
 } from '@angular/core';
 import { ExamCopyApiService } from '@msh/evaluations/data-access-evaluations';
-import { ExamCopy } from '@msh/shared/domain-models';
+import { ExamCopy, Student } from '@msh/shared/domain-models';
 import {
   GRID_ACTIONS,
   GlobalToastService,
@@ -26,8 +26,7 @@ import { ExamCopyDetailsComponent } from '../exam-copy-details/exam-copy-details
 import { ExamCopyGridComponent } from '../exam-copy-grid/exam-copy-grid.component';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ExamSecretsFormComponent } from '../../exam-secrets/exam-secrets-form/exam-secrets-form.component';
-import { FileUploadEvent, FileUploadModule } from 'primeng/fileupload';
-import { HttpResponse } from '@microsoft/signalr';
+import { FileUploadModule } from 'primeng/fileupload';
 import { HttpEventType } from '@angular/common/http';
 
 @UntilDestroy()
@@ -58,7 +57,10 @@ export class ManageExamCopyComponent {
   filters: TableLazyLoadEvent | null = null;
 
   selecetdExamCopy: ExamCopy | null = null;
-
+  examCopyId: string | undefined;
+  selectedRecord: any;
+  headerText: any;
+  displayHistoryForm = false;
   totalRecords = 0;
   displayModal = false;
 
@@ -78,6 +80,17 @@ export class ManageExamCopyComponent {
     }),
     tap()
   );
+
+  onGridEvent(event: GridEvent<any | ExamCopy[]>) {
+    switch (event.action) {
+      case GRID_ACTIONS.HISTORY:
+        this.selectedRecord = Object.assign({}, event.data);
+        this.examCopyId = event.data.id;
+        this.headerText = `Historiku për Kopjen {${event.data.id}}`;
+        this.displayHistoryForm = true;
+        break;
+    }
+  }
 
   onModalClose() {
     this.displayModal = false;
