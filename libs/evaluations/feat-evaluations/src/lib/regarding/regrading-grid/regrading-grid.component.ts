@@ -79,6 +79,13 @@ export class RegradingGridComponent {
     } as GridEvent<Regrading>);
   }
 
+  onClick(grade: Regrading) {
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.CUSTOM_ACTION2,
+      data: grade,
+    } as GridEvent<Regrading>);
+  }
+
   onHistoryClick(grade: Regrading) {
     this.displayHistoryForm = true;
     this.gridEvent.emit({

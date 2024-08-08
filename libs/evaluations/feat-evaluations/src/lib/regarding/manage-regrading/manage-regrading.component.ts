@@ -218,7 +218,9 @@ export class ManageRegradingComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examCopyId = response.data[0].id;
-        this.router.navigate(['/applications/exam-copy/form', this.examCopyId]);
+        this.router.navigate([
+          `/evaluations/exam-copy/form/${this.examCopyId}`,
+        ]);
       });
   }
 
