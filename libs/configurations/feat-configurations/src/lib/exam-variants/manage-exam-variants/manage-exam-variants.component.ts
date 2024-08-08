@@ -46,7 +46,6 @@ import { ExamVariantFormComponent } from '../exam-variant-form/exam-variant-form
 import { ExamVariantGridComponent } from '../exam-variant-grid/exam-variant-grid.component';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { Router } from '@angular/router';
-import { StudentsGridComponent } from '../../../../../../applications/feat-applications/src/lib/students/students-grid/students-grid.component';
 
 @UntilDestroy()
 @Component({
@@ -61,7 +60,6 @@ import { StudentsGridComponent } from '../../../../../../applications/feat-appli
     ExamVariantGridComponent,
     ToolbarModule,
     RippleModule,
-    StudentsGridComponent,
   ],
   templateUrl: './manage-exam-variants.component.html',
   styleUrls: ['./manage-exam-variants.component.scss'],

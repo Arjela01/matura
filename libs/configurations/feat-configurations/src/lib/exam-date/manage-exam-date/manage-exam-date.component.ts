@@ -27,7 +27,6 @@ import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ExamDateFormComponent } from '../exam-date-form/exam-date-form.component';
 import { ExamDateGridComponent } from '../exam-date-grid/exam-date-grid.component';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { StudentsGridComponent } from '../../../../../../applications/feat-applications/src/lib/students/students-grid/students-grid.component';
 
 @UntilDestroy()
 @Component({
@@ -42,7 +41,6 @@ import { StudentsGridComponent } from '../../../../../../applications/feat-appli
     ExamDateGridComponent,
     ToolbarModule,
     RippleModule,
-    StudentsGridComponent,
   ],
   templateUrl: './manage-exam-Date.component.html',
   styleUrls: ['./manage-exam-Date.component.scss'],

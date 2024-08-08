@@ -33,7 +33,6 @@ import { TableLazyLoadEvent } from 'primeng/table';
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ExamSiteFormComponent } from '../exam-site-form/exam-site-form.component';
 import { ExamSiteGridComponent } from '../exam-site-grid/exam-site-grid.component';
-import { StudentsGridComponent } from '../../../../../../applications/feat-applications/src/lib/students/students-grid/students-grid.component';
 
 @UntilDestroy()
 @Component({
@@ -48,7 +47,6 @@ import { StudentsGridComponent } from '../../../../../../applications/feat-appli
     ExamSiteGridComponent,
     ToolbarModule,
     RippleModule,
-    StudentsGridComponent,
   ],
   templateUrl: './manage-exam-site.component.html',
   styleUrls: ['./manage-exam-site.component.scss'],

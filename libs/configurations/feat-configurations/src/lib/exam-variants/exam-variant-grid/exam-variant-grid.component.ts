@@ -19,7 +19,6 @@ import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
-import { StudentsHistoryGridComponent } from '../../../../../../applications/feat-applications/src/lib/students/students-history/students-history-grid.component';
 import { ExamVariantHistoryComponent } from '../exam-variant-history/exam-variant-history.component';
 
 @Component({
@@ -35,7 +34,6 @@ import { ExamVariantHistoryComponent } from '../exam-variant-history/exam-varian
     RippleModule,
     ColumnFilterDirective,
     DialogModule,
-    StudentsHistoryGridComponent,
     ExamVariantHistoryComponent,
   ],
   templateUrl: './exam-variant-grid.component.html',

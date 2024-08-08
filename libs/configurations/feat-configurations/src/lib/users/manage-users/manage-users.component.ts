@@ -35,7 +35,7 @@ import { UserFormComponent } from '../user-form/user-form.component';
 import { UserGridComponent } from '../user-grid/user-grid.component';
 import { UsersPasswordResetViewComponent } from '../users-password-reset-view/users-password-reset-view.component';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { StudentsGridComponent } from '../../../../../../applications/feat-applications/src/lib/students/students-grid/students-grid.component';
+
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-users',
@@ -53,7 +53,6 @@ import { StudentsGridComponent } from '../../../../../../applications/feat-appli
     UserFormComponent,
     RippleModule,
     UsersPasswordResetViewComponent,
-    StudentsGridComponent,
   ],
   providers: [ConfirmationService],
 })

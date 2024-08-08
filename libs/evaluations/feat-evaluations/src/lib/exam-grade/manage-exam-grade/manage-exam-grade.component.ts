@@ -22,7 +22,6 @@ import { ManageExamGradeChangesComponent } from '../../exam-grade-changes/manage
 import { RegradingGridComponent } from '../../regarding/regrading-grid/regrading-grid.component';
 import { UploadComponent } from '../../regarding/upload/upload.component';
 import { ExamGradeGridComponent } from '../exam-grade-grid/exam-grade-grid.component';
-import { StudentsGridComponent } from '../../../../../../applications/feat-applications/src/lib/students/students-grid/students-grid.component';
 
 @UntilDestroy()
 @Component({
@@ -40,7 +39,6 @@ import { StudentsGridComponent } from '../../../../../../applications/feat-appli
     UploadComponent,
     ExamGradeGridComponent,
     ManageExamGradeChangesComponent,
-    StudentsGridComponent,
   ],
   templateUrl: './manage-exam-grade.component.html',
   styleUrl: './manage-exam-grade.component.scss',

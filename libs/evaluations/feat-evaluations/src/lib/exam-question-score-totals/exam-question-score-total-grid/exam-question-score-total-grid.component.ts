@@ -34,7 +34,6 @@ import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { AppBoolPipe, CustomSwitchComponent } from '@msh/shared/ui-shared';
 import { DialogModule } from 'primeng/dialog';
-import { StudentsHistoryGridComponent } from '../../../../../../applications/feat-applications/src/lib/students/students-history/students-history-grid.component';
 import { QuestionHistoryComponent } from '../question-history/question-history.component';
 
 @UntilDestroy()
@@ -51,7 +50,6 @@ import { QuestionHistoryComponent } from '../question-history/question-history.c
     CustomSwitchComponent,
     AppBoolPipe,
     DialogModule,
-    StudentsHistoryGridComponent,
     QuestionHistoryComponent,
   ],
   providers: [ConfirmationService],

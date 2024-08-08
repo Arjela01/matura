@@ -18,7 +18,6 @@ import { RippleModule } from 'primeng/ripple';
 import { Router } from '@angular/router';
 import { DiplomaRecognitionGridComponent } from '../diploma-recognition-grid/diploma-recognition-grid.component';
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import { StudentsGridComponent } from '../../../../../../applications/feat-applications/src/lib/students/students-grid/students-grid.component';
 
 @Component({
   selector: 'msh-manage-diploma-recognition',
