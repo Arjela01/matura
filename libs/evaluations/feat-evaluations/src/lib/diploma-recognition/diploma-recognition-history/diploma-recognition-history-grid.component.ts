@@ -29,6 +29,7 @@ import {
 } from '@msh/shared/util-shared';
 import { FailingStudent } from '@msh/applications/domain-application';
 import { AppDatePipe } from '@msh/shared/ui-shared';
+import { diplomaRequest } from '@msh/audit-logs/feat-audit-log';
 
 @Component({
   selector: 'msh-diploma-recognition-history-grid',
@@ -68,7 +69,7 @@ export class DiplomaRecognitionHistoryGridComponent {
     GridEvent<FailingStudent | FailingStudent[]>
   >();
 
-  queryName = 'diplomaRecognition';
+  queryName = 'diplomaRequest';
   pageSize = 50;
   totalCount = 0;
   currentPage = 1;
@@ -104,7 +105,7 @@ export class DiplomaRecognitionHistoryGridComponent {
     this.apollo
       .watchQuery<any>({
         query: gql`
-          ${''}
+          ${diplomaRequest}
         `,
         variables: {
           pagesize: this.pageSize,

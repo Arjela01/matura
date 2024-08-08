@@ -1452,7 +1452,6 @@ export const EXAM_VARIANT = `
             auditUsername
             auditOperation
             auditTimestamp
-            code
             name
             numberOfQuestions
             id
@@ -1462,20 +1461,7 @@ export const EXAM_VARIANT = `
             deletedIP
             deletedOn
             modifiedIP
-            examType {
-                name
-                maximumValueWritingScore
-                maximumValueMultipleScore
-                id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-            }
             examSubject {
-                code
                 name
                 credits
                 isOptional
@@ -1499,7 +1485,6 @@ export const EXAM_VARIANT = `
                 modifiedIP
             }
         }
-
        }
        }
        `;
@@ -1847,10 +1832,10 @@ export const examQuestionScoreTotal = `
 
 `;
 
-export const diploma = `
-  query Diploma($pagesize: Int, $skip: Int,$where: DiplomaFilterInput,
-  $order:[DiplomaFilterInput!]) {
-    diploma(take: $pagesize, skip: $skip,where: $where,order: $order
+export const diplomaRequest = `
+  query diplomaRequest($pagesize: Int, $skip: Int,$where: DiplomaRequestFilterInput,
+  $order:[DiplomaRequestFilterInput!]) {
+    diplomaRequest(take: $pagesize, skip: $skip,where: $where,order: $order
 ) {
     totalCount
       pageInfo {
@@ -1926,9 +1911,9 @@ export const dataExport = `
 
 `;
 export const ealbaniaMessage = `
-  query EalbaniaMessage($pagesize: Int, $skip: Int,$where: EalbaniaMessageFilterInput,
-  $order:[EalbaniaMessageFilterInput!]) {
-    ealbaniaMessage(take: $pagesize, skip: $skip,where: $where,order: $order
+  query eAlbaniaMessage($pagesize: Int, $skip: Int,$where: EAlbaniaMessageFilterInput,
+  $order:[EAlbaniaMessageFilterInput!]) {
+    eAlbaniaMessage(take: $pagesize, skip: $skip,where: $where,order: $order
 ) {
     totalCount
       pageInfo {
@@ -1992,7 +1977,7 @@ export const queriesMap: Map<string, string> = new Map([
   ['examGradesRequest', EXAM_GRADE_REQUEST_QUERY],
   ['regradingRequest', regradingRequest],
   ['examQuestionScoreTotal', examQuestionScoreTotal],
-  ['diploma', diploma],
+  ['diplomaRequest', diplomaRequest],
   ['dataExport', dataExport],
   ['ealbaniaMessage', ealbaniaMessage],
 ]);
