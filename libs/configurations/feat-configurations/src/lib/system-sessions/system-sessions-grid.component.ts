@@ -45,6 +45,7 @@ export class SystemSessionsGridComponent {
   filters: TableLazyLoadEvent | null = null;
   totalRecords = 0;
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
+    skip(1),
     map(([_]) => {
       if (this.filters) {
         this.getSessions(this.filters as TableLazyLoadEvent);
