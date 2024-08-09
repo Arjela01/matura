@@ -24,6 +24,7 @@ export interface Regrading {
   file?: any;
   comments?: string;
   barcode?: string;
+  examCopyRequestID?: string;
 }
 
 export interface RegradingTableView {

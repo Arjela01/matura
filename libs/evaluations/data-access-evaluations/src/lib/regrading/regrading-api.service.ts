@@ -41,11 +41,6 @@ export class RegradingApiService {
     );
   }
 
-  getExamCopyByIdCard(idCard: string): Observable<ApiResult<any>> {
-    return this.apiService.get(`
-/ExamCopyRequest/GetExamCopyRequestsByNid/${idCard}`);
-  }
-
   exportTemplate(): Observable<ApiResult<unknown>> {
     return this.apiService.get<any>(
       `/RegradingRequest/ExportTemplate`,

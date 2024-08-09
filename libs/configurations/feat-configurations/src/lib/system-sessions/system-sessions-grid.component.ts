@@ -1,8 +1,11 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
+  signal,
+  computed,
   Component,
   ChangeDetectorRef,
+  effect,
+  CreateEffectOptions,
 } from '@angular/core';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
@@ -14,11 +17,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
+import { combineLatest, map, skip, tap } from 'rxjs';
 import { RouterLink } from '@angular/router';
-import { SystemSessionsModel } from '@msh/shared/domain-models';
+import { AcademicYear, SystemSessionsModel } from '@msh/shared/domain-models';
 import { SystemSessionsService } from '@msh/configurations/data-access-configurations';
 import { AppDatePipe, AppTimePipe } from '@msh/shared/ui-shared';
+
 @UntilDestroy()
 @Component({
   selector: 'msh-system-sessions',
@@ -41,18 +45,19 @@ import { AppDatePipe, AppTimePipe } from '@msh/shared/ui-shared';
   providers: [AppDatePipe, DatePipe],
 })
 export class SystemSessionsGridComponent {
-  sessions: SystemSessionsModel[] = [];
-  filters: TableLazyLoadEvent | null = null;
-  totalRecords = 0;
+  sessions = signal<SystemSessionsModel[]>([]);
+  filters = signal<TableLazyLoadEvent | null>(null);
+  totalRecords = signal<number>(0);
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     skip(1),
     map(([_]) => {
-      if (this.filters) {
-        this.getSessions(this.filters as TableLazyLoadEvent);
+      if (this.filters()) {
+        this.getSessions(this.filters() as TableLazyLoadEvent);
       }
     }),
     tap()
   );
+
   constructor(
     private readonly systemSessions: SystemSessionsService,
     private authFacade: AuthFacade,
@@ -60,14 +65,14 @@ export class SystemSessionsGridComponent {
   ) {}
 
   getSessions($event: TableLazyLoadEvent) {
-    this.filters = Object.assign({}, $event);
+    this.filters.set(Object.assign({}, $event));
 
     this.systemSessions
       .loadSessions($event)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
-        this.sessions = response.data;
-        this.totalRecords = response.total;
+        this.sessions.set(response.data);
+        this.totalRecords.set(response.total);
         this.cd.detectChanges();
       });
   }
