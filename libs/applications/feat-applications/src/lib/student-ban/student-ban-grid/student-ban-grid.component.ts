@@ -6,7 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { StudentBan } from '@msh/shared/domain-models';
+import { Student, StudentBan } from '@msh/shared/domain-models';
 import {
   GridEvent,
   GRID_ACTIONS,
@@ -26,6 +26,8 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { AppBoolPipe, AppDatePipe } from '@msh/shared/ui-shared';
 import { RouterLink } from '@angular/router';
+import { DialogModule } from 'primeng/dialog';
+import { StudentBanHistoryComponent } from '../student-ban-history/student-ban-history.component';
 
 @Component({
   selector: 'msh-student-ban-grid',
@@ -43,6 +45,8 @@ import { RouterLink } from '@angular/router';
     AppDatePipe,
     AppBoolPipe,
     RouterLink,
+    DialogModule,
+    StudentBanHistoryComponent,
   ],
   templateUrl: './student-ban-grid.component.html',
   styleUrls: ['./student-ban-grid.component.scss'],
@@ -53,6 +57,10 @@ export class StudentBanGridComponent {
   @Input() bannedStudents: StudentBan[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
+  @Input() studentId: any;
+  @Input() headerText = '';
+  @Input() displayHistoryForm = true;
+  @Input() selectedRecord: any;
 
   //Keep it local state because of Table Header checkbox not syncing
   selectedBannedStudents: StudentBan[] = [];
@@ -78,30 +86,11 @@ export class StudentBanGridComponent {
     } as GridEvent<StudentBan>);
   }
 
-  onSelectAllClick() {
-    if (this.selectedBannedStudents.length === 0) {
-      this.gridEvent.emit({
-        action: GRID_ACTIONS.UNSELECT_ALL,
-      } as GridEvent<StudentBan>);
-    } else {
-      this.gridEvent.emit({
-        action: GRID_ACTIONS.SELECT_MANY,
-        data: this.selectedBannedStudents,
-      } as GridEvent<StudentBan[]>);
-    }
-  }
-
-  onRowSelect($event: TableRowSelectEvent) {
+  onHistoryClick(student: StudentBan) {
+    this.displayHistoryForm = true;
     this.gridEvent.emit({
-      action: GRID_ACTIONS.SELECT_ROW,
-      data: $event.data,
-    } as GridEvent<StudentBan>);
-  }
-
-  onRowUnselect($event: TableRowUnSelectEvent) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.UNSELECT_ROW,
-      data: $event.data,
+      action: GRID_ACTIONS.HISTORY,
+      data: student,
     } as GridEvent<StudentBan>);
   }
 

@@ -19,8 +19,7 @@ import { SharedModule } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import { StudentsHistoryGridComponent } from '../../students/students-history/students-history-grid.component';
-import { ExamGradeRequestHistoryGridComponent } from '../exam-grade-request-history/exam-grade-request-history-grid.component';
+import { ExamGradeRequestHistoryComponent } from '../exam-grade-request-history/exam-grade-request-history.component';
 
 @UntilDestroy()
 @Component({
@@ -34,12 +33,11 @@ import { ExamGradeRequestHistoryGridComponent } from '../exam-grade-request-hist
     TooltipModule,
     RouterLink,
     DialogModule,
-    StudentsHistoryGridComponent,
-    ExamGradeRequestHistoryGridComponent,
     DatePipe,
     AppDatePipe,
     AppBoolPipe,
-    AppTimePipe
+    AppTimePipe,
+    ExamGradeRequestHistoryComponent,
   ],
   providers: [DatePipe],
   templateUrl: './exam-grade-request-grid.component.html',
@@ -56,7 +54,6 @@ export class ExamGradeRequestGridComponent {
   @Output() gridEvent = new EventEmitter<
     GridEvent<ExamGradeRequestModel | ExamGradeRequestModel[]>
   >();
-
   @Output() lazyLoadData = new EventEmitter<TableLazyLoadEvent>();
 
   onEditClick(examGradeRequest: ExamGradeRequestModel) {

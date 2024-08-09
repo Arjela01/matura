@@ -69,6 +69,10 @@ export class ManageRegradingComponent {
   displayStatusModal = false;
   statuses: DropdownModel<any>[] = [];
 
+  studentId: string | undefined;
+  selectedRecord: any;
+  headerText: any;
+  displayHistoryForm = false;
   examSubjects: DropdownModel<string>[] = [];
   examGradeChangeTypes: DropdownModel<string>[] = [];
   displayModal = false;
@@ -127,8 +131,14 @@ export class ManageRegradingComponent {
     this.selectedGrade = {} as Regrading;
   }
 
-  onGridEvent(event: GridEvent<Regrading | Regrading[]>) {
+  onGridEvent(event: GridEvent<any | Regrading[]>) {
     switch (event.action) {
+      case GRID_ACTIONS.HISTORY:
+        this.selectedRecord = Object.assign({}, event.data);
+        this.studentId = event.data.id;
+        this.headerText = `Historiku për Notën {${event.data.examGradeId}}`;
+        this.displayHistoryForm = true;
+        break;
       case GRID_ACTIONS.EDIT:
         this.selectedGrade = Object.assign({}, event.data as Regrading);
         this.examGradeId = this.selectedGrade.examGradeId;
@@ -208,7 +218,9 @@ export class ManageRegradingComponent {
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.examCopyId = response.data[0].id;
-        this.router.navigate(['/applications/exam-copy/form', this.examCopyId]);
+        this.router.navigate([
+          `/evaluations/exam-copy/form/${this.examCopyId}`,
+        ]);
       });
   }
 

@@ -26,7 +26,11 @@
         [regrading]="(regrading$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getGrade($event)">
+        (lazyLoadData)="getGrade($event)"
+        [selectedRecord]="selectedRecord"
+        [studentId]="studentId"
+        [headerText]="headerText"
+        [displayHistoryForm]="displayHistoryForm">
       </msh-regrading-grid>
     </div>
   </div>

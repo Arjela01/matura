@@ -22,13 +22,17 @@ import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { RouterLink } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { ColumnFilterDirective, GridEvent } from '@msh/shared/util-shared';
-import { ExamGradeRequestModel } from '@msh/shared/domain-models';
-import { EXAM_GRADE_REQUEST_QUERY } from '../exam-grade-request.query';
+import {
+  ColumnFilterDirective,
+  GridEvent,
+  WhereBuilder,
+} from '@msh/shared/util-shared';
+import { FailingStudent } from '@msh/applications/domain-application';
 import { AppDatePipe } from '@msh/shared/ui-shared';
+import { diplomaRequest } from '@msh/shared/util-shared';
 
 @Component({
-  selector: 'msh-exam-grade-request-history-grid',
+  selector: 'msh-diploma-recognition-history-grid',
   standalone: true,
   imports: [
     CommonModule,
@@ -50,21 +54,22 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
     DatePipe,
     AppDatePipe,
   ],
-  templateUrl: './exam-grade-request-history-grid.component.html',
-  styleUrls: ['./exam-grade-request-history-grid.component.scss'],
+  templateUrl: './diploma-recognition-history-grid.component.html',
+  styleUrls: ['./diploma-recognition-history-grid.component.scss'],
   providers: [Apollo, DatePipe],
 })
 @UntilDestroy()
-export class ExamGradeRequestHistoryGridComponent {
+export class DiplomaRecognitionHistoryGridComponent {
   SORT_ASC = 'ASC';
   SORT_DESC = 'DESC';
 
   @Input() recordId: any;
   @Input() recordData: any;
   @Output() gridEvent = new EventEmitter<
-    GridEvent<ExamGradeRequestModel | ExamGradeRequestModel[]>
+    GridEvent<FailingStudent | FailingStudent[]>
   >();
 
+  queryName = 'diplomaRequest';
   pageSize = 50;
   totalCount = 0;
   currentPage = 1;
@@ -100,7 +105,7 @@ export class ExamGradeRequestHistoryGridComponent {
     this.apollo
       .watchQuery<any>({
         query: gql`
-          ${EXAM_GRADE_REQUEST_QUERY}
+          ${diplomaRequest}
         `,
         variables: {
           pagesize: this.pageSize,
@@ -115,7 +120,8 @@ export class ExamGradeRequestHistoryGridComponent {
       })
       .valueChanges.subscribe(
         (response: any) => {
-          this.recordData = response?.data['examGradesRequest'].items;
+          const items = response?.data[this.queryName].items || [];
+          this.recordData = items;
           this.totalCount = this.recordData.length;
           this.cd.markForCheck();
         },

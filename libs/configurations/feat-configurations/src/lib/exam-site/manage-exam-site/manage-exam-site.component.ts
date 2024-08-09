@@ -56,6 +56,7 @@ import { ExamSiteGridComponent } from '../exam-site-grid/exam-site-grid.componen
 export class ManageExamSiteComponent implements OnInit {
   private examSites$$ = new BehaviorSubject<ExamSite[]>([]);
   examSites$ = this.examSites$$.asObservable();
+
   filters: TableLazyLoadEvent | null = null;
   currentAcademicYear?: Partial<AcademicYear>;
   totalRecords = 0;
@@ -64,6 +65,12 @@ export class ManageExamSiteComponent implements OnInit {
   displayModal = false;
   administrationOffices: DropdownModel<number>[] = [];
   highSchools: DropdownModel<number>[] = [];
+  displayHistoryForm = false;
+  id: string | undefined;
+  selectedRecord: any;
+  headerText: any;
+  showEditButton = false;
+
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
     map(([academicYear]) => {
       this.currentAcademicYear = academicYear;
@@ -93,31 +100,18 @@ export class ManageExamSiteComponent implements OnInit {
     this.selectedExamSite = {
       isFall: this.currentAcademicYear?.isFall ?? false,
     } as ExamSite;
-    console.log('This selected examSite: ' + JSON.stringify(this.selectedExamSite))
+    console.log(
+      'This selected examSite: ' + JSON.stringify(this.selectedExamSite)
+    );
   }
 
-  onGridEvent(event: GridEvent<ExamSite | ExamSite[]>) {
+  onGridEvent(event: GridEvent<any | ExamSite[]>) {
     switch (event.action) {
-      case GRID_ACTIONS.SELECT_ROW:
-        this.selectedExamSites = [
-          ...this.selectedExamSites,
-          event.data as ExamSite,
-        ];
-        break;
-      case GRID_ACTIONS.UNSELECT_ROW:
-        this.selectedExamSites = this.selectedExamSites.filter(es => {
-          return es.id !== (event.data as ExamSite).id;
-        });
-        break;
-
-      case GRID_ACTIONS.SELECT_MANY:
-        this.selectedExamSites = [
-          ...this.selectedExamSites,
-          ...(event.data as ExamSite[]),
-        ];
-        break;
-      case GRID_ACTIONS.UNSELECT_ALL:
-        this.selectedExamSites = [];
+      case GRID_ACTIONS.HISTORY:
+        this.selectedRecord = Object.assign({}, event.data);
+        this.id = event.data.id;
+        this.headerText = `Historiku për Qendrën {${event.data.id}}`;
+        this.displayHistoryForm = true;
         break;
       case GRID_ACTIONS.EDIT:
         this.selectedExamSite = Object.assign({}, event.data as ExamSite);

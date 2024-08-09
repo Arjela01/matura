@@ -35,6 +35,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { CustomSwitchComponent } from '@msh/shared/ui-shared';
+import { StudentsGridComponent } from '../../students/students-grid/students-grid.component';
 
 @UntilDestroy()
 @Component({
@@ -50,6 +51,7 @@ import { CustomSwitchComponent } from '@msh/shared/ui-shared';
     ToolbarModule,
     RippleModule,
     CustomSwitchComponent,
+    StudentsGridComponent,
   ],
   templateUrl: './manage-student-ban.component.html',
   styleUrls: ['./manage-student-ban.component.scss'],
@@ -60,6 +62,10 @@ export class ManageStudentBanComponent implements OnInit {
   bannedStudents$ = this.bannedStudents$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
 
+  studentId: string | undefined;
+  selectedRecord: any;
+  headerText: any;
+  displayHistoryForm = false;
   totalRecords = 0;
   selectedBannedStudent: StudentBan | null = null;
   examTypes: DropdownModel<number>[] = [];
@@ -109,8 +115,14 @@ export class ManageStudentBanComponent implements OnInit {
     this.displayModal = false;
   }
 
-  onGridEvent(event: GridEvent<StudentBan | StudentBan[]>) {
+  onGridEvent(event: GridEvent<any | StudentBan[]>) {
     switch (event.action) {
+      case GRID_ACTIONS.HISTORY:
+        this.selectedRecord = Object.assign({}, event.data);
+        this.studentId = event.data.id;
+        this.headerText = `Historiku për Maturantin {${event.data.studentId}}`;
+        this.displayHistoryForm = true;
+        break;
       case GRID_ACTIONS.EDIT:
         this.selectedBannedStudent = Object.assign(
           {},

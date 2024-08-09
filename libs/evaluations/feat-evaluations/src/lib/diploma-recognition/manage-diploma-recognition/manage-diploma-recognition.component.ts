@@ -42,6 +42,10 @@ export class ManageDiplomaRecognitionComponent {
   diplomaRecognition$ = this.diplomaRecognition$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
 
+  id: string | undefined;
+  selectedRecord: any;
+  headerText: any;
+  displayHistoryForm = false;
   totalRecords = 0;
   selectedDiplomaRecognitionRecord: DiplomaRecognition | null = null;
 
@@ -67,8 +71,14 @@ export class ManageDiplomaRecognitionComponent {
     this.router.navigate(['/evaluations/diploma-recognition/add']);
   }
 
-  onGridEvent(event: GridEvent<DiplomaRecognition | DiplomaRecognition[]>) {
+  onGridEvent(event: GridEvent<any | DiplomaRecognition[]>) {
     switch (event.action) {
+      case GRID_ACTIONS.HISTORY:
+        this.selectedRecord = Object.assign({}, event.data);
+        this.id = event.data.id;
+        this.headerText = `Historiku për Kërkesën {${event.data.id}}`;
+        this.displayHistoryForm = true;
+        break;
       case GRID_ACTIONS.EDIT:
         this.selectedDiplomaRecognitionRecord = Object.assign(
           {},

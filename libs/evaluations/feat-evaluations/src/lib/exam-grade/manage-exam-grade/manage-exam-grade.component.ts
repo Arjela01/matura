@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import {
-  ExamGradeApiService
-} from '@msh/evaluations/data-access-evaluations';
+import { ExamGradeApiService } from '@msh/evaluations/data-access-evaluations';
 import { ExamGrade } from '@msh/shared/domain-models';
-import { GlobalToastService, GRID_ACTIONS, GridEvent } from '@msh/shared/util-shared';
+import {
+  GlobalToastService,
+  GRID_ACTIONS,
+  GridEvent,
+} from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ConfirmationService, PrimeTemplate } from 'primeng/api';
 import { ButtonDirective } from 'primeng/button';
@@ -36,7 +38,7 @@ import { ExamGradeGridComponent } from '../exam-grade-grid/exam-grade-grid.compo
     RegradingGridComponent,
     UploadComponent,
     ExamGradeGridComponent,
-    ManageExamGradeChangesComponent
+    ManageExamGradeChangesComponent,
   ],
   templateUrl: './manage-exam-grade.component.html',
   styleUrl: './manage-exam-grade.component.scss',
@@ -53,6 +55,10 @@ export class ManageExamGradeComponent {
   displayModal = false;
   academicYearId = 0;
   examGradeId: any;
+  studentId: string | undefined;
+  selectedRecord: any;
+  headerText: any;
+  displayHistoryForm = false;
 
   constructor(
     private readonly authFacade: AuthFacade,
@@ -76,22 +82,27 @@ export class ManageExamGradeComponent {
     this.selectedGrade = {} as ExamGrade;
   }
 
-  onGridEvent(event: GridEvent<ExamGrade | ExamGrade[]>) {
+  onGridEvent(event: GridEvent<any | ExamGrade[]>) {
     switch (event.action) {
+      case GRID_ACTIONS.HISTORY:
+        this.selectedRecord = Object.assign({}, event.data);
+        this.studentId = event.data.id;
+        this.headerText = `Historiku për Notën {${event.data.id}}`;
+        this.displayHistoryForm = true;
+        break;
       case GRID_ACTIONS.EDIT:
         this.selectedGrade = Object.assign({}, event.data as ExamGrade);
         this.examGradeId = this.selectedGrade.id;
         this.displayModal = true;
         break;
-        case GRID_ACTIONS.DELETE:
-          console.log('Delete two');
-          this.confirmationService.confirm({
-            message: 'Jeni i sigurt që doni ta fshini këtë notë?',
-            accept: () => {
-              this.deleteGrade(event.data as ExamGrade);
-            },
-          });
-          break;
+      case GRID_ACTIONS.DELETE:
+        this.confirmationService.confirm({
+          message: 'Jeni i sigurt që doni ta fshini këtë notë?',
+          accept: () => {
+            this.deleteGrade(event.data as ExamGrade);
+          },
+        });
+        break;
     }
   }
 
@@ -109,15 +120,16 @@ export class ManageExamGradeComponent {
           this.getGrade(this.filters as TableLazyLoadEvent);
         }
         if (!response.isSuccessful) {
-              if (response.errorMessage) {
-                this.toastService.showError(response.errorMessage);
-              } else {
-                this.toastService.showError('Ndonje një problem gjatë fshirjes së notës!');
-              }
+          if (response.errorMessage) {
+            this.toastService.showError(response.errorMessage);
+          } else {
+            this.toastService.showError(
+              'Ndonje një problem gjatë fshirjes së notës!'
+            );
           }
+        }
       });
   }
-
 
   getGrade($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);

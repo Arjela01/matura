@@ -19,7 +19,11 @@
         [examSites]="(examSites$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getExamSites($event)">
+        (lazyLoadData)="getExamSites($event)"
+        [selectedRecord]="selectedRecord"
+        [id]="id"
+        [headerText]="headerText"
+        [displayHistoryForm]="displayHistoryForm">
       </msh-exam-site-grid>
     </div>
   </div>

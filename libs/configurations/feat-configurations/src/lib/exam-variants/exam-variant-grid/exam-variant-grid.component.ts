@@ -6,7 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { ExamVariant } from '@msh/shared/domain-models';
+import { ExamVariant, Student } from '@msh/shared/domain-models';
 import {
   ColumnFilterDirective,
   GRID_ACTIONS,
@@ -18,6 +18,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import { DialogModule } from 'primeng/dialog';
+import { ExamVariantHistoryComponent } from '../exam-variant-history/exam-variant-history.component';
 
 @Component({
   selector: 'msh-exam-variant-grid',
@@ -31,6 +33,8 @@ import { TooltipModule } from 'primeng/tooltip';
     CheckboxModule,
     RippleModule,
     ColumnFilterDirective,
+    DialogModule,
+    ExamVariantHistoryComponent,
   ],
   templateUrl: './exam-variant-grid.component.html',
   styleUrls: ['./exam-variant-grid.component.scss'],
@@ -40,6 +44,10 @@ export class ExamVariantGridComponent {
   @Input() examVariants: ExamVariant[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
+  @Input() id: any;
+  @Input() headerText = '';
+  @Input() displayHistoryForm = false;
+  @Input() selectedRecord: any;
 
   selectedExamVariants: ExamVariant[] = [];
 
@@ -59,6 +67,14 @@ export class ExamVariantGridComponent {
   onAddQuestionClick(examVariant: ExamVariant) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.ADD,
+      data: examVariant,
+    } as GridEvent<ExamVariant>);
+  }
+
+  onHistoryClick(examVariant: ExamVariant) {
+    this.displayHistoryForm = true;
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.HISTORY,
       data: examVariant,
     } as GridEvent<ExamVariant>);
   }

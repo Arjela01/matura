@@ -1,0 +1,79 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <p-table
+        #dt
+        dataKey="id"
+        responsiveLayout="scroll"
+        [scrollable]="true"
+        scrollHeight="820px"
+        [value]="recordData || []"
+        [paginator]="false"
+        (onLazyLoad)="loadRows($event)"
+        [lazy]="true">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>ID Maturanti</th>
+            <th>NID</th>
+            <th>Emri</th>
+            <th>Atësia</th>
+            <th>Mbiemri</th>
+            <th>Tipi</th>
+            <th>Lënda</th>
+            <th>Zvap</th>
+            <th>Veprimi i Kryer</th>
+            <th>Përdoruesi</th>
+            <th>Emri i Hostit</th>
+            <th>Koha e ndryshimit</th>
+            <th></th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-record>
+          <tr>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.student?.studentId }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.student?.idCard }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.student?.firstName }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.student?.middleName }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.student?.lastName }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.examType?.name }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.examSubject?.name }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.admnistationOffice?.name }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.auditOperation }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{
+                record?.auditOperation === 'UPDATE'
+                  ? record?.modified?.displayName
+                  : record?.created?.displayName
+              }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.auditHostname }}
+            </td>
+            <td style="width: 10%; min-width: 10rem">
+              {{ record?.auditTimestamp | app_date }}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

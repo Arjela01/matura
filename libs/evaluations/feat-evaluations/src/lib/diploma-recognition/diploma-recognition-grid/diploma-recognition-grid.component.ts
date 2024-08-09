@@ -6,7 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { DiplomaRecognition } from '@msh/shared/domain-models';
+import { DiplomaRecognition, Student } from '@msh/shared/domain-models';
 import {
   ColumnFilterDirective,
   DateFilterService,
@@ -17,6 +17,8 @@ import { SharedModule } from 'primeng/api';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { AppDatePipe } from '@msh/shared/ui-shared';
+import { DialogModule } from 'primeng/dialog';
+import { DiplomaRecognitionHistoryGridComponent } from '../diploma-recognition-history/diploma-recognition-history-grid.component';
 
 @Component({
   selector: 'msh-diploma-recognition-grid',
@@ -29,6 +31,8 @@ import { AppDatePipe } from '@msh/shared/ui-shared';
     TooltipModule,
     DatePipe,
     AppDatePipe,
+    DialogModule,
+    DiplomaRecognitionHistoryGridComponent,
   ],
   providers: [DatePipe],
   templateUrl: './diploma-recognition-grid.component.html',
@@ -39,6 +43,10 @@ export class DiplomaRecognitionGridComponent {
   @Input() diplomaRecognitionRecords: DiplomaRecognition[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
+  @Input() id: any;
+  @Input() headerText = '';
+  @Input() displayHistoryForm = true;
+  @Input() selectedRecord: any;
   @Output() gridEvent = new EventEmitter<
     GridEvent<DiplomaRecognition | DiplomaRecognition[]>
   >();
@@ -49,6 +57,14 @@ export class DiplomaRecognitionGridComponent {
   onEditClick(diplomaRecognition: DiplomaRecognition) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.EDIT,
+      data: diplomaRecognition,
+    } as GridEvent<DiplomaRecognition>);
+  }
+
+  onHistoryClick(diplomaRecognition: DiplomaRecognition) {
+    this.displayHistoryForm = true;
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.HISTORY,
       data: diplomaRecognition,
     } as GridEvent<DiplomaRecognition>);
   }

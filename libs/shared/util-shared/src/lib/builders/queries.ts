@@ -27,7 +27,6 @@ export const ADMINISTRATION_OFFICE_QUERY = `
             deletedIP
             deletedOn
             modifiedIP
-            modifiedOn
             parentOffice {
                 id
                 name
@@ -41,7 +40,6 @@ export const ADMINISTRATION_OFFICE_QUERY = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
                 created {
                     displayName
                 }
@@ -99,7 +97,48 @@ export const EXAM_TYPE_QUERY = `
             deletedIP
             deletedOn
             modifiedIP
-            modifiedOn
+            created {
+                displayName
+            }
+            modified {
+                displayName
+            }
+            deleted {
+                displayName
+            }
+        }
+    }
+  }
+`;
+
+export const EXAM_GRADE_REQUEST_QUERY = `
+  query ExamGradeRequest($pagesize: Int, $skip: Int,$where: ExamGradesRequestAuditFilterInput,
+  $order:[ExamGradesRequestAuditSortInput!]) {
+    examGradesRequest(take: $pagesize, skip: $skip,where: $where,order: $order
+)  {
+    totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+      }
+        items {
+            id
+            maturaId
+            idCard
+            firstName
+            lastName
+            description
+            auditHostname
+            auditSIDUsername
+            auditUsername
+            auditOperation
+            auditTimestamp
+            isDeleted
+            createdIP
+            createdOn
+            deletedIP
+            deletedOn
+            modifiedIP
             created {
                 displayName
             }
@@ -148,6 +187,12 @@ export const CARRIED_GRADE = `
             }
              student {
                 id
+                idCard
+                firstName
+                middleName
+                lastName
+                birthPlace
+                studentId
              }
             academicYear {
                 isActive
@@ -157,6 +202,53 @@ export const CARRIED_GRADE = `
                 id
                 name
             }
+        }
+      }
+    }
+
+`;
+export const EXAM_GRADE = `
+  query ExamGrade
+  ($pagesize: Int, $skip: Int,$where: ExamGradeAuditFilterInput,
+    $order:[ExamGradeAuditSortInput!]) {
+    examGrade(take: $pagesize, skip: $skip,where: $where, order: $order) {
+    totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+       }
+        items {
+            id
+            auditHostname
+            auditSIDUsername
+            auditUsername
+            auditOperation
+            auditTimestamp
+            grade
+            isDeleted
+            createdIP
+            createdOn
+            deletedIP
+            deletedOn
+             examSubject {
+                code
+                id
+                name
+            }
+             student {
+                id
+                idCard
+                firstName
+                middleName
+                lastName
+                birthPlace
+                studentId
+             }
+            academicYear {
+                isActive
+                year
+            }
+
         }
       }
     }
@@ -187,7 +279,6 @@ export const EXAM_SECRET = `
             deletedIP
             deletedOn
             modifiedIP
-            modifiedOn
                student {
                 id
                 birthDate
@@ -218,7 +309,6 @@ export const EXAM_SECRET = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
                 created {
                     displayName
                 }
@@ -241,30 +331,6 @@ export const EXAM_SECRET = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
-            }
-                examVariant {
-                id
-                code
-                name
-                numberOfQuestions
-                variant
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
                 created {
                     displayName
                 }
@@ -318,7 +384,6 @@ export const EXAM_SCORE = `
             deletedIP
             deletedOn
             modifiedIP
-            modifiedOn
             examSecret {
                 id
                 barcode
@@ -329,7 +394,6 @@ export const EXAM_SCORE = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
                 created {
                     displayName
                 }
@@ -352,8 +416,7 @@ export const EXAM_SCORE = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                created {
+            created {
                     displayName
                 }
                 modified {
@@ -439,19 +502,9 @@ export const A1_FORMS = `
             idCard
         }
         isDeleted
-        created {
-            displayName
-        }
         createdIP
         createdOn
-        modified {
-            displayName
-        }
         modifiedIP
-        modifiedOn
-        deleted {
-            displayName
-        }
         deletedIP
         deletedOn
         auditHostname
@@ -491,7 +544,6 @@ export const A1Z_FORMS = `
             deletedIP
             deletedOn
             modifiedIP
-            modifiedOn
                carriedGradeD1 {
                 id
                 grade
@@ -513,182 +565,30 @@ export const A1Z_FORMS = `
                  reason
             }
             subjectD1 {
-                code
                 name
-                credits
-                isOptional
-                id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             subjectD2 {
-                code
                 name
-                credits
-                isOptional
-                id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             subjectD3 {
-                code
                 name
-                credits
-                isOptional
-                id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             subjectZ1 {
-                code
                 name
-                credits
-                isOptional
-                id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             subjectZ2 {
-                code
                 name
-                credits
-                isOptional
-                id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             subjectZ3 {
-                code
                 name
-                credits
-                isOptional
-                id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             a1ZCategory {
                 name
-                id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             academicYear {
                 isActive
                 year
                 id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             student {
                 birthDate
@@ -720,26 +620,7 @@ export const A1Z_FORMS = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
 }
 }
@@ -772,7 +653,6 @@ export const EXAM_DATE = `
             deletedOn
             modifiedBy
             modifiedIP
-            modifiedOn
             examType {
                 name
                 maximumValueWritingScore
@@ -784,17 +664,6 @@ export const EXAM_DATE = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
-
             }
             academicYear {
                 isActive
@@ -806,26 +675,7 @@ export const EXAM_DATE = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-             created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
 }
 }
@@ -882,16 +732,6 @@ export const EXAM_COPY_REQUEST = `
             deletedIP
             deletedOn
             modifiedIP
-            modifiedOn
-            created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
 }
 }
@@ -907,9 +747,6 @@ export const EXAM_ASSIGNMENT = `
         hasPreviousPage
        }
         items {
-           parentRecord{
-            id
-       }
             auditHostname
             auditSIDUsername
             auditUsername
@@ -922,7 +759,6 @@ export const EXAM_ASSIGNMENT = `
             deletedIP
             deletedOn
             modifiedIP
-            modifiedOn
             student {
                 birthDate
                 birthPlace
@@ -953,16 +789,6 @@ export const EXAM_ASSIGNMENT = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             examDate {
                 date
@@ -974,28 +800,9 @@ export const EXAM_ASSIGNMENT = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-            created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
-        }
-       }
+          }
+         }
        }
        `;
 export const ARCHIVE_EXAM = `
@@ -1026,7 +833,6 @@ export const ARCHIVE_EXAM = `
             deletedOn
             modifiedBy
             modifiedIP
-            modifiedOn
             archiveFolder {
                 nr
                 isClosed
@@ -1042,7 +848,6 @@ export const ARCHIVE_EXAM = `
                 deletedOn
                 modifiedBy
                 modifiedIP
-                modifiedOn
                 examSubject {
                     code
                     name
@@ -1058,7 +863,6 @@ export const ARCHIVE_EXAM = `
                     deletedOn
                     modifiedBy
                     modifiedIP
-                    modifiedOn
                 }
                 examType {
                     name
@@ -1074,7 +878,6 @@ export const ARCHIVE_EXAM = `
                     deletedOn
                     modifiedBy
                     modifiedIP
-                    modifiedOn
                 }
                 academicYear {
                     isActive
@@ -1089,7 +892,6 @@ export const ARCHIVE_EXAM = `
                     deletedOn
                     modifiedBy
                     modifiedIP
-                    modifiedOn
                 }
                 profileGroup {
                     name
@@ -1104,7 +906,6 @@ export const ARCHIVE_EXAM = `
                     deletedOn
                     modifiedBy
                     modifiedIP
-                    modifiedOn
                 }
                 examType {
                     name
@@ -1120,7 +921,6 @@ export const ARCHIVE_EXAM = `
                     deletedOn
                     modifiedBy
                     modifiedIP
-                    modifiedOn
                 }
                 examSubject {
                     code
@@ -1137,7 +937,6 @@ export const ARCHIVE_EXAM = `
                     deletedOn
                     modifiedBy
                     modifiedIP
-                    modifiedOn
                 }
                 profileGroup {
                     name
@@ -1152,7 +951,6 @@ export const ARCHIVE_EXAM = `
                     deletedOn
                     modifiedBy
                     modifiedIP
-                    modifiedOn
                 }
             }
         }
@@ -1188,7 +986,6 @@ export const ARCHIVE_FOLDER = `
             deletedIP
             deletedOn
             modifiedIP
-            modifiedOn
             examSubject {
                 code
                 name
@@ -1201,16 +998,6 @@ export const ARCHIVE_FOLDER = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             examType {
                 name
@@ -1223,16 +1010,6 @@ export const ARCHIVE_FOLDER = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             profileGroup {
                 name
@@ -1244,26 +1021,7 @@ export const ARCHIVE_FOLDER = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-             created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
 
 }
@@ -1294,7 +1052,6 @@ export const AVERAGE_GRADE = `
             deletedIP
             deletedOn
             modifiedIP
-            modifiedOn
             student {
                 birthDate
                 birthPlace
@@ -1325,16 +1082,6 @@ export const AVERAGE_GRADE = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             academicYear {
                 isActive
@@ -1346,30 +1093,9 @@ export const AVERAGE_GRADE = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-             created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
+         }
         }
-
-
-       }
        }
        `;
 export const PROFILE_GROUP = `
@@ -1397,19 +1123,9 @@ export const PROFILE_GROUP = `
             deletedIP
             deletedOn
             modifiedIP
-            modifiedOn
-            created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
        }
-       }
+     }
        `;
 export const PROFILE = `
   query Profile
@@ -1440,7 +1156,6 @@ export const PROFILE = `
             deletedIP
             deletedOn
             modifiedIP
-            modifiedOn
             academicYear {
                 isActive
                 year
@@ -1451,16 +1166,6 @@ export const PROFILE = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             profileGroup {
                 name
@@ -1472,29 +1177,10 @@ export const PROFILE = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-             created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
-       }
-       }
+      }
+    }
        `;
 export const STUDENT_BAN = `
   query StudentBan
@@ -1515,7 +1201,6 @@ export const STUDENT_BAN = `
             description
             isBanned
             effectiveDate
-            banRemovalDate
             id
             isDeleted
             createdIP
@@ -1523,7 +1208,6 @@ export const STUDENT_BAN = `
             deletedIP
             deletedOn
             modifiedIP
-            modifiedOn
             student {
                 birthDate
                 birthPlace
@@ -1554,16 +1238,6 @@ export const STUDENT_BAN = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
         }
        }
@@ -1607,7 +1281,6 @@ export const STUDY_PROGRAM = `
             deletedIP
             deletedOn
             modifiedIP
-            modifiedOn
             academicYear {
                 isActive
                 year
@@ -1618,52 +1291,15 @@ export const STUDY_PROGRAM = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             university {
                 name
                 id
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             universityDepartment {
                 name
                 id
-              created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-             created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
 
 }
@@ -1694,16 +1330,6 @@ export const STUDY_SUBJECT = `
             deletedIP
             deletedOn
             modifiedIP
-            modifiedOn
-            created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
     }
        }`;
@@ -1736,7 +1362,6 @@ export const HIGH_SCHOOL = `
             deletedIP
             deletedOn
             modifiedIP
-            modifiedOn
             administrationOffice {
                 name
                 directorName
@@ -1745,38 +1370,13 @@ export const HIGH_SCHOOL = `
                 isAllowedToLogin
                 id
                 isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
-             created {
-                    displayName
                 }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
-            }
             city {
                 name
-
-            }
+                }
             region {
                 name
             }
-             created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
        }
        }
@@ -1806,8 +1406,7 @@ export const GRADE_SCALE = `
             deletedIP
             deletedOn
             modifiedIP
-            modifiedOn
-            examSubject {
+           examSubject {
                 code
                 name
                 credits
@@ -1819,26 +1418,7 @@ export const GRADE_SCALE = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-            created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
        }
        }
@@ -1868,7 +1448,6 @@ export const FAILING_STUDENT = `
             deletedIP
             deletedOn
             modifiedIP
-            modifiedOn
             student {
                 birthDate
                 birthPlace
@@ -1899,26 +1478,7 @@ export const FAILING_STUDENT = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-              created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
        }
        }
@@ -1939,10 +1499,8 @@ export const EXAM_VARIANT = `
             auditUsername
             auditOperation
             auditTimestamp
-            code
             name
             numberOfQuestions
-            variant
             id
             isDeleted
             createdIP
@@ -1950,31 +1508,7 @@ export const EXAM_VARIANT = `
             deletedIP
             deletedOn
             modifiedIP
-            modifiedOn
-            examType {
-                name
-                maximumValueWritingScore
-                maximumValueMultipleScore
-                id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
-            }
             examSubject {
-                code
                 name
                 credits
                 isOptional
@@ -1985,16 +1519,6 @@ export const EXAM_VARIANT = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             profileGroup {
                 name
@@ -2006,28 +1530,8 @@ export const EXAM_VARIANT = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-            created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
-
        }
        }
        `;
@@ -2058,7 +1562,6 @@ export const EXAM_SUBJECT = `
             deletedIP
             deletedOn
             modifiedIP
-            modifiedOn
             examType {
                 name
                 maximumValueWritingScore
@@ -2070,16 +1573,6 @@ export const EXAM_SUBJECT = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                  created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             academicYear {
                 isActive
@@ -2091,26 +1584,7 @@ export const EXAM_SUBJECT = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-             created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
        }
        }
@@ -2139,7 +1613,6 @@ export const EXAM_SUBJECT_PROFILE = `
             deletedIP
             deletedOn
             modifiedIP
-            modifiedOn
             examSubject {
                 code
                 name
@@ -2152,16 +1625,6 @@ export const EXAM_SUBJECT_PROFILE = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             profile {
                 code
@@ -2177,26 +1640,7 @@ export const EXAM_SUBJECT_PROFILE = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-            created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
 }
 }`;
@@ -2227,7 +1671,6 @@ export const EXAM_SITE = `
             deletedOn
             modifiedBy
             modifiedIP
-            modifiedOn
             academicYear {
                 isActive
                 year
@@ -2238,16 +1681,6 @@ export const EXAM_SITE = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                 created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
             administrationOffice {
                 name
@@ -2262,37 +1695,62 @@ export const EXAM_SITE = `
                 deletedIP
                 deletedOn
                 modifiedIP
-                modifiedOn
-                created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
             }
-            created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
        }
        }`;
 export const USERS = `
-  query Users {
-    users {
-        id
-        name
-    }
-  }
-`;
+ query aspNetUser
+  ($pagesize: Int, $skip: Int,$where: AspNetUserAuditFilterInput,
+   $order:[AspNetUserAuditSortInput!]) {
+    AspNetUser (take: $pagesize, skip: $skip,where: $where,
+    order: $order) {
+    totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+       }
+       items {
+            auditHostname
+            auditSIDUsername
+            auditUsername
+            auditOperation
+            auditTimestamp
+            isDeleted
+            createdIP
+            createdOn
+            deletedIP
+            deletedOn
+            modifiedBy
+            modifiedIP
+            academicYear {
+                isActive
+                year
+                id
+                isDeleted
+                createdIP
+                createdOn
+                deletedIP
+                deletedOn
+                modifiedIP
+            }
+            administrationOffice {
+                name
+                directorName
+                isRegionalOffice
+                parentOfficeId
+                isAllowedToLogin
+                id
+                isDeleted
+                createdIP
+                createdOn
+                deletedIP
+                deletedOn
+                modifiedIP
+            }
+        }
+       }
+       }`;
 export const STUDENTS = `
   query Students($pagesize: Int, $skip: Int,$where: StudentAuditFilterInput,
   $order:[StudentAuditSortInput!]) {
@@ -2309,6 +1767,10 @@ export const STUDENTS = `
             middleName
             lastName
             auditOperation
+            auditHostname
+            auditSIDUsername
+            auditUsername
+            auditTimestamp
             idCard
             isEAlbaniaApplication
             isDiplomaRequirementException
@@ -2322,17 +1784,254 @@ export const STUDENTS = `
             deletedIP
             deletedOn
             modifiedIP
-            modifiedOn
-            created {
-                    displayName
-                }
-                modified {
-                    displayName
-                }
-                deleted {
-                    displayName
-                }
         }
+
+      }
+      }
+
+
+`;
+
+export const regradingRequest = `
+  query RegradingRequest
+  ($pagesize: Int, $skip: Int,$where: RegradingRequestAuditFilterInput,
+   $order:[RegradingRequestAuditSortInput!]) {
+    regradingRequest (take: $pagesize, skip: $skip,where: $where,
+    order: $order){
+    totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+       }
+        items {
+        student {
+                birthDate
+                birthPlace
+                isConfirmedBySupervisor
+                isAN
+                email
+                firstName
+                idCard
+                isA2A3
+                isEAlbaniaApplication
+                lastName
+                middleName
+                mobilePhone
+                oldID
+                schoolFinished
+                schoolName
+                session
+                studentId
+                studyClass
+                graduationYear
+                isFall
+                isPrinted
+                diplomaPrintedDate
+                id
+                isDeleted
+                createdIP
+                createdOn
+                deletedIP
+                deletedOn
+                modifiedIP
+            }
+            examSubject
+            {
+            name
+            id
+            }
+            examType
+            {
+            id
+            name
+            }
+            auditOperation
+            auditHostname
+            auditSIDUsername
+            auditUsername
+            auditTimestamp
+            id
+            isDeleted
+            createdIP
+            createdOn
+            deletedIP
+            deletedOn
+            modifiedIP
+        }
+
+
+      }
+      }
+
+
+`;
+
+export const examQuestionScoreTotal = `
+   query ExamQuestionScoreTotal
+  ($pagesize: Int, $skip: Int,$where: ExamQuestionScoreTotalAuditFilterInput,
+   $order:[ExamQuestionScoreTotalAuditSortInput!]) {
+    examQuestionScoreTotal (take: $pagesize, skip: $skip,where: $where,
+    order: $order){
+    totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+       }
+        items {
+            examVariant{
+            id
+            name
+            numberOfQuestions
+            maximumScore
+            isSpecificToProfile
+            }
+            academicYear{
+            id
+            year
+            directorName
+            }
+            auditOperation
+            auditHostname
+            auditSIDUsername
+            auditUsername
+            auditTimestamp
+            id
+            isDeleted
+            createdIP
+            createdOn
+            deletedIP
+            deletedOn
+            modifiedIP
+        }
+      }
+      }
+`;
+export const diplomaRequest = `
+  query DiplomaRequest
+  ($pagesize: Int, $skip: Int,$where: DiplomaRequestAuditFilterInput,
+  $order:[DiplomaRequestAuditSortInput!]) {
+    diplomaRequest(take: $pagesize, skip: $skip,where: $where,order: $order
+) {
+    totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+       }
+        items {
+            student {
+                birthDate
+                birthPlace
+                isConfirmedBySupervisor
+                isAN
+                email
+                firstName
+                idCard
+                isA2A3
+                isEAlbaniaApplication
+                lastName
+                middleName
+                mobilePhone
+                oldID
+                schoolFinished
+                schoolName
+                session
+                studentId
+                studyClass
+                graduationYear
+                isFall
+                isPrinted
+                diplomaPrintedDate
+                id
+                isDeleted
+                createdIP
+                createdOn
+                deletedIP
+                deletedOn
+                modifiedIP
+            }
+            academicYear{
+            id
+            year
+            directorName
+            }
+            auditOperation
+            auditHostname
+            auditSIDUsername
+            auditUsername
+            auditTimestamp
+            isDelivered
+            eAlbaniaDocumentResponse
+            deliveryDate
+            isDeleted
+            createdIP
+            createdOn
+            deletedIP
+            deletedOn
+            modifiedIP
+        }
+      }
+      }
+`;
+
+export const dataExport = `
+ query DataExport
+  ($pagesize: Int, $skip: Int,$where: DataExportAuditFilterInput,
+   $order:[DataExportAuditSortInput!]) {
+    dataExport (take: $pagesize, skip: $skip,where: $where,
+    order: $order){
+    totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+       }
+        items {
+            query
+            name
+            isVisible
+            isFall
+            displayOrder
+            isDeleted
+            createdIP
+            createdOn
+            deletedIP
+            deletedOn
+            modifiedIP
+        }
+
+      }
+      }
+
+
+`;
+export const ealbaniaMessage = `
+  query eAlbaniaMessage($pagesize: Int, $skip: Int,$where: EAlbaniaMessageFilterInput,
+  $order:[EAlbaniaMessageFilterInput!]) {
+    eAlbaniaMessage(take: $pagesize, skip: $skip,where: $where,order: $order
+) {
+    totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+       }
+        items {
+            query
+            name
+            isVisible
+            isFall
+            displayOrder
+            isDeleted
+            createdIP
+            createdOn
+            deletedIP
+            deletedOn
+            modifiedIP
+        }
+        modified {
+                displayName
+            }
+            deleted {
+                displayName
+            }
 
       }
       }
@@ -2368,4 +2067,11 @@ export const queriesMap: Map<string, string> = new Map([
   ['examSubjectProfile', EXAM_SUBJECT_PROFILE],
   ['examSite', EXAM_SITE],
   ['users', USERS],
+  ['examGrade', EXAM_GRADE],
+  ['examGradesRequest', EXAM_GRADE_REQUEST_QUERY],
+  ['regradingRequest', regradingRequest],
+  ['examQuestionScoreTotal', examQuestionScoreTotal],
+  ['diplomaRequest', diplomaRequest],
+  ['dataExport', dataExport],
+  ['ealbaniaMessage', ealbaniaMessage],
 ]);

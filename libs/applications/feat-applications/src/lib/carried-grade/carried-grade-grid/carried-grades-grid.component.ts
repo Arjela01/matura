@@ -7,6 +7,7 @@ import {
   GridEvent,
   GRID_ACTIONS,
   ColumnFilterDirective,
+  CARRIED_GRADE,
 } from '@msh/shared/util-shared';
 import {
   TableLazyLoadEvent,
@@ -19,6 +20,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import { DialogModule } from 'primeng/dialog';
+import { CarriedGradeHistoryComponent } from '../carried-grade-history/carried-grade-history.component';
+
 @Component({
   selector: 'msh-carried-grades-grid',
   standalone: true,
@@ -31,6 +35,8 @@ import { TooltipModule } from 'primeng/tooltip';
     CheckboxModule,
     RippleModule,
     ColumnFilterDirective,
+    DialogModule,
+    CarriedGradeHistoryComponent,
   ],
   templateUrl: './carried-grades-grid.component.html',
   styleUrls: ['./carried-grades-grid.component.scss'],
@@ -40,6 +46,10 @@ export class CarriedGradesGridComponent {
   @Input() carriedGrades: CarriedGrade[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
+  @Input() studentId: any;
+  @Input() headerText = '';
+  @Input() displayHistoryForm = true;
+  @Input() selectedRecord: any;
 
   //Keep it local state because of Table Header checkbox not syncing
   selectedGrades: CarriedGrade[] = [];
@@ -57,6 +67,14 @@ export class CarriedGradesGridComponent {
     } as GridEvent<CarriedGrade>);
   }
 
+  onHistoryClick(carriedGrade: CarriedGrade) {
+    this.displayHistoryForm = true;
+    this.gridEvent.emit({
+      action: GRID_ACTIONS.HISTORY,
+      data: carriedGrade,
+    } as GridEvent<CarriedGrade>);
+  }
+
   onDeleteClick(carriedGrade: CarriedGrade) {
     this.gridEvent.emit({
       action: GRID_ACTIONS.DELETE,
@@ -68,33 +86,6 @@ export class CarriedGradesGridComponent {
     this.gridEvent.emit({
       action: GRID_ACTIONS.CUSTOM_ACTION2,
       data: carriedGrade,
-    } as GridEvent<CarriedGrade>);
-  }
-
-  onSelectAllClick() {
-    if (this.selectedGrades.length === 0) {
-      this.gridEvent.emit({
-        action: GRID_ACTIONS.UNSELECT_ALL,
-      } as GridEvent<CarriedGrade>);
-    } else {
-      this.gridEvent.emit({
-        action: GRID_ACTIONS.SELECT_MANY,
-        data: this.selectedGrades,
-      } as GridEvent<CarriedGrade[]>);
-    }
-  }
-
-  onRowSelect($event: TableRowSelectEvent) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.SELECT_ROW,
-      data: $event.data,
-    } as GridEvent<CarriedGrade>);
-  }
-
-  onRowUnselect($event: TableRowUnSelectEvent) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.UNSELECT_ROW,
-      data: $event.data,
     } as GridEvent<CarriedGrade>);
   }
 

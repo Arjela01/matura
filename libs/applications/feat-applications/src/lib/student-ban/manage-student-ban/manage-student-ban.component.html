@@ -26,7 +26,11 @@
         [bannedStudents]="(bannedStudents$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getBannedStudents($event)">
+        (lazyLoadData)="getBannedStudents($event)"
+        [selectedRecord]="selectedRecord"
+        [studentId]="studentId"
+        [headerText]="headerText"
+        [displayHistoryForm]="displayHistoryForm">
       </msh-student-ban-grid>
     </div>
   </div>

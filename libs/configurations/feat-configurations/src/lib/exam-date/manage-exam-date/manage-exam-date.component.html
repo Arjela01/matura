@@ -20,7 +20,11 @@
         [examDates]="(examDates$ | async) || []"
         [totalRecords]="totalRecords"
         (gridEvent)="onGridEvent($event)"
-        (lazyLoadData)="getExamDates($event)">
+        (lazyLoadData)="getExamDates($event)"
+        [selectedRecord]="selectedRecord"
+        [id]="id"
+        [headerText]="headerText"
+        [displayHistoryForm]="displayHistoryForm">
       </msh-exam-date-grid>
     </div>
   </div>

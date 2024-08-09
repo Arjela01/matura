@@ -35,6 +35,7 @@ import { UserFormComponent } from '../user-form/user-form.component';
 import { UserGridComponent } from '../user-grid/user-grid.component';
 import { UsersPasswordResetViewComponent } from '../users-password-reset-view/users-password-reset-view.component';
 import { TableLazyLoadEvent } from 'primeng/table';
+
 @UntilDestroy()
 @Component({
   selector: 'msh-manage-users',
@@ -60,6 +61,10 @@ export class ManageUsersComponent implements OnInit {
   users$ = this.users$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
 
+  id: string | undefined;
+  selectedRecord: any;
+  headerText: any;
+  displayHistoryForm = false;
   totalRecords = 0;
   selectedUser: User | null = null;
   selectedUsers: User[] = [];
@@ -108,21 +113,13 @@ export class ManageUsersComponent implements OnInit {
     this.selectedUser = {} as User;
   }
 
-  onGridEvent(event: GridEvent<User | User[]>) {
+  onGridEvent(event: GridEvent<any | User[]>) {
     switch (event.action) {
-      case GRID_ACTIONS.SELECT_ROW:
-        this.selectedUsers = [...this.selectedUsers, event.data as User];
-        break;
-      case GRID_ACTIONS.UNSELECT_ROW:
-        this.selectedUsers = this.selectedUsers.filter(u => {
-          u.id !== (event.data as User).id;
-        });
-        break;
-      case GRID_ACTIONS.SELECT_MANY:
-        this.selectedUsers = [...this.selectedUsers, ...(event.data as User[])];
-        break;
-      case GRID_ACTIONS.UNSELECT_ALL:
-        this.selectedUsers = [];
+      case GRID_ACTIONS.HISTORY:
+        this.selectedRecord = Object.assign({}, event.data);
+        this.id = event.data.id;
+        this.headerText = `Historiku për Përdoruesin {${event.data.id}}`;
+        this.displayHistoryForm = true;
         break;
       case GRID_ACTIONS.CUSTOM_ACTION1:
         this.confirmationService.confirm({

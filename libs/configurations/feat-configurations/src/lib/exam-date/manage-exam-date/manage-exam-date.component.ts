@@ -53,6 +53,10 @@ export class ManageExamDateComponent implements OnInit {
   filters: TableLazyLoadEvent | null = null;
 
   totalRecords = 0;
+  id: string | undefined;
+  selectedRecord: any;
+  headerText: any;
+  displayHistoryForm = false;
   selectedExamDate: ExamDate | null = null;
   selectedExamDates: ExamDate[] = [];
   displayModal = false;
@@ -89,28 +93,13 @@ export class ManageExamDateComponent implements OnInit {
     } as ExamDate;
   }
 
-  onGridEvent(event: GridEvent<ExamDate | ExamDate[]>) {
+  onGridEvent(event: GridEvent<any | ExamDate[]>) {
     switch (event.action) {
-      case GRID_ACTIONS.SELECT_ROW:
-        this.selectedExamDates = [
-          ...this.selectedExamDates,
-          event.data as ExamDate,
-        ];
-        break;
-      case GRID_ACTIONS.UNSELECT_ROW:
-        this.selectedExamDates = this.selectedExamDates.filter(ed => {
-          ed.id !== (event.data as ExamDate).id;
-        });
-        break;
-
-      case GRID_ACTIONS.SELECT_MANY:
-        this.selectedExamDates = [
-          ...this.selectedExamDates,
-          ...(event.data as ExamDate[]),
-        ];
-        break;
-      case GRID_ACTIONS.UNSELECT_ALL:
-        this.selectedExamDates = [];
+      case GRID_ACTIONS.HISTORY:
+        this.selectedRecord = Object.assign({}, event.data);
+        this.id = event.data.id;
+        this.headerText = `Historiku për Datën {${event.data.id}}`;
+        this.displayHistoryForm = true;
         break;
       case GRID_ACTIONS.EDIT:
         this.selectedExamDate = Object.assign({}, event.data as ExamDate);

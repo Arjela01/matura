@@ -6,7 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { ExamSite } from '@msh/shared/domain-models';
+import { ExamSite, Student } from '@msh/shared/domain-models';
 import { AppBoolPipe } from '@msh/shared/ui-shared';
 import {
   ColumnFilterDirective,
@@ -24,6 +24,8 @@ import {
   TableRowUnSelectEvent,
 } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import { DialogModule } from 'primeng/dialog';
+import { ExamSiteHistoryGridComponent } from '../exam-site-history/exam-site-history-grid.component';
 
 @Component({
   selector: 'msh-exam-site-grid',
@@ -37,8 +39,10 @@ import { TooltipModule } from 'primeng/tooltip';
     CheckboxModule,
     RippleModule,
     ColumnFilterDirective,
-    AppBoolPipe
-],
+    AppBoolPipe,
+    DialogModule,
+    ExamSiteHistoryGridComponent,
+  ],
   templateUrl: './exam-site-grid.component.html',
   styleUrls: ['./exam-site-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -47,6 +51,10 @@ export class ExamSiteGridComponent {
   @Input() examSites: ExamSite[] = [];
   @Input() totalRecords = 0;
   @Input() loading = false;
+  @Input() id: any;
+  @Input() headerText = '';
+  @Input() displayHistoryForm = true;
+  @Input() selectedRecord: any;
 
   //Keep it local state because of Table Header checkbox not syncing
   selectedExamSites: ExamSite[] = [];
@@ -69,30 +77,11 @@ export class ExamSiteGridComponent {
     } as GridEvent<ExamSite>);
   }
 
-  onSelectAllClick() {
-    if (this.selectedExamSites.length === 0) {
-      this.gridEvent.emit({
-        action: GRID_ACTIONS.UNSELECT_ALL,
-      } as GridEvent<ExamSite>);
-    } else {
-      this.gridEvent.emit({
-        action: GRID_ACTIONS.SELECT_MANY,
-        data: this.selectedExamSites,
-      } as GridEvent<ExamSite[]>);
-    }
-  }
-
-  onRowSelect($event: TableRowSelectEvent) {
+  onHistoryClick(examSite: ExamSite) {
+    this.displayHistoryForm = true;
     this.gridEvent.emit({
-      action: GRID_ACTIONS.SELECT_ROW,
-      data: $event.data,
-    } as GridEvent<ExamSite>);
-  }
-
-  onRowUnselect($event: TableRowUnSelectEvent) {
-    this.gridEvent.emit({
-      action: GRID_ACTIONS.UNSELECT_ROW,
-      data: $event.data,
+      action: GRID_ACTIONS.HISTORY,
+      data: examSite,
     } as GridEvent<ExamSite>);
   }
 
