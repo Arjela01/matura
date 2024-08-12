@@ -32,12 +32,9 @@ export class ExamCopyApiService {
     return this.apiService.get(`/ExamCopyRequest/GetById/${applicationId}`);
   }
 
-  exportTemplate(): Observable<ApiResult<unknown>> {
-    return this.apiService.get<any>(
-      `/ExamCopyRequest/Export`,
-      new HttpParams(),
-      'blob'
-    );
+  exportTemplate(isFall: boolean): Observable<ApiResult<unknown>> {
+    const params = new HttpParams().set('isFall', isFall.toString());
+    return this.apiService.get<any>(`/ExamCopyRequest/Export`, params, 'blob');
   }
 
   uploadFile(file: File): Observable<any> {
