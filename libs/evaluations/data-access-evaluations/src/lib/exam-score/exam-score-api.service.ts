@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
-import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
-import { ApiResult } from '@msh/shared/data-access-shared';
-import { APIService } from '@msh/shared/util-shared';
 import { HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { ApiResult } from '@msh/shared/data-access-shared';
 import {
   ArchiveExam,
   ExamScore,
   ExamScoreTableView,
   FileImport,
 } from '@msh/shared/domain-models';
+import { APIService } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -68,7 +68,7 @@ export class ExamScoreApiService {
 
   export(): Observable<ApiResult<unknown>> {
     return this.apiService.get<any>(
-      `/ExamScores/Export`,
+      `/ExamScores/ExportTemplate`,
       new HttpParams(),
       'blob'
     );
