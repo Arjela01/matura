@@ -222,9 +222,12 @@
           {{ examGrade.status | examCopyRequestStatus }}
         </span>
       </td>
-      <td>
-        <a (click)="onClick(examGrade)" class="p-button-link cursor: pointer">
-          Shiko Aplikimin
+      <td style="width: 5%; min-width: 10rem">
+        <a
+          *ngIf="examGrade.examCopyRequestID"
+          (click)="onClick(examGrade)"
+          class="p-button-link cursor-pointer">
+          Aplikimi për kopje testi
         </a>
       </td>
       <td class="text-center" style="width: 5%; min-width: 10rem">

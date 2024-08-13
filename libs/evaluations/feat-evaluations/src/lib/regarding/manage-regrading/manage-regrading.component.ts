@@ -79,7 +79,6 @@ export class ManageRegradingComponent {
   academicYearId: any;
   examGradeId: any;
   userRole = '';
-  examCopyId: any;
 
   constructor(
     private readonly authFacade: AuthFacade,
@@ -150,7 +149,9 @@ export class ManageRegradingComponent {
         break;
       case GRID_ACTIONS.CUSTOM_ACTION2:
         this.selectedGrade = Object.assign({}, event.data as Regrading);
-        this.getExamCopy(this.selectedGrade.nid as string);
+        this.router.navigate([
+          `/evaluations/exam-copy/form/${this.selectedGrade.examCopyRequestID}`,
+        ]);
         break;
     }
   }
@@ -209,18 +210,6 @@ export class ManageRegradingComponent {
       .subscribe(response => {
         this.regrading$$.next(response.data);
         this.totalRecords = response.total;
-      });
-  }
-
-  getExamCopy(idCard: string) {
-    this.regradingApiService
-      .getExamCopyByIdCard(idCard)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.examCopyId = response.data[0].id;
-        this.router.navigate([
-          `/evaluations/exam-copy/form/${this.examCopyId}`,
-        ]);
       });
   }
 

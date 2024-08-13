@@ -5,12 +5,11 @@ import {
   Component,
 } from '@angular/core';
 import { ExamCopyApiService } from '@msh/evaluations/data-access-evaluations';
-import { ExamCopy, Student } from '@msh/shared/domain-models';
+import { AcademicYear, ExamCopy } from '@msh/shared/domain-models';
 import {
   GRID_ACTIONS,
   GlobalToastService,
   GridEvent,
-  API_URL,
 } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import * as FileSaver from 'file-saver';
@@ -21,13 +20,14 @@ import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { ExamCopyDetailsComponent } from '../exam-copy-details/exam-copy-details.component';
 import { ExamCopyGridComponent } from '../exam-copy-grid/exam-copy-grid.component';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ExamSecretsFormComponent } from '../../exam-secrets/exam-secrets-form/exam-secrets-form.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import { HttpEventType } from '@angular/common/http';
+import { CustomSwitchComponent } from '@msh/shared/ui-shared';
 
 @UntilDestroy()
 @Component({
@@ -49,6 +49,7 @@ import { HttpEventType } from '@angular/common/http';
     ExamCopyDetailsComponent,
     ExamSecretsFormComponent,
     FileUploadModule,
+    CustomSwitchComponent,
   ],
 })
 export class ManageExamCopyComponent {
@@ -63,6 +64,8 @@ export class ManageExamCopyComponent {
   displayHistoryForm = false;
   totalRecords = 0;
   displayModal = false;
+  isOn = false;
+  currentAcademicYear!: Partial<AcademicYear>;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -72,8 +75,9 @@ export class ManageExamCopyComponent {
   ) {}
 
   academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    skip(1),
-    map(([_]) => {
+    map(([data]) => {
+      this.currentAcademicYear = data;
+      this.isOn = this.currentAcademicYear?.isFall ?? false;
       if (this.filters) {
         this.getExamCopies(this.filters as TableLazyLoadEvent);
       }
@@ -92,13 +96,32 @@ export class ManageExamCopyComponent {
     }
   }
 
+  onSwitchChange(event: any) {
+    this.isOn = event;
+    this.getExamCopies(this.filters as TableLazyLoadEvent);
+  }
+
   onModalClose() {
     this.displayModal = false;
     this.selecetdExamCopy = null;
   }
 
-  getExamCopies($event: any) {
+  getExamCopies($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
+
+    if (this.isOn && this.currentAcademicYear?.isFall) {
+      this.filters.filters = {
+        ...this.filters.filters,
+        isFall: {
+          value: this.currentAcademicYear.isFall,
+          matchMode: 'equals',
+        },
+      };
+    } else {
+      const { isFall, ...restFilters } = this.filters.filters || {};
+      this.filters.filters = restFilters;
+    }
+
     this.examCopyService
       .loadExamCopies($event)
       .pipe(untilDestroyed(this))
@@ -115,7 +138,7 @@ export class ManageExamCopyComponent {
 
   downloadTemplateFile() {
     this.examCopyService
-      .exportTemplate()
+      .exportTemplate(this.isOn)
       .pipe(untilDestroyed(this))
       .subscribe((response: any) => {
         const blob: any = new Blob([response], {
