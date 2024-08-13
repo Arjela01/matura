@@ -103,17 +103,22 @@ export class ManageExamAssignmentComponent implements OnInit {
     private readonly authFacade: AuthFacade
   ) {}
 
-  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    distinctUntilChanged(),
-    map(([data]) => {
-      this.currentAcademicYear = data;
-      this.isOn = this.currentAcademicYear?.isFall ?? false;
-      if (this.filters) {
-        this.getExamAssignments(this.filters as TableLazyLoadEvent);
-      }
-    }),
-    tap()
-  );
+  changes$ = combineLatest([
+    this.authFacade.academicYear$.pipe(skip(1)),
+    this.authFacade.isFall$.pipe(skip(1)),
+  ])
+    .pipe(
+      distinctUntilChanged(),
+      skip(1),
+      untilDestroyed(this),
+      tap(([academicYear, isFall]) => {
+        this.isOn = isFall;
+        if (this.filters) {
+          this.getExamAssignments(this.filters as TableLazyLoadEvent);
+        }
+      })
+    )
+    .subscribe();
 
   onGridEvent(event: GridEvent<any | ExamAssignment[]>) {
     switch (event.action) {
@@ -172,7 +177,6 @@ export class ManageExamAssignmentComponent implements OnInit {
   ngOnInit(): void {
     this.getAdministrationOfficeDropdown();
     this.getSchoolProfiles();
-    this.academicYear$.pipe(untilDestroyed(this)).subscribe();
   }
 
   onUploadClose() {
@@ -240,11 +244,11 @@ export class ManageExamAssignmentComponent implements OnInit {
   getExamAssignments($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    if (this.isOn && this.currentAcademicYear?.isFall) {
+    if (this.isOn) {
       this.filters.filters = {
         ...this.filters.filters,
         isFall: {
-          value: this.currentAcademicYear.isFall,
+          value: this.isOn,
           matchMode: 'equals',
         },
       };

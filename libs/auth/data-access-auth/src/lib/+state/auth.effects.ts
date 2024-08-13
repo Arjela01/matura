@@ -13,7 +13,7 @@ import { catchError, exhaustMap, map, of, switchMap, tap } from 'rxjs';
 import { USER_STORAGE_KEY, User } from '../models/user.model';
 import { AuthService } from '../services/auth.service';
 import { HeartbeatService } from '../services/heartbeat.service';
-import { TOKEN_STORAGE_KEY } from '../services/token.interceptor';
+import { TOKEN_STORAGE_KEY } from '../interceptors/token.interceptor';
 import { AuthActions } from './auth.actions';
 @Injectable()
 export class AuthEffects {
@@ -26,6 +26,7 @@ export class AuthEffects {
         const academicYear = this.storageService.getItem(
           ACADEMIC_YEAR_KEY
         ) as AcademicYear;
+        const isFall = this.storageService.getItem('isFall') as boolean;
         if (
           token &&
           user &&
@@ -41,6 +42,7 @@ export class AuthEffects {
             token: token,
             user: user,
             academicYear,
+            isFall,
           });
         }
         return AuthActions.nothing();
@@ -134,18 +136,20 @@ export class AuthEffects {
         if (!token.NeedResetPassword) {
           this.heartBeatService.startTime();
         }
-        if (token[roleKey] !== 'Admin') {
-          return of(
-            AuthActions.initAcademicYear({
-              academicYear: activeYear,
-            })
-          );
-        }
-        return of(
+        const actions = [
           AuthActions.initAcademicYear({
             academicYear: activeYear,
-          })
-        );
+          }),
+          AuthActions.initFall({
+            isFall: activeYear.isFall,
+          }),
+        ];
+
+        if (token[roleKey] !== 'Admin') {
+          return of(...actions);
+        }
+
+        return of(...actions);
       })
     );
   };
@@ -166,6 +170,22 @@ export class AuthEffects {
     { dispatch: false }
   );
 
+  initialiseFall$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.initFall),
+        map(action => {
+          if (action) {
+            this.storageService.setItem('isFall', action.isFall);
+            this.router.navigate(['/']);
+          } else {
+            this.router.navigate(['/']);
+          }
+        })
+      ),
+    { dispatch: false }
+  );
+
   logout$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -174,6 +194,7 @@ export class AuthEffects {
           this.storageService.removeItem(TOKEN_STORAGE_KEY);
           this.storageService.removeItem(USER_STORAGE_KEY);
           this.storageService.removeItem(ACADEMIC_YEAR_KEY);
+          this.storageService.removeItem('isFall');
           this.heartBeatService.stopTimer();
           this.router.navigate(['/identity']);
         })
@@ -187,6 +208,17 @@ export class AuthEffects {
         ofType(AuthActions.changeAcademicYear),
         tap(action => {
           this.storageService.setItem(ACADEMIC_YEAR_KEY, action.academicYear);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  changeFall$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.changeFall),
+        tap(action => {
+          this.storageService.setItem('isFall', action.isFall);
         })
       ),
     { dispatch: false }

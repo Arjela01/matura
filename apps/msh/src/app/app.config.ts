@@ -24,6 +24,7 @@ import {
   TokenInterceptor,
   authFeature,
   loadAuthProvider,
+  FallInterceptor,
 } from '@msh/auth/data-access-auth';
 import { getStoreDevToolsProvider } from './build-specifics';
 import { getLocalStorageProvider } from '@msh/shared/data-access-shared';
@@ -85,6 +86,11 @@ export const appConfig: ApplicationConfig = {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AcademicYearInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: FallInterceptor,
       multi: true,
     },
     {

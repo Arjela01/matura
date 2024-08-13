@@ -4,7 +4,7 @@ import { StorageService } from '@msh/shared/data-access-shared';
 import { MaturaNotificationStatus } from '@msh/shared/domain-models';
 import { environment } from '@msh/shared/environments';
 import { Observable, Subject } from 'rxjs';
-import { TOKEN_STORAGE_KEY } from './token.interceptor';
+import { TOKEN_STORAGE_KEY } from '../interceptors/token.interceptor';
 @Injectable({
   providedIn: 'root',
 })

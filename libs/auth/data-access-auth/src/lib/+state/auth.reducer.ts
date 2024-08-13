@@ -13,6 +13,7 @@ export interface AuthState {
   user: User;
   token: string;
   academicYear: Partial<AcademicYear>;
+  isFall: boolean;
 }
 
 export const initialAuthState: AuthState = {
@@ -26,6 +27,7 @@ export const initialAuthState: AuthState = {
   },
   token: '',
   academicYear: { id: 0, year: '' },
+  isFall: false,
 };
 
 export const authFeature = createFeature({
@@ -87,6 +89,20 @@ export const authFeature = createFeature({
       error: null,
       isAuthenticated: true,
       academicYear: academicYear,
+    })),
+    on(AuthActions.initFall, (state, { isFall }) => ({
+      ...state,
+      status: 'success' as GenericStoreStatus,
+      error: null,
+      isAuthenticated: true,
+      isFall: isFall,
+    })),
+    on(AuthActions.changeFall, (state, { isFall }) => ({
+      ...state,
+      status: 'success' as GenericStoreStatus,
+      error: null,
+      isAuthenticated: true,
+      isFall: isFall,
     })),
     on(AuthActions.loginFailure, (state, { error }) => ({
       ...state,
