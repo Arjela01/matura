@@ -15,6 +15,7 @@ import { AuthService } from '../services/auth.service';
 import { HeartbeatService } from '../services/heartbeat.service';
 import { TOKEN_STORAGE_KEY } from '../interceptors/token.interceptor';
 import { AuthActions } from './auth.actions';
+export const FALL_STORAGE_KEY = 'isFall';
 @Injectable()
 export class AuthEffects {
   init$ = createEffect(() =>
@@ -26,7 +27,7 @@ export class AuthEffects {
         const academicYear = this.storageService.getItem(
           ACADEMIC_YEAR_KEY
         ) as AcademicYear;
-        const isFall = this.storageService.getItem('isFall') as boolean;
+        const isFall = this.storageService.getItem(FALL_STORAGE_KEY) as boolean;
         if (
           token &&
           user &&
@@ -176,7 +177,7 @@ export class AuthEffects {
         ofType(AuthActions.initFall),
         map(action => {
           if (action) {
-            this.storageService.setItem('isFall', action.isFall);
+            this.storageService.setItem(FALL_STORAGE_KEY, action.isFall);
             this.router.navigate(['/']);
           } else {
             this.router.navigate(['/']);
@@ -194,7 +195,7 @@ export class AuthEffects {
           this.storageService.removeItem(TOKEN_STORAGE_KEY);
           this.storageService.removeItem(USER_STORAGE_KEY);
           this.storageService.removeItem(ACADEMIC_YEAR_KEY);
-          this.storageService.removeItem('isFall');
+          this.storageService.removeItem(FALL_STORAGE_KEY);
           this.heartBeatService.stopTimer();
           this.router.navigate(['/identity']);
         })
@@ -218,7 +219,7 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthActions.changeFall),
         tap(action => {
-          this.storageService.setItem('isFall', action.isFall);
+          this.storageService.setItem(FALL_STORAGE_KEY, action.isFall);
         })
       ),
     { dispatch: false }
