@@ -8,16 +8,16 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { RippleModule } from 'primeng/ripple';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { AcademicYear, ExamSecret } from '@msh/shared/domain-models';
+import { ExamSecret } from '@msh/shared/domain-models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExamSecretApiService } from '@msh/evaluations/data-access-evaluations';
-import { combineLatest, map, tap } from 'rxjs';
+import { combineLatest, distinctUntilChanged, map, skip, tap } from 'rxjs';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { AppBoolPipe } from '@msh/shared/ui-shared';
 import { RouterLink } from '@angular/router';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { FormsModule } from '@angular/forms';
-import { CustomSwitchComponent } from '@msh/shared/ui-shared';
+import { CustomSwitchComponent } from '@msh/layout/feat-layout';
 
 @UntilDestroy()
 @Component({
@@ -47,7 +47,6 @@ export class ExamSecretFolderMismatchComponent {
   loading = false;
   filters: TableLazyLoadEvent | null = null;
   isOn = false;
-  currentAcademicYear!: Partial<AcademicYear>;
 
   constructor(
     private examSecretApiService: ExamSecretApiService,
@@ -55,16 +54,25 @@ export class ExamSecretFolderMismatchComponent {
     private cd: ChangeDetectorRef
   ) {}
 
-  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    map(([data]) => {
-      this.currentAcademicYear = data;
-      this.isOn = this.currentAcademicYear?.isFall ?? false;
-      if (this.filters) {
-        this.loadRows(this.filters as TableLazyLoadEvent);
-      }
-    }),
-    tap()
-  );
+  changes$ = combineLatest([
+    this.authFacade.academicYear$.pipe(skip(1)),
+    this.authFacade.isFall$.pipe(
+      tap(isFall => {
+        this.isOn = isFall;
+      })
+    ),
+  ])
+    .pipe(
+      distinctUntilChanged(),
+      skip(1),
+      untilDestroyed(this),
+      tap(() => {
+        if (this.filters) {
+          this.loadRows(this.filters as TableLazyLoadEvent);
+        }
+      })
+    )
+    .subscribe();
 
   onSwitchChange(event: any) {
     this.isOn = event;
@@ -74,11 +82,11 @@ export class ExamSecretFolderMismatchComponent {
   loadRows($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    if (this.isOn && this.currentAcademicYear?.isFall) {
+    if (this.isOn) {
       this.filters.filters = {
         ...this.filters.filters,
         isFall: {
-          value: this.currentAcademicYear.isFall,
+          value: this.isOn,
           matchMode: 'equals',
         },
       };

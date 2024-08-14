@@ -24,18 +24,14 @@ export class FallInterceptor implements HttpInterceptor {
       first(),
       distinctUntilChanged(),
       switchMap(isFall => {
-        if (isFall) {
-          const modifiedRequest = token
-            ? request.clone({
-                setHeaders: {
-                  Fall: `${isFall}`,
-                },
-              })
-            : request;
-          return next.handle(modifiedRequest);
-        } else {
-          return next.handle(request);
-        }
+        const modifiedRequest = token
+          ? request.clone({
+              setHeaders: {
+                Fall: `${isFall}`,
+              },
+            })
+          : request;
+        return next.handle(modifiedRequest);
       })
     );
   }

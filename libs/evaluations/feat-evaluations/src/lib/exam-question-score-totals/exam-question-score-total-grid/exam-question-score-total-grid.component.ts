@@ -1,40 +1,29 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   BehaviorSubject,
   combineLatest,
   distinctUntilChanged,
-  map,
   skip,
   tap,
 } from 'rxjs';
-import {
-  AcademicYear,
-  ExamQuestionScoreTotal,
-  Student,
-} from '@msh/shared/domain-models';
+import { ExamQuestionScoreTotal } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { ExamQuestionScoreTotalsService } from '@msh/evaluations/data-access-evaluations';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   ColumnFilterDirective,
   GlobalToastService,
-  GRID_ACTIONS,
-  GridEvent,
 } from '@msh/shared/util-shared';
 import { ConfirmationService, SharedModule } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
 import { Router } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { AppBoolPipe, CustomSwitchComponent } from '@msh/shared/ui-shared';
+import { AppBoolPipe } from '@msh/shared/ui-shared';
 import { DialogModule } from 'primeng/dialog';
 import { QuestionHistoryComponent } from '../question-history/question-history.component';
+import { CustomSwitchComponent } from '@msh/layout/feat-layout';
 
 @UntilDestroy()
 @Component({
@@ -57,13 +46,12 @@ import { QuestionHistoryComponent } from '../question-history/question-history.c
   styleUrls: ['./exam-question-score-total-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamQuestionScoreTotalGridComponent implements OnInit {
+export class ExamQuestionScoreTotalGridComponent {
   private records$$ = new BehaviorSubject<ExamQuestionScoreTotal[]>([]);
   analyticScoresList$ = this.records$$.asObservable();
   totalRecords = 0;
   filters: TableLazyLoadEvent | null = null;
   isOn = false;
-  currentAcademicYear!: Partial<AcademicYear>;
   id: any;
   headerText = '';
   displayHistoryForm = false;
@@ -77,35 +65,39 @@ export class ExamQuestionScoreTotalGridComponent implements OnInit {
     private readonly globalToastService: GlobalToastService
   ) {}
 
-  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    distinctUntilChanged(),
-    map(([data]) => {
-      this.currentAcademicYear = data;
-      this.isOn = this.currentAcademicYear?.isFall ?? false;
-      if (this.filters) {
-        this.loadTableData(this.filters as TableLazyLoadEvent);
-      }
-    }),
-    tap()
-  );
+  changes$ = combineLatest([
+    this.authFacade.academicYear$.pipe(skip(1)),
+    this.authFacade.isFall$.pipe(
+      tap(isFall => {
+        this.isOn = isFall;
+      })
+    ),
+  ])
+    .pipe(
+      distinctUntilChanged(),
+      skip(1),
+      untilDestroyed(this),
+      tap(() => {
+        if (this.filters) {
+          this.loadTableData(this.filters as TableLazyLoadEvent);
+        }
+      })
+    )
+    .subscribe();
 
   onSwitchChange(event: any) {
     this.isOn = event;
     this.loadTableData(this.filters as TableLazyLoadEvent);
   }
 
-  ngOnInit(): void {
-    this.academicYear$.pipe(untilDestroyed(this)).subscribe();
-  }
-
   loadTableData($event: TableLazyLoadEvent | null) {
     this.filters = Object.assign({}, $event);
 
-    if (this.isOn && this.currentAcademicYear?.isFall) {
+    if (this.isOn) {
       this.filters.filters = {
         ...this.filters.filters,
         isFall: {
-          value: this.currentAcademicYear.isFall,
+          value: this.isOn,
           matchMode: 'equals',
         },
       };

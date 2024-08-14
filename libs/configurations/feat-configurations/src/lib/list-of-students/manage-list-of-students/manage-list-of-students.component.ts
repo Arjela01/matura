@@ -18,13 +18,20 @@ import { DropdownModel } from '@msh/shared/data-access-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ListOfStudentsFiltersComponent } from '../list-of-students-filters/list-of-students-filters.component';
 import { ListOfStudentsGridComponent } from '../list-of-students-grid/list-of-students-grid.component';
-import { BehaviorSubject, combineLatest, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  distinctUntilChanged,
+  skip,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { ExamAssignment } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { UserProfileApiService } from '@msh/user-section/data-access-user-section';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ExamDateGridComponent } from '../../exam-date/exam-date-grid/exam-date-grid.component';
-import { CustomSwitchComponent } from '@msh/shared/ui-shared';
+import { CustomSwitchComponent } from '@msh/layout/feat-layout';
 
 @UntilDestroy()
 @Component({

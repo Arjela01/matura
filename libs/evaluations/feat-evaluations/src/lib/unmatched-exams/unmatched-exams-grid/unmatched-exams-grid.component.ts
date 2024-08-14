@@ -1,20 +1,16 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
 import { TableLazyLoadEvent } from 'primeng/table';
 
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import { AcademicYear, ExamScore } from '@msh/shared/domain-models';
-import { AppBoolPipe, CustomSwitchComponent } from '@msh/shared/ui-shared';
+import { ExamScore } from '@msh/shared/domain-models';
+import { AppBoolPipe } from '@msh/shared/ui-shared';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TableModule } from 'primeng/table';
-import { combineLatest, distinctUntilChanged, map, tap } from 'rxjs';
+import { combineLatest, distinctUntilChanged, skip, tap } from 'rxjs';
+import { CustomSwitchComponent } from '@msh/layout/feat-layout';
 
 @UntilDestroy()
 @Component({
@@ -30,12 +26,11 @@ import { combineLatest, distinctUntilChanged, map, tap } from 'rxjs';
   templateUrl: './unmatched-exams-grid.component.html',
   styleUrls: ['./unmatched-exams-grid.component.scss'],
 })
-export class UnmatchedExamsGridComponent implements OnInit {
+export class UnmatchedExamsGridComponent {
   unmatchedExams: ExamScore[] = [];
   totalRecords = 0;
   filters: TableLazyLoadEvent | null = null;
   isOn = false;
-  currentAcademicYear!: Partial<AcademicYear>;
 
   constructor(
     private readonly examScoreApiService: ExamScoreApiService,
@@ -43,35 +38,39 @@ export class UnmatchedExamsGridComponent implements OnInit {
     private readonly cd: ChangeDetectorRef
   ) {}
 
-  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    distinctUntilChanged(),
-    map(([data]) => {
-      this.currentAcademicYear = data;
-      this.isOn = this.currentAcademicYear?.isFall ?? false;
-      if (this.filters) {
-        this.unmatchedExamScore(this.filters as TableLazyLoadEvent);
-      }
-    }),
-    tap()
-  );
+  changes$ = combineLatest([
+    this.authFacade.academicYear$.pipe(skip(1)),
+    this.authFacade.isFall$.pipe(
+      tap(isFall => {
+        this.isOn = isFall;
+      })
+    ),
+  ])
+    .pipe(
+      distinctUntilChanged(),
+      skip(1),
+      untilDestroyed(this),
+      tap(() => {
+        if (this.filters) {
+          this.unmatchedExamScore(this.filters as TableLazyLoadEvent);
+        }
+      })
+    )
+    .subscribe();
 
   onSwitchChange(event: any) {
     this.isOn = event;
     this.unmatchedExamScore(this.filters as TableLazyLoadEvent);
   }
 
-  ngOnInit(): void {
-    this.academicYear$.pipe(untilDestroyed(this)).subscribe();
-  }
-
   unmatchedExamScore($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    if (this.isOn && this.currentAcademicYear?.isFall) {
+    if (this.isOn) {
       this.filters.filters = {
         ...this.filters.filters,
         isFall: {
-          value: this.currentAcademicYear.isFall,
+          value: this.isOn,
           matchMode: 'equals',
         },
       };

@@ -200,6 +200,7 @@ export class AppSidebarComponent implements OnInit {
     );
     const { key: id, value: year, additionalValue: json } = yearToFind;
     this.authFacade.changeAcademicYear(JSON.parse(json));
+    this.authFacade.changeIsFall(this.academicYear?.isFall as boolean);
     this.displayModal = false;
   }
 }

@@ -29,7 +29,7 @@ import { EmptySiteGridComponent } from '../empty-site-grid/empty-site-grid.compo
 import { AcademicYear, EmptySite } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import { CustomSwitchComponent } from '@msh/shared/ui-shared';
+import { CustomSwitchComponent } from '@msh/layout/feat-layout';
 
 @Component({
   selector: 'msh-manage-empty-site',
@@ -58,7 +58,6 @@ export class ManageEmptySiteComponent {
   totalRecords = 0;
   examDateId = 0;
   isOn = false;
-  currentAcademicYear!: Partial<AcademicYear>;
 
   constructor(
     private readonly emptySiteService: EmptySiteApiService,
@@ -68,17 +67,25 @@ export class ManageEmptySiteComponent {
     private readonly authFacade: AuthFacade
   ) {}
 
-  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    distinctUntilChanged(),
-    map(([data]) => {
-      this.currentAcademicYear = data;
-      this.isOn = this.currentAcademicYear?.isFall ?? false;
-      if (this.filters) {
-        this.getEmptySites(this.filters as TableLazyLoadEvent);
-      }
-    }),
-    tap()
-  );
+  changes$ = combineLatest([
+    this.authFacade.academicYear$.pipe(skip(1)),
+    this.authFacade.isFall$.pipe(
+      tap(isFall => {
+        this.isOn = isFall;
+      })
+    ),
+  ])
+    .pipe(
+      distinctUntilChanged(),
+      skip(1),
+      untilDestroyed(this),
+      tap(() => {
+        if (this.filters) {
+          this.getEmptySites(this.filters as TableLazyLoadEvent);
+        }
+      })
+    )
+    .subscribe();
 
   onGridEvent(event: GridEvent<EmptySite | EmptySite[]>) {
     switch (event.action) {
@@ -122,11 +129,11 @@ export class ManageEmptySiteComponent {
   getEmptySites($event: TableLazyLoadEvent): void {
     this.filters = Object.assign({}, $event);
 
-    if (this.isOn && this.currentAcademicYear?.isFall) {
+    if (this.isOn) {
       this.filters.filters = {
         ...this.filters.filters,
         isFall: {
-          value: this.currentAcademicYear.isFall,
+          value: this.isOn,
           matchMode: 'equals',
         },
       };

@@ -1,22 +1,16 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  AcademicYear,
-  TotalAnalyticScoresMismatchModel,
-} from '@msh/shared/domain-models';
+import { TotalAnalyticScoresMismatchModel } from '@msh/shared/domain-models';
 import { ExamQuestionScoreTotalsService } from '@msh/evaluations/data-access-evaluations';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { SharedModule } from 'primeng/api';
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import { combineLatest, distinctUntilChanged, map, skip, tap } from 'rxjs';
-import { AppBoolPipe, CustomSwitchComponent } from '@msh/shared/ui-shared';
+import { combineLatest, distinctUntilChanged, skip, tap } from 'rxjs';
+import { AppBoolPipe } from '@msh/shared/ui-shared';
+import { CustomSwitchComponent } from '@msh/layout/feat-layout';
+
 @UntilDestroy()
 @Component({
   selector: 'msh-total-analytic-score-mismatch',
@@ -32,12 +26,11 @@ import { AppBoolPipe, CustomSwitchComponent } from '@msh/shared/ui-shared';
   templateUrl: './total-analytic-score-mismatch.component.html',
   styleUrls: ['./total-analytic-score-mismatch.component.scss'],
 })
-export class TotalAnalyticScoreMismatchComponent implements OnInit {
+export class TotalAnalyticScoreMismatchComponent {
   scores: TotalAnalyticScoresMismatchModel[] = [];
   totalRecords = 0;
   filters: TableLazyLoadEvent | null = null;
   isOn = false;
-  currentAcademicYear!: Partial<AcademicYear>;
 
   constructor(
     private scoreApiService: ExamQuestionScoreTotalsService,
@@ -45,35 +38,39 @@ export class TotalAnalyticScoreMismatchComponent implements OnInit {
     private cd: ChangeDetectorRef
   ) {}
 
-  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    distinctUntilChanged(),
-    map(([data]) => {
-      this.currentAcademicYear = data;
-      this.isOn = this.currentAcademicYear?.isFall ?? false;
-      if (this.filters) {
-        this.loadRows(this.filters as TableLazyLoadEvent);
-      }
-    }),
-    tap()
-  );
+  changes$ = combineLatest([
+    this.authFacade.academicYear$.pipe(skip(1)),
+    this.authFacade.isFall$.pipe(
+      tap(isFall => {
+        this.isOn = isFall;
+      })
+    ),
+  ])
+    .pipe(
+      distinctUntilChanged(),
+      skip(1),
+      untilDestroyed(this),
+      tap(() => {
+        if (this.filters) {
+          this.loadRows(this.filters as TableLazyLoadEvent);
+        }
+      })
+    )
+    .subscribe();
 
   onSwitchChange(event: any) {
     this.isOn = event;
     this.loadRows(this.filters as TableLazyLoadEvent);
   }
 
-  ngOnInit(): void {
-    this.academicYear$.pipe(untilDestroyed(this)).subscribe();
-  }
-
   loadRows($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    if (this.isOn && this.currentAcademicYear?.isFall) {
+    if (this.isOn) {
       this.filters.filters = {
         ...this.filters.filters,
         isFall: {
-          value: this.currentAcademicYear.isFall,
+          value: this.isOn,
           matchMode: 'equals',
         },
       };
