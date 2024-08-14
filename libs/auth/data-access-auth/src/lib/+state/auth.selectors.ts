@@ -18,6 +18,10 @@ export const selectAcademicYear = createSelector(
   selectAuthState,
   (state: AuthState) => state.academicYear
 );
+export const selectFall = createSelector(
+  selectAuthState,
+  (state: AuthState) => state.isFall
+);
 
 export const authQuery = {
   selectAuthState,
@@ -28,4 +32,5 @@ export const authQuery = {
   selectIsAuthenticated,
   selectUser,
   selectToken,
+  selectFall,
 };

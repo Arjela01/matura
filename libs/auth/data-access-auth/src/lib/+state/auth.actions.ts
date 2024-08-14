@@ -19,6 +19,7 @@ export const AuthActions = createActionGroup({
       token: string;
       user: User;
       academicYear: Partial<AcademicYear>;
+      isFall: boolean;
     }>(),
     Login: props<{ loginRequest: LoginRequest }>(),
     ExternalLogin: props<{ loginResponse: LoginResponse }>(),
@@ -34,5 +35,9 @@ export const AuthActions = createActionGroup({
     resetToken: emptyProps(),
     Logout: emptyProps(),
     Nothing: emptyProps(),
+    'Init Fall': props<{
+      isFall: boolean;
+    }>(),
+    'Change Fall': props<{ isFall: boolean }>(),
   },
 });

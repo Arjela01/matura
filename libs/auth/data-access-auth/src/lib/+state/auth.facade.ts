@@ -15,6 +15,7 @@ export class AuthFacade {
   user$ = this.store.select(authQuery.selectUser);
   token$ = this.store.select(authQuery.selectToken);
   academicYear$ = this.store.select(authQuery.selectAcademicYear);
+  isFall$ = this.store.select(authQuery.selectFall);
 
   init() {
     this.store.dispatch(AuthActions.initAuth());
@@ -37,5 +38,9 @@ export class AuthFacade {
 
   logout() {
     this.store.dispatch(AuthActions.logout());
+  }
+
+  changeIsFall(isFall: boolean) {
+    this.store.dispatch(AuthActions.changeFall({ isFall }));
   }
 }
