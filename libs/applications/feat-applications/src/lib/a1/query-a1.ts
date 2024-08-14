@@ -1,6 +1,6 @@
 export const A1_FORMS = `
-  query A1Forms($pagesize: Int, $skip: Int,$where: A1Z1FormAuditFilterInput,
-  $order:[A1Z1FormAuditSortInput!]) {
+  query A1Forms($pagesize: Int, $skip: Int,$where: A1A1ZFormAuditFilterInput,
+  $order:[A1A1ZFormAuditSortInput!]) {
     a1Forms(take: $pagesize, skip: $skip,where: $where,order: $order
 ) {
     totalCount
