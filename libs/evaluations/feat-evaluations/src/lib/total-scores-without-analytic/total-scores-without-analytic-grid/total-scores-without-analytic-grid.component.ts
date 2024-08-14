@@ -1,18 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  BehaviorSubject,
-  combineLatest,
-  distinctUntilChanged,
-  map,
-  skip,
-  tap,
-} from 'rxjs';
+import { combineLatest, distinctUntilChanged, skip, tap } from 'rxjs';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { ExamQuestionScoreTotalsService } from '@msh/evaluations/data-access-evaluations';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -20,8 +8,9 @@ import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { SharedModule } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import { AcademicYear, ExamScores } from '@msh/shared/domain-models';
-import { AppBoolPipe, CustomSwitchComponent } from '@msh/shared/ui-shared';
+import { ExamScores } from '@msh/shared/domain-models';
+import { AppBoolPipe } from '@msh/shared/ui-shared';
+import { CustomSwitchComponent } from '@msh/layout/feat-layout';
 
 @UntilDestroy()
 @Component({
@@ -39,12 +28,11 @@ import { AppBoolPipe, CustomSwitchComponent } from '@msh/shared/ui-shared';
   templateUrl: './total-scores-without-analytic-grid.component.html',
   styleUrls: ['./total-scores-without-analytic-grid.component.scss'],
 })
-export class TotalScoresWithoutAnalyticGridComponent implements OnInit {
+export class TotalScoresWithoutAnalyticGridComponent {
   totalScoresWithoutAnalyticList: ExamScores[] = [];
   totalRecords = 0;
   filters: TableLazyLoadEvent | null = null;
   isOn = false;
-  currentAcademicYear!: Partial<AcademicYear>;
 
   constructor(
     private readonly examQuestionScoreTotalsService: ExamQuestionScoreTotalsService,
@@ -52,19 +40,27 @@ export class TotalScoresWithoutAnalyticGridComponent implements OnInit {
     private readonly cd: ChangeDetectorRef
   ) {}
 
-  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    distinctUntilChanged(),
-    map(([data]) => {
-      this.currentAcademicYear = data;
-      this.isOn = this.currentAcademicYear?.isFall ?? false;
-      if (this.filters) {
-        this.getExamScoresWithoutAnalyticScoresList(
-          this.filters as TableLazyLoadEvent
-        );
-      }
-    }),
-    tap()
-  );
+  changes$ = combineLatest([
+    this.authFacade.academicYear$.pipe(skip(1)),
+    this.authFacade.isFall$.pipe(
+      tap(isFall => {
+        this.isOn = isFall;
+      })
+    ),
+  ])
+    .pipe(
+      distinctUntilChanged(),
+      skip(1),
+      untilDestroyed(this),
+      tap(() => {
+        if (this.filters) {
+          this.getExamScoresWithoutAnalyticScoresList(
+            this.filters as TableLazyLoadEvent
+          );
+        }
+      })
+    )
+    .subscribe();
 
   onSwitchChange(event: any) {
     this.isOn = event;
@@ -73,18 +69,14 @@ export class TotalScoresWithoutAnalyticGridComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {
-    this.academicYear$.pipe(untilDestroyed(this)).subscribe();
-  }
-
   getExamScoresWithoutAnalyticScoresList($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    if (this.isOn && this.currentAcademicYear?.isFall) {
+    if (this.isOn) {
       this.filters.filters = {
         ...this.filters.filters,
         isFall: {
-          value: this.currentAcademicYear.isFall,
+          value: this.isOn,
           matchMode: 'equals',
         },
       };

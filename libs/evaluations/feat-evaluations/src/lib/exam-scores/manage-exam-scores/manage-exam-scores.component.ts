@@ -24,10 +24,17 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  distinctUntilChanged,
+  map,
+  skip,
+  tap,
+} from 'rxjs';
 import { ExamScoresFormComponent } from '../exam-scores-form/exam-scores-form.component';
 import { ExamScoresGridComponent } from '../exam-scores-grid/exam-scores-grid.component';
-import { CustomSwitchComponent } from '@msh/shared/ui-shared';
+import { CustomSwitchComponent } from '@msh/layout/feat-layout';
 
 @UntilDestroy()
 @Component({
@@ -82,20 +89,29 @@ export class ManageExamScoresComponent implements OnInit {
     private authFacade: AuthFacade
   ) {}
 
-  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    map(([data]) => {
-      this.currentAcademicYear = data;
-      this.isOn = this.currentAcademicYear?.isFall ?? false;
-      if (this.filters) {
-        this.getExamScores(this.filters as TableLazyLoadEvent);
-      }
-    }),
-    tap()
-  );
+  changes$ = combineLatest([
+    this.authFacade.academicYear$,
+    this.authFacade.isFall$.pipe(
+      tap(isFall => {
+        this.isOn = isFall;
+      })
+    ),
+  ])
+    .pipe(
+      distinctUntilChanged(),
+      skip(1),
+      untilDestroyed(this),
+      tap(([academicYear, isFall]) => {
+        this.currentAcademicYear = academicYear;
+        if (this.filters) {
+          this.getExamScores(this.filters as TableLazyLoadEvent);
+        }
+      })
+    )
+    .subscribe();
 
   ngOnInit(): void {
     this.getExamTypes();
-    this.academicYear$.pipe(untilDestroyed(this)).subscribe();
   }
 
   onSwitchChange(event: any) {
@@ -120,27 +136,6 @@ export class ManageExamScoresComponent implements OnInit {
         this.selectedRecord = Object.assign({}, event.data);
         this.examScoreId = event.data.id;
         this.headerText = `Historiku për Pikët e Provimit {${event.data.id}}`;
-        break;
-      case GRID_ACTIONS.SELECT_ROW:
-        this.selectedExamScores = [
-          ...this.selectedExamScores,
-          event.data as ExamScore,
-        ];
-        break;
-      case GRID_ACTIONS.UNSELECT_ROW:
-        this.selectedExamScores = this.selectedExamScores.filter(es => {
-          es.id !== (event.data as ExamScore).id;
-        });
-        break;
-
-      case GRID_ACTIONS.SELECT_MANY:
-        this.selectedExamScores = [
-          ...this.selectedExamScores,
-          ...(event.data as ExamScore[]),
-        ];
-        break;
-      case GRID_ACTIONS.UNSELECT_ALL:
-        this.selectedExamScores = [];
         break;
       case GRID_ACTIONS.EDIT:
         this.selectedExamScore = Object.assign({}, event.data as ExamScore);
@@ -189,11 +184,11 @@ export class ManageExamScoresComponent implements OnInit {
   getExamScores($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    if (this.isOn && this.currentAcademicYear?.isFall) {
+    if (this.isOn) {
       this.filters.filters = {
         ...this.filters.filters,
         isFall: {
-          value: this.currentAcademicYear.isFall,
+          value: this.isOn,
           matchMode: 'equals',
         },
       };

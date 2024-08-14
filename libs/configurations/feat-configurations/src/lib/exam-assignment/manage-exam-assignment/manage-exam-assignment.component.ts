@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  OnDestroy,
   OnInit,
 } from '@angular/core';
 import {
@@ -13,7 +14,7 @@ import {
   ProfileApiService,
 } from '@msh/configurations/data-access-configurations';
 import { DropdownModel } from '@msh/shared/data-access-shared';
-import { AcademicYear, ExamAssignment } from '@msh/shared/domain-models';
+import { ExamAssignment } from '@msh/shared/domain-models';
 import {
   GlobalToastService,
   GRID_ACTIONS,
@@ -31,6 +32,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import {
   BehaviorSubject,
   combineLatest,
+  debounceTime,
   distinctUntilChanged,
   map,
   skip,
@@ -41,7 +43,7 @@ import { ExamAssignmentFormComponent } from '../exam-assignment-form/exam-assign
 import { ExamAssignmentGridComponent } from '../exam-assignment-grid/exam-assignment-grid.component';
 import { UploadFormComponent } from '../upload-form/upload-form.component';
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import { CustomSwitchComponent } from '@msh/shared/ui-shared';
+import { CustomSwitchComponent } from '@msh/layout/feat-layout';
 
 @UntilDestroy()
 @Component({
@@ -65,7 +67,7 @@ import { CustomSwitchComponent } from '@msh/shared/ui-shared';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class ManageExamAssignmentComponent implements OnInit {
+export class ManageExamAssignmentComponent implements OnInit, OnDestroy {
   private examAssignments$$ = new BehaviorSubject<ExamAssignment[]>([]);
   examAssignments$ = this.examAssignments$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
@@ -89,7 +91,6 @@ export class ManageExamAssignmentComponent implements OnInit {
   displayHistoryForm = false;
   examAssignmentId!: string;
   isOn = false;
-  currentAcademicYear!: Partial<AcademicYear>;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -105,14 +106,17 @@ export class ManageExamAssignmentComponent implements OnInit {
 
   changes$ = combineLatest([
     this.authFacade.academicYear$.pipe(skip(1)),
-    this.authFacade.isFall$.pipe(skip(1)),
+    this.authFacade.isFall$.pipe(
+      tap(isFall => {
+        this.isOn = isFall;
+      })
+    ),
   ])
     .pipe(
       distinctUntilChanged(),
       skip(1),
       untilDestroyed(this),
-      tap(([academicYear, isFall]) => {
-        this.isOn = isFall;
+      tap(() => {
         if (this.filters) {
           this.getExamAssignments(this.filters as TableLazyLoadEvent);
         }
@@ -122,34 +126,11 @@ export class ManageExamAssignmentComponent implements OnInit {
 
   onGridEvent(event: GridEvent<any | ExamAssignment[]>) {
     switch (event.action) {
-      case GRID_ACTIONS.SELECT_ROW:
-        this.selectedExamAssignments = [
-          ...this.selectedExamAssignments,
-          event.data as ExamAssignment,
-        ];
-        break;
-      case GRID_ACTIONS.UNSELECT_ROW:
-        this.selectedExamAssignments = this.selectedExamAssignments.filter(
-          ea => {
-            const examAssignment: ExamAssignment = event.data as ExamAssignment;
-            return ea.id !== examAssignment.id;
-          }
-        );
-        break;
       case GRID_ACTIONS.HISTORY:
         this.displayHistoryForm = true;
         this.selectedRecord = Object.assign({}, event.data);
         this.examAssignmentId = event.data.id;
         this.headerText = `Historiku për Caktim në Qendër Provimi {${event.data.id}}`;
-        break;
-      case GRID_ACTIONS.SELECT_MANY:
-        this.selectedExamAssignments = [
-          ...this.selectedExamAssignments,
-          ...(event.data as ExamAssignment[]),
-        ];
-        break;
-      case GRID_ACTIONS.UNSELECT_ALL:
-        this.selectedExamAssignments = [];
         break;
       case GRID_ACTIONS.EDIT:
         this.selectedExamAssignment = Object.assign(
@@ -177,6 +158,10 @@ export class ManageExamAssignmentComponent implements OnInit {
   ngOnInit(): void {
     this.getAdministrationOfficeDropdown();
     this.getSchoolProfiles();
+  }
+
+  ngOnDestroy() {
+    this.changes$.unsubscribe();
   }
 
   onUploadClose() {

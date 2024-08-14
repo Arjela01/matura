@@ -4,7 +4,6 @@ import {
   BehaviorSubject,
   combineLatest,
   distinctUntilChanged,
-  map,
   skip,
   tap,
 } from 'rxjs';
@@ -15,11 +14,9 @@ import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { SharedModule } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import {
-  AcademicYear,
-  ExamQuestionScoreTotal,
-} from '@msh/shared/domain-models';
-import { AppBoolPipe, CustomSwitchComponent } from '@msh/shared/ui-shared';
+import { ExamQuestionScoreTotal } from '@msh/shared/domain-models';
+import { AppBoolPipe } from '@msh/shared/ui-shared';
+import { CustomSwitchComponent } from '@msh/layout/feat-layout';
 
 @UntilDestroy()
 @Component({
@@ -47,44 +44,47 @@ export class AnalyticScoresWithoutTotalGridComponent {
   totalRecords = 0;
   filters: TableLazyLoadEvent | null = null;
   isOn = false;
-  currentAcademicYear!: Partial<AcademicYear>;
 
   constructor(
     private readonly analyticScoresWithoutTotalService: ExamQuestionScoreTotalsService,
     private readonly authFacade: AuthFacade
   ) {}
 
-  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    distinctUntilChanged(),
-    map(([data]) => {
-      this.currentAcademicYear = data;
-      this.isOn = this.currentAcademicYear?.isFall ?? false;
-      if (this.filters) {
-        this.getAnalyticScoresWithoutTotalList(
-          this.filters as TableLazyLoadEvent
-        );
-      }
-    }),
-    tap()
-  );
+  changes$ = combineLatest([
+    this.authFacade.academicYear$.pipe(skip(1)),
+    this.authFacade.isFall$.pipe(
+      tap(isFall => {
+        this.isOn = isFall;
+      })
+    ),
+  ])
+    .pipe(
+      distinctUntilChanged(),
+      skip(1),
+      untilDestroyed(this),
+      tap(() => {
+        if (this.filters) {
+          this.getAnalyticScoresWithoutTotalList(
+            this.filters as TableLazyLoadEvent
+          );
+        }
+      })
+    )
+    .subscribe();
 
   onSwitchChange(event: any) {
     this.isOn = event;
     this.getAnalyticScoresWithoutTotalList(this.filters as TableLazyLoadEvent);
   }
 
-  ngOnInit(): void {
-    this.academicYear$.pipe(untilDestroyed(this)).subscribe();
-  }
-
   getAnalyticScoresWithoutTotalList($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    if (this.isOn && this.currentAcademicYear?.isFall) {
+    if (this.isOn) {
       this.filters.filters = {
         ...this.filters.filters,
         isFall: {
-          value: this.currentAcademicYear.isFall,
+          value: this.isOn,
           matchMode: 'equals',
         },
       };

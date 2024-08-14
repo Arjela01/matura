@@ -1,19 +1,15 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-} from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ExamSecretApiService } from '@msh/evaluations/data-access-evaluations';
-import { AcademicYear, ExamSecret } from '@msh/shared/domain-models';
+import { ExamSecret } from '@msh/shared/domain-models';
 import { AppBoolPipe } from '@msh/shared/ui-shared';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { SharedModule } from 'primeng/api';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
-import { combineLatest, distinctUntilChanged, map, tap } from 'rxjs';
-import { CustomSwitchComponent } from '@msh/shared/ui-shared';
+import { combineLatest, distinctUntilChanged, skip, tap } from 'rxjs';
+import { CustomSwitchComponent } from '@msh/layout/feat-layout';
 
 @UntilDestroy()
 @Component({
@@ -35,7 +31,6 @@ export class ExamSecretWithoutScoreComponent {
   totalRecords = 0;
   filters: TableLazyLoadEvent | null = null;
   isOn = false;
-  currentAcademicYear!: Partial<AcademicYear>;
 
   constructor(
     private readonly examSecretService: ExamSecretApiService,
@@ -43,35 +38,39 @@ export class ExamSecretWithoutScoreComponent {
     private cd: ChangeDetectorRef
   ) {}
 
-  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    distinctUntilChanged(),
-    map(([data]) => {
-      this.currentAcademicYear = data;
-      this.isOn = this.currentAcademicYear?.isFall ?? false;
-      if (this.filters) {
-        this.loadData(this.filters as TableLazyLoadEvent);
-      }
-    }),
-    tap()
-  );
+  changes$ = combineLatest([
+    this.authFacade.academicYear$.pipe(skip(1)),
+    this.authFacade.isFall$.pipe(
+      tap(isFall => {
+        this.isOn = isFall;
+      })
+    ),
+  ])
+    .pipe(
+      distinctUntilChanged(),
+      skip(1),
+      untilDestroyed(this),
+      tap(() => {
+        if (this.filters) {
+          this.loadData(this.filters as TableLazyLoadEvent);
+        }
+      })
+    )
+    .subscribe();
 
   onSwitchChange(event: any) {
     this.isOn = event;
     this.loadData(this.filters as TableLazyLoadEvent);
   }
 
-  ngOnInit(): void {
-    this.academicYear$.pipe(untilDestroyed(this)).subscribe();
-  }
-
   loadData($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    if (this.isOn && this.currentAcademicYear?.isFall) {
+    if (this.isOn) {
       this.filters.filters = {
         ...this.filters.filters,
         isFall: {
-          value: this.currentAcademicYear.isFall,
+          value: this.isOn,
           matchMode: 'equals',
         },
       };

@@ -12,7 +12,7 @@ import {
   ExamTypeApiService,
   StudentBanApiService,
 } from '@msh/configurations/data-access-configurations';
-import { AcademicYear, ExamDate, StudentBan } from '@msh/shared/domain-models';
+import { AcademicYear, StudentBan } from '@msh/shared/domain-models';
 
 import {
   GlobalToastService,
@@ -24,7 +24,6 @@ import {
   BehaviorSubject,
   combineLatest,
   distinctUntilChanged,
-  map,
   skip,
   tap,
 } from 'rxjs';
@@ -34,8 +33,8 @@ import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { DropdownModel } from '@msh/shared/data-access-shared';
 import { AuthFacade } from '@msh/auth/data-access-auth';
-import { CustomSwitchComponent } from '@msh/shared/ui-shared';
 import { StudentsGridComponent } from '../../students/students-grid/students-grid.component';
+import { CustomSwitchComponent } from '@msh/layout/feat-layout';
 
 @UntilDestroy()
 @Component({
@@ -82,21 +81,28 @@ export class ManageStudentBanComponent implements OnInit {
     private readonly authFacade: AuthFacade
   ) {}
 
-  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    distinctUntilChanged(),
-    map(([data]) => {
-      this.currentAcademicYear = data;
-      this.isOn = this.currentAcademicYear?.isFall ?? false;
-      if (this.filters) {
-        this.getBannedStudents(this.filters as TableLazyLoadEvent);
-      }
-    }),
-    tap()
-  );
+  changes$ = combineLatest([
+    this.authFacade.academicYear$.pipe(skip(1)),
+    this.authFacade.isFall$.pipe(
+      tap(isFall => {
+        this.isOn = isFall;
+      })
+    ),
+  ])
+    .pipe(
+      distinctUntilChanged(),
+      skip(1),
+      untilDestroyed(this),
+      tap(() => {
+        if (this.filters) {
+          this.getBannedStudents(this.filters as TableLazyLoadEvent);
+        }
+      })
+    )
+    .subscribe();
 
   ngOnInit() {
     this.getExamTypes();
-    this.academicYear$.pipe(untilDestroyed(this)).subscribe();
   }
 
   onSwitchChange(event: any) {
@@ -154,11 +160,11 @@ export class ManageStudentBanComponent implements OnInit {
   getBannedStudents($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    if (this.isOn && this.currentAcademicYear?.isFall) {
+    if (this.isOn) {
       this.filters.filters = {
         ...this.filters.filters,
         isFall: {
-          value: this.currentAcademicYear.isFall,
+          value: this.isOn,
           matchMode: 'equals',
         },
       };

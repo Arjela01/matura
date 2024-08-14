@@ -25,13 +25,20 @@ import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { RippleModule } from 'primeng/ripple';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  distinctUntilChanged,
+  map,
+  skip,
+  tap,
+} from 'rxjs';
 import { ExamSecretsFormComponent } from '../exam-secrets-form/exam-secrets-form.component';
 import { ExamSecretsGridComponent } from '../exam-secrets-grid/exam-secrets-grid.component';
-import { AcademicYear, ExamSecret } from '@msh/shared/domain-models';
+import { ExamSecret } from '@msh/shared/domain-models';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ArchiveFolderGridComponent } from '../../archive-folder/archive-folder-grid/archive-folder-grid.component';
-import { CustomSwitchComponent } from '@msh/shared/ui-shared';
+import { CustomSwitchComponent } from '@msh/layout/feat-layout';
 
 @UntilDestroy()
 @Component({
@@ -74,18 +81,26 @@ export class ManageExamSecretsComponent implements OnInit {
   headerText: any;
   displayHistoryForm = false;
   isOn = false;
-  currentAcademicYear!: Partial<AcademicYear>;
 
-  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    map(([data]) => {
-      this.currentAcademicYear = data;
-      this.isOn = this.currentAcademicYear?.isFall ?? false;
-      if (this.filters) {
-        this.getExamSecrets(this.filters as TableLazyLoadEvent);
-      }
-    }),
-    tap()
-  );
+  changes$ = combineLatest([
+    this.authFacade.academicYear$.pipe(skip(1)),
+    this.authFacade.isFall$.pipe(
+      tap(isFall => {
+        this.isOn = isFall;
+      })
+    ),
+  ])
+    .pipe(
+      distinctUntilChanged(),
+      skip(1),
+      untilDestroyed(this),
+      tap(() => {
+        if (this.filters) {
+          this.getExamSecrets(this.filters as TableLazyLoadEvent);
+        }
+      })
+    )
+    .subscribe();
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: GlobalToastService,
@@ -103,7 +118,6 @@ export class ManageExamSecretsComponent implements OnInit {
   ngOnInit(): void {
     this.getAdministrationOffices();
     this.getExamSecretNotes();
-    this.academicYear$.pipe(untilDestroyed(this)).subscribe();
   }
 
   onSwitchChange(event: any) {
@@ -229,11 +243,11 @@ export class ManageExamSecretsComponent implements OnInit {
 
     this.filters = Object.assign({}, $event);
 
-    if (this.isOn && this.currentAcademicYear?.isFall) {
+    if (this.isOn) {
       this.filters.filters = {
         ...this.filters.filters,
         isFall: {
-          value: this.currentAcademicYear.isFall,
+          value: this.isOn,
           matchMode: 'equals',
         },
       };

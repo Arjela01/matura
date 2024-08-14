@@ -4,24 +4,24 @@ import { RouterLink } from '@angular/router';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ExamScoreApiService } from '@msh/evaluations/data-access-evaluations';
 import { AcademicYear, ExamScore } from '@msh/shared/domain-models';
-import { AppBoolPipe, CustomSwitchComponent } from '@msh/shared/ui-shared';
+import { AppBoolPipe } from '@msh/shared/ui-shared';
 import { ColumnFilterDirective } from '@msh/shared/util-shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import * as FileSaver from 'file-saver';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import { CustomSwitchComponent } from '@msh/layout/feat-layout';
 import {
   BehaviorSubject,
   combineLatest,
   distinctUntilChanged,
-  map,
   skip,
   tap,
 } from 'rxjs';
+
 @UntilDestroy()
 @Component({
   selector: 'msh-exam-score-grid',
@@ -43,24 +43,32 @@ import {
   styleUrls: ['./exam-scores-secrets-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamScoresSecretsGridComponent implements OnInit {
+export class ExamScoresSecretsGridComponent {
   private examScores$$ = new BehaviorSubject<ExamScore[]>([]);
   examScores$ = this.examScores$$.asObservable();
   isOn = false;
   currentAcademicYear!: Partial<AcademicYear>;
   filters: TableLazyLoadEvent | null = null;
   totalRecords = 0;
-  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    distinctUntilChanged(),
-    map(([data]) => {
-      this.currentAcademicYear = data;
-      this.isOn = this.currentAcademicYear?.isFall ?? false;
-      if (this.filters) {
-        this.getExamScores(this.filters as TableLazyLoadEvent);
-      }
-    }),
-    tap()
-  );
+  changes$ = combineLatest([
+    this.authFacade.academicYear$.pipe(skip(1)),
+    this.authFacade.isFall$.pipe(
+      tap(isFall => {
+        this.isOn = isFall;
+      })
+    ),
+  ])
+    .pipe(
+      distinctUntilChanged(),
+      skip(1),
+      untilDestroyed(this),
+      tap(() => {
+        if (this.filters) {
+          this.getExamScores(this.filters as TableLazyLoadEvent);
+        }
+      })
+    )
+    .subscribe();
   constructor(
     private readonly examScoreService: ExamScoreApiService,
     private authFacade: AuthFacade
@@ -71,18 +79,14 @@ export class ExamScoresSecretsGridComponent implements OnInit {
     this.getExamScores(this.filters as TableLazyLoadEvent);
   }
 
-  ngOnInit(): void {
-    this.academicYear$.pipe(untilDestroyed(this)).subscribe();
-  }
-
   getExamScores($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    if (this.isOn && this.currentAcademicYear?.isFall) {
+    if (this.isOn) {
       this.filters.filters = {
         ...this.filters.filters,
         isFall: {
-          value: this.currentAcademicYear.isFall,
+          value: this.isOn,
           matchMode: 'equals',
         },
       };

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, NgClass } from '@angular/common';
@@ -11,12 +11,16 @@ import { AuthFacade } from '@msh/auth/data-access-auth';
   styleUrls: ['./app-custom-switch.component.scss'],
   imports: [InputSwitchModule, FormsModule, NgClass, CommonModule],
 })
-export class CustomSwitchComponent {
+export class CustomSwitchComponent implements OnInit {
   @Input() isOn = false;
   @Input() label = 'Label';
   @Output() isOnChange = new EventEmitter<boolean>();
 
   constructor(private authFacade: AuthFacade) {}
+
+  ngOnInit() {
+    this.authFacade.isFall$.pipe();
+  }
 
   onSwitchChange(event: any) {
     this.isOn = event.checked;

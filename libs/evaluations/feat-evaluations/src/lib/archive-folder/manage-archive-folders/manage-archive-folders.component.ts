@@ -28,10 +28,17 @@ import {
 } from '@msh/shared/util-shared';
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  distinctUntilChanged,
+  map,
+  skip,
+  tap,
+} from 'rxjs';
 import { ArchiveFolderGridComponent } from '../archive-folder-grid/archive-folder-grid.component';
 import { ArchiveOpenFolderFormComponent } from '../archive-open-folder-form/archive-open-folder-form.component';
-import { CustomSwitchComponent } from '@msh/shared/ui-shared';
+import { CustomSwitchComponent } from '@msh/layout/feat-layout';
 
 @UntilDestroy()
 @Component({
@@ -90,22 +97,31 @@ export class ManageArchiveFoldersComponent implements OnInit {
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
-  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    map(([academicYear]) => {
-      this.currentAcademicYear = academicYear;
-      this.isOn = this.currentAcademicYear?.isFall ?? false;
-      if (this.filters) {
-        this.getArchiveFolders(this.filters as TableLazyLoadEvent);
-      }
-    }),
-    tap()
-  );
+  changes$ = combineLatest([
+    this.authFacade.academicYear$.pipe(skip(1)),
+    this.authFacade.isFall$.pipe(
+      tap(isFall => {
+        this.isOn = isFall;
+      })
+    ),
+  ])
+    .pipe(
+      distinctUntilChanged(),
+      skip(1),
+      untilDestroyed(this),
+      tap(() => {
+        if (this.filters) {
+          this.getArchiveFolders(this.filters as TableLazyLoadEvent);
+        }
+      })
+    )
+    .subscribe();
+
   ngOnInit() {
     this.showEditButton = this.permissionCheckService.hasPermission(
       PermissionEnum.EditApplications as any
     );
     this.getExamTypes();
-    this.academicYear$.pipe(untilDestroyed(this)).subscribe();
   }
 
   onSwitchChange(event: any) {
@@ -136,27 +152,6 @@ export class ManageArchiveFoldersComponent implements OnInit {
         this.folderNr = event.data.id;
         this.headerText = `Historiku për Dosjen {${event.data.nr}}`;
         this.displayHistoryForm = true;
-        break;
-      case GRID_ACTIONS.SELECT_ROW:
-        this.selectedArchiveFolders = [
-          ...this.selectedArchiveFolders,
-          event.data as ArchiveFolder,
-        ];
-        break;
-      case GRID_ACTIONS.UNSELECT_ROW:
-        this.selectedArchiveFolders = this.selectedArchiveFolders.filter(hs => {
-          hs.id !== (event.data as ArchiveFolder).id;
-        });
-        break;
-
-      case GRID_ACTIONS.SELECT_MANY:
-        this.selectedArchiveFolders = [
-          ...this.selectedArchiveFolders,
-          ...(event.data as ArchiveFolder[]),
-        ];
-        break;
-      case GRID_ACTIONS.UNSELECT_ALL:
-        this.selectedArchiveFolders = [];
         break;
       case GRID_ACTIONS.EDIT:
         this.examTypeId = event.data.examTypeId;
@@ -202,11 +197,11 @@ export class ManageArchiveFoldersComponent implements OnInit {
   getArchiveFolders($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    if (this.isOn && this.currentAcademicYear?.isFall) {
+    if (this.isOn) {
       this.filters.filters = {
         ...this.filters.filters,
         isFall: {
-          value: this.currentAcademicYear.isFall,
+          value: this.isOn,
           matchMode: 'equals',
         },
       };
