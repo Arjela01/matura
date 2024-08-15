@@ -38,14 +38,18 @@ export const authFeature = createFeature({
       ...state,
       status: 'pending' as GenericStoreStatus,
     })),
-    on(AuthActions.loadAuthSuccess, (state, { token, user, academicYear }) => ({
-      ...state,
-      status: 'pending' as GenericStoreStatus,
-      isAuthenticated: true,
-      token: token,
-      user: user,
-      academicYear: academicYear,
-    })),
+    on(
+      AuthActions.loadAuthSuccess,
+      (state, { token, user, academicYear, isFall }) => ({
+        ...state,
+        status: 'pending' as GenericStoreStatus,
+        isAuthenticated: true,
+        token: token,
+        user: user,
+        academicYear: academicYear,
+        isFall: isFall,
+      })
+    ),
 
     on(AuthActions.login, state => ({
       ...state,

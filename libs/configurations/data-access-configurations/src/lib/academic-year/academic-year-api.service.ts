@@ -10,6 +10,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
 
 export const ACADEMIC_YEAR_KEY = 'academicYear';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -19,14 +20,17 @@ export class AcademicYearApiService {
   getAcademicYears(): Observable<any> {
     return this.apiService.get(`/AcademicYear`);
   }
+
   getAcademicYearsFiltered(): Observable<any> {
     return this.apiService.get(`/AcademicYear/DropdownListFilter`);
   }
+
   loadDropdownList(): Observable<ApiResult<DropdownModel<number>[]>> {
     return this.apiService.get<ApiResult<DropdownModel<number>[]>>(
       `/AcademicYear/DropdownList`
     );
   }
+
   loadAcademicYears(
     event: TableLazyLoadEvent
   ): Observable<AcademicYearTableView> {
@@ -39,6 +43,7 @@ export class AcademicYearApiService {
       academicYear
     );
   }
+
   update(academicYear: AcademicYear): Observable<ApiResult<AcademicYear>> {
     return this.apiService.post<ApiResult<AcademicYear>, AcademicYear>(
       `/AcademicYear/Update`,
