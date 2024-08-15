@@ -127,7 +127,9 @@ export class ManageExamSecretsComponent implements OnInit {
 
   onNewClick() {
     this.displayModal = true;
-    this.selectedExamSecret = {} as ExamSecret;
+    this.selectedExamSecret = {
+      isFall: this.isOn ?? false,
+    } as ExamSecret;
   }
 
   onGridEvent(event: GridEvent<any | ExamSecret[]>) {

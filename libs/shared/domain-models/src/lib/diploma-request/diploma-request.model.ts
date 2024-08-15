@@ -14,6 +14,7 @@ export interface DiplomaRequest {
   studentInputData?: string;
   attachedDocument?: string;
   fileName?: string;
+  attachedDocumentFileName?: string;
 }
 
 export interface DiplomaRequestTableView {

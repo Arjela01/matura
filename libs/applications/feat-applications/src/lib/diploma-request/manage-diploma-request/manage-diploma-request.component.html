@@ -10,7 +10,7 @@
         class="p-button-success mr-2"
         (click)="onNewClick()"></button>
     </div>
-    </div>
+  </div>
 </div>
 <div class="grid">
   <div class="col-12">
@@ -39,6 +39,7 @@
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
     <msh-diploma-request-form
+      [diploma]="diplomaRequest"
       [diplomaDetails]="selectedDiplomaRequest"
       (formSave)="onFormSave($event)"
       (formClose)="onModalClose()">
@@ -70,4 +71,3 @@
 </p-confirmDialog>
 
 <ng-container *ngIf="academicYear$ | async"></ng-container>
-

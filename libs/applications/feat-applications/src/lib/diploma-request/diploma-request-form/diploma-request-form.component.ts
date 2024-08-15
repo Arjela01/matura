@@ -75,9 +75,12 @@ export class DiplomaRequestFormComponent implements OnInit, DoCheck {
   base64?: string;
   academicYearId!: number;
 
+  @Input() diploma: DiplomaRequest = {} as DiplomaRequest;
   @Input() set diplomaDetails(details: DiplomaRequest | null) {
     if (details) {
       this.diplomaRequest = Object.assign({}, details);
+      this.diplomaRequest.attachedDocument = this.diploma.attachedDocument;
+      this.diplomaRequest.fileName = this.diploma.attachedDocumentFileName;
     }
   }
 
@@ -119,6 +122,25 @@ export class DiplomaRequestFormComponent implements OnInit, DoCheck {
 
   onModalClose() {
     this.displayStudentModal = false;
+  }
+
+  downloadFile() {
+    const byteCharacters = atob(this.diplomaRequest.attachedDocument as any);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: 'application/pdf' });
+
+    const fileURL = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = fileURL;
+    link.download = this.diplomaRequest.fileName as string;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(fileURL);
   }
 
   setStudent(student: any) {
