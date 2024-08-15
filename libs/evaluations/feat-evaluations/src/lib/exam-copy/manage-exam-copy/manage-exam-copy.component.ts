@@ -20,14 +20,21 @@ import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
-import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  distinctUntilChanged,
+  map,
+  skip,
+  tap,
+} from 'rxjs';
 import { ExamCopyDetailsComponent } from '../exam-copy-details/exam-copy-details.component';
 import { ExamCopyGridComponent } from '../exam-copy-grid/exam-copy-grid.component';
 import { AuthFacade } from '@msh/auth/data-access-auth';
 import { ExamSecretsFormComponent } from '../../exam-secrets/exam-secrets-form/exam-secrets-form.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import { HttpEventType } from '@angular/common/http';
-import { CustomSwitchComponent } from '@msh/shared/ui-shared';
+import { CustomSwitchComponent } from '@msh/layout/feat-layout';
 
 @UntilDestroy()
 @Component({
@@ -65,7 +72,6 @@ export class ManageExamCopyComponent {
   totalRecords = 0;
   displayModal = false;
   isOn = false;
-  currentAcademicYear!: Partial<AcademicYear>;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -74,16 +80,25 @@ export class ManageExamCopyComponent {
     private readonly authFacade: AuthFacade
   ) {}
 
-  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    map(([data]) => {
-      this.currentAcademicYear = data;
-      this.isOn = this.currentAcademicYear?.isFall ?? false;
-      if (this.filters) {
-        this.getExamCopies(this.filters as TableLazyLoadEvent);
-      }
-    }),
-    tap()
-  );
+  changes$ = combineLatest([
+    this.authFacade.academicYear$.pipe(skip(1)),
+    this.authFacade.isFall$.pipe(
+      tap(isFall => {
+        this.isOn = isFall;
+      })
+    ),
+  ])
+    .pipe(
+      distinctUntilChanged(),
+      skip(1),
+      untilDestroyed(this),
+      tap(() => {
+        if (this.filters) {
+          this.getExamCopies(this.filters as TableLazyLoadEvent);
+        }
+      })
+    )
+    .subscribe();
 
   onGridEvent(event: GridEvent<any | ExamCopy[]>) {
     switch (event.action) {
@@ -109,11 +124,11 @@ export class ManageExamCopyComponent {
   getExamCopies($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    if (this.isOn && this.currentAcademicYear?.isFall) {
+    if (this.isOn) {
       this.filters.filters = {
         ...this.filters.filters,
         isFall: {
-          value: this.currentAcademicYear.isFall,
+          value: this.isOn,
           matchMode: 'equals',
         },
       };
