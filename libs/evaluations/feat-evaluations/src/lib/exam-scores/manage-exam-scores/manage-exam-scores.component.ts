@@ -123,7 +123,7 @@ export class ManageExamScoresComponent implements OnInit {
     this.displayModal = true;
     this.selectedExamScore = {
       totalScore: 0,
-      isFall: this.currentAcademicYear?.isFall ?? false,
+      isFall: this.isOn,
       archiveFolderNr: 0,
       archiveExamIndex: 0,
     } as ExamScore;
@@ -166,6 +166,7 @@ export class ManageExamScoresComponent implements OnInit {
       archiveFolderNr: examScore.archiveFolderNr,
       archiveExamIndex: examScore.archiveExamIndex,
       isFall: examScore.isFall,
+      isExternalData: false,
     };
 
     if (examScore.id) {
@@ -264,7 +265,7 @@ export class ManageExamScoresComponent implements OnInit {
         if (response.isSuccessful) {
           this.toastService.showInfo('Rezultati i provimit u fshi me sukses!');
           this.getExamScores(this.filters as TableLazyLoadEvent);
-        }
+        } else this.toastService.showError(response.errorMessage);
         if (response.isBadRequest)
           this.toastService.showError(
             'Ndodhi një problem gjatë fshirjes së rezultatit të provimit!'
