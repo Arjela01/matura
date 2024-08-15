@@ -10,14 +10,12 @@ import { AcademicYear, roleKey } from '@msh/shared/domain-models';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { jwtDecode } from 'jwt-decode';
 import { catchError, exhaustMap, map, of, switchMap, tap } from 'rxjs';
-import { User, USER_STORAGE_KEY } from '../models/user.model';
+import { USER_STORAGE_KEY, User } from '../models/user.model';
 import { AuthService } from '../services/auth.service';
 import { HeartbeatService } from '../services/heartbeat.service';
 import { TOKEN_STORAGE_KEY } from '../interceptors/token.interceptor';
 import { AuthActions } from './auth.actions';
-
 export const FALL_STORAGE_KEY = 'isFall';
-
 @Injectable()
 export class AuthEffects {
   init$ = createEffect(() =>
