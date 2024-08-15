@@ -29,7 +29,6 @@ export class CustomSwitchComponent implements OnInit {
   ngOnInit(): void {
     this.authFacade.isFall$.pipe(
       tap(isFall => {
-        debugger;
         this.isOn = isFall;
       })
     );
