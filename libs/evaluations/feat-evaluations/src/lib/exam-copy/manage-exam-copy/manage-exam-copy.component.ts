@@ -138,7 +138,7 @@ export class ManageExamCopyComponent {
     }
 
     this.examCopyService
-      .loadExamCopies($event)
+      .loadExamCopies(this.filters)
       .pipe(untilDestroyed(this))
       .subscribe(
         response => {
