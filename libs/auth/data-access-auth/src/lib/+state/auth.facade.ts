@@ -19,8 +19,6 @@ export class AuthFacade {
 
   init() {
     this.store.dispatch(AuthActions.initAuth());
-    const storedIsFall = localStorage.getItem('isFall') === 'true';
-    this.store.dispatch(AuthActions.initFall({ isFall: storedIsFall }));
   }
 
   login(loginRequest: LoginRequest) {

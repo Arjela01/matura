@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   ACADEMIC_YEAR_KEY,
@@ -15,6 +15,7 @@ import { AuthService } from '../services/auth.service';
 import { HeartbeatService } from '../services/heartbeat.service';
 import { TOKEN_STORAGE_KEY } from '../interceptors/token.interceptor';
 import { AuthActions } from './auth.actions';
+import { Store } from '@ngrx/store';
 export const FALL_STORAGE_KEY = 'isFall';
 @Injectable()
 export class AuthEffects {
@@ -175,13 +176,10 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(AuthActions.initFall),
-        map(action => {
-          if (action) {
-            this.storageService.setItem(FALL_STORAGE_KEY, action.isFall);
-            this.router.navigate(['/']);
-          } else {
-            this.router.navigate(['/']);
-          }
+        tap(action => {
+          console.log('Setting isFall in storage:', action.isFall); // Add logging
+          this.storageService.setItem(FALL_STORAGE_KEY, action.isFall);
+          this.router.navigate(['/']);
         })
       ),
     { dispatch: false }
