@@ -33,8 +33,15 @@
             Maturant është fushë e kërkuar.
           </small>
 
-          <div class="field mt-4 mb-4">
+          <div class="field mt-4 mb-3">
             <label for="attachedDocument">Importo Dokument *</label>
+            <div *ngIf="diplomaRequest.fileName">
+              <p class="mb-4 mt-4">
+                <a href="javascript:void(0)" (click)="downloadFile()">
+                  {{ diplomaRequest.fileName }}
+                </a>
+              </p>
+            </div>
             <p-fileUpload
               id="attachedDocument"
               name="attachedDocument"

@@ -100,9 +100,6 @@ export class ManageExamSiteComponent implements OnInit {
     this.selectedExamSite = {
       isFall: this.currentAcademicYear?.isFall ?? false,
     } as ExamSite;
-    console.log(
-      'This selected examSite: ' + JSON.stringify(this.selectedExamSite)
-    );
   }
 
   onGridEvent(event: GridEvent<any | ExamSite[]>) {
