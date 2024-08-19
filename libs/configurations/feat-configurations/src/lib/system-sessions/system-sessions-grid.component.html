@@ -35,13 +35,13 @@
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="firstName">
+            <th pSortableColumn="name">
               Emri
               <div>
-                <p-sortIcon field="firstName"></p-sortIcon>
+                <p-sortIcon field="name"></p-sortIcon>
                 <p-columnFilter
                   type="text"
-                  field="firstName"
+                  field="name"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
@@ -87,7 +87,7 @@
               {{ session.username }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ session.firstName }}
+              {{ session.name }}
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ session.lastName }}

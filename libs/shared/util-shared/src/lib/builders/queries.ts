@@ -1906,6 +1906,73 @@ export const examQuestionScoreTotal = `
       }
       }
 `;
+export const diploma = `
+  query Diploma
+  ($pagesize: Int, $skip: Int,$where: DiplomaAuditFilterInput,
+  $order:[DiplomaAuditSortInput!]) {
+    diploma(take: $pagesize, skip: $skip,where: $where,order: $order
+) {
+    totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+       }
+        items {
+            student {
+                birthDate
+                birthPlace
+                isConfirmedBySupervisor
+                isAN
+                email
+                firstName
+                idCard
+                isA2A3
+                isEAlbaniaApplication
+                lastName
+                middleName
+                mobilePhone
+                oldID
+                schoolFinished
+                schoolName
+                session
+                studentId
+                studyClass
+                graduationYear
+                isFall
+                isPrinted
+                diplomaPrintedDate
+                id
+                isDeleted
+                createdIP
+                createdOn
+                deletedIP
+                deletedOn
+                modifiedIP
+            }
+            academicYear{
+            id
+            year
+            directorName
+            }
+            auditOperation
+            auditHostname
+            auditSIDUsername
+            auditUsername
+            auditTimestamp
+            isDelivered
+            eAlbaniaDocumentResponse
+            deliveryDate
+            isDeleted
+            createdIP
+            createdOn
+            deletedIP
+            deletedOn
+            modifiedIP
+        }
+      }
+      }
+`;
+
 export const diplomaRequest = `
   query DiplomaRequest
   ($pagesize: Int, $skip: Int,$where: DiplomaRequestAuditFilterInput,
@@ -2072,6 +2139,7 @@ export const queriesMap: Map<string, string> = new Map([
   ['regradingRequest', regradingRequest],
   ['examQuestionScoreTotal', examQuestionScoreTotal],
   ['diplomaRequest', diplomaRequest],
+  ['diploma', diploma],
   ['dataExport', dataExport],
   ['ealbaniaMessage', ealbaniaMessage],
 ]);
