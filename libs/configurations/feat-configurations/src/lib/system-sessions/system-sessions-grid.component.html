@@ -68,13 +68,13 @@
                   mshColumnFilterDirective></p-columnFilter>
               </div>
             </th>
-            <th pSortableColumn="dateDisabled">
+            <th pSortableColumn="expirationDate">
               Koha e skadimit
               <div>
-                <p-sortIcon field="dateDisabled"></p-sortIcon>
+                <p-sortIcon field="expirationDate"></p-sortIcon>
                 <p-columnFilter
                   type="date"
-                  field="dateDisabled"
+                  field="expirationDate"
                   display="menu"
                   mshColumnFilterDirective></p-columnFilter>
               </div>
@@ -96,7 +96,7 @@
               {{ session.lastLoginTime | app_time }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ session.dateDisabled | app_time }}
+              {{ session.expirationDate | app_time }}
             </td>
           </tr>
         </ng-template>
