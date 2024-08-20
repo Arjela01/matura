@@ -243,8 +243,6 @@ export class ManageExamSecretsComponent implements OnInit {
   getExamSecrets($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
-    this.filters = Object.assign({}, $event);
-
     if (this.isOn) {
       this.filters.filters = {
         ...this.filters.filters,

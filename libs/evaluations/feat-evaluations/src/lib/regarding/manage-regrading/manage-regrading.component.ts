@@ -1,6 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BehaviorSubject, combineLatest, map, skip, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  distinctUntilChanged,
+  map,
+  skip,
+  tap,
+} from 'rxjs';
 import {
   ExamCopy,
   ExamCopyUpdate,
@@ -36,6 +43,7 @@ import { UpdateStatusFormComponent } from '../update-status-form/update-status-f
 import { ManageExamGradeChangesComponent } from '../../exam-grade-changes/manage-exam-grade-changes/manage-exam-grade-changes.component';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
+import { CustomSwitchComponent } from '@msh/layout/feat-layout';
 
 @UntilDestroy()
 @Component({
@@ -53,6 +61,7 @@ import { Router } from '@angular/router';
     ExamGradeChangesFormComponent,
     UpdateStatusFormComponent,
     ManageExamGradeChangesComponent,
+    CustomSwitchComponent,
   ],
   templateUrl: './manage-regrading.component.html',
   styleUrl: './manage-regrading.component.scss',
@@ -79,6 +88,27 @@ export class ManageRegradingComponent {
   academicYearId: any;
   examGradeId: any;
   userRole = '';
+  isOn = false;
+
+  changes$ = combineLatest([
+    this.authFacade.academicYear$.pipe(skip(1)),
+    this.authFacade.isFall$.pipe(
+      tap(isFall => {
+        this.isOn = isFall;
+      })
+    ),
+  ])
+    .pipe(
+      distinctUntilChanged(),
+      skip(1),
+      untilDestroyed(this),
+      tap(() => {
+        if (this.filters) {
+          this.getGrade(this.filters as TableLazyLoadEvent);
+        }
+      })
+    )
+    .subscribe();
 
   constructor(
     private readonly authFacade: AuthFacade,
@@ -107,16 +137,6 @@ export class ManageRegradingComponent {
     }
   }
 
-  academicYear$ = combineLatest([this.authFacade.academicYear$]).pipe(
-    skip(1),
-    map(([_]) => {
-      if (this.filters) {
-        this.getGrade(this.filters as TableLazyLoadEvent);
-      }
-    }),
-    tap()
-  );
-
   ngOnInit() {
     this.getExamSubjects();
     this.getExamGradeChangeTypes();
@@ -128,6 +148,11 @@ export class ManageRegradingComponent {
   onNewClick() {
     this.displayModal = true;
     this.selectedGrade = {} as Regrading;
+  }
+
+  onSwitchChange(event: any) {
+    this.isOn = event;
+    this.getGrade(this.filters as TableLazyLoadEvent);
   }
 
   onGridEvent(event: GridEvent<any | Regrading[]>) {
@@ -204,8 +229,21 @@ export class ManageRegradingComponent {
   getGrade($event: TableLazyLoadEvent) {
     this.filters = Object.assign({}, $event);
 
+    if (this.isOn) {
+      this.filters.filters = {
+        ...this.filters.filters,
+        isFall: {
+          value: this.isOn,
+          matchMode: 'equals',
+        },
+      };
+    } else {
+      const { isFall, ...restFilters } = this.filters.filters || {};
+      this.filters.filters = restFilters;
+    }
+
     this.regradingApiService
-      .loadExamGrades($event)
+      .loadExamGrades(this.filters)
       .pipe(untilDestroyed(this))
       .subscribe(response => {
         this.regrading$$.next(response.data);
