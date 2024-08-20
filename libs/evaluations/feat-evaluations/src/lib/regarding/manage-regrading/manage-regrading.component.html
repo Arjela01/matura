@@ -2,6 +2,13 @@
   <h2 class="flex-1 mb-0">Rivlerësim/Korrigjim</h2>
   <div class="flex align-items-right justify-content-right">
     <div class="my-2">
+      <msh-custom-switch
+        [(isOn)]="isOn"
+        [label]="'Vjeshtë'"
+        (isOnChange)="onSwitchChange($event)">
+      </msh-custom-switch>
+    </div>
+    <div class="my-2">
       <button
         pRipple
         icon="pi pi-download"
@@ -87,4 +94,4 @@
   </ng-template>
 </p-dialog>
 
-<ng-container *ngIf="academicYear$ | async"></ng-container>
+<ng-container *ngIf="changes$"></ng-container>

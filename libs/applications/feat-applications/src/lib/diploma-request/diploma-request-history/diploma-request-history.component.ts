@@ -24,13 +24,11 @@ import { Apollo, gql } from 'apollo-angular';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import {
   ColumnFilterDirective,
-  EXAM_COPY_REQUEST,
+  diploma,
   GridEvent,
-  STUDENT_BAN,
 } from '@msh/shared/util-shared';
 import { FailingStudent } from '@msh/applications/domain-application';
 import { AppDatePipe } from '@msh/shared/ui-shared';
-import { EXAM_GRADE_REQUEST_QUERY } from '@msh/shared/util-shared';
 
 @Component({
   selector: 'msh-diploma-request-history',
@@ -70,7 +68,7 @@ export class DiplomaRequestHistoryComponent {
     GridEvent<FailingStudent | FailingStudent[]>
   >();
 
-  queryName = 'diplomaRequest';
+  queryName = 'diploma';
   pageSize = 50;
   totalCount = 0;
   currentPage = 1;
@@ -106,7 +104,7 @@ export class DiplomaRequestHistoryComponent {
     this.apollo
       .watchQuery<any>({
         query: gql`
-          ${EXAM_GRADE_REQUEST_QUERY}
+          ${diploma}
         `,
         variables: {
           pagesize: this.pageSize,
