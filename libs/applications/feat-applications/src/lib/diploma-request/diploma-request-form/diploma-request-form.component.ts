@@ -37,6 +37,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { SharedStudentLookupModule } from '@msh/shared/student-lookup';
 import { FileUploadModule } from 'primeng/fileupload';
 import { Ripple } from 'primeng/ripple';
+import { DiplomaRequestApiService } from '@msh/applications/data-access-applications';
 
 @UntilDestroy()
 @Component({
@@ -79,8 +80,6 @@ export class DiplomaRequestFormComponent implements OnInit, DoCheck {
   @Input() set diplomaDetails(details: DiplomaRequest | null) {
     if (details) {
       this.diplomaRequest = Object.assign({}, details);
-      this.diplomaRequest.attachedDocument = this.diploma.attachedDocument;
-      this.diplomaRequest.fileName = this.diploma.attachedDocumentFileName;
     }
   }
 
@@ -95,7 +94,8 @@ export class DiplomaRequestFormComponent implements OnInit, DoCheck {
 
   constructor(
     private cd: ChangeDetectorRef,
-    private readonly studentHistoryService: StudentsAuditService
+    private readonly studentHistoryService: StudentsAuditService,
+    private readonly diplomaRequestService: DiplomaRequestApiService
   ) {
     const academicYear = JSON.parse(
       localStorage.getItem('academicYear') as string
@@ -143,6 +143,17 @@ export class DiplomaRequestFormComponent implements OnInit, DoCheck {
     URL.revokeObjectURL(fileURL);
   }
 
+  getDiplomaById(id: string): void {
+    this.diplomaRequestService
+      .getOne(id)
+      .pipe(untilDestroyed(this))
+      .subscribe(response => {
+        this.diplomaRequest.fileName = response.data.attachedDocumentFileName;
+        this.diplomaRequest.attachedDocument = response.data.attachedDocument;
+        this.cd.detectChanges();
+      });
+  }
+
   setStudent(student: any) {
     if (!student) {
       this.studentInputData = '';
@@ -171,6 +182,7 @@ export class DiplomaRequestFormComponent implements OnInit, DoCheck {
   }
 
   ngOnInit(): void {
+    this.getDiplomaById(this.diplomaRequest.id);
     if (this.selectedStudent) {
       this.onStudentChange(this.selectedStudent);
     }
@@ -209,6 +221,7 @@ export class DiplomaRequestFormComponent implements OnInit, DoCheck {
 
   onSubmit() {
     const valuesToSend: DiplomaRequestPostData = {
+      id: this.diplomaRequest.id,
       studentID: this.diplomaRequest.studentId,
       fileName: this.diplomaRequest.fileName,
       attachedDocument: this.diplomaRequest.attachedDocument,

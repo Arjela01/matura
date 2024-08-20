@@ -39,7 +39,6 @@
   (onHide)="onModalClose()">
   <ng-template pTemplate="content">
     <msh-diploma-request-form
-      [diploma]="diplomaRequest"
       [diplomaDetails]="selectedDiplomaRequest"
       (formSave)="onFormSave($event)"
       (formClose)="onModalClose()">

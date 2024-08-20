@@ -60,7 +60,7 @@ export class ManageDiplomaRequestComponent {
   selectedRecord: any;
   headerText: any;
   displayHistoryForm = false;
-  diplomaRequest: DiplomaRequest = {} as DiplomaRequest;
+  diploma: DiplomaRequest = {} as DiplomaRequest;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
@@ -84,7 +84,9 @@ export class ManageDiplomaRequestComponent {
   onNewClick() {
     this.displayModal = true;
     this.selectedDiplomaRequest = {} as DiplomaRequest;
-    this.diplomaRequest = {} as DiplomaRequest;
+    if (this.selectedDiplomaRequest.id) {
+      this.diploma = {} as DiplomaRequest;
+    }
   }
 
   onModalClose() {
@@ -104,9 +106,7 @@ export class ManageDiplomaRequestComponent {
           {},
           event.data as DiplomaRequest
         );
-        this.getDiplomaById(this.selectedDiplomaRequest.id);
         this.displayModal = true;
-        this.cd.markForCheck();
         break;
       case GRID_ACTIONS.DELETE:
         this.confirmationService.confirm({
@@ -126,16 +126,6 @@ export class ManageDiplomaRequestComponent {
     if (!diplomaRequest.id) {
       this.addRequest(diplomaRequest);
     }
-  }
-
-  getDiplomaById(id: string): void {
-    this.diplomaRequestService
-      .getOne(id)
-      .pipe(untilDestroyed(this))
-      .subscribe(response => {
-        this.diplomaRequest = response.data;
-        this.cd.detectChanges();
-      });
   }
 
   getDiplomaRequests($event: TableLazyLoadEvent) {

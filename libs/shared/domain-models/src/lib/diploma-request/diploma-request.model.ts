@@ -23,6 +23,7 @@ export interface DiplomaRequestTableView {
 }
 
 export interface DiplomaRequestPostData {
+  id?: string;
   attachedDocument?: string;
   fileName?: string;
   studentID?: string;
