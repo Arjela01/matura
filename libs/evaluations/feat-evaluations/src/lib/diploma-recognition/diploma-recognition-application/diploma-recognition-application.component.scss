@@ -7,10 +7,7 @@
 }
 ::ng-deep .p-fileupload-files,
 ::ng-deep .p-fileupload-content{
-  .p-fileupload-row > div:first-child{
-    display: none;
-  }
-  .p-fileupload-row > div:nth-child(3) {
+  .p-fileupload-row > div:nth-child(2) {
     display: none;
   }
 }
