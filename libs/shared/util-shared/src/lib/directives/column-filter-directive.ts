@@ -12,11 +12,7 @@ import { ColumnFilter } from 'primeng/table';
   standalone: true,
 })
 export class ColumnFilterDirective {
-  constructor(
-    @Host() @Optional() private filter: ColumnFilter,
-    private elementRef: ElementRef,
-    private renderer: Renderer2
-  ) {
+  constructor(@Host() @Optional() private filter: ColumnFilter) {
     if (filter) {
       filter.hide = (): void => {
         filter.overlayVisible = false;
@@ -36,6 +32,8 @@ export class ColumnFilterDirective {
 
     if (filter.type === 'text') {
       filter.matchMode = 'contains';
+    } else {
+      filter.matchMode = 'equals';
     }
   }
 }
