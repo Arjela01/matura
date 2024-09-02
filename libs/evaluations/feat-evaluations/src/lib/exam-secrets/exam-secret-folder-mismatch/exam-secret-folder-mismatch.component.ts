@@ -88,6 +88,7 @@ export class ExamSecretFolderMismatchComponent {
         isFall: {
           value: this.isOn,
           matchMode: 'equals',
+          operator: 'and',
         },
       };
     } else {

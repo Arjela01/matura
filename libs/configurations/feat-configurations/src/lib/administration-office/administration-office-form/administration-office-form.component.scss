@@ -4,3 +4,9 @@
 .ui-fileupload-buttonbar .ui-fileupload-upload {
   display: none !important;
 }
+::ng-deep .p-fileupload-files,
+::ng-deep .p-fileupload-filename{
+  .p-fileupload-row > div:nth-child(3) {
+    display: none;
+  }
+}

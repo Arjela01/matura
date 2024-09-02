@@ -40,7 +40,7 @@
   </div>
 
   <div class="field">
-    <label class="mb-3">Eshtë DAR *</label>
+    <label class="mb-3">Eshtë DRAP *</label>
     <div class="formgrid grid">
       <div class="field-radiobutton col-6">
         <p-radioButton
@@ -61,7 +61,7 @@
     </div>
   </div>
   <div class="field">
-    <label for="City">Varet nga DAR</label>
+    <label for="City">Varet nga DRAP</label>
     <p-dropdown
       id="Dar"
       [options]="dars"
@@ -114,6 +114,11 @@
       <p-fileUpload
         #uploader
         [showUploadButton]="false"
+        [showCancelButton]="false"
+        name="myfile[]"
+        [auto]="true"
+        [customUpload]="true"
+        chooseLabel="Zgjidh"
         class="ie-file-upload"
         (onSelect)="selectFiles($event)"
         accept=".jpeg,.jpg,.png,.webp">
