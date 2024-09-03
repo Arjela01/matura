@@ -26,6 +26,7 @@ import {
   ColumnFilterDirective,
   GridEvent,
   WhereBuilder,
+  diploma,
 } from '@msh/shared/util-shared';
 import { FailingStudent } from '@msh/applications/domain-application';
 import { AppDatePipe } from '@msh/shared/ui-shared';
@@ -69,7 +70,7 @@ export class DiplomaRecognitionHistoryGridComponent {
     GridEvent<FailingStudent | FailingStudent[]>
   >();
 
-  queryName = 'diplomaRequest';
+  queryName = 'diploma';
   pageSize = 50;
   totalCount = 0;
   currentPage = 1;
@@ -105,7 +106,7 @@ export class DiplomaRecognitionHistoryGridComponent {
     this.apollo
       .watchQuery<any>({
         query: gql`
-          ${diplomaRequest}
+          ${diploma}
         `,
         variables: {
           pagesize: this.pageSize,

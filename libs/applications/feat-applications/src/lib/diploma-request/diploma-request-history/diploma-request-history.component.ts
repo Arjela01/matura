@@ -24,7 +24,7 @@ import { Apollo, gql } from 'apollo-angular';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import {
   ColumnFilterDirective,
-  diploma,
+  diplomaRequest,
   GridEvent,
 } from '@msh/shared/util-shared';
 import { FailingStudent } from '@msh/applications/domain-application';
@@ -68,7 +68,7 @@ export class DiplomaRequestHistoryComponent {
     GridEvent<FailingStudent | FailingStudent[]>
   >();
 
-  queryName = 'diploma';
+  queryName = 'diplomaRequest';
   pageSize = 50;
   totalCount = 0;
   currentPage = 1;
@@ -104,7 +104,7 @@ export class DiplomaRequestHistoryComponent {
     this.apollo
       .watchQuery<any>({
         query: gql`
-          ${diploma}
+          ${diplomaRequest}
         `,
         variables: {
           pagesize: this.pageSize,
