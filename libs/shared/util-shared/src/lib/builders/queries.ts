@@ -1700,11 +1700,10 @@ export const EXAM_SITE = `
        }
        }`;
 export const USERS = `
- query aspNetUser
+ query AspNetUser
   ($pagesize: Int, $skip: Int,$where: AspNetUserAuditFilterInput,
-   $order:[AspNetUserAuditSortInput!]) {
-    AspNetUser (take: $pagesize, skip: $skip,where: $where,
-    order: $order) {
+    $order:[AspNetUserAuditSortInput!]) {
+    aspNetUser (take: $pagesize, skip: $skip,where: $where,order: $order) {
     totalCount
       pageInfo {
         hasNextPage
@@ -2133,7 +2132,7 @@ export const queriesMap: Map<string, string> = new Map([
   ['examSubject', EXAM_SUBJECT],
   ['examSubjectProfile', EXAM_SUBJECT_PROFILE],
   ['examSite', EXAM_SITE],
-  ['users', USERS],
+  ['aspNetUser', USERS],
   ['examGrade', EXAM_GRADE],
   ['examGradesRequest', EXAM_GRADE_REQUEST_QUERY],
   ['regradingRequest', regradingRequest],
