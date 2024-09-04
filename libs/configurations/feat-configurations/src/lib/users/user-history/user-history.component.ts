@@ -65,7 +65,7 @@ export class UserHistoryComponent {
     GridEvent<FailingStudent | FailingStudent[]>
   >();
 
-  queryName = 'aspNetUser';
+  queryName = 'user';
   pageSize = 50;
   totalCount = 0;
   currentPage = 1;
@@ -96,6 +96,8 @@ export class UserHistoryComponent {
   }
 
   fetchRecordData() {
+    console.log(123, this.recordId);
+    debugger;
     const skip = (this.currentPage - 1) * this.pageSize;
 
     this.apollo

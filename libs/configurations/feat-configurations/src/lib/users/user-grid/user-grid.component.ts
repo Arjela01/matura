@@ -62,6 +62,7 @@ export class UserGridComponent {
   @Input() users: User[] = [];
   @Input() totalRecords = 0;
   @Input() userId: any;
+  @Input() recordId: any;
   @Input() headerText = '';
   @Input() displayHistoryForm = true;
   @Input() selectedRecord: any;
