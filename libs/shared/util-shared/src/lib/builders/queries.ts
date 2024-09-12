@@ -1700,17 +1700,17 @@ export const EXAM_SITE = `
        }
        }`;
 export const USERS = `
- query aspNetUser
-  ($pagesize: Int, $skip: Int,$where: AspNetUserAuditFilterInput,
-   $order:[AspNetUserAuditSortInput!]) {
-    AspNetUser (take: $pagesize, skip: $skip,where: $where,
-    order: $order) {
+ query User
+  ($pagesize: Int, $skip: Int,$where: UserAuditFilterInput,
+    $order:[UserAuditSortInput!]) {
+    user (take: $pagesize, skip: $skip,where: $where,order: $order) {
     totalCount
       pageInfo {
         hasNextPage
         hasPreviousPage
        }
        items {
+            id
             auditHostname
             auditSIDUsername
             auditUsername
@@ -1723,34 +1723,10 @@ export const USERS = `
             deletedOn
             modifiedBy
             modifiedIP
-            academicYear {
-                isActive
-                year
-                id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-            }
-            administrationOffice {
-                name
-                directorName
-                isRegionalOffice
-                parentOfficeId
-                isAllowedToLogin
-                id
-                isDeleted
-                createdIP
-                createdOn
-                deletedIP
-                deletedOn
-                modifiedIP
-            }
         }
        }
        }`;
+
 export const STUDENTS = `
   query Students($pagesize: Int, $skip: Int,$where: StudentAuditFilterInput,
   $order:[StudentAuditSortInput!]) {
@@ -2133,7 +2109,7 @@ export const queriesMap: Map<string, string> = new Map([
   ['examSubject', EXAM_SUBJECT],
   ['examSubjectProfile', EXAM_SUBJECT_PROFILE],
   ['examSite', EXAM_SITE],
-  ['users', USERS],
+  ['user', USERS],
   ['examGrade', EXAM_GRADE],
   ['examGradesRequest', EXAM_GRADE_REQUEST_QUERY],
   ['regradingRequest', regradingRequest],

@@ -61,7 +61,7 @@ export class ManageUsersComponent implements OnInit {
   users$ = this.users$$.asObservable();
   filters: TableLazyLoadEvent | null = null;
 
-  id: string | undefined;
+  recordId: string | undefined;
   selectedRecord: any;
   headerText: any;
   displayHistoryForm = false;
@@ -117,7 +117,7 @@ export class ManageUsersComponent implements OnInit {
     switch (event.action) {
       case GRID_ACTIONS.HISTORY:
         this.selectedRecord = Object.assign({}, event.data);
-        this.id = event.data.id;
+        this.recordId = event.data.id;
         this.headerText = `Historiku për Përdoruesin {${event.data.id}}`;
         this.displayHistoryForm = true;
         break;
