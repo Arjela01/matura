@@ -96,8 +96,6 @@ export class UserHistoryComponent {
   }
 
   fetchRecordData() {
-    console.log(123, this.recordId);
-    debugger;
     const skip = (this.currentPage - 1) * this.pageSize;
 
     this.apollo
