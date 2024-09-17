@@ -109,6 +109,9 @@ export class AuditLogGridComponent implements OnInit {
       })
 
       .valueChanges.subscribe((result: any) => {
+        if (this.queryName === 'passInFall') {
+          this.queryName = 'failingStudent';
+        }
         this.data =
           this.flattenObjectArray(result?.data[this.queryName].items) || [];
         this.indexHeader = this.findIndexOfMostFields(this.data) || 0;

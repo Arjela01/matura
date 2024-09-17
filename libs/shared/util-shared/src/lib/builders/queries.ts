@@ -1200,6 +1200,8 @@ export const STUDENT_BAN = `
             auditTimestamp
             description
             isBanned
+            isFall
+            barcode
             effectiveDate
             id
             isDeleted
@@ -1423,6 +1425,69 @@ export const GRADE_SCALE = `
        }
        }
        `;
+
+export const PASS_IN_FALL = `
+  query FailingStudent($pagesize: Int, $skip: Int, $order: [FailingStudentAuditSortInput!]) {
+    failingStudent (take: $pagesize, skip: $skip, where: {
+      willRetryInFall: { eq: true },
+      isDeleted: { eq: true }
+    }, order: $order) {
+      totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+      }
+      items {
+        auditHostname
+        auditSIDUsername
+        auditUsername
+        auditOperation
+        auditTimestamp
+        subject
+        willRetryInFall
+        id
+        isDeleted
+        createdIP
+        createdOn
+        deletedIP
+        deletedOn
+        modifiedIP
+        student {
+          birthDate
+          birthPlace
+          isConfirmedBySupervisor
+          isAN
+          email
+          firstName
+          idCard
+          isA2A3
+          isEAlbaniaApplication
+          lastName
+          middleName
+          mobilePhone
+          oldID
+          schoolFinished
+          schoolName
+          session
+          studentId
+          studyClass
+          graduationYear
+          isFall
+          isPrinted
+          diplomaPrintedDate
+          id
+          isDeleted
+          createdIP
+          createdOn
+          deletedIP
+          deletedOn
+          modifiedIP
+        }
+      }
+    }
+  }
+`;
+
 export const FAILING_STUDENT = `
   query FailingStudent
   ($pagesize: Int, $skip: Int,$where: FailingStudentAuditFilterInput,
@@ -2105,6 +2170,7 @@ export const queriesMap: Map<string, string> = new Map([
   ['highSchool', HIGH_SCHOOL],
   ['gradeScale', GRADE_SCALE],
   ['failingStudent', FAILING_STUDENT],
+  ['passInFall', PASS_IN_FALL],
   ['examVariant', EXAM_VARIANT],
   ['examSubject', EXAM_SUBJECT],
   ['examSubjectProfile', EXAM_SUBJECT_PROFILE],
