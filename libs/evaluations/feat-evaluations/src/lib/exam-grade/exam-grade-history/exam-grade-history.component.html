@@ -18,7 +18,6 @@
             <th>Emri i maturantit</th>
             <th>Atësia</th>
             <th>Mbiemri</th>
-            <th>Datëlindja</th>
             <th>Vendlindja</th>
             <th>Veprimi i Kryer</th>
             <th>Përdoruesi</th>
@@ -31,25 +30,22 @@
         <ng-template pTemplate="body" let-record>
           <tr>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.studentId }}
+              {{ record?.student?.studentId }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.idCard }}
+              {{ record?.student?.idCard }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.firstName }}
+              {{ record?.student?.firstName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.middleName }}
+              {{ record?.student?.middleName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.lastName }}
+              {{ record?.student?.lastName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.birthDate | app_date }}
-            </td>
-            <td style="width: 10%; min-width: 10rem">
-              {{ record.birthPlace }}
+              {{ record?.student?.birthPlace }}
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ record?.auditOperation }}
