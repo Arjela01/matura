@@ -4,13 +4,12 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  HostListener,
   Input,
   OnChanges,
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -19,6 +18,7 @@ import { AuthFacade } from '@msh/auth/data-access-auth';
 import {
   AcademicYearApiService,
   CountriesApiService,
+  DpgjcApiService,
   GendersApiService,
   HighSchoolApiService,
   ProfileApiService,
@@ -28,6 +28,7 @@ import { DropdownModel } from '@msh/shared/data-access-shared';
 import {
   AcademicYear,
   CountryName,
+  DpgjcData,
   Student,
   StudentClassModel,
   StudentSectionModel,
@@ -37,6 +38,7 @@ import {
   AlbanianNidValidatorDirective,
   GlobalToastService,
 } from '@msh/shared/util-shared';
+import { UserProfileApiService } from '@msh/user-section/data-access-user-section';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -48,7 +50,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { A1a1zConfirmationDialogComponent } from '../manage-students/a1a1z-confirmation-dialog/a1a1z-confirmation-dialog.component';
-import { UserProfileApiService } from '@msh/user-section/data-access-user-section';
 
 @Component({
   selector: 'msh-students-form',
@@ -148,7 +149,8 @@ export class StudentsFormComponent implements OnInit, OnChanges {
     private authFacade: AuthFacade,
     private readonly toastService: GlobalToastService,
     private countriesService: CountriesApiService,
-    private readonly userService: UserProfileApiService
+    private readonly userService: UserProfileApiService,
+    private readonly dpgjcService: DpgjcApiService
   ) {
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 10);
     this.userService.getLoggedInUserData().subscribe(res => {
@@ -245,14 +247,50 @@ export class StudentsFormComponent implements OnInit, OnChanges {
       this.navigateToGrid();
     }
   }
-  validateNID() {
+
+  
+ validateNID() {
     if (this.student.countryId === CountryName.Albania) {
       const value = this.student.idCard;
       this.validNid = new RegExp(ALBANIAN_NID_REGEXP).test(value as string);
+
+      if (this.validNid && typeof value === 'string') {
+            this.dpgjcService.GetDpgjc(value).subscribe(response => {
+            const dpgjcData: DpgjcData = response.data;
+            
+            this.student.firstName = dpgjcData.emri;
+            this.student.lastName = dpgjcData.mbiemri;
+            this.student.middleName = dpgjcData.atesia;
+            try {
+              this.student.birthDate = this.parseDpgjcDate(dpgjcData.datalindja);
+            } catch (error) {
+              console.error('Error parsing birth date:', error);
+            }
+            this.student.birthPlace = dpgjcData.vendlindja;
+            this.cd.detectChanges();
+          });
+
     } else {
       this.validNid = true;
     }
   }
+}
+
+private parseDpgjcDate(dateString: string): Date {
+  if (dateString && dateString.length === 8) {
+    const year = parseInt(dateString.substring(0, 4), 10);
+    const month = parseInt(dateString.substring(4, 6), 10) - 1; 
+    const day = parseInt(dateString.substring(6, 8), 10);
+    
+    const date = new Date(year, month, day);
+    
+    if (!isNaN(date.getTime())) {
+      return date;
+    }
+  }
+  throw new Error(`Invalid date format: ${dateString}`);
+}
+
   onFormSave(formType: FormType) {
     switch (formType) {
       case FormType.A1:
