@@ -182,7 +182,10 @@ export class DiplomaRequestFormComponent implements OnInit, DoCheck {
   }
 
   ngOnInit(): void {
-    this.getDiplomaById(this.diplomaRequest.id);
+    if (this.diplomaRequest.id) {
+      this.getDiplomaById(this.diplomaRequest.id);
+    }
+
     if (this.selectedStudent) {
       this.onStudentChange(this.selectedStudent);
     }
