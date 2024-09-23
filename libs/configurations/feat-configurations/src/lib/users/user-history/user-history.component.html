@@ -17,13 +17,10 @@
             <th>Emri</th>
             <th>Mbiemri</th>
             <th>Përdoruesi</th>
-            <th>Roli</th>
             <th>Zvap</th>
             <th>Veprimi i Kryer</th>
-            <th>Përdoruesi</th>
             <th>Emri i Hostit</th>
             <th>Koha e ndryshimit</th>
-            <th></th>
           </tr>
         </ng-template>
 
@@ -39,23 +36,13 @@
               {{ record.lastName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.username }}
+              {{ record.userName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.roleName }}
-            </td>
-            <td style="width: 10%; min-width: 10rem">
-              {{ record.administrationOfficeName }}
+              {{ record.administrationOffice.name }}
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ record?.auditOperation }}
-            </td>
-            <td style="width: 10%; min-width: 10rem">
-              {{
-                record?.auditOperation === 'UPDATE'
-                  ? record?.modified?.displayName
-                  : record?.created?.displayName
-              }}
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ record?.auditHostname }}
