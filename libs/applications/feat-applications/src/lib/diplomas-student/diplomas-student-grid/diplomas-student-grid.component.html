@@ -106,6 +106,17 @@
             mshColumnFilterDirective></p-columnFilter>
         </div>
       </th>
+      <th pSortableColumn="isA1">
+        Tipi i Formularit
+        <div>
+          <p-sortIcon field="isA1"></p-sortIcon>
+          <p-columnFilter
+            type="boolean"
+            field="isA1"
+            display="menu"
+            mshColumnFilterDirective></p-columnFilter>
+        </div>
+      </th>
       <th pSortableColumn="averageGrade">
         Mesatarja
         <div>
@@ -261,6 +272,9 @@
       </td>
       <td style="max-width: 10%">
         {{ diploma.countryName }}
+      </td>
+      <td style="max-width: 10%">
+        {{ diploma.isA1 ? "A1" : "A1Z"}}
       </td>
       <td style="max-width: 10%">
         {{ diploma.averageGrade }}
