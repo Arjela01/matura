@@ -1766,8 +1766,8 @@ export const EXAM_SITE = `
        }`;
 export const USERS = `
  query User
-  ($pagesize: Int, $skip: Int,$where: UserAuditFilterInput,
-    $order:[UserAuditSortInput!]) {
+  ($pagesize: Int, $skip: Int,$where: CustomUserAuditFilterInput,
+    $order:[CustomUserAuditSortInput!]) {
     user (take: $pagesize, skip: $skip,where: $where,order: $order) {
     totalCount
       pageInfo {
@@ -1776,6 +1776,10 @@ export const USERS = `
        }
        items {
             id
+            userName
+            nid
+            name
+            lastName
             auditHostname
             auditSIDUsername
             auditUsername
@@ -1788,6 +1792,9 @@ export const USERS = `
             deletedOn
             modifiedBy
             modifiedIP
+            administrationOffice {
+                name
+            }
         }
        }
        }`;
