@@ -27,19 +27,19 @@
         <ng-template pTemplate="body" let-record>
           <tr>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.nid }}
+              {{ record?.nid }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.name }}
+              {{ record?.name }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.lastName }}
+              {{ record?.lastName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.userName }}
+              {{ record?.userName }}
             </td>
             <td style="width: 10%; min-width: 10rem">
-              {{ record.administrationOffice.name }}
+              {{ record?.administrationOffice?.name }}
             </td>
             <td style="width: 10%; min-width: 10rem">
               {{ record?.auditOperation }}
