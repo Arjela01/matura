@@ -201,31 +201,37 @@
             }">
           </p-dropdown>
         </div>
-        <div class="field" [style]="{ width: '500px' }">
+        <div class="field mt-4 mb-4">
           <label for="IdCard">Karta Identitetit *</label>
-          <input
-            type="text"
-            #nidModel="ngModel"
-            pInputText
-            id="IdCard"
-            name="IdCard"
-            [(ngModel)]="student.idCard"
-            required
-            (change)="validateNID()"
-            autofocus
-            [ngClass]="{
-              'ng-invalid ng-dirty': !student.idCard || !validNid,
-            }" />
+          <div class="p-inputgroup" [style]="{ width: '500px' }">
+            <input
+              type="text"
+              #nidModel="ngModel"
+              pInputText
+              id="IdCard"
+              name="IdCard"
+              [(ngModel)]="student.idCard"
+              required
+              autofocus
+              [ngClass]="{
+                'ng-invalid ng-dirty': !student.idCard || !validNid,
+              }" />
+            <p-button
+              label="Kërko"
+              icon="pi pi-search"
+              (click)="validateNID()"
+              [style]="{ height: '100%' }"></p-button>
 
-          <small class="p-error block" *ngIf="!validNid">
-            NID nuk i përshtatet formatit shqiptar. Duhet të përmbajë 10
-            karaktere, të fillojë dhe të mbarojë me gërma të mëdha.
+            <small class="p-error block" *ngIf="!validNid">
+              NID nuk i përshtatet formatit shqiptar. Duhet të përmbajë 10
+              karaktere, të fillojë dhe të mbarojë me gërma të mëdha.
+            </small>
+          </div>
+
+          <small class="p-error block" *ngIf="submitted && !student.idCard">
+            NID është fushë e kërkuar.
           </small>
         </div>
-
-        <small class="p-error block" *ngIf="submitted && !student.idCard">
-          NID është fushë e kërkuar.
-        </small>
         <div class="field" [style]="{ width: '500px' }">
           <label for="OldID">ID e vjetër e maturës</label>
           <input
